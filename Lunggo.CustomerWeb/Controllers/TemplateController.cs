@@ -112,6 +112,11 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult eticketnew()
+        {
+            return View();
+        }
+
         public ActionResult invoice()
         {
             return View();
@@ -162,5 +167,6 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
     }
 }

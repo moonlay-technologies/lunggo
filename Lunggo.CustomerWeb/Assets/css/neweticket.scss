@@ -30,11 +30,11 @@ body {font-family:'din', helvetica, arial, sans-serif; width:100%; height:100%; 
 
 p {margin-bottom:0;}
 
-.page {width:21cm; height:29.6cm; position:absolute; background:url(/Assets/images/eticket-background.png) left 60% no-repeat; -webkit-print-color-adjust:exact;
+.page {width:21cm; height:29.6cm; position:absolute; background:url(/Assets/images/eticket-background.png) left 70% no-repeat; -webkit-print-color-adjust:exact;
     &:before, &:after {@include clearfix;}
 }
 .page.page-2 {top:29.6cm;}
-
+.page.page-3 {top:59.2cm;}
 
 /**
 Site Header
@@ -66,17 +66,41 @@ Site Content
         }
         &:after {content:""; display:block; clear:both; width:100%; border-top:2px solid #666; position:absolute; margin-top:-10px;}
     }
+
+    /*Adding Changes here*/
+    .flight-name{ width:100%;margin-bottom:3mm;
+        .flight-icon {text-align:center; float:left; width:13%; margin-right:2%; /* ini buat icon maskapai dan no pnr, width 12, margin 3*/
+                .flight-airline {width:100%;}
+            }
+        .flight-det{ width:100%; position:relative;
+            .flight-number { float:left;width:67%; margin-right:3%; margin-bottom:10px; padding-bottom:5px; font-size:8pt; font-style:italic;} /* buat no penerbangan*/
+            .flight-pnr {position:absolute; top:0; right:0;float:right; width:21%; background:#38B3E3 url(/Assets/images/blue-bg.png) center center repeat; border:1px solid #38B3E3; color:#fff; padding:1mm 0; font-weight:bold; text-align:center; font-size:8pt;}
+            .ticket-date{width:100%;position:relative;
+                .date-now{float:left; width:50%; margin-right:3%}
+                .line-date{top:40px;right:0;position: absolute;width:62%}
+            }
+        }
+    }    
+
     .flight-list {
         .flight {width:100%; margin-bottom:3mm;
             &:before, &:after {@include clearfix;}
             h3, h4 {margin:0; padding:0;}
-            .flight-icon {text-align:center; float:left; width:12%; margin-right:3%;
-                .flight-airline {width:75%;}
-                .flight-pnr {background:#38B3E3 url(/Assets/images/blue-bg.png) center center repeat; border:1px solid #38B3E3; color:#fff; padding:1mm 0; font-weight:bold; text-align:center; font-size:6pt;}
+            .flight-name{ width:100%;margin-bottom:3mm;
+        .flight-icon {text-align:center; float:left; width:13%; margin-right:2%; /* ini buat icon maskapai dan no pnr, width 12, margin 3*/
+                .flight-airline {width:100%;}
             }
-            .flight-detail {float:left; width:85%;
-                .flight-number {border-bottom:1px dashed #666; margin-bottom:10px; padding-bottom:5px; font-size:8pt; font-style:italic;}
-                .flight-route {width:100%;
+        .flight-det{ width:100%; position:relative;
+            .flight-number { float:left;width:67%; margin-right:3%; margin-bottom:10px; padding-bottom:5px; font-size:8pt; font-style:italic;} /* buat no penerbangan*/
+            .flight-pnr {position:absolute; top:0; right:0;float:right; width:21%; background:#38B3E3 url(/Assets/images/blue-bg.png) center center repeat; border:1px solid #38B3E3; color:#fff; padding:1mm 0; font-weight:bold; text-align:center; font-size:8pt;}
+            .ticket-date{width:100%;position:relative;
+                .date-now{float:left; width:50%; margin-right:3%}
+                .line-date{right:0;position: absolute;width:62%}
+            }
+        }
+    }
+            .flight-detail {float:right; width:85%;margin-top:10px;
+                .flight-route {width:100%;     /* ini membentuk table buat table detail penerbangan*/
                     &:before,&:after {@include clearfix;}
                     &>div {float:left;
                         h3:first-child {font-weight:bold;}
@@ -93,7 +117,7 @@ Site Content
                 }
             }
         }
-        .transit {border:1px dashed #666; padding:2mm 0; text-align:center; margin-bottom:3mm; font-size:8pt;}
+        .transit {float:right; width:100%; border:1px dashed #666; padding:2mm 0; text-align:center; margin-bottom:3mm; font-size:8pt;}
     }
 }
 
@@ -110,10 +134,16 @@ Site Content
     .type {width:20%; text-align:center;}
 }
 
+.flight-title2 {text-align:center; position:relative; font-size:12pt; font-weight:bold; color:#666; -webkit-print-color-adjust:exact;
+        &>span {background:url(/Assets/images/white-bg.png) top center repeat #fff; z-index:2; position:relative; padding:0 20px; overflow:hidden; z-index:2; -webkit-print-color-adjust:exact;
+        }
+        &:after {content:""; display:block; clear:both; width:100%; border-top:2px solid #666; position:absolute; margin-top:-10px;}
+    }
+
 /**
 Site Footer
 */
-.page-footer {background:#fff; color:#fff; padding:20px; position:absolute; bottom:0; -webkit-print-color-adjust:exact;
+.page-footer {padding:20px; position:absolute; bottom:0; -webkit-print-color-adjust:exact;
     img {width:100%;}
 }
 

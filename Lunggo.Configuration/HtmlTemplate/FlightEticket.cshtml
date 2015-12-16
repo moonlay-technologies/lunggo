@@ -24,7 +24,7 @@
     <!-- stylesheets -->
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/bootstrap.min.css")">
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")">
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/eticket.css")">
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/neweticket.css")">
 
 </head>
 <body class="eticket">
@@ -54,56 +54,94 @@
 
                     <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
                     <div class="flight-list">
-                        @foreach (var segment in Model.Itinerary.Trips[0].Segments)
-                        {
-                            if (segment != Model.Itinerary.Trips[0].Segments.First())
-                            {
-                                var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
-                                <div class="transit">
-                                    <p><b>Transit Duration :</b> @transitDuration.ToString(@"h'h 'm'm'")</p>
-                                </div>
-                            <!-- .transit -->
-                            }
-
-                            <div class="flight">
+                        <div class="flight">
+                            <div class="flight-name">
                                 <div class="flight-icon">
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" />
-                                    <h5 class="flight-pnr">PNR : @segment.Pnr</h5>
-                                </div><!-- .flight-icon -->
-                                <div class="flight-detail">
-                                    <div class="flight-number"><p>@segment.AirlineName @segment.AirlineCode@segment.FlightNumber</p><p><span>@segment.CabinClass</span></p></div>
-                                    <div class="flight-route">
-                                        <div class="departure-airline">
-                                            <h3 style="text-align:left;">@segment.DepartureAirport</h3>
-                                            <h3 style="text-align:left;">@segment.DepartureCity</h3>
-                                            <h3 style="text-align:left;">@segment.DepartureAirportName</h3>
-                                        </div>
-                                        <div class="departure-date">
-                                            @{ var jamBerangkat = segment.DepartureTime;}
-                                            <h3>@jamBerangkat.ToString("hh:mm")</h3>
-                                            <h3>@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
-                                        </div>
-                                        <div class="duration">
-                                            <h3>Duration - @segment.Duration</h3>
-                                        </div>
-                                        <div class="arrival-date">
-                                            @{ var jamKembali = segment.ArrivalTime;}
-                                            <h3>@jamKembali.ToString("hh:mm")</h3>
-                                            <h3>@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
-                                        </div>
-                                        <div class="arrival-airline">
-                                            <h3 style="text-align:right;">@segment.ArrivalAirport</h3>
-                                            <h3 style="text-align:right;">@segment.ArrivalCity</h3>
-                                            <h3 style="text-align:right;">@segment.ArrivalAirportName</h3>
-                                        </div>
-                                    </div><!-- .flight-route -->
-                                </div><!-- .flight-detail -->
-                            </div><!-- .flight -->
-                                             prevSegment = segment;
-                        }
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/airlines/AK.png")" alt="Icon" class="flight-airline" />
+                                </div>
+                                <div class="flight-det">
+                                    <div class="flight-number"><h4 style="margin-bottom:1px;"><b>QZ 387</b></h4><p><span>Subclass : Economy</span></p></div>
+                                    <div class="flight-pnr">Kode Booking [PNR]<p style="font-size:medium"> 2134</p></div>
+                                    <div class="ticket-date">
+                                        <div class="date-now">Jumat,3 July 2015</div>
+                                        <div class="line-date"><hr style="border:1px solid #8c8b8b;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flight-detail">
+                                <div class="flight-route">
+                                    <div class="departure-airline">
+                                        <h3 style="text-align:left;">Soe-Hatta</h3>
+                                        <h3 style="text-align:left;">Jakarta</h3>
+                                        <h3 style="text-align:left;">Soekarno-Hatta</h3>
+                                    </div>
+                                    <div class="departure-date">
+                                        <h3>22:15</h3>
+                                        <h3>2 July 2015</h3>
+                                    </div>
+                                    <div class="duration">
+                                        <h3>Duration - 5h 42m</h3>
+                                    </div>
+                                    <div class="arrival-date">
+                                        <h3>23.50</h3>
+                                        <h3>2 July 2015</h3>
+                                    </div>
+                                    <div class="arrival-airline">
+                                        <h3 style="text-align:right;">KNO</h3>
+                                        <h3 style="text-align:right;">Medan</h3>
+                                        <h3 style="text-align:right;">Kualanamu</h3>
+                                    </div>
+                                </div><!-- .flight-route -->
+                            </div><!-- .flight-detail -->
+                        </div><!-- .flight -->
+                        <div class="transit">
+                            <p><b>Transit Duration :</b> 2h 5m</p>
+                        </div>
+                        <div class="flight">
+                            <div class="flight-name">
+                                <div class="flight-icon">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/airlines/AK.png")" alt="Icon" class="flight-airline" />
+                                </div>
+                                <div class="flight-det">
+                                    <div class="flight-number"><h4 style="margin-bottom:1px;"><b>QZ 387</b></h4><p><span>Subclass : Economy</span></p></div>
+                                    <!-- <div class="flight-pnr">Kode Booking [PNR]<p style="font-size:medium"> 2134</p></div> -->
+                                    <div class="ticket-date">
+                                        <div class="date-now">Jumat,3 July 2015</div>
+                                        <div class="line-date"><hr style="border:1px solid #8c8b8b;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flight-detail">
+                                <div class="flight-route">
+                                    <div class="departure-airline">
+                                        <h3 style="text-align:left;">KNO</h3>
+                                        <h3 style="text-align:left;">Medan</h3>
+                                        <h3 style="text-align:left;">Kualanamu</h3>
+                                    </div>
+                                    <div class="departure-date">
+                                        <h3>22:15</h3>
+                                        <h3>2 July 2015</h3>
+                                    </div>
+                                    <div class="duration">
+                                        <h3>Duration - 5h 42m</h3>
+                                    </div>
+                                    <div class="arrival-date">
+                                        <h3>23.50</h3>
+                                        <h3>2 July 2015</h3>
+                                    </div>
+                                    <div class="arrival-airline">
+                                        <h3 style="text-align:right;">HUS</h3>
+                                        <h3 style="text-align:right;">Bandung</h3>
+                                        <h3 style="text-align:right;">Husein</h3>
+                                    </div>
+                                </div><!-- .flight-route -->
+                            </div><!-- .flight-detail -->
+                        </div>
+                        <!--Create Transit here-->
                     </div>
 
                 </div><!-- .flight.flight-list.departure-flight -->
+
                 <table class="passenger-wrapper">
                     <thead>
                         <tr>
@@ -113,41 +151,43 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (var j = 0; j < Model.Passengers.Count; j++)
-                        {
-                            var passenger = Model.Passengers[j];
-                            <tr>
-                                <td class="no">@(j + 1)</td>
-                                <td class="name">@EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</td>
-                                <td class="type">@EnumDisplay.PassengerType(passenger.Type)</td>
-                            </tr>
-                        }
+                        <tr>
+                            <td class="no">1234</td>
+                            <td class="name">Developer</td>
+                            <td class="type">Dewasa</td>
+                        </tr>
+                        <tr>
+                            <td class="no">5678</td>
+                            <td class="name">Developer2</td>
+                            <td class="type">Dewasa</td>
+                        </tr>
                     </tbody>
                 </table>
-                
-                <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pulang.jpg")" alt="Penerbangan Pulang" /></span></h2>
-                <table width="100%" style="margin-bottom:50px;">
-                    <tr>
+
+                <h2 class="flight-title2" style="text-align:center"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pulang.jpg")" alt="Penerbangan Pulang" /></span></h2>
+                <table width="100%">
+                    <tr style="margin-bottom:1px;">
                         <td width="10%" rowspan="2"></td>
-                        <td width="35%" align="center"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/showticket.png")" alt="Show Eticket" /></td>
+                        <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/showticket.png")" alt="Show Eticket" width="150" height="150" /></td>
                         <td width="10%" rowspan="2"></td>
-                        <td width="35%" align="center"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/checkin.png.png")" alt="Check In" /></td>
+                        <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/checkin.png")" alt="Check In" width="150" height="150" /></td>
                         <td width="10%" rowspan="2"></td>
                     </tr>
                     <tr>
-                        <td width="35%" align="center">Tunjukkan <b>e-ticket</b> dan <b>identitas</b> para<br />penumpang saat check-in</td>
+                        <td width="35%" align="center">Tunjukkan <b>e-ticket</b> dan <b>identitas</b><br /> para penumpang saat check-in</td>
                         <td width="35%" align="center">Check-in <b>paling lambat 90 menit</b><br />sebelum keberangkatan</td>
                 </table>
             </section><!-- .page-content -->
             <footer class="page-footer">
                 <hr style="border-top: dotted 2px;" />
-                <table width="100%">
+                <table width="100%" ;border-collapse:separate;
+                       border-spacing:5em;>
                     <tr>
-                        <td rowspan="2" width="80%">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vulputate lectus sapien, at blandit justo cursus id. Aliquam at accumsan libero,</td>
+                        <td rowspan="2" width="78%" style="margin-right:3px;">Lorem Ipsum<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vulputate lectus sapien, at blandit justo cursus id. Aliquam at accumsan libero,</p></td>
                         <td width="20%"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/appStore.png")" alt="App Store" /></td>
                     </tr>
                     <tr>
-                        <td width="20%"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/googlePlay.png")" alt="Google Play" /></td>
+                        <td width="20%" style="padding-top:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/googlePlay.png")" alt="Google Play" /></td>
                     </tr>
                 </table>
             </footer>
@@ -174,55 +214,92 @@
 
                 <div class="flight-list-wrapper departure-flight">
 
-                    <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pulang.jpg")" alt="Penerbangan Pulang" /></span></h2>
+                    <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
                     <div class="flight-list">
-                        @foreach (var segment in Model.Itinerary.Trips[1].Segments)
-                        {
-                            if (segment != Model.Itinerary.Trips[1].Segments.First())
-                            {
-                                var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
-                                <div class="transit">
-                                    <p><b>Transit Duration :</b> @transitDuration.ToString(@"h'h 'm'm'")</p>
-                                </div>
-                             <!-- .transit -->
-                            }
-
-                            <div class="flight">
+                        <div class="flight">
+                            <div class="flight-name">
                                 <div class="flight-icon">
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" />
-                                    <h5 class="flight-pnr">PNR : @segment.Pnr</h5>
-                                </div><!-- .flight-icon -->
-                                <div class="flight-detail">
-                                    <div class="flight-number"><p>@segment.AirlineName @segment.AirlineCode@segment.FlightNumber <span>@segment.CabinClass</span></p></div>
-                                    <div class="flight-route">
-                                        <div class="departure-airline">
-                                            <h3 style="text-align:left;">@segment.DepartureAirport</h3>
-                                            <h3 style="text-align:left;">@segment.DepartureCity</h3>
-                                            <h3 style="text-align:left;">@segment.DepartureAirportName</h3>
-                                        </div>
-                                        <div class="departure-date">
-                                            @{ var jamBerangkat = segment.DepartureTime;}
-                                            <h3>@jamBerangkat.ToString("hh:mm")</h3>
-                                            <h3>@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
-                                        </div>
-                                        <div class="duration">
-                                            <h3>Duration - @segment.Duration</h3>
-                                        </div>
-                                        <div class="arrival-date">
-                                            @{ var jamKembali = segment.ArrivalTime;}
-                                            <h3>@jamKembali.ToString("hh:mm")</h3>
-                                            <h3>@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
-                                        </div>
-                                        <div class="arrival-airline">
-                                            <h3 style="text-align:right;">@segment.ArrivalAirport</h3>
-                                            <h3 style="text-align:right;">@segment.ArrivalCity</h3>
-                                            <h3 style="text-align:right;">@segment.ArrivalAirportName</h3>
-                                        </div>
-                                    </div><!-- .flight-route -->
-                                </div><!-- .flight-detail -->
-                            </div><!-- .flight -->
-                                             prevSegment = segment;
-                        }
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/airlines/AK.png")" alt="Icon" class="flight-airline" />
+                                </div>
+                                <div class="flight-det">
+                                    <div class="flight-number"><h4 style="margin-bottom:1px;"><b>QZ 387</b></h4><p><span>Subclass : Economy</span></p></div>
+                                    <div class="flight-pnr">Kode Booking [PNR]<p style="font-size:medium"> 2134</p></div>
+                                    <div class="ticket-date">
+                                        <div class="date-now">Jumat,3 July 2015</div>
+                                        <div class="line-date"><hr style="border:1px solid #8c8b8b;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flight-detail">
+                                <div class="flight-route">
+                                    <div class="departure-airline">
+                                        <h3 style="text-align:left;">Soe-Hatta</h3>
+                                        <h3 style="text-align:left;">Jakarta</h3>
+                                        <h3 style="text-align:left;">Soekarno-Hatta</h3>
+                                    </div>
+                                    <div class="departure-date">
+                                        <h3>22:15</h3>
+                                        <h3>2 July 2015</h3>
+                                    </div>
+                                    <div class="duration">
+                                        <h3>Duration - 5h 42m</h3>
+                                    </div>
+                                    <div class="arrival-date">
+                                        <h3>23.50</h3>
+                                        <h3>2 July 2015</h3>
+                                    </div>
+                                    <div class="arrival-airline">
+                                        <h3 style="text-align:right;">KNO</h3>
+                                        <h3 style="text-align:right;">Medan</h3>
+                                        <h3 style="text-align:right;">Kualanamu</h3>
+                                    </div>
+                                </div><!-- .flight-route -->
+                            </div><!-- .flight-detail -->
+                        </div><!-- .flight -->
+                        <div class="transit">
+                            <p><b>Transit Duration :</b> 2h 5m</p>
+                        </div>
+                        <div class="flight">
+                            <div class="flight-name">
+                                <div class="flight-icon">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/airlines/AK.png")" alt="Icon" class="flight-airline" />
+                                </div>
+                                <div class="flight-det">
+                                    <div class="flight-number"><h4 style="margin-bottom:1px;"><b>QZ 387</b></h4><p><span>Subclass : Economy</span></p></div>
+                                    <!-- <div class="flight-pnr">Kode Booking [PNR]<p style="font-size:medium"> 2134</p></div> -->
+                                    <div class="ticket-date">
+                                        <div class="date-now">Jumat,3 July 2015</div>
+                                        <div class="line-date"><hr style="border:1px solid #8c8b8b;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flight-detail">
+                                <div class="flight-route">
+                                    <div class="departure-airline">
+                                        <h3 style="text-align:left;">KNO</h3>
+                                        <h3 style="text-align:left;">Medan</h3>
+                                        <h3 style="text-align:left;">Kualanamu</h3>
+                                    </div>
+                                    <div class="departure-date">
+                                        <h3>22:15</h3>
+                                        <h3>2 July 2015</h3>
+                                    </div>
+                                    <div class="duration">
+                                        <h3>Duration - 5h 42m</h3>
+                                    </div>
+                                    <div class="arrival-date">
+                                        <h3>23.50</h3>
+                                        <h3>2 July 2015</h3>
+                                    </div>
+                                    <div class="arrival-airline">
+                                        <h3 style="text-align:right;">HUS</h3>
+                                        <h3 style="text-align:right;">Bandung</h3>
+                                        <h3 style="text-align:right;">Husein</h3>
+                                    </div>
+                                </div><!-- .flight-route -->
+                            </div><!-- .flight-detail -->
+                        </div>
+                        <!--Create Transit here-->
                     </div>
 
                 </div><!-- .flight.flight-list.departure-flight -->
@@ -236,57 +313,49 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (var j = 0; j < Model.Passengers.Count; j++)
-                        {
-                            var passenger = Model.Passengers[j];
-                            <tr>
-                                <td class="no">@(j + 1)</td>
-                                <td class="name">@passenger.Title @passenger.FirstName @passenger.LastName</td>
-                                <td class="type">@passenger.Type</td>
-                            </tr>
-                        }
+                        <tr>
+                            <td class="no">1234</td>
+                            <td class="name">Developer</td>
+                            <td class="type">Dewasa</td>
+                        </tr>
+                        <tr>
+                            <td class="no">5678</td>
+                            <td class="name">Developer2</td>
+                            <td class="type">Dewasa</td>
+                        </tr>
                     </tbody>
-                </table><!-- .passenger-wrapper -->
-                <!--Adding Catatan Here-->
-                <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pulang.jpg")" alt="Penerbangan Pulang" /></span></h2>
+                </table>
+
+                <h2 class="flight-title2" style="text-align:center"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pulang.jpg")" alt="Penerbangan Pulang" /></span></h2>
                 <table width="100%">
-                    <tr>
+                    <tr style="margin-bottom:1px;">
                         <td width="10%" rowspan="2"></td>
-                        <td width="35%" align="center"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/showticket.png")" alt="Show Eticket" /></td>
+                        <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/showticket.png")" alt="Show Eticket" width="150" height="150" /></td>
                         <td width="10%" rowspan="2"></td>
-                        <td width="35%" align="center"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/checkin.png.png")" alt="Check In" /></td>
+                        <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/checkin.png")" alt="Check In" width="150" height="150" /></td>
                         <td width="10%" rowspan="2"></td>
                     </tr>
                     <tr>
-                        <td width="35%" align="center">Tunjukkan <b>e-ticket</b> dan <b>identitas</b> para<br />penumpang saat check-in</td>
+                        <td width="35%" align="center">Tunjukkan <b>e-ticket</b> dan <b>identitas</b><br /> para penumpang saat check-in</td>
                         <td width="35%" align="center">Check-in <b>paling lambat 90 menit</b><br />sebelum keberangkatan</td>
                 </table>
             </section><!-- .page-content -->
             <footer class="page-footer">
                 <hr style="border-top: dotted 2px;" />
-                <table width="100%">
+                <table width="100%" ;border-collapse:separate;
+                       border-spacing:5em;>
                     <tr>
-                        <td rowspan="2" width="80%">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vulputate lectus sapien, at blandit justo cursus id. Aliquam at accumsan libero,</td>
+                        <td rowspan="2" width="78%" style="margin-right:3px;">Lorem Ipsum<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vulputate lectus sapien, at blandit justo cursus id. Aliquam at accumsan libero,</p></td>
                         <td width="20%"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/appStore.png")" alt="App Store" /></td>
                     </tr>
                     <tr>
-                        <td width="20%"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/googlePlay.png")" alt="Google Play" /></td>
+                        <td width="20%" style="padding-top:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/googlePlay.png")" alt="Google Play" /></td>
                     </tr>
                 </table>
             </footer>
-            <footer class="page-footer hidden">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <h4>Lorem ipsum dolor sit amet</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vulputate lectus sapien, at blandit justo cursus id. Aliquam at accumsan libero, nec vulputate erat. Mauris venenatis nibh sed tortor congue, eu volutpat diam luctus. Suspendisse non mauris tristique, vehicula nisl sit amet, sodales nisl. Integer dapibus sapien augue, in accumsan orci ornare vel. Integer a ultricies augue. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-                    </div>
-                    <div class="col-xs-2"></div>
-                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/email-footer.png")" alt="Email Foter" />
-                </div>
-            </footer><!-- .page-footer -->
-        </div><!-- .page -->
+        </div><!-- .page 2 Buat Tiket Kembali-->
 
-    }
+    } <!-- END CONDITION-->
     else
     {
         <div class="page">
@@ -311,6 +380,19 @@
                 <div class="flight-list-wrapper departure-flight">
 
                     <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
+                    <div class="flight-name">
+                        <div class="flight-icon">
+                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" />
+                        </div>
+                        <div class="flight-det">
+                            <div class="flight-det">
+                                <div class="flight-number"><p>@segment.AirlineName @segment.AirlineCode@segment.FlightNumber</p><p><span>@segment.CabinClass</span></p></div>
+                                <h5 class="flight-pnr">PNR : @segment.Pnr</h5>
+                                <h5 class="date-now">@Model.DateTime.Now</h5>
+                                <hr class="style1" />
+                            </div>
+                        </div>
+                    </div>
                     <div class="flight-list">
                         @foreach (var segment in Model.Itinerary.Trips[0].Segments)
                         {
@@ -324,12 +406,7 @@
                             }
 
                             <div class="flight">
-                                <div class="flight-icon">
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" />
-                                    <h5 class="flight-pnr">PNR : @segment.Pnr</h5>
-                                </div><!-- .flight-icon -->
                                 <div class="flight-detail">
-                                    <div class="flight-number"><p>@segment.AirlineName @segment.AirlineCode@segment.FlightNumber <span>@segment.CabinClass</span></p></div>
                                     <div class="flight-route">
                                         <div class="departure-airline">
                                             <h3 style="text-align:left;">@segment.DepartureAirport</h3>
@@ -383,8 +460,8 @@
                         }
                     </tbody>
                 </table>
-
-                <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pulang.jpg")" alt="Penerbangan Pulang" /></span></h2>
+                <!--CATATAN-->
+                <h2 class="flight-title2"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pulang.jpg")" alt="Penerbangan Pulang" /></span></h2>
                 <table width="100%">
                     <tr>
                         <td width="10%" rowspan="2"></td>
@@ -402,7 +479,7 @@
                 <hr style="border-top: dotted 2px;" />
                 <table width="100%">
                     <tr>
-                        <td rowspan="2" width="80%">Ajsdhgfdskhfdsgjfhsdgfkshdmhfsdhfgdsjhg</td>
+                        <td rowspan="2" width="80%">Lorem Ipsum<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vulputate lectus sapien, at blandit justo cursus id. Aliquam at accumsan libero,</p></td>
                         <td width="20%"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/appStore.png")" alt="App Store" /></td>
                     </tr>
                     <tr>

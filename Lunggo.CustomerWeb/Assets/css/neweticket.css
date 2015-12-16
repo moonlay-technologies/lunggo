@@ -40,7 +40,7 @@ p {
   width: 21cm;
   height: 29.6cm;
   position: absolute;
-  background: url(/Assets/images/eticket-background.png) left 60% no-repeat;
+  background: url(/Assets/images/eticket-background.png) left 70% no-repeat;
   -webkit-print-color-adjust: exact; }
   .page:before, .page:after {
     content: "";
@@ -50,6 +50,9 @@ p {
 
 .page.page-2 {
   top: 29.6cm; }
+
+.page.page-3 {
+  top: 59.2cm; }
 
 /**
 Site Header
@@ -98,7 +101,8 @@ Site Content
 /* flight list detail */
 .flight-list-wrapper {
   width: 100%;
-  margin-bottom: 25px; }
+  margin-bottom: 25px;
+  /*Adding Changes here*/ }
   .flight-list-wrapper .flight-title {
     text-align: center;
     position: relative;
@@ -122,6 +126,54 @@ Site Content
       border-top: 2px solid #666;
       position: absolute;
       margin-top: -10px; }
+  .flight-list-wrapper .flight-name {
+    width: 100%;
+    margin-bottom: 3mm; }
+    .flight-list-wrapper .flight-name .flight-icon {
+      text-align: center;
+      float: left;
+      width: 13%;
+      margin-right: 2%;
+      /* ini buat icon maskapai dan no pnr, width 12, margin 3*/ }
+      .flight-list-wrapper .flight-name .flight-icon .flight-airline {
+        width: 100%; }
+    .flight-list-wrapper .flight-name .flight-det {
+      width: 100%;
+      position: relative;
+      /* buat no penerbangan*/ }
+      .flight-list-wrapper .flight-name .flight-det .flight-number {
+        float: left;
+        width: 67%;
+        margin-right: 3%;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        font-size: 8pt;
+        font-style: italic; }
+      .flight-list-wrapper .flight-name .flight-det .flight-pnr {
+        position: absolute;
+        top: 0;
+        right: 0;
+        float: right;
+        width: 21%;
+        background: #38B3E3 url(/Assets/images/blue-bg.png) center center repeat;
+        border: 1px solid #38B3E3;
+        color: #fff;
+        padding: 1mm 0;
+        font-weight: bold;
+        text-align: center;
+        font-size: 8pt; }
+      .flight-list-wrapper .flight-name .flight-det .ticket-date {
+        width: 100%;
+        position: relative; }
+        .flight-list-wrapper .flight-name .flight-det .ticket-date .date-now {
+          float: left;
+          width: 50%;
+          margin-right: 3%; }
+        .flight-list-wrapper .flight-name .flight-det .ticket-date .line-date {
+          top: 40px;
+          right: 0;
+          position: absolute;
+          width: 62%; }
   .flight-list-wrapper .flight-list .flight {
     width: 100%;
     margin-bottom: 3mm; }
@@ -133,32 +185,60 @@ Site Content
     .flight-list-wrapper .flight-list .flight h3, .flight-list-wrapper .flight-list .flight h4 {
       margin: 0;
       padding: 0; }
-    .flight-list-wrapper .flight-list .flight .flight-icon {
-      text-align: center;
-      float: left;
-      width: 12%;
-      margin-right: 3%; }
-      .flight-list-wrapper .flight-list .flight .flight-icon .flight-airline {
-        width: 75%; }
-      .flight-list-wrapper .flight-list .flight .flight-icon .flight-pnr {
-        background: #38B3E3 url(/Assets/images/blue-bg.png) center center repeat;
-        border: 1px solid #38B3E3;
-        color: #fff;
-        padding: 1mm 0;
-        font-weight: bold;
+    .flight-list-wrapper .flight-list .flight .flight-name {
+      width: 100%;
+      margin-bottom: 3mm; }
+      .flight-list-wrapper .flight-list .flight .flight-name .flight-icon {
         text-align: center;
-        font-size: 6pt; }
+        float: left;
+        width: 13%;
+        margin-right: 2%;
+        /* ini buat icon maskapai dan no pnr, width 12, margin 3*/ }
+        .flight-list-wrapper .flight-list .flight .flight-name .flight-icon .flight-airline {
+          width: 100%; }
+      .flight-list-wrapper .flight-list .flight .flight-name .flight-det {
+        width: 100%;
+        position: relative;
+        /* buat no penerbangan*/ }
+        .flight-list-wrapper .flight-list .flight .flight-name .flight-det .flight-number {
+          float: left;
+          width: 67%;
+          margin-right: 3%;
+          margin-bottom: 10px;
+          padding-bottom: 5px;
+          font-size: 8pt;
+          font-style: italic; }
+        .flight-list-wrapper .flight-list .flight .flight-name .flight-det .flight-pnr {
+          position: absolute;
+          top: 0;
+          right: 0;
+          float: right;
+          width: 21%;
+          background: #38B3E3 url(/Assets/images/blue-bg.png) center center repeat;
+          border: 1px solid #38B3E3;
+          color: #fff;
+          padding: 1mm 0;
+          font-weight: bold;
+          text-align: center;
+          font-size: 8pt; }
+        .flight-list-wrapper .flight-list .flight .flight-name .flight-det .ticket-date {
+          width: 100%;
+          position: relative; }
+          .flight-list-wrapper .flight-list .flight .flight-name .flight-det .ticket-date .date-now {
+            float: left;
+            width: 50%;
+            margin-right: 3%; }
+          .flight-list-wrapper .flight-list .flight .flight-name .flight-det .ticket-date .line-date {
+            right: 0;
+            position: absolute;
+            width: 62%; }
     .flight-list-wrapper .flight-list .flight .flight-detail {
-      float: left;
-      width: 85%; }
-      .flight-list-wrapper .flight-list .flight .flight-detail .flight-number {
-        border-bottom: 1px dashed #666;
-        margin-bottom: 10px;
-        padding-bottom: 5px;
-        font-size: 8pt;
-        font-style: italic; }
+      float: right;
+      width: 85%;
+      margin-top: 10px; }
       .flight-list-wrapper .flight-list .flight .flight-detail .flight-route {
-        width: 100%; }
+        width: 100%;
+        /* ini membentuk table buat table detail penerbangan*/ }
         .flight-list-wrapper .flight-list .flight .flight-detail .flight-route:before, .flight-list-wrapper .flight-list .flight .flight-detail .flight-route:after {
           content: "";
           clear: both;
@@ -196,6 +276,8 @@ Site Content
         .flight-list-wrapper .flight-list .flight .flight-detail .flight-route .arrival-airline {
           width: 15%; }
   .flight-list-wrapper .flight-list .transit {
+    float: right;
+    width: 100%;
     border: 1px dashed #666;
     padding: 2mm 0;
     text-align: center;
@@ -223,12 +305,34 @@ Site Content
     width: 20%;
     text-align: center; }
 
+.flight-title2 {
+  text-align: center;
+  position: relative;
+  font-size: 12pt;
+  font-weight: bold;
+  color: #666;
+  -webkit-print-color-adjust: exact; }
+  .flight-title2 > span {
+    background: url(/Assets/images/white-bg.png) top center repeat #fff;
+    z-index: 2;
+    position: relative;
+    padding: 0 20px;
+    overflow: hidden;
+    z-index: 2;
+    -webkit-print-color-adjust: exact; }
+  .flight-title2:after {
+    content: "";
+    display: block;
+    clear: both;
+    width: 100%;
+    border-top: 2px solid #666;
+    position: absolute;
+    margin-top: -10px; }
+
 /**
 Site Footer
 */
 .page-footer {
-  background: #fff;
-  color: #fff;
   padding: 20px;
   position: absolute;
   bottom: 0;

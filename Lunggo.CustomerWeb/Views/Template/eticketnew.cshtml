@@ -1,0 +1,352 @@
+﻿@{
+    Layout = "";
+}
+@using Lunggo.Framework.Config
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/ico" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/favico.ico")" />
+
+    <title>Travorama - eTicket</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/bootstrap.min.css")">
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")">
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/neweticket.css")">
+
+</head>
+<body class="eticket">
+    <div class="page">
+        <header class="page-header">
+            <div class="row">
+                <div class="col-xs-4">
+                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/logo-color.png")" alt="Travorama" />
+                </div>
+                <div class="col-xs-8">
+                    <div class="page-header-right">
+                        <div class="page-title"><h3>E-TICKET</h3></div>
+                        <div class="page-help">
+                            <p>Any Problem? Contact Us :</p>
+                            <p><span>E. </span>cs@travorama.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header><!-- .page-header -->
+        <section class="page-content">
+
+            <div class="flight-list-wrapper departure-flight">
+
+                <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
+                <div class="flight-list">
+                    <div class="flight">
+                        <div class="flight-name">
+                            <div class="flight-icon">
+                                <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/airlines/AK.png")" alt="Icon" class="flight-airline" />
+                            </div>
+                            <div class="flight-det">
+                                <div class="flight-number"><h4 style="margin-bottom:1px;"><b>QZ 387</b></h4><p><span>Subclass : Economy</span></p></div>
+                                <div class="flight-pnr">Kode Booking [PNR]<p style="font-size:medium"> 2134</p></div>
+                                <div class="ticket-date">
+                                    <div class="date-now">Jumat,3 July 2015</div>
+                                    <div class="line-date"><hr style="border:1px solid #8c8b8b;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flight-detail">
+                            <div class="flight-route">
+                                <div class="departure-airline">
+                                    <h3 style="text-align:left;">Soe-Hatta</h3>
+                                    <h3 style="text-align:left;">Jakarta</h3>
+                                    <h3 style="text-align:left;">Soekarno-Hatta</h3>
+                                </div>
+                                <div class="departure-date">
+                                    <h3>22:15</h3>
+                                    <h3>2 July 2015</h3>
+                                </div>
+                                <div class="duration">
+                                    <h3>Duration - 5h 42m</h3>
+                                </div>
+                                <div class="arrival-date">
+                                    <h3>23.50</h3>
+                                    <h3>2 July 2015</h3>
+                                </div>
+                                <div class="arrival-airline">
+                                    <h3 style="text-align:right;">KNO</h3>
+                                    <h3 style="text-align:right;">Medan</h3>
+                                    <h3 style="text-align:right;">Kualanamu</h3>
+                                </div>
+                            </div><!-- .flight-route -->
+                        </div><!-- .flight-detail -->
+                    </div><!-- .flight -->
+                    <div class="transit">
+                        <p><b>Transit Duration :</b> 2h 5m</p>
+                    </div>
+                    <div class="flight">
+                        <div class="flight-name">
+                            <div class="flight-icon">
+                                <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/airlines/AK.png")" alt="Icon" class="flight-airline" />
+                            </div>
+                            <div class="flight-det">
+                                <div class="flight-number"><h4 style="margin-bottom:1px;"><b>QZ 387</b></h4><p><span>Subclass : Economy</span></p></div>
+                                <!-- <div class="flight-pnr">Kode Booking [PNR]<p style="font-size:medium"> 2134</p></div> -->
+                                <div class="ticket-date">
+                                    <div class="date-now">Jumat,3 July 2015</div>
+                                    <div class="line-date"><hr style="border:1px solid #8c8b8b;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flight-detail">
+                            <div class="flight-route">
+                                <div class="departure-airline">
+                                    <h3 style="text-align:left;">KNO</h3>
+                                    <h3 style="text-align:left;">Medan</h3>
+                                    <h3 style="text-align:left;">Kualanamu</h3>
+                                </div>
+                                <div class="departure-date">
+                                    <h3>22:15</h3>
+                                    <h3>2 July 2015</h3>
+                                </div>
+                                <div class="duration">
+                                    <h3>Duration - 5h 42m</h3>
+                                </div>
+                                <div class="arrival-date">
+                                    <h3>23.50</h3>
+                                    <h3>2 July 2015</h3>
+                                </div>
+                                <div class="arrival-airline">
+                                    <h3 style="text-align:right;">HUS</h3>
+                                    <h3 style="text-align:right;">Bandung</h3>
+                                    <h3 style="text-align:right;">Husein</h3>
+                                </div>
+                            </div><!-- .flight-route -->
+                        </div><!-- .flight-detail -->
+                    </div>
+                    <!--Create Transit here-->
+                </div>
+
+            </div><!-- .flight.flight-list.departure-flight -->
+
+            <table class="passenger-wrapper">
+                <thead>
+                    <tr>
+                        <th class="no">NO</th>
+                        <th class="name">NAMA PENUMPANG</th>
+                        <th class="type">JENIS TIKET</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="no">1234</td>
+                        <td class="name">Developer</td>
+                        <td class="type">Dewasa</td>
+                    </tr>
+                    <tr>
+                        <td class="no">5678</td>
+                        <td class="name">Developer2</td>
+                        <td class="type">Dewasa</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="flight-title2" style="text-align:center"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pulang.jpg")" alt="Penerbangan Pulang" /></span></h2>
+            <table width="100%">
+                <tr style="margin-bottom:1px;">
+                    <td width="10%" rowspan="2"></td>
+                    <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/showticket.png")" alt="Show Eticket" width="150" height="150" /></td>
+                    <td width="10%" rowspan="2"></td>
+                    <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/checkin.png")" alt="Check In" width="150" height="150" /></td>
+                    <td width="10%" rowspan="2"></td>
+                </tr>
+                <tr>
+                    <td width="35%" align="center">Tunjukkan <b>e-ticket</b> dan <b>identitas</b><br /> para penumpang saat check-in</td>
+                    <td width="35%" align="center">Check-in <b>paling lambat 90 menit</b><br />sebelum keberangkatan</td>
+            </table>
+        </section><!-- .page-content -->
+        <footer class="page-footer">
+            <hr style="border-top: dotted 2px;" />
+            <table width="100%" ;border-collapse:separate;
+                   border-spacing:5em;>
+                <tr>
+                    <td rowspan="2" width="78%" style="margin-right:3px;">Lorem Ipsum<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vulputate lectus sapien, at blandit justo cursus id. Aliquam at accumsan libero,</p></td>
+                    <td width="20%"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/appStore.png")" alt="App Store" /></td>
+                </tr>
+                <tr>
+                    <td width="20%" style="padding-top:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/googlePlay.png")" alt="Google Play" /></td>
+                </tr>
+            </table>
+        </footer>
+    </div><!-- .page -->
+
+    <div class="page page-2">
+        <header class="page-header">
+            <div class="row">
+                <div class="col-xs-4">
+                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/logo-color.png")" alt="Travorama" />
+                </div>
+                <div class="col-xs-8">
+                    <div class="page-header-right">
+                        <div class="page-title"><h3>E-TICKET</h3></div>
+                        <div class="page-help">
+                            <p>Any Problem? Contact Us :</p>
+                            <p><span>E. </span>cs@travorama.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header><!-- .page-header -->
+        <section class="page-content">
+
+            <div class="flight-list-wrapper departure-flight">
+
+                <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
+                <div class="flight-list">
+                    <div class="flight">
+                        <div class="flight-name">
+                            <div class="flight-icon">
+                                <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/airlines/AK.png")" alt="Icon" class="flight-airline" />
+                            </div>
+                            <div class="flight-det">
+                                <div class="flight-number"><h4 style="margin-bottom:1px;"><b>QZ 387</b></h4><p><span>Subclass : Economy</span></p></div>
+                                <div class="flight-pnr">Kode Booking [PNR]<p style="font-size:medium"> 2134</p></div>
+                                <div class="ticket-date">
+                                    <div class="date-now">Jumat,3 July 2015</div>
+                                    <div class="line-date"><hr style="border:1px solid #8c8b8b;" ></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flight-detail">
+                            <div class="flight-route">
+                                <div class="departure-airline">
+                                    <h3 style="text-align:left;">Soe-Hatta</h3>
+                                    <h3 style="text-align:left;">Jakarta</h3>
+                                    <h3 style="text-align:left;">Soekarno-Hatta</h3>
+                                </div>
+                                <div class="departure-date">
+                                    <h3>22:15</h3>
+                                    <h3>2 July 2015</h3>
+                                </div>
+                                <div class="duration">
+                                    <h3>Duration - 5h 42m</h3>
+                                </div>
+                                <div class="arrival-date">
+                                    <h3>23.50</h3>
+                                    <h3>2 July 2015</h3>
+                                </div>
+                                <div class="arrival-airline">
+                                    <h3 style="text-align:right;">KNO</h3>
+                                    <h3 style="text-align:right;">Medan</h3>
+                                    <h3 style="text-align:right;">Kualanamu</h3>
+                                </div>
+                            </div><!-- .flight-route -->
+                        </div><!-- .flight-detail -->
+                    </div><!-- .flight -->
+                    <div class="transit">
+                        <p><b>Transit Duration :</b> 2h 5m</p>
+                    </div>
+                    <div class="flight">
+                        <div class="flight-name">
+                            <div class="flight-icon">
+                                <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/airlines/AK.png")" alt="Icon" class="flight-airline" />
+                            </div>
+                            <div class="flight-det">
+                                <div class="flight-number"><h4 style="margin-bottom:1px;"><b>QZ 387</b></h4><p><span>Subclass : Economy</span></p></div>
+                                <!-- <div class="flight-pnr">Kode Booking [PNR]<p style="font-size:medium"> 2134</p></div> -->
+                                <div class="ticket-date">
+                                    <div class="date-now">Jumat,3 July 2015</div>
+                                    <div class="line-date"><hr style="border:1px solid #8c8b8b;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flight-detail">
+                            <div class="flight-route">
+                                <div class="departure-airline">
+                                    <h3 style="text-align:left;">KNO</h3>
+                                    <h3 style="text-align:left;">Medan</h3>
+                                    <h3 style="text-align:left;">Kualanamu</h3>
+                                </div>
+                                <div class="departure-date">
+                                    <h3>22:15</h3>
+                                    <h3>2 July 2015</h3>
+                                </div>
+                                <div class="duration">
+                                    <h3>Duration - 5h 42m</h3>
+                                </div>
+                                <div class="arrival-date">
+                                    <h3>23.50</h3>
+                                    <h3>2 July 2015</h3>
+                                </div>
+                                <div class="arrival-airline">
+                                    <h3 style="text-align:right;">HUS</h3>
+                                    <h3 style="text-align:right;">Bandung</h3>
+                                    <h3 style="text-align:right;">Husein</h3>
+                                </div>
+                            </div><!-- .flight-route -->
+                        </div><!-- .flight-detail -->
+                    </div>
+                    <!--Create Transit here-->
+                </div>
+
+            </div><!-- .flight.flight-list.departure-flight -->
+
+            <table class="passenger-wrapper">
+                <thead>
+                    <tr>
+                        <th class="no">NO</th>
+                        <th class="name">NAMA PENUMPANG</th>
+                        <th class="type">JENIS TIKET</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="no">1234</td>
+                        <td class="name">Developer</td>
+                        <td class="type">Dewasa</td>
+                    </tr>
+                    <tr>
+                        <td class="no">5678</td>
+                        <td class="name">Developer2</td>
+                        <td class="type">Dewasa</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="flight-title2" style="text-align:center"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pulang.jpg")" alt="Penerbangan Pulang" /></span></h2>
+            <table width="100%">
+                <tr style="margin-bottom:1px;">
+                    <td width="10%" rowspan="2"></td>
+                    <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/showticket.png")" alt="Show Eticket" width="150" height="150" /></td>
+                    <td width="10%" rowspan="2"></td>
+                    <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/checkin.png")" alt="Check In" width="150" height="150" /></td>
+                    <td width="10%" rowspan="2"></td>
+                </tr>
+                <tr>
+                    <td width="35%" align="center">Tunjukkan <b>e-ticket</b> dan <b>identitas</b><br /> para penumpang saat check-in</td>
+                    <td width="35%" align="center">Check-in <b>paling lambat 90 menit</b><br />sebelum keberangkatan</td>
+            </table>
+        </section><!-- .page-content -->
+        <footer class="page-footer">
+            <hr style="border-top: dotted 2px;" />
+            <table width="100%" ;border-collapse:separate;
+                   border-spacing:5em;>
+                <tr>
+                    <td rowspan="2" width="78%" style="margin-right:3px;">Lorem Ipsum<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vulputate lectus sapien, at blandit justo cursus id. Aliquam at accumsan libero,</p></td>
+                    <td width="20%"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/appStore.png")" alt="App Store" /></td>
+                </tr>
+                <tr>
+                    <td width="20%" style="padding-top:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/googlePlay.png")" alt="Google Play" /></td>
+                </tr>
+            </table>
+        </footer>
+    </div><!-- .page 2 Buat Tiket Kembali-->
+
+    <!-- ****************************** -->
+    <!-- javascripts -->
+    <script src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/js/jquery.min.js")"></script>
+
+</body>
+</html>
