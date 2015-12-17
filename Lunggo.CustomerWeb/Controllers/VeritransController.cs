@@ -64,7 +64,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 var flight = FlightService.GetInstance();
                 flight.UpdateFlightPayment(rsvNo, new PaymentInfo {Status = PaymentStatus.Verifying});
-                TempData["AllowThisThankyouPage"] = response.order_id;
+                TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Flight", new {RsvNo = rsvNo});
             }
             else
@@ -78,7 +78,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 var flight = FlightService.GetInstance();
                 flight.UpdateFlightPayment(rsvNo, new PaymentInfo { Status = PaymentStatus.Expired });
-                TempData["AllowThisThankyouPage"] = response.order_id;
+                TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
             }
             else
@@ -92,7 +92,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 var flight = FlightService.GetInstance();
                 flight.UpdateFlightPayment(rsvNo, new PaymentInfo { Status = PaymentStatus.Expired });
-                TempData["AllowThisThankyouPage"] = response.order_id;
+                TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
             }
             else

@@ -57,6 +57,21 @@
 
     </div>
 }
+else if (Model.Payment.Status == PaymentStatus.Denied)
+{
+    <div>
+
+        <h2 class="section-title stripe text-center">PEMESANAN <span>GAGAL</span></h2>
+
+        <div class="container">
+            <p>Mohon maaf, pesanan no. @Model.RsvNo telah ditolak. Silahkan membuat pesanan baru.</p>
+        </div>
+        <div class="container text-center">
+            <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
+        </div>
+
+    </div>
+}
 else
 {
     <div>
