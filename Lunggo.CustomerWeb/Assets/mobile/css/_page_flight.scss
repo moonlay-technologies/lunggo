@@ -159,6 +159,7 @@
                 .flight-info:before {background-position:-22px 0;}
             }
         }
+        .flight-notice {background:#d70000;}
         .flight-wrapper {
             .flight {position:relative;
                 &:before, &:after {@include clearfix();}

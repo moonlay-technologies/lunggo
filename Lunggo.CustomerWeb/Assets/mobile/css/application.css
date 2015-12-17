@@ -588,6 +588,8 @@ body {
         font-weight: bold; }
     .overlay--flight-detail .overlay__content .flight-title.flight-title--return .flight-info:before {
       background-position: -22px 0; }
+  .overlay--flight-detail .overlay__content .flight-notice {
+    background: #d70000; }
   .overlay--flight-detail .overlay__content .flight-wrapper .flight {
     position: relative; }
     .overlay--flight-detail .overlay__content .flight-wrapper .flight:before, .overlay--flight-detail .overlay__content .flight-wrapper .flight:after {
