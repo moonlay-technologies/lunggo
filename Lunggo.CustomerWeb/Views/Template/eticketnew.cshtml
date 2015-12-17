@@ -41,7 +41,7 @@
 
             <div class="flight-list-wrapper departure-flight">
 
-                <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
+                <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/flight-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
                 <div class="flight-list">
                     <div class="flight">
                         <div class="flight-name">
@@ -60,9 +60,10 @@
                         <div class="flight-detail">
                             <div class="flight-route">
                                 <div class="departure-airline">
-                                    <h3 style="text-align:left;">Soe-Hatta</h3>
+                                    <h3 style="text-align:left;">CGK</h3>
                                     <h3 style="text-align:left;">Jakarta</h3>
                                     <h3 style="text-align:left;">Soekarno-Hatta</h3>
+                                    <h3 style="text-align:left;">Terminal: Domestic</h3>
                                 </div>
                                 <div class="departure-date">
                                     <h3>22:15</h3>
@@ -79,6 +80,7 @@
                                     <h3 style="text-align:right;">KNO</h3>
                                     <h3 style="text-align:right;">Medan</h3>
                                     <h3 style="text-align:right;">Kualanamu</h3>
+                                    <h3 style="text-align:right;">Terminal: Domestic</h3>
                                 </div>
                             </div><!-- .flight-route -->
                         </div><!-- .flight-detail -->
@@ -93,7 +95,7 @@
                             </div>
                             <div class="flight-det">
                                 <div class="flight-number"><h4 style="margin-bottom:1px;"><b>QZ 387</b></h4><p><span>Subclass : Economy</span></p></div>
-                                <!-- <div class="flight-pnr">Kode Booking [PNR]<p style="font-size:medium"> 2134</p></div> -->
+                                <div class="flight-pnr">Kode Booking [PNR]<p style="font-size:medium"> 2134</p></div>
                                 <div class="ticket-date">
                                     <div class="date-now">Jumat,3 July 2015</div>
                                     <div class="line-date"><hr style="border:1px solid #8c8b8b;"></div>
@@ -106,6 +108,7 @@
                                     <h3 style="text-align:left;">KNO</h3>
                                     <h3 style="text-align:left;">Medan</h3>
                                     <h3 style="text-align:left;">Kualanamu</h3>
+                                    <h3 style="text-align:left;">Terminal : 4</h3>
                                 </div>
                                 <div class="departure-date">
                                     <h3>22:15</h3>
@@ -122,6 +125,7 @@
                                     <h3 style="text-align:right;">HUS</h3>
                                     <h3 style="text-align:right;">Bandung</h3>
                                     <h3 style="text-align:right;">Husein</h3>
+                                    <h3 style="text-align:right;">Terminal : Domestic</h3>
                                 </div>
                             </div><!-- .flight-route -->
                         </div><!-- .flight-detail -->
@@ -153,32 +157,31 @@
                 </tbody>
             </table>
 
-            <h2 class="flight-title2" style="text-align:center"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pulang.jpg")" alt="Penerbangan Pulang" /></span></h2>
+            <h2 class="flight-title2" style="text-align:center"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/catatan.jpg")" alt="Penerbangan Pulang" /></span></h2>
             <table width="100%">
                 <tr style="margin-bottom:1px;">
                     <td width="10%" rowspan="2"></td>
-                    <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/showticket.png")" alt="Show Eticket" width="150" height="150" /></td>
+                    <td width="35%" align="center" ><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/show.png")" alt="Show Eticket" width="140" height="140" /></td>
                     <td width="10%" rowspan="2"></td>
-                    <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/checkin.png")" alt="Check In" width="150" height="150" /></td>
+                    <td width="35%" align="center"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/check.png")" alt="Check In" width="140" height="140" /></td>
                     <td width="10%" rowspan="2"></td>
                 </tr>
                 <tr>
-                    <td width="35%" align="center">Tunjukkan <b>e-ticket</b> dan <b>identitas</b><br /> para penumpang saat check-in</td>
-                    <td width="35%" align="center">Check-in <b>paling lambat 90 menit</b><br />sebelum keberangkatan</td>
+                    <td width="35%" align="center" style="padding-top:1em;">Tunjukkan <b>e-ticket</b> dan <b>identitas</b><br /> para penumpang saat check-in</td>
+                    <td width="35%" align="center" style="padding-top:1em;">Check-in <b>paling lambat 90 menit</b><br />sebelum keberangkatan</td>
             </table>
         </section><!-- .page-content -->
         <footer class="page-footer">
-            <hr style="border-top: dotted 2px;" />
-            <table width="100%" ;border-collapse:separate;
-                   border-spacing:5em;>
+            <hr style="border-top: dotted 3px;" />
+            <p style="text-align:center;font-size:12pt; margin-bottom: 20px;"><b>Follow Us</b> on</p>
+            <table align="center">
                 <tr>
-                    <td rowspan="2" width="78%" style="margin-right:3px;">Lorem Ipsum<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vulputate lectus sapien, at blandit justo cursus id. Aliquam at accumsan libero,</p></td>
-                    <td width="20%"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/appStore.png")" alt="App Store" /></td>
-                </tr>
-                <tr>
-                    <td width="20%" style="padding-top:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/googlePlay.png")" alt="Google Play" /></td>
+                    <td style="padding-right:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/social-facebook.png")" alt="Facebook" /></td>
+                    <td style="padding-right:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/social-twitter.png")" alt="Twitter" /></td>
+                    <td style="padding-right:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/social-instagram.png")" alt="Instagram" /></td>
                 </tr>
             </table>
+            <p style="text-align:center; margin-top: 20px;">Copyright 2015 Travel Madezy International. All Rights Reserved</p>
         </footer>
     </div><!-- .page -->
 
@@ -203,7 +206,7 @@
 
             <div class="flight-list-wrapper departure-flight">
 
-                <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
+                <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/flight-kembali.jpg")" alt="PENERBANGAN KEMBALI" /></span></h2>
                 <div class="flight-list">
                     <div class="flight">
                         <div class="flight-name">
@@ -222,9 +225,10 @@
                         <div class="flight-detail">
                             <div class="flight-route">
                                 <div class="departure-airline">
-                                    <h3 style="text-align:left;">Soe-Hatta</h3>
+                                    <h3 style="text-align:left;">CGK</h3>
                                     <h3 style="text-align:left;">Jakarta</h3>
                                     <h3 style="text-align:left;">Soekarno-Hatta</h3>
+                                    <h3 style="text-align:left;">Terminal : Domestic</h3>
                                 </div>
                                 <div class="departure-date">
                                     <h3>22:15</h3>
@@ -241,6 +245,7 @@
                                     <h3 style="text-align:right;">KNO</h3>
                                     <h3 style="text-align:right;">Medan</h3>
                                     <h3 style="text-align:right;">Kualanamu</h3>
+                                    <h3 style="text-align:right;">Terminal: 3</h3>
                                 </div>
                             </div><!-- .flight-route -->
                         </div><!-- .flight-detail -->
@@ -268,6 +273,7 @@
                                     <h3 style="text-align:left;">KNO</h3>
                                     <h3 style="text-align:left;">Medan</h3>
                                     <h3 style="text-align:left;">Kualanamu</h3>
+                                    <h3 style="text-align:left;">Terminal : Domestic</h3>
                                 </div>
                                 <div class="departure-date">
                                     <h3>22:15</h3>
@@ -315,22 +321,22 @@
                 </tbody>
             </table>
 
-            <h2 class="flight-title2" style="text-align:center"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pulang.jpg")" alt="Penerbangan Pulang" /></span></h2>
+            <h2 class="flight-title2" style="text-align:center"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/catatan.jpg")" alt="Penerbangan Pulang" /></span></h2>
             <table width="100%">
                 <tr style="margin-bottom:1px;">
                     <td width="10%" rowspan="2"></td>
-                    <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/showticket.png")" alt="Show Eticket" width="150" height="150" /></td>
+                    <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/show.png")" alt="Show Eticket" width="140" height="140" /></td>
                     <td width="10%" rowspan="2"></td>
-                    <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/checkin.png")" alt="Check In" width="150" height="150" /></td>
+                    <td width="35%" align="center" style="margin-bottom:0px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/check.png")" alt="Check In" width="140" height="140" /></td>
                     <td width="10%" rowspan="2"></td>
                 </tr>
                 <tr>
-                    <td width="35%" align="center">Tunjukkan <b>e-ticket</b> dan <b>identitas</b><br /> para penumpang saat check-in</td>
-                    <td width="35%" align="center">Check-in <b>paling lambat 90 menit</b><br />sebelum keberangkatan</td>
+                    <td width="35%" align="center" style="padding-top:1em;">Tunjukkan <b>e-ticket</b> dan <b>identitas</b><br /> para penumpang saat check-in</td>
+                    <td width="35%" align="center" style="padding-top:1em;">Check-in <b>paling lambat 90 menit</b><br />sebelum keberangkatan</td>
             </table>
         </section><!-- .page-content -->
         <footer class="page-footer">
-            <hr style="border-top: dotted 2px;" />
+            <hr style="border-top: dotted 3px;" />
             <table width="100%" ;border-collapse:separate;
                    border-spacing:5em;>
                 <tr>
