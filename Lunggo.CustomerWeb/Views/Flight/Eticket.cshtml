@@ -3,6 +3,19 @@
     Layout = "~/Views/Shared/travorama20/_Layout20150929.cshtml";
 }
 
+@section PageJS {
+    <script>
+        $(document).ready(function() {
+            
+            // refresh every 5 second
+            setTimeout(function () {
+                window.location.reload();
+            }, 5000);
+
+        });
+    </script>
+}
+
 <section class="section-eticket">
     
     <h1 class="text-center section-title stripe"><span>ETICKET</span></h1>
