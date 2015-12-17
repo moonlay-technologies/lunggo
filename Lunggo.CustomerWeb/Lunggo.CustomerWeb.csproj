@@ -726,6 +726,8 @@
     <Content Include="Assets\images\campaign\yogyakarta-text.png" />
     <Content Include="Assets\images\campaign\yogyakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta.jpg" />
+    <Content Include="Assets\images\catatan.jpg" />
+    <Content Include="Assets\images\check.png" />
     <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\choose-travorama.png" />
     <Content Include="Assets\images\cimb-clicks.jpg" />
@@ -781,8 +783,10 @@
     <Content Include="Assets\images\flight-facilities-sprite.png" />
     <Content Include="Assets\images\flight-filter-sprite.png" />
     <Content Include="Assets\images\flight-filter-title-sprite.png" />
+    <Content Include="Assets\images\flight-kembali.jpg" />
     <Content Include="Assets\images\flight-notice-arrow.png" />
     <Content Include="Assets\images\flight-page-slider.jpg" />
+    <Content Include="Assets\images\flight-pergi.jpg" />
     <Content Include="Assets\images\flight-review-title-bg.png" />
     <Content Include="Assets\images\flight-review-title-sprite.png" />
     <Content Include="Assets\images\flight-segment-separator.png" />
@@ -901,6 +905,7 @@
     <Content Include="Assets\images\section-arrow-left.png" />
     <Content Include="Assets\images\section-arrow-right.png" />
     <Content Include="Assets\images\select-arrow.png" />
+    <Content Include="Assets\images\show.png" />
     <Content Include="Assets\images\slider-arrow-left.png" />
     <Content Include="Assets\images\slider-arrow-right.png" />
     <Content Include="Assets\images\slider\slider-happy_hew_year.jpg" />
@@ -1188,7 +1193,6 @@
     <None Include="Properties\PublishProfiles\dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-qa-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
