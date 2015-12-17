@@ -143,19 +143,24 @@ body {
           top: 8px;
           background-repeat: no-repeat;
           background-image: url(/Assets/mobile/images/burger-sprite.png); }
-      .burger-content .burger-content__body ul li.login, .burger-content .burger-content__body ul li.register {
+      .burger-content .burger-content__body ul li.login, .burger-content .burger-content__body ul li.register, .burger-content .burger-content__body ul li.account {
         background: #1daee4;
         color: #fff; }
-        .burger-content .burger-content__body ul li.login a, .burger-content .burger-content__body ul li.register a {
+        .burger-content .burger-content__body ul li.login a, .burger-content .burger-content__body ul li.register a, .burger-content .burger-content__body ul li.account a {
           color: #fff; }
       .burger-content .burger-content__body ul li.login a:before {
-        background-position: 0; }
+        background-position: 0 0; }
       .burger-content .burger-content__body ul li.register a:before {
         background-position: -30px 0; }
       .burger-content .burger-content__body ul li.account {
-        background: #1daee4; }
-        .burger-content .burger-content__body ul li.account a {
-          color: #fff; }
+        padding-top: 10px;
+        padding-bottom: 10px; }
+        .burger-content .burger-content__body ul li.account a:before {
+          width: 45px;
+          height: 45px;
+          background-position: -300px 0;
+          top: 0;
+          margin-left: -50px; }
       .burger-content .burger-content__body ul li.home a:before {
         background-position: -60px 0; }
       .burger-content .burger-content__body ul li.order-check a:before {

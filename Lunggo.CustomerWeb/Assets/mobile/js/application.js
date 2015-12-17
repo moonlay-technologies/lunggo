@@ -9,7 +9,7 @@ if (typeof (angular) == 'object') {
         $rootScope.PageConfig = {
             
             // **********
-            // variables
+            // General variables
             Loaded: true,
             Busy: false,
 
@@ -18,9 +18,10 @@ if (typeof (angular) == 'object') {
 
             // body no scroll
             BodyNoScroll: false,
-            SetNoScroll: function (state) {
-
-            },
+            SetBodyNoScroll: function (state) {
+                $rootScope.PageConfig.BodyNoScroll = state;
+                
+            }, // body no scroll end
 
             // toggle burger menu
             BurgerShown: false,
@@ -28,16 +29,36 @@ if (typeof (angular) == 'object') {
 
                 if ($rootScope.PageConfig.BurgerShown == false) {
                     $rootScope.PageConfig.BurgerShown = true;
-                    $rootScope.PageConfig.BodyNoScroll = true;
+                    $rootScope.PageConfig.SetBodyNoScroll(true);
                 } else {
                     $rootScope.PageConfig.BurgerShown = false;
-                    $rootScope.PageConfig.BodyNoScroll = false;
+                    $rootScope.PageConfig.SetBodyNoScroll(false);
                 }
 
-            }
+            }, // toggle burger menu end
 
-        };
 
+            // page overlay
+            Overlay: '',
+            SetOverlay: function (overlay) {
+                if (overlay) {
+                    $rootScope.PageConfig.Overlay = overlay;
+                } else {
+                    $rootScope.PageConfig.Overlay = '';
+                }
+            }, // page overlay end
+
+            // page popup
+            Popup: '',
+            SetPopup: function (popup) {
+                if (popup) {
+                    $rootScope.PageConfig.Popup = popup;
+                } else {
+                    $rootScope.PageConfig.Popup = '';
+                }
+            }, // page popup end
+
+        }; // $rootScope.PageConfig
 
     });
 
