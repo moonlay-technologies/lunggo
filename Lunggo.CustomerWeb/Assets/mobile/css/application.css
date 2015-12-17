@@ -368,6 +368,11 @@ body {
   .page.page-flight .flight-sort-filter .flight-sort-filter-action a + a {
     border-left: 1px solid #8f8f8f; }
 
+.page.page-flight .flight-notice {
+  background: #ff9a24;
+  color: #fff;
+  padding: 5px; }
+
 .page.page-flight .flight-selection {
   background: #e5e3e4;
   position: relative;

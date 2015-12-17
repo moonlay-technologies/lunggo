@@ -124,6 +124,10 @@
             <a ng-click="SetOverlay('flight-sort')">SORT</a>
         </div>
     </section><!-- .flight-sort -->
+    
+    <section class="flight-notice">
+        <p>Tampilan harga untuk <b>{{ FlightConfig[0].FlightRequest.AdultCount + FlightConfig[0].FlightRequest.ChildCount + FlightConfig[0].FlightRequest.InfantCount | number }} orang</b><br/>({{FlightConfig[0].FlightRequest.AdultCount}} Dewasa<span ng-if="FlightConfig[0].FlightRequest.ChildCount > 0">, {{FlightConfig[0].FlightRequest.ChildCount}} Anak</span><span ng-if="FlightConfig[0].FlightConfig.InfantCount">, {{FlightConfig[0].FlightRequest.InfantCount}} Bayi</span>)</p>
+    </section><!-- .flight-notice -->
 
     <section class="flight-list">
 

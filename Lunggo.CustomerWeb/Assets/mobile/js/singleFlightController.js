@@ -11,8 +11,6 @@
 
     $scope.PageConfig = $rootScope.PageConfig;
 
-    console.log($scope.PageConfig);
-
     // set additional variables for Flight Page
     $scope.PageConfig.ActiveSection = 'departure';
     $scope.PageConfig.ActiveOverlay = '';
