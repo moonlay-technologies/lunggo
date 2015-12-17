@@ -71,6 +71,71 @@ body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; p
     }
 }
 
+.burger-content {position:fixed; height:100%; width:300px; top:0; left:-300px; z-index:9999; background:#fff; overflow:auto; @include transition(all 0.5s);
+    // if active
+    &.active {left:0;
+        .burger-content__header {left:0;}
+    }
+    .burger-content__header {background:#028ec3; color:#fff; position:fixed; width:300px; height:$header-height; top:0; left:-300px; z-index:2; @include transition(all 0.5s);
+        ul {list-style:none; margin:0; padding:10px 20px;
+            li {display:inline-block; width:70px; padding-top:10px; padding-bottom:10px; padding-left:15px;
+                a {color:#fff; font-weight:600;}
+                // specific class
+                &.language {
+                    img {width:22px;}
+                }
+                &.currency {border-left:1px solid $color-main-blue; padding-left:30px;}
+            }
+        }
+        .burger-content__close {color:#fff; position:absolute; right:15px; top:12px; font-size:24px; font-weight:600;}
+    }
+    .burger-content__body {padding-top:$header-height;
+        ul {list-style:none; margin:0; padding:0;
+            li {
+                a {color:$color-main-blue; padding:15px 0px; padding-left:70px; display:block; font-weight:600; position:relative;
+                    &:before {content:""; width:30px; height:30px; display:block; position:absolute; margin-left:-40px; top:8px; background-repeat:no-repeat; background-image:url(/Assets/mobile/images/burger-sprite.png);}
+                }
+                // specific class
+                &.login, &.register, &.account {background:$color-main-blue; color:#fff;
+                    a {color:#fff;}
+                }
+                &.login {
+                    a:before {background-position:0 0;}
+                }
+                &.register {
+                    a:before {background-position:-30px 0;}
+                }
+                &.account {padding-top:10px; padding-bottom:10px;
+                    a:before {width:45px; height:45px; background-position:-300px 0; top:0; margin-left:-50px;}
+                }
+                &.home {
+                    a:before {background-position:-60px 0;}
+                }
+                &.order-check {
+                    a:before {background-position:-90px 0;}
+                }
+                &.contact {
+                    a:before {background-position:-120px 0;}
+                }
+                &.newsletter {
+                    a:before {background-position:-150px 0;}
+                }
+                &.faq {
+                    a:before {background-position:-180px 0;}
+                }
+                &.howto-order {
+                    a:before {background-position:-210px 0;}
+                }
+                &.about {
+                    a:before {background-position:-240px 0;}
+                }
+                // if active
+                &+li {border-top:1px solid #8fd6f2;}
+            }
+        }
+    }
+}
+
 // site content
 .site-content {min-height:300px;}
 
