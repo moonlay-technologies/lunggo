@@ -301,11 +301,6 @@
     <Compile Include="WebSrc\UW600\UW620\UW620OrderHistoryController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Dummy.xml" />
-    <Content Include="App_Data\DummyDB.mdf" />
-    <Content Include="App_Data\DummyDB_log.ldf">
-      <DependentUpon>DummyDB.mdf</DependentUpon>
-    </Content>
     <Content Include="Assets\bootstrap\bootstrap.css">
       <DependentUpon>bootstrap.scss</DependentUpon>
     </Content>

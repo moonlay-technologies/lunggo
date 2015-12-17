@@ -53,7 +53,7 @@
                             <header>
                                 <h4>
                                     <b>BUYER INFO</b>
-                                    <a href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" @(Model.IsIssued ? "" : "disabled")>@Html.I18NString("CW00198")</a>
+                                    <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" target="_blank" @(Model.IsIssued ? "" : "disabled")>@Html.I18NString("CW00198")</button>
                                     @if (Model.Payment.Method == PaymentMethod.BankTransfer && Model.Payment.Status == PaymentStatus.Pending)
                                     {
                                         <a style="margin-right: 6px;" href="@Url.Action("Confirmation", "Flight", new {rsvNo = Model.RsvNo})" target="_blank" class="pull-right btn btn-yellow">Confirm</a>
