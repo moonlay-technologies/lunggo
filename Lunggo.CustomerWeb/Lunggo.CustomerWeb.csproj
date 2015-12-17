@@ -731,7 +731,6 @@
     <Content Include="Assets\images\campaign\yogyakarta-text.png" />
     <Content Include="Assets\images\campaign\yogyakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta.jpg" />
-    <Content Include="Assets\images\checkin.png" />
     <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\choose-travorama.png" />
     <Content Include="Assets\images\cimb-clicks.jpg" />
@@ -907,7 +906,6 @@
     <Content Include="Assets\images\section-arrow-left.png" />
     <Content Include="Assets\images\section-arrow-right.png" />
     <Content Include="Assets\images\select-arrow.png" />
-    <Content Include="Assets\images\showticket.png" />
     <Content Include="Assets\images\slider-arrow-left.png" />
     <Content Include="Assets\images\slider-arrow-right.png" />
     <Content Include="Assets\images\slider\slider-happy_hew_year.jpg" />
@@ -1056,6 +1054,7 @@
     <Content Include="Assets\vendor\intltelinput\js\intlTelInput.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.jquery.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.min.css" />
+    <Content Include="checkin.png" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>
@@ -1220,6 +1219,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="showticket.png" />
     <Content Include="Statics\bootstrap-3.1.1\css\bootstrap-theme.css" />
     <Content Include="Statics\bootstrap-3.1.1\css\bootstrap-theme.min.css" />
     <Content Include="Statics\bootstrap-3.1.1\css\bootstrap.css" />

@@ -40,7 +40,6 @@ p {
   width: 21cm;
   height: 29.6cm;
   position: absolute;
-  background: url(/Assets/images/eticket-background.png) left 70% no-repeat;
   -webkit-print-color-adjust: exact; }
   .page:before, .page:after {
     content: "";
@@ -253,10 +252,10 @@ Site Content
           margin-bottom: 1mm; }
         .flight-list-wrapper .flight-list .flight .flight-detail .flight-route .departure-airline {
           text-align: right;
-          width: 15%; }
+          width: 20%; }
         .flight-list-wrapper .flight-list .flight .flight-detail .flight-route .departure-date {
           text-align: right;
-          width: 20%; }
+          width: 15%; }
         .flight-list-wrapper .flight-list .flight .flight-detail .flight-route .duration {
           text-align: center;
           width: 30%;
@@ -272,9 +271,9 @@ Site Content
             font-weight: normal !important;
             font-size: 8pt; }
         .flight-list-wrapper .flight-list .flight .flight-detail .flight-route .arrival-date {
-          width: 20%; }
-        .flight-list-wrapper .flight-list .flight .flight-detail .flight-route .arrival-airline {
           width: 15%; }
+        .flight-list-wrapper .flight-list .flight .flight-detail .flight-route .arrival-airline {
+          width: 20%; }
   .flight-list-wrapper .flight-list .transit {
     float: right;
     width: 100%;
