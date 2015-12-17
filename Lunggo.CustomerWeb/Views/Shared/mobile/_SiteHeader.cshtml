@@ -1,9 +1,59 @@
 ﻿<header class="site-header">
     
     <div class="header-display">
-        <a href="#" class="site-menu"></a>
+        <a ng-click="PageConfig.ToggleBurger()" class="site-menu"></a>
         <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" class="site-logo" />
-        <a href="#" class="user-menu"></a>
+        <a href="#" class="user-menu hidden"></a>
     </div>
+    
+    <div class="burger-content" ng-class="{'active' : PageConfig.BurgerShown}">
+        <div class="burger-content__header">
+            <ul>
+                <li class="language">
+                    <a href="#">
+                        <img src="/Assets/images/flag-indonesia.png" alt="Alternate Text" />
+                    </a>
+                </li>
+                <li class="currency">
+                    <a href="#">IDR</a>
+                </li>
+            </ul>
+            <a class="burger-content__close" ng-click="PageConfig.ToggleBurger()">X</a>
+        </div><!-- .border-content-header -->
+        <div class="burger-content__body">
+            <ul>
+                <li class="login">
+                    <a href="#">Log In</a>
+                </li>
+                <li class="register">
+                    <a href="#">Sign Up</a>
+                </li>
+                <li class="account">
+                    <a href="#">Shinta Tamara</a>
+                </li>
+                <li class="home">
+                    <a href="#">Home</a>
+                </li>
+                <li class="order-check">
+                    <a href="#">Cek Pemesanan</a>
+                </li>
+                <li class="contact">
+                    <a href="#">Contact Us</a>
+                </li>
+                <li class="newsletter">
+                    <a href="#">News Letter</a>
+                </li>
+                <li class="faq">
+                    <a href="#">FAQ</a>
+                </li>
+                <li class="howto-order">
+                    <a href="#">Cara Pesan</a>
+                </li>
+                <li class="about">
+                    <a href="#">Tentang Kami</a>
+                </li>
+            </ul>
+        </div><!-- .border-content-body -->
+    </div><!-- .burger-content -->
 
 </header><!-- .site-header -->
