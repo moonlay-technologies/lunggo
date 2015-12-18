@@ -69,7 +69,7 @@ default:
         </header><!-- .page-header -->
     
         <div class="page__body">
-            <div class="page__step-1" ng-show="PageConfig.ActivePage == 1">
+            <div class="page-step-1" ng-show="PageConfig.ActivePage == 1">
                 <div class="form-wrapper">
                     
                     <h3><b>DATA</b> KONTAK</h3>
@@ -87,25 +87,23 @@ default:
 
                         <div class="form-group important">
                             <label class="control-label">Nama Depan (dan Nama Tengah) : </label>
-                            <input type="text" value="" name="FirstName" class="form-control" required />
+                            <input type="text" value="" ng-model="PageConfig.BuyerForm.FirstName" name="FirstName" class="form-control" required />
                         </div>
 
                         <div class="form-group important">
                             <label class="control-label">Nama Belakang / Nama Keluarga: </label>
-                            <input type="text" value="" name="LastName" class="form-control" required />
+                            <input type="text" value="" ng-model="PageConfig.BuyerForm.LastName" name="LastName" class="form-control" required />
                         </div>
 
                         <div class="form-group important">
                             <label class="control-label">Nomor Telepon : </label>
-                            <input type="number" value="" name="Phone" class="form-control" required />
+                            <input type="number" value="" ng-model="PageConfig.BuyerForm.Phone" name="Phone" class="form-control" required />
                         </div>
 
                         <div class="form-group important">
                             <label class="control-label">Masukan alamat email Anda : </label>
-                            <input type="email" value="" name="Email" class="form-control" required />
+                            <input type="email" value="" ng-model="PageConfig.BuyerForm.Email" name="Email" class="form-control" required />
                         </div>
-                        
-                        {{BuyerForm.$valid}}
 
                         <div class="form-group">
                             <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(2)" ng-disabled="BuyerForm.$invalid">LANJUT</button>
@@ -197,10 +195,12 @@ default:
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
-                        </div>
                     </div><!-- .passenger__body -->
+
+                </div><!-- .passenger -->
+            
+                <div class="form-group">
+                    <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
                 </div>
 
             </div><!-- .page-step-2 -->

@@ -15,7 +15,15 @@
     }
 
     // page body
-    .page__body {padding:10px;}
+    .page__body {padding:10px;
+
+        .page-step-1 {}
+        .page-step-2 {
+            .btn.btn-yellow {margin-top:25px;}
+        }
+        .page-step-3 {}
+
+    }
 
     // *****
     // passenger
