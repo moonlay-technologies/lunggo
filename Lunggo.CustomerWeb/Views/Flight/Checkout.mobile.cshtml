@@ -63,53 +63,60 @@ default:
     <div class="page-loaded">
     
         <header class="page__header step__wrapper">
-            <div class="step step-1 active"><span>01</span></div>
-            <div class="step step-2"><span>02</span></div>
-            <div class="step step-3"><span>03</span></div>
+            <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01</span></div>
+            <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02</span></div>
+            <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03</span></div>
         </header><!-- .page-header -->
     
         <div class="page__body">
-            <div class="page__step-1">
+            <div class="page__step-1" ng-show="PageConfig.ActivePage == 1">
                 <div class="form-wrapper">
                     
                     <h3><b>DATA</b> KONTAK</h3>
                     
-                    <div class="form-group">
-                        <label class="control-label">Title : </label>
-                        <select class="form-control">
-                            <option value="0">Tuan</option>
-                            <option value="1">Nyonya</option>
-                            <option value="2">Nona</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group important">
-                        <label class="control-label">Nama Depan (dan Nama Tengah) : </label>
-                        <input type="text" value="" class="form-control" />
-                    </div>
-                    
-                    <div class="form-group important">
-                        <label class="control-label">Nama Belakang / Nama Keluarga: </label>
-                        <input type="text" value="" class="form-control" />
-                    </div>
-                    
-                    <div class="form-group important">
-                        <label class="control-label">Nomor Telepon : </label>
-                        <input type="text" value="" class="form-control" />
-                    </div>
-                    
-                    <div class="form-group important">
-                        <label class="control-label">Masukan alamat email Anda : </label>
-                        <input type="text" value="" class="form-control" />
-                    </div>
-                    
-                    <div class="form-group">
-                        <a class="btn btn-yellow form-control">LANJUT</a>
-                    </div>
+                    <form name="BuyerForm" novalidate>
+
+                        <div class="form-group">
+                            <label class="control-label">Title : </label>
+                            <select class="form-control" name="title">
+                                <option value="0">Tuan</option>
+                                <option value="1">Nyonya</option>
+                                <option value="2">Nona</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group important">
+                            <label class="control-label">Nama Depan (dan Nama Tengah) : </label>
+                            <input type="text" value="" name="FirstName" class="form-control" required />
+                        </div>
+
+                        <div class="form-group important">
+                            <label class="control-label">Nama Belakang / Nama Keluarga: </label>
+                            <input type="text" value="" name="LastName" class="form-control" required />
+                        </div>
+
+                        <div class="form-group important">
+                            <label class="control-label">Nomor Telepon : </label>
+                            <input type="number" value="" name="Phone" class="form-control" required />
+                        </div>
+
+                        <div class="form-group important">
+                            <label class="control-label">Masukan alamat email Anda : </label>
+                            <input type="email" value="" name="Email" class="form-control" required />
+                        </div>
+                        
+                        {{BuyerForm.$valid}}
+
+                        <div class="form-group">
+                            <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(2)" ng-disabled="BuyerForm.$invalid">LANJUT</button>
+                        </div>
+
+                    </form>
 
                 </div>
             </div><!-- .page-step-1 -->
-            <div class="page-step-2">
+
+            <div class="page-step-2" ng-show="PageConfig.ActivePage == 2">
                 <h3><b>DATA</b> PENUMPANG</h3>
             
                 <div class="passenger">
@@ -191,14 +198,14 @@ default:
                         </div>
 
                         <div class="form-group">
-                            <a class="btn btn-yellow form-control">LANJUT</a>
+                            <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
                         </div>
                     </div><!-- .passenger__body -->
                 </div>
 
             </div><!-- .page-step-2 -->
         
-            <div class="page-step-3">
+            <div class="page-step-3" ng-show="PageConfig.ActivePage == 3">
             
                 <div class="summary summary--payment">
                     <h3 class="summary__title"><b>METODE</b> PEMBAYARAN</h3>
