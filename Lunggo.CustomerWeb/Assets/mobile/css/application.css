@@ -713,6 +713,9 @@ body {
   .page.page-checkout .passenger .passenger__body {
     padding: 10px; }
 
+.page.page-checkout .summary .summary__title {
+  color: #333; }
+
 .page.page-checkout .summary.summary--price dl:before, .page.page-checkout .summary.summary--price dl:after {
   display: block;
   width: 100%;
@@ -780,3 +783,42 @@ body {
       float: left;
       width: 50%;
       font-weight: bold; }
+
+.page.page-checkout .summary.summary--voucher {
+  background: #eaeaea;
+  padding: 10px; }
+  .page.page-checkout .summary.summary--voucher h4 {
+    font-weight: bold; }
+
+.page.page-checkout .summary.summary--payment label {
+  border: 1px solid #ccc;
+  display: block;
+  width: 100%;
+  background: #fff;
+  color: #fff; }
+  .page.page-checkout .summary.summary--payment label header {
+    background: #36b6e7;
+    position: relative; }
+    .page.page-checkout .summary.summary--payment label header:before, .page.page-checkout .summary.summary--payment label header:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .page.page-checkout .summary.summary--payment label header .input-wrapper {
+      float: left;
+      background: #028ec3;
+      width: 30px;
+      text-align: center;
+      position: absolute;
+      height: 100%;
+      padding-top: 5px; }
+    .page.page-checkout .summary.summary--payment label header h5 {
+      padding: 10px;
+      margin: 0;
+      float: left;
+      padding-left: 40px;
+      font-weight: bold;
+      width: 100%; }
+  .page.page-checkout .summary.summary--payment label section {
+    text-align: center;
+    padding: 5px; }
