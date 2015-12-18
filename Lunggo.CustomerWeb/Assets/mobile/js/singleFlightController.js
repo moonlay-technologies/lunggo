@@ -279,7 +279,7 @@
         } else {
 
             // skip to book
-            console.log('SKIP TO BOOK');
+            $('.push-token').submit();
 
         }
 

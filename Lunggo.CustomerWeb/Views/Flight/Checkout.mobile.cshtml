@@ -200,6 +200,62 @@ default:
         
             <div class="page-step-3">
             
+                <div class="summary summary--payment">
+                    <h3 class="summary__title"><b>METODE</b> PEMBAYARAN</h3>
+                    <div class="summary__body">
+                    
+                        <form>
+                            
+                            <label>
+                                <header>
+                                    <div class="input-wrapper">
+                                        <input type="radio" name="paymentMethod" value="BankTransfer" checked />
+                                    </div>
+                                    <h5>Bank Transfer</h5>
+                                </header>
+                                <section>
+                                    <img src="/Assets/images/payment-atm.jpg" alt="Bank Transfer" />
+                                </section>
+                            </label>
+                            <label>
+                                <header>
+                                    <div class="input-wrapper">
+                                        <input type="radio" name="paymentMethod" value="Credit Card"/>
+                                    </div>
+                                    <h5>Kartu Kredit</h5>
+                                </header>
+                                <section>
+                                    <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
+                                </section>
+                            </label>
+                            <label>
+                                <header>
+                                    <div class="input-wrapper">
+                                        <input type="radio" name="paymentMethod" value="VirtualAccount"/>
+                                    </div>
+                                    <h5>Bank Transfer</h5>
+                                </header>
+                                <section>
+                                    <img src="/Assets/images/payment-atm.jpg" alt="Virtual Account" />
+                                </section>
+                            </label>
+                            <label>
+                                <header>
+                                    <div class="input-wrapper">
+                                        <input type="radio" name="paymentMethod" value="MandiriClickpay"/>
+                                    </div>
+                                    <h5>Bank Transfer</h5>
+                                </header>
+                                <section>
+                                    <img src="/Assets/images/payment-mandiri.jpg" alt="Bank Transfer" />
+                                </section>
+                            </label>
+
+                        </form>    
+
+                    </div><!-- .summary__body -->
+                </div><!-- .summary--payment -->
+
                 <div class="summary summary--price">
                     <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
                     <div class="summary__body">
@@ -218,7 +274,21 @@ default:
                     </div><!-- .summary__body -->
                 </div><!-- .summar--price -->
                 <div class="summary summary--voucher">
-                    
+                    <div class="container">
+                        <h4>Punya kupon Travorama</h4>
+                        <form class="form form-horizontal">
+                            <div class="form-group">
+                                <input type="text" value="" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-6 col-xs-offset-6">
+                                    <a href="#" class="btn btn-grey btn-block">RESET</a>
+                                    <input class="btn btn-yellow btn-block" type="submit" value="REDEEM" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                 </div><!-- .summary--voucher-->
                 <div class="summary summary--passenger">
                     <h3 class="summary__title"><b>DAFTAR</b> PENUMPANG</h3>
@@ -262,9 +332,6 @@ default:
 
                     </div><!-- .summary__body -->
                 </div><!-- .summary--passenger -->
-                <div class="summary summary--payment">
-                    <h3><b>METODE</b> PEMBAYARAN</h3>
-                </div><!-- .summar--payment -->
 
                 <a class="btn btn-yellow form-control">LANJUT</a>
 
