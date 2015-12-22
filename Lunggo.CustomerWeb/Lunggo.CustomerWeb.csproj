@@ -1012,6 +1012,7 @@
     <Content Include="Assets\mobile\images\burger-sprite.png" />
     <Content Include="Assets\mobile\images\flight-separator.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
+    <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
     <Content Include="Assets\mobile\js\application.js" />
     <Content Include="Assets\mobile\js\CheckoutController.js" />
     <Content Include="Assets\mobile\js\returnFlightController.js" />

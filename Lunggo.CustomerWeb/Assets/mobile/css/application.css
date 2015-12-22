@@ -281,7 +281,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
       margin: 0; }
     .overlay .overlay__header .overlay__close {
       float: right; }
-  .overlay .overlay__content {
+  .overlay .overlay__content, .overlay .overlay__body {
     background: #fff;
     min-height: 100%;
     padding: 12px;
@@ -301,6 +301,56 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
       display: block; }
   .overlay.overlay--theme--blue .overlay__header {
     background: #1daee4; }
+
+.overlay.datepicker .overlay__body {
+  background: #616161;
+  color: #fff; }
+  .overlay.datepicker .overlay__body a {
+    color: #fff; }
+  .overlay.datepicker .overlay__body select {
+    color: #000;
+    font-size: 14px;
+    margin-left: 5px; }
+
+.overlay.datepicker .ui-datepicker .ui-datepicker-header {
+  text-align: center;
+  position: relative;
+  padding-top: 20px;
+  height: 50px; }
+  .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+    position: absolute;
+    left: 0;
+    width: 25px;
+    height: 25px;
+    background-image: url(/Assets/mobile/images/ui-calendar-nav.png);
+    background-repeat: no-repeat;
+    background-position: -30px 0;
+    background-size: 200%; }
+  .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+    left: auto;
+    right: 0;
+    background-position: 0 0; }
+  .overlay.datepicker .ui-datepicker .ui-datepicker-header:after, .overlay.datepicker .ui-datepicker .ui-datepicker-header:before {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+
+.overlay.datepicker .ui-datepicker .ui-datepicker-calendar {
+  width: 100%;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto; }
+  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar thead tr th {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    text-align: center; }
+  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar tbody tr td {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 5px; }
 
 /*--------------------*/
 .page.page-flight .flight-loading {

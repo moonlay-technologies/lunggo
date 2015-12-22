@@ -1,6 +1,9 @@
 ﻿app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interval', '$location', function($http, $scope, $rootScope, $interval, $location) {
     
+    // *****
     // general variables
+    $scope.PageConfig = $rootScope.PageConfig;
+
     $scope.CheckoutConfig = {
         Token: CheckoutDetail.Token,
         ExpiryDate: CheckoutDetail.ExpiryDate,
@@ -11,6 +14,29 @@
         FinalPrice: CheckoutDetail.Price,
         // passenger
         Passenger: CheckoutDetail.Passenger,
+        Passengers: [],
+        PassengerTypeName: CheckoutDetail.PassengerName,
+        // generate passenger
+        GeneratePassenger: function () {
+            if ($scope.CheckoutConfig.Passenger[0] > 0) {
+                for (var i = 0; i < $scope.CheckoutConfig.Passenger[0]; i++) {
+                    var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[0], type: 'adult' };
+                    $scope.CheckoutConfig.Passengers.push(x);
+                }
+            }
+            if ($scope.CheckoutConfig.Passenger[1]> 0) {
+                for (var i = 0; i < $scope.CheckoutConfig.Passenger[1]; i++) {
+                    var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[1], type: 'child' };
+                    $scope.CheckoutConfig.Passengers.push(x);
+                }
+            }
+            if ($scope.CheckoutConfig.Passenger[2] > 0) {
+                for (var i = 0; i < $scope.CheckoutConfig.Passenger[2]; i++) {
+                    var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[2], type: 'infant' };
+                    $scope.CheckoutConfig.Passengers.push(x);
+                }
+            }
+        },
         // identity requirement
         PassportRequired: CheckoutDetail.PassportRequired,
         IdRequired: CheckoutDetail.IdRequired,
@@ -18,10 +44,21 @@
         // buyer info
         BuyerInfo: CheckoutDetail.BuyerInfo
     };
-
+    // init function
+    $scope.CheckoutConfig.GeneratePassenger();
+    // countries
+    $scope.Countries = Countries;
 
     // return URL
-    $scope.returnUrl = document.referrer == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;
+    $scope.PageConfig.ReturnUrl = document.referrer == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;
+
+    // print scope
+    $scope.PrintScope = function() {
+        console.log($scope);
+    }
+
+    // general function end
+    // *****
 
     // *****
     // paging function
@@ -29,7 +66,6 @@
     angular.element(document).ready(function () {
         //$scope.PageConfig.ActivePage = 1;
         $location.hash('page-1');
-        console.log('READY');
     });
     angular.element(window).on('hashchange', function () {
         if ($location.hash() == '') {
