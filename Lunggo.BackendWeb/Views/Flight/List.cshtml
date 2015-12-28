@@ -95,7 +95,7 @@
                                 @switch (rsv.Payment.Status)
                                 {
                                     case PaymentStatus.Pending:
-                                        <span class="label label-default">Incomplete</span><br />
+                                        <span class="label label-default">Pending</span><br />
                                         <span>by @rsv.Payment.Method.ToString()</span>
                                         break;
                                     case PaymentStatus.Settled:
@@ -110,8 +110,21 @@
                                         <span class="label label-danger">Denied</span><br />
                                         <span>by @rsv.Payment.Method.ToString()</span>
                                         break;
+                                    case PaymentStatus.Verifying:
+                                        <span class="label label-default">Verifying</span><br />
+                                        <span>by @rsv.Payment.Method.ToString()</span>
+                                        break;
+                                    case PaymentStatus.Undefined:
+                                        <span class="label label-default">Undefined</span><br />
+                                        <span>by @rsv.Payment.Method.ToString()</span>
+                                        break;
+                                    case PaymentStatus.Challenged:
+                                        <span class="label label-default">Undefined</span><br />
+                                        <span>by @rsv.Payment.Method.ToString()</span>
+                                        break;
                                     case PaymentStatus.Expired:
                                         <span class="label label-danger">Expired</span><br />
+                                        <span>by @rsv.Payment.Method.ToString()</span>
                                         break;
                                 }
                             </td>
