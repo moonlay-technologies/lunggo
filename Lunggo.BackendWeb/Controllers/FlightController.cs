@@ -132,5 +132,58 @@ namespace Lunggo.BackendWeb.Controllers
             var rules = flight.GetAllPriceMarginRules();
             return View(rules);
         }
+
+        public ActionResult PriceMarginUpdate(long id)
+        {
+            var flight = FlightService.GetInstance();
+            var rule = flight.GetPriceMarginRule(id);
+            return View("PriceMarginAdd", rule);
+        }
+
+        public ActionResult PriceMarginAdd()
+        {
+            var rule = new MarginRule();
+            return View(rule);
+        }
+
+        [HttpPost]
+        public ActionResult PriceMarginAdd(MarginRule rule)
+        {
+            var flight = FlightService.GetInstance();
+            var conflicts = flight.InsertPriceMarginRuleAndRetrieveConflict(rule);
+            Session["FlightPriceMarginConflicts"] = conflicts;
+            return View("PriceMarginConflict", conflicts);
+        }
+
+        [HttpPost]
+        public ActionResult PriceMarginConflict(List<int> ruleId, List<int> priority)
+        {
+            var conflicts = (List<MarginRule>) (Session["FlightPriceMarginConflicts"]);
+            for (var i = 0; i < ruleId.Count; i++)
+            {
+                var id = ruleId[i];
+                var prio = priority[i];
+                var specifiedRule = conflicts.Single(rule => rule.RuleId == id);
+                specifiedRule.Priority = prio;
+            }
+            var flight = FlightService.GetInstance();
+            flight.UpdateResolvedPriceMarginRulesConflict(conflicts);
+            return RedirectToAction("PriceMarginList");
+        }
+
+        public ActionResult PriceMarginDelete(long id)
+        {
+            var rule = new MarginRule();
+            return View(rule);
+        }
+
+        [HttpPost]
+        [ActionName("PriceMarginDelete")]
+        public ActionResult PriceMarginDeletePost(long id)
+        {
+            var flight = FlightService.GetInstance();
+            flight.DeletePriceMarginRule(id);
+            return RedirectToAction("PriceMarginList");
+        }
     }
 }

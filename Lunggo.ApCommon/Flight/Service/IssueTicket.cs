@@ -45,20 +45,20 @@ namespace Lunggo.ApCommon.Flight.Service
                             BookingId = bookingId,
                             NewBookingId = orderResult.BookingId,
                         });
-                        UpdateDb.BookingStatus(new List<BookingStatusInfo> {new BookingStatusInfo
-                    {
-                        BookingId = orderResult.BookingId,
-                        BookingStatus = orderResult.BookingStatus
-                    }});
                     }
                     else
                     {
                         orderResult.IsSuccess = false;
-                        orderResult.BookingId = response.BookingId;
+                        orderResult.BookingId = bookingId;
                         orderResult.BookingStatus = BookingStatus.Failed;
                         output.Errors = response.Errors;
                         output.ErrorMessages = response.ErrorMessages;
                     }
+                    UpdateDb.BookingStatus(new List<BookingStatusInfo> {new BookingStatusInfo
+                    {
+                        BookingId = orderResult.BookingId,
+                        BookingStatus = orderResult.BookingStatus
+                    }});
                     output.OrderResults.Add(orderResult);
                 }
                 if (output.OrderResults.TrueForAll(result => result.IsSuccess))

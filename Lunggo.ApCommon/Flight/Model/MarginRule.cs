@@ -59,8 +59,8 @@ namespace Lunggo.ApCommon.Flight.Model
             AirportPairs = new List<AirportPairRule>();
             CityPairs = new List<AirportPairRule>();
             CountryPairs = new List<AirportPairRule>();
-            MinPassengers = int.MinValue;
-            MaxPassengers = int.MaxValue;
+            MinPassengers = 0;
+            MaxPassengers = 10;
             ConstraintCount = 0;
             Priority = int.MaxValue;
         }

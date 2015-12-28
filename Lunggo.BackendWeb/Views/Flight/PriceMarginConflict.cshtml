@@ -1,0 +1,72 @@
+﻿@using Lunggo.ApCommon.Flight.Model
+@model List<Lunggo.ApCommon.Flight.Model.MarginRule>
+
+@{
+    ViewBag.Title = "PriceMarginConflict";
+}
+
+<h2>PriceMarginConflict</h2>
+@using (Html.BeginForm("PriceMarginConflict", "Flight", FormMethod.Post, new {id = "form-submit"}))
+{
+    <table class="table">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a class="move-up">^</a>
+                    <a class="move-down">v</a>
+                    <input type="hidden" class="rule-id" value="@item.RuleId"/>
+                    <input type="hidden" class="priority"/>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" id="submit-button" />
+        </div>
+    </div>
+}
+
+@section PageJS {
+    <script>
+        $(".move-up").click(function() {
+            if ($(this).parent().parent().index() !== 1) {
+                var olderSister = $(this).parent().parent().prev();
+                $(this).parent().parent().insertBefore(olderSister);
+            }
+        });
+        $(".move-down").click(function() {
+            var youngerSister = $(this).parent().parent().next();
+            $(this).parent().parent().insertAfter(youngerSister);
+        });
+        $("#submit-button").click(function(evt) {
+            evt.preventDefault();
+            MvcAttr(".rule-id", "name", "ruleId[", "]");
+            MvcAttr(".priority", "name", "priority[", "]");
+            MvcAttr(".priority", "value", "", "");
+            $("#form-submit").submit();
+        });
+
+        function MvcAttr(type, attr, prefix, suffix) {
+            var elements = $(type);
+            for (var i = 0; i < elements.length; i++) {
+                var element = $(type + ":eq(" + i + ")");
+                console.log(element);
+                element.attr(attr, prefix + i + suffix);
+            }
+        }
+    </script>
+}

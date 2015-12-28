@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Currency.Service;
@@ -52,6 +53,8 @@ namespace Lunggo.ApCommon.Flight.Service
         public List<MarginRule> GetAllPriceMarginRules()
         {
             var rules = GetAllActiveMarginRulesFromCache();
+            rules =
+                rules.OrderByDescending(rule => rule.ConstraintCount).ThenBy(rule => rule.Priority).ToList();
             return rules;
         }
 
@@ -72,6 +75,7 @@ namespace Lunggo.ApCommon.Flight.Service
             deletedRules.Add(obsoleteRule);
             SaveActiveMarginRulesInBufferCache(rules);
             SaveDeletedMarginRulesInBufferCache(deletedRules);
+            PushPriceMarginRulesFromCacheBufferToDatabase();
         }
 
         public List<MarginRule> UpdatePriceMarginRuleAndRetrieveConflict(MarginRule updatedRule)
@@ -118,21 +122,67 @@ namespace Lunggo.ApCommon.Flight.Service
             rules.RemoveRange(targetIndex, updatedRulesCount);
             rules.InsertRange(targetIndex, orderedUpdatedRules);
             SaveActiveMarginRulesInBufferCache(rules);
-            PullPriceMarginRulesFromDatabaseToCache();
+            PushPriceMarginRulesFromCacheBufferToDatabase();
         }
 
         private List<MarginRule> RetrieveConflict(MarginRule newRule)
         {
             var rules = GetActiveMarginRulesFromBufferCache();
-            return rules.Where(rule => rule.ConstraintCount == newRule.ConstraintCount).ToList();
+            rules = rules.Where(rule => rule.ConstraintCount == newRule.ConstraintCount)
+                    .OrderByDescending(rule => rule.Priority)
+                    .ToList();
+            return rules;
         }
 
         private void InsertMarginRule(MarginRule newRule)
         {
+            AssignConstraintCount(newRule);
             var rules = GetAllActiveMarginRulesFromCache();
             var index = rules.FindLastIndex(rule => rule.ConstraintCount > newRule.ConstraintCount);
             rules.Insert(index + 1, newRule);
             SaveActiveMarginRulesInBufferCache(rules);
+        }
+
+        private void AssignConstraintCount(MarginRule newRule)
+        {
+            var count = 0;
+            if (newRule.Airlines.Any())
+                count++;
+            if (newRule.AirportPairs.Any())
+                count++;
+            if (newRule.CityPairs.Any())
+                count++;
+            if (newRule.CountryPairs.Any())
+                count++;
+            if (newRule.BookingDateSpans.Any())
+                count++;
+            if (newRule.BookingDays.Any())
+                count++;
+            if (newRule.BookingDates.Any())
+                count++;
+            if (newRule.DepartureDateSpans.Any())
+                count++;
+            if (newRule.DepartureDays.Any())
+                count++;
+            if (newRule.DepartureDates.Any())
+                count++;
+            if (newRule.DepartureTimeSpans.Any())
+                count++;
+            if (newRule.ReturnDateSpans.Any())
+                count++;
+            if (newRule.ReturnDays.Any())
+                count++;
+            if (newRule.ReturnDates.Any())
+                count++;
+            if (newRule.ReturnTimeSpans.Any())
+                count++;
+            if (newRule.CabinClasses.Any())
+                count++;
+            if (newRule.TripTypes.Any())
+                count++;
+            if (newRule.FareTypes.Any())
+                count++;
+            newRule.ConstraintCount = count;
         }
 
         private static void ApplyMarginRule(FlightItinerary fare, MarginRule rule)

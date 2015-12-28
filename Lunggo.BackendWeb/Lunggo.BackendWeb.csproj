@@ -479,6 +479,9 @@
     <Content Include="Views\Flight\InsertExchangeRate.cshtml" />
     <Content Include="Views\Activity\AddActivity.cshtml" />
     <Content Include="Views\Flight\PriceMarginList.cshtml" />
+    <Content Include="Views\Flight\PriceMarginAdd.cshtml" />
+    <Content Include="Views\Flight\PriceMarginConflict.cshtml" />
+    <Content Include="Views\Flight\PriceMarginDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
