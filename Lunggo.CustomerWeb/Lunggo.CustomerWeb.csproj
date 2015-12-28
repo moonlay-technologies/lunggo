@@ -1011,8 +1011,11 @@
     </Content>
     <Content Include="Assets\mobile\images\burger-sprite.png" />
     <Content Include="Assets\mobile\images\flight-separator.png" />
+    <Content Include="Assets\mobile\images\login-header-left.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
     <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
+    <Content Include="Assets\mobile\images\yellow-stripe.png" />
+    <Content Include="Assets\mobile\js\AccountController.js" />
     <Content Include="Assets\mobile\js\application.js" />
     <Content Include="Assets\mobile\js\CheckoutController.js" />
     <Content Include="Assets\mobile\js\returnFlightController.js" />
@@ -1190,6 +1193,7 @@
     <Content Include="Assets\mobile\css\_page_checkout.scss" />
     <None Include="Assets\images\backtotop.jpg.bak" />
     <Content Include="Assets\images\subscribe-bg.jpg.bak" />
+    <Content Include="Assets\mobile\css\_page_account.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />

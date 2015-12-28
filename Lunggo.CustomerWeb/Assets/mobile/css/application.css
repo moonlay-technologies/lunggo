@@ -21,6 +21,11 @@ body {
 .display-block {
   display: block !important; }
 
+.btn {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; }
+
 .btn.btn-yellow {
   background: #ffd632;
   border: 2px solid #ebb600;
@@ -37,10 +42,18 @@ body {
   display: block;
   width: 100%; }
 
+.error-message {
+  padding: 5px 10px; }
+
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   margin: 0; }
+
+input[type="text"], input[type="password"], input[type="number"] {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; }
 
 .site-header {
   position: fixed;
@@ -48,7 +61,10 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   left: 0;
   width: 100%;
   height: 60px;
-  z-index: 999; }
+  z-index: 999;
+  -webkit-box-shadow: 0px -2px 15px #555;
+  -moz-box-shadow: 0px -2px 15px #555;
+  box-shadow: 0px -2px 15px #555; }
   .site-header .header-display {
     background: #fff;
     text-align: center;
@@ -185,6 +201,49 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .site-content {
   min-height: 300px; }
+  .site-content a {
+    color: #2fb4e6; }
+
+.section-title {
+  font-weight: 600;
+  padding-bottom: 15px;
+  margin-bottom: 15px; }
+  .section-title span {
+    color: #1eafe4; }
+  .section-title.stripe {
+    background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat; }
+
+.form-wrapper {
+  padding: 15px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; }
+  .form-wrapper .form-wrapper__header {
+    padding-left: 35px;
+    position: relative;
+    margin-bottom: 25px; }
+    .form-wrapper .form-wrapper__header:before {
+      width: 25px;
+      height: 50px;
+      content: "";
+      display: block;
+      background-repeat: no-repeat;
+      position: absolute;
+      left: 0;
+      top: 0; }
+    .form-wrapper .form-wrapper__header .form-wrapper__title {
+      font-weight: bold;
+      margin-top: 5px;
+      margin-bottom: 2px;
+      font-size: 18px; }
+  .form-wrapper.form-wrapper--login .form-wrapper__header:before {
+    background-image: url(/Assets/mobile/images/login-header-left.png); }
 
 .site-footer {
   background-color: #111;
@@ -879,3 +938,8 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   .page.page-checkout .summary.summary--payment label section {
     text-align: center;
     padding: 5px; }
+
+.page.page-forgotpassword form {
+  border-top: 1px solid #ccc;
+  margin-top: 15px;
+  padding-top: 15px; }
