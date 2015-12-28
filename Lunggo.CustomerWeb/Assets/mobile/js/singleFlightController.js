@@ -11,8 +11,6 @@
 
     $scope.PageConfig = $rootScope.PageConfig;
 
-    console.log($scope.PageConfig);
-
     // set additional variables for Flight Page
     $scope.PageConfig.ActiveSection = 'departure';
     $scope.PageConfig.ActiveOverlay = '';
@@ -40,6 +38,8 @@
             Name: 'departure',
             FlightList: [],
             ActiveFlight: -1,
+            ActiveFlightAvailable: true,
+            ActiveFlightNewPrice: '',
             FlightRequest: {
                 CabinClass: FlightSearchConfig.flightForm.cabin,
                 AdultCount: FlightSearchConfig.flightForm.passenger.adult,
@@ -171,7 +171,7 @@
 
                     // set expiry if progress == 100
                     if ($scope.FlightConfig[0].FlightRequest.Progress == 100) {
-                        $scope.FlightConfig[0].expiry.time = returnData.ExpiryTime;
+                        $scope.FlightConfig[0].FlightExpiry.time = returnData.ExpiryTime;
                     } else {
                         $scope.FlightConfig[0].FlightRequest.FinalProgress = $scope.FlightConfig[0].FlightRequest.Progress;
                     }
@@ -210,7 +210,7 @@
             $scope.PageConfig.Busy = false;
         }
 
-    }
+    }// get flight end
 
     // generate flight list
     $scope.FlightFunctions.GenerateFlightList = function(data) {
@@ -220,13 +220,12 @@
             data[i].IndexNo = (startNo + i);
             $scope.FlightConfig[0].FlightList.push(data[i]);
         }
-    }
+    }// generate flight list end
 
     // revalidate flight
     $scope.FlightFunctions.Revalidate = function(indexNo) {
 
         $scope.PageConfig.Validating = true;
-
         console.log('Validating flight no : '+indexNo);
 
         // AJAX revalidate
@@ -247,26 +246,27 @@
                     RevalidateConfig.Available = true;
                     RevalidateConfig.Token = returnData.Token;
 
-                    $('.push-token input').val(RevalidateConfig.token);
+                    $('.push-token input').val(RevalidateConfig.Token);
                     $('.push-token').submit();
 
                 } else if (returnData.IsValid == false) {
                     RevalidateConfig.Available = false;
                     $scope.PageConfig.Validating = false;
+                    $scope.FlightConfig[0].ActiveFlightAvailable = false;
 
                     if (returnData.IsOtherFareAvailable == true) {
                         console.log('departure flight has new price');
+                        $scope.FlightConfig[0].ActiveFlightNewPrice = returnData.NewFare;
                         RevalidateConfig.NewFare = true;
                         RevalidateConfig.Token = returnData.Token;
                         // update price
                         $scope.FlightConfig[0].FlightList[indexNo].TotalFare = returnData.NewFare;
-                        $('.push-token input').val(RevalidateConfig.token);
-
+                        $('.push-token input').val(RevalidateConfig.Token);
                     } else if (returnData.IsOtherFareAvailable == false) {
                         console.log('departure flight is gone');
+                        $scope.FlightConfig[0].ActiveFlightNewPrice = -1;
                         RevalidateConfig.NewFare = false;
                         $scope.FlightConfig[0].FlightList[indexNo].Available = false;
-
                     }
                 }
             }).error(function (returnData) {
@@ -279,11 +279,12 @@
         } else {
 
             // skip to book
+            $('.push-token').submit();
 
         }
 
 
-    }
+    }// revalidate flight end
 
     // set active flight
     $scope.FlightFunctions.SetActiveFlight = function (FlightNumber) {
@@ -294,7 +295,7 @@
             $scope.FlightConfig[0].ActiveFlight = -1;
             $scope.SetOverlay();
         }
-    }
+    }// set active flight end
 
 
 }]);

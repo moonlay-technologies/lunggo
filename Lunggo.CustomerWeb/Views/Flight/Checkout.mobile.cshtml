@@ -50,6 +50,30 @@
 @section PageJS{
     <script>
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
+        // Checkout Detail
+        var CheckoutDetail = {
+            Token: '@Model.Token',
+            ExpiryDate: '@Model.ExpiryTime.ToString("o")',
+            Trips: @Html.Raw(Model.Itinerary.Trips.Serialize()),
+            Price: @Model.Itinerary.TotalFare,
+            // passenger
+            Passenger: [@Model.Itinerary.AdultCount, @Model.Itinerary.ChildCount, @Model.Itinerary.InfantCount],
+            PassengerName: ['Dewasa', 'Anak', 'Bayi'],
+            // identity requirement
+            PassportRequired: @Model.Itinerary.RequirePassport.ToString().ToLower(),
+            IdRequired: false,
+            NationalityRequired: @Model.Itinerary.RequireNationality.ToString().ToLower(),
+            // buyer info
+            BuyerInfo: {
+                LoggedIn : @User.Identity.IsAuthenticated.ToString().ToLower(),
+                FirstName: '@User.Identity.GetFirstName()',
+                LastName: '@User.Identity.GetLastName()',
+                FullName : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+                CountryCode : '@User.Identity.GetCountryCd()',
+                Phone: '@User.Identity.GetPhoneNumber()',
+                Email: '@User.Identity.GetEmail()'
+            }
+        };
     </script>
     <!-- angular controller -->
     <script src="/Assets/mobile/js/checkoutController.js"></script>
@@ -63,63 +87,22 @@ default:
     <div class="page-loaded">
     
         <header class="page__header step__wrapper">
-            <div class="step step-1 active"><span>01</span></div>
-            <div class="step step-2"><span>02</span></div>
-            <div class="step step-3"><span>03</span></div>
+            <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01</span></div>
+            <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02</span></div>
+            <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03</span></div>
         </header><!-- .page-header -->
     
         <div class="page__body">
-            <div class="page__step-1">
+            <div class="page-step-1" ng-show="PageConfig.ActivePage == 1">
                 <div class="form-wrapper">
                     
                     <h3><b>DATA</b> KONTAK</h3>
                     
-                    <div class="form-group">
-                        <label class="control-label">Title : </label>
-                        <select class="form-control">
-                            <option value="0">Tuan</option>
-                            <option value="1">Nyonya</option>
-                            <option value="2">Nona</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group important">
-                        <label class="control-label">Nama Depan (dan Nama Tengah) : </label>
-                        <input type="text" value="" class="form-control" />
-                    </div>
-                    
-                    <div class="form-group important">
-                        <label class="control-label">Nama Belakang / Nama Keluarga: </label>
-                        <input type="text" value="" class="form-control" />
-                    </div>
-                    
-                    <div class="form-group important">
-                        <label class="control-label">Nomor Telepon : </label>
-                        <input type="text" value="" class="form-control" />
-                    </div>
-                    
-                    <div class="form-group important">
-                        <label class="control-label">Masukan alamat email Anda : </label>
-                        <input type="text" value="" class="form-control" />
-                    </div>
-                    
-                    <div class="form-group">
-                        <a class="btn btn-yellow form-control">LANJUT</a>
-                    </div>
+                    <form name="BuyerForm" novalidate>
 
-                </div>
-            </div><!-- .page-step-1 -->
-            <div class="page-step-2">
-                <h3><b>DATA</b> PENUMPANG</h3>
-            
-                <div class="passenger">
-                    <header class="passenger__header">
-                        <h4 class="passenger__title">Penumpang Dewasa</h4>
-                    </header><!-- .passenger__header -->
-                    <div class="passenger__body">
                         <div class="form-group">
                             <label class="control-label">Title : </label>
-                            <select class="form-control">
+                            <select class="form-control" name="title">
                                 <option value="0">Tuan</option>
                                 <option value="1">Nyonya</option>
                                 <option value="2">Nona</option>
@@ -128,97 +111,235 @@ default:
 
                         <div class="form-group important">
                             <label class="control-label">Nama Depan (dan Nama Tengah) : </label>
-                            <input type="text" value="" class="form-control" />
+                            <input type="text" value="" ng-model="CheckoutConfig.BuyerInfo.FirstName" name="FirstName" class="form-control" required />
                         </div>
 
                         <div class="form-group important">
                             <label class="control-label">Nama Belakang / Nama Keluarga: </label>
-                            <input type="text" value="" class="form-control" />
+                            <input type="text" value="" ng-model="CheckoutConfig.BuyerInfo.LastName" name="LastName" class="form-control" required />
                         </div>
-                    
+
                         <div class="form-group important">
-                            <label class="control-label">Tanggal Lahir: </label>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <select class="form-control">
-                                        <option value="1">1</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-4">
-                                    <select class="form-control">
-                                        <option value="1">Jan</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-4">
-                                    <select class="form-control">
-                                        <option value="1">2000</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <label class="control-label">Nomor Telepon : </label>
+                            <input type="number" value="" ng-model="CheckoutConfig.BuyerInfo.Phone" name="Phone" class="form-control" required />
                         </div>
-                    
-                        <div class="form-group">
-                            <label class="control-label">No. Passport</label>
-                            <input type="text" value="" class="form-control" />
-                        </div>
-                    
+
                         <div class="form-group important">
-                            <label class="control-label">Tanggal Kadaluarsa Passport: </label>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <select class="form-control">
-                                        <option value="1">1</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-4">
-                                    <select class="form-control">
-                                        <option value="1">Jan</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-4">
-                                    <select class="form-control">
-                                        <option value="1">2000</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <div class="form-group">
-                            <label class="control-label">Nationality:</label>
-                            <select class="form-control">
-                                <option value="62">Indonesia</option>
-                            </select>
+                            <label class="control-label">Masukan alamat email Anda : </label>
+                            <input type="email" value="" ng-model="CheckoutConfig.BuyerInfo.Email" name="Email" class="form-control" required />
                         </div>
 
                         <div class="form-group">
-                            <a class="btn btn-yellow form-control">LANJUT</a>
+                            <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(2)" ng-disabled="BuyerForm.$invalid">LANJUT</button>
                         </div>
-                    </div><!-- .passenger__body -->
+
+                    </form>
+
+                </div>
+            </div><!-- .page-step-1 -->
+
+            <div class="page-step-2" ng-show="PageConfig.ActivePage == 2">
+                <h3><b>DATA</b> PENUMPANG</h3>
+            
+                <form novalidate name="PassengerForm">
+                    <div class="passenger passenger-{{$index}}" id="passenger-{{$index}}" ng-repeat="Passenger in CheckoutConfig.Passengers track by $index">
+                        <header class="passenger__header">
+                            <h4 class="passenger__title">Penumpang Dewasa</h4>
+                        </header><!-- .passenger__header -->
+                        <div class="passenger__body">
+                            <div class="form-group">
+                                <label class="control-label">Title : </label>
+                                <select class="form-control" required ng-model="Passenger.Title" name="passenger_{{$index}}_title">
+                                    <option value="0">Tuan</option>
+                                    <option value="1">Nyonya</option>
+                                    <option value="2">Nona</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group important">
+                                <label class="control-label">Nama Depan (dan Nama Tengah) : </label>
+                                <input type="text" value="" class="form-control" required name="passenger_{{$index}}_firstname" ng-model="Passenger.FirstName" />
+                            </div>
+
+                            <div class="form-group important">
+                                <label class="control-label">Nama Belakang / Nama Keluarga: </label>
+                                <input type="text" value="" class="form-control" required name="passenger_{{$index}}_lastname" ng-model="Passenger.LastName" />
+                            </div>
+                        
+                            <!-- passenger birth date start -->
+                            <div class="form-group important">
+                                <label class="control-label">Tanggal Lahir: </label>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <p class="form-control"></p>
+                                    </div>
+                                    <!--
+                                        <div class="col-xs-4">
+                                            <select class="form-control" required name="passenger_{{$index}}_birthDate" ng-model="Passenger.Birth.Date" ng-change="ValidateBirthday(Passenger)">
+                                                <option value="1">1</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <select class="form-control" required name="passenger_{{$index}}_birthMonth" ng-model="Passenger.Birth.Month" ng-change="ValidateBirthday(Passenger)">
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.Birth.Month" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.Birth.Month" ng-if="Passenger.type == 'child' && (!(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth))">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.Birth.Month" ng-if="Passenger.type == 'infant' && (!(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth))">{{month.name}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.Birth.Year" ng-change="ValidateBirthday(Passenger)">
+                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.Birth.Year">{{year}}</option>
+                                            </select>
+                                        </div>
+                                    -->
+                                </div>
+                            </div>
+                            <!-- passenger birth date end-->
+                            
+                            <!-- passenger passport start -->
+                            <div class="form-group">
+                                <label class="control-label">No. Passport</label>
+                                <input type="text" value="" class="form-control" name="passenger_{{$index}}_passportNumber" ng-model="Passenger.Passport.Number" ng-required="CheckoutConfig.PassportRequired" />
+                            </div>
+
+                            <div class="form-group important">
+                                <label class="control-label">Tanggal Kadaluarsa Passport: </label>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <select class="form-control">
+                                            <option value="1">1</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <select class="form-control">
+                                            <option value="1">Jan</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <select class="form-control">
+                                            <option value="1">2000</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- passenger passport end -->
+                        
+                            <!-- passenger nationality start -->
+                            <div class="form-group" ng-show="CheckoutConfig.NationalityRequired || CheckoutConfig.PassportRequired">
+                                <label class="control-label"><span ng-show="CheckoutConfig.NationalityRequired">Nationality:</span><span ng-show="CheckoutConfig.PassportRequired">Passport Country</span></label>
+                                <select class="form-control" ng-name="passenger_{{$index}}_passportCountry" ng-model="Passenger.Passport.Country" ng-required="CheckoutConfig.NationalityRequired">
+                                    <option ng-repeat="country in Countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
+                                </select>
+                            </div>
+                            <!-- passenger nationality end -->
+
+                        </div><!-- .passenger__body -->
+
+                    </div><!-- .passenger -->
+                </form>
+            
+                <div class="form-group">
+                    <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
+                </div>
+            
+                <div class="form-group">
+                    <button ng-click="PrintScope()" class="btn btn-block">PRINT $SCOPE</button>
                 </div>
 
             </div><!-- .page-step-2 -->
         
-            <div class="page-step-3">
+            <div class="page-step-3" ng-show="PageConfig.ActivePage == 3">
             
+                <div class="summary summary--payment">
+                    <h3 class="summary__title"><b>METODE</b> PEMBAYARAN</h3>
+                    <div class="summary__body">
+                    
+                        <form>
+                            
+                            <label>
+                                <header>
+                                    <div class="input-wrapper">
+                                        <input type="radio" name="paymentMethod" value="BankTransfer" checked />
+                                    </div>
+                                    <h5>Bank Transfer</h5>
+                                </header>
+                                <section>
+                                    <img src="/Assets/images/payment-atm.jpg" alt="Bank Transfer" />
+                                </section>
+                            </label>
+                            <label>
+                                <header>
+                                    <div class="input-wrapper">
+                                        <input type="radio" name="paymentMethod" value="Credit Card"/>
+                                    </div>
+                                    <h5>Kartu Kredit</h5>
+                                </header>
+                                <section>
+                                    <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
+                                </section>
+                            </label>
+                            <label>
+                                <header>
+                                    <div class="input-wrapper">
+                                        <input type="radio" name="paymentMethod" value="VirtualAccount"/>
+                                    </div>
+                                    <h5>Bank Transfer</h5>
+                                </header>
+                                <section>
+                                    <img src="/Assets/images/payment-atm.jpg" alt="Virtual Account" />
+                                </section>
+                            </label>
+                            <label>
+                                <header>
+                                    <div class="input-wrapper">
+                                        <input type="radio" name="paymentMethod" value="MandiriClickpay"/>
+                                    </div>
+                                    <h5>Bank Transfer</h5>
+                                </header>
+                                <section>
+                                    <img src="/Assets/images/payment-mandiri.jpg" alt="Bank Transfer" />
+                                </section>
+                            </label>
+
+                        </form>    
+
+                    </div><!-- .summary__body -->
+                </div><!-- .summary--payment -->
+
                 <div class="summary summary--price">
                     <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
                     <div class="summary__body">
                         <dl>
                             <dt>Total Tiket</dt>
-                            <dd><sup>Rp</sup> 123.456.789</dd>
+                            <dd><sup>Rp</sup> {{CheckoutConfig.Price | number}}</dd>
                         </dl>
-                        <dl>
+                        <dl ng-show="CheckoutConfig.Voucher.Validated && CheckoutConfig.Voucher.Valid">
                             <dt>Potongan Harga</dt>
-                            <dd><sup>Rp</sup>- 123.456.789</dd>
+                            <dd><sup>Rp</sup>- {{CheckoutConfig.Voucher.Amount | number}}</dd>
                         </dl>
                         <dl class="total-price">
                             <dt>Total</dt>
-                            <dd><sup>Rp</sup> 123.456.789</dd>
+                            <dd><sup>Rp</sup> {{CheckoutConfig.Price - CheckoutConfig.Voucher.Amount | number}}</dd>
                         </dl>
                     </div><!-- .summary__body -->
                 </div><!-- .summar--price -->
                 <div class="summary summary--voucher">
-                    
+                    <div class="container">
+                        <h4>Punya kupon Travorama</h4>
+                        <form class="form form-horizontal">
+                            <div class="form-group">
+                                <input type="text" value="" class="form-control" ng-model="CheckoutConfig.Voucher.Code" ng-disabled="CheckoutConfig.Voucher.Validated && CheckoutConfig.Voucher.Valid" />
+                                <p class="form-control-static" ng-show="CheckoutConfig.Voucher.Validated && !CheckoutConfig.Voucher.Valid">{{CheckoutConfig.Voucher.Status}}</p>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-6 col-xs-offset-6">
+                                    <input type="button" class="btn btn-grey btn-block" ng-click="CheckoutConfig.Voucher.Reset()" ng-show="CheckoutConfig.Voucher.Validated && CheckoutConfig.Voucher.Valid" value="RESET">
+                                    <button class="btn btn-yellow btn-block" ng-click="CheckoutConfig.Voucher.Check()" ng-disabled="!CheckoutConfig.Voucher.Code || CheckoutConfig.Voucher.Validating" ng-hide="CheckoutConfig.Voucher.Validated && CheckoutConfig.Voucher.Valid" >REDEEM</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                 </div><!-- .summary--voucher-->
                 <div class="summary summary--passenger">
                     <h3 class="summary__title"><b>DAFTAR</b> PENUMPANG</h3>
@@ -262,9 +383,6 @@ default:
 
                     </div><!-- .summary__body -->
                 </div><!-- .summary--passenger -->
-                <div class="summary summary--payment">
-                    <h3><b>METODE</b> PEMBAYARAN</h3>
-                </div><!-- .summar--payment -->
 
                 <a class="btn btn-yellow form-control">LANJUT</a>
 
@@ -272,6 +390,17 @@ default:
             </div><!-- .page-step-3 -->
 
         </div><!-- .page-body -->
+    
+        <!-- additional overlay page start -->
+        <div class="overlay datepicker overlay--theme--blue" id="calendar-overlay">
+            <div class="overlay__header">
+                <h3 class="overlay__title">Tanggal Lahir <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span></h3>
+            </div><!-- .overlay__header -->
+            <div class="overlay__body">
+                <div class="ui-datepicker"></div>
+            </div><!-- .overlay__body -->
+        </div>
+        <!-- additional overlay page end -->
 
     </div><!-- .page-loaded -->
         

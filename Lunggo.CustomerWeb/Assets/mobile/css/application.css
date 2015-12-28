@@ -21,6 +21,11 @@ body {
 .display-block {
   display: block !important; }
 
+.btn {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; }
+
 .btn.btn-yellow {
   background: #ffd632;
   border: 2px solid #ebb600;
@@ -37,13 +42,29 @@ body {
   display: block;
   width: 100%; }
 
+.error-message {
+  padding: 5px 10px; }
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0; }
+
+input[type="text"], input[type="password"], input[type="number"] {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; }
+
 .site-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 60px;
-  z-index: 999; }
+  z-index: 999;
+  -webkit-box-shadow: 0px -2px 15px #555;
+  -moz-box-shadow: 0px -2px 15px #555;
+  box-shadow: 0px -2px 15px #555; }
   .site-header .header-display {
     background: #fff;
     text-align: center;
@@ -180,6 +201,49 @@ body {
 
 .site-content {
   min-height: 300px; }
+  .site-content a {
+    color: #2fb4e6; }
+
+.section-title {
+  font-weight: 600;
+  padding-bottom: 15px;
+  margin-bottom: 15px; }
+  .section-title span {
+    color: #1eafe4; }
+  .section-title.stripe {
+    background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat; }
+
+.form-wrapper {
+  padding: 15px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; }
+  .form-wrapper .form-wrapper__header {
+    padding-left: 35px;
+    position: relative;
+    margin-bottom: 25px; }
+    .form-wrapper .form-wrapper__header:before {
+      width: 25px;
+      height: 50px;
+      content: "";
+      display: block;
+      background-repeat: no-repeat;
+      position: absolute;
+      left: 0;
+      top: 0; }
+    .form-wrapper .form-wrapper__header .form-wrapper__title {
+      font-weight: bold;
+      margin-top: 5px;
+      margin-bottom: 2px;
+      font-size: 18px; }
+  .form-wrapper.form-wrapper--login .form-wrapper__header:before {
+    background-image: url(/Assets/mobile/images/login-header-left.png); }
 
 .site-footer {
   background-color: #111;
@@ -276,7 +340,7 @@ body {
       margin: 0; }
     .overlay .overlay__header .overlay__close {
       float: right; }
-  .overlay .overlay__content {
+  .overlay .overlay__content, .overlay .overlay__body {
     background: #fff;
     min-height: 100%;
     padding: 12px;
@@ -296,6 +360,56 @@ body {
       display: block; }
   .overlay.overlay--theme--blue .overlay__header {
     background: #1daee4; }
+
+.overlay.datepicker .overlay__body {
+  background: #616161;
+  color: #fff; }
+  .overlay.datepicker .overlay__body a {
+    color: #fff; }
+  .overlay.datepicker .overlay__body select {
+    color: #000;
+    font-size: 14px;
+    margin-left: 5px; }
+
+.overlay.datepicker .ui-datepicker .ui-datepicker-header {
+  text-align: center;
+  position: relative;
+  padding-top: 20px;
+  height: 50px; }
+  .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+    position: absolute;
+    left: 0;
+    width: 25px;
+    height: 25px;
+    background-image: url(/Assets/mobile/images/ui-calendar-nav.png);
+    background-repeat: no-repeat;
+    background-position: -30px 0;
+    background-size: 200%; }
+  .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+    left: auto;
+    right: 0;
+    background-position: 0 0; }
+  .overlay.datepicker .ui-datepicker .ui-datepicker-header:after, .overlay.datepicker .ui-datepicker .ui-datepicker-header:before {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+
+.overlay.datepicker .ui-datepicker .ui-datepicker-calendar {
+  width: 100%;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto; }
+  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar thead tr th {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    text-align: center; }
+  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar tbody tr td {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 5px; }
 
 /*--------------------*/
 .page.page-flight .flight-loading {
@@ -367,6 +481,11 @@ body {
     padding: 15px 0; }
   .page.page-flight .flight-sort-filter .flight-sort-filter-action a + a {
     border-left: 1px solid #8f8f8f; }
+
+.page.page-flight .flight-notice {
+  background: #ff9a24;
+  color: #fff;
+  padding: 5px; }
 
 .page.page-flight .flight-selection {
   background: #e5e3e4;
@@ -583,6 +702,8 @@ body {
         font-weight: bold; }
     .overlay--flight-detail .overlay__content .flight-title.flight-title--return .flight-info:before {
       background-position: -22px 0; }
+  .overlay--flight-detail .overlay__content .flight-notice {
+    background: #d70000; }
   .overlay--flight-detail .overlay__content .flight-wrapper .flight {
     position: relative; }
     .overlay--flight-detail .overlay__content .flight-wrapper .flight:before, .overlay--flight-detail .overlay__content .flight-wrapper .flight:after {
@@ -692,6 +813,8 @@ body {
 
 .page.page-checkout .page__body {
   padding: 10px; }
+  .page.page-checkout .page__body .page-step-2 .btn.btn-yellow {
+    margin-top: 25px; }
 
 .page.page-checkout .passenger {
   background: #fff;
@@ -705,6 +828,9 @@ body {
       margin: 0; }
   .page.page-checkout .passenger .passenger__body {
     padding: 10px; }
+
+.page.page-checkout .summary .summary__title {
+  color: #333; }
 
 .page.page-checkout .summary.summary--price dl:before, .page.page-checkout .summary.summary--price dl:after {
   display: block;
@@ -773,3 +899,47 @@ body {
       float: left;
       width: 50%;
       font-weight: bold; }
+
+.page.page-checkout .summary.summary--voucher {
+  background: #eaeaea;
+  padding: 10px; }
+  .page.page-checkout .summary.summary--voucher h4 {
+    font-weight: bold; }
+
+.page.page-checkout .summary.summary--payment label {
+  border: 1px solid #ccc;
+  display: block;
+  width: 100%;
+  background: #fff;
+  color: #fff; }
+  .page.page-checkout .summary.summary--payment label header {
+    background: #36b6e7;
+    position: relative; }
+    .page.page-checkout .summary.summary--payment label header:before, .page.page-checkout .summary.summary--payment label header:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .page.page-checkout .summary.summary--payment label header .input-wrapper {
+      float: left;
+      background: #028ec3;
+      width: 30px;
+      text-align: center;
+      position: absolute;
+      height: 100%;
+      padding-top: 5px; }
+    .page.page-checkout .summary.summary--payment label header h5 {
+      padding: 10px;
+      margin: 0;
+      float: left;
+      padding-left: 40px;
+      font-weight: bold;
+      width: 100%; }
+  .page.page-checkout .summary.summary--payment label section {
+    text-align: center;
+    padding: 5px; }
+
+.page.page-forgotpassword form {
+  border-top: 1px solid #ccc;
+  margin-top: 15px;
+  padding-top: 15px; }
