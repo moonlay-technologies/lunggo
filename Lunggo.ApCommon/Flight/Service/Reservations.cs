@@ -80,7 +80,14 @@ namespace Lunggo.ApCommon.Flight.Service
             var storageName = azureConnString.Split(';')[1].Split('=')[1];
             var url = @"https://" + storageName + @".blob.core.windows.net/eticket/" + rsvNo + ".pdf";
             var client = new WebClient();
-            return client.DownloadData(url);
+            try
+            {
+                return client.DownloadData(url);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

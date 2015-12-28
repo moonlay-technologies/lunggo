@@ -180,16 +180,10 @@
     @Scripts.Render("~/scripts/CustomAutoComplete.js")
     @Scripts.Render("~/scripts/Flip.js")
     
-    
-    <script>
-    $(document).ready(function () {
-        $(".panel2").hide();
-        $(".flip").click(function () {
-            $(".panel2").toggle();
-            $(".panel1").toggle();
-        });
-    });
-    </script>
+    @if (IsSectionDefined("PageJS"))
+    {
+        @RenderSection("PageJS")
+    }
 
 </body>
 </html>

@@ -10,16 +10,26 @@
     var dict = DictionaryService.GetInstance();
 }
 
-<h3><i class="fa fa-angle-right"></i> Flight Reservation</h3>
+@section PageJS {
+    <script>
+        $(".togel").click(function () {
+            $(this).next().toggle();
+        });
+    </script>
+}
+
+<h3><i class="fa fa-angle-right"></i> Flight Price Margin List</h3>
 <div class="row">
 
     <div class="col-md-12">
         <div class="content-panel">
-            <h4><i class="fa fa-angle-right"></i> Flight Reservation List</h4>
+            <h4><i class="fa fa-angle-right"></i> Flight Price Margin List</h4>
             <hr>
+        <a href="@Url.Action("PriceMarginAdd", "Flight")">Add Price Margin Rule</a>
             <table class="table table-hover table-flight-booking">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Name</th>
                         <th>Description</th>
                         <th>Booking Date Spans</th>
@@ -52,128 +62,255 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     @foreach (var rule in Model)
                     {
-                        <tr>
+                        <tr class="togel">
+                            <td>
+                                <a href="@Url.Action("PriceMarginUpdate", "Flight", new {id = rule.RuleId})">Update</a>
+                                <a href="@Url.Action("PriceMarginDelete", "Flight", new {id = rule.RuleId})">Delete</a>
+                            </td>
+                            <td>
+                                @rule.Name
+                            </td>
+                            <td>@rule.Description</td>
+                            <td nowrap>
+                                @if (rule.BookingDateSpans.Count != 0)
+                                {
+                                    @:@rule.BookingDateSpans[0].Start.ToString("dd/MM/yy") - @rule.BookingDateSpans[0].End.ToString("dd/MM/yy") (@rule.BookingDateSpans.Count)<br />
+                                }
+                            </td>
+                            <td>
+                                @if (rule.BookingDays.Count != 0)
+                                {
+                                    @:@rule.BookingDays[0].ToString() (@rule.BookingDays.Count)<br />
+                                }
+                            </td>
+                            <td>
+                                @if (rule.BookingDates.Count != 0)
+                                {
+                                    @:@rule.BookingDates[0].ToString("dd/MM/yy") (@rule.BookingDates.Count)<br />
+                                }
+                            </td>
+                            <td>
+                                @if (rule.FareTypes.Count != 0)
+                                {
+                                    @:@rule.FareTypes[0] (@rule.FareTypes.Count)<br />
+                                }
+                            </td>
+                            <td>
+                                @if (rule.CabinClasses.Count != 0)
+                                {
+                                    @:@rule.CabinClasses[0] (@rule.CabinClasses.Count)<br />
+                                }
+                            </td>
+                            <td>
+                                @if (rule.TripTypes.Count != 0)
+                                {
+                                    @:@rule.TripTypes[0] (@rule.TripTypes.Count)<br />
+                                }
+                            </td>
+                            <td nowrap>
+                                @if (rule.DepartureDateSpans.Count != 0)
+                                {
+                                    @:@rule.DepartureDateSpans[0].Start.ToString("dd/MM/yy") - @rule.DepartureDateSpans[0].End.ToString("dd/MM/yy") (@rule.DepartureDateSpans.Count)<br />
+                                }
+                            </td>
+                            <td>
+                                @if (rule.DepartureDays.Count != 0)
+                                {
+                                    @:@rule.DepartureDays[0].ToString() (@rule.DepartureDays.Count)<br />
+                                }
+                            </td>
+                            <td nowrap>
+                                @if (rule.DepartureDates.Count != 0)
+                                {
+                                    @:@rule.DepartureDates[0].ToString("dd/MM/yy") (@rule.DepartureDates.Count)<br />
+                                }
+                            </td>
+                            <td nowrap>
+                                @if (rule.DepartureTimeSpans.Count != 0)
+                                {
+                                    @:@rule.DepartureTimeSpans[0].Start.ToString("HH:mm") - @rule.DepartureTimeSpans[0].End.ToString("HH:mm") (@rule.DepartureTimeSpans.Count)<br />
+                                }
+                            </td>
+                            <td nowrap>
+                                @if (rule.ReturnDateSpans.Count != 0)
+                                {
+                                    @:@rule.ReturnDateSpans[0].Start.ToString("dd/MM/yy") - @rule.ReturnDateSpans[0].End.ToString("dd/MM/yy") (@rule.ReturnDateSpans.Count)<br />
+                                }
+                            </td>
+                            <td>
+                                @if (rule.ReturnDays.Count != 0)
+                                {
+                                    @:@rule.ReturnDays[0].ToString() (@rule.ReturnDays.Count)<br />
+                                }
+                            </td>
+                            <td nowrap>
+                                @if (rule.ReturnDates.Count != 0)
+                                {
+                                    @:@rule.ReturnDates[0].ToString("dd/MM/yy") (@rule.ReturnDates.Count)<br />
+                                }
+                            </td>
+                            <td nowrap>
+                                @if (rule.ReturnTimeSpans.Count != 0)
+                                {
+                                    @:@rule.ReturnTimeSpans[0].Start.ToString("HH:mm") - @rule.ReturnTimeSpans[0].End.ToString("HH:mm") (@rule.ReturnTimeSpans.Count)<br />
+                                }
+                            </td>
+                            <td>@rule.MaxPassengers</td>
+                            <td>@rule.MinPassengers</td>
+                            <td nowrap>
+                                @if (rule.Airlines.Count != 0)
+                                {
+                                    @:@rule.Airlines[0] (@rule.Airlines.Count)<br />
+                                }
+                            </td>
+                            <td>@rule.AirlinesIsExclusion</td>
+                            <td nowrap>
+                                @if (rule.AirportPairs.Count != 0)
+                                {
+                                    @:@rule.AirportPairs[0].Origin-@rule.AirportPairs[0].Destination (@rule.AirportPairs.Count)<br />
+                                }
+                            </td>
+                            <td>@rule.AirportPairsIsExclusion</td>
+                            <td nowrap>
+                                @if (rule.CityPairs.Count != 0)
+                                {
+                                    @:@rule.CityPairs[0].Origin-@rule.CityPairs[0].Destination (@rule.CityPairs.Count)<br />
+                                }
+                            </td>
+                            <td>@rule.CityPairsIsExclusion</td>
+                            <td nowrap>
+                                @if (rule.CountryPairs.Count != 0)
+                                {
+                                    @:@rule.CountryPairs[0].Origin-@rule.CountryPairs[0].Destination (@rule.CountryPairs.Count)<br />
+                                }
+                            </td>
+                            <td>@rule.CountryPairsIsExclusion</td>
+                            <td>@((rule.Coefficient * 100M).ToString("0.###"))%</td>
+                            <td>@rule.Constant.ToString("'Rp '##,##0")</td>
+                            <td>@rule.IsFlat</td>
+                        </tr>
+                        <tr hidden>
                             <td>@rule.Name</td>
                             <td>@rule.Description</td>
                             <td nowrap>
-                                    @foreach (var span in rule.BookingDateSpans)
-                                    {
-                                        @:@span.Start.ToString("dd/MM/yy") - @span.End.ToString("dd/MM/yy")<br />
+                                @foreach (var span in rule.BookingDateSpans)
+                                {
+                                    @:@span.Start.ToString("dd/MM/yy") - @span.End.ToString("dd/MM/yy")<br />
                                     }
                             </td>
                             <td>
-                                    @foreach (var day in rule.BookingDays)
-                                    {
-                                        @:@day.ToString()<br />
+                                @foreach (var day in rule.BookingDays)
+                                {
+                                    @:@day.ToString()<br />
                                     }
                             </td>
                             <td>
-                                    @foreach (var date in rule.BookingDates)
-                                    {
-                                        @:@date.ToString("dd/MM/yy")<br />
+                                @foreach (var date in rule.BookingDates)
+                                {
+                                    @:@date.ToString("dd/MM/yy")<br />
                                     }
                             </td>
                             <td>
-                                    @foreach (var type in rule.FareTypes)
-                                    {
-                                        @:@type<br />
+                                @foreach (var type in rule.FareTypes)
+                                {
+                                    @:@type<br />
                                     }
                             </td>
                             <td>
-                                    @foreach (var cabinClass in rule.CabinClasses)
-                                    {
-                                        @:@cabinClass<br />
+                                @foreach (var cabinClass in rule.CabinClasses)
+                                {
+                                    @:@cabinClass<br />
                                     }
                             </td>
                             <td>
-                                    @foreach (var type in rule.TripTypes)
-                                    {
-                                        @:@type<br />
+                                @foreach (var type in rule.TripTypes)
+                                {
+                                    @:@type<br />
                                     }
                             </td>
                             <td nowrap>
-                                    @foreach (var span in rule.DepartureDateSpans)
-                                    {
-                                        @:@span.Start.ToString("dd/MM/yy") - @span.End.ToString("dd/MM/yy")<br />
+                                @foreach (var span in rule.DepartureDateSpans)
+                                {
+                                    @:@span.Start.ToString("dd/MM/yy") - @span.End.ToString("dd/MM/yy")<br />
                                     }
                             </td>
                             <td>
-                                    @foreach (var day in rule.DepartureDays)
-                                    {
-                                        @:@day.ToString()<br />
+                                @foreach (var day in rule.DepartureDays)
+                                {
+                                    @:@day.ToString()<br />
                                     }
                             </td>
                             <td nowrap>
-                                    @foreach (var date in rule.DepartureDates)
-                                    {
-                                        @:@date.ToString("dd/MM/yy")<br />
+                                @foreach (var date in rule.DepartureDates)
+                                {
+                                    @:@date.ToString("dd/MM/yy")<br />
                                     }
                             </td>
                             <td nowrap>
-                                    @foreach (var span in rule.DepartureTimeSpans)
-                                    {
-                                        @:@span.Start.ToString("HH:mm") - @span.End.ToString("HH:mm")<br />
+                                @foreach (var span in rule.DepartureTimeSpans)
+                                {
+                                    @:@span.Start.ToString("HH:mm") - @span.End.ToString("HH:mm")<br />
                                     }
                             </td>
                             <td nowrap>
-                                    @foreach (var span in rule.ReturnDateSpans)
-                                    { 
-                                       @:@span.Start.ToString("dd/MM/yy") - @span.End.ToString("dd/MM/yy")<br />
+                                @foreach (var span in rule.ReturnDateSpans)
+                                {
+                                    @:@span.Start.ToString("dd/MM/yy") - @span.End.ToString("dd/MM/yy")<br />
                                     }
                             </td>
                             <td>
-                                    @foreach (var day in rule.ReturnDays)
-                                    {
-                                        @:@day.ToString()<br />
+                                @foreach (var day in rule.ReturnDays)
+                                {
+                                    @:@day.ToString()<br />
                                     }
                             </td>
                             <td nowrap>
-                                    @foreach (var date in rule.ReturnDates)
-                                    {
-                                        @:@date.ToString("dd/MM/yy")<br />
+                                @foreach (var date in rule.ReturnDates)
+                                {
+                                    @:@date.ToString("dd/MM/yy")<br />
                                     }
                             </td>
                             <td nowrap>
-                                    @foreach (var span in rule.ReturnTimeSpans)
-                                    {
-                                        @:@span.Start.ToString("HH:mm") - z@span.End.ToString("HH:mm")<br />
+                                @foreach (var span in rule.ReturnTimeSpans)
+                                {
+                                    @:@span.Start.ToString("HH:mm") - z@span.End.ToString("HH:mm")<br />
                                     }
                             </td>
                             <td>@rule.MaxPassengers</td>
                             <td>@rule.MinPassengers</td>
                             <td nowrap>
-                                    @foreach (var airline in rule.Airlines)
-                                    {
-                                        @:@dict.GetAirlineName(airline) (@airline)<br />
+                                @foreach (var airline in rule.Airlines)
+                                {
+                                    @:@dict.GetAirlineName(airline) (@airline)<br />
                                     }
                             </td>
                             <td>@rule.AirlinesIsExclusion</td>
                             <td nowrap>
-                                    @foreach (var pair in rule.AirportPairs)
-                                    {
-                                        @:@dict.GetAirportName(pair.Origin) (@pair.Origin) - @dict.GetAirportName(pair.Destination) (@pair.Destination)<br />
+                                @foreach (var pair in rule.AirportPairs)
+                                {
+                                    @:@dict.GetAirportName(pair.Origin) (@pair.Origin) - @dict.GetAirportName(pair.Destination) (@pair.Destination)<br />
                                     }
                             </td>
                             <td>@rule.AirportPairsIsExclusion</td>
                             <td nowrap>
-                                    @foreach (var pair in rule.CityPairs)
-                                    {
-                                        @:@dict.GetAirportCity(pair.Origin) (@pair.Origin) - @dict.GetAirportCity(pair.Destination) (@pair.Destination)<br/>
+                                @foreach (var pair in rule.CityPairs)
+                                {
+                                    @:@dict.GetAirportCity(pair.Origin) (@pair.Origin) - @dict.GetAirportCity(pair.Destination) (@pair.Destination)<br />
                                     }
                             </td>
                             <td>@rule.CityPairsIsExclusion</td>
                             <td nowrap>
-                                    @foreach (var pair in rule.CountryPairs)
-                                    {
-                                        @:@dict.GetAirportCountry(pair.Origin) (@pair.Origin) - @dict.GetAirportCountry(pair.Destination) (@pair.Destination)<br />
+                                @foreach (var pair in rule.CountryPairs)
+                                {
+                                    @:@dict.GetAirportCountry(pair.Origin) (@pair.Origin) - @dict.GetAirportCountry(pair.Destination) (@pair.Destination)<br />
                                     }
                             </td>
                             <td>@rule.CountryPairsIsExclusion</td>
                             <td>@rule.Coefficient</td>
                             <td>@rule.Constant</td>
+                            <td>@rule.IsFlat</td>
                         </tr>
                     }
 

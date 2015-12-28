@@ -1,0 +1,427 @@
+﻿@model Lunggo.ApCommon.Flight.Model.MarginRule
+
+@{
+    ViewBag.Title = "PriceMarginAdd";
+}
+
+<h2>PriceMarginAdd</h2>
+
+
+@using (Html.BeginForm("PriceMarginAdd", "Flight", FormMethod.Post, new { id = "form-submit" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="RuleId" value="@Model.RuleId"/>
+    <div class="form-horizontal">
+        <h4>MarginRule</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookingDateSpans, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var span in Model.BookingDateSpans)
+                {
+                    <div class="row">
+                        <input type="date" value="@span.Start.ToString("yyyy-MM-dd")" class="col-md-5 form-control booking-date-span-start" />
+                        <input type="date" value="@span.End.ToString("yyyy-MM-dd")" class="col-md-5 form-control booking-date-span-end" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-booking-date-span">Add Booking Date Span</a>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookingDays, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var day in Model.BookingDays)
+                {
+                    <div class="row">
+                        <input type="text" value="@day" class="col-md-5 form-control booking-day" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-booking-day">Add Booking Day</a>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookingDates, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var date in Model.BookingDates)
+                {
+                    <div class="row">
+                        <input type="date" value="@date.ToString("yyyy-MM-dd")" class="col-md-5 form-control booking-date" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-booking-date">Add Booking Date</a>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartureDateSpans, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var span in Model.DepartureDateSpans)
+                {
+                    <div class="row">
+                        <input type="date" value="@span.Start.ToString("yyyy-MM-dd")" class="col-md-5 form-control departure-date-span-start" />
+                        <input type="date" value="@span.End.ToString("yyyy-MM-dd")" class="col-md-5 form-control booking-date-span-end" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-departure-date-span">Add Departure Date Span</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartureDays, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var day in Model.DepartureDays)
+                {
+                    <div class="row">
+                        <input type="text" value="@day" class="col-md-5 form-control departure-day" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-departure-day">Add Departure Day</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartureDates, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var date in Model.DepartureDates)
+                {
+                    <div class="row">
+                        <input type="date" value="@date.ToString("yyyy-MM-dd")" class="col-md-5 form-control departure-date" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-departure-date">Add Departure Date</a>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartureTimeSpans, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var span in Model.DepartureTimeSpans)
+                {
+                    <div class="row">
+                        <input type="time" value="@span.Start.ToString("HH:mm")" class="col-md-5 form-control departure-time-span-start" />
+                        <input type="time" value="@span.End.ToString("HH:mm")" class="col-md-5 form-control departure-time-span-end" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-departure-time-span">Add Departure Time Span</a>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReturnDateSpans, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var span in Model.ReturnDateSpans)
+                {
+                    <div class="row">
+                        <input type="date" value="@span.Start.ToString("yyyy-MM-dd")" class="col-md-5 form-control return-date-span-start" />
+                        <input type="date" value="@span.End.ToString("yyyy-MM-dd")" class="col-md-5 form-control booking-date-span-end" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-return-date-span">Add Return Date Span</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReturnDays, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var day in Model.ReturnDays)
+                {
+                    <div class="row">
+                        <input type="text" value="@day" class="col-md-5 form-control return-day" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-return-day">Add Return Day</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReturnDates, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var date in Model.ReturnDates)
+                {
+                    <div class="row">
+                        <input type="date" value="@date.ToString("yyyy-MM-dd")" class="col-md-5 form-control return-date" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-return-date">Add Return Date</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReturnTimeSpans, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var span in Model.ReturnTimeSpans)
+                {
+                    <div class="row">
+                        <input type="time" value="@span.Start.ToString("HH:mm")" class="col-md-5 form-control return-time-span-start" />
+                        <input type="time" value="@span.End.ToString("HH:mm")" class="col-md-5 form-control return-time-span-end" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-return-time-span">Add Return Time Span</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaxPassengers, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaxPassengers, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MinPassengers, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MinPassengers, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Airlines, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var airline in Model.Airlines)
+                {
+                    <div class="row">
+                        <input type="text" value="@airline" class="airline autocomplete col-md-5 form-control" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-airline">Add Airline</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AirlinesIsExclusion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.AirlinesIsExclusion)
+                    @Html.ValidationMessageFor(model => model.AirlinesIsExclusion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.AirportPairs, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var pair in Model.AirportPairs)
+                {
+                    <div class="row">
+                        <input type="text" value="@pair.Origin" class="flight-origin autocomplete col-md-5 form-control airport-origin" />
+                        <input type="text" value="@pair.Destination" class="flight-destination autocomplete form-control col-md-5 airport-destination" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-airport-pair">Add Airport Pair</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AirportPairsIsExclusion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.AirportPairsIsExclusion)
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.CityPairs, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var pair in Model.CityPairs)
+                {
+                    <div class="row">
+                        <input type="text" value="@pair.Origin" class="flight-origin autocomplete col-md-5 form-control city-origin" />
+                        <input type="text" value="@pair.Destination" class="flight-destination autocomplete form-control col-md-5 city-destination" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-airport-pair">Add City Pair</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CityPairsIsExclusion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.CityPairsIsExclusion)
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.CountryPairs, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var pair in Model.CountryPairs)
+                {
+                    <div class="row">
+                        <input type="text" value="@pair.Origin" class="flight-origin autocomplete col-md-5 form-control country-origin" />
+                        <input type="text" value="@pair.Destination" class="flight-destination autocomplete form-control col-md-5 country-destination" />
+                        <a class="col-md-2 remove">Remove</a>
+                    </div>
+                }
+                <a class="add-airport-pair">Add Country Pair</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CountryPairsIsExclusion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.CountryPairsIsExclusion)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Coefficient, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Coefficient, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Coefficient, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Constant, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Constant, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Constant, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsFlat, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.IsFlat)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" id="submit-button"/>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section PageJS {
+    <script>
+        $(".add-airline").click(function() {
+            $(this).parent().append('<div class="row"><input type="text" class="airline autocomplete col-md-5 form-control" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-airport-pair").click(function() {
+            $(this).parent().append('<div class="row"><input type="text" class="flight-origin autocomplete col-md-5 form-control airport-origin" /><input type="text" class="flight-destination autocomplete form-control col-md-5 airport-destination" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-city-pair").click(function () {
+            $(this).parent().append('<div class="row"><input type="text" class="flight-origin autocomplete col-md-5 form-control city-origin" /><input type="text" class="flight-destination autocomplete form-control col-md-5 city-destination" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-country-pair").click(function () {
+            $(this).parent().append('<div class="row"><input type="text" class="flight-origin autocomplete col-md-5 form-control country-origin" /><input type="text" class="flight-destination autocomplete form-control col-md-5 country-destination" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-booking-date-span").click(function() {
+            $(this).parent().append('<div class="row"><input type="date" class="col-md-5 form-control booking-date-span-start" /><input type="date" class="col-md-5 form-control booking-date-span-end" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-booking-day").click(function() {
+            $(this).parent().append('<div class="row"><input type="text" class="col-md-5 form-control booking-day" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-booking-date").click(function() {
+            $(this).parent().append('<div class="row"><input type="date" class="col-md-5 form-control booking-date" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-departure-date-span").click(function () {
+            $(this).parent().append('<div class="row"><input type="date" class="col-md-5 form-control departure-date-span-start" /><input type="date" class="col-md-5 form-control booking-date-span-end" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-departure-day").click(function () {
+            $(this).parent().append('<div class="row"><input type="text" class="col-md-5 form-control departure-day" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-departure-date").click(function () {
+            $(this).parent().append('<div class="row"><input type="date" class="col-md-5 form-control departure-date" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-departure-time-span").click(function() {
+            $(this).parent().append('<div class="row"><input type="time" class="col-md-5 form-control departure-time-span-start" /><input type="time" class="col-md-5 form-control departure-time-span-end" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-return-date-span").click(function () {
+            $(this).parent().append('<div class="row"><input type="date" class="col-md-5 form-control return-date-span-start" /><input type="date" class="col-md-5 form-control booking-date-span-end" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-return-day").click(function () {
+            $(this).parent().append('<div class="row"><input type="text" class="col-md-5 form-control return-day" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-return-date").click(function () {
+            $(this).parent().append('<div class="row"><input type="date" class="col-md-5 form-control return-date" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $(".add-return-time-span").click(function () {
+            $(this).parent().append('<div class="row"><input type="time" class="col-md-5 form-control return-time-span-start" /><input type="time" class="col-md-5 form-control return-time-span-end" /><a class="col-md-2 remove">Remove</a></div>');
+        });
+        $('body').on('click', '.remove', function() {
+            $(this).parent().remove();
+        });
+        $("#submit-button").click(function (evt) {
+            evt.preventDefault();
+            MvcName(".booking-date-span-start", "BookingDateSpans[", "].Start");
+            MvcName(".booking-date-span-end", "BookingDateSpans[", "].End");
+            MvcName(".booking-day", "BookingDateDays[", "]");
+            MvcName(".booking-date", "BookingDateDates[", "]");
+            MvcName(".departure-date-span-start", "DepartureDateSpans[", "].Start");
+            MvcName(".departure-date-span-end", "DepartureDateSpans[", "].End");
+            MvcName(".departure-day", "DepartureDateDays[", "]");
+            MvcName(".departure-date", "DepartureDateDates[", "]");
+            MvcName(".departure-time-span-start", "DepartureTimeSpans[", "].Start");
+            MvcName(".departure-time-span-end", "DepartureTimeSpans[", "].End");
+            MvcName(".return-date-span-start", "ReturnDateSpans[", "].Start");
+            MvcName(".return-date-span-end", "ReturnDateSpans[", "].End");
+            MvcName(".return-day", "ReturnDateDays[", "]");
+            MvcName(".return-date", "ReturnDateDates[", "]");
+            MvcName(".return-time-span-start", "ReturnTimeSpans[", "].Start");
+            MvcName(".return-time-span-end", "ReturnTimeSpans[", "].End");
+            MvcName(".airline", "Airlines[", "]");
+            MvcName(".airport-origin", "AirportPairs[", "].Origin");
+            MvcName(".airport-destination", "AirportPairs[", "].Destination");
+            MvcName(".city-origin", "CityPairs[", "].Origin");
+            MvcName(".city-destination", "CityPairs[", "].Destination");
+            MvcName(".country-origin", "CountryPairs[", "].Origin");
+            MvcName(".country-destination", "CountryPairs[", "].Destination");
+            $("#form-submit").submit();
+        });
+
+        function MvcName(type, prefix, suffix) {
+            var elements = $(type);
+            for (var i = 0; i < elements.length; i++) {
+                var element = $(type + ":eq(" + i + ")");
+                console.log(element);
+                element.attr("name", prefix + i + suffix);
+            }
+        }
+    </script>
+}
