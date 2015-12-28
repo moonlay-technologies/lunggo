@@ -244,6 +244,8 @@ input[type="text"], input[type="password"], input[type="number"] {
       font-size: 18px; }
   .form-wrapper.form-wrapper--login .form-wrapper__header:before {
     background-image: url(/Assets/mobile/images/login-header-left.png); }
+  .form-wrapper.form-wrapper--register .form-wrapper__header:before {
+    background-image: url(/Assets/mobile/images/register-header-left.png); }
 
 .site-footer {
   background-color: #111;

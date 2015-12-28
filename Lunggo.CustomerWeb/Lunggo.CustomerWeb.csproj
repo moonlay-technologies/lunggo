@@ -1013,6 +1013,7 @@
     <Content Include="Assets\mobile\images\flight-separator.png" />
     <Content Include="Assets\mobile\images\login-header-left.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
+    <Content Include="Assets\mobile\images\register-header-left.png" />
     <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
     <Content Include="Assets\mobile\images\yellow-stripe.png" />
     <Content Include="Assets\mobile\js\AccountController.js" />

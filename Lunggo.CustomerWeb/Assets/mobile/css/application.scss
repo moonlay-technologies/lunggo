@@ -173,6 +173,9 @@ input[type="text"], input[type="password"], input[type="number"] {@include borde
     &.form-wrapper--login {
         .form-wrapper__header:before {background-image:url(/Assets/mobile/images/login-header-left.png);}
     }
+    &.form-wrapper--register {
+        .form-wrapper__header:before {background-image:url(/Assets/mobile/images/register-header-left.png);}
+    }
 }
 
 // *****
