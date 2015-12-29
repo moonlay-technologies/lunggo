@@ -50,7 +50,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   -moz-appearance: none;
   margin: 0; }
 
-input[type="text"], input[type="password"], input[type="number"] {
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px; }
@@ -950,3 +950,86 @@ input[type="text"], input[type="password"], input[type="number"] {
   border-top: 1px solid #ccc;
   margin-top: 15px;
   padding-top: 15px; }
+
+.page.page-contact .contact-map {
+  background: url(/Assets/mobile/images/contact-map.jpg) center center;
+  background-size: cover; }
+  .page.page-contact .contact-map .container {
+    padding-left: 15px;
+    padding-right: 15px; }
+  .page.page-contact .contact-map .contact-list {
+    background: #0c9ed5;
+    padding: 15px;
+    color: #fff;
+    margin-top: 15px;
+    margin-bottom: 35px;
+    position: relative;
+    margin-top: 60px;
+    padding-top: 35px;
+    padding-bottom: 0; }
+    .page.page-contact .contact-map .contact-list:before {
+      width: 90px;
+      height: 90px;
+      background: url(/Assets/mobile/images/contact-plane.png) center center no-repeat;
+      content: "";
+      position: absolute;
+      top: -45px;
+      left: 50%;
+      margin-left: -45px; }
+    .page.page-contact .contact-map .contact-list a {
+      color: #fff; }
+    .page.page-contact .contact-map .contact-list > div {
+      padding: 15px;
+      padding-left: 35px;
+      position: relative; }
+      .page.page-contact .contact-map .contact-list > div:before {
+        position: absolute;
+        content: '';
+        width: 30px;
+        height: 30px;
+        background-image: url(/Assets/mobile/images/contact-list-bg.png);
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -35px; }
+      .page.page-contact .contact-map .contact-list > div.address:before {
+        background-position: 0 0; }
+      .page.page-contact .contact-map .contact-list > div.email:before {
+        background-position: -30px 0; }
+    .page.page-contact .contact-map .contact-list > div + div {
+      border-top: 1px solid #7fcae7; }
+    .page.page-contact .contact-map .contact-list h4 {
+      font-weight: bold; }
+
+.page.page-contact .contact-social:before, .page.page-contact .contact-social:after {
+  display: block;
+  width: 100%;
+  content: "";
+  clear: both; }
+
+.page.page-contact .contact-social a {
+  display: block;
+  float: left;
+  width: 33.333333334%;
+  height: 65px;
+  position: relative; }
+  .page.page-contact .contact-social a:before {
+    width: 55px;
+    height: 55px;
+    content: "";
+    background: url(/Assets/mobile/images/contact-social-bg.png);
+    position: absolute;
+    left: 50%;
+    margin-left: -26px;
+    margin-top: 5px; }
+  .page.page-contact .contact-social a.facebook {
+    background-color: #004787; }
+    .page.page-contact .contact-social a.facebook:before {
+      background-position: 0 0; }
+  .page.page-contact .contact-social a.twitter {
+    background-color: #009dd7; }
+    .page.page-contact .contact-social a.twitter:before {
+      background-position: -55px 0; }
+  .page.page-contact .contact-social a.instagram {
+    background-color: #36c8ff; }
+    .page.page-contact .contact-social a.instagram:before {
+      background-position: -110px 0; }

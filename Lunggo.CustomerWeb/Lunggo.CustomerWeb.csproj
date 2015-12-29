@@ -1010,6 +1010,10 @@
       <DependentUpon>application.css</DependentUpon>
     </Content>
     <Content Include="Assets\mobile\images\burger-sprite.png" />
+    <Content Include="Assets\mobile\images\contact-list-bg.png" />
+    <Content Include="Assets\mobile\images\contact-map.jpg" />
+    <Content Include="Assets\mobile\images\contact-plane.png" />
+    <Content Include="Assets\mobile\images\contact-social-bg.png" />
     <Content Include="Assets\mobile\images\flight-separator.png" />
     <Content Include="Assets\mobile\images\login-header-left.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
@@ -2523,6 +2527,7 @@
     <Content Include="Views\Template\DisableBack.cshtml" />
     <Content Include="Views\StaticPage\GetCalendarTerms.cshtml" />
     <Content Include="Views\Home\CekPemesanan.mobile.cshtml" />
+    <Content Include="Views\StaticPage\Contact.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
