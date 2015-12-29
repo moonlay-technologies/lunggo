@@ -371,6 +371,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("CurrencyCd");
 		    }
 		}
+		public String IssueProgress
+		{
+		    get { return _IssueProgress; }
+		    set
+		    {
+		        _IssueProgress = value;
+		        IncrementLog("IssueProgress");
+		    }
+		}
 		public String InsertBy
 		{
 		    get { return _InsertBy; }
@@ -467,6 +476,7 @@ namespace Lunggo.Repository.TableRecord
 		private Decimal? _FinalPrice;
 		private Decimal? _GrossProfit;
 		private String _CurrencyCd;
+		private String _IssueProgress;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -544,6 +554,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("FinalPrice", false),
 				new ColumnMetadata("GrossProfit", false),
 				new ColumnMetadata("CurrencyCd", false),
+				new ColumnMetadata("IssueProgress", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),
