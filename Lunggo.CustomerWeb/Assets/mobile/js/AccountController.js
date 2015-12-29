@@ -1,4 +1,23 @@
-﻿// Login Controller
+﻿// Check Order Controller
+app.controller('ContactController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
+
+    $scope.PageConfig = $rootScope.PageConfig;
+
+}]);// Check Order Controller
+
+// Check Order Controller
+app.controller('CheckOrderController', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope) {
+    
+    $scope.PageConfig = $rootScope.PageConfig;
+
+    $scope.Order = {
+        Number: '',
+        Name : ''
+    };
+
+}]);// Check Order Controller
+
+// Login Controller
 app.controller('LoginController', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope) {
 
     $scope.PageConfig = $rootScope.PageConfig;

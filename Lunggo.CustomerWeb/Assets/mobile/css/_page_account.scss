@@ -2,3 +2,42 @@
 .page.page-forgotpassword {
     form {border-top:$border-default; margin-top:15px; padding-top:15px;}
 }
+
+// check order page
+.page.page-checkorder {
+    form {border-top:$border-default; margin-top:15px; padding-top:15px;}
+}
+
+// page contact
+.page.page-contact {
+    .contact-map {background:url(/Assets/mobile/images/contact-map.jpg) center center; background-size:cover;
+        .container {padding-left:15px; padding-right:15px;}
+        .contact-list {background:#0c9ed5; padding:15px; color:#fff; margin-top:15px; margin-bottom:35px; position:relative; margin-top:60px; padding-top:35px; padding-bottom:0;
+            &:before {width:90px; height:90px; background:url(/Assets/mobile/images/contact-plane.png) center center no-repeat; content:""; position:absolute; top:-45px; left:50%; margin-left:-45px;}
+            a {color:#fff;}
+            &>div {padding:15px; padding-left:35px; position:relative;
+                &:before {position:absolute; content:''; width:30px; height:30px; background-image:url(/Assets/mobile/images/contact-list-bg.png); background-repeat:no-repeat; position:absolute; margin-left:-35px;}
+                &.address:before {background-position:0 0;}
+                &.email:before {background-position:-30px 0;}
+            }
+            &>div+div {border-top:1px solid #7fcae7;}
+            h4 {font-weight:bold;}
+        }
+    }
+    .contact-social {
+        &:before, &:after {@include clearfix();}
+        a {display:block; float:left; width:33.333333334%; height:65px; position:relative;
+            &:before {width:55px; height:55px; content:""; background:url(/Assets/mobile/images/contact-social-bg.png); position:absolute; left:50%; margin-left:-26px; margin-top:5px;}
+            &.facebook {background-color:#004787;
+                &:before {background-position:0 0;}
+            }
+            &.twitter {background-color:#009dd7;
+                &:before {background-position:-55px 0;}
+            }
+            &.instagram {background-color:#36c8ff;
+                &:before {background-position:-110px 0;}
+            }
+        }
+    }
+    .contact-form {}
+}

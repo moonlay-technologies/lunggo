@@ -1,0 +1,45 @@
+﻿// page FAQS
+.page.page-faqs {
+    .question-wrapper {
+        &>ol {padding-left:25px; list-style:none; counter-reset:main-number;
+            &>li {position:relative;
+                &:before {content:counter(main-number); counter-increment:main-number; background:#ffd632; color:#4f3500; position:absolute; height:20px; width:20px; text-align:center; @include border-radius(50px); font-size:14px; font-weight:600; padding-top:0; margin-left:-25px; margin-top:-2px;}
+                &>header {color:#1daee4;
+                    h2 {font-size:16px; font-weight:bold;}
+                }
+                &>ol {padding-left:0; list-style:none; counter-reset:sub-number;
+                    &>li {background:#fff; margin-left:-25px; padding:10px; border:$border-default; position:relative; padding-left:30px;
+                        &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:8px; left:5px; color:#1daee4; font-size:14px; font-weight:bold;}
+                        &>header {color:#1daee4;
+                            h3 {font-size:14px; margin-top:0; font-weight:bold;}
+                        }
+                        & + li {margin-top:15px;}
+                    }
+                }
+            }
+        }
+    }
+}// page FAQS
+
+
+// page terms
+.page.page-terms {
+    ol.listing {padding-left:20px;
+        &>li {
+            &>ol, &>ul {padding-left:20px;
+                &>li {}
+            }
+        }
+    }
+}// page terms
+
+// page privacy
+.page.page-privacy {
+    ol.listing {padding-left:20px;
+        &>li {
+            &>ol, &>ul {padding-left:20px;
+                &>li {}
+            }
+        }
+    }
+}// page privacy

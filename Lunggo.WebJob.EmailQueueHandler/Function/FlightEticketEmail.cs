@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
@@ -59,6 +60,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             };
             Console.WriteLine("Sending Flight Eticket Email...");
             mailService.SendEmail(summary, mailModel, "FlightEticketEmail");
+            FlightService.GetInstance().UpdateIssueProgress(rsvNo, "Eticket Email Sent. Ticket Issuance Complete.");
             
             Console.WriteLine("Done Processing Flight Eticket Email for RsvNo " + rsvNo);
         }
