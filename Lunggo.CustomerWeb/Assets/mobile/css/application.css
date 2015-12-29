@@ -1033,3 +1033,60 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-color: #36c8ff; }
     .page.page-contact .contact-social a.instagram:before {
       background-position: -110px 0; }
+
+.page.page-faqs .question-wrapper > ol {
+  padding-left: 25px;
+  list-style: none;
+  counter-reset: main-number; }
+  .page.page-faqs .question-wrapper > ol > li {
+    position: relative; }
+    .page.page-faqs .question-wrapper > ol > li:before {
+      content: counter(main-number);
+      counter-increment: main-number;
+      background: #ffd632;
+      color: #4f3500;
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      text-align: center;
+      -webkit-border-radius: 50px;
+      -moz-border-radius: 50px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      padding-top: 0;
+      margin-left: -25px;
+      margin-top: -2px; }
+    .page.page-faqs .question-wrapper > ol > li > header {
+      color: #1daee4; }
+      .page.page-faqs .question-wrapper > ol > li > header h2 {
+        font-size: 16px;
+        font-weight: bold; }
+    .page.page-faqs .question-wrapper > ol > li > ol {
+      padding-left: 0;
+      list-style: none;
+      counter-reset: sub-number; }
+      .page.page-faqs .question-wrapper > ol > li > ol > li {
+        background: #fff;
+        margin-left: -25px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        position: relative;
+        padding-left: 30px; }
+        .page.page-faqs .question-wrapper > ol > li > ol > li:before {
+          content: counter(main-number) "." counter(sub-number);
+          counter-increment: sub-number;
+          position: absolute;
+          top: 8px;
+          left: 5px;
+          color: #1daee4;
+          font-size: 14px;
+          font-weight: bold; }
+        .page.page-faqs .question-wrapper > ol > li > ol > li > header {
+          color: #1daee4; }
+          .page.page-faqs .question-wrapper > ol > li > ol > li > header h3 {
+            font-size: 14px;
+            margin-top: 0;
+            font-weight: bold; }
+        .page.page-faqs .question-wrapper > ol > li > ol > li + li {
+          margin-top: 15px; }
