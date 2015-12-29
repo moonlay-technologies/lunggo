@@ -5,21 +5,26 @@
     <div class="col-md-12">
         <div class="showback">
 
-            <h4>Passenger List</h4>
+            <h4><b>Passenger List</b></h4>
             <hr />
             <table class="table table-hover table-no-border">
                 <tbody>
                     <tr>
-                        <td>Title</td>
-                        <td>First Name</td>
-                        <td>Last Name</td>
-                        <td>Type</td>
-                        <td>Birth Date</td>
-                        <td>Passport Number</td>
+                        <th><b>NO</b></th>
+                        <th><b>TITLE</b></th>
+                        <th><b>FIRST NAME</b></th>
+                        <th><b>LAST NAME</b></th>
+                        <th><b>TYPE</b></th>
+                        <th><b>BIRTH DATE</b></th>
+                        <th><b>PASPORT NUMBER</b></th>
                     </tr>
+                    @{var count = 1;}
                     @foreach (var passenger in Model)
                     {
                         <tr>
+                            <td>
+                                @count
+                            </td>
                             <td>
                                 @passenger.Title.ToString()
                             </td>
@@ -41,6 +46,9 @@
                             <td>
                                 @passenger.PassportNumber
                             </td>
+                            @{
+                                count += 1;
+                            }
                         </tr>
                     }
                 </tbody>

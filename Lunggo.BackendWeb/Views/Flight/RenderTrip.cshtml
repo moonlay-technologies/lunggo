@@ -1,25 +1,25 @@
 ﻿@model Lunggo.ApCommon.Flight.Model.FlightTripForDisplay
 @using System.Globalization
 
-<div class="showback">
-    <h4>Trip Detail</h4>
-    <hr />
     <table class="table table-hover table-no-border">
         <tbody>
             <tr>
                 <td>Origin</td>
+                <td>:</td>
                 <td>
                     @Model.OriginCity (@Model.OriginAirport)
                 </td>
             </tr>
             <tr>
                 <td>Destination</td>
+                <td>:</td>
                 <td>
                     @Model.DestinationCity (@Model.DestinationAirport)
                 </td>
             </tr>
             <tr>
                 <td>Departure Date</td>
+                <td>:</td>
                 <td>
                     @Model.DepartureDate.ToString("dddd, d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))
                 </td>
@@ -27,4 +27,3 @@
             @{ Html.RenderPartial("RenderSegment", Model.Segments); }
         </tbody>
     </table>
-</div>
