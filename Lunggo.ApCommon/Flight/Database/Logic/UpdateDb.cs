@@ -119,6 +119,18 @@ namespace Lunggo.ApCommon.Flight.Service
                     query.Execute(conn, dbBookingStatusInfo);
                 }
             }
+
+            internal static void IssueProgress(string rsvNo, string progressMessage)
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    FlightReservationTableRepo.GetInstance().Update(conn, new FlightReservationTableRecord
+                    {
+                        RsvNo = rsvNo,
+                        IssueProgress = progressMessage
+                    });
+                }
+            }
         }
     }
 }

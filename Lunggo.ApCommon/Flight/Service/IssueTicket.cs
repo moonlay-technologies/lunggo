@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
@@ -84,7 +85,23 @@ namespace Lunggo.ApCommon.Flight.Service
                     output.Errors = output.Errors.Distinct().ToList();
                     output.ErrorMessages = output.ErrorMessages.Distinct().ToList();
                 }
+                UpdateIssueStatus(input.RsvNo, output);
                 return output;
+            }
+        }
+
+        private static void UpdateIssueStatus(string rsvNo, IssueTicketOutput output)
+        {
+            if (!output.Errors.Any())
+            {
+                UpdateDb.IssueProgress(rsvNo, "Generating Eticket File");
+            }
+            else
+            {
+                var errorMsgs = string.Join("; ", output.ErrorMessages);
+                var errors = string.Join("; ", output.Errors);
+                var progressMessages = "Issue Failed : " + errorMsgs + "; " + errors;
+                UpdateDb.IssueProgress(rsvNo, progressMessages);
             }
         }
     }
