@@ -1090,3 +1090,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             font-weight: bold; }
         .page.page-faqs .question-wrapper > ol > li > ol > li + li {
           margin-top: 15px; }
+
+.page.page-terms ol.listing {
+  padding-left: 20px; }
+  .page.page-terms ol.listing > li > ol, .page.page-terms ol.listing > li > ul {
+    padding-left: 20px; }
+
+.page.page-privacy ol.listing {
+  padding-left: 20px; }
+  .page.page-privacy ol.listing > li > ol, .page.page-privacy ol.listing > li > ul {
+    padding-left: 20px; }
