@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Constant;
@@ -51,6 +52,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     supplier.Init();
                 }
+
+                ServicePointManager.ServerCertificateValidationCallback +=
+                    (sender, certificate, chain, sslPolicyErrors) => true;
 
                 //CurrencyService.GetInstance().Init();
                 VoucherService.GetInstance().Init();

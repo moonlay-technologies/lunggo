@@ -9,6 +9,7 @@ using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
@@ -40,34 +41,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
         {
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
-                
-                var client = new ExtendedWebClient();
+                var client = CreateCustomerClient();
                 var hasil = new SearchFlightResult();
                 var convertBulan = conditions.Trips[0].DepartureDate.ToString("MMMM");
                 var bulan3 = convertBulan.Substring(0, 3);
-                Client.CreateSession(client);
+                Login(client);
 
                 //ISI BAHASA
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                //Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                //Headers["Origin"] = "https://booking2.airasia.com";
-                client.Headers["Referer"] = "https://www.sriwijayaair.co.id/welcome.php";
-                client.Headers["Host"] = "www.sriwijayaair.co.id";
 
-                var frontpageParams =
+                var url = "welcome.php";
+                var langRequest = new RestRequest(url, Method.POST);
+                var postData =
                     @"form_build_id=form-443a2fb12e018591436589029dabcde0" +
                     @"&form_id=flute_location_language_form" +
                     @"&form_id=flute_location_language_form" +
                     @"&location=ID" +
                     @"op=Choose";
-                client.Expect100Continue = false;
-                 
-                client.UploadString(@"https://www.sriwijayaair.co.id/welcome.php", frontpageParams);
-                if (client.StatusCode != HttpStatusCode.OK)
+                langRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                var langResponse = client.Execute(langRequest);
+                if (langResponse.StatusCode != HttpStatusCode.OK)
                 {
                     return new SearchFlightResult
                     {
@@ -77,7 +69,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 }
 
                 //SEARCH
-                var searchParams = @"tanggalBerangkat=" + conditions.Trips[0].DepartureDate.Day + "-" + bulan3 + "-" + conditions.Trips[0].DepartureDate.Year +
+                url = "application/?action=booking";
+                var searchRequest = new RestRequest(url, Method.POST);
+                postData = @"tanggalBerangkat=" + conditions.Trips[0].DepartureDate.Day + "-" + bulan3 + "-" + conditions.Trips[0].DepartureDate.Year +
                                  @"&ADT=" + conditions.AdultCount +
                                  @"&CHD=" + conditions.ChildCount +
                                  @"&INF=" + conditions.InfantCount +
@@ -87,25 +81,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                  @"&ruteTujuan=" + conditions.Trips[0].DestinationAirport +
                                  @"&ruteBerangkat=" + conditions.Trips[0].OriginAirport +
                                  @"&vSub=YES";
-
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                //client.Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Referer"] = "https://www.sriwijayaair.co.id/application/?action=index";
-                client.Headers["Host"] = "www.sriwijayaair.co.id";
-                client.Headers["Origin"] = "https://www.sriwijayaair.co.id";
-                client.AutoRedirect = false;
-                //client.Expect100Continue = false;
-
-                var htmlRespon = client.UploadString(@"https://www.sriwijayaair.co.id/application/?action=booking", searchParams);
+                searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                var searchResponse = client.Execute(searchRequest);
+                var htmlRespon = searchResponse.Content;
                 
 
                 CQ cobaAmbilTable;
 
-                if (client.ResponseUri.AbsoluteUri == "https://www.sriwijayaair.co.id/application/?action=booking")
+                if (searchResponse.ResponseUri.AbsoluteUri == "https://www.sriwijayaair.co.id/application/?action=booking")
                 {
                     cobaAmbilTable = (CQ)htmlRespon;
                 }
@@ -215,25 +198,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
 
                                     //AJAX
-                                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                                    //Headers["Accept-Encoding"] = "gzip, deflate";
-                                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                                    client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                                    client.Headers["Referer"] = "https://www.sriwijayaair.co.id/application/?action=booking";
-                                    //client.Headers["X-Requested-With"] = "XMLHttpRequest";
-                                    client.Headers["Host"] = "www.sriwijayaair.co.id";
-
-                                    var url =
-                                        "https://www.sriwijayaair.co.id/application/pricingDetail_.php?" +
-                                        "voteFROM=" + FID +
-                                        "&nameFROM=radioFrom" +
-                                        "&voteTO=" +
-                                        "&nameTO=" +
-                                        "&STI=false" +
-                                        "&RR=NO&ADM=";
-
-                                    var responAjax = client.DownloadString(url);
+                                    url =
+                                        "application/pricingDetail_.php";
+                                    var fareRequest = new RestRequest(url, Method.GET);
+                                    fareRequest.AddQueryParameter("voteFROM", FID);
+                                    fareRequest.AddQueryParameter("nameFROM", "radioFrom");
+                                    fareRequest.AddQueryParameter("voteTO", null);
+                                    fareRequest.AddQueryParameter("nameTO", null);
+                                    fareRequest.AddQueryParameter("STI", "false");
+                                    fareRequest.AddQueryParameter("RR", "NO");
+                                    fareRequest.AddQueryParameter("ADM", null);
+                                    var fareResponse = client.Execute(fareRequest);
+                                    var responAjax = fareResponse.Content;
 
                                     CQ ambilDataAjax = (CQ)responAjax;
                                    
@@ -486,26 +462,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     }
 
                                     //AJAX
-                                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                                    //Headers["Accept-Encoding"] = "gzip, deflate";
-                                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                                    client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                                    client.Headers["Referer"] = "https://www.sriwijayaair.co.id/application/?action=booking";
-                                    //client.Headers["X-Requested-With"] = "XMLHttpRequest";
-                                    client.Headers["Host"] = "www.sriwijayaair.co.id";
+                                    url = "application/pricingDetail_.php";
+                                    var fareRequest = new RestRequest(url, Method.GET);
+                                    fareRequest.AddQueryParameter("voteFROM", FIDB);
+                                    fareRequest.AddQueryParameter("nameFROM", "radioFrom");
+                                    fareRequest.AddQueryParameter("voteTO", null);
+                                    fareRequest.AddQueryParameter("nameTO", null);
+                                    fareRequest.AddQueryParameter("STI", "true");
+                                    fareRequest.AddQueryParameter("RR", "NO");
+                                    fareRequest.AddQueryParameter("ADM", null);
+                                    var fareResponse = client.Execute(fareRequest);
 
-                                    var url =
-                                        "https://www.sriwijayaair.co.id/application/pricingDetail_.php?" +
-                                        "voteFROM=" + FIDB +
-                                        "&nameFROM=radioFrom" +
-                                        "&voteTO=" +
-                                        "&nameTO=" +
-                                        "&STI=true" +
-                                        "&RR=NO&ADM=";
-
-
-                                    var responAjax = client.DownloadString(url);
+                                    var responAjax = fareResponse.Content;
 
 
                                     CQ ambilDataAjax = (CQ)responAjax;
@@ -682,12 +650,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 break;
                         }
                     }
-                    Client.LogoutSession(client);
+                    Logout(client);
                     return hasil;
                 }
                 catch
                 {   
-                    Client.LogoutSession(client);
+                    Logout(client);
                     return new SearchFlightResult
                     {
                         IsSuccess = false,

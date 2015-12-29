@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using CsQuery;
 using Lunggo.ApCommon.Dictionary;
@@ -7,6 +8,7 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
@@ -23,50 +25,34 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
                 // WAIT
-                var client = new ExtendedWebClient();
+                var client = CreateCustomerClient();
                 var hasil = new SearchFlightResult();
-                var URL = @"https://book.citilink.co.id/Search.aspx?" +
-                          @"DropDownListCurrency=IDR" +
-                          @"&DropDownListMarketDay1=" + conditions.Trips[0].DepartureDate.Day +
-                          @"&DropDownListMarketDay2=" +
-                          @"&DropDownListMarketMonth1=" + conditions.Trips[0].DepartureDate.ToString("yyyy MMMM") +
-                          @"&DropDownListMarketMonth2=" +
-                          @"&DropDownListPassengerType_ADT=" + conditions.AdultCount +
-                          @"&DropDownListPassengerType_CHD=" + conditions.ChildCount +
-                          @"&DropDownListPassengerType_INFANT=" + conditions.InfantCount +
-                          @"&OrganizationCode=QG" +
-                          @"&Page=Select" +
-                          @"&RadioButtonMarketStructure=OneWay" +
-                          @"&TextBoxMarketDestination1=" + conditions.Trips[0].DestinationAirport +
-                          @"&TextBoxMarketOrigin1=" + conditions.Trips[0].OriginAirport +
-                          @"&culture=id-ID";
 
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                //Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                //Headers["Origin"] = "https://booking2.airasia.com";
-                client.Headers["Referer"] = "https://www.citilink.co.id/";
+                var url = @"Search.aspx";
+                var searchRequest = new RestRequest(url, Method.GET);
+                searchRequest.AddQueryParameter("DropDownListCurrency", "IDR");
+                searchRequest.AddQueryParameter("DropDownListMarketDay1", conditions.Trips[0].DepartureDate.Day.ToString(CultureInfo.InvariantCulture));
+                searchRequest.AddQueryParameter("DropDownListMarketDay2", null);
+                searchRequest.AddQueryParameter("DropDownListMarketMonth1", conditions.Trips[0].DepartureDate.ToString("yyyy MMMM"));
+                searchRequest.AddQueryParameter("DropDownListMarketMonth2", null);
+                searchRequest.AddQueryParameter("DropDownListPassengerType_ADT", conditions.AdultCount.ToString(CultureInfo.InvariantCulture));
+                searchRequest.AddQueryParameter("DropDownListPassengerType_CHD", conditions.ChildCount.ToString(CultureInfo.InvariantCulture));
+                searchRequest.AddQueryParameter("DropDownListPassengerType_INFANT", conditions.InfantCount.ToString(CultureInfo.InvariantCulture));
+                searchRequest.AddQueryParameter("OrganizationCode", "QG");
+                searchRequest.AddQueryParameter("Page", "Select");
+                searchRequest.AddQueryParameter("RadioButtonMarketStructure", "OneWay");
+                searchRequest.AddQueryParameter("TextBoxMarketDestination1", conditions.Trips[0].DestinationAirport);
+                searchRequest.AddQueryParameter("TextBoxMarketOrigin1", conditions.Trips[0].OriginAirport);
+                searchRequest.AddQueryParameter("culture", "id-ID");
+                var searchResponse = client.Execute(searchRequest);
+                var htmlRespon = searchResponse.Content;
 
-                var htmlRespon = client.DownloadString(URL);
-
-                if (client.ResponseUri.AbsolutePath != "/ScheduleSelect.aspx")
+                if (searchResponse.ResponseUri.AbsolutePath != "/ScheduleSelect.aspx")
                     return new SearchFlightResult { Errors = new List<FlightError> { FlightError.FareIdNoLongerValid } };
 
                 try
                 {
                     var cobaAmbilTable = (CQ) htmlRespon;
-                
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    //Headers["Accept-Encoding"] = "gzip, deflate";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Referer"] = "https://www.citilink.co.id/";
-                    client.Headers["X-Requested-With"] = "XMLHttpRequest";
-                    client.Headers["Host"] = "book.citilink.co.id";
-
 
                     var isi = cobaAmbilTable[".w99>tbody>tr:not([class^='trSSR'])"];
                     
@@ -109,28 +95,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 string Acode;
                                 string Fnumber;
 
-                                client.Headers["Accept"] =
-                                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                                //Headers["Accept-Encoding"] = "gzip, deflate";
-                                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                                client.Headers["User-Agent"] =
-                                    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                                client.Headers["Referer"] = "https://www.citilink.co.id/";
-                                client.Headers["X-Requested-With"] = "XMLHttpRequest";
-                                client.Headers["Host"] = "book.citilink.co.id";
+                                
+                                url = "TaxAndFeeInclusiveDisplayAjax-resource.aspx";
+                                var fareRequest = new RestRequest(url, Method.GET);
+                                fareRequest.AddQueryParameter("flightKeys", FID);
+                                fareRequest.AddQueryParameter("numberOfMarkets", "1");
+                                fareRequest.AddQueryParameter("keyDelimeter", ",");
+                                fareRequest.AddQueryParameter("ssrs", "FLEX");
+                                var fareResponse = client.Execute(fareRequest);
 
-                                var url =
-                                    "https://book.citilink.co.id/TaxAndFeeInclusiveDisplayAjax-resource.aspx?" +
-                                    "flightKeys=" + FID +
-                                    "&numberOfMarkets=1" +
-                                    "&keyDelimeter=%2C" +
-                                    "&ssrs=FLEX";
+                                var responAjax = fareResponse.Content;
 
-                                var responAjax = client.DownloadString(url);
-
-
-                                CQ ambilDataAjax = (CQ) responAjax;
+                                var ambilDataAjax = (CQ) responAjax;
 
                                 //Price 
 
