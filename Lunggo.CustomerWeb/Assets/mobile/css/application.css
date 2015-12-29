@@ -945,3 +945,8 @@ input[type="text"], input[type="password"], input[type="number"] {
   border-top: 1px solid #ccc;
   margin-top: 15px;
   padding-top: 15px; }
+
+.page.page-checkorder form {
+  border-top: 1px solid #ccc;
+  margin-top: 15px;
+  padding-top: 15px; }

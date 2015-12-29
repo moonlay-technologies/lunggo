@@ -2522,6 +2522,7 @@
     <Content Include="Views\StaticPage\GetCalendar.cshtml" />
     <Content Include="Views\Template\DisableBack.cshtml" />
     <Content Include="Views\StaticPage\GetCalendarTerms.cshtml" />
+    <Content Include="Views\Home\CekPemesanan.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
