@@ -64,6 +64,7 @@ namespace Lunggo.CustomerWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            returnUrl = returnUrl ?? "";
             ViewBag.ReturnUrl = returnUrl;
             var defaultReturnUrl = OnlineContext.GetDefaultHomePageUrl();
 
