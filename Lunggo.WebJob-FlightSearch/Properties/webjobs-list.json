@@ -2,16 +2,16 @@
   "$schema": "http://schemastore.org/schemas/json/webjobs-list.json",
   "WebJobs": [
     {
-      "filePath": "../Lunggo.WebJob.FlightCrawler1/Lunggo.WebJob-FlightSearch.FlightCrawler1.csproj"
+      "filePath": "../Lunggo.WebJob-FlightSearch.FlightCrawler1/Lunggo.WebJob-FlightSearch.FlightCrawler1.csproj"
     },
     {
-      "filePath": "../Lunggo.WebJob.FlightCrawler2/Lunggo.WebJob-FlightSearch.FlightCrawler2.csproj"
+      "filePath": "../Lunggo.WebJob-FlightSearch.FlightCrawler2/Lunggo.WebJob-FlightSearch.FlightCrawler2.csproj"
     },
     {
-      "filePath": "../Lunggo.WebJob.FlightCrawler3/Lunggo.WebJob-FlightSearch.FlightCrawler3.csproj"
+      "filePath": "../Lunggo.WebJob-FlightSearch.FlightCrawler3/Lunggo.WebJob-FlightSearch.FlightCrawler3.csproj"
     },
     {
-      "filePath": "../Lunggo.WebJob.FlightCrawler4/Lunggo.WebJob-FlightSearch.FlightCrawler4.csproj"
+      "filePath": "../Lunggo.WebJob-FlightSearch.FlightCrawler4/Lunggo.WebJob-FlightSearch.FlightCrawler4.csproj"
     }
   ]
 }

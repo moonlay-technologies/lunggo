@@ -114,7 +114,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
-                        },Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
+                        },
+                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
                     };
 
                 // [POST] Select Flight
@@ -353,7 +354,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier } };
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier } 
+                    };
 
                 // [GET] Wait for Book
 
@@ -361,10 +363,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var sw = Stopwatch.StartNew();
                 var retryLimit = new TimeSpan(0, 1, 0);
                 var retryInterval = new TimeSpan(0, 0, 2);
-                IRestResponse waitResponse = new RestResponse();
+                var waitRequest = new RestRequest("Wait.aspx", Method.GET);
+                IRestResponse waitResponse = client.Execute(waitRequest);
                 while (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" && sw.Elapsed <= retryLimit && (waitResponse.StatusCode == HttpStatusCode.OK || waitResponse.StatusCode == HttpStatusCode.Redirect))
                 {
-                    var waitRequest = new RestRequest("Wait.aspx", Method.GET);
                     waitResponse = client.Execute(waitRequest);
                     itinHtml = waitResponse.Content;
                     if (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" && (waitResponse.StatusCode == HttpStatusCode.OK || waitResponse.StatusCode == HttpStatusCode.Redirect))
@@ -378,7 +380,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
-                        }
+                        },
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier } 
                     };
 
                 try
