@@ -2,6 +2,7 @@
     Layout = "";
 }
 @using Lunggo.Framework.Config
+@using System.Globalization
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,7 +53,7 @@
                                 <div class="flight-number"><h4 style="margin-bottom:1px;"><b>QZ 387</b></h4><p><span>Subclass : Economy</span></p></div>
                                 <div class="flight-pnr">Kode Booking [PNR]<p style="font-size:medium"> 2134</p></div>
                                 <div class="ticket-date">
-                                    <div class="date-now">Selasa, 23 Desember 2015</div>
+                                    <div class="date-now">@DateTime.Now.ToString("dddd, d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                     <div class="line-date"><hr style="border:1px solid #8c8b8b;"></div>
                                 </div>
                             </div>

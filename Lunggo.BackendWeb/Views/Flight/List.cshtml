@@ -69,7 +69,7 @@
                                 }
                                 else
                                 {
-                                    <span class="label label-default">Not Applicable</span><br />
+                                    <span style="align-content:center"> - </span><br />
                                 }
                             </td>
                             <td>
@@ -95,23 +95,36 @@
                                 @switch (rsv.Payment.Status)
                                 {
                                     case PaymentStatus.Pending:
-                                        <span class="label label-default">Incomplete</span><br />
+                                        <span class="label label-default" style="font-size:14px">Pending</span><br />
                                         <span>by @rsv.Payment.Method.ToString()</span>
                                         break;
                                     case PaymentStatus.Settled:
-                                        <span class="label label-success">Complete</span><br />
+                                    <span class="label label-success" style="font-size:14px">Complete</span><br />
                                         <span>by @rsv.Payment.Method.ToString()</span>
                                         break;
                                     case PaymentStatus.Cancelled:
-                                        <span class="label label-danger">Cancelled</span><br />
+                                    <span class="label label-danger" style="font-size:14px">Cancelled</span><br />
                                         <span>by @rsv.Payment.Method.ToString()</span>
                                         break;
                                     case PaymentStatus.Denied:
-                                        <span class="label label-danger">Denied</span><br />
+                                    <span class="label label-danger" style="font-size:14px">Denied</span><br />
+                                        <span>by @rsv.Payment.Method.ToString()</span>
+                                        break;
+                                    case PaymentStatus.Verifying:
+                                    <span class="label label-default" style="font-size:14px">Verifying</span><br />
+                                        <span>by @rsv.Payment.Method.ToString()</span>
+                                        break;
+                                    case PaymentStatus.Undefined:
+                                    <span class="label label-default" style="font-size:14px">Undefined</span><br />
+                                        <span>by @rsv.Payment.Method.ToString()</span>
+                                        break;
+                                    case PaymentStatus.Challenged:
+                                    <span class="label label-default" style="font-size:14px">Challenged</span><br />
                                         <span>by @rsv.Payment.Method.ToString()</span>
                                         break;
                                     case PaymentStatus.Expired:
-                                        <span class="label label-danger">Expired</span><br />
+                                    <span class="label label-danger" style="font-size:14px">Expired</span><br />
+                                        <span>by @rsv.Payment.Method.ToString()</span>
                                         break;
                                 }
                             </td>

@@ -20,3 +20,26 @@
         }
     }
 }// page FAQS
+
+
+// page terms
+.page.page-terms {
+    ol.listing {padding-left:20px;
+        &>li {
+            &>ol, &>ul {padding-left:20px;
+                &>li {}
+            }
+        }
+    }
+}// page terms
+
+// page privacy
+.page.page-privacy {
+    ol.listing {padding-left:20px;
+        &>li {
+            &>ol, &>ul {padding-left:20px;
+                &>li {}
+            }
+        }
+    }
+}// page privacy

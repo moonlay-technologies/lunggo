@@ -2531,6 +2531,8 @@
     <Content Include="Views\Home\CekPemesanan.mobile.cshtml" />
     <Content Include="Views\StaticPage\Contact.mobile.cshtml" />
     <Content Include="Views\StaticPage\Question.mobile.cshtml" />
+    <Content Include="Views\StaticPage\Privacy.mobile.cshtml" />
+    <Content Include="Views\StaticPage\Terms.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

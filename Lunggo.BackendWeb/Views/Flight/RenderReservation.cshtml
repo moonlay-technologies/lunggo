@@ -4,32 +4,38 @@
 
 <div class="col-md-6">
     <div class="showback">
-        <h4>Reservation Detail</h4>
+        <h4><b>Reservation Detail</b></h4>
         <hr />
         <table class="table table-hover table-no-border">
             <tbody>
                 <tr>
-                    <td>Reservation Number</td>
+                    <td>Reservation Number </td>
+                    <td>:</td>
                     <td>@Model.RsvNo</td>
                 </tr>
                 <tr>
                     <td>Reservation Time</td>
+                    <td>:</td>
                     <td>@Model.RsvTime.AddHours(7).ToString("d MMM yyyy HH:mm:ss")</td>
                 </tr>
                 <tr>
-                    <td>Contact Name</td>
+                    <td>Name</td>
+                    <td>:</td>
                     <td>@Model.Contact.Name</td>
                 </tr>
                 <tr>
-                    <td>Contact E-mail</td>
+                    <td>E-mail</td>
+                    <td>:</td>
                     <td>@Model.Contact.Email</td>
                 </tr>
                 <tr>
-                    <td>Contact Phone</td>
+                    <td>Phone</td>
+                    <td>:</td>
                     <td>@Model.Contact.Phone</td>
                 </tr>
                 <tr>
-                    <td>Contact Address</td>
+                    <td>Address</td>
+                    <td>:</td>
                     <td>@Model.Contact.Address</td>
                 </tr>
             </tbody>
@@ -39,37 +45,49 @@
 
 <div class="col-md-6">
     <div class="showback">
-        <h4>Payment Detail</h4>
+        <h4><b>Payment Detail</b></h4>
         <hr />
         <table class="table table-hover table-no-border">
             <tbody>
                 <tr>
                     <td>Total Price</td>
+                    <td>:</td>
                     <td>@Model.Payment.FinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                 </tr>
                 <tr>
                     <td>Payment Method</td>
+                    <td>:</td>
                     <td>@Model.Payment.Method.ToString()</td>
                 </tr>
                 <tr>
                     <td>Payment Status</td>
+                    <td>:</td>
                     <td>
                         @switch (Model.Payment.Status)
                         {
                             case PaymentStatus.Pending:
-                                <span class="label label-default">Incomplete</span><br />
+                                <span class="label label-default" style="font-size:larger;">Pending</span><br />
                                 break;
                             case PaymentStatus.Settled:
-                                <span class="label label-success">Complete</span><br />
+                            <span class="label label-success" style="font-size:larger;">Complete</span><br />
+                                break;
+                            case PaymentStatus.Verifying:
+                            <span class="label label-default" style="font-size:larger;">Verifying</span><br />
+                                break;
+                            case PaymentStatus.Challenged:
+                            <span class="label label-default" style="font-size:larger;">Challenged</span><br />
+                                break;
+                            case PaymentStatus.Undefined:
+                            <span class="label label-default" style="font-size:larger;">Undefined</span><br />
                                 break;
                             case PaymentStatus.Cancelled:
-                                <span class="label label-danger">Cancelled</span><br />
+                            <span class="label label-danger" style="font-size:larger;">Cancelled</span><br />
                                 break;
                             case PaymentStatus.Denied:
-                                <span class="label label-danger">Denied</span><br />
+                            <span class="label label-danger" style="font-size:larger;">Denied</span><br />
                                 break;
                             case PaymentStatus.Expired:
-                                <span class="label label-danger">Expired</span><br />
+                            <span class="label label-danger" style="font-size:larger;">Expired</span><br />
                                 break;
                         }
                     </td>

@@ -15,11 +15,28 @@
     </div>
 
     <div class="row">
+        @{
+            var count = 0;
+        }
         @foreach (var trip in Model.Itinerary.Trips)
         {
-            <div class="col-md-4">
-                @{ Html.RenderPartial("RenderTrip", trip); }
-            </div>
+            <div class="col-md-8">
+                <div class="showback">
+                    @if (count == 0)
+                    {
+                        <h4><b>Depart Flight</b></h4>
+                    }
+                    else
+                    {
+                        <h4><b>Return Flight</b></h4>
+                    }
+                    @{
+                        count += 1;
+                    }
+                    <hr />
+                    @{ Html.RenderPartial("RenderTrip", trip); }
+                </div>
+             </div>
         }
     </div>
 
