@@ -941,6 +941,20 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     text-align: center;
     padding: 5px; }
 
+.page.page-orderdetail .order-detail .content-header {
+  background: #2eb4e7;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center; }
+
+.page.page-orderdetail .order-detail .content-body > div > header {
+  background: #dedede;
+  padding: 10px 5px;
+  color: #575757; }
+
+.page.page-orderdetail .order-detail .content-body > div > section {
+  padding: 10px; }
+
 .page.page-forgotpassword form {
   border-top: 1px solid #ccc;
   margin-top: 15px;

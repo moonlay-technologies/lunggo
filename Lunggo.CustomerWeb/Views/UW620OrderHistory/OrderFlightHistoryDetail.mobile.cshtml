@@ -1,0 +1,189 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Identity.User
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.Framework.Extension
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+@{
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    ViewBag.Title = "Order Detail";
+    ViewBag.BodyClass = "page page-orderdetail";
+    ViewBag.AngularController = "OrderDetailController";
+}
+
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+
+@section PageJS{
+    <script>
+        var langCode = 'en';
+        var orderDate = '@Model.RsvTime.ToString("u")';
+        var refundDate = '@(Model.Payment.Refund != null ? Model.Payment.Refund.Time.ToString("u") : "")';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/mobile/js/AccountController.js"></script>
+}
+
+
+            <section class="account-content">
+
+                <div class="order-detail">
+                    <header class="content-header">
+                        <h3>ORDER ID : <b>@Model.RsvNo</b></h3>
+                    </header>
+                    <section class="content-body">
+
+                        <div class="info-buyer">
+                            <header>
+                                <h4>
+                                    <b>BUYER INFO</b>
+                                    @if (Model.Payment.Status != PaymentStatus.Settled)
+                                    {
+                                        <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow hidden" disabled>@Html.I18NString("CW00198")</button>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow hidden" target="_blank">@Html.I18NString("CW00198")</a>
+                                    }
+                                    @if (Model.Payment.Method == PaymentMethod.BankTransfer && Model.Payment.Status == PaymentStatus.Pending)
+                                    {
+                                        <a style="margin-right: 6px;" href="@Url.Action("Confirmation", "Flight", new {rsvNo = Model.RsvNo})" target="_blank" class="pull-right btn btn-yellow hidden">Confirm</a>
+                                    }
+                                </h4>
+                            </header>
+                            <section>
+                                <div class="form form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">User ID</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">@Model.Contact.Email</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Order Name</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">@Model.Contact.Name</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Order Date</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">{{orderDate | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Order Type</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">Flight</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Order Final Price</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Payment Method</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">@EnumDisplay.PaymentMethod(Model.Payment.Method)</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Payment Status</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">@EnumDisplay.PaymentStatus(Model.Payment.Status)</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">@Html.I18NString("CW00017")</label>
+                                        <div class="col-xs-8">
+                                            <ol class="passenger-list">
+                                                @foreach (var passenger in Model.Passengers)
+                                                {
+                                                    <li>
+                                                        <div class="row">
+                                                            <div class="col-xs-9">
+                                                                <p>@EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <span>@EnumDisplay.PassengerType(passenger.Type)</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div><!-- .info-buyer -->
+
+                        <div class="info-flight">
+                            <header>
+                                <h4><b>@Html.I18NString("CW00199")</b></h4>
+                            </header>
+                            <section>
+                                @foreach (var trip in Model.Itinerary.Trips)
+                                {
+                                    <div class="flight @(Model.Itinerary.Trips.IndexOf(trip) == 0 ? "departure" : "return")">
+                                        <p><img src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" /> <span>@trip.Segments[0].AirlineName</span> </p>
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <p>@(Model.Itinerary.Trips.IndexOf(trip) == 0 ? "Berangkat : " : "Pulang : ")</p>
+                                            </div>
+                                            <div class="col-xs-9">
+                                                <p>@trip.OriginCity - @trip.DestinationCity</p>
+                                                <p>@trip.DepartureDate.ToString("dd - MMM -yyyy")</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </section>
+
+                        </div><!-- .info-flight -->
+
+                        <div class="refund-detail">
+                            <header>
+                                <h4><b>@Html.I18NString("CW00199")</b></h4>
+                            </header>
+                            <section>
+                                <div class="form form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">No Refund</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">
+                                                <span>
+                                                    @(Model.Payment.Refund != null ?
+                                                      Model.Payment.Refund.Amount.ToString() : "-")
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Tgl Pengajuan</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">
+                                                <span>{{refundDate | date : 'dd - MMMM - yyyy , HH:mm' : 'UTC'}}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Status Refund</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">-</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div><!-- .refund-detail -->
+
+                    </section>
+                </div><!-- .history-content -->
+
+            </section><!-- .account-content -->

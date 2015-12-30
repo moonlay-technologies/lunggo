@@ -1,4 +1,17 @@
-﻿// forgot password page
+﻿// page order detail
+.page.page-orderdetail {
+    .order-detail {
+        .content-header {background:#2eb4e7; color:#fff; padding:10px 0; text-align:center;}
+        .content-body {
+            &>div {
+                &>header {background:#dedede; padding:10px 5px; color:#575757;}
+                &>section {padding:10px;}
+            }
+        }
+    }
+}
+
+// forgot password page
 .page.page-forgotpassword {
     form {border-top:$border-default; margin-top:15px; padding-top:15px;}
 }

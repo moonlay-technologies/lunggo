@@ -2,8 +2,18 @@
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "FAQS";
     ViewBag.BodyClass = "page page-privacy";
+    ViewBag.AngularController = "PrivacyController";
 }
-
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+@section PageJS{
+    <!-- angular controller -->
+    <script src="/Assets/mobile/js/StaticController.js"></script>
+}
 <section>
     <div class="container">
         
