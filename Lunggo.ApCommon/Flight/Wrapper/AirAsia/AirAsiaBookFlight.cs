@@ -73,6 +73,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         ErrorMessages = new List<string> { "Can't Login!" }
                     };
 
+                var flightPart = coreFareId.Split('|')[1];
+                var splitted = flightPart.Split('~');
+                var airlineCode = splitted[0];
+                var flightNumber = splitted[1];
+                var hidden = string.Join(" ", date.ToString("yyyyMMdd"), airlineCode, flightNumber,
+                    origin + dest + "IDR");
+
                 // [POST] Search Flight
 
                 var date2 = date.AddDays(1);
@@ -104,6 +111,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&__VIEWSTATEGENERATOR=05F9A2B0"; ;
 
                 var searchRequest = new RestRequest("Search.aspx", Method.POST);
+                searchRequest.AddHeader("Referer", "https://booking2.airasia.com/Search.aspx");
                 searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var searchResponse = client.Execute(searchRequest);
 
@@ -143,7 +151,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_CHD="+childCount +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_INFANT="+infantCount +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24MultiCurrencyConversionViewSelectView%24DropDownListCurrency=default" +
-                    @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListSearchBy=columnView" +
+                    //@"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListSearchBy=columnView" +
                     @"&ControlGroupSelectView%24AvailabilityInputSelectView%24HiddenFieldTabIndex1=4" +
                     @"&ControlGroupSelectView%24AvailabilityInputSelectView%24market1=" + HttpUtility.UrlEncode(coreFareId) +
                     @"&ControlGroupSelectView%24SpecialNeedsInputSelectView%24RadioButtonWCHYESNO=RadioButtonWCHNO" +
@@ -151,6 +159,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&__VIEWSTATEGENERATOR=C8F924D9";
 
                 var selectRequest = new RestRequest("Select.aspx", Method.POST);
+                selectRequest.AddHeader("Referer", "https://booking2.airasia.com/Select.aspx");
                 selectRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var selectResponse = client.Execute(selectRequest);
 
@@ -170,7 +179,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 postData =
                     @"__EVENTTARGET=CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24LinkButtonSkipToSeatMap" +
                     @"&__EVENTARGUMENT=" +
-                    @"&__VIEWSTATE=%2FwEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgcFSENPTlRST0xHUk9VUFRSQVZFTEVSRkxJR0hUQU5EUFJJQ0UkRmxpZ2h0RGlzcGxheVRyYXZlbGVyVmlldyRTdXJ2ZXlCb3gkMAVdQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkUGFzc2VuZ2VySW5wdXRUcmF2ZWxlclZpZXckQ2hlY2tCb3hJbUZseWluZ18wBVxDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRQYXNzZW5nZXJJbnB1dFRyYXZlbGVyVmlldyRDaGVja0JveEFkZERvY3NfMAVhQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkSW5zdXJhbmNlSW5wdXRUcmF2ZWxlclZpZXckUmFkaW9CdXR0b25Ob0luc3VyYW5jZQVhQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkSW5zdXJhbmNlSW5wdXRUcmF2ZWxlclZpZXckUmFkaW9CdXR0b25Ob0luc3VyYW5jZQViQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkSW5zdXJhbmNlSW5wdXRUcmF2ZWxlclZpZXckUmFkaW9CdXR0b25ZZXNJbnN1cmFuY2UFYkNPTlRST0xHUk9VUF9PVVRFUlRSQVZFTEVSJENPTlRST0xHUk9VUFRSQVZFTEVSJEluc3VyYW5jZUlucHV0VHJhdmVsZXJWaWV3JFJhZGlvQnV0dG9uWWVzSW5zdXJhbmNlidORNQLITt2CkCi749CCAaxW%2FNc%3D" +
+                    @"&__VIEWSTATE=%2FwEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgYFSENPTlRST0xHUk9VUFRSQVZFTEVSRkxJR0hUQU5EUFJJQ0UkRmxpZ2h0RGlzcGxheVRyYXZlbGVyVmlldyRTdXJ2ZXlCb3gkMAVdQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkUGFzc2VuZ2VySW5wdXRUcmF2ZWxlclZpZXckQ2hlY2tCb3hJbUZseWluZ18wBWFDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRJbnN1cmFuY2VJbnB1dFRyYXZlbGVyVmlldyRSYWRpb0J1dHRvbk5vSW5zdXJhbmNlBWFDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRJbnN1cmFuY2VJbnB1dFRyYXZlbGVyVmlldyRSYWRpb0J1dHRvbk5vSW5zdXJhbmNlBWJDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRJbnN1cmFuY2VJbnB1dFRyYXZlbGVyVmlldyRSYWRpb0J1dHRvblllc0luc3VyYW5jZQViQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkSW5zdXJhbmNlSW5wdXRUcmF2ZWxlclZpZXckUmFkaW9CdXR0b25ZZXNJbnN1cmFuY2XANPXRpUiKOBVSs5rbl5fvpSsmZw%3D%3D" +
                     @"&pageToken=" +
                     @"&MemberLoginTravelerView2%24TextBoxUserID=" +
                     @"&hdRememberMeEmail=" +
@@ -247,10 +256,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&radioButtonNoInsuranceId=InsuranceInputControlAddOnsViewAjax_RadioButtonNoInsurance" +
                     @"&radioButtonYesInsuranceId=InsuranceInputControlAddOnsViewAjax_RadioButtonYesInsurance" +
                     @"&radioButton=on" +
-                    @"&HiddenFieldPageBookingData=" +
+                    @"&HiddenFieldPageBookingData=" + hidden +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
 
                 var travelerRequest = new RestRequest("Traveler.aspx", Method.POST);
+                travelerRequest.AddHeader("Referer", "https://booking2.airasia.com/Traveler.aspx");
                 travelerRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var travelerResponse = client.Execute(travelerRequest);
 
@@ -279,9 +289,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24HiddenEquipmentConfiguration_0_PassengerNumber_0=" +
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24EquipmentConfiguration_0_PassengerNumber_0=" +
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24EquipmentConfiguration_0_PassengerNumber_0_HiddenFee=NaN" +
-                    @"&HiddenFieldPageBookingData=" +
+                    @"&HiddenFieldPageBookingData=" + hidden +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 var unitMapRequest = new RestRequest("UnitMap.aspx", Method.POST);
+                unitMapRequest.AddHeader("Referer", "https://booking2.airasia.com/UnitMap.aspx");
                 unitMapRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var unitMapResponse = client.Execute(unitMapRequest);
 
@@ -296,7 +307,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier }
                     };
 
+                // EZPay
+
+                postData = @"isEzPayParams=false";
+                var ezPayRequest = new RestRequest("EZPayAjax-resource.aspx", Method.POST);
+                ezPayRequest.AddHeader("Referer", "https://booking2.airasia.com/EZPayAjax-resource.aspx");
+                ezPayRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                client.Execute(ezPayRequest);
+
                 // SELECT HOLD (PAYMENT)
+
+                Thread.Sleep(5000);
 
                 postData =
                     @"__EVENTTARGET=CONTROLGROUPPAYMENTBOTTOM%24PaymentInputViewPaymentView" +
@@ -311,9 +332,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&CONTROLGROUPPAYMENTBOTTOM%24MultiCurrencyConversionViewPaymentView%24DropDownListCurrency=default" +
                     @"&MCCOriginCountry=ID" +
                     @"&CONTROLGROUPPAYMENTBOTTOM%24PaymentInputViewPaymentView%24HiddenFieldUpdatedMCC=" +
-                    @"&HiddenFieldPageBookingData=" +
+                    @"&HiddenFieldPageBookingData=" + hidden +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 var paymentRequest = new RestRequest("Payment.aspx", Method.POST);
+                paymentRequest.AddHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
                 paymentRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var paymentResponse = client.Execute(paymentRequest);
 
@@ -326,7 +348,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         },
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier } };
 
+                // EZPay
+
+                client.Execute(ezPayRequest);
+
                 // [POST] Select Hold
+
+                Thread.Sleep(5000);
 
                 postData =
                     @"__EVENTTARGET=" +
@@ -341,9 +369,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&CONTROLGROUPPAYMENTBOTTOM%24MultiCurrencyConversionViewPaymentView%24DropDownListCurrency=default" +
                     @"&MCCOriginCountry=ID" +
                     @"&CONTROLGROUPPAYMENTBOTTOM%24ButtonSubmit=Submit+payment" +
-                    @"&HiddenFieldPageBookingData=" +
+                    @"&HiddenFieldPageBookingData=" + hidden +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 var paymentRequest2 = new RestRequest("Payment.aspx", Method.POST);
+                paymentRequest2.AddHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
                 paymentRequest2.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var paymentResponse2 = client.Execute(paymentRequest2);
 
@@ -364,11 +393,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var retryLimit = new TimeSpan(0, 1, 0);
                 var retryInterval = new TimeSpan(0, 0, 2);
                 var waitRequest = new RestRequest("Wait.aspx", Method.GET);
+                waitRequest.AddHeader("Referer", "https://booking2.airasia.com/Wait.aspx");
                 IRestResponse waitResponse = client.Execute(waitRequest);
                 while (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" && sw.Elapsed <= retryLimit && (waitResponse.StatusCode == HttpStatusCode.OK || waitResponse.StatusCode == HttpStatusCode.Redirect))
                 {
                     waitResponse = client.Execute(waitRequest);
-                    itinHtml = waitResponse.Content;
                     if (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" && (waitResponse.StatusCode == HttpStatusCode.OK || waitResponse.StatusCode == HttpStatusCode.Redirect))
                         Thread.Sleep(retryInterval);
                 }
@@ -386,11 +415,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 try
                 {
+                    itinHtml = waitResponse.Content;
                     var cqHtml = (CQ) itinHtml;
                     var bookingId = cqHtml["#OptionalHeaderContent_lblBookingNumber"].Text();
                     var timeLimitTexts = cqHtml["#mainContent > p"].Text().Split('\n', ',');
-                    var timeLimitDateText = timeLimitTexts[2].Trim(' ', '\n')
-                        .Substring(0, timeLimitTexts[2].Trim(' ', '\n').Length - 2);
+                    var timeLimitDateText = timeLimitTexts[2].Trim(' ', '\n');
                     var timeLimitTimeText = timeLimitTexts[4].Trim(' ', '\n');
                     var timeLimitDate = DateTime.Parse(timeLimitDateText, CultureInfo.CreateSpecificCulture("en-US"));
                     var timeLimitTime = TimeSpan.Parse(timeLimitTimeText, CultureInfo.InvariantCulture);

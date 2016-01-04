@@ -52,8 +52,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 client.AddDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
                 client.AddDefaultHeader("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6");
                 client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
-                client.AddDefaultHeader("Origin", "http://www.airasia.com");
-                client.AddDefaultHeader("Referer", "http://www.airasia.com/id/id/login/travel-agent.page");
+                client.AddDefaultHeader("Origin", "https://booking2.airasia.com");
+                client.AddDefaultHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
                 client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
                 client.CookieContainer = new CookieContainer();
                 return client;
