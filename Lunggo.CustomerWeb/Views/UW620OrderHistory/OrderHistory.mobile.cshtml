@@ -1,0 +1,217 @@
+﻿@using Lunggo.ApCommon.Identity.User
+@model List<Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay>
+
+@{
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    ViewBag.Title = "My Account";
+    ViewBag.BodyClass = "page page-useraccount";
+    ViewBag.AngularController = "UserAccountController";
+    
+    var rsvs = Model.OrderByDescending(rsv => rsv.RsvTime).ToList();
+}
+
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+
+@section PageJS{
+    <script>
+    var langCode = 'en';
+    var userProfile = {
+        address: '@User.Identity.GetAddress()',
+        firstname: '@User.Identity.GetFirstName()',
+        lastname: '@User.Identity.GetLastName()',
+        phone: parseInt('@User.Identity.GetPhoneNumber()'),
+        country: '@User.Identity.GetCountryCd()'
+        };
+    var editProfile = {
+        address: '@User.Identity.GetAddress()',
+        firstname: '@User.Identity.GetFirstName()',
+        lastname: '@User.Identity.GetLastName()',
+        phone: parseInt('@User.Identity.GetPhoneNumber()'),
+        country: '@User.Identity.GetCountryCd()'
+    }
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/mobile/js/AccountController.js"></script>
+}
+
+
+<section class="user-menu" ng-show="PageConfig.ActivePage == 'menu'">
+    <div class="menu-user">
+        <span>Shinta Tamara</span>
+    </div>
+    <div class="menu-wrapper">
+        <ul>
+            <li class="menu-profile">
+                <a ng-click="PageConfig.ChangePage('profile')">Ubah Profile</a>
+            </li>
+            <li class="menu-history">
+                <a ng-click="PageConfig.ChangePage('history')">Pemesanan Saya</a>
+            </li>
+            <li class="menu-logout">
+                <a href="#">Log Out</a>
+            </li>
+        </ul>
+    </div>
+</section><!-- .user-menu -->
+
+<section class="user-profile" ng-show="PageConfig.ActivePage == 'profile'">
+    <div class="form-wrapper">
+        <div class="profile-form">
+            <header>
+                <span>Login ID</span>
+            </header>
+            <div>
+                <form name="profileForm" novalidate class="form">
+                    <div class="form-group">
+                        <label class="control-label">Nama Depan:</label>
+                        <p class="form-control-static" ng-hide="UserProfile.Editing">{{UserProfile.firstname}}</p>
+                        <input type="text" value="" class="form-control" ng-model="EditProfile.firstname" ng-show="UserProfile.Editing" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Nama Belakang:</label>
+                        <p class="form-control-static" ng-hide="UserProfile.Editing">{{UserProfile.lastname}}</p>
+                        <input type="text" value="" class="form-control" ng-model="EditProfile.lastname" ng-show="UserProfile.Editing" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">No Telepon:</label>
+                        <p class="form-control-static" ng-hide="UserProfile.Editing">{{UserProfile.phone}}</p>
+                        <input type="number" value="" class="form-control" ng-model="EditProfile.phone" ng-show="UserProfile.Editing" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Kewarganegaraan:</label>
+                        <p class="form-control-static" ng-hide="UserProfile.Editing">{{Countries.GetCountry(UserProfile.country)}}</p>
+                        <select class="form-control" ng-model="EditProfile.country" ng-show="UserProfile.Editing" required>
+                            <option ng-repeat="country in Countries.List" value="{{country.dial_code}}" ng-selected="country.dial_code == UserProfile.country">{{country.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group" ng-show="UserProfile.Editing">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button class="btn btn-gray btn-block" ng-click="UserProfile.Edit()">CANCEL</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button class="btn btn-yellow btn-block" ng-disabled="profileForm.$invalid" ng-click="EditProfile.Submit()">SIMPAN</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-hide="UserProfile.Editing">
+                        <button class="btn btn-yellow btn-block" ng-click="UserProfile.Edit()">UBAH PROFIL</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="form-wrapper">
+        <div class="password-form">
+            <header>
+                <span>Password</span>
+            </header>
+            <div>
+                <form name="passwordForm" ng-submit="UserPassword.Submit()" novalidate class="form">
+                    <div class="form-group" ng-hide="UserPassword.Editing">
+                        <label class="control-label">Password:</label>
+                        <p class="form-control-static">*****</p>
+                    </div>
+                    <div ng-show="UserPassword.Editing">
+                        <div class="form-group">
+                            <label class="control-label">Password Saat Ini:</label>
+                            <input type="password" value="" class="form-control" ng-model="UserPassword.CurrentPassword" required />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Password Baru:</label>
+                            <input type="password" value="" class="form-control" ng-model="UserPassword.NewPassword" required />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Konfirmasi Password Baru:</label>
+                            <input type="password" value="" class="form-control" ng-model="UserPassword.ConfirmPassword" required />
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="UserPassword.Editing">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button class="btn btn-gray btn-block" ng-click="UserPassword.Edit()">CANCEL</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button class="btn btn-yellow btn-block" ng-disabled="passwordForm.$invalid" ng-click="UserPassword.Submit()">SIMPAN</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-hide="UserPassword.Editing">
+                        <a class="btn btn-yellow btn-block" ng-click="UserPassword.Edit()">UBAH PASSWORD</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section><!-- .user-profile -->
+
+<section class="user-history" ng-show="PageConfig.ActivePage == 'history'">
+    
+    <header class="page-title">
+        <span>PEMESANAN SAYA</span>
+    </header>
+
+    <ul class="history-list">
+        <li class="done">
+            <div class="row">
+                <div class="col-xs-4">
+                    <span class="blue">Order ID</span>
+                </div>
+                <div class="col-xs-8">
+                    <span class="blue">: <b>0123456789</b></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <span>Maskapai</span>
+                </div>
+                <div class="col-xs-8">
+                    <span class="blue">: <b>GARUDA INDONESIA</b></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <span>Tujuan</span>
+                </div>
+                <div class="col-xs-8">
+                    <span>: <b>JKT</b> to <b>DPS</b> (Roundtrip)</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <span>Berangkat</span>
+                </div>
+                <div class="col-xs-8">
+                    <span>: <b>15 Okt 2015</b></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <span>Kembali</span>
+                </div>
+                <div class="col-xs-8">
+                    <span>: <b>20 Okt 2015</b></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <span>Status</span>
+                </div>
+                <div class="col-xs-8">
+                    <span>: <b>DONE</b></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <a href="#" class="btn btn-yellow">detail</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+</section><!-- .user-history -->
