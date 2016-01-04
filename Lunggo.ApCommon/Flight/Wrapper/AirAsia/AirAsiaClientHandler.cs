@@ -41,7 +41,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
                 client.AddDefaultHeader("Origin", "https://booking2.airasia.com");
                 client.AddDefaultHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
-                client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
                 client.CookieContainer = new CookieContainer();
                 return client;
             }
@@ -50,11 +50,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             {
                 var client = new RestClient("https://booking2.airasia.com");
                 client.AddDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
-                client.AddDefaultHeader("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6");
+                client.AddDefaultHeader("Accept-Language", "en-US,en;q=0.8");
                 client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
                 client.AddDefaultHeader("Origin", "https://booking2.airasia.com");
                 client.AddDefaultHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
-                client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                client.AddDefaultHeader("Cache-Control", "max-age=0");
+                client.AddDefaultHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
                 client.CookieContainer = new CookieContainer();
                 return client;
             }

@@ -311,9 +311,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 postData = @"isEzPayParams=false";
                 var ezPayRequest = new RestRequest("EZPayAjax-resource.aspx", Method.POST);
-                ezPayRequest.AddHeader("Referer", "https://booking2.airasia.com/EZPayAjax-resource.aspx");
+                ezPayRequest.AddHeader("X-Requested-With", "XMLHttpRequest");
+                ezPayRequest.AddHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
                 ezPayRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
-                client.Execute(ezPayRequest);
+                var ezPayResponse = client.Execute(ezPayRequest);
 
                 // SELECT HOLD (PAYMENT)
 
@@ -350,7 +351,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 // EZPay
 
-                client.Execute(ezPayRequest);
+                ezPayResponse = client.Execute(ezPayRequest);
 
                 // [POST] Select Hold
 
