@@ -25,6 +25,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                     var url = "BookingList.aspx";
                     var listRequest = new RestRequest(url, Method.GET);
+                    listRequest.AddHeader("Referer", "https://booking2.airasia.com/AgentHome.aspx");
                     var listResponse = clientx.Execute(listRequest);
 
                     if (listResponse.ResponseUri.AbsolutePath != "/BookingList.aspx")
@@ -34,6 +35,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                     url = "BookingList.aspx";
                     var selectRequest = new RestRequest(url, Method.POST);
+                    selectRequest.AddHeader("Referer", "https://booking2.airasia.com/BookingList.aspx");
                     var postData =
                         @"__EVENTTARGET=ControlGroupBookingListView%24BookingListSearchInputView%24LinkButtonFindBooking" +
                         @"&__EVENTARGUMENT=" +
@@ -53,6 +55,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                     url = "BookingList.aspx";
                     var itinRequest = new RestRequest(url, Method.POST);
+                    listRequest.AddHeader("Referer", "https://booking2.airasia.com/BookingList.aspx");
                     postData =
                         @"__EVENTTARGET=ControlGroupBookingListView%24BookingListSearchInputView" +
                         @"&__EVENTARGUMENT=Edit%3A" + bookingId +

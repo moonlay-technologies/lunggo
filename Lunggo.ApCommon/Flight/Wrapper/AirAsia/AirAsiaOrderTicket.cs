@@ -46,6 +46,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 var url = "BookingList.aspx";
                 var listRequest = new RestRequest(url, Method.GET);
+                listRequest.AddHeader("Referer", "https://booking2.airasia.com/AgentHome.aspx");
                 var listResponse = clientx.Execute(listRequest);
 
                 if (listResponse.ResponseUri.AbsolutePath != "/BookingList.aspx" && (listResponse.StatusCode == HttpStatusCode.OK || listResponse.StatusCode == HttpStatusCode.Redirect))
@@ -59,6 +60,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 url = "BookingList.aspx";
                 var filterRequest = new RestRequest(url, Method.POST);
+                filterRequest.AddHeader("Referer", "https://booking2.airasia.com/BookingList.aspx");
                 var postData =
                     @"__EVENTTARGET=ControlGroupBookingListView%24BookingListSearchInputView%24LinkButtonFindBooking" +
                     @"&__EVENTARGUMENT=" +
@@ -82,6 +84,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 url = "BookingList.aspx";
                 var selectRequest = new RestRequest(url, Method.POST);
+                selectRequest.AddHeader("Referer", "https://booking2.airasia.com/BookingList.aspx");
                 postData =
                     @"__EVENTTARGET=ControlGroupBookingListView%24BookingListSearchInputView" +
                     @"&__EVENTARGUMENT=Edit%3A" + bookingId +
@@ -105,6 +108,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 url = "ChangeItinerary.aspx";
                 var itinRequest = new RestRequest(url, Method.POST);
+                itinRequest.AddHeader("Referer", "https://booking2.airasia.com/ChangeItinerary.aspx");
                 postData =
                     @"__EVENTTARGET=ControlGroupChangeItineraryView%24BookingDetailChangeItineraryView%24LinkButtonSubmit" +
                     @"&__EVENTARGUMENT=" +
@@ -139,6 +143,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                     url = "PaymentChange.aspx";
                     var paymentRequest = new RestRequest(url, Method.POST);
+                    paymentRequest.AddHeader("Referer", "https://booking2.airasia.com/PaymentChange.aspx");
                     postData =
                         @"__EVENTTARGET=" +
                         @"&__EVENTARGUMENT=" +
@@ -171,6 +176,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     {
                         url = "WaitChange.aspx";
                         var waitRequest = new RestRequest(url, Method.GET);
+                        waitRequest.AddHeader("Referer", "https://booking2.airasia.com/WaitChange.aspx");
                         waitResponse = clientx.Execute(waitRequest);
                         if (waitResponse.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" && (waitResponse.StatusCode == HttpStatusCode.OK || waitResponse.StatusCode == HttpStatusCode.Redirect))
                             Thread.Sleep(retryInterval);

@@ -51,8 +51,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var availableFares = new CQ();
                 if (originCountry == "ID")
                 {
-                    var url = @"Flight/InternalSelect";
+                    var url = @"Flight/Select";
                     var searchRequest = new RestRequest(url, Method.GET);
+                    searchRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
                     searchRequest.AddQueryParameter("o1", trip0.OriginAirport);
                     searchRequest.AddQueryParameter("d1", trip0.DestinationAirport);
                     searchRequest.AddQueryParameter("dd1", trip0.DepartureDate.ToString("yyyy-MM-dd"));
@@ -139,6 +140,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     {
                         var url = @"Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
                         var fareRequest = new RestRequest(url, Method.GET);
+                        fareRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
                         var itinHtml = (CQ)client.Execute(fareRequest).Content;
                         var price =
                             decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'),
