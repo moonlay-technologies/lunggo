@@ -941,6 +941,126 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     text-align: center;
     padding: 5px; }
 
+.page.page-useraccount .menu-user {
+  display: block;
+  background: #1daee4;
+  color: #fff;
+  padding: 15px; }
+  .page.page-useraccount .menu-user:before {
+    content: '';
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-image: url(/Assets/mobile/images/user-account-bg.png);
+    background-repeat: no-repeat;
+    vertical-align: middle; }
+  .page.page-useraccount .menu-user span {
+    display: inline-block;
+    padding-left: 15px;
+    font-weight: 600;
+    font-size: 14px;
+    vertical-align: middle; }
+
+.page.page-useraccount .user-menu .menu-wrapper {
+  padding: 15px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; }
+  .page.page-useraccount .user-menu .menu-wrapper ul {
+    border: 1px solid #ccc;
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+    .page.page-useraccount .user-menu .menu-wrapper ul li a {
+      display: block;
+      padding: 15px;
+      padding-left: 50px;
+      font-weight: 600;
+      position: relative;
+      font-size: 14px; }
+      .page.page-useraccount .user-menu .menu-wrapper ul li a:before {
+        display: block;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50px;
+        height: 50px;
+        background-image: url(/Assets/mobile/images/user-account-bg.png);
+        background-repeat: no-repeat; }
+      .page.page-useraccount .user-menu .menu-wrapper ul li a:after {
+        display: block;
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50px;
+        height: 50px;
+        background-image: url(/Assets/mobile/images/user-account-bg.png);
+        background-position: -200px 0;
+        background-repeat: no-repeat; }
+    .page.page-useraccount .user-menu .menu-wrapper ul li + li {
+      border-top: 1px solid #ccc; }
+    .page.page-useraccount .user-menu .menu-wrapper ul li.menu-profile a:before {
+      background-position: -50px 0; }
+    .page.page-useraccount .user-menu .menu-wrapper ul li.menu-history a:before {
+      background-position: -100px 0; }
+    .page.page-useraccount .user-menu .menu-wrapper ul li.menu-logout a:before {
+      background-position: -150px 0; }
+    .page.page-useraccount .user-menu .menu-wrapper ul li.menu-logout a:after {
+      display: none; }
+
+.page.page-useraccount .user-profile .form-wrapper {
+  padding: 0; }
+  .page.page-useraccount .user-profile .form-wrapper > div > header {
+    background: #1daee4;
+    color: #fff;
+    padding: 15px; }
+    .page.page-useraccount .user-profile .form-wrapper > div > header span {
+      font-weight: 600;
+      font-size: 14px; }
+  .page.page-useraccount .user-profile .form-wrapper > div > div {
+    padding: 15px; }
+
+.page.page-useraccount .user-history .page-title {
+  background: #1daee4;
+  color: #fff;
+  padding: 15px; }
+  .page.page-useraccount .user-history .page-title span {
+    text-align: center;
+    font-weight: 600;
+    margin: 0;
+    font-size: 14px;
+    display: block; }
+
+.page.page-useraccount .user-history .history-list {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+  .page.page-useraccount .user-history .history-list > li {
+    padding: 30px;
+    padding-left: 30px;
+    padding-right: 0;
+    position: relative; }
+    .page.page-useraccount .user-history .history-list > li + li {
+      border-top: 1px solid #ccc; }
+    .page.page-useraccount .user-history .history-list > li:before {
+      display: block;
+      content: '';
+      width: 60px;
+      height: 60px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-image: url(/Assets/mobile/images/flight-history-status.png);
+      background-repeat: no-repeat; }
+    .page.page-useraccount .user-history .history-list > li.done:before {
+      background-position: 0 0; }
+    .page.page-useraccount .user-history .history-list > li.pending:before {
+      background-position: -60px 0; }
+    .page.page-useraccount .user-history .history-list > li.canceled:before {
+      background-position: -120px 0; }
+
 .page.page-orderdetail .order-detail .content-header {
   background: #2eb4e7;
   color: #fff;

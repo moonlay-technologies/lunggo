@@ -1014,11 +1014,13 @@
     <Content Include="Assets\mobile\images\contact-map.jpg" />
     <Content Include="Assets\mobile\images\contact-plane.png" />
     <Content Include="Assets\mobile\images\contact-social-bg.png" />
+    <Content Include="Assets\mobile\images\flight-history-status.png" />
     <Content Include="Assets\mobile\images\flight-separator.png" />
     <Content Include="Assets\mobile\images\login-header-left.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
     <Content Include="Assets\mobile\images\register-header-left.png" />
     <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
+    <Content Include="Assets\mobile\images\user-account-bg.png" />
     <Content Include="Assets\mobile\images\yellow-stripe.png" />
     <Content Include="Assets\mobile\js\StaticController.js" />
     <Content Include="Assets\mobile\js\AccountController.js" />
@@ -2568,6 +2570,7 @@
     <Content Include="Views\Travorama20\emailTransferConfirmation.cshtml" />
     <Content Include="Views\Template\eticketnew.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderFlightHistoryDetail.mobile.cshtml" />
+    <Content Include="Views\UW620OrderHistory\OrderHistory.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

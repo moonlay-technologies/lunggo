@@ -1,4 +1,71 @@
-﻿// page order detail
+﻿// page user account
+.page.page-useraccount {
+    .menu-user {display:block; background:$color-main-blue; color:#fff; padding:15px;
+        &:before {content:''; display:inline-block; width:50px; height:50px; background-image:url(/Assets/mobile/images/user-account-bg.png); background-repeat:no-repeat; vertical-align:middle;}
+        span {display:inline-block; padding-left:15px; font-weight:600; font-size:14px; vertical-align:middle}
+    }
+    // user menu section
+    .user-menu {
+        .menu-wrapper {padding:15px; @include border-radius($border-radius-default);
+            ul {border:$border-default; margin:0; padding:0; list-style:none;
+                li {
+                    a {display:block; padding:15px; padding-left:50px; font-weight:600; position:relative; font-size:14px;
+                        &:before {display:block; content:''; position:absolute; top:0; left:0; width:50px; height:50px; background-image:url(/Assets/mobile/images/user-account-bg.png); background-repeat:no-repeat;}
+                        &:after {display:block; content:''; position:absolute; top:0; right:0; width:50px; height:50px; background-image:url(/Assets/mobile/images/user-account-bg.png); background-position:-200px 0; background-repeat:no-repeat;}
+                    }
+                    // styling
+                    &+li {border-top:$border-default;}
+                    &.menu-profile {
+                        a:before {background-position:-50px 0;}
+                    }
+                    &.menu-history {
+                        a:before {background-position:-100px 0;}
+                    }
+                    &.menu-logout {
+                        a:before {background-position:-150px 0;}
+                        a:after {display:none;}
+                    }
+                }
+            }
+        }
+    }
+    // user profile section
+    .user-profile {
+        .form-wrapper {padding:0;
+            &>div {
+                &>header {background:$color-main-blue; color:#fff; padding:15px;
+                    span {font-weight:600; font-size:14px;}
+                }
+                &>div {padding:15px;}
+            }
+            
+        }
+    }
+    // user history section
+    .user-history {
+        .page-title {background:$color-main-blue; color:#fff; padding:15px;
+            span {text-align:center; font-weight:600; margin:0; font-size:14px; display:block;}
+        }
+        .history-list {margin:0; padding:0; list-style:none;
+            &>li {padding:30px; padding-left:30px; padding-right:0; position:relative;
+                &+li {border-top:$border-default;}
+                &:before {display:block; content:''; width:60px; height:60px; position:absolute; top:0; left:0; background-image:url(/Assets/mobile/images/flight-history-status.png); background-repeat:no-repeat;}
+                // styling
+                &.done {
+                    &:before {background-position:0 0;}
+                }
+                &.pending {
+                    &:before {background-position:-60px 0;}
+                }
+                &.canceled {
+                    &:before {background-position:-120px 0;}
+                }
+            }
+        }
+    }
+}
+
+// page order detail
 .page.page-orderdetail {
     .order-detail {
         .content-header {background:#2eb4e7; color:#fff; padding:10px 0; text-align:center;}
