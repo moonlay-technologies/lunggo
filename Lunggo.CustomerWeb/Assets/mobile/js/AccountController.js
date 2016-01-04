@@ -1,4 +1,105 @@
-﻿// Contact Controller
+﻿// User Account Controller
+app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$location',function ($http, $scope, $rootScope, $location) {
+
+    $scope.PageConfig = $rootScope.PageConfig;
+    $scope.Countries = $rootScope.Countries;
+    // change page
+    $scope.PageConfig.ActivePage = 'menu';
+    $scope.PageConfig.ActivePageChanged = false;
+    $scope.PageConfig.ChangePage = function(page) {
+        $scope.PageConfig.ActivePage = page;
+        $scope.PageConfig.ActivePageChanged = true;
+        $location.hash(page);
+    }
+    angular.element(document).ready(function () {
+        $location.hash('menu');
+    });
+    $scope.$watch(function () {
+        return location.hash;
+    }, function (value) {
+        if (!$scope.PageConfig.ActivePageChanged) {
+            if (value != '') {
+                $scope.PageConfig.ChangePage('menu');
+            }
+        } else {
+            if (value == '' || value == '##menu') {
+                $scope.PageConfig.ActivePage = 'menu';
+            } else if (value == '##history' || value == 'history') {
+                $scope.PageConfig.ActivePage = 'history';
+            } else if (value == '##profile' || value == 'profile') {
+                $scope.PageConfig.ActivePage = 'profile';
+            }
+        }
+    });
+    // user profile
+    $scope.UserProfile = userProfile;
+    $scope.UserProfile.Editing = false;
+    $scope.UserProfile.Edit = function () {
+        if ($scope.UserProfile.Editing == false) {
+            $scope.UserProfile.Editing = true;
+        } else {
+            $scope.UserProfile.Editing = false;
+        }
+    }
+    $scope.EditProfile = editProfile;
+    $scope.EditProfile.Updating = false;
+    $scope.EditProfile.Failed = false;
+    $scope.EditProfile.Submit = function() {
+        
+    }
+    // user password
+    $scope.UserPassword = {
+        CurrentPassword: '',
+        NewPassword: '',
+        ConfirmPassword: '',
+        Editing: false,
+        Edit: function() {
+            if ($scope.UserPassword.Editing == false) {
+                $scope.UserPassword.Editing = true;
+            } else {
+                $scope.UserPassword.Editing = false;
+            }
+        },
+        Updating: false,
+        Failed: false,
+        Submit: function () {
+            $scope.UserPassword.Updating = true;
+            $http({
+                url: ChangePasswordConfig.Url,
+                method: 'POST',
+                data: {
+                    NewPassword: $scope.UserPassword.NewPassword,
+                    OldPassword: $scope.UserPassword.CurrentPassword,
+                    ConfirmPassword: $scope.UserPassword.ConfirmPassword
+                }
+            }).then(function (returnData) {
+                $scope.UserPassword.NewPassword = '';
+                $scope.UserPassword.CurrentPassword = '';
+                $scope.UserPassword.ConfirmPassword = '';
+                if (returnData.data.Status == 'Success') {
+                    console.log('Success requesting reset password');
+                    console.log(returnData);
+                    $scope.UserPassword.Updating = false;
+                    $scope.UserPassword.Editing = false;
+                }
+                else {
+                    console.log(returnData.data.Description);
+                    console.log(returnData);
+                    $scope.UserPassword.Updating = false;
+                    $scope.UserPassword.Editing = false;
+                }
+            }, function (returnData) {
+                console.log('Failed requesting reset password');
+                console.log(returnData);
+                $scope.UserPassword.Editing = false;
+                $scope.UserPassword.Updating = false;
+            });
+        }
+    };
+
+}]);// User Account Controller
+
+// Contact Controller
 app.controller('ContactController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
 
     $scope.PageConfig = $rootScope.PageConfig;
