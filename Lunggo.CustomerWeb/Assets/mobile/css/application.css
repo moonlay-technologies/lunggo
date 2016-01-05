@@ -396,12 +396,20 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 100%;
     content: "";
     clear: both; }
+  .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-state-disabled {
+    opacity: 0.3; }
 
 .overlay.datepicker .ui-datepicker .ui-datepicker-calendar {
   width: 100%;
   max-width: 280px;
   margin-left: auto;
   margin-right: auto; }
+  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar .ui-state-disabled {
+    opacity: 0.3; }
+  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day {
+    background: #fff; }
+    .overlay.datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day a, .overlay.datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day span {
+      color: #333; }
   .overlay.datepicker .ui-datepicker .ui-datepicker-calendar thead tr th {
     width: 40px;
     height: 40px;
@@ -940,6 +948,67 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-checkout .summary.summary--payment label section {
     text-align: center;
     padding: 5px; }
+
+.page.page-confirmation .instruction header {
+  background: #2fb4e6;
+  color: #fff;
+  padding: 5px 10px;
+  margin-bottom: 10px; }
+
+.page.page-confirmation .instruction .bank-detail .bank {
+  background: #caedfa;
+  padding: 15px; }
+  .page.page-confirmation .instruction .bank-detail .bank .image-wrapper {
+    background: #fff;
+    text-align: center;
+    margin-bottom: 10px; }
+  .page.page-confirmation .instruction .bank-detail .bank dl {
+    margin-bottom: 5px; }
+    .page.page-confirmation .instruction .bank-detail .bank dl:before, .page.page-confirmation .instruction .bank-detail .bank dl:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .page.page-confirmation .instruction .bank-detail .bank dl dt {
+      float: left;
+      width: 40%; }
+    .page.page-confirmation .instruction .bank-detail .bank dl dd {
+      float: left;
+      width: 60%;
+      position: relative;
+      padding-left: 12px; }
+      .page.page-confirmation .instruction .bank-detail .bank dl dd:before {
+        position: absolute;
+        content: ":";
+        top: 0;
+        left: 0; }
+
+.page.page-confirmation .countdown .widget-content {
+  background: #ffd632;
+  padding: 15px; }
+  .page.page-confirmation .countdown .widget-content .timer {
+    background: #ffefb0;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #dab939;
+    color: #4d4e4e; }
+    .page.page-confirmation .countdown .widget-content .timer > div {
+      display: inline-block; }
+    .page.page-confirmation .countdown .widget-content .timer h5 {
+      font-weight: bold;
+      font-size: 36px;
+      margin-bottom: 0;
+      margin-top: 0; }
+    .page.page-confirmation .countdown .widget-content .timer span {
+      font-size: 12px; }
+    .page.page-confirmation .countdown .widget-content .timer .separator {
+      vertical-align: top;
+      margin-left: 6px;
+      margin-right: 6px; }
+
+.page.page-confirmation .confirmation-form .control-label.important:after {
+  content: '*';
+  color: red; }
 
 .page.page-useraccount .menu-user {
   display: block;
