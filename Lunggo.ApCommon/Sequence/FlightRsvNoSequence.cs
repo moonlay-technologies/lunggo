@@ -39,7 +39,7 @@ namespace Lunggo.ApCommon.Sequence
         public string GetNextFlightRsvNo()
         {
             var id = GetNext();
-            var rsvNo = RsvNoIdentifier.Flight + id;
+            var rsvNo = RsvNoIdentifier.Flight + id.ToString("00000000000");
             return rsvNo;
         }
     }

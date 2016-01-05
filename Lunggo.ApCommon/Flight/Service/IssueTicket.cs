@@ -92,7 +92,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static void UpdateIssueStatus(string rsvNo, IssueTicketOutput output)
         {
-            if (!output.Errors.Any())
+            if (output.Errors == null)
             {
                 UpdateDb.IssueProgress(rsvNo, "Generating Eticket File");
             }
