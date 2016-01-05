@@ -204,6 +204,7 @@
     <Compile Include="Models\ExchangeRateViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Model\SubscriberCalendar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\GetBookingPending.cs" />
     <Compile Include="Query\GetBookingPendingRecord.cs" />
@@ -482,9 +483,9 @@
     <Content Include="Views\Flight\PriceMarginAdd.cshtml" />
     <Content Include="Views\Flight\PriceMarginConflict.cshtml" />
     <Content Include="Views\Flight\PriceMarginDelete.cshtml" />
+    <Content Include="Views\Flight\SubscriberList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
     <Folder Include="Views\CheckPaymentViewModel\" />
     <Folder Include="Views\ExchangeRateViewModel\" />
   </ItemGroup>

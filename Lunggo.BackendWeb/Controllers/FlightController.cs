@@ -9,6 +9,11 @@ using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.BackendWeb.Models;
+using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRepository;
+using Lunggo.Repository.TableRecord;
+using Lunggo.CustomerWeb.Models;
+using Lunggo.BackendWeb.Model;
 
 namespace Lunggo.BackendWeb.Controllers
 {
@@ -184,6 +189,28 @@ namespace Lunggo.BackendWeb.Controllers
             var flight = FlightService.GetInstance();
             flight.DeletePriceMarginRule(id);
             return RedirectToAction("PriceMarginList");
+        }
+
+        public ActionResult SubscriberList()
+        {
+            List<SubscriberCalendar> dataModel = new List<SubscriberCalendar>();
+           var con = DbService.GetInstance().GetOpenConnection();
+           var List = CalendarRecipientTableRepo.GetInstance().FindAll(con).ToList();
+           
+           foreach (var dataSubscribers in List)
+           {
+               dataModel.Add(new SubscriberCalendar()
+               {
+                   Email = dataSubscribers.Email,
+                   Name = dataSubscribers.Name,
+                   PhoneNumber = dataSubscribers.PhoneNumber,
+                   City = dataSubscribers.City,
+                   Address = dataSubscribers.Address,
+                   PostalCode = dataSubscribers.PostalCode
+               });
+           }
+
+           return View(dataModel);
         }
     }
 }
