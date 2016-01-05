@@ -54,8 +54,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.FlightProcess
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob", "Lunggo.WebJob\Lunggo.WebJob.csproj", "{304B9323-5306-4569-B047-62DB267B0224}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch", "Lunggo.WebJob-FlightSearch\Lunggo.WebJob-FlightSearch.csproj", "{839C8598-4F07-4FA2-94CE-E61739A17700}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch.FlightCrawler1", "Lunggo.WebJob-FlightSearch.FlightCrawler1\Lunggo.WebJob-FlightSearch.FlightCrawler1.csproj", "{8FC46024-D4D4-440A-A133-698538828B38}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch.FlightCrawler2", "Lunggo.WebJob-FlightSearch.FlightCrawler2\Lunggo.WebJob-FlightSearch.FlightCrawler2.csproj", "{DD4FAF9C-CAE2-45CB-9AEA-AE1D112CF165}"
@@ -63,6 +61,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch.FlightCrawler3", "Lunggo.WebJob-FlightSearch.FlightCrawler3\Lunggo.WebJob-FlightSearch.FlightCrawler3.csproj", "{34F7E2E7-6F45-40CA-942F-7787F328243F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch.FlightCrawler4", "Lunggo.WebJob-FlightSearch.FlightCrawler4\Lunggo.WebJob-FlightSearch.FlightCrawler4.csproj", "{B077F772-60CD-4B7D-8825-836662B9A838}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch", "Lunggo.WebJob-FlightSearch\Lunggo.WebJob-FlightSearch.csproj", "{839C8598-4F07-4FA2-94CE-E61739A17700}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -247,16 +247,6 @@ Global
 		{304B9323-5306-4569-B047-62DB267B0224}.Release|ARM.ActiveCfg = Release|Any CPU
 		{304B9323-5306-4569-B047-62DB267B0224}.Release|x64.ActiveCfg = Release|Any CPU
 		{304B9323-5306-4569-B047-62DB267B0224}.Release|x86.ActiveCfg = Release|Any CPU
-		{839C8598-4F07-4FA2-94CE-E61739A17700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{839C8598-4F07-4FA2-94CE-E61739A17700}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{839C8598-4F07-4FA2-94CE-E61739A17700}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{839C8598-4F07-4FA2-94CE-E61739A17700}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{839C8598-4F07-4FA2-94CE-E61739A17700}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{839C8598-4F07-4FA2-94CE-E61739A17700}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{839C8598-4F07-4FA2-94CE-E61739A17700}.Release|Any CPU.Build.0 = Release|Any CPU
-		{839C8598-4F07-4FA2-94CE-E61739A17700}.Release|ARM.ActiveCfg = Release|Any CPU
-		{839C8598-4F07-4FA2-94CE-E61739A17700}.Release|x64.ActiveCfg = Release|Any CPU
-		{839C8598-4F07-4FA2-94CE-E61739A17700}.Release|x86.ActiveCfg = Release|Any CPU
 		{8FC46024-D4D4-440A-A133-698538828B38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8FC46024-D4D4-440A-A133-698538828B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FC46024-D4D4-440A-A133-698538828B38}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -297,6 +287,16 @@ Global
 		{B077F772-60CD-4B7D-8825-836662B9A838}.Release|ARM.ActiveCfg = Release|Any CPU
 		{B077F772-60CD-4B7D-8825-836662B9A838}.Release|x64.ActiveCfg = Release|Any CPU
 		{B077F772-60CD-4B7D-8825-836662B9A838}.Release|x86.ActiveCfg = Release|Any CPU
+		{839C8598-4F07-4FA2-94CE-E61739A17700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{839C8598-4F07-4FA2-94CE-E61739A17700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{839C8598-4F07-4FA2-94CE-E61739A17700}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{839C8598-4F07-4FA2-94CE-E61739A17700}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{839C8598-4F07-4FA2-94CE-E61739A17700}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{839C8598-4F07-4FA2-94CE-E61739A17700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{839C8598-4F07-4FA2-94CE-E61739A17700}.Release|Any CPU.Build.0 = Release|Any CPU
+		{839C8598-4F07-4FA2-94CE-E61739A17700}.Release|ARM.ActiveCfg = Release|Any CPU
+		{839C8598-4F07-4FA2-94CE-E61739A17700}.Release|x64.ActiveCfg = Release|Any CPU
+		{839C8598-4F07-4FA2-94CE-E61739A17700}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

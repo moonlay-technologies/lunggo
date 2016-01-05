@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
@@ -30,53 +31,35 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
         {
             internal OrderTicketResult OrderTicket(string bookingId)
             {
-                var client = new ExtendedWebClient();
+                var clientx = CreateAgentClient();
                 var untukEncode = "ticketing:" + bookingId + ":STEP2";
                 var encode = untukEncode.Base64Encode();
                 var encode2 = encode.Base64Encode();
 
-                Client.CreateSession(client);
+                Login(clientx);
                 try
                 {
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    //client.Headers["Accept-Encoding"] = "gzip, deflate";
-                    client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Referer"] = "http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=CheckBCode&reffNo=" + bookingId + "";
-                    client.Headers["Host"] = "agent.sriwijayaair.co.id";
-                    client.Headers["Origin"] = "https://www.sriwijayaair.co.id";
-                    client.AutoRedirect = true;
-                    client.Expect100Continue = false;
-
-                    var issueparams =
+                    var url = "SJ-Eticket/application/?action=CheckBCode&reffNo=" + bookingId;
+                    var submitRequest = new RestRequest(url, Method.POST);
+                    var postData =
                         "Submit=Issue" +
                         "&action=ticketing" +
                         "&reffNo="+ encode2 +"%3D";
+                    submitRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                    var submitResponse = clientx.Execute(submitRequest);
 
-                    client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=CheckBCode&reffNo="+ bookingId +"", issueparams);
-        
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    //client.Headers["Accept-Encoding"] = "gzip, deflate";
-                    client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Referer"] = "http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=CheckBCode&reffNo=" + bookingId + "";
-                    client.Headers["Host"] = "agent.sriwijayaair.co.id";
-                    client.Headers["Origin"] = "https://www.sriwijayaair.co.id";
-                    client.AutoRedirect = true;
-
-                    var cekparams =
+                    url = "SJ-Eticket/application/?";
+                    var checkRequest = new RestRequest(url, Method.POST);
+                    postData =
                         "reffNo=" + bookingId +
                         "&action=CheckBCode" +
                         "&step=STEP2";
-
-                    var cekresult = client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/?", cekparams);
+                    checkRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                    var checkResponse = clientx.Execute(checkRequest);
+                    var cekresult = checkResponse.Content;
                    
                     //var cekresult = System.IO.File.ReadAllText(@"C:\Users\User\Documents\Kerja\Crawl\REPONSEissue.txt");
-                    CQ ambilTimeLimit = (CQ)cekresult;
+                    var ambilTimeLimit = (CQ)cekresult;
 
                     var tunjukClassTarget = ambilTimeLimit["#pagewrapper>#pnr .reservationDetail .bookingCodeWrap:nth-child(3)>.bookingCode"];
                     var tunjukStatusBook = tunjukClassTarget.MakeRoot()[".bookingCode"];
@@ -95,7 +78,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         hasil.Errors = new List<FlightError> { FlightError.FailedOnSupplier };
                     }
                     
-                    Client.LogoutSession(client);
+                    Logout(clientx);
                     return hasil;
                 }
                 catch (Exception)
@@ -104,20 +87,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     switch (isIssued)
                     {
                         case IssueEnum.IssueSuccess:
-                            Client.LogoutSession(client);
+                            Logout(clientx);
                             return new OrderTicketResult
                             {
                                 IsSuccess = true,
                                 BookingId = bookingId
                             };
                         case IssueEnum.NotIssued:
-                            Client.LogoutSession(client);
+                            Logout(clientx);
                             return new OrderTicketResult
                             {
                                 IsSuccess = false
                             };
                         case IssueEnum.CheckingError:
-                            Client.LogoutSession(client);
+                            Logout(clientx);
                             return new OrderTicketResult
                             {
                                 IsSuccess = false,
@@ -125,7 +108,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
                             };
                         default:
-                            Client.LogoutSession(client);
+                            Logout(clientx);
                             return new OrderTicketResult
                             {
                                 IsSuccess = false,

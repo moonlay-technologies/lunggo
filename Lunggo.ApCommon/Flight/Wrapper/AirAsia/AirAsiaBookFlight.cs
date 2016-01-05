@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
@@ -25,7 +26,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
-                var client = new ExtendedWebClient();
+                var client = CreateAgentClient();
 
                 string origin, dest, coreFareId;
                 DateTime date;
@@ -72,17 +73,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         ErrorMessages = new List<string> { "Can't Login!" }
                     };
 
+                var flightPart = coreFareId.Split('|')[1];
+                var splitted = flightPart.Split('~');
+                var airlineCode = splitted[0];
+                var flightNumber = splitted[1];
+                var hidden = string.Join(" ", date.ToString("yyyyMMdd"), airlineCode, flightNumber,
+                    origin + dest + "IDR");
+
                 // [POST] Search Flight
 
                 var date2 = date.AddDays(1);
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Accept-Encoding"] = "";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Origin"] = "https://booking2.airasia.com";
-                client.Headers["Referer"] = "https://booking2.airasia.com/Search.aspx";
                 var postData =
                     @"__EVENTTARGET=" +
                     @"&__EVENTARGUMENT=" +
@@ -110,28 +110,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupSearchView%24ButtonSubmit=Search" +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0"; ;
 
-                client.UploadString(@"https://booking2.airasia.com/Search.aspx", postData);
+                var searchRequest = new RestRequest("Search.aspx", Method.POST);
+                searchRequest.AddHeader("Referer", "https://booking2.airasia.com/Search.aspx");
+                searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                var searchResponse = client.Execute(searchRequest);
 
-                if (client.ResponseUri.AbsolutePath != "/Select.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                if (searchResponse.ResponseUri.AbsolutePath != "/Select.aspx" && (searchResponse.StatusCode == HttpStatusCode.OK || searchResponse.StatusCode == HttpStatusCode.Redirect))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
-                        },Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
+                        },
+                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
                     };
 
                 // [POST] Select Flight
 
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Origin"] = "https://booking2.airasia.com";
-                client.Headers["Referer"] = "https://booking2.airasia.com/Select.aspx";
                 postData =
                     @"__EVENTTARGET=" +
                     @"&__EVENTARGUMENT=" +
@@ -155,16 +151,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_CHD="+childCount +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_INFANT="+infantCount +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24MultiCurrencyConversionViewSelectView%24DropDownListCurrency=default" +
-                    @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListSearchBy=columnView" +
+                    //@"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListSearchBy=columnView" +
                     @"&ControlGroupSelectView%24AvailabilityInputSelectView%24HiddenFieldTabIndex1=4" +
                     @"&ControlGroupSelectView%24AvailabilityInputSelectView%24market1=" + HttpUtility.UrlEncode(coreFareId) +
                     @"&ControlGroupSelectView%24SpecialNeedsInputSelectView%24RadioButtonWCHYESNO=RadioButtonWCHNO" +
                     @"&ControlGroupSelectView%24ButtonSubmit=Continue" +
                     @"&__VIEWSTATEGENERATOR=C8F924D9";
 
-                client.UploadString(@"https://booking2.airasia.com/Select.aspx", postData);
+                var selectRequest = new RestRequest("Select.aspx", Method.POST);
+                selectRequest.AddHeader("Referer", "https://booking2.airasia.com/Select.aspx");
+                selectRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                var selectResponse = client.Execute(selectRequest);
 
-                if (client.ResponseUri.AbsolutePath != "/Traveler.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                if (selectResponse.ResponseUri.AbsolutePath != "/Traveler.aspx" && (selectResponse.StatusCode == HttpStatusCode.OK || selectResponse.StatusCode == HttpStatusCode.Redirect))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -177,18 +176,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 // [POST] Input Data
 
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Origin"] = "https://booking2.airasia.com";
-                client.Headers["Referer"] = "https://booking2.airasia.com/Traveler.aspx";
                 postData =
                     @"__EVENTTARGET=CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24LinkButtonSkipToSeatMap" +
                     @"&__EVENTARGUMENT=" +
-                    @"&__VIEWSTATE=%2FwEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgcFSENPTlRST0xHUk9VUFRSQVZFTEVSRkxJR0hUQU5EUFJJQ0UkRmxpZ2h0RGlzcGxheVRyYXZlbGVyVmlldyRTdXJ2ZXlCb3gkMAVdQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkUGFzc2VuZ2VySW5wdXRUcmF2ZWxlclZpZXckQ2hlY2tCb3hJbUZseWluZ18wBVxDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRQYXNzZW5nZXJJbnB1dFRyYXZlbGVyVmlldyRDaGVja0JveEFkZERvY3NfMAVhQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkSW5zdXJhbmNlSW5wdXRUcmF2ZWxlclZpZXckUmFkaW9CdXR0b25Ob0luc3VyYW5jZQVhQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkSW5zdXJhbmNlSW5wdXRUcmF2ZWxlclZpZXckUmFkaW9CdXR0b25Ob0luc3VyYW5jZQViQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkSW5zdXJhbmNlSW5wdXRUcmF2ZWxlclZpZXckUmFkaW9CdXR0b25ZZXNJbnN1cmFuY2UFYkNPTlRST0xHUk9VUF9PVVRFUlRSQVZFTEVSJENPTlRST0xHUk9VUFRSQVZFTEVSJEluc3VyYW5jZUlucHV0VHJhdmVsZXJWaWV3JFJhZGlvQnV0dG9uWWVzSW5zdXJhbmNlidORNQLITt2CkCi749CCAaxW%2FNc%3D" +
+                    @"&__VIEWSTATE=%2FwEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgYFSENPTlRST0xHUk9VUFRSQVZFTEVSRkxJR0hUQU5EUFJJQ0UkRmxpZ2h0RGlzcGxheVRyYXZlbGVyVmlldyRTdXJ2ZXlCb3gkMAVdQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkUGFzc2VuZ2VySW5wdXRUcmF2ZWxlclZpZXckQ2hlY2tCb3hJbUZseWluZ18wBWFDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRJbnN1cmFuY2VJbnB1dFRyYXZlbGVyVmlldyRSYWRpb0J1dHRvbk5vSW5zdXJhbmNlBWFDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRJbnN1cmFuY2VJbnB1dFRyYXZlbGVyVmlldyRSYWRpb0J1dHRvbk5vSW5zdXJhbmNlBWJDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRJbnN1cmFuY2VJbnB1dFRyYXZlbGVyVmlldyRSYWRpb0J1dHRvblllc0luc3VyYW5jZQViQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkSW5zdXJhbmNlSW5wdXRUcmF2ZWxlclZpZXckUmFkaW9CdXR0b25ZZXNJbnN1cmFuY2XANPXRpUiKOBVSs5rbl5fvpSsmZw%3D%3D" +
                     @"&pageToken=" +
                     @"&MemberLoginTravelerView2%24TextBoxUserID=" +
                     @"&hdRememberMeEmail=" +
@@ -265,11 +256,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&radioButtonNoInsuranceId=InsuranceInputControlAddOnsViewAjax_RadioButtonNoInsurance" +
                     @"&radioButtonYesInsuranceId=InsuranceInputControlAddOnsViewAjax_RadioButtonYesInsurance" +
                     @"&radioButton=on" +
-                    @"&HiddenFieldPageBookingData=" +
+                    @"&HiddenFieldPageBookingData=" + hidden +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
-                client.UploadString(@"https://booking2.airasia.com/Traveler.aspx", postData);
 
-                if (client.ResponseUri.AbsolutePath != "/UnitMap.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                var travelerRequest = new RestRequest("Traveler.aspx", Method.POST);
+                travelerRequest.AddHeader("Referer", "https://booking2.airasia.com/Traveler.aspx");
+                travelerRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                var travelerResponse = client.Execute(travelerRequest);
+
+                if (travelerResponse.ResponseUri.AbsolutePath != "/UnitMap.aspx" && (travelerResponse.StatusCode == HttpStatusCode.OK || travelerResponse.StatusCode == HttpStatusCode.Redirect))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -282,14 +277,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 // [POST] Select Seat
 
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Origin"] = "https://booking2.airasia.com";
-                client.Headers["Referer"] = "https://booking2.airasia.com/UnitMap.aspx";
                 postData =
                     @"__EVENTTARGET=ControlGroupUnitMapView%24UnitMapViewControl%24LinkButtonAssignUnit" +
                     @"&__EVENTARGUMENT=" +
@@ -302,11 +289,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24HiddenEquipmentConfiguration_0_PassengerNumber_0=" +
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24EquipmentConfiguration_0_PassengerNumber_0=" +
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24EquipmentConfiguration_0_PassengerNumber_0_HiddenFee=NaN" +
-                    @"&HiddenFieldPageBookingData=" +
+                    @"&HiddenFieldPageBookingData=" + hidden +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
-                client.UploadString(@"https://booking2.airasia.com/UnitMap.aspx", postData);
+                var unitMapRequest = new RestRequest("UnitMap.aspx", Method.POST);
+                unitMapRequest.AddHeader("Referer", "https://booking2.airasia.com/UnitMap.aspx");
+                unitMapRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                var unitMapResponse = client.Execute(unitMapRequest);
 
-                if (client.ResponseUri.AbsolutePath != "/Payment.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                if (unitMapResponse.ResponseUri.AbsolutePath != "/Payment.aspx" && (unitMapResponse.StatusCode == HttpStatusCode.OK || unitMapResponse.StatusCode == HttpStatusCode.Redirect))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -317,16 +307,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier }
                     };
 
+                // EZPay
+
+                postData = @"isEzPayParams=false";
+                var ezPayRequest = new RestRequest("EZPayAjax-resource.aspx", Method.POST);
+                ezPayRequest.AddHeader("X-Requested-With", "XMLHttpRequest");
+                ezPayRequest.AddHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
+                ezPayRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                var ezPayResponse = client.Execute(ezPayRequest);
+
                 // SELECT HOLD (PAYMENT)
 
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Origin"] = "https://booking2.airasia.com";
-                client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
+                Thread.Sleep(5000);
+
                 postData =
                     @"__EVENTTARGET=CONTROLGROUPPAYMENTBOTTOM%24PaymentInputViewPaymentView" +
                     @"&__EVENTARGUMENT=HOLD" +
@@ -340,11 +333,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&CONTROLGROUPPAYMENTBOTTOM%24MultiCurrencyConversionViewPaymentView%24DropDownListCurrency=default" +
                     @"&MCCOriginCountry=ID" +
                     @"&CONTROLGROUPPAYMENTBOTTOM%24PaymentInputViewPaymentView%24HiddenFieldUpdatedMCC=" +
-                    @"&HiddenFieldPageBookingData=" +
+                    @"&HiddenFieldPageBookingData=" + hidden +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
-                client.UploadString(@"https://booking2.airasia.com/Payment.aspx", postData);
+                var paymentRequest = new RestRequest("Payment.aspx", Method.POST);
+                paymentRequest.AddHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
+                paymentRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                var paymentResponse = client.Execute(paymentRequest);
 
-                if (client.ResponseUri.AbsolutePath != "/Payment.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                if (paymentResponse.ResponseUri.AbsolutePath != "/Payment.aspx" && (paymentResponse.StatusCode == HttpStatusCode.OK || paymentResponse.StatusCode == HttpStatusCode.Redirect))
                     return new BookFlightResult { 
                         IsSuccess = false,
                         Status = new BookingStatusInfo
@@ -353,15 +349,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         },
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier } };
 
+                // EZPay
+
+                ezPayResponse = client.Execute(ezPayRequest);
+
                 // [POST] Select Hold
 
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Origin"] = "https://booking2.airasia.com";
-                client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
+                Thread.Sleep(5000);
+
                 postData =
                     @"__EVENTTARGET=" +
                     @"&__EVENTARGUMENT=" +
@@ -375,18 +370,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&CONTROLGROUPPAYMENTBOTTOM%24MultiCurrencyConversionViewPaymentView%24DropDownListCurrency=default" +
                     @"&MCCOriginCountry=ID" +
                     @"&CONTROLGROUPPAYMENTBOTTOM%24ButtonSubmit=Submit+payment" +
-                    @"&HiddenFieldPageBookingData=" +
+                    @"&HiddenFieldPageBookingData=" + hidden +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
-                client.UploadString(@"https://booking2.airasia.com/Payment.aspx", postData);
+                var paymentRequest2 = new RestRequest("Payment.aspx", Method.POST);
+                paymentRequest2.AddHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
+                paymentRequest2.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                var paymentResponse2 = client.Execute(paymentRequest2);
 
-                if (client.ResponseUri.AbsolutePath != "/Wait.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                if (paymentResponse2.ResponseUri.AbsolutePath != "/Wait.aspx" && (paymentResponse2.StatusCode == HttpStatusCode.OK || paymentResponse2.StatusCode == HttpStatusCode.Redirect))
                     return new BookFlightResult { 
                         IsSuccess = false,
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier } };
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier } 
+                    };
 
                 // [GET] Wait for Book
 
@@ -394,38 +393,34 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var sw = Stopwatch.StartNew();
                 var retryLimit = new TimeSpan(0, 1, 0);
                 var retryInterval = new TimeSpan(0, 0, 2);
-                while (client.ResponseUri.AbsolutePath != "/Itinerary.aspx" && sw.Elapsed <= retryLimit && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                var waitRequest = new RestRequest("Wait.aspx", Method.GET);
+                waitRequest.AddHeader("Referer", "https://booking2.airasia.com/Wait.aspx");
+                IRestResponse waitResponse = client.Execute(waitRequest);
+                while (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" && sw.Elapsed <= retryLimit && (waitResponse.StatusCode == HttpStatusCode.OK || waitResponse.StatusCode == HttpStatusCode.Redirect))
                 {
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Accept-Encoding"] = null;
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] =
-                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Origin"] = "https://booking2.airasia.com";
-                    client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
-                    itinHtml = client.DownloadString(@"https://booking2.airasia.com/Wait.aspx");
-                    if (client.ResponseUri.AbsolutePath != "/Itinerary.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                    waitResponse = client.Execute(waitRequest);
+                    if (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" && (waitResponse.StatusCode == HttpStatusCode.OK || waitResponse.StatusCode == HttpStatusCode.Redirect))
                         Thread.Sleep(retryInterval);
                 }
 
-                if (client.ResponseUri.AbsolutePath != "/Itinerary.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                if (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" && (waitResponse.StatusCode == HttpStatusCode.OK || waitResponse.StatusCode == HttpStatusCode.Redirect))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
-                        }
+                        },
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier } 
                     };
 
                 try
                 {
+                    itinHtml = waitResponse.Content;
                     var cqHtml = (CQ) itinHtml;
                     var bookingId = cqHtml["#OptionalHeaderContent_lblBookingNumber"].Text();
                     var timeLimitTexts = cqHtml["#mainContent > p"].Text().Split('\n', ',');
-                    var timeLimitDateText = timeLimitTexts[2].Trim(' ', '\n')
-                        .Substring(0, timeLimitTexts[2].Trim(' ', '\n').Length - 2);
+                    var timeLimitDateText = timeLimitTexts[2].Trim(' ', '\n');
                     var timeLimitTimeText = timeLimitTexts[4].Trim(' ', '\n');
                     var timeLimitDate = DateTime.Parse(timeLimitDateText, CultureInfo.CreateSpecificCulture("en-US"));
                     var timeLimitTime = TimeSpan.Parse(timeLimitTimeText, CultureInfo.InvariantCulture);

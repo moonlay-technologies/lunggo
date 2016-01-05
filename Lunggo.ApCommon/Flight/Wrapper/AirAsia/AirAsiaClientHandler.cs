@@ -1,5 +1,7 @@
-﻿using Lunggo.Framework.Config;
+﻿using System.Net;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
@@ -32,16 +34,37 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
             }
 
-            internal bool Login(ExtendedWebClient client)
+            private static RestClient CreateCustomerClient()
             {
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                client.Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Origin"] = "http://www.airasia.com";
-                client.Headers["Referer"] = "http://www.airasia.com/id/id/login/travel-agent.page";
+                var client = new RestClient("http://booking.airasia.com");
+                client.AddDefaultHeader("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6");
+                client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
+                client.AddDefaultHeader("Origin", "https://booking.airasia.com");
+                //client.AddDefaultHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
+                client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
+                client.CookieContainer = new CookieContainer();
+                return client;
+            }
+
+            private static RestClient CreateAgentClient()
+            {
+                var client = new RestClient("https://booking2.airasia.com");
+                client.AddDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
+                client.AddDefaultHeader("Accept-Language", "en-US,en;q=0.8");
+                client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
+                client.AddDefaultHeader("Origin", "https://booking2.airasia.com");
+                //client.AddDefaultHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
+                client.AddDefaultHeader("Cache-Control", "max-age=0");
+                client.AddDefaultHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
+                client.CookieContainer = new CookieContainer();
+                return client;
+            }
+
+            private static bool Login(RestClient client)
+            {
+                var url = "LoginAgent.aspx";
+                var request = new RestRequest(url, Method.POST);
                 var postData =
                     @"ControlGroupLoginAgentView$AgentLoginView$TextBoxUserID=" + _userName +
                     @"&ControlGroupLoginAgentView$AgentLoginView$PasswordFieldPassword=" + _password +
@@ -49,9 +72,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&__EVENTTARGET=ControlGroupLoginAgentView$AgentLoginView$LinkButtonLogIn" +
                     @"&__EVENTARGUMENT=" +
                     @"&pageToken=";
-                client.UploadString(@"https://booking2.airasia.com/LoginAgent.aspx", postData);
+                request.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                var response = client.Execute(request);
 
-                return client.ResponseUri.AbsolutePath == "/AgentHome.aspx";
+                return response.ResponseUri.AbsolutePath == "/AgentHome.aspx";
             }
         }
     }

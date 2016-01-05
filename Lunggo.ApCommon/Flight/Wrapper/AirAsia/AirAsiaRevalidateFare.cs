@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Web;
 using CsQuery;
 using Lunggo.ApCommon.Constant;
@@ -11,6 +12,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
@@ -25,7 +27,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         {
             internal RevalidateFareResult RevalidateFare(RevalidateConditions conditions)
             {
-                var client = new ExtendedWebClient();
+                var client = CreateCustomerClient();
 
                 if (conditions.FareId == null)
                 {
@@ -64,27 +66,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var searchedHtml = new CQ();
                 if (originCountry == "ID")
                 {
-                    var url = @"http://booking.airasia.com/Flight/InternalSelect" +
-                              @"?o1=" + origin +
-                              @"&d1=" + dest +
-                              @"&dd1=" + date.ToString("yyyy-MM-dd") +
-                              @"&ADT=" + adultCount +
-                              @"&CHD=" + childCount +
-                              @"&inl=" + infantCount +
-                              @"&s=true" +
-                              @"&mon=true" +
-                              @"&culture=id-ID" +
-                              @"&cc=IDR";
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] =
-                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Origin"] = "https://booking2.airasia.com";
-                    client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
-                    var html = client.DownloadString(url);
+                    var url = @"Flight/Select";
+                    var searchRequest = new RestRequest(url, Method.GET);
+                    searchRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
+                    searchRequest.AddQueryParameter("o1", origin);
+                    searchRequest.AddQueryParameter("d1", dest);
+                    searchRequest.AddQueryParameter("dd1", date.ToString("yyyy-MM-dd"));
+                    searchRequest.AddQueryParameter("ADT", adultCount.ToString(CultureInfo.InvariantCulture));
+                    searchRequest.AddQueryParameter("CHD", childCount.ToString(CultureInfo.InvariantCulture));
+                    searchRequest.AddQueryParameter("inl", infantCount.ToString(CultureInfo.InvariantCulture));
+                    searchRequest.AddQueryParameter("s", "true");
+                    searchRequest.AddQueryParameter("mon", "true");
+                    searchRequest.AddQueryParameter("culture", "id-ID");
+                    searchRequest.AddQueryParameter("cc", "IDR");
+                    var searchResponse = client.Execute(searchRequest);
 
-                    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                    var html = searchResponse.Content;
+
+                    if (searchResponse.ResponseUri.AbsolutePath != "/Flight/Select" && (searchResponse.StatusCode == HttpStatusCode.OK || searchResponse.StatusCode == HttpStatusCode.Redirect))
                         return new RevalidateFareResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
 
                     searchedHtml = (CQ)html;
@@ -154,9 +153,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                            "." +
                                            childCount + "." + infantCount + "." + FlightService.ParseCabinClass(cabinClass) + ".";
 
-                        var url = "https://booking.airasia.com/Flight/PriceItinerary" +
-                              "?SellKeys%5B%5D=" + HttpUtility.UrlEncode(foundFareId);
-                        var itinHtml = (CQ) client.DownloadString(url);
+                        var url = @"Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(foundFareId);
+                        var fareRequest = new RestRequest(url, Method.GET);
+                        fareRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
+                        var itinHtml = (CQ)client.Execute(fareRequest).Content;
 
                         if (itinHtml.Children().Elements.Count() <= 1)
                             return new RevalidateFareResult

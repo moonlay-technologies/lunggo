@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
@@ -34,51 +35,48 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 }
             }
 
-            internal void CreateSession(ExtendedWebClient client)
+            private static RestClient CreateCustomerClient()
             {
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                //Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] =
-                    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Referer"] = "http://agent.sriwijayaair.co.id/SJ-Eticket/login.php?action=in";
-                //client.Headers["X-Requested-With"] = "XMLHttpRequest";
-                client.Headers["Host"] = "agent.sriwijayaair.co.id";
-                client.Headers["Origin"] = "http://agent.sriwijayaair.co.id";
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                client.Expect100Continue = false;
+                var client = new RestClient("https://www.sriwijayaair.co.id");
+                client.AddDefaultHeader("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6");
+                client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
+                client.AddDefaultHeader("Referer", "https://www.sriwijayaair.co.id/welcome.php");
+                client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                client.CookieContainer = new CookieContainer();
+                return client;
+            }
 
-                var logIn =
+            private static RestClient CreateAgentClient()
+            {
+                var client = new RestClient("http://agent.sriwijayaair.co.id");
+                client.AddDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
+                client.AddDefaultHeader("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6");
+                client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
+                client.AddDefaultHeader("Host", "agent.sriwijayaair.co.id");
+                client.AddDefaultHeader("Origin", "https://www.sriwijayaair.co.id");
+                client.AddDefaultHeader("Referer", "http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=booking");
+                client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                client.CookieContainer = new CookieContainer();
+                return client;
+            }
+
+            internal static void Login(RestClient client)
+            {
+                var url = "SJ-Eticket/login.php?action=in";
+                var postData =
                     "username=" + _userName +
                     "&password=" + _password +
                     "&Submit=Login" +
                     "&actions=LOGIN";
-
-                client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/login.php?action=in", logIn);
-                if (client.StatusCode != HttpStatusCode.OK)
-                {
-                    client.Expect100Continue = true;
-                    client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/login.php?action=in", logIn);
-                }
+                var request = new RestRequest(url, Method.POST);
+                request.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                client.Execute(request);
             }
-            internal void LogoutSession(ExtendedWebClient client)
+            internal static void Logout(RestClient client)
             {
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                //Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] =
-                    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Referer"] = "http://agent.sriwijayaair.co.id/SJ-Eticket/application/index.php?action=index";
-                //client.Headers["X-Requested-With"] = "XMLHttpRequest";
-                client.Headers["Host"] = "agent.sriwijayaair.co.id";
-                client.Headers["Origin"] = "http://agent.sriwijayaair.co.id";
-                //client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                client.AutoRedirect = true;
-                client.Expect100Continue = false;
-
-                client.DownloadString("http://agent.sriwijayaair.co.id/SJ-Eticket/login.php?action=out");
+                var url = "SJ-Eticket/login.php?action=out";
+                var request = new RestRequest(url, Method.GET);
+                client.Execute(request);
             }
         }
     }
