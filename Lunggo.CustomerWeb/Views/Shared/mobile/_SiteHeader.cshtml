@@ -1,4 +1,5 @@
-﻿<header class="site-header">
+﻿@using Lunggo.ApCommon.Identity.User
+<header class="site-header">
     
     <div class="header-display">
         <a ng-click="PageConfig.ToggleBurger()" class="site-menu"></a>
@@ -22,34 +23,43 @@
         </div><!-- .border-content-header -->
         <div class="burger-content__body">
             <ul>
-                <li class="login">
-                    <a href="#">Log In</a>
-                </li>
-                <li class="register">
-                    <a href="#">Sign Up</a>
-                </li>
-                <li class="account">
-                    <a href="#">Shinta Tamara</a>
-                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="account">
+                        <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">@User.Identity.GetFirstName() @User.Identity.GetLastName()</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="login">
+                        <a href="@Url.Action("Login","Account")">Log In</a>
+                    </li>
+                    <li class="register">
+                        <a href="@Url.Action("Register","Account")">Sign Up</a>
+                    </li>
+                }
                 <li class="home">
-                    <a href="#">Home</a>
+                    <a href="/">Home</a>
                 </li>
                 <li class="order-check">
-                    <a href="#">Cek Pemesanan</a>
+                    <a href="@Url.Action("CekPemesanan","Home")">Cek Pemesanan</a>
                 </li>
                 <li class="contact">
-                    <a href="#">Contact Us</a>
+                    <a href="@Url.Action("Contact","StaticPage")">Contact Us</a>
                 </li>
-                <li class="newsletter">
+                <li class="newsletter hidden">
                     <a href="#">News Letter</a>
                 </li>
                 <li class="faq">
-                    <a href="#">FAQ</a>
+                    <a href="@Url.Action("Question","StaticPage")">FAQ</a>
                 </li>
                 <li class="howto-order">
-                    <a href="#">Cara Pesan</a>
+                    <a href="@Url.Action("HowToOrder","StaticPage")">Cara Pesan</a>
                 </li>
-                <li class="about">
+                <li class="howto-order">
+                    <a href="@Url.Action("HowToPay","StaticPage")">Cara Bayar</a>
+                </li>
+                <li class="about hidden">
                     <a href="#">Tentang Kami</a>
                 </li>
             </ul>
