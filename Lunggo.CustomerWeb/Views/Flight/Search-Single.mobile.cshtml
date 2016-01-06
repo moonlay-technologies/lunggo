@@ -166,7 +166,7 @@
     </section><!-- .flight-list -->
     
 
-
+    <!-- overlays -->
     <!-- overlay - flight detail -->
     <div class="overlay overlay--theme--blue overlay--flight-detail" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-detail')}">
         <header class="overlay__header">
@@ -238,8 +238,8 @@
                 </div>
             </div>
         </footer><!-- .overlay__footer -->
-    </div>
-
+    </div><!-- .overlay - flight detail-->
+    
     <!-- overlay - filter -->
     <div class="overlay overlay--flight-filter" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-filter')}">
         <header class="overlay__header">
@@ -369,7 +369,7 @@
         </section><!-- .overlay__content -->
     </div>
 
-    <!-- .overlay - sort -->
+    <!-- .overlay - change flight -->
     <div class="overlay overlay--theme--blue overlay--flight-form" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-form')}">
         <header class="overlay__header">
             <h3 class="overlay__title">
@@ -408,6 +408,7 @@
         </section><!-- .overlay__content -->
     </div><!-- .overlay--flight-form-->
     
+    <!-- popups -->
     <!-- popup revalidate -->
     <div class="popup__wrapper" ng-class="{'active':PageConfig.Validating}">
         <div class="popup">
@@ -417,6 +418,32 @@
             <div class="popup__body">
                 <div class="container">
                     <p>Membooking penerbangan Anda. Mohon tunggu.</p>    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- popup expired -->
+    <div class="popup__wrapper" ng-class="{'active':PageConfig.Expired}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Pencarian Kadaluarsa</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container">
+                    <p>Hasil pencarian Anda kadaluarsa. Silahkan klik tombol dibawah untuk refesh halaman pencarian.</p>
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-6 hidden">
+                            <a href="/" class="btn btn-block btn-gray">HOME</a>
+                        </div>
+                        <div class="col-xs-12">
+                            <button class="btn btn-block btn-yellow" ng-click="PageConfig.RefreshPage()" ng-disabled="PageConfig.Refreshing">REFRESH</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

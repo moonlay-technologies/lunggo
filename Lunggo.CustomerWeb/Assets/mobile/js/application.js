@@ -16,6 +16,13 @@ if (typeof (angular) == 'object') {
             // **********
             // functions
 
+            // refresh page
+            Refreshing: false,
+            RefreshPage: function () {
+                $rootScope.PageConfig.Refreshing = true;
+                location.reload();
+            },// refresh page
+
             // body no scroll
             BodyNoScroll: false,
             SetBodyNoScroll: function (state) {

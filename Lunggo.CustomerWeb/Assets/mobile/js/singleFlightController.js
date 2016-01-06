@@ -172,6 +172,8 @@
                     // set expiry if progress == 100
                     if ($scope.FlightConfig[0].FlightRequest.Progress == 100) {
                         $scope.FlightConfig[0].FlightExpiry.time = returnData.ExpiryTime;
+                        $scope.PageConfig.ExpiryDate.Time = returnData.ExpiryTime;
+                        $scope.PageConfig.ExpiryDate.Start();
                     } else {
                         $scope.FlightConfig[0].FlightRequest.FinalProgress = $scope.FlightConfig[0].FlightRequest.Progress;
                     }
