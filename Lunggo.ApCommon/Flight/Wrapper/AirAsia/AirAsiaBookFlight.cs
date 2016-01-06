@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Web;
 using CsQuery;
@@ -27,7 +28,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
                 var client = CreateAgentClient();
-
+                //client.Proxy = new WebProxy("128.199.91.32", 80);
+                //client.Proxy.Credentials = new NetworkCredential("travorama", "tmi12345");
                 string origin, dest, coreFareId;
                 DateTime date;
                 int adultCount, childCount, infantCount;
@@ -318,8 +320,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 // SELECT HOLD (PAYMENT)
 
-                Thread.Sleep(5000);
-
                 postData =
                     @"__EVENTTARGET=CONTROLGROUPPAYMENTBOTTOM%24PaymentInputViewPaymentView" +
                     @"&__EVENTARGUMENT=HOLD" +
@@ -340,6 +340,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 paymentRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var paymentResponse = client.Execute(paymentRequest);
 
+                var whileCounter = 0;
+                while (paymentResponse.StatusCode == HttpStatusCode.Forbidden && whileCounter < 10)
+                {
+                    paymentResponse = client.Execute(paymentRequest);
+                    whileCounter++;
+                    //return new BookFlightResult
+                    //{
+                    //    IsSuccess = false,
+                    //    Status = new BookingStatusInfo
+                    //    {
+                    //        BookingStatus = BookingStatus.Failed
+                    //    },
+                    //    Errors = new List<FlightError> { FlightError.TechnicalError },
+                    //    ErrorMessages = new List<string>{"Forbidden!"}
+                    //};
+                }
+
                 if (paymentResponse.ResponseUri.AbsolutePath != "/Payment.aspx" && (paymentResponse.StatusCode == HttpStatusCode.OK || paymentResponse.StatusCode == HttpStatusCode.Redirect))
                     return new BookFlightResult { 
                         IsSuccess = false,
@@ -354,8 +371,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 ezPayResponse = client.Execute(ezPayRequest);
 
                 // [POST] Select Hold
-
-                Thread.Sleep(5000);
 
                 postData =
                     @"__EVENTTARGET=" +
@@ -376,6 +391,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 paymentRequest2.AddHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
                 paymentRequest2.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var paymentResponse2 = client.Execute(paymentRequest2);
+
+                whileCounter = 0;
+                while (paymentResponse.StatusCode == HttpStatusCode.Forbidden && whileCounter < 10)
+                {
+                    paymentResponse2 = client.Execute(paymentRequest2);
+                    whileCounter++;
+                }
 
                 if (paymentResponse2.ResponseUri.AbsolutePath != "/Wait.aspx" && (paymentResponse2.StatusCode == HttpStatusCode.OK || paymentResponse2.StatusCode == HttpStatusCode.Redirect))
                     return new BookFlightResult { 
