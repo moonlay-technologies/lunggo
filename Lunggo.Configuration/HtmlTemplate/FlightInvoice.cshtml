@@ -55,7 +55,7 @@
                                 </tr>
                                 <tr>
                                     <td>Time</td>
-                                    <td>Pk @Model.Payment.Time.GetValueOrDefault().ToString("HH:mm")</td>
+                                    <td>Pk @Model.Payment.Time.GetValueOrDefault().AddHours(7).ToString("HH:mm") WIB</td>
                                 </tr>
                             </table>
                         </div>
