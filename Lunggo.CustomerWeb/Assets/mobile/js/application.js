@@ -40,13 +40,18 @@ if (typeof (angular) == 'object') {
             // page overlay
             Overlay: '',
             SetOverlay: function (overlay) {
-                console.log(overlay);
+                console.log('changing overlay to : ' + overlay);
                 if (typeof(overlay) == 'undefined') {
                     $rootScope.PageConfig.Overlay = '';
                     $rootScope.PageConfig.SetBodyNoScroll(false);
                 } else {
-                    $rootScope.PageConfig.Overlay = overlay;
-                    $rootScope.PageConfig.SetBodyNoScroll(true);
+                    if ( overlay == '' ) {
+                        $rootScope.PageConfig.Overlay = '';
+                        $rootScope.PageConfig.SetBodyNoScroll(false);
+                    } else {
+                        $rootScope.PageConfig.Overlay = overlay;
+                        $rootScope.PageConfig.SetBodyNoScroll(true);
+                    }
                 }
             }, // page overlay end
 
@@ -76,6 +81,47 @@ if (typeof (angular) == 'object') {
             }
         };
 
+        // datepicker
+        $rootScope.DatePicker = {
+            Settings: {
+                MinDate: '',
+                DateFormat: '',
+                Target: '',
+                ChangeMonth: false,
+                ChangeYear: false,
+                SelectedDate : ''
+            },
+            SetOption: function (options) {
+                $('.ui-datepicker').datepicker({
+                    onSelect: function(date) {
+                        $rootScope.PageConfig.SetOverlay('');
+                        $rootScope.DatePicker.Settings.SelectedDate = date;
+                        $('.ui-datepicker').datepicker('setDate', new Date(date));
+                        $($rootScope.DatePicker.Settings.Target).val(date);
+                        $($rootScope.DatePicker.Settings.Target).trigger('input');
+                        // console.log($rootScope);
+                    }
+                });
+                // set default value for datepicker
+                $rootScope.DatePicker.Settings.MinDate = options.MinDate || new Date();
+                $rootScope.DatePicker.Settings.DateFormat = options.DateFormat || 'yy-mm-dd';
+                $rootScope.DatePicker.Settings.Target = options.Target || '';
+                $rootScope.DatePicker.Settings.ChangeMonth = options.ShowMonth || false;
+                $rootScope.DatePicker.Settings.ChangeYear = options.ShowYear || false;
+                // set option to datepicker
+                $('.ui-datepicker').datepicker('option', 'prevText', '');
+                $('.ui-datepicker').datepicker('option', 'nextText', '');
+                $('.ui-datepicker').datepicker('option', 'changeMonth', $rootScope.DatePicker.Settings.ChangeMonth);
+                $('.ui-datepicker').datepicker('option', 'changeYear', $rootScope.DatePicker.Settings.ChangeYear);
+                $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.DatePicker.Settings.MinDate);
+                $('.ui-datepicker').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
+                //$('.ui-datepicker').datepicker('option', 'altField', $rootScope.DatePicker.Settings.Target);
+                //$('.ui-datepicker').datepicker('option', 'altFormat', $rootScope.DatePicker.Settings.DateFormat);
+                // set on choose date function
+                //console.log($rootScope.DatePicker.Settings);
+            }
+    };
+
     });
 
 }
@@ -102,14 +148,4 @@ function getParam(name) {
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-// set ui-calendar
-if ($('.ui-datepicker')) {
-    $('.ui-datepicker').each(function() {
-        $(this).datepicker({
-            changeMonth: true,
-            changeYear: true
-        });
-    });
 }
