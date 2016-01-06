@@ -51,6 +51,8 @@ $header-height:60px;
 
 body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; padding-top:$header-height;}
 
+img {max-width:100%;}
+
 .page-loading {display:none;}
 .page-loaded {display:block;}
 

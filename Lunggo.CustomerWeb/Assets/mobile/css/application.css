@@ -9,6 +9,9 @@ body {
   font-size: 12px;
   padding-top: 60px; }
 
+img {
+  max-width: 100%; }
+
 .page-loading {
   display: none; }
 
