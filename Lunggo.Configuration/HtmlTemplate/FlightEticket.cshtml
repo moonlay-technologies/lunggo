@@ -84,14 +84,14 @@
                                         <h3 style="text-align:left;">@segment.DepartureAirport</h3>
                                         <h3 style="text-align:left;">@segment.DepartureCity</h3>
                                         <h3 style="text-align:left;">@segment.DepartureAirportName</h3>
-                                        @if (@segment.DepartureTerminal != null)
+                                        @if (segment.DepartureTerminal != null)
                                         {
                                             <h3 style="text-align:left;">Terminal: @segment.DepartureTerminal</h3>
                                         }
                                     </div>
                                     <div class="departure-date">
                                         @{ var jamBerangkat = segment.DepartureTime;}
-                                        <h3>@jamBerangkat.ToString("hh:mm")</h3>
+                                        <h3>@jamBerangkat.ToString("HH:mm")</h3>
                                         <h3>@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
                                     </div>
                                     <div class="duration">
@@ -99,14 +99,14 @@
                                     </div>
                                     <div class="arrival-date">
                                         @{ var jamKembali = segment.ArrivalTime;}
-                                        <h3>@jamKembali.ToString("hh:mm")</h3>
+                                        <h3>@jamKembali.ToString("HH:mm")</h3>
                                         <h3>@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
                                     </div>
                                     <div class="arrival-airline">
                                         <h3 style="text-align:right;">@segment.ArrivalAirport</h3>
                                         <h3 style="text-align:right;">@segment.ArrivalCity</h3>
                                         <h3 style="text-align:right;">@segment.ArrivalAirportName</h3>
-                                        @if (@segment.ArrivalTerminal != null)
+                                        @if (segment.ArrivalTerminal != null)
                                         {
                                             <h3 style="text-align:right;">Terminal: @segment.ArrivalTerminal</h3>
                                         }
@@ -222,14 +222,14 @@
                                         <h3 style="text-align:left;">@segment.DepartureAirport</h3>
                                         <h3 style="text-align:left;">@segment.DepartureCity</h3>
                                         <h3 style="text-align:left;">@segment.DepartureAirportName</h3>
-                                        @if (@segment.DepartureTerminal != null)
+                                        @if (segment.DepartureTerminal != null)
                                         {
                                             <h3 style="text-align:left;">Terminal: @segment.DepartureTerminal</h3>
                                         }
                                     </div>
                                     <div class="departure-date">
                                         @{ var jamBerangkat = segment.DepartureTime;}
-                                        <h3>@jamBerangkat.ToString("hh:mm")</h3>
+                                        <h3>@jamBerangkat.ToString("HH:mm")</h3>
                                         <h3>@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
                                     </div>
                                     <div class="duration">
@@ -237,14 +237,14 @@
                                     </div>
                                     <div class="arrival-date">
                                         @{ var jamKembali = segment.ArrivalTime;}
-                                        <h3>@jamKembali.ToString("hh:mm")</h3>
+                                        <h3>@jamKembali.ToString("HH:mm")</h3>
                                         <h3>@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
                                     </div>
                                     <div class="arrival-airline">
                                         <h3>@segment.ArrivalAirport</h3>
                                         <h3>@segment.ArrivalCity</h3>
                                         <h3>@segment.ArrivalAirportName</h3>
-                                        @if (@segment.ArrivalTerminal != null)
+                                        @if (segment.ArrivalTerminal != null)
                                         {
                                             <h3 style="text-align:right;">Terminal: @segment.ArrivalTerminal</h3>
                                         }
@@ -366,9 +366,9 @@
                                         </div>
                                         <div class="departure-date">
                                             @{ var jamBerangkat = segment.DepartureTime;}
-                                            <h3>@jamBerangkat.ToString("hh:mm")</h3>
+                                            <h3>@jamBerangkat.ToString("HH:mm")</h3>
                                             <h3>@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
-                                            @if (@segment.DepartureTerminal != null)
+                                            @if (segment.DepartureTerminal != null)
                                             {
                                                 <h3 style="text-align:left;">Terminal: @segment.DepartureTerminal</h3>
                                             }
@@ -378,14 +378,14 @@
                                         </div>
                                         <div class="arrival-date">
                                             @{ var jamKembali = segment.ArrivalTime;}
-                                            <h3>@jamKembali.ToString("hh:mm")</h3>
+                                            <h3>@jamKembali.ToString("HH:mm")</h3>
                                             <h3>@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
                                         </div>
                                         <div class="arrival-airline">
                                             <h3 style="text-align:right;">@segment.ArrivalAirport</h3>
                                             <h3 style="text-align:right;">@segment.ArrivalCity</h3>
                                             <h3 style="text-align:right;">@segment.ArrivalAirportName</h3>
-                                            @if (@segment.ArrivalTerminal != null)
+                                            @if (segment.ArrivalTerminal != null)
                                             {
                                                 <h3 style="text-align:right;">Terminal: @segment.ArrivalTerminal</h3>
                                             }
