@@ -131,7 +131,7 @@
 
     <section class="flight-list">
 
-        <div class="flight" ng-repeat="Flight in FlightConfig[0].FlightList" id="flight-{{Flight.IndexNo}}">
+        <div class="flight" ng-repeat="Flight in FlightConfig[0].FlightList | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert" id="flight-{{Flight.IndexNo}}">
             <div class="flight-header">
                 <h4 class="flight-airline">
                     <img ng-src="{{Flight.Trips[0].Segments[0].AirlineLogoUrl}}" alt="{{Flight.Trips[0].Segments[0].AirlineName}}" class="flight-airline-image" />
@@ -342,6 +342,14 @@
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'price' && FlightConfig[0].FlightSort.Invert == false}" ng-click="FlightConfig[0].FlightSort.Set('price',false)">Harga - Rendah ke Tinggi</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'price' && FlightConfig[0].FlightSort.Invert == true}" ng-click="FlightConfig[0].FlightSort.Set('price',true)">Harga - Tinggi ke Rendah</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'airline' && FlightConfig[0].FlightSort.Invert == false}" ng-click="FlightConfig[0].FlightSort.Set('airline',false)"> Nama Maskapai - A ke Z</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'airline' && FlightConfig[0].FlightSort.Invert == true}" ng-click="FlightConfig[0].FlightSort.Set('airline',true)">Nama Maskapai - Z ke A</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'duration' && FlightConfig[0].FlightSort.Invert == false}" ng-click="FlightConfig[0].FlightSort.Set('duration',false)">Durasi - Singkat ke Lama</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'duration' && FlightConfig[0].FlightSort.Invert == true}" ng-click="FlightConfig[0].FlightSort.Set('duration',true)">Durasi - Lama ke Singkat</span>
+        </section>
+        <section class="overlay__content hidden">
             <label>
                 Harga - Rendah ke Tinggi
                 <input type="radio" name="name" value="" />

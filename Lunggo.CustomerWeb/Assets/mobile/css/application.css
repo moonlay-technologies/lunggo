@@ -664,14 +664,24 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     height: 30px;
     margin-right: 10px; }
 
-.overlay--flight-sort .overlay__content label {
-  display: block;
-  width: 100%;
-  padding: 12px 0; }
-  .overlay--flight-sort .overlay__content label + label {
-    border-top: 1px solid #ccc; }
-  .overlay--flight-sort .overlay__content label input[type="radio"] {
-    float: right; }
+.overlay--flight-sort .overlay__content {
+  padding: 0; }
+  .overlay--flight-sort .overlay__content span {
+    display: block;
+    padding: 15px; }
+    .overlay--flight-sort .overlay__content span + span {
+      border-top: 1px solid #ccc; }
+    .overlay--flight-sort .overlay__content span.active {
+      background: #1daee4;
+      color: #fff; }
+  .overlay--flight-sort .overlay__content label {
+    display: block;
+    width: 100%;
+    padding: 12px 0; }
+    .overlay--flight-sort .overlay__content label + label {
+      border-top: 1px solid #ccc; }
+    .overlay--flight-sort .overlay__content label input[type="radio"] {
+      float: right; }
 
 .overlay--flight-detail .overlay__content {
   padding: 0;

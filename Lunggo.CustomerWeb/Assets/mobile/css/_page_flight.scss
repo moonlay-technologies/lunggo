@@ -132,7 +132,11 @@
 // --------------------
 // overlay--flight-sort
 .overlay--flight-sort {
-    .overlay__content {
+    .overlay__content {padding:0;
+        span {display:block; padding:15px;
+            &+span {border-top:$border-default;}
+            &.active {background:$color-main-blue; color:#fff;}
+        }
         label {display:block; width:100%; padding:12px 0;
             &+label {border-top:$border-default;}
             input[type="radio"] {float:right;}

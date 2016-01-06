@@ -56,8 +56,25 @@
             },
             FlightFilter: {},
             FlightSort: {
-                label: '',
-                value: ''
+                Label: 'price',
+                Value: 'TotalFare',
+                Invert: false,
+                Set : function (sortBy, invert) {
+                    $scope.FlightConfig[0].FlightSort.Label = sortBy;
+                    $scope.FlightConfig[0].FlightSort.Invert = invert;
+                    switch (sortBy) {
+                        case 'price':
+                            $scope.FlightConfig[0].FlightSort.Value = 'TotalFare';
+                            break;
+                        case 'duration':
+                            $scope.FlightConfig[0].FlightSort.Value = 'Trips[0].TotalDuration';
+                            break;
+                        case 'airline':
+                            $scope.FlightConfig[0].FlightSort.Value = 'Trips[0].Airlines[0].Name';
+                            break;
+                    }
+                    $scope.SetOverlay('');
+                }
             },
             FlightExpiry: {
                 expired: false,
@@ -299,5 +316,8 @@
         }
     }// set active flight end
 
+    // *****
+    // flight filtering functions
+   
 
 }]);
