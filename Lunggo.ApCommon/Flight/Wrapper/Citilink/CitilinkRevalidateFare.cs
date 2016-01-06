@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using CsQuery;
 using Lunggo.ApCommon.Constant;
@@ -7,6 +8,7 @@ using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
@@ -34,32 +36,27 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var FlightNumber = splittedFareId[9];
                 var price = decimal.Parse(splittedFareId[10]);
                 var coreFareId = splittedFareId[11];
-                var client = new ExtendedWebClient();
+                var clientx = CreateCustomerClient();
 
-                var URL = @"https://book.citilink.co.id/Search.aspx?" +
-                          @"DropDownListCurrency=IDR" +
-                          @"&DropDownListMarketDay1=" + date.Day +
-                          @"&DropDownListMarketDay2=" +
-                          @"&DropDownListMarketMonth1=" + date.ToString("yyyy MMMM") +
-                          @"&DropDownListMarketMonth2=" +
-                          @"&DropDownListPassengerType_ADT=" + adultCount +
-                          @"&DropDownListPassengerType_CHD=" + childCount +
-                          @"&DropDownListPassengerType_INFANT=" + infantCount +
-                          @"&OrganizationCode=QG" +
-                          @"&Page=Select" +
-                          @"&RadioButtonMarketStructure=OneWay" +
-                          @"&TextBoxMarketDestination1=" + dest +
-                          @"&TextBoxMarketOrigin1=" + origin +
-                          @"&culture=id-ID";
+                var url = @"Search.aspx";
+                var searchRequest = new RestRequest(url, Method.GET);
+                searchRequest.AddQueryParameter("DropDownListCurrency", "IDR");
+                searchRequest.AddQueryParameter("DropDownListMarketDay1", date.Day.ToString(CultureInfo.InvariantCulture));
+                searchRequest.AddQueryParameter("DropDownListMarketDay2", null);
+                searchRequest.AddQueryParameter("DropDownListMarketMonth1", date.ToString("yyyy MMMM"));
+                searchRequest.AddQueryParameter("DropDownListMarketMonth2", null);
+                searchRequest.AddQueryParameter("DropDownListPassengerType_ADT", adultCount.ToString(CultureInfo.InvariantCulture));
+                searchRequest.AddQueryParameter("DropDownListPassengerType_CHD", childCount.ToString(CultureInfo.InvariantCulture));
+                searchRequest.AddQueryParameter("DropDownListPassengerType_INFANT", infantCount.ToString(CultureInfo.InvariantCulture));
+                searchRequest.AddQueryParameter("OrganizationCode", "QG");
+                searchRequest.AddQueryParameter("Page", "Select");
+                searchRequest.AddQueryParameter("RadioButtonMarketStructure", "OneWay");
+                searchRequest.AddQueryParameter("TextBoxMarketDestination1", dest);
+                searchRequest.AddQueryParameter("TextBoxMarketOrigin1", origin);
+                searchRequest.AddQueryParameter("culture", "id-ID");
+                var searchResponse = clientx.Execute(searchRequest);
 
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                //Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Referer"] = "https://www.citilink.co.id/";
-
-                var htmlRespon = client.DownloadString(URL);
+                var htmlRespon = searchResponse.Content;
                 var cobaAmbilTable = (CQ)htmlRespon;
                 var tunjukkode = cobaAmbilTable[".flight-info>span"];
                 var ambilTanggal = cobaAmbilTable[".dayHeaderTodayImage>a"];
@@ -85,23 +82,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     var fareIdPrefix = origin + "." + dest + "." + date.ToString("dd.MM.yyyy") + "." + adultCount + "." +
                                        childCount + "." + infantCount + "." + AirlineCode + "." + FlightNumber +"." + price;
 
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    //Headers["Accept-Encoding"] = "gzip, deflate";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Referer"] = "https://www.citilink.co.id/";
-                    client.Headers["X-Requested-With"] = "XMLHttpRequest";
-                    client.Headers["Host"] = "book.citilink.co.id";
+                    url = "TaxAndFeeInclusiveDisplayAjax-resource.aspx";
+                    var fareRequest = new RestRequest(url, Method.GET);
+                    fareRequest.AddQueryParameter("flightKeys", newFID);
+                    fareRequest.AddQueryParameter("numberOfMarkets", "1");
+                    fareRequest.AddQueryParameter("keyDelimeter", ",");
+                    fareRequest.AddQueryParameter("ssrs", "FLEX");
+                    var fareResponse = clientx.Execute(fareRequest);
 
-                    var url =
-                         "https://book.citilink.co.id/TaxAndFeeInclusiveDisplayAjax-resource.aspx?" +
-                                               "flightKeys=" + newFID +
-                         "&numberOfMarkets=1" +
-                         "&keyDelimeter=%2C" +
-                         "&ssrs=FLEX";
-
-                    var responAjax = client.DownloadString(url);
+                    var responAjax = fareResponse.Content;
                     CQ ambilDataAjax = (CQ)responAjax;
                     
                     //Price

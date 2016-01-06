@@ -89,3 +89,41 @@
 
 
 }
+
+
+// page confirmation
+.page.page-confirmation {
+    .instruction {
+        header {background:#2fb4e6; color:#fff; padding:5px 10px; margin-bottom:10px;}
+        // bank detail
+        .bank-detail {
+            .bank {background:#caedfa; padding:15px;
+                .image-wrapper {background:#fff; text-align:center; margin-bottom:10px;}
+                dl {margin-bottom:5px;
+                    &:before, &:after {@include clearfix();}
+                    dt {float:left; width:40%;}
+                    dd {float:left; width:60%; position:relative; padding-left:12px;
+                        &:before {position:absolute; content:":"; top:0; left:0;}
+                    }
+                }
+            }
+        }
+    }
+    // countdown
+    .countdown {
+        .widget-content {background:#ffd632; padding:15px;
+            .timer {background:#ffefb0; padding:12px; text-align:center; border-bottom: 1px solid #dab939; color: #4d4e4e;
+                &>div {display:inline-block;}
+                h5 {font-weight: bold; font-size: 36px; margin-bottom: 0; margin-top: 0;}
+                span {font-size: 12px;}
+                .separator {vertical-align: top; margin-left: 6px; margin-right: 6px;}
+            }
+        }
+    }
+    // form
+    .confirmation-form {
+        .control-label.important {
+            &:after {content:'*'; color:red;}
+        }
+    }
+}

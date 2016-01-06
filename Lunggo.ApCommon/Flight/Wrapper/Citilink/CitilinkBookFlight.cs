@@ -8,13 +8,14 @@ using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
     internal partial class CitilinkWrapper
     {
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
-        {            
+        {
             return Client.BookFlight(bookInfo);
         }
 
@@ -22,8 +23,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
-                var client = new ExtendedWebClient();
-                Client.CreateSession(client);
+                var client = CreateAgentClient();
+                Login(client);
 
                 var splittedFareId = bookInfo.FareId.Split('.').ToList();
                 var date = new DateTime(int.Parse(splittedFareId[4]), int.Parse(splittedFareId[3]), int.Parse(splittedFareId[2]));
@@ -48,31 +49,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     origin = splitcoreFareId[11];
                     dest = splitcoreFareId[13];
                 }
-                
-                
-                
-                
+
+
+
+
                 // SEARCH
-                Client.CreateSession(client);
                 var date2 = date.AddDays(1);
-                string searchURI = @"https://book.citilink.co.id/BookingListTravelAgent.aspx";
-                client.Headers[HttpRequestHeader.Host] = "book.citilink.co.id";
-                client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0";
-                client.Headers[HttpRequestHeader.Accept] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
-                client.Headers[HttpRequestHeader.AcceptLanguage] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.//Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
-                Headers[HttpRequestHeader.Referer] = "https://book.citilink.co.id/BookingListTravelAgent.aspx";
-                client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                client.Headers["Origin"] = "https://book.citilink.co.id";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                
-                
-                string searchParamaters =
+                string searchUrl = @"BookingListTravelAgent.aspx";
+
+                var searchRequest = new RestRequest(searchUrl, Method.POST);
+                var searchPostData =
                      @"AvailabilitySearchInputBookingListTravelAgentView$ButtonSubmit=Find+Flights" +
                      @"&AvailabilitySearchInputBookingListTravelAgentView$DropDownListMarketDay1=" + date.Day +
                      @"&AvailabilitySearchInputBookingListTravelAgentView$DropDownListMarketDay2=" + date2.Day +
                      @"&AvailabilitySearchInputBookingListTravelAgentView$DropDownListMarketMonth1=" + date.Year + "-" + date.Month +
-                     @"&AvailabilitySearchInputBookingListTravelAgentView$DropDownListMarketMonth2=" + date.Year + "-" +date.Month+
+                     @"&AvailabilitySearchInputBookingListTravelAgentView$DropDownListMarketMonth2=" + date.Year + "-" + date.Month +
                      @"&AvailabilitySearchInputBookingListTravelAgentView$DropDownListPassengerType_ADT=" + adultCount +
                      @"&AvailabilitySearchInputBookingListTravelAgentView$DropDownListPassengerType_CHD=" + childCount +
                      @"&AvailabilitySearchInputBookingListTravelAgentView$DropDownListPassengerType_INFANT=" + infantCount +
@@ -82,7 +73,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                      @"&AvailabilitySearchInputBookingListTravelAgentView$TextBoxMarketDestination2=" +
                      @"&AvailabilitySearchInputBookingListTravelAgentView$TextBoxMarketOrigin1=" + origin +
                      @"&AvailabilitySearchInputBookingListTravelAgentView$TextBoxMarketOrigin2=" +
-                     @"&AvailabilitySearchInputBookingListTravelAgentViewdestinationStation1=" + dest  +
+                     @"&AvailabilitySearchInputBookingListTravelAgentViewdestinationStation1=" + dest +
                      @"&AvailabilitySearchInputBookingListTravelAgentViewdestinationStation2=" +
                      @"&AvailabilitySearchInputBookingListTravelAgentVieworiginStation1=" + origin +
                      @"&AvailabilitySearchInputBookingListTravelAgentVieworiginStation2=" +
@@ -92,14 +83,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                      @"&__EVENTARGUMENT=" +
                      @"&__EVENTTARGET=" +
                     //@"&__VIEWSTATE=/wEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgMFWkNvbnRyb2xHcm91cEJvb2tpbmdMaXN0VHJhdmVsQWdlbnRWaWV3JEJvb2tpbmdMaXN0Qm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckUmFkaW9Gb3JBZ2VudAVbQ29udHJvbEdyb3VwQm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckQm9va2luZ0xpc3RCb29raW5nTGlzdFRyYXZlbEFnZW50VmlldyRSYWRpb0ZvckFnZW5jeQVbQ29udHJvbEdyb3VwQm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckQm9va2luZ0xpc3RCb29raW5nTGlzdFRyYXZlbEFnZW50VmlldyRSYWRpb0ZvckFnZW5jeTXhy2ltZry/VwOL4DGYiD+r/S9H" +
-                     @"&date_picker=" + date.Year + "-" +date.Month+ "-" +date.Day+
-                     @"&date_picker=" + date2.Day + "-" +date2.Month+ "-" +date2.Day+
+                     @"&date_picker=" + date.Year + "-" + date.Month + "-" + date.Day +
+                     @"&date_picker=" + date2.Day + "-" + date2.Month + "-" + date2.Day +
                      @"&pageToken=";
-                
-                client.UploadString(searchURI, searchParamaters);
-                
-                
-                if (client.ResponseUri.AbsolutePath != "/ScheduleSelect.aspx")
+                searchRequest.AddParameter("application/x-www-form-urlencoded", searchPostData, ParameterType.RequestBody);
+                var searchResponse = client.Execute(searchRequest);
+
+                if (searchResponse.ResponseUri.AbsolutePath != "/ScheduleSelect.aspx")
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -109,28 +99,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         },
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
                     };
-                
+
                 // SELECT
-                
-                string selectURI = @"https://book.citilink.co.id/ScheduleSelect.aspx";
-                client.Headers[HttpRequestHeader.Host] = "book.citilink.co.id";
-                client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0";
-                client.Headers[HttpRequestHeader.Accept] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
-                client.Headers[HttpRequestHeader.AcceptLanguage] = "en-GB,en-US;q=0.8,en;q=0.6";
-                //Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
-                client.Headers[HttpRequestHeader.Referer] = "https://book.citilink.co.id/ScheduleSelect.aspx";
-                client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                client.Headers["Origin"] = "https://book.citilink.co.id";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                
-                string selectParameters =
+
+                var selectUri = @"ScheduleSelect.aspx";
+
+                var selectRequest = new RestRequest(selectUri, Method.POST);
+                var selectPostData =
                    @"AvailabilitySearchInputScheduleSelectView$DdlCurrencyDynamic=IDR" +
                    @"&AvailabilitySearchInputScheduleSelectView$DropDownListMarketDay1=" + date.Day +
                    @"&AvailabilitySearchInputScheduleSelectView$DropDownListMarketDay2=" + date2.Day +
-                   @"&AvailabilitySearchInputScheduleSelectView$DropDownListMarketMonth1=" + date.Year +"-"+ date.Month+
+                   @"&AvailabilitySearchInputScheduleSelectView$DropDownListMarketMonth1=" + date.Year + "-" + date.Month +
                    @"&AvailabilitySearchInputScheduleSelectView$DropDownListMarketMonth2=" + date2.Year + "-" + date.Month +
                    @"&AvailabilitySearchInputScheduleSelectView$DropDownListPassengerType_ADT=" + adultCount +
-                   @"&AvailabilitySearchInputScheduleSelectView$DropDownListPassengerType_CHD=" + childCount + 
+                   @"&AvailabilitySearchInputScheduleSelectView$DropDownListPassengerType_CHD=" + childCount +
                    @"&AvailabilitySearchInputScheduleSelectView$DropDownListPassengerType_INFANT=" + infantCount +
                    @"&AvailabilitySearchInputScheduleSelectView$DropDownListSearchBy=columnView" +
                    @"&AvailabilitySearchInputScheduleSelectView$RadioButtonMarketStructure=OneWay" +
@@ -151,10 +133,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                    @"&date_picker=" + date.Year + "-" + date.Month + "-" + date.Day +
                    @"&date_picker=" + date2.Year + "-" + date2.Month + "-" + date2.Day +
                    @"&pageToken=";
-                
-                client.UploadString(selectURI, selectParameters);
-                
-                if (client.ResponseUri.AbsolutePath != "/Passenger.aspx")
+
+                selectRequest.AddParameter("application/x-www-form-urlencoded", selectPostData, ParameterType.RequestBody);
+                var selectResponse = client.Execute(selectRequest);
+
+                if (selectResponse.ResponseUri.AbsolutePath != "/Passenger.aspx")
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -164,21 +147,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         },
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
                     };
-                
+
                 // INPUT DATA (TRAVELER)
-                
-                string passURI = @"https://book.citilink.co.id/Passenger.aspx";
-                client.Headers[HttpRequestHeader.Host] = "book.citilink.co.id";
-                client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0";
-                client.Headers[HttpRequestHeader.Accept] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
-                client.Headers[HttpRequestHeader.AcceptLanguage] = "en-GB,en-US;q=0.8,en;q=0.6";
-                //Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
-                client.Headers[HttpRequestHeader.Referer] = "https://book.citilink.co.id/Passenger.aspx";
-                client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                client.Headers["Origin"] = "https://book.citilink.co.id";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                
-                string passParameters =
+
+                string passUrl = @"Passenger.aspx";
+
+                var passRequest = new RestRequest(passUrl, Method.POST);
+                var passPostData =
                     @"CONTROLGROUPPASSENGER$ButtonSubmit=Continue" +
                     @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$DropDownListCountry=" +
                     @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$DropDownListStateProvince=" +
@@ -197,11 +172,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxWorkPhone=085728755848" +
                     @"&CONTROLGROUPPASSENGER$ItineraryDistributionInputPassengerView$Distribution=2" +
                     @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$RadioButtonInsurance=No";
-                    int i = 0;
+                int i = 0;
                 foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Adult))
                 {
                     var title = passenger.Title == Title.Mister ? "MR" : "MS";
-                    passParameters +=
+                    passPostData +=
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListTitle_" + i + "=" + title +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxFirstName_" + i + "=" + passenger.FirstName +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxLastName_" + i + "=" + passenger.LastName +
@@ -217,13 +192,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListResidentCountry_" + i + "=" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxDocumentNumber0_" + i + "=" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxMiddleName_" + i + "=middle";
-                
+
                     i++;
                 }
                 foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Child))
                 {
                     var title = passenger.Title == Title.Mister ? "MR" : "MS";
-                    passParameters +=
+                    passPostData +=
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListTitle_" + i + "=" + title +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxFirstName_" + i + "=" + passenger.FirstName +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxLastName_" + i + "=" + passenger.LastName +
@@ -243,31 +218,32 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 }
                 i = 0;
                 foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Infant))
-                    {
-                        passParameters +=
-                            @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListTitle_" + i + "_"+ i +"=" +
-                            @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListAssign_" + i + "_" + i + "=" + i +
-                            @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListBirthDateDay_" + i + "_"+ i +"=" + passenger.DateOfBirth.GetValueOrDefault().Day +
-                            @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListBirthDateMonth_" + i + "_" + i + "=" + passenger.DateOfBirth.GetValueOrDefault().Month +
-                            @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListBirthDateYear_" + i + "_"+ i +"=" + passenger.DateOfBirth.GetValueOrDefault().Year +
-                            @"&CONTROLGROUPPASSENGER%24PassengerInputViewPassengerView%24TextBoxFirstName_" + i + "_" + i + "=" + passenger.FirstName +
-                            @"&CONTROLGROUPPASSENGER%24PassengerInputViewPassengerView%24TextBoxLastName_" + i + "_" + i + "=" + passenger.LastName +
-                            @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListGender_" + i + "_"+ i +"=" + (int)passenger.Gender +
-                            @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListNationality_" + i + "_"+ i +"=" +
-                            @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListResidentCountry_" + i + "_"+ i +"=" +
-                            @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxMiddleName_" + i + "_" + i + "=middle" ;
-                        i++;
-                    }
-                    
-                passParameters +=
+                {
+                    passPostData +=
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListTitle_" + i + "_" + i + "=" +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListAssign_" + i + "_" + i + "=" + i +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListBirthDateDay_" + i + "_" + i + "=" + passenger.DateOfBirth.GetValueOrDefault().Day +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListBirthDateMonth_" + i + "_" + i + "=" + passenger.DateOfBirth.GetValueOrDefault().Month +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListBirthDateYear_" + i + "_" + i + "=" + passenger.DateOfBirth.GetValueOrDefault().Year +
+                        @"&CONTROLGROUPPASSENGER%24PassengerInputViewPassengerView%24TextBoxFirstName_" + i + "_" + i + "=" + passenger.FirstName +
+                        @"&CONTROLGROUPPASSENGER%24PassengerInputViewPassengerView%24TextBoxLastName_" + i + "_" + i + "=" + passenger.LastName +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListGender_" + i + "_" + i + "=" + (int)passenger.Gender +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListNationality_" + i + "_" + i + "=" +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListResidentCountry_" + i + "_" + i + "=" +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxMiddleName_" + i + "_" + i + "=middle";
+                    i++;
+                }
+
+                passPostData +=
                     @"&__EVENTARGUMENT=" +
                     @"&__EVENTTARGET=" +
                     //@"&__VIEWSTATE=/wEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgIFR0NPTlRST0xHUk9VUFBBU1NFTkdFUiRQYXNzZW5nZXJJbnB1dFZpZXdQYXNzZW5nZXJWaWV3JENoZWNrQm94SW5zdXJhbmNlBUFDT05UUk9MR1JPVVBQQVNTRU5HRVIkUGFzc2VuZ2VySW5wdXRWaWV3UGFzc2VuZ2VyVmlldyRDaGVja0JveFBNSXZkWh6Cdtm1mad5oP+7VGz2nQKe
                     @"&pageToken=";
-                
-                client.UploadString(passURI, passParameters);
-                
-                if (client.ResponseUri.AbsolutePath != "/SeatMap.aspx")
+
+                passRequest.AddParameter("application/x-www-form-urlencoded", passPostData, ParameterType.RequestBody);
+                var passResponse = client.Execute(passRequest);
+
+                if (passResponse.ResponseUri.AbsolutePath != "/SeatMap.aspx")
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -277,47 +253,40 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         },
                         Errors = new List<FlightError> { FlightError.InvalidInputData }
                     };
-                
+
                 // SELECT SEAT (UNITMAP)
-                
-                string kursiURI = @"https://book.citilink.co.id/SeatMap.aspx";
-                client.Headers[HttpRequestHeader.Host] = "book.citilink.co.id";
-                client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0";
-                client.Headers[HttpRequestHeader.Accept] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
-                client.Headers[HttpRequestHeader.AcceptLanguage] = "en-GB,en-US;q=0.8,en;q=0.6";
-                //Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
-                client.Headers[HttpRequestHeader.Referer] = "https://book.citilink.co.id/SeatMap.aspx";
-                client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                client.Headers["Origin"] = "https://book.citilink.co.id";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                
-                string kursiParameter = 
+
+                var seatUrl = @"SeatMap.aspx";
+                var seatRequest = new RestRequest(seatUrl, Method.POST);
+
+                var seatPostData =
                           @"ControlGroupUnitMapView$UnitMapViewControl$compartmentDesignatorInput=" +
                           @"&ControlGroupUnitMapView$UnitMapViewControl$deckDesignatorInput=1" +
                           @"&ControlGroupUnitMapView$UnitMapViewControl$passengerInput=0" +
                           @"&ControlGroupUnitMapView$UnitMapViewControl$tripInput=0" +
                           @"&__EVENTARGUMENT=" +
                           @"&__EVENTTARGET=ControlGroupUnitMapView$UnitMapViewControl$LinkButtonAssignUnit" +
-                               //"&__VIEWSTATE=/wEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgEFN0NvbnRyb2xHcm91cFVuaXRNYXBWaWV3JFVuaXRNYXBWaWV3Q29udHJvbCRDaGVja0JveFNlYXRC9WoNScpqWuAJVhj4Iqw3MUfIjw=="
+                    //"&__VIEWSTATE=/wEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgEFN0NvbnRyb2xHcm91cFVuaXRNYXBWaWV3JFVuaXRNYXBWaWV3Q29udHJvbCRDaGVja0JveFNlYXRC9WoNScpqWuAJVhj4Iqw3MUfIjw=="
                           @"&pageToken=";
-                    int j = 0;
+                int j = 0;
                 foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Adult))
                 {
-                     kursiParameter += 
-                          @"&ControlGroupUnitMapView$UnitMapViewControl$EquipmentConfiguration_0_PassengerNumber_" + j + "=" +
-                          @"&ControlGroupUnitMapView$UnitMapViewControl$HiddenEquipmentConfiguration_0_PassengerNumber_" + j + "=";
-                    j++;
-                }
-                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Child))
-                {
-                    kursiParameter +=
+                    seatPostData +=
                          @"&ControlGroupUnitMapView$UnitMapViewControl$EquipmentConfiguration_0_PassengerNumber_" + j + "=" +
                          @"&ControlGroupUnitMapView$UnitMapViewControl$HiddenEquipmentConfiguration_0_PassengerNumber_" + j + "=";
                     j++;
                 }
-                client.UploadString(kursiURI, kursiParameter);
-                
-                if (client.ResponseUri.AbsolutePath != "/Payment.aspx")
+                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Child))
+                {
+                    seatPostData +=
+                         @"&ControlGroupUnitMapView$UnitMapViewControl$EquipmentConfiguration_0_PassengerNumber_" + j + "=" +
+                         @"&ControlGroupUnitMapView$UnitMapViewControl$HiddenEquipmentConfiguration_0_PassengerNumber_" + j + "=";
+                    j++;
+                }
+                seatRequest.AddParameter("application/x-www-form-urlencoded", seatPostData, ParameterType.RequestBody);
+                var seatResponse = client.Execute(seatRequest);
+
+                if (seatResponse.ResponseUri.AbsolutePath != "/Payment.aspx")
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -327,21 +296,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         },
                         Errors = new List<FlightError> { FlightError.InvalidInputData }
                     };
-                
+
                 // SELECT HOLD (PAYMENT)
-                
-                string paymentURI = @"https://book.citilink.co.id/Payment.aspx";
-                client.Headers[HttpRequestHeader.Host] = "book.citilink.co.id";
-                client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0";
-                client.Headers[HttpRequestHeader.Accept] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
-                client.Headers[HttpRequestHeader.AcceptLanguage] = "en-GB,en-US;q=0.8,en;q=0.6";
-                //Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
-                client.Headers[HttpRequestHeader.Referer] = "https://book.citilink.co.id/Payment.aspx";
-                client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                client.Headers["Origin"] = "https://book.citilink.co.id";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                
-                string payParameter =
+
+                var paymentUrl = @"Payment.aspx";
+                var paymentRequest = new RestRequest(paymentUrl, Method.POST);
+
+                var paymentPostData =
                    @"__EVENTTARGET=" +
                    @"&__EVENTARGUMENT=" +
                    @"&__VIEWSTATE=%2FwEPDwUBMGRkBsrCYiDYbQKCOcoq%2FUTudEf14vk%3D" +
@@ -370,9 +331,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                    @"&CONTROLGROUPPAYMENTBOTTOM%24ControlGroupPaymentInputViewPaymentView%24storedPaymentId=" +
                    @"&CONTROLGROUPPAYMENTBOTTOM%24ButtonSubmit=Lanjutkan";
                 
-                client.UploadString(paymentURI, payParameter);
-                
-                if (client.ResponseUri.AbsolutePath != "/Wait.aspx")
+                paymentRequest.AddParameter("application/x-www-form-urlencoded", paymentPostData, ParameterType.RequestBody);
+                var paymentResponse = client.Execute(paymentRequest);
+
+                if (paymentResponse.ResponseUri.AbsolutePath != "/Wait.aspx")
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -382,30 +344,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         },
                         Errors = new List<FlightError> { FlightError.TechnicalError }
                     };
-                
+
                 // WAIT
-                
-                string waitURI = "https://book.citilink.co.id/Wait.aspx";
-                
-                client.Headers[HttpRequestHeader.Host] = "book.citilink.co.id";
-                client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0";
-                client.Headers[HttpRequestHeader.Accept] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
-                client.Headers[HttpRequestHeader.AcceptLanguage] = "en-GB,en-US;q=0.8,en;q=0.6";
-                //Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
-                client.Headers[HttpRequestHeader.Referer] = "https://book.citilink.co.id/Wait.aspx";
-                client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                client.Headers["Origin"] = "https://book.citilink.co.id";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                
-                var htmlResult = client.DownloadString(waitURI);
-                while (!(client.ResponseUri.AbsolutePath.Contains("Itinerary.aspx")))
+
+                var waitUrl = "Wait.aspx";
+                var waitRequest = new RestRequest(waitUrl, Method.GET);
+                var waitResponse = client.Execute(waitRequest);
+
+                while (!(waitResponse.ResponseUri.AbsolutePath.Contains("Itinerary.aspx")))
                 {
-                   htmlResult = client.DownloadString(waitURI);
+                    waitResponse = client.Execute(waitRequest);
                 }
 
                 //var htmlResult = System.IO.File.ReadAllText(@"C:\Users\User\Documents\Kerja\Crawl\Itin.txt");
 
-                CQ ambilDataItin = (CQ) htmlResult;
+                var ambilDataItin = (CQ)waitResponse.Content;
 
 
                 var hasil = new BookFlightResult();
@@ -417,27 +370,31 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 //var tunjukDataTimeLimit1 = tunjukDataTimeLimit["p:nth-child(1)"];
                 var ambilTimeLimit = tunjukDataTimeLimit.Select(x => x.Cq().Text()).FirstOrDefault();
                 var timelimitIndex = ambilTimeLimit.IndexOf("[");
+                var timelimitIndex2 = ambilTimeLimit.IndexOf("]");
                 var timelimitParse3 = ambilTimeLimit.Split(' ');
-                var timelimitString = ambilTimeLimit.Substring(timelimitIndex+1, 20);
-                var timelimitParse = timelimitString.Split(',');
-                var timelimitParse2 = timelimitParse[1].Split(' ');
-                var ambiltahun = timelimitParse[2].Trim();
-                var timeLimitUTC = timelimitParse3[54].Substring(4,2);
+                var timelimitString = ambilTimeLimit.Substring(timelimitIndex + 1, timelimitIndex2 - timelimitIndex - 1);
+                var timelimitSplitComma = timelimitString.Split(',');
+                var timelimit1SplitSpace = timelimitSplitComma[1].Trim().Split(' ');
+                var timelimit2SplitSpace = timelimitSplitComma[2].Trim().Split(' ');
+                var timelimitDate = timelimit1SplitSpace[1].Trim();
+                var timelimitMonth = timelimit1SplitSpace[0].Trim();
+                var timelimitYear = timelimit2SplitSpace[0].Trim();
+                var timelimitTime = timelimit2SplitSpace[28].Trim();
                 string tahun;
-                if (ambiltahun.Length > 4)
+                if (timelimitYear.Length > 4)
                 {
-                    tahun = ambiltahun.Substring(0, 4);
+                    tahun = timelimitYear.Substring(0, 4);
                 }
                 else
                 {
-                    tahun = ambiltahun;
+                    tahun = timelimitYear;
                 }
 
 
-                if (timelimitParse2[1] == "Nop")
-                    timelimitParse2[1] = "Nov";
+                if (timelimitMonth == "Nop")
+                    timelimitMonth = "Nov";
 
-                var timelimit = DateTime.Parse(timelimitParse2[2] + "-" + timelimitParse2[1] + "-" + tahun +" "+ timelimitParse3[41]+" "+timeLimitUTC,CultureInfo.CreateSpecificCulture("id-ID"));
+                var timelimit = DateTime.Parse(timelimitDate + "-" + timelimitMonth + "-" + tahun + " " + timelimitTime, CultureInfo.CreateSpecificCulture("id-ID"));
 
                 var status = new BookingStatusInfo();
                 status.BookingId = NomorBooking;

@@ -1,4 +1,5 @@
-﻿app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interval', '$location', function($http, $scope, $rootScope, $interval, $location) {
+﻿// checkout controller
+app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interval', '$location', function ($http, $scope, $rootScope, $interval, $location) {
     
     // *****
     // general variables
@@ -153,5 +154,24 @@
     // voucher function end
     // *****
 
+
+}]);
+
+// payment confirmation payment
+app.controller('FlightConfirmationController', ['$http', '$scope', '$rootScope', '$interval', '$location', function ($http, $scope, $rootScope, $interval, $location) {
+
+    $scope.PageConfig = $rootScope.PageConfig;
+    $scope.DatePicker = $rootScope.DatePicker;
+
+    $scope.UserForm = {
+        Confirmation: {
+            Name: '',
+            Bank: {
+                Name: '',
+                Number: ''
+            },
+            Amount : 0
+        }
+    };
 
 }]);

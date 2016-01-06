@@ -2525,6 +2525,7 @@
     <Content Include="Views\Flight\Search-Single.mobile.cshtml" />
     <None Include="Views\Flight\Checkout.mobile.cshtml.bak" />
     <Content Include="Views\Flight\Eticket.cshtml" />
+    <Content Include="Views\Flight\Confirmation.mobile.cshtml" />
     <None Include="Views\Flight\SearchResultList-Single.mobile.cshtml.bak" />
     <Content Include="Views\Template\eticket3.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.cshtml" />
@@ -2535,6 +2536,8 @@
     <Content Include="Views\StaticPage\Question.mobile.cshtml" />
     <Content Include="Views\StaticPage\Privacy.mobile.cshtml" />
     <Content Include="Views\StaticPage\Terms.mobile.cshtml" />
+    <Content Include="Views\StaticPage\GetCalendar.mobile.cshtml" />
+    <Content Include="Views\StaticPage\GetCalendarTerms.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
