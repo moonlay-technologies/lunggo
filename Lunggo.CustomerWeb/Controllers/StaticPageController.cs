@@ -46,37 +46,43 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpGet]
         public ActionResult GetCalendar(string email)
         {
-            CalendarRecipientData mdlCalendar = new CalendarRecipientData();
+            DateTime Date = DateTime.Now; 
+            DateTime endDate = new DateTime(2016,1,18);
+            using (var con = DbService.GetInstance().GetOpenConnection())
+            {
+
+                var EmailList = CalendarRecipientTableRepo.GetInstance().FindAll(con).ToList();
+                var UserEmailList = UsersTableRepo.GetInstance().FindAll(con).ToList();
+                if (EmailList.Exists(x => x.Email == email))
+                {
+                    ViewBag.Message = "DataExists";
+                }
+                else if (!UserEmailList.Exists(x => x.Email == email))
+                {
+                    ViewBag.Message = "NotRegister";
+                }
+                else if (Date.Date > endDate.Date)
+                {
+                    ViewBag.Message = "Expired";
+                }
+                else 
+                {
+                    ViewBag.Message = "Success";
+                }
+            }
+            CalendarRecipientData mdlCalendar = new CalendarRecipientData(); 
             mdlCalendar.Email = email;
+
             return View(mdlCalendar);
         }
 
         [HttpPost]
         public ActionResult GetCalendar(CalendarRecipientData model)
         {
-            DateTime Date = DateTime.Now; 
-            DateTime endDate = new DateTime(2016,1,18);
             using (var con = DbService.GetInstance().GetOpenConnection()) {
-                
-                var EmailList = CalendarRecipientTableRepo.GetInstance().FindAll(con).ToList();
-                if (EmailList.Exists(x => x.Email == model.Email))
-                {
-                    ViewBag.Message = "DataExists";
-                }
-                else 
-                {
-                    if (Date < endDate)
-                    {
-                        CalendarRecipientTableRepo.GetInstance().Insert(con,
-                        new CalendarRecipientTableRecord { Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber, Address = model.Address, City = model.City, PostalCode = model.PostalCode});
-                        ViewBag.Message = "InputSuccess";
-                    }
-                    else
-                    {
-                        ViewBag.Message = "MasaBerlakuTelahHabis";
-                    }
-                    
-                }
+                CalendarRecipientTableRepo.GetInstance().Insert(con,
+                new CalendarRecipientTableRecord { Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber, Address = model.Address, City = model.City, PostalCode = model.PostalCode});
+                ViewBag.Message = "InputSuccess";
                 return View();
             }
         }
