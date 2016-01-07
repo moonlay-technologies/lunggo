@@ -301,11 +301,6 @@
     <Compile Include="WebSrc\UW600\UW620\UW620OrderHistoryController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Dummy.xml" />
-    <Content Include="App_Data\DummyDB.mdf" />
-    <Content Include="App_Data\DummyDB_log.ldf">
-      <DependentUpon>DummyDB.mdf</DependentUpon>
-    </Content>
     <Content Include="Assets\bootstrap\bootstrap.css">
       <DependentUpon>bootstrap.scss</DependentUpon>
     </Content>
@@ -731,7 +726,8 @@
     <Content Include="Assets\images\campaign\yogyakarta-text.png" />
     <Content Include="Assets\images\campaign\yogyakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta.jpg" />
-    <Content Include="Assets\images\checkin.png" />
+    <Content Include="Assets\images\catatan.jpg" />
+    <Content Include="Assets\images\check.png" />
     <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\choose-travorama.png" />
     <Content Include="Assets\images\cimb-clicks.jpg" />
@@ -787,8 +783,10 @@
     <Content Include="Assets\images\flight-facilities-sprite.png" />
     <Content Include="Assets\images\flight-filter-sprite.png" />
     <Content Include="Assets\images\flight-filter-title-sprite.png" />
+    <Content Include="Assets\images\flight-kembali.jpg" />
     <Content Include="Assets\images\flight-notice-arrow.png" />
     <Content Include="Assets\images\flight-page-slider.jpg" />
+    <Content Include="Assets\images\flight-pergi.jpg" />
     <Content Include="Assets\images\flight-review-title-bg.png" />
     <Content Include="Assets\images\flight-review-title-sprite.png" />
     <Content Include="Assets\images\flight-segment-separator.png" />
@@ -907,7 +905,7 @@
     <Content Include="Assets\images\section-arrow-left.png" />
     <Content Include="Assets\images\section-arrow-right.png" />
     <Content Include="Assets\images\select-arrow.png" />
-    <Content Include="Assets\images\showticket.png" />
+    <Content Include="Assets\images\show.png" />
     <Content Include="Assets\images\slider-arrow-left.png" />
     <Content Include="Assets\images\slider-arrow-right.png" />
     <Content Include="Assets\images\slider\slider-happy_hew_year.jpg" />
@@ -1011,8 +1009,21 @@
     <Content Include="Assets\mobile\css\application.min.css">
       <DependentUpon>application.css</DependentUpon>
     </Content>
+    <Content Include="Assets\mobile\images\burger-sprite.png" />
+    <Content Include="Assets\mobile\images\contact-list-bg.png" />
+    <Content Include="Assets\mobile\images\contact-map.jpg" />
+    <Content Include="Assets\mobile\images\contact-plane.png" />
+    <Content Include="Assets\mobile\images\contact-social-bg.png" />
+    <Content Include="Assets\mobile\images\flight-history-status.png" />
     <Content Include="Assets\mobile\images\flight-separator.png" />
+    <Content Include="Assets\mobile\images\login-header-left.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
+    <Content Include="Assets\mobile\images\register-header-left.png" />
+    <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
+    <Content Include="Assets\mobile\images\user-account-bg.png" />
+    <Content Include="Assets\mobile\images\yellow-stripe.png" />
+    <Content Include="Assets\mobile\js\StaticController.js" />
+    <Content Include="Assets\mobile\js\AccountController.js" />
     <Content Include="Assets\mobile\js\application.js" />
     <Content Include="Assets\mobile\js\CheckoutController.js" />
     <Content Include="Assets\mobile\js\returnFlightController.js" />
@@ -1056,6 +1067,7 @@
     <Content Include="Assets\vendor\intltelinput\js\intlTelInput.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.jquery.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.min.css" />
+    <Content Include="checkin.png" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>
@@ -1189,11 +1201,12 @@
     <Content Include="Assets\mobile\css\_page_checkout.scss" />
     <None Include="Assets\images\backtotop.jpg.bak" />
     <Content Include="Assets\images\subscribe-bg.jpg.bak" />
+    <Content Include="Assets\mobile\css\_page_account.scss" />
+    <Content Include="Assets\mobile\css\_page_static.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-qa-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1220,6 +1233,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="showticket.png" />
     <Content Include="Statics\bootstrap-3.1.1\css\bootstrap-theme.css" />
     <Content Include="Statics\bootstrap-3.1.1\css\bootstrap-theme.min.css" />
     <Content Include="Statics\bootstrap-3.1.1\css\bootstrap.css" />
@@ -2510,10 +2524,20 @@
     <Content Include="Views\StaticPage\_SectionHowTo.cshtml" />
     <Content Include="Views\Flight\Search-Single.mobile.cshtml" />
     <None Include="Views\Flight\Checkout.mobile.cshtml.bak" />
+    <Content Include="Views\Flight\Eticket.cshtml" />
+    <Content Include="Views\Flight\Confirmation.mobile.cshtml" />
+    <None Include="Views\Flight\SearchResultList-Single.mobile.cshtml.bak" />
     <Content Include="Views\Template\eticket3.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.cshtml" />
     <Content Include="Views\Template\DisableBack.cshtml" />
     <Content Include="Views\StaticPage\GetCalendarTerms.cshtml" />
+    <Content Include="Views\Home\CekPemesanan.mobile.cshtml" />
+    <Content Include="Views\StaticPage\Contact.mobile.cshtml" />
+    <Content Include="Views\StaticPage\Question.mobile.cshtml" />
+    <Content Include="Views\StaticPage\Privacy.mobile.cshtml" />
+    <Content Include="Views\StaticPage\Terms.mobile.cshtml" />
+    <Content Include="Views\StaticPage\GetCalendar.mobile.cshtml" />
+    <Content Include="Views\StaticPage\GetCalendarTerms.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2548,6 +2572,8 @@
     <Content Include="Views\Template\eticket4.cshtml" />
     <Content Include="Views\Travorama20\emailTransferConfirmation.cshtml" />
     <Content Include="Views\Template\eticketnew.cshtml" />
+    <Content Include="Views\UW620OrderHistory\OrderFlightHistoryDetail.mobile.cshtml" />
+    <Content Include="Views\UW620OrderHistory\OrderHistory.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -31,7 +31,7 @@
                         <address>
                             <p><b>pt. travelmadezy internasional</b></p>
                             <p>equity tower 25th ﬂoor, scbd lot 9, jl. jendral sudirman kav. 52 - 53</p>
-                            <p>p. +62 21 29035088  / +62 21 29035089 | f. +62 21 29035099 </p>
+                            <!-- <p>p. +62 21 29035088  / +62 21 29035089 | f. +62 21 29035099 </p> -->
                         </address>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                                 </tr>
                                 <tr>
                                     <td>Time</td>
-                                    <td>Pk @Model.Payment.Time.GetValueOrDefault().ToString("HH:mm")</td>
+                                    <td>Pk @Model.Payment.Time.GetValueOrDefault().AddHours(7).ToString("HH:mm") WIB</td>
                                 </tr>
                             </table>
                         </div>

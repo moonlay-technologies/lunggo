@@ -1,79 +1,75 @@
 ﻿@{
-    Layout = "/Views/Shared/_layout_mobile.cshtml";
-    ViewBag.Title = "Login Page";
-    var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
-    var facebookProvider = loginProviders.First();
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    ViewBag.Title = "Login";
+    ViewBag.BodyClass = "page page-account page-login";
+    ViewBag.AngularController = "LoginController";
+}
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+@section PageJS{
+    <script>
+        var LoginMessage = '@ViewBag.Message';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/mobile/js/AccountController.js"></script>
 }
 
-@switch ((string)ViewBag.Message)
-{
-    case "InvalidInputData":
-        <div class="bg-danger">Email format or password invalid!</div>
-        break;
-    case "NotRegistered":
-    <div class="bg-warning">Email not yet registered. Please<a href="@Url.Action("Register", "Account")">register</a>.</div>
-        break;
-    case "AlreadyRegisteredButUnconfirmed":
-    <div class="bg-warning">Email already registered but not confirmed. Please confirm.</div>
-        break;
-    case "Failed":
-    <div class="bg-danger">Wrong password!</div>
-        break;
-}
+<div class="error-message bg-warning" ng-show="User.Message">
+    <div ng-show="User.Message == 'NotRegistered'">
+        <h3>Anda belum terdaftar di Travorama</h3>
+        <p><a href="@Url.Action("Register", "Account")">Klik disini</a> untuk mendaftar di Travorama.</p>
+    </div>
+    <div ng-show="User.Message == 'InvalidInputData'">
+        <h3>Email / Password Salah</h3>
+        <p>Cek kembali alamat email dan password Anda.</p>
+    </div>
+    <div ng-show="User.Message == 'Failed'">
+        <h3>Email / Password Salah</h3>
+        <p>Cek kembali alamat email dan password Anda.</p>
+    </div>
+    <div ng-show="User.Message == 'AlreadyRegisteredButUnconfirmed'">
+        <h3>Akun Belum Aktif</h3>
+        <p>Cek kembali alamat email Anda untuk mengaktifkan akun Anda.</p>
+    </div>
+    <div ng-show="User.Message == 'AlreadyConfirmed'">
+        <h3>Akun Anda Telah Aktif</h3>
+        <p>Silahkan login menggunakan email dan password Anda.</p>
+    </div>
+</div>
 
-<section class="page login-page auth-page">
+<div class="container">
 
-    <h1 class="text-center page-title"><b>LOG</b> IN</h1>
-    <h5 class="text-center page-subtitle">Login with your Travorama Account</h5>
+    <div class="form-wrapper form-wrapper--login">
+    
+        <header class="form-wrapper__header">
+            <h1 class="form-wrapper__title">Log In</h1>
+            <p>Dengan Akun Travorama Anda</p>
+        </header><!-- .form-wrapper__header -->
 
-    <section class="login-form-section container">
-
-        @using (Html.BeginForm("Login", "Account", new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "login-form form-horizontal"}))
-        {
-            @Html.AntiForgeryToken()
-            <div class="form-group">
-                <span class="fa fa-envelope-o col-xs-2"></span>
-                <div class="col-xs-10 col-xs-offset-1">
-                    <input type="text" name="Email" placeholder="Enter your email" class="form-control" />
+        <div class="form-wrapper__body">
+            @using (Html.BeginForm("Login", "Account", new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "login-form form form-horizontal", role = "form", name = "LoginForm", ng_submit = "User.Send()"}))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label class="control-label">Alamat Email Anda :</label>
+                    <input type="email" value="" name="Email" class="form-control" ng-model="User.Email" required />
                 </div>
-            </div>
-            <div class="form-group">
-                <span class="fa fa-lock col-xs-2"></span>
-                <div class="col-xs-10 col-xs-offset-1">
-                    <input type="password" name="Password" value="" placeholder="Enter your password" class="form-control" />
+                <div class="form-group">
+                    <label class="control-label">Password :</label>
+                    <input type="password" value="" name="Password" class="form-control" ng-model="User.Password" required />
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-xs-10 col-xs-offset-1">
-                    <input type="submit" name="submit" value="LOGIN" class="btn btn-yellow submit-button btn-block-lg" />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-yellow btn-block" ng-disabled="LoginForm.$invalid || User.Sending">LOGIN</button>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-xs-10 col-xs-offset-1">
-                    <a href="@Url.Action("Register", "Account")" class="pull-right">Sign up</a>
-                    <a href="@Url.Action("ForgotPassword", "Account")">Forgot password</a>
+                <div class="form-group">
+                    <a href="#">Lupa Password</a> | <a href="#">Daftar</a>
                 </div>
-            </div>
-        }
-@*
-            <div class="form-group">
-                <div class="col-xs-10 col-xs-offset-1">
-                    <p class="text-center or-border">OR</p>
-                </div>
-            </div>
-        
-        @using (Html.BeginForm("ExternalLogin", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            <div class="form-group">
-                <div class="col-xs-10 col-xs-offset-1">
-                    <button type="submit" name="provider" value="@facebookProvider.AuthenticationType" class="btn-facebook btn btn-block-lg"><span class="fa fa-facebook"></span> Login with Facebook</button>
-                </div>
-            </div>
-        }
-*@
+            }
+        </div><!-- .form-wrapper__body -->
 
-
-    </section>
-
-</section><!-- .login-page -->
+    </div><!-- .form-wrapper -->
+</div><!-- .container -->

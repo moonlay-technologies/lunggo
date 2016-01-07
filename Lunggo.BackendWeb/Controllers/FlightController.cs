@@ -9,6 +9,11 @@ using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.BackendWeb.Models;
+using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRepository;
+using Lunggo.Repository.TableRecord;
+using Lunggo.CustomerWeb.Models;
+using Lunggo.BackendWeb.Model;
 
 namespace Lunggo.BackendWeb.Controllers
 {
@@ -131,6 +136,81 @@ namespace Lunggo.BackendWeb.Controllers
             var flight = FlightService.GetInstance();
             var rules = flight.GetAllPriceMarginRules();
             return View(rules);
+        }
+
+        public ActionResult PriceMarginUpdate(long id)
+        {
+            var flight = FlightService.GetInstance();
+            var rule = flight.GetPriceMarginRule(id);
+            return View("PriceMarginAdd", rule);
+        }
+
+        public ActionResult PriceMarginAdd()
+        {
+            var rule = new MarginRule();
+            return View(rule);
+        }
+
+        [HttpPost]
+        public ActionResult PriceMarginAdd(MarginRule rule)
+        {
+            var flight = FlightService.GetInstance();
+            var conflicts = flight.InsertPriceMarginRuleAndRetrieveConflict(rule);
+            Session["FlightPriceMarginConflicts"] = conflicts;
+            return View("PriceMarginConflict", conflicts);
+        }
+
+        [HttpPost]
+        public ActionResult PriceMarginConflict(List<int> ruleId, List<int> priority)
+        {
+            var conflicts = (List<MarginRule>) (Session["FlightPriceMarginConflicts"]);
+            for (var i = 0; i < ruleId.Count; i++)
+            {
+                var id = ruleId[i];
+                var prio = priority[i];
+                var specifiedRule = conflicts.Single(rule => rule.RuleId == id);
+                specifiedRule.Priority = prio;
+            }
+            var flight = FlightService.GetInstance();
+            flight.UpdateResolvedPriceMarginRulesConflict(conflicts);
+            return RedirectToAction("PriceMarginList");
+        }
+
+        public ActionResult PriceMarginDelete(long id)
+        {
+            var rule = new MarginRule();
+            return View(rule);
+        }
+
+        [HttpPost]
+        [ActionName("PriceMarginDelete")]
+        public ActionResult PriceMarginDeletePost(long id)
+        {
+            var flight = FlightService.GetInstance();
+            flight.DeletePriceMarginRule(id);
+            return RedirectToAction("PriceMarginList");
+        }
+
+        public ActionResult SubscriberList()
+        {
+            List<SubscriberCalendar> dataModel = new List<SubscriberCalendar>();
+           var con = DbService.GetInstance().GetOpenConnection();
+           var List = CalendarRecipientTableRepo.GetInstance().FindAll(con).ToList();
+           
+           foreach (var dataSubscribers in List)
+           {
+               dataModel.Add(new SubscriberCalendar()
+               {
+                   Email = dataSubscribers.Email,
+                   Name = dataSubscribers.Name,
+                   PhoneNumber = dataSubscribers.PhoneNumber,
+                   City = dataSubscribers.City,
+                   Address = dataSubscribers.Address,
+                   PostalCode = dataSubscribers.PostalCode
+               });
+           }
+
+           return View(dataModel);
         }
     }
 }

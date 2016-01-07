@@ -218,7 +218,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                         Id = reservationRecord.PaymentId,
                                         Medium = PaymentMediumCd.Mnemonic(reservationRecord.PaymentMediumCd),
                                         Method = PaymentMethodCd.Mnemonic(reservationRecord.PaymentMethodCd),
-                                        TimeLimit = reservationRecord.PaymentTimeLimit.GetValueOrDefault(),
+                                        TimeLimit = reservationRecord.PaymentTimeLimit,
                                         Time = reservationRecord.PaymentTime,
                                         Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
                                         TargetAccount = reservationRecord.PaymentTargetAccount,

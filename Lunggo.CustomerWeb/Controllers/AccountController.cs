@@ -64,6 +64,7 @@ namespace Lunggo.CustomerWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            returnUrl = returnUrl ?? "";
             ViewBag.ReturnUrl = returnUrl;
             var defaultReturnUrl = OnlineContext.GetDefaultHomePageUrl();
 
@@ -243,7 +244,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
 
                     var EmailList = CalendarRecipientTableRepo.GetInstance().FindAll(con).ToList();
-                    if (EmailList.Count <500 && Date<endDate)
+                    if (EmailList.Count <500 && Date.Date <= endDate.Date)
                     {
                         var queueService = QueueService.GetInstance();
                         var queue = queueService.GetQueueByReference("GetCalendar");

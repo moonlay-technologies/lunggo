@@ -192,7 +192,16 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Eticket(string rsvNo)
         {
-            return File(FlightService.GetInstance().GetEticket(rsvNo), "application/pdf");
+            try
+            {
+                var eticketData = FlightService.GetInstance().GetEticket(rsvNo);
+                return File(eticketData, "application/pdf");
+            }
+            catch
+            {
+                return View();
+            }
+            
         }
     }
 }

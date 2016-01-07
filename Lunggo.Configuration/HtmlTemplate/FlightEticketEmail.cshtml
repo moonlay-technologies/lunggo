@@ -111,13 +111,13 @@
                                 {
                                     var jamBerangkat = Model.Itinerary.Trips[0].Segments[0].DepartureTime;
                                     var jamKembali = Model.Itinerary.Trips[1].Segments[0].DepartureTime;
-                                    <p style=""><b>@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</b></p>
-                                    <p style=""><b>@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.ToString("hh:mm")</b></p>
+                                    <p style=""><b>@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("HH:mm")</b></p>
+                                    <p style=""><b>@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.ToString("HH:mm")</b></p>
                                 }
                                 else
                                 {
                                     var jamBerangkat = Model.Itinerary.Trips[0].Segments[0].DepartureTime;
-                                    <p style=""><b>@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</b></p>
+                                    <p style=""><b>@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("HH:mm")</b></p>
                                 }
 
                             </td>
@@ -206,7 +206,7 @@
                             <span style="color:#1daee5;">A.</span> Equity Tower 25th Floor, SCBD lot 9<br />Jl. Jenderal Sudirman Kav.52-53<br />Jakarta 12190
                         </p>
                         <p style="margin-top:0;">
-                            <span style="color:#1daee5;">T.</span> 021 724 808 48
+                            <!--<span style="color:#1daee5;">T.</span> 021 724 808 48-->
                         </p>
 
                     </address>

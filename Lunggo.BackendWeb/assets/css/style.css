@@ -782,6 +782,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 	height: 60px;
 	margin: 0;
 	background: #ff865c;
+    font-weight:bold;
 	text-align: center;
 }
 
@@ -1641,6 +1642,16 @@ PANELS CONFIGURATIONS
 	padding: 15px;
 	margin-bottom: 15px;
 	box-shadow: 0px 3px 2px #aab2bd;
+}
+
+.dep-city {width:25%; text-align:left; font-weight:bold;}
+.dep-time {width:15%; font-weight:bold;}
+.airline {width:20%; text-align:center; font-weight:bold;}
+.arr-time {width:15%; font-weight:bold;}
+.arr-city {width:25%; text-align:center; font-weight:bold;}
+
+.renderTrip {
+    margin-left:auto;
 }
 
 

@@ -19,7 +19,7 @@
 }
 
 
-@if (ViewBag.Message == null)
+@if (ViewBag.Message == "Success")
 {
     <div class="container" ng-app="travorama" ng-controller="campaignController">
 
@@ -103,14 +103,14 @@ else if (ViewBag.Message == "InputSuccess")
         <h1 class="text-center section-title stripe">TERIMA KASIH</h1>
 
         <div class="col-sm-8 col-sm-offset-2">
-            <h3 class="text-center">Terima kasih,Kami akan mengirimkan kalendar ke alamat yang telah anda masukkan</h3>
+            <h3 class="text-center">Terima kasih, Kami akan mengirimkan kalendar ke alamat yang telah anda masukkan</h3>
             <div class="col-sm-4 col-sm-offset-4">
                 <a class="btn btn-yellow btn-block" href="/">KE HALAMAN DEPAN</a>
             </div>
         </div>
     </div>
 }
-else if (ViewBag.Message == "MasaBerlakuTelahHabis")
+else if (ViewBag.Message == "Expired")
 {
     <div class="container">
         <h1 class="text-center section-title stripe">TERIMA KASIH</h1>
@@ -123,13 +123,26 @@ else if (ViewBag.Message == "MasaBerlakuTelahHabis")
         </div>
     </div>
 }
+else if (ViewBag.Message == "NotRegister")
+{
+    <div class="container">
+        <h1 class="text-center section-title stripe">Mohon Maaf</h1>
+
+        <div class="col-sm-8 col-sm-offset-2">
+            <h3 class="text-center">Anda belum melakukan proses Sign Up di sistem kami</h3>
+            <div class="col-sm-4 col-sm-offset-4">
+                <a class="btn btn-yellow btn-block" href="/">KE HALAMAN DEPAN</a>
+            </div>
+        </div>
+    </div>
+}
 else
 {
     <div class="container">
-        <h1 class="text-center section-title stripe">TERIMA KASIH</h1>
+        <h1 class="text-center section-title stripe">Mohon Maaf</h1>
 
         <div class="col-sm-8 col-sm-offset-2">
-            <h3 class="text-center">Anda telah terdaftar dalam sistem kami.</h3>
+            <h3 class="text-center">Anda telah mengisi form ini sebelumnya.</h3>
             <div class="col-sm-4 col-sm-offset-4">
                 <a class="btn btn-yellow btn-block" href="/">KE HALAMAN DEPAN</a>
             </div>

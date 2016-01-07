@@ -1,0 +1,123 @@
+﻿// page user account
+.page.page-useraccount {
+    .menu-user {display:block; background:$color-main-blue; color:#fff; padding:15px;
+        &:before {content:''; display:inline-block; width:50px; height:50px; background-image:url(/Assets/mobile/images/user-account-bg.png); background-repeat:no-repeat; vertical-align:middle;}
+        span {display:inline-block; padding-left:15px; font-weight:600; font-size:14px; vertical-align:middle}
+    }
+    // user menu section
+    .user-menu {
+        .menu-wrapper {padding:15px; @include border-radius($border-radius-default);
+            ul {border:$border-default; margin:0; padding:0; list-style:none;
+                li {
+                    a {display:block; padding:15px; padding-left:50px; font-weight:600; position:relative; font-size:14px;
+                        &:before {display:block; content:''; position:absolute; top:0; left:0; width:50px; height:50px; background-image:url(/Assets/mobile/images/user-account-bg.png); background-repeat:no-repeat;}
+                        &:after {display:block; content:''; position:absolute; top:0; right:0; width:50px; height:50px; background-image:url(/Assets/mobile/images/user-account-bg.png); background-position:-200px 0; background-repeat:no-repeat;}
+                    }
+                    // styling
+                    &+li {border-top:$border-default;}
+                    &.menu-profile {
+                        a:before {background-position:-50px 0;}
+                    }
+                    &.menu-history {
+                        a:before {background-position:-100px 0;}
+                    }
+                    &.menu-logout {
+                        a:before {background-position:-150px 0;}
+                        a:after {display:none;}
+                    }
+                }
+            }
+        }
+    }
+    // user profile section
+    .user-profile {
+        .form-wrapper {padding:0;
+            &>div {
+                &>header {background:$color-main-blue; color:#fff; padding:15px;
+                    span {font-weight:600; font-size:14px;}
+                }
+                &>div {padding:15px;}
+            }
+            
+        }
+    }
+    // user history section
+    .user-history {
+        .page-title {background:$color-main-blue; color:#fff; padding:15px;
+            span {text-align:center; font-weight:600; margin:0; font-size:14px; display:block;}
+        }
+        .history-list {margin:0; padding:0; list-style:none;
+            &>li {padding:30px; padding-left:30px; padding-right:0; position:relative;
+                &+li {border-top:$border-default;}
+                &:before {display:block; content:''; width:60px; height:60px; position:absolute; top:0; left:0; background-image:url(/Assets/mobile/images/flight-history-status.png); background-repeat:no-repeat;}
+                // styling
+                &.done {
+                    &:before {background-position:0 0;}
+                }
+                &.pending {
+                    &:before {background-position:-60px 0;}
+                }
+                &.canceled {
+                    &:before {background-position:-120px 0;}
+                }
+            }
+        }
+    }
+}
+
+// page order detail
+.page.page-orderdetail {
+    .order-detail {
+        .content-header {background:#2eb4e7; color:#fff; padding:10px 0; text-align:center;}
+        .content-body {
+            &>div {
+                &>header {background:#dedede; padding:10px 5px; color:#575757;}
+                &>section {padding:10px;}
+            }
+        }
+    }
+}
+
+// forgot password page
+.page.page-forgotpassword {
+    form {border-top:$border-default; margin-top:15px; padding-top:15px;}
+}
+
+// check order page
+.page.page-checkorder {
+    form {border-top:$border-default; margin-top:15px; padding-top:15px;}
+}
+
+// page contact
+.page.page-contact {
+    .contact-map {background:url(/Assets/mobile/images/contact-map.jpg) center center; background-size:cover;
+        .container {padding-left:15px; padding-right:15px;}
+        .contact-list {background:#0c9ed5; padding:15px; color:#fff; margin-top:15px; margin-bottom:35px; position:relative; margin-top:60px; padding-top:35px; padding-bottom:0;
+            &:before {width:90px; height:90px; background:url(/Assets/mobile/images/contact-plane.png) center center no-repeat; content:""; position:absolute; top:-45px; left:50%; margin-left:-45px;}
+            a {color:#fff;}
+            &>div {padding:15px; padding-left:35px; position:relative;
+                &:before {position:absolute; content:''; width:30px; height:30px; background-image:url(/Assets/mobile/images/contact-list-bg.png); background-repeat:no-repeat; position:absolute; margin-left:-35px;}
+                &.address:before {background-position:0 0;}
+                &.email:before {background-position:-30px 0;}
+            }
+            &>div+div {border-top:1px solid #7fcae7;}
+            h4 {font-weight:bold;}
+        }
+    }
+    .contact-social {
+        &:before, &:after {@include clearfix();}
+        a {display:block; float:left; width:33.333333334%; height:65px; position:relative;
+            &:before {width:55px; height:55px; content:""; background:url(/Assets/mobile/images/contact-social-bg.png); position:absolute; left:50%; margin-left:-26px; margin-top:5px;}
+            &.facebook {background-color:#004787;
+                &:before {background-position:0 0;}
+            }
+            &.twitter {background-color:#009dd7;
+                &:before {background-position:-55px 0;}
+            }
+            &.instagram {background-color:#36c8ff;
+                &:before {background-position:-110px 0;}
+            }
+        }
+    }
+    .contact-form {}
+}

@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
@@ -79,6 +80,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
+                var clientx = CreateAgentClient();
                 var hasil = new BookFlightResult();
                 var Fare = bookInfo.FareId; 
                 //var Fare =
@@ -216,23 +218,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     return hasil;
                 }
 
-                var client = new ExtendedWebClient();
-                Client.CreateSession(client);
-
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                //Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Referer"] = "http://agent.sriwijayaair.co.id/SJ-Eticket/application/index.php?action=index";
-                //client.Headers["X-Requested-With"] = "XMLHttpRequest";
-                client.Headers["Host"] = "agent.sriwijayaair.co.id";
-                client.Headers["Origin"] = "http://agent.sriwijayaair.co.id";
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                client.Expect100Continue = false;
+                Login(clientx);
 
                 var tahun2dgt = tglBerangkat.Year.ToString().Substring(2, 2);
-                var agentBooking =
+                var url = "SJ-Eticket/application/?action=booking";
+                var searchRequest = new RestRequest(url, Method.POST);
+                var postData =
                     "vSub=YES" +
                     "&PromoCode=" +
                     "&return=NO" +
@@ -245,21 +236,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     "&Submit=Search" +
                     "&action=booking" +
                     "&" + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute + "=" + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute;
-
-                client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=booking", agentBooking);
-
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                //client.Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Referer"] = "http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=booking";
-                client.Headers["Host"] = "agent.sriwijayaair.co.id";
-                client.Headers["Origin"] = "https://www.sriwijayaair.co.id";
-                client.AutoRedirect = false;
-                //client.Expect100Continue = false;
-
+                searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                var searchResponse = clientx.Execute(searchRequest);
                 
                 int i = 0;
                 foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Adult))
@@ -334,37 +312,30 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var encode1 =
                     ("prosesBookingDirect." +DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute+ ":prosesBookingDirect").Base64Encode();
                 var encode2 = encode1.Base64Encode();
-                client.AutoRedirect = true;
-                client.Expect100Continue = false;
-                var bookingResult = client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/menu_others.php?reffNo="+ encode2 +"", bookingParams);
+
+                url = "SJ-Eticket/application/menu_others.php?reffNo=" + encode2;
+                var bookRequest = new RestRequest(url, Method.POST);
+                bookRequest.AddParameter("application/x-www-form-urlencoded", bookingParams, ParameterType.RequestBody);
+                var bookResponse = clientx.Execute(bookRequest);
+                var bookingResult = bookResponse.Content;
                 //var bookingResult = System.IO.File.ReadAllText(@"C:\Users\User\Documents\Kerja\Crawl\mbuhlali.txt");
                 
-                if (client.ResponseUri.AbsoluteUri.Contains("/application/?action=Check"))
+                if (bookResponse.ResponseUri.AbsoluteUri.Contains("/application/?action=Check"))
                 {
                     CQ ambilDataBooking = (CQ)bookingResult;
                     
                     var tunjukKodeBook = ambilDataBooking.MakeRoot()[".bookingCode>input"];
                     var kodeBook = tunjukKodeBook.Select(x => x.Cq().Attr("value")).FirstOrDefault();
-                    
 
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    //client.Headers["Accept-Encoding"] = "gzip, deflate";
-                    client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    //client.Headers["Referer"] = "http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=CheckBCode&reffNo="+kodeBook+"";
-                    client.Headers["Host"] = "agent.sriwijayaair.co.id";
-                    client.Headers["Origin"] = "https://www.sriwijayaair.co.id";
-                    client.AutoRedirect = true;
-                    client.Expect100Continue = false;
-
-                    var cekparams =
+                    url = "SJ-Eticket/application/?";
+                    var checkRequest = new RestRequest(url, Method.POST);
+                    var checkParams =
                         "reffNo=" + kodeBook +
                         "&action=CheckBCode" +
                         "&step=STEP2";
-                    
-                    var cekresult = client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/?", cekparams);
+                    checkRequest.AddParameter("application/x-www-form-urlencoded", checkParams, ParameterType.RequestBody);
+                    var checkResponse = clientx.Execute(checkRequest);
+                    var cekresult = checkResponse.Content;
                     
                     CQ ambilTimeLimit = (CQ)cekresult;
 

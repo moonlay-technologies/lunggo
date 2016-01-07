@@ -51,6 +51,8 @@ $header-height:60px;
 
 body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; padding-top:$header-height;}
 
+img {max-width:100%;}
+
 .page-loading {display:none;}
 .page-loaded {display:block;}
 
@@ -58,12 +60,20 @@ body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; p
 
 .display-block {display:block !important;}
 
+.btn {@include border-radius($border-radius-default);}
 .btn.btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; font-weight:bold;}
 .btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; border:2px solid #adadad;}
 .btn.block {display:block; width:100%;}
 
+.error-message {padding:5px 10px;}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {-webkit-appearance:none;-moz-appearance:none; margin:0;}
+
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea {@include border-radius($border-radius-default);}
+
+// *****
 // site header
-.site-header {position:fixed; top:0; left:0; width:100%; height:$header-height; z-index:999;
+.site-header {position:fixed; top:0; left:0; width:100%; height:$header-height; z-index:999; @include box-shadow(0px -2px 15px #555);
     .header-display {background:#fff; text-align:center; height:$header-height;
         .site-menu {width:30px; height:30px; background:url(/Assets/mobile/images/mobile-header-sprite.png) no-repeat; background-position:-30px 0; display:block; position:absolute; top:15px; left:10px;}
         .site-logo {height:30px; margin-top:15px;}
@@ -71,9 +81,106 @@ body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; p
     }
 }
 
-// site content
-.site-content {min-height:300px;}
+.burger-content {position:fixed; height:100%; width:300px; top:0; left:-300px; z-index:9999; background:#fff; overflow:auto; @include transition(all 0.5s);
+    // if active
+    &.active {left:0;
+        .burger-content__header {left:0;}
+    }
+    .burger-content__header {background:#028ec3; color:#fff; position:fixed; width:300px; height:$header-height; top:0; left:-300px; z-index:2; @include transition(all 0.5s);
+        ul {list-style:none; margin:0; padding:10px 20px;
+            li {display:inline-block; width:70px; padding-top:10px; padding-bottom:10px; padding-left:15px;
+                a {color:#fff; font-weight:600;}
+                // specific class
+                &.language {
+                    img {width:22px;}
+                }
+                &.currency {border-left:1px solid $color-main-blue; padding-left:30px;}
+            }
+        }
+        .burger-content__close {color:#fff; position:absolute; right:15px; top:12px; font-size:24px; font-weight:600;}
+    }
+    .burger-content__body {padding-top:$header-height;
+        ul {list-style:none; margin:0; padding:0;
+            li {
+                a {color:$color-main-blue; padding:15px 0px; padding-left:70px; display:block; font-weight:600; position:relative;
+                    &:before {content:""; width:30px; height:30px; display:block; position:absolute; margin-left:-40px; top:8px; background-repeat:no-repeat; background-image:url(/Assets/mobile/images/burger-sprite.png);}
+                }
+                // specific class
+                &.login, &.register, &.account {background:$color-main-blue; color:#fff;
+                    a {color:#fff;}
+                }
+                &.login {
+                    a:before {background-position:0 0;}
+                }
+                &.register {
+                    a:before {background-position:-30px 0;}
+                }
+                &.account {padding-top:10px; padding-bottom:10px;
+                    a:before {width:45px; height:45px; background-position:-300px 0; top:0; margin-left:-50px;}
+                }
+                &.home {
+                    a:before {background-position:-60px 0;}
+                }
+                &.order-check {
+                    a:before {background-position:-90px 0;}
+                }
+                &.contact {
+                    a:before {background-position:-120px 0;}
+                }
+                &.newsletter {
+                    a:before {background-position:-150px 0;}
+                }
+                &.faq {
+                    a:before {background-position:-180px 0;}
+                }
+                &.howto-order {
+                    a:before {background-position:-210px 0;}
+                }
+                &.about {
+                    a:before {background-position:-240px 0;}
+                }
+                // if active
+                &+li {border-top:1px solid #8fd6f2;}
+            }
+        }
+    }
+}
 
+// *****
+// site content
+.site-content {min-height:300px;
+    a {color:#2fb4e6;}
+}
+
+// page content
+.page__header {}
+.page__body {}
+
+.section-title {font-weight:600; padding-bottom:15px; margin-bottom:15px;
+    span {color:#1eafe4;}
+    // theme
+    &.stripe {background:url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;}
+}
+
+// form-wrapper
+.form-wrapper {padding:15px; margin-top:15px; margin-bottom:15px; margin-left:10px; margin-right:10px; background:#fff; border:$border-default; @include border-radius($border-radius-default);
+    .form-wrapper__header {padding-left:35px; position:relative; margin-bottom:25px;
+        &:before {width:25px; height:50px; content:""; display:block; background-repeat:no-repeat; position:absolute; left:0; top:0;}
+        .form-wrapper__title {font-weight:bold; margin-top:5px; margin-bottom:2px; font-size:18px;}
+    }
+    .form-wrapper__body {}
+
+    // *****
+    // modifier
+    &.form-wrapper--login {
+        .form-wrapper__header:before {background-image:url(/Assets/mobile/images/login-header-left.png);}
+    }
+    &.form-wrapper--register {
+        .form-wrapper__header:before {background-image:url(/Assets/mobile/images/register-header-left.png);}
+    }
+}
+
+// *****
 // site footer
 .site-footer {background-color:#111; color:#fefefe;
     .site-footer-menu {background-color:#303030;
@@ -103,6 +210,7 @@ body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; p
     }
 }
 
+// *****
 // popup
 .popup__wrapper {background:rgba(0,0,0,0.7); position:fixed; top:0; left:0; width:100%; height:100%; z-index:1000; display:none;
     .popup {position:absolute; top:0; right:0; bottom:0; left:0; margin:auto; width:300px; height:200px; background:#fff; @include border-radius($border-radius-default);
@@ -110,19 +218,20 @@ body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; p
             .popup__title {text-align:center; margin:0; font-weight:bold;}
         }
         .popup__body {padding:20px 0;}
-        .popup__footer {}
+        .popup__footer {position:absolute; bottom:0; left:0; width:100%; padding-bottom:12px;}
     }
     // if active
     &.active {display:block;}
 }
 
+// *****
 // overlay
 .overlay {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:1000; background:#fff; padding-top:$header-height; overflow:auto; @include transition($transition-default);
     .overlay__header {background:#878787; color:#fff; padding:18px; height:$header-height; position:fixed; z-index:1; top:0; left:0; width:100%; display:none;
         .overlay__title {margin:0;}
         .overlay__close {float:right;}
     }
-    .overlay__content {background:#fff; min-height:100%; padding:12px; padding-bottom:$header-height;}
+    .overlay__content, .overlay__body {background:#fff; min-height:100%; padding:12px; padding-bottom:$header-height;}
     .overlay__footer {position:fixed; width:100%; bottom:0; left:0; background:#616161; padding:12px; color:#fff; height:$header-height;}
     // if active
     &.active {top:0;
@@ -134,8 +243,43 @@ body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; p
     }
 }
 
+// *****
+// datepicker on overlay
+.overlay.datepicker {
+    .overlay__body {background:#616161; color:#fff;
+        a {color:#fff;}
+        select {color:#000; font-size:14px; margin-left:5px;}
+    }
+    .ui-datepicker {
+        .ui-datepicker-header {text-align:center; position:relative; padding-top:20px; height:50px;
+            .ui-datepicker-prev {position:absolute; left:0; width:25px; height:25px; background-image:url(/Assets/mobile/images/ui-calendar-nav.png); background-repeat:no-repeat; background-position:-30px 0; background-size:200%;}
+            .ui-datepicker-next {@extend & .ui-datepicker-prev; left:auto; right:0; background-position:0 0;}
+            &:after, &:before {@include clearfix();}
+            .ui-state-disabled {opacity:0.3;}
+        }
+        .ui-datepicker-calendar {width:100%; max-width:280px; margin-left:auto; margin-right:auto;
+            .ui-state-disabled {opacity:0.3;}
+            .ui-datepicker-current-day {background:#fff;
+                a, span {color:#333;}
+            }
+            thead {
+                tr {
+                    th {width:40px; height:40px; padding:5px; text-align:center;}
+                }
+            }
+            tbody {
+                tr {
+                    td {width:40px; height:40px; text-align:center; padding:5px;}
+                }
+            }
+        }
+    }
+}
+
 
 /*--------------------*/
 // Include
 @import 'page_flight';
 @import 'page_checkout';
+@import 'page_account';
+@import 'page_static';

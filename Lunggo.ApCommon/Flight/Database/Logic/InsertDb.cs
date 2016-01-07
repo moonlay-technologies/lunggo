@@ -276,6 +276,19 @@ namespace Lunggo.ApCommon.Flight.Service
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
                     var activeRules = GetActivePriceMarginRuleQuery.GetInstance().Execute(conn, null).ToList();
+                    foreach (var deletedRule in deletedRules)
+                    {
+                        if (activeRules.Any(activeRule => activeRule.RuleId == deletedRule.RuleId))
+                        {
+                            FlightPriceMarginRuleTableRepo.GetInstance()
+                                .Update(conn, new FlightPriceMarginRuleTableRecord
+                                {
+                                    RuleId = deletedRule.RuleId,
+                                    Priority = deletedRule.Priority,
+                                    IsActive = false
+                                });
+                        }
+                    }
                     foreach (var rule in rules)
                     {
                         if (activeRules.Any(activeRule => activeRule.RuleId == rule.RuleId))
@@ -329,19 +342,6 @@ namespace Lunggo.ApCommon.Flight.Service
                                 InsertPgId = "xxx"
                             };
                             FlightPriceMarginRuleTableRepo.GetInstance().Insert(conn, ruleRecord);
-                        }
-                    }
-                    foreach (var deletedRule in deletedRules)
-                    {
-                        if (activeRules.Any(activeRule => activeRule.RuleId == deletedRule.RuleId))
-                        {
-                            FlightPriceMarginRuleTableRepo.GetInstance()
-                                .Update(conn, new FlightPriceMarginRuleTableRecord
-                                {
-                                    RuleId = deletedRule.RuleId,
-                                    Priority = deletedRule.Priority,
-                                    IsActive = false
-                                });
                         }
                     }
                 }

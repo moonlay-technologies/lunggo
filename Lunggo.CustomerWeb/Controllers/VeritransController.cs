@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -33,7 +34,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 DateTime? time;
                 if (notif.transaction_time != null)
-                    time = DateTime.Parse(notif.transaction_time).ToUniversalTime();
+                    time = DateTime.Parse(notif.transaction_time).AddHours(-7).ToUniversalTime();
                 else
                     time = null;
 
@@ -64,7 +65,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 var flight = FlightService.GetInstance();
                 flight.UpdateFlightPayment(rsvNo, new PaymentInfo {Status = PaymentStatus.Verifying});
-                TempData["AllowThisThankyouPage"] = response.order_id;
+                TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Flight", new {RsvNo = rsvNo});
             }
             else
@@ -78,7 +79,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 var flight = FlightService.GetInstance();
                 flight.UpdateFlightPayment(rsvNo, new PaymentInfo { Status = PaymentStatus.Expired });
-                TempData["AllowThisThankyouPage"] = response.order_id;
+                TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
             }
             else
@@ -92,7 +93,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 var flight = FlightService.GetInstance();
                 flight.UpdateFlightPayment(rsvNo, new PaymentInfo { Status = PaymentStatus.Expired });
-                TempData["AllowThisThankyouPage"] = response.order_id;
+                TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
             }
             else

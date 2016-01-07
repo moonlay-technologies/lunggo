@@ -1,0 +1,128 @@
+﻿@model Lunggo.ApCommon.Flight.Model.MarginRule
+
+@{
+    ViewBag.Title = "PriceMarginDelete";
+}
+
+<h2>PriceMarginDelete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MarginRule</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxPassengers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxPassengers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinPassengers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MinPassengers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AirlinesIsExclusion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AirlinesIsExclusion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AirportPairsIsExclusion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AirportPairsIsExclusion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CityPairsIsExclusion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CityPairsIsExclusion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CountryPairsIsExclusion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CountryPairsIsExclusion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Coefficient)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Coefficient)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Constant)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Constant)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsFlat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsFlat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ConstraintCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ConstraintCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Priority)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Priority)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
