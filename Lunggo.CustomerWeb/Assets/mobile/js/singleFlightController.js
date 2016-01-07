@@ -54,7 +54,12 @@
                 FinalProgress: 0,
                 Pristine: true
             },
-            FlightFilter: {},
+            FlightFilter: {
+                Transit: [true, true, true],
+                DepartureTime: [true, true, true, true],
+                ArrivalTime: [true, true, true, true],
+                Airline: ''
+            },
             FlightSort: {
                 Label: 'price',
                 Value: 'TotalFare',
@@ -122,6 +127,12 @@
             }
             return overday;
         }
+    }
+
+    // get hour and minute for time filtering
+    $scope.getHour = function (dateTime) {
+        dateTime = (dateTime.substr(11, 2)) + (dateTime.substr(14, 2));
+        return parseInt(dateTime);
     }
 
     // ms to time
@@ -318,6 +329,97 @@
 
     // *****
     // flight filtering functions
-   
+    $scope.FlightFiltering = {};
+
+    // available filter
+    $scope.FlightFiltering.AvailableFilter = function() {
+        return function (flight) {
+            if (flight.Available) {
+                return flight;
+            }
+        }
+    }
+
+    // transit filter
+    $scope.FlightFiltering.TransitFilter = function (targetFlight) {
+        var targetScope = (targetFlight == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1]);
+        return function (flight) {
+            if (targetScope.FlightFilter.Transit[0]) {
+                if (flight.Trips[0].TotalTransit == 0) {
+                    return flight;
+                }
+            }
+            if (targetScope.FlightFilter.Transit[1]) {
+                if (flight.Trips[0].TotalTransit == 1) {
+                    return flight;
+                }
+            }
+            if (targetScope.FlightFilter.Transit[2]) {
+                if (flight.Trips[0].TotalTransit > 1) {
+                    return flight;
+                }
+            }
+        }
+    }
+
+    // departure time filter
+    $scope.FlightFiltering.DepartureTimeFilter = function(targetFlight) {
+        var targetScope = (targetFlight == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1]);
+        return function (flight) {
+            if (targetScope.FlightFilter.DepartureTime[0]) {
+                if ($scope.getHour(flight.Trips[0].Segments[0].DepartureTime) >= 0400 && $scope.getHour(flight.Trips[0].Segments[0].DepartureTime) <= 1100  ) {
+                    return flight;
+                }
+            }
+            if (targetScope.FlightFilter.DepartureTime[1]) {
+                if ($scope.getHour(flight.Trips[0].Segments[0].DepartureTime) >= 1100 && $scope.getHour(flight.Trips[0].Segments[0].DepartureTime) <= 1500) {
+                    return flight;
+                }
+            }
+            if (targetScope.FlightFilter.DepartureTime[2]) {
+                if ($scope.getHour(flight.Trips[0].Segments[0].DepartureTime) >= 1500 && $scope.getHour(flight.Trips[0].Segments[0].DepartureTime) <= 1900) {
+                    return flight;
+                }
+            }
+            if (targetScope.FlightFilter.DepartureTime[3]) {
+                if ($scope.getHour(flight.Trips[0].Segments[0].DepartureTime) >= 1900 && $scope.getHour(flight.Trips[0].Segments[0].DepartureTime) <= 0400) {
+                    return flight;
+                }
+            }
+        }
+    }
+
+    // arrival time filter
+    $scope.FlightFiltering.ArrivalTimeFilter = function(targetFlight) {
+        var targetScope = (targetFlight == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1]);
+        return function (flight) {
+            if (targetScope.FlightFilter.DepartureTime[0]) {
+                if ($scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) >= 0400 && $scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) <= 1100) {
+                    return flight;
+                }
+            }
+            if (targetScope.FlightFilter.DepartureTime[1]) {
+                if ($scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) >= 1100 && $scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) <= 1500) {
+                    return flight;
+                }
+            }
+            if (targetScope.FlightFilter.DepartureTime[2]) {
+                if ($scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) >= 1500 && $scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) <= 1900) {
+                    return flight;
+                }
+            }
+            if (targetScope.FlightFilter.DepartureTime[3]) {
+                if ($scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) >= 1900 && $scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) <= 0400) {
+                    return flight;
+                }
+            }
+        }
+    }
+
+    // airline filter
+    $scope.FlightFiltering.AirlineFilter = function(targetFlight) {
+        var targetScope = (targetFlight == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1]);
+    }
+
 
 }]);
