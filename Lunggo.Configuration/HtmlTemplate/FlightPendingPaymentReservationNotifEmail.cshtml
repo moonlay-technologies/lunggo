@@ -46,7 +46,7 @@
                     <!-- CONTENT  -->
                     <p>
                         Terima kasih, Anda baru saja memesan penerbangan dari:
-                        @if (@Model.Itinerary.Trips.Count > 1)
+                        @if (Model.Itinerary.Trips.Count > 1)
                         {
                             <table width="100%" style="margin-bottom: 20px;">
                                 <tr width="100%">
@@ -59,8 +59,8 @@
                                     <td width="5%">
                                         <hr style="border-color: #15b1e4">
                                     </td>
-                                    @{ var jamBerangkat = @Model.Itinerary.Trips[0].Segments[0].DepartureTime;}
-                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</td>
+                                    @{ var jamBerangkat = Model.Itinerary.Trips[0].Segments[0].DepartureTime;}
+                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("HH:mm")</td>
                                 </tr>
                                 <tr width="100%">
                                     <td width="5%">
@@ -72,8 +72,8 @@
                                     <td width="5%">
                                         <hr style="border-color: #15b1e4">
                                     </td>
-                                    @{ var jamKembali = @Model.Itinerary.Trips[1].Segments[0].DepartureTime;}
-                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.ToString("hh:mm")</td>
+                                    @{ var jamKembali = Model.Itinerary.Trips[1].Segments[0].DepartureTime;}
+                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.ToString("HH:mm")</td>
                                 </tr>
                             </table>
                         }
@@ -90,8 +90,8 @@
                                     <td width="5%">
                                         <hr style="border-color: #15b1e4" />
                                     </td>
-                                    @{ var jamBerangkat = @Model.Itinerary.Trips[0].Segments[0].DepartureTime;}
-                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</td>
+                                    @{ var jamBerangkat = Model.Itinerary.Trips[0].Segments[0].DepartureTime;}
+                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("HH:mm")</td>
                                 </tr>
                             </table>
                         }
@@ -139,18 +139,18 @@
                                 <td width="5%"></td>
                                 <td width="20%">
                                     <p style="">No Rekening,</p>
-                                    <p style="">084 777 8800</p>
+                                    <p style="">006 332 2307</p>
                                 </td>
                                 <td width="5%"></td>
                                 <td width="20%">
                                     <p style="">Atas Nama,</p>
-                                    <p style="">PT Travelmadezy</p>
+                                    <p style="">PT. Travel Madezy Internasional</p>
                                 </td>
                             </tr>
                         </table>
 
-                        @{ var jamTimeLimit = @Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7);}
-                        <p style="font-style: italic; font-size: 11px; margin-left: 6%; margin-bottom: 0px;">Batas waktu pembayaran anda adalah sebelum <span style="color: #15b1e4">@Model.Payment.TimeLimit.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Payment.TimeLimit.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.ToString("HH:mm")</span>.</p>
+                        @{ var jamTimeLimit = Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7);}
+                        <p style="font-style: italic; font-size: 11px; margin-left: 6%; margin-bottom: 0px;">Batas waktu pembayaran anda adalah sebelum <span style="color: #15b1e4">@Model.Payment.TimeLimit.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Payment.TimeLimit.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.ToString("HH:mm") WIB</span>.</p>
                         <p style="font-size: 10px; opacity: 0.5; font-style: italic; margin-left: 6%; margin-top: 1px; margin-bottom: 50px;">Jika lewat, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan berubah</p>
 
 
@@ -165,7 +165,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a style="color: #15b1e4" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)">@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)</a>
+                                    <a style="color: #15b1e4" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + Model.RsvNo)">@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + Model.RsvNo)</a>
                                 </td>
                             </tr>
                             <tr>

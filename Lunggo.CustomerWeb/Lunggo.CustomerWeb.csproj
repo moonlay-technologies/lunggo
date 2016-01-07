@@ -2536,6 +2536,8 @@
     <Content Include="Views\StaticPage\Question.mobile.cshtml" />
     <Content Include="Views\StaticPage\Privacy.mobile.cshtml" />
     <Content Include="Views\StaticPage\Terms.mobile.cshtml" />
+    <Content Include="Views\StaticPage\GetCalendar.mobile.cshtml" />
+    <Content Include="Views\StaticPage\GetCalendarTerms.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

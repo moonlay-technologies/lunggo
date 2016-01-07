@@ -131,7 +131,7 @@
 
     <section class="flight-list">
 
-        <div class="flight" ng-repeat="Flight in FlightConfig[0].FlightList" id="flight-{{Flight.IndexNo}}">
+        <div class="flight" ng-repeat="Flight in FlightConfig[0].FlightList | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert" id="flight-{{Flight.IndexNo}}">
             <div class="flight-header">
                 <h4 class="flight-airline">
                     <img ng-src="{{Flight.Trips[0].Segments[0].AirlineLogoUrl}}" alt="{{Flight.Trips[0].Segments[0].AirlineName}}" class="flight-airline-image" />
@@ -166,7 +166,7 @@
     </section><!-- .flight-list -->
     
 
-
+    <!-- overlays -->
     <!-- overlay - flight detail -->
     <div class="overlay overlay--theme--blue overlay--flight-detail" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-detail')}">
         <header class="overlay__header">
@@ -238,8 +238,8 @@
                 </div>
             </div>
         </footer><!-- .overlay__footer -->
-    </div>
-
+    </div><!-- .overlay - flight detail-->
+    
     <!-- overlay - filter -->
     <div class="overlay overlay--flight-filter" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-filter')}">
         <header class="overlay__header">
@@ -342,6 +342,14 @@
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'price' && FlightConfig[0].FlightSort.Invert == false}" ng-click="FlightConfig[0].FlightSort.Set('price',false)">Harga - Rendah ke Tinggi</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'price' && FlightConfig[0].FlightSort.Invert == true}" ng-click="FlightConfig[0].FlightSort.Set('price',true)">Harga - Tinggi ke Rendah</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'airline' && FlightConfig[0].FlightSort.Invert == false}" ng-click="FlightConfig[0].FlightSort.Set('airline',false)"> Nama Maskapai - A ke Z</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'airline' && FlightConfig[0].FlightSort.Invert == true}" ng-click="FlightConfig[0].FlightSort.Set('airline',true)">Nama Maskapai - Z ke A</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'duration' && FlightConfig[0].FlightSort.Invert == false}" ng-click="FlightConfig[0].FlightSort.Set('duration',false)">Durasi - Singkat ke Lama</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'duration' && FlightConfig[0].FlightSort.Invert == true}" ng-click="FlightConfig[0].FlightSort.Set('duration',true)">Durasi - Lama ke Singkat</span>
+        </section>
+        <section class="overlay__content hidden">
             <label>
                 Harga - Rendah ke Tinggi
                 <input type="radio" name="name" value="" />
@@ -369,7 +377,7 @@
         </section><!-- .overlay__content -->
     </div>
 
-    <!-- .overlay - sort -->
+    <!-- .overlay - change flight -->
     <div class="overlay overlay--theme--blue overlay--flight-form" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-form')}">
         <header class="overlay__header">
             <h3 class="overlay__title">
@@ -408,6 +416,7 @@
         </section><!-- .overlay__content -->
     </div><!-- .overlay--flight-form-->
     
+    <!-- popups -->
     <!-- popup revalidate -->
     <div class="popup__wrapper" ng-class="{'active':PageConfig.Validating}">
         <div class="popup">
@@ -417,6 +426,32 @@
             <div class="popup__body">
                 <div class="container">
                     <p>Membooking penerbangan Anda. Mohon tunggu.</p>    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- popup expired -->
+    <div class="popup__wrapper" ng-class="{'active':PageConfig.ExpiryDate.Expired}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Pencarian Kadaluarsa</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container">
+                    <p>Hasil pencarian Anda kadaluarsa. Silahkan klik tombol dibawah untuk refesh halaman pencarian.</p>
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-6 hidden">
+                            <a href="/" class="btn btn-block btn-gray">HOME</a>
+                        </div>
+                        <div class="col-xs-12">
+                            <button class="btn btn-block btn-yellow" ng-click="PageConfig.RefreshPage()" ng-disabled="PageConfig.Refreshing">REFRESH</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
