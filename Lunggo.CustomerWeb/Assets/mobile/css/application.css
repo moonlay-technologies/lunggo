@@ -355,7 +355,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #fff;
     min-height: 100%;
     padding: 12px;
-    padding-bottom: 60px; }
+    /*padding-bottom:$header-height;*/ }
   .overlay .overlay__footer {
     position: fixed;
     width: 100%;

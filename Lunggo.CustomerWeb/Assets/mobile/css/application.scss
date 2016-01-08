@@ -231,7 +231,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .overlay__title {margin:0;}
         .overlay__close {float:right;}
     }
-    .overlay__content, .overlay__body {background:#fff; min-height:100%; padding:12px; padding-bottom:$header-height;}
+    .overlay__content, .overlay__body {background:#fff; min-height:100%; padding:12px; /*padding-bottom:$header-height;*/}
     .overlay__footer {position:fixed; width:100%; bottom:0; left:0; background:#616161; padding:12px; color:#fff; height:$header-height;}
     // if active
     &.active {top:0;
