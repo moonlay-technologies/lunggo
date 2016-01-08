@@ -136,7 +136,7 @@
         </div>
     </section><!-- .flight-sort -->
 
-    <section class="flight-list" id="departure-flight" ng-if="PageConfig.ActiveSection == 'departure'">
+    <section class="flight-list" id="departure-flight" ng-show="PageConfig.ActiveSection == 'departure'">
 
         <div class="flight" ng-repeat="Flight in FlightConfig[0].FlightList" id="flight-{{Flight.IndexNo}}">
             <div class="flight-header">
@@ -172,7 +172,7 @@
 
     </section><!-- .flight-list#departure-flight -->
     
-    <section class="flight-list" id="return-flight" ng-if="PageConfig.ActiveSection == 'return'">
+    <section class="flight-list" id="return-flight" ng-show="PageConfig.ActiveSection == 'return'">
     
         <div class="flight-selection">
             <div class="flight-info">
