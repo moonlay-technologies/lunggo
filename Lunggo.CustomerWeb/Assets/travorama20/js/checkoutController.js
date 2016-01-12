@@ -97,6 +97,79 @@ app.controller('checkoutController', [
             checked: false,
             rsvNo: '',
             isSuccess: false,
+            ccChecked: false,
+            checkCreditCard: function() {
+                if ($scope.paymentMethod == 'CreditCard') {
+
+                    Veritrans.url = "https://api.sandbox.veritrans.co.id/v2/token";
+                    Veritrans.client_key = "VT-client-J8i9AzRyIU49D_v3";
+                    var card = function () {
+                        return {
+                            'card_number': $scope.CreditCard.Number,
+                            'card_exp_month': $scope.CreditCard.Month,
+                            'card_exp_year': $scope.CreditCard.Year,
+                            'card_cvv': $scope.CreditCard.Cvv,
+
+                            // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
+                            'secure': true,
+                            'bank': 'mandiri',
+                            'gross_amount': $scope.initialPrice
+                        }
+                    };
+
+                    // run the veritrans function to check credit card
+                    Veritrans.token(card, callback);
+
+                    function callback(response) {
+                        if (response.redirect_url) {
+                            // 3Dsecure transaction. Open 3Dsecure dialog
+                            console.log('Open Dialog 3Dsecure');
+                            openDialog(response.redirect_url);
+
+                        } else if (response.status_code == '200') {
+                            // success 3d secure or success normal
+                            //close 3d secure dialog if any
+                            closeDialog();
+
+                            // store token data in input #token_id and then submit form to merchant server
+                            $("#vt-token").val(response.token_id);
+                            $scope.CreditCard.Token = response.token_id;
+
+                            $scope.book.send();
+
+                        } else {
+                            // failed request token
+                            //close 3d secure dialog if any
+                            closeDialog();
+                            $('#submit-button').removeAttr('disabled');
+                            // Show status message.
+                            $('#message').text(response.status_message);
+                            console.log(JSON.stringify(response));
+                        }
+                    }
+
+                    // Open 3DSecure dialog box
+                    function openDialog(url) {
+                        $.fancybox.open({
+                            href: url,
+                            type: 'iframe',
+                            autoSize: false,
+                            width: 400,
+                            height: 420,
+                            closeBtn: false,
+                            modal: true
+                        });
+                    }
+
+                    // Close 3DSecure dialog box
+                    function closeDialog() {
+                        $.fancybox.close();
+                    }
+
+                } else {
+                    $scope.book.send();
+                }
+            },
             send: function () {
                 $scope.book.booking = true; 
 
@@ -369,6 +442,13 @@ app.controller('checkoutController', [
             }
             return numbers;
         }
+        // **********
+        // if payment use credit card
+        // validate credit card
+        $scope.validateCreditCard = function() {
+            
+        }
+        // **********
         // generate passenger
         $scope.generatePassenger = function () {
             if (adultPassenger > 0) {

@@ -42,12 +42,19 @@
 }
 @section AdditionalCSS {
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <!-- fancybox CSS-->
+    <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
 }
 @section AdditionalJS {
     <!-- additional Angular JS-->
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
+    <!-- veritrans JS -->
+    <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
+    <!-- fancybox -->
+    <script type="text/javascript" src="/Assets/vendor/fancybox/jquery.fancybox.pack.js"></script>
+
 }
 @section PageJS{
     <script>
@@ -530,40 +537,41 @@
                                         <h3 class="no-spacing">Detail <b>Kartu Kredit</b></h3>
                                         <div class="form-group">
                                             <label class="control-label">Nomor Kartu</label>
-                                            <input type="number" value="" class="form-control" maxlength="16" ng-model="CreditCard.Card.Number" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                            <input type="number" value="" class="form-control" maxlength="16" ng-model="CreditCard.Number" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-4">
                                                     <label class="control-label">Kadaluarsa</label>
-                                                    <input type="number" value="" class="form-control" placeholder="MM" maxlength="2" ng-model="CreditCard.Card.Month" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                    <input type="number" value="" class="form-control" placeholder="MM" maxlength="2" ng-model="CreditCard.Month" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <label class="control-label">&nbsp;</label>
-                                                    <input type="number" value="" class="form-control" placeholder="YYYY" maxlength="4" ng-model="CreditCard.Card.Year" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                    <input type="number" value="" class="form-control" placeholder="YYYY" maxlength="4" ng-model="CreditCard.Year" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <label class="control-label">CVV Kartu</label>
-                                                    <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Card.Security" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                    <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Nama Pemegang Kartu</label>
-                                            <input type="text" value="" class="form-control" size="16" ng-model="CreditCard.Card.Name" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                            <input type="text" value="" class="form-control" size="16" ng-model="CreditCard.Name" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
                                         </div>
                                     </form>
-                                    {{creditCardForm.$valid}}
                                 </div><!-- .credit-card-form -->
 
                                 <div class="step-button">
                                     
-                                    <form name="finalForm" id="finalForm" ng-submit="book.send()">
+                                    <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()">
                                         
                                         <div class="hidden">
                                             <input type="text" name="Token" value="" ng-model="token" />
                                             <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
-                                            <input type="type" name="Language" value="" ng-model="language" />
+                                            <input type="text" name="Language" value="" ng-model="language" />
+                                            
+                                            <input type="text" name="CcToken" id="vt-token" value="" ng-model="CreditCard.Token" />
 
                                             <p>Buyer Info</p>
                                             <input type="text" name="Contact.Name" value="" ng-model="buyerInfo.fullname" />
@@ -600,8 +608,9 @@
 
                                         <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a></p>
                                         <a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>
+                                        @*<input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">*@
                                         <input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">
-                                        
+
                                     </form>
                                     
                                     <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
