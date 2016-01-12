@@ -115,6 +115,9 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0; }
 
+.no-spacing {
+  letter-spacing: 0; }
+
 .search-calendar {
   width: 320px;
   height: 520px;

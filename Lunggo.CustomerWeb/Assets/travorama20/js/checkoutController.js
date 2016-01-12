@@ -34,6 +34,8 @@ app.controller('checkoutController', [
             { name: 'Ms', value: 'Miss' }
         ];
 
+        $scope.CreditCard = {};
+
         $scope.currency = 'IDR';
         $scope.language = langCode;
         $scope.token = token;
