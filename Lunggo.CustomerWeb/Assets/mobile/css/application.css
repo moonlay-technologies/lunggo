@@ -364,10 +364,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #616161;
     padding: 12px;
     color: #fff;
-    height: 60px; }
+    height: 60px;
+    display: none; }
   .overlay.active {
     top: 0; }
     .overlay.active .overlay__header {
+      display: block; }
+    .overlay.active .overlay__footer {
       display: block; }
   .overlay.overlay--theme--blue .overlay__header {
     background: #1daee4; }

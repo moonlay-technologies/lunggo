@@ -31,6 +31,14 @@ hr {
 .page-loaded {
   display: block; }
 
+.hide {
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s; }
+
 img {
   max-width: 100%; }
 
