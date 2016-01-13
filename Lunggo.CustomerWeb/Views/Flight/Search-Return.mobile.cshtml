@@ -357,7 +357,7 @@
                         <h4><b>{{FlightConfig[0].FlightRequest.Trips[0].OriginAirport}}</b> to <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationAirport}}</b></h4>
                         <h5>{{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'dd MMM yyyy'}}</h5>
                     </div>
-                    <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('departure',-1); SetOverlay();">GANTI</span></a>
+                    <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('departure',-1); SetSection('departure'); SetOverlay();">GANTI</span></a>
                 </div>
 
                 <div class="flight-wrapper" ng-repeat="Segment in FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Segments track by $index">
@@ -402,7 +402,7 @@
                         <h4><b>{{FlightConfig[1].FlightRequest.Trips[0].OriginAirport}}</b> to <b>{{FlightConfig[1].FlightRequest.Trips[0].DestinationAirport}}</b></h4>
                         <h5>{{FlightConfig[1].FlightRequest.Trips[0].DepartureDate | date:'dd MMM yyyy'}}</h5>
                     </div>
-                    <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('return',-1); SetOverlay();">GANTI</span></a>
+                    <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('return',-1); SetOverlay(); SetSection('return')">GANTI</span></a>
                 </div>
 
                 <div class="flight-wrapper" ng-repeat="Segment in FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].Trips[0].Segments track by $index">

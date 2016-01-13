@@ -374,6 +374,10 @@
         validateFlight('departure', departureIndexNo);
         validateFlight('return', returnIndexNo);
 
+        // **********
+        // after departure flight and return flight validated
+
+
 
     }
 
