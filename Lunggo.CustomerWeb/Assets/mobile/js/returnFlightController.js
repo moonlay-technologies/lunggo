@@ -23,12 +23,12 @@
             Expired: false,
             Time: '',
             Start: function () {
-                var ExpiryTime = new Date($scope.PageConfig.ExpiryDate.Time);
+                var expiryTime = new Date($scope.PageConfig.ExpiryDate.Time);
                 if ($scope.PageConfig.ExpiryDate.Expired || $scope.PageConfig.ExpiryDate.Starting) return;
                 $interval(function () {
                     $scope.PageConfig.ExpiryDate.Starting = true;
-                    var NowTime = new Date();
-                    if (NowTime > ExpiryTime) {
+                    var nowTime = new Date();
+                    if (nowTime > expiryTime) {
                         $scope.PageConfig.ExpiryDate.Expired = true;
                     }
                 }, 1000);
@@ -42,6 +42,7 @@
             Name: 'departure',
             FlightList: [],
             ActiveFlight: -1,
+            DetailFlight: -1,
             FlightRequest: {
                 CabinClass: FlightSearchConfig.flightForm.cabin,
                 AdultCount: FlightSearchConfig.flightForm.passenger.adult,
@@ -66,6 +67,7 @@
             Name: 'return',
             FlightList: [],
             ActiveFlight: -1,
+            DetailFlight: -1,
             FlightRequest: {
                 CabinClass: FlightSearchConfig.flightForm.cabin,
                 AdultCount: FlightSearchConfig.flightForm.passenger.adult,
@@ -290,16 +292,24 @@
             if (flightNumber >= 0) {
                 targetScope.ActiveFlight = flightNumber;
 
-                console.log(targetScope.ActiveFlight);
-                console.log(anotherScope.ActiveFlight);
-                /*if (targetScope.ActiveFlight >= 0 && anotherScope.ActiveFlight >= 0) {
-                    $scope.SetOverlay('summary');
-                }*/
+                console.log(targetScope.Name+' : '+targetScope.ActiveFlight);
+                console.log(anotherScope.Name+ ' : '+anotherScope.ActiveFlight);
+                //if (targetScope.ActiveFlight != -1 && anotherScope.ActiveFlight != -1) {
+                //    $scope.SetOverlay('summary');
+                //}
 
             } else {
                 targetScope.ActiveFlight = -1;
             }
         }
+    }
+
+    // show flight detail
+    $scope.FlightFunctions.ShowDetail = function (targetScope, flightNumber) {
+        targetScope = targetScope == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1];
+        // set detail flight
+        targetScope.DetailFlight = flightNumber;
+        $scope.SetOverlay('flight-detail');
     }
 
     // revalidate flight
