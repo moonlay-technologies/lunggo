@@ -106,8 +106,8 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             var transactionDetails = ConstructTransactionDetails(reservation);
             var itemDetails = ConstructItemDetails(reservation);
-            reservation.Payment.Url = PaymentService.GetInstance()
-                .GetPaymentUrl(transactionDetails, itemDetails, reservation.Payment.Method);
+            var payment = PaymentService.GetInstance();
+            payment.ProcessPayment(reservation.Payment, transactionDetails, itemDetails, reservation.Payment.Method);
             return reservation;
         }
 
@@ -149,6 +149,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return new TransactionDetails
             {
                 OrderId = reservation.RsvNo,
+                OrderTime = reservation.RsvTime,
                 Amount = (long) reservation.Payment.FinalPrice
             };
         }

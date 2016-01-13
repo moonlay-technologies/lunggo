@@ -5,7 +5,7 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
-using Lunggo.ApCommon.Veritrans;
+using Lunggo.ApCommon.Payment.Wrapper.Veritrans;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
@@ -57,11 +57,24 @@ namespace Lunggo.ApCommon.Payment
             }
         }
 
-        public string GetPaymentUrl(TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
+        public void ProcessPayment(PaymentInfo paymentInfo, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
-            return method == PaymentMethod.BankTransfer 
-                ? "DIRECT"
-                : GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
+            if (method == PaymentMethod.BankTransfer)
+            {
+                paymentInfo.Url = "DIRECT";
+                paymentInfo.Status = PaymentStatus.Pending;
+            }
+            else if (method == PaymentMethod.BankTransfer)
+            {
+                paymentInfo.Url = "THIRDPARTYDIRECT";
+                var status = SubmitPayment(transactionDetails, itemDetails, method);
+                paymentInfo.Status = status;
+            }
+            else
+            {
+                paymentInfo.Url = GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
+                paymentInfo.Status = PaymentStatus.Pending;
+            }
         }
 
         public void SubmitTransferConfirmationReport(TransferConfirmationReport report, FileInfo file)
@@ -143,6 +156,12 @@ namespace Lunggo.ApCommon.Payment
                     StatusCd = TransferConfirmationReportStatusCd.Mnemonic(status)
                 });
             }
+        }
+
+        private static PaymentStatus SubmitPayment(TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
+        {
+            var status = VeritransWrapper.ProcessPayment(transactionDetails, itemDetails, method);
+            return status;
         }
 
         private static string GetThirdPartyPaymentUrl(TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)

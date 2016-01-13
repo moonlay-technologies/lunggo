@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Lunggo.ApCommon.Veritrans.Model
+namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans.Model
 {
     internal class VtWeb
     {
