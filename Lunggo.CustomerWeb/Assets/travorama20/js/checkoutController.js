@@ -542,22 +542,27 @@ app.controller('checkoutController', [
             Valid: false,
             Amount: 0,
             Check: function (creditCardNumber) {
-                if (creditCardNumber) {
-                    var firstNum = creditCardNumber.toString().charAt(0);
+                if ($scope.paymentMethod == 'CreditCard') {
+                    if (creditCardNumber) {
+                        var firstNum = creditCardNumber.toString().charAt(0);
 
-                    if (firstNum == 4) {
-                        $scope.VisaPromo.Valid = true;
-                        $scope.VisaPromo.Amount = 50000;
-                        // reset voucher
-                        $scope.voucher.amount = 0;
-                        $scope.voucher.checking = false;
-                        $scope.voucher.checked = false;
-                        $scope.voucher.confirmedCode = '';
+                        if (firstNum == 4) {
+                            $scope.VisaPromo.Valid = true;
+                            $scope.VisaPromo.Amount = 50000;
+                            // reset voucher
+                            $scope.voucher.amount = 0;
+                            $scope.voucher.checking = false;
+                            $scope.voucher.checked = false;
+                            $scope.voucher.confirmedCode = '';
+                        } else {
+                            $scope.VisaPromo.Valid = false;
+                            $scope.VisaPromo.Amount = 0;
+                        }
+
                     } else {
                         $scope.VisaPromo.Valid = false;
                         $scope.VisaPromo.Amount = 0;
                     }
-
                 } else {
                     $scope.VisaPromo.Valid = false;
                     $scope.VisaPromo.Amount = 0;
