@@ -543,16 +543,44 @@
                                             <div class="row">
                                                 <div class="col-sm-4">
                                                     <label class="control-label">Kadaluarsa</label>
-                                                    <input type="number" value="" class="form-control" placeholder="MM" maxlength="2" ng-model="CreditCard.Month" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                    <!-- <input type="number" value="" class="form-control" placeholder="MM" maxlength="2" ng-model="CreditCard.Month" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
+                                                    <select class="form-control" ng-model="CreditCard.Month">
+                                                        <option value="01" selected="selected">01 - Januari</option>
+                                                        <option value="02">02 - Februari</option>
+                                                        <option value="03">03 - Maret</option>
+                                                        <option value="04">04 - April</option>
+                                                        <option value="05">05 - Mei</option>
+                                                        <option value="06">06 - Juni</option>
+                                                        <option value="07">07 - Juli</option>
+                                                        <option value="08">08 - Agustus</option>
+                                                        <option value="09">09 - September</option>
+                                                        <option value="10">10 - Oktober</option>
+                                                        <option value="11">11 - November</option>
+                                                        <option value="12">12 - Desember</option>
+                                                    </select>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <label class="control-label">&nbsp;</label>
-                                                    <input type="number" value="" class="form-control" placeholder="YYYY" maxlength="4" ng-model="CreditCard.Year" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                    <!-- <input type="number" value="" class="form-control" placeholder="YYYY" maxlength="4" ng-model="CreditCard.Year" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
+                                                    <select class="form-control" ng-model="CreditCard.Year">
+                                                        <option value="2016" selected="selected">2016</option>
+                                                        <option value="2017">2017</option>
+                                                        <option value="2018">2018</option>
+                                                        <option value="2019">2019</option>
+                                                        <option value="2020">2020</option>
+                                                        <option value="2021">2021</option>
+                                                        <option value="2022">2022</option>
+                                                        <option value="2023">2023</option>
+                                                        <option value="2024">2024</option>
+                                                        <option value="2025">2025</option>
+                                                        <option value="2026">2026</option>
+                                                    </select>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <label class="control-label">CVV Kartu</label>
                                                     <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
                                                 </div>
+                                                {{CreditCard}}
                                             </div>
                                         </div>
                                         <div class="form-group">

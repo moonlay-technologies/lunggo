@@ -34,7 +34,13 @@ app.controller('checkoutController', [
             { name: 'Ms', value: 'Miss' }
         ];
 
-        $scope.CreditCard = {};
+        $scope.CreditCard = {
+            Name: '',
+            Month: '01',
+            Year: 2016,
+            Cvv: '',
+            Number: ''
+        };
 
         $scope.currency = 'IDR';
         $scope.language = langCode;
