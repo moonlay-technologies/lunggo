@@ -165,7 +165,7 @@
                 </div>
             </div>
             <div class="flight-footer">
-                <a ng-click="FlightFunctions.SetActiveFlight('departure',Flight.IndexNo); SetOverlay('flight-detail');" class="flight-detail-button">Lihat Detail &gt;</a>
+                <a ng-click="FlightFunctions.ShowDetail('departure',Flight.IndexNo);" class="flight-detail-button">Lihat Detail &gt;</a>
                 <a ng-click="FlightFunctions.SetActiveFlight('departure',Flight.IndexNo); SetPopup('roundtrip');" class="btn btn-yellow pull-right flight-order">PESAN</a>
             </div>
         </div>
@@ -208,7 +208,7 @@
                 </div>
             </div>
             <div class="flight-footer">
-                <a ng-click="FlightFunctions.SetActiveFlight('return',Flight.IndexNo); SetOverlay('flight-detail');" class="flight-detail-button">Lihat Detail &gt;</a>
+                <a ng-click="FlightFunctions.ShowDetail('return',Flight.IndexNo);" class="flight-detail-button">Lihat Detail &gt;</a>
                 <a ng-click="FlightFunctions.SetActiveFlight('return',Flight.IndexNo);" class="btn btn-yellow pull-right flight-order">PESAN</a>
             </div>
         </div>
@@ -234,7 +234,7 @@
                     <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('departure',-1); SetOverlay();">GANTI</span></a>
                 </div>
 
-                <div class="flight-wrapper" ng-repeat="Segment in FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Segments track by $index">
+                <div class="flight-wrapper" ng-repeat="Segment in FlightConfig[0].FlightList[ FlightConfig[0].DetailFlight ].Trips[0].Segments track by $index">
                     <div class="transit" ng-if="$index > 0">
                         <span>Transit di {{Segment.DepartureCity}} selama <b>{{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Transits[$index-1].Duration}}</b></span>
                     </div>
@@ -279,7 +279,7 @@
                     <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('return',-1); SetOverlay();">GANTI</span></a>
                 </div>
 
-                <div class="flight-wrapper" ng-repeat="Segment in FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].Trips[0].Segments track by $index">
+                <div class="flight-wrapper" ng-repeat="Segment in FlightConfig[1].FlightList[ FlightConfig[1].DetailFlight ].Trips[0].Segments track by $index">
                     <div class="transit" ng-if="$index > 0">
                         <span>Transit di {{Segment.DepartureCity}} selama <b>{{FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].Trips[0].Transits[$index-1].Duration}}</b></span>
                     </div>
@@ -321,10 +321,10 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <h5>Harga Total:</h5>
-                        <h4><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].TotalFare | number}}</b></h4>
+                        <h4><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].DetailFlight ].TotalFare | number}}</b></h4>
                     </div>
                     <div class="col-xs-6">
-                        <a ng-click="SetSection('return'); SetPopup('roundtrip'); SetOverlay();" class="btn btn-yellow btn-block">PESAN</a>
+                        <a ng-click="FlightFunctions.SetActiveFlight('departure',FlightConfig[0].DetailFlight); SetSection('return'); SetPopup('roundtrip'); SetOverlay();" class="btn btn-yellow btn-block">PESAN</a>
                     </div>
                 </div>
             </div>
@@ -332,10 +332,10 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <h5>Harga Total:</h5>
-                        <h4><b>Rp {{FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].TotalFare | number}}</b></h4>
+                        <h4><b>Rp {{FlightConfig[1].FlightList[ FlightConfig[1].DetailFlight ].TotalFare | number}}</b></h4>
                     </div>
                     <div class="col-xs-6">
-                        <a ng-click="FlightFunctions.Revalidate(FlightConfig[0].ActiveFlight)" class="btn btn-yellow btn-block">PESAN</a>
+                        <a ng-click="FlightFunctions.SetActiveFlight('return',FlightConfig[1].DetailFlight)" class="btn btn-yellow btn-block">PESAN</a>
                     </div>
                 </div>
             </div>
@@ -447,10 +447,10 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <h5>Harga Total:</h5>
-                        <h4><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].TotalFare | number}}</b></h4>
+                        <h4><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].TotalFare + FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].TotalFare | number}}</b></h4>
                     </div>
                     <div class="col-xs-6">
-                        <a ng-click="FlightFunctions.Revalidate(FlightConfig[0].ActiveFlight)" class="btn btn-yellow btn-block" ng-disabled="PageConfig.Validating">{{PageConfig.Validating ? 'MEMESAN' : 'PESAN'}}</a>
+                        <a ng-click="FlightFunctions.Revalidate(FlightConfig[0].ActiveFlight, FlightConfig[1].ActiveFlight)" class="btn btn-yellow btn-block" ng-disabled="PageConfig.Validating">{{PageConfig.Validating ? 'MEMESAN' : 'PESAN'}}</a>
                     </div>
                 </div>
             </div>
