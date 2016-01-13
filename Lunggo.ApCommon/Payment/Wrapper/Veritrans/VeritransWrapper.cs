@@ -42,7 +42,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
         {
             if (!_isInitialized)
             {
-                _endPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "chargeEndPoint");
+                _endPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint");
                 _serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey") + ":";
                 _rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
                 _isInitialized = true;
