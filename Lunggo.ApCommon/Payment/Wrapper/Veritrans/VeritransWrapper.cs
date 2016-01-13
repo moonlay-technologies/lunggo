@@ -49,13 +49,13 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             }
         }
 
-        internal PaymentStatus ProcessPayment(TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
+        internal PaymentStatus ProcessPayment(Data data, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             switch (method)
             {
                 case PaymentMethod.CreditCard:
                     var authorizationKey = ProcessAuthorizationKey(_serverKey);
-                    var request = CreateVtDirectRequest(authorizationKey, transactionDetail, itemDetails, method);
+                    var request = CreateVtDirectRequest(authorizationKey, data, transactionDetail, itemDetails, method);
                     var response = SubmitRequest(request);
                     var content = GetResponseContent(response);
                     if (content != null)
@@ -85,14 +85,14 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             return hashedAuthorizationKey;
         }
 
-        private static WebRequest CreateVtDirectRequest(string authorizationKey, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static WebRequest CreateVtDirectRequest(string authorizationKey, Data data, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             var request = (HttpWebRequest)WebRequest.Create(_endPoint);
             request.Method = "POST";
             request.Headers.Add("Authorization", "Basic " + authorizationKey);
             request.ContentType = "application/json";
             request.Accept = "application/json";
-            ProcessVtDirectRequestParams(request, transactionDetail, itemDetails, method);
+            ProcessVtDirectRequestParams(request, data, transactionDetail, itemDetails, method);
             return request;
         }
 
@@ -107,7 +107,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             return request;
         }
 
-        private static void ProcessVtDirectRequestParams(WebRequest request, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static void ProcessVtDirectRequestParams(WebRequest request, Data data, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout"));
             var requestParams = new VeritransRequest
@@ -126,7 +126,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             {
                 requestParams.CreditCard = new CreditCard
                 {
-                    TokenId =
+                    TokenId = data.Data0,
+                    Bank = "mandiri"
                 };
             }
             var jsonRequestParams = JsonConvert.SerializeObject(requestParams);

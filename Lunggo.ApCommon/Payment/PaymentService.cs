@@ -67,7 +67,7 @@ namespace Lunggo.ApCommon.Payment
             else if (method == PaymentMethod.BankTransfer)
             {
                 paymentInfo.Url = "THIRDPARTYDIRECT";
-                var status = SubmitPayment(transactionDetails, itemDetails, method);
+                var status = SubmitPayment(paymentInfo.Data, transactionDetails, itemDetails, method);
                 paymentInfo.Status = status;
             }
             else
@@ -158,9 +158,9 @@ namespace Lunggo.ApCommon.Payment
             }
         }
 
-        private static PaymentStatus SubmitPayment(TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static PaymentStatus SubmitPayment(Data data, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
-            var status = VeritransWrapper.ProcessPayment(transactionDetails, itemDetails, method);
+            var status = VeritransWrapper.ProcessPayment(data, transactionDetails, itemDetails, method);
             return status;
         }
 
