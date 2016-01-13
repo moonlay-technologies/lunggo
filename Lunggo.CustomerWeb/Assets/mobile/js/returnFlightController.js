@@ -288,15 +288,12 @@
     $scope.FlightFunctions.SetActiveFlight = function (targetScope, flightNumber) {
         if (targetScope) {
             targetScope = targetScope == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1];
-            var anotherScope = targetScope == 'departure' ? $scope.FlightConfig[1] : $scope.FlightConfig[0];
             if (flightNumber >= 0) {
                 targetScope.ActiveFlight = flightNumber;
 
-                console.log(targetScope.Name+' : '+targetScope.ActiveFlight);
-                console.log(anotherScope.Name+ ' : '+anotherScope.ActiveFlight);
-                //if (targetScope.ActiveFlight != -1 && anotherScope.ActiveFlight != -1) {
-                //    $scope.SetOverlay('summary');
-                //}
+                if ($scope.FlightConfig.ActiveFlight != -1 && $scope.FlightConfig[1].ActiveFlight != -1) {
+                    $scope.SetOverlay('summary');
+                }
 
             } else {
                 targetScope.ActiveFlight = -1;
