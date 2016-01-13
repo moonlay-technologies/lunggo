@@ -31,6 +31,14 @@ hr {
 .page-loaded {
   display: block; }
 
+.hide {
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s; }
+
 img {
   max-width: 100%; }
 
@@ -114,6 +122,9 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0; }
+
+.no-spacing {
+  letter-spacing: 0; }
 
 .search-calendar {
   width: 320px;
