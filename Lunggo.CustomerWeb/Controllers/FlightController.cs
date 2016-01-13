@@ -122,6 +122,8 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             if (paymentUrl != "DIRECT")
                 return Redirect(paymentUrl);
+            else if (paymentUrl != "VDIRECT")
+                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
             else
                 return RedirectToAction("Confirmation", "Flight", new { rsvNo });
         }
