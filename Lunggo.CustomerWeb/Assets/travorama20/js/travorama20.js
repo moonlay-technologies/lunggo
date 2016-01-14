@@ -1044,7 +1044,15 @@ function flightFormSearchFunctions() {
         // set default date for departure flight
         var departureDate = '';
         if (Cookies.get('departure')) {
-            departureDate = new Date(Cookies.get('departure'));
+            var cookieDateDeparture = new Date(Cookies.get('departure'));
+            var nowDate = new Date();
+            if ( cookieDateDeparture > nowDate ) {
+                departureDate = new Date(Cookies.get('departure'));
+            } else {
+                departureDate = new Date();
+                departureDate = departureDate.setDate(departureDate.getDate() + 1);
+                departureDate = new Date(departureDate);
+            }
         } else {
             departureDate = new Date();
             departureDate = departureDate.setDate(departureDate.getDate() + 1);
@@ -1057,7 +1065,16 @@ function flightFormSearchFunctions() {
         // set default date for return flight
         var returnDate = '';
         if (Cookies.get('return')) {
-            returnDate = new Date(Cookies.get('return'));
+            var cookieDateReturn = new Date(Cookies.get('return'));
+            var tomorrowDate = new Date();
+            tomorrowDate.setDate( tomorrowDate.getDate() + 1 );
+            if (cookieDateReturn > nowDate) {
+                returnDate = new Date(Cookies.get('return'));
+            } else {
+                returnDate = new Date();
+                returnDate = returnDate.setDate(returnDate.getDate() + 2);
+                returnDate = new Date(returnDate);
+            }
         } else {
             returnDate = new Date();
             returnDate = returnDate.setDate(returnDate.getDate() + 2);

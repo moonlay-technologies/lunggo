@@ -107,8 +107,8 @@
 }
 
 <div class="page-loading" ng-class="{'page-loaded':PageConfig.Loaded}">
-    <form class="hidden push-token" id="pushToken" action="/id/Flight/Select" method="post">
-        <input type="text" name="Token" id="fareToken" value="" />
+    <form class="hidden push-token pushToken" id="pushToken" action="/id/Flight/Select" method="post">
+        <input type="text" name="Token" id="fareToken" class="fareToken" value="" />
     </form>
 
     <section class="flight-summary">
@@ -356,18 +356,23 @@
                     <div class="flight-info">
                         <h4><b>{{FlightConfig[0].FlightRequest.Trips[0].OriginAirport}}</b> to <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationAirport}}</b></h4>
                         <h5>{{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'dd MMM yyyy'}}</h5>
-                    </div>
-                    <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('departure',-1); SetOverlay();">GANTI</span></a>
-                </div>
+                    </div><!-- .flight-info -->
+                    <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('departure',-1); SetSection('departure'); SetOverlay();">GANTI</span></a>
+                </div><!-- .flight-title -->
+                
+                <div class="flight-notice" ng-show="FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable">
+                    <div class="fare-changed" ng-show="FlightConfig[0].FlightNewPrice">Harga berubah menjadi <b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].TotalFare | number}}</b></div>
+                    <div class="fare-unavailable" ng-hide="FlightConfig[0].FlightNewPrice">Penerbangan tidak tersedia.</div>
+                </div><!-- .flight-notice -->
 
                 <div class="flight-wrapper" ng-repeat="Segment in FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Segments track by $index">
                     <div class="transit" ng-if="$index > 0">
                         <span>Transit di {{Segment.DepartureCity}} selama <b>{{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Transits[$index-1].Duration}}</b></span>
-                    </div>
+                    </div><!-- .transit -->
                     <div class="flight">
                         <div class="flight__number">
                             <span>{{$index + 1}}</span>
-                        </div>
+                        </div><!-- .flight__number -->
                         <div class="flight__content">
                             <div class="flight__summary">
                                 <img ng-src="{{Segment.AirlineLogoUrl}}" alt="{{Segment.AirlineName}}" class="flight__image" />
@@ -375,7 +380,7 @@
                                     <h4><b>{{Segment.AirlineName}}</b></h4>
                                     <h5>{{Segment.AirlineCode}}-{{Segment.FlightNumber}}</h5>
                                 </div>
-                            </div>
+                            </div><!-- .flight__summary -->
                             <div class="flight__detail">
                                 <div class="flight__departure">
                                     <h5>{{Segment.DepartureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
@@ -389,11 +394,11 @@
                                     <h4><b>{{Segment.ArrivalTime | date : 'HH:mm' : 'UTC'}}</b></h4>
                                     <h5><b>({{Segment.ArrivalAirport}}) {{Segment.ArrivalCity}}</b></h5>
                                     <h5>{{Segment.ArrivalAirportName}}</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                </div><!-- .flight__arrival -->
+                            </div><!-- .flight__detail -->
+                        </div><!-- .flight__content -->
+                    </div><!-- .flight -->
+                </div><!-- .flight-wrapper -->
             </div>
 
             <div>
@@ -401,18 +406,23 @@
                     <div class="flight-info">
                         <h4><b>{{FlightConfig[1].FlightRequest.Trips[0].OriginAirport}}</b> to <b>{{FlightConfig[1].FlightRequest.Trips[0].DestinationAirport}}</b></h4>
                         <h5>{{FlightConfig[1].FlightRequest.Trips[0].DepartureDate | date:'dd MMM yyyy'}}</h5>
-                    </div>
-                    <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('return',-1); SetOverlay();">GANTI</span></a>
-                </div>
+                    </div><!-- .flight-info -->
+                    <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('return',-1); SetOverlay(); SetSection('return')">GANTI</span></a>
+                </div><!-- .flight-title -->
+                
+                <div class="flight-notice" ng-show="FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable">
+                    <div class="fare-changed" ng-show="FlightConfig[1].FlightNewPrice">Harga berubah menjadi <b>Rp {{FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].TotalFare | number}}</b></div>
+                    <div class="fare-unavailable" ng-hide="FlightConfig[1].FlightNewPrice">Penerbangan tidak tersedia.</div>
+                </div><!-- .flight-notice -->
 
                 <div class="flight-wrapper" ng-repeat="Segment in FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].Trips[0].Segments track by $index">
                     <div class="transit" ng-if="$index > 0">
                         <span>Transit di {{Segment.DepartureCity}} selama <b>{{FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].Trips[0].Transits[$index-1].Duration}}</b></span>
-                    </div>
+                    </div><!-- .transit -->
                     <div class="flight">
                         <div class="flight__number">
                             <span>{{$index + 1}}</span>
-                        </div>
+                        </div><!-- .flight__number-->
                         <div class="flight__content">
                             <div class="flight__summary">
                                 <img ng-src="{{Segment.AirlineLogoUrl}}" alt="{{Segment.AirlineName}}" class="flight__image" />
@@ -420,7 +430,7 @@
                                     <h4><b>{{Segment.AirlineName}}</b></h4>
                                     <h5>{{Segment.AirlineCode}}-{{Segment.FlightNumber}}</h5>
                                 </div>
-                            </div>
+                            </div><!-- .flight__summary -->
                             <div class="flight__detail">
                                 <div class="flight__departure">
                                     <h5>{{Segment.DepartureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
@@ -435,10 +445,10 @@
                                     <h5><b>({{Segment.ArrivalAirport}}) {{Segment.ArrivalCity}}</b></h5>
                                     <h5>{{Segment.ArrivalAirportName}}</h5>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            </div><!-- .flight__detail-->
+                        </div><!-- .flight-content -->
+                    </div><!-- .flight -->
+                </div><!-- .flight-wrapper -->
             </div>
 
         </section><!-- .overlay__content -->
@@ -447,10 +457,11 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <h5>Harga Total:</h5>
-                        <h4><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].TotalFare + FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].TotalFare | number}}</b></h4>
+                        <h4 ng-hide="( (FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable && !FlightConfig[0].FlightNewFare) || (FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable && !FlightConfig[1].FlightNewFare) )"><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].TotalFare + FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].TotalFare | number}}</b></h4>
+                        <h4 ng-show="( (FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable && !FlightConfig[0].FlightNewFare) || (FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable && !FlightConfig[1].FlightNewFare) )"><b>Unavailable</b></h4>
                     </div>
                     <div class="col-xs-6">
-                        <a ng-click="FlightFunctions.Revalidate(FlightConfig[0].ActiveFlight, FlightConfig[1].ActiveFlight)" class="btn btn-yellow btn-block" ng-disabled="PageConfig.Validating">{{PageConfig.Validating ? 'MEMESAN' : 'PESAN'}}</a>
+                        <button ng-click="FlightFunctions.Revalidate(FlightConfig[0].ActiveFlight, FlightConfig[1].ActiveFlight)" class="btn btn-yellow btn-block" ng-disabled="PageConfig.Validating || ( ( FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable && !FlightConfig[0].FlightNewFare) || ( FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable && !FlightConfig[1].FlightNewFare) )">{{PageConfig.Validating ? 'MEMESAN' : 'PESAN'}}</button>
                     </div>
                 </div>
             </div>
