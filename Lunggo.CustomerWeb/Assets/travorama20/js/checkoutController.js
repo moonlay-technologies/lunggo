@@ -545,8 +545,13 @@ app.controller('checkoutController', [
                 if ($scope.paymentMethod == 'CreditCard') {
                     if (creditCardNumber) {
                         var firstNum = creditCardNumber.toString().charAt(0);
+                        var minOrder = 200000;
+                        var nowDate = new Date();
+                        var utcDate = nowDate.getTime() + (nowDate.getTimezoneOffset() * 60000);
+                        var jakartaDate = new Date(utcDate + (3600000 * 7));;
+                        var jakartaDay = jakartaDate.getDay();
 
-                        if (firstNum == 4) {
+                        if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 4) {
                             $scope.VisaPromo.Valid = true;
                             $scope.VisaPromo.Amount = 50000;
                             // reset voucher

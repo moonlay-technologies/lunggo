@@ -396,8 +396,8 @@
                 console.log('Flights available. Will be redirected shortly');
                 var fareToken = $scope.FlightConfig[0].Token + '.' + $scope.FlightConfig[1].Token;
                 console.log('Token : ' + fareToken);
-                // $('.pushToken .fareToken').val(fareToken);
-                // $('.pushToken').submit();
+                $('.pushToken .fareToken').val(fareToken);
+                $('.pushToken').submit();
             } else {
                 $scope.PageConfig.Validating = false;
             }
