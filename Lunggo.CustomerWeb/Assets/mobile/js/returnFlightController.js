@@ -198,6 +198,9 @@
                 // if granted request is not null
                 if (returnData.GrantedRequests.length) {
                     console.log('Granted request  : ' + returnData.GrantedRequests);
+                    targetScope.FlightRequest.SecureCode = returnData.OriginalRequest.SecureCode;
+                    targetScope.SecureCode = returnData.OriginalRequest.SecureCode;
+
                     for (var i = 0; i < returnData.GrantedRequests.length; i++) {
                         // add to completed
                         if (targetScope.FlightRequest.Completed.indexOf(returnData.GrantedRequests[i] < 0)) {
@@ -315,59 +318,67 @@
         $scope.PageConfig.Validating = true;
         console.log('Validating flight no : ' + departureIndexNo + ' & ' + returnIndexNo);
 
-        var flightValidated = [false,false];
-
         // **********
         // validate flight function
-        var validateFlight = function(targetFlight, indexNo) {
-            targetFlight = targetFlight == 'departure' ? flightValidated[0] : flightValidated[1];
-            var secureCode = targetFlight == 'departure' ? $scope.FlightConfig[0].FlightRequest.SecureCode : $scope.FlightConfig[1].FlightRequest.SecureCode;
-            var targetScope = targetFlight == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1];
+        var validateFlight = function (targetFlight, indexNo) {
+            var anotherFlight = targetFlight == 'departure' ? $scope.FlightConfig[1] : $scope.FlightConfig[0];
+            targetFlight = targetFlight == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1];
+            var secureCode = targetFlight.SecureCode;
+
+            targetFlight.FlightValidating = true;
+            targetFlight.FlightValidated = false;
 
             $http.get(RevalidateConfig.Url, {
                 params: {
-                    SearchId: RevalidateConfig.SearchId,
-                    ItinIndex: indexNo,
+                    SearchId: targetFlight.FlightRequest.SearchId,
+                    ItinIndex: targetFlight.FlightList[indexNo].RegisterNumber,
                     SecureCode: secureCode
                 }
             }).success(function (returnData) {
-                RevalidateConfig.Validated = true;
-                console.log(indexNo);
-                if (returnData.IsValid == true) {
-                    console.log('departure flight available');
-                    RevalidateConfig.Available = true;
-                    RevalidateConfig.Token = returnData.Token;
 
-                    $('.push-token input').val(RevalidateConfig.Token);
-                    $('.push-token').submit();
+                targetFlight.FlightValidating = false;
+                targetFlight.FlightValidated = true;
+
+                if (returnData.IsValid == true) {
+                    targetFlight.FlightAvailable = true;
+                    targetFlight.Token = returnData.Token;
+                    console.log(targetFlight.Name + ' flight available.');
+
+                    if (anotherFlight.FlightValidated) {
+                        afterValidate();
+                    }
 
                 } else if (returnData.IsValid == false) {
-                    $scope.FlightConfig[0].ActiveFlightAvailable = false;
+                    targetFlight.FlightAvailable = false;
 
                     if (returnData.IsOtherFareAvailable == true) {
-                        console.log('departure flight has new price');
-                        $scope.FlightConfig[0].ActiveFlightNewPrice = returnData.NewFare;
-                        RevalidateConfig.NewFare = true;
-                        RevalidateConfig.Token = returnData.Token;
-                        // update price
-                        $scope.FlightConfig[0].FlightList[indexNo].TotalFare = returnData.NewFare;
-                        $('.push-token input').val(RevalidateConfig.Token);
+                        targetFlight.FlightNewPrice = true;
+                        targetFlight.FlightList[indexNo].TotalFare = returnData.NewFare;
+                        targetFlight.Token = returnData.Token;
+                        console.log(targetFlight.Name+' flight has new price');
+
+                        if (anotherFlight.FlightValidated) {
+                            afterValidate();
+                        }
+
                     } else if (returnData.IsOtherFareAvailable == false) {
-                        console.log('departure flight is gone');
-                        $scope.FlightConfig[0].ActiveFlightNewPrice = -1;
-                        RevalidateConfig.NewFare = false;
-                        $scope.FlightConfig[0].FlightList[indexNo].Available = false;
+                        targetFlight.FlightNewPrice = false;
+                        targetFlight.FlightList[indexNo].Available = false;
+                        console.log(targetFlight.Name+' flight is gone');
+
+                        if (anotherFlight.FlightValidated) {
+                            afterValidate();
+                        }
+
                     }
                 }
             }).error(function (returnData) {
-                $scope.PageConfig.Validating = false;
                 console.log('ERROR Validating Flight');
                 console.log(returnData);
                 console.log('--------------------');
             });
 
         }
-        // after validate function
 
         // **********
         // start validate
@@ -376,7 +387,22 @@
 
         // **********
         // after departure flight and return flight validated
+        var afterValidate = function () {
+            console.log('Flights validated');
+            $scope.PageConfig.Validated = true;
 
+            // if both flight available
+            if ($scope.FlightConfig[0].FlightAvailable && $scope.FlightConfig[1].FlightAvailable) {
+                console.log('Flights available. Will be redirected shortly');
+                var fareToken = $scope.FlightConfig[0].Token + '.' + $scope.FlightConfig[1].Token;
+                console.log('Token : ' + fareToken);
+                // $('.pushToken .fareToken').val(fareToken);
+                // $('.pushToken').submit();
+            } else {
+                $scope.PageConfig.Validating = false;
+            }
+
+        }
 
 
     }
