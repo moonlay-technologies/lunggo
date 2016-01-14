@@ -550,8 +550,9 @@ app.controller('checkoutController', [
                         var utcDate = nowDate.getTime() + (nowDate.getTimezoneOffset() * 60000);
                         var jakartaDate = new Date(utcDate + (3600000 * 7));;
                         var jakartaDay = jakartaDate.getDay();
+                        var endOfCampaign = new Date('31 March 2016');
 
-                        if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 4) {
+                        if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 3 && jakartaDate < endOfCampaign) {
                             $scope.VisaPromo.Valid = true;
                             $scope.VisaPromo.Amount = 50000;
                             // reset voucher
