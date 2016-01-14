@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -117,7 +118,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                 ItemDetail = itemDetails,
                 PaymentExpiry = new PaymentExpiry
                 {
-                    OrderTime = transactionDetail.OrderTime.ToString("yyyy-MM-dd HH:mm:ss Z"),
+                    OrderTime = transactionDetail.OrderTime.ToString("yyyy-MM-dd HH:mm:ss' +0000'", CultureInfo.InvariantCulture),
                     Duration = timeout,
                     Unit = "minute"
                 }
@@ -153,7 +154,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                 ItemDetail = itemDetails,
                 PaymentExpiry = new PaymentExpiry
                 {
-                    OrderTime = transactionDetail.OrderTime.ToString("yyyy-MM-dd HH:mm:ss Z"),
+                    OrderTime = transactionDetail.OrderTime.ToString("yyyy-MM-dd HH:mm:ss' +0000'", CultureInfo.InvariantCulture),
                     Duration = timeout,
                     Unit = "minute"
                 },

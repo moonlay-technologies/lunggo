@@ -120,12 +120,15 @@ namespace Lunggo.CustomerWeb.Controllers
                 TempData["FlightCheckoutOrBookingError"] = true;
                 return RedirectToAction("Checkout");
             }
-            if (paymentUrl != "DIRECT")
-                return Redirect(paymentUrl);
-            else if (paymentUrl != "VDIRECT")
-                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
-            else
+            if (paymentUrl == "DIRECT")
                 return RedirectToAction("Confirmation", "Flight", new { rsvNo });
+            else if (paymentUrl == "THIRDPARTYDIRECT")
+            {
+                TempData["AllowThisThankyouPage"] = rsvNo;
+                return RedirectToAction("Thankyou", "Flight", new {rsvNo});
+            }
+            else
+                return Redirect(paymentUrl);
         }
 
         public ActionResult Thankyou(string rsvNo)

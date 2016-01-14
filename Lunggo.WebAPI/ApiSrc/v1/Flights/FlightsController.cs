@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.Cors;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Logic;
@@ -79,6 +81,31 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [Route("api/v1/flights/book")]
         public FlightBookApiResponse BookFlight(HttpRequestMessage httpRequest, FlightBookApiRequest request)
         {
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            var now = DateTime.UtcNow.AddHours(7);
+            if (now.DayOfWeek == DayOfWeek.Thursday && now.Date >= new DateTime(2016, 1, 2) &&
+                now.Date <= new DateTime(2016, 3, 31) && request.Payment.Method == PaymentMethod.CreditCard &&
+                request.Payment.Data != null && request.Payment.Data.Data0 != null &&
+                request.Payment.Data.Data0.StartsWith("4"))
+                request.DiscountCode = "VWWVWW";
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
+            // HARDCODE-AN
             var apiResponse = FlightLogic.BookFlight(request);
             return apiResponse;
         }
