@@ -125,7 +125,7 @@
         <a ng-click="SetOverlay('flight-form')" class="summary-right"><span>GANTI</span></a>
     </section><!-- .flight-summary -->
 
-    <div class="flight-loading">
+    <div class="flight-loading" ng-hide="( (FlightConfig[0].FlightRequest.Progress + FlightConfig[1].FlightRequest.Progress) / 2 ) == 100">
         <div class="flight-progress" style="width:{{(FlightConfig[0].FlightRequest.Progress + FlightConfig[1].FlightRequest.Progress) / 2}}%;"></div>
     </div><!-- .flight-loading -->
 
