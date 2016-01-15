@@ -1,4 +1,4 @@
-﻿app.controller('ReturnFlightController', ['$http', '$scope', '$interval', function($http, $scope, $interval) {
+﻿app.controller('ReturnFlightController', ['$http', '$scope',  '$rootScope','$interval', function($http, $scope, $rootScope, $interval) {
 
     // **********
     // on document ready
@@ -10,32 +10,29 @@
 
     // **********
     // variables
-    $scope.PageConfig = {
-        Loaded: true,
-        BodyNoScroll: false,
-        ActiveSection: 'departure',
-        ActiveOverlay: '',
-        Busy: false,
-        Loading: 0,
-        Validating: false,
-        FlightList: [],
-        ExpiryDate: {
-            Expired: false,
-            Time: '',
-            Start: function () {
-                var expiryTime = new Date($scope.PageConfig.ExpiryDate.Time);
-                if ($scope.PageConfig.ExpiryDate.Expired || $scope.PageConfig.ExpiryDate.Starting) return;
-                $interval(function () {
-                    $scope.PageConfig.ExpiryDate.Starting = true;
-                    var nowTime = new Date();
-                    if (nowTime > expiryTime) {
-                        $scope.PageConfig.ExpiryDate.Expired = true;
-                    }
-                }, 1000);
-            },
-            Starting: false
-        }
-    };
+    $scope.PageConfig = $rootScope;
+    console.log($scope.PageConfig);
+    $scope.PageConfig.Loaded = true;
+    $scope.PageConfig.ActiveSection = 'departure';
+    $scope.PageConfig.ActiveOverlay = '';
+    $scope.PageConfig.Loading = 0;
+    $scope.PageConfig.Validating = false;
+    $scope.PageConfig.ExpiryDate = {
+        Expired: false,
+        Time: '',
+        Start: function () {
+            var expiryTime = new Date($scope.PageConfig.ExpiryDate.Time);
+            if ($scope.PageConfig.ExpiryDate.Expired || $scope.PageConfig.ExpiryDate.Starting) return;
+            $interval(function () {
+                $scope.PageConfig.ExpiryDate.Starting = true;
+                var nowTime = new Date();
+                if (nowTime > expiryTime) {
+                    $scope.PageConfig.ExpiryDate.Expired = true;
+                }
+            }, 1000);
+        },
+        Starting: false
+    }
 
     $scope.FlightConfig = [
         {
@@ -59,8 +56,25 @@
             },
             FlightFilter: {},
             FlightSort: {
-                label: '',
-                value: ''
+                Label: 'price',
+                Value: 'TotalFare',
+                Invert: false,
+                Set: function(sortBy, invert) {
+                    $scope.FlightConfig[0].FlightSort.Label = sortBy;
+                    $scope.FlightConfig[0].FlightSort.Invert = invert;
+                    switch (sortBy) {
+                        case 'price':
+                            $scope.FlightConfig[0].FlightSort.Value = 'TotalFare';
+                            break;
+                        case 'duration':
+                            $scope.FlightConfig[0].FlightSort.Value = 'Trips[0].TotalDuration';
+                            break;
+                        case 'airline':
+                            $scope.FlightConfig[0].FlightSort.Value = 'Trips[0].Airlines[0].Name';
+                            break;
+                    }
+                    $scope.SetOverlay('');
+                }
             }
         },
         {
@@ -84,8 +98,25 @@
             },
             FlightFilter: {},
             FlightSort: {
-                label: '',
-                value: ''
+                Label: 'price',
+                Value: 'TotalFare',
+                Invert: false,
+                Set: function (sortBy, invert) {
+                    $scope.FlightConfig[1].FlightSort.Label = sortBy;
+                    $scope.FlightConfig[1].FlightSort.Invert = invert;
+                    switch (sortBy) {
+                        case 'price':
+                            $scope.FlightConfig[1].FlightSort.Value = 'TotalFare';
+                            break;
+                        case 'duration':
+                            $scope.FlightConfig[1].FlightSort.Value = 'Trips[0].TotalDuration';
+                            break;
+                        case 'airline':
+                            $scope.FlightConfig[1].FlightSort.Value = 'Trips[0].Airlines[0].Name';
+                            break;
+                    }
+                    $scope.SetOverlay('');
+                }
             }
         }
     ];
@@ -294,8 +325,12 @@
             if (flightNumber >= 0) {
                 targetScope.ActiveFlight = flightNumber;
 
-                if ($scope.FlightConfig.ActiveFlight != -1 && $scope.FlightConfig[1].ActiveFlight != -1) {
+                if ($scope.FlightConfig[0].ActiveFlight != -1 && $scope.FlightConfig[1].ActiveFlight != -1) {
                     $scope.SetOverlay('summary');
+                } else if ($scope.FlightConfig[0].ActiveFlight >= 0 && $scope.FlightConfig[1].ActiveFlight < 0) {
+                    $scope.SetPopup('roundtrip-return');
+                } else if ($scope.FlightConfig[0].ActiveFlight < 0 && $scope.FlightConfig[1].ActiveFlight >= 0) {
+                    $scope.SetPopup('roundtrip-departure');
                 }
 
             } else {
@@ -406,6 +441,5 @@
 
 
     }
-
 
 }]);

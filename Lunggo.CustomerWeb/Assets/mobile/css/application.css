@@ -355,7 +355,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #fff;
     min-height: 100%;
     padding: 12px;
-    padding-bottom: 60px; }
+    /*padding-bottom:$header-height;*/ }
   .overlay .overlay__footer {
     position: fixed;
     width: 100%;
@@ -525,6 +525,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       width: 22px;
       height: 20px;
       background: url(/Assets/images/flight-review-title-sprite.png) no-repeat; }
+    .page.page-flight .flight-selection .flight-info.flight-info--return:before {
+      background-position: -22px 0; }
   .page.page-flight .flight-selection .change-departure {
     width: 25%;
     position: absolute;

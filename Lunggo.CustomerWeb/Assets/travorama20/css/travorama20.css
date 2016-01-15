@@ -3818,6 +3818,16 @@ file : /Assets/travorama20/css/_page_checkout.scss
     .payment-wrapper .payment.disabled {
       opacity: 0.5; }
 
+.credit-card-form .cc-number.visa {
+  background-image: url(/Assets/images/visa-logo.jpg);
+  background-position: 98% center;
+  background-repeat: no-repeat; }
+
+.credit-card-form .cc-number.mastercard {
+  background-image: url(/Assets/images/mastercard-logo.jpg);
+  background-position: 98% center;
+  background-repeat: no-repeat; }
+
 .widget-container .widget .widget-content {
   background: #f4f4f4; }
 
