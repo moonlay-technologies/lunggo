@@ -20,12 +20,12 @@
         Expired: false,
         Time: '',
         Start: function() {
-            var ExpiryTime = new Date($scope.PageConfig.ExpiryDate.Time);
+            var expiryTime = new Date($scope.PageConfig.ExpiryDate.Time);
             if ($scope.PageConfig.ExpiryDate.Expired || $scope.PageConfig.ExpiryDate.Starting) return;
             $interval(function() {
                 $scope.PageConfig.ExpiryDate.Starting = true;
                 var NowTime = new Date();
-                if (NowTime > ExpiryTime) {
+                if (NowTime > expiryTime) {
                     $scope.PageConfig.ExpiryDate.Expired = true;
                 }
             }, 1000);
@@ -207,6 +207,7 @@
                         $scope.FlightConfig[0].FlightExpiry.time = returnData.ExpiryTime;
                         $scope.PageConfig.ExpiryDate.Time = returnData.ExpiryTime;
                         $scope.PageConfig.ExpiryDate.Start();
+                        $scope.FlightFunctions.PostRequest('departure');
                     } else {
                         $scope.FlightConfig[0].FlightRequest.FinalProgress = $scope.FlightConfig[0].FlightRequest.Progress;
                     }
