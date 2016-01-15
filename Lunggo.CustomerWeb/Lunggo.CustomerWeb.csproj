@@ -845,6 +845,7 @@
     <Content Include="Assets\images\main-menu-arrow.png" />
     <Content Include="Assets\images\mandiri-logo.jpg" />
     <Content Include="Assets\images\map.jpg" />
+    <Content Include="Assets\images\mastercard-logo.jpg" />
     <Content Include="Assets\images\menu-icon-white.png" />
     <Content Include="Assets\images\menu-icon.png" />
     <Content Include="Assets\images\nav-sprite.png" />
@@ -953,6 +954,7 @@
     <Content Include="Assets\images\verisign-bg.jpg" />
     <Content Include="Assets\images\verisign-pin.png" />
     <Content Include="Assets\images\verisign.jpg" />
+    <Content Include="Assets\images\visa-logo.jpg" />
     <Content Include="Assets\images\warning-image.png" />
     <Content Include="Assets\images\white-bg.png" />
     <Content Include="Assets\images\yellow-stripe-small.png" />

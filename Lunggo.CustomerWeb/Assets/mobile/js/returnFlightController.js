@@ -1,4 +1,4 @@
-﻿app.controller('ReturnFlightController', ['$http', '$scope', '$interval', function($http, $scope, $interval) {
+﻿app.controller('ReturnFlightController', ['$http', '$scope',  '$rootScope','$interval', function($http, $scope, $rootScope, $interval) {
 
     // **********
     // on document ready
@@ -10,32 +10,29 @@
 
     // **********
     // variables
-    $scope.PageConfig = {
-        Loaded: true,
-        BodyNoScroll: false,
-        ActiveSection: 'departure',
-        ActiveOverlay: '',
-        Busy: false,
-        Loading: 0,
-        Validating: false,
-        FlightList: [],
-        ExpiryDate: {
-            Expired: false,
-            Time: '',
-            Start: function () {
-                var expiryTime = new Date($scope.PageConfig.ExpiryDate.Time);
-                if ($scope.PageConfig.ExpiryDate.Expired || $scope.PageConfig.ExpiryDate.Starting) return;
-                $interval(function () {
-                    $scope.PageConfig.ExpiryDate.Starting = true;
-                    var nowTime = new Date();
-                    if (nowTime > expiryTime) {
-                        $scope.PageConfig.ExpiryDate.Expired = true;
-                    }
-                }, 1000);
-            },
-            Starting: false
-        }
-    };
+    $scope.PageConfig = $rootScope;
+    console.log($scope.PageConfig);
+    $scope.PageConfig.Loaded = true;
+    $scope.PageConfig.ActiveSection = 'departure';
+    $scope.PageConfig.ActiveOverlay = '';
+    $scope.PageConfig.Loading = 0;
+    $scope.PageConfig.Validating = false;
+    $scope.PageConfig.ExpiryDate = {
+        Expired: false,
+        Time: '',
+        Start: function () {
+            var expiryTime = new Date($scope.PageConfig.ExpiryDate.Time);
+            if ($scope.PageConfig.ExpiryDate.Expired || $scope.PageConfig.ExpiryDate.Starting) return;
+            $interval(function () {
+                $scope.PageConfig.ExpiryDate.Starting = true;
+                var nowTime = new Date();
+                if (nowTime > expiryTime) {
+                    $scope.PageConfig.ExpiryDate.Expired = true;
+                }
+            }, 1000);
+        },
+        Starting: false
+    }
 
     $scope.FlightConfig = [
         {

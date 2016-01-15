@@ -539,6 +539,7 @@ app.controller('checkoutController', [
         //********************
         // VISA Wonderful Wednesday Promo
         $scope.VisaPromo = {
+            Type: '',
             Valid: false,
             Amount: 0,
             Check: function (creditCardNumber) {
@@ -553,6 +554,7 @@ app.controller('checkoutController', [
                         var endOfCampaign = new Date('31 March 2016');
 
                         if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 3 && jakartaDate < endOfCampaign) {
+                            $scope.VisaPromo.Type = 'visa';
                             $scope.VisaPromo.Valid = true;
                             $scope.VisaPromo.Amount = 50000;
                             // reset voucher
@@ -561,6 +563,13 @@ app.controller('checkoutController', [
                             $scope.voucher.checked = false;
                             $scope.voucher.confirmedCode = '';
                         } else {
+                            if (firstNum == 5) {
+                                $scope.VisaPromo.Type = 'mastercard';
+                            } else if (firstNum == 4) {
+                                $scope.VisaPromo.Type = 'visa';
+                            } else {
+                                $scope.VisaPromo.Type = '';
+                            }
                             $scope.VisaPromo.Valid = false;
                             $scope.VisaPromo.Amount = 0;
                         }

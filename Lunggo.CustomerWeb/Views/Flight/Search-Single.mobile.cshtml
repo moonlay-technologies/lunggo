@@ -325,9 +325,9 @@
                     <h4 class="filter-group__title">Berdasarkan Maskapai</h4>
                 </div>
                 <div class="filter-group__content">
-                    <label>
-                        <span><img src="/Assets/images/airlines/GA.png" alt="" /> Garuda Indonesia</span>
-                        <input type="checkbox" value="true" />
+                    <label ng-repeat="Airline in FlightConfig[0].FlightFilter.Airline">
+                        <span><img ng-src="{{Airline.LogoUrl}}" alt="{{Airline.Name}}" /> {{Airline.Name}}</span>
+                        <input type="checkbox" value="true" ng-model="Airline.Checked" ng-change="FlightFiltering.AirlineCheck('departure')" />
                     </label>
                 </div>
             </div>
