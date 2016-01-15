@@ -70,7 +70,7 @@
                             <td width="20%">
                                 <p style="">Waktu.</p>
                                 @{ var jamKonfirmasi = Model.Payment.Time.GetValueOrDefault().AddHours(7); }
-                                <p style=""><b>@Model.Payment.Time.GetValueOrDefault().ToString("dd MMM yy") - Pk @jamKonfirmasi.ToString("HH:mm") WIB</b></p>
+                                <p style=""><b>@jamKonfirmasi.ToString("dd MMM yy") - Pk @jamKonfirmasi.ToString("HH:mm") WIB</b></p>
                             </td>
                             <td width="5%"></td>
                             <td width="20%">
@@ -288,7 +288,7 @@
                     @{ var jamMaxEtiket = Model.Payment.Time.GetValueOrDefault().AddHours(9); }
 
                     @*<p>Kuitansi pembayaran Anda telah disertakan sebagai attachment.</p>*@
-                    <p>E-tiket Anda akan dikirimkan secara otomatis ke email Anda Maksimal <span style="color: #15b1e4;">@Model.Payment.Time.GetValueOrDefault().ToString("dd MMMM yyyy") </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.ToString("HH:mm") WIB</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">cs@travorama.com</span></p>
+                    <p>E-tiket Anda akan dikirimkan secara otomatis ke email Anda Maksimal <span style="color: #15b1e4;">@jamMaxEtiket.ToString("dd MMMM yyyy") </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.ToString("HH:mm") WIB</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">cs@travorama.com</span></p>
 
                 </td>
                 <td width="5%"></td>

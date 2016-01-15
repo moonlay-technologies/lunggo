@@ -114,7 +114,7 @@
                             <tr>
                                 @{ var jamTimeLimit = Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7);}
                                 <td>
-                                    <p style="font-style: italic; font-size: 11px; margin-bottom: 0px;margin-top:2px;">Batas waktu pembayaran anda adalah sebelum <span style="color: #15b1e4">@Model.Payment.TimeLimit.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Payment.TimeLimit.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.ToString("HH:mm") WIB</span>.</p>
+                                    <p style="font-style: italic; font-size: 11px; margin-bottom: 0px;margin-top:2px;">Batas waktu pembayaran anda adalah sebelum <span style="color: #15b1e4">@Model.Payment.TimeLimit.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @jamTimeLimit.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.ToString("HH:mm") WIB</span>.</p>
                                     <p style="font-size: 10px; opacity: 0.5; font-style: italic;margin-top: 1px; margin-bottom: 20px;">Jika lewat, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan berubah.</p>
                                 </td>
                             </tr>

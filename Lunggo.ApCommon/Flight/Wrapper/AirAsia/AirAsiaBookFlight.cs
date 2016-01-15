@@ -28,8 +28,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
                 var client = CreateAgentClient();
-                //client.Proxy = new WebProxy("128.199.91.32", 80);
-                //client.Proxy.Credentials = new NetworkCredential("travorama", "tmi12345");
                 string origin, dest, coreFareId;
                 DateTime date;
                 int adultCount, childCount, infantCount;
@@ -117,7 +115,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var searchResponse = client.Execute(searchRequest);
 
-                if (searchResponse.ResponseUri.AbsolutePath != "/Select.aspx" && (searchResponse.StatusCode == HttpStatusCode.OK || searchResponse.StatusCode == HttpStatusCode.Redirect))
+                if (searchResponse.ResponseUri.AbsolutePath != "/Select.aspx" || (searchResponse.StatusCode != HttpStatusCode.OK && searchResponse.StatusCode != HttpStatusCode.Redirect))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -127,6 +125,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         },
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
                     };
+
+                Thread.Sleep(1000);
 
                 // [POST] Select Flight
 
@@ -165,7 +165,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 selectRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var selectResponse = client.Execute(selectRequest);
 
-                if (selectResponse.ResponseUri.AbsolutePath != "/Traveler.aspx" && (selectResponse.StatusCode == HttpStatusCode.OK || selectResponse.StatusCode == HttpStatusCode.Redirect))
+                if (selectResponse.ResponseUri.AbsolutePath != "/Traveler.aspx" || (selectResponse.StatusCode != HttpStatusCode.OK && selectResponse.StatusCode != HttpStatusCode.Redirect))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -175,6 +175,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         },
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
                     };
+
+                Thread.Sleep(1000);
 
                 // [POST] Input Data
 
@@ -266,7 +268,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 travelerRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var travelerResponse = client.Execute(travelerRequest);
 
-                if (travelerResponse.ResponseUri.AbsolutePath != "/UnitMap.aspx" && (travelerResponse.StatusCode == HttpStatusCode.OK || travelerResponse.StatusCode == HttpStatusCode.Redirect))
+                if (travelerResponse.ResponseUri.AbsolutePath != "/UnitMap.aspx" || (travelerResponse.StatusCode != HttpStatusCode.OK && travelerResponse.StatusCode != HttpStatusCode.Redirect))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -276,6 +278,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         },
                         Errors = new List<FlightError> { FlightError.InvalidInputData }
                     };
+
+                Thread.Sleep(1000);
 
                 // [POST] Select Seat
 
@@ -298,7 +302,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 unitMapRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var unitMapResponse = client.Execute(unitMapRequest);
 
-                if (unitMapResponse.ResponseUri.AbsolutePath != "/Payment.aspx" && (unitMapResponse.StatusCode == HttpStatusCode.OK || unitMapResponse.StatusCode == HttpStatusCode.Redirect))
+                if (unitMapResponse.ResponseUri.AbsolutePath != "/Payment.aspx" || (unitMapResponse.StatusCode != HttpStatusCode.OK && unitMapResponse.StatusCode != HttpStatusCode.Redirect))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -309,6 +313,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier }
                     };
 
+                Thread.Sleep(1000);
+
                 // EZPay
 
                 postData = @"isEzPayParams=false";
@@ -317,6 +323,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 ezPayRequest.AddHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
                 ezPayRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var ezPayResponse = client.Execute(ezPayRequest);
+
+                Thread.Sleep(1000);
 
                 // SELECT HOLD (PAYMENT)
 
@@ -340,11 +348,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 paymentRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var paymentResponse = client.Execute(paymentRequest);
 
+                Thread.Sleep(1000);
+
                 var whileCounter = 0;
                 while (paymentResponse.StatusCode == HttpStatusCode.Forbidden && whileCounter < 10)
                 {
                     paymentResponse = client.Execute(paymentRequest);
                     whileCounter++;
+
+                    Thread.Sleep(1000);
                     //return new BookFlightResult
                     //{
                     //    IsSuccess = false,
@@ -357,18 +369,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     //};
                 }
 
-                if (paymentResponse.ResponseUri.AbsolutePath != "/Payment.aspx" && (paymentResponse.StatusCode == HttpStatusCode.OK || paymentResponse.StatusCode == HttpStatusCode.Redirect))
+                if (paymentResponse.ResponseUri.AbsolutePath != "/Payment.aspx" || (paymentResponse.StatusCode != HttpStatusCode.OK && paymentResponse.StatusCode != HttpStatusCode.Redirect))
                     return new BookFlightResult { 
                         IsSuccess = false,
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier } };
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
+                    };
+
+                Thread.Sleep(1000);
 
                 // EZPay
 
                 ezPayResponse = client.Execute(ezPayRequest);
+
+                Thread.Sleep(1000);
 
                 // [POST] Select Hold
 
@@ -392,22 +409,26 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 paymentRequest2.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var paymentResponse2 = client.Execute(paymentRequest2);
 
+                Thread.Sleep(1000);
+
                 whileCounter = 0;
                 while (paymentResponse.StatusCode == HttpStatusCode.Forbidden && whileCounter < 10)
                 {
                     paymentResponse2 = client.Execute(paymentRequest2);
                     whileCounter++;
+                    Thread.Sleep(1000);
                 }
 
-                if (paymentResponse2.ResponseUri.AbsolutePath != "/Wait.aspx" && (paymentResponse2.StatusCode == HttpStatusCode.OK || paymentResponse2.StatusCode == HttpStatusCode.Redirect))
+                if (paymentResponse2.ResponseUri.AbsolutePath != "/Wait.aspx" || (paymentResponse2.StatusCode != HttpStatusCode.OK && paymentResponse2.StatusCode != HttpStatusCode.Redirect))
                     return new BookFlightResult { 
                         IsSuccess = false,
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier } 
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
                     };
+                Thread.Sleep(1000);
 
                 // [GET] Wait for Book
 
@@ -421,11 +442,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 while (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" && sw.Elapsed <= retryLimit && (waitResponse.StatusCode == HttpStatusCode.OK || waitResponse.StatusCode == HttpStatusCode.Redirect))
                 {
                     waitResponse = client.Execute(waitRequest);
-                    if (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" && (waitResponse.StatusCode == HttpStatusCode.OK || waitResponse.StatusCode == HttpStatusCode.Redirect))
+                    if (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" || (waitResponse.StatusCode != HttpStatusCode.OK && waitResponse.StatusCode != HttpStatusCode.Redirect))
                         Thread.Sleep(retryInterval);
                 }
 
-                if (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" && (waitResponse.StatusCode == HttpStatusCode.OK || waitResponse.StatusCode == HttpStatusCode.Redirect))
+                if (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" || (waitResponse.StatusCode != HttpStatusCode.OK && waitResponse.StatusCode != HttpStatusCode.Redirect))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -433,7 +454,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier } 
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
                     };
 
                 try
