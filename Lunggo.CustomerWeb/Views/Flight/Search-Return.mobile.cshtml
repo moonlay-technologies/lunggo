@@ -137,6 +137,13 @@
     </section><!-- .flight-sort -->
 
     <section class="flight-list" id="departure-flight" ng-show="PageConfig.ActiveSection == 'departure'">
+    
+        <div class="flight-selection" ng-show="FlightConfig[1].ActiveFlight >= 0">
+            <div class="flight-info flight-info--return">
+                <span>pulang : {{FlightConfig[1].FlightList[FlightConfig[1].ActiveFlight].TotalFare | number}}</span>
+            </div>
+            <a ng-click="FlightFunction.SetActiveFlight('return',-1); SetSection('return');" class="change-departure"><span>Ganti</span></a>
+        </div><!-- .flight-selection -->
 
         <div class="flight" ng-repeat="Flight in FlightConfig[0].FlightList" id="flight-{{Flight.IndexNo}}">
             <div class="flight-header">
@@ -166,7 +173,7 @@
             </div>
             <div class="flight-footer">
                 <a ng-click="FlightFunctions.ShowDetail('departure',Flight.IndexNo);" class="flight-detail-button">Lihat Detail &gt;</a>
-                <a ng-click="FlightFunctions.SetActiveFlight('departure',Flight.IndexNo); SetPopup('roundtrip');" class="btn btn-yellow pull-right flight-order">PESAN</a>
+                <a ng-click="FlightFunctions.SetActiveFlight('departure',Flight.IndexNo);" class="btn btn-yellow pull-right flight-order">PESAN</a>
             </div>
         </div>
 
@@ -174,7 +181,7 @@
     
     <section class="flight-list" id="return-flight" ng-show="PageConfig.ActiveSection == 'return'">
     
-        <div class="flight-selection">
+        <div class="flight-selection" ng-show="FlightConfig[0].ActiveFlight >= 0">
             <div class="flight-info">
                 <span>Pergi : {{FlightConfig[0].FlightList[FlightConfig[0].ActiveFlight].TotalFare | number}}</span>
             </div>
@@ -324,7 +331,7 @@
                         <h4><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].DetailFlight ].TotalFare | number}}</b></h4>
                     </div>
                     <div class="col-xs-6">
-                        <a ng-click="FlightFunctions.SetActiveFlight('departure',FlightConfig[0].DetailFlight); SetSection('return'); SetPopup('roundtrip'); SetOverlay();" class="btn btn-yellow btn-block">PESAN</a>
+                        <a ng-click="FlightFunctions.SetActiveFlight('departure',FlightConfig[0].DetailFlight); SetSection('return'); SetOverlay();" class="btn btn-yellow btn-block">PESAN</a>
                     </div>
                 </div>
             </div>
@@ -652,7 +659,7 @@
     </div>
 
     <!-- popup roundtrip selection -->
-    <div class="popup__wrapper" ng-class="{'active':PageConfig.ActivePopup == 'roundtrip'}">
+    <div class="popup__wrapper" ng-class="{'active':PageConfig.ActivePopup == 'roundtrip-return'}">
         <div class="popup">
             <header class="popup__header">
                 <h4 class="popup__title">Roundtrip Flight <span ng-click="SetPopup()" class="close-modal pull-right">X</span></h4>
@@ -683,4 +690,38 @@
             </footer>
         </div>
     </div><!-- .modal-wrapper -->
+    
+    <!-- popup roundtrip selection -->
+    <div class="popup__wrapper" ng-class="{'active':PageConfig.ActivePopup == 'roundtrip-departure'}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Roundtrip Flight <span ng-click="SetPopup()" class="close-modal pull-right">X</span></h4>
+            </header>
+            <div class="popup__body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-4 text-center" style="padding-top:12px;">
+                            <img src="/Assets/images/airplane-image.jpg" alt="Airplane" />
+                        </div>
+                        <div class="col-xs-8">
+                            <p>Anda telah memilih penerbangan pulang. <b>Silahkan lanjutkan dengan memilih penerbangan pergi</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="popup__footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a ng-click="SetPopup(); SetSection('return'); SetActiveFlight('return',-1)" class="btn btn-grey btn-block">KEMBALI</a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a ng-click="SetPopup(); SetSection('departure');" class="btn btn-yellow btn-block">LANJUT</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .modal-wrapper -->
+
 </div>

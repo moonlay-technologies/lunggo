@@ -294,8 +294,12 @@
             if (flightNumber >= 0) {
                 targetScope.ActiveFlight = flightNumber;
 
-                if ($scope.FlightConfig.ActiveFlight != -1 && $scope.FlightConfig[1].ActiveFlight != -1) {
+                if ($scope.FlightConfig[0].ActiveFlight != -1 && $scope.FlightConfig[1].ActiveFlight != -1) {
                     $scope.SetOverlay('summary');
+                } else if ($scope.FlightConfig[0].ActiveFlight >= 0 && $scope.FlightConfig[1].ActiveFlight < 0) {
+                    $scope.SetPopup('roundtrip-return');
+                } else if ($scope.FlightConfig[0].ActiveFlight < 0 && $scope.FlightConfig[1].ActiveFlight >= 0) {
+                    $scope.SetPopup('roundtrip-departure');
                 }
 
             } else {
