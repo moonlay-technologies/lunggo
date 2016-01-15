@@ -10,8 +10,8 @@
 
     // **********
     // variables
-    $scope.PageConfig = $rootScope;
-    console.log($scope.PageConfig);
+    $scope.PageConfig = $rootScope.PageConfig;
+
     $scope.PageConfig.Loaded = true;
     $scope.PageConfig.ActiveSection = 'departure';
     $scope.PageConfig.ActiveOverlay = '';
@@ -54,7 +54,13 @@
                 FinalProgress: 0,
                 Pristine: true
             },
-            FlightFilter: {},
+            FlightFilter: {
+                Transit: [true, true, true],
+                DepartureTime: [true, true, true, true],
+                ArrivalTime: [true, true, true, true],
+                Airline: [],
+                AirlineSelected: []
+            },
             FlightSort: {
                 Label: 'price',
                 Value: 'TotalFare',
@@ -96,7 +102,13 @@
                 FinalProgress: 0,
                 Pristine: true
             },
-            FlightFilter: {},
+            FlightFilter: {
+                Transit: [true, true, true],
+                DepartureTime: [true, true, true, true],
+                ArrivalTime: [true, true, true, true],
+                Airline: [],
+                AirlineSelected: []
+            },
             FlightSort: {
                 Label: 'price',
                 Value: 'TotalFare',
@@ -198,11 +210,8 @@
     // get  flight
     $scope.FlightFunctions.GetFlight = function(targetScope) {
         $scope.PageConfig.Busy = true;
-        if (targetScope == "departure") {
-            targetScope = $scope.FlightConfig[0];
-        } else {
-            targetScope = $scope.FlightConfig[1];
-        }
+        var anotherScope = targetScope == 'departure' ? $scope.FlightConfig[1] : $scope.FlightConfig[0];
+        targetScope = targetScope == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1];
         console.log('Getting flight for : ' + targetScope.Name + ' . Request : '+targetScope.FlightRequest.Requests);
         if (targetScope.FlightRequest.Progress < 100) {
 
@@ -244,20 +253,20 @@
 
                     }
 
-                    // generate flight
-                    $scope.FlightFunctions.GenerateFlightList(targetScope.Name, returnData.FlightList);
-
                     // update total progress
                     targetScope.FlightRequest.Progress = ((returnData.MaxRequest - targetScope.FlightRequest.Requests.length) / returnData.MaxRequest) * 100;
-
                     console.log('Progress : ' + targetScope.FlightRequest.Progress + ' %');
                     console.log(returnData);
+
+                    // generate flight
+                    $scope.FlightFunctions.GenerateFlightList(targetScope.Name, returnData.FlightList);
 
                     // set expiry if progress == 100
                     if (targetScope.FlightRequest.Progress == 100) {
 
                         $scope.PageConfig.ExpiryDate.Time = returnData.ExpiryTime;
-                        console.log($scope.FlightConfig);
+                        $scope.PageConfig.ExpiryDate.Start();
+                        $scope.FlightFunctions.CompleteGetFlight(targetScope.Name);
 
                     } else {
                         targetScope.FlightRequest.FinalProgress = targetScope.FlightRequest.Progress;
@@ -298,24 +307,47 @@
 
     // arrange flight
     $scope.FlightFunctions.GenerateFlightList = function(targetScope, data) {
-        if (targetScope == 'departure') {
-            targetScope = $scope.FlightConfig[0];
-        } else {
-            targetScope = $scope.FlightConfig[1];
-        }
-
+        targetScope = targetScope == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1] ;
         var startNo = targetScope.FlightList.length;
         for (var i = 0; i < data.length; i++) {
             data[i].Available = true;
             data[i].IndexNo = (startNo + i);
+            // init airlines
+            for (var x = 0; x < data[i].Trips[0].Airlines.length; x++) {
+                data[i].Trips[0].Airlines[x].Checked = true;
+            }
             targetScope.FlightList.push(data[i]);
         }
 
     }
 
     // run if departure and return flight search has completed
-    $scope.FlightFunctions.CompleteGetFlight = function() {
-        
+    $scope.FlightFunctions.CompleteGetFlight = function (targetScope) {
+        console.log('/--------------------------/');
+        console.log('Post get flight for : '+targetScope);
+        targetScope = targetScope == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1];
+        // generate airline filter
+        // generate airline for flight filtering		
+        for (var i = 0; i < targetScope.FlightList.length; i++) {
+            targetScope.FlightList[i].AirlinesTag = [];
+            for (var x = 0; x < targetScope.FlightList[i].Trips[0].Airlines.length; x++) {
+                targetScope.FlightList[i].AirlinesTag.push(targetScope.FlightList[i].Trips[0].Airlines[x].Code);
+                targetScope.FlightFilter.Airline.push(targetScope.FlightList[i].Trips[0].Airlines[x]);
+            }
+        }
+        // remove duplicate from airline filter		
+        var dupes = {};
+        var Airlines = [];
+        $.each(targetScope.FlightFilter.Airline, function (i, el) {
+            if (!dupes[el.Code]) {
+                dupes[el.Code] = true;
+                Airlines.push(el);
+            }
+        });
+        targetScope.FlightFilter.Airline = Airlines;
+        Airlines = []; // empty the variable
+        console.log(targetScope);
+
     }
 
     // set active flight
