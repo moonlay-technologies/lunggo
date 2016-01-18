@@ -82,6 +82,7 @@ app.controller('checkoutController', [
                     if (returnData.data.Discount > 0) {
                         $scope.voucher.amount = returnData.data.Discount;
                         $scope.voucher.confirmedCode = $scope.voucher.code;
+                        $scope.voucher.displayName = returnData.data.DisplayName;
                     }
                 }, function(returnData) {
                     $scope.voucher.checked = true;
@@ -119,7 +120,7 @@ app.controller('checkoutController', [
                             // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
                             'secure': true,
                             'bank': 'mandiri',
-                            'gross_amount': $scope.initialPrice
+                            'gross_amount': $scope.initialPrice - $scope.VisaPromo.Amount
                         }
                     };
 
@@ -553,7 +554,7 @@ app.controller('checkoutController', [
                         var jakartaDay = jakartaDate.getDay();
                         var endOfCampaign = new Date('31 March 2016');
 
-                        if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 3 && jakartaDate < endOfCampaign) {
+                        if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 5 && jakartaDate < endOfCampaign) {
                             $scope.VisaPromo.Type = 'visa';
                             $scope.VisaPromo.Valid = true;
                             $scope.VisaPromo.Amount = 50000;

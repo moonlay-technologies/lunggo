@@ -11,7 +11,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher
         [HttpGet]
         [LunggoCorsPolicy]
         [Route("api/v1/voucher/check")]
-        public CheckVoucherApiResponse RevalidateFlight(HttpRequestMessage httpRequest, [FromUri] CheckVoucherApiRequest request)
+        public CheckVoucherApiResponse CheckVoucher(HttpRequestMessage httpRequest, [FromUri] CheckVoucherApiRequest request)
         {
             var apiResponse = VoucherLogic.CheckVoucher(request);
             return apiResponse;
