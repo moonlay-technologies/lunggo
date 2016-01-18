@@ -392,7 +392,45 @@
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
-            <form>
+            <form class="form form-horizontal">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label><b>Roundtrip ?</b></label>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <label class="active flight-trip"><input type="radio" name="roundtrip" value="false" />No</label>
+                            <label class="flight-trip"><input type="radio" name="roundtrip" value="true" />Yes</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-origin-wrapper">
+                    <input type="text" value="" class="form-control form-origin" />
+                </div>
+                <div class="form-group form-destination-wrapper">
+                    <input type="text" value="" class="form-control form-destination" />
+                </div>
+                <div class="form-group form-date-wrapper">
+                    <input type="text" value="" class="form-control form-date" />
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <input type="text" value="" class="form-passenger form-control form-adult" />
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="text" value="" class="form-passenger form-control form-children" />
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="text" value="" class="form-passenger form-control form-infant" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-yellow text-center btn-block btn-lg">SEARCH</button>
+                </div>
+            </form>
+            <form class="hidden">
                 <div class="form-group origin">
                     <input type="text" value="" class="form-control" placeholder="Asal" />
                 </div>
