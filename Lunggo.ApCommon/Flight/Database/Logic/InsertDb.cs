@@ -50,6 +50,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         PaymentFeeForUs = 0,
                         VoucherCode = reservation.Discount.Code,
                         DiscountId = reservation.Discount.Id,
+                        DiscountName = reservation.Discount.Name,
                         DiscountPercentage = reservation.Discount.Percentage,
                         DiscountConstant = reservation.Discount.Constant,
                         DiscountNominal = reservation.Discount.Nominal,

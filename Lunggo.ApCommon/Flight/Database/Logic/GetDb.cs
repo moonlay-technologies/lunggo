@@ -86,6 +86,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     {
                                         Code = reservationRecord.VoucherCode,
                                         Id = reservationRecord.DiscountId.GetValueOrDefault(),
+                                        Name = reservationRecord.DiscountName,
                                         Percentage = reservationRecord.DiscountPercentage.GetValueOrDefault(),
                                         Constant = reservationRecord.DiscountConstant.GetValueOrDefault(),
                                         Nominal = reservationRecord.DiscountNominal.GetValueOrDefault()
@@ -232,6 +233,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     {
                                         Code = reservationRecord.VoucherCode,
                                         Id = reservationRecord.DiscountId.GetValueOrDefault(),
+                                        Name = reservationRecord.DiscountName,
                                         Percentage = reservationRecord.DiscountPercentage.GetValueOrDefault(),
                                         Constant = reservationRecord.DiscountConstant.GetValueOrDefault(),
                                         Nominal = reservationRecord.DiscountNominal.GetValueOrDefault()

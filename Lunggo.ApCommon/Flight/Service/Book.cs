@@ -94,6 +94,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     Code = input.DiscountCode,
                     Id = campaign.CampaignVoucher.CampaignId.GetValueOrDefault(),
+                    Name = campaign.CampaignVoucher.DisplayName,
                     Percentage = campaign.CampaignVoucher.ValuePercentage.GetValueOrDefault(),
                     Constant = campaign.CampaignVoucher.ValueConstant.GetValueOrDefault(),
                     Nominal = campaign.TotalDiscount

@@ -37,7 +37,6 @@ namespace Lunggo.ApCommon.Campaign.Service
             var voucher = GetDb.GetCampaignVoucher(voucherRequest.VoucherCode);
             response.Email = voucherRequest.Email;
             response.VoucherCode = voucherRequest.VoucherCode;
-            response.CampaignVoucher = voucher;
 
             validationStatus = ValidateVoucher(voucher, voucherRequest);
 
@@ -45,6 +44,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             {
                 CalculateVoucherDiscount(voucher, voucherRequest, response);
                 validationStatus = VoucherDecrement(voucherRequest.VoucherCode);
+                response.CampaignVoucher = voucher;
             }
 
             response.UpdateStatus = VoucherValidationStatusTypeMessage.Mnemonic(validationStatus);

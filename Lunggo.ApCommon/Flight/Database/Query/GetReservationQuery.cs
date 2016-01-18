@@ -23,7 +23,8 @@ namespace Lunggo.ApCommon.Flight.Database.Query
             clauseBuilder.Append(@"r.PaymentId, r.PaymentMediumCd, r.PaymentMethodCd, r.PaymentTimeLimit, ");
             clauseBuilder.Append(@"r.PaymentTime, r.PaymentStatusCd, r.PaymentTargetAccount, r.PaymentUrl, ");
             clauseBuilder.Append(@"r.RefundAmount, r.RefundTime, r.RefundTargetBank, r.RefundTargetAccount, ");
-            clauseBuilder.Append(@"r.DiscountId, r.DiscountPercentage, r.DiscountConstant, r.DiscountNominal, ");
+            clauseBuilder.Append(@"r.DiscountId, r.DiscountPercentage, r.DiscountConstant, ");
+            clauseBuilder.Append(@"r.DiscountNominal, r.DiscountName, ");
             clauseBuilder.Append(@"r.VoucherCode, r.FinalPrice, r.PaidAmount, ");
             clauseBuilder.Append(@"i.ItineraryId, i.BookingId, i.RsvNo, i.BookingStatusCd, i.FareTypeCd, i.CanHold, ");
             clauseBuilder.Append(@"i.MarginId, i.MarginCoefficient, i.MarginConstant, i.MarginNominal, ");

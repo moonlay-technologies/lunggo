@@ -25,6 +25,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     Passengers = reservation.Passengers,
                     Payment = reservation.Payment,
                     Discount = reservation.Discount.Nominal,
+                    DiscountName = reservation.Discount.Name,
                     VoucherCode = reservation.Discount.Code
                 };
             }

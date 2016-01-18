@@ -9,6 +9,7 @@ namespace Lunggo.ApCommon.Campaign.Model
         public int? RemainingCount { get; set; }
         public String CampaignName { get; set; }
         public String CampaignDescription { get; set; }
+        public String DisplayName { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public Decimal? ValuePercentage { get; set; }

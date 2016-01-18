@@ -661,7 +661,7 @@
                                             <dd><sup>Rp</sup> {{initialPrice | number}}</dd>
                                         </dl>
                                         <dl ng-if="voucher.confirmedCode">
-                                            <dt>Potongan Harga</dt>
+                                            <dt>{{voucher.displayName}}</dt>
                                             <dd><sup>Rp</sup>- {{voucher.amount | number}}</dd>
                                         </dl>
                                         <dl ng-if="VisaPromo.Valid">
