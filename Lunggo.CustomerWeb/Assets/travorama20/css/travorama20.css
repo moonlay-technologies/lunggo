@@ -126,6 +126,32 @@ input[type=number]::-webkit-outer-spin-button {
 .no-spacing {
   letter-spacing: 0; }
 
+.list-blue {
+  list-style: none;
+  padding-left: 25px;
+  counter-reset: list-counter; }
+  .list-blue li {
+    position: relative;
+    padding-top: 5px;
+    padding-bottom: 10px; }
+    .list-blue li:before, .list-blue .page-index li.section-reason:after, .page-index .list-blue li.section-reason:after {
+      content: counter(list-counter);
+      counter-increment: list-counter;
+      background: #3ab8e7;
+      color: #fff;
+      position: absolute;
+      -webkit-border-radius: 50px;
+      -moz-border-radius: 50px;
+      border-radius: 50px;
+      font-weight: bold;
+      width: 25px;
+      height: 25px;
+      padding-top: 5px;
+      display: block;
+      text-align: center;
+      left: -30px;
+      top: 0; }
+
 .search-calendar {
   width: 320px;
   height: 520px;
