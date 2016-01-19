@@ -94,7 +94,7 @@ form label.important:after {content:"*"; color:#f00000;}
 .text-main-color {color:$color-main-blue;}
 
 input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
+input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }

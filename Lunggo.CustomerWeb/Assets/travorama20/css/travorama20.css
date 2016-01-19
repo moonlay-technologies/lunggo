@@ -4998,6 +4998,9 @@ file : /Assets/travorama20/css/_page_password.scss
 .page-howtopay .section-howtopay {
   padding-top: 30px; }
 
+.page-campaign p {
+  font-size: 13px; }
+
 .page-campaign.campaign-2016-calendar .site-content {
   padding-bottom: 30px; }
 
