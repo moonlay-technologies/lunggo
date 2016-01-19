@@ -14,7 +14,7 @@ namespace Lunggo.CustomerWeb
             // visa campaign start
             routes.MapRoute(
                 name: "visawonderfulwednesday",
-                url: "{langCode}/wonderfulwednesdaywithvisa",
+                url: "wonderfulwednesdaywithvisa",
                 defaults: new { controller = "StaticPage", action = "VisaWonderfulWednesday", langCode = "id" }
             );
             // visa campaign end
