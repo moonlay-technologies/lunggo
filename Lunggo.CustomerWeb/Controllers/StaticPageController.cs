@@ -92,5 +92,11 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        // visa wonderful wednesday promo
+        public ActionResult VisaWonderfulWednesday()
+        {
+            return View();
+        }
+
     }
 }

@@ -723,6 +723,7 @@
     <Content Include="Assets\images\campaign\surabaya-text.png" />
     <Content Include="Assets\images\campaign\surabaya-thumb.jpg" />
     <Content Include="Assets\images\campaign\surabaya.jpg" />
+    <Content Include="Assets\images\campaign\VisaWonderfulWednesday\visa-wonderful-wednesday.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta-text.png" />
     <Content Include="Assets\images\campaign\yogyakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta.jpg" />
@@ -2555,6 +2556,7 @@
     <Content Include="Views\StaticPage\Terms.mobile.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.mobile.cshtml" />
     <Content Include="Views\StaticPage\GetCalendarTerms.mobile.cshtml" />
+    <Content Include="Views\StaticPage\VisaWonderfulWednesday.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2608,6 +2610,7 @@
     <Folder Include="Campaign\VisaWonderfulWednesday\css\" />
     <Folder Include="Campaign\VisaWonderfulWednesday\images\" />
     <Folder Include="Helper\" />
+    <Folder Include="Views\Campaign\" />
     <Folder Include="Views\Upload\" />
     <Folder Include="WebSrc\UW300\Logic\" />
     <Folder Include="WebSrc\UW300\Object\" />
