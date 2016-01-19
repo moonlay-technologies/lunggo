@@ -11,6 +11,7 @@ namespace Lunggo.ApCommon.Payment.Model
         public PaymentStatus Status { get; set; }
         public DateTime? Time { get; set; }
         public DateTime? TimeLimit { get; set; }
+        public Data Data { get; set; }
         public string TargetAccount { get; set; }
         public string Url { get; set; }
         public decimal FinalPrice { get; set; }

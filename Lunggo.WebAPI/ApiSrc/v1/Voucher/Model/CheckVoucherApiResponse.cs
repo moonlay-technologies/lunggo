@@ -3,6 +3,7 @@
     public class CheckVoucherApiResponse
     {
         public decimal Discount { get; set; }
+        public string DisplayName { get; set; }
         public string ValidationStatus { get; set; }
         public CheckVoucherApiRequest OriginalRequest { get; set; }
     }

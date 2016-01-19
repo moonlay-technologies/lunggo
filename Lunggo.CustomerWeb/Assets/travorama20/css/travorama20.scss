@@ -11,6 +11,7 @@ $color-main-blue:#1daee4;
 $color-main-orange:#ff7200;
 $border-default:1px solid #ccc;
 $border-radius-default:2px;
+$transition-default:all 0.5s;
 
 /*--------------------*/
 /* mixins */
@@ -36,6 +37,13 @@ $border-radius-default:2px;
     transform: skewX($value); /* Standard syntax */
 }
 
+@mixin transition($value){
+    -webkit-transition: $value;
+    -moz-transition: $value;
+    -o-transition: $value;
+    transition: $value;
+}
+
 @mixin clearfix(){
     display:block; width:100%; content:""; clear:both;
 }
@@ -48,6 +56,8 @@ hr {border-top:$border-default;}
 
 .page-loading {display:none;}
 .page-loaded {display:block;}
+
+.hide {height:0; overflow:hidden; @include transition($transition-default);}
 
 img {max-width:100%;}
 
@@ -84,9 +94,17 @@ form label.important:after {content:"*"; color:#f00000;}
 .text-main-color {color:$color-main-blue;}
 
 input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
+input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
+}
+
+.no-spacing {letter-spacing:0;}
+
+.list-blue {list-style:none; padding-left:25px; counter-reset:list-counter;
+    li {position:relative; padding-top:5px; padding-bottom:10px;
+        &:before {content:counter(list-counter); counter-increment:list-counter; background:#3ab8e7; color:#fff; position:absolute; @include border-radius(50px); font-weight:bold; width:25px; height:25px; padding-top:5px; display:block; text-align:center; left:-30px; top:0;}
+    }
 }
 
 // form Search Location pop up

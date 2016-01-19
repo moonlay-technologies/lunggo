@@ -47,6 +47,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Description");
 		    }
 		}
+        public String DisplayName
+        {
+            get { return _DisplayName; }
+            set
+            {
+                _DisplayName = value;
+                IncrementLog("DisplayName");
+            }
+        }
 		public DateTime? StartDate
 		{
 		    get { return _StartDate; }
@@ -143,6 +152,7 @@ namespace Lunggo.Repository.TableRecord
 		private int? _ClientId;
 		private String _Name;
 		private String _Description;
+		private String _DisplayName;
 		private DateTime? _StartDate;
 		private DateTime? _EndDate;
 		private short? _ValuePercentage;
@@ -188,6 +198,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("ClientId", false),
 				new ColumnMetadata("Name", false),
 				new ColumnMetadata("Description", false),
+				new ColumnMetadata("DisplayName", false),
 				new ColumnMetadata("StartDate", false),
 				new ColumnMetadata("EndDate", false),
 				new ColumnMetadata("ValuePercentage", false),

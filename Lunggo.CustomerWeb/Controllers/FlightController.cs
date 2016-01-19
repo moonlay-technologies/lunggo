@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Constant;
@@ -71,6 +73,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
+        [RequireHttps]
         public ActionResult Checkout(string token)
         {
             if (TempData["FlightCheckoutOrBookingError"] != null)
@@ -109,6 +112,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
+        [RequireHttps]
         [HttpPost]
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
@@ -120,10 +124,15 @@ namespace Lunggo.CustomerWeb.Controllers
                 TempData["FlightCheckoutOrBookingError"] = true;
                 return RedirectToAction("Checkout");
             }
-            if (paymentUrl != "DIRECT")
-                return Redirect(paymentUrl);
-            else
+            if (paymentUrl == "DIRECT")
                 return RedirectToAction("Confirmation", "Flight", new { rsvNo });
+            else if (paymentUrl == "THIRDPARTYDIRECT")
+            {
+                TempData["AllowThisThankyouPage"] = rsvNo;
+                return RedirectToAction("Thankyou", "Flight", new {rsvNo});
+            }
+            else
+                return Redirect(paymentUrl);
         }
 
         public ActionResult Thankyou(string rsvNo)
@@ -201,7 +210,25 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return View();
             }
-            
+
         }
+
+        #region Helpers
+
+        public static string RsvNoHash(string rsvNo)
+        {
+            var rsa = RSA.Create();
+            var encryptedRsvNo = rsa.EncryptValue(Encoding.UTF8.GetBytes(rsvNo));
+            return Encoding.UTF8.GetString(encryptedRsvNo);
+        }
+
+        private static string RsvNoUnhash(string encryptedRsvNo)
+        {
+            var rsa = RSA.Create();
+            var rsvNo = rsa.DecryptValue(Encoding.UTF8.GetBytes(encryptedRsvNo));
+            return Encoding.UTF8.GetString(rsvNo);
+        }
+
+        #endregion
     }
 }

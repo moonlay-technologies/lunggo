@@ -355,7 +355,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #fff;
     min-height: 100%;
     padding: 12px;
-    padding-bottom: 60px; }
+    /*padding-bottom:$header-height;*/ }
   .overlay .overlay__footer {
     position: fixed;
     width: 100%;
@@ -364,13 +364,50 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #616161;
     padding: 12px;
     color: #fff;
-    height: 60px; }
+    height: 60px;
+    display: none; }
   .overlay.active {
     top: 0; }
     .overlay.active .overlay__header {
       display: block; }
+    .overlay.active .overlay__footer {
+      display: block; }
   .overlay.overlay--theme--blue .overlay__header {
     background: #1daee4; }
+
+.overlay.overlay--flight-form form .flight-trip {
+  display: inline-block;
+  padding: 10px;
+  background: #fff;
+  color: #000; }
+  .overlay.overlay--flight-form form .flight-trip.active {
+    background: #0c7399;
+    color: #fff; }
+
+.overlay.overlay--flight-form form .form-origin-wrapper, .overlay.overlay--flight-form form .form-destination-wrapper, .overlay.overlay--flight-form form .form-date-wrapper {
+  position: relative; }
+  .overlay.overlay--flight-form form .form-origin-wrapper input[type="text"], .overlay.overlay--flight-form form .form-destination-wrapper input[type="text"], .overlay.overlay--flight-form form .form-date-wrapper input[type="text"] {
+    padding: 20px;
+    padding-left: 40px; }
+  .overlay.overlay--flight-form form .form-origin-wrapper:before, .overlay.overlay--flight-form form .form-destination-wrapper:before, .overlay.overlay--flight-form form .form-date-wrapper:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 22px;
+    height: 20px;
+    background-image: url(/Assets/images/flight-review-title-sprite.png);
+    left: 10px;
+    top: 10px; }
+
+.overlay.overlay--flight-form form .form-destination-wrapper:before {
+  background-position: -22px 0; }
+
+.overlay.overlay--flight-form form .form-date-wrapper:before {
+  background-image: url(/Assets/images/cal-bg.png);
+  background-size: contain;
+  width: 25px;
+  height: 25px;
+  top: 8px; }
 
 .overlay.datepicker .overlay__body {
   background: #616161;
@@ -522,6 +559,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       width: 22px;
       height: 20px;
       background: url(/Assets/images/flight-review-title-sprite.png) no-repeat; }
+    .page.page-flight .flight-selection .flight-info.flight-info--return:before {
+      background-position: -22px 0; }
   .page.page-flight .flight-selection .change-departure {
     width: 25%;
     position: absolute;

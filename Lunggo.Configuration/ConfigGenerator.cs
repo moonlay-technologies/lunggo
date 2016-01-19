@@ -338,6 +338,8 @@ namespace Lunggo.Configuration
             const string changePasswordPath = @"/id/ApiAccount/ChangePassword";
             const string changeProfilePath = @"/id/ApiAccount/ChangeProfile";
             const string resendConfirmationEmailPath = @"/id/ApiAccount/ResendConfirmationEmail";
+            var veritransTokenPath = _configDictionary["@@.*.veritrans.tokenEndPoint@@"];
+            var veritransClientKey = _configDictionary["@@.*.veritrans.clientKey@@"];
 
 
 
@@ -362,6 +364,8 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("changePasswordPath", changePasswordPath);
             fileTemplate.SetAttribute("changeProfilePath", changeProfilePath);
             fileTemplate.SetAttribute("resendConfirmationEmailPath", resendConfirmationEmailPath);
+            fileTemplate.SetAttribute("veritransTokenPath", veritransTokenPath);
+            fileTemplate.SetAttribute("veritransClientKey", veritransClientKey);
 
 
             var fileContent = fileTemplate.ToString();

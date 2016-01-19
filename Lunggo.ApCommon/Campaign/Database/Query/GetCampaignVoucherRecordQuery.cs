@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Campaign.Database.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT A.[VoucherCode], A.[CampaignId], A.[RemainingCount], A.[IsSingleUsage], ");
-            clauseBuilder.Append("B.[Name] AS CampaignName, B.[Description] AS CampaignDescription, ");
+            clauseBuilder.Append("B.[Name] AS CampaignName, B.[Description] AS CampaignDescription, B.DisplayName, ");
             clauseBuilder.Append("B.[StartDate], B.[EndDate], ");
             clauseBuilder.Append("B.[ValuePercentage], B.[ValueConstant], ");
             clauseBuilder.Append("B.[MaxDiscountValue], B.[MinSpendValue], ");

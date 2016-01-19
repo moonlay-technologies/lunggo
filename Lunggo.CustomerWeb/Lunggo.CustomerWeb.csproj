@@ -723,6 +723,8 @@
     <Content Include="Assets\images\campaign\surabaya-text.png" />
     <Content Include="Assets\images\campaign\surabaya-thumb.jpg" />
     <Content Include="Assets\images\campaign\surabaya.jpg" />
+    <Content Include="Assets\images\campaign\VisaWonderfulWednesday\visa-wonderful-wednesday-front.jpg" />
+    <Content Include="Assets\images\campaign\VisaWonderfulWednesday\visa-wonderful-wednesday.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta-text.png" />
     <Content Include="Assets\images\campaign\yogyakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta.jpg" />
@@ -845,6 +847,7 @@
     <Content Include="Assets\images\main-menu-arrow.png" />
     <Content Include="Assets\images\mandiri-logo.jpg" />
     <Content Include="Assets\images\map.jpg" />
+    <Content Include="Assets\images\mastercard-logo.jpg" />
     <Content Include="Assets\images\menu-icon-white.png" />
     <Content Include="Assets\images\menu-icon.png" />
     <Content Include="Assets\images\nav-sprite.png" />
@@ -953,6 +956,7 @@
     <Content Include="Assets\images\verisign-bg.jpg" />
     <Content Include="Assets\images\verisign-pin.png" />
     <Content Include="Assets\images\verisign.jpg" />
+    <Content Include="Assets\images\visa-logo.jpg" />
     <Content Include="Assets\images\warning-image.png" />
     <Content Include="Assets\images\white-bg.png" />
     <Content Include="Assets\images\yellow-stripe-small.png" />
@@ -1061,6 +1065,21 @@
     <Content Include="Assets\vendor\datepicker\jquery.datepick.css" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.min.js" />
     <Content Include="Assets\vendor\datepicker\jquery.plugin.min.js" />
+    <Content Include="Assets\vendor\fancybox\blank.gif" />
+    <Content Include="Assets\vendor\fancybox\fancybox_loading%402x.gif" />
+    <Content Include="Assets\vendor\fancybox\fancybox_loading.gif" />
+    <Content Include="Assets\vendor\fancybox\fancybox_overlay.png" />
+    <Content Include="Assets\vendor\fancybox\fancybox_sprite%402x.png" />
+    <Content Include="Assets\vendor\fancybox\fancybox_sprite.png" />
+    <Content Include="Assets\vendor\fancybox\helpers\fancybox_buttons.png" />
+    <Content Include="Assets\vendor\fancybox\helpers\jquery.fancybox-buttons.css" />
+    <Content Include="Assets\vendor\fancybox\helpers\jquery.fancybox-buttons.js" />
+    <Content Include="Assets\vendor\fancybox\helpers\jquery.fancybox-media.js" />
+    <Content Include="Assets\vendor\fancybox\helpers\jquery.fancybox-thumbs.css" />
+    <Content Include="Assets\vendor\fancybox\helpers\jquery.fancybox-thumbs.js" />
+    <Content Include="Assets\vendor\fancybox\jquery.fancybox.css" />
+    <Content Include="Assets\vendor\fancybox\jquery.fancybox.js" />
+    <Content Include="Assets\vendor\fancybox\jquery.fancybox.pack.js" />
     <Content Include="Assets\vendor\intltelinput\css\intlTelInput.css" />
     <Content Include="Assets\vendor\intltelinput\img\flags%402x.png" />
     <Content Include="Assets\vendor\intltelinput\img\flags.png" />
@@ -2538,6 +2557,7 @@
     <Content Include="Views\StaticPage\Terms.mobile.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.mobile.cshtml" />
     <Content Include="Views\StaticPage\GetCalendarTerms.mobile.cshtml" />
+    <Content Include="Views\StaticPage\VisaWonderfulWednesday.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2588,7 +2608,10 @@
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
     <Folder Include="Assets\travorama20\fonts\" />
+    <Folder Include="Campaign\VisaWonderfulWednesday\css\" />
+    <Folder Include="Campaign\VisaWonderfulWednesday\images\" />
     <Folder Include="Helper\" />
+    <Folder Include="Views\Campaign\" />
     <Folder Include="Views\Upload\" />
     <Folder Include="WebSrc\UW300\Logic\" />
     <Folder Include="WebSrc\UW300\Object\" />

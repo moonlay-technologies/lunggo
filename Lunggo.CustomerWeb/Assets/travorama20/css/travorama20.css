@@ -31,6 +31,14 @@ hr {
 .page-loaded {
   display: block; }
 
+.hide {
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s; }
+
 img {
   max-width: 100%; }
 
@@ -114,6 +122,35 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0; }
+
+.no-spacing {
+  letter-spacing: 0; }
+
+.list-blue {
+  list-style: none;
+  padding-left: 25px;
+  counter-reset: list-counter; }
+  .list-blue li {
+    position: relative;
+    padding-top: 5px;
+    padding-bottom: 10px; }
+    .list-blue li:before, .list-blue .page-index li.section-reason:after, .page-index .list-blue li.section-reason:after {
+      content: counter(list-counter);
+      counter-increment: list-counter;
+      background: #3ab8e7;
+      color: #fff;
+      position: absolute;
+      -webkit-border-radius: 50px;
+      -moz-border-radius: 50px;
+      border-radius: 50px;
+      font-weight: bold;
+      width: 25px;
+      height: 25px;
+      padding-top: 5px;
+      display: block;
+      text-align: center;
+      left: -30px;
+      top: 0; }
 
 .search-calendar {
   width: 320px;
@@ -3807,6 +3844,16 @@ file : /Assets/travorama20/css/_page_checkout.scss
     .payment-wrapper .payment.disabled {
       opacity: 0.5; }
 
+.credit-card-form .cc-number.visa {
+  background-image: url(/Assets/images/visa-logo.jpg);
+  background-position: 98% center;
+  background-repeat: no-repeat; }
+
+.credit-card-form .cc-number.mastercard {
+  background-image: url(/Assets/images/mastercard-logo.jpg);
+  background-position: 98% center;
+  background-repeat: no-repeat; }
+
 .widget-container .widget .widget-content {
   background: #f4f4f4; }
 
@@ -4950,6 +4997,9 @@ file : /Assets/travorama20/css/_page_password.scss
 
 .page-howtopay .section-howtopay {
   padding-top: 30px; }
+
+.page-campaign p {
+  font-size: 13px; }
 
 .page-campaign.campaign-2016-calendar .site-content {
   padding-bottom: 30px; }

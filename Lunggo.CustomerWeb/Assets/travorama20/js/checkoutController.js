@@ -34,6 +34,14 @@ app.controller('checkoutController', [
             { name: 'Ms', value: 'Miss' }
         ];
 
+        $scope.CreditCard = {
+            Name: '',
+            Month: '01',
+            Year: 2016,
+            Cvv: '',
+            Number: ''
+        };
+
         $scope.currency = 'IDR';
         $scope.language = langCode;
         $scope.token = token;
@@ -74,6 +82,7 @@ app.controller('checkoutController', [
                     if (returnData.data.Discount > 0) {
                         $scope.voucher.amount = returnData.data.Discount;
                         $scope.voucher.confirmedCode = $scope.voucher.code;
+                        $scope.voucher.displayName = returnData.data.DisplayName;
                     }
                 }, function(returnData) {
                     $scope.voucher.checked = true;
@@ -95,11 +104,84 @@ app.controller('checkoutController', [
             checked: false,
             rsvNo: '',
             isSuccess: false,
+            ccChecked: false,
+            checkCreditCard: function() {
+                if ($scope.paymentMethod == 'CreditCard') {
+
+                    Veritrans.url = VeritransTokenConfig.Url;
+                    Veritrans.client_key = VeritransTokenConfig.ClientKey;
+                    var card = function () {
+                        return {
+                            'card_number': $scope.CreditCard.Number,
+                            'card_exp_month': $scope.CreditCard.Month,
+                            'card_exp_year': $scope.CreditCard.Year,
+                            'card_cvv': $scope.CreditCard.Cvv,
+
+                            // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
+                            'secure': true,
+                            'bank': 'mandiri',
+                            'gross_amount': $scope.initialPrice - $scope.VisaPromo.Amount
+                        }
+                    };
+
+                    // run the veritrans function to check credit card
+                    Veritrans.token(card, callback);
+
+                    function callback(response) {
+                        if (response.redirect_url) {
+                            // 3Dsecure transaction. Open 3Dsecure dialog
+                            console.log('Open Dialog 3Dsecure');
+                            openDialog(response.redirect_url);
+
+                        } else if (response.status_code == '200') {
+                            // success 3d secure or success normal
+                            //close 3d secure dialog if any
+                            closeDialog();
+
+                            // store token data in input #token_id and then submit form to merchant server
+                            $("#vt-token").val(response.token_id);
+                            $scope.CreditCard.Token = response.token_id;
+
+                            $scope.book.send();
+
+                        } else {
+                            // failed request token
+                            //close 3d secure dialog if any
+                            closeDialog();
+                            $('#submit-button').removeAttr('disabled');
+                            // Show status message.
+                            $('#message').text(response.status_message);
+                            console.log(JSON.stringify(response));
+                        }
+                    }
+
+                    // Open 3DSecure dialog box
+                    function openDialog(url) {
+                        $.fancybox.open({
+                            href: url,
+                            type: 'iframe',
+                            autoSize: false,
+                            width: 400,
+                            height: 420,
+                            closeBtn: false,
+                            modal: true
+                        });
+                    }
+
+                    // Close 3DSecure dialog box
+                    function closeDialog() {
+                        $.fancybox.close();
+                    }
+
+                } else {
+                    $scope.book.send();
+                }
+            },
             send: function () {
                 $scope.book.booking = true; 
 
                 // generate data
-                $scope.book.postData = '"Token":"'+$scope.token+'", "Payment.Currency":"'+$scope.currency+'", "DiscountCode":"'+$scope.voucher.confirmedCode+'", "Payment.Method":"'+$scope.paymentMethod+'", "Contact.Title" :"'+$scope.buyerInfo.title+'","Contact.Name":"'+$scope.buyerInfo.fullname+'", "Contact.CountryCode":"'+$scope.buyerInfo.countryCode+'", "Contact.Phone":"'+$scope.buyerInfo.phone+'","Contact.Email":"'+$scope.buyerInfo.email+'","Language":"'+$scope.language+'"';
+                $scope.book.postData = ' "Payment.Data.Data0" : "'+$scope.CreditCard.Token+'", "Token":"'+$scope.token+'", "Payment.Currency":"'+$scope.currency+'", "DiscountCode":"'+$scope.voucher.confirmedCode+'", "Payment.Method":"'+$scope.paymentMethod+'", "Contact.Title" :"'+$scope.buyerInfo.title+'","Contact.Name":"'+$scope.buyerInfo.fullname+'", "Contact.CountryCode":"'+$scope.buyerInfo.countryCode+'", "Contact.Phone":"'+$scope.buyerInfo.phone+'","Contact.Email":"'+$scope.buyerInfo.email+'","Language":"'+$scope.language+'"';
                 for (var i = 0; i < $scope.passengers.length; i++) {
 
                     // check nationality
@@ -367,6 +449,13 @@ app.controller('checkoutController', [
             }
             return numbers;
         }
+        // **********
+        // if payment use credit card
+        // validate credit card
+        $scope.validateCreditCard = function() {
+            
+        }
+        // **********
         // generate passenger
         $scope.generatePassenger = function () {
             if (adultPassenger > 0) {
@@ -447,6 +536,55 @@ app.controller('checkoutController', [
         console.log(parseInt($scope.transferWindow[0]));
         console.log(parseInt($scope.transferWindow[1]));
         console.log( $scope.transferWindowOpen );
+
+        //********************
+        // VISA Wonderful Wednesday Promo
+        $scope.VisaPromo = {
+            Type: '',
+            Valid: false,
+            Amount: 0,
+            Check: function (creditCardNumber) {
+                if ($scope.paymentMethod == 'CreditCard') {
+                    if (creditCardNumber) {
+                        var firstNum = creditCardNumber.toString().charAt(0);
+                        var minOrder = 200000;
+                        var nowDate = new Date();
+                        var utcDate = nowDate.getTime() + (nowDate.getTimezoneOffset() * 60000);
+                        var jakartaDate = new Date(utcDate + (3600000 * 7));;
+                        var jakartaDay = jakartaDate.getDay();
+                        var endOfCampaign = new Date('31 March 2016');
+
+                        if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 3 && jakartaDate < endOfCampaign) {
+                            $scope.VisaPromo.Type = 'visa';
+                            $scope.VisaPromo.Valid = true;
+                            $scope.VisaPromo.Amount = 50000;
+                            // reset voucher
+                            $scope.voucher.amount = 0;
+                            $scope.voucher.checking = false;
+                            $scope.voucher.checked = false;
+                            $scope.voucher.confirmedCode = '';
+                        } else {
+                            if (firstNum == 5) {
+                                $scope.VisaPromo.Type = 'mastercard';
+                            } else if (firstNum == 4) {
+                                $scope.VisaPromo.Type = 'visa';
+                            } else {
+                                $scope.VisaPromo.Type = '';
+                            }
+                            $scope.VisaPromo.Valid = false;
+                            $scope.VisaPromo.Amount = 0;
+                        }
+
+                    } else {
+                        $scope.VisaPromo.Valid = false;
+                        $scope.VisaPromo.Amount = 0;
+                    }
+                } else {
+                    $scope.VisaPromo.Valid = false;
+                    $scope.VisaPromo.Amount = 0;
+                }
+            }
+        };
 
     }
 ]);// checkout controller
