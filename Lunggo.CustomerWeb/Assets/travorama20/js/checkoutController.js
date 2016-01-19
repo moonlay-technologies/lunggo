@@ -554,7 +554,7 @@ app.controller('checkoutController', [
                         var jakartaDay = jakartaDate.getDay();
                         var endOfCampaign = new Date('31 March 2016');
 
-                        if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 5 && jakartaDate < endOfCampaign) {
+                        if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 2 && jakartaDate < endOfCampaign) {
                             $scope.VisaPromo.Type = 'visa';
                             $scope.VisaPromo.Valid = true;
                             $scope.VisaPromo.Amount = 50000;

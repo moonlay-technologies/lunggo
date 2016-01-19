@@ -73,6 +73,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
+        [RequireHttps]
         public ActionResult Checkout(string token)
         {
             if (TempData["FlightCheckoutOrBookingError"] != null)
@@ -111,6 +112,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
+        [RequireHttps]
         [HttpPost]
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
