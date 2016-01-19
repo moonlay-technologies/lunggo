@@ -47,7 +47,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult GetCalendar(string email)
         {
             DateTime Date = DateTime.Now; 
-            DateTime endDate = new DateTime(2016,1,18);
+            DateTime endDate = new DateTime(2016,2,3);
             using (var con = DbService.GetInstance().GetOpenConnection())
             {
 

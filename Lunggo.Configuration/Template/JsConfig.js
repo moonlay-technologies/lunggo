@@ -125,3 +125,8 @@ var ChangeProfileConfig = {
 var ResendConfirmationEmailConfig = {
     Url: '$rootUrl$$resendConfirmationEmailPath$'
 };
+
+var VeritransTokenConfig = {
+    Url: '$veritransTokenPath$',
+    ClientKey: '$veritransClientKey$'
+};

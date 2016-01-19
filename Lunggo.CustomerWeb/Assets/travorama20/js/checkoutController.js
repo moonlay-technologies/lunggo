@@ -108,8 +108,8 @@ app.controller('checkoutController', [
             checkCreditCard: function() {
                 if ($scope.paymentMethod == 'CreditCard') {
 
-                    Veritrans.url = "https://api.sandbox.veritrans.co.id/v2/token";
-                    Veritrans.client_key = "VT-client-J8i9AzRyIU49D_v3";
+                    Veritrans.url = VeritransTokenConfig.Url;
+                    Veritrans.client_key = VeritransTokenConfig.ClientKey;
                     var card = function () {
                         return {
                             'card_number': $scope.CreditCard.Number,
@@ -554,7 +554,7 @@ app.controller('checkoutController', [
                         var jakartaDay = jakartaDate.getDay();
                         var endOfCampaign = new Date('31 March 2016');
 
-                        if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 2 && jakartaDate < endOfCampaign) {
+                        if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 3 && jakartaDate < endOfCampaign) {
                             $scope.VisaPromo.Type = 'visa';
                             $scope.VisaPromo.Valid = true;
                             $scope.VisaPromo.Amount = 50000;
