@@ -658,19 +658,19 @@
                                     <div class="widget-content">
                                         <dl>
                                             <dt>Total Tiket</dt>
-                                            <dd><sup>Rp</sup> {{initialPrice | number}}</dd>
+                                            <dd>Rp {{initialPrice | number}}</dd>
                                         </dl>
                                         <dl ng-if="voucher.confirmedCode">
                                             <dt>{{voucher.displayName}}</dt>
-                                            <dd><sup>Rp</sup>- {{voucher.amount | number}}</dd>
+                                            <dd>- Rp {{voucher.amount | number}}</dd>
                                         </dl>
                                         <dl ng-if="VisaPromo.Valid">
                                             <dt>VISA Wonderful Wednesday</dt>
-                                            <dd><sup>Rp</sup>- {{VisaPromo.Amount | number}}</dd>
+                                            <dd>- Rp {{VisaPromo.Amount | number}}</dd>
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
-                                            <dd><sup>Rp</sup> {{totalPrice - voucher.amount - VisaPromo.Amount | number}}</dd>
+                                            <dd>Rp {{totalPrice - voucher.amount - VisaPromo.Amount | number}}</dd>
                                         </dl>
                                     </div>
                                     <footer>
