@@ -128,7 +128,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                 requestParams.CreditCard = new CreditCard
                 {
                     TokenId = data.Data0,
-                    Bank = "mandiri"
+                    Bank = "mandiri",
+                    AllowedBins = data.Data0.StartsWith("4") ? new List<string>{"4"} : null
                 };
             }
             var jsonRequestParams = JsonConvert.SerializeObject(requestParams);
