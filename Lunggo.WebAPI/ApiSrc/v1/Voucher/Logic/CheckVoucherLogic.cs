@@ -25,7 +25,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Logic
             return new CheckVoucherApiResponse
             {
                 Discount = response.TotalDiscount,
-                DisplayName = response.CampaignVoucher.DisplayName,
+                DisplayName = response.CampaignVoucher != null ? response.CampaignVoucher.DisplayName : null,
                 ValidationStatus = response.UpdateStatus,
                 OriginalRequest = request
             };
