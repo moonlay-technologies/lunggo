@@ -686,10 +686,16 @@
                                             <div class="form-group">
                                                 <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherNotFound'">Kode voucher salah</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah di gunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Voucher tidak dapat di gunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignNotStartedYet'">Voucher tidak dapat di gunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignHasEnded'">Voucher tidak dapat di gunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Dibawah pembelian minimum</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignNotStartedYet'">Voucher belum dapat digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignHasEnded'">Voucher sudah tidak dapat digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignInactive'">Voucher tidak dapat digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'NoVoucherRemaining'">Voucher sudah habis</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'EmailNotEligible'">Voucher tidak dapat digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'UpdateError'">Voucher tidak dapat digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherNotFound'">Voucher tidak ditemukan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
                                             </div>
                                             <div class="form-group">
                                                 <div class="row">
@@ -771,7 +777,7 @@
             <div class="page-overlay flight-expired" ng-show="expired">
                 <div class="overlay-content">
                     <header>
-                        <h4>Pencarian Kadaluarsa</h4>
+                        <h4>Checkout Kadaluarsa</h4>
                     </header>
                     <section>
                         <div class="container">
@@ -780,8 +786,8 @@
                                     <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
                                 </div>
                                 <div class="col-sm-8">
-                                    <h3>Halaman Pencarian Anda <b>Sudah Kadaluarsa</b></h3>
-                                    <p>Silahkan klik tombol di bawah ini untuk memparbaharui halaman pencarian Anda.</p>
+                                    <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
+                                    <p>Silahkan klik tombol dibawah untuk kembali ke halaman pencarian.</p>
                                 </div>
                             </div>
                         </div>

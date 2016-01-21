@@ -404,25 +404,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group form-origin-wrapper">
-                    <input type="text" value="" class="form-control form-origin" />
+                <div class="form-group">
+                    <p class="form-control form-origin" ng-click="SetOverlay('airport-select')">Jakarta, Indonesia - CGK</p>
                 </div>
-                <div class="form-group form-destination-wrapper">
-                    <input type="text" value="" class="form-control form-destination" />
+                <div class="form-group">
+                    <p class="form-control form-destination">Denpasar, Bali, Indonesia</p>
                 </div>
-                <div class="form-group form-date-wrapper">
-                    <input type="text" value="" class="form-control form-date" />
+                <div class="form-group">
+                    <p class="form-control form-date form-departure-date"><b>Change Date?</b> 17 Nov 2015</p>
+                </div>
+                <div class="form-group">
+                    <p class="form-control form-date form-return-date"><b>Change Date?</b> 17 Nov 2015</p>
                 </div>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-xs-4">
-                            <input type="text" value="" class="form-passenger form-control form-adult" />
+                            <p class="form-control form-passenger form-adult">1</p>
                         </div>
                         <div class="col-xs-4">
-                            <input type="text" value="" class="form-passenger form-control form-children" />
+                            <p class="form-control form-passenger form-children">1</p>
                         </div>
                         <div class="col-xs-4">
-                            <input type="text" value="" class="form-passenger form-control form-infant" />
+                            <p class="form-control form-passenger form-infant">1</p>
                         </div>
                     </div>
                 </div>
@@ -460,6 +463,27 @@
         </section><!-- .overlay__content -->
     </div><!-- .overlay--flight-form-->
     
+    <!-- overlay airport selector -->
+    <div class="overlay overlay--theme--blue overlay--airport-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'airport-select')}">
+        <header class="overlay__header">
+            <div class="overlay__title">
+                <div class="row">
+                    <div class="col-xs-10">
+                        <input type="text" ng-model="FlightSearchForm.AutoComplete.Keyword" class="form-control" placeholder="Cari bandara" ng-change="FlightSearchForm.AutoComplete.GetAirport()" />
+                    </div>
+                    <div class="col-xs-2">
+                        <span class="overlay__close" ng-click="SetOverlay('flight-form')">X</span>
+                    </div>
+                </div>
+            </div>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <ul>
+                <li><a href="#"></a></li>
+            </ul>
+        </section><!-- .overlay__content -->
+    </div><!-- .overlay--airport-select -->
+
     <!-- popups -->
     <!-- popup revalidate -->
     <div class="popup__wrapper" ng-class="{'active':PageConfig.Validating}">
