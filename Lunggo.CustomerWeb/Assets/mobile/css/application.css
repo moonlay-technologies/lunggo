@@ -58,6 +58,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   -moz-border-radius: 2px;
   border-radius: 2px; }
 
+.form-control {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; }
+
 .site-header {
   position: fixed;
   top: 0;
@@ -350,7 +355,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .overlay .overlay__header .overlay__title {
       margin: 0; }
     .overlay .overlay__header .overlay__close {
-      float: right; }
+      float: right;
+      font-size: 19px; }
   .overlay .overlay__content, .overlay .overlay__body {
     background: #fff;
     min-height: 100%;
@@ -379,17 +385,19 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   display: inline-block;
   padding: 10px;
   background: #fff;
-  color: #000; }
+  color: #000;
+  font-size: 13px; }
   .overlay.overlay--flight-form form .flight-trip.active {
     background: #0c7399;
     color: #fff; }
 
-.overlay.overlay--flight-form form .form-origin-wrapper, .overlay.overlay--flight-form form .form-destination-wrapper, .overlay.overlay--flight-form form .form-date-wrapper {
-  position: relative; }
-  .overlay.overlay--flight-form form .form-origin-wrapper input[type="text"], .overlay.overlay--flight-form form .form-destination-wrapper input[type="text"], .overlay.overlay--flight-form form .form-date-wrapper input[type="text"] {
-    padding: 20px;
-    padding-left: 40px; }
-  .overlay.overlay--flight-form form .form-origin-wrapper:before, .overlay.overlay--flight-form form .form-destination-wrapper:before, .overlay.overlay--flight-form form .form-date-wrapper:before {
+.overlay.overlay--flight-form form .form-origin, .overlay.overlay--flight-form form .form-destination, .overlay.overlay--flight-form form .form-date {
+  position: relative;
+  padding: 11px 20px;
+  padding-left: 50px;
+  height: 40px;
+  font-size: 13px; }
+  .overlay.overlay--flight-form form .form-origin:before, .overlay.overlay--flight-form form .form-destination:before, .overlay.overlay--flight-form form .form-date:before {
     content: '';
     display: block;
     position: absolute;
@@ -399,15 +407,38 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     left: 10px;
     top: 10px; }
 
-.overlay.overlay--flight-form form .form-destination-wrapper:before {
+.overlay.overlay--flight-form form .form-destination:before {
   background-position: -22px 0; }
 
-.overlay.overlay--flight-form form .form-date-wrapper:before {
+.overlay.overlay--flight-form form .form-date:before {
   background-image: url(/Assets/images/cal-bg.png);
   background-size: contain;
   width: 25px;
   height: 25px;
   top: 8px; }
+
+.overlay.overlay--flight-form form .form-adult, .overlay.overlay--flight-form form .form-children, .overlay.overlay--flight-form form .form-infant {
+  position: relative;
+  padding: 10px 20px;
+  padding-left: 45px;
+  text-align: center;
+  height: 40px;
+  font-size: 14px; }
+  .overlay.overlay--flight-form form .form-adult:before, .overlay.overlay--flight-form form .form-children:before, .overlay.overlay--flight-form form .form-infant:before {
+    content: "";
+    display: block;
+    width: 22px;
+    height: 31px;
+    background: url(/Assets/mobile/images/passenger-sprite.png);
+    top: 5px;
+    left: 10px;
+    position: absolute; }
+
+.overlay.overlay--flight-form form .form-children:before {
+  background-position: -22px 0; }
+
+.overlay.overlay--flight-form form .form-infant:before {
+  background-position: -44px 0; }
 
 .overlay.datepicker .overlay__body {
   background: #616161;

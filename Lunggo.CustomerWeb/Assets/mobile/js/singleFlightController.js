@@ -10,6 +10,7 @@
     // variables
 
     $scope.PageConfig = $rootScope.PageConfig;
+    $scope.FlightSearchForm = $rootScope.FlightSearchForm;
 
     // set additional variables for Flight Page
     $scope.PageConfig.ActiveSection = 'departure';

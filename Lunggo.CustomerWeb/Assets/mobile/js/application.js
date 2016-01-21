@@ -127,7 +127,45 @@ if (typeof (angular) == 'object') {
                 // set on choose date function
                 //console.log($rootScope.DatePicker.Settings);
             }
-    };
+        };// datepicker
+
+        // flight search form
+        $rootScope.FlightSearchForm = {
+            AirportOrigin: '',
+            AirportDestination: '',
+            DepartureDate: '',
+            ReturnDate: '',
+            Passenger: [1, 0, 0],
+            AutoComplete: {
+                Target: 'departure',
+                Keyword: '',
+                GetAirport: function (keyword) {
+                    keyword = keyword || $rootScope.FlightSearchForm.AutoComplete.Keyword;
+
+                    $http.get(FlightAutocompleteConfig.Url + keyword).success(
+                        function (returnData) {
+                            console.log(returnData);
+                        }
+                    ).error(
+                        function (returnData) {
+                            console.log(returnData);
+                        }
+                    );
+
+                },
+                Loading: false,
+                Result: [],
+                Cache: {},
+                Reset: function (target) {
+                    if (target) {
+                        $rootScope.FlightSearchForm.AutoComplete.Target = target;
+                    }
+                    $rootScope.FlightSearchForm.AutoComplete.Keyword = '';
+                    $rootScope.FlightSearchForm.AutoComplete.Result = [];
+                    $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+                }
+            }
+        };// flight search form 
 
     });
 
