@@ -120,7 +120,7 @@ app.controller('checkoutController', [
                             // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
                             'secure': true,
                             'bank': 'mandiri',
-                            'gross_amount': $scope.initialPrice - $scope.VisaPromo.Amount
+                            'gross_amount': $scope.initialPrice - $scope.VisaPromo.Amount - $scope.voucher.amount
                         }
                     };
 
