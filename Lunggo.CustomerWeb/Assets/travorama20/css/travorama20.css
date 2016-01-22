@@ -3906,7 +3906,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
 .widget-container .widget.voucher .widget-content {
   padding: 12px; }
 
-.widget-container .widget.voucher .bg-danger {
+.widget-container .widget.voucher .bg-danger, .widget-container .widget.voucher .bg-success {
   padding: 6px;
   margin-top: 6px; }
 
