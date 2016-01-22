@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -90,16 +91,21 @@ namespace Lunggo.CustomerWeb.Controllers
 
             try
             {
-                var service = FlightService.GetInstance();
-                var itinerary = service.GetItineraryForDisplay(token);
-                var expiryTime = service.GetItineraryExpiry(token);
-                var savedPassengers = service.GetSavedPassengers(User.Identity.GetEmail());
+                var flight = FlightService.GetInstance();
+                var payment = PaymentService.GetInstance();
+                var itinerary = flight.GetItineraryForDisplay(token);
+                var expiryTime = flight.GetItineraryExpiry(token);
+                var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
+                var savedCreditCards = User.Identity.IsAuthenticated
+                    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
+                    : new List<SavedCreditCard>();
                 return View(new FlightCheckoutData
                 {
                     Token = token,
                     Itinerary = itinerary,
                     ExpiryTime = expiryTime.GetValueOrDefault(),
                     SavedPassengers = savedPassengers,
+                    SavedCreditCards = savedCreditCards
                 });
             }
             catch

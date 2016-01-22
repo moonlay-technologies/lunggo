@@ -130,7 +130,7 @@
                                     <td class="description">@Model.Itinerary.Trips[k].Segments[0].AirlineName @Model.Itinerary.Trips[k].OriginAirport-@Model.Itinerary.Trips[k].DestinationAirport @Model.Itinerary.Trips[k].DepartureDate.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                     <td class="qty">@Model.Passengers.Count</td>
                                     <td class="price"></td>
-                                    <td class="total">@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    <td class="total">@((Model.Payment.FinalPrice + Model.Discount).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</td>
                                 </tr>
                             }
                             @if (Model.VoucherCode != null)

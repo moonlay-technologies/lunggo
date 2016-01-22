@@ -61,12 +61,26 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     var content = GetResponseContent(response);
                     if (content != null)
                     {
+                        ProcessSavedCreditCardToken(data, content);
                         return PaymentResult(content);
                     }
                     else
                         return PaymentStatus.Denied;
                 default:
                     return PaymentStatus.Denied;
+            }
+        }
+
+        private static void ProcessSavedCreditCardToken(Data data, VeritransResponse content)
+        {
+            if (data != null && data.Data20)
+            {
+                var savedToken = content.SavedTokenId;
+                var tokenExpiry = content.TokenIdExpiry;
+                var maskedCardNumber = content.MaskedCard;
+                var cardHolderName = data.Data1;
+                var email = data.Data9;
+                PaymentService.GetInstance().SaveCreditCard(email, maskedCardNumber, cardHolderName, savedToken, tokenExpiry);
             }
         }
 
@@ -110,6 +124,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
         private static void ProcessVtDirectRequestParams(WebRequest request, Data data, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
+            data = data ?? new Data();
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout"));
             var requestParams = new VeritransRequest
             {
@@ -129,7 +144,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                 {
                     TokenId = data.Data0,
                     Bank = "mandiri",
-                    AllowedBins = data.Data0.StartsWith("4") ? new List<string>{"4"} : null
+                    AllowedBins = data.Data0.StartsWith("4") ? new List<string> { "4" } : null,
+                    TokenIdSaveEnabled = data.Data20
                 };
             }
             var jsonRequestParams = JsonConvert.SerializeObject(requestParams);

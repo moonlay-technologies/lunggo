@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans.Model
 {
@@ -32,5 +33,9 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans.Model
         internal string ApprovalCode { get; set; }
         [JsonProperty("eci")]
         internal string Eci { get; set; }
+        [JsonProperty("saved_token_id")]
+        internal string SavedTokenId { get; set; }
+        [JsonProperty("saved_token_id_expired_at")]
+        internal DateTime TokenIdExpiry { get; set; }
     }
 }
