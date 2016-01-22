@@ -111,7 +111,7 @@
                 <b>{{FlightConfig[0].FlightRequest.Trips[0].OriginAirport}}</b> to <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationAirport}}</b> - {{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'dd MMM yyyy'}}
             </p>
         </div>
-        <a ng-click="SetOverlay('flight-form')" class="summary-right"><span>GANTI</span></a>
+        <a ng-click="PageConfig.SetOverlay('flight-form')" class="summary-right"><span>GANTI</span></a>
     </section><!-- .flight-summary -->
     
     <div class="flight-loading" ng-hide="FlightConfig[0].FlightRequest.Progress == 100">
@@ -120,8 +120,8 @@
 
     <section class="flight-sort-filter" ng-show="FlightConfig[0].FlightRequest.Progress == 100">
         <div class="flight-sort-filter-action">
-            <a ng-click="SetOverlay('flight-filter')">FILTER</a>
-            <a ng-click="SetOverlay('flight-sort')">SORT</a>
+            <a ng-click="PageConfig.SetOverlay('flight-filter')">FILTER</a>
+            <a ng-click="PageConfig.SetOverlay('flight-sort')">SORT</a>
         </div>
     </section><!-- .flight-sort -->
     
@@ -399,33 +399,33 @@
                             <label><b>Roundtrip ?</b></label>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <label class="active flight-trip"><input type="radio" name="roundtrip" value="false" />No</label>
-                            <label class="flight-trip"><input type="radio" name="roundtrip" value="true" />Yes</label>
+                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == false}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" />No</label>
+                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == true}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" />Yes</label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <p class="form-control form-origin" ng-click="SetOverlay('airport-select')">Jakarta, Indonesia - CGK</p>
+                    <p class="form-control form-origin" ng-click="FlightSearchForm.AutoComplete.Reset('departure');SetOverlay('airport-select')">{{FlightSearchForm.AirportOrigin.City}} ({{FlightSearchForm.AirportOrigin.Code}}), {{FlightSearchForm.AirportOrigin.Country}}</p>
                 </div>
                 <div class="form-group">
-                    <p class="form-control form-destination">Denpasar, Bali, Indonesia</p>
+                    <p class="form-control form-destination" ng-click="FlightSearchForm.AutoComplete.Reset('return');SetOverlay('airport-select')">{{FlightSearchForm.AirportDestination.City}} ({{FlightSearchForm.AirportDestination.Code}}), {{FlightSearchForm.AirportDestination.Country}}</p>
                 </div>
                 <div class="form-group">
-                    <p class="form-control form-date form-departure-date"><b>Change Date?</b> 17 Nov 2015</p>
+                    <p class="form-control form-date form-departure-date"><b>Departure Date : </b> 17 Nov 2015</p>
                 </div>
                 <div class="form-group">
-                    <p class="form-control form-date form-return-date"><b>Change Date?</b> 17 Nov 2015</p>
+                    <p class="form-control form-date form-return-date"><b>Return Date : </b> 17 Nov 2015</p>
                 </div>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-xs-4">
-                            <p class="form-control form-passenger form-adult">1</p>
+                            <p class="form-control form-passenger form-adult" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}}</p>
                         </div>
                         <div class="col-xs-4">
-                            <p class="form-control form-passenger form-children">1</p>
+                            <p class="form-control form-passenger form-children" ng-click="FlightSearchForm.PassengerPicker.Reset('children'); SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[1]}}</p>
                         </div>
                         <div class="col-xs-4">
-                            <p class="form-control form-passenger form-infant">1</p>
+                            <p class="form-control form-passenger form-infant" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[2]}}</p>
                         </div>
                     </div>
                 </div>
@@ -478,11 +478,86 @@
             </div>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
-            <ul>
-                <li><a href="#"></a></li>
-            </ul>
+            <div ng-show="FlightSearchForm.AutoComplete.Loading">
+                <h4>Mencari bandara</h4>
+            </div>
+            <div ng-hide="FlightSearchForm.AutoComplete.Loading">
+                <div ng-show="FlightSearchForm.AutoComplete.Keyword.length < FlightSearchForm.AutoComplete.MinLength ">
+                    <h4>Masukan kata kunci</h4>
+                </div>
+                <div ng-show="FlightSearchForm.AutoComplete.Keyword.length >= FlightSearchForm.AutoComplete.MinLength">
+                    <ul ng-show="FlightSearchForm.AutoComplete.Result">
+                        <li ng-repeat="result in FlightSearchForm.AutoComplete.Result">
+                            <a ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); SetOverlay('flight-form')">{{result.City}} ({{result.Code}}), {{result.Name}}, {{result.Country}}</a>
+                        </li>
+                    </ul>
+                    <div ng-hide="FlightSearchForm.AutoComplete.Result">
+                        <h4>Bandara tidak ditemukan</h4>
+                    </div>
+                </div>
+            </div>
         </section><!-- .overlay__content -->
     </div><!-- .overlay--airport-select -->
+    
+    <!-- overlay date picker -->
+    <div class="overlay overlay--theme--blue overlay--datepicker">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                Pilih Tanggal Keberangkatan
+                <span class="overlay__close" ng-click="SetOverlay('flight-form')">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div class="datepicker" id="datepicker"></div>
+        </section>
+    </div><!-- .overlay--datepicker-->
+    
+    <!-- overlay passenger picker -->
+    <div class="overlay overlay--theme--blue overlay--passenger-selector" ng-class="{'active' : (PageConfig.ActiveOverlay == 'passenger-select')}">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                Jumlah Penumpang
+                <span class="overlay__close" ng-click="SetOverlay('flight-form')">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div class="passenger-selector">
+                <div class="passenger-selector__header">
+                    <ul>
+                        <li><a class="adult" ng-class="{'active' : FlightSearchForm.PassengerPicker.ActiveType == 'adult'}" ng-click="FlightSearchForm.PassengerPicker.Reset('adult')"></a></li>
+                        <li><a class="children" ng-class="{'active' : FlightSearchForm.PassengerPicker.ActiveType == 'children'}" ng-click="FlightSearchForm.PassengerPicker.Reset('children')"></a></li>
+                        <li><a class="infant" ng-class="{'active' : FlightSearchForm.PassengerPicker.ActiveType == 'infant'}" ng-click="FlightSearchForm.PassengerPicker.Reset('infant')"></a></li>
+                    </ul>
+                </div>
+                <div class="passenger-selector__body">
+                    <div class="selected">
+                        <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'adult'">
+                            <span class="number">{{FlightSearchForm.Passenger[0]}}</span>
+                            <span class="description"><b>Dewasa</b><br/>(&gt; 12 Tahun)</span>
+                        </p>
+                        <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'children'">
+                            <span class="number">{{FlightSearchForm.Passenger[1]}}</span>
+                            <span class="description"><b>Anak</b><br />(2-12 Tahun)</span>
+                        </p>
+                        <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'infant'">
+                            <span class="number">{{FlightSearchForm.Passenger[2]}}</span>
+                            <span class="description"><b>Bayi</b><br />(&lt; 2 Tahun)</span>
+                        </p>
+                    </div>
+                    <div class="selector" ng-show="FlightSearchForm.PassengerPicker.ActiveType != 'infant'">
+                        <span ng-repeat="number in FlightSearchForm.PassengerPicker.List" ng-click="FlightSearchForm.PassengerPicker.Set(number)" ng-class="{'disabled' : (number > (FlightSearchForm.PassengerPicker.TotalMaxPassenger - FlightSearchForm.PassengerPicker.TotalCurrentPassenger) )}">{{number}}</span>
+                    </div>
+                    <div class="selector" ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'infant'">
+                        <span ng-repeat="number in FlightSearchForm.PassengerPicker.List" ng-click="FlightSearchForm.PassengerPicker.Set(number)" ng-class="{'disabled' : (number > (FlightSearchForm.PassengerPicker.TotalMaxPassenger - FlightSearchForm.PassengerPicker.TotalCurrentPassenger) || ( number > FlightSearchForm.Passenger[0] ) )}">{{number}}</span>
+                    </div>
+                    <div class="note">
+                        <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'infant'">Jumlah bayi tidak boleh lebih dari jumlah penumpang dewasa</p>
+                        <p>Jumlah total penumpang tidak boleh lebih dari 9 orang</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div><!-- .overlay--passenger-selector -->
 
     <!-- popups -->
     <!-- popup revalidate -->

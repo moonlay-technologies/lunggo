@@ -272,6 +272,53 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
 }
 
+// overlay airport select
+.overlay.overlay--airport-select {
+    .overlay__content {padding:0;
+        h4 {padding-left:18px;}
+        ul {margin:0; padding:0;
+            li {
+                a {display:block; padding:10px 18px; color:#111;}
+                &+li {border-top:$border-default;}
+            }
+        }
+    }
+}
+
+// overlay passenger selector
+.overlay.overlay--passenger-selector {background:#616161;
+    .overlay__content {background:#616161; color:#fff; padding:0;
+        .passenger-selector__header {
+            ul {margin:0; padding:0;
+                li {display:block; width:33.333333334%; height:50px; float:left;
+                    &+li a {border-left:$border-default;}
+                    a {position:relative; display:block; width:100%; height:100%; background:#9d9d9d;
+                        &:before {width:22px; height:30px; background:url(/assets/mobile/images/passenger-sprite-white.png); background-repeat:no-repeat; display:block; position:absolute; content:''; top:10px; left:50%; margin-left:-11px;}
+                        &.active {background:#616161;}
+                        &.adult:before {background-position:0 0;}
+                        &.children:before {background-position:-22px 0;}
+                        &.infant:before {background-position:-44px 0;} 
+                    }
+                }
+            }
+        }
+        .passenger-selector__body {width:200px; margin-left:auto; margin-right:auto;
+            .selected {text-align:center; border-bottom:3px solid #fff; margin-bottom:15px;
+                .number {display:inline-block; font-size:72px; font-weight:bold;}
+                .description {display:inline-block; text-align:left; padding-left:5px;
+                    b {font-size:16px;}
+                }
+            }
+            .selector {
+                a, span {display:block; float:left; background:#ffd632; color:#616161; font-weight:bold; width:60px; height:60px; text-align:center; padding-top:10px; font-size:27px; margin-bottom:10px; margin-left:10px;
+                    &:nth-child(3n+1) {margin-left:0;}
+                    &.disabled {opacity:0.5;}
+                }
+            }
+        }
+    }
+}
+
 // *****
 // datepicker on overlay
 .overlay.datepicker {
