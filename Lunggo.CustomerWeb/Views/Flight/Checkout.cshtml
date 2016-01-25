@@ -531,88 +531,94 @@
                                     </div>
 
                                 </div><!-- .payment-wrapper -->
-                                 @*NIH NIH NIH NIH NIH NIH NIH NIH NIH NIH
-                                 NIH NIH NIH NIH NIH NIH NIH NIH NIH NIH
-                                 NIH NIH NIH NIH NIH NIH NIH NIH NIH NIH
-                                 NIH NIH NIH NIH NIH NIH NIH NIH NIH NIH
-                                 NIH NIH NIH NIH NIH NIH NIH NIH NIH NIH
-                                 NIH NIH NIH NIH NIH NIH NIH NIH NIH NIH
-                                 NIH NIH NIH NIH NIH NIH NIH NIH NIH NIH
-                                 NIH NIH NIH NIH NIH NIH NIH NIH NIH NIH
-                                 NIH NIH NIH NIH NIH NIH NIH NIH NIH NIH
-                                 BENERIN ISI IF-NYA
-                                 ITU YG DI UJUNG
-                                 TAMBAH KREDIT KART BARU
-                                 POKOKNYA KALO PAKE CREDIT CARD YG UDAH SAVED TINGGAL KIRIM TOKEN SAMA CVV BUAT TOKENIZE*@
-
-                                <select>
-                                    @foreach (var savedCreditCard in savedCreditCards)
-                                    {
-                                        <option>ISI LAH NI, nama card holder, masked card number, dll gitu2</option>
-                                    }
-                                    <option>TAMBAH BARU</option>
-                                </select>
 
                                 @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && true /*tambah kredit kart baru*/ ))
                                 {
+                                    
                                     <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
+
                                         <form name="creditCardForm" novalidate>
                                             <h3 class="no-spacing">Detail <b>Kartu Kredit</b></h3>
-                                            <div class="form-group">
-                                                <label class="control-label">Nomor Kartu</label>
-                                                <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-change="VisaPromo.Check(CreditCard.Number)" ng-class="{'visa' : (VisaPromo.Type == 'visa') , 'mastercard' : (VisaPromo.Type == 'mastercard') }" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
-                                            </div>
+                                            
+                                            <!-- credit card selector start -->
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-sm-4">
-                                                        <label class="control-label">Kadaluarsa</label>
-                                                        <!-- <input type="number" value="" class="form-control" placeholder="MM" maxlength="2" ng-model="CreditCard.Month" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
-                                                        <select class="form-control" ng-model="CreditCard.Month">
-                                                            <option value=
-                                                            <option value="01" selected="selected">Januari</option>
-                                                            <option value="02">Februari</option>
-                                                            <option value="03">Maret</option>
-                                                            <option value="04">April</option>
-                                                            <option value="05">Mei</option>
-                                                            <option value="06">Juni</option>
-                                                            <option value="07">Juli</option>
-                                                            <option value="08">Agustus</option>
-                                                            <option value="09">September</option>
-                                                            <option value="10">Oktober</option>
-                                                            <option value="11">November</option>
-                                                            <option value="12">Desember</option>
+                                                    <div class="col-sm-8">
+                                                        <label>Pilih kartu kredit :</label>
+                                                        <select class="form-control" ng-model="CreditCard.TwoClickToken" ng-required="paymentMethod == '@PaymentMethod.CreditCard'">
+                                                            <option value="false" selected="selected">Tambah Baru</option>
+                                                            @foreach (var savedCreditCard in savedCreditCards)
+                                                            {
+                                                                <option value="@savedCreditCard.Token">@savedCreditCard.CardHolderName - @savedCreditCard.MaskedCardNumber</option>
+                                                            }
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-4">
-                                                        <label class="control-label">&nbsp;</label>
-                                                        <!-- <input type="number" value="" class="form-control" placeholder="YYYY" maxlength="4" ng-model="CreditCard.Year" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
-                                                        <select class="form-control" ng-model="CreditCard.Year">
-                                                            <option value="
-                                                            <option value=" 2016" selected="selected">
-                                                                2016
-                                                            </option>
-                                                            <option value="2017">2017</option>
-                                                            <option value="2018">2018</option>
-                                                            <option value="2019">2019</option>
-                                                            <option value="2020">2020</option>
-                                                            <option value="2021">2021</option>
-                                                            <option value="2022">2022</option>
-                                                            <option value="2023">2023</option>
-                                                            <option value="2024">2024</option>
-                                                            <option value="2025">2025</option>
-                                                            <option value="2026">2026</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4" ng-if="CreditCard.TwoClickToken != 'false'">
                                                         <label class="control-label">CVV Kartu</label>
                                                         <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Nama Pemegang Kartu</label>
-                                                <input type="text" value="" class="form-control" size="16" ng-model="CreditCard.Name" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                            <!-- credit card selector end -->
+                                            
+                                            <!-- new credit card start -->
+                                            <div ng-if="CreditCard.TwoClickToken == 'false'">
+                                                <div class="form-group">
+                                                    <label class="control-label">Nomor Kartu</label>
+                                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-change="VisaPromo.Check(CreditCard.Number)" ng-class="{'visa' : (VisaPromo.Type == 'visa') , 'mastercard' : (VisaPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <label class="control-label">Kadaluarsa</label>
+                                                            <!-- <input type="number" value="" class="form-control" placeholder="MM" maxlength="2" ng-model="CreditCard.Month" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
+                                                            <select class="form-control" ng-model="CreditCard.Month">
+                                                                <option value="01" selected="selected">Januari</option>
+                                                                <option value="02">Februari</option>
+                                                                <option value="03">Maret</option>
+                                                                <option value="04">April</option>
+                                                                <option value="05">Mei</option>
+                                                                <option value="06">Juni</option>
+                                                                <option value="07">Juli</option>
+                                                                <option value="08">Agustus</option>
+                                                                <option value="09">September</option>
+                                                                <option value="10">Oktober</option>
+                                                                <option value="11">November</option>
+                                                                <option value="12">Desember</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="control-label">&nbsp;</label>
+                                                            <!-- <input type="number" value="" class="form-control" placeholder="YYYY" maxlength="4" ng-model="CreditCard.Year" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
+                                                            <select class="form-control" ng-model="CreditCard.Year">
+                                                                <option value="2016" selected="selected">
+                                                                    2016
+                                                                </option>
+                                                                <option value="2017">2017</option>
+                                                                <option value="2018">2018</option>
+                                                                <option value="2019">2019</option>
+                                                                <option value="2020">2020</option>
+                                                                <option value="2021">2021</option>
+                                                                <option value="2022">2022</option>
+                                                                <option value="2023">2023</option>
+                                                                <option value="2024">2024</option>
+                                                                <option value="2025">2025</option>
+                                                                <option value="2026">2026</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="control-label">CVV Kartu</label>
+                                                            <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Nama Pemegang Kartu</label>
+                                                    <input type="text" value="" class="form-control" size="16" ng-model="CreditCard.Name" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                </div>
                                             </div>
+                                            <!-- new credit card end -->
+
                                         </form>
                                     </div>
                                 <!-- .credit-card-form -->
