@@ -88,7 +88,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "Activities";
+            _tableName = "SavedCreditCard";
         }
 
         private static void InitRecordMetadata()

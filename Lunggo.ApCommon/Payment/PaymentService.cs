@@ -173,7 +173,7 @@ namespace Lunggo.ApCommon.Payment
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var savedCard = GetSavedCreditCardQuery.GetInstance()
-                    .Execute(conn, new {Email = email, MaskedCreditCard = maskedCardNumber}).SingleOrDefault();
+                    .Execute(conn, new {Email = email, MaskedCardNumber = maskedCardNumber}).SingleOrDefault();
                 if (savedCard == null)
                     SavedCreditCardTableRepo.GetInstance().Insert(conn, new SavedCreditCardTableRecord
                     {
