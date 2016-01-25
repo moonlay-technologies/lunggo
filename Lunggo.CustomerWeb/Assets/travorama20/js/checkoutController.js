@@ -112,7 +112,7 @@ app.controller('checkoutController', [
                     Veritrans.url = VeritransTokenConfig.Url;
                     Veritrans.client_key = VeritransTokenConfig.ClientKey;
                     var card = function () {
-                        if ($scope.CreditCard.TwoClick == 'false') {
+                        if ($scope.CreditCard.TwoClickToken == 'false') {
                             return {
                                 'card_number': $scope.CreditCard.Number,
                                 'card_exp_month': $scope.CreditCard.Month,
