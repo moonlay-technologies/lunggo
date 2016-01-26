@@ -531,22 +531,27 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a.disabled, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span.disabled {
           opacity: 0.5; }
 
-.overlay.datepicker .overlay__body {
+.overlay.overlay--datepicker .overlay__content {
   background: #616161;
   color: #fff; }
-  .overlay.datepicker .overlay__body a {
+  .overlay.overlay--datepicker .overlay__content a {
     color: #fff; }
-  .overlay.datepicker .overlay__body select {
+  .overlay.overlay--datepicker .overlay__content select {
     color: #000;
     font-size: 14px;
     margin-left: 5px; }
 
-.overlay.datepicker .ui-datepicker .ui-datepicker-header {
+.overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header {
   text-align: center;
   position: relative;
   padding-top: 20px;
-  height: 50px; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+  height: 50px;
+  color: #1daee4;
+  font-size: 22px; }
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-month {
+    font-weight: bold;
+    text-transform: uppercase; }
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
     position: absolute;
     left: 0;
     width: 25px;
@@ -555,35 +560,37 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-repeat: no-repeat;
     background-position: -30px 0;
     background-size: 200%; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
     left: auto;
     right: 0;
     background-position: 0 0; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-header:after, .overlay.datepicker .ui-datepicker .ui-datepicker-header:before {
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header:after, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header:before {
     display: block;
     width: 100%;
     content: "";
     clear: both; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-state-disabled {
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-state-disabled {
     opacity: 0.3; }
 
-.overlay.datepicker .ui-datepicker .ui-datepicker-calendar {
+.overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar {
   width: 100%;
   max-width: 280px;
   margin-left: auto;
   margin-right: auto; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar .ui-state-disabled {
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-state-disabled {
     opacity: 0.3; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day {
-    background: #fff; }
-    .overlay.datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day a, .overlay.datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day span {
-      color: #333; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar thead tr th {
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day {
+    background: #e3ae22; }
+    .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day a, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day span {
+      color: #fff; }
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end a, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end span {
+    color: #e3ae22; }
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar thead tr th {
     width: 40px;
     height: 40px;
     padding: 5px;
     text-align: center; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar tbody tr td {
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar tbody tr td {
     width: 40px;
     height: 40px;
     text-align: center;
