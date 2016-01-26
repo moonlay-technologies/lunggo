@@ -579,12 +579,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   margin-right: auto; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-state-disabled {
     opacity: 0.3; }
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end a, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end span {
+    color: #e3ae22; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day {
     background: #e3ae22; }
     .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day a, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day span {
       color: #fff; }
-  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end a, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end span {
-    color: #e3ae22; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar thead tr th {
     width: 40px;
     height: 40px;

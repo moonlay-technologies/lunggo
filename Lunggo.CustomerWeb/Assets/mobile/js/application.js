@@ -106,7 +106,7 @@ if (typeof (angular) == 'object') {
                         // $('.ui-datepicker').datepicker('setDate', new Date(date));
                         $($rootScope.DatePicker.Settings.Target).val(date);
                         $($rootScope.DatePicker.Settings.Target).trigger('input');
-                        console.log($rootScope.DatePicker.Settings.Target);
+                        console.log(date);
                     }
                 });
                 // set default value for datepicker
@@ -115,14 +115,18 @@ if (typeof (angular) == 'object') {
                 } else {
                     $rootScope.DatePicker.Settings.MinDate = new Date();
                 }
+                if (options.Target == 'departure') {
+                    $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
+                } else {
+                    $rootScope.DatePicker.Settings.Target = '.flight-search-form-return';
+                }
                 $rootScope.DatePicker.Settings.DateFormat = 'yy-mm-dd';
-                $rootScope.DatePicker.Settings.Target = options.Target;
-                $rootScope.DatePicker.Settings.ChangeMonth = options.ShowMonth || false;
-                $rootScope.DatePicker.Settings.ChangeYear = options.ShowYear || false;
+                $rootScope.DatePicker.Settings.ChangeMonth = false;
+                $rootScope.DatePicker.Settings.ChangeYear = false;
                 // set option to datepicker
-                $('.ui-datepicker.departure-date').datepicker('option', 'prevText', '');
-                $('.ui-datepicker.departure-date').datepicker('option', 'nextText', '');
-                $('.ui-datepicker.departure-date').datepicker('option', 'minDate', $rootScope.DatePicker.Settings.MinDate);
+                $('.ui-datepicker').datepicker('option', 'prevText', '');
+                $('.ui-datepicker').datepicker('option', 'nextText', '');
+                $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.DatePicker.Settings.MinDate);
                 //$('.ui-datepicker.departure-date').datepicker('option', 'changeMonth', $rootScope.DatePicker.Settings.ChangeMonth);
                 //$('.ui-datepicker.departure-date').datepicker('option', 'changeYear', $rootScope.DatePicker.Settings.ChangeYear);
                 //$('.ui-datepicker.departure-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
