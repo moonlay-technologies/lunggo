@@ -272,6 +272,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
 }
 
+// overlay flight sort
+.overlay.overlay--flight-sort {
+    .overlay__content {background:#878787; color:#fff;}
+}
+
 // overlay airport select
 .overlay.overlay--airport-select {
     .overlay__content {padding:0;
