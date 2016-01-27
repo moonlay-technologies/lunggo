@@ -704,7 +704,7 @@
         </section>
     </div><!-- .overlay--flight-sort -->
 
-    <!-- .overlay - flight form -->
+    <!-- .overlay - change flight -->
     <div class="overlay overlay--theme--blue overlay--flight-form" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-form')}">
         <header class="overlay__header">
             <h3 class="overlay__title">
@@ -713,7 +713,53 @@
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
-            <form>
+            <form class="form form-horizontal" ng-submit="FlightSearchForm.Submit()">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label><b>Roundtrip ?</b></label>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" class="hidden" />No</label>
+                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'true'}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" class="hidden" />Yes</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p class="form-control form-origin" ng-click="FlightSearchForm.AutoComplete.Reset('departure');SetOverlay('airport-select')">{{FlightSearchForm.AirportOrigin.City}} ({{FlightSearchForm.AirportOrigin.Code}}), {{FlightSearchForm.AirportOrigin.Country}}</p>
+                </div>
+                <div class="form-group">
+                    <p class="form-control form-destination" ng-click="FlightSearchForm.AutoComplete.Reset('return');SetOverlay('airport-select')">{{FlightSearchForm.AirportDestination.City}} ({{FlightSearchForm.AirportDestination.Code}}), {{FlightSearchForm.AirportDestination.Country}}</p>
+                </div>
+                <div class="form-group">
+                    <p class="form-control form-date form-departure-date" ng-click="DatePicker.SetOption({Target: 'departure'}); SetOverlay('datepicker-departure')"><b>Departure Date : </b> {{FlightSearchForm.DepartureDate | date: 'd-MMM-yyyy'}}</p>
+                    <input type="text" value="" ng-model="FlightSearchForm.DepartureDate" class="flight-search-form-departure hidden" />
+                </div>
+                <div class="form-group" ng-hide="FlightSearchForm.Trip == 'false'">
+                    <p class="form-control form-date form-return-date" ng-click="DatePicker.SetOption({Target: 'return'}); SetOverlay('datepicker-departure')"><b>Return Date : </b> {{FlightSearchForm.ReturnDate | date : 'd-MMM-yyyy'}}</p>
+                    <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <p class="form-control form-passenger form-adult" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}}</p>
+                        </div>
+                        <div class="col-xs-4">
+                            <p class="form-control form-passenger form-children" ng-click="FlightSearchForm.PassengerPicker.Reset('children'); SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[1]}}</p>
+                        </div>
+                        <div class="col-xs-4">
+                            <p class="form-control form-passenger form-infant" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[2]}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden">
+
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-yellow text-center btn-block btn-lg">SEARCH</button>
+                </div>
+            </form>
+            <form class="hidden">
                 <div class="form-group origin">
                     <input type="text" value="" class="form-control" placeholder="Asal" />
                 </div>
@@ -742,6 +788,112 @@
             </form>
         </section><!-- .overlay__content -->
     </div><!-- .overlay--flight-form-->
+    <!-- overlay airport selector -->
+    <div class="overlay overlay--theme--blue overlay--airport-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'airport-select')}">
+        <header class="overlay__header">
+            <div class="overlay__title">
+                <div class="row">
+                    <div class="col-xs-10">
+                        <input type="text" ng-model="FlightSearchForm.AutoComplete.Keyword" class="form-control" placeholder="Cari bandara" ng-change="FlightSearchForm.AutoComplete.GetAirport()" />
+                    </div>
+                    <div class="col-xs-2">
+                        <span class="overlay__close" ng-click="SetOverlay('flight-form')">X</span>
+                    </div>
+                </div>
+            </div>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div ng-show="FlightSearchForm.AutoComplete.Loading">
+                <h4>Mencari bandara</h4>
+            </div>
+            <div ng-hide="FlightSearchForm.AutoComplete.Loading">
+                <div ng-show="FlightSearchForm.AutoComplete.Keyword.length < FlightSearchForm.AutoComplete.MinLength ">
+                    <h4>Masukan kata kunci</h4>
+                </div>
+                <div ng-show="FlightSearchForm.AutoComplete.Keyword.length >= FlightSearchForm.AutoComplete.MinLength">
+                    <ul ng-show="FlightSearchForm.AutoComplete.Result">
+                        <li ng-repeat="result in FlightSearchForm.AutoComplete.Result">
+                            <a ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); SetOverlay('flight-form')">{{result.City}} ({{result.Code}}), {{result.Name}}, {{result.Country}}</a>
+                        </li>
+                    </ul>
+                    <div ng-hide="FlightSearchForm.AutoComplete.Result">
+                        <h4>Bandara tidak ditemukan</h4>
+                    </div>
+                </div>
+            </div>
+        </section><!-- .overlay__content -->
+    </div><!-- .overlay--airport-select -->
+    <!-- overlay date picker -->
+    <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--departure" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-departure') }">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                <span ng-show="DatePicker.Settings.Target == 'departure'">Pilih Tanggal Keberangkatan</span>
+                <span ng-show="DatePicker.Settings.Target == 'return'">Pilih Tanggal Pulang</span>
+                <span class="overlay__close" ng-click="SetOverlay('flight-form')">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div class="ui-datepicker departure-date"></div>
+        </section>
+    </div><!-- .overlay--datepicker-->
+    <!-- overlay date picker -->
+    <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--return" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-return') }">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                Pilih Tanggal Keberangkatan
+                <span class="overlay__close" ng-click="SetOverlay('flight-form')">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div class="ui-datepicker departure-date"></div>
+        </section>
+    </div><!-- .overlay--datepicker-->
+    <!-- overlay passenger picker -->
+    <div class="overlay overlay--theme--blue overlay--passenger-selector" ng-class="{'active' : (PageConfig.ActiveOverlay == 'passenger-select')}">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                Jumlah Penumpang
+                <span class="overlay__close" ng-click="SetOverlay('flight-form')">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div class="passenger-selector">
+                <div class="passenger-selector__header">
+                    <ul>
+                        <li><a class="adult" ng-class="{'active' : FlightSearchForm.PassengerPicker.ActiveType == 'adult'}" ng-click="FlightSearchForm.PassengerPicker.Reset('adult')"></a></li>
+                        <li><a class="children" ng-class="{'active' : FlightSearchForm.PassengerPicker.ActiveType == 'children'}" ng-click="FlightSearchForm.PassengerPicker.Reset('children')"></a></li>
+                        <li><a class="infant" ng-class="{'active' : FlightSearchForm.PassengerPicker.ActiveType == 'infant'}" ng-click="FlightSearchForm.PassengerPicker.Reset('infant')"></a></li>
+                    </ul>
+                </div>
+                <div class="passenger-selector__body">
+                    <div class="selected">
+                        <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'adult'">
+                            <span class="number">{{FlightSearchForm.Passenger[0]}}</span>
+                            <span class="description"><b>Dewasa</b><br />(&gt; 12 Tahun)</span>
+                        </p>
+                        <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'children'">
+                            <span class="number">{{FlightSearchForm.Passenger[1]}}</span>
+                            <span class="description"><b>Anak</b><br />(2-12 Tahun)</span>
+                        </p>
+                        <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'infant'">
+                            <span class="number">{{FlightSearchForm.Passenger[2]}}</span>
+                            <span class="description"><b>Bayi</b><br />(&lt; 2 Tahun)</span>
+                        </p>
+                    </div>
+                    <div class="selector" ng-show="FlightSearchForm.PassengerPicker.ActiveType != 'infant'">
+                        <span ng-repeat="number in FlightSearchForm.PassengerPicker.List" ng-click="FlightSearchForm.PassengerPicker.Set(number)" ng-class="{'disabled' : (number > (FlightSearchForm.PassengerPicker.TotalMaxPassenger - FlightSearchForm.PassengerPicker.TotalCurrentPassenger) )}">{{number}}</span>
+                    </div>
+                    <div class="selector" ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'infant'">
+                        <span ng-repeat="number in FlightSearchForm.PassengerPicker.List" ng-click="FlightSearchForm.PassengerPicker.Set(number)" ng-class="{'disabled' : (number > (FlightSearchForm.PassengerPicker.TotalMaxPassenger - FlightSearchForm.PassengerPicker.TotalCurrentPassenger) || ( number > FlightSearchForm.Passenger[0] ) )}">{{number}}</span>
+                    </div>
+                    <div class="note">
+                        <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'infant'">Jumlah bayi tidak boleh lebih dari jumlah penumpang dewasa</p>
+                        <p>Jumlah total penumpang tidak boleh lebih dari 9 orang</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div><!-- .overlay--passenger-selector -->
 
     <!-- popup revalidate -->
     <div class="popup__wrapper" ng-class="{'active':PageConfig.Validating}">

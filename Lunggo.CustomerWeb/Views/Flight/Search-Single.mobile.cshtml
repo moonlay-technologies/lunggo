@@ -396,15 +396,15 @@
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
-            <form class="form form-horizontal">
+            <form class="form form-horizontal" ng-submit="FlightSearchForm.Submit()">
                 <div class="form-group">
                     <div class="row">
                         <div class="col-xs-6">
                             <label><b>Roundtrip ?</b></label>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == false}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" />No</label>
-                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == true}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" />Yes</label>
+                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" class="hidden" />No</label>
+                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'true'}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" class="hidden" />Yes</label>
                         </div>
                     </div>
                 </div>
@@ -418,7 +418,7 @@
                     <p class="form-control form-date form-departure-date" ng-click="DatePicker.SetOption({Target: 'departure'}); SetOverlay('datepicker-departure')"><b>Departure Date : </b> {{FlightSearchForm.DepartureDate | date: 'd-MMM-yyyy'}}</p>
                     <input type="text" value="" ng-model="FlightSearchForm.DepartureDate" class="flight-search-form-departure hidden" />
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-hide="FlightSearchForm.Trip == 'false'">
                     <p class="form-control form-date form-return-date" ng-click="DatePicker.SetOption({Target: 'return'}); SetOverlay('datepicker-departure')"><b>Return Date : </b> {{FlightSearchForm.ReturnDate | date : 'd-MMM-yyyy'}}</p>
                     <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />
                 </div>
@@ -434,6 +434,9 @@
                             <p class="form-control form-passenger form-infant" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[2]}}</p>
                         </div>
                     </div>
+                </div>
+                <div class="hidden">
+                    
                 </div>
                 <div class="form-group">
                     <button class="btn btn-yellow text-center btn-block btn-lg">SEARCH</button>

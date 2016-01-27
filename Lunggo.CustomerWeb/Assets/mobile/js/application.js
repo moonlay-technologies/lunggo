@@ -106,19 +106,29 @@ if (typeof (angular) == 'object') {
                         // $('.ui-datepicker').datepicker('setDate', new Date(date));
                         $($rootScope.DatePicker.Settings.Target).val(date);
                         $($rootScope.DatePicker.Settings.Target).trigger('input');
+                        // console.log($rootScope.DatePicker.Settings.Target);
                         console.log(date);
                     }
                 });
+
                 // set default value for datepicker
                 if (options.MinDate) {
                     $rootScope.DatePicker.Settings.MinDate = options.MinDate;
                 } else {
                     $rootScope.DatePicker.Settings.MinDate = new Date();
                 }
+                $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.DatePicker.Settings.MinDate);
+
                 if (options.Target == 'departure') {
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
+                    if ($rootScope.FlightSearchForm.ReturnDate) {
+                        $('.ui-datepicker').datepicker('option', 'maxDate', new Date($rootScope.FlightSearchForm.ReturnDate) );
+                    }
                 } else {
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-return';
+                    if ($rootScope.FlightSearchForm.DepartureDate) {
+                        $('.ui-datepicker').datepicker('option', 'minDate', new Date($rootScope.FlightSearchForm.DepartureDate));
+                    }
                 }
                 $rootScope.DatePicker.Settings.DateFormat = 'yy-mm-dd';
                 $rootScope.DatePicker.Settings.ChangeMonth = false;
@@ -126,7 +136,6 @@ if (typeof (angular) == 'object') {
                 // set option to datepicker
                 $('.ui-datepicker').datepicker('option', 'prevText', '');
                 $('.ui-datepicker').datepicker('option', 'nextText', '');
-                $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.DatePicker.Settings.MinDate);
                 //$('.ui-datepicker.departure-date').datepicker('option', 'changeMonth', $rootScope.DatePicker.Settings.ChangeMonth);
                 //$('.ui-datepicker.departure-date').datepicker('option', 'changeYear', $rootScope.DatePicker.Settings.ChangeYear);
                 //$('.ui-datepicker.departure-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
@@ -140,20 +149,21 @@ if (typeof (angular) == 'object') {
 
         // flight search form
         $rootScope.FlightSearchForm = {
-            Trip: false,
+            Trip: 'false',
             AirportOrigin: {
                 City: 'Jakarta',
                 Code: 'CGK',
                 Country: 'Indonesia'
-            },
+            },// origin
             AirportDestination: {
                 City: 'Denpasar',
                 Code: 'DPS',
                 Country: 'Indonesia'
-            },
+            },// destination
             DepartureDate: '',
             ReturnDate: '',
             Passenger: [1, 0, 0],
+            Cabin: 'y',
             AutoComplete: {
                 Target: 'departure',
                 Keyword: '',
@@ -202,11 +212,9 @@ if (typeof (angular) == 'object') {
                     } else {
                         $rootScope.FlightSearchForm.AirportDestination = airport;
                     }
+                    //console.log(airport);
                 }
-            },
-            DatePicker: function() {
-                $('#datepicker').datepicker();
-            },
+            },// auto complete
             PassengerPicker: {
                 ActiveType: 'adult',
                 TotalMaxPassenger: 9,
@@ -267,7 +275,42 @@ if (typeof (angular) == 'object') {
                     $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger = $rootScope.FlightSearchForm.Passenger[0] + $rootScope.FlightSearchForm.Passenger[1] + $rootScope.FlightSearchForm.Passenger[2];
                     $rootScope.PageConfig.SetOverlay('flight-form');
                 }
-            }
+            },// passenger picker
+            Url: '',
+            Submit: function() {
+                console.log($rootScope.FlightSearchForm);
+                console.log('Generating search form');
+
+                if ($rootScope.FlightSearchForm.DepartureDate == '') {
+                    var departure = new Date();
+                    departure.setDate( departure.getDate() + 1 );
+                    $rootScope.FlightSearchForm.DepartureDate = departure;
+                }
+
+                if ($rootScope.FlightSearchForm.ReturnDate == '') {
+                    var todayDate = new Date();
+                    var returnDate = new Date();
+                    returnDate.setDate( todayDate.getDate() + 2 );
+
+                    $rootScope.FlightSearchForm.ReturnDate = returnDate;
+                }
+
+                $rootScope.FlightSearchForm.Url = FlightSearchConfig.GenerateSearchParam({
+                    trip: ($rootScope.FlightSearchForm.Trip == 'true'),
+                    departureDate: $rootScope.FlightSearchForm.DepartureDate,
+                    returnDate: $rootScope.FlightSearchForm.ReturnDate,
+                    origin: $rootScope.FlightSearchForm.AirportOrigin.Code,
+                    destination: $rootScope.FlightSearchForm.AirportDestination.Code,
+                    adult: $rootScope.FlightSearchForm.Passenger[0],
+                    children: $rootScope.FlightSearchForm.Passenger[1],
+                    infant: $rootScope.FlightSearchForm.Passenger[2],
+                    cabin: $rootScope.FlightSearchForm.Cabin
+                });
+
+                // redirect page to search page
+                window.location = window.location.origin + '/id/Flight/Search?info=' + $rootScope.FlightSearchForm.Url  ;
+
+            }// submit
         };// flight search form 
 
     });

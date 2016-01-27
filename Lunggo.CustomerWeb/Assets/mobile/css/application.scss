@@ -248,7 +248,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // overlay flight form
 .overlay.overlay--flight-form {
     form {
-        .flight-trip {display:inline-block; padding:10px; background:#fff; color:#000; font-size:13px;
+        .flight-trip {display:inline-block; padding:10px; background:#fff; color:#000; font-size:13px; width:50px; text-align:center;
             &.active {background:#0c7399; color:#fff;}
         }
         .form-origin {position:relative; padding:11px 20px; padding-left:50px; height:40px; font-size:13px;

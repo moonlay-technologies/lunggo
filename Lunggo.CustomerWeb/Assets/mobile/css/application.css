@@ -386,7 +386,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding: 10px;
   background: #fff;
   color: #000;
-  font-size: 13px; }
+  font-size: 13px;
+  width: 50px;
+  text-align: center; }
   .overlay.overlay--flight-form form .flight-trip.active {
     background: #0c7399;
     color: #fff; }
