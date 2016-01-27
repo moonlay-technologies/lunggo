@@ -137,6 +137,37 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\Driver\azureStorage.properties" />
+    <None Include="Config\Webjob.BankTransferChecking\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\Webjob.BankTransferChecking\Airline.csv" />
+    <None Include="Config\Webjob.BankTransferChecking\Airport.csv" />
+    <None Include="Config\Webjob.BankTransferChecking\api.properties" />
+    <None Include="Config\Webjob.BankTransferChecking\azureStorage.properties" />
+    <None Include="Config\Webjob.BankTransferChecking\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\Webjob.BankTransferChecking\Country.csv" />
+    <None Include="Config\Webjob.BankTransferChecking\cw.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\Webjob.BankTransferChecking\db.properties" />
+    <None Include="Config\Webjob.BankTransferChecking\domain.properties" />
+    <None Include="Config\Webjob.BankTransferChecking\facebook.properties" />
+    <None Include="Config\Webjob.BankTransferChecking\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\Webjob.BankTransferChecking\freshdesk.properties" />
+    <None Include="Config\Webjob.BankTransferChecking\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\Webjob.BankTransferChecking\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\Webjob.BankTransferChecking\HotelLocation.csv" />
+    <None Include="Config\Webjob.BankTransferChecking\mandiri.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -154,6 +185,20 @@
     <None Include="Config\WebAPI\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\Webjob.BankTransferChecking\mandrill.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\Webjob.BankTransferChecking\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\Webjob.BankTransferChecking\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\Webjob.BankTransferChecking\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\Webjob.BankTransferChecking\veritrans.properties" />
+    <None Include="Config\Webjob.BankTransferChecking\zendesk.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -361,6 +406,51 @@
     <None Include="Config\WebJob.MystiflyQueueHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\Airline.csv" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\Airport.csv" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\api.properties" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\azureStorage.properties" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\Country.csv" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\cw.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\db.properties" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\domain.properties" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\facebook.properties" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\freshdesk.properties" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\HotelLocation.csv" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\mandiri.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\mandrill.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\veritrans.properties" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\zendesk.properties" />
     <None Include="Config\WebJob.TicketQueueHandler\azureStorage.properties" />
     <None Include="Config\Worker.EticketHandler\airAsia.properties">
       <SubType>Designer</SubType>

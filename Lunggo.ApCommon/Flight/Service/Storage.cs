@@ -12,6 +12,7 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
 using StackExchange.Redis;
+using System.Diagnostics;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -24,6 +25,101 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             return GetDb.SavedPassengers(contactEmail);
         }
+
+        /* Save Transaction Inquiry into Redis */
+        public void SaveTransacInquiryInCache(string MandiriCacheId, Dictionary<string,string> transaction,TimeSpan timeout)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = MandiriCacheId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            //var cacheObject = transactionList.ToCacheObject();
+
+            foreach (var pair in transaction)
+            {
+                redisDb.HashSet(redisKey, (RedisValue)pair.Key, (RedisValue)pair.Value);
+                redisDb.KeyExpire(redisKey, timeout);
+            }
+
+        }
+
+        public Dictionary<string, string> GetTransacInquiryFromCache(string mandiricacheId)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = mandiricacheId;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var temp = redisDb.HashGetAll(redisKey).ToList();
+                if (temp.Count != 0)
+                {
+                    return temp.ToDictionary(hashEntry => (string)hashEntry.Name, hashEntry => (string)hashEntry.Value);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
+        public TimeSpan GetRedisExpiry(string key)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = key;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
+                return timeToLive;
+            }
+            catch 
+            {
+                return TimeSpan.Zero;
+            }                
+        }
+
+        //PriceIdentifier
+        public void SavePriceIdentifierInCache(string priceIdentifierCacheId, Dictionary<string, string> priceIdentifier, TimeSpan timeout)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = priceIdentifierCacheId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            foreach (var pair in priceIdentifier)
+            {
+                redisDb.HashSet(redisKey, (RedisValue)pair.Key, (RedisValue)pair.Value);
+                redisDb.KeyExpire(redisKey, timeout);
+            }
+
+        }
+
+        public Dictionary<string, string> GetPriceIdentifierFromCache(string priceIdentifierId)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = priceIdentifierId;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var temp = redisDb.HashGetAll(redisKey).ToList();
+                if (temp.Count != 0)
+                {
+                    return temp.ToDictionary(hashEntry => (string)hashEntry.Name, hashEntry => (string)hashEntry.Value);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
 
         private static bool GetSearchingStatusInCache(string searchId, int supplierIndex)
         {

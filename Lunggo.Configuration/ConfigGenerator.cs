@@ -65,7 +65,9 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler2", 
                 "WebJob-FlightSearch.FlightCrawler3", 
                 "WebJob-FlightSearch.FlightCrawler4", 
-                "Worker.EticketHandler"
+                "Worker.EticketHandler",
+                "WebJob.BankTransferChecking",
+                "WebJob.PriceIdentifierGenerator"
             };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
