@@ -442,6 +442,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .overlay.overlay--flight-form form .form-infant:before {
   background-position: -44px 0; }
 
+.overlay.overlay--flight-filter .overlay__content {
+  background: #878787;
+  color: #fff; }
+
 .overlay.overlay--flight-sort .overlay__content {
   background: #878787;
   color: #fff; }
