@@ -272,6 +272,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
 }
 
+// overlay flight filter
+.overlay.overlay--flight-filter {
+    .overlay__content {background:#878787; color:#fff;}
+}
+
 // overlay flight sort
 .overlay.overlay--flight-sort {
     .overlay__content {background:#878787; color:#fff;}
