@@ -1,10 +1,11 @@
-﻿using Lunggo.ApCommon.Flight.Model.Logic;
+﻿using System.Net;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 using FlightService = Lunggo.ApCommon.Flight.Service.FlightService;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
-    public partial class FlightLogic
+    public static partial class FlightLogic
     {
         public static FlightCancelApiResponse CancelBooking(FlightCancelApiRequest request)
         {
@@ -19,7 +20,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightCancelApiResponse
                 {
-                    Result = "Failed",
+                    StatusCode = HttpStatusCode.Accepted,
+                    StatusMessage = "Cancel request failed to progress.",
                     BookingId = null,
                     OriginalRequest = request
                 };
@@ -40,7 +42,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightCancelApiResponse
                 {
-                    Result = "Success",
+                    StatusCode = HttpStatusCode.OK,
+                    StatusMessage = "Cancel request granted.",
                     BookingId = cancelServiceResponse.BookingId,
                     OriginalRequest = request
                 };
@@ -49,7 +52,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightCancelApiResponse
                 {
-                    Result = "Failed",
+                    StatusCode = HttpStatusCode.Accepted,
+                    StatusMessage = "Cancel request failed to progress.",
                     BookingId = null,
                     OriginalRequest = request
                 };

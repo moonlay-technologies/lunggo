@@ -67,7 +67,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private void SearchFlightInternal(SearchFlightConditions conditions, int supplierIndex)
         {
             var supplier = Suppliers[supplierIndex.ToString(CultureInfo.InvariantCulture)];
-            var searchId = EncodeConditions(conditions);
+            var searchId = EncodeSearchConditions(conditions);
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
 
             var result = supplier.SearchFlight(conditions);
@@ -77,7 +77,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
                 }   
-            SaveSearchedItinerariesToCache(result.Itineraries, EncodeConditions(conditions), timeout, supplierIndex);
+            SaveSearchedItinerariesToCache(result.Itineraries, EncodeSearchConditions(conditions), timeout, supplierIndex);
             InvalidateSearchingStatusInCache(searchId, supplierIndex);
         }
 

@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Web.Http;
 using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.Framework.Cors;
+using Lunggo.WebAPI.ApiSrc.v1.Autocomplete.Logic;
+using Lunggo.WebAPI.ApiSrc.v1.Autocomplete.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
 {
@@ -10,47 +14,62 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
     {
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("api/v1/autocomplete/lastupdate")]
-        public IEnumerable<UpdateSet> LastUpdate()
+        [Route("v1/autocomplete/airlines/{prefix}")]
+        public AutocompleteAirlinesApiResponse Airlines(string prefix)
         {
-            var autocompleteManager = AutocompleteManager.GetInstance();
-            return autocompleteManager.GetDictionaryLastUpdate();
+            return AutocompleteLogic.GetAirlineAutocomplete(prefix);
+        }
+
+        [HttpGet]   
+        [LunggoCorsPolicy]
+        [Route("v1/autocomplete/airlines")]
+        public AutocompleteAirlinesApiResponse Airlines()
+        {
+            return AutocompleteLogic.GetAirlineAutocomplete("");
         }
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("api/v1/autocomplete/airline/{prefix}")]
-        public IEnumerable<AirlineDict> Airline(string prefix)
+        [Route("v1/autocomplete/airports/{prefix}")]
+        public AutocompleteAirportsApiResponse Airports(string prefix)
         {
-            var autocompleteManager = AutocompleteManager.GetInstance();
-            return autocompleteManager.GetAirlineAutocomplete(prefix);
+            return AutocompleteLogic.GetAirportAutocomplete(prefix);
         }
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("api/v1/autocomplete/airport/{prefix}")]
-        public IEnumerable<AirportDict> Airport(string prefix)
+        [Route("v1/autocomplete/airports")]
+        public AutocompleteAirportsApiResponse Airports()
         {
-            var autocompleteManager = AutocompleteManager.GetInstance();
-            return autocompleteManager.GetAirportAutocomplete(prefix);
+            return AutocompleteLogic.GetAirportAutocomplete("");
         }
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("api/v1/autocomplete/airport")]
-        public IEnumerable<AirportDict> GetAllAirport()
+        [Route("v1/autocomplete/hotellocations/{prefix}")]
+        public AutocompleteHotelLocationsApiResponse HotelLocations(string prefix)
         {
-            var autocompleteManager = AutocompleteManager.GetInstance();
-            return autocompleteManager.GetAirportAutocomplete("");
+            return AutocompleteLogic.GetHotelLocationAutocomplete(prefix);
         }
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("api/v1/autocomplete/hotellocation/{prefix}")]
-        public IEnumerable<HotelLocationApi> HotelLocation(string prefix)
+        [Route("v1/autocomplete/lastupdate")]
+        public AutocompleteLastUpdateApiResponse LastUpdate()
         {
-            var autocompleteManager = AutocompleteManager.GetInstance();
-            return autocompleteManager.GetHotelLocationAutocomplete(prefix);
+            return new AutocompleteLastUpdateApiResponse
+            {
+                StatusCode = HttpStatusCode.OK,
+                StatusMessage = "Test Success.",
+                UpdateSets = new List<UpdateSet>
+                {
+                    new UpdateSet
+                    {
+                        Type = "airport",
+                        UpdateTime = new DateTime(2015, 1, 1)
+                    }
+                }
+            };
         }
     }
 }

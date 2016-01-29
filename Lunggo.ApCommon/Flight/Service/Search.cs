@@ -13,7 +13,6 @@ namespace Lunggo.ApCommon.Flight.Service
         public SearchFlightOutput SearchFlight(SearchFlightInput input)
         {
             var output = new SearchFlightOutput();
-            var searchId = EncodeConditions(input.Conditions);
 
             if (input.RequestedSupplierIds.IsNullOrEmpty())
             {
@@ -21,20 +20,20 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.TotalSupplier = Suppliers.Count;
                 output.Itineraries = new List<FlightItineraryForDisplay>();
                 output.SearchedSuppliers = new List<int>();
-                output.SearchId = searchId;
+                output.SearchId = input.SearchId;
             }
             else
             {
-                var searchedSupplierItins = GetSearchedSupplierItineraries(searchId, input.RequestedSupplierIds);
+                var searchedSupplierItins = GetSearchedSupplierItineraries(input.SearchId, input.RequestedSupplierIds);
                 var searchedSuppliers = searchedSupplierItins.Keys.ToList();
                 var missingSuppliers = input.RequestedSupplierIds.Except(searchedSuppliers).ToList();
                 foreach (var missingSupplier in missingSuppliers)
                 {
-                    var isSearching = GetSearchingStatusInCache(searchId, missingSupplier);
+                    var isSearching = GetSearchingStatusInCache(input.SearchId, missingSupplier);
                     if (!isSearching)
                     {
                         var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl" + missingSupplier);
-                        queue.AddMessage(new CloudQueueMessage(searchId));
+                        queue.AddMessage(new CloudQueueMessage(input.SearchId));
                     }
                 }
 
@@ -46,14 +45,14 @@ namespace Lunggo.ApCommon.Flight.Service
                 else 
                     searchedItins.ForEach(itin => itin.AsReturn = (bool) asReturn);
                 AddPriceMargin(searchedItins);
-                SaveFlightRequestPrices(input.RequestId, searchId, searchedItins);
+                SaveFlightRequestPrices(input.RequestId, input.SearchId, searchedItins);
                 var itinsForDisplay = searchedItins.Select(ConvertToItineraryForDisplay).ToList();
                 itinsForDisplay.ForEach(itin => itin.SearchId = output.SearchId);
 
-                var expiry = searchedSuppliers.Select(supplier => GetSearchedItinerariesExpiry(searchId, supplier)).Min();
+                var expiry = searchedSuppliers.Select(supplier => GetSearchedItinerariesExpiry(input.SearchId, supplier)).Min();
 
                 output.IsSuccess = true;
-                output.SearchId = searchId;
+                output.SearchId = input.SearchId;
                 output.ExpiryTime = expiry;
                 output.Itineraries = itinsForDisplay;
                 output.SearchedSuppliers = searchedSuppliers;
@@ -65,7 +64,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public void CommenceSearchFlight(string searchId, int supplierIndex)
         {
-            var conditions = DecodeConditions(searchId);
+            var conditions = DecodeSearchConditions(searchId);
             SearchFlightInternal(conditions, supplierIndex);
         }
     }

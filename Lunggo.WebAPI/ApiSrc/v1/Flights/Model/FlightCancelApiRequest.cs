@@ -1,7 +1,10 @@
-﻿namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
+﻿using Newtonsoft.Json;
+
+namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightCancelApiRequest
     {
+        [JsonProperty("booking_id")]
         public string BookingId { get; set; }
     }
 }

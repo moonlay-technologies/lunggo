@@ -1,4 +1,5 @@
-﻿using Lunggo.WebAPI.ApiSrc.v1.Voucher.Model;
+﻿using System.Net;
+using Lunggo.WebAPI.ApiSrc.v1.Voucher.Model;
 using Lunggo.ApCommon.Campaign.Model;
 using Lunggo.ApCommon.Campaign.Service;
 
@@ -9,7 +10,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Logic
         public static CheckVoucherApiResponse CheckVoucher(CheckVoucherApiRequest request)
         {
             var service = CampaignService.GetInstance();
-            var voucher = new VoucherRequest()
+            var voucher = new VoucherRequest
             {
                 Email = request.Email,
                 Price = request.Price,
@@ -22,13 +23,24 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Logic
 
         private static CheckVoucherApiResponse AssembleApiResponse(VoucherResponse response, CheckVoucherApiRequest request)
         {
-            return new CheckVoucherApiResponse
-            {
-                Discount = response.TotalDiscount,
-                DisplayName = response.CampaignVoucher.DisplayName,
-                ValidationStatus = response.UpdateStatus,
-                OriginalRequest = request
-            };
+            if (response.UpdateStatus == "Success")
+                return new CheckVoucherApiResponse
+                {
+                    Discount = response.TotalDiscount,
+                    DisplayName = response.CampaignVoucher.DisplayName,
+                    StatusCode = HttpStatusCode.OK,
+                    StatusMessage = response.UpdateStatus + ".",
+                    OriginalRequest = request
+                };
+            else
+                return new CheckVoucherApiResponse
+                {
+                    Discount = response.TotalDiscount,
+                    DisplayName = response.CampaignVoucher.DisplayName,
+                    StatusCode = HttpStatusCode.Accepted,
+                    StatusMessage = response.UpdateStatus + ".",
+                    OriginalRequest = request
+                };
         }
     }
 }

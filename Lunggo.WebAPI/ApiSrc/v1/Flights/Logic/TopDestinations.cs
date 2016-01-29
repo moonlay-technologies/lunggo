@@ -1,14 +1,21 @@
-﻿using Lunggo.ApCommon.Flight.Model;
+﻿using System.Net;
+using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
-    public partial class FlightLogic
+    public static partial class FlightLogic
     {
-        public static TopDestinations TopDestinations()
+        public static TopDestinationsApiResponse TopDestinations()
         {
             var flight = FlightService.GetInstance();
-            return flight.GetTopDestination();
+            return new TopDestinationsApiResponse
+            {
+                StatusCode = HttpStatusCode.OK,
+                StatusMessage = "Success.",
+                TopDestinationList = flight.GetTopDestination()
+            };
         }
     }
 }

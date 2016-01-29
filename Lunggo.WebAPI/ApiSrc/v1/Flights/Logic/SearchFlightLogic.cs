@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -8,7 +10,7 @@ using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
-    public partial class FlightLogic
+    public static partial class FlightLogic
     {
         public static FlightSearchApiResponse SearchFlights(FlightSearchApiRequest request)
         {
@@ -29,27 +31,20 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     FlightList = new List<FlightItineraryForDisplay>(),
                     GrantedRequests = new List<int>(),
                     ExpiryTime = null,
-                    MaxRequest = 0
+                    MaxRequest = 0,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    StatusMessage = "Invalid search_id or requests format."
                 };
             }
         }
 
         private static bool IsValid(FlightSearchApiRequest request)
         {
-            return
-                request != null &&
-                request.AdultCount >= 1 &&
-                request.ChildCount >= 0 &&
-                request.InfantCount >= 0 &&
-                request.AdultCount + request.ChildCount + request.InfantCount <= 9 &&
-                request.InfantCount <= request.AdultCount &&
-                (
-                    (request.TripType == TripType.OneWay && request.Trips.Count == 1) ||
-                    (request.TripType == TripType.Return && request.Trips.Count == 2) ||
-                    (request.TripType == TripType.OpenJaw && request.Trips.Count > 1) ||
-                    (request.TripType == TripType.Circle && request.Trips.Count > 2)
-                ) &&
-                request.Trips.TrueForAll(data => data.DepartureDate >= DateTime.UtcNow.Date);
+            if (!FlightService.GetInstance().IsSearchIdValid(request.SearchId))
+                return false;
+            var splittedRequests = request.Requests.Split(',');
+            int x;
+            return splittedRequests.All(req => int.TryParse(req, out x));
         }
 
         private static FlightSearchApiResponse AssembleApiResponse(SearchFlightOutput searchServiceResponse, FlightSearchApiRequest request)
@@ -62,26 +57,20 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 TotalFlightCount = searchServiceResponse.Itineraries.Count,
                 ExpiryTime = searchServiceResponse.ExpiryTime,
                 GrantedRequests = searchServiceResponse.SearchedSuppliers,
-                MaxRequest = searchServiceResponse.TotalSupplier
+                MaxRequest = searchServiceResponse.TotalSupplier,
+                StatusCode = HttpStatusCode.OK,
+                StatusMessage = "Success."
             };
             return apiResponse;
         }
 
         private static SearchFlightInput PreprocessServiceRequest(FlightSearchApiRequest request)
         {
-            var searchConditions = new SearchFlightConditions
-            {
-                AdultCount = request.AdultCount,
-                ChildCount = request.ChildCount,
-                InfantCount = request.InfantCount,
-                CabinClass = request.CabinClass,
-                Trips = request.Trips
-            };
+            var supplierIds = request.Requests.Split(',').Select(int.Parse).ToList();
             var searchServiceRequest = new SearchFlightInput
             {
-                Conditions = searchConditions,
-                RequestedSupplierIds = request.Requests,
-                IsDateFlexible = false,
+                SearchId = request.SearchId,
+                RequestedSupplierIds = supplierIds,
                 RequestId = request.SecureCode
             };
             return searchServiceRequest;

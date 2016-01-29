@@ -65,10 +65,10 @@ namespace Lunggo.Generator.TopFlightDestinations
             var topDestinationsList = GetTopDestinationsFromFile(filePath);
             InsertIntoCache(topDestinationsList, redisDb);
         }
-        private static void InsertIntoCache(TopDestinations topDestinationsLookUp, IDatabase redisDb)
+        private static void InsertIntoCache(List<TopDestination> topDestinationsApiResponseLookUp, IDatabase redisDb)
         {
             var keyInRedis = GetTopDestinationsKey();
-            var topDestinationsJson = SerializeTopDestinations(topDestinationsLookUp);
+            var topDestinationsJson = SerializeTopDestinations(topDestinationsApiResponseLookUp);
             var topDestinationsJsonCompressed = Compress(topDestinationsJson);
             redisDb.StringSet(keyInRedis, topDestinationsJsonCompressed);
         }
@@ -84,26 +84,25 @@ namespace Lunggo.Generator.TopFlightDestinations
                 return memory.ToArray();
             }
         }
-        private static String SerializeTopDestinations(TopDestinations topDestinationsLookUp)
+        private static String SerializeTopDestinations(List<TopDestination> topDestinationsApiResponseLookUp)
         {
-            return JsonConvert.SerializeObject(topDestinationsLookUp);
+            return JsonConvert.SerializeObject(topDestinationsApiResponseLookUp);
         }
         private static String GetTopDestinationsKey()
         {
             return "flighttopdestination";
         }
-        private static TopDestinations GetTopDestinationsFromFile(String filePath)
+        private static List<TopDestination> GetTopDestinationsFromFile(String filePath)
         {
             var topDestinationRows = ReadTopDestinationFile(filePath);
             var topDestinationsListFromFile = topDestinationRows as IList<TopDestinationRow> ?? topDestinationRows.ToList();
             var topDestinationsLookUp = GetTopDestinationsLookup(topDestinationsListFromFile);
             return topDestinationsLookUp;
         }
-        static TopDestinations GetTopDestinationsLookup(IEnumerable<TopDestinationRow> topDestinationFileRows)
+        static List<TopDestination> GetTopDestinationsLookup(IEnumerable<TopDestinationRow> topDestinationFileRows)
         {
-            TopDestinations topDestinationsLookUp = new TopDestinations();
-            topDestinationsLookUp.TopDestinationList = new List<TopDestination>();
-            topDestinationsLookUp.TopDestinationList.AddRange(
+            var topDestinationsApiResponseLookUp = new List<TopDestination>();
+            topDestinationsApiResponseLookUp.AddRange(
                 topDestinationFileRows.Select(
                 p => new TopDestination
                 {
@@ -115,7 +114,7 @@ namespace Lunggo.Generator.TopFlightDestinations
                         Value = p.Price
                     }
                 }));
-            return topDestinationsLookUp;
+            return topDestinationsApiResponseLookUp;
         }
         private static IEnumerable<TopDestinationRow> ReadTopDestinationFile(String filePath)
         {

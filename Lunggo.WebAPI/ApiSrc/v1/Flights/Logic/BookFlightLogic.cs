@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Net;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -10,7 +12,7 @@ using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
-    public partial class FlightLogic
+    public static partial class FlightLogic
     {
         public static FlightBookApiResponse BookFlight(FlightBookApiRequest request)
         {
@@ -26,7 +28,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightBookApiResponse
                 {
-                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    StatusMessage = "There is an error on your submitted data.",
                     OriginalRequest = request
                 };
             }
@@ -35,8 +38,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         private static bool IsValid(FlightBookApiRequest request)
         {
             return
-                request != null &&
-                request.Token != null &&
                 request.Contact != null &&
                 request.Contact.Name != null &&
                 request.Contact.Phone != null &&
@@ -56,17 +57,65 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             if (bookServiceResponse.IsSuccess)
                 return new FlightBookApiResponse
                 {
-                    IsSuccess = true,
                     RsvNo = bookServiceResponse.RsvNo,
+                    StatusCode = HttpStatusCode.OK,
+                    StatusMessage = "Success, all fares booked.",
                     OriginalRequest = request
                 };
             else
-                return new FlightBookApiResponse
+                switch (bookServiceResponse.Errors[0])
                 {
-                    IsSuccess = false,
-                    Error = bookServiceResponse.Errors[0],
-                    OriginalRequest = request
-                };
+                    case FlightError.AlreadyBooked:
+                        return new FlightBookApiResponse
+                        {
+                            StatusCode = HttpStatusCode.Accepted,
+                            StatusMessage = "This reservation is already booked, please make another reservation.",
+                                OriginalRequest = request
+                        };
+                    case FlightError.BookingIdNoLongerValid:
+                    case FlightError.FareIdNoLongerValid:
+                        return new FlightBookApiResponse
+                        {
+                            StatusCode = HttpStatusCode.Accepted,
+                            StatusMessage = "This reservation is already expired, please make another reservation.",
+                            OriginalRequest = request
+                        };
+                    case FlightError.FailedOnSupplier:
+                        return new FlightBookApiResponse
+                        {
+                            StatusCode = HttpStatusCode.InternalServerError,
+                            StatusMessage = "There is an error when processing this flight to the supplier.",
+                            OriginalRequest = request
+                        };
+                    case FlightError.InvalidInputData:
+                        return new FlightBookApiResponse
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            StatusMessage = "There is an error on your submitted data.",
+                            OriginalRequest = request
+                        };
+                    case FlightError.PartialSuccess:
+                        return new FlightBookApiResponse
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            StatusMessage = "Only some of the fares are success.",
+                            OriginalRequest = request
+                        };
+                    case FlightError.TechnicalError:
+                        return new FlightBookApiResponse
+                        {
+                            StatusCode = HttpStatusCode.InternalServerError,
+                            StatusMessage = "There is an error occured, please try again later.",
+                            OriginalRequest = request
+                        };
+                    default:
+                        return new FlightBookApiResponse
+                        {
+                            StatusCode = HttpStatusCode.InternalServerError,
+                            StatusMessage = "There is an error occured, please try again later.",
+                            OriginalRequest = request
+                        };
+                }
         }
 
         private static BookFlightInput PreprocessServiceRequest(FlightBookApiRequest request)

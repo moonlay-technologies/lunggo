@@ -60,7 +60,7 @@ namespace Lunggo.WebJob.FlightCrawlScheduler
 
         private static IEnumerable<string> GenerateTargetStrings(IEnumerable<FlightCrawlTargetTableRecord> targets)
         {
-            var flightService = FlightService.GetInstance();
+            var flight = FlightService.GetInstance();
             foreach (var target in targets)
             {
                 var searchCondition = new SearchFlightConditions
@@ -68,7 +68,7 @@ namespace Lunggo.WebJob.FlightCrawlScheduler
                     AdultCount = target.AdultCount.GetValueOrDefault(),
                     ChildCount = target.ChildCount.GetValueOrDefault(),
                     InfantCount = target.InfantCount.GetValueOrDefault(),
-                    CabinClass = FlightService.ParseCabinClass(target.RequestedCabinClassCd),
+                    CabinClass = flight.ParseCabinClass(target.RequestedCabinClassCd),
                     Trips = new List<FlightTrip>
                     {
                         new FlightTrip
@@ -81,7 +81,7 @@ namespace Lunggo.WebJob.FlightCrawlScheduler
                 for (var i = target.DaysAdvanceDepartureDateStart; i <= target.DaysAdvanceDepartureDateEnd; i++)
                 {
                     searchCondition.Trips[0].DepartureDate = DateTime.UtcNow.AddDays(i.GetValueOrDefault());
-                    var conditionString = flightService.EncodeConditions(searchCondition);
+                    var conditionString = flight.EncodeSearchConditions(searchCondition);
                     var timeout = target.Timeout;
                     var conditionStringWithTimeout = conditionString + '.' + timeout;
                     yield return conditionStringWithTimeout;

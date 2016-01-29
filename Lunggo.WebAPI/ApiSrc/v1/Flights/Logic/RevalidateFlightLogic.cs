@@ -1,10 +1,11 @@
-﻿using Lunggo.ApCommon.Flight.Model.Logic;
+﻿using System.Net;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 using FlightService = Lunggo.ApCommon.Flight.Service.FlightService;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
-    public partial class FlightLogic
+    public static partial class FlightLogic
     {
         public static FlightRevalidateApiResponse RevalidateFlight(FlightRevalidateApiRequest request)
         {
@@ -21,7 +22,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 SearchId = request.SearchId,
                 ItinIndex = request.ItinIndex,
-                Token = request.Token,
                 RequestId = request.SecureCode
             };
         }
@@ -38,6 +38,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                         IsValid = true,
                         IsOtherFareAvailable = null,
                         NewFare = null,
+                        StatusCode = HttpStatusCode.OK,
+                        StatusMessage = "Success.",
                         OriginalRequest = request
                     };
                 }
@@ -51,6 +53,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                             IsValid = false,
                             IsOtherFareAvailable = true,
                             NewFare = revalidateServiceResponse.NewFare,
+                            StatusCode = HttpStatusCode.OK,
+                            StatusMessage = "Success.",
                             OriginalRequest = request
                         };
                     }
@@ -62,6 +66,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                             IsValid = false,
                             IsOtherFareAvailable = false,
                             NewFare = null,
+                            StatusCode = HttpStatusCode.OK,
+                            StatusMessage = "Success.",
                             OriginalRequest = request
                         };
                     }
@@ -75,16 +81,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     IsValid = false,
                     IsOtherFareAvailable = false,
                     NewFare = 0,
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    StatusMessage = "There is a problem in revalidating fare, please try again later.",
                     OriginalRequest = request
                 };
             }
-        }
-
-        private static bool IsValid(FlightRevalidateApiRequest request)
-        {
-            return
-                request != null &&
-                (request.SearchId != null || request.Token != null);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     adultCount = int.Parse(splittedFareId[5]);
                     childCount = int.Parse(splittedFareId[6]);
                     infantCount = int.Parse(splittedFareId[7]);
-                    cabinClass = FlightService.ParseCabinClass(splittedFareId[8]);
+                    cabinClass = FlightService.GetInstance().ParseCabinClass(splittedFareId[8]);
                     price = decimal.Parse(splittedFareId[9]);
                     coreFareId = splittedFareId[10];
                 }
@@ -151,7 +151,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var foundFareId = radio.Attr("value");
                         var fareIdPrefix = origin + "." + dest + "." + date.ToString("dd.MM.yyyy") + "." + adultCount +
                                            "." +
-                                           childCount + "." + infantCount + "." + FlightService.ParseCabinClass(cabinClass) + ".";
+                                           childCount + "." + infantCount + "." + FlightService.GetInstance().ParseCabinClass(cabinClass) + ".";
 
                         var url = @"Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(foundFareId);
                         var fareRequest = new RestRequest(url, Method.GET);

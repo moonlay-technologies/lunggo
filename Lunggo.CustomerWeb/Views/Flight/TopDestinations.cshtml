@@ -1,4 +1,4 @@
-﻿@model Lunggo.ApCommon.Flight.Model.TopDestinations
+﻿@model List<Lunggo.ApCommon.Flight.Model.TopDestination>
 
 @{
     ViewBag.Title = "Penerbangan Terpopuler";
@@ -17,7 +17,7 @@
                 <td>Price</td>
             </tr>
         </thead>
-        @foreach (var item in Model.TopDestinationList)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>@item.OriginCity</td>

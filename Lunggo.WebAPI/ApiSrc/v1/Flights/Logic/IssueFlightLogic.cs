@@ -1,10 +1,11 @@
-﻿using Lunggo.ApCommon.Flight.Model.Logic;
+﻿using System.Net;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
-    public partial class FlightLogic
+    public static partial class FlightLogic
     {
         public static FlightIssueApiResponse IssueFlight(FlightIssueApiRequest request)
         {
@@ -12,10 +13,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 var issueServiceRequest = PreprocessServiceRequest(request);
                 FlightService.GetInstance().IssueTicket(issueServiceRequest);
-                //var apiResponse = AssembleApiResponse(issueServiceResponse, request);
                 return new FlightIssueApiResponse
                 {
-                    IsSuccess = true,
+                    StatusCode = HttpStatusCode.OK,
+                    StatusMessage = "Success, reservation is being processed for issuance.",
                     OriginalRequest = request
                 };
             }
@@ -23,7 +24,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightIssueApiResponse
                 {
-                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    StatusMessage = "There is an error occured, please try again later.",
                     OriginalRequest = request
                 };
             }
@@ -34,15 +36,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             return
                 request != null &&
                 request.RsvNo != null;
-        }
-
-        private static FlightIssueApiResponse AssembleApiResponse(IssueTicketOutput issueServiceResponse, FlightIssueApiRequest request)
-        {
-            return new FlightIssueApiResponse
-            {
-                IsSuccess = issueServiceResponse.IsSuccess,
-                OriginalRequest = request
-            };
         }
 
         private static IssueTicketInput PreprocessServiceRequest(FlightIssueApiRequest request)

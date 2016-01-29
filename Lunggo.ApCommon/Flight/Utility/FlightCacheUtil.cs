@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Flight.Model;
+﻿using System.Collections.Generic;
+using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Util;
 using Newtonsoft.Json;
 using StackExchange.Redis;
@@ -8,7 +9,7 @@ namespace Lunggo.ApCommon.Flight.Utility
 {
     public class FlightCacheUtil
     {
-        public static TopDestinations ConvertTopDestinationRawObjectToTopDestination(RedisValue topDestinationCacheObject)
+        public static List<TopDestination> ConvertTopDestinationRawObjectToTopDestination(RedisValue topDestinationCacheObject)
         {
             if (topDestinationCacheObject.IsNullOrEmpty)
             {
@@ -22,9 +23,9 @@ namespace Lunggo.ApCommon.Flight.Utility
             }
 
         }
-        private static TopDestinations DeserializeTopDestination(String topDestinationJsoned)
+        private static List<TopDestination> DeserializeTopDestination(String topDestinationJsoned)
         {
-            return JsonConvert.DeserializeObject<TopDestinations>(topDestinationJsoned);
+            return JsonConvert.DeserializeObject<List<TopDestination>>(topDestinationJsoned);
         }
     }
 }

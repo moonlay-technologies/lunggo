@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Constant;
+﻿using System.Collections.Generic;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.Framework.Config;
@@ -8,11 +9,11 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public TopDestinations GetTopDestination()
+        public List<TopDestination> GetTopDestination()
         {
             return GetTopDestinationsFromCache();
         }
-        private static TopDestinations GetTopDestinationsFromCache()
+        private static List<TopDestination> GetTopDestinationsFromCache()
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);

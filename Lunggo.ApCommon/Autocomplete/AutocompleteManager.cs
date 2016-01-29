@@ -28,18 +28,8 @@ namespace Lunggo.ApCommon.Autocomplete
             }
         }
 
-        public IEnumerable<UpdateSet> GetDictionaryLastUpdate()
+        public IEnumerable<long> GetAirportIdsAutocomplete(string prefix)
         {
-           yield return new UpdateSet
-           {
-               Type = "airport",
-               UpdateTime = new DateTime(2015,1,1)
-           };
-        }
-
-        public IEnumerable<AirportDict> GetAirportAutocomplete(string prefix)
-        {
-            var airportDict = DictionaryService.GetInstance().AirportDict;
             var airportIndex = TrieIndexService.GetInstance().AirportIndex;
             var splittedString = prefix.Split(' ');
             var airportIds = new List<long>();
@@ -51,21 +41,27 @@ namespace Lunggo.ApCommon.Autocomplete
                 i++;
             }
             var distinctAirportIds = airportIds.Distinct();
-            var airportAutocomplete = distinctAirportIds.Select(id => airportDict[id]);
-            return airportAutocomplete;
+            return distinctAirportIds;
         }
 
-        public IEnumerable<AirlineDict> GetAirlineAutocomplete(string prefix)
+        public IEnumerable<long> GetAirlineIdsAutocomplete(string prefix)
         {
-            var airlineDict = DictionaryService.GetInstance().AirlineDict;
             var airlineIndex = TrieIndexService.GetInstance().AirlineIndex;
-            var airlineAutocomplete = airlineIndex.GetAllSuggestionIds(prefix).Select(id => airlineDict[id]);
-            return airlineAutocomplete;
+            var splittedString = prefix.Split(' ');
+            var airlineIds = new List<long>();
+            airlineIds.AddRange(airlineIndex.GetAllSuggestionIds(splittedString[0]));
+            var i = 1;
+            while (i < splittedString.Count())
+            {
+                airlineIds = airlineIds.Intersect(airlineIndex.GetAllSuggestionIds(splittedString[i])).ToList();
+                i++;
+            }
+            var distinctairlineIds = airlineIds.Distinct();
+            return distinctairlineIds;
         }
 
-        public IEnumerable<HotelLocationApi> GetHotelLocationAutocomplete(string prefix)
+        public IEnumerable<long> GetHotelLocationIdsAutocomplete(string prefix)
         {
-            var hotelLocationDict = DictionaryService.GetInstance().HotelLocationDict;
             var hotelLocationIndex = TrieIndexService.GetInstance().HotelLocationIndex;
             var splittedString = prefix.Split(' ');
             var hotelLocationIds = new List<long>();
@@ -76,34 +72,8 @@ namespace Lunggo.ApCommon.Autocomplete
                 hotelLocationIds = hotelLocationIds.Intersect(hotelLocationIndex.GetAllSuggestionIds(splittedString[i])).ToList();
                 i++;
             }
-            var distinctHotelLocationIds = hotelLocationIds.Distinct();
-            var hotelLocationAutocomplete = distinctHotelLocationIds
-                .Select(id => new HotelLocationApi
-                {
-                    LocationId = hotelLocationDict[id].LocationId,
-                    LocationName = hotelLocationDict[id].LocationName,
-                    RegionName = hotelLocationDict[id].RegionName,
-                    CountryName = hotelLocationDict[id].CountryName,
-                    Priority = hotelLocationDict[id].Priority,
-                }
-                    )
-                .OrderBy(dict => dict.Priority);
-            return hotelLocationAutocomplete;
+            var distincthotelLocationIds = hotelLocationIds.Distinct();
+            return distincthotelLocationIds;
         }
-    }
-
-    public class HotelLocationApi
-    {
-        public long LocationId { get; set; }
-        public string LocationName { get; set; }
-        public string RegionName { get; set; }
-        public string CountryName { get; set; }
-        public int? Priority { get; set; }
-    }
-
-    public class UpdateSet
-    {
-        public string Type { get; set; }
-        public DateTime UpdateTime { get; set; }
     }
 }

@@ -1,13 +1,19 @@
-﻿using FlightService = Lunggo.ApCommon.Flight.Service.FlightService;
+﻿using System.Net;
+using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
+using FlightService = Lunggo.ApCommon.Flight.Service.FlightService;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
-    public partial class FlightLogic
+    public static partial class FlightLogic
     {
-        public static void ExpireReservations()
+        public static ExpireReservationsApiResponse ExpireReservations()
         {
             var flight = FlightService.GetInstance();
-            flight.ExpireReservations();
+            return new ExpireReservationsApiResponse()
+            {
+                StatusCode = HttpStatusCode.OK,
+                StatusMessage = "Success."
+            };
         }
     }
 }

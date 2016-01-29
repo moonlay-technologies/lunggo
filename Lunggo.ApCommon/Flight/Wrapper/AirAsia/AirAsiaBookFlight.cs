@@ -44,7 +44,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     adultCount = int.Parse(splittedFareId[5]);
                     childCount = int.Parse(splittedFareId[6]);
                     infantCount = int.Parse(splittedFareId[7]);
-                    cabinClass = FlightService.ParseCabinClass(splittedFareId[8]);
+                    cabinClass = FlightService.GetInstance().ParseCabinClass(splittedFareId[8]);
                     price = decimal.Parse(splittedFareId[9]);
                     coreFareId = splittedFareId[10];
                 }

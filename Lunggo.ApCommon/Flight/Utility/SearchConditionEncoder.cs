@@ -10,33 +10,31 @@ namespace Lunggo.ApCommon.Flight.Service
     public partial class FlightService
     {
 
-        public string EncodeConditions(SearchFlightConditions conditions)
+        public string EncodeSearchConditions(SearchFlightConditions conditions)
         {
-            var conditionString = new StringBuilder();
+            var searchId = new StringBuilder();
             foreach (var trip in conditions.Trips)
             {
-                conditionString.Append(trip.OriginAirport);
-                conditionString.Append(trip.DestinationAirport);
-                conditionString.Append(trip.DepartureDate.ToString("ddMMyy"));
+                searchId.Append(trip.OriginAirport);
+                searchId.Append(trip.DestinationAirport);
+                searchId.Append(trip.DepartureDate.ToString("ddMMyy"));
                 if (trip != conditions.Trips.Last())
-                    conditionString.Append(".");
+                    searchId.Append(".");
             }
-            conditionString.Append("-");
-            conditionString.Append(conditions.AdultCount.ToString(CultureInfo.InvariantCulture));
-            conditionString.Append(conditions.ChildCount.ToString(CultureInfo.InvariantCulture));
-            conditionString.Append(conditions.InfantCount.ToString(CultureInfo.InvariantCulture));
-            conditionString.Append(ParseCabinClass(conditions.CabinClass));
-            
-            return conditionString.ToString().Base64Encode();
+            searchId.Append("-");
+            searchId.Append(conditions.AdultCount.ToString(CultureInfo.InvariantCulture));
+            searchId.Append(conditions.ChildCount.ToString(CultureInfo.InvariantCulture));
+            searchId.Append(conditions.InfantCount.ToString(CultureInfo.InvariantCulture));
+            searchId.Append(ParseCabinClass(conditions.CabinClass));
+
+            return searchId.ToString();
         }
 
-        public SearchFlightConditions DecodeConditions(string searchId)
+        public SearchFlightConditions DecodeSearchConditions(string searchId)
         {
-            var conditionString = searchId.Base64Decode();
-
             try
             {
-                var parts = conditionString.Split('-');
+                var parts = searchId.Split('-');
                 var tripPart = parts.First();
                 var infoPart = parts.Last();
                 var isValid = ((tripPart.Length + 1) % 13 == 0) && (infoPart.Length == 4);
@@ -68,6 +66,20 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 return null;
             }
+        }
+
+        public bool IsSearchIdValid(string searchId)
+        {
+            var conditions = DecodeSearchConditions(searchId);
+            if (conditions == null)
+                return false;
+            return
+                conditions.AdultCount >= 1 &&
+                conditions.ChildCount >= 0 &&
+                conditions.InfantCount >= 0 &&
+                conditions.AdultCount + conditions.ChildCount + conditions.InfantCount <= 9 &&
+                conditions.InfantCount <= conditions.AdultCount &&
+                conditions.Trips.TrueForAll(data => data.DepartureDate >= DateTime.UtcNow.Date);
         }
     }
 }

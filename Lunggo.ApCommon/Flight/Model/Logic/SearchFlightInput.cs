@@ -4,9 +4,8 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
 {
     public class SearchFlightInput
     {
-        public SearchFlightConditions Conditions { get; set; }
+        public string SearchId { get; set; }
         public List<int> RequestedSupplierIds { get; set; }
-        public bool IsDateFlexible { get; set; }
         public string RequestId { get; set; }
     }
 }
