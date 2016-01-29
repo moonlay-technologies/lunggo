@@ -30,7 +30,7 @@ namespace Lunggo.ApCommon.Flight.Service
         public void SaveTransacInquiryInCache(string MandiriCacheId, Dictionary<string,string> transaction,TimeSpan timeout)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = MandiriCacheId;
+            var redisKey = "mandiriTransactionPrice" + MandiriCacheId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             //var cacheObject = transactionList.ToCacheObject();
 
@@ -47,7 +47,7 @@ namespace Lunggo.ApCommon.Flight.Service
             try
             {
                 var redisService = RedisService.GetInstance();
-                var redisKey = mandiricacheId;
+                var redisKey = "mandiriTransactionPrice" + mandiricacheId;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
                 var temp = redisDb.HashGetAll(redisKey).ToList();
                 if (temp.Count != 0)
@@ -71,7 +71,7 @@ namespace Lunggo.ApCommon.Flight.Service
             try
             {
                 var redisService = RedisService.GetInstance();
-                var redisKey = key;
+                var redisKey = "mandiriTransactionPrice" + key;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
                 var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
                 return timeToLive;
@@ -82,44 +82,39 @@ namespace Lunggo.ApCommon.Flight.Service
             }                
         }
 
-        //PriceIdentifier
-        public void SavePriceIdentifierInCache(string priceIdentifierCacheId, Dictionary<string, string> priceIdentifier, TimeSpan timeout)
+        /*Redis Save Unique Price*/
+        public void SaveUniquePriceinCache(string price) 
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = priceIdentifierCacheId;
+            var redisKey = "transferUniquePrice:" + price;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            foreach (var pair in priceIdentifier)
-            {
-                redisDb.HashSet(redisKey, (RedisValue)pair.Key, (RedisValue)pair.Value);
-                redisDb.KeyExpire(redisKey, timeout);
-            }
-
+            redisDb.StringSet(redisKey,"inUsed", TimeSpan.FromHours(2));
         }
 
-        public Dictionary<string, string> GetPriceIdentifierFromCache(string priceIdentifierId)
+        public bool isRedisExist(string price) 
         {
             try
             {
                 var redisService = RedisService.GetInstance();
-                var redisKey = priceIdentifierId;
+                var redisKey = "transferUniquePrice:" + price;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                var temp = redisDb.HashGetAll(redisKey).ToList();
-                if (temp.Count != 0)
+                var value = redisDb.StringGet(redisKey).ToString();
+                if (value != null)
                 {
-                    return temp.ToDictionary(hashEntry => (string)hashEntry.Name, hashEntry => (string)hashEntry.Value);
+                    return true;
                 }
                 else
                 {
-                    return null;
+                    return false;
                 }
             }
-            catch
+            catch 
             {
-                return null;
+                return false;
             }
+            
 
         }
-
 
         private static bool GetSearchingStatusInCache(string searchId, int supplierIndex)
         {
