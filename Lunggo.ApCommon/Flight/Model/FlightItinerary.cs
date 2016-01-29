@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public decimal TotalFare { get; set; }
         public string Currency { get; set; }
         public List<FlightTripForDisplay> Trips { get; set; }
-        public string IssueProgress { get; set; }
+        public decimal OriginalFare { get; set; }
     }
 
     public class FlightItinerary : FlightItineraryBase

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
@@ -53,7 +54,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     RequestedCabinClass = itinerary.RequestedCabinClass,
                     TotalFare = itinerary.LocalPrice,
                     Trips = MapTrips(itinerary.Trips),
-                    RegisterNumber = itinerary.RegisterNumber
+                    RegisterNumber = itinerary.RegisterNumber,
+                    OriginalFare = GenerateDummyOriginalFare(itinerary.LocalPrice)
                 };
             }
             else
@@ -179,6 +181,13 @@ namespace Lunggo.ApCommon.Flight.Service
             var segments = trip.Segments;
             var transit = segments.Count() - 1;
             return transit;
+        }
+
+        private static decimal GenerateDummyOriginalFare(decimal fare)
+        {
+            var markup = (((fare / 100M) % 200M) + 50M) / 10000M; // 0.5% ~ 2.5%
+            var unroundedFare = fare * (1M + markup);
+            return unroundedFare - (unroundedFare % 100M);
         }
     }
 }
