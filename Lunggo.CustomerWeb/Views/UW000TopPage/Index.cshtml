@@ -5,6 +5,8 @@
     ViewBag.FooterPayment = true;
     ViewBag.FooterFeedback = false;
     ViewBag.Title = "Enjoy Your Every Moment";
+
+    ViewBag.Campaign = true;
     
     // location
     ViewBag.LocationData = new Dictionary<string, string>();
@@ -82,6 +84,14 @@
 
 @section AdditionalCSS{
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
+    
+    @if (ViewBag.Campaign)
+    {
+        <!-- imlek start -->
+        <link href="/Campaign/Imlek2016/css/imlek2016.min.css" rel="stylesheet" />
+        <!-- imlek end -->
+    }
+
 }
 
 @section AdditionalJS{
@@ -575,3 +585,33 @@ else
 
     </div>
 </section><!-- .section-feedback -->
+
+
+@if (ViewBag.Campaign)
+{
+    <!-- TRAVORAMA IMLEK CAMPAIGN -->
+    <div class="imlek-wrapper">
+
+        <div class="draw__wrapper">
+        
+            <header class="draw__header">
+                <img src="/Campaign/Imlek2016/images/imlek-header.png" alt="TRAVORAMA - Chinese New Year Celebration" />
+            </header>
+        
+            <section class="draw__body">
+                
+                <div class="tree">
+                    <img src="/Campaign/Imlek2016/images/imlek-tree.png" alt="Tree" />
+                </div>
+                
+                <div class="cloud">
+                    
+                </div>
+
+            </section>
+
+
+        </div><!-- .tree-wrapper -->
+
+    </div><!-- .imlek-wrapper -->
+}

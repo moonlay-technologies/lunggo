@@ -1087,6 +1087,21 @@
     <Content Include="Assets\vendor\intltelinput\js\intlTelInput.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.jquery.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.min.css" />
+    <Content Include="Campaign\Imlek2016\css\imlek2016.css">
+      <DependentUpon>imlek2016.scss</DependentUpon>
+    </Content>
+    <Content Include="Campaign\Imlek2016\css\imlek2016.min.css">
+      <DependentUpon>imlek2016.css</DependentUpon>
+    </Content>
+    <Content Include="Campaign\Imlek2016\images\imlek-bg.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-cloud-1.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-cloud-2.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-cloud-3.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-header.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-monkey.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-title.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-tree.png" />
+    <Content Include="Campaign\Imlek2016\images\wrapper-bg.png" />
     <Content Include="checkin.png" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
@@ -1223,6 +1238,7 @@
     <Content Include="Assets\images\subscribe-bg.jpg.bak" />
     <Content Include="Assets\mobile\css\_page_account.scss" />
     <Content Include="Assets\mobile\css\_page_static.scss" />
+    <Content Include="Campaign\Imlek2016\css\imlek2016.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
