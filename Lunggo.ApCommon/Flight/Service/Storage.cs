@@ -30,10 +30,8 @@ namespace Lunggo.ApCommon.Flight.Service
         public void SaveTransacInquiryInCache(string MandiriCacheId, Dictionary<string,string> transaction,TimeSpan timeout)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "mandiriTransactionPrice" + MandiriCacheId;
+            var redisKey = "mandiriTransactionPrice:" + MandiriCacheId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            //var cacheObject = transactionList.ToCacheObject();
-
             foreach (var pair in transaction)
             {
                 redisDb.HashSet(redisKey, (RedisValue)pair.Key, (RedisValue)pair.Value);
@@ -47,7 +45,7 @@ namespace Lunggo.ApCommon.Flight.Service
             try
             {
                 var redisService = RedisService.GetInstance();
-                var redisKey = "mandiriTransactionPrice" + mandiricacheId;
+                var redisKey = "mandiriTransactionPrice:" + mandiricacheId;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
                 var temp = redisDb.HashGetAll(redisKey).ToList();
                 if (temp.Count != 0)
@@ -71,7 +69,7 @@ namespace Lunggo.ApCommon.Flight.Service
             try
             {
                 var redisService = RedisService.GetInstance();
-                var redisKey = "mandiriTransactionPrice" + key;
+                var redisKey = "mandiriTransactionPrice:" + key;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
                 var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
                 return timeToLive;

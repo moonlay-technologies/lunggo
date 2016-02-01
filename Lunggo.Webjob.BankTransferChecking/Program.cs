@@ -105,7 +105,7 @@ namespace Lunggo.Webjob.BankTransferChecking
                     // If Crawling data not empty, save to redis
                     if (prevDataList.Count != 0)
                     {
-                        TimeSpan setPrevTimeLimit = TimeSpan.FromHours(12); // ??? TIme is not available yet, change this to 12 hours
+                        TimeSpan setPrevTimeLimit = TimeSpan.FromHours(12); // ??? Time is not available yet, change this to 12 hours
                         var listDict = ListToDictionary(prevDataList);
                         flight.SaveTransacInquiryInCache(prevRedisKey, listDict, setPrevTimeLimit);
                         var getPrevSaveList = flight.GetTransacInquiryFromCache(prevRedisKey);
@@ -159,24 +159,13 @@ namespace Lunggo.Webjob.BankTransferChecking
             }
         }
 
-
-        /*private static List<string> DictionaryToList(Dictionary<string, string> dict)
-        {
-            List<string> list = new List<string>();
-            foreach (var pair in dict)
-            {
-                list.Add(pair.Value);
-                list.Add(pair.Key);
-            }
-            return list;
-        }*/
-
         private static Dictionary<string, string> ListToDictionary(List<string> list)
         {
             Dictionary<string,string> dict = new Dictionary<string,string>();
             for (int i = 0; i < list.Count; i += 2)
             {
                 dict.Add(list[i + 1], list[i]);
+                Debug.Print("Key : "+list[i+1]+"Value : "+list[i]);
             }
             
             return dict;

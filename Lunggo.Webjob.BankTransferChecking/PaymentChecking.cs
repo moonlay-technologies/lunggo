@@ -29,10 +29,6 @@ namespace Lunggo.Webjob.BankTransferChecking
                     if (decimal.Parse(pair.Key) == getUnpaid.Payment.FinalPrice)
                     {
                         Debug.Print("The Price is Same ");
-                        //Debug.Print("Reservasi No : " + getUnpaid.RsvNo);
-                        //Debug.Print("Transac : "+transacDate.ToString());
-                        //Debug.Print("Batas Bawah : " + getUnpaid.RsvTime.ToString());
-                        //Debug.Print("Batas Atas : " + getUnpaid.Payment.TimeLimit.ToString());
                         if (transacDate >= getUnpaid.RsvTime && transacDate <= getUnpaid.Payment.TimeLimit) 
                         {
                             Debug.Print("FIND------------->");
