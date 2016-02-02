@@ -70,7 +70,7 @@ namespace Lunggo.Webjob.BankTransferChecking
                 Debug.Print("---Redis is still empty---");
                 Console.WriteLine("---Redis is still empty---");
                 //Process Crawling for a previous day
-                Debug.Print("===Do Crawling and Getting data from Redis for Previous Day===");
+                Debug.Print("=== Do Crawling and Get data from Redis for Previous Day ===");
                 var prevRedisKey = prevDate.Date.ToString();
                 var getRedisData = flight.GetTransacInquiryFromCache(prevRedisKey);
                 var prevDataList = ProcessCrawl(_prevDay, _prevMonth, _prevYear);
@@ -105,7 +105,7 @@ namespace Lunggo.Webjob.BankTransferChecking
                     // If Crawling data not empty, save to redis
                     if (prevDataList.Count != 0)
                     {
-                        TimeSpan setPrevTimeLimit = TimeSpan.FromHours(12); // ??? Time is not available yet, change this to 12 hours
+                        TimeSpan setPrevTimeLimit = TimeSpan.FromHours(6); // ??? Time is not available yet,change this to 12 hours
                         var listDict = ListToDictionary(prevDataList);
                         flight.SaveTransacInquiryInCache(prevRedisKey, listDict, setPrevTimeLimit);
                         var getPrevSaveList = flight.GetTransacInquiryFromCache(prevRedisKey);
@@ -117,10 +117,7 @@ namespace Lunggo.Webjob.BankTransferChecking
                     {
                         Debug.Print("There is no previous transaction");
                     }
-                }
-                
-                
-                
+                }        
 
                 // Do first crawling for this day
                 Debug.Print("===Do Crawling and Getting data from Redis for This Day===");
@@ -129,7 +126,7 @@ namespace Lunggo.Webjob.BankTransferChecking
                 {
                     Debug.Print("Crawling is not empty");
                     var dictTodayList = ListToDictionary(todayList);
-                    TimeSpan setTimeLimit = TimeSpan.FromHours(36); // change this to set timelimit at first
+                    TimeSpan setTimeLimit = TimeSpan.FromHours(30); // change this to set timelimit at first
                     flight.SaveTransacInquiryInCache(redisKey, dictTodayList, setTimeLimit);
                     var getSaveList = flight.GetTransacInquiryFromCache(redisKey);
 
@@ -139,7 +136,6 @@ namespace Lunggo.Webjob.BankTransferChecking
                     {
                         Debug.Print("Harga : " + data.Payment.FinalPrice +", No : "+ data.RsvNo );
                     }
-
 
                     //CHECK PAYMENT
                     PaymentCheck(getSaveList);
@@ -165,7 +161,7 @@ namespace Lunggo.Webjob.BankTransferChecking
             for (int i = 0; i < list.Count; i += 2)
             {
                 dict.Add(list[i + 1], list[i]);
-                Debug.Print("Key : "+list[i+1]+"Value : "+list[i]);
+                Debug.Print("Key : "+list[i+1]+" Value : "+list[i]);
             }
             
             return dict;
@@ -174,7 +170,6 @@ namespace Lunggo.Webjob.BankTransferChecking
         private static Dictionary<string, string> CompareDictionary(Dictionary<string, string> dcrawl, Dictionary<string, string> dredis) 
         {
             var listDiff = dcrawl.Keys.Except(dredis.Keys);
-
             Dictionary<string, string> diff = new Dictionary<string, string>();
             if (listDiff != null) 
             {

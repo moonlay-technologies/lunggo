@@ -110,8 +110,6 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 return false;
             }
-            
-
         }
 
         private static bool GetSearchingStatusInCache(string searchId, int supplierIndex)

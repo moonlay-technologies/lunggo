@@ -76,7 +76,7 @@ namespace Lunggo.Webjob.BankTransferChecking
             if (data.Length != 0)
             {
                 int count = 0;
-                int num1 = 7, num2 = 12;
+                int num1 = 7, num2 = 12; // 11 for debit(testing), 12 for credit
                 foreach (var print in data)
                 {
                     if (count > 6 && count < (data.Length - 11))
@@ -267,7 +267,7 @@ namespace Lunggo.Webjob.BankTransferChecking
             var postData = @"transferDateDay1="+day+
                            @"&transferDateMonth1="+ month +
                            @"&transferDateYear1="+ year +
-                           @"&transferDateDay2="+day+
+                           @"&transferDateDay2="+ day +
                            @"&transferDateMonth2="+ month +
                            @"&transferDateYear2="+ year +
                            @"&transactionType=%25" +
@@ -307,7 +307,6 @@ namespace Lunggo.Webjob.BankTransferChecking
             {
                 return null;
             }
-
         }
 
         /*[GET] Logout*/

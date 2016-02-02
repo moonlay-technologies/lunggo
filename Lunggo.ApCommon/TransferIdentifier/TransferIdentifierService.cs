@@ -46,6 +46,7 @@ namespace Lunggo.ApCommon.TransferIdentifier
                 Debug.Print("Candidate Price : " + candidatePrice +" IsExist : "+isExist);
             } while (isExist);
 
+            Debug.Print("->Price : "+ candidatePrice.ToString());
             FlightService.GetInstance().SaveUniquePriceinCache(candidatePrice.ToString());
             return uniqueId;
         }

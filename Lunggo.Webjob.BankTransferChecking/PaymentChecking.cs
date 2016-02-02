@@ -31,8 +31,8 @@ namespace Lunggo.Webjob.BankTransferChecking
                         Debug.Print("The Price is Same ");
                         if (transacDate >= getUnpaid.RsvTime && transacDate <= getUnpaid.Payment.TimeLimit) 
                         {
-                            Debug.Print("FIND------------->");
-                            //Change Payment Info
+                            Debug.Print("---->FIND : Same price and vaid date transaction");
+                            //Change Payment Reservation
                             getUnpaid.Payment.PaidAmount = decimal.Parse(pair.Key);
                             getUnpaid.Payment.Status = PaymentStatus.Settled;
                             getUnpaid.Payment.Time = DateTime.ParseExact(pair.Value, format, provider);
@@ -42,11 +42,8 @@ namespace Lunggo.Webjob.BankTransferChecking
                             FlightService.GetInstance().UpdateFlightPayment(getUnpaid.RsvNo, getUnpaid.Payment);
                             FlightService.GetInstance().SendPendingPaymentConfirmedNotifToCustomer(getUnpaid.RsvNo);
                         }
-                        
-                        
                     }
                 }
-                
             }
         }
     }
