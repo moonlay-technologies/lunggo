@@ -59,7 +59,7 @@ $('.imlek-wrapper .card').click(function(evt) {
 });
 
 $('.imlek-wrapper .card .prize__close').click(function(evt) {
-    $(this).closest('.card').fadeOut().remove();
+    $(this).closest('.card').fadeOut(700, function() { $(this).remove(); });
     $('.imlek-wrapper .tree').children().show();
 });
 
