@@ -1093,6 +1093,13 @@
     <Content Include="Campaign\Imlek2016\css\imlek2016.min.css">
       <DependentUpon>imlek2016.css</DependentUpon>
     </Content>
+    <Content Include="Campaign\Imlek2016\images\card-1.png" />
+    <Content Include="Campaign\Imlek2016\images\card-2.png" />
+    <Content Include="Campaign\Imlek2016\images\card-3.png" />
+    <Content Include="Campaign\Imlek2016\images\card-4.png" />
+    <Content Include="Campaign\Imlek2016\images\card-5.png" />
+    <Content Include="Campaign\Imlek2016\images\card-content.jpg" />
+    <Content Include="Campaign\Imlek2016\images\close-btn.png" />
     <Content Include="Campaign\Imlek2016\images\imlek-bg.png" />
     <Content Include="Campaign\Imlek2016\images\imlek-cloud-1.png" />
     <Content Include="Campaign\Imlek2016\images\imlek-cloud-2.png" />
@@ -1102,6 +1109,8 @@
     <Content Include="Campaign\Imlek2016\images\imlek-title.png" />
     <Content Include="Campaign\Imlek2016\images\imlek-tree.png" />
     <Content Include="Campaign\Imlek2016\images\wrapper-bg.png" />
+    <Content Include="Assets\vendor\transitJS\jquery.transit.min.js" />
+    <Content Include="Campaign\Imlek2016\js\imlek2016.js" />
     <Content Include="checkin.png" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
