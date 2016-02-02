@@ -14,7 +14,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.TransferIdentifier.Model
         [JsonProperty("status_message")]
         public string StatusMessage{get;set;}
         [JsonProperty("transfer_code")]
-        //public IEnumerable<ModelName> price{get;set;}  
         public int TransferCode { get; set; }
     }
 }
