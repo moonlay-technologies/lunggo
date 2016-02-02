@@ -184,6 +184,9 @@
     <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Newsletter\Model\NewsletterSubscribeInput.cs" />
     <Compile Include="ApiSrc\v1\Newsletter\Query\CheckEmailQuery.cs" />
+    <Compile Include="ApiSrc\v1\Promo\Imlek\Model\ImlekApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Promo\Imlek\Model\ImlekApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Promo\PromoController.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Logic\GetRoomsLogic.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiResponse.cs" />
