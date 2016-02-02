@@ -131,6 +131,13 @@
 
     </script>
     <script src="/Assets/Travorama20/js/homeController.js"></script>
+    
+    @if (ViewBag.Campaign)
+    {
+        <script src="/Assets/vendor/transitJS/jquery.transit.min.js"></script>
+        <script src="/Campaign/Imlek2016/js/imlek2016.js"></script>
+    }
+
 }
 
 
@@ -596,22 +603,90 @@ else
         
             <header class="draw__header">
                 <img src="/Campaign/Imlek2016/images/imlek-header.png" alt="TRAVORAMA - Chinese New Year Celebration" />
-            </header>
+            </header><!-- .draw__header -->
         
             <section class="draw__body">
                 
                 <div class="tree">
-                    <img src="/Campaign/Imlek2016/images/imlek-tree.png" alt="Tree" />
-                </div>
+                    <img src="/Campaign/Imlek2016/images/imlek-tree.png" alt="Tree" class="main" />
+                    <img src="/Campaign/Imlek2016/images/imlek-monkey.png" alt="Monkey" class="monkey" />
+                    
+                    <div class="card card-1">
+                        <div class="prize__wrapper">
+                            <a href="#" class="prize__close">
+                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
+                            </a>
+                                
+                            <div class="prize__body">
+                                asdasdasd
+                            </div>
+
+                        </div>
+                        <img src="/Campaign/Imlek2016/images/card-1.png" alt="Card 1" class="envelope" />
+                    </div>
+                    <div class="card card-2">
+                        <div class="prize__wrapper">
+                            <a href="#" class="prize__close">
+                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
+                            </a>
+
+                            <div class="prize__body">
+                                asdasdasd
+                            </div>
+
+                        </div>
+                        <img src="/Campaign/Imlek2016/images/card-2.png" alt="Card 2" class="envelope" />
+                    </div>
+                    <div class="card card-3">
+                        <div class="prize__wrapper">
+                            <a href="#" class="prize__close">
+                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
+                            </a>
+
+                            <div class="prize__body">
+                                asdasdasd
+                            </div>
+
+                        </div>
+                        <img src="/Campaign/Imlek2016/images/card-3.png" alt="Card 3" class="envelope" />
+                    </div>
+                    <div class="card card-4">
+                        <div class="prize__wrapper">
+                            <a href="#" class="prize__close">
+                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
+                            </a>
+
+                            <div class="prize__body">
+                                asdasdasd
+                            </div>
+
+                        </div>
+                        <img src="/Campaign/Imlek2016/images/card-4.png" alt="Card 4" class="envelope" />
+                    </div>
+                    <div class="card card-5">
+                        <div class="prize__wrapper">
+                            <a href="#" class="prize__close">
+                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
+                            </a>
+
+                            <div class="prize__body">
+                                asdasdasd
+                            </div>
+
+                        </div>
+                        <img src="/Campaign/Imlek2016/images/card-5.png" alt="Card 5" class="envelope" />
+                    </div>
+
+                </div><!-- .tree -->
                 
                 <div class="cloud">
                     
-                </div>
+                </div><!-- .cloud -->
 
-            </section>
+            </section><!-- .draw__bdoy -->
 
 
-        </div><!-- .tree-wrapper -->
+        </div><!-- .draw__wrapper -->
 
     </div><!-- .imlek-wrapper -->
 }
