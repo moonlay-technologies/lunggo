@@ -11,7 +11,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Logic
     public class ImlekLogic
     {
         private const int RetryCountPerDay = 2;
-        private const double Chance = 0.00001;
+        private const int Chance = 1;
+        private const int ChanceMax = 10000000;
 
         public ImlekApiResponse Roll(ImlekApiRequest request)
         {
@@ -35,7 +36,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Logic
 
         private static ImlekApiResponse RollResult()
         {
-            if (new Random().NextDouble() <= Chance)
+            if (new Random().Next(ChanceMax) < Chance)
             {
                 throw new NotImplementedException();
             }
