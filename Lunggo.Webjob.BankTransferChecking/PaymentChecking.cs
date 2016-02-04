@@ -35,7 +35,7 @@ namespace Lunggo.Webjob.BankTransferChecking
                             //Change Payment Reservation
                             getUnpaid.Payment.PaidAmount = decimal.Parse(pair.Key);
                             getUnpaid.Payment.Status = PaymentStatus.Settled;
-                            getUnpaid.Payment.Time = DateTime.ParseExact(pair.Value, format, provider);
+                            getUnpaid.Payment.Time = transacDate;
                             Console.WriteLine("Reservation No : " + getUnpaid.RsvNo + ", Price : " + getUnpaid.Payment.FinalPrice + " Has Paid");
 
                             //Updating in database
