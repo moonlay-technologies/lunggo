@@ -18,16 +18,26 @@
                     &.card-4 {top:270px; left:70px;}
                     &.card-5 {top:230px; left:420px;}
 
-                    .prize__wrapper {display:none;}
-
                     // if active
                     //&.active {left:50%; margin-left:-125px; width:250px; z-index:9999;
                         &.active {cursor:default;
                             &:before {display:none;}
                         }// &.active
-                        .prize__wrapper {width:240px; height:150px; background:url(/Campaign/Imlek2016/images/card-content.jpg); position:absolute; left:50%; margin-left:-120px;
+                        .prize__wrapper {width:240px; height:150px; background:url(/Campaign/Imlek2016/images/card-content.jpg); position:absolute; left:50%; margin-left:-120px; display:none;
                             .prize__close {position:absolute; top:-20px; right:-20px; z-index:2;}
-                            .prize__body {}
+                            .prize__body {font-size:14px;
+                                &.no-prize {padding-top:30px;}
+                                &.prize {position:absolute; width:100%; height:100%; background-repeat:no-repeat; background-position:center 15px;
+                                    &.prize-50 {background-image:url(/Campaign/Imlek2016/images/voucher-50.png);}
+                                    &.prize-100 {background-image:url(/Campaign/Imlek2016/images/voucher-100.png);}
+                                    &.prize-150 {background-image:url(/Campaign/Imlek2016/images/voucher-150.png);}
+                                    &.prize-200 {background-image:url(/Campaign/Imlek2016/images/voucher-200.png);}
+                                    .text-info {font-size:12px; line-height:100%; top:77px; color:#7a4d00; position:absolute;}
+                                    .voucher-code {position:absolute; color:#fff; background:#d92a15; padding:5px 10px; top:110px; width:200px; left:50%; margin-left:-100px; font-weight:bold; font-size:18px;}
+                                }
+                                &.no-eligible {padding-top:30px;}
+                                p {padding:0 10px;}
+                            }
                         }// .prize__wrapper
                     //}
 
@@ -37,8 +47,10 @@
 
             }// .tree
             .cloud {position:absolute; top:0; left:0; width:100%; height:100%; z-index:10;}// .cloud
-            .email {position:absolute; top:50%; left:50%; width:300px; margin-top:-50px; margin-left:-150px; background:#fff; padding:15px; z-index:999;
+            .email {position:absolute; top:50%; left:50%; width:300px; margin-top:-150px; margin-left:-150px; background:#fff; padding:15px; z-index:999;
+                .form-group {margin-bottom:0;}
                 input[type="email"] {margin-bottom:15px;}
+                .help-block {margin-top:-10px; display:none;}
                 button {margin-bottom:15px;}
                 p:last-child {margin-bottom:0;}
             }// .email
