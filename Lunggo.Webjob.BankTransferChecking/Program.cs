@@ -31,17 +31,17 @@ namespace Lunggo.Webjob.BankTransferChecking
             if (getListFirst != null)
             {
                 Debug.Print("===Redis is not Empty===");
-                Console.WriteLine("===Redis is not Empty===");
+                Console.WriteLine("=== Redis is not Empty ===");
                 var crawlingList = ProcessCrawl(_day,_month,_year);
 
                 var listToDict = ListToDictionary(crawlingList);
                 var difference = CompareDictionary(listToDict, getListFirst);
-                Debug.Print("Time Limit : " + flight.GetRedisExpiry(redisKey).ToString());
+                Console.WriteLine("Time Limit : " + flight.GetRedisExpiry(redisKey).ToString());
                 if (difference.Count != 0)  
                 {
-                    Debug.Print("-----------Different----------");
+                    Console.WriteLine("-----------Different----------");
                     TimeSpan timeLimit = flight.GetRedisExpiry(redisKey);
-                    Debug.Print("Time to Live : " + timeLimit.ToString());
+                    Console.WriteLine("Time to Live : " + timeLimit.ToString());
                     flight.SaveTransacInquiryInCache(redisKey, difference, timeLimit);
                     var getList = flight.GetTransacInquiryFromCache(redisKey);
                     
@@ -57,7 +57,8 @@ namespace Lunggo.Webjob.BankTransferChecking
                 }
                 else 
                 {
-                    Debug.Print("Crawling List is same with data in redis");
+                    Console.WriteLine("Crawling List is same with data in redis");
+                    //PaymentCheck(listToDict);
                 }
                 
             }
@@ -70,7 +71,7 @@ namespace Lunggo.Webjob.BankTransferChecking
                 Debug.Print("---Redis is still empty---");
                 Console.WriteLine("---Redis is still empty---");
                 //Process Crawling for a previous day
-                Debug.Print("=== Do Crawling and Get data from Redis for Previous Day ===");
+                Console.WriteLine("=== Do Crawling and Get data from Redis for Previous Day ===");
                 var prevRedisKey = prevDate.Date.ToString();
                 var getRedisData = flight.GetTransacInquiryFromCache(prevRedisKey);
                 var prevDataList = ProcessCrawl(_prevDay, _prevMonth, _prevYear);
@@ -81,7 +82,7 @@ namespace Lunggo.Webjob.BankTransferChecking
                     if (diff.Count != 0)
                     {
                         TimeSpan prevTimeLimit = flight.GetRedisExpiry(prevRedisKey);
-                        Debug.Print("Time Limit : " + prevTimeLimit.ToString());
+                        Console.WriteLine("Time Limit : " + prevTimeLimit.ToString());
                         flight.SaveTransacInquiryInCache(prevRedisKey, diff, prevTimeLimit);
                         var getPrevList = flight.GetTransacInquiryFromCache(prevRedisKey);
                         
@@ -96,7 +97,7 @@ namespace Lunggo.Webjob.BankTransferChecking
                     }
                     else
                     {
-                        Debug.Print("Prev :: Crawling data and in Redis is same ");
+                        Console.WriteLine("Prev :: Crawling data and in Redis is same ");
                     }
                     
                 }
@@ -105,7 +106,7 @@ namespace Lunggo.Webjob.BankTransferChecking
                     // If Crawling data not empty, save to redis
                     if (prevDataList.Count != 0)
                     {
-                        TimeSpan setPrevTimeLimit = TimeSpan.FromHours(6); // ??? Time is not available yet,change this to 12 hours
+                        TimeSpan setPrevTimeLimit = TimeSpan.FromHours(6); // ??? Time is not available yet,change this to 6 hours
                         var listDict = ListToDictionary(prevDataList);
                         flight.SaveTransacInquiryInCache(prevRedisKey, listDict, setPrevTimeLimit);
                         var getPrevSaveList = flight.GetTransacInquiryFromCache(prevRedisKey);
@@ -115,18 +116,18 @@ namespace Lunggo.Webjob.BankTransferChecking
                     }
                     else
                     {
-                        Debug.Print("There is no previous transaction");
+                        Console.WriteLine("There is no previous transaction");
                     }
                 }        
 
                 // Do first crawling for this day
-                Debug.Print("===Do Crawling and Getting data from Redis for This Day===");
+                Console.WriteLine("===Do Crawling and Getting data from Redis for This Day===");
                 var todayList = ProcessCrawl(_day,_month,_year);
                 if (todayList.Count != 0)
                 {
-                    Debug.Print("Crawling is not empty");
+                    Console.WriteLine("Crawling is not empty");
                     var dictTodayList = ListToDictionary(todayList);
-                    TimeSpan setTimeLimit = TimeSpan.FromHours(30); // change this to set timelimit at first
+                    TimeSpan setTimeLimit = TimeSpan.FromHours(30); // change this to set timelimit at first, 30
                     flight.SaveTransacInquiryInCache(redisKey, dictTodayList, setTimeLimit);
                     var getSaveList = flight.GetTransacInquiryFromCache(redisKey);
 
@@ -134,22 +135,23 @@ namespace Lunggo.Webjob.BankTransferChecking
                     var unpaid = flight.GetUnpaidReservations();
                     foreach (var data in unpaid) 
                     {
-                        Debug.Print("Harga : " + data.Payment.FinalPrice +", No : "+ data.RsvNo );
+                        Debug.Print("Price : " + data.Payment.FinalPrice +", No : "+ data.RsvNo );
                     }
 
                     //CHECK PAYMENT
                     PaymentCheck(getSaveList);
 
                     //print data from the redis
-                    Debug.Print("Printing data from Redis");
+                    Console.WriteLine("Printing data from Redis");
                     foreach (var pair in getSaveList)
                     {
                         Debug.Print("{0}, {1}", pair.Key, pair.Value);
+                        Console.WriteLine("{0}, {1}", pair.Key, pair.Value);
                     }
                 }
                 else 
                 {
-                    Debug.Print("There is no transaction today");
+                    Console.WriteLine("There is no transaction today");
                 }
                 
             }

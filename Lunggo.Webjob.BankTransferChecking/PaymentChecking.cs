@@ -28,15 +28,15 @@ namespace Lunggo.Webjob.BankTransferChecking
                     var transacDate = DateTime.ParseExact(pair.Value, format, provider).AddHours(-7);
                     if (decimal.Parse(pair.Key) == getUnpaid.Payment.FinalPrice)
                     {
-                        Debug.Print("The Price is Same ");
+                        Console.WriteLine("The Price is Same ");
                         if (transacDate >= getUnpaid.RsvTime && transacDate <= getUnpaid.Payment.TimeLimit) 
                         {
-                            Debug.Print("---->FIND : Same price and vaid date transaction");
+                            Console.WriteLine("---->FIND : Same price and valid date transaction");
                             //Change Payment Reservation
                             getUnpaid.Payment.PaidAmount = decimal.Parse(pair.Key);
                             getUnpaid.Payment.Status = PaymentStatus.Settled;
                             getUnpaid.Payment.Time = DateTime.ParseExact(pair.Value, format, provider);
-                            Debug.Print("Reservation No : " + getUnpaid.RsvNo + ", Price : " + getUnpaid.Payment.FinalPrice + " Has Paid");
+                            Console.WriteLine("Reservation No : " + getUnpaid.RsvNo + ", Price : " + getUnpaid.Payment.FinalPrice + " Has Paid");
 
                             //Updating in database
                             FlightService.GetInstance().UpdateFlightPayment(getUnpaid.RsvNo, getUnpaid.Payment);

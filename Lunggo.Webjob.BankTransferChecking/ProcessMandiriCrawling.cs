@@ -71,7 +71,7 @@ namespace Lunggo.Webjob.BankTransferChecking
             var searchedHtml = (CQ)html;
             //var data = searchedHtml[".clsEven"].Children().Elements.ToArray();//.Text().Trim().Replace("\r\n", "").Replace("\n", "").Replace("\r", "").Replace("\u0009", "").Replace(",", "").Split(' ');
             var data = searchedHtml[".clsFormTrxStatus"].Children().Children().Children().Elements.ToArray();
-            Console.Write("DATA LENGTH : " + data.Length);
+            Console.WriteLine("DATA LENGTH : " + data.Length);
             List<string> listData = new List<string>();
             if (data.Length != 0)
             {
@@ -261,7 +261,7 @@ namespace Lunggo.Webjob.BankTransferChecking
             //change url and post data for AccountNumber, Filter Category, and Set Value Date for Searcing
             //change trxFilter with "credit" for production
             var url = "/corp/front/transactioninquiry.do?action=doCheckValidityAndShow&day1="+day+"&mon1="+month+"&year1="+year +
-                "&day2="+day+"&mon2=" + month + "&year2=" + year + "&accountNumber=1020006644014&type=show&accountNumber=1020006644014" +
+                "&day2=" + day + "&mon2=" + month + "&year2=" + year + "&accountNumber=1020006644014&type=show&accountNumber=1020006644014" +
                 "&accountType=S&frOrganizationUnitNm=&currDisplay=IDR&day1="+day+"&mon1="+month+"&year1="+year+"&day2="+day+"&mon2="+month+"&year2="+year+"&trxFilter=credit";
             var request = new RestRequest(url, Method.POST);
             var postData = @"transferDateDay1="+day+
