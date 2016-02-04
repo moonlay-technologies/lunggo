@@ -131,7 +131,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Logic
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var imlekTable = GetImlekTableByEmailQuery.GetInstance().Execute(conn, new { Email = email }).SingleOrDefault();
-                return imlekTable != null;
+                return imlekTable == null;
             }
         }
     }

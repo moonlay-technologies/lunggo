@@ -11,7 +11,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Query
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "SELECT * FROM ImlekTable WHERE Email = @Email";
+            return "SELECT * FROM PromoImlek WHERE Email = @Email";
         }
     }
 }
