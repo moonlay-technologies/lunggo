@@ -1101,6 +1101,7 @@
     <Content Include="Campaign\Imlek2016\images\card-content.jpg" />
     <Content Include="Campaign\Imlek2016\images\close-btn.png" />
     <Content Include="Campaign\Imlek2016\images\imlek-bg.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-close.png" />
     <Content Include="Campaign\Imlek2016\images\imlek-cloud-1.png" />
     <Content Include="Campaign\Imlek2016\images\imlek-cloud-2.png" />
     <Content Include="Campaign\Imlek2016\images\imlek-cloud-3.png" />
