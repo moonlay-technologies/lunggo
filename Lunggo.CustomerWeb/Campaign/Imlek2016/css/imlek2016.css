@@ -29,7 +29,7 @@
         left: 50%;
         margin-left: -250px;
         z-index: 100;
-        display: none; }
+        opacity: 0.5; }
         .imlek-wrapper .draw__wrapper .draw__body .tree .monkey {
           position: absolute;
           left: 50%;

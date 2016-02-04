@@ -16,7 +16,7 @@ Imlek.State = function(state) {
         $('.imlek-wrapper').fadeOut();
         $('body').removeClass('no-scroll');
     } else if (state == 'init') {
-        $('.imlek-wrapper .tree').fadeIn();
+        $('.imlek-wrapper .tree').css('opacity', '1');
         $('.imlek-wrapper .email').fadeOut();
     }
 
@@ -34,7 +34,7 @@ $('#imlek__email__submit').click(function () {
     var email = $('#imlek__email__address').val();
     var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
 
-    if ( email = '' || !re.test( email ) ) {
+    if ( email == '' || !re.test( email ) ) {
         $(this).parent().addClass('has-error');
         $(this).siblings('.help-block').show();
     } else {
@@ -58,6 +58,12 @@ $('.imlek-wrapper .card').hover(function() {
 // card on click
 $('.imlek-wrapper .card').click(function(evt) {
     evt.preventDefault();
+
+    // console.log(Imlek);
+
+    if (Imlek.Email.length == 0) {
+        return false;
+    }
 
     if ($(this).hasClass('active')) {
         return false;

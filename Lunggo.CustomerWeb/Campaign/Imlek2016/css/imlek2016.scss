@@ -6,7 +6,7 @@
     .draw__wrapper {min-height:100%; overflow:auto;
         .draw__header {text-align:center; margin-bottom:20px;}
         .draw__body {text-align:center; background:url(/Campaign/Imlek2016/images/imlek-bg.png) center center no-repeat; height:550px; position:relative;
-            .tree {width:500px; position:absolute; left:50%; margin-left:-250px; z-index:100; display:none;
+            .tree {width:500px; position:absolute; left:50%; margin-left:-250px; z-index:100; opacity:0.5;
                 .main {}
                 .monkey {position:absolute; left:50%; top:200px; margin-left:50px;}
                 .card {width:50px; position:absolute; cursor:pointer;
