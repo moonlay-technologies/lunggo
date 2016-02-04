@@ -120,6 +120,8 @@
                   margin-left: -100px;
                   font-weight: bold;
                   font-size: 18px; }
+                .imlek-wrapper .draw__wrapper .draw__body .tree .card .prize__wrapper .prize__body.prize .loading {
+                  padding-top: 40px; }
               .imlek-wrapper .draw__wrapper .draw__body .tree .card .prize__wrapper .prize__body.no-eligible {
                 padding-top: 30px; }
               .imlek-wrapper .draw__wrapper .draw__body .tree .card .prize__wrapper .prize__body p {
