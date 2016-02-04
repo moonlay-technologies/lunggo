@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRecord;
+using Lunggo.Repository.TableRepository;
 using Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Model;
 using Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Query;
 
@@ -11,8 +13,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Logic
     public class ImlekLogic
     {
         private const int RetryCountPerDay = 2;
-        private const int Chance = 1;
-        private const int ChanceMax = 10000000;
+        private const int Chance = 5;
+        private const int ChanceMax = 100;
 
         public ImlekApiResponse Roll(ImlekApiRequest request)
         {
@@ -30,15 +32,57 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Logic
             else
             {
                 DecrementRetryCount(request.Email);
-                return RollResult();
+                return RollResult(request.Email);
             }
         }
 
-        private static ImlekApiResponse RollResult()
+        private static ImlekApiResponse RollResult(string email)
         {
             if (new Random().Next(ChanceMax) < Chance)
             {
-                throw new NotImplementedException();
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    var unusedVouchers = GetUnusedVoucherCodesQuery.GetInstance().Execute(conn, null).ToList();
+                    var voucher = unusedVouchers[new Random().Next(unusedVouchers.Count)];
+                    var voucherType = voucher.Email.Substring(9);
+                    VoucherRecipientsTableRepo.GetInstance().Update(conn, new VoucherRecipientsTableRecord
+                    {
+                        VoucherRecipientId = voucher.VoucherRecipientId,
+                        Email = email
+                    });
+                    switch (voucherType)
+                    {
+                        case "50":
+                            return new ImlekApiResponse
+                            {
+                                ReturnCode = 1,
+                                VoucherCode = voucher.VoucherCode
+                            };
+                        case "100":
+                            return new ImlekApiResponse
+                            {
+                                ReturnCode = 2,
+                                VoucherCode = voucher.VoucherCode
+                            };
+                        case "150":
+                            return new ImlekApiResponse
+                            {
+                                ReturnCode = 3,
+                                VoucherCode = voucher.VoucherCode
+                            };
+                        case "200":
+                            return new ImlekApiResponse
+                            {
+                                ReturnCode = 4,
+                                VoucherCode = voucher.VoucherCode
+                            };
+                        default:
+                            return new ImlekApiResponse
+                            {
+                                ReturnCode = 0
+                            };
+                    }
+                }
             }
             else
                 return new ImlekApiResponse

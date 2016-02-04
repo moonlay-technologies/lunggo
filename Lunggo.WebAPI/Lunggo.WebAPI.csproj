@@ -188,6 +188,7 @@
     <Compile Include="ApiSrc\v1\Promo\Imlek\Model\ImlekApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Promo\Imlek\Model\ImlekApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Promo\Imlek\Model\ImlekTable.cs" />
+    <Compile Include="ApiSrc\v1\Promo\Imlek\Query\GetUnusedVoucherCodesQuery.cs" />
     <Compile Include="ApiSrc\v1\Promo\Imlek\Query\ResetRetryCountQuery.cs" />
     <Compile Include="ApiSrc\v1\Promo\Imlek\Query\GetImlekTableByEmailQuery.cs" />
     <Compile Include="ApiSrc\v1\Promo\Imlek\Query\DecrementRetryCountQuery.cs" />
