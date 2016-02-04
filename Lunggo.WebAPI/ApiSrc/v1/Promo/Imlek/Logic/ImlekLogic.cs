@@ -10,13 +10,13 @@ using Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Query;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Logic
 {
-    public class ImlekLogic
+    public static class ImlekLogic
     {
         private const int RetryCountPerDay = 2;
         private const int Chance = 5;
         private const int ChanceMax = 100;
 
-        public ImlekApiResponse Roll(ImlekApiRequest request)
+        public static ImlekApiResponse Roll(ImlekApiRequest request)
         {
             if (EmailNotExist(request.Email))
                 AddEmail(request.Email);

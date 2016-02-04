@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Lunggo.Framework.Cors;
+using Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Logic;
 using Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Promo
@@ -16,10 +17,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Promo
         [Route("v1/promo/imlek")]
         public ImlekApiResponse Imlek(HttpRequestMessage httpRequest, [FromBody] ImlekApiRequest request)
         {
-            return new ImlekApiResponse
-            {
-                ReturnCode = new Random().Next(-1, 5)
-            };
+            return ImlekLogic.Roll(request);
         }
 
     }
