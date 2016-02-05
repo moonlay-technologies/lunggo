@@ -104,7 +104,7 @@ $('.imlek-wrapper .card').click(function(evt) {
                     textTarget.addClass('prize-200');
                     break;
             }
-            textTarget.html('<p class="text-info">Masukan kode voucher ini ketika melakukan pembayaran.</p><p class="voucher-code">'+data.v+'</p>');
+            textTarget.html('<p class="text-info">Masukkan kode voucher ini ketika melakukan pembayaran.</p><p class="voucher-code">'+data.v+'</p>');
         }
 
     });

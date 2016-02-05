@@ -13,7 +13,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Logic
     public static class ImlekLogic
     {
         private const int RetryCountPerDay = 2;
-        private const int Chance = 5;
+        private const int Chance = 15;
         private const int ChanceMax = 100;
 
         public static ImlekApiResponse Roll(ImlekApiRequest request)
