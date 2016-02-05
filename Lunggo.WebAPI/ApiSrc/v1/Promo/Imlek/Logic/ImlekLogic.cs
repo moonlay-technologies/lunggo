@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Mail;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Model;
@@ -12,8 +13,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Logic
 {
     public static class ImlekLogic
     {
-        private const int RetryCountPerDay = 2;
-        private const int Chance = 15;
+        private const int RetryCountPerDay = 3;
+        private const int Chance = 3;
         private const int ChanceMax = 100;
 
         public static ImlekApiResponse Roll(ImlekApiRequest request)
@@ -50,27 +51,39 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Promo.Imlek.Logic
                         VoucherRecipientId = voucher.VoucherRecipientId,
                         Email = email
                     });
+                    var mail = MailService.GetInstance();
+                    var mailModel = new MailModel
+                    {
+                        RecipientList = new[] { email },
+                        Subject = "[Travorama] Congrats! Here is Your Lunar Angpao",
+                        FromMail = "no-reply@travorama.com",
+                        FromName = "Travorama"
+                    };
                     switch (voucherType)
                     {
                         case "50":
+                            mail.SendEmail(new { Email = email, Amount = "50.000", Code = voucher.VoucherCode }, mailModel, "ImlekPromoEmail");
                             return new ImlekApiResponse
                             {
                                 ReturnCode = 1,
                                 VoucherCode = voucher.VoucherCode
                             };
                         case "100":
+                            mail.SendEmail(new { Email = email, Amount = "100.000", Code = voucher.VoucherCode }, mailModel, "ImlekPromoEmail");
                             return new ImlekApiResponse
                             {
                                 ReturnCode = 2,
                                 VoucherCode = voucher.VoucherCode
                             };
                         case "150":
+                            mail.SendEmail(new { Email = email, Amount = "150.000", Code = voucher.VoucherCode }, mailModel, "ImlekPromoEmail");
                             return new ImlekApiResponse
                             {
                                 ReturnCode = 3,
                                 VoucherCode = voucher.VoucherCode
                             };
                         case "200":
+                            mail.SendEmail(new { Email = email, Amount = "200.000", Code = voucher.VoucherCode }, mailModel, "ImlekPromoEmail");
                             return new ImlekApiResponse
                             {
                                 ReturnCode = 4,
