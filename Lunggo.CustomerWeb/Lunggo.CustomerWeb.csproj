@@ -711,6 +711,7 @@
     <Content Include="Assets\images\campaign\hongkong-text.png" />
     <Content Include="Assets\images\campaign\hongkong-thumb.jpg" />
     <Content Include="Assets\images\campaign\hongkong.jpg" />
+    <Content Include="Assets\images\campaign\imlek2016\imlek2016-banner.jpg" />
     <Content Include="Assets\images\campaign\jakarta-text.png" />
     <Content Include="Assets\images\campaign\jakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\jakarta.jpg" />
@@ -1087,6 +1088,35 @@
     <Content Include="Assets\vendor\intltelinput\js\intlTelInput.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.jquery.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.min.css" />
+    <Content Include="Campaign\Imlek2016\css\imlek2016.css">
+      <DependentUpon>imlek2016.scss</DependentUpon>
+    </Content>
+    <Content Include="Campaign\Imlek2016\css\imlek2016.min.css">
+      <DependentUpon>imlek2016.css</DependentUpon>
+    </Content>
+    <Content Include="Campaign\Imlek2016\images\card-1.png" />
+    <Content Include="Campaign\Imlek2016\images\card-2.png" />
+    <Content Include="Campaign\Imlek2016\images\card-3.png" />
+    <Content Include="Campaign\Imlek2016\images\card-4.png" />
+    <Content Include="Campaign\Imlek2016\images\card-5.png" />
+    <Content Include="Campaign\Imlek2016\images\card-content.jpg" />
+    <Content Include="Campaign\Imlek2016\images\close-btn.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-bg.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-close.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-cloud-1.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-cloud-2.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-cloud-3.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-header.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-monkey.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-title.png" />
+    <Content Include="Campaign\Imlek2016\images\imlek-tree.png" />
+    <Content Include="Campaign\Imlek2016\images\voucher-100.png" />
+    <Content Include="Campaign\Imlek2016\images\voucher-150.png" />
+    <Content Include="Campaign\Imlek2016\images\voucher-200.png" />
+    <Content Include="Campaign\Imlek2016\images\voucher-50.png" />
+    <Content Include="Campaign\Imlek2016\images\wrapper-bg.png" />
+    <Content Include="Assets\vendor\transitJS\jquery.transit.min.js" />
+    <Content Include="Campaign\Imlek2016\js\imlek2016.js" />
     <Content Include="checkin.png" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
@@ -1223,6 +1253,7 @@
     <Content Include="Assets\images\subscribe-bg.jpg.bak" />
     <Content Include="Assets\mobile\css\_page_account.scss" />
     <Content Include="Assets\mobile\css\_page_static.scss" />
+    <Content Include="Campaign\Imlek2016\css\imlek2016.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2559,6 +2590,7 @@
     <Content Include="Views\StaticPage\GetCalendar.mobile.cshtml" />
     <Content Include="Views\StaticPage\GetCalendarTerms.mobile.cshtml" />
     <Content Include="Views\StaticPage\VisaWonderfulWednesday.cshtml" />
+    <Content Include="Views\StaticPage\Imlek2016.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2612,7 +2644,6 @@
     <Folder Include="Campaign\VisaWonderfulWednesday\css\" />
     <Folder Include="Campaign\VisaWonderfulWednesday\images\" />
     <Folder Include="Helper\" />
-    <Folder Include="Views\Campaign\" />
     <Folder Include="Views\Upload\" />
     <Folder Include="WebSrc\UW300\Logic\" />
     <Folder Include="WebSrc\UW300\Object\" />

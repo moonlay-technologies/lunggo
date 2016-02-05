@@ -98,5 +98,10 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult Imlek2016()
+        {
+            return View();
+        }
+
     }
 }

@@ -19,6 +19,14 @@ namespace Lunggo.CustomerWeb
             );
             // visa campaign end
 
+            // imlek campaign start
+            routes.MapRoute(
+                name: "ImlekTerms",
+                url: "{langCode}/campaign/imlek2016",
+                defaults: new { controller = "StaticPage", action = "Imlek2016", langCode = "id" }
+            );
+            // imlek campaign end
+
             routes.MapRoute(
                 name: "toppage",
                 url: "{langCode}",

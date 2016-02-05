@@ -35,7 +35,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Lunggo.Generator.TableRepo.TableRepoGenerator</StartupObject>
+    <StartupObject>Lunggo.Generator.VoucherGenerator.VoucherGenerator</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.StringTemplate">
@@ -89,6 +89,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="VoucherCodes.txt" />
     <None Include="TopFlightDestinations\TopDestinations.csv" />
   </ItemGroup>
   <ItemGroup>
