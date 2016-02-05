@@ -29,5 +29,19 @@ namespace Lunggo.WebAPI.ApiSrc.v1.PriceIdentifier
                 TransferCode = response
             };
         }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Route("api/v1/saveprice")]
+        public SavePriceApiResponse SaveUniquePrice([FromUri] decimal finalprice)
+        {
+
+            TransferIdentifierService.GetInstance().SavePrice(finalprice);
+            return new SavePriceApiResponse
+            {
+                StatusCode = HttpStatusCode.OK,
+                StatusMessage = "The Final Price is successfully saved"
+            };
+        }
     }
 }

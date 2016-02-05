@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Init.cs" />
+    <Compile Include="MandiriClientHandler.cs" />
     <Compile Include="PaymentChecking.cs" />
     <Compile Include="ProcessMandiriCrawling.cs" />
     <Compile Include="Program.cs" />

@@ -15,7 +15,7 @@ namespace Lunggo.Webjob.BankTransferChecking
     {
         private static void PaymentCheck(Dictionary<string, string> dict) 
         {
-            Debug.Print("Payment Checking Started");
+            Console.WriteLine("Payment Checking Started");
             FlightService flight = FlightService.GetInstance();
             //Get all booking data from database
             List<FlightReservation> unpaidReservation = flight.GetUnpaidReservations();

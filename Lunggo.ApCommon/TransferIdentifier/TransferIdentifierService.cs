@@ -47,8 +47,16 @@ namespace Lunggo.ApCommon.TransferIdentifier
             } while (isExist);
 
             Debug.Print("->Price : "+ candidatePrice.ToString());
-            FlightService.GetInstance().SaveUniquePriceinCache(candidatePrice.ToString());
             return uniqueId;
         }
+
+        public void SavePrice(decimal price) 
+        {
+            FlightService.GetInstance().SaveUniquePriceinCache(price.ToString());
+            //For testing, check if price is succesfully saved in redis
+            bool isExist = FlightService.GetInstance().isRedisExist(price.ToString());
+            Debug.Print("Successfully Saved : "+isExist);
+        }
+
     }
 }

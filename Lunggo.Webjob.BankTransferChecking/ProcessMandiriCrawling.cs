@@ -17,9 +17,6 @@ namespace Lunggo.Webjob.BankTransferChecking
 {
     public partial class Program
     {
-        private static string _companyId;
-        private static string _userName;
-        private static string _password;
         private static DateTime datenow = DateTime.Now.Date;//new DateTime(2016,1,8);//DateTime.Now.Date;
         private static DateTime prevDate = datenow.AddDays(-1);
         private static string _day = datenow.Day.ToString();
@@ -29,41 +26,25 @@ namespace Lunggo.Webjob.BankTransferChecking
         private static string _prevMonth = prevDate.Month.ToString();
         private static string _prevYear = prevDate.Year.ToString();
 
-        private static List<string> ProcessCrawl(string day, string month, string year) 
+        private static List<string> ProcessCrawl(RestClient client,string day, string month, string year) 
         {
-            var client = CreateCustomerClient();
-            /*Crawling MCM*/
-            //Login
-            var textLogin = Login(client);
-
-            //Top Request
-            var textTopReq = getTopRequest(client);
-
-            //Menu Request
-            var textMenu = MenuRequest(client);
-
-            // Main Request
-            var textMain = MainRequest(client);
-
-            // Bottom Request
-            var textBottom = BottomRequest(client);
-
-            // TansacInquiry Form
-            var textTransacForm = TransacInquiry(client);
-
-            // TansacInquiry Form
-            var textChooseAcc = ChooseAccount(client);
-
+            GetTopRequest(client);  //Top Request
+            MenuRequest(client); //Menu Request
+            MainRequest(client); // Main Request
+            BottomRequest(client); // Bottom Request
+            TransacInquiry(client); // TansacInquiry Form
+            ChooseAccount(client); //Choose Account
+            
             //Post Mutation
-            var textMutation = PostMutation(client,day,month,year);
+            var textMutation = PostMutation(client, day, month, year);
 
             //Saving the data as a List
             var listCrawling = GetTransactionList(textMutation);
 
             //Logout
-            var logout = Logout(client);
+            Logout(client);
 
-            return listCrawling; 
+            return listCrawling;
         }
 
         private static List<string> GetTransactionList(string html)
@@ -108,54 +89,8 @@ namespace Lunggo.Webjob.BankTransferChecking
 
         }
 
-        /*Create RestClient */
-        private static RestClient CreateCustomerClient()
-        {
-            var client = new RestClient("https://mcm.bankmandiri.co.id");
-            client.AddDefaultHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-            client.AddDefaultHeader("Accept-Encoding", "gzip, deflate, sdch");
-            client.AddDefaultHeader("Accept-Language", "en-US,en;q=0.8");
-            client.UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
-            client.CookieContainer = new CookieContainer();
-            return client;
-        }
-
-
-        /*[POST]Login*/
-        private static string Login(RestClient client)
-        {
-            var url = "/corp/common/login.do?action=login";
-            var request = new RestRequest(url, Method.POST);
-            var postData =
-                @"corpId=" + _companyId + "&userName=" + _userName +
-                @"&passwordEncryption=" +
-                @"&language=fr_FR" +
-                @"&password="+_password +
-                @"&sessionId=" +
-                @"&ssoFlag=" +
-                @"&eTax=https%3A%2F%2Fetax.bankmandiri.co.id";
-            client.AddDefaultHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-            client.AddDefaultHeader("Accept-Encoding", "gzip, deflate");
-            client.AddDefaultHeader("Accept-Language", "en-US,en;q=0.8");
-            client.UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
-            request.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
-            request.AddHeader("Origin", "https://mcm.bankmandiri.co.id");
-            request.AddHeader("Referer", "https://mcm.bankmandiri.co.id/corp/common/login.do?action=logout");
-            var response = client.Execute(request);
-            var html = response.Content;
-
-            if (response.ResponseUri.AbsolutePath == "/corp/common/login.do")
-            {
-                return html;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         /*[GET] Top Request(After Login)*/
-        private static string getTopRequest(RestClient client)
+        private static void GetTopRequest(RestClient client)
         {
             var url = "/corp/common/login.do?action=topRequest";
             var request = new RestRequest(url, Method.GET);
@@ -166,11 +101,10 @@ namespace Lunggo.Webjob.BankTransferChecking
             request.AddHeader("Referer", "https://mcm.bankmandiri.co.id/corp/common/login.do?action=login");
             var response = client.Execute(request);
             var html = response.Content;
-            return html;
         }
 
         /*[GET] Menu Request (After Login)*/
-        private static string MenuRequest(RestClient client)
+        private static void MenuRequest(RestClient client)
         {
             var url = "/corp/common/login.do?action=menuRequest";
             var request = new RestRequest(url, Method.GET);
@@ -181,11 +115,10 @@ namespace Lunggo.Webjob.BankTransferChecking
             request.AddHeader("Referer", "https://mcm.bankmandiri.co.id/corp/common/login.do?action=login");
             var response = client.Execute(request);
             var html = response.Content;
-            return html;
         }
 
         /*[GET] Main Request (After Login)*/
-        private static string MainRequest(RestClient client)
+        private static void MainRequest(RestClient client)
         {
             var url = "/corp/common/login.do?action=mainRequest";
             var request = new RestRequest(url, Method.GET);
@@ -196,11 +129,10 @@ namespace Lunggo.Webjob.BankTransferChecking
             request.AddHeader("Referer", "https://mcm.bankmandiri.co.id/corp/common/login.do?action=login");
             var response = client.Execute(request);
             var html = response.Content;
-            return html;
         }
 
         /*[GET] Bottom Request (After Login)*/
-        private static string BottomRequest(RestClient client)
+        private static void BottomRequest(RestClient client)
         {
             var url = "/corp/common/login.do?action=bottomRequest";
             var request = new RestRequest(url, Method.GET);
@@ -211,11 +143,10 @@ namespace Lunggo.Webjob.BankTransferChecking
             request.AddHeader("Referer", "https://mcm.bankmandiri.co.id/corp/common/login.do?action=login");
             var response = client.Execute(request);
             var html = response.Content;
-            return html;
         }
 
         /*[GET] Transaction Inquiry Form*/
-        private static string TransacInquiry(RestClient client)
+        private static void TransacInquiry(RestClient client)
         {
             var url = "/corp/front/transactioninquiry.do?action=transactionByDateRequest&menuCode=MNU_GCME_040200";
             var request = new RestRequest(url, Method.GET);
@@ -226,12 +157,11 @@ namespace Lunggo.Webjob.BankTransferChecking
             request.AddHeader("Referer", "https://mcm.bankmandiri.co.id/corp/common/login.do?action=menuRequest");
             var response = client.Execute(request);
             var html = response.Content;
-            return html;
         }
 
 
         /*[GET] Choose Account*/
-        private static string ChooseAccount(RestClient client)
+        private static void ChooseAccount(RestClient client)
         {
             var url = "GET /common/dynamic_picklist.do?action=SearchRequest&PicklistName=ACCOUNT_NO_INQUIRY" +
                 "&queryName=gcm.AccountGroupDetail.getByAccountGroupIdAndIsInquiryPicklistWithAccountType.new" +
@@ -247,7 +177,6 @@ namespace Lunggo.Webjob.BankTransferChecking
             request.AddHeader("Referer", "https://mcm.bankmandiri.co.id/corp/front/transactioninquiry.do?action=transactionByDateRequest&menuCode=MNU_GCME_040200");
             var response = client.Execute(request);
             var html = response.Content;
-            return html;
         }
 
         /*[POST] See Transaction Inquiry*/
@@ -310,7 +239,7 @@ namespace Lunggo.Webjob.BankTransferChecking
         }
 
         /*[GET] Logout*/
-        private static string Logout(RestClient client)
+        private static void Logout(RestClient client)
         {
             var url = "/corp/common/login.do?action=logout";
             var request = new RestRequest(url, Method.GET);
@@ -321,14 +250,6 @@ namespace Lunggo.Webjob.BankTransferChecking
             request.AddHeader("Referer", "https://mcm.bankmandiri.co.id/corp/common/login.do?action=topRequest");
             var response = client.Execute(request);
             var html = response.Content;
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                return html;
-            }
-            else
-            {
-                return null;
-            }
         }
     }
 }
