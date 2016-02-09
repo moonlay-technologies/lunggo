@@ -558,6 +558,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   height: 50px;
   color: #1daee4;
   font-size: 22px; }
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-month {
     font-weight: bold;
     text-transform: uppercase; }
@@ -574,11 +579,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     left: auto;
     right: 0;
     background-position: 0 0; }
-  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header:after, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header:before {
-    display: block;
-    width: 100%;
-    content: "";
-    clear: both; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-state-disabled {
     opacity: 0.3; }
 
@@ -624,13 +624,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background-color: #2eb4e7;
   color: #fff;
   position: relative; }
-  .page.page-flight .flight-summary p {
-    margin-bottom: 0; }
-  .page.page-flight .flight-summary:before, .page.page-flight .flight-summary:after {
+  .page.page-flight .flight-summary:after {
     display: block;
     width: 100%;
     content: "";
     clear: both; }
+  .page.page-flight .flight-summary p {
+    margin-bottom: 0; }
   .page.page-flight .flight-summary .summary-left, .page.page-flight .flight-summary .summary-right {
     float: left;
     width: 77%;
@@ -661,7 +661,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .page.page-flight .flight-sort-filter .flight-sort-filter-action {
   background: #616161; }
-  .page.page-flight .flight-sort-filter .flight-sort-filter-action:before, .page.page-flight .flight-sort-filter .flight-sort-filter-action:after {
+  .page.page-flight .flight-sort-filter .flight-sort-filter-action:after {
     display: block;
     width: 100%;
     content: "";
@@ -722,13 +722,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .page.page-flight .flight-list .flight {
   padding: 12px; }
-  .page.page-flight .flight-list .flight + .flight {
-    border-top: 1px solid #ccc; }
-  .page.page-flight .flight-list .flight:before, .page.page-flight .flight-list .flight:after {
+  .page.page-flight .flight-list .flight:after {
     display: block;
     width: 100%;
     content: "";
     clear: both; }
+  .page.page-flight .flight-list .flight + .flight {
+    border-top: 1px solid #ccc; }
   .page.page-flight .flight-list .flight .flight-header .flight-airline {
     margin-top: 0;
     margin-bottom: 0; }
@@ -737,7 +737,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-flight .flight-list .flight .flight-header .flight-airline span {
       color: #2ca3e1;
       font-weight: bold; }
-  .page.page-flight .flight-list .flight .flight-content:before, .page.page-flight .flight-list .flight .flight-content:after {
+  .page.page-flight .flight-list .flight .flight-content:after {
     display: block;
     width: 100%;
     content: "";
@@ -745,7 +745,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-flight .flight-list .flight .flight-content .content-left, .page.page-flight .flight-list .flight .flight-content .content-right {
     float: left;
     width: 50%; }
-    .page.page-flight .flight-list .flight .flight-content .content-left .flight-time:before, .page.page-flight .flight-list .flight .flight-content .content-right .flight-time:before, .page.page-flight .flight-list .flight .flight-content .content-left .flight-time:after, .page.page-flight .flight-list .flight .flight-content .content-right .flight-time:after {
+    .page.page-flight .flight-list .flight .flight-content .content-left .flight-time:after, .page.page-flight .flight-list .flight .flight-content .content-right .flight-time:after {
       display: block;
       width: 100%;
       content: "";
@@ -789,7 +789,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background: #1daee4; }
   .overlay--flight-form .overlay__content form {
     color: #fff; }
-    .overlay--flight-form .overlay__content form .switch-wrapper:before, .overlay--flight-form .overlay__content form .switch-wrapper:after {
+    .overlay--flight-form .overlay__content form .switch-wrapper:after {
       display: block;
       width: 100%;
       content: "";
@@ -830,7 +830,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin-bottom: 12px; }
     .overlay--flight-filter .overlay__content .filter-group .filter-group__header .filter-group__title {
       margin: 0;
-      font-weight: bold; }
+      font-weight: normal; }
   .overlay--flight-filter .overlay__content .filter-group .filter-group__content label {
     display: block;
     padding: 12px 0; }
@@ -841,6 +841,45 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .overlay--flight-filter .overlay__content .filter-group.filter-group--airline label img {
     height: 30px;
     margin-right: 10px; }
+  .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content:after, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content:after, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content:after, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label {
+    display: block;
+    float: left;
+    width: 50%;
+    border: 0;
+    margin-bottom: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label .switch {
+      float: left;
+      width: 20px;
+      height: 20px;
+      content: "";
+      background: #fff;
+      border: 3px solid #fff;
+      position: absolute;
+      top: 50%;
+      margin-top: -10px;
+      -webkit-border-radius: 50px;
+      -moz-border-radius: 50px;
+      border-radius: 50px; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label input {
+      display: none; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label span {
+      width: 100%;
+      padding-left: 30px;
+      display: block; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label.active .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label.active .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label.active .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label.active .switch {
+      background: #ffca10; }
+  .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label {
+    width: 33.3334%; }
+  .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label {
+    width: 100%; }
 
 .overlay--flight-sort .overlay__content {
   padding: 0; }
@@ -867,7 +906,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .overlay--flight-detail .overlay__content .flight-title {
     background: #e5e3e4;
     position: relative; }
-    .overlay--flight-detail .overlay__content .flight-title:before, .overlay--flight-detail .overlay__content .flight-title:after {
+    .overlay--flight-detail .overlay__content .flight-title:after {
       display: block;
       width: 100%;
       content: "";
@@ -913,7 +952,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #d70000; }
   .overlay--flight-detail .overlay__content .flight-wrapper .flight {
     position: relative; }
-    .overlay--flight-detail .overlay__content .flight-wrapper .flight:before, .overlay--flight-detail .overlay__content .flight-wrapper .flight:after {
+    .overlay--flight-detail .overlay__content .flight-wrapper .flight:after {
       display: block;
       width: 100%;
       content: "";
@@ -933,7 +972,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         font-size: 12px; }
     .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content {
       padding-left: 25px; }
-      .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary:before, .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary:after {
+      .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary:after {
         display: block;
         width: 100%;
         content: "";
@@ -946,7 +985,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         color: #1daee4; }
       .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail {
         position: relative; }
-        .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail:before, .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail:after {
+        .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail:after {
           display: block;
           width: 100%;
           content: "";
@@ -995,7 +1034,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-checkout .page__header {
   margin: 0;
   padding: 0; }
-  .page.page-checkout .page__header:before, .page.page-checkout .page__header:after {
+  .page.page-checkout .page__header:after {
     display: block;
     width: 100%;
     content: "";
@@ -1039,7 +1078,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-checkout .summary .summary__title {
   color: #333; }
 
-.page.page-checkout .summary.summary--price dl:before, .page.page-checkout .summary.summary--price dl:after {
+.page.page-checkout .summary.summary--price dl:after {
   display: block;
   width: 100%;
   content: "";
@@ -1088,7 +1127,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-checkout .summary.summary--passenger dl {
     margin-bottom: 5px;
     color: #333; }
-    .page.page-checkout .summary.summary--passenger dl:before, .page.page-checkout .summary.summary--passenger dl:after {
+    .page.page-checkout .summary.summary--passenger dl:after {
       display: block;
       width: 100%;
       content: "";
@@ -1122,7 +1161,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-checkout .summary.summary--payment label header {
     background: #36b6e7;
     position: relative; }
-    .page.page-checkout .summary.summary--payment label header:before, .page.page-checkout .summary.summary--payment label header:after {
+    .page.page-checkout .summary.summary--payment label header:after {
       display: block;
       width: 100%;
       content: "";
@@ -1161,7 +1200,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin-bottom: 10px; }
   .page.page-confirmation .instruction .bank-detail .bank dl {
     margin-bottom: 5px; }
-    .page.page-confirmation .instruction .bank-detail .bank dl:before, .page.page-confirmation .instruction .bank-detail .bank dl:after {
+    .page.page-confirmation .instruction .bank-detail .bank dl:after {
       display: block;
       width: 100%;
       content: "";
@@ -1400,7 +1439,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-contact .contact-map .contact-list h4 {
       font-weight: bold; }
 
-.page.page-contact .contact-social:before, .page.page-contact .contact-social:after {
+.page.page-contact .contact-social:after {
   display: block;
   width: 100%;
   content: "";
