@@ -1,0 +1,46 @@
+﻿// .page.page-home
+.page.page-home {@include clearfix(); background:url(/assets/images/home-page-bg.jpg) top center repeat-x #2fb4e6;
+
+    .site-content {}//.site-content
+
+    .form-wrapper {margin:0; background:none; border:0;
+        h1 {text-align:center; margin-bottom:25px; color:#fff;}
+        form {padding:0 30px;
+            .form-group {
+                p.form-control {font-size:12px; padding:10px 15px; height:auto;
+                    span {float:right;}
+                }
+            }
+            .form__origin {position:relative;
+                &:before {content:""; width:25px; height:25px; background:url(/assets/mobile/images/form-sprite.png); left:-27px; top:50%; margin-top:-12px; display:block; position:absolute;}
+            }
+            .form__destination {@extend & .form__origin;
+                &:before {background-position:-25px 0;}
+            }
+            .form__departure {@extend & .form__origin;
+                &:before {background-position:-50px 0;}
+            }
+            .form__roundtrip {color:#fff;}
+            .form__return {@extend & .form__departure}
+            .form__passenger {@include clearfix();
+                &>div {float:left; width:33.3334%; position:relative;
+                    p {width:75%; display:inline; text-align:center; display:block; margin-bottom:0;}
+                    &:before {content:""; display:block; width:22px; height:30px; top:50%; margin-top:-15px; position:absolute; background:url(/assets/mobile/images/passenger-sprite-yellow.png);}
+                }
+                .form__adult {
+                    &:before {left:-25px; background-position:0 0;}
+                }
+                .form__child {
+                    p {margin-left:auto; margin-right:auto;}
+                    &:before {left:-15px; background-position:-22px 0;}
+                }
+                .form__infant {
+                    p {float:right;}
+                    &:before {left:-4px; background-position:-44px 0;}
+                }
+            }
+            .form__submit {}
+        }//form
+    }//.form-wrapper
+
+}//.page.page-home

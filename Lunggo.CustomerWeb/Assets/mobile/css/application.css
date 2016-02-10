@@ -607,6 +607,86 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     padding: 5px; }
 
 /*--------------------*/
+.page.page-home {
+  background: url(/assets/images/home-page-bg.jpg) top center repeat-x #2fb4e6; }
+  .page.page-home:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page.page-home .form-wrapper {
+    margin: 0;
+    background: none;
+    border: 0; }
+    .page.page-home .form-wrapper h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #fff; }
+    .page.page-home .form-wrapper form {
+      padding: 0 30px; }
+      .page.page-home .form-wrapper form .form-group p.form-control {
+        font-size: 12px;
+        padding: 10px 15px;
+        height: auto; }
+        .page.page-home .form-wrapper form .form-group p.form-control span {
+          float: right; }
+      .page.page-home .form-wrapper form .form__origin, .page.page-home .form-wrapper form .form__destination, .page.page-home .form-wrapper form .form__departure, .page.page-home .form-wrapper form .form__return {
+        position: relative; }
+        .page.page-home .form-wrapper form .form__origin:before, .page.page-home .form-wrapper form .form__destination:before, .page.page-home .form-wrapper form .form__departure:before, .page.page-home .form-wrapper form .form__return:before {
+          content: "";
+          width: 25px;
+          height: 25px;
+          background: url(/assets/mobile/images/form-sprite.png);
+          left: -27px;
+          top: 50%;
+          margin-top: -12px;
+          display: block;
+          position: absolute; }
+      .page.page-home .form-wrapper form .form__destination:before {
+        background-position: -25px 0; }
+      .page.page-home .form-wrapper form .form__departure:before, .page.page-home .form-wrapper form .form__return:before {
+        background-position: -50px 0; }
+      .page.page-home .form-wrapper form .form__roundtrip {
+        color: #fff; }
+      .page.page-home .form-wrapper form .form__passenger:after {
+        display: block;
+        width: 100%;
+        content: "";
+        clear: both; }
+      .page.page-home .form-wrapper form .form__passenger > div {
+        float: left;
+        width: 33.3334%;
+        position: relative; }
+        .page.page-home .form-wrapper form .form__passenger > div p {
+          width: 75%;
+          display: inline;
+          text-align: center;
+          display: block;
+          margin-bottom: 0; }
+        .page.page-home .form-wrapper form .form__passenger > div:before {
+          content: "";
+          display: block;
+          width: 22px;
+          height: 30px;
+          top: 50%;
+          margin-top: -15px;
+          position: absolute;
+          background: url(/assets/mobile/images/passenger-sprite-yellow.png); }
+      .page.page-home .form-wrapper form .form__passenger .form__adult:before {
+        left: -25px;
+        background-position: 0 0; }
+      .page.page-home .form-wrapper form .form__passenger .form__child p {
+        margin-left: auto;
+        margin-right: auto; }
+      .page.page-home .form-wrapper form .form__passenger .form__child:before {
+        left: -15px;
+        background-position: -22px 0; }
+      .page.page-home .form-wrapper form .form__passenger .form__infant p {
+        float: right; }
+      .page.page-home .form-wrapper form .form__passenger .form__infant:before {
+        left: -4px;
+        background-position: -44px 0; }
+
 .page.page-flight .flight-loading {
   background: #ffae93;
   display: block;

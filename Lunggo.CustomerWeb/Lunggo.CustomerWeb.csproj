@@ -1020,13 +1020,16 @@
     <Content Include="Assets\mobile\images\contact-social-bg.png" />
     <Content Include="Assets\mobile\images\flight-history-status.png" />
     <Content Include="Assets\mobile\images\flight-separator.png" />
+    <Content Include="Assets\mobile\images\form-sprite.png" />
     <Content Include="Assets\mobile\images\login-header-left.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-white.png" />
+    <Content Include="Assets\mobile\images\passenger-sprite-yellow.png" />
     <Content Include="Assets\mobile\images\register-header-left.png" />
     <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
     <Content Include="Assets\mobile\images\user-account-bg.png" />
     <Content Include="Assets\mobile\images\yellow-stripe.png" />
+    <Content Include="Assets\mobile\js\HomeController.js" />
     <Content Include="Assets\mobile\js\StaticController.js" />
     <Content Include="Assets\mobile\js\AccountController.js" />
     <Content Include="Assets\mobile\js\application.js" />
@@ -1223,6 +1226,7 @@
     <Content Include="Assets\images\subscribe-bg.jpg.bak" />
     <Content Include="Assets\mobile\css\_page_account.scss" />
     <Content Include="Assets\mobile\css\_page_static.scss" />
+    <Content Include="Assets\mobile\css\_page_home.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2595,6 +2599,7 @@
     <Content Include="Views\Template\eticketnew.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderFlightHistoryDetail.mobile.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderHistory.mobile.cshtml" />
+    <None Include="Views\UW000TopPage\Index.mobile.cshtml.bak" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -52,7 +52,7 @@ if (typeof (angular) == 'object') {
                     $rootScope.PageConfig.ActiveOverlay = '';
                     $rootScope.PageConfig.SetBodyNoScroll(false);
                 } else {
-                    if ( overlay == '' ) {
+                    if ( overlay == '' || overlay == ' ' ) {
                         $rootScope.PageConfig.ActiveOverlay = '';
                         $rootScope.PageConfig.SetBodyNoScroll(false);
                     } else {
@@ -98,10 +98,11 @@ if (typeof (angular) == 'object') {
                 ChangeYear: false,
                 SelectedDate : ''
             },
-            SetOption: function (options) {
+            SetOption: function (options, overlay) {
+                overlay = overlay || 'flight-form' ;
                 $('.ui-datepicker').datepicker({
                     onSelect: function(date) {
-                        $rootScope.PageConfig.SetOverlay('flight-form');
+                        $rootScope.PageConfig.SetOverlay(overlay);
                         $rootScope.DatePicker.Settings.SelectedDate = date;
                         // $('.ui-datepicker').datepicker('setDate', new Date(date));
                         $($rootScope.DatePicker.Settings.Target).val(date);
@@ -244,7 +245,8 @@ if (typeof (angular) == 'object') {
                             break;
                     }
                 },
-                Set: function (number) {
+                Set: function (number, overlay) {
+                    overlay = overlay || 'flight-form' ;
                     switch ($rootScope.FlightSearchForm.PassengerPicker.ActiveType) {
                         case 'adult':
                             if ((number + $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger) > $rootScope.FlightSearchForm.PassengerPicker.TotalMaxPassenger ) {
@@ -273,7 +275,7 @@ if (typeof (angular) == 'object') {
                             break;
                     }
                     $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger = $rootScope.FlightSearchForm.Passenger[0] + $rootScope.FlightSearchForm.Passenger[1] + $rootScope.FlightSearchForm.Passenger[2];
-                    $rootScope.PageConfig.SetOverlay('flight-form');
+                    $rootScope.PageConfig.SetOverlay(overlay);
                 }
             },// passenger picker
             Url: '',
