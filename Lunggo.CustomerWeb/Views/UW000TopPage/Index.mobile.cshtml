@@ -47,9 +47,13 @@
 
             <div class="form-group form__roundtrip">
                 <p>Roundtrip ?</p>
+                <div class="switch">
+                    <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" class="hidden" />No</label>
+                    <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'true'}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" class="hidden" />Yes</label>
+                </div>
             </div>
 
-            <div class="form-group form__return">
+            <div class="form-group form__return" ng-hide="FlightSearchForm.Trip == 'false'">
                 <p class="form-control" ng-click="DatePicker.SetOption({Target : 'return'}, ' '); PageConfig.SetOverlay('datepicker-return')">
                     <b>Kembali</b> <span>{{FlightSearchForm.ReturnDate | date : 'd-MMM-yyyy'}}</span>
                     <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />

@@ -648,6 +648,27 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         background-position: -50px 0; }
       .page.page-home .form-wrapper form .form__roundtrip {
         color: #fff; }
+        .page.page-home .form-wrapper form .form__roundtrip:after {
+          display: block;
+          width: 100%;
+          content: "";
+          clear: both; }
+        .page.page-home .form-wrapper form .form__roundtrip p {
+          float: left;
+          margin-bottom: 0;
+          padding-top: 10px; }
+        .page.page-home .form-wrapper form .form__roundtrip .switch {
+          float: right; }
+          .page.page-home .form-wrapper form .form__roundtrip .switch label {
+            display: inline-block;
+            width: 50px;
+            text-align: center;
+            background: #fff;
+            padding: 10px 15px;
+            color: #666; }
+            .page.page-home .form-wrapper form .form__roundtrip .switch label.active {
+              background: #0c7399;
+              color: #fff; }
       .page.page-home .form-wrapper form .form__passenger:after {
         display: block;
         width: 100%;

@@ -20,7 +20,14 @@
             .form__departure {@extend & .form__origin;
                 &:before {background-position:-50px 0;}
             }
-            .form__roundtrip {color:#fff;}
+            .form__roundtrip {color:#fff; @include clearfix();
+                p {float:left; margin-bottom:0; padding-top:10px;}
+                .switch {float:right;
+                    label {display:inline-block; width:50px; text-align:center; background:#fff; padding:10px 15px; color:#666;
+                        &.active {background:#0c7399; color:#fff;}
+                    }
+                }
+            }
             .form__return {@extend & .form__departure}
             .form__passenger {@include clearfix();
                 &>div {float:left; width:33.3334%; position:relative;
