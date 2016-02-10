@@ -101,7 +101,7 @@ if (typeof (angular) == 'object') {
             SetOption: function (options, overlay) {
                 overlay = overlay || 'flight-form' ;
                 $('.ui-datepicker').datepicker({
-                    onSelect: function(date) {
+                    onSelect: function (date) {
                         $rootScope.PageConfig.SetOverlay(overlay);
                         $rootScope.DatePicker.Settings.SelectedDate = date;
                         // $('.ui-datepicker').datepicker('setDate', new Date(date));
