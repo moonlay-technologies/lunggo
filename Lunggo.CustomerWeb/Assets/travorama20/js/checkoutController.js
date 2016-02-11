@@ -555,6 +555,7 @@ app.controller('checkoutController', [
         $scope.VisaPromo = {
             Type: '',
             Valid: false,
+            PromoName: '',
             Amount: 0,
             Check: function (creditCardNumber) {
                 if ($scope.paymentMethod == 'CreditCard') {
@@ -567,7 +568,42 @@ app.controller('checkoutController', [
                         var jakartaDay = jakartaDate.getDay();
                         var endOfCampaign = new Date('31 March 2016');
 
+                        var creditCardString = creditCardNumber.toString();
+
+                        // check credit card type
+                        if (firstNum == 5) {
+                            $scope.VisaPromo.Type = 'mastercard';
+                        } else if (firstNum == 4) {
+                            $scope.VisaPromo.Type = 'visa';
+                        } else {
+                            $scope.VisaPromo.Type = '';
+                        }
+
+                        //**********
+                        // Danamon Sweet Valentine
+                        var valentineDate = new Date('14 February 2016');
+                        if (creditCardString.length > 5 && ( jakartaDate.getDate() == valentineDate.getDate() && jakartaDate.getMonth() == valentineDate.getMonth() )) {
+                            var danamonList = ['456798', '456799', '425857', '432449', '540731', '559228', '516634', '542260', '552239', '523983', '552338'];
+                            var creditCardString = creditCardString.substr(0, 6);
+
+                            // if Danamon Card
+                            if (danamonList.indexOf(creditCardString) > -1) {
+                                $scope.VisaPromo.PromoName = 'Danamon Sweet Valentine';
+                                $scope.VisaPromo.Valid = true;
+                                $scope.VisaPromo.Amount = ($scope.initialPrice * 14) / 100;
+                                // reset voucher
+                                $scope.voucher.amount = 0;
+                                $scope.voucher.checking = false;
+                                $scope.voucher.checked = false;
+                                $scope.voucher.confirmedCode = '';
+                            }
+                            return;
+                        }
+
+                        //**********
+                        // Wonderful Wednesday with Visa
                         if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 3 && jakartaDate < endOfCampaign) {
+                            $scope.VisaPromo.PromoName = 'Wonderful Wednesday with Visa';
                             $scope.VisaPromo.Type = 'visa';
                             $scope.VisaPromo.Valid = true;
                             $scope.VisaPromo.Amount = 50000;
@@ -576,17 +612,13 @@ app.controller('checkoutController', [
                             $scope.voucher.checking = false;
                             $scope.voucher.checked = false;
                             $scope.voucher.confirmedCode = '';
-                        } else {
-                            if (firstNum == 5) {
-                                $scope.VisaPromo.Type = 'mastercard';
-                            } else if (firstNum == 4) {
-                                $scope.VisaPromo.Type = 'visa';
-                            } else {
-                                $scope.VisaPromo.Type = '';
-                            }
-                            $scope.VisaPromo.Valid = false;
-                            $scope.VisaPromo.Amount = 0;
+                            return;
                         }
+
+                        //**********
+                        // Reset
+                        $scope.VisaPromo.Valid = false;
+                        $scope.VisaPromo.Amount = 0;
 
                     } else {
                         $scope.VisaPromo.Valid = false;
