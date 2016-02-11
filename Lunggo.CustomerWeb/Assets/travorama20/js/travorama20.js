@@ -494,12 +494,15 @@ function flightPageSearchFormFunctions() {
         switch (FlightData.Cabin) {
             case 'Economy':
                 $('.form-flight-class>span').text($('.form-flight-class .option span:nth-child(1)').text());
+                flightPageSearchFormParam.cabin = 'y';
                 break;
             case 'Business':
                 $('.form-flight-class>span').text($('.form-flight-class .option span:nth-child(2)').text());
+                flightPageSearchFormParam.cabin = 'c';
                 break;
             case 'First':
                 $('.form-flight-class>span').text($('.form-flight-class .option span:nth-child(3)').text());
+                flightPageSearchFormParam.cabin = 'f';
                 break;
         }
         
