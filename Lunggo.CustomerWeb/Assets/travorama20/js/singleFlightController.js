@@ -1,7 +1,7 @@
 ﻿// travorama angular app - Flight Controller
 
 app.controller('singleFlightController', [
-    '$http', '$scope', '$interval', function ($http, $scope, $interval) {
+    '$http', '$scope', '$interval', '$timeout', function ($http, $scope, $interval, $timeout) {
 
         // **********
         // on document ready
@@ -55,12 +55,16 @@ app.controller('singleFlightController', [
 
         $scope.translateMonth = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
 
-        $scope.ProgressAnimation = function() {
-            $interval(function () {
+        $scope.ProgressAnimation = function (delayTime) {
+            delayTime = delayTime || 1000;
+            var randomTime = (Math.random()) * 3000;
+            $timeout(function () {
+                //console.log(delayTime);
                 if ($scope.flightRequest.FinalProgress < $scope.flightRequest.MaxProgress) {
                     $scope.flightRequest.FinalProgress = $scope.flightRequest.FinalProgress + 1;
+                    $scope.ProgressAnimation(randomTime);
                 }
-            }, $scope.flightRequest.ProgressDuration);
+            }, delayTime);
         };
 
         // **********

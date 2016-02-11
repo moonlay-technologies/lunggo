@@ -1,7 +1,7 @@
 ﻿// travorama angular app - Flight Controller
 
 app.controller('returnFlightController', [
-    '$http', '$scope', '$interval', function($http, $scope, $interval) {
+    '$http', '$scope', '$interval', '$timeout', function($http, $scope, $interval, $timeout) {
 
         // ******************************
         // on document ready
@@ -15,7 +15,6 @@ app.controller('returnFlightController', [
             $scope.ProgressAnimation('return');
         });
 
-        $scope.ProgressDuration = 1000;
         $scope.ProgressAnimation = function (targetScope) {
             targetScope = 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig;
             $interval(function () {
@@ -23,6 +22,19 @@ app.controller('returnFlightController', [
                     targetScope.flightSearchParams.FinalProgress = targetScope.flightSearchParams.FinalProgress + 1;
                 }
             }, $scope.ProgressDuration);
+        };
+
+        $scope.ProgressAnimation = function (targetScope, delayTime) {
+            targetScope = 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig;
+            delayTime = delayTime || 1000;
+            var randomTime = (Math.random()) * 3000;
+            $timeout(function () {
+                //console.log(delayTime);
+                if (targetScope.flightSearchParams.FinalProgress < targetScope.flightSearchParams.MaxProgress) {
+                    targetScope.flightSearchParams.FinalProgress = targetScope.flightSearchParams.FinalProgress + 1;
+                    $scope.ProgressAnimation(targetScope.name, randomTime);
+                }
+            }, delayTime);
         };
 
         // ******************************
