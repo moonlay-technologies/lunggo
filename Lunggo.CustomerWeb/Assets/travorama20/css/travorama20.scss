@@ -239,6 +239,21 @@ input[type=number]::-webkit-outer-spin-button {
     }
 }
 
+// page campaign
+.page-campaign {
+    // Danamon Sweet Valentine Promo
+    &.campaign-danamon-sweet-valentine {
+        .site-content {
+            .row>div:first-child {padding-right:30px;}
+        }
+        h4 {margin-bottom:15px;}
+        .promo-image {margin-bottom:20px;}
+        .promo-duration {padding:15px 0; margin-top:15px; border-top:1px dotted #3ab8e7; border-bottom:1px dotted #3ab8e7;
+            p {color:#3ab8e7;}
+        }
+    }
+}
+
 /*--------------------*/
 /* imports */
 @import 'screenSmall';

@@ -19,6 +19,14 @@ namespace Lunggo.CustomerWeb
             );
             // visa campaign end
 
+            // danamon sweet valentine start
+            routes.MapRoute(
+                name: "DanamonSweetValentine",
+                url: "danamonsweetvalentine",
+                defaults: new { controller = "StaticPage", action = "DanamonSweetValentine", langCode = "id" }
+            );
+            // danamon sweet valentine end
+
             routes.MapRoute(
                 name: "toppage",
                 url: "{langCode}",

@@ -700,6 +700,7 @@
     <Content Include="Assets\images\campaign\bandung-text.png" />
     <Content Include="Assets\images\campaign\bandung-thumb.jpg" />
     <Content Include="Assets\images\campaign\bandung.jpg" />
+    <Content Include="Assets\images\campaign\DanamonSweetValenetine\danamonsweetvalentine-head.jpg" />
     <Content Include="Assets\images\campaign\free2016calendar\campaign-2016_calendar.jpg" />
     <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\1.jpg" />
     <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\2.jpg" />
@@ -2563,6 +2564,7 @@
     <Content Include="Views\StaticPage\GetCalendar.mobile.cshtml" />
     <Content Include="Views\StaticPage\GetCalendarTerms.mobile.cshtml" />
     <Content Include="Views\StaticPage\VisaWonderfulWednesday.cshtml" />
+    <Content Include="Views\StaticPage\DanamonSweetValentine.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2614,10 +2616,7 @@
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
     <Folder Include="Assets\travorama20\fonts\" />
-    <Folder Include="Campaign\VisaWonderfulWednesday\css\" />
-    <Folder Include="Campaign\VisaWonderfulWednesday\images\" />
     <Folder Include="Helper\" />
-    <Folder Include="Views\Campaign\" />
     <Folder Include="Views\Upload\" />
     <Folder Include="WebSrc\UW300\Logic\" />
     <Folder Include="WebSrc\UW300\Object\" />

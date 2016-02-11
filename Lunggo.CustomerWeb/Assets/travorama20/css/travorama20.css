@@ -445,6 +445,23 @@ input[type=number]::-webkit-outer-spin-button {
       left: 0;
       width: 100%; }
 
+.page-campaign.campaign-danamon-sweet-valentine .site-content .row > div:first-child {
+  padding-right: 30px; }
+
+.page-campaign.campaign-danamon-sweet-valentine h4 {
+  margin-bottom: 15px; }
+
+.page-campaign.campaign-danamon-sweet-valentine .promo-image {
+  margin-bottom: 20px; }
+
+.page-campaign.campaign-danamon-sweet-valentine .promo-duration {
+  padding: 15px 0;
+  margin-top: 15px;
+  border-top: 1px dotted #3ab8e7;
+  border-bottom: 1px dotted #3ab8e7; }
+  .page-campaign.campaign-danamon-sweet-valentine .promo-duration p {
+    color: #3ab8e7; }
+
 /*--------------------*/
 /* imports */
 @media (max-width: 1199px) {
