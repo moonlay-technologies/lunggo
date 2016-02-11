@@ -700,7 +700,8 @@
     <Content Include="Assets\images\campaign\bandung-text.png" />
     <Content Include="Assets\images\campaign\bandung-thumb.jpg" />
     <Content Include="Assets\images\campaign\bandung.jpg" />
-    <Content Include="Assets\images\campaign\DanamonSweetValenetine\danamonsweetvalentine-head.jpg" />
+    <Content Include="Assets\images\campaign\DanamonSweetValentine\danamonsweetvalentine-slider.jpg" />
+    <Content Include="Assets\images\campaign\DanamonSweetValentine\danamonsweetvalentine-head.jpg" />
     <Content Include="Assets\images\campaign\free2016calendar\campaign-2016_calendar.jpg" />
     <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\1.jpg" />
     <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\2.jpg" />
