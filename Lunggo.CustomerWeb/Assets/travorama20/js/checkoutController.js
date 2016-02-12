@@ -581,7 +581,7 @@ app.controller('checkoutController', [
 
                         //**********
                         // Danamon Sweet Valentine
-                        var valentineDate = new Date('14 February 2016');
+                        var valentineDate = new Date('12 February 2016');
                         if (creditCardString.length > 5 && ( jakartaDate.getDate() == valentineDate.getDate() && jakartaDate.getMonth() == valentineDate.getMonth() )) {
                             var danamonList = ['456798', '456799', '425857', '432449', '540731', '559228', '516634', '542260', '552239', '523983', '552338'];
                             var creditCardString = creditCardString.substr(0, 6);
@@ -590,7 +590,7 @@ app.controller('checkoutController', [
                             if (danamonList.indexOf(creditCardString) > -1) {
                                 $scope.CreditCardPromo.PromoName = 'Danamon Sweet Valentine';
                                 $scope.CreditCardPromo.Valid = true;
-                                $scope.CreditCardPromo.Amount = ($scope.initialPrice * 14) / 100;
+                                $scope.CreditCardPromo.Amount = Math.floor($scope.initialPrice * 14 / 100);
                                 // reset voucher
                                 $scope.voucher.amount = 0;
                                 $scope.voucher.checking = false;

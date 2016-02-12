@@ -91,11 +91,33 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
             // HARDCODE-AN
             // HARDCODE-AN
             var now = DateTime.UtcNow.AddHours(7);
-            if (now.DayOfWeek == DayOfWeek.Wednesday && now.Date >= new DateTime(2016, 1, 2) &&
-                now.Date <= new DateTime(2016, 3, 31) && request.Payment.Method == PaymentMethod.CreditCard &&
+            if (now.DayOfWeek == DayOfWeek.Friday && now.Date == new DateTime(2016, 2, 12) &&
+                request.Payment.Method == PaymentMethod.CreditCard &&
                 request.Payment.Data != null && request.Payment.Data.Data0 != null &&
-                request.Payment.Data.Data0.StartsWith("4"))
-                request.DiscountCode = "VWWVWW";
+                (request.Payment.Data.Data0.StartsWith("456798") ||
+                request.Payment.Data.Data0.StartsWith("456799") ||
+                request.Payment.Data.Data0.StartsWith("432449") ||
+                request.Payment.Data.Data0.StartsWith("425857") ||
+                request.Payment.Data.Data0.StartsWith("456798") ||
+                request.Payment.Data.Data0.StartsWith("432449") ||
+                request.Payment.Data.Data0.StartsWith("542260") ||
+                request.Payment.Data.Data0.StartsWith("540731") ||
+                request.Payment.Data.Data0.StartsWith("552239") ||
+                request.Payment.Data.Data0.StartsWith("552338") ||
+                request.Payment.Data.Data0.StartsWith("559228") ||
+                request.Payment.Data.Data0.StartsWith("516634") ||
+                request.Payment.Data.Data0.StartsWith("542260") ||
+                request.Payment.Data.Data0.StartsWith("552239") ||
+                request.Payment.Data.Data0.StartsWith("523983") ||
+                request.Payment.Data.Data0.StartsWith("523983") ||
+                request.Payment.Data.Data0.StartsWith("552338") ||
+                request.Payment.Data.Data0.StartsWith("552338") ||
+                request.Payment.Data.Data0.StartsWith("375531") ||
+                request.Payment.Data.Data0.StartsWith("375531") ||
+                request.Payment.Data.Data0.StartsWith("375539") ||
+                request.Payment.Data.Data0.StartsWith("375539") ||
+                request.Payment.Data.Data0.StartsWith("375539")))
+                request.DiscountCode = "DSVDSV16";
             // HARDCODE-AN
             // HARDCODE-AN
             // HARDCODE-AN

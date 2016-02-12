@@ -144,7 +144,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                 {
                     TokenId = data.Data0,
                     Bank = "mandiri",
-                    AllowedBins = data.Data0.StartsWith("4") ? new List<string> { "4" } : null,
+                    AllowedBins = new List<string> { data.Data0.Substring(0, 6) },
                     TokenIdSaveEnabled = data.Data20
                 };
             }
