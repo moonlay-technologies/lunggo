@@ -12,13 +12,13 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Promo
 {
     public class PromoController : ApiController
     {
-        [HttpPost]
-        [LunggoCorsPolicy]
-        [Route("v1/promo/imlek")]
-        public ImlekApiResponse Imlek(HttpRequestMessage httpRequest, [FromBody] ImlekApiRequest request)
-        {
-            return ImlekLogic.Roll(request);
-        }
+        //[HttpPost]
+        //[LunggoCorsPolicy]
+        //[Route("v1/promo/imlek")]
+        //public ImlekApiResponse Imlek(HttpRequestMessage httpRequest, [FromBody] ImlekApiRequest request)
+        //{
+        //    return ImlekLogic.Roll(request);
+        //}
 
     }
 }
