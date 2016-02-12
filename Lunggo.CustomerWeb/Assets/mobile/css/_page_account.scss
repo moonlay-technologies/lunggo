@@ -104,8 +104,7 @@
             h4 {font-weight:bold;}
         }
     }
-    .contact-social {
-        &:before, &:after {@include clearfix();}
+    .contact-social {@include clearfix();
         a {display:block; float:left; width:33.333333334%; height:65px; position:relative;
             &:before {width:55px; height:55px; content:""; background:url(/Assets/mobile/images/contact-social-bg.png); position:absolute; left:50%; margin-left:-26px; margin-top:5px;}
             &.facebook {background-color:#004787;

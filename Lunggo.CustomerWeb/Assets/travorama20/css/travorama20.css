@@ -445,6 +445,23 @@ input[type=number]::-webkit-outer-spin-button {
       left: 0;
       width: 100%; }
 
+.page-campaign.campaign-danamon-sweet-valentine .site-content .row > div:first-child {
+  padding-right: 30px; }
+
+.page-campaign.campaign-danamon-sweet-valentine h4 {
+  margin-bottom: 15px; }
+
+.page-campaign.campaign-danamon-sweet-valentine .promo-image {
+  margin-bottom: 20px; }
+
+.page-campaign.campaign-danamon-sweet-valentine .promo-duration {
+  padding: 15px 0;
+  margin-top: 15px;
+  border-top: 1px dotted #3ab8e7;
+  border-bottom: 1px dotted #3ab8e7; }
+  .page-campaign.campaign-danamon-sweet-valentine .promo-duration p {
+    color: #3ab8e7; }
+
 /*--------------------*/
 /* imports */
 @media (max-width: 1199px) {
@@ -1487,11 +1504,11 @@ file: /Assets/travorama20/css/_page_flight.scss
       height: 100%;
       top: 0;
       left: 0;
-      padding-right: 120px; }
+      padding-right: 0px; }
     .page-flight .page-progress .progress-wrapper .plane {
       position: absolute;
       top: -10px;
-      right: 0;
+      left: 100%;
       background: #fff;
       height: 30px;
       width: 120px;

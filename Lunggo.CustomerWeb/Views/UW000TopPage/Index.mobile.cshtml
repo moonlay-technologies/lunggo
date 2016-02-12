@@ -1,326 +1,194 @@
 ﻿@{
-    Layout = "/Views/Shared/_layout_mobile.cshtml";
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Home Page";
+    ViewBag.BodyClass = "page page-home";
+    ViewBag.AngularController = "HomePageController";
 }
 
-@section PageJavascript {
-    <script>
-        $(document).ready(function() {
-            homePageFunctions();
-        });
-    </script>
+@section AdditionalJS {
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+
+    <!-- jquery datepicker -->
+    <script src="/Assets/js/jquery-ui.min.js"></script>
 }
 
-<section class="page home-page">
-    <section class="section-search active container">
-        <div class="text-center">
-            <h1>PICK YOUR MOMENT</h1>
-            <p>Lorem ipsum dolor sit amet adpiscing elite, constecture elite humble bundle. Sed diam nohummy nibh.</p>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <a href="#search-hotel" class="search-hotel" data-trigger="showSearchForm">SEARCH FOR <b>HOTEL</b></a>
-            </div>
-            <div class="col-xs-6">
-                <a href="#search-flight" class="search-flight" data-trigger="showSearchForm">SEARCH FOR <b>FLIGHT</b></a>
-            </div>
-        </div>
-    </section><!-- .section-search -->
-    <section class="home-search">
-        <header class="home-search-header hidden">
-            <button class="search-hotel active" data-target="#search-hotel" disabled><span class="fa fa-building"></span> HOTEL</button>
-            <button class="search-flight" data-target="#search-flight"><span class="fa fa-plane"></span> FLIGHT</button>
-        </header>
-        <section class="home-search-content container">
-            <section class="active" id="search-hotel">
-                <form class="search-hotel-form form-horizontal" action="/">
-                    <h1><b>HOTEL</b> BOOKING</h1>
-                    <div class="form-group">
-                        <span class="fa fa-map-marker col-xs-2"></span>
-                        <div class="col-xs-10 col-xs-offset-1">
-                            <span class="form-control hotel-locationid" data-trigger="show-formset" data-target=".hotel-locationid" >Enter your destination</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <span class="fa fa-calendar col-xs-2"></span>
-                        <div class="col-xs-10 col-xs-offset-1">
-                            <span class="form-control hotel-checkin-date" data-trigger="show-formset" data-target=".hotel-checkin-date">Checkin date</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <span class="fa fa-calendar col-xs-2"></span>
-                        <div class="col-xs-10 col-xs-offset-1">
-                            <span class="form-control hotel-checkout-date" data-trigger="show-formset" data-target=".hotel-checkin-date">Checkout date</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <span class="fa fa-bed col-xs-2"></span>
-                        <div class="col-xs-10 col-xs-offset-1">
-                            <span class="form-control hotel-room" data-trigger="show-formset" data-target=".hotel-room">1 Room</span>
-                        </div>
-                    </div>
-                    <div class="form-group hidden hotel-search-param">
-                        <input type="text" name="LocationId" value="" />
-                        <input type="text" name="StayDate" value="" />
-                        <input type="text" name="StayLength" value="" />
-                        <input type="text" name="RoomCount" value="" />
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-10 col-xs-offset-1">
-                            <input type="submit" class="btn btn-yellow" value="SEARCH">
-                        </div>
-                    </div>
-                </form>
-            </section><!-- .search-hotel -->
-            <section class="" id="search-flight">
-                <form class="search-flight-form form-horizontal" action="/id/flight/Search">
-                    <h1><b>FLIGHT</b> BOOKING</h1>
-                    <div class="form-group">
-                        <span class="fa fa-plane col-xs-2"></span>
-                        <div class="col-xs-10 col-xs-offset-1">
-                            <span class="form-control flight-origin" data-trigger="show-formset" data-target=".flight-origin">Origin</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <span class="fa fa-plane col-xs-2"></span>
-                        <div class="col-xs-10 col-xs-offset-1">
-                            <span class="form-control flight-destination" data-trigger="show-formset" data-target=".flight-destination">Destination</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <span class="fa fa-calendar col-xs-2"></span>
-                        <div class="col-xs-10 col-xs-offset-1">
-                            <span class="form-control flight-departure-date" data-trigger="show-formset" data-target=".flight-departure-date" >Departure Date</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-10 col-xs-offset-1">
-                            <span>Roundtrip ?</span> 
-                            
-                            <div class="flighttype-select">
-                                <label for="flighttype-return" class="active">
-                                    <input type="radio" name="flightType" value="RoundTrip" id="flighttype-return" checked /> <span>Yes</span>
-                                </label>
-                                <label for="flighttype-oneway">
-                                    <input type="radio" name="flightType" value="OneWay" id="flighttype-oneway" /> <span>No</span>
-                                </label>
-                            </div>
+@section PageJS {
+    <script src="/Assets/mobile/js/HomeController.js"></script>
+}
 
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <span class="fa fa-calendar col-xs-2"></span>
-                        <div class="col-xs-10 col-xs-offset-1">
-                            <span class="form-control flight-return-date" data-trigger="show-formset" data-target=".flight-departure-date" >Return Date</span>
-                            <span class="form-control flight-oneway hidden">One Way Flight</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <span class="fa fa-user col-xs-2"></span>
-                        <div class="col-xs-10 col-xs-offset-1">
-                            <span class="form-control flight-passenger" data-trigger="show-formset" data-target=".flight-passenger" ><span class="flight-passenger-adult">1</span> <img src="/Assets/images/adult-icon.png" alt="Adult" /> <span class="flight-passenger-child">0</span> <img src="/Assets/images/child-icon.png" alt="Child" /> <span class="flight-passenger-infant">0</span> <img src="/Assets/images/infant-icon.png" alt="Infant" /></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-10 col-xs-offset-1">
-                            <input type="text" name="info" value="" class="flight-info hidden" />
-                            <input type="submit" class="btn btn-yellow" value="SEARCH">
-                        </div>
-                    </div>
-                </form>
-            </section><!-- .search-flight -->
-        </section>
-    </section>
+<div class="page-loading" ng-class="{'page-loaded' : PageConfig.Loaded}">
     
-    <!-- hotel search form set -->
-    <div class="form-set hotel-set">
-        <!-- group set for hotel start -->
-        <div class="form hotel-locationid">
-            <header class="form-header container">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <input type="text" value="" class="form-control hotel-location autocomplete initialize" placeholder="Search your destination" />
-                    </div>
-                    <span class="fa fa-times col-xs-2 close-formset"></span>
-                </div>
-            </header>
-            <div class="form-content">
-                <ul class="hotel-location autocomplete-result">
-                    <li>Masukan kata kunci pencarian</li>
-                </ul>
-            </div>
-        </div><!-- .hotel-location -->
-        <div class="form hotel-checkin-date hotel-date">
-            <header class="form-header container">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <span>Checkin Date</span>
-                    </div>
-                    <span class="fa fa-times col-xs-2 close-formset"></span>
-                </div>
-            </header>
-            <div class="form-content">
-                <div class="checkin-calendar"></div>
-            </div>
-        </div><!-- .hotel-checkin-date-->
-        <div class="form hotel-checkout-date hotel-date">
-            <header class="form-header container">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <span>Checkout Date</span>
-                    </div>
-                    <span class="fa fa-times col-xs-2 close-formset"></span>
-                </div>
-            </header>
-            <div class="form-content">
-                <div class="checkout-calendar"></div>
-            </div>
-        </div><!-- .hotel-checkout-date -->
-        <div class="form hotel-room">
-            <header class="form-header container">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <span>Room Count</span>
-                    </div>
-                    <span class="fa fa-times col-xs-2 close-formset"></span>
-                </div>
-            </header>
-            <div class="form-content">
-                <div class="room-count row">
-                    <div class="col-xs-10 col-xs-offset-1">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <div class="btn decrease">-</div>
-                            </div>
-                            <div class="col-xs-8">
-                                <span class="room-count-number">1 Room</span>
-                            </div>
-                            <div class="col-xs-2">
-                                <div class="btn increase">-</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <span class="btn btn-lg text-center close-formset">UPDATE</span>
-            </div>
-        </div><!-- .hotel-room -->
-        <!-- group set for hotel end -->
-        <!-- group set for flight start -->
-        <div class="form flight-origin">
-            <header class="form-header container">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <input type="text" value="" class="form-control flight-airport autocomplete initialize" data-airportTarget="origin" placeholder="Search your origin" />
-                    </div>
-                    <span class="fa fa-times col-xs-2 close-formset"></span>
-                </div>
-            </header>
-            <div class="form-content">
-                <ul class="flight-airport autocomplete-result" data-target="origin">
-                    <li>Masukan kata kunci pencarian</li>
-                </ul>
-            </div>
-        </div><!-- .flight-origin -->
-        <div class="form flight-destination">
-            <header class="form-header container">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <input type="text" value="" class="form-control flight-airport autocomplete initialize" data-airportTarget="destination" placeholder="Search your destination" />
-                    </div>
-                    <span class="fa fa-times col-xs-2 close-formset"></span>
-                </div>
-            </header>
-            <div class="form-content">
-                <ul class="flight-airport autocomplete-result" data-target="destination">
-                    <li>Masukan kata kunci pencarian</li>
-                </ul>
-            </div>
-        </div><!-- .flight-destination -->
-        <div class="form flight-departure-date">
-            <header class="form-header container">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <span>Departure Date</span>
-                    </div>
-                    <span class="fa fa-times col-xs-2 close-formset"></span>
-                </div>
-            </header>
-            <div class="form-content">
-                <div class="departure-calendar"></div>
-            </div>
-        </div><!-- .flight-departure-date -->
-        <div class="form flight-return-date">
-            <header class="form-header container">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <span>Return Date</span>
-                    </div>
-                    <span class="fa fa-times col-xs-2 close-formset"></span>
-                </div>
-            </header>
-            <div class="form-content">
-                <div class="return-calendar"></div>
-            </div>
-        </div><!-- .flight-return-date -->
-        <div class="form flight-passenger">
-            <header class="form-header container">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <span>Passenger</span>
-                    </div>
-                    <span class="fa fa-times col-xs-2 close-formset"></span>
-                </div>
-            </header>
-            <div class="form-content">
-                <div class="adult-passenger row">
-                    <div class="col-xs-10 col-xs-offset-1">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <div class="btn decrease" data-target="adult">-</div>
-                            </div>
-                            <div class="col-xs-8">
-                                <span>1 Adult</span>
-                            </div>
-                            <div class="col-xs-2">
-                                <div class="btn increase" data-target="adult">+</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="child-passenger row">
-                    <div class="col-xs-10 col-xs-offset-1">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <div class="btn decrease" data-target="child">-</div>
-                            </div>
-                            <div class="col-xs-8">
-                                <span>0 Child</span>
-                            </div>
-                            <div class="col-xs-2">
-                                <div class="btn increase" data-target="child">+</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="infant-passenger row">
-                    <div class="col-xs-10 col-xs-offset-1">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <div class="btn decrease" data-target="infant">-</div>
-                            </div>
-                            <div class="col-xs-8">
-                                <span>0 Infant</span>
-                            </div>
-                            <div class="col-xs-2">
-                                <div class="btn increase" data-target="infant">+</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <span class="btn btn-lg text-center close-formset">UPDATE</span>
-            </div>
-        </div><!-- .flight-passenger -->
-        <!-- group set for flight end -->
-    </div><!-- .form-set.hotel-->
+    <div class="form-wrapper">
 
-</section><!-- .home-page -->
+        <h1><b>FLIGHT</b> BOOKING</h1>
+
+        <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
+
+            <div class="form-group form__origin">
+                <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('departure'); PageConfig.SetOverlay('airport-select')">
+                    {{FlightSearchForm.AirportOrigin.City}}, {{FlightSearchForm.AirportOrigin.Country}} ({{FlightSearchForm.AirportOrigin.Code}})
+                </p>
+            </div>
+
+            <div class="form-group form__destination">
+                <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('return'); PageConfig.SetOverlay('airport-select')">
+                    {{FlightSearchForm.AirportDestination.City}}, {{FlightSearchForm.AirportDestination.Country}} ({{FlightSearchForm.AirportDestination.Code}})
+                </p>
+            </div>
+
+            <div class="form-group form__departure">
+                <p class="form-control" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-departure')">
+                    <b>Berangkat</b> <span>{{FlightSearchForm.DepartureDate | date : 'd-MMM-yyyy'}}</span>
+                </p>
+                <input type="text" value="" ng-model="FlightSearchForm.DepartureDate" class="flight-search-form-departure hidden" />
+            </div>
+
+            <div class="form-group form__roundtrip">
+                <p>Roundtrip ?</p>
+                <div class="switch">
+                    <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" class="hidden" />No</label>
+                    <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'true'}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" class="hidden" />Yes</label>
+                </div>
+            </div>
+
+            <div class="form-group form__return" ng-hide="FlightSearchForm.Trip == 'false'">
+                <p class="form-control" ng-click="DatePicker.SetOption({Target : 'return'}, ' '); PageConfig.SetOverlay('datepicker-return')">
+                    <b>Kembali</b> <span>{{FlightSearchForm.ReturnDate | date : 'd-MMM-yyyy'}}</span>
+                    <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />
+                </p>
+            </div>
+
+            <div class="form-group form__passenger">
+                <div class="form__adult">
+                    <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}}</p>
+                </div>
+                <div class="form__child">
+                    <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('children'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[1]}}</p>
+                </div>
+                <div class="form__infant">
+                    <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[2]}}</p>
+                </div>
+            </div>
+
+            <div class="form-group form__submit">
+                <button class="btn btn-yellow btn-block btn-lg">SEARCH</button>
+            </div>
+
+        </form><!-- .flight-form -->
+
+    </div><!-- .form-wrapper -->
+    
+    <!-- overlays -->
+    <!-- overlay date picker -->
+    <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--departure" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-departure') }">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                Pilih Tanggal Keberangkatan
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div class="ui-datepicker departure-date"></div>
+        </section>
+    </div><!-- .overlay--datepicker-->
+
+    <!-- overlay date picker -->
+    <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--return" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-return') }">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                Pilih Tanggal Kepulangan
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div class="ui-datepicker departure-date"></div>
+        </section>
+    </div><!-- .overlay--datepicker-->
+    
+    <!-- overlay airport selector -->
+    <div class="overlay overlay--theme--blue overlay--airport-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'airport-select')}">
+        <header class="overlay__header">
+            <div class="overlay__title">
+                <div class="row">
+                    <div class="col-xs-10">
+                        <input type="text" ng-model="FlightSearchForm.AutoComplete.Keyword" class="form-control" placeholder="Cari bandara" ng-change="FlightSearchForm.AutoComplete.GetAirport()" />
+                    </div>
+                    <div class="col-xs-2">
+                        <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+                    </div>
+                </div>
+            </div>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div ng-show="FlightSearchForm.AutoComplete.Loading">
+                <h4>Mencari bandara</h4>
+            </div>
+            <div ng-hide="FlightSearchForm.AutoComplete.Loading">
+                <div ng-show="FlightSearchForm.AutoComplete.Keyword.length < FlightSearchForm.AutoComplete.MinLength ">
+                    <h4>Masukan kata kunci</h4>
+                </div>
+                <div ng-show="FlightSearchForm.AutoComplete.Keyword.length >= FlightSearchForm.AutoComplete.MinLength">
+                    <ul ng-show="FlightSearchForm.AutoComplete.Result">
+                        <li ng-repeat="result in FlightSearchForm.AutoComplete.Result">
+                            <a ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()">{{result.City}} ({{result.Code}}), {{result.Name}}, {{result.Country}}</a>
+                        </li>
+                    </ul>
+                    <div ng-hide="FlightSearchForm.AutoComplete.Result">
+                        <h4>Bandara tidak ditemukan</h4>
+                    </div>
+                </div>
+            </div>
+        </section><!-- .overlay__content -->
+    </div><!-- .overlay--airport-select -->
+    
+    <!-- overlay passenger picker -->
+    <div class="overlay overlay--theme--blue overlay--passenger-selector" ng-class="{'active' : (PageConfig.ActiveOverlay == 'passenger-select')}">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                Jumlah Penumpang
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div class="passenger-selector">
+                <div class="passenger-selector__header">
+                    <ul>
+                        <li><a class="adult" ng-class="{'active' : FlightSearchForm.PassengerPicker.ActiveType == 'adult'}" ng-click="FlightSearchForm.PassengerPicker.Reset('adult')"></a></li>
+                        <li><a class="children" ng-class="{'active' : FlightSearchForm.PassengerPicker.ActiveType == 'children'}" ng-click="FlightSearchForm.PassengerPicker.Reset('children')"></a></li>
+                        <li><a class="infant" ng-class="{'active' : FlightSearchForm.PassengerPicker.ActiveType == 'infant'}" ng-click="FlightSearchForm.PassengerPicker.Reset('infant')"></a></li>
+                    </ul>
+                </div>
+                <div class="passenger-selector__body">
+                    <div class="selected">
+                        <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'adult'">
+                            <span class="number">{{FlightSearchForm.Passenger[0]}}</span>
+                            <span class="description"><b>Dewasa</b><br />(&gt; 12 Tahun)</span>
+                        </p>
+                        <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'children'">
+                            <span class="number">{{FlightSearchForm.Passenger[1]}}</span>
+                            <span class="description"><b>Anak</b><br />(2-12 Tahun)</span>
+                        </p>
+                        <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'infant'">
+                            <span class="number">{{FlightSearchForm.Passenger[2]}}</span>
+                            <span class="description"><b>Bayi</b><br />(&lt; 2 Tahun)</span>
+                        </p>
+                    </div>
+                    <div class="selector" ng-show="FlightSearchForm.PassengerPicker.ActiveType != 'infant'">
+                        <span ng-repeat="number in FlightSearchForm.PassengerPicker.List" ng-click="FlightSearchForm.PassengerPicker.Set(number, ' ')" ng-class="{'disabled' : (number > (FlightSearchForm.PassengerPicker.TotalMaxPassenger - FlightSearchForm.PassengerPicker.TotalCurrentPassenger) )}">{{number}}</span>
+                    </div>
+                    <div class="selector" ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'infant'">
+                        <span ng-repeat="number in FlightSearchForm.PassengerPicker.List" ng-click="FlightSearchForm.PassengerPicker.Set(number, ' ')" ng-class="{'disabled' : (number > (FlightSearchForm.PassengerPicker.TotalMaxPassenger - FlightSearchForm.PassengerPicker.TotalCurrentPassenger) || ( number > FlightSearchForm.Passenger[0] ) )}">{{number}}</span>
+                    </div>
+                    <div class="note">
+                        <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'infant'">Jumlah bayi tidak boleh lebih dari jumlah penumpang dewasa</p>
+                        <p>Jumlah total penumpang tidak boleh lebih dari 9 orang</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div><!-- .overlay--passenger-selector -->
+
+
+</div><!-- .page-loading -->

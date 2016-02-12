@@ -88,7 +88,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             response.TotalDiscount = 0;
 
             if (voucher.ValuePercentage != null && voucher.ValuePercentage > 0)
-                response.TotalDiscount += (response.OriginalPrice * (decimal)voucher.ValuePercentage / 100);
+                response.TotalDiscount += (response.OriginalPrice * (decimal)voucher.ValuePercentage / 100M);
 
             if (voucher.ValueConstant != null && voucher.ValueConstant > 0)
                 response.TotalDiscount += (decimal)voucher.ValueConstant;
@@ -96,6 +96,8 @@ namespace Lunggo.ApCommon.Campaign.Service
             if (voucher.MaxDiscountValue != null && voucher.MaxDiscountValue > 0
                 && response.TotalDiscount > voucher.MaxDiscountValue)
                 response.TotalDiscount = (decimal)voucher.MaxDiscountValue;
+
+            response.TotalDiscount = Math.Floor(response.TotalDiscount);
 
             response.DiscountedPrice = response.OriginalPrice - response.TotalDiscount;
         }

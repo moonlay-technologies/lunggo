@@ -261,81 +261,93 @@
         <section class="overlay__content">
             <div class="filter-group filter-group--price hidden">
                 <div class="filter-group__header">
-                    <h4 class="filter-group__title">Berdasarkan Harga</h4>
+                    <h4 class="filter-group__title">Berdasarkan Harga:</h4>
                 </div>
                 <div class="filter-group__content"></div>
             </div>
             <div class="filter-group filter-group--transit">
                 <div class="filter-group__header">
-                    <h4 class="filter-group__title">Berdasarkan Transit</h4>
+                    <h4 class="filter-group__title">Berdasarkan Transit:</h4>
                 </div>
                 <div class="filter-group__content">
-                    <label>
-                        Langsung
+                    <label ng-class="{ 'active' : FlightConfig[0].FlightFilter.Transit[0]}">
+                        <div class="switch"></div>
+                        <span>Langsung</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.Transit[0]" />
                     </label>
-                    <label>
-                        1 kali Transit
+                    <label ng-class="{ 'active' : FlightConfig[0].FlightFilter.Transit[1]}">
+                        <div class="switch"></div>
+                        <span>1 Stop</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.Transit[1]" />
                     </label>
-                    <label class="control-label">
-                        Lebih dari 1
+                    <label ng-class="{ 'active' : FlightConfig[0].FlightFilter.Transit[2]}">
+                        <div class="switch"></div>
+                        <span>2 atau lebih</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.Transit[2]" />
                     </label>
                 </div>
             </div>
             <div class="filter-group filter-group--departure">
                 <div class="filter-group__header">
-                    <h4 class="filter-group__title">Berdasarkan Jam Berangkat</h4>
+                    <h4 class="filter-group__title">Berdasarkan Jam Berangkat:</h4>
                 </div>
                 <div class="filter-group__content">
-                    <label>
-                        Pagi &nbsp; (04.00 - 11:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.DepartureTime[0] }">
+                        <div class="switch"></div>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.DepartureTime[0]" />
+                        <span>Pagi<br />(04.00 - 11:00)</span>
                     </label>
-                    <label>
-                        Siang &nbsp; (11.00 - 15:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.DepartureTime[1] }">
+                        <div class="switch"></div>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.DepartureTime[1]" />
+                        <span>Siang<br />(11.00 - 15:00)</span>
                     </label>
-                    <label>
-                        Sore &nbsp; (15.00 - 19:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.DepartureTime[2] }">
+                        <div class="switch"></div>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.DepartureTime[2]" />
+                        <span>Sore<br />(15.00 - 19:00)</span>
                     </label>
-                    <label>
-                        Malam &nbsp; (19.00 - 04:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.DepartureTime[3] }">
+                        <div class="switch"></div>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.DepartureTime[3]" />
+                        <span>Malam<br />(19.00 - 04:00)</span>
                     </label>
                 </div>
             </div>
             <div class="filter-group filter-group--arrival">
                 <div class="filter-group__header">
-                    <h4 class="filter-group__title">Berdasarkan Jam Tiba</h4>
+                    <h4 class="filter-group__title">Berdasarkan Jam Tiba:</h4>
                 </div>
                 <div class="filter-group__content">
-                    <label>
-                        Pagi &nbsp; (04.00 - 11:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.ArrivalTime[0]}">
+                        <div class="switch"></div>
+                        <span>Pagi<br />(04.00 - 11:00)</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.ArrivalTime[0]" />
                     </label>
-                    <label>
-                        Siang &nbsp; (11.00 - 15:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.ArrivalTime[1]}">
+                        <div class="switch"></div>
+                        <span>Siang<br />(11.00 - 15:00)</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.ArrivalTime[1]" />
                     </label>
-                    <label>
-                        Sore &nbsp; (15.00 - 19:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.ArrivalTime[2]}">
+                        <div class="switch"></div>
+                        <span>Sore<br />(15.00 - 19:00)</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.ArrivalTime[2]" />
                     </label>
-                    <label>
-                        Malam &nbsp; (19.00 - 04:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.ArrivalTime[3]}">
+                        <div class="switch"></div>
+                        <span>Malam<br />(19.00 - 04:00)</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.ArrivalTime[3]" />
                     </label>
                 </div>
             </div>
             <div class="filter-group filter-group--airline">
                 <div class="filter-group__header">
-                    <h4 class="filter-group__title">Berdasarkan Maskapai</h4>
+                    <h4 class="filter-group__title">Berdasarkan Maskapai:</h4>
                 </div>
                 <div class="filter-group__content">
-                    <label ng-repeat="Airline in FlightConfig[0].FlightFilter.Airline">
+                    <label ng-repeat="Airline in FlightConfig[0].FlightFilter.Airline" ng-class="{'active' : Airline.Checked}">
+                        <div class="switch"></div>
                         <span><img ng-src="{{Airline.LogoUrl}}" alt="{{Airline.Name}}" /> {{Airline.Name}}</span>
                         <input type="checkbox" value="true" ng-model="Airline.Checked" ng-change="FlightFiltering.AirlineCheck('departure')" />
                     </label>

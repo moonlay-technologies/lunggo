@@ -700,6 +700,8 @@
     <Content Include="Assets\images\campaign\bandung-text.png" />
     <Content Include="Assets\images\campaign\bandung-thumb.jpg" />
     <Content Include="Assets\images\campaign\bandung.jpg" />
+    <Content Include="Assets\images\campaign\DanamonSweetValentine\danamonsweetvalentine-slider.jpg" />
+    <Content Include="Assets\images\campaign\DanamonSweetValentine\danamonsweetvalentine-head.jpg" />
     <Content Include="Assets\images\campaign\free2016calendar\campaign-2016_calendar.jpg" />
     <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\1.jpg" />
     <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\2.jpg" />
@@ -1021,13 +1023,16 @@
     <Content Include="Assets\mobile\images\contact-social-bg.png" />
     <Content Include="Assets\mobile\images\flight-history-status.png" />
     <Content Include="Assets\mobile\images\flight-separator.png" />
+    <Content Include="Assets\mobile\images\form-sprite.png" />
     <Content Include="Assets\mobile\images\login-header-left.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-white.png" />
+    <Content Include="Assets\mobile\images\passenger-sprite-yellow.png" />
     <Content Include="Assets\mobile\images\register-header-left.png" />
     <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
     <Content Include="Assets\mobile\images\user-account-bg.png" />
     <Content Include="Assets\mobile\images\yellow-stripe.png" />
+    <Content Include="Assets\mobile\js\HomeController.js" />
     <Content Include="Assets\mobile\js\StaticController.js" />
     <Content Include="Assets\mobile\js\AccountController.js" />
     <Content Include="Assets\mobile\js\application.js" />
@@ -1253,7 +1258,7 @@
     <Content Include="Assets\images\subscribe-bg.jpg.bak" />
     <Content Include="Assets\mobile\css\_page_account.scss" />
     <Content Include="Assets\mobile\css\_page_static.scss" />
-    <Content Include="Campaign\Imlek2016\css\imlek2016.scss" />
+    <Content Include="Assets\mobile\css\_page_home.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2590,7 +2595,7 @@
     <Content Include="Views\StaticPage\GetCalendar.mobile.cshtml" />
     <Content Include="Views\StaticPage\GetCalendarTerms.mobile.cshtml" />
     <Content Include="Views\StaticPage\VisaWonderfulWednesday.cshtml" />
-    <Content Include="Views\StaticPage\Imlek2016.cshtml" />
+    <Content Include="Views\StaticPage\DanamonSweetValentine.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2627,6 +2632,7 @@
     <Content Include="Views\Template\eticketnew.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderFlightHistoryDetail.mobile.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderHistory.mobile.cshtml" />
+    <None Include="Views\UW000TopPage\Index.mobile.cshtml.bak" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2641,8 +2647,6 @@
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
     <Folder Include="Assets\travorama20\fonts\" />
-    <Folder Include="Campaign\VisaWonderfulWednesday\css\" />
-    <Folder Include="Campaign\VisaWonderfulWednesday\images\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />
     <Folder Include="WebSrc\UW300\Logic\" />

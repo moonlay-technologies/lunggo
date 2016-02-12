@@ -98,7 +98,7 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
-        public ActionResult Imlek2016()
+        public ActionResult DanamonSweetValentine()
         {
             return View();
         }

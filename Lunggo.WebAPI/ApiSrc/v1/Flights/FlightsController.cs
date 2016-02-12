@@ -96,6 +96,28 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
                 request.Payment.Data != null && request.Payment.Data.Data0 != null &&
                 request.Payment.Data.Data0.StartsWith("4"))
                 request.DiscountCode = "VWWVWW";
+            if (now.DayOfWeek == DayOfWeek.Sunday && now.Date == new DateTime(2016, 2, 14) &&
+                request.Payment.Method == PaymentMethod.CreditCard &&
+                request.Payment.Data != null && request.Payment.Data.Data0 != null &&
+                (request.Payment.Data.Data0.StartsWith("456798") ||
+                request.Payment.Data.Data0.StartsWith("456799") ||
+                request.Payment.Data.Data0.StartsWith("432449") ||
+                request.Payment.Data.Data0.StartsWith("425857") ||
+                request.Payment.Data.Data0.StartsWith("456798") ||
+                request.Payment.Data.Data0.StartsWith("432449") ||
+                request.Payment.Data.Data0.StartsWith("542260") ||
+                request.Payment.Data.Data0.StartsWith("540731") ||
+                request.Payment.Data.Data0.StartsWith("552239") ||
+                request.Payment.Data.Data0.StartsWith("552338") ||
+                request.Payment.Data.Data0.StartsWith("559228") ||
+                request.Payment.Data.Data0.StartsWith("516634") ||
+                request.Payment.Data.Data0.StartsWith("542260") ||
+                request.Payment.Data.Data0.StartsWith("552239") ||
+                request.Payment.Data.Data0.StartsWith("523983") ||
+                request.Payment.Data.Data0.StartsWith("523983") ||
+                request.Payment.Data.Data0.StartsWith("552338") ||
+                request.Payment.Data.Data0.StartsWith("552338")))
+                request.DiscountCode = "DSVDSV16";
             // HARDCODE-AN
             // HARDCODE-AN
             // HARDCODE-AN

@@ -1,12 +1,15 @@
 ﻿// travorama angular app - Flight Controller
 
 app.controller('singleFlightController', [
-    '$http', '$scope', '$interval', function ($http, $scope, $interval) {
+    '$http', '$scope', '$interval', '$timeout', function ($http, $scope, $interval, $timeout) {
 
         // **********
         // on document ready
         angular.element(document).ready(function () {
             $scope.getFlight();
+            // start progress animation
+            $scope.ProgressAnimation();
+
         });
 
         // **********
@@ -29,6 +32,8 @@ app.controller('singleFlightController', [
             Completed: [],
             Progress: 0,
             FinalProgress: 0,
+            ProgressDuration: 1000,
+            MaxProgress: 0,
             SecureCode: FlightSearchConfig.flightForm.SecureCode
     };
         $scope.expiry = {
@@ -49,6 +54,18 @@ app.controller('singleFlightController', [
         $scope.overviewDetailShown = false;
 
         $scope.translateMonth = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+
+        $scope.ProgressAnimation = function (delayTime) {
+            delayTime = delayTime || 1000;
+            var randomTime = (Math.random()) * 3000;
+            $timeout(function () {
+                //console.log(delayTime);
+                if ($scope.flightRequest.FinalProgress < $scope.flightRequest.MaxProgress && $scope.flightRequest.FinalProgress <= 100) {
+                    $scope.flightRequest.FinalProgress = $scope.flightRequest.FinalProgress + 1;
+                    $scope.ProgressAnimation(randomTime);
+                }
+            }, delayTime);
+        };
 
         // **********
         // general functions
@@ -446,8 +463,9 @@ app.controller('singleFlightController', [
                     if ($scope.pristine == true) {
                         $scope.pristine = false;
                         for (var i = 0; i < returnData.MaxRequest; i++) {
-                            $scope.flightRequest.Requests.push( i+1 );
+                            $scope.flightRequest.Requests.push(i + 1);
                         }
+                        $scope.flightRequest.MaxProgress = 100 / (returnData.MaxRequest);
                     }
 
                     // if granted request is not null
@@ -467,7 +485,8 @@ app.controller('singleFlightController', [
 
                         // update total progress
                         $scope.flightRequest.Progress = ((returnData.MaxRequest - $scope.flightRequest.Requests.length) / returnData.MaxRequest) * 100;
-
+                        $scope.flightRequest.MaxProgress = (100 / returnData.MaxRequest) * ($scope.flightRequest.Completed.length + 1);
+                        
                         // set expiry if progress == 100
                         if ($scope.flightRequest.Progress == 100) {
                             $scope.expiry.time = returnData.ExpiryTime;
