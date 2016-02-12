@@ -122,7 +122,7 @@ app.controller('checkoutController', [
                                 // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
                                 'secure': true,
                                 'bank': 'mandiri',
-                                'gross_amount': $scope.initialPrice - $scope.VisaPromo.Amount - $scope.voucher.amount
+                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount
                             }
                         } else {
                             return {
@@ -132,7 +132,7 @@ app.controller('checkoutController', [
                                 'two_click': true,
                                 'secure': true,
                                 'bank': 'mandiri',
-                                'gross_amount': $scope.initialPrice - $scope.VisaPromo.Amount - $scope.voucher.amount
+                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount
                             }
                         }
                     };
@@ -552,7 +552,7 @@ app.controller('checkoutController', [
 
         //********************
         // VISA Wonderful Wednesday Promo
-        $scope.VisaPromo = {
+        $scope.CreditCardPromo = {
             Type: '',
             Valid: false,
             PromoName: '',
@@ -572,11 +572,11 @@ app.controller('checkoutController', [
 
                         // check credit card type
                         if (firstNum == 5) {
-                            $scope.VisaPromo.Type = 'mastercard';
+                            $scope.CreditCardPromo.Type = 'mastercard';
                         } else if (firstNum == 4) {
-                            $scope.VisaPromo.Type = 'visa';
+                            $scope.CreditCardPromo.Type = 'visa';
                         } else {
-                            $scope.VisaPromo.Type = '';
+                            $scope.CreditCardPromo.Type = '';
                         }
 
                         //**********
@@ -588,9 +588,9 @@ app.controller('checkoutController', [
 
                             // if Danamon Card
                             if (danamonList.indexOf(creditCardString) > -1) {
-                                $scope.VisaPromo.PromoName = 'Danamon Sweet Valentine';
-                                $scope.VisaPromo.Valid = true;
-                                $scope.VisaPromo.Amount = ($scope.initialPrice * 14) / 100;
+                                $scope.CreditCardPromo.PromoName = 'Danamon Sweet Valentine';
+                                $scope.CreditCardPromo.Valid = true;
+                                $scope.CreditCardPromo.Amount = ($scope.initialPrice * 14) / 100;
                                 // reset voucher
                                 $scope.voucher.amount = 0;
                                 $scope.voucher.checking = false;
@@ -603,10 +603,10 @@ app.controller('checkoutController', [
                         //**********
                         // Wonderful Wednesday with Visa
                         if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 3 && jakartaDate < endOfCampaign) {
-                            $scope.VisaPromo.PromoName = 'Wonderful Wednesday with Visa';
-                            $scope.VisaPromo.Type = 'visa';
-                            $scope.VisaPromo.Valid = true;
-                            $scope.VisaPromo.Amount = 50000;
+                            $scope.CreditCardPromo.PromoName = 'Wonderful Wednesday with Visa';
+                            $scope.CreditCardPromo.Type = 'visa';
+                            $scope.CreditCardPromo.Valid = true;
+                            $scope.CreditCardPromo.Amount = 50000;
                             // reset voucher
                             $scope.voucher.amount = 0;
                             $scope.voucher.checking = false;
@@ -617,16 +617,16 @@ app.controller('checkoutController', [
 
                         //**********
                         // Reset
-                        $scope.VisaPromo.Valid = false;
-                        $scope.VisaPromo.Amount = 0;
+                        $scope.CreditCardPromo.Valid = false;
+                        $scope.CreditCardPromo.Amount = 0;
 
                     } else {
-                        $scope.VisaPromo.Valid = false;
-                        $scope.VisaPromo.Amount = 0;
+                        $scope.CreditCardPromo.Valid = false;
+                        $scope.CreditCardPromo.Amount = 0;
                     }
                 } else {
-                    $scope.VisaPromo.Valid = false;
-                    $scope.VisaPromo.Amount = 0;
+                    $scope.CreditCardPromo.Valid = false;
+                    $scope.CreditCardPromo.Amount = 0;
                 }
             }
         };

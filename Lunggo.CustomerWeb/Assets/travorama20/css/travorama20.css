@@ -1504,11 +1504,11 @@ file: /Assets/travorama20/css/_page_flight.scss
       height: 100%;
       top: 0;
       left: 0;
-      padding-right: 120px; }
+      padding-right: 0px; }
     .page-flight .page-progress .progress-wrapper .plane {
       position: absolute;
       top: -10px;
-      right: 0;
+      left: 100%;
       background: #fff;
       height: 30px;
       width: 120px;

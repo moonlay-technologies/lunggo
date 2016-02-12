@@ -459,7 +459,7 @@
                                             <label ng-class="{ 'disabled' : !transferWindowOpen }">
                                                 <header>
                                                     <div class="input-wrapper">
-                                                        <input ng-disabled="!transferWindowOpen" type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer" ng-model="paymentMethod" checked ng-change="VisaPromo.Check(CreditCard.Number)" />
+                                                        <input ng-disabled="!transferWindowOpen" type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer" ng-model="paymentMethod" checked ng-change="CreditCardPromo.Check(CreditCard.Number)" />
                                                     </div>
                                                     <h5>Bank Transfer</h5>
                                                 </header>
@@ -473,7 +473,7 @@
                                             <label>
                                                 <header>
                                                     <div class="input-wrapper">
-                                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" ng-change="VisaPromo.Check(CreditCard.Number)" />
+                                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
                                                     </div>
                                                     <h5>Kartu Kredit</h5>
                                                 </header>
@@ -487,7 +487,7 @@
                                             <label>
                                                 <header>
                                                     <div class="input-wrapper">
-                                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" ng-change="VisaPromo.Check(CreditCard.Number)" />
+                                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
                                                     </div>
                                                     <h5>Virtual Account</h5>
                                                 </header>
@@ -504,7 +504,7 @@
                                             <label>
                                                 <header>
                                                     <div class="input-wrapper">
-                                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriClickPay" ng-model="paymentMethod" ng-change="VisaPromo.Check(CreditCard.Number)" />
+                                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriClickPay" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
                                                     </div>
                                                     <h5>Mandiri Clickpay</h5>
                                                 </header>
@@ -565,7 +565,7 @@
                                             <div ng-if="CreditCard.TwoClickToken == 'false'">
                                                 <div class="form-group">
                                                     <label class="control-label">Nomor Kartu</label>
-                                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-change="VisaPromo.Check(CreditCard.Number)" ng-class="{'visa' : (VisaPromo.Type == 'visa') , 'mastercard' : (VisaPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
+                                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
@@ -699,20 +699,20 @@
                                             <dt>{{voucher.displayName}}</dt>
                                             <dd>- Rp {{voucher.amount | number}}</dd>
                                         </dl>
-                                        <dl ng-if="VisaPromo.Valid">
-                                            <dt>{{VisaPromo.PromoName}}</dt>
-                                            <dd>- Rp {{VisaPromo.Amount | number}}</dd>
+                                        <dl ng-if="CreditCardPromo.Valid">
+                                            <dt>{{CreditCardPromo.PromoName}}</dt>
+                                            <dd>- Rp {{CreditCardPromo.Amount | number}}</dd>
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
-                                            <dd>Rp {{totalPrice - voucher.amount - VisaPromo.Amount | number}}</dd>
+                                            <dd>Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount | number}}</dd>
                                         </dl>
                                     </div>
                                     <footer>
                                         <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
                                     </footer>
                                 </div><!-- .widget.price-detail -->
-                                <div class="widget voucher" ng-show="currentPage == 4" ng-class="{'hide' : VisaPromo.Valid}">
+                                <div class="widget voucher" ng-show="currentPage == 4" ng-class="{'hide' : CreditCardPromo.Valid}">
                                     <h3 class="widget-title"><b>KODE</b> VOUCHER</h3>
                                     <div class="widget-content">
                                         <span><b>Punya Kupon Travorama ?</b></span>

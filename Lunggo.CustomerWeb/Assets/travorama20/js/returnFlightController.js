@@ -30,7 +30,7 @@ app.controller('returnFlightController', [
             var randomTime = (Math.random()) * 3000;
             $timeout(function () {
                 //console.log(delayTime);
-                if (targetScope.flightSearchParams.FinalProgress < targetScope.flightSearchParams.MaxProgress) {
+                if (targetScope.flightSearchParams.FinalProgress < targetScope.flightSearchParams.MaxProgress && targetScope.flightSearchParams.FinalProgress <= 100) {
                     targetScope.flightSearchParams.FinalProgress = targetScope.flightSearchParams.FinalProgress + 1;
                     $scope.ProgressAnimation(targetScope.name, randomTime);
                 }
