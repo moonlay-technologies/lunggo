@@ -91,7 +91,12 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
             // HARDCODE-AN
             // HARDCODE-AN
             var now = DateTime.UtcNow.AddHours(7);
-            if (now.DayOfWeek == DayOfWeek.Friday && now.Date == new DateTime(2016, 2, 12) &&
+            if (now.DayOfWeek == DayOfWeek.Wednesday && now.Date >= new DateTime(2016, 1, 2) &&
+                now.Date <= new DateTime(2016, 3, 31) && request.Payment.Method == PaymentMethod.CreditCard &&
+                request.Payment.Data != null && request.Payment.Data.Data0 != null &&
+                request.Payment.Data.Data0.StartsWith("4"))
+                request.DiscountCode = "VWWVWW";
+            if (now.DayOfWeek == DayOfWeek.Sunday && now.Date == new DateTime(2016, 2, 14) &&
                 request.Payment.Method == PaymentMethod.CreditCard &&
                 request.Payment.Data != null && request.Payment.Data.Data0 != null &&
                 (request.Payment.Data.Data0.StartsWith("456798") ||
@@ -111,12 +116,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
                 request.Payment.Data.Data0.StartsWith("523983") ||
                 request.Payment.Data.Data0.StartsWith("523983") ||
                 request.Payment.Data.Data0.StartsWith("552338") ||
-                request.Payment.Data.Data0.StartsWith("552338") ||
-                request.Payment.Data.Data0.StartsWith("375531") ||
-                request.Payment.Data.Data0.StartsWith("375531") ||
-                request.Payment.Data.Data0.StartsWith("375539") ||
-                request.Payment.Data.Data0.StartsWith("375539") ||
-                request.Payment.Data.Data0.StartsWith("375539")))
+                request.Payment.Data.Data0.StartsWith("552338")))
                 request.DiscountCode = "DSVDSV16";
             // HARDCODE-AN
             // HARDCODE-AN
