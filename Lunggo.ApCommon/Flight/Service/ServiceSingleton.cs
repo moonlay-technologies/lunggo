@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private static readonly AirAsiaWrapper AirAsiaWrapper = AirAsiaWrapper.GetInstance();
         private static readonly CitilinkWrapper CitilinkWrapper = CitilinkWrapper.GetInstance();
         private static readonly SriwijayaWrapper SriwijayaWrapper = SriwijayaWrapper.GetInstance();
-        private static readonly Dictionary<String,FlightSupplierWrapperBase> Suppliers = new Dictionary<string, FlightSupplierWrapperBase>()
+        private static readonly Dictionary<String, FlightSupplierWrapperBase> Suppliers = new Dictionary<string, FlightSupplierWrapperBase>()
         {
             { "1", MystiflyWrapper},
             { "2", AirAsiaWrapper},
@@ -66,19 +66,10 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private void SearchFlightInternal(SearchFlightConditions conditions, int supplierIndex)
         {
-            var supplier = Suppliers[supplierIndex.ToString(CultureInfo.InvariantCulture)];
-            var searchId = EncodeConditions(conditions);
-            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
-
-            var result = supplier.SearchFlight(conditions);
-            result.Itineraries = result.Itineraries ?? new List<FlightItinerary>();
-            if (result.IsSuccess)
-                foreach (var itin in result.Itineraries)
-                {
-                    itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
-                }   
-            SaveSearchedItinerariesToCache(result.Itineraries, EncodeConditions(conditions), timeout, supplierIndex);
-            InvalidateSearchingStatusInCache(searchId, supplierIndex);
+            if (ParseTripType(conditions.Trips) == TripType.Return)
+                SearchComboFares(conditions, supplierIndex);
+            else
+                SearchNormalFares(conditions, supplierIndex);
         }
 
         private SearchFlightResult SpecificSearchFlightInternal(SearchFlightConditions conditions)

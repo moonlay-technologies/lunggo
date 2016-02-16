@@ -7,7 +7,13 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public static TripType ParseTripType(List<FlightTrip> trips)
+        public TripType ParseTripType(string searchId)
+        {
+            var conditions = DecodeConditions(searchId);
+            return ParseTripType(conditions.Trips);
+        }
+
+        public TripType ParseTripType(List<FlightTrip> trips)
         {
             switch (trips.Count)
             {
@@ -31,7 +37,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public static CabinClass ParseCabinClass(string code)
+        public CabinClass ParseCabinClass(string code)
         {
             switch (code.ToUpper())
             {
@@ -46,7 +52,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public static string ParseCabinClass(CabinClass cabinClass)
+        public string ParseCabinClass(CabinClass cabinClass)
         {
             switch (cabinClass)
             {

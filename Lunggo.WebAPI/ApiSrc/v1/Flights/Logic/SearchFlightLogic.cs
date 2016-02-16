@@ -60,6 +60,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 SearchId = searchServiceResponse.SearchId,
                 FlightList = searchServiceResponse.Itineraries,
                 TotalFlightCount = searchServiceResponse.Itineraries.Count,
+                ReturnFlightList = searchServiceResponse.ReturnItineraries,
+                TotalReturnFlightCount = searchServiceResponse.ReturnItineraries.Count,
                 ExpiryTime = searchServiceResponse.ExpiryTime,
                 GrantedRequests = searchServiceResponse.SearchedSuppliers,
                 MaxRequest = searchServiceResponse.TotalSupplier

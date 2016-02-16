@@ -53,5 +53,14 @@ namespace Lunggo.ApCommon.Flight.Model
         public TripType TripType { get; set; }
         public CabinClass RequestedCabinClass { get; set; }
         public int RegisterNumber { get; set; }
+        public ComboSet ComboSet { get; set; }
+    }
+
+    public class ComboSet
+    {
+        public decimal ComboFare { get; set; }
+        public List<int> PairRegisterNumber { get; set; }
+        public List<decimal> TotalComboFare { get; set; }
+        public List<int> BundledRegisterNumber { get; set; }
     }
 }

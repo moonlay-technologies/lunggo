@@ -68,7 +68,7 @@ namespace Lunggo.WebJob.FlightCrawlScheduler
                     AdultCount = target.AdultCount.GetValueOrDefault(),
                     ChildCount = target.ChildCount.GetValueOrDefault(),
                     InfantCount = target.InfantCount.GetValueOrDefault(),
-                    CabinClass = FlightService.ParseCabinClass(target.RequestedCabinClassCd),
+                    CabinClass = flightService.ParseCabinClass(target.RequestedCabinClassCd),
                     Trips = new List<FlightTrip>
                     {
                         new FlightTrip

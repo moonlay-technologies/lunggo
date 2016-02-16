@@ -38,7 +38,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         int.Parse(info.Substring(8, 2)),
                         int.Parse(info.Substring(6, 2)))
                 }).ToList();
-                var tripType = FlightService.ParseTripType(trips);
+                var tripType = FlightService.GetInstance().ParseTripType(trips);
                 var requestId = Guid.NewGuid().ToString();
                 FlightService.GetInstance().SetFlightRequestTripType(requestId, tripType == TripType.Return);
                 ViewBag.RequestId = requestId;

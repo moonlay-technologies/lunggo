@@ -135,7 +135,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var fareIdPrefix = trip0.OriginAirport + "." + trip0.DestinationAirport + "." +
                                        trip0.DepartureDate.ToString("dd.MM.yyyy") + "." + conditions.AdultCount + "." +
                                        conditions.ChildCount + "." + conditions.InfantCount + "." +
-                                       FlightService.ParseCabinClass(conditions.CabinClass) + ".";
+                                       FlightService.GetInstance().ParseCabinClass(conditions.CabinClass) + ".";
                     foreach (var fareId in fareIds)
                     {
                         var url = @"Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);

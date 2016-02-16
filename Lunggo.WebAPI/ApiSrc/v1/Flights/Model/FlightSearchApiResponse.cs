@@ -9,6 +9,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public string SearchId { get; set; }
         public int TotalFlightCount { get; set; }
         public List<FlightItineraryForDisplay> FlightList { get; set; }
+        public int TotalReturnFlightCount { get; set; }
+        public List<FlightItineraryForDisplay> ReturnFlightList { get; set; }
         public DateTime? ExpiryTime { get; set; }
         public int MaxRequest { get; set; }
         public List<int> GrantedRequests { get; set; }
