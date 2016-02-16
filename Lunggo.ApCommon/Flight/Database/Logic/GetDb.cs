@@ -323,7 +323,8 @@ namespace Lunggo.ApCommon.Flight.Service
                                     Title = TitleCd.Mnemonic(passengerRecord.TitleCd),
                                     FirstName = passengerRecord.FirstName,
                                     LastName = passengerRecord.LastName,
-                                    Type = PassengerTypeCd.Mnemonic(passengerRecord.PassengerTypeCd)
+                                    Type = PassengerTypeCd.Mnemonic(passengerRecord.PassengerTypeCd),
+                                    DateOfBirth = passengerRecord.BirthDate
                                 };
                                 reservation.Passengers.Add(passenger);
                                 passengerLookup.Add(passengerRecord.PassengerId.GetValueOrDefault(), passenger);
