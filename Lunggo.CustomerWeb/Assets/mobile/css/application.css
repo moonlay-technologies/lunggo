@@ -58,6 +58,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   -moz-border-radius: 2px;
   border-radius: 2px; }
 
+.form-control {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; }
+
 .site-header {
   position: fixed;
   top: 0;
@@ -350,7 +355,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .overlay .overlay__header .overlay__title {
       margin: 0; }
     .overlay .overlay__header .overlay__close {
-      float: right; }
+      float: right;
+      font-size: 19px; }
   .overlay .overlay__content, .overlay .overlay__body {
     background: #fff;
     min-height: 100%;
@@ -379,17 +385,21 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   display: inline-block;
   padding: 10px;
   background: #fff;
-  color: #000; }
+  color: #000;
+  font-size: 13px;
+  width: 50px;
+  text-align: center; }
   .overlay.overlay--flight-form form .flight-trip.active {
     background: #0c7399;
     color: #fff; }
 
-.overlay.overlay--flight-form form .form-origin-wrapper, .overlay.overlay--flight-form form .form-destination-wrapper, .overlay.overlay--flight-form form .form-date-wrapper {
-  position: relative; }
-  .overlay.overlay--flight-form form .form-origin-wrapper input[type="text"], .overlay.overlay--flight-form form .form-destination-wrapper input[type="text"], .overlay.overlay--flight-form form .form-date-wrapper input[type="text"] {
-    padding: 20px;
-    padding-left: 40px; }
-  .overlay.overlay--flight-form form .form-origin-wrapper:before, .overlay.overlay--flight-form form .form-destination-wrapper:before, .overlay.overlay--flight-form form .form-date-wrapper:before {
+.overlay.overlay--flight-form form .form-origin, .overlay.overlay--flight-form form .form-destination, .overlay.overlay--flight-form form .form-date {
+  position: relative;
+  padding: 11px 20px;
+  padding-left: 50px;
+  height: 40px;
+  font-size: 13px; }
+  .overlay.overlay--flight-form form .form-origin:before, .overlay.overlay--flight-form form .form-destination:before, .overlay.overlay--flight-form form .form-date:before {
     content: '';
     display: block;
     position: absolute;
@@ -399,32 +409,159 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     left: 10px;
     top: 10px; }
 
-.overlay.overlay--flight-form form .form-destination-wrapper:before {
+.overlay.overlay--flight-form form .form-destination:before {
   background-position: -22px 0; }
 
-.overlay.overlay--flight-form form .form-date-wrapper:before {
+.overlay.overlay--flight-form form .form-date:before {
   background-image: url(/Assets/images/cal-bg.png);
   background-size: contain;
   width: 25px;
   height: 25px;
   top: 8px; }
 
-.overlay.datepicker .overlay__body {
+.overlay.overlay--flight-form form .form-adult, .overlay.overlay--flight-form form .form-children, .overlay.overlay--flight-form form .form-infant {
+  position: relative;
+  padding: 10px 20px;
+  padding-left: 45px;
+  text-align: center;
+  height: 40px;
+  font-size: 14px; }
+  .overlay.overlay--flight-form form .form-adult:before, .overlay.overlay--flight-form form .form-children:before, .overlay.overlay--flight-form form .form-infant:before {
+    content: "";
+    display: block;
+    width: 22px;
+    height: 31px;
+    background: url(/Assets/mobile/images/passenger-sprite.png);
+    top: 5px;
+    left: 10px;
+    position: absolute; }
+
+.overlay.overlay--flight-form form .form-children:before {
+  background-position: -22px 0; }
+
+.overlay.overlay--flight-form form .form-infant:before {
+  background-position: -44px 0; }
+
+.overlay.overlay--flight-filter .overlay__content {
+  background: #878787;
+  color: #fff; }
+
+.overlay.overlay--flight-sort .overlay__content {
+  background: #878787;
+  color: #fff; }
+
+.overlay.overlay--airport-select .overlay__content {
+  padding: 0; }
+  .overlay.overlay--airport-select .overlay__content h4 {
+    padding-left: 18px; }
+  .overlay.overlay--airport-select .overlay__content ul {
+    margin: 0;
+    padding: 0; }
+    .overlay.overlay--airport-select .overlay__content ul li a {
+      display: block;
+      padding: 10px 18px;
+      color: #111; }
+    .overlay.overlay--airport-select .overlay__content ul li + li {
+      border-top: 1px solid #ccc; }
+
+.overlay.overlay--passenger-selector {
+  background: #616161; }
+  .overlay.overlay--passenger-selector .overlay__content {
+    background: #616161;
+    color: #fff;
+    padding: 0; }
+    .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul {
+      margin: 0;
+      padding: 0; }
+      .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li {
+        display: block;
+        width: 33.333333334%;
+        height: 50px;
+        float: left; }
+        .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li + li a {
+          border-left: 1px solid #ccc; }
+        .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a {
+          position: relative;
+          display: block;
+          width: 100%;
+          height: 100%;
+          background: #9d9d9d; }
+          .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a:before {
+            width: 22px;
+            height: 30px;
+            background: url(/assets/mobile/images/passenger-sprite-white.png);
+            background-repeat: no-repeat;
+            display: block;
+            position: absolute;
+            content: '';
+            top: 10px;
+            left: 50%;
+            margin-left: -11px; }
+          .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active {
+            background: #616161; }
+          .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.adult:before {
+            background-position: 0 0; }
+          .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.children:before {
+            background-position: -22px 0; }
+          .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.infant:before {
+            background-position: -44px 0; }
+    .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body {
+      width: 200px;
+      margin-left: auto;
+      margin-right: auto; }
+      .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected {
+        text-align: center;
+        border-bottom: 3px solid #fff;
+        margin-bottom: 15px; }
+        .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number {
+          display: inline-block;
+          font-size: 72px;
+          font-weight: bold; }
+        .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .description {
+          display: inline-block;
+          text-align: left;
+          padding-left: 5px; }
+          .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .description b {
+            font-size: 16px; }
+      .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span {
+        display: block;
+        float: left;
+        background: #ffd632;
+        color: #616161;
+        font-weight: bold;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        padding-top: 10px;
+        font-size: 27px;
+        margin-bottom: 10px;
+        margin-left: 10px; }
+        .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a:nth-child(3n+1), .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span:nth-child(3n+1) {
+          margin-left: 0; }
+        .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a.disabled, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span.disabled {
+          opacity: 0.5; }
+
+.overlay.overlay--datepicker .overlay__content {
   background: #616161;
   color: #fff; }
-  .overlay.datepicker .overlay__body a {
+  .overlay.overlay--datepicker .overlay__content a {
     color: #fff; }
-  .overlay.datepicker .overlay__body select {
+  .overlay.overlay--datepicker .overlay__content select {
     color: #000;
     font-size: 14px;
     margin-left: 5px; }
 
-.overlay.datepicker .ui-datepicker .ui-datepicker-header {
+.overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header {
   text-align: center;
   position: relative;
   padding-top: 20px;
-  height: 50px; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+  height: 50px;
+  color: #1daee4;
+  font-size: 22px; }
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-month {
+    font-weight: bold;
+    text-transform: uppercase; }
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
     position: absolute;
     left: 0;
     width: 25px;
@@ -433,35 +570,37 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-repeat: no-repeat;
     background-position: -30px 0;
     background-size: 200%; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
     left: auto;
     right: 0;
     background-position: 0 0; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-header:after, .overlay.datepicker .ui-datepicker .ui-datepicker-header:before {
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header:after, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header:before {
     display: block;
     width: 100%;
     content: "";
     clear: both; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-header .ui-state-disabled {
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-state-disabled {
     opacity: 0.3; }
 
-.overlay.datepicker .ui-datepicker .ui-datepicker-calendar {
+.overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar {
   width: 100%;
   max-width: 280px;
   margin-left: auto;
   margin-right: auto; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar .ui-state-disabled {
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-state-disabled {
     opacity: 0.3; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day {
-    background: #fff; }
-    .overlay.datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day a, .overlay.datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day span {
-      color: #333; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar thead tr th {
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end a, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end span {
+    color: #e3ae22; }
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day {
+    background: #e3ae22; }
+    .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day a, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day span {
+      color: #fff; }
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar thead tr th {
     width: 40px;
     height: 40px;
     padding: 5px;
     text-align: center; }
-  .overlay.datepicker .ui-datepicker .ui-datepicker-calendar tbody tr td {
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar tbody tr td {
     width: 40px;
     height: 40px;
     text-align: center;

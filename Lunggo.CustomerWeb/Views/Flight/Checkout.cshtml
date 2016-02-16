@@ -15,6 +15,7 @@
     var needNationality = false;
     var token = "";
     var savedPassengers = Model.SavedPassengers;
+    var savedCreditCards = Model.SavedCreditCards;
 
     try
     {
@@ -54,7 +55,6 @@
     <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
     <!-- fancybox -->
     <script type="text/javascript" src="/Assets/vendor/fancybox/jquery.fancybox.pack.js"></script>
-
 }
 @section PageJS{
     <script>
@@ -64,7 +64,7 @@
         //var transferWindow = [ '1100', '1124' ];
         // messages
         var message = '@ViewBag.Message';
-        // possible values : 
+        // possible values :
         //      InvalidInputData
         //      NotRegistered
         //      AlreadyRegisteredButUnconfirmed
@@ -97,11 +97,11 @@
             if (Model.Itinerary.Trips.Count == 2)
             {
                 @:departureDate = '@Model.Itinerary.Trips[1].DepartureDate';
-            }
+                                    }
             else
             {
                 @:departureDate = '@Model.Itinerary.Trips[0].DepartureDate';
-            }
+                                    }
         }
 
         // change current page
@@ -123,7 +123,7 @@
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
 }
 
-@switch ((string) ViewBag.Message)
+@switch ((string)ViewBag.Message)
 {
     default:
         <!-- checkout start here -->
@@ -260,7 +260,7 @@
                                 <div class="travorama-login" ng-class="{'active' : loginShown}" ng-if="!loggedIn">
                                     <a class="login-toggle" ng-click="toggleLogin()"><b>Login</b> with your <b>TRAVORAMA</b> Account <span class="caret"></span></a>
                                     <div class="login-content">
-                                        @using (Html.BeginForm("Login", "Account", new{returnUrl = HttpContext.Current.Request.Url},FormMethod.Post, new {@class = "form form-horizontal"}))
+                                        @using (Html.BeginForm("Login", "Account", new { returnUrl = HttpContext.Current.Request.Url }, FormMethod.Post, new { @class = "form form-horizontal" }))
                                         {
                                             @Html.AntiForgeryToken()
                                             <div class="form-group">
@@ -333,14 +333,14 @@
                                 <h3><b>DETAIL</b> PENUMPANG</h3>
 
                                 <div class="passenger-detail">
-                                
-                                <form novalidate name="passengersForm">
-                                    <div class="passenger-form" id="passenger-{{$index}}" ng-repeat="passenger in passengers track by $index" ng-init="initPassenger(passenger)">
-                                        <header>
-                                            <span>Penumpang {{$index + 1}} ({{passenger.typeName}}) <span ng-show="passenger.firstname || passenger.lastname"> : {{ passenger.title + ' ' + passenger.firstname + ' ' + passenger.lastname}}</span></span>
-                                            <span class="toggle hidden"></span>
-                                        </header>
-                                        <div class="passenger-content">
+
+                                    <form novalidate name="passengersForm">
+                                        <div class="passenger-form" id="passenger-{{$index}}" ng-repeat="passenger in passengers track by $index" ng-init="initPassenger(passenger)">
+                                            <header>
+                                                <span>Penumpang {{$index + 1}} ({{passenger.typeName}}) <span ng-show="passenger.firstname || passenger.lastname"> : {{ passenger.title + ' ' + passenger.firstname + ' ' + passenger.lastname}}</span></span>
+                                                <span class="toggle hidden"></span>
+                                            </header>
+                                            <div class="passenger-content">
 
                                                 <div class="form-group">
                                                     <label class="control-label">Title</label>
@@ -429,17 +429,17 @@
                                                     </select>
                                                 </div>
 
-                                        </div>
-                                    </div><!-- .passenger-form -->
-                                
-                                </form>
+                                            </div>
+                                        </div><!-- .passenger-form -->
+
+                                    </form>
 
                                 </div><!-- .passengerdetail -->
 
                                 <div class="step-button">
                                     <a class="btn btn-grey" ng-click="changePage(2)">KEMBALI</a>
                                     <button class="btn btn-yellow" ng-click="changePage(4)" ng-disabled="passengersForm.$invalid">LANJUTKAN</button>
-                                    
+
                                 </div>
                                 <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Perika kembali form Anda.</h4>
 
@@ -514,90 +514,125 @@
                                             </label>
                                         </div><!-- .payment -->
                                         @*
-                                        <div class="payment cimbClicks col-xs-4">
-                                            <label>
-                                                <header>
-                                                    <div class="input-wrapper">
-                                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.CimbClicks" ng-model="paymentMethod" />
-                                                    </div>
-                                                    <h5>CIMB Clicks</h5>
-                                                </header>
-                                                <section>
-                                                    <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Clicks" />
-                                                </section>
-                                            </label>
-                                        </div><!-- .payment -->
-                                            *@
+                                            <div class="payment cimbClicks col-xs-4">
+                                                <label>
+                                                    <header>
+                                                        <div class="input-wrapper">
+                                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.CimbClicks" ng-model="paymentMethod" />
+                                                        </div>
+                                                        <h5>CIMB Clicks</h5>
+                                                    </header>
+                                                    <section>
+                                                        <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Clicks" />
+                                                    </section>
+                                                </label>
+                                            </div><!-- .payment -->
+                                        *@
                                     </div>
 
                                 </div><!-- .payment-wrapper -->
 
-                                <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
-                                    <form name="creditCardForm" novalidate>
-                                        <h3 class="no-spacing">Detail <b>Kartu Kredit</b></h3>
-                                        <div class="form-group">
-                                            <label class="control-label">Nomor Kartu</label>
-                                            <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-change="VisaPromo.Check(CreditCard.Number)" ng-class="{'visa' : (VisaPromo.Type == 'visa') , 'mastercard' : (VisaPromo.Type == 'mastercard') }" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <label class="control-label">Kadaluarsa</label>
-                                                    <!-- <input type="number" value="" class="form-control" placeholder="MM" maxlength="2" ng-model="CreditCard.Month" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
-                                                    <select class="form-control" ng-model="CreditCard.Month">
-                                                        <option value="01" selected="selected">Januari</option>
-                                                        <option value="02">Februari</option>
-                                                        <option value="03">Maret</option>
-                                                        <option value="04">April</option>
-                                                        <option value="05">Mei</option>
-                                                        <option value="06">Juni</option>
-                                                        <option value="07">Juli</option>
-                                                        <option value="08">Agustus</option>
-                                                        <option value="09">September</option>
-                                                        <option value="10">Oktober</option>
-                                                        <option value="11">November</option>
-                                                        <option value="12">Desember</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="control-label">&nbsp;</label>
-                                                    <!-- <input type="number" value="" class="form-control" placeholder="YYYY" maxlength="4" ng-model="CreditCard.Year" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
-                                                    <select class="form-control" ng-model="CreditCard.Year">
-                                                        <option value="2016" selected="selected">2016</option>
-                                                        <option value="2017">2017</option>
-                                                        <option value="2018">2018</option>
-                                                        <option value="2019">2019</option>
-                                                        <option value="2020">2020</option>
-                                                        <option value="2021">2021</option>
-                                                        <option value="2022">2022</option>
-                                                        <option value="2023">2023</option>
-                                                        <option value="2024">2024</option>
-                                                        <option value="2025">2025</option>
-                                                        <option value="2026">2026</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="control-label">CVV Kartu</label>
-                                                    <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && true /*tambah kredit kart baru*/ ))
+                                {
+                                    
+                                    <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
+
+                                        <form name="creditCardForm" novalidate>
+                                            <h3 class="no-spacing">Detail <b>Kartu Kredit</b></h3>
+                                            
+                                            <!-- credit card selector start -->
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-8">
+                                                        <label>Pilih kartu kredit :</label>
+                                                        <select class="form-control" ng-model="CreditCard.TwoClickToken" ng-required="paymentMethod == '@PaymentMethod.CreditCard'">
+                                                            <option value="false" selected="selected">Tambah Baru</option>
+                                                            @foreach (var savedCreditCard in savedCreditCards)
+                                                            {
+                                                                <option value="@savedCreditCard.Token">@savedCreditCard.CardHolderName - @savedCreditCard.MaskedCardNumber</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-4" ng-if="CreditCard.TwoClickToken != 'false'">
+                                                        <label class="control-label">CVV Kartu</label>
+                                                        <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Nama Pemegang Kartu</label>
-                                            <input type="text" value="" class="form-control" size="16" ng-model="CreditCard.Name" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
-                                        </div>
-                                    </form>
-                                </div><!-- .credit-card-form -->
+                                            <!-- credit card selector end -->
+                                            
+                                            <!-- new credit card start -->
+                                            <div ng-if="CreditCard.TwoClickToken == 'false'">
+                                                <div class="form-group">
+                                                    <label class="control-label">Nomor Kartu</label>
+                                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-change="VisaPromo.Check(CreditCard.Number)" ng-class="{'visa' : (VisaPromo.Type == 'visa') , 'mastercard' : (VisaPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <label class="control-label">Kadaluarsa</label>
+                                                            <!-- <input type="number" value="" class="form-control" placeholder="MM" maxlength="2" ng-model="CreditCard.Month" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
+                                                            <select class="form-control" ng-model="CreditCard.Month">
+                                                                <option value="01" selected="selected">Januari</option>
+                                                                <option value="02">Februari</option>
+                                                                <option value="03">Maret</option>
+                                                                <option value="04">April</option>
+                                                                <option value="05">Mei</option>
+                                                                <option value="06">Juni</option>
+                                                                <option value="07">Juli</option>
+                                                                <option value="08">Agustus</option>
+                                                                <option value="09">September</option>
+                                                                <option value="10">Oktober</option>
+                                                                <option value="11">November</option>
+                                                                <option value="12">Desember</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="control-label">&nbsp;</label>
+                                                            <!-- <input type="number" value="" class="form-control" placeholder="YYYY" maxlength="4" ng-model="CreditCard.Year" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
+                                                            <select class="form-control" ng-model="CreditCard.Year">
+                                                                <option value="2016" selected="selected">
+                                                                    2016
+                                                                </option>
+                                                                <option value="2017">2017</option>
+                                                                <option value="2018">2018</option>
+                                                                <option value="2019">2019</option>
+                                                                <option value="2020">2020</option>
+                                                                <option value="2021">2021</option>
+                                                                <option value="2022">2022</option>
+                                                                <option value="2023">2023</option>
+                                                                <option value="2024">2024</option>
+                                                                <option value="2025">2025</option>
+                                                                <option value="2026">2026</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="control-label">CVV Kartu</label>
+                                                            <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Nama Pemegang Kartu</label>
+                                                    <input type="text" value="" class="form-control" size="16" ng-model="CreditCard.Name" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                </div>
+                                            </div>
+                                            <!-- new credit card end -->
+
+                                        </form>
+                                    </div>
+                                <!-- .credit-card-form -->
+                                }
 
                                 <div class="step-button">
-                                    
+
                                     <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()">
-                                        
+
                                         <div class="hidden">
                                             <input type="text" name="Token" value="" ng-model="token" />
                                             <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
                                             <input type="text" name="Language" value="" ng-model="language" />
-                                            
+
                                             <input type="text" name="Payment.Data0" id="vt-token" value="" ng-model="CreditCard.Token" />
 
                                             <p>Buyer Info</p>
@@ -625,7 +660,7 @@
                                                 <input type="text" name="Passengers[{{$index}}].Country" value="" ng-model="passenger.nationality" />
 
                                             </div>
-                                            
+
                                             <p>Voucher Code</p>
                                             <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
 
@@ -639,7 +674,7 @@
                                         <input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">
 
                                     </form>
-                                    
+
                                     <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
                                         <input type="text" name="RsvNo" value="" id="rsvno-input" />
                                     </form>
@@ -686,16 +721,22 @@
                                             <div class="form-group">
                                                 <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherNotFound'">Kode voucher salah</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah di gunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Voucher tidak dapat di gunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignNotStartedYet'">Voucher tidak dapat di gunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignHasEnded'">Voucher tidak dapat di gunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Dibawah pembelian minimum</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignNotStartedYet'">Voucher belum dapat digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignHasEnded'">Voucher sudah tidak dapat digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignInactive'">Voucher tidak dapat digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'NoVoucherRemaining'">Voucher sudah habis</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'EmailNotEligible'">Voucher tidak dapat digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'UpdateError'">Voucher tidak dapat digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
+                                                <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
                                             </div>
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-xs-6 col-xs-offset-6">
                                                         <input type="submit" value="REDEEM" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
-                                                        <input type="submit" value="RESET" class="btn btn-yellow form-control" ng-click="voucher.reset()" ng-show="voucher.checked"/>
+                                                        <input type="submit" value="RESET" class="btn btn-yellow form-control" ng-click="voucher.reset()" ng-show="voucher.checked" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -767,11 +808,11 @@
                 </div>
 
             </section><!-- .checkout-content -->
-            
+
             <div class="page-overlay flight-expired" ng-show="expired">
                 <div class="overlay-content">
                     <header>
-                        <h4>Pencarian Kadaluarsa</h4>
+                        <h4>Checkout Kadaluarsa</h4>
                     </header>
                     <section>
                         <div class="container">
@@ -780,8 +821,8 @@
                                     <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
                                 </div>
                                 <div class="col-sm-8">
-                                    <h3>Halaman Pencarian Anda <b>Sudah Kadaluarsa</b></h3>
-                                    <p>Silahkan klik tombol di bawah ini untuk memparbaharui halaman pencarian Anda.</p>
+                                    <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
+                                    <p>Silahkan klik tombol dibawah untuk kembali ke halaman pencarian.</p>
                                 </div>
                             </div>
                         </div>
@@ -799,7 +840,7 @@
                     </footer>
                 </div>
             </div><!-- .page-overlay -->
-            
+
             <div class="page-overlay booking-flight" ng-show="book.booking">
                 <div class="overlay-content" ng-hide="book.checked">
                     <header>
@@ -851,17 +892,17 @@
 
 
         <!-- checkout end here -->
-        break;
+                                break;
     case "BookExpired":
-        @:[Ini ceritanya page booking expired]
+    @:[Ini ceritanya page booking expired]
         break;
     case "BookError":
-        @:[Ini ceritanya page kalo input datanya ga bener]
+    @:[Ini ceritanya page kalo input datanya ga bener]
         break;
     case "NoLongerAvailable":
-        @:[Ini ceritanya page kalo fare-nya uda ga available lageh]
+    @:[Ini ceritanya page kalo fare-nya uda ga available lageh]
         break;
     case "InvalidInputData":
-        @:[Ini ceritanya page kalo input datanya ga bener]
+    @:[Ini ceritanya page kalo input datanya ga bener]
         break;
 }

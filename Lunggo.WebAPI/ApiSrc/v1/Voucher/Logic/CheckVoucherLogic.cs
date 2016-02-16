@@ -33,14 +33,14 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Logic
                     OriginalRequest = request
                 };
             else
-                return new CheckVoucherApiResponse
-                {
-                    Discount = response.TotalDiscount,
+            return new CheckVoucherApiResponse
+            {
+                Discount = response.TotalDiscount,
                     DisplayName = response.CampaignVoucher.DisplayName,
                     StatusCode = HttpStatusCode.Accepted,
                     StatusMessage = response.UpdateStatus + ".",
-                    OriginalRequest = request
-                };
+                OriginalRequest = request
+            };
         }
     }
 }

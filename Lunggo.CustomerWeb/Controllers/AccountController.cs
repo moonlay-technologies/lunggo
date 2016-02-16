@@ -239,7 +239,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 };
 
                 DateTime Date = DateTime.Now; 
-                DateTime endDate = new DateTime(2016,1,31);
+                DateTime endDate = new DateTime(2016,2,18);
                 using (var con = DbService.GetInstance().GetOpenConnection())
                 {
 

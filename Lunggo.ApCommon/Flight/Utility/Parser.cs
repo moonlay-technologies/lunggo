@@ -7,6 +7,12 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
+        public TripType ParseTripType(string searchId)
+        {
+            var conditions = DecodeSearchConditions(searchId);
+            return ParseTripType(conditions.Trips);
+        }
+
         public TripType ParseTripType(List<FlightTrip> trips)
         {
             switch (trips.Count)

@@ -14,6 +14,8 @@ namespace Lunggo.ApCommon.Campaign.Service
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
                     var voucher = GetCampaignVoucherRecordQuery.GetInstance().Execute(conn, new { VoucherCode = voucherCode }).FirstOrDefault();
+                    if (voucher != null && string.IsNullOrWhiteSpace(voucher.DisplayName))
+                        voucher.DisplayName = "Discount";
                     return voucher;
                 }
             }

@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var output = new RevalidateFlightOutput();
             if (input.Token == null)
-                input.Token = SelectFlight(input.SearchId, input.ItinIndex, input.RequestId);
+                input.Token = SelectFlight(input.SearchId, input.ItinIndices);
             if (input.Token == null)
             {
                 output.IsSuccess = true;

@@ -247,7 +247,6 @@
     <Compile Include="Flight\Database\Query\UpdatePaymentQuery.cs" />
     <Compile Include="Flight\Model\TopDestination.cs" />
     <Compile Include="Flight\Service\Select.cs" />
-    <Compile Include="Flight\Service\Bundle.cs" />
     <Compile Include="Flight\Service\Discount.cs" />
     <Compile Include="Flight\Service\SendToCustomer.cs" />
     <Compile Include="Flight\Service\Reservations.cs" />
@@ -380,11 +379,14 @@
     <Compile Include="Payment\Model\CustomerDetails.cs" />
     <Compile Include="Payment\Model\Data.cs" />
     <Compile Include="Payment\Model\ItemDetails.cs" />
+    <Compile Include="Payment\Model\SavedCreditCard.cs" />
     <Compile Include="Payment\Model\TransferConfirmationReport.cs" />
     <Compile Include="Payment\Model\PaymentInfo.cs" />
     <Compile Include="Payment\Model\RefundInfo.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
     <Compile Include="Payment\PaymentService.cs" />
+    <Compile Include="Payment\Query\GetSavedCreditCardQuery.cs" />
+    <Compile Include="Payment\Query\GetSavedCreditCardByEmailQuery.cs" />
     <Compile Include="Payment\Query\GetUncheckedTransferConfirmationReportsQuery.cs" />
     <Compile Include="Payment\Wrapper\Veritrans\Model\Indomaret.cs" />
     <Compile Include="Payment\Wrapper\Veritrans\Model\MandiriEcash.cs" />

@@ -49,14 +49,14 @@ if (typeof (angular) == 'object') {
             SetOverlay: function (overlay) {
                 console.log('changing overlay to : ' + overlay);
                 if (typeof(overlay) == 'undefined') {
-                    $rootScope.PageConfig.Overlay = '';
+                    $rootScope.PageConfig.ActiveOverlay = '';
                     $rootScope.PageConfig.SetBodyNoScroll(false);
                 } else {
                     if ( overlay == '' ) {
-                        $rootScope.PageConfig.Overlay = '';
+                        $rootScope.PageConfig.ActiveOverlay = '';
                         $rootScope.PageConfig.SetBodyNoScroll(false);
                     } else {
-                        $rootScope.PageConfig.Overlay = overlay;
+                        $rootScope.PageConfig.ActiveOverlay = overlay;
                         $rootScope.PageConfig.SetBodyNoScroll(true);
                     }
                 }
@@ -101,33 +101,217 @@ if (typeof (angular) == 'object') {
             SetOption: function (options) {
                 $('.ui-datepicker').datepicker({
                     onSelect: function(date) {
-                        $rootScope.PageConfig.SetOverlay('');
+                        $rootScope.PageConfig.SetOverlay('flight-form');
                         $rootScope.DatePicker.Settings.SelectedDate = date;
-                        $('.ui-datepicker').datepicker('setDate', new Date(date));
+                        // $('.ui-datepicker').datepicker('setDate', new Date(date));
                         $($rootScope.DatePicker.Settings.Target).val(date);
                         $($rootScope.DatePicker.Settings.Target).trigger('input');
-                        // console.log($rootScope);
+                        // console.log($rootScope.DatePicker.Settings.Target);
+                        console.log(date);
                     }
                 });
+
                 // set default value for datepicker
-                $rootScope.DatePicker.Settings.MinDate = options.MinDate || new Date();
-                $rootScope.DatePicker.Settings.DateFormat = options.DateFormat || 'yy-mm-dd';
-                $rootScope.DatePicker.Settings.Target = options.Target || '';
-                $rootScope.DatePicker.Settings.ChangeMonth = options.ShowMonth || false;
-                $rootScope.DatePicker.Settings.ChangeYear = options.ShowYear || false;
+                if (options.MinDate) {
+                    $rootScope.DatePicker.Settings.MinDate = options.MinDate;
+                } else {
+                    $rootScope.DatePicker.Settings.MinDate = new Date();
+                }
+                $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.DatePicker.Settings.MinDate);
+
+                if (options.Target == 'departure') {
+                    $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
+                    if ($rootScope.FlightSearchForm.ReturnDate) {
+                        $('.ui-datepicker').datepicker('option', 'maxDate', new Date($rootScope.FlightSearchForm.ReturnDate) );
+                    }
+                } else {
+                    $rootScope.DatePicker.Settings.Target = '.flight-search-form-return';
+                    if ($rootScope.FlightSearchForm.DepartureDate) {
+                        $('.ui-datepicker').datepicker('option', 'minDate', new Date($rootScope.FlightSearchForm.DepartureDate));
+                    }
+                }
+                $rootScope.DatePicker.Settings.DateFormat = 'yy-mm-dd';
+                $rootScope.DatePicker.Settings.ChangeMonth = false;
+                $rootScope.DatePicker.Settings.ChangeYear = false;
                 // set option to datepicker
                 $('.ui-datepicker').datepicker('option', 'prevText', '');
                 $('.ui-datepicker').datepicker('option', 'nextText', '');
-                $('.ui-datepicker').datepicker('option', 'changeMonth', $rootScope.DatePicker.Settings.ChangeMonth);
-                $('.ui-datepicker').datepicker('option', 'changeYear', $rootScope.DatePicker.Settings.ChangeYear);
-                $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.DatePicker.Settings.MinDate);
-                $('.ui-datepicker').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
+                //$('.ui-datepicker.departure-date').datepicker('option', 'changeMonth', $rootScope.DatePicker.Settings.ChangeMonth);
+                //$('.ui-datepicker.departure-date').datepicker('option', 'changeYear', $rootScope.DatePicker.Settings.ChangeYear);
+                //$('.ui-datepicker.departure-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
                 //$('.ui-datepicker').datepicker('option', 'altField', $rootScope.DatePicker.Settings.Target);
                 //$('.ui-datepicker').datepicker('option', 'altFormat', $rootScope.DatePicker.Settings.DateFormat);
                 // set on choose date function
                 //console.log($rootScope.DatePicker.Settings);
             }
-    };
+        };// datepicker
+        //$rootScope.DatePicker.SetOption({MinDate: new Date(), Target: '.flight-search-form-departure', ShowMonth: false, ShowYear: false});
+
+        // flight search form
+        $rootScope.FlightSearchForm = {
+            Trip: 'false',
+            AirportOrigin: {
+                City: 'Jakarta',
+                Code: 'CGK',
+                Country: 'Indonesia'
+            },// origin
+            AirportDestination: {
+                City: 'Denpasar',
+                Code: 'DPS',
+                Country: 'Indonesia'
+            },// destination
+            DepartureDate: '',
+            ReturnDate: '',
+            Passenger: [1, 0, 0],
+            Cabin: 'y',
+            AutoComplete: {
+                Target: 'departure',
+                Keyword: '',
+                MinLength: 3,
+                GetAirport: function (keyword) {
+                    keyword = keyword || $rootScope.FlightSearchForm.AutoComplete.Keyword;
+                    var url = FlightAutocompleteConfig.Url + keyword;
+
+                    if (keyword.length >= $rootScope.FlightSearchForm.AutoComplete.MinLength) {
+                        $rootScope.FlightSearchForm.AutoComplete.Loading = true;
+                        // if result exist in cache
+                        if (keyword in $rootScope.FlightSearchForm.AutoComplete.Cache) {
+                            $rootScope.FlightSearchForm.AutoComplete.Result = $rootScope.FlightSearchForm.AutoComplete.Cache[keyword];
+                            $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+                        } else {
+                            $.get(url).done(
+                                function (returnData) {
+                                    $rootScope.FlightSearchForm.AutoComplete.Result = returnData;
+                                    $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+                                    // add result to cache
+                                    $rootScope.FlightSearchForm.AutoComplete.Cache[keyword] = returnData;
+                                }
+                            ).fail(
+                                function (returnData) {
+                                    console.log('Failed to get airport list');
+                                    console.log(returnData);
+                                    $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+                                }
+                            );
+                        }
+                    }
+                },
+                Loading: false,
+                Result: [],
+                Cache: {},
+                Reset: function (target) {
+                    $rootScope.FlightSearchForm.AutoComplete.Target = target || 'departure';
+                    
+                    $rootScope.FlightSearchForm.AutoComplete.Keyword = '';
+                    $rootScope.FlightSearchForm.AutoComplete.Result = [];
+                    $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+                },
+                SetAirport: function (target, airport) {
+                    if (target == 'departure') {
+                        $rootScope.FlightSearchForm.AirportOrigin = airport;
+                    } else {
+                        $rootScope.FlightSearchForm.AirportDestination = airport;
+                    }
+                    //console.log(airport);
+                }
+            },// auto complete
+            PassengerPicker: {
+                ActiveType: 'adult',
+                TotalMaxPassenger: 9,
+                TotalCurrentPassenger: 1,
+                PreviousPassenger: [1,0,0],
+                List: [1,2,3,4,5,6,7,8,9],
+                Reset: function(type) {
+                    $rootScope.FlightSearchForm.PassengerPicker.ActiveType = type;
+                    var minPassenger = type == 'adult' ? 1 : 0;
+                    var maxPassenger = type == 'adult' ? 9 : 8;
+                    $rootScope.FlightSearchForm.PassengerPicker.List = [];
+                    for (var i = minPassenger ; i <= maxPassenger ; i++) {
+                        $rootScope.FlightSearchForm.PassengerPicker.List.push(i);
+                    }
+                    // reset total current passenger
+                    $rootScope.FlightSearchForm.PassengerPicker.PreviousPassenger = $rootScope.FlightSearchForm.Passenger;
+                    $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger = $rootScope.FlightSearchForm.PassengerPicker.PreviousPassenger[0] + $rootScope.FlightSearchForm.PassengerPicker.PreviousPassenger[1] + $rootScope.FlightSearchForm.PassengerPicker.PreviousPassenger[2];
+                    switch (type) {
+                        case 'adult':
+                            $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger = $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger - $rootScope.FlightSearchForm.PassengerPicker.PreviousPassenger[0];
+                            break;
+                        case 'children':
+                            $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger = $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger - $rootScope.FlightSearchForm.PassengerPicker.PreviousPassenger[1];
+                            break;
+                        case 'infant':
+                            $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger = $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger - $rootScope.FlightSearchForm.PassengerPicker.PreviousPassenger[2];
+                            break;
+                    }
+                },
+                Set: function (number) {
+                    switch ($rootScope.FlightSearchForm.PassengerPicker.ActiveType) {
+                        case 'adult':
+                            if ((number + $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger) > $rootScope.FlightSearchForm.PassengerPicker.TotalMaxPassenger ) {
+                                console.log('Passenger cannot more than 9');
+                            } else {
+                                $rootScope.FlightSearchForm.Passenger[0] = number;
+                            }
+                            break;
+                        case 'children':
+                            if ((number + $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger) > $rootScope.FlightSearchForm.PassengerPicker.TotalMaxPassenger) {
+                                console.log('Passenger cannot more than 9');
+                            } else {
+                                $rootScope.FlightSearchForm.Passenger[1] = number;
+                            }
+                            break;
+                        case 'infant':
+                            if (((number + $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger) > $rootScope.FlightSearchForm.PassengerPicker.TotalMaxPassenger)) {
+                                console.log('Passenger cannot more than 9');
+                            } else {
+                                if (number > $rootScope.FlightSearchForm.Passenger[0]) {
+                                    console.log('Infant cannot be more than adult');
+                                } else {
+                                    $rootScope.FlightSearchForm.Passenger[2] = number;
+                                }
+                            }
+                            break;
+                    }
+                    $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger = $rootScope.FlightSearchForm.Passenger[0] + $rootScope.FlightSearchForm.Passenger[1] + $rootScope.FlightSearchForm.Passenger[2];
+                    $rootScope.PageConfig.SetOverlay('flight-form');
+                }
+            },// passenger picker
+            Url: '',
+            Submit: function() {
+                console.log($rootScope.FlightSearchForm);
+                console.log('Generating search form');
+
+                if ($rootScope.FlightSearchForm.DepartureDate == '') {
+                    var departure = new Date();
+                    departure.setDate( departure.getDate() + 1 );
+                    $rootScope.FlightSearchForm.DepartureDate = departure;
+                }
+
+                if ($rootScope.FlightSearchForm.ReturnDate == '') {
+                    var todayDate = new Date();
+                    var returnDate = new Date();
+                    returnDate.setDate( todayDate.getDate() + 2 );
+
+                    $rootScope.FlightSearchForm.ReturnDate = returnDate;
+                }
+
+                $rootScope.FlightSearchForm.Url = FlightSearchConfig.GenerateSearchParam({
+                    trip: ($rootScope.FlightSearchForm.Trip == 'true'),
+                    departureDate: $rootScope.FlightSearchForm.DepartureDate,
+                    returnDate: $rootScope.FlightSearchForm.ReturnDate,
+                    origin: $rootScope.FlightSearchForm.AirportOrigin.Code,
+                    destination: $rootScope.FlightSearchForm.AirportDestination.Code,
+                    adult: $rootScope.FlightSearchForm.Passenger[0],
+                    children: $rootScope.FlightSearchForm.Passenger[1],
+                    infant: $rootScope.FlightSearchForm.Passenger[2],
+                    cabin: $rootScope.FlightSearchForm.Cabin
+                });
+
+                // redirect page to search page
+                window.location = window.location.origin + '/id/Flight/Search?info=' + $rootScope.FlightSearchForm.Url  ;
+
+            }// submit
+        };// flight search form 
 
     });
 

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
@@ -6,8 +7,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
     {
         [JsonProperty("search_id")]
         public string SearchId { get; set; }
-        [JsonProperty("itin_index")]
-        public int ItinIndex { get; set; }
+        [JsonProperty("registers")]
+        public List<int> ItinIndices { get; set; }
         [JsonProperty("secure_code")]
         public string SecureCode { get; set; }
     }

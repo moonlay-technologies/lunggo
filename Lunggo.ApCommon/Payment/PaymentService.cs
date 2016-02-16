@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
@@ -155,6 +156,41 @@ namespace Lunggo.ApCommon.Payment
                     RsvNo = rsvNo,
                     StatusCd = TransferConfirmationReportStatusCd.Mnemonic(status)
                 });
+            }
+        }
+
+        public List<SavedCreditCard> GetSavedCreditCards(string email)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var savedCards = GetSavedCreditCardByEmailQuery.GetInstance().Execute(conn, new {Email = email});
+                return savedCards.ToList();
+            }
+        }
+
+        public void SaveCreditCard(string email, string maskedCardNumber, string cardHolderName, string token, DateTime tokenExpiry)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var savedCard = GetSavedCreditCardQuery.GetInstance()
+                    .Execute(conn, new {Email = email, MaskedCardNumber = maskedCardNumber}).SingleOrDefault();
+                if (savedCard == null)
+                    SavedCreditCardTableRepo.GetInstance().Insert(conn, new SavedCreditCardTableRecord
+                    {
+                        Email = email,
+                        MaskedCardNumber = maskedCardNumber,
+                        CardHolderName = cardHolderName,
+                        Token = token,
+                        TokenExpiry = tokenExpiry
+                    });
+                else
+                    SavedCreditCardTableRepo.GetInstance().Update(conn, new SavedCreditCardTableRecord
+                    {
+                        Email = email,
+                        MaskedCardNumber = maskedCardNumber,
+                        Token = token,
+                        TokenExpiry = tokenExpiry
+                    });
             }
         }
 

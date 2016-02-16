@@ -70,6 +70,7 @@ img {max-width:100%;}
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {-webkit-appearance:none;-moz-appearance:none; margin:0;}
 
 input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea {@include border-radius($border-radius-default);}
+.form-control {@include border-radius($border-radius-default)}
 
 // *****
 // site header
@@ -229,7 +230,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .overlay {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:1000; background:#fff; padding-top:$header-height; overflow:auto; @include transition($transition-default);
     .overlay__header {background:#878787; color:#fff; padding:18px; height:$header-height; position:fixed; z-index:1; top:0; left:0; width:100%; display:none;
         .overlay__title {margin:0;}
-        .overlay__close {float:right;}
+        .overlay__close {float:right; font-size:19px;}
     }
     .overlay__content, .overlay__body {background:#fff; min-height:100%; padding:12px; /*padding-bottom:$header-height;*/}
     .overlay__footer {position:fixed; width:100%; bottom:0; left:0; background:#616161; padding:12px; color:#fff; height:$header-height; display:none;}
@@ -247,34 +248,97 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // overlay flight form
 .overlay.overlay--flight-form {
     form {
-        .flight-trip {display:inline-block; padding:10px; background:#fff; color:#000;
+        .flight-trip {display:inline-block; padding:10px; background:#fff; color:#000; font-size:13px; width:50px; text-align:center;
             &.active {background:#0c7399; color:#fff;}
         }
-        .form-origin-wrapper {position:relative;
-            input[type="text"] {padding:20px; padding-left:40px;}
+        .form-origin {position:relative; padding:11px 20px; padding-left:50px; height:40px; font-size:13px;
             &:before {content:''; display:block; position:absolute; width:22px; height:20px; background-image:url(/Assets/images/flight-review-title-sprite.png); left:10px; top:10px;}
         }
-        .form-destination-wrapper {@extend & .form-origin-wrapper;
+        .form-destination {@extend & .form-origin;
             &:before {background-position:-22px 0;}
         }
-        .form-date-wrapper {@extend & .form-origin-wrapper;
+        .form-date {@extend & .form-origin;
             &:before {background-image:url(/Assets/images/cal-bg.png); background-size:contain; width:25px; height:25px; top:8px;}
         }
-        .form-adult {}
-        .form-children {}
-        .form-infant {}
+        .form-adult {position:relative; padding:10px 20px; padding-left:45px; text-align:center; height:40px; font-size:14px;
+            &:before {content:""; display:block; width:22px; height:31px; background:url(/Assets/mobile/images/passenger-sprite.png); top:5px; left:10px; position:absolute;}
+        }
+        .form-children {@extend & .form-adult;
+            &:before {background-position:-22px 0;}
+        }
+        .form-infant {@extend &.form-adult;
+            &:before {background-position:-44px 0;}
+        }
+    }
+}
+
+// overlay flight filter
+.overlay.overlay--flight-filter {
+    .overlay__content {background:#878787; color:#fff;}
+}
+
+// overlay flight sort
+.overlay.overlay--flight-sort {
+    .overlay__content {background:#878787; color:#fff;}
+}
+
+// overlay airport select
+.overlay.overlay--airport-select {
+    .overlay__content {padding:0;
+        h4 {padding-left:18px;}
+        ul {margin:0; padding:0;
+            li {
+                a {display:block; padding:10px 18px; color:#111;}
+                &+li {border-top:$border-default;}
+            }
+        }
+    }
+}
+
+// overlay passenger selector
+.overlay.overlay--passenger-selector {background:#616161;
+    .overlay__content {background:#616161; color:#fff; padding:0;
+        .passenger-selector__header {
+            ul {margin:0; padding:0;
+                li {display:block; width:33.333333334%; height:50px; float:left;
+                    &+li a {border-left:$border-default;}
+                    a {position:relative; display:block; width:100%; height:100%; background:#9d9d9d;
+                        &:before {width:22px; height:30px; background:url(/assets/mobile/images/passenger-sprite-white.png); background-repeat:no-repeat; display:block; position:absolute; content:''; top:10px; left:50%; margin-left:-11px;}
+                        &.active {background:#616161;}
+                        &.adult:before {background-position:0 0;}
+                        &.children:before {background-position:-22px 0;}
+                        &.infant:before {background-position:-44px 0;} 
+                    }
+                }
+            }
+        }
+        .passenger-selector__body {width:200px; margin-left:auto; margin-right:auto;
+            .selected {text-align:center; border-bottom:3px solid #fff; margin-bottom:15px;
+                .number {display:inline-block; font-size:72px; font-weight:bold;}
+                .description {display:inline-block; text-align:left; padding-left:5px;
+                    b {font-size:16px;}
+                }
+            }
+            .selector {
+                a, span {display:block; float:left; background:#ffd632; color:#616161; font-weight:bold; width:60px; height:60px; text-align:center; padding-top:10px; font-size:27px; margin-bottom:10px; margin-left:10px;
+                    &:nth-child(3n+1) {margin-left:0;}
+                    &.disabled {opacity:0.5;}
+                }
+            }
+        }
     }
 }
 
 // *****
 // datepicker on overlay
-.overlay.datepicker {
-    .overlay__body {background:#616161; color:#fff;
+.overlay.overlay--datepicker {
+    .overlay__content {background:#616161; color:#fff;
         a {color:#fff;}
         select {color:#000; font-size:14px; margin-left:5px;}
     }
     .ui-datepicker {
-        .ui-datepicker-header {text-align:center; position:relative; padding-top:20px; height:50px;
+        .ui-datepicker-header {text-align:center; position:relative; padding-top:20px; height:50px; color:$color-main-blue; font-size:22px;
+            .ui-datepicker-month {font-weight:bold; text-transform:uppercase;}
             .ui-datepicker-prev {position:absolute; left:0; width:25px; height:25px; background-image:url(/Assets/mobile/images/ui-calendar-nav.png); background-repeat:no-repeat; background-position:-30px 0; background-size:200%;}
             .ui-datepicker-next {@extend & .ui-datepicker-prev; left:auto; right:0; background-position:0 0;}
             &:after, &:before {@include clearfix();}
@@ -282,8 +346,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
         .ui-datepicker-calendar {width:100%; max-width:280px; margin-left:auto; margin-right:auto;
             .ui-state-disabled {opacity:0.3;}
-            .ui-datepicker-current-day {background:#fff;
-                a, span {color:#333;}
+            .ui-datepicker-week-end {
+                a, span {color:#e3ae22;}
+            }
+            .ui-datepicker-current-day {background:#e3ae22;
+                a, span {color:#fff;}
             }
             thead {
                 tr {

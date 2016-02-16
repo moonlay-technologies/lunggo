@@ -35,6 +35,7 @@ app.controller('checkoutController', [
         ];
 
         $scope.CreditCard = {
+            TwoClickToken: 'false',
             Name: '',
             Month: '01',
             Year: 2016,
@@ -111,16 +112,28 @@ app.controller('checkoutController', [
                     Veritrans.url = VeritransTokenConfig.Url;
                     Veritrans.client_key = VeritransTokenConfig.ClientKey;
                     var card = function () {
-                        return {
-                            'card_number': $scope.CreditCard.Number,
-                            'card_exp_month': $scope.CreditCard.Month,
-                            'card_exp_year': $scope.CreditCard.Year,
-                            'card_cvv': $scope.CreditCard.Cvv,
+                        if ($scope.CreditCard.TwoClickToken == 'false') {
+                            return {
+                                'card_number': $scope.CreditCard.Number,
+                                'card_exp_month': $scope.CreditCard.Month,
+                                'card_exp_year': $scope.CreditCard.Year,
+                                'card_cvv': $scope.CreditCard.Cvv,
 
-                            // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
-                            'secure': true,
-                            'bank': 'mandiri',
-                            'gross_amount': $scope.initialPrice - $scope.VisaPromo.Amount - $scope.voucher.amount
+                                // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
+                                'secure': true,
+                                'bank': 'mandiri',
+                                'gross_amount': $scope.initialPrice - $scope.VisaPromo.Amount - $scope.voucher.amount
+                            }
+                        } else {
+                            return {
+                                'card_cvv': $scope.CreditCard.Cvv,
+                                'token_id': $scope.CreditCard.TwoClickToken,
+
+                                'two_click': true,
+                                'secure': true,
+                                'bank': 'mandiri',
+                                'gross_amount': $scope.initialPrice - $scope.VisaPromo.Amount - $scope.voucher.amount
+                            }
                         }
                     };
 
@@ -181,7 +194,7 @@ app.controller('checkoutController', [
                 $scope.book.booking = true; 
 
                 // generate data
-                $scope.book.postData = ' "Payment.Data.Data0" : "'+$scope.CreditCard.Token+'", "Token":"'+$scope.token+'", "Payment.Currency":"'+$scope.currency+'", "DiscountCode":"'+$scope.voucher.confirmedCode+'", "Payment.Method":"'+$scope.paymentMethod+'", "Contact.Title" :"'+$scope.buyerInfo.title+'","Contact.Name":"'+$scope.buyerInfo.fullname+'", "Contact.CountryCode":"'+$scope.buyerInfo.countryCode+'", "Contact.Phone":"'+$scope.buyerInfo.phone+'","Contact.Email":"'+$scope.buyerInfo.email+'","Language":"'+$scope.language+'"';
+                $scope.book.postData = ' "Payment.Data.Data0" : "'+$scope.CreditCard.Token+ '", "Payment.Data.Data1" : "' +$scope.CreditCard.Name+ '", "Payment.Data.Data20" : "' +$scope.loggedIn+ '", "Payment.Data.Data9" : "' +$scope.buyerInfo.email+'", "Token":"'+$scope.token+'", "Payment.Currency":"'+$scope.currency+'", "DiscountCode":"'+$scope.voucher.confirmedCode+'", "Payment.Method":"'+$scope.paymentMethod+'", "Contact.Title" :"'+$scope.buyerInfo.title+'","Contact.Name":"'+$scope.buyerInfo.fullname+'", "Contact.CountryCode":"'+$scope.buyerInfo.countryCode+'", "Contact.Phone":"'+$scope.buyerInfo.phone+'","Contact.Email":"'+$scope.buyerInfo.email+'","Language":"'+$scope.language+'"';
                 for (var i = 0; i < $scope.passengers.length; i++) {
 
                     // check nationality

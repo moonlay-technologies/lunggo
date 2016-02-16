@@ -159,7 +159,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
         // widget voucher
         &.voucher {
             .widget-content {padding:12px;}
-            .bg-danger {padding:6px; margin-top:6px;}
+            .bg-danger, .bg-success {padding:6px; margin-top:6px;}
         }
 
         // widget airline
