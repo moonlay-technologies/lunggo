@@ -247,7 +247,6 @@
     <Compile Include="Flight\Database\Query\UpdatePaymentQuery.cs" />
     <Compile Include="Flight\Model\TopDestination.cs" />
     <Compile Include="Flight\Service\Select.cs" />
-    <Compile Include="Flight\Service\Bundle.cs" />
     <Compile Include="Flight\Service\Discount.cs" />
     <Compile Include="Flight\Service\SendToCustomer.cs" />
     <Compile Include="Flight\Service\Reservations.cs" />

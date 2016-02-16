@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Model;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -33,6 +35,35 @@ namespace Lunggo.ApCommon.Flight.Service
                 var token = SaveItineraryFromSearchToCache(searchId, registerNumbers[0]);
                 return token;
             }
+        }
+
+        public string BundleFlight(List<string> tokens)
+        {
+            var itins = tokens.Select(GetItineraryFromCache).ToList();
+            var itinBundle = BundleItineraries(itins);
+            var newToken = SaveItinerarySetAndBundleToCache(itins, itinBundle);
+            return newToken;
+        }
+
+        internal FlightItinerary BundleItineraries(List<FlightItinerary> itins)
+        {
+            var itin = new FlightItinerary
+            {
+                AdultCount = itins[0].AdultCount,
+                ChildCount = itins[0].ChildCount,
+                InfantCount = itins[0].InfantCount,
+                RequestedCabinClass = itins[0].RequestedCabinClass,
+                CanHold = itins.TrueForAll(i => i.CanHold),
+                FinalIdrPrice = itins.Sum(i => i.FinalIdrPrice),
+                RequireBirthDate = itins.Any(i => i.RequireBirthDate),
+                RequirePassport = itins.Any(i => i.RequirePassport),
+                RequireSameCheckIn = itins.Any(i => i.RequireSameCheckIn),
+                RequireNationality = itins.Any(i => i.RequireNationality),
+                LocalPrice = itins.Sum(i => i.LocalPrice),
+                Trips =
+                    itins.SelectMany(i => i.Trips).OrderBy(t => t.Segments[0].DepartureTime).ToList()
+            };
+            return itin;
         }
     }
 }
