@@ -33,15 +33,27 @@ namespace Lunggo.WebAPI.ApiSrc.v1.PriceIdentifier
         [HttpGet]
         [LunggoCorsPolicy]
         [Route("api/v1/saveprice")]
-        public SavePriceApiResponse SaveUniquePrice([FromUri] decimal finalprice)
+        public SavePriceApiResponse SaveUniquePrice([FromUri] decimal finalPrice)
         {
 
-            TransferIdentifierService.GetInstance().SavePrice(finalprice);
-            return new SavePriceApiResponse
+            bool isSaved = TransferIdentifierService.GetInstance().SavePrice(finalPrice);
+            if (isSaved)
             {
-                StatusCode = HttpStatusCode.OK,
-                StatusMessage = "The Final Price is successfully saved"
-            };
+                return new SavePriceApiResponse
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    StatusMessage = "The Final Price is successfully saved"
+                };
+            }
+            else 
+            {
+                return new SavePriceApiResponse 
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    StatusMessage = "Failed to Save"
+                };
+            }
+            
         }
     }
 }

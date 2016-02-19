@@ -18,6 +18,7 @@ namespace Lunggo.Webjob.BankTransferChecking
         private static string _companyId;
         private static string _userName;
         private static string _password;
+        private static string bankAccountNumber;
         private MandiriClientHandler()
         {
             
@@ -35,6 +36,7 @@ namespace Lunggo.Webjob.BankTransferChecking
                 _companyId = ConfigManager.GetInstance().GetConfigValue("mandiri", "webCompanyId");
                 _userName = ConfigManager.GetInstance().GetConfigValue("mandiri", "webUserName");
                 _password = ConfigManager.GetInstance().GetConfigValue("mandiri", "webPassword");
+                bankAccountNumber = ConfigManager.GetInstance().GetConfigValue("mandiri", "bankAccountNumber");
                 _isInitialized = true;
             }
         }
@@ -74,9 +76,13 @@ namespace Lunggo.Webjob.BankTransferChecking
                 var response = client.Execute(request);
                 var html = response.Content;
                 var searchedHtml = (CQ)html;
-                //bool status = true;
                 string data = searchedHtml[".top_box"].Text();
                 return data != "LOGIN" ? true : false;
        }
+
+        public string getBankAccount() 
+        {
+            return bankAccountNumber;
+        }
     }
 }

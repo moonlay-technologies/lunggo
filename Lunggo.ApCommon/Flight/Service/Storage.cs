@@ -27,10 +27,10 @@ namespace Lunggo.ApCommon.Flight.Service
         }
 
         /* Save Transaction Inquiry into Redis */
-        public void SaveTransacInquiryInCache(string MandiriCacheId, Dictionary<string,string> transaction,TimeSpan timeout)
+        public void SaveTransacInquiryInCache(string mandiriCacheId, List<KeyValuePair<string,string>> transaction,TimeSpan timeout)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "mandiriTransactionPrice:" + MandiriCacheId;
+            var redisKey = "mandiriTransactionPrice:" + mandiriCacheId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             foreach (var pair in transaction)
             {
@@ -40,17 +40,19 @@ namespace Lunggo.ApCommon.Flight.Service
 
         }
 
-        public Dictionary<string, string> GetTransacInquiryFromCache(string mandiricacheId)
+        public List<KeyValuePair<string,string>> GetTransacInquiryFromCache(string mandiriCacheId)
         {
             try
             {
+                List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
                 var redisService = RedisService.GetInstance();
-                var redisKey = "mandiriTransactionPrice:" + mandiricacheId;
+                var redisKey = "mandiriTransactionPrice:" + mandiriCacheId;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
                 var temp = redisDb.HashGetAll(redisKey).ToList();
                 if (temp.Count != 0)
                 {
-                    return temp.ToDictionary(hashEntry => (string)hashEntry.Name, hashEntry => (string)hashEntry.Value);
+                    //return temp.ToDictionary(hashEntry => (string)hashEntry.Name, hashEntry => (string)hashEntry.Value);
+                    return temp.Select(hashEntry=> new KeyValuePair<string,string>((string)hashEntry.Name,(string)hashEntry.Value)).ToList();
                 }
                 else
                 {
@@ -97,14 +99,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 var redisKey = "transferUniquePrice:" + price;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
                 var value = redisDb.StringGet(redisKey).ToString();
-                if (value != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return value != null ? true : false;
             }
             catch 
             {

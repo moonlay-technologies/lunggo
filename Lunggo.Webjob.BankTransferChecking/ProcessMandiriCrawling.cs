@@ -12,6 +12,7 @@ using Lunggo.Framework.Redis;
 using Lunggo.Framework.Database;
 using Lunggo.ApCommon.Constant;
 using Lunggo.Framework.Queue;
+using System.Globalization;
 
 namespace Lunggo.Webjob.BankTransferChecking
 {
@@ -19,28 +20,53 @@ namespace Lunggo.Webjob.BankTransferChecking
     {
         private static DateTime datenow = DateTime.Now.Date;//new DateTime(2016,1,8);//DateTime.Now.Date;
         private static DateTime prevDate = datenow.AddDays(-1);
-        private static string _day = datenow.Day.ToString();
-        private static string _month = datenow.Month.ToString();
-        private static string _year = datenow.Year.ToString();
-        private static string _prevDay = prevDate.Day.ToString();
-        private static string _prevMonth = prevDate.Month.ToString();
-        private static string _prevYear = prevDate.Year.ToString();
+        private static string _bankAccountNumber;
 
-        private static List<string> ProcessCrawl(RestClient client,string day, string month, string year) 
+        private static List<string> ProcessCrawl(RestClient client,DateTime transacDate) 
         {
+            
+            List<string> listCrawling = new List<string>();
+            int currentPage = 2;
+            
             GetTopRequest(client);  //Top Request
             MenuRequest(client); //Menu Request
             MainRequest(client); // Main Request
             BottomRequest(client); // Bottom Request
-            TransacInquiry(client); // TansacInquiry Form
+            TransacInquiry(client); // TransacInquiry Form
             ChooseAccount(client); //Choose Account
             
-            //Post Mutation
-            var textMutation = PostMutation(client, day, month, year);
+            //Do the First Page Crawling
+            var textMutation = PostMutation(client,transacDate);
+            listCrawling = GetTransactionList(textMutation); //Saving the data as a List
+            bool similarityData = false;
 
-            //Saving the data as a List
-            var listCrawling = GetTransactionList(textMutation);
+            //Do the second Page Crawling
+            var textPage = NextPageMutation(client, transacDate, currentPage);
+            var pageList = GetTransactionList(textPage);
+            currentPage += 1;
 
+            if (!(listCrawling.SequenceEqual(pageList)))
+            {
+                listCrawling = listCrawling.Concat(pageList).ToList();
+                do
+                {
+                    var textNextPage = NextPageMutation(client, transacDate, currentPage);
+                    var nextPageList = GetTransactionList(textNextPage);
+                    if (!(pageList.SequenceEqual(nextPageList)))
+                    {
+                        listCrawling = listCrawling.Concat(nextPageList).ToList();
+                        pageList = nextPageList.ToList();
+                        similarityData = false;
+                        currentPage++;
+                    }
+                    else 
+                    {
+                        Console.WriteLine("Data Duplicated");
+                        similarityData = true;
+                    }
+                } while (!similarityData);
+            }
+            
             //Logout
             Logout(client);
 
@@ -52,12 +78,11 @@ namespace Lunggo.Webjob.BankTransferChecking
             var searchedHtml = (CQ)html;
             //var data = searchedHtml[".clsEven"].Children().Elements.ToArray();//.Text().Trim().Replace("\r\n", "").Replace("\n", "").Replace("\r", "").Replace("\u0009", "").Replace(",", "").Split(' ');
             var data = searchedHtml[".clsFormTrxStatus"].Children().Children().Children().Elements.ToArray();
-            Console.WriteLine("DATA LENGTH : " + data.Length);
             List<string> listData = new List<string>();
             if (data.Length != 0)
             {
                 int count = 0;
-                int num1 = 7, num2 = 12; // 11 for debit(testing), 12 for credit
+                int num1 = 7, num2 = 12; //12 for credit
                 foreach (var print in data)
                 {
                     if (count > 6 && count < (data.Length - 11))
@@ -66,17 +91,14 @@ namespace Lunggo.Webjob.BankTransferChecking
                         {
                             var date = print.InnerText.Trim().Replace("\n", "").Replace("\u0009", "").Replace(",", "");
                             listData.Add(date);
-                            Debug.Print(date);
                             num1 += 7;
                         }
                         if (count == num2)
                         {
                             var price = print.InnerText.Trim().Replace("\n", "").Replace("\u0009", "").Replace(",", "");
                             listData.Add(price);
-                            Debug.Print(price);
                             num2 += 7;
                         }
-
                     }
                     count++;
                 }
@@ -86,7 +108,6 @@ namespace Lunggo.Webjob.BankTransferChecking
             {
                 return listData;
             }
-
         }
 
         /*[GET] Top Request(After Login)*/
@@ -180,29 +201,23 @@ namespace Lunggo.Webjob.BankTransferChecking
         }
 
         /*[POST] See Transaction Inquiry*/
-        private static string PostMutation(RestClient client, string day, string month, string year)
+        private static string PostMutation(RestClient client, DateTime transacDate)
         {
-            //if(trxfilter is %, it means credit and debit)
-            //1020006644014
-            //1020006644022
-            //1020006644030
-
-            //change url and post data for AccountNumber, Filter Category, and Set Value Date for Searcing
-            //change trxFilter with "credit" for production
-            var url = "/corp/front/transactioninquiry.do?action=doCheckValidityAndShow&day1="+day+"&mon1="+month+"&year1="+year +
-                "&day2=" + day + "&mon2=" + month + "&year2=" + year + "&accountNumber=1020006644014&type=show&accountNumber=1020006644014" +
-                "&accountType=S&frOrganizationUnitNm=&currDisplay=IDR&day1="+day+"&mon1="+month+"&year1="+year+"&day2="+day+"&mon2="+month+"&year2="+year+"&trxFilter=credit";
+            var url = "/corp/front/transactioninquiry.do?action=doCheckValidityAndShow&day1="+transacDate.Day+"&mon1="+transacDate.Month+"&year1="+transacDate.Year +
+                "&day2=" + transacDate.Day + "&mon2=" + transacDate.Month + "&year2=" + transacDate.Year + "&accountNumber=" + _bankAccountNumber + "&type=show&accountNumber=" + _bankAccountNumber +
+                "&accountType=S&frOrganizationUnitNm=&currDisplay=IDR&day1=" + transacDate.Day + "&mon1="+transacDate.Month+"&year1="+transacDate.Year +
+                "&day2="+transacDate.Day+"&mon2="+transacDate.Month+"&year2="+transacDate.Year+"&trxFilter=credit";
             var request = new RestRequest(url, Method.POST);
-            var postData = @"transferDateDay1="+day+
-                           @"&transferDateMonth1="+ month +
-                           @"&transferDateYear1="+ year +
-                           @"&transferDateDay2="+ day +
-                           @"&transferDateMonth2="+ month +
-                           @"&transferDateYear2="+ year +
+            var postData = @"transferDateDay1=" +transacDate.Day +
+                           @"&transferDateMonth1=" + transacDate.Month +
+                           @"&transferDateYear1=" + transacDate.Year +
+                           @"&transferDateDay2=" + transacDate.Day +
+                           @"&transferDateMonth2=" + transacDate.Month +
+                           @"&transferDateYear2=" + transacDate.Year +
                            @"&transactionType=%25" +
                            @"&accountType=S" +
-                           @"&accountDisplay=1020006644014" +
-                           @"&accountNumber=1020006644014" +
+                           @"&accountDisplay=" + _bankAccountNumber +
+                           @"&accountNumber=" + _bankAccountNumber +
                            @"&accountNm=TRAVEL+MADEZY+INTERN" +
                            @"&currDisplay=IDR" + 
                            @"&curr=IDR" +
@@ -236,6 +251,52 @@ namespace Lunggo.Webjob.BankTransferChecking
             {
                 return null;
             }
+        }
+
+        private static string NextPageMutation(RestClient client, DateTime transacDate, int currentPage)
+        {
+            var url = "/corp/front/transactioninquiry.do?action=doCheckValidityAndShow&type=show&accountNumber=" + _bankAccountNumber +
+                "&accountType=S&frOrganizationUnitNm=KC%20Jkt%20Sudirman&currDisplay=IDR&day1=" + transacDate.Day + "&mon1=" + transacDate.Month +
+                "&year1=" + transacDate.Year + "&day2=" + transacDate.Day + "&mon2=" + transacDate.Month + "&year2=" + transacDate.Year +
+                "&trxFilter=credit&pagingFlag=Y HTTP/1.1";
+            var request = new RestRequest(url, Method.POST);
+            var postData = @"valuePage=1&customFile=+" +
+                           @"&accountNm=" + _bankAccountNumber + "+-+TRAVEL+MADEZY+INTERN" +
+                           @"&currencyReport=IDR" +
+                           @"&branch=KC+Jkt+Sudirman"+
+                           @"&periodFrom=" + transacDate.Day + "+" + transacDate.Month.ToString("MMMM", CultureInfo.InvariantCulture) + "+" + transacDate.Year + // NAMA MONTH BISA JADI  MASALAH JUGA
+                           @"&periodTo=" + transacDate.Day + "+" + transacDate.Month.ToString("MMMM", CultureInfo.InvariantCulture) + "+" + transacDate.Year +
+                           @"&screenState=TRX_DATE" + 
+                           @"&accountHierarchy=+&accountType=S&processAccountIndividually=" + 
+                           @"&transferDateDay1=" + transacDate.Day +
+                           @"&transferDateMonth1=" + transacDate.Month +
+                           @"&transferDateYear1=" + transacDate.Year + 
+                           @"&transferDateDay2="+ transacDate.Day +
+                           @"&transferDateMonth2=" + transacDate.Month +
+                           @"&transferDateYear2=" + transacDate.Year +
+                           @"&transactionType=%25"+
+                           @"&currentPage="+currentPage +"&totalPage="+ (currentPage+1) + //BISA JADI DISASTER
+                           @"&accountNumber=" + _bankAccountNumber +
+                           @"&accountTypeCode=S&frOrganizationUnitNm=KC+Jkt+Sudirman"+
+                           @"&currDisplay=IDR&checkDate=Y&timeLength=31"+ 
+                           @"&balanceInquiryFlag=&balanceInquirySingleFlag=&balanceInquiryGroupBy=" +
+                           @"&balanceInquiryHierarchy=&balanceInquirySelectedBy="+
+                           @"&balanceInquiryIsShowDate=&corpName=TRAVEL+MADEZY+INTERNASIONAL";
+
+            client.AddDefaultHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+            client.AddDefaultHeader("Accept-Encoding", "gzip, deflate");
+            client.AddDefaultHeader("Accept-Language", "en-US,en;q=0.8");
+            client.UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
+            request.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+            request.AddHeader("Origin", "https://mcm.bankmandiri.co.id");
+            request.AddHeader("Referer", "https://mcm.bankmandiri.co.id/corp/front/transactioninquiry.do?action=doCheckValidityAndShow&day1=" +
+                transacDate.Day+"&mon1="+transacDate.Month+"&year1="+transacDate.Year + "&day2="+transacDate.Day+"&mon2="+transacDate.Month+"&year2="+transacDate.Year +
+                "&accountNumber=" + _bankAccountNumber + "&type=show&accountNumber=" + _bankAccountNumber + "&accountType=S&frOrganizationUnitNm=&currDisplay=IDR" + 
+                "&day1="+transacDate.Day+"&mon1="+transacDate.Month+"&year1="+transacDate.Year+"&day2="+transacDate.Day+"&mon2="+transacDate.Month+"&year2="+transacDate.Year+"&trxFilter=credit");
+            var response = client.Execute(request);
+            string html = response.Content;
+
+            return html;
         }
 
         /*[GET] Logout*/
