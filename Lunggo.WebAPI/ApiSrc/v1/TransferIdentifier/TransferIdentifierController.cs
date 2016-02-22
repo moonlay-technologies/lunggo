@@ -30,7 +30,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.PriceIdentifier
             };
         }
 
-        [HttpGet]
+       /* [HttpGet]
         [LunggoCorsPolicy]
         [Route("api/v1/saveprice")]
         public SavePriceApiResponse SaveUniquePrice([FromUri] decimal finalPrice)
@@ -54,6 +54,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.PriceIdentifier
                 };
             }
             
-        }
+        }*/
     }
 }
