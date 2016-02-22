@@ -4,6 +4,6 @@
   "startTime": "2016-02-02T10:30:00+07:00",
   "endTime": null,
   "jobRecurrenceFrequency": "Minute",
-  "interval": 5,
+  "interval": 3,
   "runMode": "Scheduled"
 }
