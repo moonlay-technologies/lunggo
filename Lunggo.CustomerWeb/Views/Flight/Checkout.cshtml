@@ -709,7 +709,8 @@
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
-                                            <dd>Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount - TransferConfig.UniqueCode | number}}</dd>
+                                            <dd ng-if="paymentMethod != '@PaymentMethod.BankTransfer'">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount | number}}</dd>
+                                            <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount - TransferConfig.UniqueCode | number}}</dd>
                                         </dl>
                                     </div>
                                     <footer>
