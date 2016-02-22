@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.Cors;
 using Lunggo.Framework.Extension;
@@ -16,18 +18,28 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
     {
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("v1/flights/{SearchId}")]
-        public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, [FromUri] FlightSearchApiRequest request)
+        [Route("v1/flights/{searchId}")]
+        public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, string searchId, string requests)
         {
+            var request = new FlightSearchApiRequest
+            {
+                SearchId = searchId,
+                Requests = (List<int>)new ListConverter<int>().ConvertFrom(requests)
+            };
             var apiResponse = FlightLogic.SearchFlights(request);
             return apiResponse;
         }
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("v1/flights/{SearchId}/revalidate")]
-        public FlightRevalidateApiResponse RevalidateFlight(HttpRequestMessage httpRequest, [FromUri] FlightRevalidateApiRequest request)
+        [Route("v1/flights/{searchId}/revalidate")]
+        public FlightRevalidateApiResponse RevalidateFlight(HttpRequestMessage httpRequest, string searchId, string registers)
         {
+            var request = new FlightRevalidateApiRequest
+            {
+                SearchId = searchId,
+                ItinIndices = (List<int>)new ListConverter<int>().ConvertFrom(registers)
+            };
             var apiResponse = FlightLogic.RevalidateFlight(request);
             return apiResponse;
         }

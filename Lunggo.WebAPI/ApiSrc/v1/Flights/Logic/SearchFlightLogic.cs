@@ -19,7 +19,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 var searchServiceRequest = PreprocessServiceRequest(request);
                 var searchServiceResponse = FlightService.GetInstance().SearchFlight(searchServiceRequest);
                 var apiResponse = AssembleApiResponse(searchServiceResponse, request);
-                return apiResponse;
+                return apiResponse; 
             }
             else
             {
@@ -40,11 +40,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static bool IsValid(FlightSearchApiRequest request)
         {
-            if (!FlightService.GetInstance().IsSearchIdValid(request.SearchId))
-                return false;
-            var splittedRequests = request.Requests.Split(',');
-            int x;
-            return splittedRequests.All(req => int.TryParse(req, out x));
+            return FlightService.GetInstance().IsSearchIdValid(request.SearchId);
         }
 
         private static FlightSearchApiResponse AssembleApiResponse(SearchFlightOutput searchServiceResponse, FlightSearchApiRequest request)
@@ -56,7 +52,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 FlightList = searchServiceResponse.Itineraries,
                 TotalFlightCount = searchServiceResponse.Itineraries.Count,
                 ReturnFlightList = searchServiceResponse.ReturnItineraries,
-                TotalReturnFlightCount = searchServiceResponse.ReturnItineraries.Count,
+                TotalReturnFlightCount = searchServiceResponse.ReturnItineraries == null ? null : (int?) searchServiceResponse.ReturnItineraries.Count,
                 ExpiryTime = searchServiceResponse.ExpiryTime,
                 GrantedRequests = searchServiceResponse.SearchedSuppliers,
                 MaxRequest = searchServiceResponse.TotalSupplier,
@@ -68,12 +64,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static SearchFlightInput PreprocessServiceRequest(FlightSearchApiRequest request)
         {
-            var supplierIds = request.Requests.Split(',').Select(int.Parse).ToList();
+            var supplierIds = request.Requests;
             var searchServiceRequest = new SearchFlightInput
             {
                 SearchId = request.SearchId,
-                RequestedSupplierIds = supplierIds,
-                RequestId = request.SecureCode
+                RequestedSupplierIds = supplierIds
             };
             return searchServiceRequest;
         }

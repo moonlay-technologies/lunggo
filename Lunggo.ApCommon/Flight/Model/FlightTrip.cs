@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class FlightTrip : FlightTripBase
     {
-        
+
     }
 
     public class FlightTripBase
@@ -33,11 +33,11 @@ namespace Lunggo.ApCommon.Flight.Model
             if (OriginAirport != otherTrip.OriginAirport ||
                 DestinationAirport != otherTrip.DestinationAirport ||
                 DepartureDate != otherTrip.DepartureDate ||
-                Segments == null || 
+                Segments == null ||
                 otherTrip.Segments == null ||
                 Segments.Count != otherTrip.Segments.Count)
                 return false;
-            for (var i = 0; i< Segments.Count; i++)
+            for (var i = 0; i < Segments.Count; i++)
             {
                 var segment = Segments[i];
                 var otherSegment = otherTrip.Segments[i];
@@ -71,5 +71,5 @@ namespace Lunggo.ApCommon.Flight.Model
         public TimeSpan Duration { get; set; }
     }
 
-    
+
 }

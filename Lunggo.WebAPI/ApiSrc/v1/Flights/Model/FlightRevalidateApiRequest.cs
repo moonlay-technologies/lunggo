@@ -9,7 +9,5 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public string SearchId { get; set; }
         [JsonProperty("registers")]
         public List<int> ItinIndices { get; set; }
-        [JsonProperty("secure_code")]
-        public string SecureCode { get; set; }
     }
 }

@@ -94,7 +94,8 @@ namespace Lunggo.ApCommon.Flight.Service
         private static void SaveSearchedItinerariesToCache(List<FlightItinerary> itineraryList, List<FlightItinerary> returnItineraryList, List<FlightItinerary> bundledItineraryList, string searchId, int timeout, int supplierIndex)
         {
             var sequenceNo = 0;
-            itineraryList.ForEach(itin => itin.RegisterNumber = (supplierIndex * 333) + sequenceNo);
+            itineraryList.ForEach(itin => itin.RegisterNumber = (supplierIndex * 333) + sequenceNo++);
+            sequenceNo = 0;
             returnItineraryList.ForEach(itin => itin.RegisterNumber = (supplierIndex * 333) + sequenceNo++);
 
             if (timeout == 0)
@@ -199,7 +200,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     var depItins = cacheObject.DeconvertTo<List<FlightItinerary>>();
                     var retItins = cacheObjectReturn.DeconvertTo<List<FlightItinerary>>();
-                    var itinsList = new List<List<FlightItinerary>> {depItins, retItins};
+                    var bunItins = cacheObjectBundled.DeconvertTo<List<FlightItinerary>>();
+                    var itinsList = new List<List<FlightItinerary>> {bunItins, depItins, retItins};
                     searchedSupplierItins.Add(supplierId, itinsList);
                 }
             }
@@ -462,9 +464,9 @@ namespace Lunggo.ApCommon.Flight.Service
             return (bool?)redisDb.StringGet(redisKey);
         }
 
-        public void SaveFlightRequestPrices(string requestId, string searchId, List<FlightItinerary> itins, int itinSetNo = 0)
+        public void SaveFlightRequestPrices(string searchId, List<FlightItinerary> itins, int itinSetNo = 0)
         {
-            var cacheContent = GetFlightRequestPrices(requestId, searchId).ToDictionary(e => e.Key, e => e.Value);
+            var cacheContent = GetFlightRequestPrices(searchId).ToDictionary(e => e.Key, e => e.Value);
             itins.ForEach(itin =>
             {
                 try
@@ -475,16 +477,16 @@ namespace Lunggo.ApCommon.Flight.Service
             });
 
             var redisService = RedisService.GetInstance();
-            var redisKey = "flightRequestPrices:" + searchId + ":" + requestId + ":" + itinSetNo;
+            var redisKey = "flightRequestPrices:" + searchId + ":" + itinSetNo;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var timeout = Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
             redisDb.StringSet(redisKey, cacheContent.ToCacheObject(), new TimeSpan(0, 2 * timeout, 0));
         }
 
-        public Dictionary<int, decimal> GetFlightRequestPrices(string requestId, string searchId, int itinSetNo = 0)
+        public Dictionary<int, decimal> GetFlightRequestPrices(string searchId, int itinSetNo = 0)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "flightRequestPrices:" + searchId + ":" + requestId + ":" + itinSetNo;
+            var redisKey = "flightRequestPrices:" + searchId + ":" + itinSetNo;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cache = redisDb.StringGet(redisKey);
             return cache.IsNull ? new Dictionary<int, decimal>() : cache.DeconvertTo<Dictionary<int, decimal>>();

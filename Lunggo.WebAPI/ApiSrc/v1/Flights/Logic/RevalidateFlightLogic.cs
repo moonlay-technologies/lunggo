@@ -21,8 +21,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             return new RevalidateFlightInput
             {
                 SearchId = request.SearchId,
-                ItinIndices = request.ItinIndices,
-                RequestId = request.SecureCode
+                ItinIndices = request.ItinIndices
             };
         }
 

@@ -17,12 +17,18 @@ namespace Lunggo.ApCommon.Flight.Service
                 var retCombo = retItin.ComboSet;
                 if (depCombo != null && retCombo != null)
                 {
-                    var comboRegByDep = depCombo.BundledRegisterNumber[depCombo.PairRegisterNumber.IndexOf(registerNumbers[1])];
-                    var comboRegByRet = retCombo.BundledRegisterNumber[retCombo.PairRegisterNumber.IndexOf(registerNumbers[0])];
-                    if (comboRegByDep != -1 && comboRegByRet != -1 && comboRegByDep == comboRegByRet)
+                    var depBundleRegNoIdx = depCombo.PairRegisterNumber.IndexOf(registerNumbers[1]);
+                    var retBundleRegNoIdx = retCombo.PairRegisterNumber.IndexOf(registerNumbers[0]);
+                    if (depBundleRegNoIdx != -1 && retBundleRegNoIdx != -1)
                     {
-                        var token = SaveItineraryFromSearchToCache(searchId, comboRegByDep, 0);
-                        return token;
+                        var comboRegByDep = depCombo.BundledRegisterNumber[depBundleRegNoIdx];
+                        var comboRegByRet = retCombo.BundledRegisterNumber[retBundleRegNoIdx];
+                        if (comboRegByDep != -1 && comboRegByRet != -1 && comboRegByDep == comboRegByRet)
+                        {
+                            var token = SaveItineraryFromSearchToCache(searchId, comboRegByDep, 0);
+                            var newToken = BundleFlight(new List<string> {token});
+                            return newToken;
+                        }
                     }
                 }
                 var depToken = SaveItineraryFromSearchToCache(searchId, registerNumbers[0]);
@@ -33,7 +39,8 @@ namespace Lunggo.ApCommon.Flight.Service
             else
             {
                 var token = SaveItineraryFromSearchToCache(searchId, registerNumbers[0]);
-                return token;
+                var newToken = BundleFlight(new List<string> { token });
+                return newToken;
             }
         }
 

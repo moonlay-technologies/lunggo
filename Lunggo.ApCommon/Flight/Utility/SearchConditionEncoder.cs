@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 searchId.Append(trip.DestinationAirport);
                 searchId.Append(trip.DepartureDate.ToString("ddMMyy"));
                 if (trip != conditions.Trips.Last())
-                    searchId.Append(".");
+                    searchId.Append("~");
             }
             searchId.Append("-");
             searchId.Append(conditions.AdultCount.ToString(CultureInfo.InvariantCulture));
@@ -42,7 +42,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (isValid)
                 {
                     var conditions = new SearchFlightConditions();
-                    conditions.Trips = tripPart.Split('.').Select(info => new FlightTrip
+                    conditions.Trips = tripPart.Split('~').Select(info => new FlightTrip
                     {
                         OriginAirport = info.Substring(0, 3),
                         DestinationAirport = info.Substring(3, 3),

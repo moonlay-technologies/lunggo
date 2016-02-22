@@ -181,6 +181,7 @@
     <Compile Include="ApiSrc\v1\Flights\Logic\SearchFlightLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\RevalidateFlightLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\TopDestinations.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Model\ArrayHelper.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightIssueApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightIssueApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightBookApiRequest.cs" />

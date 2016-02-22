@@ -55,7 +55,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     TotalFare = itinerary.LocalPrice,
                     Trips = MapTrips(itinerary.Trips),
                     RegisterNumber = itinerary.RegisterNumber,
-                    OriginalFare = GenerateDummyOriginalFare(itinerary.LocalPrice)
+                    OriginalFare = GenerateDummyOriginalFare(itinerary.LocalPrice),
+                    ComboSet = itinerary.ComboSet
                 };
             }
             else

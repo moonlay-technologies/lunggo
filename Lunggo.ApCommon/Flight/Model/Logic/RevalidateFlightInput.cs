@@ -7,6 +7,5 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public string SearchId { get; set; }
         public List<int> ItinIndices { get; set; }
         public string Token { get; set; }
-        public string RequestId { get; set; }
     }
 }

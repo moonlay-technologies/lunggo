@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 
@@ -57,13 +58,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (output.Sets.TrueForAll(set => set.IsSuccess))
                 {
                     var newItins = output.Sets.Select(set => set.Itinerary).ToList();
-                    var asReturn = GetFlightRequestTripType(input.RequestId);
-                    if (asReturn == null)
-                        newItins = new List<FlightItinerary>();
-                    else
-                        newItins.ForEach(itin => itin.AsReturn = (bool)asReturn);
+                    var tripType = ParseTripType(input.SearchId);
+                    newItins.ForEach(itin => itin.AsReturn = tripType == TripType.Return);
                     AddPriceMargin(newItins);
-                    var searchedPrices = GetFlightRequestPrices(input.RequestId, input.SearchId);
+                    var searchedPrices = GetFlightRequestPrices(input.SearchId);
                     var itinsPriceDifference = newItins.Select(itin => itin.LocalPrice - searchedPrices[itin.RegisterNumber]);
                     if (IsItinBundleCacheId(input.Token))
                         SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.Token);

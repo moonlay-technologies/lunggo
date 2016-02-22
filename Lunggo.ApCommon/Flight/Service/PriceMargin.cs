@@ -24,24 +24,27 @@ namespace Lunggo.ApCommon.Flight.Service
 
         internal void AddPriceMargin(List<FlightItinerary> itins)
         {
+            if (!itins.Any())
+                return;
+
             var rules = GetAllActiveMarginRulesFromCache();
+            var currency = CurrencyService.GetInstance();
+            var supplierRate = currency.GetSupplierExchangeRate(itins[0].Supplier);
             foreach (var itin in itins)
             {
+                itin.SupplierRate = supplierRate;
+                itin.OriginalIdrPrice = itin.SupplierPrice * itin.SupplierRate;
                 AddPriceMargin(itin, rules);
+                itin.LocalCurrency = "IDR";
+                itin.LocalRate = 1;
+                itin.LocalPrice = itin.FinalIdrPrice * itin.LocalRate;
             }
         }
 
         internal void AddPriceMargin(FlightItinerary itin, List<MarginRule> rules)
         {
-            var currency = CurrencyService.GetInstance();
-            var rule = GetFirstMatchingRule(itin, rules);
-            
-            itin.SupplierRate = currency.GetSupplierExchangeRate(itin.Supplier);
-            itin.OriginalIdrPrice = itin.SupplierPrice * itin.SupplierRate;
+            var rule = GetFirstMatchingRule(itin, rules);   
             ApplyMarginRule(itin, rule);
-            itin.LocalCurrency = "IDR";
-            itin.LocalRate = 1;
-            itin.LocalPrice = itin.FinalIdrPrice * itin.LocalRate;
         }
 
         public MarginRule GetPriceMarginRule(long ruleId)
