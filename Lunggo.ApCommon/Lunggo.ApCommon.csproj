@@ -430,6 +430,7 @@
     </Compile>
     <Compile Include="Subscriber\Query\GetSubscriberRowQuery.cs" />
     <Compile Include="Subscriber\SubscriberEmailModel.cs" />
+    <Compile Include="TransferIdentifier\TransferIdentifierService.cs" />
     <Compile Include="Travolutionary\TravolutionaryPreBookCheckResponse.cs" />
     <Compile Include="Trie\TrieIndexService.cs" />
     <Compile Include="Trie\TrieNode.cs" />
