@@ -30,7 +30,7 @@ namespace Lunggo.ApCommon.TransferIdentifier
             }
         }
 
-        public int GetTransferIdentifier(decimal price) 
+        public int GetTransferIdentifier(decimal price, string token) 
         {
             bool isExist = true;
             Random rnd = new Random();
@@ -45,9 +45,16 @@ namespace Lunggo.ApCommon.TransferIdentifier
                 isExist = FlightService.GetInstance().isRedisExist(candidatePrice.ToString());
                 Debug.Print("Candidate Price : " + candidatePrice +" IsExist : "+isExist);
             } while (isExist);
-
-            FlightService.GetInstance().SaveUniquePriceinCache(candidatePrice.ToString());
-            Debug.Print("->Price : "+ candidatePrice.ToString());
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            dict.Add(token, uniqueId);
+            Debug.Print("->Price : " + candidatePrice.ToString());
+            FlightService.GetInstance().SaveUniquePriceinCache(candidatePrice.ToString(),dict);
+            var data = FlightService.GetInstance().GetUniquePriceFromCache(candidatePrice.ToString());
+            foreach (var print in data) 
+            {
+                Debug.Print("Token : " + print.Key);
+                Debug.Print("Unique Id : " + print.Value);
+            }
             return uniqueId;
         }
 

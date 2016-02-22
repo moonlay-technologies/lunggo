@@ -83,12 +83,40 @@ namespace Lunggo.ApCommon.Flight.Service
         }
 
         /*Redis Save Unique Price*/
-        public void SaveUniquePriceinCache(string price) 
+        public void SaveUniquePriceinCache(string price,Dictionary<string,int> dict) 
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "transferUniquePrice:" + price;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            redisDb.StringSet(redisKey,"inUsed", TimeSpan.FromMinutes(150));
+            foreach (var pair in dict) 
+            {
+                redisDb.HashSet(redisKey, (RedisValue)pair.Key, (RedisValue)pair.Value);
+            }
+            
+        }
+
+        public Dictionary<string, int> GetUniquePriceFromCache(string price)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = "transferUniquePrice:" + price;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var temp = redisDb.HashGetAll(redisKey).ToList();
+                if (temp.Count != 0)
+                {
+                    return temp.ToDictionary(hashEntry => (string)hashEntry.Name, hashEntry => (int)hashEntry.Value);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
         }
 
         public bool isRedisExist(string price) 
@@ -98,8 +126,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 var redisService = RedisService.GetInstance();
                 var redisKey = "transferUniquePrice:" + price;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                var value = redisDb.StringGet(redisKey).ToString();
-                return value != null ? true : false;
+                var value = redisDb.HashGetAll(redisKey).ToList();
+                return value.Count != 0 ? true : false;
             }
             catch 
             {
