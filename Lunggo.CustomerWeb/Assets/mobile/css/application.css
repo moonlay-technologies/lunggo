@@ -782,6 +782,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background: #ff9a24;
   color: #fff;
   padding: 5px; }
+  .page.page-flight .flight-notice p {
+    margin-bottom: 0; }
 
 .page.page-flight .flight-selection {
   background: #e5e3e4;

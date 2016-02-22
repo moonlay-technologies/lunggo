@@ -347,33 +347,15 @@ default:
                     <div class="summary__body">
                     
                         <ol>
-                            <li>
-                                <h4>Nyonya Shinta Tamara</h4>
+                            <li ng-repeat="Passenger in CheckoutConfig.Passengers">
+                                <h4>
+                                    <span ng-show="Passenger.Title == 0">Tuan</span>
+                                    <span ng-show="Passenger.Title == 1">Nyonya</span>
+                                    {{Passenger.FirstName}} {{Passenger.LastName}}
+                                </h4>
                                 <dl>
                                     <dt>Jenis Tiket</dt>
-                                    <dd>Dewasa</dd>
-                                </dl>
-                                <dl>
-                                    <dt>Tanggal Lahir</dt>
-                                    <dd>03 / 04 / 90</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <h4>Nyonya Shinta Tamara</h4>
-                                <dl>
-                                    <dt>Jenis Tiket</dt>
-                                    <dd>Dewasa</dd>
-                                </dl>
-                                <dl>
-                                    <dt>Tanggal Lahir</dt>
-                                    <dd>03 / 04 / 90</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <h4>Nyonya Shinta Tamara</h4>
-                                <dl>
-                                    <dt>Jenis Tiket</dt>
-                                    <dd>Dewasa</dd>
+                                    <dd>{{Passenger.typeName}}</dd>
                                 </dl>
                                 <dl>
                                     <dt>Tanggal Lahir</dt>
