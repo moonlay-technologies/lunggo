@@ -43,6 +43,35 @@ app.controller('checkoutController', [
             Number: ''
         };
 
+        $scope.TransferConfig = {
+            UniqueCode: 0,
+            GetUniqueCode: function (sentPrice) {
+                if (!sentPrice) {
+                    sentPrice = price ;
+                }
+
+                console.log(sentPrice);
+
+                // get unique payment code
+                $http({
+                    method: 'GET',
+                    url: TransferConfig.Url,
+                    params: {
+                        price : sentPrice
+                    }
+                }).then(function (returnData) {
+                    console.log('Getting Unique Payment Code');
+                    console.log(returnData);
+                    $scope.TransferConfig.UniqueCode = returnData.data.transfer_code;
+
+                }, function (returnData) {
+                    console.log('Failed to get Unique Payment Code');
+                    console.log(returnData);
+                });
+            }
+        };
+        $scope.TransferConfig.GetUniqueCode(price);
+
         $scope.currency = 'IDR';
         $scope.language = langCode;
         $scope.token = token;
@@ -84,6 +113,8 @@ app.controller('checkoutController', [
                         $scope.voucher.amount = returnData.data.Discount;
                         $scope.voucher.confirmedCode = $scope.voucher.code;
                         $scope.voucher.displayName = returnData.data.DisplayName;
+                        // get unique code for transfer payment
+                        $scope.TransferConfig.GetUniqueCode( $scope.initialPrice - $scope.voucher.amount );
                     }
                 }, function(returnData) {
                     $scope.voucher.checked = true;
@@ -95,6 +126,8 @@ app.controller('checkoutController', [
                 $scope.voucher.amount = 0;
                 $scope.voucher.confirmedCode = '';
                 $scope.voucher.checked = false;
+                // get unique code for transfer payment
+                $scope.TransferConfig.GetUniqueCode($scope.initialPrice);
             }
         };
 

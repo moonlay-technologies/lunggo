@@ -60,7 +60,7 @@ app.controller('singleFlightController', [
             var randomTime = (Math.random()) * 3000;
             $timeout(function () {
                 //console.log(delayTime);
-                if ($scope.flightRequest.FinalProgress < $scope.flightRequest.MaxProgress && $scope.flightRequest.FinalProgress <= 100) {
+                if ($scope.flightRequest.FinalProgress < ($scope.flightRequest.MaxProgress - 1) && $scope.flightRequest.FinalProgress <= 100) {
                     $scope.flightRequest.FinalProgress = $scope.flightRequest.FinalProgress + 1;
                     $scope.ProgressAnimation(randomTime);
                 }
