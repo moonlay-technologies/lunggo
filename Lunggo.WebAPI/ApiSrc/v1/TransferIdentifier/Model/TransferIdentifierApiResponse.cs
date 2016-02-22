@@ -15,5 +15,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.TransferIdentifier.Model
         public string StatusMessage{get;set;}
         [JsonProperty("transfer_code")]
         public int TransferCode { get; set; }
+        [JsonProperty("token")]
+        public string Token { get; set; }
+
     }
 }

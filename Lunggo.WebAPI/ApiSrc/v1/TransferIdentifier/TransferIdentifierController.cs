@@ -20,13 +20,17 @@ namespace Lunggo.WebAPI.ApiSrc.v1.PriceIdentifier
         [Route("api/v1/transferidentifier")]
         public TransferIdentifierApiResponse GetIdentifier([FromUri] decimal price)
         {
-           
-            var response = TransferIdentifierService.GetInstance().GetTransferIdentifier(price);
+
+            Guid generator;
+            // Create and display the value of two GUIDs.
+            generator = Guid.NewGuid();
+            var response = TransferIdentifierService.GetInstance().GetTransferIdentifier(price, generator.ToString());
             return new TransferIdentifierApiResponse
             {
                 StatusCode = HttpStatusCode.OK,
                 StatusMessage = "Generated Code Success",
-                TransferCode = response
+                TransferCode = response,
+                Token = generator.ToString()
             };
         }
 
