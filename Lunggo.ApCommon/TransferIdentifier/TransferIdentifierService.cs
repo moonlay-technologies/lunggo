@@ -41,7 +41,7 @@ namespace Lunggo.ApCommon.TransferIdentifier
             {
                 uniqueId = rnd.Next(1, 999);
                 Debug.Print("Generated Code : " + uniqueId);
-                candidatePrice = price + uniqueId;
+                candidatePrice = price - uniqueId;
                 isExist = FlightService.GetInstance().isRedisExist(candidatePrice.ToString());
                 Debug.Print("Candidate Price : " + candidatePrice +" IsExist : "+isExist);
             } while (isExist);
