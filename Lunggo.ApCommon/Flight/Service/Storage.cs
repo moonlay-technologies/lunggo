@@ -88,7 +88,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "transferUniquePrice:" + price;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            redisDb.StringSet(redisKey,"inUsed", TimeSpan.FromHours(2));
+            redisDb.StringSet(redisKey,"inUsed", TimeSpan.FromMinutes(150));
         }
 
         public bool isRedisExist(string price) 
