@@ -91,6 +91,7 @@ namespace Lunggo.ApCommon.Flight.Service
             foreach (var pair in dict) 
             {
                 redisDb.HashSet(redisKey, (RedisValue)pair.Key, (RedisValue)pair.Value);
+                redisDb.KeyExpire(redisKey, TimeSpan.FromMinutes(150));
             }
             
         }
