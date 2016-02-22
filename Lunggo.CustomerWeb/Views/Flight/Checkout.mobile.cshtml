@@ -170,10 +170,12 @@ default:
                             <div class="form-group important">
                                 <label class="control-label">Tanggal Lahir: </label>
                                 <div class="row">
-                                    <div class="col-xs-12">
-                                        <p class="form-control"></p>
-                                    </div>
                                     <!--
+                                        <div class="col-xs-12">
+                                            <p class="form-control"></p>
+                                        </div>
+                                        -->
+                                    
                                         <div class="col-xs-4">
                                             <select class="form-control" required name="passenger_{{$index}}_birthDate" ng-model="Passenger.Birth.Date" ng-change="ValidateBirthday(Passenger)">
                                                 <option value="1">1</option>
@@ -191,7 +193,6 @@ default:
                                                 <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.Birth.Year">{{year}}</option>
                                             </select>
                                         </div>
-                                    -->
                                 </div>
                             </div>
                             <!-- passenger birth date end-->
@@ -259,7 +260,7 @@ default:
                             <label>
                                 <header>
                                     <div class="input-wrapper">
-                                        <input type="radio" name="paymentMethod" value="BankTransfer" checked />
+                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer" checked />
                                     </div>
                                     <h5>Bank Transfer</h5>
                                 </header>
@@ -270,7 +271,7 @@ default:
                             <label>
                                 <header>
                                     <div class="input-wrapper">
-                                        <input type="radio" name="paymentMethod" value="Credit Card"/>
+                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard"/>
                                     </div>
                                     <h5>Kartu Kredit</h5>
                                 </header>
@@ -281,9 +282,9 @@ default:
                             <label>
                                 <header>
                                     <div class="input-wrapper">
-                                        <input type="radio" name="paymentMethod" value="VirtualAccount"/>
+                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount"/>
                                     </div>
-                                    <h5>Bank Transfer</h5>
+                                    <h5>Virtual Account</h5>
                                 </header>
                                 <section>
                                     <img src="/Assets/images/payment-atm.jpg" alt="Virtual Account" />
@@ -292,9 +293,9 @@ default:
                             <label>
                                 <header>
                                     <div class="input-wrapper">
-                                        <input type="radio" name="paymentMethod" value="MandiriClickpay"/>
+                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriClickPay"/>
                                     </div>
-                                    <h5>Bank Transfer</h5>
+                                    <h5>Mandiri ClickPay</h5>
                                 </header>
                                 <section>
                                     <img src="/Assets/images/payment-mandiri.jpg" alt="Bank Transfer" />
