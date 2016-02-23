@@ -34,44 +34,20 @@ namespace Lunggo.ApCommon.TransferIdentifier
         {
             bool isExist = true;
             Random rnd = new Random();
-            Debug.Print("Try to generate the Unique Id ");
             int uniqueId;
             decimal candidatePrice;
+            //Generate Unique Id
             do
             {
                 uniqueId = rnd.Next(1, 999);
-                Debug.Print("Generated Code : " + uniqueId);
                 candidatePrice = price - uniqueId;
                 isExist = FlightService.GetInstance().isRedisExist(candidatePrice.ToString());
-                Debug.Print("Candidate Price : " + candidatePrice +" IsExist : "+isExist);
             } while (isExist);
             Dictionary<string, int> dict = new Dictionary<string, int>();
             dict.Add(token, uniqueId);
-            Debug.Print("->Price : " + candidatePrice.ToString());
             FlightService.GetInstance().SaveUniquePriceinCache(candidatePrice.ToString(),dict);
             FlightService.GetInstance().SaveTokenTransferCodeinCache(token, uniqueId.ToString());
-            //for testing for getting transfer code by token
-            var transferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(token);
-            Debug.Print("Transfer Code dari Token : "+transferCode);
-            var data = FlightService.GetInstance().GetUniquePriceFromCache(candidatePrice.ToString());
-            foreach (var print in data) 
-            {
-                Debug.Print("Token : " + print.Key);
-                Debug.Print("Unique Id : " + print.Value);
-            }
-            var timelimit = FlightService.GetInstance().GetUniqueIdExpiry(candidatePrice.ToString());
-            Debug.Print("Waktu hidup di Redis : "+timelimit.ToString());
             return uniqueId;
         }
-
-        /*public bool SavePrice(decimal price) 
-        {
-            FlightService.GetInstance().SaveUniquePriceinCache(price.ToString());
-            //For testing, check if price is succesfully saved in redis
-            bool isExist = FlightService.GetInstance().isRedisExist(price.ToString());
-            Debug.Print("Successfully Saved : "+isExist);
-            return isExist;
-        }*/
-
     }
 }

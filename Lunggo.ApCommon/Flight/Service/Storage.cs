@@ -26,7 +26,6 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetDb.SavedPassengers(contactEmail);
         }
 
-        /* Save Transaction Inquiry into Redis */
         public void SaveTransacInquiryInCache(string mandiriCacheId, List<KeyValuePair<string,string>> transaction,TimeSpan timeout)
         {
             var redisService = RedisService.GetInstance();
@@ -82,7 +81,6 @@ namespace Lunggo.ApCommon.Flight.Service
             }                
         }
 
-        /*Redis Save Unique Price*/
         public void SaveUniquePriceinCache(string price,Dictionary<string,int> dict) 
         {
             var redisService = RedisService.GetInstance();
@@ -120,7 +118,6 @@ namespace Lunggo.ApCommon.Flight.Service
 
         }
 
-        /*AMBIL TIME LIMIT*/
         public TimeSpan GetUniqueIdExpiry(string key)
         {
             try
@@ -153,7 +150,6 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        /*Save Transfer Code Token*/
         public void SaveTokenTransferCodeinCache(string token, string transferCode)
         {
             var redisService = RedisService.GetInstance();
