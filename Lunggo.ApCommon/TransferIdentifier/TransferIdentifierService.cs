@@ -49,12 +49,18 @@ namespace Lunggo.ApCommon.TransferIdentifier
             dict.Add(token, uniqueId);
             Debug.Print("->Price : " + candidatePrice.ToString());
             FlightService.GetInstance().SaveUniquePriceinCache(candidatePrice.ToString(),dict);
+            FlightService.GetInstance().SaveTokenTransferCodeinCache(token, uniqueId.ToString());
+            //for testing for getting transfer code by token
+            var transferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(token);
+            Debug.Print("Transfer Code dari Token : "+transferCode);
             var data = FlightService.GetInstance().GetUniquePriceFromCache(candidatePrice.ToString());
             foreach (var print in data) 
             {
                 Debug.Print("Token : " + print.Key);
                 Debug.Print("Unique Id : " + print.Value);
             }
+            var timelimit = FlightService.GetInstance().GetUniqueIdExpiry(candidatePrice.ToString());
+            Debug.Print("Waktu hidup di Redis : "+timelimit.ToString());
             return uniqueId;
         }
 

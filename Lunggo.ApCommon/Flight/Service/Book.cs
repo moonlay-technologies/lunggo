@@ -15,6 +15,7 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
+using System.Diagnostics;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -105,6 +106,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 reservation.Payment.FinalPrice = originalPrice;
                 reservation.Discount = new DiscountData();
             }
+            reservation.TransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
+            Debug.Print("--------->Transfer Code : " + reservation.TransferCode);
+            reservation.Payment.FinalPrice -= reservation.TransferCode;
+            Debug.Print("--------->Final Price : " + reservation.Payment.FinalPrice);
             var transactionDetails = ConstructTransactionDetails(reservation);
             var itemDetails = ConstructItemDetails(reservation);
             var payment = PaymentService.GetInstance();

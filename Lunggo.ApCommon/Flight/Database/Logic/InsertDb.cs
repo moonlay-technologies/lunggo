@@ -58,7 +58,8 @@ namespace Lunggo.ApCommon.Flight.Service
                         GrossProfit = 0,
                         InsertBy = "xxx",
                         InsertDate = DateTime.UtcNow,
-                        InsertPgId = "xxx"
+                        InsertPgId = "xxx",
+                        TransferCode = reservation.TransferCode
                     };
 
                     FlightReservationTableRepo.GetInstance().Insert(conn, reservationRecord);

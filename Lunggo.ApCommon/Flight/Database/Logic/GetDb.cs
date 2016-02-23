@@ -206,6 +206,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 {
                                     RsvNo = rsvNo,
                                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
+                                    TransferCode = reservationRecord.TransferCode.GetValueOrDefault(),
                                     InvoiceNo = reservationRecord.InvoiceNo,
                                     Contact = new ContactData
                                     {

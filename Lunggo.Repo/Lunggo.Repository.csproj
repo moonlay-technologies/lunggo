@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableRecord\FlightReservationTableRecord.cs" />
     <Compile Include="TableRecord\SavedCreditCardTableRecord.cs" />
     <Compile Include="TableRecord\CalendarRecipientTableRecord.cs" />
     <Compile Include="TableRecord\CampaignTableRecord.cs" />
@@ -59,7 +60,6 @@
     <Compile Include="TableRecord\FlightItineraryTableRecord.cs" />
     <Compile Include="TableRecord\FlightPassengerTableRecord.cs" />
     <Compile Include="TableRecord\FlightPriceMarginRuleTableRecord.cs" />
-    <Compile Include="TableRecord\FlightReservationTableRecord.cs" />
     <Compile Include="TableRecord\FlightSavedPassengerTableRecord.cs" />
     <Compile Include="TableRecord\FlightSegmentTableRecord.cs" />
     <Compile Include="TableRecord\FlightStopTableRecord.cs" />
@@ -95,6 +95,7 @@
     <Compile Include="TableRecord\UsersTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRepository\FlightReservationRepository.cs" />
     <Compile Include="TableRepository\SavedCreditCardRepository.cs" />
     <Compile Include="TableRepository\CalendarRecipientRepository.cs" />
     <Compile Include="TableRepository\CampaignRepository.cs" />
@@ -112,7 +113,6 @@
     <Compile Include="TableRepository\FlightItineraryRepository.cs" />
     <Compile Include="TableRepository\FlightPassengerRepository.cs" />
     <Compile Include="TableRepository\FlightPriceMarginRuleRepository.cs" />
-    <Compile Include="TableRepository\FlightReservationRepository.cs" />
     <Compile Include="TableRepository\FlightSavedPassengerRepository.cs" />
     <Compile Include="TableRepository\FlightSegmentRepository.cs" />
     <Compile Include="TableRepository\FlightStopRepository.cs" />

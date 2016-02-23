@@ -120,6 +120,23 @@ namespace Lunggo.ApCommon.Flight.Service
 
         }
 
+        /*AMBIL TIME LIMIT*/
+        public TimeSpan GetUniqueIdExpiry(string key)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = "transferUniquePrice:" + key;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
+                return timeToLive;
+            }
+            catch
+            {
+                return TimeSpan.Zero;
+            }
+        }
+
         public bool isRedisExist(string price) 
         {
             try
@@ -134,6 +151,24 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 return false;
             }
+        }
+
+        /*Save Transfer Code Token*/
+        public void SaveTokenTransferCodeinCache(string token, string transferCode)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "transferCodeToken:" + token;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.StringSet(redisKey,transferCode,TimeSpan.FromMinutes(150));
+        }
+
+        public decimal GetTransferCodeByTokeninCache(string token) 
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "transferCodeToken:" + token;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var price = Decimal.Parse(redisDb.StringGet(redisKey));
+            return price;
         }
 
         private static bool GetSearchingStatusInCache(string searchId, int supplierIndex)
