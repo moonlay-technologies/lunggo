@@ -63,6 +63,8 @@
             PassportRequired: @Model.Itinerary.RequirePassport.ToString().ToLower(),
             IdRequired: false,
             NationalityRequired: @Model.Itinerary.RequireNationality.ToString().ToLower(),
+            // departure date
+            DepartureDate: '',
             // buyer info
             BuyerInfo: {
                 LoggedIn : @User.Identity.IsAuthenticated.ToString().ToLower(),
@@ -74,6 +76,15 @@
                 Email: '@User.Identity.GetEmail()'
             }
         };
+
+        @if (Model.Itinerary.Trips != null){
+            if (Model.Itinerary.Trips.Count == 2){
+                @:CheckoutDetail.DepartureDate = '@Model.Itinerary.Trips[1].DepartureDate';
+            } else {
+                @:CheckoutDetail.DepartureDate = '@Model.Itinerary.Trips[0].DepartureDate';
+            }
+        }
+
     </script>
     <!-- angular controller -->
     <script src="/Assets/mobile/js/checkoutController.js"></script>
@@ -102,10 +113,8 @@ default:
 
                         <div class="form-group">
                             <label class="control-label">Title : </label>
-                            <select class="form-control" name="title">
-                                <option value="0">Tuan</option>
-                                <option value="1">Nyonya</option>
-                                <option value="2">Nona</option>
+                            <select class="form-control" name="title" ng-model="CheckoutConfig.BuyerInfo.Title" ng-init="CheckoutConfig.BuyerInfo.Title = titles[0].value">
+                                <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
                             </select>
                         </div>
 
@@ -149,10 +158,8 @@ default:
                         <div class="passenger__body">
                             <div class="form-group">
                                 <label class="control-label">Title : </label>
-                                <select class="form-control" required ng-model="Passenger.Title" name="passenger_{{$index}}_title">
-                                    <option value="0">Tuan</option>
-                                    <option value="1">Nyonya</option>
-                                    <option value="2">Nona</option>
+                                <select class="form-control" required ng-model="Passenger.Title" name="passenger_{{$index}}_title" ng-init="Passenger.Title = titles[0].value">
+                                    <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
                                 </select>
                             </div>
 
@@ -170,22 +177,18 @@ default:
                             <div class="form-group important">
                                 <label class="control-label">Tanggal Lahir: </label>
                                 <div class="row">
-                                    <!--
-                                        <div class="col-xs-12">
-                                            <p class="form-control"></p>
-                                        </div>
-                                        -->
-                                    
                                         <div class="col-xs-4">
                                             <select class="form-control" required name="passenger_{{$index}}_birthDate" ng-model="Passenger.Birth.Date" ng-change="ValidateBirthday(Passenger)">
-                                                <option value="1">1</option>
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.Birth.Month, Passenger.Birth.Year)" ng-selected="date == passenger.Birth.Date" ng-if="Passenger.type == 'adult'">{{date}}</option>
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.Birth.Month, Passenger.Birth.Year)" ng-selected="date == passenger.Birth.Date" ng-if="Passenger.type == 'child' && !( Passenger.Birth.Year == flightDetail.minYearChild && Passenger.Birth.Month == flightDetail.departureMonth && date < flightDetail.departureDate )">{{date}}</option>
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.Birth.Month, Passenger.Birth.Year)" ng-selected="date == passenger.Birth.Date" ng-if="Passenger.type == 'infant' && !( (Passenger.Birth.Year == flightDetail.minYearInfant && Passenger.Birth.Month == flightDetail.departureMonth && date < flightDetail.departureDate))">{{date}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
                                             <select class="form-control" required name="passenger_{{$index}}_birthMonth" ng-model="Passenger.Birth.Month" ng-change="ValidateBirthday(Passenger)">
                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.Birth.Month" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.Birth.Month" ng-if="Passenger.type == 'child' && (!(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth))">{{month.name}}</option>
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.Birth.Month" ng-if="Passenger.type == 'infant' && (!(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth))">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.Birth.Month" ng-if="Passenger.type == 'child' && (!(passenger.Birth.Year == flightDetail.minYearChild && month.value < flightDetail.departureMonth))">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.Birth.Month" ng-if="Passenger.type == 'infant' && (!(passenger.Birth.Year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth))">{{month.name}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
@@ -198,27 +201,27 @@ default:
                             <!-- passenger birth date end-->
                             
                             <!-- passenger passport start -->
-                            <div class="form-group">
+                            <div class="form-group" ng-if="CheckoutConfig.PassportRequired">
                                 <label class="control-label">No. Passport</label>
                                 <input type="text" value="" class="form-control" name="passenger_{{$index}}_passportNumber" ng-model="Passenger.Passport.Number" ng-required="CheckoutConfig.PassportRequired" />
                             </div>
 
-                            <div class="form-group important">
+                            <div class="form-group important" ng-if="CheckoutConfig.PassportRequired">
                                 <label class="control-label">Tanggal Kadaluarsa Passport: </label>
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <select class="form-control">
-                                            <option value="1">1</option>
+                                        <select class="form-control" name="passenger_{{$index}}_expiryDate" ng-model="Passenger.Passport.Expire.date" ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
+                                            <option value="{{date}}" ng-repeat="date in dates(Passenger.Passport.Expire.Month, Passenger.Passport.Expire.Year)" ng-selected="date == Passenger.Passport.Expire.Date" ng-if="!(Passenger.Passport.Expire.Year == flightDetail.passportYear && Passenger.Passport.Expire.Month == flightDetail.passportMonth && date < flightDetail.passportDate)">{{date}}</option>
                                         </select>
                                     </div>
                                     <div class="col-xs-4">
-                                        <select class="form-control">
-                                            <option value="1">Jan</option>
+                                        <select class="form-control" name="passenger_{{$index}}_expiryMonth" ng-model="Passenger.Passport.Expire.Month" ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
+                                            <option value="{{month.value}}" ng-repeat="month in months" ng-if="!(Passenger.Passport.Expire.year == flightDetail.passportYear && month.value < flightDetail.passportMonth)">{{month.name}}</option>
                                         </select>
                                     </div>
                                     <div class="col-xs-4">
-                                        <select class="form-control">
-                                            <option value="1">2000</option>
+                                        <select class="form-control" name="passenger_{{$index}}_expiryYear" ng-model="Passenger.Passport.Expire.Year" ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
+                                            <option value="{{year}}" ng-repeat="year in generateYear('passport')">{{year}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -237,15 +240,17 @@ default:
                         </div><!-- .passenger__body -->
 
                     </div><!-- .passenger -->
+                    
+                    <div class="form-group">
+                        <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
+                    </div>
+
+                    <div class="form-group">
+                        <button ng-click="PrintScope()" class="btn btn-block">PRINT $SCOPE</button>
+                        <button ng-click="PrintForm()" class="btn btn-block">PRINT FORM</button>
+                    </div>
+
                 </form>
-            
-                <div class="form-group">
-                    <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
-                </div>
-            
-                <div class="form-group">
-                    <button ng-click="PrintScope()" class="btn btn-block">PRINT $SCOPE</button>
-                </div>
 
             </div><!-- .page-step-2 -->
         
@@ -384,6 +389,29 @@ default:
             </div><!-- .overlay__body -->
         </div>
         <!-- additional overlay page end -->
+    
+        <!-- popup expired -->
+        <div class="popup__wrapper" ng-class="{'active':PageConfig.ExpiryDate.Expired}">
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">Checkout Kadaluarsa</h4>
+                </header>
+                <div class="popup__body">
+                    <div class="container">
+                        <p>Maaf, waktu pembayaran Anda sudah habis. Silahkan klik tombol dibawah untuk kembali ke halaman pencarian.</p>
+                    </div>
+                </div>
+                <div class="popup__footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div><!-- .page-loaded -->
         
