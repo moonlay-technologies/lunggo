@@ -26,7 +26,6 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetDb.SavedPassengers(contactEmail);
         }
 
-        /* Save Transaction Inquiry into Redis */
         public void SaveTransacInquiryInCache(string mandiriCacheId, List<KeyValuePair<string,string>> transaction,TimeSpan timeout)
         {
             var redisService = RedisService.GetInstance();
@@ -82,7 +81,6 @@ namespace Lunggo.ApCommon.Flight.Service
             }                
         }
 
-        /*Redis Save Unique Price*/
         public void SaveUniquePriceinCache(string price,Dictionary<string,int> dict) 
         {
             var redisService = RedisService.GetInstance();
@@ -120,6 +118,22 @@ namespace Lunggo.ApCommon.Flight.Service
 
         }
 
+        public TimeSpan GetUniqueIdExpiry(string key)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = "transferUniquePrice:" + key;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
+                return timeToLive;
+            }
+            catch
+            {
+                return TimeSpan.Zero;
+            }
+        }
+
         public bool isRedisExist(string price) 
         {
             try
@@ -134,6 +148,23 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 return false;
             }
+        }
+
+        public void SaveTokenTransferCodeinCache(string token, string transferCode)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "transferCodeToken:" + token;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.StringSet(redisKey,transferCode,TimeSpan.FromMinutes(150));
+        }
+
+        public decimal GetTransferCodeByTokeninCache(string token) 
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "transferCodeToken:" + token;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var price = Decimal.Parse(redisDb.StringGet(redisKey));
+            return price;
         }
 
         private static bool GetSearchingStatusInCache(string searchId, int supplierIndex)

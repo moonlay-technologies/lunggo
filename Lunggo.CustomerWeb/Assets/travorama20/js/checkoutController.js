@@ -45,13 +45,11 @@ app.controller('checkoutController', [
 
         $scope.TransferConfig = {
             UniqueCode: 0,
+            Token : '',
             GetUniqueCode: function (sentPrice) {
                 if (!sentPrice) {
                     sentPrice = price ;
                 }
-
-                console.log(sentPrice);
-
                 // get unique payment code
                 $http({
                     method: 'GET',
@@ -63,6 +61,7 @@ app.controller('checkoutController', [
                     console.log('Getting Unique Payment Code');
                     console.log(returnData);
                     $scope.TransferConfig.UniqueCode = returnData.data.transfer_code;
+                    $scope.TransferConfig.Token = returnData.data.token
 
                 }, function (returnData) {
                     console.log('Failed to get Unique Payment Code');
@@ -227,7 +226,7 @@ app.controller('checkoutController', [
                 $scope.book.booking = true; 
 
                 // generate data
-                $scope.book.postData = ' "Payment.Data.Data0" : "'+$scope.CreditCard.Token+ '", "Payment.Data.Data1" : "' +$scope.CreditCard.Name+ '", "Payment.Data.Data20" : "' +$scope.loggedIn+ '", "Payment.Data.Data9" : "' +$scope.buyerInfo.email+'", "Token":"'+$scope.token+'", "Payment.Currency":"'+$scope.currency+'", "DiscountCode":"'+$scope.voucher.confirmedCode+'", "Payment.Method":"'+$scope.paymentMethod+'", "Contact.Title" :"'+$scope.buyerInfo.title+'","Contact.Name":"'+$scope.buyerInfo.fullname+'", "Contact.CountryCode":"'+$scope.buyerInfo.countryCode+'", "Contact.Phone":"'+$scope.buyerInfo.phone+'","Contact.Email":"'+$scope.buyerInfo.email+'","Language":"'+$scope.language+'"';
+                $scope.book.postData = ' "TransferToken" : "'+$scope.TransferConfig.Token+'" , "Payment.Data.Data0" : "'+$scope.CreditCard.Token+ '", "Payment.Data.Data1" : "' +$scope.CreditCard.Name+ '", "Payment.Data.Data20" : "' +$scope.loggedIn+ '", "Payment.Data.Data9" : "' +$scope.buyerInfo.email+'", "Token":"'+$scope.token+'", "Payment.Currency":"'+$scope.currency+'", "DiscountCode":"'+$scope.voucher.confirmedCode+'", "Payment.Method":"'+$scope.paymentMethod+'", "Contact.Title" :"'+$scope.buyerInfo.title+'","Contact.Name":"'+$scope.buyerInfo.fullname+'", "Contact.CountryCode":"'+$scope.buyerInfo.countryCode+'", "Contact.Phone":"'+$scope.buyerInfo.phone+'","Contact.Email":"'+$scope.buyerInfo.email+'","Language":"'+$scope.language+'"';
                 for (var i = 0; i < $scope.passengers.length; i++) {
 
                     // check nationality
