@@ -230,9 +230,9 @@ default:
                         
                             <!-- passenger nationality start -->
                             <div class="form-group" ng-show="CheckoutConfig.NationalityRequired || CheckoutConfig.PassportRequired">
-                                <label class="control-label"><span ng-show="CheckoutConfig.NationalityRequired">Nationality:</span><span ng-show="CheckoutConfig.PassportRequired">Passport Country</span></label>
-                                <select class="form-control" ng-name="passenger_{{$index}}_passportCountry" ng-model="Passenger.Passport.Country" ng-required="CheckoutConfig.NationalityRequired">
-                                    <option ng-repeat="country in Countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
+                                <label class="control-label">Kewarganegaraan</label>
+                                <select class="form-control" name="passenger_{{$index}}_passportCountry" ng-model="Passenger.Passport.Country" ng-init="Passenger.Passport.Country = 'ID'" ng-required="CheckoutConfig.NationalityRequired">
+                                    <option ng-repeat="country in Countries" value="{{country.code}}">{{country.name}}</option>
                                 </select>
                             </div>
                             <!-- passenger nationality end -->
@@ -245,7 +245,7 @@ default:
                         <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group hidden">
                         <button ng-click="PrintScope()" class="btn btn-block">PRINT $SCOPE</button>
                         <button ng-click="PrintForm()" class="btn btn-block">PRINT FORM</button>
                     </div>
