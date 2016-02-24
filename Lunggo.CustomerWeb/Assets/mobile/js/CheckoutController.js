@@ -22,19 +22,19 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             if ($scope.CheckoutConfig.Passenger[0] > 0) {
                 for (var i = 0; i < $scope.CheckoutConfig.Passenger[0]; i++) {
                     var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[0], type: 'adult' };
-                    $scope.CheckoutConfig.Passengers.push(x);
+                    $scope.passengers.push(x);
                 }
             }
             if ($scope.CheckoutConfig.Passenger[1]> 0) {
                 for (var i = 0; i < $scope.CheckoutConfig.Passenger[1]; i++) {
                     var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[1], type: 'child' };
-                    $scope.CheckoutConfig.Passengers.push(x);
+                    $scope.passengers.push(x);
                 }
             }
             if ($scope.CheckoutConfig.Passenger[2] > 0) {
                 for (var i = 0; i < $scope.CheckoutConfig.Passenger[2]; i++) {
                     var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[2], type: 'infant' };
-                    $scope.CheckoutConfig.Passengers.push(x);
+                    $scope.passengers.push(x);
                 }
             }
         },
@@ -45,6 +45,22 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         // buyer info
         BuyerInfo: CheckoutDetail.BuyerInfo
     };
+
+    $scope.token = CheckoutDetail.Token;
+
+    // buyer info
+    $scope.buyerInfo = {};
+    if ($scope.loggedIn) {
+        $scope.buyerInfo.fullname = buyerInfo.fullname;
+        $scope.buyerInfo.countryCode = buyerInfo.countryCode;
+        $scope.buyerInfo.phone = buyerInfo.phone;
+        $scope.buyerInfo.email = buyerInfo.email;
+    } else {
+        $scope.buyerInfo = {};
+    }
+
+    // passengers
+    $scope.passengers = [];
 
     // flight detail
     $scope.flightDetail = {};
@@ -77,8 +93,333 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
     // payment detail
     $scope.paymentDetail = {
-        Method : ''
+        method : ''
+    }//$scope.paymentDetail
+
+    // credit card
+    $scope.CreditCard = {
+        TwoClickToken: 'false',
+        Name: '',
+        Month: '01',
+        Year: 2016,
+        Cvv: '',
+        Number: ''
+    }//$scope.CreditCard
+    
+    // transfer config
+    $scope.TransferConfig = {
+        UniqueCode: 0,
+        Token: '',
+        GetUniqueCode: function (sentPrice) {
+            if (!sentPrice) {
+                sentPrice = price;
+            }
+            // get unique payment code
+            $http({
+                method: 'GET',
+                url: TransferConfig.Url,
+                params: {
+                    price: sentPrice
+                }
+            }).then(function (returnData) {
+                console.log('Getting Unique Payment Code');
+                console.log(returnData);
+                $scope.TransferConfig.UniqueCode = returnData.data.transfer_code;
+                $scope.TransferConfig.Token = returnData.data.token
+
+            }, function (returnData) {
+                console.log('Failed to get Unique Payment Code');
+                console.log(returnData);
+            });
+        }
     };
+    $scope.TransferConfig.GetUniqueCode($scope.CheckoutConfig.Price);
+
+    // voucher code
+    $scope.voucher = {
+        confirmedCode: '',
+        code: '',
+        amount: 0,
+        status: '',
+        checking: false,
+        checked: false,
+        check: function () {
+            $scope.voucher.checking = true;
+            $http({
+                method: 'GET',
+                url: CheckVoucherConfig.Url,
+                params: {
+                    token: $scope.token,
+                    code: $scope.voucher.code,
+                    email: $scope.buyerInfo.email,
+                    price: $scope.initialPrice
+                }
+            }).then(function (returnData) {
+                console.log(returnData);
+                $scope.voucher.checking = false;
+                $scope.voucher.checked = true;
+                $scope.voucher.status = returnData.data.ValidationStatus;
+                if (returnData.data.Discount > 0) {
+                    $scope.voucher.amount = returnData.data.Discount;
+                    $scope.voucher.confirmedCode = $scope.voucher.code;
+                    $scope.voucher.displayName = returnData.data.DisplayName;
+                    // get unique code for transfer payment
+                    $scope.TransferConfig.GetUniqueCode($scope.initialPrice - $scope.voucher.amount);
+                }
+            }, function (returnData) {
+                $scope.voucher.checked = true;
+                $scope.voucher.checking = false;
+            });
+        },
+        reset: function () {
+            $scope.voucher.code = '';
+            $scope.voucher.amount = 0;
+            $scope.voucher.confirmedCode = '';
+            $scope.voucher.checked = false;
+            // get unique code for transfer payment
+            $scope.TransferConfig.GetUniqueCode($scope.initialPrice);
+        }
+    };
+
+    // book
+    $scope.book = {
+        booking: false,
+        url: FlightBookConfig.Url,
+        postData: '',
+        checked: false,
+        rsvNo: '',
+        isSuccess: false,
+        ccChecked: false,
+        checkCreditCard: function () {
+            if ($scope.paymentMethod == 'CreditCard') {
+
+                Veritrans.url = VeritransTokenConfig.Url;
+                Veritrans.client_key = VeritransTokenConfig.ClientKey;
+                var card = function () {
+                    if ($scope.CreditCard.TwoClickToken == 'false') {
+                        return {
+                            'card_number': $scope.CreditCard.Number,
+                            'card_exp_month': $scope.CreditCard.Month,
+                            'card_exp_year': $scope.CreditCard.Year,
+                            'card_cvv': $scope.CreditCard.Cvv,
+
+                            // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
+                            'secure': true,
+                            'bank': 'mandiri',
+                            'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount
+                        }
+                    } else {
+                        return {
+                            'card_cvv': $scope.CreditCard.Cvv,
+                            'token_id': $scope.CreditCard.TwoClickToken,
+
+                            'two_click': true,
+                            'secure': true,
+                            'bank': 'mandiri',
+                            'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount
+                        }
+                    }
+                };
+
+                // run the veritrans function to check credit card
+                Veritrans.token(card, callback);
+
+                function callback(response) {
+                    if (response.redirect_url) {
+                        // 3Dsecure transaction. Open 3Dsecure dialog
+                        console.log('Open Dialog 3Dsecure');
+                        openDialog(response.redirect_url);
+
+                    } else if (response.status_code == '200') {
+                        // success 3d secure or success normal
+                        //close 3d secure dialog if any
+                        closeDialog();
+
+                        // store token data in input #token_id and then submit form to merchant server
+                        $("#vt-token").val(response.token_id);
+                        $scope.CreditCard.Token = response.token_id;
+
+                        $scope.book.send();
+
+                    } else {
+                        // failed request token
+                        //close 3d secure dialog if any
+                        closeDialog();
+                        $('#submit-button').removeAttr('disabled');
+                        // Show status message.
+                        $('#message').text(response.status_message);
+                        console.log(JSON.stringify(response));
+                    }
+                }
+
+                // Open 3DSecure dialog box
+                function openDialog(url) {
+                    $.fancybox.open({
+                        href: url,
+                        type: 'iframe',
+                        autoSize: false,
+                        width: 400,
+                        height: 420,
+                        closeBtn: false,
+                        modal: true
+                    });
+                }
+
+                // Close 3DSecure dialog box
+                function closeDialog() {
+                    $.fancybox.close();
+                }
+
+            } else {
+                $scope.book.send();
+            }
+        },
+        send: function () {
+            $scope.book.booking = true;
+
+            // generate data
+            $scope.book.postData = ' "TransferToken" : "' + $scope.TransferConfig.Token + '" , "Payment.Data.Data0" : "' + $scope.CreditCard.Token + '", "Payment.Data.Data1" : "' + $scope.CreditCard.Name + '", "Payment.Data.Data20" : "' + $scope.loggedIn + '", "Payment.Data.Data9" : "' + $scope.buyerInfo.email + '", "Token":"' + $scope.token + '", "Payment.Currency":"' + $scope.currency + '", "DiscountCode":"' + $scope.voucher.confirmedCode + '", "Payment.Method":"' + $scope.paymentMethod + '", "Contact.Title" :"' + $scope.buyerInfo.title + '","Contact.Name":"' + $scope.buyerInfo.fullName + '", "Contact.CountryCode":"' + $scope.buyerInfo.countryCode + '", "Contact.Phone":"' + $scope.buyerInfo.phone + '","Contact.Email":"' + $scope.buyerInfo.email + '","Language":"' + $scope.language + '"';
+            for (var i = 0; i < $scope.passengers.length; i++) {
+
+                // check nationality
+                if (!$scope.passportRequired) {
+                    $scope.passengers[i].passport.number = '';
+                    $scope.passengers[i].passport.expire = {};
+                    $scope.passengers[i].passport.expire.date = '';
+                    $scope.passengers[i].passport.expire.month = '';
+                    $scope.passengers[i].passport.expire.year = '';
+                    $scope.passengers[i].passport.expire.full = '';
+                    if (!$scope.nationalityRequired) {
+                        $scope.passengers[i].passport.country = '';
+                    }
+                }
+                if (!$scope.idRequired) {
+                    $scope.passengers[i].idNumber = '';
+                }
+
+                // passport expiry date
+                $scope.passengers[i].passport.expire.full = $scope.passengers[i].passport.expire.year + '/' + ('0' + (parseInt($scope.passengers[i].passport.expire.month) + 1)).slice(-2) + '/' + ('0' + $scope.passengers[i].passport.expire.date).slice(-2);
+
+                // birthdate
+                $scope.passengers[i].birth.full = $scope.passengers[i].birth.year + '/' + ('0' + (parseInt($scope.passengers[i].birth.month) + 1)).slice(-2) + '/' + ('0' + $scope.passengers[i].birth.date).slice(-2);
+
+                $scope.book.postData = $scope.book.postData + (',"Passengers[' + i + '].Type": "' + $scope.passengers[i].type + '", "Passengers[' + i + '].Title": "' + $scope.passengers[i].title + '", "Passengers[' + i + '].FirstName":"' + $scope.passengers[i].firstName + '", "Passengers[' + i + '].LastName": "' + $scope.passengers[i].lastName + '", "Passengers[' + i + '].BirthDate":"' + $scope.passengers[i].birth.full + '", "Passengers[' + i + '].PassportNumber":"' + $scope.passengers[i].passport.number + '", "Passengers[' + i + '].PassportExpiryDate":"' + $scope.passengers[i].passport.expire.full + '", "Passengers[' + i + '].idNumber":"' + $scope.passengers[i].idNumber + '", "Passengers[' + i + '].Country":"' + $scope.passengers[i].passport.country + '"');
+            }
+            $scope.book.postData = '{' + $scope.book.postData + '}';
+            $scope.book.postData = JSON.parse($scope.book.postData);
+
+            console.log($scope.book.postData);
+
+            // send form
+            $http({
+                method: 'POST',
+                url: $scope.book.url,
+                data: $.param($scope.book.postData),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            }).then(function (returnData) {
+                console.log(returnData);
+
+                $scope.book.checked = true;
+
+                if (returnData.data.IsSuccess) {
+                    $scope.book.isSuccess = true;
+                    $scope.book.rsvNo = returnData.data.RsvNo;
+
+                    $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                    $('form#rsvno').submit();
+
+                } else {
+                    $scope.book.isSuccess = false;
+                }
+
+            }, function (returnData) {
+                console.log(returnData);
+                $scope.book.checked = true;
+                $scope.book.isSuccess = false;
+            });
+
+        }
+    }//$scope.book
+
+    // credit card promo checker
+    $scope.CreditCardPromo = {
+        Type: '',
+        Valid: false,
+        PromoName: '',
+        Amount: 0,
+        Check: function (creditCardNumber) {
+            if ($scope.paymentDetail.method == 'CreditCard') {
+                if (creditCardNumber) {
+                    var firstNum = creditCardNumber.toString().charAt(0);
+                    var minOrder = 200000;
+                    var nowDate = new Date();
+                    var utcDate = nowDate.getTime() + (nowDate.getTimezoneOffset() * 60000);
+                    var jakartaDate = new Date(utcDate + (3600000 * 7));;
+                    var jakartaDay = jakartaDate.getDay();
+                    var endOfCampaign = new Date('31 March 2016');
+
+                    var creditCardString = creditCardNumber.toString();
+
+                    // check credit card type
+                    if (firstNum == 5) {
+                        $scope.CreditCardPromo.Type = 'mastercard';
+                    } else if (firstNum == 4) {
+                        $scope.CreditCardPromo.Type = 'visa';
+                    } else {
+                        $scope.CreditCardPromo.Type = '';
+                    }
+
+                    //**********
+                    // Danamon Sweet Valentine
+                    var valentineDate = new Date('14 February 2016');
+                    if (creditCardString.length > 5 && (jakartaDate.getDate() == valentineDate.getDate() && jakartaDate.getMonth() == valentineDate.getMonth())) {
+                        var danamonList = ['456798', '456799', '425857', '432449', '540731', '559228', '516634', '542260', '552239', '523983', '552338'];
+                        var creditCardString = creditCardString.substr(0, 6);
+
+                        // if Danamon Card
+                        if (danamonList.indexOf(creditCardString) > -1) {
+                            $scope.CreditCardPromo.PromoName = 'Danamon Sweet Valentine';
+                            $scope.CreditCardPromo.Valid = true;
+                            $scope.CreditCardPromo.Amount = Math.floor($scope.initialPrice * 14 / 100);
+                            // reset voucher
+                            $scope.voucher.amount = 0;
+                            $scope.voucher.checking = false;
+                            $scope.voucher.checked = false;
+                            $scope.voucher.confirmedCode = '';
+                        }
+                        return;
+                    }
+
+                    //**********
+                    // Wonderful Wednesday with Visa
+                    if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 3 && jakartaDate < endOfCampaign) {
+                        $scope.CreditCardPromo.PromoName = 'Wonderful Wednesday with Visa';
+                        $scope.CreditCardPromo.Type = 'visa';
+                        $scope.CreditCardPromo.Valid = true;
+                        $scope.CreditCardPromo.Amount = 50000;
+                        // reset voucher
+                        $scope.voucher.amount = 0;
+                        $scope.voucher.checking = false;
+                        $scope.voucher.checked = false;
+                        $scope.voucher.confirmedCode = '';
+                        return;
+                    }
+
+                    //**********
+                    // Reset
+                    $scope.CreditCardPromo.Valid = false;
+                    $scope.CreditCardPromo.Amount = 0;
+
+                } else {
+                    $scope.CreditCardPromo.Valid = false;
+                    $scope.CreditCardPromo.Amount = 0;
+                }
+            } else {
+                $scope.CreditCardPromo.Valid = false;
+                $scope.CreditCardPromo.Amount = 0;
+            }
+        }
+    }//$scope.CreditCardPromo
 
     // expiry date
     $scope.PageConfig.ExpiryDate = {
