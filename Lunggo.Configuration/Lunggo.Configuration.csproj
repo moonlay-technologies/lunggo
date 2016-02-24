@@ -63,9 +63,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -86,6 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\BackendWeb\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\BackendWeb\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\BackendWeb\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
@@ -117,6 +123,9 @@
     </None>
     <None Include="Config\BackendWeb\veritrans.properties" />
     <None Include="Config\BackendWeb\zendesk.properties" />
+    <None Include="Config\CustomerWeb\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -145,6 +154,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebAPI\Country.csv" />
+    <None Include="Config\WebAPI\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\mailchimp.properties">
       <SubType>Designer</SubType>
     </None>
@@ -152,6 +164,48 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebAPI\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\Airline.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\Airport.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\azureStorage.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\Country.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\db.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\HotelLocation.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.EmailQueueHandler\airAsia.properties">
@@ -172,6 +226,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.EmailQueueHandler\HotelLocation.csv" />
+    <None Include="Config\WebJob.EmailQueueHandler\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.EmailQueueHandler\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
@@ -274,6 +331,9 @@
     <None Include="Config\WebJob.FlightCrawlScheduler\citilink.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.FlightCrawlScheduler\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.FlightCrawlScheduler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
@@ -337,6 +397,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.FlightProcessor\HotelLocation.csv" />
+    <None Include="Config\WebJob.FlightProcessor\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.FlightProcessor\mandrill.properties">
       <SubType>Designer</SubType>
     </None>
@@ -358,10 +421,16 @@
     <None Include="Config\WebJob.MystiflyQueueHandler\citilink.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.MystiflyQueueHandler\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.MystiflyQueueHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.TicketQueueHandler\azureStorage.properties" />
+    <None Include="Config\WebJob.TicketQueueHandler\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\Worker.EticketHandler\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -380,6 +449,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\Worker.EticketHandler\HotelLocation.csv" />
+    <None Include="Config\Worker.EticketHandler\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\Worker.EticketHandler\mandrill.properties">
       <SubType>Designer</SubType>
     </None>

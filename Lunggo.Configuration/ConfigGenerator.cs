@@ -14,7 +14,8 @@ namespace Lunggo.Configuration
         Local = 5,
         Development1 = 6,
         QA = 7,
-        Production = 8
+        Production = 8,
+        Development2 = 9
     }
 
     public class ConfigGenerator
@@ -65,6 +66,7 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler2", 
                 "WebJob-FlightSearch.FlightCrawler3", 
                 "WebJob-FlightSearch.FlightCrawler4", 
+                "WebJob-FlightSearch.FlightCrawler5",
                 "Worker.EticketHandler"
             };
             Console.WriteLine("####################Starting Configuration Generation");
@@ -414,6 +416,7 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler2", 
                 "WebJob-FlightSearch.FlightCrawler3", 
                 "WebJob-FlightSearch.FlightCrawler4",
+                "WebJob-FlightSearch.FlightCrawler5",
             };
             SaveRootFile("App.Debug.config", fileContent, projectList);
         }
@@ -436,7 +439,8 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler1",
                 "WebJob-FlightSearch.FlightCrawler2",
                 "WebJob-FlightSearch.FlightCrawler3",
-                "WebJob-FlightSearch.FlightCrawler4"
+                "WebJob-FlightSearch.FlightCrawler4",
+                "WebJob-FlightSearch.FlightCrawler5"
             };
             SaveRootFile("App.Release.config", fileContent, projectList);
         }
