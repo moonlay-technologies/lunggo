@@ -48,6 +48,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
     $scope.token = CheckoutDetail.Token;
     $scope.currency = 'IDR';
+    $scope.initialPrice = CheckoutDetail.Price;
 
     // buyer info
     $scope.buyerInfo = {};
