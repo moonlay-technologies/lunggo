@@ -517,7 +517,7 @@ default:
                     </div>
 
                     <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a></p>
-                    <input type="submit" class="btn btn-yellow btn-block" value="BAYAR">
+                    <input type="submit" class="btn btn-yellow btn-block" value="{{ !book.booking ? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(!paymentMethod || !creditCardForm.$valid) || book.booking">
 
                 </form><!-- finalForm -->
             
