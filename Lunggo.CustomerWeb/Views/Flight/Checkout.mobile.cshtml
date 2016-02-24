@@ -267,7 +267,7 @@ default:
                             <label>
                                 <header>
                                     <div class="input-wrapper">
-                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer" ng-model="paymentDetail.method" checked />
+                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer" ng-model="paymentMethod" checked />
                                     </div>
                                     <h5>Bank Transfer</h5>
                                 </header>
@@ -278,7 +278,7 @@ default:
                             <label>
                                 <header>
                                     <div class="input-wrapper">
-                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentDetail.method" />
+                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" />
                                     </div>
                                     <h5>Kartu Kredit</h5>
                                 </header>
@@ -289,7 +289,7 @@ default:
                             <label>
                                 <header>
                                     <div class="input-wrapper">
-                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentDetail.method" />
+                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" />
                                     </div>
                                     <h5>Virtual Account</h5>
                                 </header>
@@ -300,7 +300,7 @@ default:
                             <label>
                                 <header>
                                     <div class="input-wrapper">
-                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriClickPay" ng-model="paymentDetail.method" />
+                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriClickPay" ng-model="paymentMethod" />
                                     </div>
                                     <h5>Mandiri ClickPay</h5>
                                 </header>
@@ -314,7 +314,7 @@ default:
                     </div><!-- .summary__body -->
                 </div><!-- .summary--payment -->
             
-                <div class="summary summary--creditcard" ng-show="paymentDetail.method == '@PaymentMethod.CreditCard'">
+                <div class="summary summary--creditcard" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
 
                     <h3 class="summary__title"><b>DETAIL</b> KARTU KREDIT</h3>
                     <div class="summary__body">
@@ -332,7 +332,7 @@ default:
                                         <div class="row">
                                             <div class="col-sm-8">
                                                 <label>Pilih kartu kredit :</label>
-                                                <select class="form-control" ng-model="CreditCard.TwoClickToken" ng-required="paymentDetail.method == '@PaymentMethod.CreditCard'">
+                                                <select class="form-control" ng-model="CreditCard.TwoClickToken" ng-required="paymentMethod == '@PaymentMethod.CreditCard'">
                                                     <option value="false" selected="selected">Tambah Baru</option>
                                                     @foreach (var savedCreditCard in savedCreditCards)
                                                     {

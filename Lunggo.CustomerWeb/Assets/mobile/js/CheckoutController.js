@@ -47,6 +47,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     };
 
     $scope.token = CheckoutDetail.Token;
+    $scope.currency = 'IDR';
 
     // buyer info
     $scope.buyerInfo = {};
@@ -95,6 +96,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     $scope.paymentDetail = {
         method : ''
     }//$scope.paymentDetail
+
+    $scope.paymentMethod = '';
 
     // credit card
     $scope.CreditCard = {
@@ -348,7 +351,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         PromoName: '',
         Amount: 0,
         Check: function (creditCardNumber) {
-            if ($scope.paymentDetail.method == 'CreditCard') {
+            if ($scope.paymentMethod == 'CreditCard') {
                 if (creditCardNumber) {
                     var firstNum = creditCardNumber.toString().charAt(0);
                     var minOrder = 200000;
