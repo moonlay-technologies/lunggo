@@ -12,6 +12,7 @@ using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Framework.SharedModel;
 using RestSharp;
 using System.Globalization;
 
@@ -39,7 +40,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 int segmentCount;
                 DateTime depdate;
                 int adultCount, childCount, infantCount;
-                decimal price;
+                //decimal price;
                 string bookingTimeLimit = "";
                 string bookingReference = "";
                 CabinClass cabinClass;
@@ -53,7 +54,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     childCount = Convert.ToInt32(splittedFareId[4]);
                     infantCount = Convert.ToInt32(splittedFareId[5]);
                     cabinClass = FlightService.ParseCabinClass(splittedFareId[6]);
-                    price = Convert.ToDecimal((splittedFareId[7]));
+                    //price = Convert.ToDecimal((splittedFareId[7]));
                     flightId = splittedFareId[8];
                     segmentCount = Convert.ToInt32(splittedFareId[9]);
                  }
@@ -62,6 +63,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return new BookFlightResult {Errors = new List<FlightError> {FlightError.FareIdNoLongerValid}};
                 }
 
+                var infants = bookInfo.Passengers.Where(pax => pax.Type == PassengerType.Infant);
+                var children = bookInfo.Passengers.Where(pax => pax.Type == PassengerType.Child);
+                bool isInfantValid = true;
+                bool isChildValid = true;
+                foreach (var inft in infants)
+                {
+                    if (inft.DateOfBirth.Value.AddYears(2) < depdate)
+                    {
+                        isInfantValid = false;
+                    }
+                }
+
+                foreach (var child in children)
+                {
+                    if (!(child.DateOfBirth.Value.AddYears(2) < depdate && child.DateOfBirth.Value.AddYears(12) > depdate))
+                    {
+                        isChildValid = false;
+                    }
+                }
 
                 if (adultCount == 0)
                 {
@@ -97,16 +117,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         ErrorMessages = new List<string> {"Time of Departure Exceeds"}
                     };
                 }
-
+                if (!isInfantValid)
+                {
+                    return new BookFlightResult
+                    {
+                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        ErrorMessages = new List<string> { "Age of infant when traveling must be less than or equal 2 years old" }
+                    };
+                }
                 // [GET] Search Flight
 
                 var client = CreateAgentClient();
-                string currentDeposit;
+                //string currentDeposit;
                 var dict = DictionaryService.GetInstance();
                 var originCountry = dict.GetAirportCountryCode(origin);
                 var destinationCountry = dict.GetAirportCountryCode(dest);
                 var searchedHtml = new CQ();
-                string userID;
+                string userId;
                 if (originCountry == "ID")
                 {
                     bool successLogin;
@@ -134,7 +161,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var searchResponse1 = client.Execute(searchRequest1);
                         Thread.Sleep(1000);
                         var img = new Bitmap(new MemoryStream(searchResponse1.RawBytes));
-                        successLogin = Login(client, img, viewstate, eventval, out userID); //, out currentDeposit);
+                        successLogin = Login(client, img, viewstate, eventval, out userId); //, out currentDeposit);
                         Thread.Sleep(1000);
                     } while (!successLogin);
                 }
@@ -143,14 +170,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return new BookFlightResult
                     {
                         IsSuccess = true,
-                        //IsValid = false,
-                        //Itinerary = null
                     };
                 }
 
                 //GET PAGE CONST ID
-                var startind = userID.IndexOf("consID");
-                var cid = userID.SubstringBetween(startind, userID.Length);
+                var startind = userId.IndexOf("consID");
+                var cid = userId.SubstringBetween(startind, userId.Length);
                 var url2 = @"/LionAirAgentsIBE/OnlineBooking.aspx?" + cid;
                 var searchRequest2 = new RestRequest(url2, Method.GET);
                 searchRequest2.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
@@ -178,7 +203,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 //POST FOR PAGE AVAILABLE FLIGHTS AND PRICE 
 
-                var url4 = @"LionAirAgentsIBE/Step1.aspx";
+                const string url4 = @"LionAirAgentsIBE/Step1.aspx";
                 var searchRequest4 = new RestRequest(url4, Method.POST);
                 searchRequest4.AddHeader("Accept-Encoding", "gzip, deflate");
                 searchRequest4.AddHeader("Accept",
@@ -539,7 +564,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             "ScriptManager1=upnlTotalTripCost%7CbtnPriceSelection&__EVENTTARGET=btnPriceSelection&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE=";
                          b =
                             "&txtUpdateInsurance=no" +
-                            "&Insurance%24rblInsurance=No" +
+                            "&Insurance%24rblInsurance=No" + // ini kdg2 ngada.
                             "&Insurance%24txtInsPostbackRequired=no" +
                             "&txtPricingResponse=OK" + "" +
                             "&txtOutFBCsUsed=" + seat +

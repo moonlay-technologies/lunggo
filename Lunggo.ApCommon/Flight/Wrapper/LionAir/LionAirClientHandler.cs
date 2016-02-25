@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Web;
 using CsQuery;
 using Lunggo.Framework.Config;
 using RestSharp;
@@ -72,7 +73,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var url = @"lionairagentsportal/default.aspx";
                 var request = new RestRequest(url, Method.POST);
 
-                _userName= "trv.agent.satu";
+                _userName= "trv.agent.dua";
                 _password = "Standar1234";
 
                 var postData = 
@@ -112,6 +113,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 {
                     ret = true;
                 }
+                var checkLogin = searchedHtml["#trLoginError"].Text();
+                if (checkLogin.Length != 0)
+                    ret = false;
+
                 linkgoto = searchedHtml["#ctl00_tblMenu > tbody > tr:nth-child(5) > td > a"].Attr("href");//.Children(".menu").ToList()[4].Children().Attr("a");
                 return ret;
                 
@@ -141,7 +146,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 /// OCR /// 
 
-                var ocr = new TesseractEngine(@"C:\Program Files\Tesseract-OCR\tessdata", "eng");
+                var ocr = new TesseractEngine(HttpContext.Current.Server.MapPath("~/Config/"), "eng");
                 ocr.SetVariable("tessedit_char_whitelist", "0123456789");
                 var result = ocr.Process(img4, null).GetText().Trim();
                 var readcaptcha = result.Replace(" ", "");

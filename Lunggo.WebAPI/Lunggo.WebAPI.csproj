@@ -15,10 +15,10 @@
     <AssemblyName>Lunggo.WebAPI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressSSLPort>443</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -227,6 +227,40 @@
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\Country.csv" />
+    <Content Include="Config\tessdata\cap.traineddata" />
+    <Content Include="Config\tessdata\configs\ambigs.train" />
+    <Content Include="Config\tessdata\configs\api_config" />
+    <Content Include="Config\tessdata\configs\bigram" />
+    <Content Include="Config\tessdata\configs\box.train" />
+    <Content Include="Config\tessdata\configs\box.train.stderr" />
+    <Content Include="Config\tessdata\configs\digits" />
+    <Content Include="Config\tessdata\configs\hocr" />
+    <Content Include="Config\tessdata\configs\inter" />
+    <Content Include="Config\tessdata\configs\kannada" />
+    <Content Include="Config\tessdata\configs\linebox" />
+    <Content Include="Config\tessdata\configs\logfile" />
+    <Content Include="Config\tessdata\configs\makebox" />
+    <Content Include="Config\tessdata\configs\quiet" />
+    <Content Include="Config\tessdata\configs\rebox" />
+    <Content Include="Config\tessdata\configs\strokewidth" />
+    <Content Include="Config\tessdata\configs\unlv" />
+    <Content Include="Config\tessdata\eng.cube.bigrams" />
+    <Content Include="Config\tessdata\eng.cube.fold" />
+    <Content Include="Config\tessdata\eng.cube.lm" />
+    <Content Include="Config\tessdata\eng.cube.lm_" />
+    <Content Include="Config\tessdata\eng.cube.nn" />
+    <Content Include="Config\tessdata\eng.cube.params" />
+    <Content Include="Config\tessdata\eng.cube.size" />
+    <Content Include="Config\tessdata\eng.cube.word-freq" />
+    <Content Include="Config\tessdata\eng.tesseract_cube.nn" />
+    <Content Include="Config\tessdata\eng.traineddata" />
+    <Content Include="Config\tessdata\osd.traineddata" />
+    <Content Include="Config\tessdata\tessconfigs\batch" />
+    <Content Include="Config\tessdata\tessconfigs\batch.nochop" />
+    <Content Include="Config\tessdata\tessconfigs\matdemo" />
+    <Content Include="Config\tessdata\tessconfigs\msdemo" />
+    <Content Include="Config\tessdata\tessconfigs\nobatch" />
+    <Content Include="Config\tessdata\tessconfigs\segdemo" />
     <None Include="Properties\PublishProfiles\dv1-api.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />

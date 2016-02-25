@@ -59,13 +59,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             new List<string> {"Every infant must be accompanied by one adult"}
                     };
                 }
-                if (conditions.Trips[0].DepartureDate > DateTime.Now.AddMonths(12).Date)
+                if (conditions.Trips[0].DepartureDate > DateTime.Now.AddDays(331).Date)
                 {
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
                         ErrorMessages =
-                            new List<string> {"Time of Departure exceeds"}
+                            new List<string> {"Booking is allowed to max 331 days before the departure date"}
                     };
                 }
 

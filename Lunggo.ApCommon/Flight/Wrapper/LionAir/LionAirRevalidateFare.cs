@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
         {
             internal RevalidateFareResult RevalidateFare(RevalidateConditions conditions)
             {
-                //conditions.FareId = "CGK+SOC+24 MAY 2016+1+0+0+Y+4205000+FR00_C0_SLOT0+1+JT 534+11:45";
+                //conditions.FareId = "KUL+CGK+25 SEP 2016+1+0+0+Y+404700+FR00_C0_SLOT0+1+JT 287+07:40";
                 if (conditions.FareId == null)
                 {
                     return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
@@ -111,10 +111,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 // destinationCountry = dict.GetAirportCountryCode(dest);
                 //string currentDeposit;
                 string userId;
-                if (originCountry == "ID")
-                {
+                //if (originCountry == "ID")
+                //{
                     CQ searchedHtml;
                     bool successLogin;
+                    int counter = 0;
                     do
                     {
                         client.BaseUrl = new Uri("https://agent.lionair.co.id");
@@ -143,17 +144,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         
                         successLogin = Login(client, img, viewstate, eventval, out userId);// out currentDeposit);
                         Thread.Sleep(1000);
-                    } while (!successLogin);
-                }
-                else
-                {
-                    return new RevalidateFareResult
-                    {
-                        IsSuccess = true,
-                        IsValid = false,
-                        Itinerary = null
-                    };
-                }
+                        counter++;
+                    } while (!successLogin && counter < 11);
+                //}
+                //else
+                //{
+                //    return new RevalidateFareResult
+                //    {
+                //        IsSuccess = true,
+                //        IsValid = false,
+                //        Itinerary = null
+                //    };
+                //}
 
                 //GET PAGE CONST ID
                 var startind = userId.IndexOf("consID");
@@ -393,7 +395,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 Convert.ToInt32(timeArrival.Split(':')[0]),
                                 Convert.ToInt32(timeArrival.Split(':')[1]), 0), DateTimeKind.Utc);
                         }
-                        
+
+                        DictionaryService.GetInstance().GetAirportTimeZone(airportarrival);
+                        DictionaryService.GetInstance().GetAirportTimeZone(airportdeparture);
+
+                        var dur = arrDate.AddHours(-DictionaryService.GetInstance().GetAirportTimeZone(airportarrival)) - 
+                            depDate.AddHours(-DictionaryService.GetInstance().GetAirportTimeZone(airportdeparture));
+
                         segments.Add(new FlightSegment
                         {
                             AirlineCode = flightNo.Split()[0],
@@ -406,7 +414,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             AirlineName = airplaneName,
                             OperatingAirlineName = airplaneName,
                             ArrivalAirport = airportarrival,
-                            DepartureAirport = airportdeparture
+                            DepartureAirport = airportdeparture,
+                            Duration = dur
                         });
                     }
 
@@ -524,11 +533,45 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         colpost = postdata.Create(Rows, priceCollections);
                         garbled =
                             "ScriptManager1=upnlTotalTripCost%7CbtnPriceSelection&__EVENTTARGET=btnPriceSelection&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE=";
-                        
-                        b =
-                            "&txtUpdateInsurance=no" +
-                            "&Insurance%24rblInsurance=No" +
-                            "&Insurance%24txtInsPostbackRequired=no" +
+
+
+                        if (originCountry == "ID")
+                        {
+                            b =
+                                "&txtUpdateInsurance=no" +
+                                "&Insurance%24rblInsurance=No" +
+                                "&Insurance%24txtInsPostbackRequired=no" +
+                                "&txtPricingResponse=OK" + "" +
+                                "&txtOutFBCsUsed=" + seat +
+                                "&txtInFBCsUsed=" +
+                                "&txtTaxBreakdown=" +
+                                "&lbContinue.x=39&lbContinue.y=11" +
+                                "&UcFlightSelection%24TripType=rbOneWay" + "" +
+                                "&UcFlightSelection%24DateFlexibility=rbMustTravel" +
+                                "&UcFlightSelection%24txtSelOri=" + origin + //CHANGE
+                                "&UcFlightSelection%24txtOri=" + cityDep + "%20(" + origin + ")" + //CHANGE
+                                "&UcFlightSelection%24ddlDepMonth=" + depdate.ToString("MMM") + "%20" + depdate.Year +
+                                "&UcFlightSelection%24ddlDepDay=" + depdate.Day + //CHANGE
+                                "&UcFlightSelection%24ddlADTCount=" + adultCount + //CHANGE
+                                "&UcFlightSelection%24txtSelDes=" + dest + //CHANGE
+                                "&UcFlightSelection%24txtDes=" + cityArr + "%20(" + dest + ")" + //CHANGE
+                                "&UcFlightSelection%24ddlCNNCount=" + childCount + //CHANGE
+                                "&UcFlightSelection%24ddlINFCount=" + infantCount + //CHANGE
+                                "&UcFlightSelection%24txtDepartureDate=" + depdate.ToString("dd") + "%20" + depdate.ToString("MMM") +
+                                "%20" + depdate.Year + //CHANGE
+                                "&UcFlightSelection%24txtReturnDate=" + depdate.ToString("dd") + "%20" + depdate.ToString("MMM") +
+                                "%20" + depdate.Year + //CHANGE
+                                "&txtOBNNCellID=" + string.Join("|", priceCollections.ToArray()) +
+                                "&txtIBNNCellID=oneway" +
+                                "&txtOBNNRowID=" + txt_OBNNRowID +
+                                "&txtIBNNRowID=" +
+                                "&txtUserSelectedOneway=";
+                        }
+                        else
+                        {
+                            b =
+                            "&txtUpdateInsurance="+
+                            "&Insurance%24txtInsPostbackRequired=no"+
                             "&txtPricingResponse=OK" + "" +
                             "&txtOutFBCsUsed=" + seat +
                             "&txtInFBCsUsed=" +
@@ -554,6 +597,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             "&txtOBNNRowID=" + txt_OBNNRowID +
                             "&txtIBNNRowID=" +
                             "&txtUserSelectedOneway=";
+                        }
 
                         // POST BUAT DAPETIN HARGA
                         var url6 = @"LionAirAgentsIBE/Step2Availability.aspx";
