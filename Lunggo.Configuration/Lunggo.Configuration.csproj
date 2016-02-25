@@ -123,6 +123,39 @@
     </None>
     <None Include="Config\BackendWeb\veritrans.properties" />
     <None Include="Config\BackendWeb\zendesk.properties" />
+    <None Include="Config\CloudApp.CaptchaReader\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\CloudApp.CaptchaReader\Airline.csv" />
+    <None Include="Config\CloudApp.CaptchaReader\Airport.csv" />
+    <None Include="Config\CloudApp.CaptchaReader\azureStorage.properties" />
+    <None Include="Config\CloudApp.CaptchaReader\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\CloudApp.CaptchaReader\Country.csv" />
+    <None Include="Config\CloudApp.CaptchaReader\db.properties" />
+    <None Include="Config\CloudApp.CaptchaReader\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\CloudApp.CaptchaReader\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\CloudApp.CaptchaReader\HotelLocation.csv" />
+    <None Include="Config\CloudApp.CaptchaReader\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\CloudApp.CaptchaReader\mandrill.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\CloudApp.CaptchaReader\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\CloudApp.CaptchaReader\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\CloudApp.CaptchaReader\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
@@ -154,6 +187,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebAPI\Country.csv" />
+    <Content Include="Config\WebAPI\eng.traineddata" />
     <None Include="Config\WebAPI\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
@@ -428,34 +462,37 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.TicketQueueHandler\azureStorage.properties" />
+    <None Include="Config\WebJob.TicketQueueHandler\general.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.TicketQueueHandler\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\Worker.EticketHandler\airAsia.properties">
+    <None Include="Config\CloudApp.EticketHandler\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\Worker.EticketHandler\Airline.csv" />
-    <None Include="Config\Worker.EticketHandler\Airport.csv" />
-    <None Include="Config\Worker.EticketHandler\azureStorage.properties" />
-    <None Include="Config\Worker.EticketHandler\citilink.properties">
+    <None Include="Config\CloudApp.EticketHandler\Airline.csv" />
+    <None Include="Config\CloudApp.EticketHandler\Airport.csv" />
+    <None Include="Config\CloudApp.EticketHandler\azureStorage.properties" />
+    <None Include="Config\CloudApp.EticketHandler\citilink.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\Worker.EticketHandler\Country.csv" />
-    <None Include="Config\Worker.EticketHandler\db.properties" />
-    <None Include="Config\Worker.EticketHandler\flight.properties">
+    <None Include="Config\CloudApp.EticketHandler\Country.csv" />
+    <None Include="Config\CloudApp.EticketHandler\db.properties" />
+    <None Include="Config\CloudApp.EticketHandler\flight.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\Worker.EticketHandler\general.properties">
+    <None Include="Config\CloudApp.EticketHandler\general.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\Worker.EticketHandler\HotelLocation.csv" />
-    <None Include="Config\Worker.EticketHandler\lionAir.properties">
+    <None Include="Config\CloudApp.EticketHandler\HotelLocation.csv" />
+    <None Include="Config\CloudApp.EticketHandler\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\Worker.EticketHandler\mandrill.properties">
+    <None Include="Config\CloudApp.EticketHandler\mandrill.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\Worker.EticketHandler\mystifly.properties">
+    <None Include="Config\CloudApp.EticketHandler\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.MystiflyQueueHandler\db.properties" />
@@ -538,10 +575,10 @@
     </None>
     <None Include="Config\WebJob.TicketQueueHandler\zendesk.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\zendesk.properties" />
-    <None Include="Config\Worker.EticketHandler\redis.properties">
+    <None Include="Config\CloudApp.EticketHandler\redis.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\Worker.EticketHandler\sriwijaya.properties">
+    <None Include="Config\CloudApp.EticketHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="HtmlTemplate\GetCalendarEmail.cshtml" />

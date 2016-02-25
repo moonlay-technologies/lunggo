@@ -46,8 +46,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
                     var searchRequest1 = new RestRequest(url1, Method.GET);
                     var searchResponse1 = clientx.Execute(searchRequest1);
-                    var img = new Bitmap(new MemoryStream(searchResponse1.RawBytes));
-                    successLogin = Login(clientx, img, viewstate, eventval, out userId);//, out currentDeposit);
+                    successLogin = Login(clientx, searchResponse1.RawBytes, viewstate, eventval, out userId);//, out currentDeposit);
                 } while (!successLogin);
 
                 // Page Welcome

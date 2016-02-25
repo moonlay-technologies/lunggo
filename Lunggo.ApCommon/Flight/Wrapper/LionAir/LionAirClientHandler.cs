@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Net;
+using System.Text;
 using CsQuery;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Extension;
 using RestSharp;
 using Tesseract;
 using AForge.Imaging.Filters;
@@ -63,7 +65,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 return client;
             }
 
-            private static bool Login(RestClient client, Bitmap img, string viewstate, string eventval, out string linkgoto)
+            private static bool Login(RestClient client, byte[] img, string viewstate, string eventval, out string linkgoto)
             {
                 //READ CAPTCHA
                 var captcha = ReadCaptcha(img);
@@ -116,37 +118,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 return ret;
                 
             }
-            private static string ReadCaptcha(Bitmap captcha)
+            private static string ReadCaptcha(byte[] captcha)
             {
-                ////////////////////// Series of Filters ///////////////////////
-                
-                // 1. create blur filter
-                ConservativeSmoothing filter3 = new ConservativeSmoothing();
-                Bitmap img2 = filter3.Apply(captcha);
-
-                // 2. create Crop filter
-
-                var w = img2.Width;
-                var h = img2.Height;
-                Crop filter4 = new Crop(new Rectangle(10, 10, w - 20, h - 20));
-                Bitmap img3 = filter4.Apply(img2);
-
-                // 3. create Resize filter
-                var newWidth = Convert.ToInt32(img3.Width*1.982);
-                var newHeight = Convert.ToInt32(img3.Height*1.982);
-                ResizeBilinear filter5 = new ResizeBilinear(newWidth, newHeight);
-                Bitmap img4 = filter5.Apply(img3);
-
-                //////////////////// end of series of filters ////////////////////
-
-                /// OCR /// 
-
-                var ocr = new TesseractEngine(@"C:\Program Files\Tesseract-OCR\tessdata", "eng");
-                ocr.SetVariable("tessedit_char_whitelist", "0123456789");
-                var result = ocr.Process(img4, null).GetText().Trim();
-                var readcaptcha = result.Replace(" ", "");
-
-                return readcaptcha;
+                var client = new RestClient("http://localhost:14938");
+                var captchaRq = new RestRequest("/api/captcha/lionairbreak", Method.POST);
+                captchaRq.AddHeader("Host", "localhost:14938");
+                captchaRq.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                captchaRq.AddHeader("Content-Type", "multipart/form-data");
+                captchaRq.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,i  mage/webp,*/*;q=0.8");
+                captchaRq.AddFileBytes("captcha", captcha, "captcha");
+                var captchaRs = client.Execute(captchaRq);
+                return captchaRs.Content.Trim('"');
             }
         }
     }

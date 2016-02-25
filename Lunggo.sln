@@ -42,9 +42,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebAPI", "Lunggo.Web
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.EmailQueueHandler", "Lunggo.WebJob.EmailQueueHandler\Lunggo.WebJob.EmailQueueHandler.csproj", "{F8450B86-5157-453A-9B2F-CC0A2DD4A1A9}"
 EndProject
-Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Lunggo.Worker", "Lunggo.Worker\Lunggo.Worker.ccproj", "{A1168B1D-A5FC-4811-B5F7-376661D31DA0}"
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Lunggo.CloudApp", "Lunggo.CloudApp\Lunggo.CloudApp.ccproj", "{A1168B1D-A5FC-4811-B5F7-376661D31DA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.Worker.EticketHandler", "Lunggo.Worker.EticketHandler\Lunggo.Worker.EticketHandler.csproj", "{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.CloudApp.EticketHandler", "Lunggo.CloudApp.EticketHandler\Lunggo.CloudApp.EticketHandler.csproj", "{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.FlightCrawlScheduler", "Lunggo.WebJob.FlightCrawlScheduler\Lunggo.WebJob.FlightCrawlScheduler.csproj", "{F88849EF-C947-4D34-A658-AC8CA22EF97C}"
 EndProject
@@ -63,6 +63,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch", "Lunggo.WebJob-FlightSearch\Lunggo.WebJob-FlightSearch.csproj", "{839C8598-4F07-4FA2-94CE-E61739A17700}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch.FlightCrawler5", "Lunggo.WebJob-FlightSearch.FlightCrawler5\Lunggo.WebJob-FlightSearch.FlightCrawler5.csproj", "{D6403A11-7BB3-4F58-97FE-2D67043C120C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.CloudApp.CaptchaReader", "Lunggo.CloudApp.CaptchaReader\Lunggo.CloudApp.CaptchaReader.csproj", "{C1EFFC7E-A4A5-42FF-8372-EF9BDD692F29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -297,6 +299,16 @@ Global
 		{D6403A11-7BB3-4F58-97FE-2D67043C120C}.Release|ARM.ActiveCfg = Release|Any CPU
 		{D6403A11-7BB3-4F58-97FE-2D67043C120C}.Release|x64.ActiveCfg = Release|Any CPU
 		{D6403A11-7BB3-4F58-97FE-2D67043C120C}.Release|x86.ActiveCfg = Release|Any CPU
+		{C1EFFC7E-A4A5-42FF-8372-EF9BDD692F29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1EFFC7E-A4A5-42FF-8372-EF9BDD692F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1EFFC7E-A4A5-42FF-8372-EF9BDD692F29}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C1EFFC7E-A4A5-42FF-8372-EF9BDD692F29}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C1EFFC7E-A4A5-42FF-8372-EF9BDD692F29}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C1EFFC7E-A4A5-42FF-8372-EF9BDD692F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1EFFC7E-A4A5-42FF-8372-EF9BDD692F29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1EFFC7E-A4A5-42FF-8372-EF9BDD692F29}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C1EFFC7E-A4A5-42FF-8372-EF9BDD692F29}.Release|x64.ActiveCfg = Release|Any CPU
+		{C1EFFC7E-A4A5-42FF-8372-EF9BDD692F29}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

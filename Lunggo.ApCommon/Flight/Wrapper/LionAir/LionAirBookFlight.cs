@@ -133,8 +133,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var searchRequest1 = new RestRequest(url1, Method.GET);
                         var searchResponse1 = client.Execute(searchRequest1);
                         Thread.Sleep(1000);
-                        var img = new Bitmap(new MemoryStream(searchResponse1.RawBytes));
-                        successLogin = Login(client, img, viewstate, eventval, out userID); //, out currentDeposit);
+                        successLogin = Login(client, searchResponse1.RawBytes, viewstate, eventval, out userID); //, out currentDeposit);
                         Thread.Sleep(1000);
                     } while (!successLogin);
                 }
