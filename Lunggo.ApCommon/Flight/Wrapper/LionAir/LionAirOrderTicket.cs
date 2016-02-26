@@ -10,6 +10,7 @@ using CsQuery.ExtensionMethods.Internal;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Framework.Config;
 using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
@@ -18,7 +19,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
     {
         internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
         {
-            return Client.OrderTicket(bookingId);
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            if (env == "production")
+                return Client.OrderTicket(bookingId);
+            else
+                return new OrderTicketResult
+                {
+                    IsSuccess = true,
+                    BookingId = bookingId,
+                    IsInstantIssuance = true
+                };
         }
 
         private partial class LionAirClientHandler

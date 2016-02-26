@@ -31,6 +31,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 //conditions.FareId = "KUL+CGK+25 SEP 2016+1+0+0+Y+404700+FR00_C0_SLOT0+1+JT 287+07:40";
                 if (conditions.FareId == null)
                 {
+                    throw new Exception("revalidate 1");
                     return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
                 }
 
@@ -63,12 +64,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 }
                 catch
                 {
+                    //throw new Exception("revalidate data parsing error");
                     return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.FareIdNoLongerValid}};
                 }
 
 
                 if (adultCount == 0)
                 {
+                    //throw new Exception("revalidate adult = 0");
                     return new RevalidateFareResult
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
@@ -77,6 +80,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 }
                 if (adultCount + childCount > 7)
                 {
+                    //throw new Exception("revalidate adul+children > 7");
                     return new RevalidateFareResult
                     {
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
@@ -86,6 +90,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 }
                 if (adultCount < infantCount)
                 {
+                    //throw new Exception("revalidate adult < children");
                     return new RevalidateFareResult
                     {
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
@@ -93,8 +98,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             new List<string> { "Every infant must be accompanied by one adult" }
                     };
                 }
-                if (depdate > DateTime.Now.AddMonths(12).Date)
+                if (depdate > DateTime.Now.AddDays(331).Date)
                 {
+                    //throw new Exception("revalidate > 331");
                     return new RevalidateFareResult
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
@@ -130,10 +136,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         if (searchResponse0.ResponseUri.AbsolutePath != "/lionairagentsportal/default.aspx" &&
                             (searchResponse0.StatusCode == HttpStatusCode.OK ||
                              searchResponse0.StatusCode == HttpStatusCode.Redirect))
+                        {
+                            //throw new Exception("revalidate connection");
                             return new RevalidateFareResult
                             {
                                 Errors = new List<FlightError> {FlightError.InvalidInputData}
                             };
+                        }
                         Thread.Sleep(1000);
                         var url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
                         var searchRequest1 = new RestRequest(url1, Method.GET);
@@ -145,6 +154,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Thread.Sleep(1000);
                         counter++;
                     } while (!successLogin && counter < 11);
+                if (counter >= 11)
+                {
+                    return new RevalidateFareResult
+                    {
+                        Errors = new List<FlightError> { FlightError.InvalidInputData }
+                    };
+                }
                 //}
                 //else
                 //{
@@ -248,7 +264,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var v = 2;
                     int z;
                     while (v < Rows.Count())
-                     {
+                    {
+                        if (selectedRows.Count == segmentCount)
+                        {
+                            break;
+                        }
 	                    var plane = Rows[v].ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
 	                    var w = 0;
 	                    if (plane == listflight.ElementAt(w))
@@ -266,7 +286,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 			                    else
 			                    {
 				                    selectedRows.Clear();
-				                }
+			                        break;
+			                    }
                                 z += 1;
                                 w += 1;
 		                    }
@@ -276,7 +297,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 	                    {
 	                        v = v + 1;
 	                    }
-                        
                     }
                     
                     string b;
@@ -532,8 +552,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         colpost = postdata.Create(Rows, priceCollections);
                         garbled =
                             "ScriptManager1=upnlTotalTripCost%7CbtnPriceSelection&__EVENTTARGET=btnPriceSelection&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE=";
-
-
+                        
                         if (originCountry == "ID")
                         {
                             b =
@@ -695,8 +714,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 
                 }
 
-                catch
+                catch //(Exception e)
                 {
+                    //throw e;
                     return new RevalidateFareResult
                     {
                         IsSuccess = false,

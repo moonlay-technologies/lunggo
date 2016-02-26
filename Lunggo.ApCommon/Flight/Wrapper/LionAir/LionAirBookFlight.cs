@@ -31,7 +31,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             {
                 if (bookInfo.FareId == null)
                 {
-                    return new BookFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
+                    throw new Exception("haloooo 1");
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Errors = new List<FlightError> {FlightError.InvalidInputData},
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        }
+                    };
                 }
 
                 string origin, dest, flightId;
@@ -40,9 +49,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 int segmentCount;
                 DateTime depdate;
                 int adultCount, childCount, infantCount;
-                //decimal price;
+                decimal price;
                 string bookingTimeLimit = "";
                 string bookingReference = "";
+                //string price;
+                List<string> listflight;
+                List<string> listdephr;
                 CabinClass cabinClass;
                 try
                 {
@@ -54,13 +66,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     childCount = Convert.ToInt32(splittedFareId[4]);
                     infantCount = Convert.ToInt32(splittedFareId[5]);
                     cabinClass = FlightService.ParseCabinClass(splittedFareId[6]);
-                    //price = Convert.ToDecimal((splittedFareId[7]));
-                    flightId = splittedFareId[8];
+                    price = Convert.ToDecimal((splittedFareId[7]));
+                    //flightId = splittedFareId[8];
                     segmentCount = Convert.ToInt32(splittedFareId[9]);
+                    listflight = splittedFareId[10].Split('|').ToList();
+                    listdephr = splittedFareId[11].Split('|').ToList();
                  }
                 catch
                 {
-                    return new BookFlightResult {Errors = new List<FlightError> {FlightError.FareIdNoLongerValid}};
+                    //throw new Exception("haloooo 2");
+                    return new BookFlightResult
+                    {
+                        Errors = new List<FlightError> {FlightError.FareIdNoLongerValid},
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        IsSuccess = false
+                    };
                 }
 
                 var infants = bookInfo.Passengers.Where(pax => pax.Type == PassengerType.Infant);
@@ -85,36 +108,60 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 if (adultCount == 0)
                 {
+                    //throw new Exception("haloooo 3");
                     return new BookFlightResult
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages = new List<string> {"There Must be one adult"}
+                        ErrorMessages = new List<string> {"There Must be one adult"},
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        IsSuccess = false
                     };
                 }
                 if (adultCount + childCount > 7)
                 {
+                    //throw new Exception("haloooo 4");
                     return new BookFlightResult
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
                         ErrorMessages =
-                            new List<string> {"Total adult and children passenger must be not more than seven"}
+                            new List<string> {"Total adult and children passenger must be not more than seven"},
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        IsSuccess = false
                     };
                 }
                 if (adultCount < infantCount)
                 {
+                    //throw new Exception("haloooo 5");
                     return new BookFlightResult
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
                         ErrorMessages =
-                            new List<string> {"Each infant must be accompanied by one adult"}
+                            new List<string> {"Each infant must be accompanied by one adult"},
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        }
                     };
                 }
-                if (depdate > DateTime.Now.AddMonths(12).Date)
+                if (depdate > DateTime.Now.AddMonths(331).Date)
                 {
+                    //throw new Exception("haloooo 6");
                     return new BookFlightResult
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages = new List<string> {"Time of Departure Exceeds"}
+                        ErrorMessages = new List<string> {"Time of Departure Exceeds"},
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        IsSuccess = false
                     };
                 }
                 if (!isInfantValid)
@@ -122,7 +169,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return new BookFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        ErrorMessages = new List<string> { "Age of infant when traveling must be less than or equal 2 years old" }
+                        ErrorMessages = new List<string> { "Age of infant when traveling must be less than or equal 2 years old" },
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        IsSuccess = false
+                    };
+                }
+                if (!isChildValid)
+                {
+                    return new BookFlightResult
+                    {
+                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        ErrorMessages = new List<string> { "Age of chil when traveling must be between 2 and 12 years old" },
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        IsSuccess = false
                     };
                 }
                 // [GET] Search Flight
@@ -134,43 +199,69 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var destinationCountry = dict.GetAirportCountryCode(dest);
                 var searchedHtml = new CQ();
                 string userId;
-                if (originCountry == "ID")
+                //if (originCountry == "ID")
+                //{
+                bool successLogin;
+                int counter = 0;
+                do
                 {
-                    bool successLogin;
-                    do
+                    client.BaseUrl = new Uri("https://agent.lionair.co.id");
+                    var url0 = @"/lionairagentsportal/default.aspx";
+                    var searchRequest0 = new RestRequest(url0, Method.GET);
+                    var searchResponse0 = client.Execute(searchRequest0);
+                    var html0 = searchResponse0.Content;
+                    searchedHtml = (CQ) html0;
+                    var viewstate = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
+                    var eventval = HttpUtility.UrlEncode(searchedHtml["#__EVENTVALIDATION"].Attr("value"));
+                    FlightService.ParseCabinClass(CabinClass.Economy);
+                    if (searchResponse0.ResponseUri.AbsolutePath != "/lionairagentsportal/default.aspx" &&
+                        (searchResponse0.StatusCode == HttpStatusCode.OK ||
+                         searchResponse0.StatusCode == HttpStatusCode.Redirect))
                     {
-                        client.BaseUrl = new Uri("https://agent.lionair.co.id");
-                        var url0 = @"/lionairagentsportal/default.aspx";
-                        var searchRequest0 = new RestRequest(url0, Method.GET);
-                        var searchResponse0 = client.Execute(searchRequest0);
-                        var html0 = searchResponse0.Content;
-                        searchedHtml = (CQ) html0;
-                        var viewstate = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
-                        var eventval = HttpUtility.UrlEncode(searchedHtml["#__EVENTVALIDATION"].Attr("value"));
-                        FlightService.ParseCabinClass(CabinClass.Economy);
-                        if (searchResponse0.ResponseUri.AbsolutePath != "/lionairagentsportal/default.aspx" &&
-                            (searchResponse0.StatusCode == HttpStatusCode.OK ||
-                             searchResponse0.StatusCode == HttpStatusCode.Redirect))
-                            return new BookFlightResult
+                        //throw new Exception("haloooo 99999");
+                        return new BookFlightResult
+                        {
+
+                            Errors = new List<FlightError> {FlightError.InvalidInputData},
+                            Status = new BookingStatusInfo
                             {
-                                Errors = new List<FlightError> {FlightError.InvalidInputData}
-                            };
-                        Thread.Sleep(1000);
-                        var url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
-                        var searchRequest1 = new RestRequest(url1, Method.GET);
-                        var searchResponse1 = client.Execute(searchRequest1);
-                        Thread.Sleep(1000);
-                        successLogin = Login(client, searchResponse1.RawBytes, viewstate, eventval, out userID); //, out currentDeposit);
-                        Thread.Sleep(1000);
-                    } while (!successLogin);
-                }
-                else
+                                BookingStatus = BookingStatus.Failed
+                            },
+                            IsSuccess = false
+                        };
+                    } 
+                    Thread.Sleep(1000);
+                    var url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
+                    var searchRequest1 = new RestRequest(url1, Method.GET);
+                    var searchResponse1 = client.Execute(searchRequest1);
+                    Thread.Sleep(1000);
+                    successLogin = Login(client, searchResponse1.RawBytes, viewstate, eventval, out userId); //, out currentDeposit);
+                    Thread.Sleep(1000);
+                    counter++;
+                } while (!successLogin && counter < 11);
+
+                if (counter >= 11)
                 {
                     return new BookFlightResult
                     {
-                        IsSuccess = true,
+
+                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        IsSuccess = false
                     };
                 }
+
+                //}
+                //else
+                //{
+                //    return new BookFlightResult
+                //    {
+                //        IsSuccess = true,
+                //    };
+                //}
 
                 //GET PAGE CONST ID
                 var startind = userId.IndexOf("consID");
@@ -266,19 +357,58 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                     // PILIH ROW DAN SEGMENNYA
                     //var j = 0;
-                    for (int v = 2; v < Rows.Count() - 1; v++)
+                    
+                    var v = 2;
+                    int z;
+                    while (v < Rows.Count())
                     {
-                        var rowId = Rows[v].GetAttribute("id");
-                        var flightselection = rowId.Split('_')[1].SubstringBetween(1, rowId.Split('_')[1].Length);
-                        //var liat = flightID.Split('_')[1].SubstringBetween(1, flightID.Split('_')[1].Length);
-                        if (rowId[2] == flightId[3] &&
-                            (flightselection ==
-                             flightId.Split('_')[1].SubstringBetween(1, flightId.Split('_')[1].Length)))
+                        if (selectedRows.Count == segmentCount)
+                        {
+                            break;
+                        }
+                        var plane = Rows[v].ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
+                        var w = 0;
+                        if (plane == listflight.ElementAt(w))
                         {
                             selectedRows.Add(Rows[v]);
+                            z = v + 1;
+                            w += 1;
+                            while (z < Rows.Count() && z < v + listflight.Count())
+                            {
+                                plane = Rows[z].ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
+                                if (plane == listflight.ElementAt(w))
+                                {
+                                    selectedRows.Add(Rows[z]);
+                                }
+                                else
+                                {
+                                    selectedRows.Clear();
+                                    break;
+                                }
+                                z += 1;
+                                w += 1;
+                            }
+                            v = z;
+                        }
+                        else
+                        {
+                            v = v + 1;
                         }
                     }
-                    //var jlh = selectedRows.Count();
+
+                    //for (int v = 2; v < Rows.Count() - 1; v++)
+                    //{
+                    //    var rowId = Rows[v].GetAttribute("id");
+                    //    var flightselection = rowId.Split('_')[1].SubstringBetween(1, rowId.Split('_')[1].Length);
+                    //    //var liat = flightID.Split('_')[1].SubstringBetween(1, flightID.Split('_')[1].Length);
+                    //    if (rowId[2] == flightId[3] &&
+                    //        (flightselection ==
+                    //         flightId.Split('_')[1].SubstringBetween(1, flightId.Split('_')[1].Length)))
+                    //    {
+                    //        selectedRows.Add(Rows[v]);
+                    //    }
+                    //}
+                    ////var jlh = selectedRows.Count();
                     //Crawling data penerbangan: Jam, airport, flight number
                     string b;
                     string colpost;
@@ -561,38 +691,69 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         colpost = postdata.Create(Rows, priceCollections);
                         garbled =
                             "ScriptManager1=upnlTotalTripCost%7CbtnPriceSelection&__EVENTTARGET=btnPriceSelection&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE=";
-                         b =
-                            "&txtUpdateInsurance=no" +
-                            "&Insurance%24rblInsurance=No" + // ini kdg2 ngada.
-                            "&Insurance%24txtInsPostbackRequired=no" +
-                            "&txtPricingResponse=OK" + "" +
-                            "&txtOutFBCsUsed=" + seat +
-                            "&txtInFBCsUsed=" +
-                            "&txtTaxBreakdown=" +
-                            "&lbContinue.x=39&lbContinue.y=11" +
-                            "&UcFlightSelection%24TripType=rbOneWay" + "" +
-                            "&UcFlightSelection%24DateFlexibility=rbMustTravel" +
-                            "&UcFlightSelection%24txtSelOri=" + origin + //CHANGE
-                            "&UcFlightSelection%24txtOri=" + cityDep + "%20(" + origin + ")" + //CHANGE
-                            "&UcFlightSelection%24ddlDepMonth=" + depdate.ToString("MMM") + "%20" + depdate.Year +
-                            //CHANGE
-                            "&UcFlightSelection%24ddlDepDay=" + depdate.Day + //CHANGE
-                            "&UcFlightSelection%24ddlADTCount=" + adultCount + //CHANGE
-                            "&UcFlightSelection%24txtSelDes=" + dest + //CHANGE
-                            "&UcFlightSelection%24txtDes=" + cityArr + "%20(" + dest + ")" + //CHANGE
-                            //"&UcFlightSelection%24ddlRetMonth=" + depdate.ToString("MMM") + "%20" + depdate.Year + //CHANGE
-                            //"&UcFlightSelection%24ddlRetDay=" + depdate.Day + //CHANGE
-                            "&UcFlightSelection%24ddlCNNCount=" + childCount + //CHANGE
-                            "&UcFlightSelection%24ddlINFCount=" + infantCount + //CHANGE
-                            "&UcFlightSelection%24txtDepartureDate=" + depdate.ToString("dd") + "%20" + depdate.ToString("MMM") +
-                            "%20" + depdate.Year + //CHANGE
-                            "&UcFlightSelection%24txtReturnDate=" + depdate.ToString("dd") + "%20" + depdate.ToString("MMM") +
-                            "%20" + depdate.Year + //CHANGE
-                            "&txtOBNNCellID=" + string.Join("|", priceCollections.ToArray()) +
-                            "&txtIBNNCellID=oneway" +
-                            "&txtOBNNRowID=" + txt_OBNNRowID +
-                            "&txtIBNNRowID=" +
-                            "&txtUserSelectedOneway=";
+                        //if (originCountry == "ID")
+                        //{
+                            b =
+                                "&txtUpdateInsurance=no" +
+                                "&Insurance%24rblInsurance=No" +
+                                "&Insurance%24txtInsPostbackRequired=no" +
+                                "&txtPricingResponse=OK" + "" +
+                                "&txtOutFBCsUsed=" + seat +
+                                "&txtInFBCsUsed=" +
+                                "&txtTaxBreakdown=" +
+                                "&lbContinue.x=39&lbContinue.y=11" +
+                                "&UcFlightSelection%24TripType=rbOneWay" + "" +
+                                "&UcFlightSelection%24DateFlexibility=rbMustTravel" +
+                                "&UcFlightSelection%24txtSelOri=" + origin + //CHANGE
+                                "&UcFlightSelection%24txtOri=" + cityDep + "%20(" + origin + ")" + //CHANGE
+                                "&UcFlightSelection%24ddlDepMonth=" + depdate.ToString("MMM") + "%20" + depdate.Year +
+                                "&UcFlightSelection%24ddlDepDay=" + depdate.Day + //CHANGE
+                                "&UcFlightSelection%24ddlADTCount=" + adultCount + //CHANGE
+                                "&UcFlightSelection%24txtSelDes=" + dest + //CHANGE
+                                "&UcFlightSelection%24txtDes=" + cityArr + "%20(" + dest + ")" + //CHANGE
+                                "&UcFlightSelection%24ddlCNNCount=" + childCount + //CHANGE
+                                "&UcFlightSelection%24ddlINFCount=" + infantCount + //CHANGE
+                                "&UcFlightSelection%24txtDepartureDate=" + depdate.ToString("dd") + "%20" + depdate.ToString("MMM") +
+                                "%20" + depdate.Year + //CHANGE
+                                "&UcFlightSelection%24txtReturnDate=" + depdate.ToString("dd") + "%20" + depdate.ToString("MMM") +
+                                "%20" + depdate.Year + //CHANGE
+                                "&txtOBNNCellID=" + string.Join("|", priceCollections.ToArray()) +
+                                "&txtIBNNCellID=oneway" +
+                                "&txtOBNNRowID=" + txt_OBNNRowID +
+                                "&txtIBNNRowID=" +
+                                "&txtUserSelectedOneway=";
+                        //}
+                        //else
+                        //{
+                        //    b =
+                        //    "&txtUpdateInsurance=" +
+                        //    "&Insurance%24txtInsPostbackRequired=no" +
+                        //    "&txtPricingResponse=OK" + "" +
+                        //    "&txtOutFBCsUsed=" + seat +
+                        //    "&txtInFBCsUsed=" +
+                        //    "&txtTaxBreakdown=" +
+                        //    "&lbContinue.x=39&lbContinue.y=11" +
+                        //    "&UcFlightSelection%24TripType=rbOneWay" + "" +
+                        //    "&UcFlightSelection%24DateFlexibility=rbMustTravel" +
+                        //    "&UcFlightSelection%24txtSelOri=" + origin + //CHANGE
+                        //    "&UcFlightSelection%24txtOri=" + cityDep + "%20(" + origin + ")" + //CHANGE
+                        //    "&UcFlightSelection%24ddlDepMonth=" + depdate.ToString("MMM") + "%20" + depdate.Year +
+                        //    "&UcFlightSelection%24ddlDepDay=" + depdate.Day + //CHANGE
+                        //    "&UcFlightSelection%24ddlADTCount=" + adultCount + //CHANGE
+                        //    "&UcFlightSelection%24txtSelDes=" + dest + //CHANGE
+                        //    "&UcFlightSelection%24txtDes=" + cityArr + "%20(" + dest + ")" + //CHANGE
+                        //    "&UcFlightSelection%24ddlCNNCount=" + childCount + //CHANGE
+                        //    "&UcFlightSelection%24ddlINFCount=" + infantCount + //CHANGE
+                        //    "&UcFlightSelection%24txtDepartureDate=" + depdate.ToString("dd") + "%20" + depdate.ToString("MMM") +
+                        //    "%20" + depdate.Year + //CHANGE
+                        //    "&UcFlightSelection%24txtReturnDate=" + depdate.ToString("dd") + "%20" + depdate.ToString("MMM") +
+                        //    "%20" + depdate.Year + //CHANGE
+                        //    "&txtOBNNCellID=" + string.Join("|", priceCollections.ToArray()) +
+                        //    "&txtIBNNCellID=oneway" +
+                        //    "&txtOBNNRowID=" + txt_OBNNRowID +
+                        //    "&txtIBNNRowID=" +
+                        //    "&txtUserSelectedOneway=";
+                        //}
 
                         // POST BUAT DAPETIN HARGA
                         var url6 = @"LionAirAgentsIBE/Step2Availability.aspx";
@@ -992,10 +1153,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     CultureInfo provider = CultureInfo.InvariantCulture;
                     if (bookingReference.Length == 0)
                     {
+                        //throw new Exception("haloooo 1000000000000");
                         return new BookFlightResult
                         {
                             IsSuccess = false,
                             Errors = new List<FlightError> { FlightError.TechnicalError },
+                            Status = new BookingStatusInfo
+                            {
+                                BookingStatus = BookingStatus.Failed
+                            }
                             //ErrorMessages = new List<string> { "Web Layout Changed!" }
                         };
                     }
@@ -1014,13 +1180,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         }
                     };
                  }
-                 catch
+                 catch //(Exception e)
                  {
+                    //throw e;
                     return new BookFlightResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> {FlightError.TechnicalError},
-                        ErrorMessages = new List<string> {"Web Layout Changed!"}
+                        ErrorMessages = new List<string> {"Web Layout Changed!"},
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        }
                     };
                 }
             }

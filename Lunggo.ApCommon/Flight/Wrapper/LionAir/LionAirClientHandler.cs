@@ -75,7 +75,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var url = @"lionairagentsportal/default.aspx";
                 var request = new RestRequest(url, Method.POST);
 
-                _userName= "trv.agent.dua";
+                _userName= "trv.agent.tujuh";
                 _password = "Standar1234";
 
                 var postData = 
@@ -125,7 +125,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             }
             private static string ReadCaptcha(byte[] captcha)
             {
-                var client = new RestClient("http://localhost:14938");
+                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var client = new RestClient(cloudAppUrl);
                 var captchaRq = new RestRequest("/api/captcha/lionairbreak", Method.POST);
                 captchaRq.AddHeader("Host", "localhost:14938");
                 captchaRq.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
