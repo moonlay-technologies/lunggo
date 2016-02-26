@@ -32,6 +32,15 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge">
+      <HintPath>..\packages\AForge.2.2.5\lib\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging">
+      <HintPath>..\packages\AForge.Imaging.2.2.5\lib\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Math">
+      <HintPath>..\packages\AForge.Math.2.2.5\lib\AForge.Math.dll</HintPath>
+    </Reference>
     <Reference Include="Base36Encoder">
       <HintPath>..\packages\csharpbase36.1.0.0\lib\Base36Encoder.dll</HintPath>
     </Reference>
@@ -72,9 +81,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -128,6 +137,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tesseract">
+      <HintPath>..\packages\Tesseract.3.0.1.0\lib\net45\Tesseract.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\Constant\ActivityCdEnum.cs" />
@@ -289,6 +301,33 @@
     <Compile Include="Flight\Wrapper\Citilink\CitilinkSearchFlight.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkWrapperSingleton.cs" />
     <Compile Include="Flight\Wrapper\FlightSupplierWrapperBase.cs" />
+    <Compile Include="Flight\Wrapper\LionAir\LionAirBookFlight.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Flight\Wrapper\LionAir\LionAirClientHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Flight\Wrapper\LionAir\LionAirGetBookingStatus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Flight\Wrapper\LionAir\LionAirGetTripDetails.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Flight\Wrapper\LionAir\LionAirIsIssued.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Flight\Wrapper\LionAir\LionAirOrderTicket.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Flight\Wrapper\LionAir\LionAirRevalidateFare.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Flight\Wrapper\LionAir\LionAirSearchFlight.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Flight\Wrapper\LionAir\LionAirWrapperSingleton.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyCancelBooking.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyClientHandler.cs" />
@@ -476,6 +515,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <Content Include="eng.cube-word-dawg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="eng.cube.bigrams">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="eng.cube.fold">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="eng.cube.lm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="eng.cube.nn">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="eng.cube.params">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="eng.cube.size">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="eng.cube.word-freq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="eng.tesseract_cube.nn">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="eng.traineddata">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirBookingDataRS.datasource" />
     <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirBookingNotesRS.datasource" />
@@ -667,6 +736,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Identity\Model\" />
+    <Folder Include="NewFolder1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="x64\liblept171.dll" />
+    <Content Include="x64\libtesseract304.dll" />
+    <Content Include="x86\liblept171.dll" />
+    <Content Include="x86\libtesseract304.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
