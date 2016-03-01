@@ -784,7 +784,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   color: #fff;
   padding: 5px; }
   .page.page-flight .flight-notice p {
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    font-size: 11px; }
 
 .page.page-flight .flight-selection {
   background: #e5e3e4;
@@ -1054,8 +1055,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background-position: -22px 0; }
   .overlay--flight-detail .overlay__content .flight-notice {
     background: #d70000; }
-    .overlay--flight-detail .overlay__content .flight-notice p {
-      font-size: 11px; }
   .overlay--flight-detail .overlay__content .flight-wrapper .flight {
     position: relative; }
     .overlay--flight-detail .overlay__content .flight-wrapper .flight:after {

@@ -23,7 +23,7 @@
     }
     // flight notice
     .flight-notice {background:#ff9a24; color:#fff; padding:5px;
-        p {margin-bottom:0;}
+        p {margin-bottom:0; font-size:11px;}
     }
     // flight selection
     .flight-selection {background:#e5e3e4; position:relative; font-weight:bold;
@@ -190,9 +190,7 @@
                 .flight-info:before {background-position:-22px 0;}
             }
         }
-        .flight-notice {background:#d70000;
-            p {font-size:11px;}
-        }
+        .flight-notice {background:#d70000;}
         .flight-wrapper {
             .flight {position:relative; @include clearfix();
                 .flight__number {width:15px; left:5px; position:absolute;
