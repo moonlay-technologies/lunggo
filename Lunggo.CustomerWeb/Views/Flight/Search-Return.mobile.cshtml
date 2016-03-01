@@ -147,7 +147,7 @@
     
         <div class="flight-selection" ng-show="FlightConfig[1].ActiveFlight >= 0">
             <div class="flight-info flight-info--return">
-                <span>pulang : <br/> {{FlightConfig[1].FlightList[FlightConfig[1].ActiveFlight].Trips[0].Segments[0].AirlineName}} ({{FlightConfig[1].FlightList[FlightConfig[1].ActiveFlight].TotalFare | number}})</span>
+                <span>pulang : <br/> {{FlightConfig[1].FlightList[FlightConfig[1].ActiveFlight].Trips[0].Segments[0].AirlineName}} (Rp {{FlightConfig[1].FlightList[FlightConfig[1].ActiveFlight].TotalFare | number}})</span>
             </div>
             <a ng-click="FlightFunction.SetActiveFlight('return',-1); SetSection('return');" class="change-departure"><span>Ganti</span></a>
         </div><!-- .flight-selection -->
@@ -191,7 +191,7 @@
     
         <div class="flight-selection" ng-show="FlightConfig[0].ActiveFlight >= 0">
             <div class="flight-info">
-                <span>Pergi : <br/> {{FlightConfig[0].FlightList[FlightConfig[0].ActiveFlight].Trips[0].Segments[0].AirlineName}} ({{FlightConfig[0].FlightList[FlightConfig[0].ActiveFlight].TotalFare | number}})</span>
+                <span>Pergi : <br/> {{FlightConfig[0].FlightList[FlightConfig[0].ActiveFlight].Trips[0].Segments[0].AirlineName}} (Rp {{FlightConfig[0].FlightList[FlightConfig[0].ActiveFlight].TotalFare | number}})</span>
             </div>
             <a ng-click="FlightFunction.SetActiveFlight('departure',-1); SetSection('departure');" class="change-departure"><span>Ganti</span></a>
         </div><!-- .flight-selection -->
