@@ -69,7 +69,7 @@ namespace Lunggo.ApCommon.Flight.Service
             UpdateDb.CancelReservation(rsvNo, cancellationType);
         }
 
-        internal void ConfirmReservationRefund(string rsvNo, RefundInfo refund)
+        internal void ConfirmReservationRefund(string rsvNo, Refund refund)
         {
             UpdateDb.ConfirmRefund(rsvNo, refund);
         }

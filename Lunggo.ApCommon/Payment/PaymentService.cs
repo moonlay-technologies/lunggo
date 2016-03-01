@@ -58,23 +58,23 @@ namespace Lunggo.ApCommon.Payment
             }
         }
 
-        public void ProcessPayment(PaymentInfo paymentInfo, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
+        public void ProcessPayment(Model.Payment payment, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             if (method == PaymentMethod.BankTransfer)
             {
-                paymentInfo.Url = "DIRECT";
-                paymentInfo.Status = PaymentStatus.Pending;
+                payment.Url = "DIRECT";
+                payment.Status = PaymentStatus.Pending;
             }
             else if (method == PaymentMethod.CreditCard)
             {
-                paymentInfo.Url = "THIRDPARTYDIRECT";
-                var status = SubmitPayment(paymentInfo.Data, transactionDetails, itemDetails, method);
-                paymentInfo.Status = status;
+                payment.Url = "THIRDPARTYDIRECT";
+                var status = SubmitPayment(payment.Data, transactionDetails, itemDetails, method);
+                payment.Status = status;
             }
             else
             {
-                paymentInfo.Url = GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
-                paymentInfo.Status = PaymentStatus.Pending;
+                payment.Url = GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
+                payment.Status = PaymentStatus.Pending;
             }
         }
 

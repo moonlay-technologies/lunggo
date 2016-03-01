@@ -165,7 +165,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxEmailAddress=dwi.agustina@travelmadezy.com" +
                     @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxFax=021-29035099" +
                     @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxFirstName=Yoga" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxHomePhone=" + bookInfo.ContactData.CountryCode + bookInfo.ContactData.Phone +
+                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxHomePhone=" + bookInfo.Contact.CountryCode + bookInfo.Contact.Phone +
                     @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxLastName=Sukma" +
                     @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxMiddleName=Dwi" +
                     @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxPostalCode=zip/postal" +
@@ -320,7 +320,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                    @"&CONTROLGROUPPAYMENTBOTTOM%24ControlGroupPaymentInputViewPaymentView%24TxtCardHolderZipCode=" +
                    @"&CONTROLGROUPPAYMENTBOTTOM%24ControlGroupPaymentInputViewPaymentView%24DdlCardHolderCountry=AD" +
                    @"&CONTROLGROUPPAYMENTBOTTOM%24ControlGroupPaymentInputViewPaymentView%24TxtCardHolderEmail=dwi.agustina%40travelmadezy.com" +
-                   @"&CONTROLGROUPPAYMENTBOTTOM%24ControlGroupPaymentInputViewPaymentView%24TxtCardHolderPhone=" + bookInfo.ContactData.CountryCode + bookInfo.ContactData.Phone +
+                   @"&CONTROLGROUPPAYMENTBOTTOM%24ControlGroupPaymentInputViewPaymentView%24TxtCardHolderPhone=" + bookInfo.Contact.CountryCode + bookInfo.Contact.Phone +
                    @"&DropDownListPaymentMethodCode=ExternalAccount%3AMC" +
                    @"&DropDownListPaymentMethodCode=Voucher%3AVO" +
                    @"&TextBoxVoucherAccount_VO_ACCTNO=" +

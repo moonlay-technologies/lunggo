@@ -60,7 +60,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
             }
 
-            internal static bool Payment(string rsvNo, PaymentInfo payment)
+            internal static bool Payment(string rsvNo, Payment.Model.Payment payment)
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
@@ -91,7 +91,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
             }
 
-            internal static void ConfirmRefund(string rsvNo, RefundInfo refund)
+            internal static void ConfirmRefund(string rsvNo, Refund refund)
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {

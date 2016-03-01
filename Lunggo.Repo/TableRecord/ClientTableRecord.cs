@@ -11,13 +11,22 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public int? ClientId
+		public String Id
 		{
-		    get { return _ClientId; }
+		    get { return _Id; }
 		    set
 		    {
-		        _ClientId = value;
-		        IncrementLog("ClientId");
+		        _Id = value;
+		        IncrementLog("Id");
+		    }
+		}
+		public String Secret
+		{
+		    get { return _Secret; }
+		    set
+		    {
+		        _Secret = value;
+		        IncrementLog("Secret");
 		    }
 		}
 		public String Name
@@ -29,60 +38,51 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Name");
 		    }
 		}
-		public String Description
+		public String ApplicationTypeCd
 		{
-		    get { return _Description; }
+		    get { return _ApplicationTypeCd; }
 		    set
 		    {
-		        _Description = value;
-		        IncrementLog("Description");
+		        _ApplicationTypeCd = value;
+		        IncrementLog("ApplicationTypeCd");
 		    }
 		}
-		public String InsertBy
+		public Boolean? IsActive
 		{
-		    get { return _InsertBy; }
+		    get { return _IsActive; }
 		    set
 		    {
-		        _InsertBy = value;
-		        IncrementLog("InsertBy");
+		        _IsActive = value;
+		        IncrementLog("IsActive");
 		    }
 		}
-		public DateTime? InsertDate
+		public int? RefreshTokenLifeTime
 		{
-		    get { return _InsertDate; }
+		    get { return _RefreshTokenLifeTime; }
 		    set
 		    {
-		        _InsertDate = value;
-		        IncrementLog("InsertDate");
+		        _RefreshTokenLifeTime = value;
+		        IncrementLog("RefreshTokenLifeTime");
 		    }
 		}
-		public String UpdateBy
+		public String AllowedOrigin
 		{
-		    get { return _UpdateBy; }
+		    get { return _AllowedOrigin; }
 		    set
 		    {
-		        _UpdateBy = value;
-		        IncrementLog("UpdateBy");
-		    }
-		}
-		public DateTime? UpdateDate
-		{
-		    get { return _UpdateDate; }
-		    set
-		    {
-		        _UpdateDate = value;
-		        IncrementLog("UpdateDate");
+		        _AllowedOrigin = value;
+		        IncrementLog("AllowedOrigin");
 		    }
 		}
 
 		
-		private int? _ClientId;
+		private String _Id;
+		private String _Secret;
 		private String _Name;
-		private String _Description;
-		private String _InsertBy;
-		private DateTime? _InsertDate;
-		private String _UpdateBy;
-		private DateTime? _UpdateDate;
+		private String _ApplicationTypeCd;
+		private Boolean? _IsActive;
+		private int? _RefreshTokenLifeTime;
+		private String _AllowedOrigin;
 
 
 		public static ClientTableRecord CreateNewInstance()
@@ -114,13 +114,13 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("ClientId", true),
+				new ColumnMetadata("Id", true),
+				new ColumnMetadata("Secret", false),
 				new ColumnMetadata("Name", false),
-				new ColumnMetadata("Description", false),
-				new ColumnMetadata("InsertBy", false),
-				new ColumnMetadata("InsertDate", false),
-				new ColumnMetadata("UpdateBy", false),
-				new ColumnMetadata("UpdateDate", false),
+				new ColumnMetadata("ApplicationTypeCd", false),
+				new ColumnMetadata("IsActive", false),
+				new ColumnMetadata("RefreshTokenLifeTime", false),
+				new ColumnMetadata("AllowedOrigin", false),
 
             };
         }

@@ -3,32 +3,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Payment.Model
 {
     public class Data
     {
-        public string Data0 { get; set; }
-        public string Data1 { get; set; }
-        public string Data2 { get; set; }
-        public string Data3 { get; set; }
-        public string Data4 { get; set; }
-        public string Data5 { get; set; }
-        public string Data6 { get; set; }
-        public string Data7 { get; set; }
-        public string Data8 { get; set; }
-        public string Data9 { get; set; }
-        public int Data10 { get; set; }
-        public int Data11 { get; set; }
-        public int Data12 { get; set; }
-        public int Data13 { get; set; }
-        public int Data14 { get; set; }
-        public bool Data20 { get; set; }
-        public bool Data21 { get; set; }
-        public bool Data22 { get; set; }
-        public bool Data23 { get; set; }
-        public bool Data24 { get; set; }
-
-
+        [JsonProperty("d0", NullValueHandling = NullValueHandling.Ignore)]
+        public string DataString0 { get; set; }
+        [JsonProperty("d1", NullValueHandling = NullValueHandling.Ignore)]
+        public string DataString1 { get; set; }
+        [JsonProperty("d2", NullValueHandling = NullValueHandling.Ignore)]
+        public string DataString2 { get; set; }
+        [JsonProperty("d3", NullValueHandling = NullValueHandling.Ignore)]
+        public string DataString3 { get; set; }
+        [JsonProperty("d4", NullValueHandling = NullValueHandling.Ignore)]
+        public string DataString4 { get; set; }
+        [JsonProperty("d5", NullValueHandling = NullValueHandling.Ignore)]
+        public string DataString5 { get; set; }
+        [JsonProperty("d6", NullValueHandling = NullValueHandling.Ignore)]
+        public string DataString6 { get; set; }
+        [JsonProperty("d7", NullValueHandling = NullValueHandling.Ignore)]
+        public string DataString7 { get; set; }
+        [JsonProperty("d8", NullValueHandling = NullValueHandling.Ignore)]
+        public string DataString8 { get; set; }
+        [JsonProperty("d9", NullValueHandling = NullValueHandling.Ignore)]
+        public string DataString9 { get; set; }
+        [JsonProperty("d10", NullValueHandling = NullValueHandling.Ignore)]
+        public int DataInt0 { get; set; }
+        [JsonProperty("d11", NullValueHandling = NullValueHandling.Ignore)]
+        public int DataInt1 { get; set; }
+        [JsonProperty("d12", NullValueHandling = NullValueHandling.Ignore)]
+        public int DataInt2 { get; set; }
+        [JsonProperty("d13", NullValueHandling = NullValueHandling.Ignore)]
+        public int DataInt3 { get; set; }
+        [JsonProperty("d14", NullValueHandling = NullValueHandling.Ignore)]
+        public int DataInt4 { get; set; }
+        [JsonProperty("d20", NullValueHandling = NullValueHandling.Ignore)]
+        public bool DataBool0 { get; set; }
+        [JsonProperty("d21", NullValueHandling = NullValueHandling.Ignore)]
+        public bool DataBool1 { get; set; }
+        [JsonProperty("d22", NullValueHandling = NullValueHandling.Ignore)]
+        public bool DataBool2 { get; set; }
+        [JsonProperty("d23", NullValueHandling = NullValueHandling.Ignore)]
+        public bool DataBool3 { get; set; }
+        [JsonProperty("d24", NullValueHandling = NullValueHandling.Ignore)]
+        public bool DataBool4 { get; set; }
     }
 }

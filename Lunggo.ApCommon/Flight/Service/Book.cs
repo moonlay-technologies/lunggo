@@ -172,7 +172,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 FareId = itin.FareId,
                 CanHold = itin.CanHold,
-                ContactData = input.Contact,
+                Contact = input.Contact,
                 Passengers = input.Passengers
             };
             var response = BookFlightInternal(bookInfo);

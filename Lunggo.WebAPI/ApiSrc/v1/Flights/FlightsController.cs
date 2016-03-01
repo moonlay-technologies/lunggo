@@ -61,8 +61,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
             var now = DateTime.UtcNow.AddHours(7);
             if (now.DayOfWeek == DayOfWeek.Wednesday && now.Date >= new DateTime(2016, 1, 2) &&
                 now.Date <= new DateTime(2016, 3, 31) && request.Payment.Method == PaymentMethod.CreditCard &&
-                request.Payment.Data != null && request.Payment.Data.Data0 != null &&
-                request.Payment.Data.Data0.StartsWith("4"))
+                request.Payment.Data != null && request.Payment.Data.DataString0 != null &&
+                request.Payment.Data.DataString0.StartsWith("4"))
                 request.DiscountCode = "VWWVWW";
             // HARDCODE-AN
             // HARDCODE-AN

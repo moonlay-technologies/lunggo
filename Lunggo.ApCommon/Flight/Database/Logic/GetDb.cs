@@ -64,14 +64,14 @@ namespace Lunggo.ApCommon.Flight.Service
                                     RsvNo = rsvNo,
                                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
                                     InvoiceNo = reservationRecord.InvoiceNo,
-                                    Contact = new ContactData
+                                    Contact = new Contact
                                     {
                                         Name = reservationRecord.ContactName,
                                         Email = reservationRecord.ContactEmail,
                                         CountryCode = reservationRecord.ContactCountryCd,
                                         Phone = reservationRecord.ContactPhone
                                     },
-                                    Payment = new PaymentInfo
+                                    Payment = new Payment.Model.Payment
                                     {
                                         Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
                                         FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault(),
@@ -191,10 +191,10 @@ namespace Lunggo.ApCommon.Flight.Service
                                 return reservation;
                             if (reservation == null)
                             {
-                                RefundInfo refundInfo = null;
+                                Refund refund = null;
                                 if (reservationRecord.RefundTime != null)
                                 {
-                                    refundInfo = new RefundInfo
+                                    refund = new Refund
                                     {
                                         Amount = reservationRecord.RefundAmount.GetValueOrDefault(),
                                         Time = reservationRecord.RefundTime.GetValueOrDefault(),
@@ -207,14 +207,14 @@ namespace Lunggo.ApCommon.Flight.Service
                                     RsvNo = rsvNo,
                                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
                                     InvoiceNo = reservationRecord.InvoiceNo,
-                                    Contact = new ContactData
+                                    Contact = new Contact
                                     {
                                         Name = reservationRecord.ContactName,
                                         Email = reservationRecord.ContactEmail,
                                         CountryCode = reservationRecord.ContactCountryCd,
                                         Phone = reservationRecord.ContactPhone
                                     },
-                                    Payment = new PaymentInfo
+                                    Payment = new Payment.Model.Payment
                                     {
                                         Id = reservationRecord.PaymentId,
                                         Medium = PaymentMediumCd.Mnemonic(reservationRecord.PaymentMediumCd),
@@ -227,7 +227,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                         FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault(),
                                         PaidAmount = reservationRecord.PaidAmount.GetValueOrDefault(),
                                         Currency = reservationRecord.CurrencyCd,
-                                        Refund = refundInfo
+                                        Refund = refund
                                     },
                                     Discount = new DiscountData
                                     {
@@ -343,7 +343,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     var reservations = rsvRecords.Select(record => new FlightReservation
                     {
                         RsvNo = record.RsvNo,
-                        Payment = new PaymentInfo
+                        Payment = new Payment.Model.Payment
                         {
                             FinalPrice = record.FinalPrice.GetValueOrDefault(),
                             TimeLimit = record.PaymentTimeLimit

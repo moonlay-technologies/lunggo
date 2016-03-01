@@ -6,7 +6,7 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public void UpdateFlightPayment(string rsvNo, PaymentInfo payment)
+        public void UpdateFlightPayment(string rsvNo, Payment.Model.Payment payment)
         {
             var isUpdated = UpdateDb.Payment(rsvNo, payment);
             if (isUpdated && payment.Status == PaymentStatus.Settled)

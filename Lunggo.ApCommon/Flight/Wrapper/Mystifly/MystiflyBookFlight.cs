@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             if (bookInfo.CanHold)
             {
                 var airTravelers = bookInfo.Passengers.Select(MapAirTraveler).ToList();
-                var travelerInfo = MapTravelerInfo(bookInfo.ContactData, airTravelers);
+                var travelerInfo = MapTravelerInfo(bookInfo.Contact, airTravelers);
                 var request = new AirBookRQ
                 {
                     FareSourceCode = bookInfo.FareId,
@@ -217,14 +217,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             return passport;
         }
 
-        private static TravelerInfo MapTravelerInfo(ContactData contactData, List<AirTraveler> airTravelers)
+        private static TravelerInfo MapTravelerInfo(Contact contact, List<AirTraveler> airTravelers)
         {
             var travelerInfo = new TravelerInfo
             {
-                CountryCode = contactData.CountryCode,
+                CountryCode = contact.CountryCode,
                 AreaCode = "",
-                PhoneNumber = contactData.Phone,
-                Email = contactData.Email,
+                PhoneNumber = contact.Phone,
+                Email = contact.Email,
                 AirTravelers = airTravelers.ToArray(),
                 ExtensionData = null
             };

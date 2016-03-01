@@ -64,6 +64,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
@@ -75,6 +84,9 @@
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -192,7 +204,7 @@
     <Compile Include="Flight\Model\BookFlightResult.cs" />
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
     <Compile Include="Flight\Model\Conditions.cs" />
-    <Compile Include="Flight\Model\ContactData.cs" />
+    <Compile Include="Flight\Model\Contact.cs" />
     <Compile Include="Flight\Model\DiscountData.cs" />
     <Compile Include="Flight\Model\FlightOrderInfo.cs" />
     <Compile Include="Flight\Model\FlightReservation.cs" />
@@ -308,13 +320,22 @@
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaRevalidateFare.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaSearchFight.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaWrapperSingleton.cs" />
+    <Compile Include="Identity\AuthStore\DapperAuthStore.cs" />
+    <Compile Include="Identity\Auth\ApplicationType.cs" />
+    <Compile Include="Identity\Auth\RefreshTokenProvider.cs" />
+    <Compile Include="Identity\Auth\Client.cs" />
+    <Compile Include="Identity\Auth\AuthorizationServerProvider.cs" />
+    <Compile Include="Identity\Auth\RefreshToken.cs" />
     <Compile Include="Identity\Query\GetAllUserQuery.cs" />
     <Compile Include="Identity\Query\GetListClaimByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetListRoleByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetLoginInfoByUserIdQuery.cs" />
+    <Compile Include="Identity\Query\GetRefreshTokenByIdQuery.cs" />
     <Compile Include="Identity\Query\GetRoleByIdQuery.cs" />
     <Compile Include="Identity\Query\GetRoleByNameQuery.cs" />
     <Compile Include="Identity\Query\GetUserByEmailQuery.cs" />
+    <Compile Include="Identity\Query\GetClientByIdQuery.cs" />
+    <Compile Include="Identity\Query\GetRefreshTokenByClientAndIdQuery.cs" />
     <Compile Include="Identity\Query\GetUserByIdQuery.cs" />
     <Compile Include="Identity\Query\GetUserByLoginInfoQuery.cs" />
     <Compile Include="Identity\Query\GetUserByNameQuery.cs" />
@@ -381,8 +402,8 @@
     <Compile Include="Payment\Model\ItemDetails.cs" />
     <Compile Include="Payment\Model\SavedCreditCard.cs" />
     <Compile Include="Payment\Model\TransferConfirmationReport.cs" />
-    <Compile Include="Payment\Model\PaymentInfo.cs" />
-    <Compile Include="Payment\Model\RefundInfo.cs" />
+    <Compile Include="Payment\Model\Payment.cs" />
+    <Compile Include="Payment\Model\Refund.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
     <Compile Include="Payment\PaymentService.cs" />
     <Compile Include="Payment\Query\GetSavedCreditCardQuery.cs" />

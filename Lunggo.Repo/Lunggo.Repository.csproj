@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableRecord\RefreshTokenTableRecord.cs" />
     <Compile Include="TableRecord\SavedCreditCardTableRecord.cs" />
     <Compile Include="TableRecord\CalendarRecipientTableRecord.cs" />
     <Compile Include="TableRecord\CampaignTableRecord.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="TableRecord\UsersTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRepository\RefreshTokenRepository.cs" />
     <Compile Include="TableRepository\SavedCreditCardRepository.cs" />
     <Compile Include="TableRepository\CalendarRecipientRepository.cs" />
     <Compile Include="TableRepository\CampaignRepository.cs" />

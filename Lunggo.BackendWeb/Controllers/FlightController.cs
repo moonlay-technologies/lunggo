@@ -68,7 +68,7 @@ namespace Lunggo.BackendWeb.Controllers
                     payment.UpdateTransferConfirmationReportStatus(listPayment.RsvNo, listPayment.Status);
                     if (listPayment.Status == TransferConfirmationReportStatus.Confirmed)
                     {
-                        var updatedInfo = new PaymentInfo
+                        var updatedInfo = new Payment
                         {
                             PaidAmount = listPayment.Amount,
                             Time = DateTime.UtcNow

@@ -30,7 +30,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 
             if (reservation.Payment.Status == PaymentStatus.Pending)
             {
-                flightService.UpdateFlightPayment(rsvNo, new PaymentInfo
+                flightService.UpdateFlightPayment(rsvNo, new Payment
                 {
                     Status = PaymentStatus.Expired
                 });

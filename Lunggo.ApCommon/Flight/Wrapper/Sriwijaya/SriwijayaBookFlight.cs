@@ -283,9 +283,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                 bookingParams +=
 
-                    "&contactFName=" + bookInfo.ContactData.Name +
-                    "&contactLName=" + bookInfo.ContactData.Name +
-                    "&contactOriginPh=" + bookInfo.ContactData.Phone +
+                    "&contactFName=" + bookInfo.Contact.Name +
+                    "&contactLName=" + bookInfo.Contact.Name +
+                    "&contactOriginPh=" + bookInfo.Contact.Phone +
                     "&contactOtherPh=" +
                     "&contactAgenName=PT+TRAVEL+MADEZY+INTERNASIONAL" +
                     "&contactAgenEmail=rama.adhitia%40travelmadezy.com+" +

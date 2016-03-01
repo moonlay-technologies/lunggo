@@ -135,7 +135,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             return bookServiceRequest;
         }
 
-        private static List<FlightPassenger> MapPassengers(IEnumerable<PassengerData> passengers)
+        private static List<FlightPassenger> MapPassengers(IEnumerable<Passenger> passengers)
         {
             return passengers.Select(passenger => new FlightPassenger
             {

@@ -73,13 +73,13 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
         private static void ProcessSavedCreditCardToken(Data data, VeritransResponse content)
         {
-            if (data != null && data.Data20)
+            if (data != null && data.DataBool0)
             {
                 var savedToken = content.SavedTokenId;
                 var tokenExpiry = content.TokenIdExpiry;
                 var maskedCardNumber = content.MaskedCard;
-                var cardHolderName = data.Data1;
-                var email = data.Data9;
+                var cardHolderName = data.DataString1;
+                var email = data.DataString9;
                 PaymentService.GetInstance().SaveCreditCard(email, maskedCardNumber, cardHolderName, savedToken, tokenExpiry);
             }
         }
@@ -142,10 +142,10 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             {
                 requestParams.CreditCard = new CreditCard
                 {
-                    TokenId = data.Data0,
+                    TokenId = data.DataString0,
                     Bank = "mandiri",
-                    AllowedBins = data.Data0.StartsWith("4") ? new List<string> { "4" } : null,
-                    TokenIdSaveEnabled = data.Data20
+                    AllowedBins = data.DataString0.StartsWith("4") ? new List<string> { "4" } : null,
+                    TokenIdSaveEnabled = data.DataBool0
                 };
             }
             var jsonRequestParams = JsonConvert.SerializeObject(requestParams);

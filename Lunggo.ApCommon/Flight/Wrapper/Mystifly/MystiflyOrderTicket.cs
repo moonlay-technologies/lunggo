@@ -69,7 +69,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             {
                 var bookInfo = WebfareBooking(bookingId);
                 var airTravelers = bookInfo.Passengers.Select(MapAirTraveler).ToList();
-                var travelerInfo = MapTravelerInfo(bookInfo.ContactData, airTravelers);
+                var travelerInfo = MapTravelerInfo(bookInfo.Contact, airTravelers);
                 var request = new AirBookRQ
                 {
                     FareSourceCode = bookInfo.FareId,

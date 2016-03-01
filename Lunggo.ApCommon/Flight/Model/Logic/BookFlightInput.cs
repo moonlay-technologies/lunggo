@@ -9,8 +9,8 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public string ItinCacheId { get; set; }
         public TripType OverallTripType { get; set; }
         public List<FlightPassenger> Passengers { get; set; }
-        public ContactData Contact { get; set; }
-        public PaymentInfo Payment { get; set; }
+        public Contact Contact { get; set; }
+        public Payment.Model.Payment Payment { get; set; }
         public string DiscountCode { get; set; }
     }
 }

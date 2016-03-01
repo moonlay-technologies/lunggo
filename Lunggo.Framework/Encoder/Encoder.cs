@@ -18,7 +18,7 @@ namespace Lunggo.Framework.Encoder
             return Encoding.UTF8.GetString(base64EncodedBytes);
         }
 
-        public static string Sha512(this string input)
+        public static string Sha512Encode(this string input)
         {
             var data = Encoding.UTF8.GetBytes(input);
             using (SHA512 shaM = new SHA512Managed())

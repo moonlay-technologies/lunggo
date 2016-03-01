@@ -25,7 +25,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
             var serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
             var rawKey = notif.order_id + notif.status_code + notif.gross_amount + serverKey;
-            var signatureKey = rawKey.Sha512();
+            var signatureKey = rawKey.Sha512Encode();
 
             if (notif.signature_key != signatureKey)
                 return null;
@@ -38,7 +38,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 else
                     time = null;
 
-                var paymentInfo = new PaymentInfo
+                var paymentInfo = new Payment
                 {
                     Medium = PaymentMedium.Veritrans,
                     Method = MapPaymentMethod(notif),
@@ -64,7 +64,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (rsvNo.IsFlightRsvNo())
             {
                 var flight = FlightService.GetInstance();
-                flight.UpdateFlightPayment(rsvNo, new PaymentInfo {Status = PaymentStatus.Verifying});
+                flight.UpdateFlightPayment(rsvNo, new Payment {Status = PaymentStatus.Verifying});
                 TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Flight", new {RsvNo = rsvNo});
             }
@@ -78,7 +78,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (rsvNo.IsFlightRsvNo())
             {
                 var flight = FlightService.GetInstance();
-                flight.UpdateFlightPayment(rsvNo, new PaymentInfo { Status = PaymentStatus.Expired });
+                flight.UpdateFlightPayment(rsvNo, new Payment { Status = PaymentStatus.Expired });
                 TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
             }
@@ -92,7 +92,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (rsvNo.IsFlightRsvNo())
             {
                 var flight = FlightService.GetInstance();
-                flight.UpdateFlightPayment(rsvNo, new PaymentInfo { Status = PaymentStatus.Expired });
+                flight.UpdateFlightPayment(rsvNo, new Payment { Status = PaymentStatus.Expired });
                 TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
             }

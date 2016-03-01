@@ -14,9 +14,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public int TotalFlightCount { get; set; }
         [JsonProperty("flights")]
         public List<FlightItineraryForDisplay> FlightList { get; set; }
-        [JsonProperty("return_flights_count")]
+        [JsonProperty("ret_flights_count")]
         public int? TotalReturnFlightCount { get; set; }
-        [JsonProperty("return_flights")]
+        [JsonProperty("ret_flights")]
         public List<FlightItineraryForDisplay> ReturnFlightList { get; set; }
         [JsonProperty("expiry_time")]
         public DateTime? ExpiryTime { get; set; }
@@ -28,7 +28,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public HttpStatusCode StatusCode { get; set; }
         [JsonProperty("status_message")]
         public string StatusMessage { get; set; }
-        [JsonProperty("original_request")]
+        [JsonProperty("request")]
         public FlightSearchApiRequest OriginalRequest { get; set; }   
     }
 }

@@ -11,7 +11,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public HttpStatusCode StatusCode { get; set; }
         [JsonProperty("status_message")]
         public string StatusMessage { get; set; }
-        [JsonProperty("top_destinations")]
+        [JsonProperty("tops")]
         public List<TopDestination> TopDestinationList { get; set; }
     }
 }

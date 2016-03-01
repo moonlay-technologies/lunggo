@@ -6,6 +6,6 @@ namespace Lunggo.ApCommon.Flight.Model
     {
         internal string BookingId { get; set; }
         internal List<FlightPassenger> Passengers { get; set; }
-        internal ContactData ContactData { get; set; }
+        internal Contact Contact { get; set; }
     }
 }
