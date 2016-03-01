@@ -991,11 +991,21 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .overlay--flight-sort .overlay__content span {
     display: block;
     padding: 15px; }
+    .overlay--flight-sort .overlay__content span:before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+      border: 3px solid #fff; }
     .overlay--flight-sort .overlay__content span + span {
       border-top: 1px solid #ccc; }
     .overlay--flight-sort .overlay__content span.active {
-      background: #1daee4;
       color: #fff; }
+      .overlay--flight-sort .overlay__content span.active:before {
+        background: #ffca10; }
   .overlay--flight-sort .overlay__content label {
     display: block;
     width: 100%;

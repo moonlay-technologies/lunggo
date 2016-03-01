@@ -162,8 +162,11 @@
 .overlay--flight-sort {
     .overlay__content {padding:0;
         span {display:block; padding:15px;
+            &:before {content:''; width:20px; height:20px; background:#fff; display:inline-block; vertical-align:middle; margin-right:10px; border:3px solid #fff;}
             &+span {border-top:$border-default;}
-            &.active {background:$color-main-blue; color:#fff;}
+            &.active {color:#fff;
+                &:before {background:#ffca10;}
+            }
         }
         label {display:block; width:100%; padding:12px 0;
             &+label {border-top:$border-default;}
