@@ -204,9 +204,6 @@
                     // generate flight
                     if (returnData.FlightList.length) {
                         $scope.FlightFunctions.GenerateFlightList(returnData.FlightList);
-                        console.log('JEMPING ADUH');
-                    } else {
-                        console.log('ADUH');
                     }
                     // set expiry if progress == 100
                     if ($scope.FlightConfig[0].FlightRequest.Progress == 100) {
