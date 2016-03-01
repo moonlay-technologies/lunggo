@@ -190,7 +190,9 @@
                 .flight-info:before {background-position:-22px 0;}
             }
         }
-        .flight-notice {background:#d70000;}
+        .flight-notice {background:#d70000;
+            p {font-size:11px;}
+        }
         .flight-wrapper {
             .flight {position:relative; @include clearfix();
                 .flight__number {width:15px; left:5px; position:absolute;
