@@ -999,7 +999,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       display: inline-block;
       vertical-align: middle;
       margin-right: 10px;
-      border: 3px solid #fff; }
+      border: 3px solid #fff;
+      -webkit-border-radius: 50px;
+      -moz-border-radius: 50px;
+      border-radius: 50px; }
     .overlay--flight-sort .overlay__content span + span {
       border-top: 1px solid #ccc; }
     .overlay--flight-sort .overlay__content span.active {
