@@ -351,7 +351,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     top: 0;
     left: 0;
     width: 100%;
-    display: none; }
+    display: none;
+    text-align: center; }
     .overlay .overlay__header .overlay__title {
       margin: 0; }
     .overlay .overlay__header .overlay__close {
