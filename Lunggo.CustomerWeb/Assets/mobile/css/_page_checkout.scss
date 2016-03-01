@@ -83,6 +83,14 @@
         }
     }
 
+    // credit card form
+    .credit-card-form {
+        .cc-number {
+            &.visa {background-image:url(/Assets/images/visa-logo.jpg); background-position:98% center; background-repeat:no-repeat;}
+            &.mastercard {background-image:url(/Assets/images/mastercard-logo.jpg); background-position:98% center; background-repeat:no-repeat;}
+        }
+    }
+
 
 }
 

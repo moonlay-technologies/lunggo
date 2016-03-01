@@ -208,7 +208,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border-top: 1px solid #8fd6f2; }
 
 .site-content {
-  min-height: 300px; }
+  min-height: 350px; }
   .site-content a {
     color: #2fb4e6; }
 
@@ -1287,6 +1287,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-checkout .summary.summary--payment label section {
     text-align: center;
     padding: 5px; }
+
+.page.page-checkout .credit-card-form .cc-number.visa {
+  background-image: url(/Assets/images/visa-logo.jpg);
+  background-position: 98% center;
+  background-repeat: no-repeat; }
+
+.page.page-checkout .credit-card-form .cc-number.mastercard {
+  background-image: url(/Assets/images/mastercard-logo.jpg);
+  background-position: 98% center;
+  background-repeat: no-repeat; }
 
 .page.page-confirmation .instruction header {
   background: #2fb4e6;

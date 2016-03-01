@@ -86,7 +86,7 @@ if (typeof (angular) == 'object') {
                     }
                 }
             }
-        };
+        };//$rootScope.Countries
 
         // datepicker
         $rootScope.DatePicker = {
@@ -313,9 +313,23 @@ if (typeof (angular) == 'object') {
                 window.location = window.location.origin + '/id/Flight/Search?info=' + $rootScope.FlightSearchForm.Url  ;
 
             }// submit
-        };// flight search form 
+        };//$rootScope.FlightSearchForm
 
-    });
+        // set default date for departure date and return date
+        if ($rootScope.FlightSearchForm.DepartureDate == '') {
+            var departure = new Date();
+            departure.setDate(departure.getDate() + 1);
+            $rootScope.FlightSearchForm.DepartureDate = departure;
+        }
+        if ($rootScope.FlightSearchForm.ReturnDate == '') {
+            var todayDate = new Date();
+            var returnDate = new Date();
+            returnDate.setDate(todayDate.getDate() + 2);
+            $rootScope.FlightSearchForm.ReturnDate = returnDate;
+        }
+
+
+    });//app.run
 
 }
 
