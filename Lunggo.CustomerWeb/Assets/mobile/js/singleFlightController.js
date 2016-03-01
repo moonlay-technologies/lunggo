@@ -202,7 +202,12 @@
                     console.log(returnData);
 
                     // generate flight
-                    $scope.FlightFunctions.GenerateFlightList(returnData.FlightList);
+                    if (returnData.FlightList.length) {
+                        $scope.FlightFunctions.GenerateFlightList(returnData.FlightList);
+                        console.log('JEMPING ADUH');
+                    } else {
+                        console.log('ADUH');
+                    }
                     // set expiry if progress == 100
                     if ($scope.FlightConfig[0].FlightRequest.Progress == 100) {
                         $scope.FlightConfig[0].FlightExpiry.time = returnData.ExpiryTime;
@@ -246,6 +251,8 @@
 
     // generate flight list
     $scope.FlightFunctions.GenerateFlightList = function (data) {
+        console.log('Generating Flight List');
+        console.log(data);
         var targetScope = $scope.FlightConfig[0];
         var startNo = $scope.FlightConfig[0].FlightList.length;
         for (var i = 0; i < data.length; i++) {

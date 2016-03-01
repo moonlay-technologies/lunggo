@@ -61,6 +61,7 @@
                 }
                 .content-right {@extend & .content-left; text-align:right; color:#ff7200;
                     label {font-weight:normal;}
+                    .flight-price-was {margin:0; text-decoration:line-through;}
                     .flight-price {margin-top:0; font-weight:bold; font-size:16px;}
                 }
             }
@@ -128,7 +129,7 @@
             &.filter-group--departure {
                 .filter-group__content {@include clearfix();
                     label {display:block; float:left; width:50%; border:0; margin-bottom:0; padding-top:10px; padding-bottom:10px; position:relative;
-                        .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(50px);}
+                        .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px;}
                         input {display:none;}
                         span {width:100%; padding-left:30px; display:block;}
                         // if active

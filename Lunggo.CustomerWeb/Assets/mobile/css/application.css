@@ -878,6 +878,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #ff7200; }
     .page.page-flight .flight-list .flight .flight-content .content-right label {
       font-weight: normal; }
+    .page.page-flight .flight-list .flight .flight-content .content-right .flight-price-was {
+      margin: 0;
+      text-decoration: line-through; }
     .page.page-flight .flight-list .flight .flight-content .content-right .flight-price {
       margin-top: 0;
       font-weight: bold;
@@ -968,10 +971,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       border: 3px solid #fff;
       position: absolute;
       top: 50%;
-      margin-top: -10px;
-      -webkit-border-radius: 50px;
-      -moz-border-radius: 50px;
-      border-radius: 50px; }
+      margin-top: -10px; }
     .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label input {
       display: none; }
     .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label span {
