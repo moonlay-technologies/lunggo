@@ -42,7 +42,7 @@
 
 <section class="user-menu" ng-show="PageConfig.ActivePage == 'menu'">
     <div class="menu-user">
-        <span>Shinta Tamara</span>
+        <span>{{UserProfile.firstname}} {{UserProfile.lastname}}</span>
     </div>
     <div class="menu-wrapper">
         <ul>
@@ -53,7 +53,7 @@
                 <a ng-click="PageConfig.ChangePage('history')">Pemesanan Saya</a>
             </li>
             <li class="menu-logout">
-                <a href="#">Log Out</a>
+                <a href="@Url.Action("Logout", "Account")">Log Out</a>
             </li>
         </ul>
     </div>
