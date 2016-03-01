@@ -107,9 +107,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 reservation.Discount = new DiscountData();
             }
             reservation.TransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
-            Debug.Print("--------->Transfer Code : " + reservation.TransferCode);
+            //Debug.Print("--------->Transfer Code : " + reservation.TransferCode);
             reservation.Payment.FinalPrice -= reservation.TransferCode;
-            Debug.Print("--------->Final Price : " + reservation.Payment.FinalPrice);
+            //Debug.Print("--------->Final Price : " + reservation.Payment.FinalPrice);
             var transactionDetails = ConstructTransactionDetails(reservation);
             var itemDetails = ConstructItemDetails(reservation);
             var payment = PaymentService.GetInstance();
