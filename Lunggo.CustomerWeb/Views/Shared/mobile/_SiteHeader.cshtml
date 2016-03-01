@@ -5,6 +5,10 @@
         <a ng-click="PageConfig.ToggleBurger()" class="site-menu"></a>
         <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" class="site-logo" />
         <a href="#" class="user-menu hidden"></a>
+        @if (ViewBag.FlightSwap == "true")
+        {
+            <a class="flight-swap" ng-click="FlightFunctions.SwapFlight()"></a>
+        }
     </div>
     
     <div class="burger-content" ng-class="{'active' : PageConfig.BurgerShown}">

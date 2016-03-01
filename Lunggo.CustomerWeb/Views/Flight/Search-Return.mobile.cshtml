@@ -76,6 +76,7 @@
     ViewBag.Title = "Flight Search Page";
     ViewBag.BodyClass = "page page-flight single-flight";
     ViewBag.AngularController = "ReturnFlightController";
+    ViewBag.FlightSwap = "true";
 }
 
 @section AdditionalJS {
@@ -947,7 +948,8 @@
                             <img src="/Assets/images/airplane-image.jpg" alt="Airplane" />
                         </div>
                         <div class="col-xs-8">
-                            <p>Anda telah memilih penerbangan pergi. <b>Silahkan lanjutkan dengan memilih penerbangan pulang</b></p>
+                            <p ng-if="FlightConfig[0].ActiveFlight >= 0">Anda telah memilih penerbangan pergi. <b>Silahkan lanjutkan dengan memilih penerbangan pulang</b></p>
+                            <p ng-if="FlightConfig[0].ActiveFlight < 0">Anda akan memilih penerbangan pulang.</p>
                         </div>
                     </div>
                 </div>
@@ -980,7 +982,8 @@
                             <img src="/Assets/images/airplane-image.jpg" alt="Airplane" />
                         </div>
                         <div class="col-xs-8">
-                            <p>Anda telah memilih penerbangan pulang. <b>Silahkan lanjutkan dengan memilih penerbangan pergi</b></p>
+                            <p ng-if="FlightConfig[1].ActiveFlight >= 0">Anda telah memilih penerbangan pulang. <b>Silahkan lanjutkan dengan memilih penerbangan pergi</b></p>
+                            <p ng-if="FlightConfig[1].ActiveFlight < 0">Anda akan memilih penerbangan pergi.</p>
                         </div>
                     </div>
                 </div>

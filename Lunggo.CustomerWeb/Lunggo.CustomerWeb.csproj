@@ -1023,6 +1023,7 @@
     <Content Include="Assets\mobile\images\contact-social-bg.png" />
     <Content Include="Assets\mobile\images\flight-history-status.png" />
     <Content Include="Assets\mobile\images\flight-separator.png" />
+    <Content Include="Assets\mobile\images\flight-swap.png" />
     <Content Include="Assets\mobile\images\form-sprite.png" />
     <Content Include="Assets\mobile\images\login-header-left.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />

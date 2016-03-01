@@ -377,6 +377,15 @@
         }
     }
 
+    // swap flight
+    $scope.FlightFunctions.SwapFlight = function() {
+        if ($scope.PageConfig.ActiveSection == 'departure') {
+            $scope.SetPopup('roundtrip-return');
+        } else {
+            $scope.SetPopup('roundtrip-departure');
+        }
+    }
+
     // show flight detail
     $scope.FlightFunctions.ShowDetail = function (targetScope, flightNumber) {
         targetScope = targetScope == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1];
