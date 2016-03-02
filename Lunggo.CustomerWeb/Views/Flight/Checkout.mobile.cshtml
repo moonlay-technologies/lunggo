@@ -106,10 +106,12 @@ default:
         
     <div class="page-loaded">
     
-        <header class="page__header step__wrapper">
-            <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01</span></div>
-            <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02</span></div>
-            <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03</span></div>
+        <header class="page__header">
+            <div class="step__wrapper">
+                <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01</span></div>
+                <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02</span></div>
+                <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03</span></div>
+            </div>
         </header><!-- .page-header -->
     
         <div class="page__body">
@@ -134,7 +136,16 @@ default:
 
                         <div class="form-group important">
                             <label class="control-label">Nomor Telepon : </label>
-                            <input type="number" value="" ng-model="buyerInfo.phone" name="Phone" class="form-control" placeholder="Ex : 0821 2345 6789" required />
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <p><small>Kode Negara:</small></p>
+                                    <input type="number" value="" ng-model="buyerInfo.phoneCode" name="PhoneCode" class="form-control" placeholder="Ex : 62 for Indonesia" required />
+                                </div>
+                                <div class="col-xs-8">
+                                    <p><small>Nomer Telepon (Tanpa kode negara)</small></p>
+                                    <input type="number" value="" ng-model="buyerInfo.phone" name="Phone" class="form-control" placeholder="Ex : 821 2345 6789" required />  
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group important">
