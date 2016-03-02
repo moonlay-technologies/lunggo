@@ -9,6 +9,10 @@
         {
             <a class="flight-swap" ng-click="FlightFunctions.SwapFlight()"></a>
         }
+        @if (ViewBag.FlightDetail == "true")
+        {
+            <a class="flight-detail" ng-click="PageConfig.SetOverlay('flight-detail')">Detail</a>
+        }
     </div>
     
     <div class="burger-content" ng-class="{'active' : PageConfig.BurgerShown}">

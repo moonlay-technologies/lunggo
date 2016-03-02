@@ -45,7 +45,7 @@ if (typeof (angular) == 'object') {
 
 
             // page overlay
-            Overlay: '',
+            ActiveOverlay: '',
             SetOverlay: function (overlay) {
                 console.log('changing overlay to : ' + overlay);
                 if (typeof(overlay) == 'undefined') {

@@ -80,6 +80,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .site-logo {height:30px; margin-top:15px;}
         .user-menu {@extend & .site-menu; background-position:0 0; left:auto; right:10px;}
         .flight-swap {@extend & .site-menu; background:url(/Assets/mobile/images/flight-swap.png); left:auto; right:10px;}
+        .flight-detail {@extend & .site-menu; width:40px; background:none; left:auto; right:15px; color:$color-main-blue; text-decoration:none; text-align:right; font-weight:600; padding:10px 0; font-size:14px;}
     }
 }
 

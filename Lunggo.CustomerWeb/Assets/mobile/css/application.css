@@ -77,7 +77,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #fff;
     text-align: center;
     height: 60px; }
-    .site-header .header-display .site-menu, .site-header .header-display .user-menu, .site-header .header-display .flight-swap {
+    .site-header .header-display .site-menu, .site-header .header-display .user-menu, .site-header .header-display .flight-swap, .site-header .header-display .flight-detail {
       width: 30px;
       height: 30px;
       background: url(/Assets/mobile/images/mobile-header-sprite.png) no-repeat;
@@ -97,6 +97,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background: url(/Assets/mobile/images/flight-swap.png);
       left: auto;
       right: 10px; }
+    .site-header .header-display .flight-detail {
+      width: 40px;
+      background: none;
+      left: auto;
+      right: 15px;
+      color: #1daee4;
+      text-decoration: none;
+      text-align: right;
+      font-weight: 600;
+      padding: 10px 0;
+      font-size: 14px; }
 
 .burger-content {
   position: fixed;
@@ -1316,6 +1327,55 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background-image: url(/Assets/images/mastercard-logo.jpg);
   background-position: 98% center;
   background-repeat: no-repeat; }
+
+.page.page-checkout .overlay--flight-detail .flight-detail-wrapper {
+  padding: 10px;
+  padding-top: 0; }
+
+.page.page-checkout .overlay--flight-detail .flight-fare-wrapper {
+  padding: 10px; }
+  .page.page-checkout .overlay--flight-detail .flight-fare-wrapper .fare-note {
+    background: #eaeaea;
+    padding: 10px; }
+
+.page.page-checkout .overlay--flight-detail dl:after {
+  display: block;
+  width: 100%;
+  content: "";
+  clear: both; }
+
+.page.page-checkout .overlay--flight-detail dl dt {
+  float: left;
+  width: 50%;
+  font-weight: normal;
+  position: relative;
+  padding-left: 12px; }
+  .page.page-checkout .overlay--flight-detail dl dt:before {
+    position: absolute;
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: #ff7200;
+    top: 3px;
+    left: 0; }
+
+.page.page-checkout .overlay--flight-detail dl dd {
+  float: left;
+  width: 50%;
+  text-align: right;
+  font-weight: bold; }
+
+.page.page-checkout .overlay--flight-detail dl.total-price {
+  border-top: 1px solid #ccc;
+  padding-top: 10px; }
+  .page.page-checkout .overlay--flight-detail dl.total-price dt {
+    width: 35%; }
+    .page.page-checkout .overlay--flight-detail dl.total-price dt:before {
+      display: none; }
+  .page.page-checkout .overlay--flight-detail dl.total-price dd {
+    width: 65%;
+    color: #ff7200;
+    font-size: 16px; }
 
 .page.page-confirmation .instruction header {
   background: #2fb4e6;
