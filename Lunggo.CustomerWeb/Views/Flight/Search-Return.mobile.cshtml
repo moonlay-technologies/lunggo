@@ -372,7 +372,7 @@
                         <h4><b>{{FlightConfig[0].FlightRequest.Trips[0].OriginAirport}}</b> to <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationAirport}}</b></h4>
                         <h5>{{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date: 'EEE,dd MMM yyyy'}}</h5>
                     </div><!-- .flight-info -->
-                    <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('departure',-1); SetSection('departure'); SetOverlay();">GANTI</span></a>
+                    <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('departure',-1); FlightFunctions.ResetValidation(); SetSection('departure'); SetOverlay();">GANTI</span></a>
                 </div><!-- .flight-title -->
                 
                 <div class="flight-notice" ng-show="FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable">
@@ -422,7 +422,7 @@
                         <h4><b>{{FlightConfig[1].FlightRequest.Trips[0].OriginAirport}}</b> to <b>{{FlightConfig[1].FlightRequest.Trips[0].DestinationAirport}}</b></h4>
                         <h5>{{FlightConfig[1].FlightRequest.Trips[0].DepartureDate | date: 'EEE,dd MMM yyyy'}}</h5>
                     </div><!-- .flight-info -->
-                    <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('return',-1); SetOverlay(); SetSection('return')">GANTI</span></a>
+                    <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('return',-1); FlightFunctions.ResetValidation(); SetOverlay(); SetSection('return')">GANTI</span></a>
                 </div><!-- .flight-title -->
                 
                 <div class="flight-notice" ng-show="FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable">
@@ -472,11 +472,11 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <h5>Harga Total:</h5>
-                        <h4 ng-hide="( (FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable && !FlightConfig[0].FlightNewFare) || (FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable && !FlightConfig[1].FlightNewFare) )"><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].TotalFare + FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].TotalFare | number}}</b></h4>
-                        <h4 ng-show="( (FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable && !FlightConfig[0].FlightNewFare) || (FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable && !FlightConfig[1].FlightNewFare) )"><b>Unavailable</b></h4>
+                        <h4 ng-hide="( (FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable && !FlightConfig[0].FlightNewPrice) || (FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable && !FlightConfig[1].FlightNewPrice) )"><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].TotalFare + FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].TotalFare | number}}</b></h4>
+                        <h4 ng-show="( (FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable && !FlightConfig[0].FlightNewPrice) || (FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable && !FlightConfig[1].FlightNewPrice) )"><b>Unavailable</b></h4>
                     </div>
                     <div class="col-xs-6">
-                        <button ng-click="FlightFunctions.Revalidate(FlightConfig[0].ActiveFlight, FlightConfig[1].ActiveFlight)" class="btn btn-yellow btn-block" ng-disabled="PageConfig.Validating || ( ( FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable && !FlightConfig[0].FlightNewFare) || ( FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable && !FlightConfig[1].FlightNewFare) )">{{PageConfig.Validating ? 'MEMESAN' : 'PESAN'}}</button>
+                        <button ng-click="FlightFunctions.Revalidate(FlightConfig[0].ActiveFlight, FlightConfig[1].ActiveFlight)" class="btn btn-yellow btn-block" ng-disabled="(PageConfig.Validating || ((FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable && !FlightConfig[0].FlightNewPrice) || (FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable && !FlightConfig[1].FlightNewPrice) ) )">{{PageConfig.Validating ? 'MEMVALIDASI' : 'PESAN'}}</button>
                     </div>
                 </div>
             </div>
