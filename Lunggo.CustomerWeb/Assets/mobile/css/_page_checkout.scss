@@ -21,7 +21,7 @@
                     &:after {content:''; display:block; position:absolute; height:100%; width:100%; top:0; left:15px; @include skew-x(30deg);}
                 }
                 // step 1 
-                &.step-1:before {content:''; display:block; position:absolute; height:100%; width:100%; top:0; left:0; @include skew-x(30deg);}
+                &.step-1:before {content:''; display:block; position:absolute; height:100%; width:100%; top:0; left:-15px; @include skew-x(30deg);}
             }
         }
     }

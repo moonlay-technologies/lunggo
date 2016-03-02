@@ -1230,7 +1230,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         height: 100%;
         width: 100%;
         top: 0;
-        left: 0;
+        left: -15px;
         -ms-transform: skewX(30deg);
         -webkit-transform: skewX(30deg);
         transform: skewX(30deg); }
