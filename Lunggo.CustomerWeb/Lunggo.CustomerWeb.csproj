@@ -1018,6 +1018,7 @@
     </Content>
     <Content Include="Assets\mobile\images\arrow-down.png" />
     <Content Include="Assets\mobile\images\arrow-up.png" />
+    <Content Include="Assets\mobile\images\borger-menu-active.png" />
     <Content Include="Assets\mobile\images\burger-sprite.png" />
     <Content Include="Assets\mobile\images\contact-list-bg.png" />
     <Content Include="Assets\mobile\images\contact-map.jpg" />
