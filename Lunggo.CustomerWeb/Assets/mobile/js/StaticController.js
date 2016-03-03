@@ -18,3 +18,10 @@ app.controller('TermsController', ['$http', '$scope', '$rootScope', function ($h
     $scope.PageConfig = $rootScope.PageConfig;
 
 }]);// Terms Controller
+
+// how to order controller
+app.controller('HowToOrderController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
+
+    $scope.PageConfig = $rootScope.PageConfig;
+
+}]);// Terms Controller
