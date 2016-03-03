@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Payment.Wrapper.Veritrans.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 {
@@ -50,7 +51,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             }
         }
 
-        internal PaymentStatus ProcessPayment(Data data, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
+        internal PaymentInfo ProcessPayment(PaymentInfo payment, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             var authorizationKey = ProcessAuthorizationKey(_serverKey);
             WebRequest request;
@@ -59,30 +60,36 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             switch (method)
             {
                 case PaymentMethod.CreditCard:
-                    request = CreateVtDirectRequest(authorizationKey, data, transactionDetail, itemDetails, method);
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
                     if (content != null)
                     {
-                        ProcessSavedCreditCardToken(data, content);
-                        return PaymentResult(content);
+                        ProcessSavedCreditCardToken(payment.Data, content);
+                        payment.Status = PaymentResult(content);
                     }
                     else
-                        return PaymentStatus.Denied;
-                /*case PaymentMethod.VirtualAccount:
-                    request = CreateVtDirectRequest(authorizationKey, data, transactionDetail, itemDetails, method);
+                    {
+                        payment.Status = PaymentStatus.Denied;
+                    }
+                    return payment;
+                case PaymentMethod.VirtualAccount:
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
                     if (content != null)
                     {
-                        //Call A method to save the data
-                        var temp = content.PermataVANumber;
-                        return PaymentResult(content);
+                        payment.TargetAccount = content.PermataVANumber;
+                        payment.Status = PaymentResult(content);
                     }
                     else
-                        return PaymentStatus.Denied;*/
+                    {
+                        payment.Status = PaymentStatus.Denied;
+                    }
+                    return payment;
                 default:
-                    return PaymentStatus.Denied;
+                    payment.Status = PaymentStatus.Denied;
+                    return payment;
             }
         }
 
@@ -163,14 +170,14 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     TokenIdSaveEnabled = data.Data20
                 };
             }
-            /*Add Here for Payment Method Virtual Account*/
-            /*else if (method == PaymentMethod.VirtualAccount) 
+            //Add Here for Payment Method Virtual Account
+            else if (method == PaymentMethod.VirtualAccount) 
             {
                 requestParams.BankTransfer = new BankTransfer
                 {
                     Bank = "permata"
                 };
-            }*/
+            }
             var jsonRequestParams = JsonConvert.SerializeObject(requestParams);
             var dataStream = request.GetRequestStream();
             using (var streamWriter = new StreamWriter(dataStream))
