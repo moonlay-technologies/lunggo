@@ -5,6 +5,14 @@
         <a ng-click="PageConfig.ToggleBurger()" class="site-menu"></a>
         <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" class="site-logo" />
         <a href="#" class="user-menu hidden"></a>
+        @if (ViewBag.FlightSwap == "true")
+        {
+            <a class="flight-swap" ng-click="FlightFunctions.SwapFlight()"></a>
+        }
+        @if (ViewBag.FlightDetail == "true")
+        {
+            <a class="flight-detail" ng-click="PageConfig.SetOverlay('flight-detail')">Detail</a>
+        }
     </div>
     
     <div class="burger-content" ng-class="{'active' : PageConfig.BurgerShown}">
@@ -38,32 +46,37 @@
                         <a href="@Url.Action("Register","Account")">Sign Up</a>
                     </li>
                 }
-                <li class="home">
+                <li class="home @(ViewBag.CurrentPage == "home" ? "active" : "") ">
                     <a href="/">Home</a>
                 </li>
-                <li class="order-check">
+                <li class="order-check @(ViewBag.CurrentPage == "checkorder" ? "active" : "")">
                     <a href="@Url.Action("CekPemesanan","Home")">Cek Pemesanan</a>
                 </li>
-                <li class="contact">
+                <li class="promo">
+                    <a href="@Url.Action("Promo","StaticPage")">Promo Berlangsung</a>
+                </li>
+                <li class="contact @(ViewBag.CurrentPage == "contact" ? "active" : "")">
                     <a href="@Url.Action("Contact","StaticPage")">Contact Us</a>
                 </li>
-                <li class="newsletter hidden">
-                    <a href="#">News Letter</a>
+                <li class="newsletter">
+                    <a href="#">Newsletter</a>
                 </li>
-                <li class="faq">
+                <li class="faq @(ViewBag.CurrentPage == "question" ? "active" : "")">
                     <a href="@Url.Action("Question","StaticPage")">FAQ</a>
                 </li>
-                <li class="howto-order">
+                <li class="howto-order @(ViewBag.CurrentPage == "howtoorder" ? "active" : "")">
                     <a href="@Url.Action("HowToOrder","StaticPage")">Cara Pesan</a>
                 </li>
-                <li class="howto-order">
+                <li class="hidden howto-order @(ViewBag.CurrentPage == "howtopay" ? "active" : "")">
                     <a href="@Url.Action("HowToPay","StaticPage")">Cara Bayar</a>
                 </li>
-                <li class="about hidden">
+                <li class="about">
                     <a href="#">Tentang Kami</a>
                 </li>
             </ul>
         </div><!-- .border-content-body -->
     </div><!-- .burger-content -->
+    
+    <div class="burger-overlay" ng-class="{'active' : PageConfig.BurgerShown}"></div><!-- .burger-overlay -->
 
 </header><!-- .site-header -->

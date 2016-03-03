@@ -4738,7 +4738,8 @@ file : /Assets/travorama20/css/_page_password.scss
           cursor: pointer; }
           .page-faq .question-wrapper > ol > li > ol > li > header > h3 {
             margin: 0;
-            font-size: 17px; }
+            font-size: 17px;
+            padding-right: 25px; }
             .page-faq .question-wrapper > ol > li > ol > li > header > h3 span {
               width: 23px;
               height: 22px;
@@ -4748,7 +4749,10 @@ file : /Assets/travorama20/css/_page_password.scss
               -moz-border-radius: 15px;
               border-radius: 15px;
               background-image: url(/Assets/images/faq-toggle-sprite.png);
-              background-position: -13px 0; }
+              background-position: -13px 0;
+              position: absolute;
+              right: 10px;
+              top: 10px; }
         .page-faq .question-wrapper > ol > li > ol > li > section {
           height: 0;
           overflow: hidden; }

@@ -1016,6 +1016,9 @@
     <Content Include="Assets\mobile\css\application.min.css">
       <DependentUpon>application.css</DependentUpon>
     </Content>
+    <Content Include="Assets\mobile\images\arrow-down.png" />
+    <Content Include="Assets\mobile\images\arrow-up.png" />
+    <Content Include="Assets\mobile\images\burger-menu-active.png" />
     <Content Include="Assets\mobile\images\burger-sprite.png" />
     <Content Include="Assets\mobile\images\contact-list-bg.png" />
     <Content Include="Assets\mobile\images\contact-map.jpg" />
@@ -1023,12 +1026,21 @@
     <Content Include="Assets\mobile\images\contact-social-bg.png" />
     <Content Include="Assets\mobile\images\flight-history-status.png" />
     <Content Include="Assets\mobile\images\flight-separator.png" />
+    <Content Include="Assets\mobile\images\flight-swap.png" />
     <Content Include="Assets\mobile\images\form-sprite.png" />
+    <Content Include="Assets\mobile\images\howtoorder-image-1.jpg" />
+    <Content Include="Assets\mobile\images\howtoorder-image-2.jpg" />
+    <Content Include="Assets\mobile\images\howtoorder-image-3.jpg" />
+    <Content Include="Assets\mobile\images\howtoorder-image-4.jpg" />
+    <Content Include="Assets\mobile\images\howtoorder-image-5.jpg" />
+    <Content Include="Assets\mobile\images\howtoorder-image-6.jpg" />
+    <Content Include="Assets\mobile\images\howtoorder-image-7.jpg" />
     <Content Include="Assets\mobile\images\login-header-left.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-white.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-yellow.png" />
     <Content Include="Assets\mobile\images\register-header-left.png" />
+    <Content Include="Assets\mobile\images\revalidate-plane.png" />
     <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
     <Content Include="Assets\mobile\images\user-account-bg.png" />
     <Content Include="Assets\mobile\images\yellow-stripe.png" />
@@ -2567,6 +2579,8 @@
     <Content Include="Views\StaticPage\GetCalendarTerms.mobile.cshtml" />
     <Content Include="Views\StaticPage\VisaWonderfulWednesday.cshtml" />
     <Content Include="Views\StaticPage\DanamonSweetValentine.cshtml" />
+    <Content Include="Views\StaticPage\HowToOrder.mobile.cshtml" />
+    <Content Include="Views\StaticPage\Promo.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
