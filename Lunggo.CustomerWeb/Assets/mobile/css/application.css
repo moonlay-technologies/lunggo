@@ -1775,3 +1775,49 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding-left: 20px; }
   .page.page-privacy ol.listing > li > ol, .page.page-privacy ol.listing > li > ul {
     padding-left: 20px; }
+
+.page.page-howtoorder {
+  font-size: 14px; }
+  .page.page-howtoorder .howto-content {
+    padding: 0 10px; }
+    .page.page-howtoorder .howto-content .list__wrapper {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      counter-reset: howto-counter; }
+      .page.page-howtoorder .howto-content .list__wrapper .list {
+        margin-bottom: 15px;
+        counter-increment: howto-counter; }
+        .page.page-howtoorder .howto-content .list__wrapper .list .list__header {
+          background: #1daee4; }
+          .page.page-howtoorder .howto-content .list__wrapper .list .list__header h3 {
+            color: #fff;
+            padding: 15px;
+            font-weight: 600;
+            margin: 0;
+            position: relative;
+            padding-left: 60px; }
+            .page.page-howtoorder .howto-content .list__wrapper .list .list__header h3:before {
+              content: counter(howto-counter);
+              background: #028ec3;
+              color: #fff;
+              font-weight: 600;
+              display: inline-block;
+              vertical-align: middle;
+              position: absolute;
+              left: 0;
+              top: 0;
+              height: 100%;
+              padding: 15px; }
+        .page.page-howtoorder .howto-content .list__wrapper .list .list__content {
+          background: #fff;
+          padding: 15px;
+          border: 1px solid #ccc;
+          border-top: 0; }
+          .page.page-howtoorder .howto-content .list__wrapper .list .list__content img {
+            margin: 15px 0;
+            max-width: 100%; }
+    .page.page-howtoorder .howto-content .howto-note h3 {
+      font-weight: bold; }
+    .page.page-howtoorder .howto-content .howto-note p span {
+      color: #1daee4; }
