@@ -18,6 +18,17 @@
                 }
             }
         }
+        .toggle {position:relative;
+            header {position:relative; padding-right:25px;
+                &:after {width:20px; height:20px; background:url(/assets/mobile/images/arrow-down.png); background-size:contain; content:''; display:block; top:0; right:0; position:absolute;}
+            }
+            section {display:none;}
+            //
+            &.active {
+                header:after {background:url(/assets/mobile/images/arrow-up.png); background-size:contain;}
+                section {display:block;}
+            }
+        }
     }
 }// page FAQS
 

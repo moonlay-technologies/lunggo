@@ -1766,6 +1766,29 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .page.page-faqs .question-wrapper > ol > li > ol > li + li {
           margin-top: 15px; }
 
+.page.page-faqs .question-wrapper .toggle {
+  position: relative; }
+  .page.page-faqs .question-wrapper .toggle header {
+    position: relative;
+    padding-right: 25px; }
+    .page.page-faqs .question-wrapper .toggle header:after {
+      width: 20px;
+      height: 20px;
+      background: url(/assets/mobile/images/arrow-down.png);
+      background-size: contain;
+      content: '';
+      display: block;
+      top: 0;
+      right: 0;
+      position: absolute; }
+  .page.page-faqs .question-wrapper .toggle section {
+    display: none; }
+  .page.page-faqs .question-wrapper .toggle.active header:after {
+    background: url(/assets/mobile/images/arrow-up.png);
+    background-size: contain; }
+  .page.page-faqs .question-wrapper .toggle.active section {
+    display: block; }
+
 .page.page-terms ol.listing {
   padding-left: 20px; }
   .page.page-terms ol.listing > li > ol, .page.page-terms ol.listing > li > ul {
