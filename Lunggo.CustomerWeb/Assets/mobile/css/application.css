@@ -222,13 +222,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .burger-content .burger-content__body ul li.order-check a:before {
         background-position: -90px 0; }
       .burger-content .burger-content__body ul li.contact a:before {
-        background-position: -120px 0; }
+        background-position: -150px 0; }
       .burger-content .burger-content__body ul li.newsletter a:before {
         background-position: -150px 0; }
+      .burger-content .burger-content__body ul li.promo a:before {
+        background-position: -120px 0; }
       .burger-content .burger-content__body ul li.faq a:before {
-        background-position: -180px 0; }
-      .burger-content .burger-content__body ul li.howto-order a:before {
         background-position: -210px 0; }
+      .burger-content .burger-content__body ul li.howto-order a:before {
+        background-position: -240px 0; }
       .burger-content .burger-content__body ul li.about a:before {
         background-position: -240px 0; }
       .burger-content .burger-content__body ul li + li {

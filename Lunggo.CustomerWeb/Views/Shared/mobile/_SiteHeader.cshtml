@@ -58,13 +58,16 @@
                 <li class="newsletter hidden">
                     <a href="#">News Letter</a>
                 </li>
+                <li class="promo">
+                    <a href="@Url.Action("Promo","StaticPage")">Promo Berlangsung</a>
+                </li>
                 <li class="faq @(ViewBag.CurrentPage == "question" ? "active" : "")">
                     <a href="@Url.Action("Question","StaticPage")">FAQ</a>
                 </li>
                 <li class="howto-order @(ViewBag.CurrentPage == "howtoorder" ? "active" : "")">
                     <a href="@Url.Action("HowToOrder","StaticPage")">Cara Pesan</a>
                 </li>
-                <li class="howto-order @(ViewBag.CurrentPage == "howtopay" ? "active" : "")">
+                <li class="hidden howto-order @(ViewBag.CurrentPage == "howtopay" ? "active" : "")">
                     <a href="@Url.Action("HowToPay","StaticPage")">Cara Bayar</a>
                 </li>
                 <li class="about hidden">

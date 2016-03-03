@@ -2579,6 +2579,7 @@
     <Content Include="Views\StaticPage\VisaWonderfulWednesday.cshtml" />
     <Content Include="Views\StaticPage\DanamonSweetValentine.cshtml" />
     <Content Include="Views\StaticPage\HowToOrder.mobile.cshtml" />
+    <Content Include="Views\StaticPage\Promo.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

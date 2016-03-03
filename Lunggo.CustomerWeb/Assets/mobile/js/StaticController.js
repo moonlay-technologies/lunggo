@@ -25,3 +25,11 @@ app.controller('HowToOrderController', ['$http', '$scope', '$rootScope', functio
     $scope.PageConfig = $rootScope.PageConfig;
 
 }]);// Terms Controller
+
+// promo controller
+// how to order controller
+app.controller('PromoController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
+
+    $scope.PageConfig = $rootScope.PageConfig;
+
+}]);// promo controller
