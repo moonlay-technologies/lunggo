@@ -84,9 +84,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
 }
 
-.burger-content {position:fixed; height:100%; width:300px; top:0; left:-300px; z-index:9999; background:#fff; @include transition(all 0.5s); overflow:hidden;
+.burger-content {position:fixed; height:100%; width:300px; top:0; left:-320px; z-index:9999; background:#fff; @include transition(all 0.5s); overflow:hidden; width:320px; padding-right:20px; background:none;
     // if active
-    &.active {left:0; overflow:visible;
+    &.active {left:0; overflow:auto;
         .burger-content__header {left:0;}
     }
     .burger-content__header {background:#028ec3; color:#fff; position:fixed; width:300px; height:$header-height; top:0; left:-300px; z-index:2; @include transition(all 0.5s);
@@ -102,7 +102,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
         .burger-content__close {color:#fff; position:absolute; right:15px; top:12px; font-size:24px; font-weight:600;}
     }
-    .burger-content__body {padding-top:$header-height;
+    .burger-content__body {padding-top:$header-height; background:#fff;
         ul {list-style:none; margin:0; padding:0;
             li {
                 a {color:$color-main-blue; padding:15px 0px; padding-left:70px; display:block; font-weight:600; position:relative;
@@ -135,7 +135,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                     a:before {background-position:-150px 0;}
                 }
                 &.newsletter {
-                    a:before {background-position:-150px 0;}
+                    a:before {background-position:-180px 0;}
                 }
                 &.promo {
                     a:before {background-position:-120px 0;}
@@ -147,7 +147,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                     a:before {background-position:-240px 0;}
                 }
                 &.about {
-                    a:before {background-position:-240px 0;}
+                    a:before {background-position:-270px 0;}
                 }
                 // if active
                 &+li {border-top:1px solid #8fd6f2;}
