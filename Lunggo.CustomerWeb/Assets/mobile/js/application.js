@@ -9,6 +9,16 @@ if (typeof (angular) == 'object') {
         $rootScope.PageConfig = {
             
             // **********
+            // Popular Destination
+            PopularDestination : {
+                Popular: [
+                    { Name: 'Soekarno Hatta Intl.', City: 'Jakarta', Country: 'Indonesia', Code: 'CGK' },
+                    { Name: 'Ngurah Rai Intl.', City: 'Denpasar, Bali', Country: 'Indonesia', Code: 'DPS' },
+                    { Name: 'Suvarnabhumi Intl.', City: 'Bangkok', Country: 'Thailand', Code: 'BKK' }
+                ]
+            },
+
+            // **********
             // General variables
             Loaded: true,
             Busy: false,
