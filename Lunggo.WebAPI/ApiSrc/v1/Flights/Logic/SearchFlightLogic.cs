@@ -33,7 +33,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     ExpiryTime = null,
                     MaxRequest = 0,
                     StatusCode = HttpStatusCode.BadRequest,
-                    StatusMessage = "Invalid search_id or requests format."
+                    StatusMessage = "Invalid Search ID or Requests format.",
+                    ErrorCode = "ERFSEA01"
                 };
             }
         }

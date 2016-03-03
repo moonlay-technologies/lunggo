@@ -60,26 +60,26 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
             }
 
-            internal static bool Payment(string rsvNo, Payment.Model.Payment payment)
+            internal static bool Payment(string rsvNo, Payment.Model.PaymentData paymentData)
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
                     var prevStatus = GetDb.PaymentStatus(rsvNo);
-                    if (payment.Status != prevStatus)
+                    if (paymentData.Status != prevStatus)
                     {
                         var queryParam = new FlightReservationTableRecord
                         {
                             RsvNo = rsvNo,
-                            PaymentMediumCd = PaymentMediumCd.Mnemonic(payment.Medium),
-                            PaymentMethodCd = PaymentMethodCd.Mnemonic(payment.Method),
-                            PaymentStatusCd = PaymentStatusCd.Mnemonic(payment.Status),
-                            PaymentTime = payment.Time.HasValue ? payment.Time.Value.ToUniversalTime() : (DateTime?) null,
-                            PaymentId = payment.Id,
-                            PaymentTargetAccount = payment.TargetAccount,
-                            PaymentTimeLimit = payment.TimeLimit.HasValue ? payment.TimeLimit.Value.ToUniversalTime() : (DateTime?) null,
-                            PaymentUrl = payment.Url,
-                            PaidAmount = payment.PaidAmount,
-                            FinalPrice = payment.FinalPrice,
+                            PaymentMediumCd = PaymentMediumCd.Mnemonic(paymentData.Medium),
+                            PaymentMethodCd = PaymentMethodCd.Mnemonic(paymentData.Method),
+                            PaymentStatusCd = PaymentStatusCd.Mnemonic(paymentData.Status),
+                            PaymentTime = paymentData.Time.HasValue ? paymentData.Time.Value.ToUniversalTime() : (DateTime?) null,
+                            PaymentId = paymentData.Id,
+                            PaymentTargetAccount = paymentData.TargetAccount,
+                            PaymentTimeLimit = paymentData.TimeLimit.HasValue ? paymentData.TimeLimit.Value.ToUniversalTime() : (DateTime?) null,
+                            PaymentUrl = paymentData.Url,
+                            PaidAmount = paymentData.PaidAmount,
+                            FinalPrice = paymentData.FinalPrice,
                         };
                         UpdatePaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);
                         return true;

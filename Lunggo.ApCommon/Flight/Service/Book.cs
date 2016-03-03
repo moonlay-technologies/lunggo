@@ -75,10 +75,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 Itineraries = itins,
                 Contact = input.Contact,
                 Passengers = input.Passengers,
-                Payment = input.Payment,
+                Payment = input.PaymentData,
                 TripType = ParseTripType(trips)
             };
-            reservation.Payment.Medium = PaymentService.GetInstance().GetPaymentMedium(input.Payment.Method);
+            reservation.Payment.Medium = PaymentService.GetInstance().GetPaymentMedium(input.PaymentData.Method);
             reservation.Payment.TimeLimit = output.BookResults.Min(res => res.TimeLimit);
             var originalPrice = reservation.Itineraries.Sum(itin => itin.LocalPrice);
             var campaign = CampaignService.GetInstance().UseVoucherRequest(new VoucherRequest
@@ -90,7 +90,7 @@ namespace Lunggo.ApCommon.Flight.Service
             if (campaign.CampaignVoucher != null)
             {
                 reservation.Payment.FinalPrice = campaign.DiscountedPrice;
-                reservation.Discount = new DiscountData
+                reservation.Discount = new Discount
                 {
                     Code = input.DiscountCode,
                     Id = campaign.CampaignVoucher.CampaignId.GetValueOrDefault(),
@@ -103,7 +103,7 @@ namespace Lunggo.ApCommon.Flight.Service
             else
             {
                 reservation.Payment.FinalPrice = originalPrice;
-                reservation.Discount = new DiscountData();
+                reservation.Discount = new Discount();
             }
             var transactionDetails = ConstructTransactionDetails(reservation);
             var itemDetails = ConstructItemDetails(reservation);

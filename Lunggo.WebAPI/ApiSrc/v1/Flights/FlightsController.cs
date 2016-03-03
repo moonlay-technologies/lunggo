@@ -18,8 +18,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
     {
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("v1/flights/{searchId}")]
-        public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, string searchId, string requests)
+        [Route("v1/flights/{searchId}/{requests}")]
+        public FlightSearchApiResponse SearchFlights(string searchId, string requests)
         {
             var request = new FlightSearchApiRequest
             {
@@ -32,8 +32,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("v1/flights/{searchId}/revalidate")]
-        public FlightRevalidateApiResponse RevalidateFlight(HttpRequestMessage httpRequest, string searchId, string registers)
+        [Route("v1/flights/{searchId}/revalidate/{registers}")]
+        public FlightRevalidateApiResponse RevalidateFlight(string searchId, string registers)
         {
             var request = new FlightRevalidateApiRequest
             {
@@ -47,8 +47,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("v1/flights/book")]
-        public FlightBookApiResponse BookFlight(HttpRequestMessage httpRequest, FlightBookApiRequest request)
+        public FlightBookApiResponse BookFlight()
         {
+            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightBookApiRequest>();
             // HARDCODE-AN
             // HARDCODE-AN
             // HARDCODE-AN
@@ -60,9 +61,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
             // HARDCODE-AN
             var now = DateTime.UtcNow.AddHours(7);
             if (now.DayOfWeek == DayOfWeek.Wednesday && now.Date >= new DateTime(2016, 1, 2) &&
-                now.Date <= new DateTime(2016, 3, 31) && request.Payment.Method == PaymentMethod.CreditCard &&
-                request.Payment.Data != null && request.Payment.Data.DataString0 != null &&
-                request.Payment.Data.DataString0.StartsWith("4"))
+                now.Date <= new DateTime(2016, 3, 31) && request.PaymentData.Method == PaymentMethod.CreditCard &&
+                request.PaymentData.Data != null && request.PaymentData.Data.DataString0 != null &&
+                request.PaymentData.Data.DataString0.StartsWith("4"))
                 request.DiscountCode = "VWWVWW";
             // HARDCODE-AN
             // HARDCODE-AN
@@ -81,36 +82,37 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("v1/flights/issue")]
-        public FlightIssueApiResponse IssueFlight(HttpRequestMessage httpRequest, FlightIssueApiRequest request)
+        public FlightIssueApiResponse IssueFlight()
         {
+            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightIssueApiRequest>();
             var apiResponse = FlightLogic.IssueFlight(request);
             return apiResponse;
         }
 
-        [HttpGet]
-        [LunggoCorsPolicy]
-        [Route("v1/flights/{SearchId}/rules/{ItinIndex}")]
-        public FlightRulesApiResponse GetFlightRules(HttpRequestMessage httpRequest, [FromUri] FlightRulesApiRequest request)
-        {
-            var apiResponse = FlightLogic.GetRules(request);
-            return apiResponse;
-        }
+        //[HttpGet]
+        //[LunggoCorsPolicy]
+        //[Route("v1/flights/{SearchId}/rules/{ItinIndex}")]
+        //public FlightRulesApiResponse GetFlightRules(HttpRequestMessage httpRequest, [FromUri] FlightRulesApiRequest request)
+        //{
+        //    var apiResponse = FlightLogic.GetRules(request);
+        //    return apiResponse;
+        //}
 
-        [HttpPost]
-        [LunggoCorsPolicy]
-        [Route("v1/flights/cancel")]
-        public FlightCancelApiResponse CancelFlightBooking(HttpRequestMessage httpRequest, [FromUri] FlightCancelApiRequest request)
-        {
-            return FlightLogic.CancelBooking(request);
-        }
+        //[HttpPost]
+        //[LunggoCorsPolicy]
+        //[Route("v1/flights/cancel")]
+        //public FlightCancelApiResponse CancelFlightBooking(HttpRequestMessage httpRequest, [FromUri] FlightCancelApiRequest request)
+        //{
+        //    return FlightLogic.CancelBooking(request);
+        //}
 
-        [HttpPost]
-        [LunggoCorsPolicy]
-        [Route("v1/flights/expire")]
-        public ExpireReservationsApiResponse ExpireFlightReservations(HttpRequestMessage httpRequest)
-        {
-            return FlightLogic.ExpireReservations();
-        }
+        //[HttpPost]
+        //[LunggoCorsPolicy]
+        //[Route("v1/flights/expire")]
+        //public ExpireReservationsApiResponse ExpireFlightReservations(HttpRequestMessage httpRequest)
+        //{
+        //    return FlightLogic.ExpireReservations();
+        //}
 
         [HttpPost]
         [LunggoCorsPolicy]

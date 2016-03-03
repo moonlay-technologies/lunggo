@@ -6,7 +6,6 @@ using CsQuery.ExtensionMethods.Internal;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
-using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
@@ -183,10 +182,10 @@ namespace Lunggo.ApCommon.Flight.Service
 
                 InitializeComboSet(depItin);
                 InitializeComboSet(retItin);
-                depItin.ComboSet.PairRegisterNumber.Add(bundledItins[identicalRetItins[itinIdx]].RegisterNumber);
-                retItin.ComboSet.PairRegisterNumber.Add(bundledItins[identicalDepItins[itinIdx]].RegisterNumber);
-                depItin.ComboSet.BundledRegisterNumber.Add(bundledItin.RegisterNumber);
-                retItin.ComboSet.BundledRegisterNumber.Add(bundledItin.RegisterNumber);
+                depItin.PairRegisterNumber.Add(bundledItins[identicalRetItins[itinIdx]].RegisterNumber);
+                retItin.PairRegisterNumber.Add(bundledItins[identicalDepItins[itinIdx]].RegisterNumber);
+                depItin.BundledRegisterNumber.Add(bundledItin.RegisterNumber);
+                retItin.BundledRegisterNumber.Add(bundledItin.RegisterNumber);
             }
         }
 
@@ -196,27 +195,24 @@ namespace Lunggo.ApCommon.Flight.Service
             for (var itinListIdx = 1; itinListIdx < searchedItinLists.Count; itinListIdx++)
             {
                 var itins = searchedItinLists[itinListIdx];
-                foreach (var itin in itins.Where(itin => itin.ComboSet != null))
+                foreach (var itin in itins.Where(itin => itin.PairRegisterNumber != null))
                 {
-                    for (var comboIdx = 0; comboIdx < itin.ComboSet.BundledRegisterNumber.Count; comboIdx++)
+                    for (var comboIdx = 0; comboIdx < itin.BundledRegisterNumber.Count; comboIdx++)
                     {
-                        itin.ComboSet.TotalComboFare.Add(bundledItin[comboIdx].LocalPrice);
+                        itin.TotalComboFare.Add(bundledItin[comboIdx].LocalPrice);
                     }
-                    itin.ComboSet.ComboFare = itin.ComboSet.TotalComboFare.Min() / 2M;
+                    itin.ComboFare = itin.TotalComboFare.Min() / 2M;
                 }
             }
         }
 
-        private void InitializeComboSet(FlightItinerary itin)
+        private static void InitializeComboSet(FlightItinerary itin)
         {
-            if (itin.ComboSet == null)
+            if (itin.ComboFare == null)
             {
-                itin.ComboSet = new ComboSet
-                {
-                    PairRegisterNumber = new List<int>(),
-                    BundledRegisterNumber = new List<int>(),
-                    TotalComboFare = new List<decimal>()
-                };
+                itin.PairRegisterNumber = new List<int>();
+                itin.BundledRegisterNumber = new List<int>();
+                itin.TotalComboFare = new List<decimal>();
             }
         }
     }

@@ -30,6 +30,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     StatusMessage = "There is an error on your submitted data.",
+                    ErrorCode = "ERFBOO01",
                     OriginalRequest = request
                 };
             }
@@ -48,8 +49,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 request.Passengers.TrueForAll(p => p.LastName != null) &&
                 request.Passengers.TrueForAll(p => p.Title != Title.Undefined) &&
                 request.Passengers.TrueForAll(p => p.Type != PassengerType.Undefined) &&
-                request.Payment != null &&
-                request.Payment.Method != PaymentMethod.Undefined;
+                request.PaymentData != null &&
+                request.PaymentData.Method != PaymentMethod.Undefined;
         }
 
         private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse, FlightBookApiRequest request)
@@ -70,7 +71,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                         {
                             StatusCode = HttpStatusCode.Accepted,
                             StatusMessage = "This reservation is already booked, please make another reservation.",
-                                OriginalRequest = request
+                            ErrorCode = "ERFBOO02",
+                            OriginalRequest = request
                         };
                     case FlightError.BookingIdNoLongerValid:
                     case FlightError.FareIdNoLongerValid:
@@ -78,6 +80,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                         {
                             StatusCode = HttpStatusCode.Accepted,
                             StatusMessage = "This reservation is already expired, please make another reservation.",
+                            ErrorCode = "ERFBOO03",
                             OriginalRequest = request
                         };
                     case FlightError.FailedOnSupplier:
@@ -85,6 +88,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                         {
                             StatusCode = HttpStatusCode.InternalServerError,
                             StatusMessage = "There is an error when processing this flight to the supplier.",
+                            ErrorCode = "ERFBOO04",
                             OriginalRequest = request
                         };
                     case FlightError.InvalidInputData:
@@ -92,6 +96,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                         {
                             StatusCode = HttpStatusCode.BadRequest,
                             StatusMessage = "There is an error on your submitted data.",
+                            ErrorCode = "ERFBOO01",
                             OriginalRequest = request
                         };
                     case FlightError.PartialSuccess:
@@ -99,6 +104,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                         {
                             StatusCode = HttpStatusCode.BadRequest,
                             StatusMessage = "Only some of the fares are success.",
+                            ErrorCode = "ERFBOO05",
                             OriginalRequest = request
                         };
                     case FlightError.TechnicalError:
@@ -106,6 +112,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                         {
                             StatusCode = HttpStatusCode.InternalServerError,
                             StatusMessage = "There is an error occured, please try again later.",
+                            ErrorCode = "ERFBOO06",
                             OriginalRequest = request
                         };
                     default:
@@ -113,6 +120,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                         {
                             StatusCode = HttpStatusCode.InternalServerError,
                             StatusMessage = "There is an error occured, please try again later.",
+                            ErrorCode = "ERFBOO06",
                             OriginalRequest = request
                         };
                 }
@@ -120,7 +128,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static BookFlightInput PreprocessServiceRequest(FlightBookApiRequest request)
         {
-            request.Payment.Medium = request.Payment.Method == PaymentMethod.BankTransfer
+            request.PaymentData.Medium = request.PaymentData.Method == PaymentMethod.BankTransfer
                 ? PaymentMedium.Direct
                 : PaymentMedium.Veritrans;
 
@@ -129,7 +137,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 ItinCacheId = request.Token,
                 Contact = request.Contact,
                 Passengers = MapPassengers(request.Passengers),
-                Payment = request.Payment,
+                PaymentData = request.PaymentData,
                 DiscountCode = request.DiscountCode
             };
             return bookServiceRequest;

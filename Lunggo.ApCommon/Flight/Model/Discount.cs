@@ -1,6 +1,6 @@
 ﻿namespace Lunggo.ApCommon.Flight.Model
 {
-    public class DiscountData
+    public class Discount
     {
         public string Code { get; set; }
         public long Id { get; set; }

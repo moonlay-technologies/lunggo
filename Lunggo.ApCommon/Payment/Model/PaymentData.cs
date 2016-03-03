@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Payment.Model
 {
-    public class Payment
+    public class PaymentData
     {
         [JsonProperty("id")]
         public string Id { get; set; }

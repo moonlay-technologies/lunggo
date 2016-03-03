@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.AuthStore;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Identity.UserStore;
+using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.v1.Account.Model;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -44,14 +45,16 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Account
         [HttpPut]
         [AllowAnonymous]
         [Route("v1/accounts")]
-        public async Task<RegisterApiResponse> Register(RegisterApiRequest request)
+        public async Task<RegisterApiResponse> Register()
         {
+            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<RegisterApiRequest>();
             if (!ModelState.IsValid)
             {
                 return new RegisterApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    StatusMessage = "Email format is invalid"
+                    StatusMessage = "Email format is invalid",
+                    ErrorCode = "ERAREG01"
                 };
             }
 
@@ -63,7 +66,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Account
                     StatusCode = HttpStatusCode.Accepted,
                     StatusMessage = foundUser.EmailConfirmed
                         ? "User already registered, please login instead."
-                        : "User already registered but not yet confirmed, please confirm."
+                        : "User already registered but not yet confirmed, please confirm.",
+                    ErrorCode = foundUser.EmailConfirmed
+                        ? "ERAREG02"
+                        : "ERAREG03"
                 };
             }
 
@@ -91,7 +97,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Account
                 return new RegisterApiResponse
                 {
                     StatusCode = HttpStatusCode.Accepted,
-                    StatusMessage = "Registration failed."
+                    StatusMessage = "Registration failed.",
+                    ErrorCode = "ERAREG04"
                 };
             }
         }
@@ -99,14 +106,16 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Account
         [HttpPost]
         [AllowAnonymous]
         [Route("v1/accounts/forgot")]
-        public async Task<ForgotPasswordApiResponse> ForgotPassword(ForgotPasswordApiRequest request)
+        public async Task<ForgotPasswordApiResponse> ForgotPassword()
         {
+            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ForgotPasswordApiRequest>();
             if (!ModelState.IsValid)
             {
                 return new ForgotPasswordApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    StatusMessage = "Email format is invalid."
+                    StatusMessage = "Email format is invalid.",
+                    ErrorCode = "ERAFPW01"
                 };
             }
 
@@ -116,7 +125,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Account
                 return new ForgotPasswordApiResponse
                 {
                     StatusCode = HttpStatusCode.Accepted,
-                    StatusMessage = "Email is not registered."
+                    StatusMessage = "Email is not registered.",
+                    ErrorCode = "ERAFPW02"
                 };
             }
             if (!await UserManager.IsEmailConfirmedAsync(foundUser.Id))
@@ -124,7 +134,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Account
                 return new ForgotPasswordApiResponse
                 {
                     StatusCode = HttpStatusCode.Accepted,
-                    StatusMessage = "Email already registered but not yet confirmed, please confirm."
+                    StatusMessage = "Email already registered but not yet confirmed, please confirm.",
+                    ErrorCode = "ERAFPW03"
                 };
             }
 
@@ -142,22 +153,24 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Account
         [HttpPatch]
         [Authorize]
         [Route("v1/accounts/profile")]
-        public async Task<ChangeProfileApiResponse> ChangeProfile(ChangeProfileApiRequest request)
+        public async Task<ChangeProfileApiResponse> ChangeProfile()
         {
-            if (!ModelState.IsValid)
+            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangeProfileApiRequest>();
+            if (!ModelState.IsValid)    
             {
                 return new ChangeProfileApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    StatusMessage = "Some input field format are invalid."
+                    StatusMessage = "Some input field format are invalid.",
+                    ErrorCode = "ERACPR01"
                 };
             }
             var updatedUser = User.Identity.GetCustomUser();
-            updatedUser.FirstName = request.FirstName;
-            updatedUser.LastName = request.LastName;
-            updatedUser.CountryCd = request.CountryCd;
-            updatedUser.PhoneNumber = request.PhoneNumber;
-            updatedUser.Address = request.Address;
+            updatedUser.FirstName = request.FirstName ?? updatedUser.FirstName;
+            updatedUser.LastName = request.LastName ?? updatedUser.LastName;
+            updatedUser.CountryCd = request.CountryCd ?? updatedUser.CountryCd;
+            updatedUser.PhoneNumber = request.PhoneNumber ?? updatedUser.PhoneNumber;
+            updatedUser.Address = request.Address ?? updatedUser.Address;
             var result = await UserManager.UpdateAsync(updatedUser);
             if (result.Succeeded)
             {
@@ -170,41 +183,47 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Account
             return new ChangeProfileApiResponse
             {
                 StatusCode = HttpStatusCode.Accepted,
-                StatusMessage = "Profile change failed."
+                StatusMessage = "Profile change failed.",
+                ErrorCode = "ERACPR02"
             };
         }
 
         [HttpGet]
         [Authorize]
         [Route("v1/accounts/profile")]
-        public async Task<GetProfileApiResponse> GetProfile(GetProfileApiRequest request)
+        public async Task<GetProfileApiResponse> GetProfile()
         {
-            if (!ModelState.IsValid)
+            return await Task.Run(() =>
             {
-                return new GetProfileApiResponse
+                if (!ModelState.IsValid)
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    StatusMessage = "Email format is invalid"
-                };
-            }
+                    return new GetProfileApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        StatusMessage = "Email format is invalid",
+                        ErrorCode = "ERAGPR01"
+                    };
+                }
 
-            var foundUser = await UserManager.FindByEmailAsync(request.Email);
-            if (foundUser == null)
-            {
+                if (User == null)
+                {
+                    return new GetProfileApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        StatusMessage = "Email not registered.",
+                        ErrorCode = "ERAGPR02"
+                    };
+                }
+                var user = User.Identity.GetCustomUser();
                 return new GetProfileApiResponse
                 {
-                    StatusCode = HttpStatusCode.Accepted,
-                    StatusMessage = "Email not registered."
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    CountryCd = user.CountryCd,
+                    PhoneNumber = user.PhoneNumber,
+                    Address = user.Address
                 };
-            }
-            return new GetProfileApiResponse
-            {
-                FirstName = foundUser.FirstName,
-                LastName = foundUser.LastName,
-                CountryCd = foundUser.CountryCd,
-                PhoneNumber = foundUser.PhoneNumber,
-                Address = foundUser.Address
-            };
+            });
         }
 
         [HttpGet]
@@ -229,7 +248,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Account
         [HttpGet]
         [Authorize]
         [Route("v1/accounts/trx")]
-        public async Task<OrderDetailApiResponse> GetTransactionHistory(string rsvNo)
+        public async Task<OrderDetailApiResponse> GetOrderDetail(string rsvNo)
         {
             var flight = FlightService.GetInstance();
             return await Task.Run(() =>
@@ -247,7 +266,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Account
                     {
                         Reservation = null,
                         StatusCode = HttpStatusCode.Unauthorized,
-                        StatusMessage = "You are not authorized to see this reservation."
+                        StatusMessage = "You are not authorized to see this reservation.",
+                        ErrorCode = "ERAORD01"
                     };
             });
         }

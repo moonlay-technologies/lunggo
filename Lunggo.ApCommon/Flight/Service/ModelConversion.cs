@@ -56,14 +56,9 @@ namespace Lunggo.ApCommon.Flight.Service
                     Trips = MapTrips(itinerary.Trips),
                     RegisterNumber = itinerary.RegisterNumber,
                     OriginalFare = GenerateDummyOriginalFare(itinerary.LocalPrice),
-                    ComboSet = itinerary.ComboSet != null
-                        ? new ComboSet
-                        {
-                            ComboFare = itinerary.ComboSet.ComboFare,
-                            PairRegisterNumber = itinerary.ComboSet.PairRegisterNumber,
-                            TotalComboFare = itinerary.ComboSet.TotalComboFare
-                        }
-                        : null
+                    ComboFare = itinerary.ComboFare,
+                    PairRegisterNumber = itinerary.PairRegisterNumber,
+                    TotalComboFare = itinerary.TotalComboFare
                 };
             }
             else

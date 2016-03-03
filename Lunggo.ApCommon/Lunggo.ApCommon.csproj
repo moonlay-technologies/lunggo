@@ -205,7 +205,7 @@
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
     <Compile Include="Flight\Model\Conditions.cs" />
     <Compile Include="Flight\Model\Contact.cs" />
-    <Compile Include="Flight\Model\DiscountData.cs" />
+    <Compile Include="Flight\Model\Discount.cs" />
     <Compile Include="Flight\Model\FlightOrderInfo.cs" />
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
@@ -402,7 +402,7 @@
     <Compile Include="Payment\Model\ItemDetails.cs" />
     <Compile Include="Payment\Model\SavedCreditCard.cs" />
     <Compile Include="Payment\Model\TransferConfirmationReport.cs" />
-    <Compile Include="Payment\Model\Payment.cs" />
+    <Compile Include="Payment\Model\PaymentData.cs" />
     <Compile Include="Payment\Model\Refund.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
     <Compile Include="Payment\PaymentService.cs" />

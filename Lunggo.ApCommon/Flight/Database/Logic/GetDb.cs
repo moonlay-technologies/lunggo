@@ -71,7 +71,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                         CountryCode = reservationRecord.ContactCountryCd,
                                         Phone = reservationRecord.ContactPhone
                                     },
-                                    Payment = new Payment.Model.Payment
+                                    Payment = new Payment.Model.PaymentData
                                     {
                                         Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
                                         FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault(),
@@ -82,7 +82,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                         Method = PaymentMethodCd.Mnemonic(reservationRecord.PaymentMethodCd),
                                         Url = reservationRecord.PaymentUrl
                                     },
-                                    Discount = new DiscountData
+                                    Discount = new Discount
                                     {
                                         Code = reservationRecord.VoucherCode,
                                         Id = reservationRecord.DiscountId.GetValueOrDefault(),
@@ -214,7 +214,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                         CountryCode = reservationRecord.ContactCountryCd,
                                         Phone = reservationRecord.ContactPhone
                                     },
-                                    Payment = new Payment.Model.Payment
+                                    Payment = new Payment.Model.PaymentData
                                     {
                                         Id = reservationRecord.PaymentId,
                                         Medium = PaymentMediumCd.Mnemonic(reservationRecord.PaymentMediumCd),
@@ -229,7 +229,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                         Currency = reservationRecord.CurrencyCd,
                                         Refund = refund
                                     },
-                                    Discount = new DiscountData
+                                    Discount = new Discount
                                     {
                                         Code = reservationRecord.VoucherCode,
                                         Id = reservationRecord.DiscountId.GetValueOrDefault(),
@@ -343,7 +343,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     var reservations = rsvRecords.Select(record => new FlightReservation
                     {
                         RsvNo = record.RsvNo,
-                        Payment = new Payment.Model.Payment
+                        Payment = new Payment.Model.PaymentData
                         {
                             FinalPrice = record.FinalPrice.GetValueOrDefault(),
                             TimeLimit = record.PaymentTimeLimit

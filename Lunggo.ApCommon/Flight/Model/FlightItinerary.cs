@@ -45,6 +45,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public Supplier Supplier { get; set; }
         public bool AsReturn { get; set; }
         public TripType RequestedTripType { get; set; }
+        public List<int> BundledRegisterNumber { get; set; }
     }
 
     public class FlightItineraryBase
@@ -72,18 +73,10 @@ namespace Lunggo.ApCommon.Flight.Model
         [JsonProperty("reg")]
         public int RegisterNumber { get; set; }
         [JsonProperty("combo", NullValueHandling = NullValueHandling.Ignore)]
-        public ComboSet ComboSet { get; set; }
-    }
-
-    public class ComboSet
-    {
-        [JsonProperty("fare")]
-        public decimal ComboFare { get; set; }
-        [JsonProperty("regs")]
+        public decimal? ComboFare { get; set; }
+        [JsonProperty("combo_regs", NullValueHandling = NullValueHandling.Ignore)]
         public List<int> PairRegisterNumber { get; set; }
-        [JsonProperty("fares")]
+        [JsonProperty("combo_fares", NullValueHandling = NullValueHandling.Ignore)]
         public List<decimal> TotalComboFare { get; set; }
-        [JsonProperty("bun_regs", NullValueHandling = NullValueHandling.Ignore)]
-        public List<int> BundledRegisterNumber { get; set; }
     }
 }

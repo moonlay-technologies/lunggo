@@ -13,16 +13,14 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 var depItin = GetItineraryFromSearchCache(searchId, registerNumbers[0], 1);
                 var retItin = GetItineraryFromSearchCache(searchId, registerNumbers[1], 2);
-                var depCombo = depItin.ComboSet;
-                var retCombo = retItin.ComboSet;
-                if (depCombo != null && retCombo != null)
+                if (depItin.ComboFare != null && retItin.ComboFare != null)
                 {
-                    var depBundleRegNoIdx = depCombo.PairRegisterNumber.IndexOf(registerNumbers[1]);
-                    var retBundleRegNoIdx = retCombo.PairRegisterNumber.IndexOf(registerNumbers[0]);
+                    var depBundleRegNoIdx = depItin.PairRegisterNumber.IndexOf(registerNumbers[1]);
+                    var retBundleRegNoIdx = retItin.PairRegisterNumber.IndexOf(registerNumbers[0]);
                     if (depBundleRegNoIdx != -1 && retBundleRegNoIdx != -1)
                     {
-                        var comboRegByDep = depCombo.BundledRegisterNumber[depBundleRegNoIdx];
-                        var comboRegByRet = retCombo.BundledRegisterNumber[retBundleRegNoIdx];
+                        var comboRegByDep = depItin.BundledRegisterNumber[depBundleRegNoIdx];
+                        var comboRegByRet = retItin.BundledRegisterNumber[retBundleRegNoIdx];
                         if (comboRegByDep != -1 && comboRegByRet != -1 && comboRegByDep == comboRegByRet)
                         {
                             var token = SaveItineraryFromSearchToCache(searchId, comboRegByDep, 0);

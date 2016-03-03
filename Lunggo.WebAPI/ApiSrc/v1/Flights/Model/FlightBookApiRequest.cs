@@ -13,10 +13,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public string Token { get; set; }
         [JsonProperty("contact")]
         public Contact Contact { get; set; }
-        [JsonProperty("paxs")]
+        [JsonProperty("pax")]
         public List<Passenger> Passengers { get; set; }
         [JsonProperty("pay")]
-        public Payment Payment { get; set; }
+        public PaymentData PaymentData { get; set; }
         [JsonProperty("code")]
         public string DiscountCode { get; set; }
         [JsonProperty("lang")]
@@ -33,7 +33,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public string FirstName { get; set; }
         [JsonProperty("last")]
         public string LastName { get; set; }
-        [JsonProperty("bd")]
+        [JsonProperty("dob")]
         public DateTime? BirthDate { get; set; }
         [JsonProperty("pass_no")]
         public string PassportNumber { get; set; }

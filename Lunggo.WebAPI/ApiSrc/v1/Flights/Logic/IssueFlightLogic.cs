@@ -26,6 +26,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
                     StatusMessage = "There is an error occured, please try again later.",
+                    ErrorCode = "ERFISS01",
                     OriginalRequest = request
                 };
             }

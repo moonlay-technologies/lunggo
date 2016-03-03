@@ -82,6 +82,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     NewFare = 0,
                     StatusCode = HttpStatusCode.InternalServerError,
                     StatusMessage = "There is a problem in revalidating fare, please try again later.",
+                    ErrorCode = "ERFREV01",
                     OriginalRequest = request
                 };
             }
