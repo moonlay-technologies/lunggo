@@ -120,9 +120,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
-  transition: all 0.5s; }
+  transition: all 0.5s;
+  overflow: hidden; }
   .burger-content.active {
-    left: 0; }
+    left: 0;
+    overflow: visible; }
     .burger-content.active .burger-content__header {
       left: 0; }
   .burger-content .burger-content__header {
@@ -196,7 +198,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           height: 100%;
           left: 100%;
           top: 0;
-          background: url(/assets/mobile/images/borger-menu-active.png) left center no-repeat; }
+          background: url(/assets/mobile/images/burger-menu-active.png) left center no-repeat; }
       .burger-content .burger-content__body ul li.login, .burger-content .burger-content__body ul li.register, .burger-content .burger-content__body ul li.account {
         background: #1daee4;
         color: #fff; }

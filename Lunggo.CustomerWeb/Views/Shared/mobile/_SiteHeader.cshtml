@@ -46,25 +46,25 @@
                         <a href="@Url.Action("Register","Account")">Sign Up</a>
                     </li>
                 }
-                <li class="home">
+                <li class="home @(ViewBag.CurrentPage == "home" ? "active" : "") ">
                     <a href="/">Home</a>
                 </li>
-                <li class="order-check">
+                <li class="order-check @(ViewBag.CurrentPage == "checkorder" ? "active" : "")">
                     <a href="@Url.Action("CekPemesanan","Home")">Cek Pemesanan</a>
                 </li>
-                <li class="contact">
+                <li class="contact @(ViewBag.CurrentPage == "contact" ? "active" : "")">
                     <a href="@Url.Action("Contact","StaticPage")">Contact Us</a>
                 </li>
                 <li class="newsletter hidden">
                     <a href="#">News Letter</a>
                 </li>
-                <li class="faq">
+                <li class="faq @(ViewBag.CurrentPage == "question" ? "active" : "")">
                     <a href="@Url.Action("Question","StaticPage")">FAQ</a>
                 </li>
-                <li class="howto-order">
+                <li class="howto-order @(ViewBag.CurrentPage == "howtoorder" ? "active" : "")">
                     <a href="@Url.Action("HowToOrder","StaticPage")">Cara Pesan</a>
                 </li>
-                <li class="howto-order">
+                <li class="howto-order @(ViewBag.CurrentPage == "howtopay" ? "active" : "")">
                     <a href="@Url.Action("HowToPay","StaticPage")">Cara Bayar</a>
                 </li>
                 <li class="about hidden">

@@ -84,9 +84,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
 }
 
-.burger-content {position:fixed; height:100%; width:300px; top:0; left:-300px; z-index:9999; background:#fff; @include transition(all 0.5s);
+.burger-content {position:fixed; height:100%; width:300px; top:0; left:-300px; z-index:9999; background:#fff; @include transition(all 0.5s); overflow:hidden;
     // if active
-    &.active {left:0;
+    &.active {left:0; overflow:visible;
         .burger-content__header {left:0;}
     }
     .burger-content__header {background:#028ec3; color:#fff; position:fixed; width:300px; height:$header-height; top:0; left:-300px; z-index:2; @include transition(all 0.5s);
@@ -110,7 +110,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 }
                 //active
                 &.active {background:#9ee5ff; position:relative;
-                    &:after {content:''; position:absolute; width:20px; height:100%; left:100%; top:0; background:url(/assets/mobile/images/borger-menu-active.png) left center no-repeat;}
+                    &:after {content:''; position:absolute; width:20px; height:100%; left:100%; top:0; background:url(/assets/mobile/images/burger-menu-active.png) left center no-repeat;}
                 }
                 // specific class
                 &.login, &.register, &.account {background:$color-main-blue; color:#fff;
