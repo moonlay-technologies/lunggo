@@ -239,6 +239,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     // if active
     &.active {display:block;}
 }
+.popup__wrapper.popup--revalidate {
+    .popup {text-align:center; background:none; padding-top:50px;
+        .revalidate-image {}
+        .revalidate-anim {padding:10px 0;}
+        p {font-size:16px; color:#fff; font-weight:600;}
+    }
+}
 
 // *****
 // overlay

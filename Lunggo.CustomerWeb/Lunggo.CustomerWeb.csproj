@@ -1040,6 +1040,7 @@
     <Content Include="Assets\mobile\images\passenger-sprite-white.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-yellow.png" />
     <Content Include="Assets\mobile\images\register-header-left.png" />
+    <Content Include="Assets\mobile\images\revalidate-plane.png" />
     <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
     <Content Include="Assets\mobile\images\user-account-bg.png" />
     <Content Include="Assets\mobile\images\yellow-stripe.png" />

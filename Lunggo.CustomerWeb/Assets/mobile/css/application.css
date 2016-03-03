@@ -375,6 +375,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .popup__wrapper.active {
     display: block; }
 
+.popup__wrapper.popup--revalidate .popup {
+  text-align: center;
+  background: none;
+  padding-top: 50px; }
+  .popup__wrapper.popup--revalidate .popup .revalidate-anim {
+    padding: 10px 0; }
+  .popup__wrapper.popup--revalidate .popup p {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600; }
+
 .overlay {
   position: fixed;
   width: 100%;

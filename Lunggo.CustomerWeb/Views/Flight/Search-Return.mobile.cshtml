@@ -935,16 +935,19 @@
     </div><!-- .overlay--passenger-selector -->
 
     <!-- popup revalidate -->
-    <div class="popup__wrapper" ng-class="{'active':PageConfig.Validating}">
+    <div class="popup__wrapper popup--revalidate" ng-class="{'active':PageConfig.Validating}">
         <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Membooking Penerbangan</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container">
-                    <p>Membooking penerbangan Anda. Mohon tunggu.</p>
-                </div>
+
+            <div class="revalidate-image">
+                <img src="/assets/mobile/images/revalidate-plane.png" alt="Revalidating" />
             </div>
+
+            <div class="revalidate-anim">
+
+            </div>
+
+            <p>Sedang Memvalidasi<br />Penerbangan Anda</p>
+
         </div>
     </div>
 
