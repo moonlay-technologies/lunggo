@@ -106,10 +106,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 reservation.Payment.FinalPrice = originalPrice;
                 reservation.Discount = new DiscountData();
             }
-            reservation.TransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
-            //Debug.Print("--------->Transfer Code : " + reservation.TransferCode);
-            reservation.Payment.FinalPrice -= reservation.TransferCode;
-            //Debug.Print("--------->Final Price : " + reservation.Payment.FinalPrice);
+            if (reservation.Payment.Method == PaymentMethod.BankTransfer) 
+            {
+                reservation.TransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
+                reservation.Payment.FinalPrice -= reservation.TransferCode;
+            }
             var transactionDetails = ConstructTransactionDetails(reservation);
             var itemDetails = ConstructItemDetails(reservation);
             var payment = PaymentService.GetInstance();
