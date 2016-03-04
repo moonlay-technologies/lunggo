@@ -66,7 +66,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private void SearchFlightInternal(SearchFlightConditions conditions, int supplierIndex)
         {
-            if (ParseTripType(conditions.Trips) == TripType.Return)
+            if (ParseTripType(conditions.Trips) == TripType.RoundTrip)
                 SearchComboFares(conditions, supplierIndex);
             else
                 SearchNormalFares(conditions, supplierIndex);

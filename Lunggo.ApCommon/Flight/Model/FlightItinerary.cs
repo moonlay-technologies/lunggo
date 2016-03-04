@@ -19,6 +19,8 @@ namespace Lunggo.ApCommon.Flight.Model
         public List<FlightTripForDisplay> Trips { get; set; }
         [JsonProperty("original_fare")]
         public decimal OriginalFare { get; set; }
+        [JsonProperty("combo", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? ComboFare { get; set; }
     }
 
     public class FlightItinerary : FlightItineraryBase
@@ -43,18 +45,17 @@ namespace Lunggo.ApCommon.Flight.Model
         public decimal LocalRate { get; set; }
         public FareType FareType { get; set; }
         public Supplier Supplier { get; set; }
-        public bool AsReturn { get; set; }
         public TripType RequestedTripType { get; set; }
-        public List<int> BundledRegisterNumber { get; set; }
+        public List<int> ComboBundledRegisters { get; set; }
     }
 
     public class FlightItineraryBase
     {
-        [JsonProperty("req_passport")]
+        [JsonProperty("req_pass")]
         public bool RequirePassport { get; set; }
-        [JsonProperty("req_bd")]
+        [JsonProperty("req_dob")]
         public bool RequireBirthDate { get; set; }
-        [JsonProperty("req_same_check_in")]
+        [JsonProperty("req_sci")]
         public bool RequireSameCheckIn { get; set; }
         [JsonProperty("req_nat")]
         public bool RequireNationality { get; set; }
@@ -66,17 +67,15 @@ namespace Lunggo.ApCommon.Flight.Model
         public int ChildCount { get; set; }
         [JsonProperty("inf")]
         public int InfantCount { get; set; }
-        [JsonProperty("trip")]
+        [JsonProperty("type")]
         public TripType TripType { get; set; }
         [JsonProperty("req_cabin")]
         public CabinClass RequestedCabinClass { get; set; }
         [JsonProperty("reg")]
         public int RegisterNumber { get; set; }
-        [JsonProperty("combo", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal? ComboFare { get; set; }
         [JsonProperty("combo_regs", NullValueHandling = NullValueHandling.Ignore)]
-        public List<int> PairRegisterNumber { get; set; }
+        public List<int> ComboPairRegisters { get; set; }
         [JsonProperty("combo_fares", NullValueHandling = NullValueHandling.Ignore)]
-        public List<decimal> TotalComboFare { get; set; }
+        public List<decimal> TotalComboFares { get; set; }
     }
 }

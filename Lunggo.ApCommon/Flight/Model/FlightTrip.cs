@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Flight.Model
         [JsonProperty("airs")]
         public List<Airline> Airlines { get; set; }
         [JsonProperty("tot_dur")]
-        public double TotalDuration { get; set; }
+        public TimeSpan TotalDuration { get; set; }
     }
 
     public class FlightTrip : FlightTripBase

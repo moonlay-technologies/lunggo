@@ -260,7 +260,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static bool ReturnTimeMatches(MarginRule rule, FlightItinerary fare)
         {
-            if (fare.TripType != TripType.Return)
+            if (fare.TripType != TripType.RoundTrip)
                 return true;
             else
             {
@@ -276,8 +276,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static bool TripTypeMatches(MarginRule rule, FlightItinerary fare)
         {
-            return !rule.TripTypes.Any() || rule.TripTypes.Contains(fare.TripType) ||
-                   (rule.TripTypes.Contains(TripType.Return) && fare.AsReturn);
+            return !rule.TripTypes.Any() || rule.TripTypes.Contains(fare.RequestedTripType);
         }
 
         private static bool FareTypeMatches(MarginRule rule, FlightItinerary fare)
@@ -324,7 +323,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
             if (rule.AirportPairs.Any())
             {
-                if (rule.TripTypes.Contains(TripType.Return) && fare.TripType == TripType.Return)
+                if (rule.TripTypes.Contains(TripType.RoundTrip) && fare.TripType == TripType.RoundTrip)
                     return rule.AirportPairsIsExclusion
                         ? !rule.AirportPairs.Contains(returnPair)
                         : rule.AirportPairs.Contains(returnPair);
@@ -353,7 +352,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
             if (rule.CityPairs.Any())
             {
-                if (rule.TripTypes.Contains(TripType.Return) && fare.TripType == TripType.Return)
+                if (rule.TripTypes.Contains(TripType.RoundTrip) && fare.TripType == TripType.RoundTrip)
                     return rule.CityPairsIsExclusion
                         ? !rule.CityPairs.Contains(returnPair)
                         : rule.CityPairs.Contains(returnPair);
@@ -382,7 +381,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
             if (rule.CountryPairs.Any())
             {
-                if (rule.TripTypes.Contains(TripType.Return) && fare.TripType == TripType.Return)
+                if (rule.TripTypes.Contains(TripType.RoundTrip) && fare.TripType == TripType.RoundTrip)
                     return rule.CountryPairsIsExclusion
                         ? !rule.CountryPairs.Contains(returnPair)
                         : rule.CountryPairs.Contains(returnPair);

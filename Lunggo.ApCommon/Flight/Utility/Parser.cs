@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 case 2:
                     return (trips.First().DestinationAirport == trips.Last().OriginAirport &&
                             trips.First().OriginAirport == trips.Last().DestinationAirport)
-                        ? TripType.Return
+                        ? TripType.RoundTrip
                         : TripType.OpenJaw;
                 default:
                     var circling = true;

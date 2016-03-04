@@ -16,7 +16,10 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public SearchFlightOutput SearchFlight(SearchFlightInput input)
         {
-            var output = new SearchFlightOutput();
+            var output = new SearchFlightOutput
+            {
+                SearchId = input.SearchId
+            };
 
             if (input.RequestedSupplierIds.IsNullOrEmpty())
             {
@@ -24,7 +27,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.TotalSupplier = Suppliers.Count;
                 output.Itineraries = new List<FlightItineraryForDisplay>();
                 output.SearchedSuppliers = new List<int>();
-                output.SearchId = input.SearchId;
             }
             else
             {
@@ -41,20 +43,20 @@ namespace Lunggo.ApCommon.Flight.Service
                     }
                 }
 
+                var tripType = ParseTripType(input.SearchId);
                 var searchedItinLists = searchedSupplierItins.SelectMany(dict => dict.Value).ToList();
-                var isReturn = ParseTripType(input.SearchId) == TripType.Return;
+                searchedItinLists.SelectMany(list => list).ToList().ForEach(itin => itin.RequestedTripType = tripType);
                 var depItins = new List<FlightItineraryForDisplay>();
                 List<FlightItineraryForDisplay> retItins = null;
 
                 if (searchedItinLists.Any())
                 {
-                    if (isReturn)
+                    if (tripType == TripType.RoundTrip)
                     {
 
                         for (var itinListIdx = 0; itinListIdx < searchedItinLists.Count; itinListIdx++)
                         {
                             var searchedItinList = searchedItinLists[itinListIdx];
-                            searchedItinList.ForEach(itin => itin.AsReturn = true);
                             AddPriceMargin(searchedItinList);
                             SaveFlightRequestPrices(input.SearchId, searchedItinList, itinListIdx);
                         }
@@ -152,19 +154,21 @@ namespace Lunggo.ApCommon.Flight.Service
         private void GenerateReturnCombo(List<List<FlightItinerary>> itinLists)
         {
             var bundledItins = itinLists[0];
+            var depItins = itinLists[1];
+            var retItins = itinLists[2];
             var identicalDepItins =
                 bundledItins.Select(itin => itin.Trips[0])
                 .Select(trip =>
                 {
                     var identicalTrip = itinLists[1].SingleOrDefault(itin => itin.Trips[0].Identical(trip));
-                    return identicalTrip != null ? itinLists[1].IndexOf(identicalTrip) : -1;
+                    return identicalTrip != null ? depItins.IndexOf(identicalTrip) : -1;
                 }).ToList();
             var identicalRetItins =
                 bundledItins.Select(itin => itin.Trips[1])
                 .Select(trip =>
                 {
                     var identicalTrip = itinLists[2].SingleOrDefault(itin => itin.Trips[0].Identical(trip));
-                    return identicalTrip != null ? itinLists[2].IndexOf(identicalTrip) : -1;
+                    return identicalTrip != null ? retItins.IndexOf(identicalTrip) : -1;
                 }).ToList();
 
             for (var itinIdx = 0; itinIdx < bundledItins.Count; itinIdx++)
@@ -182,10 +186,10 @@ namespace Lunggo.ApCommon.Flight.Service
 
                 InitializeComboSet(depItin);
                 InitializeComboSet(retItin);
-                depItin.PairRegisterNumber.Add(bundledItins[identicalRetItins[itinIdx]].RegisterNumber);
-                retItin.PairRegisterNumber.Add(bundledItins[identicalDepItins[itinIdx]].RegisterNumber);
-                depItin.BundledRegisterNumber.Add(bundledItin.RegisterNumber);
-                retItin.BundledRegisterNumber.Add(bundledItin.RegisterNumber);
+                depItin.ComboPairRegisters.Add(retItins[identicalRetItins[itinIdx]].RegisterNumber);
+                retItin.ComboPairRegisters.Add(depItins[identicalDepItins[itinIdx]].RegisterNumber);
+                depItin.ComboBundledRegisters.Add(bundledItin.RegisterNumber);
+                retItin.ComboBundledRegisters.Add(bundledItin.RegisterNumber);
             }
         }
 
@@ -195,24 +199,23 @@ namespace Lunggo.ApCommon.Flight.Service
             for (var itinListIdx = 1; itinListIdx < searchedItinLists.Count; itinListIdx++)
             {
                 var itins = searchedItinLists[itinListIdx];
-                foreach (var itin in itins.Where(itin => itin.PairRegisterNumber != null))
+                foreach (var itin in itins.Where(itin => itin.ComboPairRegisters != null))
                 {
-                    for (var comboIdx = 0; comboIdx < itin.BundledRegisterNumber.Count; comboIdx++)
+                    for (var comboIdx = 0; comboIdx < itin.ComboBundledRegisters.Count; comboIdx++)
                     {
-                        itin.TotalComboFare.Add(bundledItin[comboIdx].LocalPrice);
+                        itin.TotalComboFares.Add(bundledItin[comboIdx].LocalPrice);
                     }
-                    itin.ComboFare = itin.TotalComboFare.Min() / 2M;
                 }
             }
         }
 
         private static void InitializeComboSet(FlightItinerary itin)
         {
-            if (itin.ComboFare == null)
+            if (itin.ComboPairRegisters == null)
             {
-                itin.PairRegisterNumber = new List<int>();
-                itin.BundledRegisterNumber = new List<int>();
-                itin.TotalComboFare = new List<decimal>();
+                itin.ComboPairRegisters = new List<int>();
+                itin.ComboBundledRegisters = new List<int>();
+                itin.TotalComboFares = new List<decimal>();
             }
         }
     }

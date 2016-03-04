@@ -213,6 +213,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 flightItinerary.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
                 MapPassengerCount(pricedItinerary, flightItinerary);
                 flightItinerary.FareId = pricedItinerary.AirItineraryPricingInfo.FareSourceCode;
+                if (conditions is SearchFlightConditions)
+                    flightItinerary.RequestedCabinClass = (conditions as SearchFlightConditions).CabinClass;
                 return flightItinerary;
             }
             else
@@ -281,7 +283,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 case "oneway":
                     return TripType.OneWay;
                 case "return":
-                    return TripType.Return;
+                    return TripType.RoundTrip;
                 case "openjaw":
                     return TripType.OpenJaw;
                 case "circle":
@@ -388,7 +390,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         private static FlightSegment MapFlightSegment(ApCommon.Mystifly.OnePointService.Flight.FlightSegment flightSegment)
         {
-            List<FlightStop> stops = null;
+            var stops = new List<FlightStop>();
             if (flightSegment.StopQuantity > 0)
             {
                 stops = new List<FlightStop>

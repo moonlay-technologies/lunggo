@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public int StopQuantity { get; set; }
         [JsonProperty("air_code")]
         public string AirlineCode { get; set; }
-        [JsonProperty("f_number")]
+        [JsonProperty("f_no")]
         public string FlightNumber { get; set; }
         [JsonProperty("op_air_code")]
         public string OperatingAirlineCode { get; set; }

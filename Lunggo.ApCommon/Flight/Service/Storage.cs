@@ -88,7 +88,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static void SaveSearchedItinerariesToCache(List<FlightItinerary> itineraryList, string searchId, int timeout, int supplierIndex)
         {
-            SaveSearchedItinerariesToCache(itineraryList, null, null, searchId, timeout, supplierIndex);
+            SaveSearchedItinerariesToCache(itineraryList, new List<FlightItinerary>(), new List<FlightItinerary>(), searchId, timeout, supplierIndex);
         }
 
         private static void SaveSearchedItinerariesToCache(List<FlightItinerary> itineraryList, List<FlightItinerary> returnItineraryList, List<FlightItinerary> bundledItineraryList, string searchId, int timeout, int supplierIndex)
@@ -183,7 +183,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private Dictionary<int, List<List<FlightItinerary>>> GetSearchedSupplierItineraries(string searchId, List<int> requestedSupplierIds)
         {
-            var isReturn = ParseTripType(searchId) == TripType.Return;
+            var isReturn = ParseTripType(searchId) == TripType.RoundTrip;
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var searchedSupplierItins = new Dictionary<int, List<List<FlightItinerary>>>();
@@ -201,7 +201,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     var depItins = cacheObject.DeconvertTo<List<FlightItinerary>>();
                     var retItins = cacheObjectReturn.DeconvertTo<List<FlightItinerary>>();
                     var bunItins = cacheObjectBundled.DeconvertTo<List<FlightItinerary>>();
-                    var itinsList = new List<List<FlightItinerary>> {bunItins, depItins, retItins};
+                    var itinsList = new List<List<FlightItinerary>> { bunItins, depItins, retItins };
                     searchedSupplierItins.Add(supplierId, itinsList);
                 }
             }

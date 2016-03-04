@@ -14,11 +14,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public int TotalFlightCount { get; set; }
         [JsonProperty("flights")]
         public List<FlightItineraryForDisplay> FlightList { get; set; }
-        [JsonProperty("ret_flights_count")]
+        [JsonProperty("ret_flights_count", NullValueHandling = NullValueHandling.Ignore)]
         public int? TotalReturnFlightCount { get; set; }
-        [JsonProperty("ret_flights")]
+        [JsonProperty("ret_flights", NullValueHandling = NullValueHandling.Ignore)]
         public List<FlightItineraryForDisplay> ReturnFlightList { get; set; }
-        [JsonProperty("expiry_time")]
+        [JsonProperty("expiry_time", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? ExpiryTime { get; set; }
         [JsonProperty("max_requests")]
         public int MaxRequest { get; set; }

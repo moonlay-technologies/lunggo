@@ -59,7 +59,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     var newItins = output.Sets.Select(set => set.Itinerary).ToList();
                     var tripType = ParseTripType(input.SearchId);
-                    newItins.ForEach(itin => itin.AsReturn = tripType == TripType.Return);
+                    newItins.ForEach(itin => itin.RequestedTripType = tripType);
                     AddPriceMargin(newItins);
                     var searchedPrices = GetFlightRequestPrices(input.SearchId);
                     var itinsPriceDifference = newItins.Select(itin => itin.LocalPrice - searchedPrices[itin.RegisterNumber]);

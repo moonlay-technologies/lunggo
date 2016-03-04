@@ -49,16 +49,17 @@ namespace Lunggo.ApCommon.Flight.Service
                     RequirePassport = itinerary.RequirePassport,
                     RequireSameCheckIn = itinerary.RequireSameCheckIn,
                     RequireNationality = itinerary.RequireNationality,
-                    CanHold = itinerary.CanHold,
-                    TripType = itinerary.TripType,
                     RequestedCabinClass = itinerary.RequestedCabinClass,
+                    CanHold = itinerary.CanHold,
+                    Currency = itinerary.LocalCurrency,
+                    TripType = itinerary.TripType,
                     TotalFare = itinerary.LocalPrice,
                     Trips = MapTrips(itinerary.Trips),
                     RegisterNumber = itinerary.RegisterNumber,
                     OriginalFare = GenerateDummyOriginalFare(itinerary.LocalPrice),
-                    ComboFare = itinerary.ComboFare,
-                    PairRegisterNumber = itinerary.PairRegisterNumber,
-                    TotalComboFare = itinerary.TotalComboFare
+                    ComboFare = itinerary.TotalComboFares == null ? null : (decimal?) itinerary.TotalComboFares.Min() / 2M,
+                    ComboPairRegisters = itinerary.ComboPairRegisters,
+                    TotalComboFares = itinerary.TotalComboFares
                 };
             }
             else
@@ -80,7 +81,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 DestinationCity = dict.GetAirportCity(trip.DestinationAirport),
                 DestinationAirportName = dict.GetAirportName(trip.DestinationAirport),
                 DepartureDate = trip.DepartureDate,
-                TotalDuration = CalculateTotalDuration(trip).TotalMilliseconds,
+                TotalDuration = CalculateTotalDuration(trip),
                 Airlines = GetAirlineList(trip),
                 TotalTransit = CalculateTotalTransit(trip),
                 Transits = MapTransitDetails(trip)
@@ -153,7 +154,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var result = new List<Transit>();
             for (var i = 0; i < segments.Count; i++)
             {
-                if (segments[i].Stops != null)
+                if (segments[i].Stops.Any())
                 {
                     result.AddRange(segments[i].Stops.Select(stop => new Transit
                     {

@@ -50,7 +50,7 @@
                                 @trip.OriginAirport - @trip.DestinationAirport
                             </td>
                             <td>
-                                @if (@rsv.TripType == TripType.Return)
+                                @if (@rsv.TripType == TripType.RoundTrip)
                                 {
                                     @Html.Raw("RETURN");
                                 }
@@ -63,7 +63,7 @@
                                 @trip.DepartureDate.ToString("d MMM yyyy")
                             </td>
                             <td>
-                                @if (rsv.TripType == TripType.Return)
+                                @if (rsv.TripType == TripType.RoundTrip)
                                 {
                                     @rsv.Itinerary.Trips.Last().DepartureDate.ToString("d MMM yyyy")
                                 }

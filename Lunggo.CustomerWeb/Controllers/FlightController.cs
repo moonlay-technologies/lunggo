@@ -40,13 +40,13 @@ namespace Lunggo.CustomerWeb.Controllers
                 }).ToList();
                 var tripType = FlightService.GetInstance().ParseTripType(trips);
                 var requestId = Guid.NewGuid().ToString();
-                FlightService.GetInstance().SetFlightRequestTripType(requestId, tripType == TripType.Return);
+                FlightService.GetInstance().SetFlightRequestTripType(requestId, tripType == TripType.RoundTrip);
                 ViewBag.RequestId = requestId;
                 switch (tripType)
                 {
                     case TripType.OneWay:
                         return View("Search-Single", search);
-                    case TripType.Return:
+                    case TripType.RoundTrip:
                         return View("Search-Return", search);
                     default:
                         return View("Search-Single", search);

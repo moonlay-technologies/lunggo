@@ -4,11 +4,10 @@
     {
         Undefined = 0,
         OneWay = 1,
-        Return = 2,
-        MultiCity = 3,
-        OpenJaw = 4,
-        Circle = 5,
-        Other = 6
+        RoundTrip = 2,
+        OpenJaw = 3,
+        Circle = 4,
+        Other = 5
     }
 
     internal class TripTypeCd
@@ -19,7 +18,7 @@
             {
                 case TripType.OneWay:
                     return "ONE";
-                case TripType.Return:
+                case TripType.RoundTrip:
                     return "RET";
                 case TripType.OpenJaw:
                     return "JAW";
@@ -39,7 +38,7 @@
                 case "ONE":
                     return TripType.OneWay;
                 case "RET":
-                    return TripType.Return;
+                    return TripType.RoundTrip;
                 case "JAW":
                     return TripType.OpenJaw;
                 case "CRC":

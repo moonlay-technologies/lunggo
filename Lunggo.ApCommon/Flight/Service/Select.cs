@@ -9,18 +9,18 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public string SelectFlight(string searchId, List<int> registerNumbers)
         {
-            if (ParseTripType(searchId) == TripType.Return)
+            if (ParseTripType(searchId) == TripType.RoundTrip)
             {
                 var depItin = GetItineraryFromSearchCache(searchId, registerNumbers[0], 1);
                 var retItin = GetItineraryFromSearchCache(searchId, registerNumbers[1], 2);
-                if (depItin.ComboFare != null && retItin.ComboFare != null)
+                if (depItin.ComboPairRegisters != null && retItin.ComboPairRegisters != null)
                 {
-                    var depBundleRegNoIdx = depItin.PairRegisterNumber.IndexOf(registerNumbers[1]);
-                    var retBundleRegNoIdx = retItin.PairRegisterNumber.IndexOf(registerNumbers[0]);
+                    var depBundleRegNoIdx = depItin.ComboPairRegisters.IndexOf(registerNumbers[1]);
+                    var retBundleRegNoIdx = retItin.ComboPairRegisters.IndexOf(registerNumbers[0]);
                     if (depBundleRegNoIdx != -1 && retBundleRegNoIdx != -1)
                     {
-                        var comboRegByDep = depItin.BundledRegisterNumber[depBundleRegNoIdx];
-                        var comboRegByRet = retItin.BundledRegisterNumber[retBundleRegNoIdx];
+                        var comboRegByDep = depItin.ComboBundledRegisters[depBundleRegNoIdx];
+                        var comboRegByRet = retItin.ComboBundledRegisters[retBundleRegNoIdx];
                         if (comboRegByDep != -1 && comboRegByRet != -1 && comboRegByDep == comboRegByRet)
                         {
                             var token = SaveItineraryFromSearchToCache(searchId, comboRegByDep, 0);

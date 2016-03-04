@@ -16,10 +16,12 @@ namespace Lunggo.ApCommon.Flight.Model
         public string LastName { get; set; }
         [JsonProperty("dob")]
         public DateTime? DateOfBirth { get; set; }
+        [JsonProperty("gen")]
+        public Gender Gender { get; set; }
+        [JsonProperty("nat")]
+        public string Nationality { get; set; }
         [JsonProperty("pass_no")]
         public string PassportNumber { get; set; }
-        [JsonProperty("gender")]
-        public Gender Gender { get; set; }
         [JsonProperty("pass_exp")]
         public DateTime? PassportExpiryDate { get; set; }
         [JsonProperty("pass_country")]
