@@ -158,7 +158,7 @@
     </header>
 
     <ul class="history-list">
-        <li class="done" ng-repeat="rsvs in Order">
+        <li class="" ng-repeat="rsvs in Order" ng-class="{'done' : rsvs.Payment.Status == 3, 'pending' : rsvs.Payment.Status == 2 , 'canceled' : rsvs.Payment.Status == 1 || rsvs.Payment.Status == 5 }">
             <div class="row">
                 <div class="col-xs-4">
                     <span class="blue">Order ID</span>
@@ -172,7 +172,7 @@
                     <span>Maskapai</span>
                 </div>
                 <div class="col-xs-8">
-                    <span class="blue">: <b>GARUDA INDONESIA</b></span>
+                    <span class="blue">: <b>{{rsvs.Itinerary.Trips[0].Segments[0].AirlineName}}</b></span>
                 </div>
             </div>
             <div class="row">
@@ -180,7 +180,7 @@
                     <span>Tujuan</span>
                 </div>
                 <div class="col-xs-8">
-                    <span>: <b>{{rsvs.Itinerary.Trips[0].OriginAirport}}</b> to <b>{{rsvs.Itinerary.Trips[0].DestinationAirport}}</b> ({{rsvs.TripType}})</span>
+                    <span>: <b>{{rsvs.Itinerary.Trips[0].OriginAirport}}</b> to <b>{{rsvs.Itinerary.Trips[0].DestinationAirport}}</b> ({{FlightType(rsvs.TripType)}})</span>
                 </div>
             </div>
             <div class="row">
@@ -188,15 +188,15 @@
                     <span>Berangkat</span>
                 </div>
                 <div class="col-xs-8">
-                    <span>: <b>{{Itinerary.Trips[0].DepartureDate}}</b></span>
+                    <span>: <b>{{rsvs.Itinerary.Trips[0].DepartureDate | date}}</b></span>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" ng-show="rsvs.Itinerary.Trips[1].DepartureDate">
                 <div class="col-xs-4">
                     <span>Kembali</span>
                 </div>
                 <div class="col-xs-8">
-                    <span>: <b>20 Okt 2015</b></span>
+                    <span>: <b>{{rsvs.Itinerary.Trips[1].DepartureDate | date}}</b></span>
                 </div>
             </div>
             <div class="row">
@@ -204,7 +204,7 @@
                     <span>Status</span>
                 </div>
                 <div class="col-xs-8">
-                    <span>: <b>{{rsvs.Payment.Status}}</b></span>
+                    <span>: <b>{{OrderStatus(rsvs.Payment.Status)}}</b></span>
                 </div>
             </div>
             <div class="row">

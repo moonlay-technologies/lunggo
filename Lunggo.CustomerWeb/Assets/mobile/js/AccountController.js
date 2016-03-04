@@ -7,6 +7,49 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
     if (order.length) {
         $scope.Order = JSON.parse(order);
     }
+
+    // order status
+    $scope.OrderStatus = function(num) {
+        var text = '';
+        switch (num) {
+            case 1:
+                text = 'Cancel';
+                break;
+            case 2:
+                text = 'Pending';
+                break;
+            case 3:
+                text = 'Settled';
+                break;
+            case 4:
+                text = 'Denied';
+                break;
+            case 5:
+                text = 'Expired';
+                break;
+            case 6:
+                text = 'Veryfing';
+                break;
+            case 7:
+                text = 'Challanged';
+                break;
+        }
+        return text;
+    }
+    // flight type
+    $scope.FlightType = function(num) {
+        var text = '';
+        switch (num) {
+            case 1:
+                text = 'OneWay';
+                break;
+            case 2:
+                text = 'Return';
+                break;
+        }
+        return text;
+    }
+
     // change page
     $scope.PageConfig.ActivePage = 'menu';
     $scope.PageConfig.ActivePageChanged = false;

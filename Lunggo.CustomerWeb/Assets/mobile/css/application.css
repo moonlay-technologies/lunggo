@@ -1696,6 +1696,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background-position: -60px 0; }
     .page.page-useraccount .user-history .history-list > li.canceled:before {
       background-position: -120px 0; }
+    .page.page-useraccount .user-history .history-list > li .btn {
+      margin-top: 15px; }
 
 .page.page-orderdetail .order-detail .content-header {
   background: #2eb4e7;
