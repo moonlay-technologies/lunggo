@@ -157,6 +157,7 @@ app.controller('ContactController', ['$http', '$scope', '$rootScope', function (
 app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
 
     $scope.PageConfig = $rootScope.PageConfig;
+    $scope.orderDate = new Date(orderDate);
 
 }]);// Order Detail Controller
 
