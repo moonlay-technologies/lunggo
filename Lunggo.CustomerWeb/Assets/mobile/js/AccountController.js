@@ -3,6 +3,10 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
 
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.Countries = $rootScope.Countries;
+    $scope.Order;
+    if (order.length) {
+        $scope.Order = JSON.parse(order);
+    }
     // change page
     $scope.PageConfig.ActivePage = 'menu';
     $scope.PageConfig.ActivePageChanged = false;

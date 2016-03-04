@@ -1,4 +1,5 @@
 ﻿@using Lunggo.ApCommon.Identity.User
+@using Lunggo.Framework.Extension
 @model List<Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay>
 
 @{
@@ -34,11 +35,11 @@
         phone: parseInt('@User.Identity.GetPhoneNumber()'),
         country: '@User.Identity.GetCountryCd()'
     }
+    var order = '@Html.Raw(rsvs.Serialize())';
     </script>
     <!-- angular controller -->
     <script src="/Assets/mobile/js/AccountController.js"></script>
 }
-
 
 <section class="user-menu" ng-show="PageConfig.ActivePage == 'menu'">
     <div class="menu-user">
@@ -157,13 +158,13 @@
     </header>
 
     <ul class="history-list">
-        <li class="done">
+        <li class="done" ng-repeat="rsvs in Order">
             <div class="row">
                 <div class="col-xs-4">
                     <span class="blue">Order ID</span>
                 </div>
                 <div class="col-xs-8">
-                    <span class="blue">: <b>0123456789</b></span>
+                    <span class="blue">: <b>{{rsvs.RsvNo}}</b></span>
                 </div>
             </div>
             <div class="row">
@@ -179,7 +180,7 @@
                     <span>Tujuan</span>
                 </div>
                 <div class="col-xs-8">
-                    <span>: <b>JKT</b> to <b>DPS</b> (Roundtrip)</span>
+                    <span>: <b>{{rsvs.Itinerary.Trips[0].OriginAirport}}</b> to <b>{{rsvs.Itinerary.Trips[0].DestinationAirport}}</b> ({{rsvs.TripType}})</span>
                 </div>
             </div>
             <div class="row">
@@ -187,7 +188,7 @@
                     <span>Berangkat</span>
                 </div>
                 <div class="col-xs-8">
-                    <span>: <b>15 Okt 2015</b></span>
+                    <span>: <b>{{Itinerary.Trips[0].DepartureDate}}</b></span>
                 </div>
             </div>
             <div class="row">
@@ -203,7 +204,7 @@
                     <span>Status</span>
                 </div>
                 <div class="col-xs-8">
-                    <span>: <b>DONE</b></span>
+                    <span>: <b>{{rsvs.Payment.Status}}</b></span>
                 </div>
             </div>
             <div class="row">

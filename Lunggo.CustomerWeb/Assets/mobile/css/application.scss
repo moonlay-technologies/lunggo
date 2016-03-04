@@ -72,7 +72,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea {@include border-radius($border-radius-default);}
 .form-control {@include border-radius($border-radius-default)}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"] {font-size:16px;}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"] {font-size:16px; height:auto;}
 
 // *****
 // site header
