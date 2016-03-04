@@ -1713,6 +1713,50 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-orderdetail .order-detail .content-body > div > section {
   padding: 10px; }
 
+.page.page-orderdetail .passenger-list {
+  padding: 0;
+  margin: 0;
+  padding-left: 30px;
+  counter-reset: number;
+  list-style: none; }
+  .page.page-orderdetail .passenger-list li {
+    position: relative;
+    counter-increment: number; }
+    .page.page-orderdetail .passenger-list li:before {
+      background: #1daee4;
+      content: counter(number);
+      position: absolute;
+      color: #fff;
+      top: 0;
+      left: -30px;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      padding: 2px; }
+
+.page.page-orderdetail .info-flight .flight {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 20px; }
+  .page.page-orderdetail .info-flight .flight .flight__airline__name {
+    color: #1daee4;
+    font-weight: bold;
+    padding-top: 10px; }
+  .page.page-orderdetail .info-flight .flight:before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #1daee4;
+    background-repeat: no-repeat;
+    background-size: 200%;
+    border: 2px solid #1daee4;
+    background-image: url(/assets/images/plane-updown-sprite.png); }
+  .page.page-orderdetail .info-flight .flight.return:before {
+    background-position: -16px; }
+
 .page.page-forgotpassword form {
   border-top: 1px solid #ccc;
   margin-top: 15px;
