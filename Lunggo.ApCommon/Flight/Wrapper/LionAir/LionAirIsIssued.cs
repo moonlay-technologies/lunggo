@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -9,6 +7,7 @@ using CsQuery;
 using CsQuery.ExtensionMethods.Internal;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Framework.Config;
 using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
@@ -17,21 +16,37 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
     {
         private partial class LionAirClientHandler
         {
-            public IssueEnum IsIssued(string bookingId)
+            private IssueEnum IsIssued(string bookingId)
             {
                 const int maxRetryCount = 10;
                 var counter = 0;
                 var isIssued = (bool?) null;
-                string currentDeposit;
+                //string currentDeposit;
                 var clientx = CreateAgentClient();
                 clientx.FollowRedirects = false;
-                var searchedHtml = new CQ();
-                bool successLogin = false;
+                CQ searchedHtml;
+                bool successLogin ;
                 string userId;
+                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var clienty = new RestClient(cloudAppUrl);
+                var accReq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
+                var userName = "";
+                var accRs = new RestResponse();
+                var reqTime = DateTime.UtcNow;
+                while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
+                {
+                    accRs = (RestResponse)clientx.Execute(accReq);
+                    userName = accRs.Content.Trim('"');
+                }
+
+                if (userName.Length == 0)
+                    isIssued = null;
+                string msgLogin;
+                var ctr = 0;
                 do
                 {
                     clientx.BaseUrl = new Uri("https://agent.lionair.co.id");
-                    var url0 = @"/lionairagentsportal/default.aspx";
+                    const string url0 = @"/lionairagentsportal/default.aspx";
                     var searchRequest0 = new RestRequest(url0, Method.GET);
                     var searchResponse0 = clientx.Execute(searchRequest0);
                     var html0 = searchResponse0.Content;
@@ -43,11 +58,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         (searchResponse0.StatusCode == HttpStatusCode.OK ||
                          searchResponse0.StatusCode == HttpStatusCode.Redirect))
                         return IssueEnum.CheckingError;
-                    var url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
+                    const string url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
                     var searchRequest1 = new RestRequest(url1, Method.GET);
                     var searchResponse1 = clientx.Execute(searchRequest1);
-                    successLogin = Login(clientx, searchResponse1.RawBytes, viewstate, eventval, out userId);//, out currentDeposit);
-                } while (!successLogin);
+                    successLogin = Login(clientx, searchResponse1.RawBytes, viewstate, eventval, out userId, userName, out msgLogin);//, out currentDeposit);
+                    ctr++;
+                } while (!successLogin && ctr <21);
 
                 // Page Welcome
                 var startind = userId.IndexOf("consID");
@@ -64,10 +80,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     searchRequest3.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
                     searchRequest3.AddHeader("Accept",
                         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                    Thread.Sleep(3000);
+                    Thread.Sleep(2000);
                     var searchResponse3 = clientx.Execute(searchRequest3);
                     var html3 = searchResponse3.Content;
-                    searchedHtml = (CQ)html3;
+                    searchedHtml = html3;
                     var vs = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
 
                     //Post data booking id
@@ -81,7 +97,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var ending = "&txtBookingReloc=" + bookingId + "&txtPassengerName=&ddlDateSelection=";
                     var postData4 = beginning + vs + ending;
                     searchRequest4.AddParameter("application/x-www-form-urlencoded", postData4, ParameterType.RequestBody);
-                    Thread.Sleep(3000);
+                    Thread.Sleep(2000);
                     var searchResponse4 = clientx.Execute(searchRequest4);
 
                     //Page Tampilin Reservasi
@@ -93,7 +109,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     searchRequest5.AddHeader("Accept",
                         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
                     var searchResponse5 = clientx.Execute(searchRequest5);
-                    Thread.Sleep(3000);
+                    Thread.Sleep(2000);
                     var confirmationContent = searchResponse5.Content;
                     var bookingListCq = (CQ)confirmationContent;
                     var theTable = bookingListCq[".Step4ItinRow"];
@@ -114,19 +130,47 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     ending =
                         "&payDet=rbPay_CA&CreditCardDisplay1%24CreditCardType=VI&CreditCardDisplay1%24txtCardHolderName=&CreditCardDisplay1%24CreditCardNumber=&CreditCardDisplay1%24CreditCardExpiryMonth=MM&CreditCardDisplay1%24CreditCardExpiryYear=YY&CreditCardDisplay1%24CVVNumber=&FlightInfo=&AXTotal=&DCTotal=&OtherTotal=&nameMismatch=";
                     searchRequest6.AddParameter("application/x-www-form-urlencoded", beginning+ending, ParameterType.RequestBody);
-                    Thread.Sleep(3000);
+                    Thread.Sleep(2000);
                     var searchResponse6 = clientx.Execute(searchRequest6);
 
-                    var url7 = @"/LionAgentsOPS/TicketQueue.aspx";
+                    const string url7 = @"/LionAgentsOPS/TicketQueue.aspx";
                     var searchRequest7 = new RestRequest(url7, Method.GET);
                     searchRequest7.AddHeader("Referer",
                         "https://agent.lionair.co.id/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId);
                     searchRequest7.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
                     searchRequest7.AddHeader("Accept",
                         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                    Thread.Sleep(3000);
+                    Thread.Sleep(2000);
                     var searchResponse7 = clientx.Execute(searchRequest7);
+                    
+                    const string url15 = @"/LionAirAgentsPortal/Logout.aspx";
+                    var searchRequest15 = new RestRequest(url15, Method.GET);
+                    searchRequest15.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                    searchRequest15.AddHeader("Content-Encoding", "gzip");
+                    searchRequest15.AddHeader("Host", "agent.lionair.co.id");
+                    searchRequest15.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchRequest15.AddHeader("Referer",
+                        "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + cid);
+                    Thread.Sleep(2000);
+                    var searchResponse15 = clientx.Execute(searchRequest15);
 
+                    //GET PAGE DEFAULT(HOME)
+
+                    const string url16 = @"/LionAirAgentsPortal/Default.aspx";
+                    var searchRequest16 = new RestRequest(url16, Method.GET);
+                    searchRequest16.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                    searchRequest16.AddHeader("Content-Encoding", "gzip");
+                    searchRequest16.AddHeader("Host", "agent.lionair.co.id");
+                    searchRequest16.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchRequest16.AddHeader("Referer",
+                        "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + cid);
+                    Thread.Sleep(2000);
+                    var searchResponse16 = clientx.Execute(searchRequest16);
+
+                    accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
+                    accRs = (RestResponse) clienty.Execute(accReq);
                 }
                 switch (isIssued)
                 {
@@ -141,7 +185,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 }
             }
 
-            public enum IssueEnum
+            private enum IssueEnum
             {
                 IssueSuccess,
                 NotIssued,

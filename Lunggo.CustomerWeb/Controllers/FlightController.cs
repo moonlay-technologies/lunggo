@@ -61,17 +61,17 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult Select(string token)
         {
-            try
-            {
+            //try
+            //{
                 var tokens = token.Split('.').ToList();
                 var flightService = FlightService.GetInstance();
                 var newToken = flightService.BundleFlight(tokens);
                 return RedirectToAction("Checkout", "Flight", new { token = newToken });
-            }
-            catch
-            {
-                return RedirectToAction("Checkout", "Flight");
-            }
+            //}
+            //catch
+            //{
+            //    return RedirectToAction("Checkout", "Flight");
+            //}
         }
 
         [RequireHttps]

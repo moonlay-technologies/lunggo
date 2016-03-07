@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Net;
 using System.Threading;
 using System.Web;
@@ -22,7 +20,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             if (env == "production")
                 return Client.OrderTicket(bookingId);
-            else
+            //else
                 return new OrderTicketResult
                 {
                     IsSuccess = true,
@@ -37,34 +35,61 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             {
                 var clientx = CreateAgentClient();
                 clientx.FollowRedirects = false;
-                var searchedHtml = new CQ();
-                bool successLogin = false;
-                string userId;
-                string currentDeposit;
-                do
+                CQ searchedHtml;
+                string userId = "";
+                //string currentDeposit;
+
+                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var clienty = new RestClient(cloudAppUrl);
+                var accReq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
+                var userName = "";
+                RestResponse accRs;
+                var reqTime = DateTime.UtcNow;
+                var msgLogin = "Your login name is inuse";
+                //var counter = 0;
+
+                while (msgLogin == "Your login name is inuse" || msgLogin == "There was an error logging you in")
                 {
-                    clientx.BaseUrl = new Uri("https://agent.lionair.co.id");
-                    var url0 = @"/lionairagentsportal/default.aspx";
-                    var searchRequest0 = new RestRequest(url0, Method.GET);
-                    var searchResponse0 = clientx.Execute(searchRequest0);
-                    var html0 = searchResponse0.Content;
-                    searchedHtml = (CQ)html0;
-                    var viewstate = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
-                    var eventval = HttpUtility.UrlEncode(searchedHtml["#__EVENTVALIDATION"].Attr("value"));
-                    FlightService.ParseCabinClass(CabinClass.Economy);
-                    if (searchResponse0.ResponseUri.AbsolutePath != "/lionairagentsportal/default.aspx" &&
-                        (searchResponse0.StatusCode == HttpStatusCode.OK ||
-                            searchResponse0.StatusCode == HttpStatusCode.Redirect))
+                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
+                    {
+                        accRs = (RestResponse) clientx.Execute(accReq);
+                        userName = accRs.Content.Trim('"');
+                    }
+
+                    if (userName.Length == 0)
                         return new OrderTicketResult
                         {
-                            Errors = new List<FlightError> { FlightError.InvalidInputData }
+                            Errors = new List<FlightError> {FlightError.TechnicalError},
+                            ErrorMessages = new List<string> {"userName is full"}
                         };
-                    var url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
-                    var searchRequest1 = new RestRequest(url1, Method.GET);
-                    var searchResponse1 = clientx.Execute(searchRequest1);
-                    successLogin = Login(clientx, searchResponse1.RawBytes, viewstate, eventval, out userId);// out currentDeposit);
-                } while (!successLogin);
 
+                    bool successLogin;
+                    do
+                    {
+                        clientx.BaseUrl = new Uri("https://agent.lionair.co.id");
+                        const string url0 = @"/lionairagentsportal/default.aspx";
+                        var searchRequest0 = new RestRequest(url0, Method.GET);
+                        var searchResponse0 = clientx.Execute(searchRequest0);
+                        var html0 = searchResponse0.Content;
+                        searchedHtml = html0;
+                        var viewstate = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
+                        var eventval = HttpUtility.UrlEncode(searchedHtml["#__EVENTVALIDATION"].Attr("value"));
+                        FlightService.ParseCabinClass(CabinClass.Economy);
+                        if (searchResponse0.ResponseUri.AbsolutePath != "/lionairagentsportal/default.aspx" &&
+                            (searchResponse0.StatusCode == HttpStatusCode.OK ||
+                             searchResponse0.StatusCode == HttpStatusCode.Redirect))
+                            return new OrderTicketResult
+                            {
+                                Errors = new List<FlightError> {FlightError.InvalidInputData}
+                            };
+                        const string url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
+                        var searchRequest1 = new RestRequest(url1, Method.GET);
+                        var searchResponse1 = clientx.Execute(searchRequest1);
+                        successLogin = Login(clientx, searchResponse1.RawBytes, viewstate, eventval, out userId,
+                            userName, out msgLogin); // out currentDeposit);
+                    } while (!successLogin && (msgLogin != "Your login name is inuse"
+                        || msgLogin != "There was an error logging you in"));
+                }
                 // Page Welcome
                 var startind = userId.IndexOf("consID");
                 var cid = userId.SubstringBetween(startind, userId.Length);
@@ -81,7 +106,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var searchResponse3 = clientx.Execute(searchRequest3);
                 Thread.Sleep(1000);
                 var html3 = searchResponse3.Content;
-                searchedHtml = (CQ)html3;
+                searchedHtml = html3;
                 var vs = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
 
                 //Post data booking id
@@ -91,7 +116,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 searchRequest4.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
                 searchRequest4.AddHeader("Accept",
                     "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                var beginning = "__EVENTTARGET=lbSearch&__EVENTARGUMENT=&__VIEWSTATE=";
+                const string beginning = "__EVENTTARGET=lbSearch&__EVENTARGUMENT=&__VIEWSTATE=";
                 var ending = "&txtBookingReloc=" + bookingId + "&txtPassengerName=&ddlDateSelection=";
                 var postData4 = beginning + vs + ending;
                 searchRequest4.AddParameter("application/x-www-form-urlencoded", postData4, ParameterType.RequestBody);
@@ -109,7 +134,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var searchResponse5 = clientx.Execute(searchRequest5);
                 Thread.Sleep(3000);
                 var html8 = searchResponse5.Content;
-                searchedHtml = (CQ)html8;
+                searchedHtml = html8;
                 var vsPostToPay = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
                 
                 try
@@ -123,8 +148,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     searchRequest9.AddHeader("Accept",
                         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
                     var beginningToPay = "__EVENTTARGET=lbContinue&__EVENTARGUMENT=&__VIEWSTATE=" + vsPostToPay;
-                    var endingToPay =
-                        "&payDet=rbPay_CA&CreditCardDisplay1%24CreditCardType=VI&CreditCardDisplay1%24txtCardHolderName=&CreditCardDisplay1%24CreditCardNumber=&CreditCardDisplay1%24CreditCardExpiryMonth=MM&CreditCardDisplay1%24CreditCardExpiryYear=YY&CreditCardDisplay1%24CVVNumber=&FlightInfo=&AXTotal=&DCTotal=&OtherTotal=&nameMismatch=";
+                    const string endingToPay = "&payDet=rbPay_CA&CreditCardDisplay1%24CreditCardType=VI&CreditCardDisplay1%24txtCardHolderName=&CreditCardDisplay1%24CreditCardNumber=&CreditCardDisplay1%24CreditCardExpiryMonth=MM&CreditCardDisplay1%24CreditCardExpiryYear=YY&CreditCardDisplay1%24CVVNumber=&FlightInfo=&AXTotal=&DCTotal=&OtherTotal=&nameMismatch=";
                     var postData9 = beginningToPay + endingToPay;
                     searchRequest9.AddParameter("application/x-www-form-urlencoded", postData9, ParameterType.RequestBody);
                     var searchResponse9 = clientx.Execute(searchRequest9);
@@ -136,7 +160,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                     //CashPayment
 
-                    var url10 = @"/LionAgentsOPS/CashPayment.aspx";
+                    const string url10 = @"/LionAgentsOPS/CashPayment.aspx";
                     var searchRequest10 = new RestRequest(url10, Method.GET);
                     searchRequest10.AddHeader("Referer",
                         "https://agent.lionair.co.id/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId);
@@ -152,7 +176,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                     //Confirmation
 
-                    var url11 = @"/LionAgentsOPS/Confirmation.aspx";
+                    const string url11 = @"/LionAgentsOPS/Confirmation.aspx";
                     var searchRequest11 = new RestRequest(url11, Method.GET);
                     searchRequest11.AddHeader("Referer",
                         "https://agent.lionair.co.id/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId);
@@ -170,7 +194,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var bookingRef = html11["#lblRefNumber"].Text();
 
                     //Logout
-                    var url15 = @"/LionAirAgentsPortal/Logout.aspx";
+                    const string url15 = @"/LionAirAgentsPortal/Logout.aspx";
                     var searchRequest15 = new RestRequest(url15, Method.GET);
                     searchRequest15.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
                     searchRequest15.AddHeader("Content-Encoding", "gzip");
@@ -184,7 +208,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                     //GET PAGE DEFAULT(HOME)
 
-                    var url16 = @"/LionAirAgentsPortal/Default.aspx";
+                    const string url16 = @"/LionAirAgentsPortal/Default.aspx";
                     var searchRequest16 = new RestRequest(url16, Method.GET);
                     searchRequest16.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
                     searchRequest16.AddHeader("Content-Encoding", "gzip");
@@ -194,7 +218,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     searchRequest16.AddHeader("Referer",
                         "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + cid);
                     Thread.Sleep(3000);
-                    var searchResponse16 = clientx.Execute(searchRequest16);
+                    var searchResponse16 = clienty.Execute(searchRequest16);
+
+                    accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
+                    accRs = (RestResponse) clienty.Execute(accReq);
                     
                     return new OrderTicketResult
                     {

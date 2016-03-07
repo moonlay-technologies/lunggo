@@ -11,7 +11,7 @@ using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
 using Lunggo.Framework.TableStorage;
 
-namespace Lunggo.Worker.EticketHandler
+namespace Lunggo.CloudApp.EticketHandler
 {
     public partial class WorkerRole
     {

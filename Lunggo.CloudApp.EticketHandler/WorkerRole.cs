@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceRuntime;
 
-namespace Lunggo.Worker.EticketHandler
+namespace Lunggo.CloudApp.EticketHandler
 {
     public partial class WorkerRole : RoleEntryPoint
     {
@@ -13,7 +13,7 @@ namespace Lunggo.Worker.EticketHandler
 
         public override void Run()
         {
-            Trace.TraceInformation("Lunggo.Worker.EticketHandler is running");
+            Trace.TraceInformation("Lunggo.CloudApp.EticketHandler is running");
 
             try
             {
@@ -35,7 +35,7 @@ namespace Lunggo.Worker.EticketHandler
 
             var result = base.OnStart();
 
-            Trace.TraceInformation("Lunggo.Worker.EticketHandler has been started");
+            Trace.TraceInformation("Lunggo.CloudApp.EticketHandler has been started");
 
             Init();
 
@@ -44,14 +44,14 @@ namespace Lunggo.Worker.EticketHandler
 
         public override void OnStop()
         {
-            Trace.TraceInformation("Lunggo.Worker.EticketHandler is stopping");
+            Trace.TraceInformation("Lunggo.CloudApp.EticketHandler is stopping");
 
             _cancellationTokenSource.Cancel();
             _runCompleteEvent.WaitOne();
 
             base.OnStop();
 
-            Trace.TraceInformation("Lunggo.Worker.EticketHandler has stopped");
+            Trace.TraceInformation("Lunggo.CloudApp.EticketHandler has stopped");
         }
 
         private static async Task RunAsync(CancellationToken cancellationToken)

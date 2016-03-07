@@ -1,15 +1,7 @@
-﻿using System;
-using System.Net;
-using System.Text;
-using System.Web;
+﻿using System.Net;
 using CsQuery;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Extension;
 using RestSharp;
-using Tesseract;
-using AForge.Imaging.Filters;
-using System.Drawing;
-using Tesseract;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 {
@@ -66,8 +58,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 return client;
             }
 
-            private static bool Login(RestClient client, byte[] img, string viewstate, string eventval, out string linkgoto)
+            private static bool Login(RestClient client, byte[] img, string viewstate, string eventval, 
+                out string linkgoto, string userName, out string checkLogin)
             {
+                
                 //READ CAPTCHA
                 var captcha = ReadCaptcha(img);
                 
@@ -75,7 +69,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var url = @"lionairagentsportal/default.aspx";
                 var request = new RestRequest(url, Method.POST);
 
-                _userName= "trv.agent.tujuh";
+                _userName = userName;
                 _password = "Standar1234";
 
                 var postData = 
@@ -115,7 +109,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 {
                     ret = true;
                 }
-                var checkLogin = searchedHtml["#trLoginError"].Text();
+                checkLogin = searchedHtml["#trLoginError"].Text();
                 if (checkLogin.Length != 0)
                     ret = false;
 

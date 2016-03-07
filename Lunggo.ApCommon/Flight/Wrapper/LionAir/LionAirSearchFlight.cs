@@ -77,24 +77,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     DepartureDate = conditions.Trips[0].DepartureDate
                 };
 
-                string originAirport, destinationAirport;
-                if (trip0.OriginAirport == "JKT")
-                {
-                    originAirport= "CGK";
-                }
-                else
-                {
-                   originAirport = trip0.OriginAirport;
-                }
+                var originAirport = trip0.OriginAirport == "JKT" ? "CGK" : trip0.OriginAirport;
                     
-                if (trip0.DestinationAirport == "JKT")
-                {
-                    destinationAirport = "CGK";
-                }
-                else
-                {
-                    destinationAirport = trip0.DestinationAirport;
-                }
+                var destinationAirport = trip0.DestinationAirport == "JKT" ? "CGK" : trip0.DestinationAirport;
 
                 // [GET] Search Flight
                 var dict = DictionaryService.GetInstance();
@@ -108,7 +93,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 {
                     // Calling The Zeroth Page
                     client.BaseUrl = new Uri("http://www.lionair.co.id");
-                    var url0 = @"Default.aspx";
+                    const string url0 = @"Default.aspx";
                     var searchRequest0 = new RestRequest(url0, Method.GET);
                     searchRequest0.AddHeader("Referer", "http://www.lionair.co.id");
 
@@ -121,7 +106,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                     // Calling The First Page
                     client.BaseUrl = new Uri("https://secure2.lionair.co.id");
-                    var url = @"lionairibe/OnlineBooking.aspx";
+                    const string url = @"lionairibe/OnlineBooking.aspx";
                     var searchRequest = new RestRequest(url, Method.GET);
                     searchRequest.AddHeader("Referer", "http://www.lionair.co.id");
                     searchRequest.AddQueryParameter("trip_type", "one way");
@@ -152,7 +137,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         return new SearchFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
 
                     //Calling The Second Page
-                    var url2 = @"lionairibe/OnlineBooking.aspx";
+                    const string url2 = @"lionairibe/OnlineBooking.aspx";
                     var searchRequest2 = new RestRequest(url2, Method.GET);
                     searchRequest2.AddHeader("Referer", "https://secure2.lionair.co.id");
 
@@ -162,7 +147,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                                            SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
 
                     var searchResponse2 = client.Execute(searchRequest2);
-
                     var html2 = searchResponse2.Content;
 
                     if (searchResponse2.ResponseUri.AbsolutePath != "/lionairibe/OnlineBooking.aspx" &&
@@ -187,7 +171,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     };
                 }
 
-                GetLionAirPrice pricefunc = new GetLionAirPrice(scr);
+                var pricefunc = new GetLionAirPrice(scr);
                 try
                 {
                     //var retidx = 0;
@@ -260,7 +244,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                                 (availableFares[j - 1].GetAttribute("id")
                                                     .SubstringBetween(0,
                                                         (availableFares[j - 1].GetAttribute("id").Length - 2))
-                                                == availableFares[j].GetAttribute("id").SubstringBetween(0,                                                        availableFares[j].GetAttribute("id").Length - 2)))
+                                                == availableFares[j].GetAttribute("id").SubstringBetween(0,availableFares[j].GetAttribute("id").Length - 2)))
                                         {
                                             fareIds.Add(availableFares[j]);
                                             j += 1;
@@ -299,10 +283,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     {
                         //For index 0 or all segment 1
                         var segments = new List<FlightSegment>();
-                        decimal price;
-                        string importantData;
-                        string cityArrival2 = "";
-                        string airportArrival2 = "";
+                        var cityArrival2 = "";
+                        var airportArrival2 = "";
                         var listFlightNo = new List<string>();
                         var listDepHr = new List<string>();
                         var subst1 = fareIds.ElementAt(ind).GetAttribute("id");
@@ -317,18 +299,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             var flightNo = "JT 34";
                             var aircraftNo = "737-900ER";
                             var airplaneName = "Lion Air";
-                            if (flight.ChildElements.ToList().Count == 3)
+                            switch (flight.ChildElements.ToList().Count)
                             {
-                                flightNo = flight.ChildElements.ToList()[0].InnerText;
-                                aircraftNo = flight.ChildElements.ToList()[1].InnerText;
-                                airplaneName = flight.ChildElements.ToList()[2].InnerText;
-
-                            }
-                            else if (flight.ChildElements.ToList().Count == 2)
-                            {
-                                flightNo = flight.ChildElements.ToList()[0].InnerText;
-                                airplaneName = flight.ChildElements.ToList()[1].InnerText;
-                                aircraftNo = "Unknown";
+                                case 3:
+                                    flightNo = flight.ChildElements.ToList()[0].InnerText;
+                                    aircraftNo = flight.ChildElements.ToList()[1].InnerText;
+                                    airplaneName = flight.ChildElements.ToList()[2].InnerText;
+                                    break;
+                                case 2:
+                                    flightNo = flight.ChildElements.ToList()[0].InnerText;
+                                    airplaneName = flight.ChildElements.ToList()[1].InnerText;
+                                    aircraftNo = "Unknown";
+                                    break;
                             }
 
                             listFlightNo.Add(flightNo);
@@ -339,15 +321,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             var tess = trip.InnerText.Split(' ')[1];
                             var duration = trip.InnerText.Split(' ')[1].SubstringBetween(5, tess.Length) + " " +
                                            trip.InnerText.Split(' ')[2];
-                            TimeSpan dur = TimeSpan.ParseExact(duration, "h'h 'm'm'", CultureInfo.InvariantCulture);
+                            var dur = TimeSpan.ParseExact(duration, "h'h 'm'm'", CultureInfo.InvariantCulture);
 
                             // Column 2
-                            var format = "dd MMM yyyy HH:mm";
-                            CultureInfo provider = CultureInfo.InvariantCulture;
+                            const string format = "dd MMM yyyy HH:mm";
+                            var provider = CultureInfo.InvariantCulture;
 
                             var departure = fareIds.ElementAt(ind).ChildElements.ToList()[2];
-                            var temp = new string[10];
-                            temp = departure.ChildElements.ToList()[0].InnerText.Split(' ');
+                            string[] temp  = departure.ChildElements.ToList()[0].InnerText.Split(' ');
                             var cityDeparture = String.Join(" ", temp.Take(temp.Length - 1));
                             var airportDeparture = temp[temp.Length - 1].SubstringBetween(1,temp[temp.Length - 1].Length - 1);
                             var timeDeparture = departure.LastChild.ToString().Split(' ')[1];
@@ -384,7 +365,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             DateTime arrDate;
                             if (jamdatang < jambrgkt)
                             {
-                                DateTime x = depDate.AddDays(1);
+                                var x = depDate.AddDays(1);
                                 arrDate = DateTime.SpecifyKind(new DateTime(x.Year, x.Month, x.Day,
                                     Convert.ToInt32(timeArrival.Split(':')[0]),
                                     Convert.ToInt32(timeArrival.Split(':')[1]), 0), DateTimeKind.Utc);
@@ -417,7 +398,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             }
 
                             pricefunc.SetId(priceId);
-                            price = pricefunc.GetPrice(conditions.AdultCount, conditions.ChildCount,
+                            decimal price = pricefunc.GetPrice(conditions.AdultCount, conditions.ChildCount,
                                 conditions.InfantCount);
 
                             segments.Add(new FlightSegment
@@ -441,26 +422,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             });
                             var j = ind + 1;
                             while ((j != fareIds.Count) && (subst1.SubstringBetween(0, subst1.Length - 2) ==
-                                                            fareIds.ElementAt(j)
-                                                                .GetAttribute("id")
-                                                                .SubstringBetween(0,
-                                                                    fareIds.ElementAt(ind + 1).GetAttribute("id").Length -
-                                                                    2)))
+                                                            fareIds.ElementAt(j).GetAttribute("id").SubstringBetween(0,
+                                                                    fareIds.ElementAt(ind + 1).GetAttribute("id").Length -2)))
                             {
                                 // Column 0 (the left-est)
                                 flight = fareIds.ElementAt(j).ChildElements.ToList()[0];
-                                if (flight.ChildElements.ToList().Count == 3)
+                                switch (flight.ChildElements.ToList().Count)
                                 {
-                                    flightNo = flight.ChildElements.ToList()[0].InnerText;
-                                    aircraftNo = flight.ChildElements.ToList()[1].InnerText;
-                                    airplaneName = flight.ChildElements.ToList()[2].InnerText;
-
-                                }
-                                else if (flight.ChildElements.ToList().Count == 2)
-                                {
-                                    flightNo = flight.ChildElements.ToList()[0].InnerText;
-                                    airplaneName = flight.ChildElements.ToList()[1].InnerText;
-                                    aircraftNo = "Unknown";
+                                    case 3:
+                                        flightNo = flight.ChildElements.ToList()[0].InnerText;
+                                        aircraftNo = flight.ChildElements.ToList()[1].InnerText;
+                                        airplaneName = flight.ChildElements.ToList()[2].InnerText;
+                                        break;
+                                    case 2:
+                                        flightNo = flight.ChildElements.ToList()[0].InnerText;
+                                        airplaneName = flight.ChildElements.ToList()[1].InnerText;
+                                        aircraftNo = "Unknown";
+                                        break;
                                 }
                                 // Column 1
                                 listFlightNo.Add(flightNo);
@@ -539,7 +517,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 DateTime arrDate2;
                                 if (jamdatang < jambrgkt)
                                 {
-                                    DateTime x = depDate2.AddDays(1);
+                                    var x = depDate2.AddDays(1);
                                     arrDate2 = DateTime.SpecifyKind(new DateTime(x.Year, x.Month, x.Day,
                                         Convert.ToInt32(timeArrival2.Split(':')[0]),
                                         Convert.ToInt32(timeArrival2.Split(':')[1]), 0), DateTimeKind.Utc);
@@ -592,15 +570,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             }
 
 
-                            importantData = originAirport + "+"
-                                           + destinationAirport + "+"
-                                           + depDate + "+"
-                                           + conditions.AdultCount + "+"
-                                           + conditions.ChildCount + "+"
-                                           + conditions.InfantCount + "+"
-                                           + FlightService.ParseCabinClass(conditions.CabinClass) + "+"
-                                           + price + "+" + priceId.SubstringBetween(3, priceId.Length) + "+" +
-                                           +segments.Count + "+" + flightNoJoin + "+" + depHrJoin;
+                            var importantData = originAirport + "+"
+                                                   + destinationAirport + "+"
+                                                   + depDate + "+"
+                                                   + conditions.AdultCount + "+"
+                                                   + conditions.ChildCount + "+"
+                                                   + conditions.InfantCount + "+"
+                                                   + FlightService.ParseCabinClass(conditions.CabinClass) + "+"
+                                                   + price + "+" + priceId.SubstringBetween(3, priceId.Length) + "+" +
+                                                   +segments.Count + "+" + flightNoJoin + "+" + depHrJoin;
 
                             var itin = new FlightItinerary
                             {
@@ -636,9 +614,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         }
                     }
 
-                    itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "ID")).ToList();
-                    itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "OD")).ToList();
-                    itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "SL")).ToList();
+                    //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "ID")).ToList();
+                    //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "OD")).ToList();
+                    //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "SL")).ToList();
                     if (trip0.DestinationAirport != "JKT")
                     {
                         itins = itins.Where(itin => itin.Trips[0].Segments.Last().ArrivalAirport == trip0.DestinationAirport).ToList();
@@ -675,27 +653,27 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var segmentCountries = segmentAirports.Select(dict.GetAirportCountryCode).Distinct();
                 return segmentCountries.Count() > 1;
             }
-            
-            public class GetLionAirPrice
+
+            private class GetLionAirPrice
             {
-                public dynamic priceScript;
-                public string Id;
+                private readonly dynamic _priceScript;
+                private string _id;
 
                 public void SetId(string id)
                 {
-                    Id = id.SubstringBetween(3, id.Length);
+                    _id = id.SubstringBetween(3, id.Length);
                 }
 
                 public GetLionAirPrice(string scr)
                 {
-                    priceScript = JsonConvert.DeserializeObject(scr, typeof (object));
+                    _priceScript = JsonConvert.DeserializeObject(scr, typeof (object));
                 }
 
-                public object WorkOutTripTotals()
+                private object WorkOutTripTotals()
                 {
 
                     //GET WHICH FARE USED
-                    var codeFlight = ParseID(Id);
+                    var codeFlight = ParseId(_id);
                     var id1 = "";
                     var id2 = "";
                     /*var outId = "";
@@ -703,18 +681,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     if (codeFlight[0] == 0)
                     {
                         //outId = Id;
-                        id1 = Id;
+                        id1 = _id;
                     }
                     else
                     {
                         //inId = Id;
-                        id2 = Id;
+                        id2 = _id;
                     }
 
                     return SearchForBreakdown(id1, id2);
                 }
 
-                public List<int> ParseID(string id)
+                private static List<int> ParseId(string id)
                 {
                     var codeFlight = new List<int>();
 
@@ -732,16 +710,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return codeFlight;
                 }
 
-                public object SearchForBreakdown(string outId, string inId)
+                private object SearchForBreakdown(string outId, string inId)
                 {
-                    dynamic ps = priceScript.fares;
+                   var ps = _priceScript.fares;
                     if (ps.Count == 0)
                     {
                         return null;
                     }
 
-                    var noOutId = ParseID(outId);
-                    var noInId = ParseID(inId);
+                    var noOutId = ParseId(outId);
+                    var noInId = ParseId(inId);
                     if (noOutId.Count == 1)
                     {
                         noOutId.Clear();
@@ -758,10 +736,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     }
 
                     var temp = new object();
-                    for (int i = 0; i < priceScript.fares.Count; i++)
+                    for (var i = 0; i < _priceScript.fares.Count; i++)
                     {
-                        var fare = priceScript.fares[i];
-                        for (int j = 0; j < fare.Indices.Count; j++)
+                        var fare = _priceScript.fares[i];
+                        for (var j = 0; j < fare.Indices.Count; j++)
                         {
                             var ind = fare.Indices[j];
                             if (Convert.ToInt32(ind.obI) == noOutId[1] && Convert.ToInt32(ind.obJ) == noOutId[2]
@@ -775,7 +753,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 public int GetPrice(int adult, int child, int infant)
                 {
                     dynamic fare = WorkOutTripTotals();
-                    int totalprice = 0;
+                    var totalprice = 0;
                     int adultPrice;
                     int childPrice;
                     int infantPrice;

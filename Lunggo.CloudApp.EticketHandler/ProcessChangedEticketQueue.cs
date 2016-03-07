@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 using NReco.PdfGenerator;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
-namespace Lunggo.Worker.EticketHandler
+namespace Lunggo.CloudApp.EticketHandler
 {
     public class ProcessChangedEticketQueue
     {
