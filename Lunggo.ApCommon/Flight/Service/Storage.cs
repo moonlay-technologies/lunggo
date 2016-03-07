@@ -183,7 +183,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private Dictionary<int, List<List<FlightItinerary>>> GetSearchedSupplierItineraries(string searchId, List<int> requestedSupplierIds)
         {
-            var isReturn = ParseTripType(searchId) == TripType.RoundTrip;
+            var isReturn = ParseTripType(searchId) == TripType.Return;
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var searchedSupplierItins = new Dictionary<int, List<List<FlightItinerary>>>();
