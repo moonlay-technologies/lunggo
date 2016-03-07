@@ -3,6 +3,7 @@
     ViewBag.Title = "Home Page";
     ViewBag.BodyClass = "page page-home";
     ViewBag.AngularController = "HomePageController";
+    ViewBag.CurrentPage = "home";
 }
 
 @section AdditionalJS {
@@ -110,36 +111,49 @@
     <!-- overlay airport selector -->
     <div class="overlay overlay--theme--blue overlay--airport-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'airport-select')}">
         <header class="overlay__header">
-            <div class="overlay__title">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <input type="text" ng-model="FlightSearchForm.AutoComplete.Keyword" class="form-control" placeholder="Cari bandara" ng-change="FlightSearchForm.AutoComplete.GetAirport()" />
-                    </div>
-                    <div class="col-xs-2">
-                        <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
-                    </div>
-                </div>
-            </div>
+            <h3 class="overlay__title">
+                <small>PILIH TUJUAN PENERBANGAN</small>
+                 <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+            </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
-            <div ng-show="FlightSearchForm.AutoComplete.Loading">
-                <h4>Mencari bandara</h4>
-            </div>
-            <div ng-hide="FlightSearchForm.AutoComplete.Loading">
-                <div ng-show="FlightSearchForm.AutoComplete.Keyword.length < FlightSearchForm.AutoComplete.MinLength ">
-                    <h4>Masukan kata kunci</h4>
+        
+            <div class="autocomplete-input">
+                <input type="text" class="form-control" name="name" value="" placeholder="Masukan lokasi tujuan penerbangan" ng-model="FlightSearchForm.AutoComplete.Keyword" ng-change="FlightSearchForm.AutoComplete.GetAirport()" />
+            </div><!-- .autocomplete-input -->
+        
+            <div class="autocomplete-preload" ng-show="FlightSearchForm.AutoComplete.Keyword.length < FlightSearchForm.AutoComplete.MinLength">
+                <div class="list__header">
+                    <h4>POPULAR DESTINATION</h4>
                 </div>
-                <div ng-show="FlightSearchForm.AutoComplete.Keyword.length >= FlightSearchForm.AutoComplete.MinLength">
-                    <ul ng-show="FlightSearchForm.AutoComplete.Result">
-                        <li ng-repeat="result in FlightSearchForm.AutoComplete.Result">
-                            <a ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()">{{result.City}} ({{result.Code}}), {{result.Name}}, {{result.Country}}</a>
-                        </li>
-                    </ul>
-                    <div ng-hide="FlightSearchForm.AutoComplete.Result">
-                        <h4>Bandara tidak ditemukan</h4>
-                    </div>
-                </div>
-            </div>
+                <ul class="result">
+                    <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Popular">
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <span class="airport__code">{{result.Code}}</span>
+                        <div class="airport__detail">
+                            <p class="airport__location">{{result.City}}, {{result.Country}}</p>
+                            <p class="airport__name">{{result.Name}}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div><!-- .autocomplete-preload -->
+
+            <div class="autocomplete-loading" ng-show="FlightSearchForm.AutoComplete.Loading">
+                <h4>Mencari Bandara</h4>
+            </div><!-- .autocomplete-loading -->
+
+            <div class="autocomplete-result" ng-hide="FlightSearchForm.AutoComplete.Loading">
+                <ul class="result" ng-show="FlightSearchForm.AutoComplete.Keyword.length >= FlightSearchForm.AutoComplete.MinLength">
+                    <li class="airport" ng-repeat="result in FlightSearchForm.AutoComplete.Result">
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <span class="airport__code">{{result.Code}}</span>
+                        <div class="airport__detail">
+                            <p class="airport__location">{{result.City}}, {{result.Country}}</p>
+                            <p class="airport__name">{{result.Name}}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div><!-- .autocomplete-result -->
         </section><!-- .overlay__content -->
     </div><!-- .overlay--airport-select -->
     

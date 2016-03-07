@@ -37,5 +37,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans.Model
         internal string SavedTokenId { get; set; }
         [JsonProperty("saved_token_id_expired_at")]
         internal DateTime TokenIdExpiry { get; set; }
+        [JsonProperty("permata_va_number")]
+        internal string PermataVANumber { get; set; }
     }
 }

@@ -1,15 +1,28 @@
 ﻿.page.page-checkout {
     // *****
     // page header
-    .page__header {margin:0; padding:0; @include clearfix();
-        .step {float:left; width:33.3333334%; background:#2eb4e7; color:#fff; border-right:1px solid #1c99c7;
-            span {font-size:14px; font-weight:600; padding:10px 15px; display:block;}
-            // if active
-            &.active {background:#032f56;}
-            // if inactive
-            &.inactive {background:#a6a6a6;}
-            // if last child
-            &:last-child {border-right:0;}
+    .page__header {margin:0; padding:0; @include clearfix(); overflow:hidden;
+        .step__wrapper {position:relative;
+            .step {float:left; width:33.3333334%; background:#2eb4e7; color:#fff; border-right:1px solid #1c99c7; position:relative; z-index:2; @include skew-x(-30deg);
+                span {font-size:14px; font-weight:600; padding:10px 15px; display:block; position:relative; z-index:2; @include skew-x(30deg);}
+                &:before {background:#2eb4e7;}
+                &:after {background:#2eb4e7;}
+                // if active
+                &.active {background:#032f56;
+                    &:before {background:#032f56;}
+                    &:after {background:#032f56;}
+                }
+                // if inactive
+                &.inactive {background:#a6a6a6;
+                    &:before {background:#a6a6a6;}
+                }
+                // if last child
+                &:last-child {border-right:0;
+                    &:after {content:''; display:block; position:absolute; height:100%; width:100%; top:0; left:15px; @include skew-x(30deg);}
+                }
+                // step 1 
+                &.step-1:before {content:''; display:block; position:absolute; height:100%; width:100%; top:0; left:-15px; @include skew-x(30deg);}
+            }
         }
     }
 
@@ -91,6 +104,26 @@
         }
     }
 
+    // overlay
+    .overlay--flight-detail {
+        .flight-detail-wrapper {padding:10px; padding-top:0;}
+        .flight-fare-wrapper {padding:10px;
+            .fare-note {background:#eaeaea; padding:10px;}
+        }
+        dl {@include clearfix();
+            dt {float:left; width:50%; font-weight:normal; position:relative; padding-left:12px;
+                &:before {position:absolute; content:''; width:7px; height:7px; background:#ff7200; top:3px; left:0;}
+            }
+            dd {float:left; width:50%; text-align:right; font-weight:bold;}
+            // total price
+            &.total-price {border-top:$border-default; padding-top:10px;
+                dt {width:35%;
+                    &:before {display:none;}
+                }
+                dd {width:65%; color:#ff7200; font-size:16px;}
+            }
+        }
+    }
 
 }
 

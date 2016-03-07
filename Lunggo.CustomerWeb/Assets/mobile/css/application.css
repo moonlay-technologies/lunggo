@@ -63,6 +63,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   -moz-border-radius: 2px;
   border-radius: 2px; }
 
+input[type="text"], input[type="password"], input[type="number"], input[type="email"] {
+  font-size: 16px;
+  height: auto; }
+
 .site-header {
   position: fixed;
   top: 0;
@@ -77,7 +81,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #fff;
     text-align: center;
     height: 60px; }
-    .site-header .header-display .site-menu, .site-header .header-display .user-menu {
+    .site-header .header-display .site-menu, .site-header .header-display .user-menu, .site-header .header-display .flight-swap, .site-header .header-display .flight-detail {
       width: 30px;
       height: 30px;
       background: url(/Assets/mobile/images/mobile-header-sprite.png) no-repeat;
@@ -93,22 +97,41 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background-position: 0 0;
       left: auto;
       right: 10px; }
+    .site-header .header-display .flight-swap {
+      background: url(/Assets/mobile/images/flight-swap.png);
+      left: auto;
+      right: 10px; }
+    .site-header .header-display .flight-detail {
+      width: 40px;
+      background: none;
+      left: auto;
+      right: 15px;
+      color: #1daee4;
+      text-decoration: none;
+      text-align: right;
+      font-weight: 600;
+      padding: 10px 0;
+      font-size: 14px; }
 
 .burger-content {
   position: fixed;
   height: 100%;
   width: 300px;
   top: 0;
-  left: -300px;
+  left: -320px;
   z-index: 9999;
   background: #fff;
-  overflow: auto;
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
-  transition: all 0.5s; }
+  transition: all 0.5s;
+  overflow: hidden;
+  width: 320px;
+  padding-right: 20px;
+  background: none; }
   .burger-content.active {
-    left: 0; }
+    left: 0;
+    overflow: auto; }
     .burger-content.active .burger-content__header {
       left: 0; }
   .burger-content .burger-content__header {
@@ -150,7 +173,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-size: 24px;
       font-weight: 600; }
   .burger-content .burger-content__body {
-    padding-top: 60px; }
+    padding-top: 60px;
+    background: #fff; }
     .burger-content .burger-content__body ul {
       list-style: none;
       margin: 0;
@@ -172,6 +196,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           top: 8px;
           background-repeat: no-repeat;
           background-image: url(/Assets/mobile/images/burger-sprite.png); }
+      .burger-content .burger-content__body ul li.active {
+        background: #9ee5ff;
+        position: relative; }
+        .burger-content .burger-content__body ul li.active:after {
+          content: '';
+          position: absolute;
+          width: 20px;
+          height: 100%;
+          left: 100%;
+          top: 0;
+          background: url(/assets/mobile/images/burger-menu-active.png) left center no-repeat; }
       .burger-content .burger-content__body ul li.login, .burger-content .burger-content__body ul li.register, .burger-content .burger-content__body ul li.account {
         background: #1daee4;
         color: #fff; }
@@ -195,17 +230,31 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .burger-content .burger-content__body ul li.order-check a:before {
         background-position: -90px 0; }
       .burger-content .burger-content__body ul li.contact a:before {
-        background-position: -120px 0; }
-      .burger-content .burger-content__body ul li.newsletter a:before {
         background-position: -150px 0; }
-      .burger-content .burger-content__body ul li.faq a:before {
+      .burger-content .burger-content__body ul li.newsletter a:before {
         background-position: -180px 0; }
-      .burger-content .burger-content__body ul li.howto-order a:before {
+      .burger-content .burger-content__body ul li.promo a:before {
+        background-position: -120px 0; }
+      .burger-content .burger-content__body ul li.faq a:before {
         background-position: -210px 0; }
-      .burger-content .burger-content__body ul li.about a:before {
+      .burger-content .burger-content__body ul li.howto-order a:before {
         background-position: -240px 0; }
+      .burger-content .burger-content__body ul li.about a:before {
+        background-position: -270px 0; }
       .burger-content .burger-content__body ul li + li {
         border-top: 1px solid #8fd6f2; }
+
+.burger-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9998;
+  display: none; }
+  .burger-overlay.active {
+    display: block; }
 
 .site-content {
   min-height: 350px; }
@@ -327,6 +376,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .popup__wrapper.active {
     display: block; }
 
+.popup__wrapper.popup--revalidate .popup {
+  text-align: center;
+  background: none;
+  padding-top: 50px; }
+  .popup__wrapper.popup--revalidate .popup .revalidate-anim {
+    padding: 10px 0; }
+  .popup__wrapper.popup--revalidate .popup p {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600; }
+
 .overlay {
   position: fixed;
   width: 100%;
@@ -351,9 +411,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     top: 0;
     left: 0;
     width: 100%;
-    display: none; }
+    display: none;
+    text-align: center; }
     .overlay .overlay__header .overlay__title {
       margin: 0; }
+      .overlay .overlay__header .overlay__title small {
+        color: #fff;
+        font-weight: 600;
+        font-size: 14px; }
     .overlay .overlay__header .overlay__close {
       float: right;
       font-size: 19px; }
@@ -452,6 +517,52 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .overlay.overlay--airport-select .overlay__content {
   padding: 0; }
+  .overlay.overlay--airport-select .overlay__content .autocomplete-input {
+    background: #616161;
+    padding: 10px; }
+    .overlay.overlay--airport-select .overlay__content .autocomplete-input input[type="text"] {
+      padding: 10px;
+      height: auto; }
+  .overlay.overlay--airport-select .overlay__content .autocomplete-preload .list__header h4 {
+    margin: 0;
+    background: #dedede;
+    color: #656565;
+    padding: 10px;
+    font-weight: bold; }
+  .overlay.overlay--airport-select .overlay__content ul.result li.airport {
+    padding: 10px 0;
+    position: relative; }
+    .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__link {
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      z-index: 2; }
+    .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__code {
+      display: inline-block;
+      vertical-align: middle;
+      font-weight: bold;
+      font-size: 32px;
+      padding-left: 15px;
+      padding-right: 15px;
+      color: #1daee4;
+      width: 30%;
+      text-align: center; }
+    .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__detail {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 14px;
+      width: 65%; }
+      .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__detail .airport__location {
+        margin: 0;
+        font-weight: 600;
+        margin-bottom: 5px; }
+      .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__detail .airport__name {
+        margin: 0; }
+  .overlay.overlay--airport-select .overlay__content ul.result + li {
+    border-top: 1px solid #ccc; }
   .overlay.overlay--airport-select .overlay__content h4 {
     padding-left: 18px; }
   .overlay.overlay--airport-select .overlay__content ul {
@@ -783,7 +894,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   color: #fff;
   padding: 5px; }
   .page.page-flight .flight-notice p {
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    font-size: 11px; }
 
 .page.page-flight .flight-selection {
   background: #e5e3e4;
@@ -877,6 +989,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #ff7200; }
     .page.page-flight .flight-list .flight .flight-content .content-right label {
       font-weight: normal; }
+    .page.page-flight .flight-list .flight .flight-content .content-right .flight-price-was {
+      margin: 0;
+      text-decoration: line-through; }
     .page.page-flight .flight-list .flight .flight-content .content-right .flight-price {
       margin-top: 0;
       font-weight: bold;
@@ -967,10 +1082,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       border: 3px solid #fff;
       position: absolute;
       top: 50%;
-      margin-top: -10px;
-      -webkit-border-radius: 50px;
-      -moz-border-radius: 50px;
-      border-radius: 50px; }
+      margin-top: -10px; }
     .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label input {
       display: none; }
     .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label span {
@@ -989,11 +1101,24 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .overlay--flight-sort .overlay__content span {
     display: block;
     padding: 15px; }
+    .overlay--flight-sort .overlay__content span:before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+      border: 3px solid #fff;
+      -webkit-border-radius: 50px;
+      -moz-border-radius: 50px;
+      border-radius: 50px; }
     .overlay--flight-sort .overlay__content span + span {
       border-top: 1px solid #ccc; }
     .overlay--flight-sort .overlay__content span.active {
-      background: #1daee4;
       color: #fff; }
+      .overlay--flight-sort .overlay__content span.active:before {
+        background: #ffca10; }
   .overlay--flight-sort .overlay__content label {
     display: block;
     width: 100%;
@@ -1136,29 +1261,74 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .page.page-checkout .page__header {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  overflow: hidden; }
   .page.page-checkout .page__header:after {
     display: block;
     width: 100%;
     content: "";
     clear: both; }
-  .page.page-checkout .page__header .step {
-    float: left;
-    width: 33.3333334%;
-    background: #2eb4e7;
-    color: #fff;
-    border-right: 1px solid #1c99c7; }
-    .page.page-checkout .page__header .step span {
-      font-size: 14px;
-      font-weight: 600;
-      padding: 10px 15px;
-      display: block; }
-    .page.page-checkout .page__header .step.active {
-      background: #032f56; }
-    .page.page-checkout .page__header .step.inactive {
-      background: #a6a6a6; }
-    .page.page-checkout .page__header .step:last-child {
-      border-right: 0; }
+  .page.page-checkout .page__header .step__wrapper {
+    position: relative; }
+    .page.page-checkout .page__header .step__wrapper .step {
+      float: left;
+      width: 33.3333334%;
+      background: #2eb4e7;
+      color: #fff;
+      border-right: 1px solid #1c99c7;
+      position: relative;
+      z-index: 2;
+      -ms-transform: skewX(-30deg);
+      -webkit-transform: skewX(-30deg);
+      transform: skewX(-30deg); }
+      .page.page-checkout .page__header .step__wrapper .step span {
+        font-size: 14px;
+        font-weight: 600;
+        padding: 10px 15px;
+        display: block;
+        position: relative;
+        z-index: 2;
+        -ms-transform: skewX(30deg);
+        -webkit-transform: skewX(30deg);
+        transform: skewX(30deg); }
+      .page.page-checkout .page__header .step__wrapper .step:before {
+        background: #2eb4e7; }
+      .page.page-checkout .page__header .step__wrapper .step:after {
+        background: #2eb4e7; }
+      .page.page-checkout .page__header .step__wrapper .step.active {
+        background: #032f56; }
+        .page.page-checkout .page__header .step__wrapper .step.active:before {
+          background: #032f56; }
+        .page.page-checkout .page__header .step__wrapper .step.active:after {
+          background: #032f56; }
+      .page.page-checkout .page__header .step__wrapper .step.inactive {
+        background: #a6a6a6; }
+        .page.page-checkout .page__header .step__wrapper .step.inactive:before {
+          background: #a6a6a6; }
+      .page.page-checkout .page__header .step__wrapper .step:last-child {
+        border-right: 0; }
+        .page.page-checkout .page__header .step__wrapper .step:last-child:after {
+          content: '';
+          display: block;
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          top: 0;
+          left: 15px;
+          -ms-transform: skewX(30deg);
+          -webkit-transform: skewX(30deg);
+          transform: skewX(30deg); }
+      .page.page-checkout .page__header .step__wrapper .step.step-1:before {
+        content: '';
+        display: block;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: -15px;
+        -ms-transform: skewX(30deg);
+        -webkit-transform: skewX(30deg);
+        transform: skewX(30deg); }
 
 .page.page-checkout .page__body {
   padding: 10px; }
@@ -1298,6 +1468,55 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background-position: 98% center;
   background-repeat: no-repeat; }
 
+.page.page-checkout .overlay--flight-detail .flight-detail-wrapper {
+  padding: 10px;
+  padding-top: 0; }
+
+.page.page-checkout .overlay--flight-detail .flight-fare-wrapper {
+  padding: 10px; }
+  .page.page-checkout .overlay--flight-detail .flight-fare-wrapper .fare-note {
+    background: #eaeaea;
+    padding: 10px; }
+
+.page.page-checkout .overlay--flight-detail dl:after {
+  display: block;
+  width: 100%;
+  content: "";
+  clear: both; }
+
+.page.page-checkout .overlay--flight-detail dl dt {
+  float: left;
+  width: 50%;
+  font-weight: normal;
+  position: relative;
+  padding-left: 12px; }
+  .page.page-checkout .overlay--flight-detail dl dt:before {
+    position: absolute;
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: #ff7200;
+    top: 3px;
+    left: 0; }
+
+.page.page-checkout .overlay--flight-detail dl dd {
+  float: left;
+  width: 50%;
+  text-align: right;
+  font-weight: bold; }
+
+.page.page-checkout .overlay--flight-detail dl.total-price {
+  border-top: 1px solid #ccc;
+  padding-top: 10px; }
+  .page.page-checkout .overlay--flight-detail dl.total-price dt {
+    width: 35%; }
+    .page.page-checkout .overlay--flight-detail dl.total-price dt:before {
+      display: none; }
+  .page.page-checkout .overlay--flight-detail dl.total-price dd {
+    width: 65%;
+    color: #ff7200;
+    font-size: 16px; }
+
 .page.page-confirmation .instruction header {
   background: #2fb4e6;
   color: #fff;
@@ -1380,15 +1599,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     vertical-align: middle; }
 
 .page.page-useraccount .user-menu .menu-wrapper {
-  padding: 15px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px; }
   .page.page-useraccount .user-menu .menu-wrapper ul {
-    border: 1px solid #ccc;
     margin: 0;
     padding: 0;
-    list-style: none; }
+    list-style: none;
+    border-bottom: 1px solid #ccc; }
     .page.page-useraccount .user-menu .menu-wrapper ul li a {
       display: block;
       padding: 15px;
@@ -1478,6 +1696,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background-position: -60px 0; }
     .page.page-useraccount .user-history .history-list > li.canceled:before {
       background-position: -120px 0; }
+    .page.page-useraccount .user-history .history-list > li .btn {
+      margin-top: 15px; }
 
 .page.page-orderdetail .order-detail .content-header {
   background: #2eb4e7;
@@ -1492,6 +1712,50 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .page.page-orderdetail .order-detail .content-body > div > section {
   padding: 10px; }
+
+.page.page-orderdetail .passenger-list {
+  padding: 0;
+  margin: 0;
+  padding-left: 30px;
+  counter-reset: number;
+  list-style: none; }
+  .page.page-orderdetail .passenger-list li {
+    position: relative;
+    counter-increment: number; }
+    .page.page-orderdetail .passenger-list li:before {
+      background: #1daee4;
+      content: counter(number);
+      position: absolute;
+      color: #fff;
+      top: 0;
+      left: -30px;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      padding: 2px; }
+
+.page.page-orderdetail .info-flight .flight {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 20px; }
+  .page.page-orderdetail .info-flight .flight .flight__airline__name {
+    color: #1daee4;
+    font-weight: bold;
+    padding-top: 10px; }
+  .page.page-orderdetail .info-flight .flight:before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #1daee4;
+    background-repeat: no-repeat;
+    background-size: 200%;
+    border: 2px solid #1daee4;
+    background-image: url(/assets/images/plane-updown-sprite.png); }
+  .page.page-orderdetail .info-flight .flight.return:before {
+    background-position: -16px; }
 
 .page.page-forgotpassword form {
   border-top: 1px solid #ccc;
@@ -1643,6 +1907,29 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .page.page-faqs .question-wrapper > ol > li > ol > li + li {
           margin-top: 15px; }
 
+.page.page-faqs .question-wrapper .toggle {
+  position: relative; }
+  .page.page-faqs .question-wrapper .toggle header {
+    position: relative;
+    padding-right: 25px; }
+    .page.page-faqs .question-wrapper .toggle header:after {
+      width: 20px;
+      height: 20px;
+      background: url(/assets/mobile/images/arrow-down.png);
+      background-size: contain;
+      content: '';
+      display: block;
+      top: 0;
+      right: 0;
+      position: absolute; }
+  .page.page-faqs .question-wrapper .toggle section {
+    display: none; }
+  .page.page-faqs .question-wrapper .toggle.active header:after {
+    background: url(/assets/mobile/images/arrow-up.png);
+    background-size: contain; }
+  .page.page-faqs .question-wrapper .toggle.active section {
+    display: block; }
+
 .page.page-terms ol.listing {
   padding-left: 20px; }
   .page.page-terms ol.listing > li > ol, .page.page-terms ol.listing > li > ul {
@@ -1652,3 +1939,49 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding-left: 20px; }
   .page.page-privacy ol.listing > li > ol, .page.page-privacy ol.listing > li > ul {
     padding-left: 20px; }
+
+.page.page-howtoorder {
+  font-size: 14px; }
+  .page.page-howtoorder .howto-content {
+    padding: 0 10px; }
+    .page.page-howtoorder .howto-content .list__wrapper {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      counter-reset: howto-counter; }
+      .page.page-howtoorder .howto-content .list__wrapper .list {
+        margin-bottom: 15px;
+        counter-increment: howto-counter; }
+        .page.page-howtoorder .howto-content .list__wrapper .list .list__header {
+          background: #1daee4; }
+          .page.page-howtoorder .howto-content .list__wrapper .list .list__header h3 {
+            color: #fff;
+            padding: 15px;
+            font-weight: 600;
+            margin: 0;
+            position: relative;
+            padding-left: 60px; }
+            .page.page-howtoorder .howto-content .list__wrapper .list .list__header h3:before {
+              content: counter(howto-counter);
+              background: #028ec3;
+              color: #fff;
+              font-weight: 600;
+              display: inline-block;
+              vertical-align: middle;
+              position: absolute;
+              left: 0;
+              top: 0;
+              height: 100%;
+              padding: 15px; }
+        .page.page-howtoorder .howto-content .list__wrapper .list .list__content {
+          background: #fff;
+          padding: 15px;
+          border: 1px solid #ccc;
+          border-top: 0; }
+          .page.page-howtoorder .howto-content .list__wrapper .list .list__content img {
+            margin: 15px 0;
+            max-width: 100%; }
+    .page.page-howtoorder .howto-content .howto-note h3 {
+      font-weight: bold; }
+    .page.page-howtoorder .howto-content .howto-note p span {
+      color: #1daee4; }
