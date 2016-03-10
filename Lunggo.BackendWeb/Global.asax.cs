@@ -27,7 +27,7 @@ namespace Lunggo.BackendWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AppInitializer.Init();
-            FlightService.GetInstance().CommenceSearchFlight("NTXPKU-700y".Base64Encode(), 5);
+            //FlightService.GetInstance().CommenceSearchFlight("NTXPKU-700y".Base64Encode(), 5);
             //FlightService.GetInstance().RevalidateFareInternal(new RevalidateConditions{FareId = "LIONPUBkjbcxz"});
             //FlightService.GetInstance().OrderTicketInternal("LIONPUBPOQFSR", true);
             //FlightService.GetInstance().is

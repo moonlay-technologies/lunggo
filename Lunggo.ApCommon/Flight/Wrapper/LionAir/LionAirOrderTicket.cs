@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Web;
@@ -17,8 +18,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
     {
         internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            if (env == "production")
+            //var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            //if (env == "production")
                 return Client.OrderTicket(bookingId);
             //else
                 return new OrderTicketResult
@@ -52,7 +53,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 {
                     while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
                     {
-                        accRs = (RestResponse) clientx.Execute(accReq);
+                        accRs = (RestResponse) clienty.Execute(accReq);
                         userName = accRs.Content.Trim('"');
                     }
 
@@ -88,7 +89,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         successLogin = Login(clientx, searchResponse1.RawBytes, viewstate, eventval, out userId,
                             userName, out msgLogin); // out currentDeposit);
                     } while (!successLogin && (msgLogin != "Your login name is inuse"
-                        || msgLogin != "There was an error logging you in"));
+                        && msgLogin != "There was an error logging you in"));
                 }
                 // Page Welcome
                 var startind = userId.IndexOf("consID");
@@ -136,7 +137,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var html8 = searchResponse5.Content;
                 searchedHtml = html8;
                 var vsPostToPay = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
-                
+                                                
                 try
                 {
                     //GO TO PAY, POST
@@ -152,7 +153,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var postData9 = beginningToPay + endingToPay;
                     searchRequest9.AddParameter("application/x-www-form-urlencoded", postData9, ParameterType.RequestBody);
                     var searchResponse9 = clientx.Execute(searchRequest9);
-                    //var Y = searchResponse9.ResponseUri.AbsolutePath;
                     Thread.Sleep(3000);
                     if (searchResponse9.ResponseUri.AbsolutePath != "/LionAgentsOPS/TicketBooking.aspx"
                         && (searchResponse9.StatusCode == HttpStatusCode.OK || searchResponse9.StatusCode == HttpStatusCode.Redirect))
@@ -168,7 +168,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     searchRequest10.AddHeader("Accept",
                         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
                     var searchResponse10 = clientx.Execute(searchRequest10);
-                   // var z = searchResponse10.ResponseUri.AbsolutePath;
                     Thread.Sleep(3000);
                     if (searchResponse10.ResponseUri.AbsolutePath != "/LionAgentsOPS/CashPayment.aspx"
                         && (searchResponse10.StatusCode == HttpStatusCode.OK || searchResponse10.StatusCode == HttpStatusCode.Redirect))
@@ -190,8 +189,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         throw new Exception();
                     Thread.Sleep(3000);
                     var confirmationContent = searchResponse11.Content;
-                    var html11 = (CQ) confirmationContent;
-                    var bookingRef = html11["#lblRefNumber"].Text();
+                    var html11 = (CQ)confirmationContent;
+                    var booking = html11["#RelocHighlight"];
+                    var bookingRef = booking.Children().ToList()[0].GetAttribute("id");
+
+                    var theTable = html11[".Step4ItinRow"];
+                    //var viewstateX = HttpUtility.UrlEncode(html11["#__VIEWSTATE"].Attr("value"));
+                    var isIssued = theTable.Children().ToList()[7].InnerText == "Confirmed";
 
                     //Logout
                     const string url15 = @"/LionAirAgentsPortal/Logout.aspx";
@@ -222,11 +226,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                     accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
                     accRs = (RestResponse) clienty.Execute(accReq);
-                    
+
+                    bool isIssuedByFunction;
+                    var abc = IsIssued(bookingId);
+                    isIssuedByFunction = abc == IssueEnum.IssueSuccess;
+
+                    var isIssuedx = isIssued && isIssuedByFunction;
                     return new OrderTicketResult
                     {
-                        IsSuccess = true,
-                        BookingId = bookingRef
+                        IsSuccess = isIssuedx,
+                        BookingId = isIssuedx ? bookingRef : null,
+                        IsInstantIssuance = isIssuedx
                     };
                 }
                 catch

@@ -9,7 +9,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
     {
         internal override GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions)
         {
-            var bookingId = "AIRAPUB" + conditions.BookingId;
+            var bookingId = "LIONPUB" + conditions.BookingId;
             var rsvNo = FlightService.GetDb.RsvNoByBookingId(new List<string> { bookingId }).Single();
             var reservation = FlightService.GetDb.Reservation(rsvNo);
             var itinerary = reservation.Itineraries.Single(itin => itin.BookingId == bookingId);

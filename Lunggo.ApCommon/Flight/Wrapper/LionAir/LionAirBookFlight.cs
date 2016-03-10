@@ -267,13 +267,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Thread.Sleep(1000);
                         counter++;
                     } while (!successLogin && counter < 31 && (msgLogin != "Your login name is inuse"
-                        || msgLogin != "There was an error logging you in"));
+                        && msgLogin != "There was an error logging you in"));
                 }
 
                 if (counter >= 31)
                 {
                     //throw new Exception("haloooo 23");
-                    
                     return new BookFlightResult
                     {
 
@@ -285,16 +284,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         IsSuccess = false
                     };
                 }
-
-                //}
-                //else
-                //{
-                //    return new BookFlightResult
-                //    {
-                //        IsSuccess = true,
-                //    };
-                //}
-
+                
                 //GET PAGE CONST ID
                 var startind = userId.IndexOf("consID");
                 var cid = userId.SubstringBetween(startind, userId.Length);
@@ -423,25 +413,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         }
                     }
 
-                    //for (int v = 2; v < Rows.Count() - 1; v++)
-                    //{
-                    //    var rowId = Rows[v].GetAttribute("id");
-                    //    var flightselection = rowId.Split('_')[1].SubstringBetween(1, rowId.Split('_')[1].Length);
-                    //    //var liat = flightID.Split('_')[1].SubstringBetween(1, flightID.Split('_')[1].Length);
-                    //    if (rowId[2] == flightId[3] &&
-                    //        (flightselection ==
-                    //         flightId.Split('_')[1].SubstringBetween(1, flightId.Split('_')[1].Length)))
-                    //    {
-                    //        selectedRows.Add(Rows[v]);
-                    //    }
-                    //}
-                    ////var jlh = selectedRows.Count();
-                    //Crawling data penerbangan: Jam, airport, flight number
-                    //string b;
-                    //string colpost;
-                    //string garbled;
-                    //string vs5;
-
                     var segments = new List<FlightSegment>();
                     var arrDate = new DateTime(depdate.Year, depdate.Month, depdate.Day, 0, 0, 0);
                     var txt_OBNNRowID = selectedRows.Last().Id;
@@ -458,7 +429,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 aircraftNo = flightIdty.ChildElements.ToList()[1].InnerText;
                                 break;
                             case 1:
-                                aircraftNo = "Unknown";
+                                aircraftNo = null;
                                 break;
                         }
 

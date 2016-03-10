@@ -174,7 +174,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Thread.Sleep(1000);
                         counter++;
                     } while (!successLogin && counter < 21 && (msgLogin != "Your login name is inuse"
-                        || msgLogin != "There was an error logging you in"));
+                        && msgLogin != "There was an error logging you in"));
                 }
             
 
@@ -185,17 +185,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Errors = new List<FlightError> { FlightError.InvalidInputData }
                     };
                 }
-                //}
-                //else
-                //{
-                //    return new RevalidateFareResult
-                //    {
-                //        IsSuccess = true,
-                //        IsValid = false,
-                //        Itinerary = null
-                //    };
-                //}
-
+                
                 //GET PAGE CONST ID
                 var startind = userId.IndexOf("consID");
                 var cid = userId.SubstringBetween(startind, userId.Length);
@@ -336,7 +326,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 aircraftNo = flightIdty.ChildElements.ToList()[1].InnerText;
                                 break;
                             case 1:
-                                aircraftNo = "Unknown";
+                                aircraftNo = null;
                                 break;
                         }
 
@@ -629,30 +619,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var pagePrice = (CQ) html6;
 
                         var revalidateFare = pagePrice["#tdAmtTotal"].Text();
-                        //var sampah = pagePrice.Text();
-                        //var startvs = sampah.IndexOf("__VIEWSTATE");
-                        //var xyz = sampah.SubstringBetween(startvs + 12, sampah.Length);
-                        //var myvs = HttpUtility.UrlEncode(xyz.Split('|')[0]);
-                        agentprice = revalidateFare.Replace(",", "");
-
-                        //GoBack
-
-                        //var url7 = @"LionAirAgentsIBE/Step2Availability.aspx";
-                        //var searchRequest7 = new RestRequest(url7, Method.POST);
-                        //searchRequest7.AddHeader("Accept-Encoding", "gzip, deflate");
-                        //searchRequest7.AddHeader("Accept",
-                        //    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*///*;q=0.8");
-                        //searchRequest7.AddHeader("Referer",
-                        //    "https://agent.lionair.co.id/LionAirAgentsIBE/OnlineBooking.aspx");
-                        //searchRequest7.AddHeader("Origin", "https://agent.lionair.co.id");
-                        //searchRequest7.AddHeader("Cache-Control", "max-age=0");
-                        //var postData7 = colpost.SubstringBetween(1, colpost.Length) + b +
-                        //                "&__EVENTTARGET=&__EVENTARGUMENT=lbGoBack&__LASTFOCUS=&__VIEWSTATE=" +
-                        //                myvs;// + "&__VIEWSTATEGENERATOR=" + vsgen; //UBAH KE lbGoBack kalau udah bener
-                        //searchRequest7.AddParameter("application/x-www-form-urlencoded", postData7,
-                        //    ParameterType.RequestBody);
-                        ////Thread.Sleep(1000);
-                        //var searchResponse7 = client.Execute(searchRequest7);
+                         agentprice = revalidateFare.Replace(",", "");
                         
                         //GET PAGE LOGOUT
 
@@ -684,10 +651,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                         accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
                         accRs = (RestResponse)clientx.Execute(accReq);
-
-                        //var userName = accRs.Content;
-                        //var userName = clientx.Execute(accReq);
-                        
                     }
 
                     var itin = new FlightItinerary
