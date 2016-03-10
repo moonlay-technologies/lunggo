@@ -77,45 +77,54 @@ namespace Lunggo.CustomerWeb.Controllers
         [RequireHttps]
         public ActionResult Checkout(string token)
         {
-            if (TempData["FlightCheckoutOrBookingError"] != null)
+            var itin = FlightService.GetInstance().GetItineraryForDisplay(token);
+            if (itin != null)
             {
-                ViewBag.Message = "BookFailed";
-                return View();
-            }
-
-            if (token == null)
-            {
-                ViewBag.Message = "BookExpired";
-                return View();
-            }
-
-            try
-            {
-                var flight = FlightService.GetInstance();
-                var payment = PaymentService.GetInstance();
-                var itinerary = flight.GetItineraryForDisplay(token);
-                var expiryTime = flight.GetItineraryExpiry(token);
-                var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
-                var savedCreditCards = User.Identity.IsAuthenticated
-                    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
-                    : new List<SavedCreditCard>();
-                return View(new FlightCheckoutData
+                if (TempData["FlightCheckoutOrBookingError"] != null)
                 {
-                    Token = token,
-                    Itinerary = itinerary,
-                    ExpiryTime = expiryTime.GetValueOrDefault(),
-                    SavedPassengers = savedPassengers,
-                    SavedCreditCards = savedCreditCards
-                });
-            }
-            catch
-            {
-                ViewBag.Message = "BookExpired";
-                return View(new FlightCheckoutData
+                    ViewBag.Message = "BookFailed";
+                    return View();
+                }
+
+                if (token == null)
                 {
-                    Token = token
-                });
+                    ViewBag.Message = "BookExpired";
+                    return View();
+                }
+
+                try
+                {
+                    var flight = FlightService.GetInstance();
+                    var payment = PaymentService.GetInstance();
+                    var itinerary = flight.GetItineraryForDisplay(token);
+                    var expiryTime = flight.GetItineraryExpiry(token);
+                    var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
+                    var savedCreditCards = User.Identity.IsAuthenticated
+                        ? payment.GetSavedCreditCards(User.Identity.GetEmail())
+                        : new List<SavedCreditCard>();
+                    return View(new FlightCheckoutData
+                    {
+                        Token = token,
+                        Itinerary = itinerary,
+                        ExpiryTime = expiryTime.GetValueOrDefault(),
+                        SavedPassengers = savedPassengers,
+                        SavedCreditCards = savedCreditCards
+                    });
+                }
+                catch
+                {
+                    ViewBag.Message = "BookExpired";
+                    return View(new FlightCheckoutData
+                    {
+                        Token = token
+                    });
+                }
             }
+            else 
+            {
+                return RedirectToAction("Index", "UW000TopPage");
+            }
+            
         }
 
         [RequireHttps]

@@ -115,7 +115,15 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 return null;
             }
+        }
 
+        // Penambahan Buat Delete TransferCode jika tidak digunakan
+        public void DeleteUniquePriceFromCache(string price) 
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "transferUniquePrice:" + price;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.KeyDelete(redisKey);
         }
 
         public TimeSpan GetUniqueIdExpiry(string key)
@@ -165,6 +173,15 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var price = Decimal.Parse(redisDb.StringGet(redisKey));
             return price;
+        }
+
+        //Penambahan Method ini buat menghapus token Transfer Code jika tidak dipakai
+        public void DeleteTokenTransferCodeFromCache(string token) 
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "transferCodeToken:" + token;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.KeyDelete(redisKey);
         }
 
         private static bool GetSearchingStatusInCache(string searchId, int supplierIndex)
@@ -348,6 +365,15 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
+        private void DeleteItineraryFromCache(string itinCacheId) 
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "flightItinerary:" + itinCacheId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            //var cacheObject = redisDb.StringGet(redisKey);
+            redisDb.KeyDelete(redisKey);
+        }
+
         public DateTime? GetItineraryExpiry(string itinCacheId)
         {
             try
@@ -390,7 +416,8 @@ namespace Lunggo.ApCommon.Flight.Service
             catch { }
         }
 
-        private List<FlightItinerary> GetItinerarySetFromCache(string itinCacheId)
+        //Buat Method untuk menghapus data pada GetItinerarySetFromCache
+        private List<FlightItinerary> GetItinerarySetFromCache(string itinCacheId)  
         {
             try
             {
@@ -413,6 +440,16 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 return null;
             }
+        }
+
+        private void DeleteItinerarySetFromCache(string itinCacheId) 
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "flightItinerarySet:" + itinCacheId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.KeyDelete(redisKey);
+            Debug.Print(redisKey);
+            //redisDb.KeyDelete(redisBundleKey);
         }
 
         private void SavePaymentRedirectionUrlInCache(string rsvNo, string paymentUrl, DateTime? timeLimit)
