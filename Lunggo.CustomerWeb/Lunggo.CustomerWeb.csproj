@@ -861,6 +861,7 @@
     <Content Include="Assets\images\payment-cc.jpg" />
     <Content Include="Assets\images\payment-credit.png" />
     <Content Include="Assets\images\payment-mandiri.jpg" />
+    <Content Include="Assets\images\payment-mandiri.png" />
     <Content Include="Assets\images\payment-method.jpg" />
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />

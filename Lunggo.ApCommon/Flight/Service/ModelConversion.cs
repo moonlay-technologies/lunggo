@@ -61,7 +61,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
-                return new FlightItineraryForDisplay();
+                return null;
             }
         }
 

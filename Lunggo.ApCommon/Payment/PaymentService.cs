@@ -65,7 +65,7 @@ namespace Lunggo.ApCommon.Payment
                 paymentInfo.Url = "DIRECT";
                 paymentInfo.Status = PaymentStatus.Pending;
             }
-            else if (method == PaymentMethod.CreditCard || method == PaymentMethod.VirtualAccount) // Add VA here
+            else if (method == PaymentMethod.CreditCard)// || method == PaymentMethod.VirtualAccount) // Add VA here
             {
                 paymentInfo.Url = "THIRDPARTYDIRECT";
                 var paymentResponse = SubmitPayment(paymentInfo, transactionDetails, itemDetails, method);
