@@ -193,10 +193,6 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="Tesseract, Version=3.0.1.0, Culture=neutral, PublicKeyToken=ebeb3d86bef60cbe, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Tesseract.3.0.1.0\lib\net45\Tesseract.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -347,18 +343,6 @@
     </Content>
     <Content Include="Assets\css\invoice.scss" />
     <Content Include="Areas\Api\Views\web.config" />
-    <Content Include="x64\liblept171.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x64\libtesseract304.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\liblept171.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\libtesseract304.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Assets\css\jquery-ui.min.css.bak" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\jquery.range.css" />
@@ -685,13 +669,11 @@
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\css\neweticket.scss" />
-    <None Include="Assets\images\backtotop.jpg.bak" />
     <Content Include="Assets\images\arrow-white.png" />
     <Content Include="Assets\images\asita-logo.png" />
     <Content Include="Assets\images\at-icon.png" />
     <Content Include="Assets\images\atm-bersama.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
-    <Content Include="Assets\images\backtotop.jpg.bak" />
     <Content Include="Assets\images\bank-bca.png" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
     <Content Include="Assets\images\bca-logo.jpg" />
@@ -1253,7 +1235,6 @@
     <Content Include="Assets\mobile\css\application.scss" />
     <Content Include="Assets\mobile\css\_page_flight.scss" />
     <Content Include="Assets\mobile\css\_page_checkout.scss" />
-    <None Include="Assets\images\backtotop.jpg.bak" />
     <Content Include="Assets\images\subscribe-bg.jpg.bak" />
     <Content Include="Assets\mobile\css\_page_account.scss" />
     <Content Include="Assets\mobile\css\_page_static.scss" />

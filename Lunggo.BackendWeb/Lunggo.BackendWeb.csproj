@@ -164,9 +164,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Tesseract">
-      <HintPath>..\packages\Tesseract.3.0.1.0\lib\net45\Tesseract.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -379,10 +376,6 @@
     <Content Include="App_Readme\WURFL Quick Guide_v1_5.pdf" />
     <Content Include="App_Data\wurfl-latest.zip" />
     <Content Include="Config\Country.csv" />
-    <Content Include="x64\liblept171.dll" />
-    <Content Include="x64\libtesseract304.dll" />
-    <Content Include="x86\liblept171.dll" />
-    <Content Include="x86\libtesseract304.dll" />
     <None Include="Properties\PublishProfiles\prod-travorama-support-backend.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-tap.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
