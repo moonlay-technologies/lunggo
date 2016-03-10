@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetDb.SavedPassengers(contactEmail);
         }
 
-        public void SaveTransacInquiryInCache(string mandiriCacheId, List<KeyValuePair<string,string>> transaction,TimeSpan timeout)
+        public void SaveTransacInquiryInCache(string mandiriCacheId, List<KeyValuePair<string, string>> transaction, TimeSpan timeout)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "mandiriTransactionPrice:" + mandiriCacheId;
@@ -39,7 +39,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         }
 
-        public List<KeyValuePair<string,string>> GetTransacInquiryFromCache(string mandiriCacheId)
+        public List<KeyValuePair<string, string>> GetTransacInquiryFromCache(string mandiriCacheId)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (temp.Count != 0)
                 {
                     //return temp.ToDictionary(hashEntry => (string)hashEntry.Name, hashEntry => (string)hashEntry.Value);
-                    return temp.Select(hashEntry=> new KeyValuePair<string,string>((string)hashEntry.Name,(string)hashEntry.Value)).ToList();
+                    return temp.Select(hashEntry => new KeyValuePair<string, string>((string)hashEntry.Name, (string)hashEntry.Value)).ToList();
                 }
                 else
                 {
@@ -75,23 +75,23 @@ namespace Lunggo.ApCommon.Flight.Service
                 var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
                 return timeToLive;
             }
-            catch 
+            catch
             {
                 return TimeSpan.Zero;
-            }                
+            }
         }
 
-        public void SaveUniquePriceinCache(string price,Dictionary<string,int> dict) 
+        public void SaveUniquePriceinCache(string price, Dictionary<string, int> dict)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "transferUniquePrice:" + price;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            foreach (var pair in dict) 
+            foreach (var pair in dict)
             {
                 redisDb.HashSet(redisKey, (RedisValue)pair.Key, (RedisValue)pair.Value);
                 redisDb.KeyExpire(redisKey, TimeSpan.FromMinutes(150));
             }
-            
+
         }
 
         public Dictionary<string, int> GetUniquePriceFromCache(string price)
@@ -142,7 +142,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public bool isRedisExist(string price) 
+        public bool isRedisExist(string price)
         {
             try
             {
@@ -152,7 +152,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 var value = redisDb.HashGetAll(redisKey).ToList();
                 return value.Count != 0 ? true : false;
             }
-            catch 
+            catch
             {
                 return false;
             }
@@ -163,10 +163,10 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "transferCodeToken:" + token;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            redisDb.StringSet(redisKey,transferCode,TimeSpan.FromMinutes(150));
+            redisDb.StringSet(redisKey, transferCode, TimeSpan.FromMinutes(150));
         }
 
-        public decimal GetTransferCodeByTokeninCache(string token) 
+        public decimal GetTransferCodeByTokeninCache(string token)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "transferCodeToken:" + token;
@@ -454,14 +454,10 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private void SavePaymentRedirectionUrlInCache(string rsvNo, string paymentUrl, DateTime? timeLimit)
         {
-            try
-            {
-                var redisService = RedisService.GetInstance();
-                var redisKey = "paymentRedirectionUrl:" + rsvNo;
-                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                redisDb.StringSet(redisKey, paymentUrl, timeLimit - DateTime.UtcNow);
-            }
-            catch { }
+            var redisService = RedisService.GetInstance();
+            var redisKey = "paymentRedirectionUrl:" + rsvNo;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.StringSet(redisKey, paymentUrl, timeLimit - DateTime.UtcNow);
         }
 
         private string GetPaymentRedirectionUrlInCache(string rsvNo)

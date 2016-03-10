@@ -71,9 +71,9 @@
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -214,8 +214,8 @@
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\Country.csv" />
+    <Content Include="Config\eng.traineddata" />
     <None Include="Properties\PublishProfiles\dv1-api.pubxml" />
-    <None Include="Properties\PublishProfiles\dv2-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-apidev.pubxml" />

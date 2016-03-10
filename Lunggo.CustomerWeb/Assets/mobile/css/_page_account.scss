@@ -77,6 +77,22 @@
             }
         }
     }
+    .passenger-list {padding:0; margin:0; padding-left:30px; counter-reset:number; list-style:none;
+        li {position:relative; counter-increment:number;
+            &:before {background:$color-main-blue; content:counter(number); position:absolute; color:#fff; top:0; left:-30px; width:20px; height:20px; text-align:center; padding:2px;}
+        }
+    }
+    .info-flight {
+        .flight {position:relative; padding-left:30px; margin-bottom:20px;
+            .flight__airline__logo {}
+            .flight__airline__name {color:$color-main-blue; font-weight:bold; padding-top:10px;}
+            &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-repeat:no-repeat; background-size:200%; border:2px solid $color-main-blue; background-image:url(/assets/images/plane-updown-sprite.png);}
+            &.departure {}
+            &.return {
+                &:before {background-position:-16px;}
+            }
+        }
+    }
 }
 
 // forgot password page
