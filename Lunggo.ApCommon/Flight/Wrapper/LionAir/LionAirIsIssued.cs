@@ -133,7 +133,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var bookingListCq = (CQ)confirmationContent;
                     var theTable = bookingListCq[".Step4ItinRow"];
                     var viewstateX = HttpUtility.UrlEncode(bookingListCq["#__VIEWSTATE"].Attr("value"));
-                    isIssued = theTable.Children().ToList()[7].InnerText == "Confirmed";
+                    //isIssued = theTable.Children().ToList()[7].InnerText == "Confirmed";
+                    
+                    var isIssuedy = theTable.Children().ToList()[7].InnerText == "Confirmed";
+                    /*foreach (var row in theTable)
+                    {
+                        isIssuedy = theTable.Children()
+                        isIssuedy &= row.Children().ToList()[7].InnerText == "Confirmed";
+                    }*/
 
                     var url6 = @"/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId;
                     var searchRequest6 = new RestRequest(url6, Method.POST);
