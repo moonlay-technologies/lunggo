@@ -171,60 +171,30 @@
     <None Include="Config\CloudApp.CaptchaReader\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\CustomerWeb\lionAir.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\CustomerWeb\airAsia.properties">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Config\CustomerWeb\airAsia.properties" />
+    <None Include="Config\CustomerWeb\Airline.csv" />
+    <None Include="Config\CustomerWeb\Airport.csv" />
     <None Include="Config\CustomerWeb\api.properties" />
     <None Include="Config\CustomerWeb\azureStorage.properties" />
-    <None Include="Config\CustomerWeb\citilink.properties">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Config\CustomerWeb\citilink.properties" />
     <None Include="Config\CustomerWeb\Country.csv" />
+    <None Include="Config\CustomerWeb\cw.properties" />
+    <None Include="Config\CustomerWeb\db.properties" />
+    <None Include="Config\CustomerWeb\domain.properties" />
     <None Include="Config\CustomerWeb\facebook.properties" />
-    <None Include="Config\CustomerWeb\cw.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\CustomerWeb\mandrill.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\CustomerWeb\sriwijaya.properties">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Config\CustomerWeb\flight.properties" />
+    <None Include="Config\CustomerWeb\freshdesk.properties" />
+    <None Include="Config\CustomerWeb\general.properties" />
+    <None Include="Config\CustomerWeb\hotel.properties" />
+    <None Include="Config\CustomerWeb\HotelLocation.csv" />
+    <None Include="Config\CustomerWeb\lionAir.properties" />
+    <None Include="Config\CustomerWeb\mandrill.properties" />
+    <None Include="Config\CustomerWeb\mystifly.properties" />
+    <None Include="Config\CustomerWeb\redis.properties" />
+    <None Include="Config\CustomerWeb\sriwijaya.properties" />
+    <None Include="Config\CustomerWeb\veritrans.properties" />
+    <None Include="Config\CustomerWeb\zendesk.properties" />
     <None Include="Config\Driver\azureStorage.properties" />
-    <None Include="Config\Webjob.BankTransferChecking\airAsia.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\Webjob.BankTransferChecking\Airline.csv" />
-    <None Include="Config\Webjob.BankTransferChecking\Airport.csv" />
-    <None Include="Config\Webjob.BankTransferChecking\api.properties" />
-    <None Include="Config\Webjob.BankTransferChecking\azureStorage.properties" />
-    <None Include="Config\Webjob.BankTransferChecking\citilink.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\Webjob.BankTransferChecking\Country.csv" />
-    <None Include="Config\Webjob.BankTransferChecking\cw.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\Webjob.BankTransferChecking\db.properties" />
-    <None Include="Config\Webjob.BankTransferChecking\domain.properties" />
-    <None Include="Config\Webjob.BankTransferChecking\facebook.properties" />
-    <None Include="Config\Webjob.BankTransferChecking\flight.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\Webjob.BankTransferChecking\freshdesk.properties" />
-    <None Include="Config\Webjob.BankTransferChecking\general.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\Webjob.BankTransferChecking\hotel.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\Webjob.BankTransferChecking\HotelLocation.csv" />
-    <None Include="Config\Webjob.BankTransferChecking\mandiri.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\WebAPI\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -288,6 +258,29 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler4\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.BankTransferChecking\airAsia.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\Airline.csv" />
+    <None Include="Config\WebJob.BankTransferChecking\Airport.csv" />
+    <None Include="Config\WebJob.BankTransferChecking\api.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\azureStorage.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\citilink.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\Country.csv" />
+    <None Include="Config\WebJob.BankTransferChecking\cw.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\db.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\domain.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\facebook.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\flight.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\freshdesk.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\general.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\hotel.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\HotelLocation.csv" />
+    <None Include="Config\WebJob.BankTransferChecking\lionAir.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\mandrill.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\mystifly.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\redis.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\sriwijaya.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\veritrans.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\zendesk.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -606,15 +599,6 @@
     </None>
     <None Include="Config\WebJob.MystiflyQueueHandler\veritrans.properties" />
     <None Include="Config\WebJob.MystiflyQueueHandler\zendesk.properties" />
-    <None Include="Config\CustomerWeb\Airline.csv" />
-    <None Include="Config\CustomerWeb\Airport.csv" />
-    <None Include="Config\CustomerWeb\flight.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\CustomerWeb\HotelLocation.csv" />
-    <None Include="Config\CustomerWeb\mystifly.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\WebAPI\Airline.csv" />
     <None Include="Config\WebAPI\Airport.csv" />
     <None Include="Config\WebAPI\flight.properties">
@@ -624,10 +608,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebAPI\travolutionary.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\CustomerWeb\domain.properties" />
-    <None Include="Config\CustomerWeb\hotel.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebAPI\HotelLocation.csv" />
@@ -645,15 +625,6 @@
     </None>
     <None Include="Config\WebAPI\veritrans.properties" />
     <None Include="Config\WebAPI\zendesk.properties" />
-    <None Include="Config\CustomerWeb\redis.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\CustomerWeb\freshdesk.properties" />
-    <None Include="Config\CustomerWeb\veritrans.properties" />
-    <None Include="Config\CustomerWeb\general.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\CustomerWeb\zendesk.properties" />
     <None Include="Config\Driver\db.properties" />
     <None Include="Config\Driver\freshdesk.properties" />
     <None Include="Config\Driver\general.properties">
@@ -689,7 +660,6 @@
     <None Include="HtmlTemplate\InitialSubscriberEmail.cshtml" />
     <None Include="HtmlTemplate\UserConfirmationEmail.cshtml" />
     <None Include="Lunggo_Config.xlsx" />
-    <None Include="Config\CustomerWeb\db.properties" />
     <None Include="packages.config" />
     <Content Include="Template\Web.Debug.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -741,6 +711,7 @@
     </Content>
     <None Include="HtmlTemplate\FlightEticket.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

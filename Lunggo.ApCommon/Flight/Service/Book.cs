@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Flight.Service
         public BookFlightOutput BookFlight(BookFlightInput input)
         {
             var output = new BookFlightOutput();
-            var itins = GetItinerarySetFromCache(input.ItinCacheId); //Ini buat ngambil token buat si itenarary
+            var itins = GetItinerarySetFromCache(input.ItinCacheId); 
             output.BookResults = BookItineraries(itins, input, output);
             if (AllAreBooked(output.BookResults))
             {
@@ -115,9 +115,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 reservation.TransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
                 reservation.Payment.FinalPrice -= reservation.TransferCode;
             }
-            else //Penambahan disini buat menghapus Transfer Code dan Token Transfer Code jika tidak milih Bank Transfer 
+            else  
             {
-                 var dummyTransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
+                //Penambahan disini buat menghapus Transfer Code dan Token Transfer Code jika tidak milih Bank Transfer
+                var dummyTransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
                 var dummyPrice = reservation.Payment.FinalPrice - dummyTransferCode;
                 FlightService.GetInstance().DeleteUniquePriceFromCache(dummyPrice.ToString());
                 FlightService.GetInstance().DeleteTokenTransferCodeFromCache(input.TransferToken);
