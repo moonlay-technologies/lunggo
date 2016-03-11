@@ -615,8 +615,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     }
 
                     //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "ID")).ToList();
-                    //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "OD")).ToList();
-                    //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "SL")).ToList();
+                    itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "OD")).ToList();
+                    itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "SL")).ToList();
                     if (trip0.DestinationAirport != "JKT")
                     {
                         itins = itins.Where(itin => itin.Trips[0].Segments.Last().ArrivalAirport == trip0.DestinationAirport).ToList();

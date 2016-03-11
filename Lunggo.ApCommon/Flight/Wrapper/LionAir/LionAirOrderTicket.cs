@@ -137,74 +137,74 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var html8 = searchResponse5.Content;
                 searchedHtml = (CQ) html8;
                 var vsPostToPay = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
-                var theTable = searchedHtml[".Step4ItinRow"];
+                //var theTable = searchedHtml[".Step4ItinRow"];
                 /*var isIssuedy = true;
                 foreach (var row in theTable)
                 {
                     isIssuedy &= row.Children().ToList()[7].InnerText == "Confirmed";
                 }*/
-                var isIssuedy = theTable.Children().ToList()[7].InnerText == "Confirmed";
-                var bookingRef = "ABCDEF";
+                //var isIssuedy = theTable.Children().ToList()[7].InnerText == "Not Ticketed";
+                //var bookingRef = "ABCDEF";
 
-                var a = 3;
+                //var a = 3;
                 try
                 {
                     //GO TO PAY, POST
 
-                    //var searchRequest9 = new RestRequest(url5, Method.POST);
-                    //searchRequest9.AddHeader("Referer",
-                    //    "https://agent.lionair.co.id/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId);
-                    //searchRequest9.AddHeader("Accept-Encoding", "gzip, deflate");
-                    //searchRequest9.AddHeader("Accept",
-                    //    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                    //var beginningToPay = "__EVENTTARGET=lbContinue&__EVENTARGUMENT=&__VIEWSTATE=" + vsPostToPay;
-                    //const string endingToPay = "&payDet=rbPay_CA&CreditCardDisplay1%24CreditCardType=VI&CreditCardDisplay1%24txtCardHolderName=&CreditCardDisplay1%24CreditCardNumber=&CreditCardDisplay1%24CreditCardExpiryMonth=MM&CreditCardDisplay1%24CreditCardExpiryYear=YY&CreditCardDisplay1%24CVVNumber=&FlightInfo=&AXTotal=&DCTotal=&OtherTotal=&nameMismatch=";
-                    //var postData9 = beginningToPay + endingToPay;
-                    //searchRequest9.AddParameter("application/x-www-form-urlencoded", postData9, ParameterType.RequestBody);
-                    //var searchResponse9 = clientx.Execute(searchRequest9);
-                    //Thread.Sleep(3000);
-                    //if (searchResponse9.ResponseUri.AbsolutePath != "/LionAgentsOPS/TicketBooking.aspx"
-                    //    && (searchResponse9.StatusCode == HttpStatusCode.OK || searchResponse9.StatusCode == HttpStatusCode.Redirect))
-                    //    throw new Exception();
+                    var searchRequest9 = new RestRequest(url5, Method.POST);
+                    searchRequest9.AddHeader("Referer",
+                        "https://agent.lionair.co.id/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId);
+                    searchRequest9.AddHeader("Accept-Encoding", "gzip, deflate");
+                    searchRequest9.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    var beginningToPay = "__EVENTTARGET=lbContinue&__EVENTARGUMENT=&__VIEWSTATE=" + vsPostToPay;
+                    const string endingToPay = "&payDet=rbPay_CA&CreditCardDisplay1%24CreditCardType=VI&CreditCardDisplay1%24txtCardHolderName=&CreditCardDisplay1%24CreditCardNumber=&CreditCardDisplay1%24CreditCardExpiryMonth=MM&CreditCardDisplay1%24CreditCardExpiryYear=YY&CreditCardDisplay1%24CVVNumber=&FlightInfo=&AXTotal=&DCTotal=&OtherTotal=&nameMismatch=";
+                    var postData9 = beginningToPay + endingToPay;
+                    searchRequest9.AddParameter("application/x-www-form-urlencoded", postData9, ParameterType.RequestBody);
+                    var searchResponse9 = clientx.Execute(searchRequest9);
+                    Thread.Sleep(3000);
+                    if (searchResponse9.ResponseUri.AbsolutePath != "/LionAgentsOPS/TicketBooking.aspx"
+                        && (searchResponse9.StatusCode == HttpStatusCode.OK || searchResponse9.StatusCode == HttpStatusCode.Redirect))
+                        throw new Exception();
 
-                    ////CashPayment
+                    //CashPayment
 
-                    //const string url10 = @"/LionAgentsOPS/CashPayment.aspx";
-                    //var searchRequest10 = new RestRequest(url10, Method.GET);
-                    //searchRequest10.AddHeader("Referer",
-                    //    "https://agent.lionair.co.id/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId);
-                    //searchRequest10.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
-                    //searchRequest10.AddHeader("Accept",
-                    //    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                    //var searchResponse10 = clientx.Execute(searchRequest10);
-                    //Thread.Sleep(3000);
-                    //if (searchResponse10.ResponseUri.AbsolutePath != "/LionAgentsOPS/CashPayment.aspx"
-                    //    && (searchResponse10.StatusCode == HttpStatusCode.OK || searchResponse10.StatusCode == HttpStatusCode.Redirect))
-                    //    throw new Exception();
+                    const string url10 = @"/LionAgentsOPS/CashPayment.aspx";
+                    var searchRequest10 = new RestRequest(url10, Method.GET);
+                    searchRequest10.AddHeader("Referer",
+                        "https://agent.lionair.co.id/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId);
+                    searchRequest10.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                    searchRequest10.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    var searchResponse10 = clientx.Execute(searchRequest10);
+                    Thread.Sleep(3000);
+                    if (searchResponse10.ResponseUri.AbsolutePath != "/LionAgentsOPS/CashPayment.aspx"
+                        && (searchResponse10.StatusCode == HttpStatusCode.OK || searchResponse10.StatusCode == HttpStatusCode.Redirect))
+                        throw new Exception();
 
-                    ////Confirmation
+                    //Confirmation
 
-                    //const string url11 = @"/LionAgentsOPS/Confirmation.aspx";
-                    //var searchRequest11 = new RestRequest(url11, Method.GET);
-                    //searchRequest11.AddHeader("Referer",
-                    //    "https://agent.lionair.co.id/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId);
-                    //searchRequest11.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
-                    //searchRequest11.AddHeader("Accept",
-                    //    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                    //var searchResponse11 = clientx.Execute(searchRequest11);
-                    ////var abc = searchResponse11.ResponseUri.AbsolutePath;
-                    //if (searchResponse11.ResponseUri.AbsolutePath != "/LionAgentsOPS/Confirmation.aspx"
-                    //    && (searchResponse11.StatusCode == HttpStatusCode.OK || searchResponse11.StatusCode == HttpStatusCode.Redirect))
-                    //    throw new Exception();
-                    //Thread.Sleep(3000);
-                    //var confirmationContent = searchResponse11.Content;
-                    //var html11 = (CQ)confirmationContent;
-                    //var booking = html11["#RelocHighlight"];
-                    //var bookingRef = booking.Children().ToList()[0].GetAttribute("id");
+                    const string url11 = @"/LionAgentsOPS/Confirmation.aspx";
+                    var searchRequest11 = new RestRequest(url11, Method.GET);
+                    searchRequest11.AddHeader("Referer",
+                        "https://agent.lionair.co.id/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId);
+                    searchRequest11.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                    searchRequest11.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    var searchResponse11 = clientx.Execute(searchRequest11);
+                    //var abc = searchResponse11.ResponseUri.AbsolutePath;
+                    if (searchResponse11.ResponseUri.AbsolutePath != "/LionAgentsOPS/Confirmation.aspx"
+                        && (searchResponse11.StatusCode == HttpStatusCode.OK || searchResponse11.StatusCode == HttpStatusCode.Redirect))
+                        throw new Exception();
+                    Thread.Sleep(3000);
+                    var confirmationContent = searchResponse11.Content;
+                    var html11 = (CQ)confirmationContent;
+                    var booking = html11["#RelocHighlight"];
+                    var bookingRef = booking.Children().ToList()[0].GetAttribute("id");
 
-                    //var theTable = html11[".Step4ItinRow"];
-                    ////var viewstateX = HttpUtility.UrlEncode(html11["#__VIEWSTATE"].Attr("value"));
-                    //var isIssued = theTable.Children().ToList()[7].InnerText == "Confirmed";
+                    var theTable = html11[".Step4ItinRow"];
+                    //var viewstateX = HttpUtility.UrlEncode(html11["#__VIEWSTATE"].Attr("value"));
+                    var isIssued = theTable.Children().ToList()[7].InnerText == "Confirmed";
 
                     //Logout
                     const string url15 = @"/LionAirAgentsPortal/Logout.aspx";
@@ -236,11 +236,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
                     accRs = (RestResponse) clienty.Execute(accReq);
 
-                    bool isIssuedByFunction;
+                   // bool isIssuedByFunction;
                     var abc = IsIssued(bookingId);
-                    isIssuedByFunction = abc == IssueEnum.IssueSuccess;
+                    var isIssuedByFunction = abc == IssueEnum.IssueSuccess;
 
-                    var isIssuedx = isIssuedy && isIssuedByFunction;
+                    var isIssuedx = isIssued && isIssuedByFunction;
                     return new OrderTicketResult
                     {
                         IsSuccess = isIssuedx,
