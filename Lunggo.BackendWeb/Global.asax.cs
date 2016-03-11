@@ -29,7 +29,7 @@ namespace Lunggo.BackendWeb
             AppInitializer.Init();
             //FlightService.GetInstance().CommenceSearchFlight("NTXPKU-700y".Base64Encode(), 5);
             //FlightService.GetInstance().RevalidateFareInternal(new RevalidateConditions{FareId = "LIONPUBkjbcxz"});
-            //FlightService.GetInstance().OrderTicketInternal("LIONPUBPOQFSR", true);
+            //FlightService.GetInstance().OrderTicketInternal("LIONPUBGHJOUF", true);
             //FlightService.GetInstance().is
             /*FlightService.GetInstance().BookFlight(new BookFlightInput
             {
