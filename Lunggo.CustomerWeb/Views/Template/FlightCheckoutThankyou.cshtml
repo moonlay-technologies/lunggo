@@ -74,6 +74,7 @@
                         </div>
                         <div class="col-xs-4">
                             <div class="print">
+                                <a href="" target="_blank" class="btn btn-yellow block disabled"><span>CETAK eTICKET</span></a>
                             </div>
                         </div>
                     </div>
@@ -84,6 +85,7 @@
                         <div class="print">
                             @using (Html.BeginForm())
                             {
+                                <input type="hidden" name="rsvNo" value="119726581079" />
                                 <button class="btn btn-yellow block"><span>CEK PESANAN</span></button>
                             }
                         </div>
@@ -96,50 +98,54 @@
 
             <section class="order-detail">
                 <header>
-                    <h4><b>Detail Pesanan</b> <span class="pull-right">Order ID: <b>116756573779</b></span></h4>
+                    <h4><b>Detail Pesanan</b> <span class="pull-right">Order ID: <b>119726581079</b></span></h4>
                 </header>
-                    <!--<section>
-                        @*<h4><b>Account Number    : @Model.Payment.TargetAccount</b></h4>
-                        @{var jamTimeLimit = Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7);}
-                        <h4><b>Batas Pembayaran  : @Model.Payment.TimeLimit.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @jamTimeLimit.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.ToString("HH:mm") WIB.</b></h4>
-                    *@</section>-->
                 <section>
+
                     <div class="container">
                         <div class="row">
+
                             <div class="order-detail-left col-xs-8">
-                                <div class="passenger">
-                                    <h4>INFO PENUMPANG</h4>
+                                <div class="va-passenger col-xs-12">
+                                    <div class="passenger col-xs-7">
+                                        <h4>INFO PENUMPANG</h4>
 
-                                    <ol>
-                                            <li><p>Dewasa: Mr. Gianluigi Buffon</p></li>
-                                    </ol>
-
+                                        <ol>
+                                            <li><p>Dewasa    : Suheri Manuturi Rajoki Marpaung</p></li>
+                                            <li><p>Anak-anak : Reus Junior</p></li>
+                                        </ol>
+                                    </div>
+                                    <div class="virtual-account col-xs-5">
+                                        <h4 class="va-text"><b>No VIRTUAL ACCOUNT</b></h4>
+                                        <h4 class="va-number" ><b>7329234586751120</b></h4>
+                                    </div>
                                 </div>
                                 <div class="order">
                                     <h4>DETAIL PENERBANGAN</h4>
 
                                     <div class="flight departure">
-                                            
+                                        <p><img src="~/Assets/images/airlines/AK.png" alt="Air Asia" /> <span>Air Asia</span> </p>
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <p>Berangkat : </p>
+                                            </div>
+                                            <div class="col-xs-9">
+                                                <p>Jakarta (CGK) - Medan (KNO)</p>
+                                                <p>Sabtu, 30 Apr 2016</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="flight return">
+                                            <p><img src="~/Assets/images/airlines/AK.png" alt="Air Asia" /> <span>Air Asia</span> </p>
                                             <div class="row">
                                                 <div class="col-xs-3">
                                                     <p>Berangkat : </p>
                                                 </div>
                                                 <div class="col-xs-9">
-                                                    <p> Jakarta (CGK) - Denpasar (DPS)</p>
-                                                    <p>Rabu, 20 Apr 2016</p>
+                                                    <p>Jakarta (CGK) - Medan (KNO)</p>
+                                                    <p>Sabtu, 30 Apr 2016</p>
                                                 </div>
                                             </div>
-                                    </div>
-                                        <div class="flight return">
-                                                <div class="row">
-                                                    <div class="col-xs-3">
-                                                        <p>Kembali : </p>
-                                                    </div>
-                                                    <div class="col-xs-9">
-                                                        <p>Jakarta (CGK) - Denpasar (DPS)</p>
-                                                        <p>Rabu, 20 Apr 2016</p>
-                                                    </div>
-                                                </div>
                                         </div>
                                 </div>
 
@@ -148,26 +154,23 @@
                                 <div class="price-detail">
                                     <h4>RINCIAN HARGA</h4>
                                     <dl>
-                                        <dt>Tiket Pesawat <span>(1 Penumpang)</span></dt>
-                                        <dd>Rp 695.900</dd>
+                                        <dt>Tiket Pesawat <span>(2 Penumpang)</span></dt>
+                                        <dd>Rp 671.000</dd>
                                     </dl>
                                         <dl>
-                                            <dt>Diskon bla</dt>
-                                            <dd>- Rp 900</dd>
+                                            <dt>Visa Promo</dt>
+                                            <dd>- Rp 71.000</dd>
                                         </dl>
                                     <dl class="total-price">
                                         <dt>Total</dt>
-                                        <dd>Rp 695.000</dd>
+                                        <dd>Rp 600.000</dd>
                                     </dl>
                                 </div>
 
                                 <div class="payment-detail">
                                     <h4>METODE PEMBAYARAN</h4>
-                                        <h5>ATM/Virtual Account</h5>
-                                        <img src="/Assets/images/atm-bersama.jpg" alt="Virtual Account" />
-                                        <!--<h5>No. Virtual Account : </h5>
-                                        @*<h4>@Model.Payment.TargetAccount</h4>
-                                        <h6>Valid Until : @Model.Payment.TimeLimit.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @jamTimeLimit.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.ToString("HH:mm") WIB.</h6> *@-->
+                                        <h5>Virtual Account</h5>
+                                        <img src="~/Assets/images/atm-bersama.jpg" alt="Virtual Account" />
                                 </div>
 
                             </div>

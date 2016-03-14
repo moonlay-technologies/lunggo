@@ -138,16 +138,21 @@ else
                         <div class="row">
 
                             <div class="order-detail-left col-xs-8">
-                                <div class="passenger">
-                                    <h4>INFO PENUMPANG</h4>
+                                <div class="va-passenger col-xs-12">
+                                    <div class="passenger col-xs-7">
+                                        <h4>INFO PENUMPANG</h4>
 
-                                    <ol>
-                                        @foreach (var passenger in Model.Passengers)
-                                        {
-                                            <li><p>@EnumDisplay.PassengerType(passenger.Type) : @EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p></li>
-                                        }
-                                    </ol>
-
+                                        <ol>
+                                            @foreach (var passenger in Model.Passengers)
+                                            {
+                                                <li><p>@EnumDisplay.PassengerType(passenger.Type) : @EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p></li>
+                                            }
+                                        </ol>
+                                    </div>
+                                    <div class="virtual-account col-xs-5">
+                                        <h4 class="va-text"><b>No VIRTUAL ACCOUNT</b></h4>
+                                        <h4 class="va-number"><b>@Model.Payment.TargetAccount</b></h4>
+                                    </div>
                                 </div>
                                 <div class="order">
                                     <h4>DETAIL PENERBANGAN</h4>

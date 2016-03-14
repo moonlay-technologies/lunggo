@@ -343,13 +343,20 @@ file : /Assets/travorama20/css/_page_checkout.scss
             h4 {font-weight:bold; letter-spacing:0; margin-bottom:18px;}
 
             .order-detail-left {padding:12px 24px;
-                .passenger {margin-bottom:24px;
+                .va-passenger{
+                    .passenger {margin-bottom:24px;padding-left: 0px;margin-left:0;
                     ol {counter-reset:passenger-counter; list-style:none; margin:0; padding:0;
                         li {position:relative; padding-left:21px; font-size:12px;
                             &:before {content:'0' counter(passenger-counter); counter-increment:passenger-counter; position:absolute; left:0; color:$color-main-blue; font-weight:bold;}
                         }
                     }
                 }
+                    .virtual-account{ margin-bottom:24px;padding-left:20px;
+                        .va-text{font-size : 11px;padding-bottom:2px;margin-bottom:8px;}
+                        .va-number{font-size : 23px; color: #1daee4; padding:0;}
+                    }    
+                }
+                
                 .order {
                     .flight {padding-left:36px; position:relative;
                         .col-xs-9 {font-weight:bold;}
