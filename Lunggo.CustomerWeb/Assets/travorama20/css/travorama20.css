@@ -4260,13 +4260,13 @@ file : /Assets/travorama20/css/_page_checkout.scss
             font-weight: bold; }
     .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account {
       margin-bottom: 24px;
-      padding-left: 20px; }
+      padding-left: 23px; }
       .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account .va-text {
         font-size: 11px;
         padding-bottom: 2px;
         margin-bottom: 8px; }
       .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account .va-number {
-        font-size: 23px;
+        font-size: 18px;
         color: #1daee4;
         padding: 0; }
     .page-thankyou .order-detail section .order-detail-left .order .flight {
