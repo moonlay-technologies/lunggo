@@ -37,16 +37,24 @@ namespace Lunggo.ApCommon.TransferIdentifier
             int uniqueId;
             decimal candidatePrice;
             //Generate Unique Id
-            do
+            if (price <= 999)
             {
-                uniqueId = rnd.Next(1, 999);
-                candidatePrice = price - uniqueId;
-                isExist = FlightService.GetInstance().isRedisExist(candidatePrice.ToString());
-            } while (isExist);
-            Dictionary<string, int> dict = new Dictionary<string, int>();
-            dict.Add(token, uniqueId);
-            FlightService.GetInstance().SaveUniquePriceinCache(candidatePrice.ToString(),dict);
-            FlightService.GetInstance().SaveTokenTransferCodeinCache(token, uniqueId.ToString());
+                uniqueId = Decimal.ToInt32(price);
+            }
+            else 
+            {
+                do
+                {
+                    uniqueId = rnd.Next(1, 999);
+                    candidatePrice = price - uniqueId;
+                    isExist = FlightService.GetInstance().isRedisExist(candidatePrice.ToString());
+                } while (isExist);
+                Dictionary<string, int> dict = new Dictionary<string, int>();
+                dict.Add(token, uniqueId);
+                FlightService.GetInstance().SaveUniquePriceinCache(candidatePrice.ToString(), dict);
+                FlightService.GetInstance().SaveTokenTransferCodeinCache(token, uniqueId.ToString());
+            }
+            
             return uniqueId;
         }
     }
