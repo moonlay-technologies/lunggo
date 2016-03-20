@@ -1,25 +1,18 @@
 ﻿using System.Net;
+using Lunggo.WebAPI.ApiSrc.v1.Common.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
-    public class FlightRevalidateApiResponse
+    public class FlightRevalidateApiResponse : ApiResponseBase
     {
-        [JsonProperty("token")]
+        [JsonProperty("tkn")]
         public string Token { get; set; }
-        [JsonProperty("is_valid")]
+        [JsonProperty("vld")]
         public bool IsValid { get; set; }
-        [JsonProperty("other_fare_available")]
+        [JsonProperty("avail")]
         public bool? IsOtherFareAvailable { get; set; }
-        [JsonProperty("new_fare")]
+        [JsonProperty("fare")]
         public decimal? NewFare { get; set; }
-        [JsonProperty("status_code")]
-        public HttpStatusCode StatusCode { get; set; }
-        [JsonProperty("status_message")]
-        public string StatusMessage { get; set; }
-        [JsonProperty("error_code", NullValueHandling = NullValueHandling.Ignore)]
-        public string ErrorCode { get; set; }
-        [JsonProperty("request")]
-        public FlightRevalidateApiRequest OriginalRequest { get; set; }
     }
 }

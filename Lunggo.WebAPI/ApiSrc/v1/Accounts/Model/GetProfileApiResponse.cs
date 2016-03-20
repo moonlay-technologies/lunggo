@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Net;
+using Lunggo.WebAPI.ApiSrc.v1.Common.Model;
 using Newtonsoft.Json;
 
-namespace Lunggo.WebAPI.ApiSrc.v1.Account.Model
+namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Model
 {
-    public class GetProfileApiResponse
+    public class GetProfileApiResponse : ApiResponseBase
     {
         [JsonProperty("first", NullValueHandling = NullValueHandling.Ignore)]
         public string FirstName { get; set; }
@@ -19,11 +16,5 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Account.Model
         public string PhoneNumber { get; set; }
         [JsonProperty("address", NullValueHandling = NullValueHandling.Ignore)]
         public string Address { get; set; }
-        [JsonProperty("status_code")]
-        public HttpStatusCode StatusCode { get; set; }
-        [JsonProperty("status_message")]
-        public string StatusMessage { get; set; }
-        [JsonProperty("error_code", NullValueHandling = NullValueHandling.Ignore)]
-        public string ErrorCode { get; set; }
     }
 }

@@ -56,10 +56,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     TotalFare = itinerary.LocalPrice,
                     Trips = MapTrips(itinerary.Trips),
                     RegisterNumber = itinerary.RegisterNumber,
-                    OriginalFare = GenerateDummyOriginalFare(itinerary.LocalPrice),
-                    ComboFare = itinerary.TotalComboFares == null ? null : (decimal?) itinerary.TotalComboFares.Min() / 2M,
-                    ComboPairRegisters = itinerary.ComboPairRegisters,
-                    TotalComboFares = itinerary.TotalComboFares
+                    OriginalFare = GenerateDummyOriginalFare(itinerary.LocalPrice)
                 };
             }
             else
@@ -154,7 +151,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var result = new List<Transit>();
             for (var i = 0; i < segments.Count; i++)
             {
-                if (segments[i].Stops.Any())
+                if (segments[i].Stops != null && segments[i].Stops.Any())
                 {
                     result.AddRange(segments[i].Stops.Select(stop => new Transit
                     {

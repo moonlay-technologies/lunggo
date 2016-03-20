@@ -9,9 +9,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightSearchApiRequest
     {
-        [JsonProperty("search_id")]
+        [JsonProperty("sid")]
         public string SearchId { get; set; }
-        [JsonProperty("requests")]
+        [JsonProperty("rq")]
         public List<int> Requests { get; set; }
     }
 }

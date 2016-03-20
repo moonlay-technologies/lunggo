@@ -187,19 +187,15 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiSrc\v1\Account\AccountsController.cs" />
-    <Compile Include="ApiSrc\v1\Account\Model\AccountResponseModel.cs" />
-    <Compile Include="ApiSrc\v1\Account\Model\GetProfileApiResponse.cs" />
-    <Compile Include="ApiSrc\v1\Account\Model\ChangeProfileApiRequest.cs" />
-    <Compile Include="ApiSrc\v1\Account\Model\ForgotPasswordApiRequest.cs" />
-    <Compile Include="ApiSrc\v1\Account\Model\ChangeProfileApiResponse.cs" />
-    <Compile Include="ApiSrc\v1\Account\Model\GetProfileApiRequest.cs" />
-    <Compile Include="ApiSrc\v1\Account\Model\RegisterApiRequest.cs" />
-    <Compile Include="ApiSrc\v1\Account\Model\ForgotPasswordApiResponse.cs" />
-    <Compile Include="ApiSrc\v1\Account\Model\OrderDetailApiResponse.cs" />
-    <Compile Include="ApiSrc\v1\Account\Model\TransactionHistoryApiResponse.cs" />
-    <Compile Include="ApiSrc\v1\Account\Model\RegisterApiResponse.cs" />
-    <Compile Include="ApiSrc\v1\Account\Model\ResetPasswordViewModel.cs" />
+    <Compile Include="ApiSrc\v1\Accounts\AccountsController.cs" />
+    <Compile Include="ApiSrc\v1\Accounts\Model\ChangeProfileApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Accounts\Model\ForgotPasswordApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Accounts\Model\GetProfileApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Accounts\Model\GetProfileApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Accounts\Model\OrderDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Accounts\Model\RegisterApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Accounts\Model\ResetPasswordViewModel.cs" />
+    <Compile Include="ApiSrc\v1\Accounts\Model\TransactionHistoryApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Autocomplete\AutocompleteController.cs" />
     <Compile Include="ApiSrc\v1\Autocomplete\Logic\GetHotelLocationAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\v1\Autocomplete\Logic\GetAirlineAutocompleteLogic.cs" />
@@ -212,6 +208,7 @@
     <Compile Include="ApiSrc\v1\Autocomplete\Model\AirportApi.cs" />
     <Compile Include="ApiSrc\v1\Autocomplete\Model\HotelLocationApi.cs" />
     <Compile Include="ApiSrc\v1\Autocomplete\Model\UpdateSet.cs" />
+    <Compile Include="ApiSrc\v1\Common\Model\ApiResponseBase.cs" />
     <Compile Include="ApiSrc\v1\Flights\FlightsController.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\IssueFlightLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\BookFlightLogic.cs" />
@@ -222,7 +219,6 @@
     <Compile Include="ApiSrc\v1\Flights\Logic\RevalidateFlightLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\TopDestinations.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\ArrayHelper.cs" />
-    <Compile Include="ApiSrc\v1\Flights\Model\FlightIssueApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightIssueApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightBookApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightBookApiResponse.cs" />
@@ -234,7 +230,6 @@
     <Compile Include="ApiSrc\v1\Flights\Model\FlightRevalidateApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiResponse.cs" />
-    <Compile Include="ApiSrc\v1\Flights\Model\ExpireReservationsApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\TopDestinationsApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Newsletter\Model\NewsletterSubscribeInput.cs" />
     <Compile Include="ApiSrc\v1\Newsletter\Query\CheckEmailQuery.cs" />

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Lunggo.WebAPI.ApiSrc.v1.Account.Model
+namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Model
 {
     public class ChangeProfileApiRequest
     {

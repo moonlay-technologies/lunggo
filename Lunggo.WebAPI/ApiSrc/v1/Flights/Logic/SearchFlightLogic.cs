@@ -18,7 +18,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 var searchServiceRequest = PreprocessServiceRequest(request);
                 var searchServiceResponse = FlightService.GetInstance().SearchFlight(searchServiceRequest);
-                var apiResponse = AssembleApiResponse(searchServiceResponse, request);
+                var apiResponse = AssembleApiResponse(searchServiceResponse);
                 return apiResponse; 
             }
             else
@@ -26,14 +26,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 return new FlightSearchApiResponse
                 {
                     SearchId = null,
-                    OriginalRequest = request,
-                    TotalFlightCount = 0,
-                    FlightList = new List<FlightItineraryForDisplay>(),
+                    Flights = new List<Flight>(),
                     GrantedRequests = new List<int>(),
                     ExpiryTime = null,
                     MaxRequest = 0,
                     StatusCode = HttpStatusCode.BadRequest,
-                    StatusMessage = "Invalid Search ID or Requests format.",
                     ErrorCode = "ERFSEA01"
                 };
             }
@@ -44,21 +41,20 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             return FlightService.GetInstance().IsSearchIdValid(request.SearchId);
         }
 
-        private static FlightSearchApiResponse AssembleApiResponse(SearchFlightOutput searchServiceResponse, FlightSearchApiRequest request)
+        private static FlightSearchApiResponse AssembleApiResponse(SearchFlightOutput searchServiceResponse)
         {
             var apiResponse = new FlightSearchApiResponse
             {
-                OriginalRequest = request,
                 SearchId = searchServiceResponse.SearchId,
-                FlightList = searchServiceResponse.Itineraries,
-                TotalFlightCount = searchServiceResponse.Itineraries.Count,
-                ReturnFlightList = searchServiceResponse.ReturnItineraries,
-                TotalReturnFlightCount = searchServiceResponse.ReturnItineraries == null ? null : (int?) searchServiceResponse.ReturnItineraries.Count,
+                Flights = searchServiceResponse.ItineraryLists.Select(itinList => new Flight
+                {
+                    Count = itinList.Count,
+                    Itineraries = itinList
+                }).ToList(),
                 ExpiryTime = searchServiceResponse.ExpiryTime,
                 GrantedRequests = searchServiceResponse.SearchedSuppliers,
                 MaxRequest = searchServiceResponse.TotalSupplier,
-                StatusCode = HttpStatusCode.OK,
-                StatusMessage = "Success."
+                StatusCode = HttpStatusCode.OK
             };
             return apiResponse;
         }

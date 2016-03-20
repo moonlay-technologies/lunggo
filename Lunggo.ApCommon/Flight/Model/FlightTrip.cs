@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public string OriginAirportName { get; set; }
         [JsonProperty("date")]
         public DateTime DepartureDate { get; set; }
-        [JsonProperty("segments")]
+        [JsonProperty("segs")]
         public List<FlightSegment> Segments { get; set; }
 
         public bool Identical(FlightTrip otherTrip)
@@ -70,11 +70,11 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class Airline
     {
-        [JsonProperty("code")]
+        [JsonProperty("cd")]
         public string Code { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
-        [JsonProperty("logo_url")]
+        [JsonProperty("logo")]
         public string LogoUrl { get; set; }
     }
 

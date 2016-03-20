@@ -125,20 +125,14 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             var flight = FlightService.GetInstance();
             var paymentUrl = flight.GetBookingRedirectionUrl(rsvNo);
-            if (paymentUrl == null)
-            {
-                TempData["FlightCheckoutOrBookingError"] = true;
-                return RedirectToAction("Checkout");
-            }
-            if (paymentUrl == "DIRECT")
-                return RedirectToAction("Confirmation", "Flight", new { rsvNo });
-            else if (paymentUrl == "THIRDPARTYDIRECT")
+            if (paymentUrl != null)
+                return Redirect(paymentUrl);
+            else
             {
                 TempData["AllowThisThankyouPage"] = rsvNo;
-                return RedirectToAction("Thankyou", "Flight", new {rsvNo});
+                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
             }
-            else
-                return Redirect(paymentUrl);
+
         }
 
         public ActionResult Thankyou(string rsvNo)
@@ -160,7 +154,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult ThankyouPost(string rsvNo)
         {
             TempData["AllowThisReservationCheck"] = rsvNo;
-            return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", new {rsvNo});
+            return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", new { rsvNo });
         }
 
         public ActionResult Confirmation(string rsvNo)

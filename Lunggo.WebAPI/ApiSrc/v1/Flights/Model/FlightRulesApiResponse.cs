@@ -1,21 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.WebAPI.ApiSrc.v1.Common.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
-    public class FlightRulesApiResponse
+    public class FlightRulesApiResponse : ApiResponseBase
     {
-        [JsonProperty("status_code")]
-        public HttpStatusCode StatusCode { get; set; }
-        [JsonProperty("status_message")]
-        public string StatusMessage { get; set; }
-        [JsonProperty("airline_rules")]
+        [JsonProperty("a")]
         public List<AirlineRules> AirlineRules { get; set; }
-        [JsonProperty("baggage_rules")]
+        [JsonProperty("b")]
         public List<BaggageRules> BaggageRules { get; set; }
-        [JsonProperty("original_request")]
-        public FlightRulesApiRequest OriginalRequest { get; set; }
     }
 }

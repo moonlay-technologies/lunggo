@@ -4,7 +4,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightCancelApiRequest
     {
-        [JsonProperty("booking_id")]
+        [JsonProperty("bid")]
         public string BookingId { get; set; }
     }
 }

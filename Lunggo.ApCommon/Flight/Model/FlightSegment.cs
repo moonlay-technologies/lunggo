@@ -43,11 +43,11 @@ namespace Lunggo.ApCommon.Flight.Model
         public string ArrivalAirportName { get; set; }
         [JsonProperty("air_name")]
         public string AirlineName { get; set; }
-        [JsonProperty("air_logo_url")]
+        [JsonProperty("air_logo")]
         public string AirlineLogoUrl { get; set; }
         [JsonProperty("op_air_name")]
         public string OperatingAirlineName { get; set; }
-        [JsonProperty("op_air_logo_url")]
+        [JsonProperty("op_air_logo")]
         public string OperatingAirlineLogoUrl { get; set; }
         [JsonProperty("stops")]
         public List<FlightStop> Stops { get; set; }

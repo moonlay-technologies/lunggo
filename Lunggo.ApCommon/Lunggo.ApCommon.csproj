@@ -205,6 +205,7 @@
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
     <Compile Include="Flight\Model\Conditions.cs" />
     <Compile Include="Flight\Model\Contact.cs" />
+    <Compile Include="Flight\Model\Combo.cs" />
     <Compile Include="Flight\Model\Discount.cs" />
     <Compile Include="Flight\Model\FlightOrderInfo.cs" />
     <Compile Include="Flight\Model\FlightReservation.cs" />

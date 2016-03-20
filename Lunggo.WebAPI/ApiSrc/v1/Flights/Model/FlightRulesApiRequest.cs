@@ -4,9 +4,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightRulesApiRequest
     {
-        [JsonProperty("search_id")]
+        [JsonProperty("sid")]
         public string SearchId { get; set; }
-        [JsonProperty("itin_index")]
+        [JsonProperty("r")]
         public int ItinIndex { get; set; }
     }
 }

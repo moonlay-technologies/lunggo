@@ -16,18 +16,16 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 return new FlightIssueApiResponse
                 {
                     StatusCode = HttpStatusCode.OK,
-                    StatusMessage = "Success, reservation is being processed for issuance.",
-                    OriginalRequest = request
+                    StatusMessage = "Success, reservation is being processed for issuance."
                 };
             }
             else
             {
                 return new FlightIssueApiResponse
                 {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    StatusMessage = "There is an error occured, please try again later.",
-                    ErrorCode = "ERFISS01",
-                    OriginalRequest = request
+                    StatusCode = HttpStatusCode.BadRequest,
+                    StatusMessage = "Reservation number is missing.",
+                    ErrorCode = "ERFISS01"
                 };
             }
         }

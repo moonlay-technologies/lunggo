@@ -9,15 +9,15 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightBookApiRequest
     {
-        [JsonProperty("token")]
+        [JsonProperty("tkn")]
         public string Token { get; set; }
-        [JsonProperty("contact")]
+        [JsonProperty("con")]
         public Contact Contact { get; set; }
         [JsonProperty("pax")]
         public List<Passenger> Passengers { get; set; }
         [JsonProperty("pay")]
         public PaymentData PaymentData { get; set; }
-        [JsonProperty("code")]
+        [JsonProperty("cd")]
         public string DiscountCode { get; set; }
         [JsonProperty("lang")]
         public string Language { get; set; }
@@ -25,13 +25,13 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 
     public class Passenger
     {
-        [JsonProperty("type")]
+        [JsonProperty("typ")]
         public PassengerType Type { get; set; }
-        [JsonProperty("title")]
+        [JsonProperty("tit")]
         public Title Title { get; set; }
-        [JsonProperty("first")]
+        [JsonProperty("fst")]
         public string FirstName { get; set; }
-        [JsonProperty("last")]
+        [JsonProperty("lst")]
         public string LastName { get; set; }
         [JsonProperty("dob")]
         public DateTime? BirthDate { get; set; }
@@ -39,7 +39,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public string PassportNumber { get; set; }
         [JsonProperty("pass_exp")]
         public DateTime? PassportExpiryDate { get; set; }
-        [JsonProperty("country")]
-        public string Country { get; set; }
+        [JsonProperty("pass_cty")]
+        public string PassportCountry { get; set; }
+        [JsonProperty("nat")]
+        public string Nationality { get; set; }
     }
 }

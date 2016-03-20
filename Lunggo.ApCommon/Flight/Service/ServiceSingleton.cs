@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Constant;
@@ -66,10 +67,44 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private void SearchFlightInternal(SearchFlightConditions conditions, int supplierIndex)
         {
-            if (ParseTripType(conditions.Trips) == TripType.RoundTrip)
-                SearchComboFares(conditions, supplierIndex);
-            else
-                SearchNormalFares(conditions, supplierIndex);
+            var supplier = Suppliers[supplierIndex.ToString(CultureInfo.InvariantCulture)];
+
+            var conditionsList = new List<SearchFlightConditions> { conditions };
+            if (conditions.Trips.Count > 1)
+                conditionsList.AddRange(conditions.Trips.Select(trip => new SearchFlightConditions
+                {
+                    AdultCount = conditions.AdultCount,
+                    ChildCount = conditions.ChildCount,
+                    InfantCount = conditions.InfantCount,
+                    CabinClass = conditions.CabinClass,
+                    AirlinePreferences = conditions.AirlinePreferences,
+                    AirlineExcludes = conditions.AirlineExcludes,
+                    Trips = new List<FlightTrip> { trip }
+                }));
+
+            var searchId = EncodeSearchConditions(conditions);
+            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
+
+            Parallel.ForEach(conditionsList, partialConditions =>
+            {
+                var result = supplier.SearchFlight(partialConditions);
+                result.Itineraries = result.Itineraries ?? new List<FlightItinerary>();
+                if (result.IsSuccess)
+                    foreach (var itin in result.Itineraries)
+                    {
+                        itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
+                    }
+                SaveSearchedPartialItinerariesToBufferCache(result.Itineraries, searchId, timeout, supplierIndex, conditionsList.IndexOf(partialConditions));
+            });
+
+            var itinLists = GetSearchedPartialItinerariesFromBufferCache(searchId, supplierIndex);
+            if (conditions.Trips.Count > 1)
+            {
+                var combos = GenerateCombo(itinLists);
+                SaveCombosToCache(combos, searchId, supplierIndex);
+            }
+            SaveSearchedItinerariesToCache(itinLists, searchId, timeout, supplierIndex);
+            InvalidateSearchingStatusInCache(searchId, supplierIndex);
         }
 
         private SearchFlightResult SpecificSearchFlightInternal(SearchFlightConditions conditions)

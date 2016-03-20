@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Lunggo.WebAPI.ApiSrc.v1.Account.Model
+namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Model
 {
     public class ResetPasswordViewModel
     {

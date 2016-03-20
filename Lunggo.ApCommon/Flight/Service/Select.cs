@@ -9,36 +9,47 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public string SelectFlight(string searchId, List<int> registerNumbers)
         {
-            if (ParseTripType(searchId) == TripType.RoundTrip)
+            if (ParseTripType(searchId) == TripType.OneWay)
             {
-                var depItin = GetItineraryFromSearchCache(searchId, registerNumbers[0], 1);
-                var retItin = GetItineraryFromSearchCache(searchId, registerNumbers[1], 2);
-                if (depItin.ComboPairRegisters != null && retItin.ComboPairRegisters != null)
-                {
-                    var depBundleRegNoIdx = depItin.ComboPairRegisters.IndexOf(registerNumbers[1]);
-                    var retBundleRegNoIdx = retItin.ComboPairRegisters.IndexOf(registerNumbers[0]);
-                    if (depBundleRegNoIdx != -1 && retBundleRegNoIdx != -1)
-                    {
-                        var comboRegByDep = depItin.ComboBundledRegisters[depBundleRegNoIdx];
-                        var comboRegByRet = retItin.ComboBundledRegisters[retBundleRegNoIdx];
-                        if (comboRegByDep != -1 && comboRegByRet != -1 && comboRegByDep == comboRegByRet)
-                        {
-                            var token = SaveItineraryFromSearchToCache(searchId, comboRegByDep, 0);
-                            var newToken = BundleFlight(new List<string> {token});
-                            return newToken;
-                        }
-                    }
-                }
-                var depToken = SaveItineraryFromSearchToCache(searchId, registerNumbers[0]);
-                var retToken = SaveItineraryFromSearchToCache(searchId, registerNumbers[1]);
-                var bundledToken = BundleFlight(new List<string> {depToken, retToken});
+                var token = SaveItineraryFromSearchToCache(searchId, registerNumbers[0], 0);
+                var bundledToken = BundleFlight(new List<string> { token });
                 return bundledToken;
             }
             else
             {
-                var token = SaveItineraryFromSearchToCache(searchId, registerNumbers[0]);
-                var newToken = BundleFlight(new List<string> { token });
-                return newToken;
+                var supplierIndices = registerNumbers.Select(reg => reg / SupplierIndexCap).Distinct().ToList();
+                var isFromSameSupplier = supplierIndices.Count == 1;
+
+                if (!isFromSameSupplier)
+                {
+                    var tokens = registerNumbers.Select(reg => SaveItineraryFromSearchToCache(searchId, reg, registerNumbers.IndexOf(reg) + 1)).ToList();
+                    var bundledToken = BundleFlight(tokens);
+                    return bundledToken;
+                }
+
+                var combos = GetCombosFromCache(searchId, supplierIndices[0]);
+                var matchedCombo = combos.SingleOrDefault(combo =>
+                {
+                    var allMatched = true;
+                    for (var i = 0; i < combo.Registers.Length; i++)
+                    {
+                        if (combo.Registers[i] != registerNumbers[i])
+                            allMatched = false;
+                    }
+                    return allMatched;
+                });
+                if (matchedCombo != null)
+                {
+                    var token = SaveItineraryFromSearchToCache(searchId, matchedCombo.BundledRegister, 0);
+                    var bundledToken = BundleFlight(new List<string> { token });
+                    return bundledToken;
+                }
+                else
+                {
+                    var tokens = registerNumbers.Select(reg => SaveItineraryFromSearchToCache(searchId, reg, registerNumbers.IndexOf(reg) + 1)).ToList();
+                    var bundledToken = BundleFlight(tokens);
+                    return bundledToken;
+                }
             }
         }
 

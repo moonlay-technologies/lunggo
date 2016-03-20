@@ -38,8 +38,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                         IsOtherFareAvailable = null,
                         NewFare = null,
                         StatusCode = HttpStatusCode.OK,
-                        StatusMessage = "Success.",
-                        OriginalRequest = request
+                        StatusMessage = "Success."
                     };
                 }
                 else
@@ -53,8 +52,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                             IsOtherFareAvailable = true,
                             NewFare = revalidateServiceResponse.NewFare,
                             StatusCode = HttpStatusCode.OK,
-                            StatusMessage = "Success.",
-                            OriginalRequest = request
+                            StatusMessage = "Success."
                         };
                     }
                     else
@@ -66,8 +64,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                             IsOtherFareAvailable = false,
                             NewFare = null,
                             StatusCode = HttpStatusCode.OK,
-                            StatusMessage = "Success.",
-                            OriginalRequest = request
+                            StatusMessage = "Success."
                         };
                     }
                 }
@@ -82,8 +79,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     NewFare = 0,
                     StatusCode = HttpStatusCode.InternalServerError,
                     StatusMessage = "There is a problem in revalidating fare, please try again later.",
-                    ErrorCode = "ERFREV01",
-                    OriginalRequest = request
+                    ErrorCode = "ERFREV01"
                 };
             }
         }

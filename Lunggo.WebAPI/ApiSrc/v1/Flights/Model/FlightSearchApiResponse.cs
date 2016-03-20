@@ -2,35 +2,30 @@
 using System.Collections.Generic;
 using System.Net;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.WebAPI.ApiSrc.v1.Common.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
-    public class FlightSearchApiResponse
+    public class FlightSearchApiResponse : ApiResponseBase
     {
-        [JsonProperty("search_id")]
+        [JsonProperty("sid")]
         public string SearchId { get; set; }
-        [JsonProperty("flights_count")]
-        public int TotalFlightCount { get; set; }
-        [JsonProperty("flights")]
-        public List<FlightItineraryForDisplay> FlightList { get; set; }
-        [JsonProperty("ret_flights_count", NullValueHandling = NullValueHandling.Ignore)]
-        public int? TotalReturnFlightCount { get; set; }
-        [JsonProperty("ret_flights", NullValueHandling = NullValueHandling.Ignore)]
-        public List<FlightItineraryForDisplay> ReturnFlightList { get; set; }
-        [JsonProperty("expiry_time", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("fl")]
+        public List<Flight> Flights { get; set; }
+        [JsonProperty("exp", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? ExpiryTime { get; set; }
-        [JsonProperty("max_requests")]
+        [JsonProperty("max_req")]
         public int MaxRequest { get; set; }
-        [JsonProperty("granted_requests")]
+        [JsonProperty("gr_req")]
         public List<int> GrantedRequests { get; set; }
-        [JsonProperty("status_code")]
-        public HttpStatusCode StatusCode { get; set; }
-        [JsonProperty("status_message")]
-        public string StatusMessage { get; set; }
-        [JsonProperty("error_code", NullValueHandling = NullValueHandling.Ignore)]
-        public string ErrorCode { get; set; }
-        [JsonProperty("request")]
-        public FlightSearchApiRequest OriginalRequest { get; set; }   
+    }
+
+    public class Flight
+    {
+        [JsonProperty("cnt")]
+        public int Count { get; set; }
+        [JsonProperty("opt")]
+        public List<FlightItineraryForDisplay> Itineraries { get; set; }
     }
 }
