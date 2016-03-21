@@ -31,7 +31,7 @@
         var paymentTimeout = '';
 
         // development only start
-        paymentTimeout = new Date('@Model.TimeLimit.ToString("u")');
+        paymentTimeout = new Date('@Model.TimeLimit.AddMinutes(-30).ToString("u")');
 
         // countdown timer
         $('.timer').countdown(paymentTimeout, function(event) {
