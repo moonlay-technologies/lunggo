@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <PublishProfile Include="Profiles\lunggoworkerqaProduction.azurePubxml" />
+    <PublishProfile Include="Profiles\dv2Production.azurePubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.CloudApp.CaptchaReader\Lunggo.CloudApp.CaptchaReader.csproj">

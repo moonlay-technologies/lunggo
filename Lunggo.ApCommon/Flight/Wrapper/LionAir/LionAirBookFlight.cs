@@ -333,22 +333,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     @"__EVENTTARGET=UcFlightSelection%24lbSearch" + @"&__EVENTARGUMENT=" + @"&__VIEWSTATE=" + vs4 +
                     @"&UcFlightSelection%24TripType=rbOneWay" +
                     @"&UcFlightSelection%24DateFlexibility=rbMustTravel" +
-                    @"&UcFlightSelection%24txtSelOri=" + origin + // => should be variabel origin (ex: CGK)
+                    @"&UcFlightSelection%24txtSelOri=" + origin +
                     @"&UcFlightSelection%24txtOri=" + cityDep + "+%28" + origin + "%29" +
-                    // => should be return of City-Airport method whatsoever
                     @"&UcFlightSelection%24ddlDepMonth=" + depdate.ToString("MMM") + "+" + depdate.Year +
-                    // => should be taken from variabel depdate
-                    @"&UcFlightSelection%24ddlDepDay=" + depdate.Day + // => should be taken from variabel depdate
-                    @"&UcFlightSelection%24ddlADTCount=" + adultCount + //adultCount
-                    @"&UcFlightSelection%24txtSelDes=" + dest + //=> should be variabel DEST (ex: CGK)
+                    @"&UcFlightSelection%24ddlDepDay=" + depdate.Day +
+                    @"&UcFlightSelection%24ddlADTCount=" + adultCount + 
+                    @"&UcFlightSelection%24txtSelDes=" + dest + 
                     @"&UcFlightSelection%24txtDes=" + cityArr + "+%28" + dest + "%29" +
-                    // => should be return of City-Airport method whatsoever
-                    @"&UcFlightSelection%24ddlCNNCount=" + childCount + //childCount
-                    @"&UcFlightSelection%24ddlINFCount=" + infantCount + //infantCount
+                    @"&UcFlightSelection%24ddlCNNCount=" + childCount + 
+                    @"&UcFlightSelection%24ddlINFCount=" + infantCount +
                     @"&UcFlightSelection%24txtDepartureDate=" + depdate.Day + "+" + depdate.ToString("MMM") + "+" +
-                    depdate.Year + // => should be taken from variabel depdate
+                    depdate.Year +
                     @"&UcFlightSelection%24txtReturnDate=" + depdate.Day + "+" + depdate.ToString("MMM") + "+" +
-                    depdate.Year; // => should be taken from variabel depdate
+                    depdate.Year; 
                 Thread.Sleep(3000);
                 searchRequest4.AddParameter("application/x-www-form-urlencoded", postData4, ParameterType.RequestBody);
                 client.FollowRedirects = false;
@@ -769,7 +766,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                         var pageBooking = (CQ) html8;
                         var vs9 = HttpUtility.UrlEncode(pageBooking["#__VIEWSTATE"].Attr("value"));
-                        var beginning = "__EVENTTARGET=lbContinue&__EVENTARGUMENT=&__VIEWSTATE=" + vs9 + "&__VIEWSTATEGENERATOR=B80F8107";
+                        var beginning = "__EVENTTARGET=lbContinue&__EVENTARGUMENT=&__VIEWSTATE=" + vs9;// + "&__VIEWSTATEGENERATOR=B80F8107";
                         const string ending =
                             "&txtRemark=&payDet=rbPay_HOLD&CreditCardDisplay1%24CreditCardType=VI&CreditCardDisplay1%24txtCardHolderName=&CreditCardDisplay1%24CreditCardNumber=&CreditCardDisplay1%24CreditCardExpiryMonth=MM&CreditCardDisplay1%24CreditCardExpiryYear=YY&CreditCardDisplay1%24CVVNumber=&AcceptFareConditions=on&FlightInfo=&AXTotal=&DCTotal=&OtherTotal=&nameMismatch=";
 
@@ -1020,7 +1017,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             "&txtCountryCode3=" +
                             "&txtPhoneNumber3=" +
                             "&txtEmailAddress1=" + HttpUtility.UrlEncode("dwi.agustina@travelmadezy.com") + //email agent
-                            "&txtEmailAddress2=" + HttpUtility.UrlEncode(bookInfo.ContactData.Email);
+                            "&txtEmailAddress2=" + HttpUtility.UrlEncode("dwi.agustina@travelmadezy.com");
 
                         Thread.Sleep(1000);
                         var postDataBooking = beginning + dataPassenger + middle + middle1 + cntct + ending;

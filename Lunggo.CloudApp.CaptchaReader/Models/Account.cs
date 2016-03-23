@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Lunggo.Framework.Config;
 
 namespace Lunggo.CloudApp.CaptchaReader.Models
 {
@@ -10,38 +11,7 @@ namespace Lunggo.CloudApp.CaptchaReader.Models
     {
         public static List<string> AccountList = new List<string>();
         public static ConcurrentDictionary<int, Tuple<DateTime, int>> DictAccountOn = new ConcurrentDictionary<int, Tuple<DateTime, int>>();
-        static Account()
-        {
-            //AccountList.Add("trv.agent.satu");
-            AccountList.Add("trv.agent.dua");
-            AccountList.Add("trv.agent.tiga");
-            AccountList.Add("trv.agent.empat");
-            AccountList.Add("trv.agent.lima");
-            AccountList.Add("trv.agent.enam");
-            AccountList.Add("trv.agent.tujuh");
-            AccountList.Add("trv.agent.delapan");
-            AccountList.Add("trv.agent.sembilan");
-            AccountList.Add("trv.agent.sepuluh");
-            AccountList.Add("trv.agent.sebelas");
-            AccountList.Add("trv.agent.duabelas");
-            AccountList.Add("trv.agent.tigabelas");
-            AccountList.Add("trv.agent.empatbelas");
-            AccountList.Add("trv.agent.limabelas");
-            AccountList.Add("trv.agent.enambelas");
-            AccountList.Add("trv.agent.tujuhbelas");
-            AccountList.Add("trv.agent.delapanbelas");
-            AccountList.Add("trv.agent.sembilanbelas");
-            AccountList.Add("trv.agent.duapuluh");
-            AccountList.Add("trv.agent.duasatu");
-            AccountList.Add("trv.agent.duadua");
-            AccountList.Add("trv.agent.duatiga");
-            AccountList.Add("trv.agent.duaempat");
-            AccountList.Add("trv.agent.dualima");
-            AccountList.Add("trv.agent.duaenam");
-            AccountList.Add("trv.agent.duatujuh");
-            AccountList.Add("trv.agent.duadelapan");
-            AccountList.Add("trv.agent.duasembilan");
-        }
+        
         public static string GetUserId()
         {
             bool isKeyGiven = false;

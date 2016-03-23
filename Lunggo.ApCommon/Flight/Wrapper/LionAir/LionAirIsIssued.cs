@@ -20,7 +20,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             {
                 const int maxRetryCount = 10;
                 var counter = 0;
-                var isIssued = (bool?) null;
+                bool? isIssued = null;
                 //string currentDeposit;
                 var clientx = CreateAgentClient();
                 clientx.FollowRedirects = false;
@@ -45,8 +45,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                     if (userName.Length == 0)
                         isIssued = null;
-                    //string msgLogin;
-
+                    
                     bool successLogin ;
                     do
                     {
@@ -72,11 +71,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     } while (!successLogin && (msgLogin != "Your login name is inuse"
                         && msgLogin != "There was an error logging you in"));
                 }
-
-                //if (ctr >= 21)
-                //{
-                //    return IssueEnum.CheckingError;
-                //}
 
                 if (userId == null)
                 {
@@ -133,15 +127,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var bookingListCq = (CQ)confirmationContent;
                     var theTable = bookingListCq[".Step4ItinRow"];
                     var viewstateX = HttpUtility.UrlEncode(bookingListCq["#__VIEWSTATE"].Attr("value"));
-                    isIssued = theTable.Children().ToList()[7].InnerText == "Confirmed";
-                    
-                    //isIssued = theTable.Children().ToList()[7].InnerText == "Confirmed";
-                    /*foreach (var row in theTable)
+                    if (theTable.IsNullOrEmpty())
+                        isIssued = false;
+                    else if (theTable.Children().ToList()[7].InnerText.Length == 0)
+                        isIssued = false;
+                    else
                     {
-                        isIssuedy = theTable.Children()
-                        isIssuedy &= row.Children().ToList()[7].InnerText == "Confirmed";
-                    }*/
-
+                        isIssued = theTable.Children().ToList()[7].InnerText == "Confirmed";
+                    }
+                    
                     var url6 = @"/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId;
                     var searchRequest6 = new RestRequest(url6, Method.POST);
                     searchRequest6.AddHeader("Referer",
