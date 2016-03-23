@@ -8,6 +8,8 @@
         AlreadyBooked = 3,
         InvalidInputData = 4,
         FailedOnSupplier = 5,
-        PartialSuccess = 6
+        PartialSuccess = 6,
+        NotEligibleToIssue = 7,
+        PaymentFailed = 8
     }
 }

@@ -11,6 +11,7 @@
     {
         internal static string Mnemonic(PaymentMedium paymentMedium)
         {
+            
             switch (paymentMedium)
             {
                 case PaymentMedium.Direct:

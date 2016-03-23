@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -33,13 +34,27 @@ namespace Lunggo.ApCommon.Flight.Service
 
         internal FlightReservation GetReservation(string rsvNo)
         {
-            return GetDb.Reservation(rsvNo);
+            try
+            {
+                return GetDb.Reservation(rsvNo);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public FlightReservationForDisplay GetOverviewReservation(string rsvNo)
         {
-            var rsv = GetDb.OverviewReservation(rsvNo);
-            return ConvertToReservationForDisplay(rsv);
+            try
+            {
+                var rsv = GetDb.OverviewReservation(rsvNo);
+                return ConvertToReservationForDisplay(rsv);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public List<FlightReservationForDisplay> GetOverviewReservationsByContactEmail(string contactEmail)
@@ -117,6 +132,20 @@ namespace Lunggo.ApCommon.Flight.Service
         public void UpdateIssueProgress(string rsvNo, string progressMessage)
         {
             UpdateDb.IssueProgress(rsvNo, progressMessage);
+        }
+
+        public List<Tuple<FlightTripForDisplay, BookingStatus>> GetAllBookingStatus(string rsvNo)
+        {
+            var rsv = GetReservation(rsvNo);
+            if (rsv == null)
+                return null;
+            return
+                rsv.Itineraries.SelectMany(
+                    itin =>
+                        itin.Trips.Select(
+                            trip =>
+                                new Tuple<FlightTripForDisplay, BookingStatus>(ConvertToTripForDisplay(trip),
+                                    itin.BookingStatus))).ToList();
         }
     }
 }

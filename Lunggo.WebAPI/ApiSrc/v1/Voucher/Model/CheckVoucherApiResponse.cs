@@ -10,7 +10,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Model
         public decimal Discount { get; set; }
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
-        [JsonProperty("original_request")]
-        public CheckVoucherApiRequest OriginalRequest { get; set; }
+        [JsonProperty("msg")]
+        public string Message { get; set; }
     }
 }

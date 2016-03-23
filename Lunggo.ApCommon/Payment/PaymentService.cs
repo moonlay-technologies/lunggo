@@ -47,6 +47,7 @@ namespace Lunggo.ApCommon.Payment
             switch (method)
             {
                 case PaymentMethod.BankTransfer:
+                case PaymentMethod.Credit:
                     return PaymentMedium.Direct;
                 case PaymentMethod.CreditCard:
                 case PaymentMethod.MandiriClickPay:
@@ -60,7 +61,7 @@ namespace Lunggo.ApCommon.Payment
 
         public void ProcessPayment(PaymentData paymentData, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
-            if (method == PaymentMethod.BankTransfer)
+            if (method == PaymentMethod.BankTransfer || method == PaymentMethod.Credit)
             {
                 paymentData.Status = PaymentStatus.Pending;
             }
@@ -72,7 +73,7 @@ namespace Lunggo.ApCommon.Payment
             else
             {
                 paymentData.Url = GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
-                paymentData.Status = PaymentStatus.Pending;
+                paymentData.Status = paymentData.Url != null ? PaymentStatus.Pending : PaymentStatus.Failed;
             }
         }
 

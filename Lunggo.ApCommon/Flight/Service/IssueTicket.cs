@@ -14,11 +14,34 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public void IssueTicket(IssueTicketInput input)
+        public IssueTicketOutput IssueTicket(IssueTicketInput input)
         {
-            var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("FlightIssueTicket");
-            queue.AddMessage(new CloudQueueMessage(input.RsvNo));
+            var reservation = GetReservation(input.RsvNo);
+            var output = new IssueTicketOutput();
+
+            if (reservation == null)
+            {
+                output.IsSuccess = false;
+                output.Errors = new List<FlightError> { FlightError.InvalidInputData };
+                return output;
+            }
+
+            if (reservation.Payment.Method == PaymentMethod.Credit ||
+                (reservation.Payment.Method != PaymentMethod.Credit &&
+                 reservation.Payment.Status == PaymentStatus.Settled))
+            {
+                var queueService = QueueService.GetInstance();
+                var queue = queueService.GetQueueByReference("FlightIssueTicket");
+                queue.AddMessage(new CloudQueueMessage(input.RsvNo));
+                output.IsSuccess = true;
+                return output;
+            }
+            else
+            {
+                output.IsSuccess = false;
+                output.Errors = new List<FlightError> { FlightError.NotEligibleToIssue };
+                return output;
+            }
         }
 
         public IssueTicketOutput CommenceIssueTicket(IssueTicketInput input)
@@ -27,66 +50,88 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 var reservation = GetReservation(input.RsvNo);
                 var output = new IssueTicketOutput();
-                foreach (var itin in reservation.Itineraries)
+
+                if (reservation == null)
                 {
-                    var bookingId = itin.BookingId;
-                    var canHold = itin.CanHold;
-                    var response = OrderTicketInternal(bookingId, canHold);
-                    var orderResult = new OrderResult();
-                    if (response.IsSuccess)
+                    output.IsSuccess = false;
+                    output.Errors = new List<FlightError>{FlightError.InvalidInputData};
+                    return output;
+                }
+
+                if (reservation.Payment.Method == PaymentMethod.Credit ||
+                    (reservation.Payment.Method != PaymentMethod.Credit &&
+                     reservation.Payment.Status == PaymentStatus.Settled))
+                {
+                    foreach (var itin in reservation.Itineraries)
                     {
-                        orderResult.IsSuccess = true;
-                        orderResult.BookingId = response.BookingId;
-                        orderResult.BookingStatus = response.IsInstantIssuance
-                            ? BookingStatus.Ticketed
-                            : BookingStatus.Ticketing;
-                        orderResult.IsInstantIssuance = response.IsInstantIssuance;
-                        UpdateBookingIdQuery.GetInstance().Execute(conn, new
+                        var bookingId = itin.BookingId;
+                        var canHold = itin.CanHold;
+                        var response = OrderTicketInternal(bookingId, canHold);
+                        var orderResult = new OrderResult();
+                        if (response.IsSuccess)
                         {
-                            BookingId = bookingId,
-                            NewBookingId = orderResult.BookingId,
+                            orderResult.IsSuccess = true;
+                            orderResult.BookingId = response.BookingId;
+                            orderResult.BookingStatus = response.IsInstantIssuance
+                                ? BookingStatus.Ticketed
+                                : BookingStatus.Ticketing;
+                            orderResult.IsInstantIssuance = response.IsInstantIssuance;
+                            UpdateBookingIdQuery.GetInstance().Execute(conn, new
+                            {
+                                BookingId = bookingId,
+                                NewBookingId = orderResult.BookingId,
+                            });
+                        }
+                        else
+                        {
+                            orderResult.IsSuccess = false;
+                            orderResult.BookingId = bookingId;
+                            orderResult.BookingStatus = BookingStatus.Failed;
+                            output.Errors = response.Errors;
+                            output.ErrorMessages = response.ErrorMessages;
+                        }
+                        UpdateDb.BookingStatus(new List<BookingStatusInfo>
+                        {
+                            new BookingStatusInfo
+                            {
+                                BookingId = orderResult.BookingId,
+                                BookingStatus = orderResult.BookingStatus
+                            }
                         });
+                        output.OrderResults.Add(orderResult);
+                    }
+                    if (output.OrderResults.TrueForAll(result => result.IsSuccess))
+                    {
+                        output.IsSuccess = true;
+                        if (output.OrderResults.TrueForAll(result => result.IsInstantIssuance))
+                        {
+                            var detailsInput = new GetDetailsInput {RsvNo = input.RsvNo};
+                            GetAndUpdateNewDetails(detailsInput);
+                            SendEticketToCustomer(input.RsvNo);
+                            if (reservation.Payment.Method != PaymentMethod.BankTransfer)
+                                SendInstantPaymentConfirmedNotifToCustomer(input.RsvNo);
+                            InsertDb.SavedPassengers(reservation.Contact.Email, reservation.Passengers);
+                        }
                     }
                     else
                     {
-                        orderResult.IsSuccess = false;
-                        orderResult.BookingId = bookingId;
-                        orderResult.BookingStatus = BookingStatus.Failed;
-                        output.Errors = response.Errors;
-                        output.ErrorMessages = response.ErrorMessages;
+                        if (output.OrderResults.Any(set => set.IsSuccess))
+                        {
+                            output.PartiallySucceed();
+                        }
+                        output.IsSuccess = false;
+                        output.Errors = output.Errors.Distinct().ToList();
+                        output.ErrorMessages = output.ErrorMessages.Distinct().ToList();
                     }
-                    UpdateDb.BookingStatus(new List<BookingStatusInfo> {new BookingStatusInfo
-                    {
-                        BookingId = orderResult.BookingId,
-                        BookingStatus = orderResult.BookingStatus
-                    }});
-                    output.OrderResults.Add(orderResult);
-                }
-                if (output.OrderResults.TrueForAll(result => result.IsSuccess))
-                {
-                    output.IsSuccess = true;
-                    if (output.OrderResults.TrueForAll(result => result.IsInstantIssuance))
-                    {
-                        var detailsInput = new GetDetailsInput { RsvNo = input.RsvNo };
-                        GetAndUpdateNewDetails(detailsInput);
-                        SendEticketToCustomer(input.RsvNo);
-                        if (reservation.Payment.Method != PaymentMethod.BankTransfer)
-                            SendInstantPaymentConfirmedNotifToCustomer(input.RsvNo);
-                        InsertDb.SavedPassengers(reservation.Contact.Email, reservation.Passengers);
-                    }
+                    UpdateIssueStatus(input.RsvNo, output);
+                    return output;
                 }
                 else
                 {
-                    if (output.OrderResults.Any(set => set.IsSuccess))
-                    {
-                        output.PartiallySucceed();
-                    }
                     output.IsSuccess = false;
-                    output.Errors = output.Errors.Distinct().ToList();
-                    output.ErrorMessages = output.ErrorMessages.Distinct().ToList();
+                    output.Errors = new List<FlightError>{FlightError.NotEligibleToIssue};
+                    return output;
                 }
-                UpdateIssueStatus(input.RsvNo, output);
-                return output;
             }
         }
 

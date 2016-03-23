@@ -2,7 +2,7 @@
 
 namespace Lunggo.ApCommon.Flight.Model.Logic
 {
-    public class RevalidateFlightInput
+    public class SelectFlightOutput : OutputBase
     {
         public string Token { get; set; }
     }

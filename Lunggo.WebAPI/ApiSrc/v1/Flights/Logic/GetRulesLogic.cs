@@ -23,8 +23,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 return new FlightRulesApiResponse
                 {
                     AirlineRules = new List<AirlineRules>(),
-                    BaggageRules = new List<BaggageRules>(),
-                    OriginalRequest = request
+                    BaggageRules = new List<BaggageRules>()
                 };
             }
         }
@@ -46,8 +45,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 return new FlightRulesApiResponse
                 {
                     AirlineRules = rulesServiceResponse.AirlineRules,
-                    BaggageRules = rulesServiceResponse.BaggageRules,
-                    OriginalRequest = request
+                    BaggageRules = rulesServiceResponse.BaggageRules
                 };
             }
             else
@@ -55,8 +53,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 return new FlightRulesApiResponse
                 {
                     AirlineRules = null,
-                    BaggageRules = null,
-                    OriginalRequest = request
+                    BaggageRules = null
                 };
             }
         }

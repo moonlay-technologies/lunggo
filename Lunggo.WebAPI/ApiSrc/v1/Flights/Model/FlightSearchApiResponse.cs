@@ -9,16 +9,14 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightSearchApiResponse : ApiResponseBase
     {
-        [JsonProperty("sid")]
-        public string SearchId { get; set; }
         [JsonProperty("fl")]
         public List<Flight> Flights { get; set; }
+        [JsonProperty("cmb")]
+        public List<Combo> Combos { get; set; }
         [JsonProperty("exp", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? ExpiryTime { get; set; }
-        [JsonProperty("max_req")]
-        public int MaxRequest { get; set; }
-        [JsonProperty("gr_req")]
-        public List<int> GrantedRequests { get; set; }
+        [JsonProperty("prog", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Progress { get; set; }
     }
 
     public class Flight

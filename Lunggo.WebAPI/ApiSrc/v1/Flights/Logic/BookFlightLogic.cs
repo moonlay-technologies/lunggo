@@ -29,7 +29,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 return new FlightBookApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    StatusMessage = "There is an error on your submitted data.",
                     ErrorCode = "ERFBOO01"
                 };
             }
@@ -58,17 +57,24 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 return new FlightBookApiResponse
                 {
                     RsvNo = bookServiceResponse.RsvNo,
-                    StatusCode = HttpStatusCode.OK,
-                    StatusMessage = "Success, all fares booked."
+                    StatusCode = HttpStatusCode.OK
                 };
             else
+            {
+                if (bookServiceResponse.Errors[0] == FlightError.PartialSuccess)
+                    bookServiceResponse.Errors.RemoveAt(0);
                 switch (bookServiceResponse.Errors[0])
                 {
+                    case FlightError.InvalidInputData:
+                        return new FlightBookApiResponse
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            ErrorCode = "ERFBOO01"
+                        };
                     case FlightError.AlreadyBooked:
                         return new FlightBookApiResponse
                         {
                             StatusCode = HttpStatusCode.Accepted,
-                            StatusMessage = "This reservation is already booked, please make another reservation.",
                             ErrorCode = "ERFBOO02"
                         };
                     case FlightError.BookingIdNoLongerValid:
@@ -76,45 +82,28 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                         return new FlightBookApiResponse
                         {
                             StatusCode = HttpStatusCode.Accepted,
-                            StatusMessage = "This reservation is already expired, please make another reservation.",
                             ErrorCode = "ERFBOO03"
                         };
                     case FlightError.FailedOnSupplier:
                         return new FlightBookApiResponse
                         {
                             StatusCode = HttpStatusCode.InternalServerError,
-                            StatusMessage = "There is an error when processing this flight to the supplier.",
                             ErrorCode = "ERFBOO04"
-                        };
-                    case FlightError.InvalidInputData:
-                        return new FlightBookApiResponse
-                        {
-                            StatusCode = HttpStatusCode.BadRequest,
-                            StatusMessage = "There is an error on your submitted data.",
-                            ErrorCode = "ERFBOO05"
-                        };
-                    case FlightError.PartialSuccess:
-                        return new FlightBookApiResponse
-                        {
-                            StatusCode = HttpStatusCode.Accepted,
-                            StatusMessage = "Only some of the fares succeed.",
-                            ErrorCode = "ERFBOO06"
                         };
                     case FlightError.TechnicalError:
                         return new FlightBookApiResponse
                         {
                             StatusCode = HttpStatusCode.InternalServerError,
-                            StatusMessage = "There is an error occurred, please try again later.",
-                            ErrorCode = "ERFBOO07"
+                            ErrorCode = "ERFBOO05"
                         };
                     default:
                         return new FlightBookApiResponse
                         {
                             StatusCode = HttpStatusCode.InternalServerError,
-                            StatusMessage = "There is an error occured, please try again later.",
-                            ErrorCode = "ERFBOO07"
+                            ErrorCode = "ERFBOO05"
                         };
                 }
+            }
         }
 
         private static BookFlightInput PreprocessServiceRequest(FlightBookApiRequest request)

@@ -2,9 +2,9 @@
 
 namespace Lunggo.ApCommon.Flight.Model.Logic
 {
-    public class SearchFlightInput
+    public class SelectFlightInput
     {
         public string SearchId { get; set; }
-        public int Progress { get; set; }
+        public List<int> RegisterNumbers { get; set; }
     }
 }

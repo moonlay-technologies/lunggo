@@ -17,23 +17,25 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public SearchFlightOutput SearchFlight(SearchFlightInput input)
         {
+            var gottenSupplierCount = input.Progress/(100/Suppliers.Count);
+            var searchedSupplierIds = GetSearchedSupplierIndicesFromCache(input.SearchId);
+            var requestedSupplierIds = searchedSupplierIds.Skip(gottenSupplierCount).ToList();
+
             var output = new SearchFlightOutput
             {
                 SearchId = input.SearchId
             };
 
-            if (input.RequestedSupplierIds.IsNullOrEmpty())
+            if (requestedSupplierIds.IsNullOrEmpty())
             {
                 output.IsSuccess = true;
-                output.TotalSupplier = Suppliers.Count;
                 output.ItineraryLists = new List<FlightItineraryForDisplay>[0];
-                output.SearchedSuppliers = new List<int>();
             }
             else
             {
-                var searchedSupplierItins = GetSearchedSupplierItineraries(input.SearchId, input.RequestedSupplierIds);
+                var searchedSupplierItins = GetSearchedSupplierItineraries(input.SearchId, requestedSupplierIds);
                 var searchedSuppliers = searchedSupplierItins.Keys.ToList();
-                var missingSuppliers = input.RequestedSupplierIds.Except(searchedSuppliers).ToList();
+                var missingSuppliers = requestedSupplierIds.Except(searchedSuppliers).ToList();
                 foreach (var missingSupplier in missingSuppliers)
                 {
                     var isSearching = GetSearchingStatusInCache(input.SearchId, missingSupplier);
@@ -69,18 +71,23 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.ExpiryTime = expiry;
                 output.ItineraryLists = seachedItinListsForDisplay;
                 output.Combos = combos;
-                output.SearchedSuppliers = searchedSuppliers;
-                output.TotalSupplier = Suppliers.Count;
+                output.Progress = CalculateProgress(input.Progress, searchedSupplierIds.Count, Suppliers.Count);
             }
 
             return output;
+        }
+
+        public void CommenceSearchFlight(string searchId, int supplierIndex)
+        {
+            var conditions = DecodeSearchConditions(searchId);
+            SearchFlightInternal(conditions, supplierIndex);
         }
 
         private void SetComboFare(List<FlightItineraryForDisplay>[] itinLists, List<Combo> combos)
         {
             foreach (var combo in combos)
             {
-                var comboFare = combo.Fare/combo.Registers.Length;
+                var comboFare = combo.Fare / combo.Registers.Length;
                 for (var i = 0; i < combo.Registers.Length; i++)
                 {
                     var reg = combo.Registers[i];
@@ -92,10 +99,19 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public void CommenceSearchFlight(string searchId, int supplierIndex)
+        private static int CalculateProgress(int progress, int searchedSupplierCount, int totalSupplierCount)
         {
-            var conditions = DecodeSearchConditions(searchId);
-            SearchFlightInternal(conditions, supplierIndex);
+            var currentProgress = searchedSupplierCount*100/totalSupplierCount;
+            if (progress < currentProgress)
+                return currentProgress;
+            else
+            {
+                progress += new Random().Next(0, 3);
+                var nextProgress = (searchedSupplierCount + 1)*100/totalSupplierCount;
+                if (progress >= nextProgress)
+                    progress = nextProgress - 1;
+                return progress;
+            }
         }
 
         private List<Combo> GenerateCombo(List<List<FlightItinerary>> itinLists)

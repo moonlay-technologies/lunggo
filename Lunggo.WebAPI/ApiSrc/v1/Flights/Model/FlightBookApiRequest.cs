@@ -35,11 +35,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public string LastName { get; set; }
         [JsonProperty("dob")]
         public DateTime? BirthDate { get; set; }
-        [JsonProperty("pass_no")]
+        [JsonProperty("passno")]
         public string PassportNumber { get; set; }
-        [JsonProperty("pass_exp")]
+        [JsonProperty("passexp")]
         public DateTime? PassportExpiryDate { get; set; }
-        [JsonProperty("pass_cty")]
+        [JsonProperty("passcty")]
         public string PassportCountry { get; set; }
         [JsonProperty("nat")]
         public string Nationality { get; set; }

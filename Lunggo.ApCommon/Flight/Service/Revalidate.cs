@@ -13,8 +13,6 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var output = new RevalidateFlightOutput();
             if (input.Token == null)
-                input.Token = SelectFlight(input.SearchId, input.ItinIndices);
-            if (input.Token == null)
             {
                 output.IsSuccess = true;
                 output.IsValid = false;
@@ -58,10 +56,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (output.Sets.TrueForAll(set => set.IsSuccess))
                 {
                     var newItins = output.Sets.Select(set => set.Itinerary).ToList();
-                    var tripType = ParseTripType(input.SearchId);
+                    var searchId = output.Sets[0].Itinerary.SearchId;
+                    var tripType = ParseTripType(searchId);
                     newItins.ForEach(itin => itin.RequestedTripType = tripType);
                     AddPriceMargin(newItins);
-                    var searchedPrices = GetFlightRequestPrices(input.SearchId);
+                    var searchedPrices = GetFlightRequestPrices(searchId);
                     var itinsPriceDifference = newItins.Select(itin => itin.LocalPrice - searchedPrices[itin.RegisterNumber]);
                     if (IsItinBundleCacheId(input.Token))
                         SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.Token);

@@ -21,9 +21,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 return new FlightCancelApiResponse
                 {
                     StatusCode = HttpStatusCode.Accepted,
-                    StatusMessage = "Cancel request failed to progress.",
-                    BookingId = null,
-                    OriginalRequest = request
+                    BookingId = null
                 };
             }
         }
@@ -43,9 +41,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 return new FlightCancelApiResponse
                 {
                     StatusCode = HttpStatusCode.OK,
-                    StatusMessage = "Cancel request granted.",
-                    BookingId = cancelServiceResponse.BookingId,
-                    OriginalRequest = request
+                    BookingId = cancelServiceResponse.BookingId
                 };
             }
             else
@@ -53,9 +49,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 return new FlightCancelApiResponse
                 {
                     StatusCode = HttpStatusCode.Accepted,
-                    StatusMessage = "Cancel request failed to progress.",
-                    BookingId = null,
-                    OriginalRequest = request
+                    BookingId = null
                 };
             }
         }

@@ -16,7 +16,8 @@
         IndosatDompetku = 11,
         MandiriEcash = 12,
         MandiriBillPayment = 13,
-        Indomaret = 14
+        Indomaret = 14,
+        Credit = 15
     }
 
     internal class PaymentMethodCd
@@ -53,6 +54,8 @@
                     return "MBP";
                 case PaymentMethod.Indomaret:
                     return "IDM";
+                case PaymentMethod.Credit:
+                    return "CRD";
                 default:
                     return "";
             }
@@ -89,6 +92,8 @@
                     return PaymentMethod.MandiriBillPayment;
                 case "IDM":
                     return PaymentMethod.Indomaret;
+                case "CRD":
+                    return PaymentMethod.Credit;
                 default:
                     return PaymentMethod.Undefined;
             }

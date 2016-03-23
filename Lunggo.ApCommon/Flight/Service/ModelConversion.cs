@@ -54,7 +54,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     Currency = itinerary.LocalCurrency,
                     TripType = itinerary.TripType,
                     TotalFare = itinerary.LocalPrice,
-                    Trips = MapTrips(itinerary.Trips),
+                    Trips = itinerary.Trips.Select(ConvertToTripForDisplay).ToList(),
                     RegisterNumber = itinerary.RegisterNumber,
                     OriginalFare = GenerateDummyOriginalFare(itinerary.LocalPrice)
                 };
@@ -65,10 +65,10 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private static List<FlightTripForDisplay> MapTrips(IEnumerable<FlightTrip> trips)
+        private static FlightTripForDisplay ConvertToTripForDisplay(FlightTrip trip)
         {
             var dict = DictionaryService.GetInstance();
-            return trips.Select(trip => new FlightTripForDisplay
+            return new FlightTripForDisplay
             {
                 Segments = MapSegments(trip.Segments),
                 OriginAirport = trip.OriginAirport,
@@ -82,7 +82,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Airlines = GetAirlineList(trip),
                 TotalTransit = CalculateTotalTransit(trip),
                 Transits = MapTransitDetails(trip)
-            }).ToList();
+            };
         }
 
         private static List<FlightSegment> MapSegments(IEnumerable<FlightSegment> segments)

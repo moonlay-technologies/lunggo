@@ -1,30 +1,29 @@
 ﻿using System.Net;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.WebAPI.ApiSrc.v1.Common.Model;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
     public static partial class FlightLogic
     {
-        public static FlightIssueApiResponse IssueFlight(FlightIssueApiRequest request)
+        public static ApiResponseBase IssueFlight(FlightIssueApiRequest request)
         {
             if (IsValid(request))
             {
                 var issueServiceRequest = PreprocessServiceRequest(request);
-                FlightService.GetInstance().IssueTicket(issueServiceRequest);
-                return new FlightIssueApiResponse
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    StatusMessage = "Success, reservation is being processed for issuance."
-                };
+                var issueServiceResponse = FlightService.GetInstance().IssueTicket(issueServiceRequest);
+                var apiResponse = AssembleApiResponse(issueServiceResponse);
+                return apiResponse;
             }
             else
             {
-                return new FlightIssueApiResponse
+                return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    StatusMessage = "Reservation number is missing.",
                     ErrorCode = "ERFISS01"
                 };
             }
@@ -44,6 +43,39 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 RsvNo = request.RsvNo
             };
             return issueServiceRequest;
+        }
+
+        private static ApiResponseBase AssembleApiResponse(IssueTicketOutput issueServiceResponse)
+        {
+            if (issueServiceResponse.IsSuccess)
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.OK
+                };
+            else
+            {
+                switch (issueServiceResponse.Errors[0])
+                {
+                    case FlightError.InvalidInputData:
+                        return new ApiResponseBase
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            ErrorCode = "ERFISS02"
+                        };
+                    case FlightError.NotEligibleToIssue:
+                        return new ApiResponseBase
+                        {
+                            StatusCode = HttpStatusCode.Accepted,
+                            ErrorCode = "ERFISS03"
+                        };
+                    default:
+                        return new ApiResponseBase
+                        {
+                            StatusCode = HttpStatusCode.InternalServerError,
+                            ErrorCode = "ERFISS04"
+                        };
+                }
+            }
         }
     }
 }

@@ -7,9 +7,9 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightSegment
     {
-        [JsonProperty("dep_time")]
+        [JsonProperty("deptm")]
         public DateTime DepartureTime { get; set; }
-        [JsonProperty("arr_time")]
+        [JsonProperty("arrtm")]
         public DateTime ArrivalTime { get; set; }
         [JsonProperty("dep")]
         public string DepartureAirport { get; set; }
@@ -17,60 +17,60 @@ namespace Lunggo.ApCommon.Flight.Model
         public string ArrivalAirport { get; set; }
         [JsonProperty("dur")]
         public TimeSpan Duration { get; set; }
-        [JsonProperty("stop_qty")]
+        [JsonProperty("stpqty")]
         public int StopQuantity { get; set; }
-        [JsonProperty("air_code")]
+        [JsonProperty("aircd")]
         public string AirlineCode { get; set; }
-        [JsonProperty("f_no")]
+        [JsonProperty("fno")]
         public string FlightNumber { get; set; }
-        [JsonProperty("op_air_code")]
+        [JsonProperty("opaircd")]
         public string OperatingAirlineCode { get; set; }
-        [JsonProperty("craft", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("crft", NullValueHandling = NullValueHandling.Ignore)]
         public string AircraftCode { get; set; }
         [JsonProperty("rbd")]
         public string Rbd { get; set; }
-        [JsonProperty("dep_term", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("deptrm", NullValueHandling = NullValueHandling.Ignore)]
         public string DepartureTerminal { get; set; }
-        [JsonProperty("dep_city")]
+        [JsonProperty("depct")]
         public string DepartureCity { get; set; }
-        [JsonProperty("dep_name")]
+        [JsonProperty("depnm")]
         public string DepartureAirportName { get; set; }
-        [JsonProperty("arr_term", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("arrtrm", NullValueHandling = NullValueHandling.Ignore)]
         public string ArrivalTerminal { get; set; }
-        [JsonProperty("arr_city")]
+        [JsonProperty("arrct")]
         public string ArrivalCity { get; set; }
-        [JsonProperty("arr_name")]
+        [JsonProperty("arrnm")]
         public string ArrivalAirportName { get; set; }
-        [JsonProperty("air_name")]
+        [JsonProperty("airnm")]
         public string AirlineName { get; set; }
-        [JsonProperty("air_logo")]
+        [JsonProperty("airlg")]
         public string AirlineLogoUrl { get; set; }
-        [JsonProperty("op_air_name")]
+        [JsonProperty("opairnm")]
         public string OperatingAirlineName { get; set; }
-        [JsonProperty("op_air_logo")]
+        [JsonProperty("opairlg")]
         public string OperatingAirlineLogoUrl { get; set; }
-        [JsonProperty("stops")]
+        [JsonProperty("stp")]
         public List<FlightStop> Stops { get; set; }
-        [JsonProperty("cabin")]
+        [JsonProperty("cbn")]
         public CabinClass CabinClass { get; set; }
         [JsonProperty("meal")]
         public bool Meal { get; set; }
-        [JsonProperty("bagg", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("bag", NullValueHandling = NullValueHandling.Ignore)]
         public string Baggage { get; set; }
         [JsonProperty("pnr", NullValueHandling = NullValueHandling.Ignore)]
         public string Pnr { get; set; }
-        [JsonProperty("rem_seats", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("rem", NullValueHandling = NullValueHandling.Ignore)]
         public int RemainingSeats { get; set; }
 
     }
 
     public class FlightStop
     {
-        [JsonProperty("airport")]
+        [JsonProperty("air")]
         public string Airport { get; set; }
-        [JsonProperty("arr_time")]
+        [JsonProperty("arr")]
         public DateTime ArrivalTime { get; set; }
-        [JsonProperty("dep_time")]
+        [JsonProperty("dep")]
         public DateTime DepartureTime { get; set; }
         [JsonProperty("dur")]
         public TimeSpan Duration { get; set; }

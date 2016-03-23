@@ -17,11 +17,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Logic
                 VoucherCode = request.Code
             };
             var response = service.ValidateVoucherRequest(voucher);
-            var apiResponse = AssembleApiResponse(response, request);
+            var apiResponse = AssembleApiResponse(response);
             return apiResponse;
         }
 
-        private static CheckVoucherApiResponse AssembleApiResponse(VoucherResponse response, CheckVoucherApiRequest request)
+        private static CheckVoucherApiResponse AssembleApiResponse(VoucherResponse response)
         {
             if (response.UpdateStatus == "Success")
                 return new CheckVoucherApiResponse
@@ -29,18 +29,16 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Logic
                     Discount = response.TotalDiscount,
                     DisplayName = response.CampaignVoucher.DisplayName,
                     StatusCode = HttpStatusCode.OK,
-                    StatusMessage = response.UpdateStatus + ".",
-                    OriginalRequest = request
+                    Message = response.UpdateStatus + ".",
                 };
             else
-            return new CheckVoucherApiResponse
-            {
-                Discount = response.TotalDiscount,
+                return new CheckVoucherApiResponse
+                {
+                    Discount = response.TotalDiscount,
                     DisplayName = response.CampaignVoucher.DisplayName,
                     StatusCode = HttpStatusCode.Accepted,
-                    StatusMessage = response.UpdateStatus + ".",
-                OriginalRequest = request
-            };
+                    Message = response.UpdateStatus + ".",
+                };
         }
     }
 }

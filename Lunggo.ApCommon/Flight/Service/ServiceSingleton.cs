@@ -25,12 +25,12 @@ namespace Lunggo.ApCommon.Flight.Service
         private static readonly AirAsiaWrapper AirAsiaWrapper = AirAsiaWrapper.GetInstance();
         private static readonly CitilinkWrapper CitilinkWrapper = CitilinkWrapper.GetInstance();
         private static readonly SriwijayaWrapper SriwijayaWrapper = SriwijayaWrapper.GetInstance();
-        private static readonly Dictionary<String, FlightSupplierWrapperBase> Suppliers = new Dictionary<string, FlightSupplierWrapperBase>()
+        private static readonly Dictionary<int, FlightSupplierWrapperBase> Suppliers = new Dictionary<int, FlightSupplierWrapperBase>()
         {
-            { "1", MystiflyWrapper},
-            { "2", AirAsiaWrapper},
-            { "3", CitilinkWrapper},
-            { "4", SriwijayaWrapper}
+            { 1, MystiflyWrapper},
+            { 2, AirAsiaWrapper},
+            { 3, CitilinkWrapper},
+            { 4, SriwijayaWrapper}
         };
 
         private bool _isInitialized;
@@ -67,7 +67,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private void SearchFlightInternal(SearchFlightConditions conditions, int supplierIndex)
         {
-            var supplier = Suppliers[supplierIndex.ToString(CultureInfo.InvariantCulture)];
+            var supplier = Suppliers[supplierIndex];
 
             var conditionsList = new List<SearchFlightConditions> { conditions };
             if (conditions.Trips.Count > 1)
@@ -93,6 +93,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     foreach (var itin in result.Itineraries)
                     {
                         itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
+                        itin.SearchId = searchId;
                     }
                 SaveSearchedPartialItinerariesToBufferCache(result.Itineraries, searchId, timeout, supplierIndex, conditionsList.IndexOf(partialConditions));
             });
@@ -104,6 +105,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 SaveCombosToCache(combos, searchId, supplierIndex);
             }
             SaveSearchedItinerariesToCache(itinLists, searchId, timeout, supplierIndex);
+            SaveSearchedSupplierIndexToCache(searchId, supplierIndex, timeout);
             InvalidateSearchingStatusInCache(searchId, supplierIndex);
         }
 

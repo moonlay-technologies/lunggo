@@ -20,8 +20,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             return new RevalidateFlightInput
             {
-                SearchId = request.SearchId,
-                ItinIndices = request.ItinIndices
+                Token = request.Token
             };
         }
 
@@ -33,12 +32,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 {
                     return new FlightRevalidateApiResponse
                     {
-                        Token = revalidateServiceResponse.Token,
                         IsValid = true,
                         IsOtherFareAvailable = null,
                         NewFare = null,
-                        StatusCode = HttpStatusCode.OK,
-                        StatusMessage = "Success."
+                        StatusCode = HttpStatusCode.OK
                     };
                 }
                 else
@@ -47,24 +44,20 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     {
                         return new FlightRevalidateApiResponse
                         {
-                            Token = revalidateServiceResponse.Token,
                             IsValid = false,
                             IsOtherFareAvailable = true,
                             NewFare = revalidateServiceResponse.NewFare,
-                            StatusCode = HttpStatusCode.OK,
-                            StatusMessage = "Success."
+                            StatusCode = HttpStatusCode.OK
                         };
                     }
                     else
                     {
                         return new FlightRevalidateApiResponse
                         {
-                            Token = null,
                             IsValid = false,
                             IsOtherFareAvailable = false,
                             NewFare = null,
-                            StatusCode = HttpStatusCode.OK,
-                            StatusMessage = "Success."
+                            StatusCode = HttpStatusCode.OK
                         };
                     }
                 }
@@ -73,12 +66,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightRevalidateApiResponse
                 {
-                    Token = null,
                     IsValid = false,
                     IsOtherFareAvailable = false,
                     NewFare = 0,
                     StatusCode = HttpStatusCode.InternalServerError,
-                    StatusMessage = "There is a problem in revalidating fare, please try again later.",
                     ErrorCode = "ERFREV01"
                 };
             }

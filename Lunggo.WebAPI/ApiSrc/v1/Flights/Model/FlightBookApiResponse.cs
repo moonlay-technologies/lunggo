@@ -8,7 +8,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightBookApiResponse : ApiResponseBase
     {
-        [JsonProperty("rsv_no")]
+        [JsonProperty("rsvno")]
         public string RsvNo { get; set; }
         [JsonProperty("url")]
         public string PaymentUrl { get; set; }

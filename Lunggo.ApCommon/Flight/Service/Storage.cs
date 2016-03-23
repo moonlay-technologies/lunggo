@@ -126,6 +126,27 @@ namespace Lunggo.ApCommon.Flight.Service
             redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(timeout));
         }
 
+        private static void SaveSearchedSupplierIndexToCache(string searchId, int supplierIndex, int timeout)
+        {
+            if (timeout == 0)
+                timeout =
+                    Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
+            var redisService = RedisService.GetInstance();
+            var redisKey = "searchedSupplierIndexes:" + searchId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.ListRightPush(redisKey, supplierIndex);
+            redisDb.KeyExpire(redisKey, TimeSpan.FromMinutes(timeout));
+        }
+
+        private static List<int> GetSearchedSupplierIndicesFromCache(string searchId)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "searchedSupplierIndexes:" + searchId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var length = redisDb.ListLength(redisKey);
+            return redisDb.ListRange(redisKey, 0, length - 1).Select(val => (int) val).ToList();
+        }
+
         private List<List<FlightItinerary>> GetSearchedPartialItinerariesFromBufferCache(string searchId, int supplierIndex)
         {
             var partialItinsCount = DecodeSearchConditions(searchId).Trips.Count;

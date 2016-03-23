@@ -2,53 +2,70 @@
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Model.Logic;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public string SelectFlight(string searchId, List<int> registerNumbers)
+        public SelectFlightOutput SelectFlight(SelectFlightInput input)
         {
-            if (ParseTripType(searchId) == TripType.OneWay)
+            if (ParseTripType(input.SearchId) == TripType.OneWay)
             {
-                var token = SaveItineraryFromSearchToCache(searchId, registerNumbers[0], 0);
+                var token = SaveItineraryFromSearchToCache(input.SearchId, input.RegisterNumbers[0], 0);
                 var bundledToken = BundleFlight(new List<string> { token });
-                return bundledToken;
+                return new SelectFlightOutput
+                {
+                    IsSuccess = true,
+                    Token = bundledToken
+                };
             }
             else
             {
-                var supplierIndices = registerNumbers.Select(reg => reg / SupplierIndexCap).Distinct().ToList();
+                var supplierIndices = input.RegisterNumbers.Select(reg => reg / SupplierIndexCap).Distinct().ToList();
                 var isFromSameSupplier = supplierIndices.Count == 1;
 
                 if (!isFromSameSupplier)
                 {
-                    var tokens = registerNumbers.Select(reg => SaveItineraryFromSearchToCache(searchId, reg, registerNumbers.IndexOf(reg) + 1)).ToList();
+                    var tokens = input.RegisterNumbers.Select(reg => SaveItineraryFromSearchToCache(input.SearchId, reg, input.RegisterNumbers.IndexOf(reg) + 1)).ToList();
                     var bundledToken = BundleFlight(tokens);
-                    return bundledToken;
+                    return new SelectFlightOutput
+                    {
+                        IsSuccess = true,
+                        Token = bundledToken
+                    };
                 }
 
-                var combos = GetCombosFromCache(searchId, supplierIndices[0]);
+                var combos = GetCombosFromCache(input.SearchId, supplierIndices[0]);
                 var matchedCombo = combos.SingleOrDefault(combo =>
                 {
                     var allMatched = true;
                     for (var i = 0; i < combo.Registers.Length; i++)
                     {
-                        if (combo.Registers[i] != registerNumbers[i])
+                        if (combo.Registers[i] != input.RegisterNumbers[i])
                             allMatched = false;
                     }
                     return allMatched;
                 });
                 if (matchedCombo != null)
                 {
-                    var token = SaveItineraryFromSearchToCache(searchId, matchedCombo.BundledRegister, 0);
+                    var token = SaveItineraryFromSearchToCache(input.SearchId, matchedCombo.BundledRegister, 0);
                     var bundledToken = BundleFlight(new List<string> { token });
-                    return bundledToken;
+                    return new SelectFlightOutput
+                    {
+                        IsSuccess = true,
+                        Token = bundledToken
+                    };
                 }
                 else
                 {
-                    var tokens = registerNumbers.Select(reg => SaveItineraryFromSearchToCache(searchId, reg, registerNumbers.IndexOf(reg) + 1)).ToList();
+                    var tokens = input.RegisterNumbers.Select(reg => SaveItineraryFromSearchToCache(input.SearchId, reg, input.RegisterNumbers.IndexOf(reg) + 1)).ToList();
                     var bundledToken = BundleFlight(tokens);
-                    return bundledToken;
+                    return new SelectFlightOutput
+                    {
+                        IsSuccess = true,
+                        Token = bundledToken
+                    };
                 }
             }
         }

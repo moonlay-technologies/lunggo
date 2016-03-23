@@ -25,11 +25,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightSearchApiResponse
                 {
-                    SearchId = null,
                     Flights = new List<Flight>(),
-                    GrantedRequests = new List<int>(),
                     ExpiryTime = null,
-                    MaxRequest = 0,
+                    Progress = null,
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERFSEA01"
                 };
@@ -45,15 +43,14 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             var apiResponse = new FlightSearchApiResponse
             {
-                SearchId = searchServiceResponse.SearchId,
                 Flights = searchServiceResponse.ItineraryLists.Select(itinList => new Flight
                 {
                     Count = itinList.Count,
                     Itineraries = itinList
                 }).ToList(),
+                Combos = searchServiceResponse.Combos,
                 ExpiryTime = searchServiceResponse.ExpiryTime,
-                GrantedRequests = searchServiceResponse.SearchedSuppliers,
-                MaxRequest = searchServiceResponse.TotalSupplier,
+                Progress = searchServiceResponse.Progress,
                 StatusCode = HttpStatusCode.OK
             };
             return apiResponse;
@@ -61,11 +58,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static SearchFlightInput PreprocessServiceRequest(FlightSearchApiRequest request)
         {
-            var supplierIds = request.Requests;
             var searchServiceRequest = new SearchFlightInput
             {
                 SearchId = request.SearchId,
-                RequestedSupplierIds = supplierIds
+                Progress = request.Progress
             };
             return searchServiceRequest;
         }

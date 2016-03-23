@@ -7,13 +7,13 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightTripForDisplay : FlightTripBase
     {
-        [JsonProperty("tot_transit")]
+        [JsonProperty("trnscnt")]
         public int TotalTransit { get; set; }
-        [JsonProperty("transits")]
+        [JsonProperty("trns")]
         public List<Transit> Transits { get; set; }
-        [JsonProperty("airs")]
+        [JsonProperty("air")]
         public List<Airline> Airlines { get; set; }
-        [JsonProperty("tot_dur")]
+        [JsonProperty("dur")]
         public TimeSpan TotalDuration { get; set; }
     }
 
@@ -28,17 +28,17 @@ namespace Lunggo.ApCommon.Flight.Model
         public string OriginAirport { get; set; }
         [JsonProperty("des")]
         public string DestinationAirport { get; set; }
-        [JsonProperty("des_city")]
+        [JsonProperty("desct")]
         public string DestinationCity { get; set; }
-        [JsonProperty("des_name")]
+        [JsonProperty("desnm")]
         public string DestinationAirportName { get; set; }
-        [JsonProperty("ori_city")]
+        [JsonProperty("orict")]
         public string OriginCity { get; set; }
-        [JsonProperty("ori_name")]
+        [JsonProperty("orinm")]
         public string OriginAirportName { get; set; }
-        [JsonProperty("date")]
+        [JsonProperty("dt")]
         public DateTime DepartureDate { get; set; }
-        [JsonProperty("segs")]
+        [JsonProperty("seg")]
         public List<FlightSegment> Segments { get; set; }
 
         public bool Identical(FlightTrip otherTrip)
@@ -72,21 +72,21 @@ namespace Lunggo.ApCommon.Flight.Model
     {
         [JsonProperty("cd")]
         public string Code { get; set; }
-        [JsonProperty("name")]
+        [JsonProperty("nm")]
         public string Name { get; set; }
-        [JsonProperty("logo")]
+        [JsonProperty("lg")]
         public string LogoUrl { get; set; }
     }
 
     public class Transit
     {
-        [JsonProperty("stop")]
+        [JsonProperty("stp")]
         public bool IsStop { get; set; }
-        [JsonProperty("airport")]
+        [JsonProperty("air")]
         public string Airport { get; set; }
-        [JsonProperty("arr_time")]
+        [JsonProperty("arr")]
         public DateTime ArrivalTime { get; set; }
-        [JsonProperty("dep_time")]
+        [JsonProperty("dep")]
         public DateTime DepartureTime { get; set; }
         [JsonProperty("dur")]
         public TimeSpan Duration { get; set; }

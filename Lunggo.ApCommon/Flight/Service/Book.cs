@@ -27,7 +27,6 @@ namespace Lunggo.ApCommon.Flight.Service
             output.BookResults = BookItineraries(itins, input, output);
             if (AllAreBooked(output.BookResults))
             {
-                output.IsSuccess = true;
                 var reservation = CreateReservation(itins, input, output);
                 InsertDb.Reservation(reservation);
                 if (reservation.Payment.Method == PaymentMethod.BankTransfer)
@@ -36,6 +35,15 @@ namespace Lunggo.ApCommon.Flight.Service
                     SendInstantPaymentReservationNotifToCustomer(reservation.RsvNo);
                 SavePaymentRedirectionUrlInCache(reservation.RsvNo, reservation.Payment.Url, reservation.Payment.TimeLimit);
                 output.RsvNo = reservation.RsvNo;
+
+                if (reservation.Payment.Status != PaymentStatus.Failed)
+                    output.IsSuccess = true;
+                else
+                {
+                    output.IsSuccess = false;
+                    output.Errors = new List<FlightError> {FlightError.PaymentFailed};
+                }
+
             }
             else
             {

@@ -11,7 +11,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
     {
         [JsonProperty("sid")]
         public string SearchId { get; set; }
-        [JsonProperty("rq")]
-        public List<int> Requests { get; set; }
+        [JsonProperty("prog")]
+        public int Progress { get; set; }
     }
 }

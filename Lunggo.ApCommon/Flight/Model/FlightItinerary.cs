@@ -9,17 +9,15 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightItineraryForDisplay : FlightItineraryBase
     {
-        [JsonProperty("sid")]
-        public string SearchId { get; set; }
         [JsonProperty("fare")]
         public decimal TotalFare { get; set; }
         [JsonProperty("curr")]
         public string Currency { get; set; }
         [JsonProperty("trips")]
         public List<FlightTripForDisplay> Trips { get; set; }
-        [JsonProperty("ori_fare")]
+        [JsonProperty("ofare")]
         public decimal OriginalFare { get; set; }
-        [JsonProperty("combo", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("cfare", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? ComboFare { get; set; }
     }
 
@@ -50,15 +48,17 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class FlightItineraryBase
     {
-        [JsonProperty("rq_pass")]
+        [JsonProperty("sid")]
+        public string SearchId { get; set; }
+        [JsonProperty("rqpass")]
         public bool RequirePassport { get; set; }
-        [JsonProperty("rq_dob")]
+        [JsonProperty("rqdob")]
         public bool RequireBirthDate { get; set; }
-        [JsonProperty("rq_sci")]
+        [JsonProperty("rqsci")]
         public bool RequireSameCheckIn { get; set; }
-        [JsonProperty("rq_nat")]
+        [JsonProperty("rqnat")]
         public bool RequireNationality { get; set; }
-        [JsonProperty("hold")]
+        [JsonProperty("hld")]
         public bool CanHold { get; set; }
         [JsonProperty("adt")]
         public int AdultCount { get; set; }
@@ -68,7 +68,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public int InfantCount { get; set; }
         [JsonProperty("type")]
         public TripType TripType { get; set; }
-        [JsonProperty("rq_cabin")]
+        [JsonProperty("rqcbn")]
         public CabinClass RequestedCabinClass { get; set; }
         [JsonProperty("reg")]
         public int RegisterNumber { get; set; }

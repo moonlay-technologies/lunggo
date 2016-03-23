@@ -9,29 +9,29 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightReservationForDisplay
     {
-        [JsonProperty("rsv_no")]
+        [JsonProperty("rsvno")]
         public string RsvNo { get; set; }
-        [JsonProperty("rsv_time")]
+        [JsonProperty("rsvtm")]
         public DateTime RsvTime { get; set; }
-        [JsonProperty("issued")]
+        [JsonProperty("iss")]
         public bool IsIssued { get; set; }
         [JsonProperty("itin")]
         public FlightItineraryForDisplay Itinerary { get; set; }
         [JsonProperty("pax")]
         public List<FlightPassenger> Passengers { get; set; }
-        [JsonProperty("payment")]
+        [JsonProperty("pay")]
         public PaymentData Payment { get; set; }
-        [JsonProperty("contact")]
+        [JsonProperty("con")]
         public Contact Contact { get; set; }
-        [JsonProperty("invoice", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("inv", NullValueHandling = NullValueHandling.Ignore)]
         public string InvoiceNo { get; set; }
         [JsonProperty("disc")]
         public decimal Discount { get; set; }
-        [JsonProperty("disc_name")]
+        [JsonProperty("discnm")]
         public string DiscountName { get; set; }
-        [JsonProperty("code")]
+        [JsonProperty("cd")]
         public string VoucherCode { get; set; }
-        [JsonProperty("type")]
+        [JsonProperty("typ")]
         public TripType TripType { get; set; }
     }
 

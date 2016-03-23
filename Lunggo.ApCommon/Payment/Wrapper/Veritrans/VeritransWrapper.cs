@@ -65,9 +65,9 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                         return PaymentResult(content);
                     }
                     else
-                        return PaymentStatus.Denied;
+                        return PaymentStatus.Failed;
                 default:
-                    return PaymentStatus.Denied;
+                    return PaymentStatus.Failed;
             }
         }
 
@@ -283,7 +283,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     case "authorize":
                         return PaymentStatus.Pending;
                     default:
-                        return PaymentStatus.Undefined;
+                        return PaymentStatus.Failed;
                 }
             }
             else
