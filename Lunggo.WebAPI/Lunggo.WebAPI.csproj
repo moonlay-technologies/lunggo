@@ -220,6 +220,8 @@
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-apidev.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-api %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-api %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
