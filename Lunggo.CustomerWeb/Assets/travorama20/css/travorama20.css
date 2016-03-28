@@ -4105,81 +4105,123 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
 .page-confirmation .site-content {
   padding: 24px 0; }
+  .page-confirmation .site-content .confirmation-content .instruction header {
+    background: #1daee4;
+    color: #fff;
+    padding: 6px 12px;
+    margin-bottom: 12px; }
+  .page-confirmation .site-content .confirmation-content .instruction .text {
+    padding-left: 100px;
+    background: url(/Assets/images/exclamation-mark.png) top left no-repeat;
+    min-height: 80px; }
+    .page-confirmation .site-content .confirmation-content .instruction .text p + p {
+      margin-top: 12px;
+      border-top: 2px dashed #1daee4;
+      padding-top: 12px; }
+  .page-confirmation .site-content .confirmation-content .instruction .bank-detail {
+    background: #cdf1ff;
+    padding: 12px; }
+    .page-confirmation .site-content .confirmation-content .instruction .bank-detail .bank dl {
+      margin-bottom: 4px; }
+      .page-confirmation .site-content .confirmation-content .instruction .bank-detail .bank dl:before, .page-confirmation .site-content .confirmation-content .instruction .bank-detail .bank .page-index dl.section-reason:after, .page-index .page-confirmation .site-content .confirmation-content .instruction .bank-detail .bank dl.section-reason:after, .page-confirmation .site-content .confirmation-content .instruction .bank-detail .bank dl:after {
+        display: block;
+        width: 100%;
+        content: "";
+        clear: both; }
+      .page-confirmation .site-content .confirmation-content .instruction .bank-detail .bank dl dt {
+        float: left;
+        width: 50%;
+        font-weight: normal; }
+      .page-confirmation .site-content .confirmation-content .instruction .bank-detail .bank dl dd {
+        float: left;
+        width: 50%;
+        font-weight: bold; }
+  .page-confirmation .site-content .confirmation-content .instruction .transfer-instruction .order-list {
+    font-size: 12px; }
+  .page-confirmation .site-content .confirmation-content .instruction .confirmation-order {
+    background: #f4f4f4;
+    padding: 12px; }
+    .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail {
+      background: #f4f4f4;
+      margin-top: 0px;
+      padding-top: 0px; }
+      .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-passenger {
+        margin-bottom: 24px; }
+        .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-passenger ol {
+          counter-reset: passenger-counter;
+          list-style: none;
+          margin: 0;
+          padding: 0; }
+          .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-passenger ol li {
+            position: relative;
+            padding-left: 21px;
+            font-size: 12px; }
+            .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-passenger ol li:before, .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-passenger ol .page-index li.section-reason:after, .page-index .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-passenger ol li.section-reason:after {
+              content: "0" counter(passenger-counter);
+              counter-increment: passenger-counter;
+              position: absolute;
+              left: 0;
+              color: #1daee4;
+              font-weight: bold; }
+      .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight {
+        padding-left: 36px;
+        position: relative; }
+        .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight .col-xs-9 {
+          font-weight: bold; }
+        .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight img {
+          height: 36px;
+          margin-right: 24px; }
+        .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight span {
+          font-weight: bold;
+          color: #1daee4; }
+        .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight:before, .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .page-index .confirm-flight.section-reason:after, .page-index .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight.section-reason:after {
+          content: '';
+          width: 20px;
+          height: 20px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          background-color: #1daee4;
+          background-image: url(/Assets/images/plane-updown-sprite.png);
+          background-size: 200%;
+          background-repeat: no-repeat;
+          border: 2px solid #1daee4; }
+        .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight.return:before, .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .page-index .confirm-flight.return.section-reason:after, .page-index .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight.return.section-reason:after {
+          background-position: -16px; }
 
-.page-confirmation .confirmation-content .instruction header {
-  background: #1daee4;
-  color: #fff;
-  padding: 6px 12px;
-  margin-bottom: 12px; }
-
-.page-confirmation .confirmation-content .instruction .text {
-  padding-left: 100px;
-  background: url(/Assets/images/exclamation-mark.png) top left no-repeat;
-  min-height: 80px; }
-  .page-confirmation .confirmation-content .instruction .text p + p {
-    margin-top: 12px;
-    border-top: 2px dashed #1daee4;
-    padding-top: 12px; }
-
-.page-confirmation .confirmation-content .instruction .bank-detail {
-  background: #cdf1ff;
-  padding: 12px; }
-  .page-confirmation .confirmation-content .instruction .bank-detail .bank dl {
-    margin-bottom: 4px; }
-    .page-confirmation .confirmation-content .instruction .bank-detail .bank dl:before, .page-confirmation .confirmation-content .instruction .bank-detail .bank .page-index dl.section-reason:after, .page-index .page-confirmation .confirmation-content .instruction .bank-detail .bank dl.section-reason:after, .page-confirmation .confirmation-content .instruction .bank-detail .bank dl:after {
-      display: block;
-      width: 100%;
-      content: "";
-      clear: both; }
-    .page-confirmation .confirmation-content .instruction .bank-detail .bank dl dt {
-      float: left;
-      width: 50%;
-      font-weight: normal; }
-    .page-confirmation .confirmation-content .instruction .bank-detail .bank dl dd {
-      float: left;
-      width: 50%;
-      font-weight: bold; }
-
-.page-confirmation .confirmation-form {
-  border-top: 1px solid #ccc;
-  margin-top: 24px; }
-  .page-confirmation .confirmation-form .btn.btn-yellow {
-    padding: 9px 48px;
-    font-size: 14px; }
-
-.page-confirmation .ui-datepicker {
+.ui-datepicker {
   padding: 15px;
   display: none; }
-  .page-confirmation .ui-datepicker .ui-datepicker-header {
+  .ui-datepicker .ui-datepicker-header {
     padding-bottom: 10px; }
-    .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .page-confirmation .ui-datepicker .ui-datepicker-header .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-next, .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+    .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .ui-datepicker .ui-datepicker-header .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .ui-datepicker .ui-datepicker-header .ui-datepicker-next, .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
       display: inline;
       color: #fff;
       cursor: pointer; }
-    .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+    .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
       float: right; }
-    .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
+    .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
       color: #1daee4;
       font-size: 14px;
       font-weight: 600;
       margin-top: 10px; }
-  .page-confirmation .ui-datepicker .ui-datepicker-calendar thead tr th {
+  .ui-datepicker .ui-datepicker-calendar thead tr th {
     width: 32px;
     text-align: center; }
-  .page-confirmation .ui-datepicker .ui-datepicker-calendar tbody tr td {
+  .ui-datepicker .ui-datepicker-calendar tbody tr td {
     text-align: center;
     height: 25px; }
-  .page-confirmation .ui-datepicker .ui-datepicker-calendar a {
+  .ui-datepicker .ui-datepicker-calendar a {
     color: #fff;
     display: block;
     padding-top: 4px;
     height: 25px;
     width: 25px; }
-    .page-confirmation .ui-datepicker .ui-datepicker-calendar a:hover {
+    .ui-datepicker .ui-datepicker-calendar a:hover {
       background: #fff;
       color: #333;
       text-decoration: none; }
-  .page-confirmation .ui-datepicker .ui-datepicker-calendar .ui-datepicker-unselectable {
+  .ui-datepicker .ui-datepicker-calendar .ui-datepicker-unselectable {
     color: #666; }
 
 .page-thankyou .site-content {

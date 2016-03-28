@@ -168,5 +168,15 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult ConfirmationRaw() 
+        {
+            return View();
+        }
+
+        public ActionResult PendingConfirmed()
+        {
+            return View();
+        }
+
     }
 }

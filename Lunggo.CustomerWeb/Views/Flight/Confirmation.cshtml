@@ -1,6 +1,11 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Flight.Service
-@model Lunggo.CustomerWeb.Models.FlightPaymentConfirmationData
+@using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Flight.Model
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
@@ -17,6 +22,10 @@
         new SelectListItem {Text = "BCA", Value = "BCA"},
     };
 }
+@{
+    DateTime timelimit = (DateTime)Model.Payment.TimeLimit;
+    FlightSegment prevSegment = null;
+}
 
 @section AdditionalJS {
     <!-- additional Angular JS-->
@@ -31,7 +40,7 @@
         var paymentTimeout = '';
 
         // development only start
-        paymentTimeout = new Date('@Model.TimeLimit.AddMinutes(-30).ToString("u")');
+        paymentTimeout = new Date('@timelimit.AddMinutes(-30).ToString("u")');
 
         // countdown timer
         $('.timer').countdown(paymentTimeout, function(event) {
@@ -97,55 +106,137 @@
                                         </dl>
                                         <dl>
                                             <dt>Jumlah</dt>
-                                            <dd>: Rp @Model.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                            <dd>: Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                         </dl>
                                     </div>
                                 </div>
                             </div>
                         </section>
+                        <div class="transfer-instruction">
+                            <!--<section> -->
+                            <ol style="margin-left:5px;padding-left:5px;margin-top:5px;">
+                                <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Pastikan Anda melakukan transfer ke rekening <b>Travel Madezy Internasional</b></li>
+                                <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
+                                <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">E-tiket akan dikirimkan secara otomatis ke email Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
+                            </ol>
+                            <!--Bagian Form Konfirmasi yang dihilangin-->
+                        </div>
+                        <header style="margin-bottom:0px; margin-top:25px;">
+                            <h4>DETAIL <b>PESANAN</b></h4>
+                        </header>
+                        <section class="confirmation-order" style="margin-top:0px;">
+                            <div class="confirm-order-detail">
+                                <div class="confirm-passenger">
+                                    <h4><b>INFO PENUMPANG</b></h4>
+                                    <ol>
+                                        @foreach (var passenger in Model.Passengers)
+                                        {
+                                            <li><p>@EnumDisplay.PassengerType(passenger.Type) : @EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p></li>
+                                        }
+                                    </ol>
+
+                                </div>
+                                <div class="confirm-order">
+                                    <h4><b>DETAIL PENERBANGAN</b></h4>
+
+                                    <div class="confirm-flight departure">
+                                        <p>Berangkat : </p>
+                                        <div class="row">
+                                            @foreach (var segment in Model.Itinerary.Trips[0].Segments)
+                                            {
+                                                if (segment != Model.Itinerary.Trips[0].Segments.First())
+                                                {
+                                                    var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
+                                                    <div class="col-xs-12">
+                                                        <p style="border:1px dashed #666; padding:2mm 0; text-align:center; margin-bottom:3mm; font-size:8pt;"><b>Transit Duration :</b> @transitDuration.ToString(@"h'h 'm'm'")</p>
+                                                    </div>
+                                                     <!-- .transit -->
+                                                }
+                                                <div class="col-xs-3">
+                                                    <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                    <p><span>@segment.AirlineName</span></p>
+                                                </div>
+                                                <div class="col-xs-9">
+                                                    <div class="col-xs-12">
+                                                        <div class="col-xs-4">
+                                                            <p>@segment.DepartureCity (@segment.DepartureAirport)</p>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <p>Duration - @segment.Duration</p>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <p style="text-align:right;">@segment.ArrivalCity (@segment.ArrivalAirport)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <hr style="margin-top:0px;margin-bottom:10px;">
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <div class="col-xs-6" style="float:left;">
+                                                            <p>@segment.DepartureTime.ToString("dddd, d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                        </div>
+                                                        <div class="col-xs-6" style="text-align:right;">
+                                                            <p>@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                prevSegment = segment;
+                                            }
+                                        </div>
+                                    </div>
+                                    @if (Model.Itinerary.Trips.Count > 1)
+                                    {
+                                        <div class="confirm-flight return" style="margin-top: 20px;">
+                                            <p>Kembali : </p>
+                                            <div class="row">
+                                                @foreach (var segment in Model.Itinerary.Trips[0].Segments)
+                                                {
+                                                    if (segment != Model.Itinerary.Trips[0].Segments.First())
+                                                    {
+                                                        var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
+                                                        <div class="col-xs-12">
+                                                            <p style="border:1px dashed #666; padding:2mm 0; text-align:center; margin-bottom:3mm; font-size:8pt;"><b>Transit Duration :</b> @transitDuration.ToString(@"h'h 'm'm'")</p>
+                                                        </div>
+                                                        <!-- .transit -->
+                                                    }
+                                                    <div class="col-xs-3">
+                                                        <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                        <p><span>@segment.AirlineName</span></p>
+                                                    </div>
+                                                    <div class="col-xs-9">
+                                                        <div class="col-xs-12">
+                                                            <div class="col-xs-4">
+                                                                <p>@segment.DepartureCity (@segment.DepartureAirport)</p>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <p>Duration - @segment.Duration</p>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <p style="text-align:right;">@segment.ArrivalCity (@segment.ArrivalAirport)</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12">
+                                                            <hr style="margin-top:0px;margin-bottom:10px;">
+                                                        </div>
+                                                        <div class="col-xs-12">
+                                                            <div class="col-xs-6" style="float:left;">
+                                                                <p>@segment.DepartureTime.ToString("dddd, d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                            </div>
+                                                            <div class="col-xs-6" style="text-align:right;">
+                                                                <p>@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                prevSegment = segment;
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </section><!-- .order-detail -->
+                        <!--</section>-->
                     </div>
-
-                    <div class="confirmation-form">
-                        <h3><b>KONFIRMASI</b> PEMBAYARAN - <b>TRANSFER</b></h3>
-                        <section>
-
-                            @using (@Html.BeginForm("Confirmation", "Flight", FormMethod.Post, new {enctype = "multipart/form-data"}))
-                            {
-                                <input type="hidden" name="report.RsvNo" value="@Model.RsvNo"/>
-                                <div class="form-group">
-                                    <label class="important control-label">Nama Pemilik Rekening:</label>
-                                    <input type="text" name="report.RemitterName" value="" class="form-control" placeholder="Nama Pengirim" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="important control-label">Nama Bank:</label>
-                                    <input type="text" name="report.RemitterBank" value="" class="form-control" placeholder="Bank Pengirim" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="important control-label">Nomor Rekening:</label>
-                                    <input type="text" name="report.RemitterAccount" value="" class="form-control" placeholder="Nomor Rekening" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="important control-label">Jumlah Transfer:</label>
-                                    <input type="text" name="report.Amount" value="" class="form-control" placeholder="Jumlah Transfer" />
-                                </div>
-                                <!--
-                                <div class="form-group">
-                                    <label class="important control-label">Tanggal Transfer:</label>
-                                    <input type="date" name="report.PaymentTime" class="form-control" />
-                                </div>
-                                -->
-                                <div class="form-group">
-                                    <label class="important control-label">Tanggal Transfer:</label>
-                                    <input type="text" name="report.PaymentTime" class="form-control date-picker" />
-                                </div>
-                                <div class="form-group">
-                                    <input class="btn btn-yellow" type="submit" value="KONFIRMASI" />
-                                </div>
-                            }
-
-                        </section>
-                    </div>
-
                 </div>
                 <div class="col-xs-4">
                     <div class="widget-container">
@@ -154,7 +245,7 @@
                             <div class="widget-content">
                                 <dl>
                                     <dt>Total Tiket</dt>
-                                    <dd>Rp @((Model.FinalPrice + reservation.Discount + reservation.TransferCode).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                    <dd>Rp @((Model.Payment.FinalPrice + reservation.Discount + reservation.TransferCode).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                 </dl>
                                 @if (reservation.Discount != 0)
                                 {
@@ -172,7 +263,7 @@
                                 }
                                 <dl class="total-price">
                                     <dt>Total</dt>
-                                    <dd>Rp @Model.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                    <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                 </dl>
                             </div>
                             <footer>
