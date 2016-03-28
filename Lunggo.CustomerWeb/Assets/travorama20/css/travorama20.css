@@ -4166,8 +4166,6 @@ file : /Assets/travorama20/css/_page_checkout.scss
       .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight {
         padding-left: 36px;
         position: relative; }
-        .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight .col-xs-9 {
-          font-weight: bold; }
         .page-confirmation .site-content .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight img {
           height: 36px;
           margin-right: 24px; }
@@ -4321,57 +4319,58 @@ file : /Assets/travorama20/css/_page_checkout.scss
         background-size: 200%;
         background-repeat: no-repeat;
         border: 2px solid #1daee4; }
-      .page-thankyou .order-detail section .order-detail-left .order .flight.return:before, .page-thankyou .order-detail section .order-detail-left .order .page-index .flight.return.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-left .order .flight.return.section-reason:after {
-        background-position: -16px; }
-  .page-thankyou .order-detail section .order-detail-right {
-    background: #e9e7e8;
-    padding: 12px 24px;
-    height: 100%;
-    position: absolute;
-    right: 0; }
-    .page-thankyou .order-detail section .order-detail-right .price-detail {
-      margin-bottom: 24px; }
-      .page-thankyou .order-detail section .order-detail-right .price-detail dl:before, .page-thankyou .order-detail section .order-detail-right .price-detail .page-index dl.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-right .price-detail dl.section-reason:after, .page-thankyou .order-detail section .order-detail-right .price-detail dl:after {
-        display: block;
-        width: 100%;
+    .page-thankyou .order-detail section .order-detail-left .order.return:before, .page-thankyou .order-detail section .order-detail-left .page-index .order.return.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-left .order.return.section-reason:after {
+      background-position: -16px; }
+
+.page-thankyou .order-detail .order-detail-right {
+  background: #e9e7e8;
+  padding: 12px 24px;
+  height: 100%;
+  position: absolute;
+  right: 0; }
+  .page-thankyou .order-detail .order-detail-right .price-detail {
+    margin-bottom: 24px; }
+    .page-thankyou .order-detail .order-detail-right .price-detail dl:before, .page-thankyou .order-detail .order-detail-right .price-detail .page-index dl.section-reason:after, .page-index .page-thankyou .order-detail .order-detail-right .price-detail dl.section-reason:after, .page-thankyou .order-detail .order-detail-right .price-detail dl:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .page-thankyou .order-detail .order-detail-right .price-detail dl dt {
+      width: 55%;
+      float: left;
+      font-weight: normal;
+      position: relative;
+      padding-left: 12px; }
+      .page-thankyou .order-detail .order-detail-right .price-detail dl dt:before, .page-thankyou .order-detail .order-detail-right .price-detail dl .page-index dt.section-reason:after, .page-index .page-thankyou .order-detail .order-detail-right .price-detail dl dt.section-reason:after {
         content: "";
-        clear: both; }
-      .page-thankyou .order-detail section .order-detail-right .price-detail dl dt {
-        width: 55%;
-        float: left;
-        font-weight: normal;
-        position: relative;
-        padding-left: 12px; }
-        .page-thankyou .order-detail section .order-detail-right .price-detail dl dt:before, .page-thankyou .order-detail section .order-detail-right .price-detail dl .page-index dt.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-right .price-detail dl dt.section-reason:after {
-          content: "";
-          width: 6px;
-          height: 6px;
-          position: absolute;
-          top: 3px;
-          left: 0;
-          background: #ff6900; }
-      .page-thankyou .order-detail section .order-detail-right .price-detail dl dd {
-        width: 45%;
-        float: left;
-        text-align: right;
-        font-weight: bold; }
-      .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price {
-        border-top: 1px solid #ccc;
-        padding-top: 12px; }
-        .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price dt {
-          width: 40%; }
-          .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price dt:before, .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price .page-index dt.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price dt.section-reason:after {
-            content: "";
-            width: 0;
-            height: 0; }
-        .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price dd {
-          width: 60%;
-          color: #ff6900;
-          font-weight: bold;
-          font-size: 16px; }
-    .page-thankyou .order-detail section .order-detail-right .payment-detail h5 {
-      color: #1daee4;
+        width: 6px;
+        height: 6px;
+        position: absolute;
+        top: 3px;
+        left: 0;
+        background: #ff6900; }
+    .page-thankyou .order-detail .order-detail-right .price-detail dl dd {
+      width: 45%;
+      float: left;
+      text-align: right;
       font-weight: bold; }
+    .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price {
+      border-top: 1px solid #ccc;
+      padding-top: 12px; }
+      .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dt {
+        width: 40%; }
+        .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dt:before, .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price .page-index dt.section-reason:after, .page-index .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dt.section-reason:after {
+          content: "";
+          width: 0;
+          height: 0; }
+      .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dd {
+        width: 60%;
+        color: #ff6900;
+        font-weight: bold;
+        font-size: 16px; }
+  .page-thankyou .order-detail .order-detail-right .payment-detail h5 {
+    color: #1daee4;
+    font-weight: bold; }
 
 .page-overlay.flight-expired {
   z-index: 9999; }

@@ -291,7 +291,6 @@ file : /Assets/travorama20/css/_page_checkout.scss
                     }
                     .confirm-order {
                         .confirm-flight {padding-left:36px; position:relative;
-                            .col-xs-9 {font-weight:bold;}
                             img {height:36px; margin-right:24px;}
                             span {font-weight:bold; color:$color-main-blue;}
                             &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%; background-repeat:no-repeat; border:2px solid $color-main-blue;}
@@ -421,8 +420,6 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
         }
     }
-
-}
 
 // *****
 // page overlay
