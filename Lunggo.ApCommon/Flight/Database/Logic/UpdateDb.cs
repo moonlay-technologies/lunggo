@@ -67,20 +67,29 @@ namespace Lunggo.ApCommon.Flight.Service
                     var prevStatus = GetDb.PaymentStatus(rsvNo);
                     if (payment.Status != prevStatus)
                     {
-                        var queryParam = new FlightReservationTableRecord
-                        {
-                            RsvNo = rsvNo,
-                            PaymentMediumCd = PaymentMediumCd.Mnemonic(payment.Medium),
-                            PaymentMethodCd = PaymentMethodCd.Mnemonic(payment.Method),
-                            PaymentStatusCd = PaymentStatusCd.Mnemonic(payment.Status),
-                            PaymentTime = payment.Time.HasValue ? payment.Time.Value.ToUniversalTime() : (DateTime?) null,
-                            PaymentId = payment.Id,
-                            PaymentTargetAccount = payment.TargetAccount,
-                            PaymentTimeLimit = payment.TimeLimit.HasValue ? payment.TimeLimit.Value.ToUniversalTime() : (DateTime?) null,
-                            PaymentUrl = payment.Url,
-                            PaidAmount = payment.PaidAmount,
-                            FinalPrice = payment.FinalPrice,
-                        };
+                        var queryParam = new FlightReservationTableRecord();
+                        if (rsvNo != null)
+                            queryParam.RsvNo = rsvNo;
+                        if (payment.Medium != PaymentMedium.Undefined)
+                            queryParam.PaymentMediumCd = PaymentMediumCd.Mnemonic(payment.Medium);
+                        if(payment.Method != PaymentMethod.Undefined)
+                            queryParam.PaymentMethodCd = PaymentMethodCd.Mnemonic(payment.Method);
+                        if(payment.Status != PaymentStatus.Undefined)
+                            queryParam.PaymentStatusCd = PaymentStatusCd.Mnemonic(payment.Status);
+                        if (payment.Time.HasValue)
+                            queryParam.PaymentTime = payment.Time.Value.ToUniversalTime();
+                        if(payment.Id != null)
+                            queryParam.PaymentId = payment.Id;
+                        if(payment.TargetAccount!=null)
+                            queryParam.PaymentTargetAccount = payment.TargetAccount;
+                        if(payment.TimeLimit.HasValue)
+                            queryParam.PaymentTimeLimit =payment.TimeLimit.Value.ToUniversalTime();
+                        if(payment.Url !=null)
+                            queryParam.PaymentUrl = payment.Url;
+                        if(payment.PaidAmount!=null)
+                            queryParam.PaidAmount = payment.PaidAmount;
+                        if (payment.FinalPrice != null)
+                            queryParam.FinalPrice = payment.FinalPrice;
                         UpdatePaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);
                         return true;
                     }
