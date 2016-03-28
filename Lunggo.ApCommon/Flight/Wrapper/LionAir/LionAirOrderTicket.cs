@@ -18,10 +18,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
     {
         internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
         {
-            //var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            //if (env == "production")
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            if (env == "production")
                 return Client.OrderTicket(bookingId);
-            //else
+            else
                 return new OrderTicketResult
                 {
                     IsSuccess = true,
@@ -37,7 +37,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var clientx = CreateAgentClient();
                 clientx.FollowRedirects = false;
                 CQ searchedHtml;
-                string userId = "";
+                var userId = "";
                 //string currentDeposit;
 
                 var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
@@ -47,8 +47,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 RestResponse accRs;
                 var reqTime = DateTime.UtcNow;
                 var msgLogin = "Your login name is inuse";
-                //var counter = 0;
-
+                
                 while (msgLogin == "Your login name is inuse" || msgLogin == "There was an error logging you in")
                 {
                     while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
@@ -137,16 +136,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var html8 = searchResponse5.Content;
                 searchedHtml = (CQ) html8;
                 var vsPostToPay = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
-                //var theTable = searchedHtml[".Step4ItinRow"];
-                /*var isIssuedy = true;
-                foreach (var row in theTable)
-                {
-                    isIssuedy &= row.Children().ToList()[7].InnerText == "Confirmed";
-                }*/
-                //var isIssuedy = theTable.Children().ToList()[7].InnerText == "Not Ticketed";
-                //var bookingRef = "ABCDEF";
 
-                //var a = 3;
                 try
                 {
                     //GO TO PAY, POST
@@ -192,7 +182,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     searchRequest11.AddHeader("Accept",
                         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
                     var searchResponse11 = clientx.Execute(searchRequest11);
-                    //var abc = searchResponse11.ResponseUri.AbsolutePath;
                     if (searchResponse11.ResponseUri.AbsolutePath != "/LionAgentsOPS/Confirmation.aspx"
                         && (searchResponse11.StatusCode == HttpStatusCode.OK || searchResponse11.StatusCode == HttpStatusCode.Redirect))
                         throw new Exception();
@@ -203,9 +192,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var bookingRef = booking.Children().ToList()[0].GetAttribute("id");
 
                     var theTable = html11[".Step4ItinRow"];
-                    //var viewstateX = HttpUtility.UrlEncode(html11["#__VIEWSTATE"].Attr("value"));
-                    var isIssued = theTable.Children().ToList()[7].InnerText == "Confirmed";
-
+                    var isIssued = false;
+                    if (!theTable.IsNullOrEmpty())
+                    {
+                        isIssued = theTable.Children().ToList()[7].InnerText == "Confirmed";
+                    }
+                    
                     //Logout
                     const string url15 = @"/LionAirAgentsPortal/Logout.aspx";
                     var searchRequest15 = new RestRequest(url15, Method.GET);
@@ -236,10 +228,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
                     accRs = (RestResponse) clienty.Execute(accReq);
 
-                   // bool isIssuedByFunction;
                     var abc = IsIssued(bookingId);
                     var isIssuedByFunction = abc == IssueEnum.IssueSuccess;
-
                     var isIssuedx = isIssued && isIssuedByFunction;
                     return new OrderTicketResult
                     {

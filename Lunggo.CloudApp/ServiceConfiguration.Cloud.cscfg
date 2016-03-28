@@ -10,6 +10,7 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Setting1" value="" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

@@ -18,7 +18,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 16|AAP|Andrau Airpark|HOU|Houston|US|United States|-6
 17|AAQ|Anapa|AAQ|Anapa|RU|Russian Federation|4
 18|AAR|Aarhus Arpt.|AAR|Aarhus|DK|Denmark|1
-19|AAS|Apalapsili|AAS|Apalapsili|ID|Indonesia|99
+19|AAS|Apalapsili|AAS|Jayawijaya|ID|Indonesia|99
 20|AAT|Altay|AAT|Altay|CN|China|8
 21|AAU|Asau|AAU|Asau|WS|Samoa|13
 22|AAV|Allah Valley|AAV|Surallah|PH|Philippines|99
@@ -46,7 +46,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 44|ABR|Municipal|ABR|Aberdeen|US|United States|-6
 45|ABS|Abu Simbel|ABS|Abu Simbel|EG|Egypt|2
 46|ABT|Al-Aqiq|ABT|Al-Baha|SA|Saudi Arabia|3
-47|ABU|Atambua|ABU|Atambua|ID|Indonesia|99
+47|ABU|Haliwen|ABU|Atambua|ID|Indonesia|99
 48|ABV|Nnamdi Azikiwe Intl. Arpt.|ABV|Abuja|NG|Nigeria|1
 49|ABW|Abau|ABW|Abau|PG|Papua New Guinea|99
 50|ABX|Albury|ABX|Albury|AU|Australia|10
@@ -101,7 +101,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 99|ADZ|San Andres Island|ADZ|San Andres Island|CO|Colombia|-5
 100|AEA|Abemama Atoll|AEA|Abemama Atoll|KI|Kiribati|12
 101|AED|Aleneva|AED|Aleneva|US|United States|99
-102|AEG|Aek Godang|AEG|Aek Godang|ID|Indonesia|99
+102|AEG|Aek Godang|AEG|Padang Sidempuan|ID|Indonesia|99
 103|AEH|Abecher|AEH|Abecher|TD|Chad|1
 104|AEK|Aseki|AEK|Aseki|PG|Papua New Guinea|99
 105|AEL|Albert Lea|AEL|Albert Lea|US|United States|99
@@ -160,7 +160,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 158|AHE|Ahe Arpt.|AHE|Ahe|PF|French Polynesia|-10
 159|AHF|Municipal|AHF|Arapahoe|US|United States|99
 160|AHH|Municipal|AHH|Amery|US|United States|99
-161|AHI|Amahai|AHI|Amahai|ID|Indonesia|99
+161|AHI|Amahai|AHI|Masohi|ID|Indonesia|99
 162|AHL|Aishalton|AHL|Aishalton|GY|Guyana|99
 163|AHN|Athens|AHN|Athens|US|United States|-5
 164|AHO|Fertilia|AHO|Alghero|IT|Italy|1
@@ -219,7 +219,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 217|AKN|King Salmon|AKN|King Salmon|US|United States|-9
 218|AKO|Colorado Plains Regional Arpt.|AKO|Akron|||99
 219|AKP|Anaktuvuk|AKP|Anaktuvuk|US|United States|-9
-220|AKQ|Gunung Batin|AKQ|Astraksetra|ID|Indonesia|99
+220|AKQ|Astraksetra|AKQ|Way Tuba|ID|Indonesia|99
 221|AKR|Akure|AKR|Akure|NG|Nigeria|1
 222|AKT|Akrotiri Raf|AKT|Akrotiri|CY|Cyprus|0
 223|AKU|Aksu|AKU|Aksu|CN|China|8
@@ -261,7 +261,6 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 259|AMF|Ama|AMF|Ama|PG|Papua New Guinea|99
 260|AMG|Amboin|AMG|Amboin|PG|Papua New Guinea|99
 261|AMH|Arba Mintch|AMH|Arba Mintch|ET|Ethiopia|3
-262|AMI|Selaparang|AMI|Mataram|ID|Indonesia|8
 263|AMJ|Almenara|AMJ|Almenara|BR|Brazil|99
 264|AMK|Animas Airpark|AMK|Durango|US|United States|99
 265|AML|Puerto Armuellas|AML|Puerto Armuellas|PA|Panama|99
@@ -355,7 +354,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 353|ARA|Acadiana Regional|ARA|New Iberia|US|United States|-6
 354|ARB|Municipal|ARB|Ann Arbor|||-5
 355|ARC|Arctic Village|ARC|Arctic Village|US|United States|-9
-356|ARD|Alor Island|ARD|Alor Island|ID|Indonesia|8
+356|ARD|Mali|ARD|Alor Island|ID|Indonesia|8
 357|ARE|Arecibo|ARE|Arecibo|PR|Puerto Rico|-4
 358|ARF|Acaricuara|ARF|Acaricuara|CO|Colombia|99
 359|ARG|Walnut Ridge|ARG|Walnut Ridge|US|United States|99
@@ -444,7 +443,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 442|AUQ|Atuona|AUQ|Atuona|PF|French Polynesia|-9.5
 443|AUR|Aurillac|AUR|Aurillac|FR|France|1
 444|AUS|Austin-bergstrom Intl.|AUS|Austin|US|United States|-6
-445|AUT|Atauro|AUT|Atauro|ID|Indonesia|99
+445|AUT|Atauro|AUT|Atauro|ID|East Timor-Indonesia|99
 446|AUU|Aurukun Mission|AUU|Aurukun Mission|AU|Australia|10
 447|AUV|Aumo|AUV|Aumo|PG|Papua New Guinea|99
 448|AUW|Municipal|AUW|Wausau|US|United States|-6
@@ -509,7 +508,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 507|AYS|Ware County|AYS|Waycross|US|United States|99
 508|AYT|Antalya|AYT|Antalya|TR|Turkey|2
 509|AYU|Aiyura|AYU|Aiyura|PG|Papua New Guinea|99
-510|AYW|Ayawasi|AYW|Ayawasi|ID|Indonesia|99
+510|AYW|Ayawasi|AYW|Sorong|ID|Indonesia|99
 511|AYZ|Zahns|AYZ|Amityville|US|United States|99
 512|AZA|Phoenix-Mesa Gateway Airport|PHX|Phoenix|US|United States|-7
 513|AZB|Amazon Bay|AZB|Amazon Bay|PG|Papua New Guinea|99
@@ -606,7 +605,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 604|BDG|Blanding|BDG|Blanding|US|United States|99
 605|BDH|Bandar Lengeh|BDH|Bandar Lengeh|IR|Iran|3.5
 606|BDI|Bird Island|BDI|Bird Island|SC|Seychelles|4
-607|BDJ|Sjamsudin Noor|BDJ|Banjarmasin|ID|Indonesia|8
+607|BDJ|Sjamsudin Noor|BDJ|Banjarbaru|ID|Indonesia|8
 608|BDK|Bondoukou|BDK|Bondoukou|CI|Cote D'Ivoire|99
 609|BDL|Bradley Intl.|BDL|Windsor Locks|||-5
 610|BDM|Bandirma|BDM|Bandirma|TR|Turkey|2
@@ -632,7 +631,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 630|BEG|Nikola Tesla|BEG|Belgrade|RS|Serbia|1
 631|BEH|Ross Field|BEH|Benton Harbor|US|United States|-5
 632|BEI|Beica|BEI|Beica|ET|Ethiopia|3
-633|BEJ|Kalimaru|BEJ|Tanjung Redep|ID|Indonesia|8
+633|BEJ|Kalimaru|BEJ|Berau|ID|Indonesia|8
 634|BEK|Bareli|BEK|Bareli|IN|India|99
 635|BEL|Val De Cans|BEL|Belem|BR|Brazil|-4
 636|BEM|Bossembele|BEM|Bossembele|CF|Central African Republic|99
@@ -754,11 +753,11 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 752|BJC|Jeffco|BJC|Broomfield|US|United States|-7
 753|BJD|Bakkafjordur|BJD|Bakkafjordur|IS|Iceland|99
 754|BJF|Batsfjord|BJF|Batsfjord|NO|Norway|1
-755|BJG|Bolaang|BJG|Bolaang|ID|Indonesia|99
+755|BJG|Mopait|BJG|Bolaang Mongodow|ID|Indonesia|99
 756|BJH|Bajhang|BJH|Bajhang|NP|Nepal|5.75
 757|BJI|Bemidji|BJI|Bemidji|US|United States|-6
 758|BJJ|Wayne County|BJJ|Wooster|US|United States|99
-759|BJK|Benjina|BJK|Benjina|ID|Indonesia|99
+759|BJK|Nangasuri|BJK|Benjina|ID|Indonesia|99
 760|BJL|Yundum Intl.|BJL|Banjul|GM|Gambia|0
 761|BJM|Intl.|BJM|Bujumbura|BI|Burundi|2
 762|BJN|Bajone|BJN|Bajone|MZ|Mozambique|99
@@ -769,7 +768,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 767|BJT|Bentota River|BJT|Bentota River|LK|Sri Lanka|5.5
 768|BJU|Bajura Arpt|BJU|Bajura|NP|Nepal|5.75
 769|BJV|Milas|BJV|Milas|TR|Turkey|2
-770|BJW|Bajawa|BJW|Bajawa|ID|Indonesia|99
+770|BJW|Soa|BJW|Bajawa|ID|Indonesia|99
 771|BJX|Del Bajío Intl.|BJX|León|MX|Mexico|-6
 772|BJY|Batajnica|BJY|Belgrade|RS|Serbia|99
 773|BJZ|Talaveral La Real|BJZ|Badajoz|ES|Spain|1
@@ -791,7 +790,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 789|BKP|Barkly Downs|BKP|Barkly Downs|AU|Australia|99
 790|BKQ|Blackall|BKQ|Blackall|AU|Australia|10
 791|BKR|Bokoro|BKR|Bokoro|TD|Chad|99
-792|BKS|Padangkemiling|BKS|Bengkulu|ID|Indonesia|7
+792|BKS|Fatmawati Soekarno|BKS|Bengkulu|ID|Indonesia|7
 793|BKT|Blackstone AAF|BKT|Blackstone|US|United States|99
 794|BKU|Betioky|BKU|Betioky|MG|Madagascar|99
 795|BKW|Beckley|BKW|Beckley|US|United States|-5
@@ -844,7 +843,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 842|BMR|Baltrum|BMR|Baltrum Island|DE|Germany|99
 843|BMS|Brumado|BMS|Brumado|BR|Brazil|99
 844|BMT|Beaumont Muni|BMT|Beaumont|US|United States|-6
-845|BMU|Bima|BMU|Bima|ID|Indonesia|8
+845|BMU|Muhammad Salahuddin|BMU|Bima|ID|Indonesia|8
 846|BMV|Phung-Duc|BMV|Banmethuot|VN|Viet Nam|7
 847|BMW|Bordj Badji Mokhtar|BMW|Bordj Badji Mokhtar|DZ|Algeria|1
 848|BMX|Big Mountain|BMX|Big Mountain|US|United States|-9
@@ -910,7 +909,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 908|BPH|Bislig|BPH|Bislig|PH|Philippines|99
 909|BPI|Big Piney-marbleton|BPI|Big Piney|US|United States|99
 910|BPK|Biangabip|BPK|Biangabip|PG|Papua New Guinea|99
-911|BPN|Sepingan|BPN|Balikpapan|ID|Indonesia|8
+911|BPN|Sultan Aji Muhammad Sulaiman|BPN|Balikpapan|ID|Indonesia|8
 912|BPS|Porto Seguro|BPS|Porto Seguro|BR|Brazil|-3
 913|BPT|Jefferson County|BPT|Beaumont|US|United States|-6
 914|BPU|Beppu|BPU|Beppu|JP|Japan|9
@@ -991,7 +990,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 989|BTG|Batangafo|BTG|Batangafo|CF|Central African Republic|99
 990|BTH|Hang Nadim|BTH|Batam|ID|Indonesia|7
 991|BTI|Barter Island|BTI|Barter Island|US|United States|-9
-992|BTJ|Sultan Lskandarmuda Arpt.|BTJ|Banda Aceh|ID|Indonesia|7
+992|BTJ|Sultan Iskandar muda Arpt.|BTJ|Banda Aceh|ID|Indonesia|7
 993|BTK|Bratsk|BTK|Bratsk|RU|Russian Federation|9
 994|BTL|WK Kellogg Regional|BTL|Battle Creek|US|United States|99
 995|BTM|Bert Mooney Arpt.|BTM|Butte|||-7
@@ -1004,7 +1003,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 1002|BTT|Bettles|BTT|Bettles|US|United States|-9
 1003|BTU|Bintulu|BTU|Bintulu|MY|Malaysia|8
 1004|BTV|Burlington Intl.|BTV|Burlington|US|United States|-5
-1005|BTW|Batu Licin|BTW|Batu Licin|ID|Indonesia|99
+1005|BTW|Bersujud|BTW|Batu Licin|ID|Indonesia|99
 1006|BTX|Betoota|BTX|Betoota|AU|Australia|99
 1007|BTY|Beatty|BTY|Beatty|US|United States|99
 1008|BTZ|Bursa Arpt.|BTZ|Bursa|TR|Turkey|2
@@ -1016,7 +1015,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 1014|BUF|Buffalo Niagara Intl.|BUF|Buffalo|||-5
 1015|BUG|Gen V Deslandes|BUG|Benguela|AO|Angola|1
 1016|BUH|All Airports|BUH|Bucharest|RO|Romania|1
-1017|BUI|Bokondini|BUI|Bokondini|ID|Indonesia|9
+1017|BUI|Bokondini|BUI|Jayawijaya|ID|Indonesia|9
 1018|BUJ|Ain Eddis|BUJ|Boussaada|DZ|Algeria|99
 1019|BUK|Albuq|BUK|Albuq|YE|Yemen|99
 1020|BUL|Bulolo|BUL|Bulolo|PG|Papua New Guinea|99
@@ -1030,7 +1029,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 1028|BUT|Burtonwood|BUT|Burtonwood|GB|United Kingdom|99
 1029|BUU|Buyo|BUU|Buyo|CI|Cote D'Ivoire|-6
 1030|BUV|Bella Union|BUV|Bella Union|UY|Uruguay|99
-1031|BUW|Baubau|BUW|Baubau|ID|Indonesia|99
+1031|BUW|Betoambari|BUW|Baubau|ID|Indonesia|99
 1032|BUX|Bunia|BUX|Bunia|ZR|Zaire|2
 1033|BUY|Bunbury|BUY|Bunbury|AU|Australia|-5
 1034|BUZ|Bushehr|BUZ|Bushehr|IR|Iran|3.5
@@ -1076,7 +1075,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 1074|BXA|George R Carr|BXA|Bogalusa|US|United States|99
 1075|BXB|Babo|BXB|Babo|ID|Indonesia|9
 1076|BXC|Boxborough|BXC|Boxborough|US|United States|99
-1077|BXD|Bade|BXD|Bade|ID|Indonesia|99
+1077|BXD|Bade|BXD|Merauke|ID|Indonesia|99
 1078|BXE|Bakel|BXE|Bakel|SN|Senegal|0
 1079|BXF|Belburn|BXF|Belburn|AU|Australia|99
 1080|BXG|Bendigo|BXG|Bendigo|AU|Australia|99
@@ -1085,7 +1084,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 1083|BXJ|Burundai|BXJ|Burundai|KZ|Kazakhstan|99
 1084|BXK|Buckeye Municipal|BXK|Buckeye|US|United States|-7
 1085|BXL|Blue Lagoon|BXL|Blue Lagoon|FJ|Fiji|99
-1086|BXM|Batom|BXM|Batom|ID|Indonesia|99
+1086|BXM|Batom|BXM|Bintang|ID|Indonesia|99
 1087|BXN|Imsik Arpt.|BJV|Milas|TR|Turkey|2
 1088|BXO|Buochs|BXO|Buochs|GW|Guinea-Bissau|1
 1089|BXR|Bam|BXR|Bam|IR|Iran|3.5
@@ -1172,7 +1171,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 1170|CBK|Municipal|CBK|Colby|US|United States|99
 1171|CBL|Ciudad Bolivar|CBL|Ciudad Bolivar|VE|Venezuela|-4.5
 1172|CBM|Columbus AFB|CBM|Columbus|||-6
-1173|CBN|Penggung|CBN|Cirebon|ID|Indonesia|7
+1173|CBN|Cakrabhuwana|CBN|Cirebon|ID|Indonesia|7
 1174|CBO|Awang|CBO|Cotabato|PH|Philippines|8
 1175|CBP|Coimbra|CBP|Coimbra|PT|Portugal|99
 1176|CBQ|Calabar|CBQ|Calabar|NG|Nigeria|1
@@ -1488,7 +1487,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 1486|CPC|Chapelco|CPC|San Martin DeLos Andes|AR|Argentina|-3
 1487|CPD|Coober Pedy|CPD|Coober Pedy|AU|Australia|9.5
 1488|CPE|Campeche Intl.|CPE|Campeche|MX|Mexico|-6
-1489|CPF|Cepu|CPF|Cepu|ID|Indonesia|99
+1489|CPF|Ngloram|CPF|Cepu|ID|Indonesia|99
 1490|CPG|Carmen De Patagones|CPG|Carmen De Patagones|AR|Argentina|99
 1491|CPH|All Airports|CPH|Copenhagen|DK|Denmark|1
 1492|CPI|Cape Orford|CPI|Cape Orford|PG|Papua New Guinea|99
@@ -1796,7 +1795,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 1794|DIW|Mawella Lagoon|DIW|Dickwella|LK|Sri Lanka|5.5
 1795|DIY|Diyarbakir|DIY|Diyarbakir|TR|Turkey|2
 1796|DJA|Djougou|DJA|Djougou|BJ|Benin|99
-1797|DJB|Sultan Taha Syarifudn|DJB|Jambi|ID|Indonesia|7
+1797|DJB|Sultan Thaha Syaifuddin|DJB|Jambi|ID|Indonesia|7
 1798|DJE|Djerba-Zarzis|DJE|Djerba|TN|Tunisia|1
 1799|DJG|Inedbirenne|DJG|Djanet|DZ|Algeria|1
 1800|DJJ|Sentani|DJJ|Jayapura|ID|Indonesia|9
@@ -1899,7 +1898,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 1897|DRE|Drummond Island|DRE|Drummond Island|US|United States|99
 1898|DRF|Drift River|DRF|Drift River|US|United States|99
 1899|DRG|Deering|DRG|Deering|US|United States|-9
-1900|DRH|Dabra|DRH|Dabra|ID|Indonesia|99
+1900|DRH|Dabra|DRH|Puncak Jaya|ID|Indonesia|99
 1901|DRI|Beauregard Parish|DRI|De Ridder|US|United States|-6
 1902|DRM|Drama|DRM|Drama|GR|Greece|-5
 1903|DRN|Dirranbandi|DRN|Dirranbandi|AU|Australia|99
@@ -1919,7 +1918,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 1917|DSM|Des Moines Intl.|DSM|Des Moines|||-6
 1918|DSN|Dongsheng|DSN|Dongsheng|CN|China|8
 1919|DTA|Delta|DTA|Delta|US|United States|-7
-1920|DTD|Datadawai|DTD|Datadawai|ID|Indonesia|8
+1920|DTD|Datah Dawai|DTD|Kutai Barat|ID|Indonesia|8
 1921|DTE|Naga|DTE|Daet|PH|Philippines|99
 1922|DTH|Death Valley|DTH|Death Valley|US|United States|99
 1923|DTL|Municipal|DTL|Detroit Lakes|US|United States|99
@@ -2079,7 +2078,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 2077|ELO|Eldorado|ELO|Eldorado|AR|Argentina|99
 2078|ELP|El Paso Intl. Arpt.|ELP|El Paso|US|United States|-7
 2079|ELQ|Gassim Regional Arpt.|ELQ|Buraidah|SA|Saudi Arabia|3
-2080|ELR|Elelim|ELR|Elelim|ID|Indonesia|99
+2080|ELR|Elilim|ELR|Jayawijaya|ID|Indonesia|99
 2081|ELS|East London|ELS|East London|ZA|South Africa|2
 2082|ELT|Tour Sinai City|ELT|Tour Sinai City|EG|Egypt|2
 2083|ELU|Guemar|ELU|El Oued|DZ|Algeria|1
@@ -2108,7 +2107,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 2106|ENB|Eneabba West|ENB|Eneabba West|AU|Australia|99
 2107|ENC|Essey|ENC|Nancy|FR|France|1
 2108|END|Vance Afb|END|Enid|US|United States|-6
-2109|ENE|Ende|ENE|Ende|ID|Indonesia|8
+2109|ENE|H Hasan Aroeboesman|ENE|Ende|ID|Indonesia|8
 2110|ENF|Enontekio|ENF|Enontekio|FI|Finland|2
 2111|ENH|Enshi|ENH|Enshi|CN|China|8
 2112|ENI|El Nido|ENI|El Nido|PH|Philippines|8
@@ -2206,7 +2205,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 2204|EVX|Evreux|EVX|Evreux|FR|France|99
 2205|EWB|New Bedford|EWB|New Bedford|US|United States|-5
 2206|EWD|Wildman Lake|EWD|Wildman Lake|US|United States|3
-2207|EWE|Ewer|EWE|Ewer|ID|Indonesia|99
+2207|EWE|Ewer|EWE|Merauke|ID|Indonesia|99
 2208|EWI|Enarotali|EWI|Enarotali|ID|Indonesia|99
 2209|EWK|City-County|EWK|Newton|US|United States|-6
 2210|EWN|Simmons Nott|EWN|New Bern|US|United States|-5
@@ -2314,7 +2313,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 2312|FKJ|Fukui|FKJ|Fukui|JP|Japan|99
 2313|FKL|Chess-Lambertin|FKL|Franklin|US|United States|-5
 2314|FKN|Municipal|FKN|Franklin|US|United States|99
-2315|FKQ|Fak Fak|FKQ|Fak Fak|ID|Indonesia|9
+2315|FKQ|Torea|FKQ|Fak Fak|ID|Indonesia|9
 2316|FLA|Capitolio|FLA|Florencia|CO|Colombia|-5
 2317|FLB|Cangapara|FLB|Floriano|BR|Brazil|99
 2318|FLC|Falls Creek|FLC|Falls Creek|AU|Australia|99
@@ -2369,7 +2368,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 2367|FOK|Suffolk County|FOK|Westhampton|US|United States|-5
 2368|FOM|Foumban|FOM|Foumban|CM|Cameroon|1
 2369|FON|Fortuna|FON|Fortuna|CR|Costa Rica|-6
-2370|FOO|Numfoor|FOO|Numfoor|ID|Indonesia|99
+2370|FOO|Kornasoren|FOO|Numfor|ID|Indonesia|99
 2371|FOR|Pinto Martins|FOR|Fortaleza|BR|Brazil|-3
 2372|FOS|Forrest|FOS|Forrest|AU|Australia|99
 2373|FOT|Forster|FOT|Forster|AU|Australia|99
@@ -2468,7 +2467,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 2466|GAS|Garissa|GAS|Garissa|KE|Kenya|3
 2467|GAT|Tallard|GAT|Gap|FR|France|99
 2468|GAU|Borjhar|GAU|Gawahati|IN|India|5.5
-2469|GAV|Gag Island|GAV|Gag Island|ID|Indonesia|99
+2469|GAV|Gag Island|GAV|Raja|ID|Indonesia|99
 2470|GAW|Gangaw|GAW|Gangaw|MM|Myanmar|99
 2471|GAX|Gamba|GAX|Gamba|GA|Gabon|1
 2472|GAY|Gaya|GAY|Gaya|IN|India|5.5
@@ -2618,7 +2617,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 2616|GLT|Gladstone|GLT|Gladstone|AU|Australia|10
 2617|GLV|Golovin|GLV|Golovin|US|United States|-9
 2618|GLW|Municipal|GLW|Glasgow|US|United States|99
-2619|GLX|Galela|GLX|Galela|ID|Indonesia|99
+2619|GLX|Gamarmalamo|GLX|Galela|ID|Indonesia|99
 2620|GLY|Goldsworthy|GLY|Goldsworthy|AU|Australia|99
 2621|GLZ|Gilze-Rijen|GLZ|Breda|NL|Netherlands|99
 2622|GMA|Gemena|GMA|Gemena|ZR|Zaire|1
@@ -2646,7 +2645,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 2644|GNM|Guanambi|GNM|Guanambi|BR|Brazil|-3
 2645|GNN|Ghinnir|GNN|Ghinnir|ET|Ethiopia|99
 2646|GNR|General Roca|GNR|General Roca|AR|Argentina|99
-2647|GNS|Binaka|GNS|Gunungsitoli|ID|Indonesia|7
+2647|GNS|Binaka|GNS|Gunung Sitoli|ID|Indonesia|7
 2648|GNT|Milan|GNT|Grants|US|United States|-7
 2649|GNU|Goodnews Bay|GNU|Goodnews Bay|US|United States|-9
 2650|GNV|Gainesville Regional|GNV|Gainesville|US|United States|-5
@@ -2734,7 +2733,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 2732|GTI|Guettin|GTI|Guettin|DE|Germany|1
 2733|GTK|Sungei Tekai|GTK|Sungei Tekai|MY|Malaysia|99
 2734|GTN|Glentanner|GTN|Mount Cook|NZ|New Zealand|12
-2735|GTO|Tolotio|GTO|Gorontalo|ID|Indonesia|8
+2735|GTO|Jalaluddin|GTO|Gorontalo|ID|Indonesia|8
 2736|GTR|Golden Triangle Reg.|GTR|Columbus|US|United States|-6
 2737|GTS|Granites|GTS|Granites|AU|Australia|99
 2738|GTT|Georgetown|GTT|Georgetown|AU|Australia|99
@@ -3201,7 +3200,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3199|IKP|Inkerman|IKP|Inkerman|AU|Australia|99
 3200|IKS|Tiksi|IKS|Tiksi|RU|Russian Federation|10
 3201|IKT|Irkutsk|IKT|Irkutsk|RU|Russian Federation|9
-3202|ILA|Illaga|ILA|Illaga|ID|Indonesia|99
+3202|ILA|Illaga|ILA|Paniai|ID|Indonesia|99
 3203|ILB|Ilha Solteira|ILB|Ilha Solteira|BR|Brazil|99
 3204|ILE|Municipal|ILE|Killeen|US|United States|99
 3205|ILF|Ilford|ILF|Ilford|CA|Canada|-6
@@ -3327,7 +3326,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3325|ITQ|Itaqui|ITQ|Itaqui|BR|Brazil|99
 3326|ITR|Hidroeletrica|ITR|Itumbiara|BR|Brazil|99
 3327|IUE|Hanan|IUE|Niue Island|NU|Niue|-11
-3328|IUL|Ilu|IUL|Ilu|ID|Indonesia|99
+3328|IUL|Ilu|IUL|Puncak Jaya|ID|Indonesia|99
 3329|IUM|Summit Lake|IUM|Summit Lake|CA|Canada|99
 3330|IUS|Inus|IUS|Inus|PG|Papua New Guinea|99
 3331|IVA|Ambanja|IVA|Ambanja|MG|Madagascar|3
@@ -3507,7 +3506,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3505|JNZ|Jinzhou|JNZ|Jinzhou|CN|China|8
 3506|JOC|Centerport Heliport|JOC|Santa Ana|US|United States|99
 3507|JOE|Joensuu|JOE|Joensuu|FI|Finland|2
-3508|JOG|Adisutjipto|JOG|Yogyakarta|ID|Indonesia|7
+3508|JOG|Adi Sucipto|JOG|Yogyakarta|ID|Indonesia|7
 3509|JOH|Port Saint Johns|JOH|Port Saint Johns|ZA|South Africa|99
 3510|JOI|Lauro Carneiro De Loyola|JOI|Joinville|BR|Brazil|-3
 3511|JOK|Joshkar-Ola|JOK|Joshkar-Ola|RU|Russian Federation|4
@@ -3596,13 +3595,13 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3594|KAW|Kawthaung|KAW|Kawthaung|MM|Myanmar|6.5
 3595|KAX|Kalbarri|KAX|Kalbarri|AU|Australia|8
 3596|KAY|Wakaya Island|KAY|Wakaya Island|FJ|Fiji|99
-3597|KAZ|Kau|KAZ|Kau|ID|Indonesia|99
+3597|KAZ|Kuabang|KAZ|Tobelo|ID|Indonesia|99
 3598|KBA|Kabala|KBA|Kabala|SL|Sierra Leone|99
 3599|KBB|Kirkimbie|KBB|Kirkimbie|AU|Australia|99
 3600|KBC|Birch Creek|KBC|Birch Creek|US|United States|-9
 3601|KBD|Kimberley Downs|KBD|Kimberley Downs|AU|Australia|99
 3602|KBE|Hot Springs SPB|KBE|Bell Island|US|United States|99
-3603|KBF|Karubaga|KBF|Karubaga|ID|Indonesia|99
+3603|KBF|Karubaga|KBF|Jayawijaya|ID|Indonesia|99
 3604|KBG|Kabalega Falls|KBG|Kabalega Falls|UG|Uganda|99
 3605|KBH|Kalat|KBH|Kalat|PK|Pakistan|99
 3606|KBI|Kribi|KBI|Kribi|CM|Cameroon|99
@@ -3616,20 +3615,20 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3614|KBR|Sultan Ismail Petra|KBR|Kota Bharu|MY|Malaysia|8
 3615|KBS|Bo|KBS|Bo|SL|Sierra Leone|0
 3616|KBT|Kaben|KBT|Kaben|MH|Marshall Islands|12
-3617|KBU|Kotabaru|KBU|Kotabaru|ID|Indonesia|8
+3617|KBU|Stagen|KBU|Kotabaru|ID|Indonesia|8
 3618|KBV|Krabi|KBV|Krabi|TH|Thailand|7
 3619|KBW|Chignik Bay|KBW|Chignik|US|United States|-9
-3620|KBX|Kambuaya|KBX|Kambuaya|ID|Indonesia|99
+3620|KBX|Kambuaya|KBX|Sorong Selatan|ID|Indonesia|99
 3621|KBY|Streaky Bay|KBY|Streaky Bay|AU|Australia|4
 3622|KBZ|Kaikoura|KBZ|Kaikoura|NZ|New Zealand|12
 3623|KCA|Kuqa|KCA|Kuqa|CN|China|8
 3624|KCC|Coffman Cove SPB|KCC|Coffman Cove|US|United States|-9
-3625|KCD|Kamur|KCD|Kamur|ID|Indonesia|99
+3625|KCD|Kamur|KCD|Asmat|ID|Indonesia|99
 3626|KCE|Collinsville|KCE|Collinsville|AU|Australia|99
 3627|KCF|Kadanwari|KCF|Kadanwari|PK|Pakistan|99
 3628|KCG|Fisheries|KCG|Chignik|US|United States|99
 3629|KCH|Kuching|KCH|Kuching|MY|Malaysia|8
-3630|KCI|Kon|KCI|Kon|ID|Indonesia|99
+3630|KCI|Kon|KCI|Kon|ID|Timor Leste|99
 3631|KCJ|Komaio|KCJ|Komaio|PG|Papua New Guinea|99
 3632|KCK|Fairfax Municipal|KCK|Kansas City|US|United States|99
 3633|KCL|Lagoon|KCL|Chignik|US|United States|-9
@@ -3651,7 +3650,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3649|KDF|Kouba|KDF|Kouba|DZ|Algeria|99
 3650|KDG|Kardjali|KDG|Kardjali|BG|Bulgaria|99
 3651|KDH|Kandahar|KDH|Kandahar|AF|Afghanistan|4.5
-3652|KDI|Wolter Monginsidi|KDI|Kendari|ID|Indonesia|8
+3652|KDI|Haluoleo|KDI|Kendari|ID|Indonesia|8
 3653|KDK|Municipal|KDK|Kodiak|US|United States|99
 3654|KDM|Kaadedhdhoo|KDM|Kaadedhdhoo|MV|Maldives|5
 3655|KDN|Ndende|KDN|Ndende|GA|Gabon|99
@@ -3674,7 +3673,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3672|KEF|Keflavik Intl.|REK|Reykjavik|IS|Iceland|0
 3673|KEG|Keglsugl|KEG|Keglsugl|PG|Papua New Guinea|99
 3674|KEH|Kenmore Air Harbor|KEH|Kenmore Air Harbor|US|United States|-8
-3675|KEI|Kepi|KEI|Kepi|ID|Indonesia|99
+3675|KEI|Kepi|KEI|Merauke|ID|Indonesia|99
 3676|KEJ|Kemerovo|KEJ|Kemerovo|RU|Russian Federation|7
 3677|KEK|Ekwok|KEK|Ekwok|US|United States|-9
 3678|KEL|Kiel-Holtenau|KEL|Kiel|DE|Germany|1
@@ -3682,7 +3681,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3680|KEN|Kenema|KEN|Kenema|SL|Sierra Leone|0
 3681|KEO|Odienne|KEO|Odienne|CI|Cote D'Ivoire|99
 3682|KEP|Nepalganj|KEP|Nepalganj|NP|Nepal|5.75
-3683|KEQ|Kebar|KEQ|Kebar|ID|Indonesia|99
+3683|KEQ|Kebar|KEQ|Manokwari|ID|Indonesia|99
 3684|KER|Kerman|KER|Kerman|IR|Iran|3.5
 3685|KES|Kelsey|KES|Kelsey|CA|Canada|99
 3686|KET|Keng Tung|KET|Keng Tung|MM|Myanmar|6.5
@@ -3827,7 +3826,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3825|KMJ|Kumamoto|KMJ|Kumamoto|JP|Japan|9
 3826|KMK|Makabana|KMK|Makabana|CG|Congo|99
 3827|KML|Kamileroi|KML|Kamileroi|AU|Australia|99
-3828|KMM|Kimam|KMM|Kimam|ID|Indonesia|99
+3828|KMM|Kimaan|KMM|Merauke|ID|Indonesia|99
 3829|KMN|Kamina|KMN|Kamina|ZR|Zaire|2
 3830|KMO|Manokotak SPB|KMO|Manokotak|US|United States|-9
 3831|KMP|J.G.H. Van Der Wath|KMP|Keetmanshoop|NA|Namibia|1
@@ -3846,7 +3845,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3844|KND|Kindu|KND|Kindu|ZR|Zaire|2
 3845|KNE|Kanainj|KNE|Kanainj|PG|Papua New Guinea|99
 3846|KNF|Marham RAF|KNF|Kings Lynn|GB|United Kingdom|0
-3847|KNG|Kaimana|KNG|Kaimana|ID|Indonesia|9
+3847|KNG|Utarom|KNG|Kaimana|ID|Indonesia|9
 3848|KNH|Shang-Yi|KNH|Kinmen|TW|Taiwan|8
 3849|KNI|Katanning|KNI|Katanning|AU|Australia|99
 3850|KNJ|Kindamba|KNJ|Kindamba|CG|Congo|99
@@ -3854,7 +3853,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3852|KNL|Kelanoa|KNL|Kelanoa|PG|Papua New Guinea|99
 3853|KNM|Kaniama|KNM|Kaniama|ZR|Zaire|99
 3854|KNN|Kankan|KNN|Kankan|GN|Guinea|0
-3855|KNO|Kuala Namu International Airport|KNO|Kuala Namu|ID|Indonesia|7
+3855|KNO|Kuala Namu International Airport|KNO|Medan|ID|Indonesia|7
 3856|KNP|Capanda|KNP|Capanda|AO|Angola|1
 3857|KNQ|Kone|KNQ|Kone|NC|New Caledonia|11
 3858|KNR|Jam|KNR|Kangan|IR|Iran|99
@@ -3869,8 +3868,8 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3867|KOA|Kona Intl. Arpt.|KOA|Kona|||-10
 3868|KOB|Koutaba|KOB|Koutaba|CM|Cameroon|99
 3869|KOC|Koumac|KOC|Koumac|NC|New Caledonia|11
-3870|KOD|Sabiha Gökçen Havaalanı|KOD|Kotabangun|ID|Indonesia|99
-3871|KOE|Eltari|KOE|Kupang|ID|Indonesia|8
+3870|KOD|Kotabangun|KOD|Kutai Kartanegara|ID|Indonesia|99
+3871|KOE|El Tari|KOE|Kupang|ID|Indonesia|8
 3872|KOF|Komatipoort|KOF|Komatipoort|ZA|South Africa|99
 3873|KOG|Khong|KOG|Khong|LA|Laos|99
 3874|KOH|Koolatah|KOH|Koolatah|AU|Australia|99
@@ -3889,7 +3888,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3887|KOU|Koulamoutou|KOU|Koulamoutou|GA|Gabon|1
 3888|KOV|Kokshetau|KOV|Kokshetau|KZ|Kazakhstan|6
 3889|KOW|Ganzhou|KOW|Ganzhou|CN|China|8
-3890|KOX|Kokonao|KOX|Kokonao|ID|Indonesia|1
+3890|KOX|Kokonao|KOX|Mimika|ID|Indonesia|1
 3891|KOY|Olga Bay SPB|KOY|Olga Bay|US|United States|-9
 3892|KOZ|Ouzinkie SPB|KOZ|Ouzinkie|US|United States|-9
 3893|KPA|Kopiago|KPA|Kopiago|PG|Papua New Guinea|99
@@ -3917,7 +3916,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3915|KQL|Kol|KQL|Kol|PG|Papua New Guinea|99
 3916|KRA|Kerang|KRA|Kerang|AU|Australia|99
 3917|KRB|Karumba|KRB|Karumba|AU|Australia|10
-3918|KRC|Kerinci|KRC|Kerinci|ID|Indonesia|99
+3918|KRC|Depati Parbo|KRC|Kerinci|ID|Indonesia|99
 3919|KRD|Kurundi|KRD|Kurundi|AU|Australia|99
 3920|KRE|Kirundo|KRE|Kirundo|BI|Burundi|99
 3921|KRF|Kramfors|KRF|Kramfors|SE|Sweden|1
@@ -3972,7 +3971,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 3970|KTD|Kitadaito|KTD|Kitadaito|JP|Japan|9
 3971|KTE|Kerteh|KTE|Kerteh|MY|Malaysia|8
 3972|KTF|Takaka|KTF|Takaka|NZ|New Zealand|12
-3973|KTG|Ketapang|KTG|Ketapang|ID|Indonesia|7
+3973|KTG|Rahadi Oesman|KTG|Ketapang|ID|Indonesia|7
 3974|KTH|SPB|KTH|Tikchik|US|United States|99
 3975|KTI|Kratie|KTI|Kratie|KH|Cambodia|7
 3976|KTK|Kanua|KTK|Kanua|PG|Papua New Guinea|99
@@ -4025,7 +4024,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4023|KVU|Korolevu|KVU|Korolevu|FJ|Fiji|99
 4024|KVX|Kirov|KVX|Kirov|RU|Russian Federation|4
 4025|KWA|Kwajalein|KWA|Kwajalein|MH|Marshall Islands|12
-4026|KWB|Karimunjawa|KWB|Karimunjawa|ID|Indonesia|7
+4026|KWB|Dewandaru|KWB|Karimunjawa|ID|Indonesia|7
 4027|KWD|Kawadjia|KWD|Kawadjia|CF|Central African Republic|99
 4028|KWE|Guiyang|KWE|Guiyang|CN|China|8
 4029|KWF|Waterfall SPB|KWF|Waterfall|US|United States|99
@@ -4085,7 +4084,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4083|LAE|Nadzab|LAE|Lae|PG|Papua New Guinea|10
 4084|LAF|Purdue University|LAF|Lafayette|US|United States|-5
 4085|LAG|La Guaira|LAG|La Guaira|VE|Venezuela|99
-4086|LAH|Labuha|LAH|Labuha|ID|Indonesia|9
+4086|LAH|Oesman Sadik|LAH|Labuha|ID|Indonesia|9
 4087|LAI|Servel|LAI|Lannion|FR|France|1
 4088|LAJ|Lages|LAJ|Lages|BR|Brazil|99
 4089|LAK|Aklavik|LAK|Aklavik|CA|Canada|-7
@@ -4113,7 +4112,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4111|LBG|Le Bourget|PAR|Paris|FR|France|1
 4112|LBH|Palm Beach SPB|SYD|Sydney|AU|Australia|99
 4113|LBI|Le Sequestre|LBI|Albi|FR|France|1
-4114|LBJ|Mutiara|LBJ|Labuan Bajo|ID|Indonesia|8
+4114|LBJ|Komodo|LBJ|Labuan Bajo|ID|Indonesia|8
 4115|LBK|Liboi|LBK|Liboi|KE|Kenya|99
 4116|LBL|Municipal|LBL|Liberal|US|United States|-6
 4117|LBM|Luabo|LBM|Luabo|MZ|Mozambique|99
@@ -4125,7 +4124,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4123|LBT|Lumberton|LBT|Lumberton|US|United States|-5
 4124|LBU|Labuan|LBU|Labuan|MY|Malaysia|8
 4125|LBV|Libreville|LBV|Libreville|GA|Gabon|1
-4126|LBW|Long Bawan|LBW|Long Bawan|ID|Indonesia|8
+4126|LBW|Yuvai Semaring|LBW|Long Bawan|ID|Indonesia|8
 4127|LBX|Lubang|LBX|Lubang|PH|Philippines|8
 4128|LBY|Montoir|LBY|La Baule-Escoublac|FR|France|99
 4129|LBZ|Lukapa|LBZ|Lukapa|AO|Angola|1
@@ -4231,7 +4230,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4229|LHB|Lost Harbor Sea Port|LHB|Lost Harbor|US|United States|99
 4230|LHE|Alama Iqbal Intl.|LHE|Lahore|PK|Pakistan|5
 4231|LHG|Lightning Ridge|LHG|Lightning Ridge|AU|Australia|10
-4232|LHI|Lereh|LHI|Lereh|ID|Indonesia|9
+4232|LHI|Lereh|LHI|Jayapura|ID|Indonesia|9
 4233|LHK|Guanghua|LHK|Guanghua|CN|China|99
 4234|LHM|Lincoln Regional Arpt.|LHM|Lincoln|||-8
 4235|LHN|Lishan|LHN|Lishan|TW|Taiwan|99
@@ -4249,7 +4248,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4247|LIF|Lifou|LIF|Lifou|NC|New Caledonia|11
 4248|LIG|Bellegarde|LIG|Limoges|FR|France|1
 4249|LIH|Lihue|LIH|Kauai Island|US|United States|-10
-4250|LII|Mulia|LII|Mulia|ID|Indonesia|99
+4250|LII|Mulia|LII|Puncak Jaya|ID|Indonesia|99
 4251|LIJ|Long Island|LIJ|Long Island|US|United States|99
 4252|LIK|Likiep Island|LIK|Likiep Island|MH|Marshall Islands|12
 4253|LIL|Lesquin|LIL|Lille|FR|France|1
@@ -4269,7 +4268,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4267|LJG|Lijiang|LJG|Lijiang City|CN|China|8
 4268|LJN|Brazoria County|LJN|Lake Jackson|US|United States|99
 4269|LJU|Brnik|LJU|Ljubljana|SI|Slovenia|1
-4270|LKA|Larantuka|LKA|Larantuka|ID|Indonesia|8
+4270|LKA|Gewayantana|LKA|Larantuka|ID|Indonesia|8
 4271|LKB|Lakeba|LKB|Lakeba|FJ|Fiji|12
 4272|LKC|Lekana|LKC|Lekana|CG|Congo|99
 4273|LKD|Lakeland Downs|LKD|Lakeland Downs|AU|Australia|99
@@ -4297,7 +4296,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4295|LLI|Lalibela|LLI|Lalibela|ET|Ethiopia|3
 4296|LLL|Lissadell|LLL|Lissadell|AU|Australia|99
 4297|LLM|Long Lama|LLM|Long Lama|MY|Malaysia|99
-4298|LLN|Kelila|LLN|Kelila|ID|Indonesia|99
+4298|LLN|Kelila|LLN|Jayawijaya|ID|Indonesia|99
 4299|LLP|Linda Downs|LLP|Linda Downs|AU|Australia|99
 4300|LLS|Las Lomitas|LLS|Las Lomitas|AR|Argentina|99
 4301|LLT|Lilydale Arpt.|LLT|Lilydale|AU|Australia|99
@@ -4432,8 +4431,8 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4430|LST|Launceston|LST|Launceston|AU|Australia|10
 4431|LSU|Long Sukang|LSU|Long Sukang|MY|Malaysia|99
 4432|LSV|Nellis AFB|LSV|Las Vegas|||-8
-4433|LSW|Lhoksumawe|LSW|Lhoksumawe|ID|Indonesia|7
-4434|LSX|Lhok Sukon|LSX|Lhok Sukon|ID|Indonesia|99
+4433|LSW|Malikus Saleh|LSW|Lhoksumawe|ID|Indonesia|7
+4434|LSX|Lhok Sukon|LSX|Aceh|ID|Indonesia|99
 4435|LSY|Lismore|LSY|Lismore|AU|Australia|10
 4436|LSZ|Losinj Arpt|LSZ|Mali Losinj|HR|Croatia|1
 4437|LTA|Letaba|LTA|Tzaneen|ZA|South Africa|2
@@ -4478,8 +4477,8 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4476|LUS|Lusanga|LUS|Lusanga|ZR|Zaire|99
 4477|LUT|Laura Station|LUT|Laura Station|AU|Australia|99
 4478|LUU|Laura|LUU|Laura|AU|Australia|99
-4479|LUV|Langgur|LUV|Langgur|ID|Indonesia|9
-4480|LUW|Luwuk|LUW|Luwuk|ID|Indonesia|8
+4479|LUV|Dumatubun|LUV|Langgur|ID|Indonesia|9
+4480|LUW|Syukuran Aminuddin Amir|LUW|Luwuk|ID|Indonesia|8
 4481|LUX|Findel|LUX|Luxembourg|LU|Luxembourg|1
 4482|LUY|Lushoto|LUY|Lushoto|TZ|Tanzania|99
 4483|LUZ|Lushan|LUZ|Lushan|CN|China|1
@@ -4495,7 +4494,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4493|LVS|Las Vegas|LVS|Las Vegas|US|United States|-7
 4494|LWB|Greenbrier Valley|LWB|Lewisburg|US|United States|-5
 4495|LWC|Lawrence|LWC|Lawrence|US|United States|-6
-4496|LWE|Lewoleba|LWE|Lewoleba|ID|Indonesia|99
+4496|LWE|Wonopito|LWE|Lewoleba|ID|Indonesia|99
 4497|LWH|Lawn Hill|LWH|Lawn Hill|AU|Australia|99
 4498|LWI|Lowai|LWI|Lowai|PG|Papua New Guinea|99
 4499|LWK|Lerwick/Tingwall|LWK|Shetland Islands|GB|United Kingdom|0
@@ -4523,7 +4522,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4521|LYG|Lianyungang|LYG|Lianyungang|CN|China|8
 4522|LYH|Preston-Glenn Field|LYH|Lynchburg|US|United States|-5
 4523|LYI|Linyi|LYI|Linyi|CN|China|8
-4524|LYK|Lunyuk|LYK|Lunyuk|ID|Indonesia|99
+4524|LYK|Lunyuk|LYK|Sumbawa|ID|Indonesia|99
 4525|LYN|Bron|LYN|Lyon|FR|France|1
 4526|LYP|Faisalabad|LYP|Faisalabad|PK|Pakistan|5
 4527|LYR|Svalbard|LYR|Longyearbyen|NO|Norway|1
@@ -4620,7 +4619,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4618|MCZ|Palmares|MCZ|Maceio|BR|Brazil|-3
 4619|MDA|Martindale Army Heliport|MDA|San Antonio|||99
 4620|MDB|Melinda|MDB|Melinda|BZ|Belize|99
-4621|MDC|Samratulangi|MDC|Manado|ID|Indonesia|8
+4621|MDC|Sam Ratulangi|MDC|Manado|ID|Indonesia|8
 4622|MDD|Airpark|MDD|Midland|US|United States|99
 4623|MDE|Jose Maria Cordova|MDE|Medellin|CO|Colombia|-5
 4624|MDF|Medford|MDF|Medford|US|United States|99
@@ -4633,7 +4632,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4631|MDM|Munduku|MDM|Munduku|PG|Papua New Guinea|99
 4632|MDN|Jefferson Proving Grd|MDN|Madison|US|United States|99
 4633|MDO|Intermediate|MDO|Middleton Island|US|United States|-3
-4634|MDP|Mindiptana|MDP|Mindiptana|ID|Indonesia|99
+4634|MDP|Mindiptana|MDP|Boven Digoel|ID|Indonesia|99
 4635|MDQ|Mar Del Plata|MDQ|Mar Del Plata|AR|Argentina|-3
 4636|MDR|Medfra|MDR|Medfra|US|United States|99
 4637|MDS|Middle Caicos|MDS|Middle Caicos|TC|Turks and Caicos Islands|-5
@@ -4660,9 +4659,8 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4658|MEN|Brenoux|MEN|Mende|FR|France|1
 4659|MEO|Dare County Regional|MEO|Manteo|US|United States|99
 4660|MEP|Mersing|MEP|Mersing|MY|Malaysia|99
-4661|MEQ|Seunagan|MEQ|Meulaboh|ID|Indonesia|99
+4661|MEQ|Cut Nyak Dhien|MEQ|Meulaboh|ID|Indonesia|99
 4662|MER|Castle AFB|MER|Atwater|||-8
-4663|MES|Polonia|MES|Medan|ID|Indonesia|7
 4664|MET|Moreton|MET|Moreton|AU|Australia|99
 4665|MEU|Monte Dourado|MEU|Monte Dourado|BR|Brazil|99
 4666|MEV|Douglas County|MEV|Minden|US|United States|99
@@ -4788,7 +4786,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4786|MJR|Miramar|MJR|Miramar|AR|Argentina|99
 4787|MJS|Maganja Da Costa|MJS|Maganja Da Costa|MZ|Mozambique|99
 4788|MJT|Mytilene Intl. Arpt.|MJT|Mytilene|GR|Greece|2
-4789|MJU|Mamuju|MJU|Mamuju|ID|Indonesia|8
+4789|MJU|Tampa Padang|MJU|Mamuju|ID|Indonesia|8
 4790|MJV|San Javier|MJV|Murcia|ES|Spain|1
 4791|MJW|Mahenye|MJW|Mahenye|ZW|Zimbabwe|99
 4792|MJY|Mangunjaya|MJY|Mangunjaya|ID|Indonesia|99
@@ -4867,7 +4865,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4865|MMX|Sturup|MMX|Malmo|SE|Sweden|1
 4866|MMY|Hirara|MMY|Miyako Jima|JP|Japan|9
 4867|MMZ|Maimana|MMZ|Maimana|AF|Afghanistan|4.5
-4868|MNA|Melangguane|MNA|Melangguane|ID|Indonesia|99
+4868|MNA|Melonguane|MNA|Melonguane|ID|Indonesia|99
 4869|MNB|Moanda|MNB|Moanda|ZR|Zaire|1
 4870|MNC|Nacala|MNC|Nacala|MZ|Mozambique|2
 4871|MND|Medina|MND|Medina|CO|Colombia|99
@@ -4898,7 +4896,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4896|MOC|Montes Claros|MOC|Montes Claros|BR|Brazil|-3
 4897|MOD|Municipal|MOD|Modesto|||-8
 4898|MOE|Momeik|MOE|Momeik|MM|Myanmar|99
-4899|MOF|Waioti|MOF|Maumere|ID|Indonesia|8
+4899|MOF|Wai Oti|MOF|Maumere|ID|Indonesia|8
 4900|MOG|Mong Hsat|MOG|Mong Hsat|MM|Myanmar|6.5
 4901|MOH|Mohanbari|MOH|Mohanbari|IN|India|5.5
 4902|MOI|Mitiaro Island|MOI|Mitiaro Island|CK|Cook Islands|-10
@@ -4938,7 +4936,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4936|MPQ|Maan|MPQ|Maan|JO|Jordan|99
 4937|MPR|Mcpherson|MPR|Mcpherson|US|United States|99
 4938|MPS|Mount Pleasant|MPS|Mount Pleasant|US|United States|99
-4939|MPT|Maliana|MPT|Maliana|ID|Indonesia|99
+4939|MPT|Maliana|MPT|Maliana|ID|Timor Leste|99
 4940|MPU|Mapua|MPU|Mapua|PG|Papua New Guinea|-5
 4941|MPV|Edward F Knapp State|MPV|Montpelier|||-5
 4942|MPW|Mariupol|MPW|Mariupol|||2
@@ -5051,7 +5049,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5049|MUC|Franz Josef Strauss|MUC|Munich|DE|Germany|1
 5050|MUD|Mueda|MUD|Mueda|MZ|Mozambique|99
 5051|MUE|Kamuela|MUE|Kamuela|US|United States|-10
-5052|MUF|Muting|MUF|Muting|ID|Indonesia|99
+5052|MUF|Muting|MUF|Merauke|ID|Indonesia|99
 5053|MUG|Mulege|MUG|Mulege|MX|Mexico|99
 5054|MUH|Mersa Matruh|MUH|Mersa Matruh|EG|Egypt|2
 5055|MUI|Muir AAF|MUI|Fort Indiantown|US|United States|-5
@@ -5107,7 +5105,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5105|MWH|Grant County|MWH|Moses Lake|US|United States|-8
 5106|MWI|Maramuni|MWI|Maramuni|PG|Papua New Guinea|99
 5107|MWJ|Matthews Ridge|MWJ|Matthews Ridge|GY|Guyana|99
-5108|MWK|Matak|MWK|Matak|ID|Indonesia|7
+5108|MWK|Matak|MWK|Pal Matak|ID|Indonesia|7
 5109|MWL|Mineral Wells Arpt|MWL|Mineral Wells|US|United States|-6
 5110|MWM|Windom Municipal|MWM|Windom|||-6
 5111|MWN|Mwadui|MWN|Mwadui|TZ|Tanzania|99
@@ -5120,7 +5118,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5118|MWY|Miranda Downs|MWY|Miranda Downs|AU|Australia|99
 5119|MWZ|Mwanza|MWZ|Mwanza|TZ|Tanzania|3
 5120|MXA|Municipal|MXA|Manila|US|United States|99
-5121|MXB|Masamba|MXB|Masamba|ID|Indonesia|99
+5121|MXB|Andi Djemma|MXB|Masamba|ID|Indonesia|99
 5122|MXC|San Juan County|MXC|Monticello|US|United States|99
 5123|MXD|Marion Downs|MXD|Marion Downs|AU|Australia|99
 5124|MXE|Maxton|MXE|Maxton|US|United States|99
@@ -5201,7 +5199,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5199|NAE|Natitingou|NAE|Natitingou|BJ|Benin|99
 5200|NAF|Banaina|NAF|Banaina|ID|Indonesia|99
 5201|NAG|Sonegaon|NAG|Nagpur|IN|India|5.5
-5202|NAH|Naha|NAH|Naha|ID|Indonesia|8
+5202|NAH|Naha|NAH|Tahuna|ID|Indonesia|8
 5203|NAI|Annai|NAI|Annai|GY|Guyana|-4
 5204|NAJ|Nakhichevan|NAJ|Nakhichevan|AZ|Azerbaijan|4
 5205|NAK|Nakhon Ratchasima|NAK|Nakhon Ratchasima|TH|Thailand|7
@@ -5247,7 +5245,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5245|NCT|Guanacaste|NCT|Nicoya|CR|Costa Rica|99
 5246|NCU|Nukus|NCU|Nukus|UZ|Uzbekistan|5
 5247|NCY|Annecy-Meythe|NCY|Annecy|FR|France|1
-5248|NDA|Bandanaira|NDA|Bandanaira|ID|Indonesia|9
+5248|NDA|Bandaneira|NDA|Banda|ID|Indonesia|9
 5249|NDB|Nouadhibou|NDB|Nouadhibou|MR|Mauritania|0
 5250|NDC|Nanded|NDC|Nanded|IN|India|5.5
 5251|NDD|Sumbe|NDD|Sumbe|AO|Angola|99
@@ -5327,7 +5325,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5325|NKA|Nkan|NKA|Nkan|GA|Gabon|99
 5326|NKB|Noonkanbah|NKB|Noonkanbah|AU|Australia|99
 5327|NKC|Nouakchott|NKC|Nouakchott|MR|Mauritania|0
-5328|NKD|Sinak|NKD|Sinak|ID|Indonesia|99
+5328|NKD|Sinak|NKD|Puncak Jaya|ID|Indonesia|99
 5329|NKG|Lukou Intl. Arpt.|NKG|Nanking/nanjing|CN|China|8
 5330|NKI|Naukiti|NKI|Naukiti|US|United States|99
 5331|NKL|Nkolo|NKL|Nkolo|ZR|Zaire|99
@@ -5372,7 +5370,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5370|NNR|Connemara|NNR|Spiddal|IE|Ireland|0
 5371|NNT|Nan|NNT|Nan|TH|Thailand|7
 5372|NNU|Nanuque|NNU|Nanuque|BR|Brazil|99
-5373|NNX|Nunukan|NNX|Nunukan|ID|Indonesia|8
+5373|NNX|Warukin|NNX|Tabalong|ID|Indonesia|8
 5374|NNY|Nanyang|NNY|Nanyang|CN|China|8
 5375|NOA|Nowra|NOA|Nowra|AU|Australia|10
 5376|NOB|Nosara Beach|NOB|Nosara Beach|CR|Costa Rica|-6
@@ -5398,7 +5396,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5396|NPG|Nipa|NPG|Nipa|PG|Papua New Guinea|99
 5397|NPH|Nephi|NPH|Nephi|US|United States|99
 5398|NPL|New Plymouth|NPL|New Plymouth|NZ|New Zealand|12
-5399|NPO|Nangapinoh|NPO|Nangapinoh|ID|Indonesia|99
+5399|NPO|Nanga Pinoh|NPO|Nanga Pinoh|ID|Indonesia|99
 5400|NPP|Napperby|NPP|Napperby|AU|Australia|99
 5401|NPT|State|NPT|Newport|US|United States|99
 5402|NPU|San Pedro Uraba|NPU|San Pedro Uraba|CO|Colombia|99
@@ -5454,7 +5452,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5452|NTR|Tuxtla Gutierrez|NTR|Tuxtla Gutierrez|MX|Mexico|-6
 5453|NTT|Kuini Lavenia|NTT|Niuatoputapu|TO|Tonga|13
 5454|NTU|NAS|NTU|Oceana|US|United States|-5
-5455|NTX|Natuna Ranai|NTX|Natuna Ranai|ID|Indonesia|7
+5455|NTX|Ranai|NTX|Natuna|ID|Indonesia|7
 5456|NTY|Pilanesberg|NTY|Sun City|ZA|South Africa|2
 5457|NUB|Numbulwar|NUB|Numbulwar|AU|Australia|99
 5458|NUD|En Nahud|NUD|En Nahud|SD|Sudan|99
@@ -5516,7 +5514,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5514|OAX|Xoxocotlan|OAX|Oaxaca|MX|Mexico|-6
 5515|OBA|Oban|OBA|Oban|AU|Australia|99
 5516|OBC|Obock|OBC|Obock|DJ|Djibouti|3
-5517|OBD|Obano|OBD|Obano|ID|Indonesia|99
+5517|OBD|Obano|OBD|Nabire|ID|Indonesia|99
 5518|OBE|County|OBE|Okeechobee|US|United States|-5
 5519|OBF|Oberpfaffenhofen|OBF|Oberpfaffenhofen|DE|Germany|1
 5520|OBI|Obidos|OBI|Obidos|BR|Brazil|99
@@ -5551,7 +5549,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5549|ODW|Oak Harbor|ODW|Oak Harbor|US|United States|99
 5550|ODY|Oudomxai|ODY|Oudomxay|LA|Laos|7
 5551|OEA|Oneal|OEA|Vincennes|US|United States|99
-5552|OEC|Ocussi|OEC|Ocussi|ID|Indonesia|99
+5552|OEC|Ocussi|OEC|Ocussi|ID|Timor Leste|99
 5553|OEL|Orel|OEL|Orel|RU|Russian Federation|99
 5554|OEO|Municipal|OEO|Osceola|US|United States|99
 5555|OER|Ornskoldsvik|OER|Ornskoldsvik|SE|Sweden|1
@@ -5599,12 +5597,12 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5597|OKI|Oki Island|OKI|Oki Island|JP|Japan|9
 5598|OKJ|Okayama|OKJ|Okayama|JP|Japan|9
 5599|OKK|Kokomo|OKK|Kokomo|US|United States|99
-5600|OKL|Oksibil|OKL|Oksibil|ID|Indonesia|99
+5600|OKL|Oksibil|OKL|Bintang|ID|Indonesia|99
 5601|OKM|Okmulgee|OKM|Okmulgee|US|United States|99
 5602|OKN|Okondja|OKN|Okondja|GA|Gabon|1
 5603|OKO|Yokota Afb|TYO|Tokyo|JP|Japan|9
 5604|OKP|Oksapmin|OKP|Oksapmin|PG|Papua New Guinea|99
-5605|OKQ|Okaba|OKQ|Okaba|ID|Indonesia|99
+5605|OKQ|Okaba|OKQ|Puncak Jaya|ID|Indonesia|99
 5606|OKR|Yorke Island|OKR|Yorke Island|AU|Australia|10
 5607|OKS|Oshkosh|OKS|Oshkosh|US|United States|99
 5608|OKT|Oktiabrskij|OKT|Oktiabrskij|RU|Russian Federation|99
@@ -5653,7 +5651,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5651|ONE|Onepusu|ONE|Onepusu|SB|Solomon Islands|99
 5652|ONG|Mornington|ONG|Mornington|AU|Australia|10
 5653|ONH|Municipal|ONH|Oneonta|US|United States|-5
-5654|ONI|Moanamani|ONI|Moanamani|ID|Indonesia|99
+5654|ONI|Moanamani|ONI|Dogiyai|ID|Indonesia|99
 5655|ONJ|Odate Noshiro|ONJ|Odate Noshiro|JP|Japan|9
 5656|ONL|Municipal|ONL|Oneill|US|United States|99
 5657|ONM|Socorro|ONM|Socorro|US|United States|99
@@ -5849,7 +5847,6 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5847|PBY|Hamilton/Proserpine|PBY|Peppers Palm Bay|AU|Australia|99
 5848|PBZ|Plettenberg Bay|PBZ|Plettenberg Bay|ZA|South Africa|99
 5849|PCA|Portage Creek|PCA|Portage Creek|US|United States|-6
-5850|PCB|Pondok Cabe|PCB|Jakarta|ID|Indonesia|7
 5851|PCC|Puerto Rico|PCC|Puerto Rico|CO|Colombia|99
 5852|PCD|Municipal|PCD|Prairie Du Chien|US|United States|99
 5853|PCE|Painter Creek|PCE|Painter Creek|US|United States|99
@@ -5879,7 +5876,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5877|PDK|Dekalb-Peachtree|PDK|Atlanta|||-5
 5878|PDL|Nordela|PDL|Ponta Delgada|||-1
 5879|PDN|Parndana|PDN|Parndana|AU|Australia|99
-5880|PDO|Pendopo|PDO|Pendopo|ID|Indonesia|7
+5880|PDO|Pendopo|PDO|Muara Enim|ID|Indonesia|7
 5881|PDP|Capitan Corbeta CA Curbelo Intl. Arpt.|PDP|Maldonado|UY|Uruguay|-3
 5882|PDS|Piedras Negras|PDS|Piedras Negras|MX|Mexico|-6
 5883|PDT|Pendleton|PDT|Pendleton|US|United States|-8
@@ -5928,7 +5925,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5926|PGG|Progresso|PGG|Sao Paulo|BR|Brazil|99
 5927|PGH|Pantnagar|PGH|Pantnagar|IN|India|5.5
 5928|PGI|Chitato|PGI|Chitato|AO|Angola|99
-5929|PGK|Pangkalpinang|PGK|Pangkalpinang|ID|Indonesia|7
+5929|PGK|Depati Amir|PGK|Pangkalpinang|ID|Indonesia|7
 5930|PGM|Port Graham|PGM|Port Graham|US|United States|99
 5931|PGN|Pangia|PGN|Pangia|PG|Papua New Guinea|99
 5932|PGP|Porto Alegre|PGP|Porto Alegre|ST|Sao Tome and Principe|99
@@ -6002,16 +5999,16 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6000|PKK|Pakokku|PKK|Pakokku|MM|Myanmar|6.5
 6001|PKL|Pakatoa Island|PKL|Pakatoa Island|NZ|New Zealand|99
 6002|PKM|Port Kaituma|PKM|Port Kaituma|GY|Guyana|99
-6003|PKN|Pangkalanbuun|PKN|Pangkalanbuun|ID|Indonesia|7
+6003|PKN|Iskandar|PKN|Pangkalan Bun|ID|Indonesia|7
 6004|PKO|Parakou|PKO|Parakou|BJ|Benin|99
 6005|PKP|Puka Puka|PKP|Puka Puka|PF|French Polynesia|-10
 6006|PKR|Pokhara|PKR|Pokhara|NP|Nepal|5.75
 6007|PKS|Paksane|PKS|Paksane|LA|Laos|99
 6008|PKT|Port Keats|PKT|Port Keats|AU|Australia|99
-6009|PKU|Sultan Syarif Kasim Ii|PKU|Pekanbaru|ID|Indonesia|7
+6009|PKU|Sultan Syarif Kasim II|PKU|Pekanbaru|ID|Indonesia|7
 6010|PKV|Pskov|PKV|Pskov|RU|Russian Federation|4
 6011|PKW|Selebi-Phikwe|PKW|Selebi-Phikwe|BW|Botswana|2
-6012|PKY|Palangkaraya|PKY|Palangkaraya|ID|Indonesia|7
+6012|PKY|Tjilik Riwut|PKY|Palangkaraya|ID|Indonesia|7
 6013|PKZ|Pakse|PKZ|Pakse|LA|Laos|7
 6014|PLA|Planadas|PLA|Planadas|CO|Colombia|99
 6015|PLB|Clinton County|PLB|Plattsburgh|US|United States|99
@@ -6024,7 +6021,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6022|PLJ|Placencia|PLJ|Placencia|BZ|Belize|-6
 6023|PLK|M Graham Clark|PLK|Branson/point Lookout|US|United States|99
 6024|PLL|Ponta Pelada|PLL|Manaus|BR|Brazil|-4
-6025|PLM|Mahmud Badaruddin Ii|PLM|Palembang|ID|Indonesia|7
+6025|PLM|Sultan Mahmud Badaruddin Ii|PLM|Palembang|ID|Indonesia|7
 6026|PLN|Emmet County|PLN|Pellston|US|United States|-5
 6027|PLO|Port Lincoln|PLO|Port Lincoln|AU|Australia|9.5
 6028|PLP|La Palma|PLP|La Palma|PA|Panama|-5
@@ -6034,7 +6031,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6032|PLT|Plato|PLT|Plato|CO|Colombia|99
 6033|PLU|Pampulha Domestic|BHZ|Belo Horizonte|BR|Brazil|-3
 6034|PLV|Poltava|PLV|Poltava|UA|Ukraine|2
-6035|PLW|Mutiara|PLW|Palu|ID|Indonesia|8
+6035|PLW|Mutiara Sis Aljufri|PLW|Palu|ID|Indonesia|8
 6036|PLX|Semipalatinsk|PLX|Semipalatinsk|KZ|Kazakhstan|6
 6037|PLY|Plymouth|PLY|Plymouth|US|United States|1
 6038|PLZ|Port Elizabeth|PLZ|Port Elizabeth|ZA|South Africa|2
@@ -6120,7 +6117,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6118|PPG|Intl.|PPG|Pago Pago|AS|American Samoa|-11
 6119|PPH|Peraitepuy|PPH|Peraitepuy|VE|Venezuela|99
 6120|PPI|Port Pirie|PPI|Port Pirie|AU|Australia|99
-6121|PPJ|Pulau Panjang|PPJ|Pulau Panjang|ID|Indonesia|99
+6121|PPJ|Pulau Panjang|PPJ|Seribu Island|ID|Indonesia|99
 6122|PPK|Petropavlovsk|PPK|Petropavlovsk|KZ|Kazakhstan|6
 6123|PPL|Phaplu|PPL|Phaplu|NP|Nepal|5.75
 6124|PPM|Pompano Beach|PPM|Pompano Beach|US|United States|99
@@ -6128,7 +6125,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6126|PPO|Powell Point|PPO|Powell Point|BS|Bahamas|99
 6127|PPP|Whitsunday Coast|PPP|Proserpine|AU|Australia|10
 6128|PPQ|Paraparaumu|PPQ|Paraparaumu|NZ|New Zealand|12
-6129|PPR|Pasir Pangarayan|PPR|Pasir Pangarayan|ID|Indonesia|99
+6129|PPR|Pasir Pangaraian|PPR|Pasir Pangaraian|ID|Indonesia|99
 6130|PPS|Puerto Princesa|PPS|Puerto Princesa|PH|Philippines|8
 6131|PPT|Faa'a|PPT|Papeete|PF|French Polynesia|-10
 6132|PPU|Papun|PPU|Papun|MM|Myanmar|99
@@ -6178,7 +6175,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6176|PSG|Petersburg James A Johnson|PSG|Petersburg|||-9
 6177|PSH|St Peter|PSH|St Peter|DE|Germany|1
 6178|PSI|Pasni|PSI|Pasni|PK|Pakistan|5
-6179|PSJ|Poso|PSJ|Poso|ID|Indonesia|8
+6179|PSJ|Kasiguncu|PSJ|Poso|ID|Indonesia|8
 6180|PSK|New River Valley|PSK|Dublin|US|United States|99
 6181|PSL|Perth|PSL|Perth|GB|United Kingdom|0
 6182|PSM|Pease Intl.|PSM|Portsmouth|||-5
@@ -6189,7 +6186,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6187|PSR|Liberi|PSR|Pescara|IT|Italy|1
 6188|PSS|Posadas|PSS|Posadas|AR|Argentina|-3
 6189|PST|Preston|PST|Preston|CU|Cuba|99
-6190|PSU|Putussibau|PSU|Putussibau|ID|Indonesia|7
+6190|PSU|Pangsuma|PSU|Putussibau|ID|Indonesia|7
 6191|PSW|Passos|PSW|Passos|BR|Brazil|99
 6192|PSX|Palacios|PSX|Palacios|US|United States|-6
 6193|PSY|Port Stanley|PSY|Port Stanley|FK|Falkland Islands|-3
@@ -6232,7 +6229,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6230|PUJ|Punta Cana Intl.|PUJ|Higuey|DO|Dominican Republic|-4
 6231|PUK|Pukarua|PUK|Pukarua|PF|French Polynesia|-10
 6232|PUL|Poulsbo|PUL|Poulsbo|US|United States|99
-6233|PUM|Pomala|PUM|Pomala|ID|Indonesia|8
+6233|PUM|Sangia Ni Bandera|PUM|Pomalaa|ID|Indonesia|8
 6234|PUN|Punia|PUN|Punia|ZR|Zaire|99
 6235|PUO|Prudhoe Bay|PUO|Prudhoe Bay|US|United States|99
 6236|PUP|Po|PUP|Po|BF|Burkina Faso|99
@@ -6268,7 +6265,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6266|PWE|Pevek|PWE|Pevek|RU|Russian Federation|12
 6267|PWI|Beles|PWI|Pawi|ET|Ethiopia|99
 6268|PWK|Pal-Waukee|PWK|Chicago|US|United States|-6
-6269|PWL|Purwokerto|PWL|Purwokerto|ID|Indonesia|99
+6269|PWL|Wirasaba|PWL|Purwokerto|ID|Indonesia|99
 6270|PWM|Intl Jetport|PWM|Portland|US|United States|-5
 6271|PWN|Pitts Town|PWN|Pitts Town|BS|Bahamas|99
 6272|PWO|Pweto|PWO|Pweto|ZR|Zaire|99
@@ -6328,7 +6325,6 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6326|QOF|Darnitsa Bus Station|QOF|Kiev|UA|Ukraine|99
 6327|QOH|Hotel Rus Bus Station|QOH|Kiev|UA|Ukraine|99
 6328|QOW|Owerri|QOW|Owerri|NG|Nigeria|1
-6329|QPG|Paya Lebar|SIN|Singapore|SG|Singapore|8
 6330|QPJ|Pecs-Pogany|QPJ|Pecs|HU|Hungary|1
 6331|QPW|Heliport|QPW|Kangaatsiaq|GL|Greenland|99
 6332|QQS|Railway Station|QQS|Saint Pancras Intl|GB|United Kingdom|0
@@ -6418,7 +6414,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6416|RDB|Red Dog|RDB|Red Dog|US|Alaska|99
 6417|RDC|Redencao|RDC|Redencao|BR|Brazil|-4
 6418|RDD|Redding|RDD|Redding|US|United States|-8
-6419|RDE|Merdey|RDE|Merdey|ID|Indonesia|99
+6419|RDE|Merdey|RDE|Manokwari|ID|Indonesia|99
 6420|RDG|Municipal/Spaatz Fld|RDG|Reading|US|United States|-5
 6421|RDM|Roberts Field|RDM|Redmond|US|United States|-8
 6422|RDN|LTS Pulau Redang|RDN|Redang|MY|Malaysia|8
@@ -6502,8 +6498,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6500|RKD|Knox County Regional|RKD|Rockland|US|United States|-5
 6501|RKE|Roskilde Arpt.|CPH|Copenhagen|DK|Denmark|1
 6502|RKH|Rock Hill|RKH|Rock Hill|US|United States|-5
-6503|RKI|Rokot|RKI|Rokot|ID|Indonesia|99
-6504|RKO|Sipora|RKO|Sipora|ID|Indonesia|99
+6504|RKO|Rokot|RKO|Sipora|ID|Indonesia|99
 6505|RKP|Aransas County|RKP|Rockport|US|United States|-6
 6506|RKR|Robert S Kerr|RKR|Poteau|US|United States|99
 6507|RKS|Sweetwater County|RKS|Rock Springs|US|United States|-7
@@ -6597,7 +6592,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6595|RSH|Russian SPB|RSH|Russian Mission|US|United States|-9
 6596|RSI|Rio Sidra|RSI|Rio Sidra|PA|Panama|-5
 6597|RSJ|Rosario SPB|RSJ|Rosario|US|United States|-8
-6598|RSK|Ransiki|RSK|Ransiki|ID|Indonesia|99
+6598|RSK|Abresso|RSK|Manokwari|ID|Indonesia|99
 6599|RSL|Russell|RSL|Russell|US|United States|99
 6600|RSN|Ruston|RSN|Ruston|US|United States|99
 6601|RSP|Raspberry Strait|RSP|Raspberry Strait|US|United States|99
@@ -6611,8 +6606,8 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6609|RTC|Ratnagiri|RTC|Ratnagiri|IN|India|99
 6610|RTD|Rotunda|RTD|Rotunda|US|United States|99
 6611|RTE|Marguerite Bay|RTE|Marguerite Bay|US|United States|99
-6612|RTG|Ruteng|RTG|Ruteng|ID|Indonesia|8
-6613|RTI|Roti|RTI|Roti|ID|Indonesia|99
+6612|RTG|Frans Sales Lega|RTG|Ruteng|ID|Indonesia|8
+6613|RTI|Lekunik|RTI|Rote|ID|Indonesia|99
 6614|RTL|Spirit Lake|RTL|Spirit Lake|US|United States|99
 6615|RTM|Rotterdam Zestienhoven|RTM|Rotterdam|NL|Netherlands|1
 6616|RTN|Crews Field|RTN|Raton|US|United States|99
@@ -6686,7 +6681,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6684|SAR|Sparta Community|SAR|Sparta|US|United States|99
 6685|SAS|Salton City|SAS|Salton City|US|United States|99
 6686|SAT|San Antonio Intl.|SAT|San Antonio|US|United States|-6
-6687|SAU|Sawu|SAU|Sawu|ID|Indonesia|99
+6687|SAU|Tardamu|SAU|Sawu|ID|Indonesia|99
 6688|SAV|Savannah/Hilton Head|SAV|Savannah|US|United States|-5
 6689|SAW|Sabiha Gokcen|IST|Istanbul|TR|Turkey|2
 6690|SAX|Sambu|SAX|Sambu|PA|Panama|-5
@@ -6698,7 +6693,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6696|SBD|Norton Afb|SBD|San Bernardino|US|United States|-8
 6697|SBE|Suabi|SBE|Suabi|PG|Papua New Guinea|99
 6698|SBF|Sardeh Band|SBF|Sardeh Band|AF|Afghanistan|99
-6699|SBG|Narita|SBG|Sabang|ID|Indonesia|7
+6699|SBG|Maimun Saleh|SBG|Sabang|ID|Indonesia|7
 6700|SBH|St Barthelemy|SBH|St Barthelemy|GP|Guadeloupe|-4
 6701|SBI|Sambailo|SBI|Koundara|GN|Guinea|99
 6702|SBJ|Sao Mateus|SBJ|Sao Mateus|BR|Brazil|99
@@ -6774,7 +6769,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6772|SEE|Gillespie Field|SEE|San Diego|US|United States|-8
 6773|SEF|Sebring Regional Arpt.|SEF|Sebring|||-5
 6774|SEG|Penn Valley|SEG|Selinsgrove|US|United States|99
-6775|SEH|Senggeh|SEH|Senggeh|ID|Indonesia|9
+6775|SEH|Senggeh|SEH|Keerom|ID|Indonesia|9
 6776|SEI|Senhor Do Bonfim|SEI|Senhor Do Bonfim|BR|Brazil|99
 6777|SEJ|Seydisfjordur|SEJ|Seydisfjordur|IS|Iceland|99
 6778|SEK|Er Errachidia|SEK|Ksar Es Souk|MA|Morocco|99
@@ -6783,7 +6778,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6781|SEN|London Southend|LON|London|GB|United Kingdom|0
 6782|SEO|Seguela|SEO|Seguela|CI|Cote D'Ivoire|99
 6783|SEP|Clark Field|SEP|Stephenville|US|United States|99
-6784|SEQ|Sungai Pakning|SEQ|Sungai Pakning|ID|Indonesia|99
+6784|SEQ|Sungai Pakning|SEQ|Bengkalis|ID|Indonesia|99
 6785|SER|Freeman Municipal|SER|Seymour|US|United States|99
 6786|SES|Selfield|SES|Selma|US|United States|-6
 6787|SET|San Esteban|SET|San Esteban|HN|Honduras|99
@@ -6832,7 +6827,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6830|SGN|Tan Son Nhat Intl.|SGN|Ho Chi Minh City|VN|Viet Nam|7
 6831|SGO|St George|SGO|St George|AU|Australia|10
 6832|SGP|Shay Gap|SGP|Shay Gap|AU|Australia|99
-6833|SGQ|Sanggata|SGQ|Sanggata|ID|Indonesia|99
+6833|SGQ|Sangkimah|SGQ|Sanggata|ID|Indonesia|99
 6834|SGR|Sugar Land Regional|SGR|Houston|||-6
 6835|SGS|Sanga Sanga|SGS|Sanga Sanga|PH|Philippines|8
 6836|SGT|Stuttgart Municipal|SGT|Stuttgart|||99
@@ -6986,7 +6981,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 6984|SMN|Salmon|SMN|Salmon|US|United States|-7
 6985|SMO|Santa Monica|SMO|Santa Monica|US|United States|-8
 6986|SMP|Stockholm|SMP|Stockholm|PG|Papua-New Guinea|99
-6987|SMQ|Sampit|SMQ|Sampit|ID|Indonesia|7
+6987|SMQ|H. Asan|SMQ|Sampit|ID|Indonesia|7
 6988|SMR|Simon Bolivar|SMR|Santa Marta|CO|Colombia|-5
 6989|SMS|Sainte Marie|SMS|Sainte Marie|MG|Madagascar|3
 6990|SMT|Sun Moon Lake|SMT|Sun Moon Lake|TW|Taiwan|8
@@ -7024,7 +7019,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7022|SNZ|Santa Cruz|SNZ|Santa Cruz|BR|Brazil|99
 7023|SOA|Soc Trang|SOA|Soc Trang|VN|Viet Nam|99
 7024|SOB|Saarmelleek/balaton|SOB|Saarmelleek|HU|Hungary|1
-7025|SOC|Adi Sumarmo|SOC|Solo City|ID|Indonesia|7
+7025|SOC|Adi Sumarmo|SOC|Solo|ID|Indonesia|7
 7026|SOD|Sorocaba|SOD|Sorocaba|BR|Brazil|-3
 7027|SOE|Souanke|SOE|Souanke|CG|Congo|99
 7028|SOF|Sofia|SOF|Sofia|BG|Bulgaria|2
@@ -7038,7 +7033,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7036|SON|Pekoa|SON|Espiritu Santo|VU|Vanuatu|11
 7037|SOO|Soderhamn|SOO|Soderhamn|SE|Sweden|1
 7038|SOP|Pinehurst-S. Pines|SOP|Southern Pines|US|United States|-5
-7039|SOQ|Jefman|SOQ|Sorong|ID|Indonesia|9
+7039|SOQ|Jeffman|SOQ|Sorong|ID|Indonesia|9
 7040|SOR|Al Thaurah|SOR|Al Thaurah|SY|Syria|99
 7041|SOT|Sodankyla|SOT|Sodankyla|FI|Finland|2
 7042|SOU|Southampton Arpt.|SOU|Eastleigh near Southampton|GB|United Kingdom|0
@@ -7075,16 +7070,16 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7073|SQD|Sinop|SQD|Sinop|TR|Turkey|99
 7074|SQE|San Luis De Pale|SQE|San Luis De Pale|CO|Colombia|99
 7075|SQF|Solano|SQF|Solano|CO|Colombia|99
-7076|SQG|Sintang|SQG|Sintang|ID|Indonesia|7
+7076|SQG|Susilo|SQG|Sintang|ID|Indonesia|7
 7077|SQI|Whiteside County|SQI|Sterling Rockfalls|US|United States|99
 7078|SQK|Sidi Barani|SQK|Sidi Barani|EG|Egypt|99
 7079|SQL|San Carlos|SQL|San Carlos|US|United States|-8
 7080|SQM|São Miguel de Aragao|SQM|São Miguel de Aragao|BR|Brazil|99
-7081|SQN|Sanana|SQN|Sanana|ID|Indonesia|99
+7081|SQN|Emalamo|SQN|Sanana|ID|Indonesia|99
 7082|SQO|Gunnarn|SQO|Storuman|SE|Sweden|1
 7083|SQP|Starcke|SQP|Starcke|AU|Australia|99
 7084|SQQ|Siauliai Intl.|SQQ|Siauliai|LT|Lithuania|2
-7085|SQR|Inco Soroako Waws|SQR|Soroako|ID|Indonesia|99
+7085|SQR|Inco Soroako Waws|SQR|Sorowako|ID|Indonesia|99
 7086|SQS|Matthew Spain|SQS|San Ignacio|BZ|Belize|99
 7087|SQT|China Straits Airstrip|SQT|Samarai Island|PG|Papua New Guinea|99
 7088|SQV|Sequim Valley Arpt|SQV|Sequim|US|United States|99
@@ -7100,7 +7095,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7098|SRF|Hamilton Field|SRF|San Rafael|US|United States|99
 7099|SRG|Achmad Yani|SRG|Semarang|ID|Indonesia|7
 7100|SRH|Sarh|SRH|Sarh|TD|Chad|1
-7101|SRI|Samarinda|SRI|Samarinda|ID|Indonesia|8
+7101|SRI|Temindung|SRI|Samarinda|ID|Indonesia|8
 7102|SRJ|Capitan G Q Guardia|SRJ|San Borja|BO|Bolivia|-4
 7103|SRK|Sierra Leone|SRK|Sierra Leone|SL|Sierra Leone|99
 7104|SRL|Santa Rosalia|SRL|Santa Rosalia|MX|Mexico|99
@@ -7251,7 +7246,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7249|SXH|Sehulea|SXH|Sehulea|PG|Papua New Guinea|99
 7250|SXI|Sirri Island|SXI|Sirri Island|IR|Iran|99
 7251|SXJ|Shanshan|SXJ|Shanshan|CN|China|99
-7252|SXK|Saumlaki|SXK|Saumlaki|ID|Indonesia|99
+7252|SXK|Olilit|SXK|Saumlaki|ID|Indonesia|99
 7253|SXL|Collooney|SXL|Sligo|IE|Ireland|0
 7254|SXM|Princess Juliana Intl.|SXM|Philipsburg|||-4
 7255|SXN|Suapan|SXN|Suapan|BW|Botswana|99
@@ -7352,7 +7347,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7350|TBJ|Tabarka|TBJ|Tabarka|TN|Tunisia|1
 7351|TBK|Timber Creek|TBK|Timber Creek|AU|Australia|99
 7352|TBL|Tableland|TBL|Tableland|AU|Australia|99
-7353|TBM|Tumbang Samba|TBM|Tumbang Samba|ID|Indonesia|99
+7353|TBM|Tumbang Samba|TBM|Katingan|ID|Indonesia|99
 7354|TBN|Forney AAF|TBN|Fort Leonard Wood|US|United States|-6
 7355|TBO|Tabora|TBO|Tabora|TZ|Tanzania|3
 7356|TBP|Tumbes|TBP|Tumbes|PE|Peru|-5
@@ -7501,16 +7496,16 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7499|TIY|Tidjikja|TIY|Tidjikja|MR|Mauritania|0
 7500|TIZ|Tari|TIZ|Tari|PG|Papua New Guinea|10
 7501|TJA|Tarija|TJA|Tarija|BO|Bolivia|-4
-7502|TJB|Tanjung Balai|TJB|Tanjung Balai|ID|Indonesia|99
+7502|TJB|Sei Bati|TJB|Karimun|ID|Indonesia|99
 7503|TJC|Ticantiki|TJC|Ticantiki|PA|Panama|99
-7504|TJG|Tanjung Warukin|TJG|Tanjung Warukin|ID|Indonesia|8
+7504|TJG|Warukin|TJG|Tanjung|ID|Indonesia|8
 7505|TJH|Tajima|TJH|Toyooka|JP|Japan|9
 7506|TJI|Capiro|TJI|Trujillo|HN|Honduras|99
 7507|TJK|Tokat|TJK|Tokat|TR|Turkey|99
 7508|TJM|Roschino|TJM|Tyumen|RU|Russian Federation|6
 7509|TJN|Takume|TJN|Takume|PF|French Polynesia|99
-7510|TJQ|Bulutumbang|TJQ|Tanjung Pandan|ID|Indonesia|7
-7511|TJS|Tanjung Selor|TJS|Tanjung Selor|ID|Indonesia|8
+7510|TJQ|H. A. S. Hanandjoeddin|TJQ|Tanjung Pandan|ID|Indonesia|7
+7511|TJS|Tanjung Harapan|TJS|Bulungan|ID|Indonesia|8
 7512|TJV|Thanjavur|TJV|Thanjavur|IN|India|99
 7513|TKA|Talkeetna|TKA|Talkeetna|US|United States|-9
 7514|TKB|Tekadu|TKB|Tekadu|PG|Papua New Guinea|99
@@ -7518,7 +7513,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7516|TKD|Takoradi|TKD|Takoradi|GH|Ghana|0
 7517|TKE|Tenakee SPB|TKE|Tenakee Springs|US|United States|-9
 7518|TKF|Truckee-Tahoe|TKF|Truckee|||-8
-7519|TKG|Branti|TKG|Bandar Lampung|ID|Indonesia|7
+7519|TKG|Radin Inten II|TKG|Bandar Lampung|ID|Indonesia|7
 7520|TKH|Nakhon Sawan|TKH|Takhli|TH|Thailand|99
 7521|TKJ|Tok|TKJ|Tok|US|United States|99
 7522|TKK|Truk|TKK|Truk|FM|Micronesia|10
@@ -7544,7 +7539,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7542|TLE|Tulear|TLE|Tulear|MG|Madagascar|3
 7543|TLG|Tulagi Island|TLG|Tulagi Island|SB|Solomon Islands|1
 7544|TLH|Tallahassee Regional Arpt.|TLH|Tallahassee|US|United States|-5
-7545|TLI|Tolitoli|TLI|Tolitoli|ID|Indonesia|99
+7545|TLI|Lalos|TLI|Tolitoli|ID|Indonesia|99
 7546|TLJ|Tatalina AFS|TLJ|Tatalina|US|United States|-9
 7547|TLK|Talknafjordur|TLK|Talknafjordur|IS|Iceland|99
 7548|TLL|Ulemiste|TLL|Tallinn|EE|Estonia|2
@@ -7562,11 +7557,11 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7560|TLZ|Catalao|TLZ|Catalao|BR|Brazil|99
 7561|TMA|Henry Tift Myers|TMA|Tifton|||-5
 7562|TMB|Tamiami|TMB|Miami|US|United States|-5
-7563|TMC|Tjilik Riwut|TMC|Tambolaka|ID|Indonesia|8
+7563|TMC|Tambolaka|TMC|Waikabubak|ID|Indonesia|8
 7564|TMD|Timbedra|TMD|Timbedra|MR|Mauritania|99
 7565|TME|Tame|TME|Tame|CO|Colombia|-5
 7566|TMG|Tomanggong|TMG|Tomanggong|MY|Malaysia|8
-7567|TMH|Tanahmerah|TMH|Tanahmerah|ID|Indonesia|99
+7567|TMH|Tanah Merah|TMH|Tanah Merah|ID|Indonesia|99
 7568|TMI|Tumling Tar|TMI|Tumling Tar|NP|Nepal|5.75
 7569|TMJ|Termez|TMJ|Termez|UZ|Uzbekistan|5
 7570|TML|Tamale|TML|Tamale|GH|Ghana|0
@@ -7581,7 +7576,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7579|TMU|Tambor|TMU|Tambor|CR|Costa Rica|-6
 7580|TMW|Tamworth Regional Arpt.|TMW|Tamworth|AU|Australia|10
 7581|TMX|Timimoun|TMX|Timimoun|DZ|Algeria|1
-7582|TMY|Tiom|TMY|Tiom|ID|Indonesia|99
+7582|TMY|Tiom|TMY|Jayawijaya|ID|Indonesia|99
 7583|TMZ|Thames|TMZ|Thames|NZ|New Zealand|99
 7584|TNA|Jinan|TNA|Jinan|CN|China|8
 7585|TNB|Tanah Grogot|TNB|Tanah Grogot|ID|Indonesia|99
@@ -7592,7 +7587,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7590|TNG|Boukhalef|TNG|Tangier|MA|Morocco|0
 7591|TNH|Tonghua Liuhe|TNH|Tonghua|CN|China|99
 7592|TNI|Satna|TNI|Satna|IN|India|5.5
-7593|TNJ|Kidjang|TNJ|Tanjung Pinang|ID|Indonesia|7
+7593|TNJ|Raja Haji Fisabilillah|TNJ|Tanjung Pinang|ID|Indonesia|7
 7594|TNK|Tununak|TNK|Tununak|US|United States|-9
 7595|TNL|Ternopol|TNL|Ternopol|UA|Ukraine|2
 7596|TNM|Teniente R. Marsh Martin|TNM|Teniente R. Marsh Martin|AQ|Antarctica|99
@@ -7636,7 +7631,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7634|TPH|Tonopah Arpt|TPH|Tonopah|US|United States|99
 7635|TPI|Tapini|TPI|Tapini|PG|Papua New Guinea|10
 7636|TPJ|Taplejung Suketar|TPJ|Taplejung|NP|Nepal|5.75
-7637|TPK|Tapaktuan|TPK|Tapaktuan|ID|Indonesia|99
+7637|TPK|Teuku Cut Ali|TPK|Tapaktuan|ID|Indonesia|99
 7638|TPL|Draughon-miller Central Texas Regional|TPL|Temple|||-6
 7639|TPN|Tiputini|TPN|Tiputini|EC|Ecuador|-5
 7640|TPO|Tanalian Point|TPO|Tanalian Point|US|United States|99
@@ -7696,7 +7691,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7694|TTB|Arbatax|TTB|Tortoli|IT|Italy|1
 7695|TTC|Taltal|TTC|Taltal|CL|Chile|99
 7696|TTD|Troutdale|TTD|Troutdale|US|United States|-8
-7697|TTE|Babullah|TTE|Ternate|ID|Indonesia|9
+7697|TTE|Sultan Babullah|TTE|Ternate|ID|Indonesia|9
 7698|TTG|Tartagal|TTG|Tartagal|AR|Argentina|-3
 7699|TTH|Thumrait|TTH|Thumrait|OM|Oman|4
 7700|TTI|Tetiaroa Is|TTI|Tetiaroa Is|PF|French Polynesia|-10
@@ -7706,7 +7701,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7704|TTN|Trenton Mercer Arpt.|TTN|Trenton|||-5
 7705|TTO|Municipal|TTO|Britton|US|United States|99
 7706|TTQ|Tortuquero|TTQ|Tortuquero|CR|Costa Rica|-6
-7707|TTR|Tana Toraja|TTR|Tana Toraja|ID|Indonesia|8
+7707|TTR|Pongtiku|TTR|Tana Toraja|ID|Indonesia|8
 7708|TTS|Tsaratanana|TTS|Tsaratanana|MG|Madagascar|3
 7709|TTT|Taitung|TTT|Taitung|TW|Taiwan|8
 7710|TTU|Sania Ramel|TTU|Tetuan|MA|Morocco|0
@@ -7785,7 +7780,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7783|UAC|San Luis Rio Colorado|UAC|San Luis Rio Colorado|MX|Mexico|99
 7784|UAE|Mount Aue|UAE|Mount Aue|PG|Papua New Guinea|99
 7785|UAH|Ua Huka|UAH|Ua Huka|PF|French Polynesia|-9.5
-7786|UAI|Suai|UAI|Suai|ID|Indonesia|99
+7786|UAI|Suai|UAI|Suai|ID|Timor Leste|99
 7787|UAK|Narsarsuaq|UAK|Narsarsuaq|GL|Greenland|-3
 7788|UAL|Luau|UAL|Luau|AO|Angola|99
 7789|UAM|Andersen AFB|UAM|Andersen|||10
@@ -7798,7 +7793,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7796|UBI|Buin|UBI|Buin|PG|Papua New Guinea|99
 7797|UBJ|Ube|UBJ|Ube|JP|Japan|9
 7798|UBP|Muang Ubon|UBP|Ubon Ratchathni|TH|Thailand|7
-7799|UBR|Ubrub|UBR|Ubrub|ID|Indonesia|99
+7799|UBR|Ubrub|UBR|Keerom|ID|Indonesia|99
 7800|UBS|Lowndes County|UBS|Columbus|US|United States|99
 7801|UBT|Ubatuba|UBT|Ubatuba|BR|Brazil|99
 7802|UBU|Kalumburu|UBU|Kalumburu|AU|Australia|99
@@ -7828,7 +7823,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7826|UGI|Uganik|UGI|Uganik|US|United States|99
 7827|UGN|Memorial|UGN|Waukegan|US|United States|-6
 7828|UGO|Uige|UGO|Uige|AO|Angola|1
-7829|UGU|Zugapa|UGU|Zugapa|ID|Indonesia|99
+7829|UGU|Zugapa|UGU|Paniai|ID|Indonesia|99
 7830|UHE|Kunovice|UHE|Uherske Hradiste|CZ|Czech Republic|99
 7831|UHF|RAF Station|UHF|Upper Heyford|GB|United Kingdom|99
 7832|UIB|Quibdo|UIB|Quibdo|CO|Colombia|-5
@@ -7897,7 +7892,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7895|UNS|Umnak|UNS|Umnak Island|US|United States|99
 7896|UNT|Baltasound|UNT|Unst Shetland Is|GB|United Kingdom|0
 7897|UNU|Dodge County|UNU|Juneau|||99
-7898|UOL|Buol|UOL|Buol|ID|Indonesia|99
+7898|UOL|Pogugol|UOL|Buol|ID|Indonesia|99
 7899|UON|Muong Sai|UON|Muong Sai|LA|Laos|99
 7900|UOS|Franklin County|UOS|Sewanee|US|United States|99
 7901|UOX|University-Oxford|UOX|Oxford|US|United States|99
@@ -7905,7 +7900,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 7903|UPB|Playa Baracoa|UPB|Havana|CU|Cuba|99
 7904|UPC|Puerto La Cruz|UPC|Puerto La Cruz|VZ|Venezuela|99
 7905|UPF|Pforheim|UPF|Pforheim|DE|Germany|99
-7906|UPG|Hasanudin|UPG|Ujung Pandang|ID|Indonesia|8
+7906|UPG|Sultan Hasanuddin|UPG|Makassar|ID|Indonesia|8
 7907|UPL|Upala|UPL|Upala|CR|Costa Rica|99
 7908|UPN|Uruapan|UPN|Uruapan|MX|Mexico|-6
 7909|UPP|Upolu Point|UPP|Upolu Point|US|United States|-10
@@ -8048,7 +8043,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 8046|VIK|Airstrip|VIK|Kavik|US|United States|99
 8047|VIL|Dakhla|VIL|Dakhla|MA|Morocco|0
 8048|VIN|Vinnica|VIN|Vinnica|UA|Ukraine|2
-8049|VIQ|Viqueque|VIQ|Viqueque|ID|Indonesia|99
+8049|VIQ|Viqueque|VIQ|Viqueque|ID|East Timor|99
 8050|VIR|Virginia|VIR|Durban|ZA|South Africa|2
 8051|VIS|Visalia|VIS|Visalia|US|United States|-8
 8052|VIT|Vitoria.|VIT|Vitoria.|ES|Spain|1
@@ -8159,7 +8154,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 8157|WAO|Wabo|WAO|Wabo|PG|Papua New Guinea|99
 8158|WAP|Alto Palena|WAP|Alto Palena|CL|Chile|99
 8159|WAQ|Antsalova|WAQ|Antsalova|MG|Madagascar|3
-8160|WAR|Waris|WAR|Waris|ID|Indonesia|9
+8160|WAR|Waris|WAR|Keerom|ID|Indonesia|9
 8161|WAS|All Airports|WAS|Washington|US|United States|-5
 8162|WAT|Waterford|WAT|Waterford|IE|Ireland|0
 8163|WAU|Wauchope|WAU|Wauchope|AU|Australia|99
@@ -8200,7 +8195,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 8198|WEM|West Malling|WEM|West Malling|GB|United Kingdom|99
 8199|WEP|Weam|WEP|Weam|PG|Papua New Guinea|99
 8200|WES|Weasua|WES|Weasua|LR|Liberia|99
-8201|WET|Wagethe|WET|Wagethe|ID|Indonesia|99
+8201|WET|Wagethe|WET|Deiyai|ID|Indonesia|99
 8202|WEW|Wee Waa|WEW|Wee Waa|AU|Australia|99
 8203|WEX|Castlebridge|WEX|Wexford|IE|Ireland|99
 8204|WFB|Waterfront SPB|WFB|Ketchikan|US|United States|-9
@@ -8214,7 +8209,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 8212|WGF|Off Line Point|WGF|Manama|BH|Bahrain|99
 8213|WGN|Waitangi|WGN|Waitangi|NZ|New Zealand|99
 8214|WGO|Municipal|WGO|Winchester|US|United States|99
-8215|WGP|Waingapu|WGP|Waingapu|ID|Indonesia|8
+8215|WGP|Umbu Mehang Kunda|WGP|Waingapu|ID|Indonesia|8
 8216|WGT|Wangaratta|WGT|Wangaratta|AU|Australia|99
 8217|WGU|Wagau|WGU|Wagau|PG|Papua New Guinea|99
 8218|WGY|Wagny|WGY|Wagny|GA|Gabon|99
@@ -8500,7 +8495,6 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 8498|XSI|South Indian Lake|XSI|South Indian Lake|CA|Canada|-6
 8499|XSM|St Marys|XSM|St Marys|US|United States|99
 8500|XSO|Siocon|XSO|Siocon|PH|Philippines|99
-8501|XSP|Seletar|SIN|Singapore|SG|Singapore|8
 8502|XTA|Econ/Tech Dev. Area|XTA|Tianjin|CN|China|99
 8503|XTF|Port Free Trade Zone|XTF|Tianjin|CN|China|99
 8504|XTG|Thargomindah|XTG|Thargomindah|AU|Australia|10
@@ -9068,7 +9062,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 9066|ZDU|ScotRail|ZDU|Dundee|GB|United Kingdom|99
 9067|ZEC|Secunda|ZEC|Secunda|ZA|South Africa|99
 9068|ZEF|Nanhai Ferry|ZEF|Nanhai|CN|China|99
-9069|ZEG|Senggo|ZEG|Senggo|ID|Indonesia|99
+9069|ZEG|Senggo|ZEG|Mappi|ID|Indonesia|99
 9070|ZEL|Bella Bella|ZEL|Bella Bella|CA|Canada|-8
 9071|ZEM|East Main|ZEM|East Main|CA|Canada|-5
 9072|ZEN|Zenag|ZEN|Zenag|PG|Papua New Guinea|99
@@ -9170,11 +9164,11 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 9168|ZRD|Richmond VA Rail|ZRD|Richmond|US|United States|-5
 9169|ZRF|Park & Ride Bus Svc|ZRF|Rockford|US|United States|99
 9170|ZRH|Zurich-Kloten|ZRH|Zurich|CH|Switzerland|1
-9171|ZRI|Serui|ZRI|Serui|ID|Indonesia|99
+9171|ZRI|Sudjarwo Tjondronegoro|ZRI|Serui|ID|Indonesia|99
 9172|ZRJ|Round Lake|ZRJ|Round Lake|CA|Canada|-6
 9173|ZRK|VanGalder Bus Termina|ZRK|Rockford|US|United States|99
 9174|ZRL|Lancaster PA Rail|ZRL|Lancaster|US|United States|99
-9175|ZRM|Sarmi|ZRM|Sarmi|ID|Indonesia|99
+9175|ZRM|Mararena|ZRM|Sarmi|ID|Indonesia|99
 9176|ZRP|Pennsylvania Railroad Station|ZRP|Newark|US|United States|-5
 9177|ZRR|Harbour|ZRR|Fiumicino|CA|Canada|99
 9178|ZRV|Providence Rail|ZRV|Providence|US|United States|99
@@ -9242,3 +9236,4 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 9240|ZYZ|Berchem Railway Stn.|ZYZ|Antwerp|BE|Belgium|99
 9241|ZZU|Mzuzu|ZZU|Mzuzu|MW|Malawi|2
 9242|ZZV|Zanesville|ZZV|Zanesville|US|United States|99
+9243|DTB|Silangit|DTB|Siborong-Borong|ID|Indonesia|7

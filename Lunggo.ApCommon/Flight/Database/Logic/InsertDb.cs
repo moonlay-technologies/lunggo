@@ -261,7 +261,9 @@ namespace Lunggo.ApCommon.Flight.Service
                             CountryCd = passenger.PassportCountry
                         };
                         if (savedPassengers.Any(
-                            saved => saved.FirstName == passenger.FirstName && saved.LastName == passenger.LastName))
+                            saved => String.Equals(saved.ContactEmail, contactEmail, StringComparison.CurrentCultureIgnoreCase) &&
+                                String.Equals(saved.FirstName, passenger.FirstName, StringComparison.CurrentCultureIgnoreCase) && 
+                                String.Equals(saved.LastName, passenger.LastName, StringComparison.CurrentCultureIgnoreCase)))
                         {
                             FlightSavedPassengerTableRepo.GetInstance().Update(conn, passengerRecord);
                         }

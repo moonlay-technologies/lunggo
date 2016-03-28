@@ -141,9 +141,7 @@
     <Content Include="Airline.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Airport.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Airport.csv" />
     <None Include="App.config" />
     <Content Include="application.properties">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -14,6 +14,7 @@ namespace Lunggo.CloudApp.CaptchaReader.Controllers
         [HttpGet]
         public string ChooseUserId()
         {
+
             return Account.GetUserId();
         }
 

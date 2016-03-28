@@ -18,6 +18,7 @@ namespace Lunggo.CloudApp.CaptchaReader
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AppInitializer.Init();
         }
     }
 }

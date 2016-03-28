@@ -121,7 +121,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
                 var clientx = new RestClient(cloudAppUrl);
-                //var clientx = new RestClient("http://localhost:14938/");
                 var accReq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
                 var userName = "";
                 RestResponse accRs;
@@ -931,14 +930,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                         postdata += "&RGM0_" + c + "=" + idc;
                                         c += 1;
                                     }
-                                    //foreach (var id in idcols)
-                                    //{
-                                    //    if (id == idc)
-                                    //    {
-                                    //        postdata += "&RGM0_" + c + "=" + idc;
-                                    //        c += 1;
-                                    //    }
-                                    //}
                                     
                                     if (cols[j].ChildElements.ToList()[1].ChildElements.ToList().Count() != 1)
                                     {
