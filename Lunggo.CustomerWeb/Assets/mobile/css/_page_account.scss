@@ -6,8 +6,8 @@
     }
     // user menu section
     .user-menu {
-        .menu-wrapper {padding:15px; @include border-radius($border-radius-default);
-            ul {border:$border-default; margin:0; padding:0; list-style:none;
+        .menu-wrapper {@include border-radius($border-radius-default);
+            ul {margin:0; padding:0; list-style:none; border-bottom:$border-default;
                 li {
                     a {display:block; padding:15px; padding-left:50px; font-weight:600; position:relative; font-size:14px;
                         &:before {display:block; content:''; position:absolute; top:0; left:0; width:50px; height:50px; background-image:url(/Assets/mobile/images/user-account-bg.png); background-repeat:no-repeat;}
@@ -60,6 +60,7 @@
                 &.canceled {
                     &:before {background-position:-120px 0;}
                 }
+                .btn {margin-top:15px;}
             }
         }
     }
@@ -73,6 +74,22 @@
             &>div {
                 &>header {background:#dedede; padding:10px 5px; color:#575757;}
                 &>section {padding:10px;}
+            }
+        }
+    }
+    .passenger-list {padding:0; margin:0; padding-left:30px; counter-reset:number; list-style:none;
+        li {position:relative; counter-increment:number;
+            &:before {background:$color-main-blue; content:counter(number); position:absolute; color:#fff; top:0; left:-30px; width:20px; height:20px; text-align:center; padding:2px;}
+        }
+    }
+    .info-flight {
+        .flight {position:relative; padding-left:30px; margin-bottom:20px;
+            .flight__airline__logo {}
+            .flight__airline__name {color:$color-main-blue; font-weight:bold; padding-top:10px;}
+            &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-repeat:no-repeat; background-size:200%; border:2px solid $color-main-blue; background-image:url(/assets/images/plane-updown-sprite.png);}
+            &.departure {}
+            &.return {
+                &:before {background-position:-16px;}
             }
         }
     }

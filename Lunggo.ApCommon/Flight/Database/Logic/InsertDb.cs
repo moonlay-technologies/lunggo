@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         ChildCount = reservation.Passengers.Count(p => p.Type == PassengerType.Child),
                         InfantCount = reservation.Passengers.Count(p => p.Type == PassengerType.Infant),
                         PaymentMediumCd = PaymentMediumCd.Mnemonic(reservation.Payment.Medium),
-                        PaymentStatusCd = PaymentStatusCd.Mnemonic(PaymentStatus.Pending),
+                        PaymentStatusCd = PaymentStatusCd.Mnemonic(reservation.Payment.Status),
                         PaymentMethodCd = PaymentMethodCd.Mnemonic(reservation.Payment.Method),
                         PaymentTimeLimit = reservation.Payment.TimeLimit.HasValue ? reservation.Payment.TimeLimit.Value.ToUniversalTime() : (DateTime?) null,
                         PaymentTargetAccount = reservation.Payment.TargetAccount,
@@ -58,7 +58,8 @@ namespace Lunggo.ApCommon.Flight.Service
                         GrossProfit = 0,
                         InsertBy = "xxx",
                         InsertDate = DateTime.UtcNow,
-                        InsertPgId = "xxx"
+                        InsertPgId = "xxx",
+                        TransferCode = reservation.TransferCode
                     };
 
                     FlightReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
@@ -260,7 +261,9 @@ namespace Lunggo.ApCommon.Flight.Service
                             CountryCd = passenger.PassportCountry
                         };
                         if (savedPassengers.Any(
-                            saved => saved.FirstName == passenger.FirstName && saved.LastName == passenger.LastName))
+                            saved => String.Equals(saved.ContactEmail, contactEmail, StringComparison.CurrentCultureIgnoreCase) &&
+                                String.Equals(saved.FirstName, passenger.FirstName, StringComparison.CurrentCultureIgnoreCase) && 
+                                String.Equals(saved.LastName, passenger.LastName, StringComparison.CurrentCultureIgnoreCase)))
                         {
                             FlightSavedPassengerTableRepo.GetInstance().Update(conn, passengerRecord);
                         }

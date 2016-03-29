@@ -14,6 +14,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public PaymentInfo Payment { get; set; }
         public string DiscountCode { get; set; }
         public string Language { get; set; }
+        public string TransferToken { get; set; }
     }
 
     public class PassengerData

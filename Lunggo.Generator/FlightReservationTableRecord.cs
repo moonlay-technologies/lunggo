@@ -317,6 +317,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("DiscountId");
 		    }
 		}
+		public String DiscountName
+		{
+		    get { return _DiscountName; }
+		    set
+		    {
+		        _DiscountName = value;
+		        IncrementLog("DiscountName");
+		    }
+		}
 		public Decimal? DiscountPercentage
 		{
 		    get { return _DiscountPercentage; }
@@ -434,6 +443,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UpdatePgId");
 		    }
 		}
+		public Decimal? TransferCode
+		{
+		    get { return _TransferCode; }
+		    set
+		    {
+		        _TransferCode = value;
+		        IncrementLog("TransferCode");
+		    }
+		}
 
 		
 		private String _RsvNo;
@@ -470,6 +488,7 @@ namespace Lunggo.Repository.TableRecord
 		private Decimal? _PaymentFeeForUs;
 		private String _VoucherCode;
 		private long? _DiscountId;
+		private String _DiscountName;
 		private Decimal? _DiscountPercentage;
 		private Decimal? _DiscountConstant;
 		private Decimal? _DiscountNominal;
@@ -483,6 +502,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _UpdateBy;
 		private DateTime? _UpdateDate;
 		private String _UpdatePgId;
+		private Decimal? _TransferCode;
 
 
 		public static FlightReservationTableRecord CreateNewInstance()
@@ -548,6 +568,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("PaymentFeeForUs", false),
 				new ColumnMetadata("VoucherCode", false),
 				new ColumnMetadata("DiscountId", false),
+				new ColumnMetadata("DiscountName", false),
 				new ColumnMetadata("DiscountPercentage", false),
 				new ColumnMetadata("DiscountConstant", false),
 				new ColumnMetadata("DiscountNominal", false),
@@ -561,6 +582,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("UpdateBy", false),
 				new ColumnMetadata("UpdateDate", false),
 				new ColumnMetadata("UpdatePgId", false),
+				new ColumnMetadata("TransferCode", false),
 
             };
         }
