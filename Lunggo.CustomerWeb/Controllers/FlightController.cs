@@ -178,18 +178,21 @@ namespace Lunggo.CustomerWeb.Controllers
             if (reservation.Payment.Method == PaymentMethod.BankTransfer &&
                 (reservation.Payment.Status == PaymentStatus.Pending || reservation.Payment.Status == PaymentStatus.Challenged))
             {
-                return View(new FlightPaymentConfirmationData
+                /*return View(new FlightPaymentConfirmationData
                 {
                     RsvNo = rsvNo,
                     FinalPrice = reservation.Payment.FinalPrice,
                     TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault()
-                });
+                });*/
+                var service = FlightService.GetInstance();
+                var summary = service.GetReservationForDisplay(rsvNo);
+                return View(summary);
             }
             else
                 return RedirectToAction("Index", "UW000TopPage");
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult Confirmation(TransferConfirmationReport report, HttpPostedFileBase file)
         {
             if (!ModelState.IsValid)
@@ -205,7 +208,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var paymentService = PaymentService.GetInstance();
             paymentService.SubmitTransferConfirmationReport(report, fileInfo);
             return RedirectToAction("Thankyou", "Flight", new { rsvNo = report.RsvNo });
-        }
+        }*/
 
         public ActionResult TopDestinations()
         {

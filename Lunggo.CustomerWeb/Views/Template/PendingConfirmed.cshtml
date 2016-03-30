@@ -3,6 +3,10 @@
 @using Lunggo.Framework.Config
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
+@{
+    
+}
+
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -201,110 +205,141 @@
                             </tr>
                         </thead>
                     </table>
-
-                    <p style="color: #15b1e4; margin-top:1px; padding-top:1px;">(Roundtrip)</p>
-
-                    <table width="100%" style="margin-bottom: 40px;">
-                        <tr>
-                            <td width="3%" style="padding-top: 15px; vertical-align: top;">
-                                <img src="/Assets/images/email/flight-departure-icon.png" />
-                            </td>
-                            <td style="color: #15b1e4; text-align: center;" width="2%">
-                                Berangkat
-                            </td>
-                            <td rowspan="2" width="70%">
-                                <table width="100%">
-                                    <tr>
-                                        <td style="color: #15b1e4;">Sriwijaya SW-007</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="color: #15b1e4;" width="30%">Jakarta</td>
-                                        <td rowspan="2" width="25%"><hr style="border-color: #f5f5f5; opacity: 0.2;" /></td>
-                                        <td style="color: #15b1e4;" width="30%">Surabaya</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="color: #15b1e4;" width="10%">22 July 2016 Pk 07.30
-                                        <td>
-                                        <td style="color: #15b1e4;" width="10%">22 July 2016
-                                        <td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="height: 10px;"></td>
-                            <td style="height: 10px;"></td>
-                        </tr>
-                        <tr>
-                            <td width="3%" style="padding-top: 15px; vertical-align: top;">
-                                <img src="/Assets/images/email/flight-return-icon.png" />
-                            </td>
-                            <td style="color: #15b1e4; text-align: center;" width="2%">
-                                <img width="100%" height="auto" src="~/Assets/images/airlines/GA.png" />
-                                Kembali
-                            </td>
-                            <td rowspan="2" width="6%">
-                                <p style="text-align: center;">:</p>
-                            </td>
-                            <td rowspan="2" width="40%">
-                                <p style="color: #15b1e4;"><b>Garuda - GASPKI</b></p>
-                                <p style="color: #15b1e4;">Kualanamu - SoeHatta</p>
-                                <p style="color: #15b1e4;">Monday, 10 Apr 2016</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="height: 10px;"></td>
-                            <td style="height: 10px;"></td>
-                        </tr>
-                        <tr>
-                            <td width="3%" style="padding-top: 15px; vertical-align: top;">
-                                <img src="/Assets/images/email/flight-departure-icon.png" />
-                            </td>
-                            <td style="color: #15b1e4; text-align: center;" width="2%">
-                                <img width="100%" height="auto" src="~/Assets/images/airlines/AK.png" />
-                                Berangkat
-                            </td>
-                            <td rowspan="2" width="6%">
-                                <p style="text-align: center;">:</p>
-                            </td>
-                            <td rowspan="2" width="40%">
-                                <p style="color: #15b1e4;"><b>Air Asia - AK47</b></p>
-                                <p style="color: #15b1e4;">Soe-Hatta - Kualanamu</p>
-                                <p style="color: #15b1e4;"> Sunday, 10 Apr 2016</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="height: 10px;"></td>
-                            <td style="height: 10px;"></td>
-                        </tr>
-                        <tr>
-                            <td width="3%" style="padding-top: 15px; vertical-align: top;">
-                                <img src="/Assets/images/email/flight-return-icon.png" />
-                            </td>
-                            <td style="color: #15b1e4; text-align: center;" width="2%">
-                                <img width="100%" height="auto" src="~/Assets/images/airlines/GA.png" />
-                                Kembali
-                            </td>
-                            <td rowspan="2" width="6%">
-                                <p style="text-align: center;">:</p>
-                            </td>
-                            <td rowspan="2" width="40%">
-                                <p style="color: #15b1e4;"><b>Garuda - GASPKI</b></p>
-                                <p style="color: #15b1e4;">Kualanamu - SoeHatta</p>
-                                <p style="color: #15b1e4;">Monday, 10 Apr 2016</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="height: 10px;"></td>
-                            <td style="height: 10px;"></td>
-                        </tr>
-                    </table>
+                    <div>
+                        <p><img src="/Assets/images/email/flight-departure-icon.png" alt="departure"/> <b>BERANGKAT</b></p>
+                        <div>
+                            <div class="col-xs-2">
+                                <p><img src="/Assets/images/airlines/AK.png" width="40%" air=air asia"=asia" /></p>
+                                <p><span>Air Asia</span></p>
+                            </div>
+                            <div class="col-xs-10">
+                                <div class="col-xs-12">
+                                    <div class="col-xs-4">
+                                        <p style="text-align:left; padding:0px; margin:0px;">10 Apr 2016</p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>12:10</b></p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>Jakarta (CGK)</b></p>
+                                        <p style="text-align:left; padding:0px; margin:0px;">Soekarno-Hatta Intl.</p>
+                                    </div>
+                                    <div class="col-xs-4" style="align-content:center;">
+                                        <p></p>
+                                        <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Duration:</b> 01:00:00</p>
+                                        <p></p>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <p style="text-align:left; padding:0px; margin:0px;">10 Apr 2016</p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>13:10</b></p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>Yogyakarta (JOG)</b></p>
+                                        <p style="text-align:left; padding:0px; margin:0px;">Sultan Aji Muhammad Sulaiman</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12" style="padding-top:5px;">
+                                <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;"><span style="background:#fff;padding:0 10px;color:#15b1e4;">Transit Duration : 01:00:00</span></p>
+                            </div>
+                            <div class="col-xs-2">
+                                <p><img src="/Assets/images/airlines/AK.png" width="50%" air=air asia"=asia" /></p>
+                                <p><span>Air Asia</span></p>
+                            </div>
+                            <div class="col-xs-10">
+                                <div class="col-xs-12">
+                                    <div class="col-xs-4">
+                                        <p style="text-align:left; padding:0px; margin:0px;">10 Apr 2016</p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>12:10</b></p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>Jakarta (CGK)</b></p>
+                                        <p style="text-align:left; padding:0px; margin:0px;">Soekarno-Hatta Intl.</p>
+                                    </div>
+                                    <div class="col-xs-4" style="align-content:center;">
+                                        <p></p>
+                                        <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Duration:</b> 01:00:00</p>
+                                        <p></p>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <p style="text-align:left; padding:0px; margin:0px;">10 Apr 2016</p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>13:10</b></p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>Yogyakarta (JOG)</b></p>
+                                        <p style="text-align:left; padding:0px; margin:0px;">Adi Sucipto</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     @*<p>Kuitansi pembayaran Anda telah disertakan sebagai attachment.</p>*@
-                    <p>E-tiket Anda akan dikirimkan secara otomatis ke email Anda maksimal <span style="color: #15b1e4;">Selasa, 5 Apr 2016 </span>,  pukul <span style="color: #15b1e4;"> 17:00 WIB</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">cs@travorama.com.</span>
-
                 </td>
                 <td width="5%"></td>
+            </tr>
+            <tr >
+                <td width="5%" style="padding-top:20px;"></td>
+                <td colspan="2" width="90%" style="padding-top:20px;">
+                    <div>
+                        <p><img src="/Assets/images/email/flight-return-icon.png" alt="kembali" /> <b>KEMBALI</b></p>
+                        <div>
+                            <div class="col-xs-2">
+                                <p><img src="/Assets/images/airlines/AK.png" width="40%" air=air asia"=asia" /></p>
+                                <p><span>Air Asia</span></p>
+                            </div>
+                            <div class="col-xs-10">
+                                <div class="col-xs-12">
+                                    <div class="col-xs-4">
+                                        <p style="text-align:left; padding:0px; margin:0px;">10 Apr 2016</p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>12:10</b></p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>Jakarta (CGK)</b></p>
+                                        <p style="text-align:left; padding:0px; margin:0px;">Soekarno-Hatta Intl.</p>
+                                    </div>
+                                    <div class="col-xs-4" style="align-content:center;">
+                                        <p></p>
+                                        <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Duration:</b> 01:00:00</p>
+                                        <p></p>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <p style="text-align:left; padding:0px; margin:0px;">10 Apr 2016</p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>13:10</b></p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>Yogyakarta (JOG)</b></p>
+                                        <p style="text-align:left; padding:0px; margin:0px;">Adi Sucipto</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12" style="padding-top:5px;">
+                                <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;"><span style="background:#fff;padding:0 10px;color:#15b1e4;">Transit Duration : 01:00:00</span></p>
+                            </div>
+                            <div class="col-xs-2">
+                                <p><img src="/Assets/images/airlines/AK.png" width="50%" air=air asia"=asia" /></p>
+                                <p><span>Air Asia</span></p>
+                            </div>
+                            <div class="col-xs-10">
+                                <div class="col-xs-12">
+                                    <div class="col-xs-4">
+                                        <p style="text-align:left; padding:0px; margin:0px;">10 Apr 2016</p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>12:10</b></p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>Jakarta (CGK)</b></p>
+                                        <p style="text-align:left; padding:0px; margin:0px;">Soekarno-Hatta Intl.</p>
+                                    </div>
+                                    <div class="col-xs-4" style="align-content:center;">
+                                        <p></p>
+                                        <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Duration:</b> 01:00:00</p>
+                                        <p></p>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <p style="text-align:left; padding:0px; margin:0px;">10 Apr 2016</p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>13:10</b></p>
+                                        <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>Yogyakarta (JOG)</b></p>
+                                        <p style="text-align:left; padding:0px; margin:0px;">Adi Sucipto</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td width="5%" style="padding-top:20px;"></td>
+            </tr>
+            <tr>
+                <td width="5%" style="padding-top:20px;"></td>
+                <td colspan="2" width="90%" style="padding-top:20px;">
+                    <p>
+                        E-tiket Anda akan dikirimkan secara otomatis ke email Anda maksimal <span style="color: #15b1e4;">Selasa, 5 Apr 2016 </span>,  pukul <span style="color: #15b1e4;"> 17:00 WIB</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">cs@travorama.com.</span>
+                    </p>
+                </td>
+                <td width="5%" style="padding-top:20px;"></td>
             </tr>
         </tbody>
         <tfoot width="100%">
