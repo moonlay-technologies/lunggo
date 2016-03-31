@@ -12,19 +12,30 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
     {
         public static ApiResponseBase IssueFlight(FlightIssueApiRequest request)
         {
-            if (IsValid(request))
+            try
             {
-                var issueServiceRequest = PreprocessServiceRequest(request);
-                var issueServiceResponse = FlightService.GetInstance().IssueTicket(issueServiceRequest);
-                var apiResponse = AssembleApiResponse(issueServiceResponse);
-                return apiResponse;
+                if (IsValid(request))
+                {
+                    var issueServiceRequest = PreprocessServiceRequest(request);
+                    var issueServiceResponse = FlightService.GetInstance().IssueTicket(issueServiceRequest);
+                    var apiResponse = AssembleApiResponse(issueServiceResponse);
+                    return apiResponse;
+                }
+                else
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERFISS01"
+                    };
+                }
             }
-            else
+            catch
             {
                 return new ApiResponseBase
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERFISS01"
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    ErrorCode = "ERFISS99"
                 };
             }
         }
@@ -65,14 +76,14 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     case FlightError.NotEligibleToIssue:
                         return new ApiResponseBase
                         {
-                            StatusCode = HttpStatusCode.Accepted,
+                            StatusCode = HttpStatusCode.Unauthorized,
                             ErrorCode = "ERFISS03"
                         };
                     default:
                         return new ApiResponseBase
                         {
                             StatusCode = HttpStatusCode.InternalServerError,
-                            ErrorCode = "ERFISS04"
+                            ErrorCode = "ERFISS99"
                         };
                 }
             }

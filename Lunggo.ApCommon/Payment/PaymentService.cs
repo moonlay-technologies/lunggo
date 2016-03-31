@@ -61,7 +61,7 @@ namespace Lunggo.ApCommon.Payment
 
         public void ProcessPayment(PaymentData paymentData, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
-            if (method == PaymentMethod.BankTransfer || method == PaymentMethod.Credit)
+            if (method == PaymentMethod.BankTransfer || method == PaymentMethod.Credit || method == PaymentMethod.Deposit)
             {
                 paymentData.Status = PaymentStatus.Pending;
             }

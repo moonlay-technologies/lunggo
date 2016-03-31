@@ -6,11 +6,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightRevalidateApiResponse : ApiResponseBase
     {
-        [JsonProperty("vld")]
-        public bool IsValid { get; set; }
-        [JsonProperty("avail")]
-        public bool? IsOtherFareAvailable { get; set; }
-        [JsonProperty("fare")]
+        [JsonProperty("pr")]
         public decimal? NewFare { get; set; }
     }
 }

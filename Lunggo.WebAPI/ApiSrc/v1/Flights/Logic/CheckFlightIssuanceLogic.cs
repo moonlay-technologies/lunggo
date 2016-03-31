@@ -14,27 +14,40 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
     public static partial class FlightLogic
     {
-        public static FlightIssuanceApiResponse CheckFlightIssuance(string rsvNo)
+        public static FlightIssuanceApiResponse CheckFlightIssuance(FlightIssuanceApiRequest request)
         {
-            if (IsValid(rsvNo))
+            try
             {
-                var bookingStatus = FlightService.GetInstance().GetAllBookingStatus(rsvNo);
-                var apiResponse = AssembleApiResponse(bookingStatus);
-                return apiResponse;
+                if (IsValid(request))
+                {
+                    var bookingStatus = FlightService.GetInstance().GetAllBookingStatus(request.RsvNo);
+                    var apiResponse = AssembleApiResponse(bookingStatus);
+                    return apiResponse;
+                }
+                else
+                {
+                    return new FlightIssuanceApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERFCHI01"
+                    };
+                }
             }
-            else
+            catch
             {
                 return new FlightIssuanceApiResponse
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERFCHI01"
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    ErrorCode = "ERFCHI99"
                 };
             }
         }
 
-        private static bool IsValid(string rsvNo)
+        private static bool IsValid(FlightIssuanceApiRequest request)
         {
-            return rsvNo != null;
+            return 
+                request != null &&
+                request.RsvNo != null;
         }
 
         private static FlightIssuanceApiResponse AssembleApiResponse(List<Tuple<FlightTripForDisplay, BookingStatus>> list)

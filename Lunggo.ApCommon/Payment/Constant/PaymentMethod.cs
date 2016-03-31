@@ -17,7 +17,8 @@
         MandiriEcash = 12,
         MandiriBillPayment = 13,
         Indomaret = 14,
-        Credit = 15
+        Credit = 15,
+        Deposit = 16
     }
 
     internal class PaymentMethodCd

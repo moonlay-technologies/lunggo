@@ -14,22 +14,30 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
     {
         public static FlightSearchApiResponse SearchFlights(FlightSearchApiRequest request)
         {
-            if (IsValid(request))
+            try
             {
-                var searchServiceRequest = PreprocessServiceRequest(request);
-                var searchServiceResponse = FlightService.GetInstance().SearchFlight(searchServiceRequest);
-                var apiResponse = AssembleApiResponse(searchServiceResponse);
-                return apiResponse; 
+                if (IsValid(request))
+                {
+                    var searchServiceRequest = PreprocessServiceRequest(request);
+                    var searchServiceResponse = FlightService.GetInstance().SearchFlight(searchServiceRequest);
+                    var apiResponse = AssembleApiResponse(searchServiceResponse);
+                    return apiResponse;
+                }
+                else
+                {
+                    return new FlightSearchApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERFSEA01"
+                    };
+                }
             }
-            else
+            catch
             {
                 return new FlightSearchApiResponse
                 {
-                    Flights = new List<Flight>(),
-                    ExpiryTime = null,
-                    Progress = null,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERFSEA01"
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    ErrorCode = "ERFSEA99"
                 };
             }
         }

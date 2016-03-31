@@ -47,12 +47,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("v1/flights/{searchId}/revalidate/{token}")]
-        public FlightRevalidateApiResponse RevalidateFlight(string searchId, string token)
+        [Route("v1/flights/revalidate/{token}")]
+        public FlightRevalidateApiResponse RevalidateFlight(string token)
         {
             var request = new FlightRevalidateApiRequest
             {
-                SearchId = searchId,
                 Token = token
             };
             var apiResponse = FlightLogic.RevalidateFlight(request);
@@ -65,32 +64,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         public FlightBookApiResponse BookFlight()
         {
             var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightBookApiRequest>();
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            var now = DateTime.UtcNow.AddHours(7);
-            if (now.DayOfWeek == DayOfWeek.Wednesday && now.Date >= new DateTime(2016, 1, 2) &&
-                now.Date <= new DateTime(2016, 3, 31) && request.PaymentData.Method == PaymentMethod.CreditCard &&
-                request.PaymentData.Data != null && request.PaymentData.Data.DataString0 != null &&
-                request.PaymentData.Data.DataString0.StartsWith("4"))
-                request.DiscountCode = "VWWVWW";
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            // HARDCODE-AN
-            var apiResponse = FlightLogic.BookFlight(request);
+            var apiResponse = FlightLogic.BookFlight(request, User);
             return apiResponse;
         }
 
@@ -109,7 +83,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [Route("v1/flights/check/{rsvNo}")]
         public FlightIssuanceApiResponse CheckFlightIssuance(string rsvNo)
         {
-            var apiResponse = FlightLogic.CheckFlightIssuance(rsvNo);
+            var request = new FlightIssuanceApiRequest
+            {
+                RsvNo = rsvNo
+            };
+            var apiResponse = FlightLogic.CheckFlightIssuance(request);
             return apiResponse;
         }
 

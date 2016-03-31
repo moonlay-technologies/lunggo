@@ -2,11 +2,13 @@
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Security.Principal;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Context;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 
@@ -14,24 +16,50 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
     public static partial class FlightLogic
     {
-        public static FlightBookApiResponse BookFlight(FlightBookApiRequest request)
+        public static FlightBookApiResponse BookFlight(FlightBookApiRequest request, IPrincipal user)
         {
-            if (IsValid(request))
+            try
             {
-                OnlineContext.SetActiveLanguageCode(request.Language);
-                var bookServiceRequest = PreprocessServiceRequest(request);
-                var bookServiceResponse = FlightService.GetInstance().BookFlight(bookServiceRequest);
-                var apiResponse = AssembleApiResponse(bookServiceResponse, request);
-                return apiResponse;
+                if (IsValid(request))
+                {
+                    if (NotEligibleToBook(request, user))
+                    {
+                        return new FlightBookApiResponse
+                        {
+                            StatusCode = HttpStatusCode.Unauthorized,
+                            ErrorCode = "ERFBOO05"
+                        };
+                    }
+                    OnlineContext.SetActiveLanguageCode(request.Language);
+                    var bookServiceRequest = PreprocessServiceRequest(request);
+                    var bookServiceResponse = FlightService.GetInstance().BookFlight(bookServiceRequest);
+                    var apiResponse = AssembleApiResponse(bookServiceResponse, request);
+                    return apiResponse;
+                }
+                else
+                {
+                    return new FlightBookApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERFBOO01"
+                    };
+                }
             }
-            else
+            catch
             {
                 return new FlightBookApiResponse
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERFBOO01"
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    ErrorCode = "ERFBOO99"
                 };
             }
+        }
+
+        private static bool NotEligibleToBook(FlightBookApiRequest request, IPrincipal user)
+        {
+            return
+                (request.Payment.Method == PaymentMethod.Credit || request.Payment.Method == PaymentMethod.Deposit) &&
+                !user.IsInRole("CorporateCustomer");
         }
 
         private static bool IsValid(FlightBookApiRequest request)
@@ -47,8 +75,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 request.Passengers.TrueForAll(p => p.LastName != null) &&
                 request.Passengers.TrueForAll(p => p.Title != Title.Undefined) &&
                 request.Passengers.TrueForAll(p => p.Type != PassengerType.Undefined) &&
-                request.PaymentData != null &&
-                request.PaymentData.Method != PaymentMethod.Undefined;
+                request.Payment != null &&
+                request.Payment.Method != PaymentMethod.Undefined &&
+                request.Payment.Currency != null;
         }
 
         private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse, FlightBookApiRequest request)
@@ -94,13 +123,13 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                         return new FlightBookApiResponse
                         {
                             StatusCode = HttpStatusCode.InternalServerError,
-                            ErrorCode = "ERFBOO05"
+                            ErrorCode = "ERFBOO99"
                         };
                     default:
                         return new FlightBookApiResponse
                         {
                             StatusCode = HttpStatusCode.InternalServerError,
-                            ErrorCode = "ERFBOO05"
+                            ErrorCode = "ERFBOO99"
                         };
                 }
             }
@@ -108,16 +137,17 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static BookFlightInput PreprocessServiceRequest(FlightBookApiRequest request)
         {
-            request.PaymentData.Medium = request.PaymentData.Method == PaymentMethod.BankTransfer
-                ? PaymentMedium.Direct
-                : PaymentMedium.Veritrans;
-
             var bookServiceRequest = new BookFlightInput
             {
-                ItinCacheId = request.Token,
+                Token = request.Token,
                 Contact = request.Contact,
                 Passengers = MapPassengers(request.Passengers),
-                PaymentData = request.PaymentData,
+                PaymentData = new PaymentData
+                {
+                    Method = request.Payment.Method,
+                    Data = request.Payment.Data,
+                    Currency = request.Payment.Currency
+                },
                 DiscountCode = request.DiscountCode
             };
             return bookServiceRequest;

@@ -23,7 +23,7 @@ namespace Lunggo.ApCommon.Flight.Service
         public BookFlightOutput BookFlight(BookFlightInput input)
         {
             var output = new BookFlightOutput();
-            var itins = GetItinerarySetFromCache(input.ItinCacheId);
+            var itins = GetItinerarySetFromCache(input.Token);
             output.BookResults = BookItineraries(itins, input, output);
             if (AllAreBooked(output.BookResults))
             {
@@ -43,7 +43,6 @@ namespace Lunggo.ApCommon.Flight.Service
                     output.IsSuccess = false;
                     output.Errors = new List<FlightError> {FlightError.PaymentFailed};
                 }
-
             }
             else
             {

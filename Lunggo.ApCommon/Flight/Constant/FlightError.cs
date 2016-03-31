@@ -10,6 +10,7 @@
         FailedOnSupplier = 5,
         PartialSuccess = 6,
         NotEligibleToIssue = 7,
-        PaymentFailed = 8
+        PaymentFailed = 8,
+        PriceChanged = 9
     }
 }

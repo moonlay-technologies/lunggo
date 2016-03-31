@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Newtonsoft.Json;
 
@@ -16,7 +17,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         [JsonProperty("pax")]
         public List<Passenger> Passengers { get; set; }
         [JsonProperty("pay")]
-        public PaymentData PaymentData { get; set; }
+        public Payment Payment { get; set; }
         [JsonProperty("cd")]
         public string DiscountCode { get; set; }
         [JsonProperty("lang")]
@@ -43,5 +44,15 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public string PassportCountry { get; set; }
         [JsonProperty("nat")]
         public string Nationality { get; set; }
+    }
+
+    public class Payment
+    {
+        [JsonProperty("met")]
+        public PaymentMethod Method { get; set; }
+        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
+        public Data Data { get; set; }
+        [JsonProperty("curr")]
+        public string Currency { get; set; }
     }
 }

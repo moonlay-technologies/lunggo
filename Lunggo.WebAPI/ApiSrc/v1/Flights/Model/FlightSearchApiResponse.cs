@@ -9,9 +9,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightSearchApiResponse : ApiResponseBase
     {
-        [JsonProperty("fl")]
+        [JsonProperty("fl", NullValueHandling = NullValueHandling.Ignore)]
         public List<Flight> Flights { get; set; }
-        [JsonProperty("cmb")]
+        [JsonProperty("cmb", NullValueHandling = NullValueHandling.Ignore)]
         public List<Combo> Combos { get; set; }
         [JsonProperty("exp", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? ExpiryTime { get; set; }
