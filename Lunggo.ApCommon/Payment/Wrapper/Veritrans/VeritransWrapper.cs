@@ -50,7 +50,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             }
         }
 
-        internal PaymentStatus ProcessPayment(Data data, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
+        internal PaymentStatus ProcessPayment(UniversalPaymentData data, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             switch (method)
             {
@@ -71,7 +71,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             }
         }
 
-        private static void ProcessSavedCreditCardToken(Data data, VeritransResponse content)
+        private static void ProcessSavedCreditCardToken(UniversalPaymentData data, VeritransResponse content)
         {
             if (data != null && data.DataBool0)
             {
@@ -100,7 +100,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             return hashedAuthorizationKey;
         }
 
-        private static WebRequest CreateVtDirectRequest(string authorizationKey, Data data, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static WebRequest CreateVtDirectRequest(string authorizationKey, UniversalPaymentData data, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             var request = (HttpWebRequest)WebRequest.Create(_endPoint);
             request.Method = "POST";
@@ -122,9 +122,9 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             return request;
         }
 
-        private static void ProcessVtDirectRequestParams(WebRequest request, Data data, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static void ProcessVtDirectRequestParams(WebRequest request, UniversalPaymentData data, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
-            data = data ?? new Data();
+            data = data ?? new UniversalPaymentData();
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout"));
             var requestParams = new VeritransRequest
             {

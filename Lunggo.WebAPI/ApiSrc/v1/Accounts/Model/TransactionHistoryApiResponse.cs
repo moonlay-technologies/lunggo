@@ -8,7 +8,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Model
 {
     public class TransactionHistoryApiResponse : ApiResponseBase
     {
-        [JsonProperty("trx", NullValueHandling = NullValueHandling.Ignore)]
-        public List<FlightReservationForDisplay> Reservations { get; set; }
+        [JsonProperty("fl", NullValueHandling = NullValueHandling.Ignore)]
+        public List<FlightReservationForDisplay> FlightReservations { get; set; }
     }
 }

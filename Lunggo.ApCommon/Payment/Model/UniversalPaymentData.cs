@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Payment.Model
 {
-    public class Data
+    public class UniversalPaymentData
     {
         [JsonProperty("d0", NullValueHandling = NullValueHandling.Ignore)]
         public string DataString0 { get; set; }

@@ -31,14 +31,5 @@ namespace Lunggo.ApCommon.Sequence
             return GetNextNumber(_properties);
         }
 
-        public string GetFlightReservationId(EnumReservationType.ReservationType type)
-        {
-            object enumType = Convert.ChangeType(type, type.GetTypeCode());
-            long Id = GetNext();
-            string prefixReservationID = "F" + enumType.ToString();
-            string ReservationID = string.Format("{0}{1}", prefixReservationID, Base36.Encode(Id));
-            return ReservationID;
-        }
-
     }
 }

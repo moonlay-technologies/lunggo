@@ -51,7 +51,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         [JsonProperty("met")]
         public PaymentMethod Method { get; set; }
         [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
-        public Data Data { get; set; }
+        public UniversalPaymentData Data { get; set; }
         [JsonProperty("curr")]
         public string Currency { get; set; }
     }

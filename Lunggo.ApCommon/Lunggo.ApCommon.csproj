@@ -176,7 +176,7 @@
     <Compile Include="Campaign\Service\ServiceSingleton.cs" />
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumDisplay.cs" />
-    <Compile Include="Constant\EnumReservationType.cs" />
+    <Compile Include="Constant\ReservationType.cs" />
     <Compile Include="Constant\Supplier.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
     <Compile Include="Constant\CacheIdentifier.cs" />
@@ -401,7 +401,7 @@
     <Compile Include="Payment\Model\AddressingDetails.cs" />
     <Compile Include="Payment\Model\CreditCardInfo.cs" />
     <Compile Include="Payment\Model\CustomerDetails.cs" />
-    <Compile Include="Payment\Model\Data.cs" />
+    <Compile Include="Payment\Model\UniversalPaymentData.cs" />
     <Compile Include="Payment\Model\ItemDetails.cs" />
     <Compile Include="Payment\Model\SavedCreditCard.cs" />
     <Compile Include="Payment\Model\TransferConfirmationReport.cs" />

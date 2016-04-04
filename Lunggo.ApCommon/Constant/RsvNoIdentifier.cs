@@ -1,4 +1,6 @@
-﻿namespace Lunggo.ApCommon.Constant
+﻿using System;
+
+namespace Lunggo.ApCommon.Constant
 {
     public static class RsvNoIdentifier
     {
@@ -8,17 +10,17 @@
 
         public static bool IsFlightRsvNo(this string rsvNo)
         {
-            return rsvNo.Substring(0, 1) == Flight;
+            return (!string.IsNullOrEmpty(rsvNo) && rsvNo.Substring(0, 1) == Flight);
         }
 
         public static bool IsHotelRsvNo(this string rsvNo)
         {
-            return rsvNo.Substring(0, 1) == Hotel;
+            return (!string.IsNullOrEmpty(rsvNo) && rsvNo.Substring(0, 1) == Hotel);
         }
 
         public static bool IsActivityRsvNo(this string rsvNo)
         {
-            return rsvNo.Substring(0, 1) == Activity;
+            return (!string.IsNullOrEmpty(rsvNo) && rsvNo.Substring(0, 1) == Activity);
         }
     }
 }

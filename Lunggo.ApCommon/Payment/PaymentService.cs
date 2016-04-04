@@ -193,7 +193,7 @@ namespace Lunggo.ApCommon.Payment
             }
         }
 
-        private static PaymentStatus SubmitPayment(Data data, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static PaymentStatus SubmitPayment(UniversalPaymentData data, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             var status = VeritransWrapper.ProcessPayment(data, transactionDetails, itemDetails, method);
             return status;

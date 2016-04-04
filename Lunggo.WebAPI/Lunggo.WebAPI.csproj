@@ -188,16 +188,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiSrc\v1\Accounts\AccountsController.cs" />
-    <Compile Include="ApiSrc\v1\Accounts\Logic\GetProfile.cs" />
+    <Compile Include="ApiSrc\v1\Accounts\Logic\GetProfileLogic.cs" />
     <Compile Include="ApiSrc\v1\Accounts\Logic\ForgotPasswordLogic.cs" />
     <Compile Include="ApiSrc\v1\Accounts\Logic\ChangeProfileLogic.cs" />
+    <Compile Include="ApiSrc\v1\Accounts\Logic\GetTransactionHistoryLogic.cs" />
+    <Compile Include="ApiSrc\v1\Accounts\Logic\GetReservationLogic.cs" />
     <Compile Include="ApiSrc\v1\Accounts\Logic\RegisterLogic.cs" />
     <Compile Include="ApiSrc\v1\Accounts\Logic\LoginLogic.cs" />
     <Compile Include="ApiSrc\v1\Accounts\Model\ChangeProfileApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Accounts\Model\ForgotPasswordApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Accounts\Model\GetProfileApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Accounts\Model\LoginApiResponse.cs" />
-    <Compile Include="ApiSrc\v1\Accounts\Model\OrderDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Accounts\Model\GetReservationApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Accounts\Model\LoginApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Accounts\Model\RegisterApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Accounts\Model\ResetPasswordViewModel.cs" />

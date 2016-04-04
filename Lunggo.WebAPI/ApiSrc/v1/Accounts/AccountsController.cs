@@ -97,41 +97,20 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts
 
         [HttpGet]
         [Authorize]
-        [Route("v1/accounts/trx")]
+        [Route("v1/trxhistory")]
         public TransactionHistoryApiResponse GetTransactionHistory()
         {
-            var email = User.Identity.GetEmail();
-            var flight = FlightService.GetInstance();
-
-            var rsvs = flight.GetOverviewReservationsByContactEmail(email);
-            return new TransactionHistoryApiResponse
-            {
-                Reservations = rsvs,
-                StatusCode = HttpStatusCode.OK
-            };
-
+            var apiResponse = AccountsLogic.GetTransactionHistory(User);
+            return apiResponse;
         }
 
         [HttpGet]
         [Authorize]
-        [Route("v1/accounts/trx")]
-        public OrderDetailApiResponse GetOrderDetail(string rsvNo)
+        [Route("v1/rsv/{rsvNo}")]
+        public GetReservationApiResponse GetOrderDetail(string rsvNo)
         {
-            var flight = FlightService.GetInstance();
-            var rsv = flight.GetReservationForDisplay(rsvNo);
-            if (User.IsInRole("Admin") || User.Identity.GetEmail() == rsv.Contact.Email)
-                return new OrderDetailApiResponse
-                {
-                    Reservation = rsv,
-                    StatusCode = HttpStatusCode.OK
-                };
-            else
-                return new OrderDetailApiResponse
-                {
-                    Reservation = null,
-                    StatusCode = HttpStatusCode.Unauthorized,
-                    ErrorCode = "ERAORD01"
-                };
+            var apiResponse = AccountsLogic.GetReservation(rsvNo, User);
+            return apiResponse;
         }
     }
 }

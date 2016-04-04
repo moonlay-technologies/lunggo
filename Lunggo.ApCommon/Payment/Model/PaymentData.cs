@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Payment.Model
         [JsonProperty("time_limit")]
         public DateTime? TimeLimit { get; set; }
         [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
-        public Data Data { get; set; }
+        public UniversalPaymentData Data { get; set; }
         [JsonProperty("account")]
         public string TargetAccount { get; set; }
         [JsonProperty("url")]
