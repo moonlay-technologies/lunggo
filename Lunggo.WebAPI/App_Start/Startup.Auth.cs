@@ -27,7 +27,7 @@ namespace Lunggo.WebAPI
             var oAuthServerOptions = new OAuthAuthorizationServerOptions
             {
                 AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/v1/accounts/login"),
+                TokenEndpointPath = new PathString("/oauth/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 Provider = new AuthorizationServerProvider(),
                 RefreshTokenProvider = new RefreshTokenProvider()

@@ -6,15 +6,17 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Model
 {
     public class GetProfileApiResponse : ApiResponseBase
     {
-        [JsonProperty("first", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("em", NullValueHandling = NullValueHandling.Ignore)]
+        public string Email { get; set; }
+        [JsonProperty("fst", NullValueHandling = NullValueHandling.Ignore)]
         public string FirstName { get; set; }
-        [JsonProperty("last", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("lst", NullValueHandling = NullValueHandling.Ignore)]
         public string LastName { get; set; }
-        [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("ctycd", NullValueHandling = NullValueHandling.Ignore)]
         public string CountryCd { get; set; }
-        [JsonProperty("phone", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("ph", NullValueHandling = NullValueHandling.Ignore)]
         public string PhoneNumber { get; set; }
-        [JsonProperty("address", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("add", NullValueHandling = NullValueHandling.Ignore)]
         public string Address { get; set; }
     }
 }

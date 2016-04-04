@@ -91,6 +91,12 @@ namespace Lunggo.ApCommon.Identity.Auth
                 return;
             }
 
+            if (!user.EmailConfirmed)
+            {
+                context.SetError("not_active", "User is not yet activated.");
+                return;
+            }
+
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new System.Security.Claims.Claim(ClaimTypes.Name, context.UserName));
             identity.AddClaim(new System.Security.Claims.Claim("sub", context.UserName));

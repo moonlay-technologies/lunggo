@@ -36,7 +36,6 @@ namespace Lunggo.Driver
             new BayuDriver().Init();
             VoucherRequest voucherRequest = new VoucherRequest();
             voucherRequest.Email = "a@a.com";
-            voucherRequest.Price = 700000;
             voucherRequest.VoucherCode = "VC182822";
             //var validationStatus = CampaignService.GetInstance().ValidateVoucherRequest(voucherRequest);
             //if (validationStatus == VoucherValidationStatusType.Success)

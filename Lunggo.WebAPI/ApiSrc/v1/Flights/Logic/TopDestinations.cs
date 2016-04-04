@@ -9,13 +9,23 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
     {
         public static TopDestinationsApiResponse TopDestinations()
         {
-            var flight = FlightService.GetInstance();
-            return new TopDestinationsApiResponse
+            try
             {
-                StatusCode = HttpStatusCode.OK,
-                StatusMessage = "Success.",
-                TopDestinationList = flight.GetTopDestination()
-            };
+                var flight = FlightService.GetInstance();
+                return new TopDestinationsApiResponse
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    TopDestinationList = flight.GetTopDestination()
+                };
+            }
+            catch
+            {
+                return new TopDestinationsApiResponse
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    ErrorCode = "ERFTOP99"
+                };
+            }
         }
     }
 }

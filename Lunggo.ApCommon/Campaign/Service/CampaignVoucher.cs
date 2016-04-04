@@ -1,6 +1,8 @@
-﻿using Lunggo.ApCommon.Campaign.Constant;
+﻿using System.Runtime.InteropServices;
+using Lunggo.ApCommon.Campaign.Constant;
 using Lunggo.ApCommon.Campaign.Model;
 using System;
+using Lunggo.ApCommon.Flight.Service;
 
 namespace Lunggo.ApCommon.Campaign.Service
 {
@@ -12,79 +14,87 @@ namespace Lunggo.ApCommon.Campaign.Service
         }
         public VoucherResponse ValidateVoucherRequest(VoucherRequest voucherRequest)
         {
-            VoucherResponse response = new VoucherResponse();
-            VoucherValidationStatusType validationStatus = VoucherValidationStatusType.Undefined;
+            var response = new VoucherResponse();
 
             var voucher = GetDb.GetCampaignVoucher(voucherRequest.VoucherCode);
             response.Email = voucherRequest.Email;
             response.VoucherCode = voucherRequest.VoucherCode;
             response.CampaignVoucher = voucher;
 
-            validationStatus = ValidateVoucher(voucher, voucherRequest);
+            var validationStatus = ValidateVoucher(voucher, voucherRequest);
 
-            if (validationStatus == VoucherValidationStatusType.Success)
+            if (validationStatus == VoucherStatus.Success)
             {
                 CalculateVoucherDiscount(voucher, voucherRequest, response);
             }
-            response.UpdateStatus = VoucherValidationStatusTypeMessage.Mnemonic(validationStatus);
+            response.VoucherStatus = validationStatus;
             return response;
         }
         public VoucherResponse UseVoucherRequest(VoucherRequest voucherRequest)
         {
-            VoucherResponse response = new VoucherResponse();
-            VoucherValidationStatusType validationStatus = VoucherValidationStatusType.Undefined;
+            var response = new VoucherResponse();
 
             var voucher = GetDb.GetCampaignVoucher(voucherRequest.VoucherCode);
             response.Email = voucherRequest.Email;
             response.VoucherCode = voucherRequest.VoucherCode;
 
-            validationStatus = ValidateVoucher(voucher, voucherRequest);
+            var validationStatus = ValidateVoucher(voucher, voucherRequest);
 
-            if (validationStatus == VoucherValidationStatusType.Success)
+            if (validationStatus == VoucherStatus.Success)
             {
                 CalculateVoucherDiscount(voucher, voucherRequest, response);
                 validationStatus = VoucherDecrement(voucherRequest.VoucherCode);
                 response.CampaignVoucher = voucher;
             }
 
-            response.UpdateStatus = VoucherValidationStatusTypeMessage.Mnemonic(validationStatus);
+            response.VoucherStatus = validationStatus;
             return response;
         }
-        private VoucherValidationStatusType ValidateVoucher(CampaignVoucher voucher, VoucherRequest voucherRequest)
+        private VoucherStatus ValidateVoucher(CampaignVoucher voucher, VoucherRequest voucherRequest)
         {
+            var price = GetFlightPrice(voucherRequest.Token);
+
             var currentTime = DateTime.Now;
             if (voucher == null)
-                return VoucherValidationStatusType.VoucherNotFound;
+                return VoucherStatus.VoucherNotFound;
             if (voucher.StartDate >= currentTime)
-                return VoucherValidationStatusType.CampaignNotStartedYet;
+                return VoucherStatus.CampaignNotStartedYet;
             if (voucher.EndDate <= currentTime)
-                return VoucherValidationStatusType.CampaignHasEnded;
+                return VoucherStatus.CampaignHasEnded;
             if (voucher.RemainingCount < 1)
-                return VoucherValidationStatusType.NoVoucherRemaining;
-            if (voucher.MinSpendValue > voucherRequest.Price)
-                return VoucherValidationStatusType.BelowMinimumSpend;
+                return VoucherStatus.NoVoucherRemaining;
+            if (voucher.MinSpendValue > price)
+                return VoucherStatus.BelowMinimumSpend;
             if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Member))
             {
                 if (!GetDb.IsMember(voucherRequest.Email))
-                    return VoucherValidationStatusType.EmailNotEligible;
+                    return VoucherStatus.EmailNotEligible;
             }
             if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Private))
             {
                 if (!GetDb.IsEligibleForVoucher(voucherRequest.VoucherCode, voucherRequest.Email))
-                    return VoucherValidationStatusType.EmailNotEligible;
+                    return VoucherStatus.EmailNotEligible;
             }
             if (voucher.CampaignStatus == false)
-                return VoucherValidationStatusType.CampaignInactive;
+                return VoucherStatus.CampaignInactive;
             if (voucher.IsSingleUsage!=null && voucher.IsSingleUsage == true)
             {
                 if (GetDb.CheckVoucherUsage(voucherRequest.VoucherCode, voucherRequest.Email) > 0)
-                    return VoucherValidationStatusType.VoucherAlreadyUsed;
+                    return VoucherStatus.VoucherAlreadyUsed;
             }
-            return VoucherValidationStatusType.Success;
+            return VoucherStatus.Success;
         }
+
+        private decimal GetFlightPrice(string token)
+        {
+            var flight = FlightService.GetInstance();
+            var itin = flight.GetItineraryForDisplay(token);
+            return itin.TotalFare;
+        }
+
         private void CalculateVoucherDiscount(CampaignVoucher voucher, VoucherRequest voucherRequest, VoucherResponse response)
         {
-            response.OriginalPrice = voucherRequest.Price;
+            response.OriginalPrice = GetFlightPrice(voucherRequest.Token);;
             response.TotalDiscount = 0;
 
             if (voucher.ValuePercentage != null && voucher.ValuePercentage > 0)
@@ -99,32 +109,32 @@ namespace Lunggo.ApCommon.Campaign.Service
 
             response.DiscountedPrice = response.OriginalPrice - response.TotalDiscount;
         }
-        private VoucherValidationStatusType VoucherDecrement(string voucherCode)
+        private VoucherStatus VoucherDecrement(string voucherCode)
         {
             try
             {
                 if (UpdateDb.VoucherDecrement(voucherCode))
-                    return VoucherValidationStatusType.Success;
+                    return VoucherStatus.Success;
                 else
-                    return VoucherValidationStatusType.NoVoucherRemaining;
+                    return VoucherStatus.NoVoucherRemaining;
             }
             catch (Exception)
             {
-                return VoucherValidationStatusType.UpdateError;
+                return VoucherStatus.UpdateError;
             }
         }
-        private VoucherValidationStatusType VoucherIncrement(string voucherCode)
+        private VoucherStatus VoucherIncrement(string voucherCode)
         {
             try
             {
                 if (UpdateDb.VoucherIncrement(voucherCode))
-                    return VoucherValidationStatusType.Success;
+                    return VoucherStatus.Success;
                 else
-                    return VoucherValidationStatusType.UpdateError;
+                    return VoucherStatus.UpdateError;
             }
             catch (Exception)
             {
-                return VoucherValidationStatusType.UpdateError;
+                return VoucherStatus.UpdateError;
             }
         }
     }

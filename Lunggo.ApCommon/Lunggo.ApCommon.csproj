@@ -160,7 +160,7 @@
     <Compile Include="Activity\Service\ThingsToDo.cs" />
     <Compile Include="Autocomplete\AutocompleteManager.cs" />
     <Compile Include="Campaign\Constant\CampaignType.cs" />
-    <Compile Include="Campaign\Constant\VoucherValidationStatusType.cs" />
+    <Compile Include="Campaign\Constant\VoucherStatus.cs" />
     <Compile Include="Campaign\Database\Logic\GetDb.cs" />
     <Compile Include="Campaign\Database\Logic\UpdateDb.cs" />
     <Compile Include="Campaign\Database\Query\CheckVoucherUsageQuery.cs" />

@@ -19,7 +19,7 @@
                 case CampaignType.Private:
                     return "PRI";
                 case CampaignType.Member:
-                    return "MBR";
+                    return "MEM";
                 default:
                     return null;
             }
@@ -28,11 +28,11 @@
         {
             switch (campaignType)
             {
-                case "PBL":
+                case "PUB":
                     return CampaignType.Public;
-                case "PRV":
+                case "PRI":
                     return CampaignType.Private;
-                case "MBR":
+                case "MEM":
                     return CampaignType.Member;
                 default:
                     return CampaignType.Undefined;

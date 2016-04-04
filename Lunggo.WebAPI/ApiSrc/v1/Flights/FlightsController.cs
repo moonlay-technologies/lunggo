@@ -118,10 +118,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("v1/flights/topdestinations")]
+        [Route("v1/flights/top")]
         public TopDestinationsApiResponse TopDestinations(HttpRequestMessage httpRequest)
         {
-            return FlightLogic.TopDestinations();
+            var apiResponse = FlightLogic.TopDestinations();
+            return apiResponse;
         }
     }
 }

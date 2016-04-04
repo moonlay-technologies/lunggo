@@ -91,7 +91,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var campaign = CampaignService.GetInstance().UseVoucherRequest(new VoucherRequest
             {
                 Email = input.Contact.Email,
-                Price = originalPrice,
+                Token = input.Token,
                 VoucherCode = input.DiscountCode
             });
             if (campaign.CampaignVoucher != null)

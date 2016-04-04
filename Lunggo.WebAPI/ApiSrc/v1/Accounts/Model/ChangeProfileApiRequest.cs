@@ -4,15 +4,15 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Model
 {
     public class ChangeProfileApiRequest
     {
-        [JsonProperty("first")]
+        [JsonProperty("fst")]
         public string FirstName { get; set; }
-        [JsonProperty("last")]
+        [JsonProperty("lst")]
         public string LastName { get; set; }
-        [JsonProperty("country")]
+        [JsonProperty("ctycd")]
         public string CountryCd { get; set; }
-        [JsonProperty("phone")]
+        [JsonProperty("ph")]
         public string PhoneNumber { get; set; }
-        [JsonProperty("address")]
+        [JsonProperty("add")]
         public string Address { get; set; }
     }
 }

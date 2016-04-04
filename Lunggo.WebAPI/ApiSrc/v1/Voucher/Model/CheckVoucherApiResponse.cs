@@ -6,11 +6,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Model
 {
     public class CheckVoucherApiResponse : ApiResponseBase
     {
-        [JsonProperty("discount")]
+        [JsonProperty("disc")]
         public decimal Discount { get; set; }
-        [JsonProperty("display_name")]
+        [JsonProperty("disp")]
         public string DisplayName { get; set; }
-        [JsonProperty("msg")]
-        public string Message { get; set; }
     }
 }

@@ -4,8 +4,8 @@ namespace Lunggo.ApCommon.Campaign.Model
 {
     public class VoucherRequest
     {
-        public String VoucherCode { get; set; }
-        public String Email { get; set; }
-        public decimal Price { get; set; }
+        public string VoucherCode { get; set; }
+        public string Email { get; set; }
+        public string Token { get; set; }
     }
 }
