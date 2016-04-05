@@ -16,14 +16,11 @@ namespace Lunggo.ApCommon.Flight.Service
             if (input.Token == null)
             {
                 output.IsSuccess = true;
-                output.IsValid = false;
-                output.NewFare = null;
-                output.Sets = null;
-                output.Token = null;
                 return output;
             }
             else
             {
+                var revalidateSets = new List<RevalidateFlightOutputSet>();
                 var itins = IsItinBundleCacheId(input.Token)
                     ? GetItinerarySetFromCache(input.Token)
                     : new List<FlightItinerary> {GetItineraryFromCache(input.Token)};
@@ -32,17 +29,18 @@ namespace Lunggo.ApCommon.Flight.Service
                     var outputSet = new RevalidateFlightOutputSet();
                     var request = new RevalidateConditions
                     {
-                        FareId = itin.FareId,
+                        Itinerary = itin,
                         Trips = itin.Trips
                     };
                     var response = RevalidateFareInternal(request);
                     if (response.IsSuccess)
                     {
                         outputSet.IsSuccess = true;
-                        outputSet.IsValid = response.IsValid;
-                        outputSet.Itinerary = response.Itinerary;
-                        if (outputSet.Itinerary != null)
-                            outputSet.Itinerary.RegisterNumber = itin.RegisterNumber;
+                        outputSet.IsItineraryChanged = response.IsItineraryChanged;
+                        outputSet.IsPriceChanged = response.IsPriceChanged;
+                        outputSet.NewItinerary = response.NewItinerary;
+                        if (outputSet.NewItinerary != null)
+                            outputSet.NewItinerary.RegisterNumber = itin.RegisterNumber;
                     }
                     else
                     {
@@ -51,12 +49,12 @@ namespace Lunggo.ApCommon.Flight.Service
                         if (response.ErrorMessages != null)
                             response.ErrorMessages.ForEach(output.AddError);
                     }
-                    output.Sets.Add(outputSet);
+                    revalidateSets.Add(outputSet);
                 });
 
-                if (output.Sets.TrueForAll(set => set.IsSuccess))
+                if (revalidateSets.TrueForAll(set => set.IsSuccess))
                 {
-                    var newItins = output.Sets.Select(set => set.Itinerary).ToList();
+                    var newItins = revalidateSets.Select(set => set.NewItinerary).ToList();
                     var asReturn = GetFlightRequestTripType(input.RequestId);
                     if (asReturn == null)
                         newItins = new List<FlightItinerary>();
@@ -64,23 +62,28 @@ namespace Lunggo.ApCommon.Flight.Service
                         newItins.ForEach(itin => itin.AsReturn = (bool)asReturn);
                     AddPriceMargin(newItins);
                     var searchedPrices = GetFlightRequestPrices(input.RequestId, input.SearchId);
-                    var itinsPriceDifference = newItins.Select(itin => itin.LocalPrice - searchedPrices[itin.RegisterNumber]);
                     if (IsItinBundleCacheId(input.Token))
                         SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.Token);
                     else
                         SaveItineraryToCache(newItins.Single(), input.Token);
 
                     output.IsSuccess = true;
-                    output.IsValid = output.Sets.TrueForAll(set => set.IsValid) && itinsPriceDifference.All(diff => diff == 0);
-                    if (output.Sets.Any(set => set.Itinerary == null))
-                        output.NewFare = null;
-                    else
-                        output.NewFare = output.Sets.Sum(set => set.Itinerary.LocalPrice);
+                    output.IsValid = revalidateSets.TrueForAll(set => set.IsValid);
+                    if (output.IsValid)
+                    {
+                        output.IsItineraryChanged = revalidateSets.Exists(set => set.IsItineraryChanged);
+                        if (output.IsItineraryChanged)
+                            output.NewItinerary = ConvertToItineraryForDisplay(BundleItineraries(newItins));
+                        output.IsPriceChanged = revalidateSets.Exists(set => set.IsPriceChanged);
+                        if (output.IsPriceChanged)
+                            output.NewPrice = revalidateSets.Sum(set => set.NewPrice);
+                        SaveItineraryToCache(newItins[0], input.Token);
+                    }
                     output.Token = input.Token;
                 }
                 else
                 {
-                    if (output.Sets.Any(set => set.IsSuccess))
+                    if (revalidateSets.Any(set => set.IsSuccess))
                         output.PartiallySucceed();
                     output.IsSuccess = false;
                     output.DistinguishErrors();

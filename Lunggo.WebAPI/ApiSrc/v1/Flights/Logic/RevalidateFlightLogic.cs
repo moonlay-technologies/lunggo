@@ -43,14 +43,14 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 }
                 else
                 {
-                    if (revalidateServiceResponse.NewFare != null)
+                    if (revalidateServiceResponse.NewPrice != null)
                     {
                         return new FlightRevalidateApiResponse
                         {
                             Token = revalidateServiceResponse.Token,
                             IsValid = false,
                             IsOtherFareAvailable = true,
-                            NewFare = revalidateServiceResponse.NewFare,
+                            NewFare = revalidateServiceResponse.NewPrice,
                             OriginalRequest = request
                         };
                     }

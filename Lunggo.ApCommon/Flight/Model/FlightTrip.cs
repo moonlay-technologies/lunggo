@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
@@ -13,7 +14,15 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class FlightTrip : FlightTripBase
     {
-        
+        public bool Identical(FlightTrip otherTrip)
+        {
+            return
+                OriginAirport == otherTrip.OriginAirport &&
+                DestinationAirport == otherTrip.DestinationAirport &&
+                DepartureDate == otherTrip.DepartureDate &&
+                Segments.Count == otherTrip.Segments.Count &&
+                Segments.Zip(otherTrip.Segments, (segment, otherSegment) => segment.Identical(otherSegment)).All(x => x);
+        }
     }
 
     public class FlightTripBase

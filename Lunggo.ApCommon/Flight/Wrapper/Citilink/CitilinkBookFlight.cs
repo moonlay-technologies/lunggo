@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var client = CreateAgentClient();
                 Login(client);
 
-                var splittedFareId = bookInfo.FareId.Split('.').ToList();
+                var splittedFareId = bookInfo.Itinerary.FareId.Split('.').ToList();
                 var date = new DateTime(int.Parse(splittedFareId[4]), int.Parse(splittedFareId[3]), int.Parse(splittedFareId[2]));
                 var adultCount = int.Parse(splittedFareId[5]);
                 var childCount = int.Parse(splittedFareId[6]);

@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             internal RevalidateFareResult RevalidateFare(RevalidateConditions conditions)
             {
                 //conditions.FareId = "NTX+PKU+14 JUN 2016+7+0+0+Y+404700+FR00_C0_SLOT0+2+IW 1271|JT 235+10:35|13:30";
-                if (conditions.FareId == null)
+                if (conditions.Itinerary.FareId == null)
                 {
                     //throw new Exception("revalidate 1");
                     return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
@@ -46,7 +46,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 CabinClass cabinClass;
                 try
                 {
-                    var splittedFareId = conditions.FareId.Split('+');
+                    var splittedFareId = conditions.Itinerary.FareId.Split('+');
                     origin = splittedFareId[0];
                     dest = splittedFareId[1];
                     depdate = Convert.ToDateTime(splittedFareId[2]);
@@ -668,7 +668,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Supplier = Supplier.LionAir,
                         SupplierCurrency = "IDR",
                         SupplierPrice = Convert.ToDecimal(agentprice),
-                        FareId = conditions.FareId,
+                        FareId = conditions.Itinerary.FareId,
                         Trips = new List<FlightTrip>
                         {
                             new FlightTrip
@@ -681,13 +681,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         }
                     };
 
-                    return new RevalidateFareResult
+                    var newPrice = Convert.ToDecimal(agentprice);
+                    var result = new RevalidateFareResult
                     {
                         IsSuccess = true,
-                        IsValid = (price == Convert.ToDecimal(agentprice)) && isDepHrSame && isFlightSame && isSegmentEqual,
-                        Itinerary = itin
+                        IsValid = (price == newPrice) && isDepHrSame && isFlightSame && isSegmentEqual,
+                        IsPriceChanged = price != newPrice,
+                        NewItinerary = itin
                     };
-                
+                    if (result.IsPriceChanged)
+                        result.NewPrice = newPrice;
+                    return result;  
+
                 }
 
                 catch //(Exception e)

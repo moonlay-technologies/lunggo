@@ -10,7 +10,7 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class RevalidateConditions : ConditionsBase
     {
-        public string FareId { get; set; }
+        public FlightItinerary Itinerary { get; set; }
     }
 
     public class SearchFlightConditions : ConditionsBase

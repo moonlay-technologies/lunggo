@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var client = CreateAgentClient();
                     Login(client);
                     var hasil = new RevalidateFareResult();
-                    var Fare = conditions.FareId;
+                    var Fare = conditions.Itinerary.FareId;
                     var ParseFare = Fare.Split('.');
                     var FID = ParseFare[(ParseFare.Count() - 1)];
                     //var Fare =
@@ -308,10 +308,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             }
                         }
                             };
-
+                            var newPrice = decimal.Parse(hargaBaru);
                             hasil.IsSuccess = true;
-                            hasil.IsValid = harga == Decimal.Parse(hargaBaru);
-                            hasil.Itinerary = itin;
+                            hasil.IsValid = harga == newPrice;
+                            hasil.IsPriceChanged = harga != newPrice;
+                            if (hasil.IsPriceChanged)
+                                hasil.NewPrice = newPrice;
+                            hasil.NewItinerary = itin;
 
                         }
                         else
@@ -449,7 +452,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 };
                                 hasil.IsSuccess = true;
                                 hasil.IsValid = harga == Decimal.Parse(hargaBaru);
-                                hasil.Itinerary = itin;
+                                hasil.NewItinerary = itin;
                             }
                             else
                             {
@@ -582,7 +585,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     };
                                     hasil.IsSuccess = true;
                                     hasil.IsValid = harga == Decimal.Parse(hargaBaru);
-                                    hasil.Itinerary = itin;
+                                    hasil.NewItinerary = itin;
                                 }
                                 else
                                 {
