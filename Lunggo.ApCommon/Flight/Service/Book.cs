@@ -188,8 +188,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var bookInfo = new FlightBookingInfo
             {
-                FareId = itin.FareId,
-                CanHold = itin.CanHold,
+                Itinerary = itin,
                 ContactData = input.Contact,
                 Passengers = input.Passengers
             };

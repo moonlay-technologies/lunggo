@@ -82,7 +82,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
             {
                 var clientx = CreateAgentClient();
                 var hasil = new BookFlightResult();
-                var Fare = bookInfo.FareId; 
+                var Fare = bookInfo.Itinerary.FareId; 
                 //var Fare =
                 //    "SJ.017.SJ.272.IN.9662.KNO.WGP?2015-11-11|1.0.0|2346000.0.97174,3853813,1953461:X,M,T:S:KNO:WGP:U2s5VlVrNUZXUT09";
                 var ParseFare = Fare.Split('.');

@@ -23,7 +23,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
         {
             internal RevalidateFareResult RevalidateFare(RevalidateConditions conditions)
             {
-                var splittedFareId = conditions.FareId.Split('.').ToList();
+                var splittedFareId = conditions.Itinerary.FareId.Split('.').ToList();
                 var origin = splittedFareId[0];
                 var dest = splittedFareId[1];
                 var date = new DateTime(int.Parse(splittedFareId[4]), int.Parse(splittedFareId[3]),
@@ -200,13 +200,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         }
                     };
                     
-                    return new RevalidateFareResult
+                    var result = new RevalidateFareResult
                     {
                         IsSuccess = true,
                         IsValid = price == newPrice,
-                        Itinerary = itin
+                        IsPriceChanged = price != newPrice,
+                        NewItinerary = itin
                     };
-               }    
+                    if (result.IsPriceChanged)
+                        result.NewPrice = newPrice;
+                    return result;
+                }    
                else
                {
                    return new RevalidateFareResult

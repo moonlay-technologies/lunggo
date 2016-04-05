@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
-                if (bookInfo.FareId == null)
+                if (bookInfo.Itinerary.FareId == null)
                 {
                     //throw new Exception("haloooo 1");
                     return new BookFlightResult
@@ -56,7 +56,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 CabinClass cabinClass;
                 try
                 {
-                    var splittedFareId = bookInfo.FareId.Split('+');
+                    var splittedFareId = bookInfo.Itinerary.FareId.Split('+');
                     origin = splittedFareId[0]; //CGK
                     dest = splittedFareId[1]; // SIN
                     depdate = Convert.ToDateTime(splittedFareId[2]);

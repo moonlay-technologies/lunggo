@@ -36,7 +36,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 try
                 {
-                    var splittedFareId = bookInfo.FareId.Split('.').ToList();
+                    var splittedFareId = bookInfo.Itinerary.FareId.Split('.').ToList();
                     origin = splittedFareId[0];
                     dest = splittedFareId[1];
                     date = new DateTime(int.Parse(splittedFareId[4]), int.Parse(splittedFareId[3]),
