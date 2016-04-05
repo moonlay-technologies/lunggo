@@ -4,15 +4,15 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class Contact
     {
-        [JsonProperty("name")]
+        [JsonProperty("nm")]
         public string Name { get; set; }
-        [JsonProperty("country")]
+        [JsonProperty("ctycd")]
         public string CountryCode { get; set; }
-        [JsonProperty("phone")]
+        [JsonProperty("ph")]
         public string Phone { get; set; }
-        [JsonProperty("email")]
+        [JsonProperty("em")]
         public string Email { get; set; }
-        [JsonProperty("address")]
+        [JsonProperty("add")]
         public string Address { get; set; }
     }
 }

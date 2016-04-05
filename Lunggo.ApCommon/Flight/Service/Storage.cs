@@ -96,17 +96,9 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisTransaction = redisDb.CreateTransaction();
-            var tripType = ParseTripType(searchId);
             for (var i = 0; i < itinLists.Count; i++)
             {
                 var itinList = itinLists[i];
-                var sequenceNo = 0;
-                foreach (var itin in itinList)
-                {
-                    itin.RegisterNumber = (supplierIndex*SupplierIndexCap) + sequenceNo++;
-                    itin.RequestedTripType = tripType;
-                }
-
                 var redisKey = "searchedFlightItineraries:" + i + ":" + searchId + ":" + supplierIndex;
                 var cacheObject = itinList.ToCacheObject();
                 redisTransaction.StringSetAsync(redisKey, cacheObject, TimeSpan.FromMinutes(timeout));
@@ -132,7 +124,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 timeout =
                     Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
             var redisService = RedisService.GetInstance();
-            var redisKey = "searchedSupplierIndexes:" + searchId;
+            var redisKey = "searchedSupplierIndices:" + searchId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.ListRightPush(redisKey, supplierIndex);
             redisDb.KeyExpire(redisKey, TimeSpan.FromMinutes(timeout));
@@ -141,10 +133,10 @@ namespace Lunggo.ApCommon.Flight.Service
         private static List<int> GetSearchedSupplierIndicesFromCache(string searchId)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "searchedSupplierIndexes:" + searchId;
+            var redisKey = "searchedSupplierIndices:" + searchId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var length = redisDb.ListLength(redisKey);
-            return redisDb.ListRange(redisKey, 0, length - 1).Select(val => (int) val).ToList();
+            return redisDb.ListRange(redisKey, 0, length - 1).Select(val => (int) val).Distinct().ToList();
         }
 
         private List<List<FlightItinerary>> GetSearchedPartialItinerariesFromBufferCache(string searchId, int supplierIndex)
@@ -173,7 +165,9 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cacheObject = redisDb.StringGet(redisKey);
             var itins = cacheObject.DeconvertTo<List<FlightItinerary>>();
-            return itins.Single(itin => itin.RegisterNumber == registerNumber);
+            if (itins == null)
+                return null;
+            return itins.SingleOrDefault(itin => itin.RegisterNumber == registerNumber);
         }
 
         public DateTime? GetSearchedItinerariesExpiry(string searchId, int supplierIndex)
@@ -181,7 +175,7 @@ namespace Lunggo.ApCommon.Flight.Service
             try
             {
                 var redisService = RedisService.GetInstance();
-                var redisKey = "searchedFlightItineraries:" + searchId + ":" + supplierIndex;
+                var redisKey = "searchedFlightItineraries:0:" + searchId + ":" + supplierIndex;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
                 var timeToLive = redisDb.KeyTimeToLive(redisKey);
                 var expiryTime = DateTime.UtcNow + timeToLive;
@@ -231,6 +225,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
             var itinCacheId = CacheIdentifier.Flight + SingleItinKeyPrefix + plainItinCacheId;
             var itin = GetItineraryFromSearchCache(searchId, registerNumber, partNumber);
+
+            if (itin == null)
+                return null;
+
             var redisService = RedisService.GetInstance();
             var redisKey = "flightItinerary:" + itinCacheId;
             var cacheObject = itin.ToCacheObject();
@@ -274,7 +272,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisKey = "flightCombos:" + searchId + ":" + supplierIndex;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cacheObject = redisDb.StringGet(redisKey);
-            return cacheObject.DeconvertTo<List<Combo>>();
+            return cacheObject.DeconvertTo<List<Combo>>() ?? new List<Combo>();
         }
 
         private FlightItinerary GetItineraryFromCache(string itinCacheId)

@@ -10,6 +10,12 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public SelectFlightOutput SelectFlight(SelectFlightInput input)
         {
+            if (input.RegisterNumbers == null || input.RegisterNumbers.Count == 0)
+                return new SelectFlightOutput
+                {
+                    IsSuccess = true,
+                    Token = null
+                };
             if (ParseTripType(input.SearchId) == TripType.OneWay)
             {
                 var token = SaveItineraryFromSearchToCache(input.SearchId, input.RegisterNumbers[0], 0);
@@ -72,6 +78,9 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public string BundleFlight(List<string> tokens)
         {
+            if (tokens.Count == 0 || tokens.Contains(null))
+                return null;
+
             var itins = tokens.Select(GetItineraryFromCache).ToList();
             var itinBundle = BundleItineraries(itins);
             var newToken = SaveItinerarySetAndBundleToCache(itins, itinBundle);

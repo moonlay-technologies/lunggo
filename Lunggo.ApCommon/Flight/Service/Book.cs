@@ -35,6 +35,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     SendInstantPaymentReservationNotifToCustomer(reservation.RsvNo);
                 SavePaymentRedirectionUrlInCache(reservation.RsvNo, reservation.Payment.Url, reservation.Payment.TimeLimit);
                 output.RsvNo = reservation.RsvNo;
+                output.PaymentUrl = reservation.Payment.Url;
+                output.TimeLimit = reservation.Payment.TimeLimit;
 
                 if (reservation.Payment.Status != PaymentStatus.Failed)
                     output.IsSuccess = true;
@@ -47,6 +49,8 @@ namespace Lunggo.ApCommon.Flight.Service
             else
             {
                 output.IsSuccess = false;
+                if (!output.BookResults.Any())
+                    output.AddError(FlightError.InvalidInputData);
                 if (AnyIsBooked(output.BookResults))
                     output.PartiallySucceed();
                 output.DistinguishErrors();
@@ -66,9 +70,9 @@ namespace Lunggo.ApCommon.Flight.Service
             return bookResults.Any(set => set.IsSuccess);
         }
 
-        private static bool AllAreBooked(IEnumerable<BookResult> bookResults)
+        private static bool AllAreBooked(List<BookResult> bookResults)
         {
-            return bookResults.All(set => set.IsSuccess);
+            return bookResults.Any() && bookResults.All(set => set.IsSuccess);
         }
 
         private FlightReservation CreateReservation(List<FlightItinerary> itins, BookFlightInput input, BookFlightOutput output)
@@ -165,11 +169,12 @@ namespace Lunggo.ApCommon.Flight.Service
         private List<BookResult> BookItineraries(IEnumerable<FlightItinerary> itins, BookFlightInput input, BookFlightOutput output)
         {
             var bookResults = new List<BookResult>();
-            Parallel.ForEach(itins, itin =>
-            {
-                var bookResult = BookItinerary(itin, input, output);
-                bookResults.Add(bookResult);
-            });
+            if (itins != null)
+                Parallel.ForEach(itins, itin =>
+                {
+                    var bookResult = BookItinerary(itin, input, output);
+                    bookResults.Add(bookResult);
+                });
             return bookResults;
         }
 

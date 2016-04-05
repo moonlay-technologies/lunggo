@@ -12,7 +12,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         [JsonProperty("fl", NullValueHandling = NullValueHandling.Ignore)]
         public List<Flight> Flights { get; set; }
         [JsonProperty("cmb", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Combo> Combos { get; set; }
+        public List<ComboForDisplay> Combos { get; set; }
         [JsonProperty("exp", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? ExpiryTime { get; set; }
         [JsonProperty("prog", NullValueHandling = NullValueHandling.Ignore)]

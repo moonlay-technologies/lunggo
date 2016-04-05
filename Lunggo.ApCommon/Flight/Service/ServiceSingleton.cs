@@ -99,6 +99,16 @@ namespace Lunggo.ApCommon.Flight.Service
             });
 
             var itinLists = GetSearchedPartialItinerariesFromBufferCache(searchId, supplierIndex);
+            var tripType = ParseTripType(searchId);
+            foreach (var itinList in itinLists)
+            {
+                var sequenceNo = 0;
+                foreach (var itin in itinList)
+                {
+                    itin.RegisterNumber = (supplierIndex*SupplierIndexCap) + sequenceNo++;
+                    itin.RequestedTripType = tripType;
+                }
+            }
             if (conditions.Trips.Count > 1)
             {
                 var combos = GenerateCombo(itinLists);

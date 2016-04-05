@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Net;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 using FlightService = Lunggo.ApCommon.Flight.Service.FlightService;

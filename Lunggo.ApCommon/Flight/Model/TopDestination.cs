@@ -9,7 +9,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public string OriginCity { get; set; }
         [JsonProperty("des")]
         public string DestinationCity { get; set; }
-        [JsonProperty("price")]
+        [JsonProperty("pr")]
         public Price CheapestPrice { get; set; }
     }
 }

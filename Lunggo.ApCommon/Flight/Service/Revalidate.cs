@@ -21,6 +21,14 @@ namespace Lunggo.ApCommon.Flight.Service
             var itins = IsItinBundleCacheId(input.Token)
                 ? GetItinerarySetFromCache(input.Token)
                 : new List<FlightItinerary> { GetItineraryFromCache(input.Token) };
+
+            if (itins == null)
+            {
+                output.IsSuccess = false;
+                output.Errors = new List<FlightError> { FlightError.FareIdNoLongerValid };
+                return output;
+            }
+
             Parallel.ForEach(itins, itin =>
             {
                 var outputSet = new RevalidateFlightOutputSet();
@@ -29,6 +37,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     FareId = itin.FareId,
                     Trips = itin.Trips
                 };
+
                 var response = RevalidateFareInternal(request);
                 if (response.IsSuccess)
                 {

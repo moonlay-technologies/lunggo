@@ -24,6 +24,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
         {
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
+                if (conditions.Trips.Count > 1)
+                    return new SearchFlightResult
+                    {
+                        IsSuccess = true,
+                        Itineraries = new List<FlightItinerary>()
+                    };
+
                 // WAIT
                 var client = CreateCustomerClient();
                 var hasil = new SearchFlightResult();

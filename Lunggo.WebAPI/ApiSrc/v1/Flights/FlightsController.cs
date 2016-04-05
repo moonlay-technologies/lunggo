@@ -33,19 +33,15 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("v1/flights/{searchId}/select/{registers}")]
-        public FlightSelectApiResponse SelectFlight(string searchId, string registers)
+        [Route("v1/flights/select")]
+        public FlightSelectApiResponse SelectFlight()
         {
-            var request = new FlightSelectApiRequest
-            {
-                SearchId = searchId,
-                RegisterNumbers = (List<int>)new ListConverter<int>().ConvertFrom(registers)
-            };
+            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightSelectApiRequest>();
             var apiResponse = FlightLogic.SelectFlight(request);
             return apiResponse;
         }
 
-        [HttpPost]
+        [HttpGet]
         [LunggoCorsPolicy]
         [Route("v1/flights/revalidate/{token}")]
         public FlightRevalidateApiResponse RevalidateFlight(string token)
@@ -116,10 +112,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         //    return FlightLogic.ExpireReservations();
         //}
 
-        [HttpPost]
+        [HttpGet]
         [LunggoCorsPolicy]
         [Route("v1/flights/top")]
-        public TopDestinationsApiResponse TopDestinations(HttpRequestMessage httpRequest)
+        public TopDestinationsApiResponse TopDestinations()
         {
             var apiResponse = FlightLogic.TopDestinations();
             return apiResponse;

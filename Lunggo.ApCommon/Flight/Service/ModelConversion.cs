@@ -65,6 +65,17 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
+        private static ComboForDisplay ConvertToComboForDisplay(Combo combo)
+        {
+            if (combo == null)
+                return null;
+            return new ComboForDisplay
+            {
+                Fare = combo.Fare,
+                Registers = combo.Registers
+            };
+        }
+
         private static FlightTripForDisplay ConvertToTripForDisplay(FlightTrip trip)
         {
             var dict = DictionaryService.GetInstance();

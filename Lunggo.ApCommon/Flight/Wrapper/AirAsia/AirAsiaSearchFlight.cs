@@ -30,6 +30,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         {
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
+                if (conditions.Trips.Count > 1)
+                    return new SearchFlightResult
+                    {
+                        IsSuccess = true,
+                        Itineraries = new List<FlightItinerary>()
+                    };
+
                 var client = CreateCustomerClient();
 
                 // Airport Generalizing

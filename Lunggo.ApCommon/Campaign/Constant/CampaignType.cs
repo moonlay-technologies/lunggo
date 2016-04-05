@@ -2,10 +2,11 @@
 {
     public enum CampaignType
     {
-        Public = 0,
-        Private = 1,
-        Member = 2,
-        Undefined = 3
+        Undefined = 0,
+        Public = 1,
+        Private = 2,
+        Member = 3,
+        
     }
 
     internal class CampaignTypeCd

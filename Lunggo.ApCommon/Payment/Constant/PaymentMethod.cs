@@ -57,6 +57,8 @@
                     return "IDM";
                 case PaymentMethod.Credit:
                     return "CRD";
+                case PaymentMethod.Deposit:
+                    return "DPS";
                 default:
                     return "";
             }
@@ -95,6 +97,8 @@
                     return PaymentMethod.Indomaret;
                 case "CRD":
                     return PaymentMethod.Credit;
+                case "DPS":
+                    return PaymentMethod.Deposit;
                 default:
                     return PaymentMethod.Undefined;
             }

@@ -23,6 +23,7 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class FlightItinerary : FlightItineraryBase
     {
+        public string SearchId { get; set; }
         public string FareId { get; set; }
         public string BookingId { get; set; }
         public BookingStatus BookingStatus { get; set; }
@@ -47,9 +48,7 @@ namespace Lunggo.ApCommon.Flight.Model
     }
 
     public class FlightItineraryBase
-    {
-        [JsonProperty("sid")]
-        public string SearchId { get; set; }
+    {     
         [JsonProperty("rqpass")]
         public bool RequirePassport { get; set; }
         [JsonProperty("rqdob")]

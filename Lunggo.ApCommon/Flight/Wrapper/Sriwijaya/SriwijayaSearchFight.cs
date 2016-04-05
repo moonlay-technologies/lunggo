@@ -41,9 +41,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
         {
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
+                if (conditions.Trips.Count > 1)
+                    return new SearchFlightResult
+                    {
+                        IsSuccess = true,
+                        Itineraries = new List<FlightItinerary>()
+                    };
+
+                var trip0 = conditions.Trips[0];
+                trip0.OriginAirport = trip0.OriginAirport == "JKT" ? "CGK" : trip0.OriginAirport;
+                trip0.DestinationAirport = trip0.DestinationAirport == "JKT" ? "CGK" : trip0.DestinationAirport;
                 var client = CreateCustomerClient();
                 var hasil = new SearchFlightResult();
-                var convertBulan = conditions.Trips[0].DepartureDate.ToString("MMMM");
+                var convertBulan = trip0.DepartureDate.ToString("MMMM");
                 var bulan3 = convertBulan.Substring(0, 3);
                 Login(client);
 
@@ -71,15 +81,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 //SEARCH
                 url = "application/?action=booking";
                 var searchRequest = new RestRequest(url, Method.POST);
-                postData = @"tanggalBerangkat=" + conditions.Trips[0].DepartureDate.Day + "-" + bulan3 + "-" + conditions.Trips[0].DepartureDate.Year +
+                postData = @"tanggalBerangkat=" + trip0.DepartureDate.Day + "-" + bulan3 + "-" + trip0.DepartureDate.Year +
                                  @"&ADT=" + conditions.AdultCount +
                                  @"&CHD=" + conditions.ChildCount +
                                  @"&INF=" + conditions.InfantCount +
                                  @"&returndaterange=0" +
                                  @"&return=NO" +
                                  @"&Submit=Pencarian" +
-                                 @"&ruteTujuan=" + conditions.Trips[0].DestinationAirport +
-                                 @"&ruteBerangkat=" + conditions.Trips[0].OriginAirport +
+                                 @"&ruteTujuan=" + trip0.DestinationAirport +
+                                 @"&ruteBerangkat=" + trip0.OriginAirport +
                                  @"&vSub=YES";
                 searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var searchResponse = client.Execute(searchRequest);
@@ -336,11 +346,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                                     var prefix =
                                         "" + tampungPesawatString + "" +
-                                        "." + conditions.Trips[0].OriginAirport + "" +
-                                        "." + conditions.Trips[0].DestinationAirport + "" +
-                                        "?" + conditions.Trips[0].DepartureDate.Year + "" +
-                                        "-" + conditions.Trips[0].DepartureDate.Month + "" +
-                                        "-" + conditions.Trips[0].DepartureDate.Day + "" +
+                                        "." + trip0.OriginAirport + "" +
+                                        "." + trip0.DestinationAirport + "" +
+                                        "?" + trip0.DepartureDate.Year + "" +
+                                        "-" + trip0.DepartureDate.Month + "" +
+                                        "-" + trip0.DepartureDate.Day + "" +
                                         "|" + conditions.AdultCount + "" +
                                         "." + conditions.ChildCount + "" +
                                         "." + conditions.InfantCount + "" +
@@ -370,9 +380,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                        new FlightTrip()
                                        {
                                            Segments = segments,
-                                           OriginAirport = conditions.Trips[0].OriginAirport,
-                                           DestinationAirport = conditions.Trips[0].DestinationAirport,
-                                           DepartureDate = DateTime.SpecifyKind(conditions.Trips[0].DepartureDate,DateTimeKind.Utc)
+                                           OriginAirport = trip0.OriginAirport,
+                                           DestinationAirport = trip0.DestinationAirport,
+                                           DepartureDate = DateTime.SpecifyKind(trip0.DepartureDate,DateTimeKind.Utc)
                                        }
                                     }
                                     };
@@ -595,11 +605,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                                     var prefix =
                                          "" + tampungPesawatString + "" +
-                                        "." + conditions.Trips[0].OriginAirport + "" +
-                                        "." + conditions.Trips[0].DestinationAirport + "" +
-                                        "?" + conditions.Trips[0].DepartureDate.Year + "" +
-                                        "-" + conditions.Trips[0].DepartureDate.Month + "" +
-                                        "-" + conditions.Trips[0].DepartureDate.Day + "" +
+                                        "." + trip0.OriginAirport + "" +
+                                        "." + trip0.DestinationAirport + "" +
+                                        "?" + trip0.DepartureDate.Year + "" +
+                                        "-" + trip0.DepartureDate.Month + "" +
+                                        "-" + trip0.DepartureDate.Day + "" +
                                         "|" + conditions.AdultCount + "" +
                                         "." + conditions.ChildCount + "" +
                                         "." + conditions.InfantCount + "" +
@@ -629,9 +639,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                            new FlightTrip()
                                            {
                                                 Segments = segments,
-                                                OriginAirport = conditions.Trips[0].OriginAirport,
-                                                DestinationAirport = conditions.Trips[0].DestinationAirport,
-                                                DepartureDate = DateTime.SpecifyKind(conditions.Trips[0].DepartureDate,DateTimeKind.Utc)
+                                                OriginAirport = trip0.OriginAirport,
+                                                DestinationAirport = trip0.DestinationAirport,
+                                                DepartureDate = DateTime.SpecifyKind(trip0.DepartureDate,DateTimeKind.Utc)
                                            }
                                         }
                                     };

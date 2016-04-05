@@ -61,18 +61,25 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             if (selectServiceResponse.IsSuccess)
             {
-                return new FlightSelectApiResponse
-                {
-                    Token = selectServiceResponse.Token,
-                    StatusCode = HttpStatusCode.OK
-                };
+                if (selectServiceResponse.Token != null)
+                    return new FlightSelectApiResponse
+                    {
+                        Token = selectServiceResponse.Token,
+                        StatusCode = HttpStatusCode.OK
+                    };
+                else
+                    return new FlightSelectApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        ErrorCode = "ERFSEL01"
+                    };
             }
             else
             {
                 return new FlightSelectApiResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERFSEL01"
+                    ErrorCode = "ERFSEL99"
                 };
             }
         }

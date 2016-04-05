@@ -295,8 +295,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiSrc\Common\" />
-    <Folder Include="ApiSrc\v1\FlightOrders\" />
-    <Folder Include="ApiSrc\v1\HotelOrders\" />
     <Folder Include="ApiSrc\v1\Hotels\Model\" />
     <Folder Include="ApiSrc\v1\Newsletter\Logic\" />
     <Folder Include="ApiSrc\v1\Rooms\Model\" />

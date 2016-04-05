@@ -33,7 +33,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     OnlineContext.SetActiveLanguageCode(request.Language);
                     var bookServiceRequest = PreprocessServiceRequest(request);
                     var bookServiceResponse = FlightService.GetInstance().BookFlight(bookServiceRequest);
-                    var apiResponse = AssembleApiResponse(bookServiceResponse, request);
+                    var apiResponse = AssembleApiResponse(bookServiceResponse);
                     return apiResponse;
                 }
                 else
@@ -53,6 +53,13 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     ErrorCode = "ERFBOO99"
                 };
             }
+        }
+
+        private static bool NotEligibleForPaymentMethod(FlightBookApiRequest request, IPrincipal user)
+        {
+            return (request.Payment.Method == PaymentMethod.Credit ||
+                    request.Payment.Method == PaymentMethod.Deposit) &&
+                    !(user.IsInRole("CorporateCustomer") || user.IsInRole("Admin"));
         }
 
         private static bool NotEligibleToBook(FlightBookApiRequest request, IPrincipal user)
@@ -80,14 +87,24 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 request.Payment.Currency != null;
         }
 
-        private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse, FlightBookApiRequest request)
+        private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse)
         {
             if (bookServiceResponse.IsSuccess)
                 return new FlightBookApiResponse
                 {
                     RsvNo = bookServiceResponse.RsvNo,
+                    PaymentUrl = bookServiceResponse.PaymentUrl,
+                    TimeLimit = bookServiceResponse.TimeLimit,
                     StatusCode = HttpStatusCode.OK
                 };
+            else if (!bookServiceResponse.Errors.Any())
+            {
+                return new FlightBookApiResponse
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    ErrorCode = "ERFBOO04"
+                };
+            }
             else
             {
                 if (bookServiceResponse.Errors[0] == FlightError.PartialSuccess)
