@@ -110,7 +110,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var searchRequest = new RestRequest(url, Method.GET);
                     searchRequest.AddHeader("Referer", "http://www.lionair.co.id");
                     searchRequest.AddQueryParameter("trip_type", "one way");
-                    searchRequest.AddQueryParameter("date_flexibility", "fixed");
+                    searchRequest.AddQueryParameter("date_flexibility", "undefined");
                     searchRequest.AddQueryParameter("depart", originAirport);
                     searchRequest.AddQueryParameter("dest.1", destinationAirport);
                     searchRequest.AddQueryParameter("date.0", trip0.DepartureDate.ToString("ddMMM"));
@@ -121,8 +121,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         conditions.ChildCount.ToString(CultureInfo.InvariantCulture));
                     searchRequest.AddQueryParameter("persons.2",
                         conditions.InfantCount.ToString(CultureInfo.InvariantCulture));
-                    searchRequest.AddQueryParameter("origin", "EN");
-                    searchRequest.AddQueryParameter("usercountry", "ID");
+                    //searchRequest.AddQueryParameter("origin", "EN");
+                    //searchRequest.AddQueryParameter("usercountry", "ID");
 
                     ServicePointManager.ServerCertificateValidationCallback +=
                         (sender, certificate, chain, sslPolicyErrors) => true;
@@ -155,7 +155,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         return new SearchFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
 
                     var searchedHtml = (CQ) html2;
-                    availableFares = searchedHtml[".flighttable_Row"];
+                    availableFares = searchedHtml[".flight-matrix-row flight-done"];
                     departureDate = searchedHtml["#UcFlightSelection_txtDepartureDate"];
                     var json = searchedHtml["#Head1"].Text();
                     var startIndex = json.IndexOf("{'fares'");

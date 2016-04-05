@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
         {
             internal RevalidateFareResult RevalidateFare(RevalidateConditions conditions)
             {
-                //conditions.FareId = "NTX+PKU+14 JUN 2016+7+0+0+Y+404700+FR00_C0_SLOT0+2+IW 1271|JT 235+10:35|13:30";
+                //conditions.FareId = "NTX+PKU+14 JUN 2016+1+0+0+Y+404700+FR00_C0_SLOT0+2+IW 1271|JT 235+10:35|13:30";
                 if (conditions.FareId == null)
                 {
                     //throw new Exception("revalidate 1");
@@ -614,11 +614,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Thread.Sleep(1000);
                         var searchResponse6 = client.Execute(searchRequest6);
                         var html6 = searchResponse6.Content;
-
                         var pagePrice = (CQ) html6;
-
                         var revalidateFare = pagePrice["#tdAmtTotal"].Text();
-                         agentprice = revalidateFare.Replace(",", "");
+                        agentprice = revalidateFare.Replace(",", "");
                         
                         //GET PAGE LOGOUT
 
