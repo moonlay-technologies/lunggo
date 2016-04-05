@@ -19,5 +19,6 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public bool IsItineraryChanged { get; set; }
         public bool IsPriceChanged { get; set; }
         public FlightItinerary NewItinerary { get; set; }
+        public decimal? NewPrice { get; set; }
     }
 }

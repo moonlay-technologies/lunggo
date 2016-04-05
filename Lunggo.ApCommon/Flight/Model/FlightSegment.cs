@@ -34,7 +34,18 @@ namespace Lunggo.ApCommon.Flight.Model
         public string Pnr { get; set; }   
         public int RemainingSeats { get; set; }
         
-    }
+        public bool Identical(FlightSegment otherSegment)
+        {
+            return
+                DepartureAirport == otherSegment.DepartureAirport &&
+                ArrivalAirport == otherSegment.ArrivalAirport &&
+                DepartureTime == otherSegment.DepartureTime &&
+                ArrivalTime == otherSegment.ArrivalTime &&
+                Duration == otherSegment.Duration &&
+                AirlineCode == otherSegment.AirlineCode &&
+                FlightNumber == otherSegment.FlightNumber &&
+                CabinClass == otherSegment.CabinClass;
+        }
 
     public class FlightStop
     {

@@ -25,8 +25,20 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var output = new BookFlightOutput();
             var itins = GetItinerarySetFromCache(input.ItinCacheId); 
-            output.BookResults = BookItineraries(itins, input, output);
-            if (AllAreBooked(output.BookResults))
+            var bookResults = BookItineraries(itins, input, output);
+            output.IsValid = bookResults.TrueForAll(result => result.RevalidateSet.IsValid);
+            if (output.IsValid)
+            {
+                output.IsItineraryChanged = bookResults.Exists(result => result.RevalidateSet.IsItineraryChanged);
+                var newItins = bookResults.Select(result => result.RevalidateSet.NewItinerary).ToList();
+                if (output.IsItineraryChanged)
+                    output.NewItinerary = ConvertToItineraryForDisplay(BundleItineraries(newItins));
+                output.IsPriceChanged = bookResults.Exists(result => result.RevalidateSet.IsPriceChanged);
+                if (output.IsPriceChanged)
+                    output.NewPrice = bookResults.Sum(result => result.RevalidateSet.NewPrice);
+                SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.ItinCacheId);
+            }
+            if (AllAreBooked(bookResults))
             {
                 output.IsSuccess = true;
                 var reservation = CreateReservation(itins, input, output);
@@ -41,7 +53,7 @@ namespace Lunggo.ApCommon.Flight.Service
             else
             {
                 output.IsSuccess = false;
-                if (AnyIsBooked(output.BookResults))
+                if (AnyIsBooked(bookResults))
                     output.PartiallySucceed();
                 output.DistinguishErrors();
             }
@@ -213,6 +225,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (response.ErrorMessages != null)
                     response.ErrorMessages.ForEach(output.AddError);
             }
+            bookResult.RevalidateSet.IsValid = response.IsValid;
+            bookResult.RevalidateSet.IsItineraryChanged = response.IsItineraryChanged;
+            bookResult.RevalidateSet.NewItinerary = response.NewItinerary;
+            bookResult.RevalidateSet.IsPriceChanged = response.IsPriceChanged;
+            bookResult.RevalidateSet.NewPrice = response.NewPrice;
             return bookResult;
         }
     }

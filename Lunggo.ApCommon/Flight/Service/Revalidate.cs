@@ -76,7 +76,8 @@ namespace Lunggo.ApCommon.Flight.Service
                             output.NewItinerary = ConvertToItineraryForDisplay(BundleItineraries(newItins));
                         output.IsPriceChanged = revalidateSets.Exists(set => set.IsPriceChanged);
                         if (output.IsPriceChanged)
-                            output.NewPrice = newItins.Sum(itin => itin.LocalPrice);
+                            output.NewPrice = revalidateSets.Sum(set => set.NewPrice);
+                        SaveItineraryToCache(newItins[0], input.Token);
                     }
                     output.Token = input.Token;
                 }
