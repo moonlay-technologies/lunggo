@@ -15,7 +15,7 @@
     <AssemblyName>Lunggo.WebAPI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>443</IISExpressSSLPort>
+    <IISExpressSSLPort>1148</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -71,9 +71,9 @@
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -184,9 +184,16 @@
     <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Newsletter\Model\NewsletterSubscribeInput.cs" />
     <Compile Include="ApiSrc\v1\Newsletter\Query\CheckEmailQuery.cs" />
-    <Compile Include="ApiSrc\v1\TransferIdentifier\Model\SavePriceApiResponse.cs" />
-    <Compile Include="ApiSrc\v1\TransferIdentifier\Model\TransferIdentifierApiResponse.cs" />
-    <Compile Include="ApiSrc\v1\TransferIdentifier\TransferIdentifierController.cs" />
+    <Compile Include="ApiSrc\v1\Promo\Imlek\Logic\ImlekLogic.cs" />
+    <Compile Include="ApiSrc\v1\Promo\Imlek\Model\ImlekApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Promo\Imlek\Model\ImlekApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Promo\Imlek\Model\ImlekTable.cs" />
+    <Compile Include="ApiSrc\v1\Promo\Imlek\Query\GetUnusedVoucherCodesQuery.cs" />
+    <Compile Include="ApiSrc\v1\Promo\Imlek\Query\ResetRetryCountQuery.cs" />
+    <Compile Include="ApiSrc\v1\Promo\Imlek\Query\GetImlekTableByEmailQuery.cs" />
+    <Compile Include="ApiSrc\v1\Promo\Imlek\Query\DecrementRetryCountQuery.cs" />
+    <Compile Include="ApiSrc\v1\Promo\Imlek\Query\AddImlekEmailQuery.cs" />
+    <Compile Include="ApiSrc\v1\Promo\PromoController.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Logic\GetRoomsLogic.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiResponse.cs" />
@@ -214,14 +221,12 @@
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\Country.csv" />
-    <Content Include="Config\eng.traineddata" />
     <None Include="Properties\PublishProfiles\dv1-api.pubxml" />
+    <None Include="Properties\PublishProfiles\dv2-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-apidev.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-qa-api %283%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-qa-api %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -272,7 +277,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1665</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1147</IISUrl>
+          <IISUrl>http://localhost:1147/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -74,7 +74,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var searchedHtml = (CQ)html;
                     availableFares = searchedHtml[".radio-markets"];
                 }
-
                 //else if (destinationCountry == "ID")
                 //{
                 //    var url = @"http://booking.airasia.com/Flight/InternalSelect" +

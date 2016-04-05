@@ -1,7 +1,4 @@
-﻿using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-
-namespace Lunggo.ApCommon.Flight.Model
+﻿namespace Lunggo.ApCommon.Flight.Model
 {
     public class ContactData
     {
@@ -10,6 +7,5 @@ namespace Lunggo.ApCommon.Flight.Model
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
-        public Title Title { get; set; }
     }
 }

@@ -15,7 +15,6 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
-using System.Diagnostics;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -24,7 +23,7 @@ namespace Lunggo.ApCommon.Flight.Service
         public BookFlightOutput BookFlight(BookFlightInput input)
         {
             var output = new BookFlightOutput();
-            var itins = GetItinerarySetFromCache(input.ItinCacheId); 
+            var itins = GetItinerarySetFromCache(input.ItinCacheId);
             output.BookResults = BookItineraries(itins, input, output);
             if (AllAreBooked(output.BookResults))
             {
@@ -45,10 +44,6 @@ namespace Lunggo.ApCommon.Flight.Service
                     output.PartiallySucceed();
                 output.DistinguishErrors();
             }
-
-            //Delete Itinerary From Cache
-            DeleteItineraryFromCache(input.ItinCacheId);
-            DeleteItinerarySetFromCache(input.ItinCacheId);
             return output;
         }
 
@@ -109,19 +104,6 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 reservation.Payment.FinalPrice = originalPrice;
                 reservation.Discount = new DiscountData();
-            }
-            if (reservation.Payment.Method == PaymentMethod.BankTransfer)
-            {
-                reservation.TransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
-                reservation.Payment.FinalPrice -= reservation.TransferCode;
-            }
-            else  
-            {
-                //Penambahan disini buat menghapus Transfer Code dan Token Transfer Code jika tidak milih Bank Transfer
-                var dummyTransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
-                var dummyPrice = reservation.Payment.FinalPrice - dummyTransferCode;
-                FlightService.GetInstance().DeleteUniquePriceFromCache(dummyPrice.ToString());
-                FlightService.GetInstance().DeleteTokenTransferCodeFromCache(input.TransferToken);
             }
             var transactionDetails = ConstructTransactionDetails(reservation);
             var itemDetails = ConstructItemDetails(reservation);

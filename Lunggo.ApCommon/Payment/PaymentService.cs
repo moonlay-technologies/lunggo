@@ -65,20 +65,11 @@ namespace Lunggo.ApCommon.Payment
                 paymentInfo.Url = "DIRECT";
                 paymentInfo.Status = PaymentStatus.Pending;
             }
-            else if (method == PaymentMethod.CreditCard)// || method == PaymentMethod.VirtualAccount) // Add VA here
+            else if (method == PaymentMethod.CreditCard)
             {
                 paymentInfo.Url = "THIRDPARTYDIRECT";
-                var paymentResponse = SubmitPayment(paymentInfo, transactionDetails, itemDetails, method);
-                if (method == PaymentMethod.VirtualAccount)
-                {
-                    paymentInfo.Status = PaymentStatus.Verifying;
-                    paymentInfo.TargetAccount = paymentResponse.TargetAccount;
-                }
-                else 
-                {
-                    paymentInfo.Status = paymentResponse.Status;
-                }
-                
+                var status = SubmitPayment(paymentInfo.Data, transactionDetails, itemDetails, method);
+                paymentInfo.Status = status;
             }
             else
             {
@@ -203,10 +194,10 @@ namespace Lunggo.ApCommon.Payment
             }
         }
 
-        private static PaymentInfo SubmitPayment(PaymentInfo payment, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static PaymentStatus SubmitPayment(Data data, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
-            var paymentResponse = VeritransWrapper.ProcessPayment(payment, transactionDetails, itemDetails, method);
-            return paymentResponse;
+            var status = VeritransWrapper.ProcessPayment(data, transactionDetails, itemDetails, method);
+            return status;
         }
 
         private static string GetThirdPartyPaymentUrl(TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)

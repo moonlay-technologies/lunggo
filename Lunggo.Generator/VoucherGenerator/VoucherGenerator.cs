@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,10 +22,10 @@ namespace Lunggo.Generator.VoucherGenerator
         //  CARI PERHATIAN
         //  CARI PERHATIAN
         const CharactersPosition POSITION = CharactersPosition.Front;
-        const string FIXED_CHARACTERS = "TRVM";
-        const string FORMAT_VOUCHER = "YZZZ";//FORMAT VOUCHER LIAT DI BAWAH
-        static int sequenceStartFrom = 1;
-        static int sequenceEndAt = 500;
+        const string FIXED_CHARACTERS = "IM67";
+        const string FORMAT_VOUCHER = "ZZZY";//FORMAT VOUCHER LIAT DI BAWAH
+        static int sequenceStartFrom = 451;
+        static int sequenceEndAt = 600;
         //  CARI PERHATIAN
         //  CARI PERHATIAN
         //  CARI PERHATIAN
@@ -44,6 +45,10 @@ namespace Lunggo.Generator.VoucherGenerator
         const char SEQUENCE_NUMBER = 'Z';
         //NIH FORMATNYA
 
+        //FILE PATHNYA NIH
+        const string FilePath = @"..\..\VoucherCodes.txt";
+        //NIH FILE PATHNYA
+
         static void Main(string[] args)
         {
             List<string> listResult = new List<string>();
@@ -54,10 +59,11 @@ namespace Lunggo.Generator.VoucherGenerator
                 listResult.Add(temp);
             }
 
-            foreach (var voucher in listResult)
-                Console.WriteLine(voucher);
-
-            Console.ReadLine();
+            using (var file = new StreamWriter(FilePath))
+            {
+                foreach (var voucher in listResult)
+                    file.WriteLine(voucher);
+            }
         }
 
         private enum CharactersPosition

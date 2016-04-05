@@ -7,8 +7,7 @@ namespace Lunggo.ApCommon.Constant
         Sriwijaya = 2,
         Citilink = 3,
         AirAsia = 4,
-        HotelsPro = 5,
-        LionAir = 6
+        HotelsPro = 5
     }
 
     internal class SupplierCd
@@ -25,8 +24,6 @@ namespace Lunggo.ApCommon.Constant
                     return "CITI";
                 case Supplier.AirAsia:
                     return "AIRA";
-                case Supplier.LionAir:
-                    return "LION";
                 default:
                     return null;
             }
@@ -44,8 +41,6 @@ namespace Lunggo.ApCommon.Constant
                     return Supplier.Citilink;
                 case "AIRA":
                     return Supplier.AirAsia;
-                case "LION":
-                    return Supplier.LionAir;
                 default:
                     return Supplier.Undefined;
             }

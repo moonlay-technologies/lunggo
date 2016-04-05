@@ -72,9 +72,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -289,33 +289,6 @@
     <Compile Include="Flight\Wrapper\Citilink\CitilinkSearchFlight.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkWrapperSingleton.cs" />
     <Compile Include="Flight\Wrapper\FlightSupplierWrapperBase.cs" />
-    <Compile Include="Flight\Wrapper\LionAir\LionAirBookFlight.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Flight\Wrapper\LionAir\LionAirClientHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Flight\Wrapper\LionAir\LionAirGetBookingStatus.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Flight\Wrapper\LionAir\LionAirGetTripDetails.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Flight\Wrapper\LionAir\LionAirIsIssued.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Flight\Wrapper\LionAir\LionAirOrderTicket.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Flight\Wrapper\LionAir\LionAirRevalidateFare.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Flight\Wrapper\LionAir\LionAirSearchFlight.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Flight\Wrapper\LionAir\LionAirWrapperSingleton.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyCancelBooking.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyClientHandler.cs" />
@@ -457,7 +430,6 @@
     </Compile>
     <Compile Include="Subscriber\Query\GetSubscriberRowQuery.cs" />
     <Compile Include="Subscriber\SubscriberEmailModel.cs" />
-    <Compile Include="TransferIdentifier\TransferIdentifierService.cs" />
     <Compile Include="Travolutionary\TravolutionaryPreBookCheckResponse.cs" />
     <Compile Include="Trie\TrieIndexService.cs" />
     <Compile Include="Trie\TrieNode.cs" />
@@ -503,36 +475,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Content Include="eng.cube-word-dawg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="eng.cube.bigrams">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="eng.cube.fold">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="eng.cube.lm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="eng.cube.nn">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="eng.cube.params">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="eng.cube.size">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="eng.cube.word-freq">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="eng.tesseract_cube.nn">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="eng.traineddata">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirBookingDataRS.datasource" />
     <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirBookingNotesRS.datasource" />
@@ -724,7 +666,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Identity\Model\" />
-    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

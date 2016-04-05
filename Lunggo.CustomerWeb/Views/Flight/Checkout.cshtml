@@ -64,6 +64,15 @@
         //var transferWindow = [ '1100', '1124' ];
         // messages
         var message = '@ViewBag.Message';
+        // possible values :
+        //      InvalidInputData
+        //      NotRegistered
+        //      AlreadyRegisteredButUnconfirmed
+        //      AlreadyConfirmed
+        //      Failed
+        //      BookExpired
+        //      BookFailed
+
         // flight detail
         var token = @Model.Token;
         var paymentDetail = '';
@@ -694,14 +703,9 @@
                                             <dt>{{CreditCardPromo.PromoName}}</dt>
                                             <dd>- Rp {{CreditCardPromo.Amount | number}}</dd>
                                         </dl>
-                                        <dl ng-if="paymentMethod == '@PaymentMethod.BankTransfer'">
-                                            <dt>Kode Unik Pembayaran</dt>
-                                            <dd>- Rp {{TransferConfig.UniqueCode}}</dd>
-                                        </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
-                                            <dd ng-if="paymentMethod != '@PaymentMethod.BankTransfer'">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount | number}}</dd>
-                                            <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount - TransferConfig.UniqueCode | number}}</dd>
+                                            <dd>Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount | number}}</dd>
                                         </dl>
                                     </div>
                                     <footer>

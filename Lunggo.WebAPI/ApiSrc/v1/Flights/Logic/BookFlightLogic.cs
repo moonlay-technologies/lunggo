@@ -81,8 +81,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 Contact = request.Contact,
                 Passengers = MapPassengers(request.Passengers),
                 Payment = request.Payment,
-                DiscountCode = request.DiscountCode,
-                TransferToken = request.TransferToken
+                DiscountCode = request.DiscountCode
             };
             return bookServiceRequest;
         }

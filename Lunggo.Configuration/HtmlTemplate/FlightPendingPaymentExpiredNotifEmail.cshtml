@@ -91,8 +91,7 @@
                             </td>
                         </tr>
                         <tr>
-                            @{ var jamTimeLimit = Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7);
-                               jamTimeLimit = jamTimeLimit.AddMinutes(-30);}
+                            @{ var jamTimeLimit = Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7);}
                             <td width="20%">
                                 <p style="opacity: 0.5">Jatuh Tempo</p>
                                 <p style=""><b>@jamTimeLimit.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Payment.TimeLimit.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.ToString("HH:mm") WIB</b></p>

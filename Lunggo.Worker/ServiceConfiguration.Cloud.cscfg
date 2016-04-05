@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="Lunggo.Worker" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="Lunggo.Worker.EticketHandler">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=lunggostorageqa;AccountKey=ECUAdynBjM6ttLekJLBMNCoXHEUEulWkLwT5r8iTDXeW9GuHCD7sx5IOF9CtdI6/vyJbfX6XHxPbgiao8a2Umw==" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

@@ -3,7 +3,6 @@
     ViewBag.Title = "Cek Pemesanan";
     ViewBag.BodyClass = "page page-checkorder";
     ViewBag.AngularController = "CheckOrderController";
-    ViewBag.CurrentPage = "checkorder";
 }
 @section AdditionalJS {
     <!-- additional Angular JS-->
@@ -37,11 +36,11 @@
             @Html.AntiForgeryToken()
             <div class="form-group">
                 <label class="control-label">@Html.I18NString("CW00190") :</label>
-                <input type="number" name="rsvNo" value="" class="form-control" required ng-model="Order.Number" />
+                <input type="number" name="" value="" class="form-control" required ng-model="Order.Number" />
             </div>
             <div class="form-group">
                 <label class="control-label">@Html.I18NString("CW00191") :</label>
-                <input type="text" name="lastName" value="" class="form-control" required ng-model="Order.Name" />
+                <input type="text" name="" value="" class="form-control" required ng-model="Order.Name" />
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-yellow btn-block" ng-disabled="CheckForm.$invalid">@Html.I18NString("CW00192")</button>

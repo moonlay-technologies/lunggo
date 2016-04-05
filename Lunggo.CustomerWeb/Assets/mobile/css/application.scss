@@ -72,8 +72,6 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea {@include border-radius($border-radius-default);}
 .form-control {@include border-radius($border-radius-default)}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"] {font-size:16px; height:auto;}
-
 // *****
 // site header
 .site-header {position:fixed; top:0; left:0; width:100%; height:$header-height; z-index:999; @include box-shadow(0px -2px 15px #555);
@@ -81,14 +79,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .site-menu {width:30px; height:30px; background:url(/Assets/mobile/images/mobile-header-sprite.png) no-repeat; background-position:-30px 0; display:block; position:absolute; top:15px; left:10px;}
         .site-logo {height:30px; margin-top:15px;}
         .user-menu {@extend & .site-menu; background-position:0 0; left:auto; right:10px;}
-        .flight-swap {@extend & .site-menu; background:url(/Assets/mobile/images/flight-swap.png); left:auto; right:10px;}
-        .flight-detail {@extend & .site-menu; width:40px; background:none; left:auto; right:15px; color:$color-main-blue; text-decoration:none; text-align:right; font-weight:600; padding:10px 0; font-size:14px;}
     }
 }
 
-.burger-content {position:fixed; height:100%; width:300px; top:0; left:-320px; z-index:9999; background:#fff; @include transition(all 0.5s); overflow:hidden; width:320px; padding-right:20px; background:none;
+.burger-content {position:fixed; height:100%; width:300px; top:0; left:-300px; z-index:9999; background:#fff; overflow:auto; @include transition(all 0.5s);
     // if active
-    &.active {left:0; overflow:auto;
+    &.active {left:0;
         .burger-content__header {left:0;}
     }
     .burger-content__header {background:#028ec3; color:#fff; position:fixed; width:300px; height:$header-height; top:0; left:-300px; z-index:2; @include transition(all 0.5s);
@@ -104,15 +100,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
         .burger-content__close {color:#fff; position:absolute; right:15px; top:12px; font-size:24px; font-weight:600;}
     }
-    .burger-content__body {padding-top:$header-height; background:#fff;
+    .burger-content__body {padding-top:$header-height;
         ul {list-style:none; margin:0; padding:0;
             li {
                 a {color:$color-main-blue; padding:15px 0px; padding-left:70px; display:block; font-weight:600; position:relative;
                     &:before {content:""; width:30px; height:30px; display:block; position:absolute; margin-left:-40px; top:8px; background-repeat:no-repeat; background-image:url(/Assets/mobile/images/burger-sprite.png);}
-                }
-                //active
-                &.active {background:#9ee5ff; position:relative;
-                    &:after {content:''; position:absolute; width:20px; height:100%; left:100%; top:0; background:url(/assets/mobile/images/burger-menu-active.png) left center no-repeat;}
                 }
                 // specific class
                 &.login, &.register, &.account {background:$color-main-blue; color:#fff;
@@ -134,22 +126,19 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                     a:before {background-position:-90px 0;}
                 }
                 &.contact {
-                    a:before {background-position:-150px 0;}
-                }
-                &.newsletter {
-                    a:before {background-position:-180px 0;}
-                }
-                &.promo {
                     a:before {background-position:-120px 0;}
                 }
+                &.newsletter {
+                    a:before {background-position:-150px 0;}
+                }
                 &.faq {
-                    a:before {background-position:-210px 0;}
+                    a:before {background-position:-180px 0;}
                 }
                 &.howto-order {
-                    a:before {background-position:-240px 0;}
+                    a:before {background-position:-210px 0;}
                 }
                 &.about {
-                    a:before {background-position:-270px 0;}
+                    a:before {background-position:-240px 0;}
                 }
                 // if active
                 &+li {border-top:1px solid #8fd6f2;}
@@ -158,13 +147,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
 }
 
-.burger-overlay {position:fixed; width:100%; height:100%; top:0; left:0; background:rgba(0,0,0,0.8); z-index:9998; display:none;
-    &.active {display:block;}
-}
-
 // *****
 // site content
-.site-content {min-height:350px;
+.site-content {min-height:300px;
     a {color:#2fb4e6;}
 }
 
@@ -239,21 +224,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     // if active
     &.active {display:block;}
 }
-.popup__wrapper.popup--revalidate {
-    .popup {text-align:center; background:none; padding-top:50px;
-        .revalidate-image {}
-        .revalidate-anim {padding:10px 0;}
-        p {font-size:16px; color:#fff; font-weight:600;}
-    }
-}
 
 // *****
 // overlay
 .overlay {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:1000; background:#fff; padding-top:$header-height; overflow:auto; @include transition($transition-default);
-    .overlay__header {background:#878787; color:#fff; padding:18px; height:$header-height; position:fixed; z-index:1; top:0; left:0; width:100%; display:none; text-align:center;
-        .overlay__title {margin:0;
-            small {color:#fff; font-weight:600; font-size:14px;}
-        }
+    .overlay__header {background:#878787; color:#fff; padding:18px; height:$header-height; position:fixed; z-index:1; top:0; left:0; width:100%; display:none;
+        .overlay__title {margin:0;}
         .overlay__close {float:right; font-size:19px;}
     }
     .overlay__content, .overlay__body {background:#fff; min-height:100%; padding:12px; /*padding-bottom:$header-height;*/}
@@ -309,28 +285,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // overlay airport select
 .overlay.overlay--airport-select {
     .overlay__content {padding:0;
-        .autocomplete-input {background:#616161; padding:10px;
-            input[type="text"] {padding:10px; height:auto;}
-        }
-        .autocomplete-preload {
-            .list__header {
-                h4 {margin:0; background:#dedede; color:#656565; padding:10px; font-weight:bold;}
-            }
-        }
-        .autocomplete-loading {}
-        ul.result {
-            li.airport {padding:10px 0; position:relative;
-                .airport__link {position: static; display:block; width:100%; height:100%; left:0; top:0; z-index:2;}
-                .airport__code {display:inline-block; vertical-align:middle; font-weight:bold; font-size:32px; padding-left:15px; padding-right:15px; color:$color-main-blue; width:30%; text-align:center;}
-                .airport__detail {display:inline-block; vertical-align:middle; font-size:14px; width:65%;
-                    .airport__location {margin:0; font-weight:600; margin-bottom:5px;}
-                    .airport__name {margin:0;}
-                }
-            }
-            //
-            &+li {border-top:$border-default;}
-        }
-        //
         h4 {padding-left:18px;}
         ul {margin:0; padding:0;
             li {

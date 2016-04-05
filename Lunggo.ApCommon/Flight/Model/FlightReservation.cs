@@ -20,7 +20,6 @@ namespace Lunggo.ApCommon.Flight.Model
         public string DiscountName { get; set; }
         public string VoucherCode { get; set; }
         public TripType TripType { get; set; }
-        public decimal TransferCode { get; set; }
     }
 
     public class FlightReservation
@@ -34,6 +33,5 @@ namespace Lunggo.ApCommon.Flight.Model
         public string InvoiceNo { get; set; }
         public TripType TripType { get; set; }
         public DiscountData Discount { get; set; }
-        public decimal TransferCode { get; set; }
     }
 }

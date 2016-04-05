@@ -107,7 +107,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 case "credit_card":
                     return PaymentMethod.CreditCard;
                 case "bank_transfer":
-                    return PaymentMethod.VirtualAccount;
+                    return PaymentMethod.BankTransfer;
                 case "mandiri_clickpay":
                     return PaymentMethod.MandiriClickPay;
                 case "cimb_clicks":

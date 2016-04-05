@@ -32,10 +32,6 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TableRecord\FlightReservationTableRecord.cs" />
     <Compile Include="TableRecord\SavedCreditCardTableRecord.cs" />
     <Compile Include="TableRecord\CalendarRecipientTableRecord.cs" />
     <Compile Include="TableRecord\CampaignTableRecord.cs" />
@@ -64,6 +59,7 @@
     <Compile Include="TableRecord\FlightItineraryTableRecord.cs" />
     <Compile Include="TableRecord\FlightPassengerTableRecord.cs" />
     <Compile Include="TableRecord\FlightPriceMarginRuleTableRecord.cs" />
+    <Compile Include="TableRecord\FlightReservationTableRecord.cs" />
     <Compile Include="TableRecord\FlightSavedPassengerTableRecord.cs" />
     <Compile Include="TableRecord\FlightSegmentTableRecord.cs" />
     <Compile Include="TableRecord\FlightStopTableRecord.cs" />
@@ -99,7 +95,6 @@
     <Compile Include="TableRecord\UsersTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TableRepository\FlightReservationRepository.cs" />
     <Compile Include="TableRepository\SavedCreditCardRepository.cs" />
     <Compile Include="TableRepository\CalendarRecipientRepository.cs" />
     <Compile Include="TableRepository\CampaignRepository.cs" />
@@ -117,6 +112,7 @@
     <Compile Include="TableRepository\FlightItineraryRepository.cs" />
     <Compile Include="TableRepository\FlightPassengerRepository.cs" />
     <Compile Include="TableRepository\FlightPriceMarginRuleRepository.cs" />
+    <Compile Include="TableRepository\FlightReservationRepository.cs" />
     <Compile Include="TableRepository\FlightSavedPassengerRepository.cs" />
     <Compile Include="TableRepository\FlightSegmentRepository.cs" />
     <Compile Include="TableRepository\FlightStopRepository.cs" />
@@ -161,7 +157,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

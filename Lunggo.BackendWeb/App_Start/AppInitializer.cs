@@ -1,21 +1,15 @@
 ﻿using System.Web;
-using System.Web.WebPages;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Payment;
-using Lunggo.Framework.BrowserDetection;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Core;
-using Lunggo.Framework.Database;
-using Lunggo.Framework.HtmlTemplate;
-using Lunggo.Framework.I18nMessage;
-using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
+using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;
-using Lunggo.Framework.TableStorage;
 using Microsoft.WindowsAzure.Storage;
+using Lunggo.Framework.Database;
+
 
 namespace Lunggo.BackendWeb
 {
@@ -25,26 +19,52 @@ namespace Lunggo.BackendWeb
         {
             InitConfigurationManager();
             InitI18NMessageManager();
-            InitUniqueIdGenerator();
-            InitRedisService();
             InitDatabaseService();
+            InitRedisService();
             InitQueueService();
             //InitLogger();
             InitDictionaryService();
             InitFlightService();
-            InitPaymentService();
-            InitBrowserDetectionService();
-            InitDisplayModes();
-            InitMailService();
-            InitHtmlTemplateService();
-            InitTableStorageService();
+            InitUniqueIdGenerator();
         }
 
-        private static void InitMailService()
+        private static void InitUniqueIdGenerator()
         {
-            var apiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
-            var mailService = MailService.GetInstance();
-            mailService.Init(apiKey);
+            var generator = UniqueIdGenerator.GetInstance();
+            var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
+            var storageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.Parse(storageConnectionString), seqContainerName)
+            {
+                SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
+            };
+            generator.Init(optimisticData);
+            generator.BatchSize = 100;
+        }
+
+        private static void InitConfigurationManager()
+        {
+            var configManager = ConfigManager.GetInstance();
+            var configDirectoryPath = HttpContext.Current.Server.MapPath(@"~/Config/");
+            configManager.Init(configDirectoryPath);
+        }
+
+        private static void InitI18NMessageManager()
+        {
+            var messageManager = MessageManager.GetInstance();
+            messageManager.Init("Config");
+        }
+
+        private static void InitDatabaseService()
+        {
+            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+            var database = DbService.GetInstance();
+            database.Init(connString);
+        }
+        private static void InitQueueService()
+        {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var queue = QueueService.GetInstance();
+            queue.Init(connString);
         }
 
         private static void InitRedisService()
@@ -67,45 +87,6 @@ namespace Lunggo.BackendWeb
             });
         }
 
-        private static void InitConfigurationManager()
-        {
-            var configManager = ConfigManager.GetInstance();
-            var configDirectoryPath = HttpContext.Current.Server.MapPath(@"~/Config/");
-            configManager.Init(configDirectoryPath);
-        }
-
-        private static void InitI18NMessageManager()
-        {
-            var messageManager = MessageManager.GetInstance();
-            messageManager.Init("Config");
-        }
-
-        private static void InitUniqueIdGenerator()
-        {
-            var generator = UniqueIdGenerator.GetInstance();
-            var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
-            var storageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
-            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.Parse(storageConnectionString), seqContainerName)
-            {
-                SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
-            };
-            generator.Init(optimisticData);
-            generator.BatchSize = 100;
-        }
-
-        private static void InitDatabaseService()
-        {
-            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
-            var database = DbService.GetInstance();
-            database.Init(connString);
-        }
-        private static void InitQueueService()
-        {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
-            var queue = QueueService.GetInstance();
-            queue.Init(connString);
-        }
-       
         private static void InitDictionaryService()
         {
             var dictionary = DictionaryService.GetInstance();
@@ -116,43 +97,6 @@ namespace Lunggo.BackendWeb
         {
             var flight = FlightService.GetInstance();
             flight.Init();
-        }
-
-        private static void InitPaymentService()
-        {
-            var payment = PaymentService.GetInstance();
-            payment.Init();
-        }
-
-        private static void InitBrowserDetectionService()
-        {
-            var wurflDataFile = HttpContext.Current.Server.MapPath("~/App_Data/wurfl-latest.zip");
-            var service = BrowserDetectionService.GetInstance();
-            service.Init(wurflDataFile);
-        }
-
-        private static void InitDisplayModes()
-        {
-            var configManager = ConfigManager.GetInstance();
-            var mobileUrl = configManager.GetConfigValue("general", "mobileUrl");
-            DisplayModeProvider.Instance.Modes.Clear();
-            DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("mobile")
-            {
-                ContextCondition = context =>
-                                context.Request.Url.Host == mobileUrl
-            });
-            DisplayModeProvider.Instance.Modes.Insert(1, new DefaultDisplayMode(""));
-        }
-        public static void InitHtmlTemplateService()
-        {
-            var htmlTemplateService = HtmlTemplateService.GetInstance();
-            htmlTemplateService.Init();
-        }
-        public static void InitTableStorageService()
-        {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
-            var tableStorageService = TableStorageService.GetInstance();
-            tableStorageService.Init(connString);
         }
     }
 }

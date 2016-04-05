@@ -46,8 +46,8 @@
                     &>li {position:relative; background:#fff; padding:12px; border:$border-default; padding-left:42px;
                         &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:12px; left:12px;}
                         > header {color:$color-main-blue; cursor:pointer;
-                            > h3 {margin:0; font-size:17px; padding-right:25px;
-                                span {width:23px; height:22px; border:2px solid $color-main-blue; display:inline-block; @include border-radius(15px); background-image:url(/Assets/images/faq-toggle-sprite.png); background-position:-13px 0; position:absolute; right:10px; top:10px;}
+                            > h3 {margin:0; font-size:17px;
+                                span {width:23px; height:22px; border:2px solid $color-main-blue; display:inline-block; @include border-radius(15px); background-image:url(/Assets/images/faq-toggle-sprite.png); background-position:-13px 0;}
                             }
                         }
                         > section {height:0; overflow:hidden;}

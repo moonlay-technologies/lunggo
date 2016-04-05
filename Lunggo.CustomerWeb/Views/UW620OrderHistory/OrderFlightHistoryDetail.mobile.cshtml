@@ -106,11 +106,13 @@
                                                 @foreach (var passenger in Model.Passengers)
                                                 {
                                                     <li>
-                                                        <div>
-                                                            <p>@EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p>
-                                                        </div>
-                                                        <div>
-                                                            <span>(@EnumDisplay.PassengerType(passenger.Type))</span>
+                                                        <div class="row">
+                                                            <div class="col-xs-9">
+                                                                <p>@EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <span>@EnumDisplay.PassengerType(passenger.Type)</span>
+                                                            </div>
                                                         </div>
                                                     </li>
                                                 }
@@ -129,16 +131,12 @@
                                 @foreach (var trip in Model.Itinerary.Trips)
                                 {
                                     <div class="flight @(Model.Itinerary.Trips.IndexOf(trip) == 0 ? "departure" : "return")">
+                                        <p><img src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" /> <span>@trip.Segments[0].AirlineName</span> </p>
                                         <div class="row">
-                                            <div class="col-xs-3">
-                                                <img src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" class="flight__airline__image" />
+                                            <div class="col-xs-2">
+                                                <p>@(Model.Itinerary.Trips.IndexOf(trip) == 0 ? "Berangkat : " : "Pulang : ")</p>
                                             </div>
                                             <div class="col-xs-9">
-                                                <p class="flight__airline__name"><span>@trip.Segments[0].AirlineName</span> </p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-12">
                                                 <p>@trip.OriginCity - @trip.DestinationCity</p>
                                                 <p>@trip.DepartureDate.ToString("dd - MMM -yyyy")</p>
                                             </div>
@@ -150,7 +148,7 @@
 
                         </div><!-- .info-flight -->
 
-                        <div class="refund-detail hidden">
+                        <div class="refund-detail">
                             <header>
                                 <h4><b>@Html.I18NString("CW00199")</b></h4>
                             </header>

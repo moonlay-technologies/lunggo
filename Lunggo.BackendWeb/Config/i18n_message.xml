@@ -435,8 +435,8 @@
   <Message code="CW00189" lang="id_ID" value="Hingga 2 jam setelah pemesanan awal dilakukan." />
   <Message code="CW00190" lang="en_US" value="Order Number" />
   <Message code="CW00190" lang="id_ID" value="Nomor Pemesanan" />
-  <Message code="CW00191" lang="en_US" value="Passenger's last name" />
-  <Message code="CW00191" lang="id_ID" value="Nama Belakang Penumpang" />
+  <Message code="CW00191" lang="en_US" value="Customer's last name" />
+  <Message code="CW00191" lang="id_ID" value="Nama Belakang Pemesan" />
   <Message code="CW00192" lang="en_US" value="CHECK ORDER" />
   <Message code="CW00192" lang="id_ID" value="CEK PEMESANAN" />
   <Message code="CW00193" lang="en_US" value="Nationality" />

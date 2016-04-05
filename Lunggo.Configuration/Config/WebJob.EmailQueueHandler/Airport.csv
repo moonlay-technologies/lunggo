@@ -4112,7 +4112,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 4111|LBG|Le Bourget|PAR|Paris|FR|France|1
 4112|LBH|Palm Beach SPB|SYD|Sydney|AU|Australia|99
 4113|LBI|Le Sequestre|LBI|Albi|FR|France|1
-4114|LBJ|Komodo|LBJ|Labuan Bajo|ID|Indonesia|8
+4114|LBJ|Komodo|LBJ|Manggarai Barat|ID|Indonesia|8
 4115|LBK|Liboi|LBK|Liboi|KE|Kenya|99
 4116|LBL|Municipal|LBL|Liberal|US|United States|-6
 4117|LBM|Luabo|LBM|Luabo|MZ|Mozambique|99
@@ -9236,4 +9236,3 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 9240|ZYZ|Berchem Railway Stn.|ZYZ|Antwerp|BE|Belgium|99
 9241|ZZU|Mzuzu|ZZU|Mzuzu|MW|Malawi|2
 9242|ZZV|Zanesville|ZZV|Zanesville|US|United States|99
-9243|DTB|Silangit|DTB|Siborong-Borong|ID|Indonesia|7

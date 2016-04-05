@@ -3,7 +3,6 @@
     ViewBag.Title = "FAQS";
     ViewBag.BodyClass = "page page-faqs";
     ViewBag.AngularController = "FaqsController";
-    ViewBag.CurrentPage = "question";
 }
 @section AdditionalJS {
     <!-- additional Angular JS-->
@@ -14,14 +13,6 @@
 @section PageJS{
     <!-- angular controller -->
     <script src="/Assets/mobile/js/StaticController.js"></script>
-    
-    <!-- toggle animation -->
-    <script>
-        $('.toggle').click(function() {
-            $(this).toggleClass('active');
-        });
-    </script>
-
 }
 
 <section>
@@ -41,7 +32,7 @@
                         <h2>Tentang Travorama</h2>
                     </header>
                     <ol>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Siapa Travorama? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -64,7 +55,7 @@
                                 <p>Anda dapat menghubungi kami di <i>call center</i> kami di nomor <b>1500-650</b> pada hari Senin – Minggu, pukul 08.00-20.00 WIB. </p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Apakah akun social media Travorama? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -81,7 +72,7 @@
                         <h2>Berlangganan Newsletter</h2>
                     </header>
                     <ol>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Apakah dikenakan biaya jika berlangganan Newsletter? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -96,7 +87,7 @@
                         <h2>Diskon Voucher</h2>
                     </header>
                     <ol>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Apa yang dimaksud dengan Voucher Travorama? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -104,7 +95,7 @@
                                 <p>Voucher Travorama adalah voucher elektronik, yang diberikan kepada pelanggan Travorama dalam bentuk diskon atau potongan harga dengan nilai tertentu yang dapat digunakan untuk membeli tiket elektronik di Travorama.com.</p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Bagaimana cara untuk mendapatkan Voucher Travorama? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -112,7 +103,7 @@
                                 <p>Voucher Travorama dapat diperoleh dari promosi yang disampaikan di website, event yang digelar, serta voucher yang didistribusikan melalui newsletter, serta kuis di akun media social Travorama. </p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Bagaimana cara menggunakan Voucher Travoama? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -135,7 +126,7 @@
                         <h2>Pemesanan Tiket Pesawat</h2>
                     </header>
                     <ol>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Bagaimana cara melakukan pemesanan atau booking tiket pesawat lewat Travorama? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -143,7 +134,7 @@
                                 <p>Cara pemesanan atau booking tiket pesawat dapat dilihat dari halaman cara pesan. </p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Apakah ada biaya pemesanan di Travorama? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -151,7 +142,7 @@
                                 <p>Tidak ada biaya pemesanan (<i>booking fee</i>) untuk setiap pemesanan dan pembelian tiket yang dilakukan di Travorama. Travorama selalu berusaha untuk mendapatkan harga tiket yang paling bersaing untuk Anda.</p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Apakah nama yang terdaftar pada pesanan harus sama dengan tanda pengenal? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -159,7 +150,7 @@
                                 <p>Ya. Nama yang terdaftar pada pesanan harus sama dengan tanda pengenal (KTP, SIM, atau paspor). </p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Apakah saya bisa menahan pesanan saya? Berapa waktu maksimal penahanan pemesanan? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -167,7 +158,7 @@
                                 <p>Anda dapat menahan pesanan Anda sekitar 2 jam sebelum Anda melakukan pembelian tiket. Apabila Anda belum melakukan pembayaran selama 2 jam, maka pemesanan Anda akan dibatalkan secara otomatis. Anda tidak akan dapat menahan reservasi Anda apabila maskapai tidak mengijinkan Anda untuk menahannya lebih lama.  </p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Darimana saya tahu bahwa pemesanan saya telah dikonfirmasi? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -190,7 +181,7 @@
                         <h2>Harga</h2>
                     </header>
                     <ol>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Mengapa harga tiket dapat berubah? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -198,7 +189,7 @@
                                 <p>Harga dapat berubah dikarenakan penentuan harga yang merupakan hak dari masing-masing maskapai penerbangan. Untuk harga tiket penerbangan internasional, terdapat perubahan kurs sehingga perlu adanya konversi dari mata uang asing dengan Rupiah.</p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Apakah harga yang tertera sudah termasuk biaya bagasi, pajak maskapai, dan biaya bensin tambahan? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -214,7 +205,7 @@
                         <h2>Sistem Pembayaran</h2>
                     </header>
                     <ol>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Metode pembayaran apa saja yang dapat diterima di Travorama? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -222,7 +213,7 @@
                                 <p>Travorama menerima metode pembayaran dengan melalui Kartu Kredit (Visa dan Mastercard), Transfer (via ATM/SMS Banking/setoran bank), dan ATM (semua ATM Bank dalam jaringan ATM bersama, Prima, Alto).</p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Apa perbedaan metode pembayaran Transfer dan ATM? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -230,15 +221,15 @@
                                 <p>Metode Transfer tersedia dari pukul 05.00-20.00 WIB, dan metode ATM tersedia 24 jam. Metode Transfer dapat Anda pilih apabila Anda ingin melakukan transfer pembayaran ke rekening Travorama pada BCA, BNI, BRI, atau Mandiri melalui Internet Banking, Mobile Banking, maupun setoran bank atau Non-ATM. Metode ATM dapat Anda pilih apabila Anda ingin melakukan pembayaran menggunakan mesin ATM dengan bank yang tergabung dalam jaringan ATM Bersama, Prima, dan Alto.</p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Bagaimana jika saya tidak melakukan pembayaran setelah melakukan pemesanan? <span class="pull-right toggle-one"></span></h3>
                             </header>
                             <section>
-                                <p>Apabila Anda tidak melakukan pembayaran setelah melakukan pemesanan sampai pada batas waktu yang telah ditentukan, maka tiket yang telah dipesan akan hangus dan dibatalkan secara otomatis oleh sistem.</p>
+                                <p>Apabila Anda tidak melakukan pembayaran setelah melakukan pemesanan sampai pada batas waktu yang telah ditentukan, maka tiket yang telah dipesan akan hangus dan dibatalkan secara otomatis oleh system.</p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Apakah harga tiket bayi dan anak-anak berbeda dengan tiket dewasa? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -253,7 +244,7 @@
                         <h2>Pembatalan, Penjadwalan Ulang, Pengembalan Dana</h2>
                     </header>
                     <ol>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Apakah saya dapat membatalkan pemesanan tiket pesawat saya? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -261,7 +252,7 @@
                                 <p>Apabila Anda belum melakukan pembayaran dan tiket konfirmasi kode booking belum dikeluarkan, maka Anda dapat mengabaikan pemesanan Anda.</p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Apakah saya dapat mengubah jadwal penerbangan? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -269,7 +260,7 @@
                                 <p>Apabila Anda telah menerima tiket konfirmasi kode booking Anda, Anda dapat menghubungi pihak maskapai terkait untuk mengubah jadwal penerbangan Anda.</p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Apakah saya akan mendapatkan pengembalian dana tiket? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -284,7 +275,7 @@
                         <h2>Check in</h2>
                     </header>
                     <ol>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Apa yang perlu saya berikan pada <i>counter check in</i> untuk mendapatkan <i>boarding pass</i>? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -292,7 +283,7 @@
                                 <p>Anda perlu untuk menunjukkan tanda pengenal Anda (KTP, SIM, atau paspor) di <i>counter check in</i>, sehingga Anda dapat memperoleh boarding pass.</p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Kapan waktu minimal saya harus sampai di bandara? <span class="pull-right toggle-one"></span></h3>
                             </header>
@@ -300,7 +291,7 @@
                                 <p>Anda harus tiba di bandara paling lambat 2 jam sebelum waktu keberangkatan, karena Anda perlu untuk melakukan <i>check in</i> terlebih dahulu untuk mendapatkan <i>boarding pass</i>.</p>
                             </section>
                         </li>
-                        <li class="toggle">
+                        <li>
                             <header>
                                 <h3>Bagaimana apabila saya ketinggalan pesawat? <span class="pull-right toggle-one"></span></h3>
                             </header>

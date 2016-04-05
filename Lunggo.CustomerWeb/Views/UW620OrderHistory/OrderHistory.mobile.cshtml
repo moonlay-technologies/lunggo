@@ -1,5 +1,4 @@
 ﻿@using Lunggo.ApCommon.Identity.User
-@using Lunggo.Framework.Extension
 @model List<Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay>
 
 @{
@@ -35,15 +34,15 @@
         phone: parseInt('@User.Identity.GetPhoneNumber()'),
         country: '@User.Identity.GetCountryCd()'
     }
-    var order = '@Html.Raw(rsvs.Serialize())';
     </script>
     <!-- angular controller -->
     <script src="/Assets/mobile/js/AccountController.js"></script>
 }
 
+
 <section class="user-menu" ng-show="PageConfig.ActivePage == 'menu'">
     <div class="menu-user">
-        <span>{{UserProfile.firstname}} {{UserProfile.lastname}}</span>
+        <span>Shinta Tamara</span>
     </div>
     <div class="menu-wrapper">
         <ul>
@@ -54,7 +53,7 @@
                 <a ng-click="PageConfig.ChangePage('history')">Pemesanan Saya</a>
             </li>
             <li class="menu-logout">
-                <a href="@Url.Action("Logout", "Account")">Log Out</a>
+                <a href="#">Log Out</a>
             </li>
         </ul>
     </div>
@@ -158,13 +157,13 @@
     </header>
 
     <ul class="history-list">
-        <li class="" ng-repeat="rsvs in Order" ng-class="{'done' : rsvs.Payment.Status == 3, 'pending' : rsvs.Payment.Status == 2 , 'canceled' : rsvs.Payment.Status == 1 || rsvs.Payment.Status == 5 }">
+        <li class="done">
             <div class="row">
                 <div class="col-xs-4">
                     <span class="blue">Order ID</span>
                 </div>
                 <div class="col-xs-8">
-                    <span class="blue">: <b>{{rsvs.RsvNo}}</b></span>
+                    <span class="blue">: <b>0123456789</b></span>
                 </div>
             </div>
             <div class="row">
@@ -172,7 +171,7 @@
                     <span>Maskapai</span>
                 </div>
                 <div class="col-xs-8">
-                    <span class="blue">: <b>{{rsvs.Itinerary.Trips[0].Segments[0].AirlineName}}</b></span>
+                    <span class="blue">: <b>GARUDA INDONESIA</b></span>
                 </div>
             </div>
             <div class="row">
@@ -180,7 +179,7 @@
                     <span>Tujuan</span>
                 </div>
                 <div class="col-xs-8">
-                    <span>: <b>{{rsvs.Itinerary.Trips[0].OriginAirport}}</b> to <b>{{rsvs.Itinerary.Trips[0].DestinationAirport}}</b> ({{FlightType(rsvs.TripType)}})</span>
+                    <span>: <b>JKT</b> to <b>DPS</b> (Roundtrip)</span>
                 </div>
             </div>
             <div class="row">
@@ -188,15 +187,15 @@
                     <span>Berangkat</span>
                 </div>
                 <div class="col-xs-8">
-                    <span>: <b>{{rsvs.Itinerary.Trips[0].DepartureDate | date}}</b></span>
+                    <span>: <b>15 Okt 2015</b></span>
                 </div>
             </div>
-            <div class="row" ng-show="rsvs.Itinerary.Trips[1].DepartureDate">
+            <div class="row">
                 <div class="col-xs-4">
                     <span>Kembali</span>
                 </div>
                 <div class="col-xs-8">
-                    <span>: <b>{{rsvs.Itinerary.Trips[1].DepartureDate | date}}</b></span>
+                    <span>: <b>20 Okt 2015</b></span>
                 </div>
             </div>
             <div class="row">
@@ -204,12 +203,12 @@
                     <span>Status</span>
                 </div>
                 <div class="col-xs-8">
-                    <span>: <b>{{OrderStatus(rsvs.Payment.Status)}}</b></span>
+                    <span>: <b>DONE</b></span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <a ng-href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory")?rsvNo={{rsvs.RsvNo}}" class="btn btn-yellow">detail</a>
+                    <a href="#" class="btn btn-yellow">detail</a>
                 </div>
             </div>
         </li>
