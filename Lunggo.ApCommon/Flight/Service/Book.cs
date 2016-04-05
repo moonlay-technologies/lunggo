@@ -41,7 +41,7 @@ namespace Lunggo.ApCommon.Flight.Service
             if (AllAreBooked(bookResults))
             {
                 output.IsSuccess = true;
-                var reservation = CreateReservation(itins, input, output);
+                var reservation = CreateReservation(itins, input, bookResults);
                 InsertDb.Reservation(reservation);
                 if (reservation.Payment.Method == PaymentMethod.BankTransfer)
                     SendPendingPaymentReservationNotifToCustomer(reservation.RsvNo);
@@ -81,7 +81,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return bookResults.All(set => set.IsSuccess);
         }
 
-        private FlightReservation CreateReservation(List<FlightItinerary> itins, BookFlightInput input, BookFlightOutput output)
+        private FlightReservation CreateReservation(List<FlightItinerary> itins, BookFlightInput input, List<BookResult> bookResults)
         {
             var trips =
                 itins.SelectMany(itin => itin.Trips).OrderBy(trip => trip.Segments.First().DepartureTime).ToList();
@@ -96,7 +96,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 TripType = ParseTripType(trips)
             };
             reservation.Payment.Medium = PaymentService.GetInstance().GetPaymentMedium(input.Payment.Method);
-            reservation.Payment.TimeLimit = output.BookResults.Min(res => res.TimeLimit);
+            reservation.Payment.TimeLimit = bookResults.Min(res => res.TimeLimit);
             var originalPrice = reservation.Itineraries.Sum(itin => itin.LocalPrice);
             var campaign = CampaignService.GetInstance().UseVoucherRequest(new VoucherRequest
             {
