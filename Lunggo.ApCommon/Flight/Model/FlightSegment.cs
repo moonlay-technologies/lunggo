@@ -31,9 +31,9 @@ namespace Lunggo.ApCommon.Flight.Model
         public CabinClass CabinClass { get; set; }
         public bool Meal { get; set; }
         public string Baggage { get; set; }
-        public string Pnr { get; set; }   
+        public string Pnr { get; set; }
         public int RemainingSeats { get; set; }
-        
+
         public bool Identical(FlightSegment otherSegment)
         {
             return
@@ -46,7 +46,7 @@ namespace Lunggo.ApCommon.Flight.Model
                 FlightNumber == otherSegment.FlightNumber &&
                 CabinClass == otherSegment.CabinClass;
         }
-
+    }
     public class FlightStop
     {
         public string Airport { get; set; }

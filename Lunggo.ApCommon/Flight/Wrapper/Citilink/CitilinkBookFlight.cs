@@ -23,6 +23,28 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
+                RevalidateConditions conditions =  new RevalidateConditions
+                {
+                    Itinerary = bookInfo.Itinerary
+                };
+                //conditions.Itinerary = bookInfo.Itinerary;
+                RevalidateFareResult revalidateResult = RevalidateFare(conditions);
+                if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid)) 
+                {
+                    return new BookFlightResult
+                    {
+                        IsValid = revalidateResult.IsValid,
+                        ErrorMessages = revalidateResult.ErrorMessages,
+                        Errors = revalidateResult.Errors,
+                        IsItineraryChanged = revalidateResult.IsItineraryChanged,
+                        IsPriceChanged = revalidateResult.IsPriceChanged,
+                        IsSuccess = revalidateResult.IsSuccess,
+                        NewItinerary = revalidateResult.NewItinerary,
+                        NewPrice = revalidateResult.NewPrice,
+                        Status = null
+                    };
+                }
+
                 var client = CreateAgentClient();
                 Login(client);
 
@@ -46,8 +68,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 }
                 else
                 {
-                    origin = splitcoreFareId[11];
-                    dest = splitcoreFareId[13];
+                    origin = splitcoreFareId[4];
+                    dest = splitcoreFareId[6];
                 }
 
 

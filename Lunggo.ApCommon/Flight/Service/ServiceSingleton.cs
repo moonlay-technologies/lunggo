@@ -103,7 +103,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return result;
         }
 
-        private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
+        public BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
             var fareType = IdUtil.GetFareType(bookInfo.Itinerary.FareId);
             var supplierName = IdUtil.GetSupplier(bookInfo.Itinerary.FareId);
