@@ -58,10 +58,22 @@ namespace Lunggo.ApCommon.Flight.Model
         [JsonProperty("bag", NullValueHandling = NullValueHandling.Ignore)]
         public string Baggage { get; set; }
         [JsonProperty("pnr", NullValueHandling = NullValueHandling.Ignore)]
-        public string Pnr { get; set; }
+        public string Pnr { get; set; }   
         [JsonProperty("rem", NullValueHandling = NullValueHandling.Ignore)]
         public int RemainingSeats { get; set; }
 
+        public bool Identical(FlightSegment otherSegment)
+        {
+            return
+                DepartureAirport == otherSegment.DepartureAirport &&
+                ArrivalAirport == otherSegment.ArrivalAirport &&
+                DepartureTime == otherSegment.DepartureTime &&
+                ArrivalTime == otherSegment.ArrivalTime &&
+                Duration == otherSegment.Duration &&
+                AirlineCode == otherSegment.AirlineCode &&
+                FlightNumber == otherSegment.FlightNumber &&
+                CabinClass == otherSegment.CabinClass;
+        }
     }
 
     public class FlightStop

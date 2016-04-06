@@ -2,6 +2,7 @@
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
+@using Lunggo.Framework.Config
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
 
 @{
@@ -14,7 +15,8 @@
     var needNationality = false;
     var token = "";
     var savedPassengers = Model.SavedPassengers;
-
+    var savedCreditCards = Model.SavedCreditCards;
+    
     try
     {
         adultCount = Model.Itinerary.AdultCount;
@@ -37,15 +39,22 @@
     ViewBag.Title = "Checkout Page";
     ViewBag.BodyClass = "page page-checkout page-flight-checkout";
     ViewBag.AngularController = "CheckoutController";
+    ViewBag.FlightDetail = "true";
 }
 @section AdditionalCSS {
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <!-- fancybox CSS-->
+    <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
 }
 @section AdditionalJS {
     <!-- additional Angular JS-->
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
+    <!-- veritrans JS -->
+    <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
+    <!-- fancybox -->
+    <script type="text/javascript" src="/Assets/vendor/fancybox/jquery.fancybox.pack.js"></script>
 }
 @section PageJS{
     <script>
@@ -63,6 +72,8 @@
             PassportRequired: @Model.Itinerary.RequirePassport.ToString().ToLower(),
             IdRequired: false,
             NationalityRequired: @Model.Itinerary.RequireNationality.ToString().ToLower(),
+            // departure date
+            DepartureDate: '',
             // buyer info
             BuyerInfo: {
                 LoggedIn : @User.Identity.IsAuthenticated.ToString().ToLower(),
@@ -74,6 +85,15 @@
                 Email: '@User.Identity.GetEmail()'
             }
         };
+
+        @if (Model.Itinerary.Trips != null){
+            if (Model.Itinerary.Trips.Count == 2){
+                @:CheckoutDetail.DepartureDate = '@Model.Itinerary.Trips[1].DepartureDate';
+            } else {
+                @:CheckoutDetail.DepartureDate = '@Model.Itinerary.Trips[0].DepartureDate';
+            }
+        }
+
     </script>
     <!-- angular controller -->
     <script src="/Assets/mobile/js/checkoutController.js"></script>
@@ -86,15 +106,17 @@ default:
         
     <div class="page-loaded">
     
-        <header class="page__header step__wrapper">
-            <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01</span></div>
-            <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02</span></div>
-            <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03</span></div>
+        <header class="page__header">
+            <div class="step__wrapper">
+                <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01</span></div>
+                <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02</span></div>
+                <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03</span></div>
+            </div>
         </header><!-- .page-header -->
     
         <div class="page__body">
             <div class="page-step-1" ng-show="PageConfig.ActivePage == 1">
-                <div class="form-wrapper">
+                <div class="form">
                     
                     <h3><b>DATA</b> KONTAK</h3>
                     
@@ -102,31 +124,33 @@ default:
 
                         <div class="form-group">
                             <label class="control-label">Title : </label>
-                            <select class="form-control" name="title">
-                                <option value="0">Tuan</option>
-                                <option value="1">Nyonya</option>
-                                <option value="2">Nona</option>
+                            <select class="form-control" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
+                                <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
                             </select>
                         </div>
 
                         <div class="form-group important">
-                            <label class="control-label">Nama Depan (dan Nama Tengah) : </label>
-                            <input type="text" value="" ng-model="CheckoutConfig.BuyerInfo.FirstName" name="FirstName" class="form-control" required />
-                        </div>
-
-                        <div class="form-group important">
-                            <label class="control-label">Nama Belakang / Nama Keluarga: </label>
-                            <input type="text" value="" ng-model="CheckoutConfig.BuyerInfo.LastName" name="LastName" class="form-control" required />
+                            <label class="control-label">Nama Lengkap : </label>
+                            <input type="text" value="" ng-model="buyerInfo.fullName" name="FullName" class="form-control" placeholder="Nama Lengkap" required />
                         </div>
 
                         <div class="form-group important">
                             <label class="control-label">Nomor Telepon : </label>
-                            <input type="number" value="" ng-model="CheckoutConfig.BuyerInfo.Phone" name="Phone" class="form-control" required />
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <p><small>Kode Negara:</small></p>
+                                    <input type="number" value="" ng-model="buyerInfo.phoneCode" name="PhoneCode" class="form-control" placeholder="Ex : 62 for Indonesia" required />
+                                </div>
+                                <div class="col-xs-8">
+                                    <p><small>Nomer Telepon (Tanpa kode negara)</small></p>
+                                    <input type="number" value="" ng-model="buyerInfo.phone" name="Phone" class="form-control" placeholder="Ex : 821 2345 6789" required />  
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group important">
                             <label class="control-label">Masukan alamat email Anda : </label>
-                            <input type="email" value="" ng-model="CheckoutConfig.BuyerInfo.Email" name="Email" class="form-control" required />
+                            <input type="email" value="" ng-model="buyerInfo.email" name="Email" class="form-control" placeholder="Ex : mail@travelmadezy.com" required />
                         </div>
 
                         <div class="form-group">
@@ -142,82 +166,77 @@ default:
                 <h3><b>DATA</b> PENUMPANG</h3>
             
                 <form novalidate name="PassengerForm">
-                    <div class="passenger passenger-{{$index}}" id="passenger-{{$index}}" ng-repeat="Passenger in CheckoutConfig.Passengers track by $index">
+                    <div class="passenger passenger-{{$index}}" id="passenger-{{$index}}" ng-repeat="Passenger in passengers track by $index">
                         <header class="passenger__header">
                             <h4 class="passenger__title">Penumpang Dewasa</h4>
                         </header><!-- .passenger__header -->
                         <div class="passenger__body">
                             <div class="form-group">
                                 <label class="control-label">Title : </label>
-                                <select class="form-control" required ng-model="Passenger.Title" name="passenger_{{$index}}_title">
-                                    <option value="0">Tuan</option>
-                                    <option value="1">Nyonya</option>
-                                    <option value="2">Nona</option>
+                                <select class="form-control" required ng-model="Passenger.title" name="passenger_{{$index}}_title" ng-init="Passenger.title = titles[0].value">
+                                    <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
                                 </select>
                             </div>
 
                             <div class="form-group important">
                                 <label class="control-label">Nama Depan (dan Nama Tengah) : </label>
-                                <input type="text" value="" class="form-control" required name="passenger_{{$index}}_firstname" ng-model="Passenger.FirstName" />
+                                <input type="text" value="" class="form-control" required name="passenger_{{$index}}_firstName" placeholder="Ex : Jhon" ng-model="Passenger.firstName" />
                             </div>
 
                             <div class="form-group important">
                                 <label class="control-label">Nama Belakang / Nama Keluarga: </label>
-                                <input type="text" value="" class="form-control" required name="passenger_{{$index}}_lastname" ng-model="Passenger.LastName" />
+                                <input type="text" value="" class="form-control" required name="passenger_{{$index}}_lastName" placeholder="Ex : Doe" ng-model="Passenger.lastName" />
                             </div>
                         
                             <!-- passenger birth date start -->
                             <div class="form-group important">
                                 <label class="control-label">Tanggal Lahir: </label>
                                 <div class="row">
-                                    <div class="col-xs-12">
-                                        <p class="form-control"></p>
-                                    </div>
-                                    <!--
                                         <div class="col-xs-4">
-                                            <select class="form-control" required name="passenger_{{$index}}_birthDate" ng-model="Passenger.Birth.Date" ng-change="ValidateBirthday(Passenger)">
-                                                <option value="1">1</option>
+                                            <select class="form-control" required name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" ng-change="ValidateBirthday(Passenger)">
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="Passenger.type == 'adult'">{{date}}</option>
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="Passenger.type == 'child' && !( Passenger.birth.year == flightDetail.minYearChild && Passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate )">{{date}}</option>
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="Passenger.type == 'infant' && !( (Passenger.birth.year == flightDetail.minYearInfant && Passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate))">{{date}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <select class="form-control" required name="passenger_{{$index}}_birthMonth" ng-model="Passenger.Birth.Month" ng-change="ValidateBirthday(Passenger)">
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.Birth.Month" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.Birth.Month" ng-if="Passenger.type == 'child' && (!(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth))">{{month.name}}</option>
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.Birth.Month" ng-if="Passenger.type == 'infant' && (!(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth))">{{month.name}}</option>
+                                            <select class="form-control" required name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" ng-change="ValidateBirthday(Passenger)">
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'child' && (!(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth))">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'infant' && (!(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth))">{{month.name}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.Birth.Year" ng-change="ValidateBirthday(Passenger)">
-                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.Birth.Year">{{year}}</option>
+                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)">
+                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
                                             </select>
                                         </div>
-                                    -->
                                 </div>
                             </div>
                             <!-- passenger birth date end-->
                             
                             <!-- passenger passport start -->
-                            <div class="form-group">
+                            <div class="form-group" ng-if="CheckoutConfig.PassportRequired">
                                 <label class="control-label">No. Passport</label>
-                                <input type="text" value="" class="form-control" name="passenger_{{$index}}_passportNumber" ng-model="Passenger.Passport.Number" ng-required="CheckoutConfig.PassportRequired" />
+                                <input type="text" value="" class="form-control" name="passenger_{{$index}}_passportNumber" ng-model="Passenger.passport.number" ng-required="CheckoutConfig.PassportRequired" />
                             </div>
 
-                            <div class="form-group important">
+                            <div class="form-group important" ng-if="CheckoutConfig.PassportRequired">
                                 <label class="control-label">Tanggal Kadaluarsa Passport: </label>
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <select class="form-control">
-                                            <option value="1">1</option>
+                                        <select class="form-control" name="passenger_{{$index}}_expiryDate" ng-model="Passenger.passport.expire.date" ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
+                                            <option value="{{date}}" ng-repeat="date in dates(Passenger.passport.expire.month, Passenger.passport.expire.year)" ng-selected="date == Passenger.passport.expire.Date" ng-if="!(Passenger.passport.expire.Year == flightDetail.passportYear && Passenger.passport.expire.Month == flightDetail.passportMonth && date < flightDetail.passportDate)">{{date}}</option>
                                         </select>
                                     </div>
                                     <div class="col-xs-4">
-                                        <select class="form-control">
-                                            <option value="1">Jan</option>
+                                        <select class="form-control" name="passenger_{{$index}}_expiryMonth" ng-model="Passenger.passport.expire.month" ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
+                                            <option value="{{month.value}}" ng-repeat="month in months" ng-if="!(Passenger.passport.expire.year == flightDetail.passportYear && month.value < flightDetail.passportMonth)">{{month.name}}</option>
                                         </select>
                                     </div>
                                     <div class="col-xs-4">
-                                        <select class="form-control">
-                                            <option value="1">2000</option>
+                                        <select class="form-control" name="passenger_{{$index}}_expiryYear" ng-model="Passenger.passport.expire.Year" ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
+                                            <option value="{{year}}" ng-repeat="year in generateYear('passport')">{{year}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -226,8 +245,8 @@ default:
                         
                             <!-- passenger nationality start -->
                             <div class="form-group" ng-show="CheckoutConfig.NationalityRequired || CheckoutConfig.PassportRequired">
-                                <label class="control-label"><span ng-show="CheckoutConfig.NationalityRequired">Nationality:</span><span ng-show="CheckoutConfig.PassportRequired">Passport Country</span></label>
-                                <select class="form-control" ng-name="passenger_{{$index}}_passportCountry" ng-model="Passenger.Passport.Country" ng-required="CheckoutConfig.NationalityRequired">
+                                <label class="control-label">Kewarganegaraan</label>
+                                <select class="form-control" name="passenger_{{$index}}_passportCountry" ng-model="Passenger.passport.country" ng-init="Passenger.passport.country = 'ID'" ng-required="CheckoutConfig.NationalityRequired">
                                     <option ng-repeat="country in Countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
                                 </select>
                             </div>
@@ -236,15 +255,12 @@ default:
                         </div><!-- .passenger__body -->
 
                     </div><!-- .passenger -->
+                    
+                    <div class="form-group">
+                        <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
+                    </div>
+
                 </form>
-            
-                <div class="form-group">
-                    <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
-                </div>
-            
-                <div class="form-group">
-                    <button ng-click="PrintScope()" class="btn btn-block">PRINT $SCOPE</button>
-                </div>
 
             </div><!-- .page-step-2 -->
         
@@ -254,12 +270,12 @@ default:
                     <h3 class="summary__title"><b>METODE</b> PEMBAYARAN</h3>
                     <div class="summary__body">
                     
-                        <form>
+                        <form name="paymentMethodForm">
                             
                             <label>
                                 <header>
                                     <div class="input-wrapper">
-                                        <input type="radio" name="paymentMethod" value="BankTransfer" checked />
+                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer" ng-model="paymentMethod" checked />
                                     </div>
                                     <h5>Bank Transfer</h5>
                                 </header>
@@ -270,7 +286,7 @@ default:
                             <label>
                                 <header>
                                     <div class="input-wrapper">
-                                        <input type="radio" name="paymentMethod" value="Credit Card"/>
+                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" />
                                     </div>
                                     <h5>Kartu Kredit</h5>
                                 </header>
@@ -281,9 +297,9 @@ default:
                             <label>
                                 <header>
                                     <div class="input-wrapper">
-                                        <input type="radio" name="paymentMethod" value="VirtualAccount"/>
+                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" />
                                     </div>
-                                    <h5>Bank Transfer</h5>
+                                    <h5>Virtual Account</h5>
                                 </header>
                                 <section>
                                     <img src="/Assets/images/payment-atm.jpg" alt="Virtual Account" />
@@ -292,9 +308,9 @@ default:
                             <label>
                                 <header>
                                     <div class="input-wrapper">
-                                        <input type="radio" name="paymentMethod" value="MandiriClickpay"/>
+                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriClickPay" ng-model="paymentMethod" />
                                     </div>
-                                    <h5>Bank Transfer</h5>
+                                    <h5>Mandiri ClickPay</h5>
                                 </header>
                                 <section>
                                     <img src="/Assets/images/payment-mandiri.jpg" alt="Bank Transfer" />
@@ -305,6 +321,112 @@ default:
 
                     </div><!-- .summary__body -->
                 </div><!-- .summary--payment -->
+            
+                <div class="summary summary--creditcard" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
+
+                    <h3 class="summary__title"><b>DETAIL</b> KARTU KREDIT</h3>
+                    <div class="summary__body">
+
+
+                        @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && true /*tambah kredit kart baru*/ ))
+                        {
+
+                            <div class="credit-card-form">
+
+                                <form name="creditCardForm" novalidate>
+
+                                    <!-- credit card selector start -->
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <label>Pilih kartu kredit :</label>
+                                                <select class="form-control" ng-model="CreditCard.TwoClickToken" ng-required="paymentMethod == '@PaymentMethod.CreditCard'">
+                                                    <option value="false" selected="selected">Tambah Baru</option>
+                                                    @foreach (var savedCreditCard in savedCreditCards)
+                                                    {
+                                                        <option value="@savedCreditCard.Token">@savedCreditCard.CardHolderName - @savedCreditCard.MaskedCardNumber</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4" ng-if="CreditCard.TwoClickToken != 'false'">
+                                                <label class="control-label">CVV Kartu</label>
+                                                <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- credit card selector end -->
+                                    <!-- new credit card start -->
+                                    <div ng-if="CreditCard.TwoClickToken == 'false'">
+                                        <div class="form-group">
+                                            <label class="control-label">Nomor Kartu</label>
+                                            <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Kadaluarsa</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <!-- <input type="number" value="" class="form-control" placeholder="MM" maxlength="2" ng-model="CreditCard.Month" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
+                                                    <select class="form-control" ng-model="CreditCard.Month">
+                                                        <option value="01" selected="selected">Januari</option>
+                                                        <option value="02">Februari</option>
+                                                        <option value="03">Maret</option>
+                                                        <option value="04">April</option>
+                                                        <option value="05">Mei</option>
+                                                        <option value="06">Juni</option>
+                                                        <option value="07">Juli</option>
+                                                        <option value="08">Agustus</option>
+                                                        <option value="09">September</option>
+                                                        <option value="10">Oktober</option>
+                                                        <option value="11">November</option>
+                                                        <option value="12">Desember</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <!-- <input type="number" value="" class="form-control" placeholder="YYYY" maxlength="4" ng-model="CreditCard.Year" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
+                                                    <select class="form-control" ng-model="CreditCard.Year">
+                                                        <option value="2016" selected="selected">2016</option>
+                                                        <option value="2017">2017</option>
+                                                        <option value="2018">2018</option>
+                                                        <option value="2019">2019</option>
+                                                        <option value="2020">2020</option>
+                                                        <option value="2021">2021</option>
+                                                        <option value="2022">2022</option>
+                                                        <option value="2023">2023</option>
+                                                        <option value="2024">2024</option>
+                                                        <option value="2025">2025</option>
+                                                        <option value="2026">2026</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">CVV Kartu</label>
+                                                    <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Nama Pemegang Kartu</label>
+                                            <input type="text" value="" class="form-control" size="16" ng-model="CreditCard.Name" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                        </div>
+                                    </div>
+                                    <!-- new credit card end -->
+
+                                </form>
+                            </div>
+                                <!-- .credit-card-form -->
+                        }
+
+
+                    </div><!-- .summary__body -->
+
+                </div><!-- .summary--creditcard -->
 
                 <div class="summary summary--price">
                     <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
@@ -317,9 +439,14 @@ default:
                             <dt>Potongan Harga</dt>
                             <dd><sup>Rp</sup>- {{CheckoutConfig.Voucher.Amount | number}}</dd>
                         </dl>
+                        <dl ng-show="paymentMethod == '@PaymentMethod.BankTransfer'">
+                            <dt>Kode Unik Transfer</dt>
+                            <dd><sup>Rp</sup>- {{TransferConfig.UniqueCode | number}}</dd>
+                        </dl>
                         <dl class="total-price">
                             <dt>Total</dt>
-                            <dd><sup>Rp</sup> {{CheckoutConfig.Price - CheckoutConfig.Voucher.Amount | number}}</dd>
+                            <dd ng-if="paymentMethod != '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{CheckoutConfig.Price - CheckoutConfig.Voucher.Amount | number}}</dd>
+                            <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{CheckoutConfig.Price - CheckoutConfig.Voucher.Amount - TransferConfig.UniqueCode | number}}</dd>
                         </dl>
                     </div><!-- .summary__body -->
                 </div><!-- .summar--price -->
@@ -346,51 +473,202 @@ default:
                     <div class="summary__body">
                     
                         <ol>
-                            <li>
-                                <h4>Nyonya Shinta Tamara</h4>
+                            <li ng-repeat="Passenger in passengers">
+                                <h4>
+                                    <span>{{Passenger.title}}</span>
+                                    {{Passenger.firstName}} {{Passenger.lastName}}
+                                </h4>
                                 <dl>
                                     <dt>Jenis Tiket</dt>
-                                    <dd>Dewasa</dd>
+                                    <dd>{{Passenger.typeName}}</dd>
                                 </dl>
                                 <dl>
                                     <dt>Tanggal Lahir</dt>
-                                    <dd>03 / 04 / 90</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <h4>Nyonya Shinta Tamara</h4>
-                                <dl>
-                                    <dt>Jenis Tiket</dt>
-                                    <dd>Dewasa</dd>
-                                </dl>
-                                <dl>
-                                    <dt>Tanggal Lahir</dt>
-                                    <dd>03 / 04 / 90</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <h4>Nyonya Shinta Tamara</h4>
-                                <dl>
-                                    <dt>Jenis Tiket</dt>
-                                    <dd>Dewasa</dd>
-                                </dl>
-                                <dl>
-                                    <dt>Tanggal Lahir</dt>
-                                    <dd>03 / 04 / 90</dd>
+                                    <dd>{{Passenger.birth.date}} / {{Passenger.birth.month + 1}} / {{Passenger.birth.year}}</dd>
                                 </dl>
                             </li>
                         </ol>
 
                     </div><!-- .summary__body -->
                 </div><!-- .summary--passenger -->
+            
+                <form name="finalForm" ng-submit="book.checkCreditCard()">
+                
+                    <div class="hidden">
+                        <input type="text" name="Token" value="" ng-model="token" />
+                        <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
+                        <input type="text" name="Language" value="" ng-model="language" />
 
-                <a class="btn btn-yellow form-control">LANJUT</a>
+                        <input type="text" name="Payment.Data0" id="vt-token" value="" ng-model="CreditCard.Token" />
+
+                        <input type="text" name="Contact.Name" value="" ng-model="buyerInfo.fullname" />
+                        <input type="text" name="Contact.CountryCode" value="" ng-model="buyerInfo.countryCode" />
+                        <input type="text" name="Contact.Phone" value="" ng-model="buyerInfo.phone" />
+                        <input type="text" name="Contact.Email" value="" ng-model="buyerInfo.email" />
+
+                        <div ng-repeat="passenger in CheckoutConfig.Passengers track by $index">
+
+                            <input type="text" name="Passengers[{{$index}}].Type" value="" ng-model="passenger.type" />
+                            <input type="text" name="Passengers[{{$index}}].Title" value="" ng-model="passenger.title" />
+                            <input type="text" name="Passengers[{{$index}}].FirstName" value="" ng-model="passenger.firstname" />
+                            <input type="text" name="Passengers[{{$index}}].LastName" value="" ng-model="passenger.lastname" />
+                            <input type="text" name="Passengers[{{$index}}].BirthDate.Year" value="" ng-model="passenger.birth.year" />
+                            <input type="text" name="Passengers[{{$index}}].BirthDate.Month" value="" ng-model="passenger.birth.month" />
+                            <input type="text" name="Passengers[{{$index}}].BirthDate.Date" value="" ng-model="passenger.birth.date" />
+
+                            <input type="text" name="Passengers[{{$index}}].PassportNumber" value="" ng-model="passenger.passport.number" />
+                            <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Year" value="" ng-model="passenger.passport.expire.year" />
+                            <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Month" value="" ng-model="passenger.passport.expire.month" />
+                            <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Date" value="" ng-model="passenger.passport.expire.date" />
+                            <input type="text" name="Passengers[{{$index}}].idNumber" value="" ng-model="passenger.idNumber" />
+                            <input type="text" name="Passengers[{{$index}}].Country" value="" ng-model="passenger.nationality" />
+
+                        </div>
+                        <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
+                        <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
+                    </div>
+
+                    <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a></p>
+                    <input type="submit" class="btn btn-yellow btn-block" value="{{ !book.booking ? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(!paymentMethod || !creditCardForm.$valid) || book.booking">
+
+                </form><!-- finalForm -->
+            
+                <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                    <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                </form>
 
 
             </div><!-- .page-step-3 -->
 
         </div><!-- .page-body -->
     
+        <!-- flight detail overlay -->
+        <div class="overlay overlay--flight-detail overlay--theme--blue" id="flightDetail-overlay" ng-class="{'active' : PageConfig.ActiveOverlay == 'flight-detail'}">
+            <div class="overlay__header">
+                <h3 class="overlay__title">Detail Pesanan<span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span></h3>
+            </div><!-- .overlay__header -->
+            <div class="overlay__body overlay__content">
+                <div class="flight-detail-wrapper ">
+                    <h3><b>DETAIL</b> PENERBANGAN</h3>
+                    <div ng-if="CheckoutConfig.Trips[0]">
+                        <div class="flight-title flight-title--departure">
+                            <div class="flight-info">
+                                <h4><b>{{CheckoutConfig.Trips[0].OriginAirport}}</b> to <b>{{CheckoutConfig.Trips[0].DestinationAirport}}</b></h4>
+                                <h5>{{CheckoutConfig.Trips[0].DepartureDate | date: 'EEE,dd MMM yyyy'}}</h5>
+                            </div><!-- .flight-info -->
+                        </div><!-- .flight-title -->
+
+                        <div class="flight-wrapper" ng-repeat="Segment in CheckoutConfig.Trips[0].Segments track by $index">
+                            <div class="transit" ng-if="$index > 0">
+                                <span>Transit di {{Segment.DepartureCity}} selama <b>{{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Transits[$index-1].Duration}}</b></span>
+                            </div><!-- .transit -->
+                            <div class="flight">
+                                <div class="flight__number">
+                                    <span>{{$index + 1}}</span>
+                                </div><!-- .flight__number -->
+                                <div class="flight__content">
+                                    <div class="flight__summary">
+                                        <img ng-src="{{Segment.AirlineLogoUrl}}" alt="{{Segment.AirlineName}}" class="flight__image" />
+                                        <div class="flight__airline">
+                                            <h4><b>{{Segment.AirlineName}}</b></h4>
+                                            <h5>{{Segment.AirlineCode}}-{{Segment.FlightNumber}}</h5>
+                                        </div>
+                                    </div><!-- .flight__summary -->
+                                    <div class="flight__detail">
+                                        <div class="flight__departure">
+                                            <h5>{{Segment.DepartureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                            <h4><b>{{Segment.DepartureTime | date : 'HH:mm' : 'UTC'}}</b></h4>
+                                            <h5><b>({{Segment.DepartureAirport}}) {{Segment.DepartureCity}}</b></h5>
+                                            <h5>{{Segment.DepartureAirportName}}</h5>
+                                        </div>
+                                        <div class="flight__separator"></div>
+                                        <div class="flight__arrival">
+                                            <h5>{{Segment.ArrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                            <h4><b>{{Segment.ArrivalTime | date : 'HH:mm' : 'UTC'}}</b></h4>
+                                            <h5><b>({{Segment.ArrivalAirport}}) {{Segment.ArrivalCity}}</b></h5>
+                                            <h5>{{Segment.ArrivalAirportName}}</h5>
+                                        </div><!-- .flight__arrival -->
+                                    </div><!-- .flight__detail -->
+                                </div><!-- .flight__content -->
+                            </div><!-- .flight -->
+                        </div><!-- .flight-wrapper -->
+                    </div>
+
+                    <div ng-if="CheckoutConfig.Trips[1]">
+                        <div class="flight-title flight-title--return">
+                            <div class="flight-info">
+                                <h4><b>{{CheckoutConfig.Trips[1].OriginAirport}}</b> to <b>{{CheckoutConfig.Trips[1].DestinationAirport}}</b></h4>
+                                <h5>{{CheckoutConfig.Trips[1].DepartureDate | date: 'EEE,dd MMM yyyy'}}</h5>
+                            </div><!-- .flight-info -->
+                        </div><!-- .flight-title -->
+
+                        <div class="flight-wrapper" ng-repeat="Segment in CheckoutConfig.Trips[1].Segments track by $index">
+                            <div class="transit" ng-if="$index > 0">
+                                <span>Transit di {{Segment.DepartureCity}} selama <b>{{FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].Trips[0].Transits[$index-1].Duration}}</b></span>
+                            </div><!-- .transit -->
+                            <div class="flight">
+                                <div class="flight__number">
+                                    <span>{{$index + 1}}</span>
+                                </div><!-- .flight__number-->
+                                <div class="flight__content">
+                                    <div class="flight__summary">
+                                        <img ng-src="{{Segment.AirlineLogoUrl}}" alt="{{Segment.AirlineName}}" class="flight__image" />
+                                        <div class="flight__airline">
+                                            <h4><b>{{Segment.AirlineName}}</b></h4>
+                                            <h5>{{Segment.AirlineCode}}-{{Segment.FlightNumber}}</h5>
+                                        </div>
+                                    </div><!-- .flight__summary -->
+                                    <div class="flight__detail">
+                                        <div class="flight__departure">
+                                            <h5>{{Segment.DepartureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                            <h4><b>{{Segment.DepartureTime | date : 'HH:mm' : 'UTC'}}</b></h4>
+                                            <h5><b>({{Segment.DepartureAirport}}) {{Segment.DepartureCity}}</b></h5>
+                                            <h5>{{Segment.DepartureAirportName}}</h5>
+                                        </div>
+                                        <div class="flight__separator"></div>
+                                        <div class="flight__arrival">
+                                            <h5>{{Segment.ArrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                            <h4><b>{{Segment.ArrivalTime | date : 'HH:mm' : 'UTC'}}</b></h4>
+                                            <h5><b>({{Segment.ArrivalAirport}}) {{Segment.ArrivalCity}}</b></h5>
+                                            <h5>{{Segment.ArrivalAirportName}}</h5>
+                                        </div>
+                                    </div><!-- .flight__detail-->
+                                </div><!-- .flight-content -->
+                            </div><!-- .flight -->
+                        </div><!-- .flight-wrapper -->
+                    </div>
+                </div><!-- .flight-detail-wrapper -->
+                <div class="flight-fare-wrapper">
+                    <h3><b>DETAIL</b> HARGA</h3>
+                
+                    <div class="summary__body">
+                        <dl>
+                            <dt>Total Tiket</dt>
+                            <dd><sup>Rp</sup> {{CheckoutConfig.Price | number}}</dd>
+                        </dl>
+                        <dl ng-show="CheckoutConfig.Voucher.Validated && CheckoutConfig.Voucher.Valid">
+                            <dt>Potongan Harga</dt>
+                            <dd><sup>Rp</sup>- {{CheckoutConfig.Voucher.Amount | number}}</dd>
+                        </dl>
+                        <dl ng-show="paymentMethod == '@PaymentMethod.BankTransfer'">
+                            <dt>Kode Unik Transfer</dt>
+                            <dd><sup>Rp</sup>- {{TransferConfig.UniqueCode | number}}</dd>
+                        </dl>
+                        <dl class="total-price">
+                            <dt>Total</dt>
+                            <dd ng-if="paymentMethod != '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{CheckoutConfig.Price - CheckoutConfig.Voucher.Amount | number}}</dd>
+                            <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{CheckoutConfig.Price - CheckoutConfig.Voucher.Amount - TransferConfig.UniqueCode | number}}</dd>
+                        </dl>
+                    </div><!-- .summary__body -->
+
+                    <div class="fare-note">
+                        <p><i>*Harga ini masih bisa berubah. Harga final maskapai akan dikonfirmasi kembali pada proses pembayaran.</i></p>
+                    </div>    
+
+                </div><!-- .flight-fare-wrapper -->
+            </div><!-- .overlay__body -->
+        </div><!-- #flightDetail-overlay --->
+
         <!-- additional overlay page start -->
         <div class="overlay datepicker overlay--theme--blue" id="calendar-overlay">
             <div class="overlay__header">
@@ -401,6 +679,29 @@ default:
             </div><!-- .overlay__body -->
         </div>
         <!-- additional overlay page end -->
+    
+        <!-- popup expired -->
+        <div class="popup__wrapper" ng-class="{'active':PageConfig.ExpiryDate.Expired}">
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">Checkout Kadaluarsa</h4>
+                </header>
+                <div class="popup__body">
+                    <div class="container">
+                        <p>Maaf, waktu pembayaran Anda sudah habis. Silahkan klik tombol dibawah untuk kembali ke halaman pencarian.</p>
+                    </div>
+                </div>
+                <div class="popup__footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div><!-- .page-loaded -->
         

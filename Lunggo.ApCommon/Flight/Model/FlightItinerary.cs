@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Helpers;
+using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Newtonsoft.Json;
@@ -45,10 +46,28 @@ namespace Lunggo.ApCommon.Flight.Model
         public FareType FareType { get; set; }
         public Supplier Supplier { get; set; }
         public TripType RequestedTripType { get; set; }
+
+        public bool Identical(FlightItinerary otheritin)
+        {
+            return
+                RequirePassport == otheritin.RequirePassport &&
+                RequireBirthDate == otheritin.RequireBirthDate &&
+                RequireSameCheckIn == otheritin.RequireSameCheckIn &&
+                RequireNationality == otheritin.RequireNationality &&
+                CanHold == otheritin.CanHold &&
+                AdultCount == otheritin.AdultCount &&
+                ChildCount == otheritin.ChildCount &&
+                InfantCount == otheritin.InfantCount &&
+                TripType == otheritin.TripType &&
+                RequestedCabinClass == otheritin.RequestedCabinClass &&
+                RequestedTripType == otheritin.RequestedTripType &&
+                Trips.Count == otheritin.Trips.Count &&
+                Trips.Zip(otheritin.Trips, (trip, otherTrip) => trip.Identical(otherTrip)).All(x => x);
+        }
     }
 
     public class FlightItineraryBase
-    {     
+    {
         [JsonProperty("rqpass")]
         public bool RequirePassport { get; set; }
         [JsonProperty("rqdob")]

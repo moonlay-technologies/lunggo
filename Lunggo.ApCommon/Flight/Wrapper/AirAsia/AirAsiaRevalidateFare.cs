@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             {
                 var client = CreateCustomerClient();
 
-                if (conditions.FareId == null)
+                if (conditions.Itinerary.FareId == null)
                 {
                     return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
                 }
@@ -41,7 +41,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 decimal price;
                 try
                 {
-                    var splittedFareId = conditions.FareId.Split('.').ToList();
+                    var splittedFareId = conditions.Itinerary.FareId.Split('.').ToList();
                     origin = splittedFareId[0];
                     dest = splittedFareId[1];
                     date = new DateTime(int.Parse(splittedFareId[4]), int.Parse(splittedFareId[3]),
@@ -123,7 +123,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     {
                         IsSuccess = true,
                         IsValid = false,
-                        Itinerary = null
+                        NewItinerary = null
                     };
                 }
 
@@ -163,7 +163,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             {
                                 IsSuccess = true,
                                 IsValid = false,
-                                Itinerary = null
+                                NewItinerary = null
                             };
 
                         var newPrice =
@@ -233,12 +233,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             segment.Duration = duration;
                             return segment;
                         }).ToList();
-                        return new RevalidateFareResult
+                        var result = new RevalidateFareResult
                         {
                             IsSuccess = true,
                             IsValid = price == newPrice,
-                            Itinerary = itin
+                            IsPriceChanged = price != newPrice,
+                            NewItinerary = itin
                         };
+                        if (result.IsPriceChanged)
+                            result.NewPrice = newPrice;
+                        return result;
                     }
                     else
                     {
@@ -246,7 +250,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             IsSuccess = true,
                             IsValid = false,
-                            Itinerary = null
+                            NewItinerary = null
                         };
                     }
                 }

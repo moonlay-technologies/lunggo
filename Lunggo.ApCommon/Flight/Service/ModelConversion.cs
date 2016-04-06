@@ -27,7 +27,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     Payment = reservation.Payment,
                     Discount = reservation.Discount.Nominal,
                     DiscountName = string.IsNullOrWhiteSpace(reservation.Discount.Name) ? "Discount" : reservation.Discount.Name,
-                    VoucherCode = reservation.Discount.Code
+                    VoucherCode = reservation.Discount.Code,
+                    TransferCode = reservation.TransferCode
                 };
             }
             else
@@ -61,7 +62,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
-                return new FlightItineraryForDisplay();
+                return null;
             }
         }
 

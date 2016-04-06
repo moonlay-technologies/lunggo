@@ -26,20 +26,20 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
             {
                 SearchId = searchId,
                 Progress = progress
-            };
+                };
             var apiResponse = FlightLogic.SearchFlights(request);
             return apiResponse;
-        }
+            }
 
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("v1/flights/select")]
         public FlightSelectApiResponse SelectFlight()
-        {
+            {
             var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightSelectApiRequest>();
             var apiResponse = FlightLogic.SelectFlight(request);
-            return apiResponse;
-        }
+                return apiResponse;
+            }
 
         [HttpGet]
         [LunggoCorsPolicy]
@@ -80,7 +80,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         public FlightIssuanceApiResponse CheckFlightIssuance(string rsvNo)
         {
             var request = new FlightIssuanceApiRequest
-            {
+        {
                 RsvNo = rsvNo
             };
             var apiResponse = FlightLogic.CheckFlightIssuance(request);

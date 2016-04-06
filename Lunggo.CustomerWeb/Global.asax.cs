@@ -1,9 +1,12 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Framework.BrowserDetection;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
 
 namespace Lunggo.CustomerWeb
@@ -18,14 +21,13 @@ namespace Lunggo.CustomerWeb
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            //FlightService.GetInstance().CommenceSearchFlight("CGKDPS290216-100y".Base64Encode(), 2);
         }
         
-        /*
         void Session_Start(object sender, EventArgs e)
         {
             // Redirect mobile users to the mobile home page
-            var httpRequest = HttpContext.Current.Request;
+            /*
+            var httpRequest = Request;
             if (httpRequest.Browser.IsMobileDevice)
             {
                 var configManager = ConfigManager.GetInstance();
@@ -46,11 +48,11 @@ namespace Lunggo.CustomerWeb
                     // if (HttpContext.Current.Handler is UserRegistration)
                     //     redirectTo = "~/Mobile/Register.aspx";
 
-                    HttpContext.Current.Response.Redirect(redirectTo);
+                    Response.Redirect(redirectTo);
                 }
             }
-            
+            */
         }
-        */
+        
     }
 }

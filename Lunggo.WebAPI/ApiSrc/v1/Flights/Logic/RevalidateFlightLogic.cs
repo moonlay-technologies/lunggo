@@ -15,12 +15,12 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 if (IsValid(request))
                 {
-                    var service = FlightService.GetInstance();
-                    var revalidateServiceRequest = PreprocessServiceRequest(request);
-                    var revalidateServiceResponse = service.RevalidateFlight(revalidateServiceRequest);
+            var service = FlightService.GetInstance();
+            var revalidateServiceRequest = PreprocessServiceRequest(request);
+            var revalidateServiceResponse = service.RevalidateFlight(revalidateServiceRequest);
                     var apiResponse = AssembleApiResponse(revalidateServiceResponse);
-                    return apiResponse;
-                }
+            return apiResponse;
+        }
                 else
                 {
                     return new FlightRevalidateApiResponse
@@ -59,41 +59,15 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             if (revalidateServiceResponse.IsSuccess)
             {
-                if (revalidateServiceResponse.Sets == null || !revalidateServiceResponse.Sets.Any())
+                return new FlightRevalidateApiResponse
                 {
-                    return new FlightRevalidateApiResponse
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERFREV01"
-                    };
-                }
-                if (revalidateServiceResponse.IsValid)
-                {
-                    return new FlightRevalidateApiResponse
-                    {
-                        NewFare = revalidateServiceResponse.NewFare,
-                        StatusCode = HttpStatusCode.OK
-                    };
-                }
-                else
-                {
-                    if (revalidateServiceResponse.NewFare != null)
-                    {
-                        return new FlightRevalidateApiResponse
-                        {
-                            NewFare = revalidateServiceResponse.NewFare,
-                            StatusCode = HttpStatusCode.OK
-                        };
-                    }
-                    else
-                    {
-                        return new FlightRevalidateApiResponse
-                        {
-                            NewFare = null,
-                            StatusCode = HttpStatusCode.OK
-                        };
-                    }
-                }
+                    IsValid = revalidateServiceResponse.IsValid,
+                    IsItineraryChanged = revalidateServiceResponse.IsItineraryChanged,
+                    IsPriceChanged = revalidateServiceResponse.IsPriceChanged,
+                    NewItinerary = revalidateServiceResponse.NewItinerary,
+                    NewPrice = revalidateServiceResponse.NewPrice,
+                    StatusCode = HttpStatusCode.OK
+                };
             }
             else
             {

@@ -98,5 +98,15 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult DanamonSweetValentine()
+        {
+            return View();
+        }
+
+        public ActionResult Promo()
+        {
+            return View();
+        }
+
     }
 }

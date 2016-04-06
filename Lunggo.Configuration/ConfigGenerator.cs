@@ -14,13 +14,14 @@ namespace Lunggo.Configuration
         Local = 5,
         Development1 = 6,
         QA = 7,
-        Production = 8
+        Production = 8,
+        Development2 = 9
     }
 
     public class ConfigGenerator
     {
         private const DeploymentEnvironment Environment = DeploymentEnvironment.Local;
-        private const bool DeployHtmlTemplate = true;
+        private const bool DeployHtmlTemplate = false;
         private const string FileExtension = "*.properties";
         private const string FinalProjectConfigFile = "application.properties";
         private const string RootProject = "Lunggo";
@@ -65,7 +66,9 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler2", 
                 "WebJob-FlightSearch.FlightCrawler3", 
                 "WebJob-FlightSearch.FlightCrawler4", 
-                "Worker.EticketHandler"
+                "WebJob-FlightSearch.FlightCrawler5",
+                "CloudApp.EticketHandler",
+                "WebJob.BankTransferChecking"
             };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
@@ -338,6 +341,7 @@ namespace Lunggo.Configuration
             const string changePasswordPath = @"/id/ApiAccount/ChangePassword";
             const string changeProfilePath = @"/id/ApiAccount/ChangeProfile";
             const string resendConfirmationEmailPath = @"/id/ApiAccount/ResendConfirmationEmail";
+            const string transferPaymentPath = @"/api/v1/transferidentifier" ;
             var veritransTokenPath = _configDictionary["@@.*.veritrans.tokenEndPoint@@"];
             var veritransClientKey = _configDictionary["@@.*.veritrans.clientKey@@"];
 
@@ -366,7 +370,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("resendConfirmationEmailPath", resendConfirmationEmailPath);
             fileTemplate.SetAttribute("veritransTokenPath", veritransTokenPath);
             fileTemplate.SetAttribute("veritransClientKey", veritransClientKey);
-
+            fileTemplate.SetAttribute("transferPaymentPath", transferPaymentPath);
 
             var fileContent = fileTemplate.ToString();
             string[] projectList = { "BackendWeb", "CustomerWeb" };
@@ -418,6 +422,7 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler2", 
                 "WebJob-FlightSearch.FlightCrawler3", 
                 "WebJob-FlightSearch.FlightCrawler4",
+                "WebJob-FlightSearch.FlightCrawler5",
             };
             SaveRootFile("App.Debug.config", fileContent, projectList);
         }
@@ -440,7 +445,8 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler1",
                 "WebJob-FlightSearch.FlightCrawler2",
                 "WebJob-FlightSearch.FlightCrawler3",
-                "WebJob-FlightSearch.FlightCrawler4"
+                "WebJob-FlightSearch.FlightCrawler4",
+                "WebJob-FlightSearch.FlightCrawler5"
             };
             SaveRootFile("App.Release.config", fileContent, projectList);
         }

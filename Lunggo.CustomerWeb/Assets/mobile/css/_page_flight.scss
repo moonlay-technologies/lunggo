@@ -7,9 +7,8 @@
         .flight-progress {background:#ff7d51; position:absolute; height:100%; top:0; left:0;}
     }
     // flight summary
-    .flight-summary {background-color:#2eb4e7; color:#fff; position:relative;
+    .flight-summary {background-color:#2eb4e7; color:#fff; position:relative; @include clearfix();
         p {margin-bottom:0;}
-        &:before, &:after {@include clearfix();}
         .summary-left {float:left; width:77%; padding:12px;}
         .summary-right {@extend & .summary-left; padding:0; width:25%; color:#fff; height:100%; background-color:#0b84b1; display:block; vertical-align:middle; text-align:center; font-weight:bold; position:absolute; right:0;
             span {position:absolute; top:0; left:0; right:0; bottom:0; margin:auto; height:auto; width:auto; width:50px; height:20px;}
@@ -17,14 +16,15 @@
     }
     // flight sort and filter
     .flight-sort-filter {
-        .flight-sort-filter-action {background:#616161;
-            &:before, &:after {@include clearfix();}
+        .flight-sort-filter-action {background:#616161; @include clearfix();
             a {float:left; color:#fff; text-align:center; display:block; width:50%; font-weight:bold; padding:15px 0;}
             a+a {border-left:1px solid #8f8f8f;}
         }
     }
     // flight notice
-    .flight-notice {background:#ff9a24; color:#fff; padding:5px;}
+    .flight-notice {background:#ff9a24; color:#fff; padding:5px;
+        p {margin-bottom:0; font-size:11px;}
+    }
     // flight selection
     .flight-selection {background:#e5e3e4; position:relative; font-weight:bold;
         .flight-info {padding:15px; padding-left:50px;
@@ -40,20 +40,17 @@
     // flight list
     .flight-list {
         // flight
-        .flight {padding:12px;
+        .flight {padding:12px; @include clearfix();
             &+.flight {border-top:1px solid #ccc;}
-            &:before, &:after {@include clearfix();}
             .flight-header {
                 .flight-airline {margin-top:0; margin-bottom:0;
                     .flight-airline-image {height:30px;}
                     span {color:#2ca3e1; font-weight:bold;}
                 }
             }
-            .flight-content {
-                &:before, &:after {@include clearfix();}
+            .flight-content {@include clearfix();
                 .content-left {float:left; width:50%;
-                    .flight-time {
-                        &:before, &:after {@include clearfix();}
+                    .flight-time {@include clearfix();
                         span {font-weight:bold; float:left; display:block;}
                         .departure {}
                         .separator {width:10%; border-top:2px solid $color-main-blue; height:10px; position:relative; top:7px; margin-left:5px; margin-right:5px;}
@@ -64,6 +61,7 @@
                 }
                 .content-right {@extend & .content-left; text-align:right; color:#ff7200;
                     label {font-weight:normal;}
+                    .flight-price-was {margin:0; text-decoration:line-through;}
                     .flight-price {margin-top:0; font-weight:bold; font-size:16px;}
                 }
             }
@@ -91,8 +89,7 @@
                 &.submit {}
             }
             // switch
-            .switch-wrapper {
-                &:before, &:after {@include clearfix();}
+            .switch-wrapper {@include clearfix();
                 span {line-height:24px; padding:3px 0; display:inline-block;}
                 .switch {float:right; background:#fff; @include border-radius($border-radius-default); padding:3px;
                     label {color:#000; width:50px; text-align:center; display:block; float:left; margin-bottom:0; line-height:24px;
@@ -114,7 +111,7 @@
             label {font-weight:normal;}
             &+.filter-group {border-top:$border-default;}
             .filter-group__header {margin-bottom:12px;
-                .filter-group__title {margin:0; font-weight:bold;}
+                .filter-group__title {margin:0; font-weight:normal;}
             }
             .filter-group__content {
                 label {display:block; padding:12px 0;
@@ -128,6 +125,34 @@
                     img {height:30px; margin-right:10px;}
                 }
             }
+            // departure time filter
+            &.filter-group--departure {
+                .filter-group__content {@include clearfix();
+                    label {display:block; float:left; width:50%; border:0; margin-bottom:0; padding-top:10px; padding-bottom:10px; position:relative;
+                        .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px;}
+                        input {display:none;}
+                        span {width:100%; padding-left:30px; display:block;}
+                        // if active
+                        &.active {
+                            .switch {background:#ffca10;}
+                        }
+                    }
+                }
+            }
+            // return time filter
+            &.filter-group--arrival {@extend &.filter-group--departure;}
+            // transit filter
+            &.filter-group--transit {@extend &.filter-group--departure;
+                .filter-group__content {
+                    label {width:33.3334%;}
+                }
+            }
+            // airline filter
+            &.filter-group--airline {@extend &.filter-group--departure;
+                .filter-group__content {
+                    label {width:100%;}
+                }
+            }
         }
     }
 }
@@ -137,8 +162,11 @@
 .overlay--flight-sort {
     .overlay__content {padding:0;
         span {display:block; padding:15px;
+            &:before {content:''; width:20px; height:20px; background:#fff; display:inline-block; vertical-align:middle; margin-right:10px; border:3px solid #fff; @include border-radius(50px);}
             &+span {border-top:$border-default;}
-            &.active {background:$color-main-blue; color:#fff;}
+            &.active {color:#fff;
+                &:before {background:#ffca10;}
+            }
         }
         label {display:block; width:100%; padding:12px 0;
             &+label {border-top:$border-default;}
@@ -151,8 +179,7 @@
 // overlay--flight-detail
 .overlay--flight-detail {
     .overlay__content {padding:0; padding-bottom:$header-height;
-        .flight-title {background:#e5e3e4; position:relative;
-            &:before,&:after {@include clearfix();}
+        .flight-title {background:#e5e3e4; position:relative; @include clearfix();
             &>div, &>a {float:left; display:block;}
             .flight-info {width:75%; padding-left:50px; position:relative;
                 &:before {content:""; position:absolute; top:50%; margin-top:-10px; left:15px; width:22px; height:20px; background:url(/Assets/images/flight-review-title-sprite.png) no-repeat;}
@@ -168,19 +195,16 @@
         }
         .flight-notice {background:#d70000;}
         .flight-wrapper {
-            .flight {position:relative;
-                &:before, &:after {@include clearfix();}
+            .flight {position:relative; @include clearfix();
                 .flight__number {width:15px; left:5px; position:absolute;
                     span {background:$color-main-blue; color:#fff; width:16px; height:16px; display:block; text-align:center; line-height:16px; font-size:12px;}
                 }
                 .flight__content {padding-left:25px;
-                    .flight__summary {
-                        &:before, &:after {@include clearfix();}
+                    .flight__summary {@include clearfix();
                         .flight__image {width:35px; height:auto; float:left;}
                         .flight__airline {color:$color-main-blue;}
                     }
-                    .flight__detail {position:relative;
-                        &:before, &:after {@include clearfix();}
+                    .flight__detail {position:relative; @include clearfix();
                         &>div {float:left;}
                         .flight__departure {width:45%;}
                         .flight__separator {width:10%; height:100%; position:absolute; background:url(/Assets/mobile/images/flight-separator.png) center center no-repeat; left:45%;}

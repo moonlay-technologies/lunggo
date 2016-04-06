@@ -216,6 +216,14 @@ else
                                             <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
                                             <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
                                             break;
+                                        case PaymentMethod.VirtualAccount:
+                                            <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
+                                            <img src="/Assets/images/atm-bersama.jpg" alt="Virtual Account" />
+                                            break;
+                                        case PaymentMethod.MandiriClickPay:
+                                        <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
+                                        <img src="/Assets/images/payment-mandiri.png" alt="Mandiri Click Pay" />
+                                            break;
                                     }
                                 </div>
 

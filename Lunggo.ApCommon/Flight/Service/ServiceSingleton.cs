@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Wrapper;
 using Lunggo.ApCommon.Flight.Wrapper.AirAsia;
 using Lunggo.ApCommon.Flight.Wrapper.Citilink;
+using Lunggo.ApCommon.Flight.Wrapper.LionAir;
 using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
 using Lunggo.ApCommon.Flight.Wrapper.Sriwijaya;
 using Lunggo.ApCommon.Voucher;
@@ -25,12 +26,14 @@ namespace Lunggo.ApCommon.Flight.Service
         private static readonly AirAsiaWrapper AirAsiaWrapper = AirAsiaWrapper.GetInstance();
         private static readonly CitilinkWrapper CitilinkWrapper = CitilinkWrapper.GetInstance();
         private static readonly SriwijayaWrapper SriwijayaWrapper = SriwijayaWrapper.GetInstance();
+        private static readonly LionAirWrapper LionAirWrapper = LionAirWrapper.GetInstance();
         private static readonly Dictionary<int, FlightSupplierWrapperBase> Suppliers = new Dictionary<int, FlightSupplierWrapperBase>()
         {
             { 1, MystiflyWrapper},
             { 2, AirAsiaWrapper},
             { 3, CitilinkWrapper},
-            { 4, SriwijayaWrapper}
+            { 4, SriwijayaWrapper},
+            { 5, LionAirWrapper}
         };
 
         private bool _isInitialized;
@@ -88,11 +91,11 @@ namespace Lunggo.ApCommon.Flight.Service
             Parallel.ForEach(conditionsList, partialConditions =>
             {
                 var result = supplier.SearchFlight(partialConditions);
-                result.Itineraries = result.Itineraries ?? new List<FlightItinerary>();
-                if (result.IsSuccess)
-                    foreach (var itin in result.Itineraries)
-                    {
-                        itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
+            result.Itineraries = result.Itineraries ?? new List<FlightItinerary>();
+            if (result.IsSuccess)
+                foreach (var itin in result.Itineraries)
+                {
+                    itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
                         itin.SearchId = searchId;
                     }
                 SaveSearchedPartialItinerariesToBufferCache(result.Itineraries, searchId, timeout, supplierIndex, conditionsList.IndexOf(partialConditions));
@@ -113,7 +116,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 var combos = GenerateCombo(itinLists);
                 SaveCombosToCache(combos, searchId, supplierIndex);
-            }
+                }   
             SaveSearchedItinerariesToCache(itinLists, searchId, timeout, supplierIndex);
             SaveSearchedSupplierIndexToCache(searchId, supplierIndex, timeout);
             InvalidateSearchingStatusInCache(searchId, supplierIndex);
@@ -128,23 +131,23 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
         {
-            var supplierName = IdUtil.GetSupplier(conditions.FareId);
-            conditions.FareId = IdUtil.GetCoreId(conditions.FareId);
+            var supplierName = IdUtil.GetSupplier(conditions.Itinerary.FareId);
+            conditions.Itinerary.FareId = IdUtil.GetCoreId(conditions.Itinerary.FareId);
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
 
             var result = supplier.RevalidateFare(conditions);
-            if (result.Itinerary != null)
-                result.Itinerary.FareId = IdUtil.ConstructIntegratedId(result.Itinerary.FareId, supplierName, result.Itinerary.FareType);
+            if (result.NewItinerary != null)
+                result.NewItinerary.FareId = IdUtil.ConstructIntegratedId(result.NewItinerary.FareId, supplierName, result.NewItinerary.FareType);
             return result;
         }
 
         private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
-            var fareType = IdUtil.GetFareType(bookInfo.FareId);
-            var supplierName = IdUtil.GetSupplier(bookInfo.FareId);
-            bookInfo.FareId = IdUtil.GetCoreId(bookInfo.FareId);
+            var fareType = IdUtil.GetFareType(bookInfo.Itinerary.FareId);
+            var supplierName = IdUtil.GetSupplier(bookInfo.Itinerary.FareId);
+            bookInfo.Itinerary.FareId = IdUtil.GetCoreId(bookInfo.Itinerary.FareId);
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
-            BookFlightResult result = supplier.BookFlight(bookInfo);
+            var result = supplier.BookFlight(bookInfo);
             if (result.Status.BookingId != null)
                 result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId,
                     supplierName, fareType);
@@ -155,7 +158,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return result;
         }
 
-        private OrderTicketResult OrderTicketInternal(string bookingId, bool canHold)
+        public OrderTicketResult OrderTicketInternal(string bookingId, bool canHold)
         {
             var fareType = IdUtil.GetFareType(bookingId);
             var supplierName = IdUtil.GetSupplier(bookingId);

@@ -18,13 +18,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
     {
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
-            if (bookInfo.CanHold)
+            if (bookInfo.Itinerary.CanHold)
             {
                 var airTravelers = bookInfo.Passengers.Select(MapAirTraveler).ToList();
                 var travelerInfo = MapTravelerInfo(bookInfo.Contact, airTravelers);
                 var request = new AirBookRQ
                 {
-                    FareSourceCode = bookInfo.FareId,
+                    FareSourceCode = bookInfo.Itinerary.FareId,
                     TravelerInfo = travelerInfo,
                     ClientMarkup = 0,
                     PaymentTransactionID = null,

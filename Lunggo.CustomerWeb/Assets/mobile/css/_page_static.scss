@@ -18,6 +18,17 @@
                 }
             }
         }
+        .toggle {position:relative;
+            header {position:relative; padding-right:25px;
+                &:after {width:20px; height:20px; background:url(/assets/mobile/images/arrow-down.png); background-size:contain; content:''; display:block; top:0; right:0; position:absolute;}
+            }
+            section {display:none;}
+            //
+            &.active {
+                header:after {background:url(/assets/mobile/images/arrow-up.png); background-size:contain;}
+                section {display:block;}
+            }
+        }
     }
 }// page FAQS
 
@@ -43,3 +54,27 @@
         }
     }
 }// page privacy
+
+// page how to order
+.page.page-howtoorder {font-size:14px;
+    .howto-content {padding:0 10px;
+        .list__wrapper {padding:0; margin:0; list-style:none; counter-reset:howto-counter;
+            .list {margin-bottom:15px; counter-increment: howto-counter;
+                .list__header {background:$color-main-blue;
+                    h3 {color:#fff; padding:15px; font-weight:600; margin:0; position:relative; padding-left:60px;
+                        &:before {content:counter(howto-counter); background:#028ec3; color:#fff; font-weight:600; display:inline-block; vertical-align:middle; position:absolute; left:0; top:0; height:100%; padding:15px;}
+                    }
+                }
+                .list__content {background:#fff; padding:15px; border:$border-default; border-top:0;
+                    img {margin:15px 0; max-width:100%;}
+                }
+            }
+        }
+        .howto-note {
+            h3 {font-weight:bold;}
+            p {
+                span {color:$color-main-blue;}
+            }
+        }
+    }
+}// page how to order

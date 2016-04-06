@@ -9,6 +9,16 @@ if (typeof (angular) == 'object') {
         $rootScope.PageConfig = {
             
             // **********
+            // Popular Destination
+            PopularDestination : {
+                Popular: [
+                    { Name: 'Soekarno Hatta Intl.', City: 'Jakarta', Country: 'Indonesia', Code: 'CGK' },
+                    { Name: 'Ngurah Rai Intl.', City: 'Denpasar, Bali', Country: 'Indonesia', Code: 'DPS' },
+                    { Name: 'Suvarnabhumi Intl.', City: 'Bangkok', Country: 'Thailand', Code: 'BKK' }
+                ]
+            },
+
+            // **********
             // General variables
             Loaded: true,
             Busy: false,
@@ -45,14 +55,14 @@ if (typeof (angular) == 'object') {
 
 
             // page overlay
-            Overlay: '',
+            ActiveOverlay: '',
             SetOverlay: function (overlay) {
                 console.log('changing overlay to : ' + overlay);
                 if (typeof(overlay) == 'undefined') {
                     $rootScope.PageConfig.ActiveOverlay = '';
                     $rootScope.PageConfig.SetBodyNoScroll(false);
                 } else {
-                    if ( overlay == '' ) {
+                    if ( overlay == '' || overlay == ' ' ) {
                         $rootScope.PageConfig.ActiveOverlay = '';
                         $rootScope.PageConfig.SetBodyNoScroll(false);
                     } else {
@@ -86,7 +96,7 @@ if (typeof (angular) == 'object') {
                     }
                 }
             }
-        };
+        };//$rootScope.Countries
 
         // datepicker
         $rootScope.DatePicker = {
@@ -98,10 +108,11 @@ if (typeof (angular) == 'object') {
                 ChangeYear: false,
                 SelectedDate : ''
             },
-            SetOption: function (options) {
+            SetOption: function (options, overlay) {
+                overlay = overlay || 'flight-form' ;
                 $('.ui-datepicker').datepicker({
-                    onSelect: function(date) {
-                        $rootScope.PageConfig.SetOverlay('flight-form');
+                    onSelect: function (date) {
+                        $rootScope.PageConfig.SetOverlay(overlay);
                         $rootScope.DatePicker.Settings.SelectedDate = date;
                         // $('.ui-datepicker').datepicker('setDate', new Date(date));
                         $($rootScope.DatePicker.Settings.Target).val(date);
@@ -244,7 +255,8 @@ if (typeof (angular) == 'object') {
                             break;
                     }
                 },
-                Set: function (number) {
+                Set: function (number, overlay) {
+                    overlay = overlay || 'flight-form' ;
                     switch ($rootScope.FlightSearchForm.PassengerPicker.ActiveType) {
                         case 'adult':
                             if ((number + $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger) > $rootScope.FlightSearchForm.PassengerPicker.TotalMaxPassenger ) {
@@ -273,7 +285,7 @@ if (typeof (angular) == 'object') {
                             break;
                     }
                     $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger = $rootScope.FlightSearchForm.Passenger[0] + $rootScope.FlightSearchForm.Passenger[1] + $rootScope.FlightSearchForm.Passenger[2];
-                    $rootScope.PageConfig.SetOverlay('flight-form');
+                    $rootScope.PageConfig.SetOverlay(overlay);
                 }
             },// passenger picker
             Url: '',
@@ -311,9 +323,23 @@ if (typeof (angular) == 'object') {
                 window.location = window.location.origin + '/id/Flight/Search?info=' + $rootScope.FlightSearchForm.Url  ;
 
             }// submit
-        };// flight search form 
+        };//$rootScope.FlightSearchForm
 
-    });
+        // set default date for departure date and return date
+        if ($rootScope.FlightSearchForm.DepartureDate == '') {
+            var departure = new Date();
+            departure.setDate(departure.getDate() + 1);
+            $rootScope.FlightSearchForm.DepartureDate = departure;
+        }
+        if ($rootScope.FlightSearchForm.ReturnDate == '') {
+            var todayDate = new Date();
+            var returnDate = new Date();
+            returnDate.setDate(todayDate.getDate() + 2);
+            $rootScope.FlightSearchForm.ReturnDate = returnDate;
+        }
+
+
+    });//app.run
 
 }
 

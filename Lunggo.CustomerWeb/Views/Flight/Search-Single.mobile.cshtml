@@ -107,20 +107,20 @@
     <form class="hidden push-token" id="pushToken" action="/id/Flight/Select" method="post">
         <input type="text" name="Token" id="fareToken" value="" />
     </form>
+    
+    <div class="flight-loading" ng-hide="FlightConfig[0].FlightRequest.Progress == 100">
+        <div class="flight-progress" style="width:{{FlightConfig[0].FlightRequest.Progress}}%;"></div>
+    </div><!-- .flight-loading -->
 
     <section class="flight-summary">
         <div class="summary-left">
             <p>
                 <b>Penerbangan Pergi</b><br />
-                <b>{{FlightConfig[0].FlightRequest.Trips[0].OriginAirport}}</b> to <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationAirport}}</b> - {{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'dd MMM yyyy'}}
+                <b>{{FlightConfig[0].FlightRequest.Trips[0].OriginAirport}}</b> to <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationAirport}}</b> - {{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'EEE,dd MMM yyyy'}}
             </p>
         </div>
         <a ng-click="PageConfig.SetOverlay('flight-form')" class="summary-right"><span>GANTI</span></a>
     </section><!-- .flight-summary -->
-    
-    <div class="flight-loading" ng-hide="FlightConfig[0].FlightRequest.Progress == 100">
-        <div class="flight-progress" style="width:{{FlightConfig[0].FlightRequest.Progress}}%;"></div>
-    </div><!-- .flight-loading -->
 
     <section class="flight-sort-filter" ng-show="FlightConfig[0].FlightRequest.Progress == 100">
         <div class="flight-sort-filter-action">
@@ -130,7 +130,7 @@
     </section><!-- .flight-sort -->
     
     <section class="flight-notice" ng-show="FlightConfig[0].FlightList.length > 0">
-        <p>Tampilan harga untuk <b>{{ FlightConfig[0].FlightRequest.AdultCount + FlightConfig[0].FlightRequest.ChildCount + FlightConfig[0].FlightRequest.InfantCount | number }} orang</b><br/>({{FlightConfig[0].FlightRequest.AdultCount}} Dewasa<span ng-if="FlightConfig[0].FlightRequest.ChildCount > 0">, {{FlightConfig[0].FlightRequest.ChildCount}} Anak</span><span ng-if="FlightConfig[0].FlightConfig.InfantCount">, {{FlightConfig[0].FlightRequest.InfantCount}} Bayi</span>)</p>
+        <p>Tampilan harga untuk <b>{{ FlightConfig[0].FlightRequest.AdultCount + FlightConfig[0].FlightRequest.ChildCount + FlightConfig[0].FlightRequest.InfantCount | number }} orang</b> ({{FlightConfig[0].FlightRequest.AdultCount}} Dewasa<span ng-if="FlightConfig[0].FlightRequest.ChildCount > 0">, {{FlightConfig[0].FlightRequest.ChildCount}} Anak</span><span ng-if="FlightConfig[0].FlightRequest.InfantCount">, {{FlightConfig[0].FlightRequest.InfantCount}} Bayi</span>)</p>
     </section><!-- .flight-notice -->
 
     <section class="flight-list">
@@ -141,7 +141,7 @@
             </div>
         </div>
 
-        <div class="flight" ng-repeat="Flight in departureFlight = (FlightConfig[0].FlightList | filter:FlightFiltering.AirlineFilter('departure') | filter:FlightFiltering.TransitFilter('departure') | filter:FlightFiltering.DepartureTimeFilter('departure') | filter:FlightFiltering.ArrivalTimeFilter('departure') | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert)" id="flight-{{Flight.IndexNo}}">
+        <div class="flight" ng-repeat="Flight in departureFlight = (FlightConfig[0].FlightList | filter:FlightFiltering.AirlineFilter('departure') | filter:FlightFiltering.TransitFilter('departure') | filter:FlightFiltering.DepartureTimeFilter('departure') | filter:FlightFiltering.ArrivalTimeFilter('departure') | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert)" id="flight-{{Flight.IndexNo}}" ng-click="FlightFunctions.SetActiveFlight(Flight.IndexNo)">
             <div class="flight-header">
                 <h4 class="flight-airline">
                     <img ng-src="{{Flight.Trips[0].Segments[0].AirlineLogoUrl}}" alt="{{Flight.Trips[0].Segments[0].AirlineName}}" class="flight-airline-image" />
@@ -164,12 +164,13 @@
                 </div>
                 <div class="content-right">
                     <label>Harga Total :</label>
+                    <h5 class="flight-price-was" ng-show="Flight.OriginalFare">Rp {{Flight.OriginalFare | number}}</h5>
                     <h4 class="flight-price">Rp {{Flight.TotalFare | number}}</h4>
                 </div>
             </div>
             <div class="flight-footer">
-                <a ng-click="FlightFunctions.SetActiveFlight(Flight.IndexNo)" class="flight-detail-button">Lihat Detail &gt;</a>
-                <a ng-click="FlightFunctions.SetActiveFlight(Flight.IndexNo)" class="btn btn-yellow pull-right flight-order">PESAN</a>
+                <a class="flight-detail-button">Lihat Detail &gt;</a>
+                <a class="btn btn-yellow pull-right flight-order">PESAN</a>
             </div>
         </div>
 
@@ -189,7 +190,7 @@
             <div class="flight-title flight-title--departure">
                 <div class="flight-info">
                     <h4><b>{{FlightConfig[0].FlightRequest.Trips[0].OriginAirport}}</b> to <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationAirport}}</b></h4>
-                    <h5>{{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'dd MMM yyyy'}}</h5>
+                    <h5>{{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'EEE,dd MMM yyyy'}}</h5>
                 </div>
                 <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight()">GANTI</span></a>
             </div><!-- .flight-title -->
@@ -261,81 +262,93 @@
         <section class="overlay__content">
             <div class="filter-group filter-group--price hidden">
                 <div class="filter-group__header">
-                    <h4 class="filter-group__title">Berdasarkan Harga</h4>
+                    <h4 class="filter-group__title">Berdasarkan Harga:</h4>
                 </div>
                 <div class="filter-group__content"></div>
             </div>
             <div class="filter-group filter-group--transit">
                 <div class="filter-group__header">
-                    <h4 class="filter-group__title">Berdasarkan Transit</h4>
+                    <h4 class="filter-group__title">Berdasarkan Transit:</h4>
                 </div>
                 <div class="filter-group__content">
-                    <label>
-                        Langsung
+                    <label ng-class="{ 'active' : FlightConfig[0].FlightFilter.Transit[0]}">
+                        <div class="switch"></div>
+                        <span>Langsung</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.Transit[0]" />
                     </label>
-                    <label>
-                        1 kali Transit
+                    <label ng-class="{ 'active' : FlightConfig[0].FlightFilter.Transit[1]}">
+                        <div class="switch"></div>
+                        <span>1 Stop</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.Transit[1]" />
                     </label>
-                    <label class="control-label">
-                        Lebih dari 1
+                    <label ng-class="{ 'active' : FlightConfig[0].FlightFilter.Transit[2]}">
+                        <div class="switch"></div>
+                        <span>2 atau lebih</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.Transit[2]" />
                     </label>
                 </div>
             </div>
             <div class="filter-group filter-group--departure">
                 <div class="filter-group__header">
-                    <h4 class="filter-group__title">Berdasarkan Jam Berangkat</h4>
+                    <h4 class="filter-group__title">Berdasarkan Jam Berangkat:</h4>
                 </div>
                 <div class="filter-group__content">
-                    <label>
-                        Pagi &nbsp; (04.00 - 11:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.DepartureTime[0] }">
+                        <div class="switch"></div>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.DepartureTime[0]" />
+                        <span>Pagi<br />(04.00 - 11:00)</span>
                     </label>
-                    <label>
-                        Siang &nbsp; (11.00 - 15:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.DepartureTime[1] }">
+                        <div class="switch"></div>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.DepartureTime[1]" />
+                        <span>Siang<br />(11.00 - 15:00)</span>
                     </label>
-                    <label>
-                        Sore &nbsp; (15.00 - 19:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.DepartureTime[2] }">
+                        <div class="switch"></div>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.DepartureTime[2]" />
+                        <span>Sore<br />(15.00 - 19:00)</span>
                     </label>
-                    <label>
-                        Malam &nbsp; (19.00 - 04:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.DepartureTime[3] }">
+                        <div class="switch"></div>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.DepartureTime[3]" />
+                        <span>Malam<br />(19.00 - 04:00)</span>
                     </label>
                 </div>
             </div>
             <div class="filter-group filter-group--arrival">
                 <div class="filter-group__header">
-                    <h4 class="filter-group__title">Berdasarkan Jam Tiba</h4>
+                    <h4 class="filter-group__title">Berdasarkan Jam Tiba:</h4>
                 </div>
                 <div class="filter-group__content">
-                    <label>
-                        Pagi &nbsp; (04.00 - 11:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.ArrivalTime[0]}">
+                        <div class="switch"></div>
+                        <span>Pagi<br />(04.00 - 11:00)</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.ArrivalTime[0]" />
                     </label>
-                    <label>
-                        Siang &nbsp; (11.00 - 15:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.ArrivalTime[1]}">
+                        <div class="switch"></div>
+                        <span>Siang<br />(11.00 - 15:00)</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.ArrivalTime[1]" />
                     </label>
-                    <label>
-                        Sore &nbsp; (15.00 - 19:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.ArrivalTime[2]}">
+                        <div class="switch"></div>
+                        <span>Sore<br />(15.00 - 19:00)</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.ArrivalTime[2]" />
                     </label>
-                    <label>
-                        Malam &nbsp; (19.00 - 04:00)
+                    <label ng-class="{'active' : FlightConfig[0].FlightFilter.ArrivalTime[3]}">
+                        <div class="switch"></div>
+                        <span>Malam<br />(19.00 - 04:00)</span>
                         <input type="checkbox" value="true" ng-model="FlightConfig[0].FlightFilter.ArrivalTime[3]" />
                     </label>
                 </div>
             </div>
             <div class="filter-group filter-group--airline">
                 <div class="filter-group__header">
-                    <h4 class="filter-group__title">Berdasarkan Maskapai</h4>
+                    <h4 class="filter-group__title">Berdasarkan Maskapai:</h4>
                 </div>
                 <div class="filter-group__content">
-                    <label ng-repeat="Airline in FlightConfig[0].FlightFilter.Airline">
+                    <label ng-repeat="Airline in FlightConfig[0].FlightFilter.Airline" ng-class="{'active' : Airline.Checked}">
+                        <div class="switch"></div>
                         <span><img ng-src="{{Airline.LogoUrl}}" alt="{{Airline.Name}}" /> {{Airline.Name}}</span>
                         <input type="checkbox" value="true" ng-model="Airline.Checked" ng-change="FlightFiltering.AirlineCheck('departure')" />
                     </label>
@@ -415,11 +428,11 @@
                     <p class="form-control form-destination" ng-click="FlightSearchForm.AutoComplete.Reset('return');SetOverlay('airport-select')">{{FlightSearchForm.AirportDestination.City}} ({{FlightSearchForm.AirportDestination.Code}}), {{FlightSearchForm.AirportDestination.Country}}</p>
                 </div>
                 <div class="form-group">
-                    <p class="form-control form-date form-departure-date" ng-click="DatePicker.SetOption({Target: 'departure'}); SetOverlay('datepicker-departure')"><b>Departure Date : </b> {{FlightSearchForm.DepartureDate | date: 'd-MMM-yyyy'}}</p>
+                    <p class="form-control form-date form-departure-date" ng-click="DatePicker.SetOption({Target: 'departure'}); SetOverlay('datepicker-departure')"><b>Departure Date : </b> {{FlightSearchForm.DepartureDate | date: 'EEE,d-MMM-yyyy'}}</p>
                     <input type="text" value="" ng-model="FlightSearchForm.DepartureDate" class="flight-search-form-departure hidden" />
                 </div>
                 <div class="form-group" ng-hide="FlightSearchForm.Trip == 'false'">
-                    <p class="form-control form-date form-return-date" ng-click="DatePicker.SetOption({Target: 'return'}); SetOverlay('datepicker-departure')"><b>Return Date : </b> {{FlightSearchForm.ReturnDate | date : 'd-MMM-yyyy'}}</p>
+                    <p class="form-control form-date form-return-date" ng-click="DatePicker.SetOption({Target: 'return'}); SetOverlay('datepicker-departure')"><b>Return Date : </b> {{FlightSearchForm.ReturnDate | date : 'EEE,d-MMM-yyyy'}}</p>
                     <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />
                 </div>
                 <div class="form-group">
@@ -475,36 +488,49 @@
     <!-- overlay airport selector -->
     <div class="overlay overlay--theme--blue overlay--airport-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'airport-select')}">
         <header class="overlay__header">
-            <div class="overlay__title">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <input type="text" ng-model="FlightSearchForm.AutoComplete.Keyword" class="form-control" placeholder="Cari bandara" ng-change="FlightSearchForm.AutoComplete.GetAirport()" />
-                    </div>
-                    <div class="col-xs-2">
-                        <span class="overlay__close" ng-click="SetOverlay('flight-form')">X</span>
-                    </div>
-                </div>
-            </div>
+            <h3 class="overlay__title">
+                <small>PILIH TUJUAN PENERBANGAN</small>
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay('flight-form')">X</span>
+            </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
-            <div ng-show="FlightSearchForm.AutoComplete.Loading">
-                <h4>Mencari bandara</h4>
-            </div>
-            <div ng-hide="FlightSearchForm.AutoComplete.Loading">
-                <div ng-show="FlightSearchForm.AutoComplete.Keyword.length < FlightSearchForm.AutoComplete.MinLength ">
-                    <h4>Masukan kata kunci</h4>
+
+            <div class="autocomplete-input">
+                <input type="text" class="form-control" name="name" value="" placeholder="Masukan lokasi tujuan penerbangan" ng-model="FlightSearchForm.AutoComplete.Keyword" ng-change="FlightSearchForm.AutoComplete.GetAirport()" />
+            </div><!-- .autocomplete-input -->
+
+            <div class="autocomplete-preload" ng-show="FlightSearchForm.AutoComplete.Keyword.length < FlightSearchForm.AutoComplete.MinLength">
+                <div class="list__header">
+                    <h4>POPULAR DESTINATION</h4>
                 </div>
-                <div ng-show="FlightSearchForm.AutoComplete.Keyword.length >= FlightSearchForm.AutoComplete.MinLength">
-                    <ul ng-show="FlightSearchForm.AutoComplete.Result">
-                        <li ng-repeat="result in FlightSearchForm.AutoComplete.Result">
-                            <a ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); SetOverlay('flight-form')">{{result.City}} ({{result.Code}}), {{result.Name}}, {{result.Country}}</a>
-                        </li>
-                    </ul>
-                    <div ng-hide="FlightSearchForm.AutoComplete.Result">
-                        <h4>Bandara tidak ditemukan</h4>
-                    </div>
-                </div>
-            </div>
+                <ul class="result">
+                    <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Popular">
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay('flight-form')"></a>
+                        <span class="airport__code">{{result.Code}}</span>
+                        <div class="airport__detail">
+                            <p class="airport__location">{{result.City}}, {{result.Country}}</p>
+                            <p class="airport__name">{{result.Name}}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div><!-- .autocomplete-preload -->
+
+            <div class="autocomplete-loading" ng-show="FlightSearchForm.AutoComplete.Loading">
+                <h4>Mencari Bandara</h4>
+            </div><!-- .autocomplete-loading -->
+
+            <div class="autocomplete-result" ng-hide="FlightSearchForm.AutoComplete.Loading">
+                <ul class="result" ng-show="FlightSearchForm.AutoComplete.Keyword.length >= FlightSearchForm.AutoComplete.MinLength">
+                    <li class="airport" ng-repeat="result in FlightSearchForm.AutoComplete.Result">
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay('flight-form')"></a>
+                        <span class="airport__code">{{result.Code}}</span>
+                        <div class="airport__detail">
+                            <p class="airport__location">{{result.City}}, {{result.Country}}</p>
+                            <p class="airport__name">{{result.Name}}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div><!-- .autocomplete-result -->
         </section><!-- .overlay__content -->
     </div><!-- .overlay--airport-select -->
     
@@ -584,16 +610,19 @@
 
     <!-- popups -->
     <!-- popup revalidate -->
-    <div class="popup__wrapper" ng-class="{'active':PageConfig.Validating}">
+    <div class="popup__wrapper popup--revalidate" ng-class="{'active':PageConfig.Validating}">
         <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Membooking Penerbangan</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container">
-                    <p>Membooking penerbangan Anda. Mohon tunggu.</p>    
-                </div>
+            
+            <div class="revalidate-image">
+                <img src="/assets/mobile/images/revalidate-plane.png" alt="Revalidating" />
             </div>
+            
+            <div class="revalidate-anim">
+                
+            </div>
+
+            <p>Sedang Memvalidasi<br/>Penerbangan Anda</p>
+
         </div>
     </div>
     

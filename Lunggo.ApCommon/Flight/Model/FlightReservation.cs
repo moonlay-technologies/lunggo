@@ -33,6 +33,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public string VoucherCode { get; set; }
         [JsonProperty("typ")]
         public TripType TripType { get; set; }
+        public decimal TransferCode { get; set; }
     }
 
     public class FlightReservation
@@ -41,10 +42,11 @@ namespace Lunggo.ApCommon.Flight.Model
         public DateTime RsvTime { get; set; }
         public List<FlightItinerary> Itineraries { get; set; }
         public List<FlightPassenger> Passengers { get; set; }
-        public Payment.Model.PaymentData Payment { get; set; }
+        public PaymentData Payment { get; set; }
         public Contact Contact { get; set; }
         public string InvoiceNo { get; set; }
         public TripType TripType { get; set; }
         public Discount Discount { get; set; }
+        public decimal TransferCode { get; set; }
     }
 }

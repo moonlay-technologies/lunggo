@@ -169,3 +169,4 @@ Lunggo.Driver/Config/
 /Lunggo.Generator/ClientTableRecord.cs
 /Lunggo.Generator/VoucherRecipientsRepository.cs
 /Lunggo.Generator/VoucherRecipientsTableRecord.cs
+/Lunggo.CustomerWeb/Views/Template/FlightInstantPaymentConfirmedNotifEmail.cshtml

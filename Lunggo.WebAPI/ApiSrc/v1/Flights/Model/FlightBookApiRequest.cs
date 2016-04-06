@@ -22,6 +22,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public string DiscountCode { get; set; }
         [JsonProperty("lang")]
         public string Language { get; set; }
+        public string TransferToken { get; set; }
     }
 
     public class Passenger

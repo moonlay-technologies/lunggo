@@ -206,6 +206,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 {
                                     RsvNo = rsvNo,
                                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
+                                    TransferCode = reservationRecord.TransferCode.GetValueOrDefault(),
                                     InvoiceNo = reservationRecord.InvoiceNo,
                                     Contact = new Contact
                                     {
@@ -343,7 +344,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     var reservations = rsvRecords.Select(record => new FlightReservation
                     {
                         RsvNo = record.RsvNo,
-                        Payment = new Payment.Model.PaymentData
+                        RsvTime = record.RsvTime.GetValueOrDefault(),
+                        Payment = new PaymentData
                         {
                             FinalPrice = record.FinalPrice.GetValueOrDefault(),
                             TimeLimit = record.PaymentTimeLimit

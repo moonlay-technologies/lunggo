@@ -72,7 +72,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 var travelerInfo = MapTravelerInfo(bookInfo.Contact, airTravelers);
                 var request = new AirBookRQ
                 {
-                    FareSourceCode = bookInfo.FareId,
+                    FareSourceCode = bookInfo.Itinerary.FareId,
                     TravelerInfo = travelerInfo,
                     ClientMarkup = 0,
                     PaymentTransactionID = null,

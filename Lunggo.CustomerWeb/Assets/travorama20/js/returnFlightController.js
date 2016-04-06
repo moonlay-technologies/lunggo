@@ -1,7 +1,7 @@
 ﻿// travorama angular app - Flight Controller
 
 app.controller('returnFlightController', [
-    '$http', '$scope', '$interval', function($http, $scope, $interval) {
+    '$http', '$scope', '$interval', '$timeout', function($http, $scope, $interval, $timeout) {
 
         // ******************************
         // on document ready
@@ -10,7 +10,32 @@ app.controller('returnFlightController', [
             // $scope.getReturnFlight();
             $scope.getFlight('departure');
             $scope.getFlight('return');
+
+            $scope.ProgressAnimation('departure');
+            $scope.ProgressAnimation('return');
         });
+
+        $scope.ProgressAnimation = function (targetScope) {
+            targetScope = 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig;
+            $interval(function () {
+                if (targetScope.flightSearchParams.FinalProgress < targetScope.flightSearchParams.MaxProgress) {
+                    targetScope.flightSearchParams.FinalProgress = targetScope.flightSearchParams.FinalProgress + 1;
+                }
+            }, $scope.ProgressDuration);
+        };
+
+        $scope.ProgressAnimation = function (targetScope, delayTime) {
+            targetScope = 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig;
+            delayTime = delayTime || 1000;
+            var randomTime = (Math.random()) * 3000;
+            $timeout(function () {
+                //console.log(delayTime);
+                if (targetScope.flightSearchParams.FinalProgress < (targetScope.flightSearchParams.MaxProgress - 1) && targetScope.flightSearchParams.FinalProgress <= 100) {
+                    targetScope.flightSearchParams.FinalProgress = targetScope.flightSearchParams.FinalProgress + 1;
+                    $scope.ProgressAnimation(targetScope.name, randomTime);
+                }
+            }, delayTime);
+        };
 
         // ******************************
         // general variables
@@ -131,6 +156,9 @@ app.controller('returnFlightController', [
             validateNewfare: false,
             validateActive: false,
         };
+
+        $scope.departureFlightConfig.flightSearchParams.MaxProgress = 0;
+        $scope.returnFlightConfig.flightSearchParams.MaxProgress = 0;
 
         // ******************************
         // general functions
@@ -615,6 +643,7 @@ app.controller('returnFlightController', [
                         for (var i = 0; i < returnData.MaxRequest; i++) {
                             targetScope.flightSearchParams.Requests.push(i + 1);
                         }
+                        targetScope.flightSearchParams.MaxProgress = 100 / returnData.MaxRequest ;
                     }
 
                     // if granted request is not null
@@ -639,6 +668,7 @@ app.controller('returnFlightController', [
 
                         // update total progress
                         targetScope.flightSearchParams.Progress = ((returnData.MaxRequest - targetScope.flightSearchParams.Requests.length) / returnData.MaxRequest) * 100;
+                        targetScope.flightSearchParams.MaxProgress = (100 / returnData.MaxRequest) * (targetScope.flightSearchParams.Completed.length + 1);
                         if (targetScope.flightSearchParams.Progress < 100) {
                             targetScope.flightSearchParams.FinalProgress = targetScope.flightSearchParams.Progress;
                         }

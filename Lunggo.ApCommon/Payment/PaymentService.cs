@@ -48,6 +48,7 @@ namespace Lunggo.ApCommon.Payment
             {
                 case PaymentMethod.BankTransfer:
                 case PaymentMethod.Credit:
+                case PaymentMethod.Deposit:
                     return PaymentMedium.Direct;
                 case PaymentMethod.CreditCard:
                 case PaymentMethod.MandiriClickPay:
@@ -65,10 +66,19 @@ namespace Lunggo.ApCommon.Payment
             {
                 paymentData.Status = PaymentStatus.Pending;
             }
-            else if (method == PaymentMethod.CreditCard)
+            else if (method == PaymentMethod.CreditCard)// || method == PaymentMethod.VirtualAccount) // Add VA here
             {
-                var status = SubmitPayment(paymentData.Data, transactionDetails, itemDetails, method);
-                paymentData.Status = status;
+                var paymentResponse = SubmitPayment(paymentData, transactionDetails, itemDetails, method);
+                if (method == PaymentMethod.VirtualAccount)
+                {
+                    paymentData.Status = PaymentStatus.Verifying;
+                    paymentData.TargetAccount = paymentResponse.TargetAccount;
+                }
+                else 
+                {
+                    paymentData.Status = paymentResponse.Status;
+                }
+                
             }
             else
             {
@@ -193,10 +203,10 @@ namespace Lunggo.ApCommon.Payment
             }
         }
 
-        private static PaymentStatus SubmitPayment(UniversalPaymentData data, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static PaymentData SubmitPayment(PaymentData payment, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
-            var status = VeritransWrapper.ProcessPayment(data, transactionDetails, itemDetails, method);
-            return status;
+            var paymentResponse = VeritransWrapper.ProcessPayment(payment, transactionDetails, itemDetails, method);
+            return paymentResponse;
         }
 
         private static string GetThirdPartyPaymentUrl(TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)

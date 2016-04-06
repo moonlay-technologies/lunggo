@@ -15,6 +15,7 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
 using StackExchange.Redis;
+using System.Diagnostics;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -27,6 +28,164 @@ namespace Lunggo.ApCommon.Flight.Service
         public List<FlightPassenger> GetSavedPassengers(string contactEmail)
         {
             return GetDb.SavedPassengers(contactEmail);
+        }
+
+        public void SaveTransacInquiryInCache(string mandiriCacheId, List<KeyValuePair<string, string>> transaction, TimeSpan timeout)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "mandiriTransactionPrice:" + mandiriCacheId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            foreach (var pair in transaction)
+            {
+                redisDb.HashSet(redisKey, (RedisValue)pair.Key, (RedisValue)pair.Value);
+                redisDb.KeyExpire(redisKey, timeout);
+            }
+
+        }
+
+        public List<KeyValuePair<string, string>> GetTransacInquiryFromCache(string mandiriCacheId)
+        {
+            try
+            {
+                List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
+                var redisService = RedisService.GetInstance();
+                var redisKey = "mandiriTransactionPrice:" + mandiriCacheId;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var temp = redisDb.HashGetAll(redisKey).ToList();
+                if (temp.Count != 0)
+                {
+                    //return temp.ToDictionary(hashEntry => (string)hashEntry.Name, hashEntry => (string)hashEntry.Value);
+                    return temp.Select(hashEntry => new KeyValuePair<string, string>((string)hashEntry.Name, (string)hashEntry.Value)).ToList();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
+        public TimeSpan GetRedisExpiry(string key)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = "mandiriTransactionPrice:" + key;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
+                return timeToLive;
+            }
+            catch
+            {
+                return TimeSpan.Zero;
+            }
+        }
+
+        public void SaveUniquePriceinCache(string price, Dictionary<string, int> dict)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "transferUniquePrice:" + price;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            foreach (var pair in dict)
+            {
+                redisDb.HashSet(redisKey, (RedisValue)pair.Key, (RedisValue)pair.Value);
+                redisDb.KeyExpire(redisKey, TimeSpan.FromMinutes(150));
+            }
+
+        }
+
+        public Dictionary<string, int> GetUniquePriceFromCache(string price)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = "transferUniquePrice:" + price;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var temp = redisDb.HashGetAll(redisKey).ToList();
+                if (temp.Count != 0)
+                {
+                    return temp.ToDictionary(hashEntry => (string)hashEntry.Name, hashEntry => (int)hashEntry.Value);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        // Penambahan Buat Delete TransferCode jika tidak digunakan
+        public void DeleteUniquePriceFromCache(string price) 
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "transferUniquePrice:" + price;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.KeyDelete(redisKey);
+        }
+
+        public TimeSpan GetUniqueIdExpiry(string key)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = "transferUniquePrice:" + key;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
+                return timeToLive;
+            }
+            catch
+            {
+                return TimeSpan.Zero;
+            }
+        }
+
+        public bool isRedisExist(string price)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = "transferUniquePrice:" + price;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var value = redisDb.HashGetAll(redisKey).ToList();
+                return value.Count != 0 ? true : false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public void SaveTokenTransferCodeinCache(string token, string transferCode)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "transferCodeToken:" + token;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.StringSet(redisKey, transferCode, TimeSpan.FromMinutes(150));
+        }
+
+        public decimal GetTransferCodeByTokeninCache(string token)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "transferCodeToken:" + token;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var price = Decimal.Parse(redisDb.StringGet(redisKey));
+            return price;
+        }
+
+        //Penambahan Method ini buat menghapus token Transfer Code jika tidak dipakai
+        public void DeleteTokenTransferCodeFromCache(string token) 
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "transferCodeToken:" + token;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.KeyDelete(redisKey);
         }
 
         private static bool GetSearchingStatusInCache(string searchId, int supplierIndex)
@@ -300,6 +459,15 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
+        private void DeleteItineraryFromCache(string itinCacheId) 
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "flightItinerary:" + itinCacheId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            //var cacheObject = redisDb.StringGet(redisKey);
+            redisDb.KeyDelete(redisKey);
+        }
+
         public DateTime? GetItineraryExpiry(string itinCacheId)
         {
             try
@@ -342,7 +510,8 @@ namespace Lunggo.ApCommon.Flight.Service
             catch { }
         }
 
-        private List<FlightItinerary> GetItinerarySetFromCache(string itinCacheId)
+        //Buat Method untuk menghapus data pada GetItinerarySetFromCache
+        private List<FlightItinerary> GetItinerarySetFromCache(string itinCacheId)  
         {
             try
             {
@@ -367,16 +536,22 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
+        private void DeleteItinerarySetFromCache(string itinCacheId) 
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "flightItinerarySet:" + itinCacheId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.KeyDelete(redisKey);
+            Debug.Print(redisKey);
+            //redisDb.KeyDelete(redisBundleKey);
+        }
+
         private void SavePaymentRedirectionUrlInCache(string rsvNo, string paymentUrl, DateTime? timeLimit)
         {
-            try
-            {
-                var redisService = RedisService.GetInstance();
-                var redisKey = "paymentRedirectionUrl:" + rsvNo;
-                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                redisDb.StringSet(redisKey, paymentUrl, timeLimit - DateTime.UtcNow);
-            }
-            catch { }
+            var redisService = RedisService.GetInstance();
+            var redisKey = "paymentRedirectionUrl:" + rsvNo;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.StringSet(redisKey, paymentUrl, timeLimit - DateTime.UtcNow);
         }
 
         private string GetPaymentRedirectionUrlInCache(string rsvNo)
