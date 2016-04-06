@@ -618,7 +618,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var pagePrice = (CQ) html6;
 
                         var revalidateFare = pagePrice["#tdAmtTotal"].Text();
-                         agentprice = revalidateFare.Replace(",", "");
+                        agentprice = revalidateFare.Replace(",", "");
                         
                         //GET PAGE LOGOUT
 
