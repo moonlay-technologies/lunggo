@@ -96,7 +96,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         Errors = revalidateResult.Errors,
                         IsItineraryChanged = revalidateResult.IsItineraryChanged,
                         IsPriceChanged = revalidateResult.IsPriceChanged,
-                        IsSuccess = revalidateResult.IsSuccess,
+                        IsSuccess = false,
                         NewItinerary = revalidateResult.NewItinerary,
                         NewPrice = revalidateResult.NewPrice,
                         Status = null
