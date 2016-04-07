@@ -203,7 +203,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     var result = new RevalidateFareResult
                     {
                         IsSuccess = true,
-                        IsValid = price == newPrice,
+                        IsValid = true,
                         IsPriceChanged = price != newPrice,
                         NewItinerary = itin,
                         IsItineraryChanged = !conditions.Itinerary.Identical(itin)

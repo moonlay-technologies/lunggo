@@ -685,9 +685,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var result = new RevalidateFareResult
                     {
                         IsSuccess = true,
-                        IsValid = (price == newPrice) && isDepHrSame && isFlightSame && isSegmentEqual,
+                        IsValid = true,
+                        IsItineraryChanged = !(isDepHrSame && isFlightSame && isSegmentEqual),
                         IsPriceChanged = price != newPrice,
-                        NewItinerary = itin
+                        NewItinerary = itin,
                     };
                     if (result.IsPriceChanged)
                         result.NewPrice = newPrice;

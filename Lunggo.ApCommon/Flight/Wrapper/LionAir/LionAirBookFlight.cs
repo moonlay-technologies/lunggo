@@ -1038,6 +1038,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Thread.Sleep(3000);
                         var searchResponseBooking = client.Execute(searchRequestBooking);
 
+                        var htmlBookingResult = (CQ) searchResponseBooking.Content;
+                        var newPrice = htmlBookingResult["#lblTotalFares"].Text().Replace(",","");
+
                         const string url9 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
                         var searchRequest9 = new RestRequest(url9, Method.GET);
                         searchRequest9.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
