@@ -205,7 +205,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         IsSuccess = true,
                         IsValid = price == newPrice,
                         IsPriceChanged = price != newPrice,
-                        NewItinerary = itin
+                        NewItinerary = itin,
+                        IsItineraryChanged = !conditions.Itinerary.Identical(itin)
                     };
                     if (result.IsPriceChanged)
                         result.NewPrice = newPrice;

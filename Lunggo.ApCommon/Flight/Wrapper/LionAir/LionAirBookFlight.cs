@@ -731,7 +731,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var xyz = sampah.SubstringBetween(startvs + 12, sampah.Length);
                         var myvs = HttpUtility.UrlEncode(xyz.Split('|')[0]);
                         var agentprice = revalidateFare.Replace(",", "");
-
+                        /// bandingin sama yg di search
+                        
                         // POST SEBELUM PAGE PASSENGER
                         const string url7 = @"LionAirAgentsIBE/Step2Availability.aspx";
                         var searchRequest7 = new RestRequest(url7, Method.POST);

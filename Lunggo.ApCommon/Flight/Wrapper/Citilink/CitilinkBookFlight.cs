@@ -23,6 +23,28 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
+                RevalidateConditions conditions = new RevalidateConditions
+                {
+                    Itinerary = bookInfo.Itinerary
+                };
+                //conditions.Itinerary = bookInfo.Itinerary;
+                RevalidateFareResult revalidateResult = RevalidateFare(conditions);
+                if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
+                {
+                    return new BookFlightResult
+                    {
+                        IsValid = revalidateResult.IsValid,
+                        ErrorMessages = revalidateResult.ErrorMessages,
+                        Errors = revalidateResult.Errors,
+                        IsItineraryChanged = revalidateResult.IsItineraryChanged,
+                        IsPriceChanged = revalidateResult.IsPriceChanged,
+                        IsSuccess = revalidateResult.IsSuccess,
+                        NewItinerary = revalidateResult.NewItinerary,
+                        NewPrice = revalidateResult.NewPrice,
+                        Status = null
+                    };
+                }
+                bookInfo.Itinerary = revalidateResult.NewItinerary;
                 var client = CreateAgentClient();
                 Login(client);
 

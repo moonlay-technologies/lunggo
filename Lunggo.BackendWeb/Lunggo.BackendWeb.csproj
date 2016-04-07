@@ -313,7 +313,9 @@
     <Content Include="assets\lineicons\index.html" />
     <Content Include="assets\lineicons\lte-ie7.js" />
     <Content Include="assets\lineicons\style.css" />
-    <Content Include="Config\i18n_message.xml" />
+    <Content Include="Config\i18n_message.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Config\JsConfig.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
