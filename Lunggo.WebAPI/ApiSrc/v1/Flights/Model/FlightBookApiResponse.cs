@@ -9,6 +9,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public string RsvNo { get; set; }
         public string PaymentUrl { get; set; }
         public DateTime? TimeLimit { get; set; }
+        public Decimal? NewPrice { get; set; }
         public FlightError Error { get; set; }
         public FlightBookApiRequest OriginalRequest { get; set; }
     }
