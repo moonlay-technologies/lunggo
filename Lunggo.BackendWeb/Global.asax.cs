@@ -34,24 +34,24 @@ namespace Lunggo.BackendWeb
             {
                 ContactData = new ContactData
                 {
-                    Name = "Suheri M R",
-                    Address = "Medan",
+                    Name = "Richardo",
+                    Address = "Bandung",
                     CountryCode = "62",
-                    Email = "if312055@gmail.com",
-                    Phone = "85360343300",
+                    Email = "merangkaksanasini@gmail.com",
+                    Phone = "85360342424",
                     Title = Title.Mister
                 },
                 Passengers = new List<FlightPassenger>
                 {
                     new FlightPassenger
                     {
-                        DateOfBirth = new DateTime(1994,4,5),
-                        FirstName = "Suheri",
-                        LastName = "Marpaung",
+                        DateOfBirth = new DateTime(1995,6,7),
+                        FirstName = "Richardo",
+                        LastName = "Marthin",
                         Gender = Gender.Male,
                         PassportCountry = "ID",
-                        PassportExpiryDate = new DateTime(2017,4,5),
-                        PassportNumber = "A8409696",
+                        PassportExpiryDate = new DateTime(2018,6,7),
+                        PassportNumber = "A8406969",
                         Title = Title.Mister,
                         Type = PassengerType.Adult
                     }
