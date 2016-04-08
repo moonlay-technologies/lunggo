@@ -731,7 +731,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var xyz = sampah.SubstringBetween(startvs + 12, sampah.Length);
                         var myvs = HttpUtility.UrlEncode(xyz.Split('|')[0]);
                         var agentprice = revalidateFare.Replace(",", "");
-
+                        /// bandingin sama yg di search
+                        
                         // POST SEBELUM PAGE PASSENGER
                         const string url7 = @"LionAirAgentsIBE/Step2Availability.aspx";
                         var searchRequest7 = new RestRequest(url7, Method.POST);
@@ -1023,6 +1024,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             ParameterType.RequestBody);
                         Thread.Sleep(3000);
                         var searchResponseBooking = client.Execute(searchRequestBooking);
+
+                        var htmlBookingResult = (CQ) searchResponseBooking.Content;
+                        var newPrice = htmlBookingResult["#lblTotalFares"].Text().Replace(",","");
 
                         const string url9 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
                         var searchRequest9 = new RestRequest(url9, Method.GET);

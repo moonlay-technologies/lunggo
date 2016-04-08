@@ -41,7 +41,7 @@ namespace Lunggo.ApCommon.Flight.Service
             if (AllAreBooked(bookResults))
             {
                 output.IsSuccess = true;
-                var reservation = CreateReservation(itins, input, output);
+                var reservation = CreateReservation(itins, input, bookResults);
                 InsertDb.Reservation(reservation);
                 if (reservation.Payment.Method == PaymentMethod.BankTransfer)
                     SendPendingPaymentReservationNotifToCustomer(reservation.RsvNo);
@@ -93,7 +93,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return bookResults.Any() && bookResults.All(set => set.IsSuccess);
         }
 
-        private FlightReservation CreateReservation(List<FlightItinerary> itins, BookFlightInput input, BookFlightOutput output)
+        private FlightReservation CreateReservation(List<FlightItinerary> itins, BookFlightInput input, List<BookResult> bookResults)
         {
             var trips =
                 itins.SelectMany(itin => itin.Trips).OrderBy(trip => trip.Segments.First().DepartureTime).ToList();
@@ -106,10 +106,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 Passengers = input.Passengers,
                 TripType = ParseTripType(trips),
                 Payment = new PaymentData
-                {
+            {
                     FinalPrice = itins.Sum(itin => itin.LocalPrice)
                 }
-            };
+                };
             return reservation;
         }
 
@@ -132,7 +132,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 Id = "1",
                 Name = itemName,
-                Price = (long) reservation.Itineraries.Sum(itin => itin.LocalPrice),
+                Price = (long)reservation.Itineraries.Sum(itin => itin.LocalPrice),
                 Quantity = 1
             });
             if (reservation.Discount.Nominal != 0)
@@ -140,7 +140,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     Id = "2",
                     Name = "Discount",
-                    Price = (long) -reservation.Discount.Nominal,
+                    Price = (long)-reservation.Discount.Nominal,
                     Quantity = 1
                 });
             return itemDetails;
@@ -152,7 +152,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 OrderId = reservation.RsvNo,
                 OrderTime = reservation.RsvTime,
-                Amount = (long) reservation.Payment.FinalPrice
+                Amount = (long)reservation.Payment.FinalPrice
             };
         }
 
@@ -192,16 +192,18 @@ namespace Lunggo.ApCommon.Flight.Service
             else
             {
                 bookResult.IsSuccess = false;
-                itin.BookingId = response.Status.BookingId;
                 response.Errors.ForEach(output.AddError);
                 if (response.ErrorMessages != null)
                     response.ErrorMessages.ForEach(output.AddError);
             }
-            bookResult.RevalidateSet.IsValid = response.IsValid;
-            bookResult.RevalidateSet.IsItineraryChanged = response.IsItineraryChanged;
-            bookResult.RevalidateSet.NewItinerary = response.NewItinerary;
-            bookResult.RevalidateSet.IsPriceChanged = response.IsPriceChanged;
-            bookResult.RevalidateSet.NewPrice = response.NewPrice;
+            bookResult.RevalidateSet = new RevalidateFlightOutputSet
+            {
+                IsValid = response.IsValid,
+                IsItineraryChanged = response.IsItineraryChanged,
+                NewItinerary = response.NewItinerary,
+                IsPriceChanged = response.IsPriceChanged,
+                NewPrice = response.NewPrice
+            };
             return bookResult;
         }
     }

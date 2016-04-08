@@ -141,20 +141,17 @@ namespace Lunggo.ApCommon.Flight.Service
             return result;
         }
 
-        private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
+        public BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
             var fareType = IdUtil.GetFareType(bookInfo.Itinerary.FareId);
             var supplierName = IdUtil.GetSupplier(bookInfo.Itinerary.FareId);
             bookInfo.Itinerary.FareId = IdUtil.GetCoreId(bookInfo.Itinerary.FareId);
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
             var result = supplier.BookFlight(bookInfo);
-            if (result.Status.BookingId != null)
+            if (result.Status != null && result.Status.BookingId != null)
                 result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId,
                     supplierName, fareType);
             var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
-            result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit
-                ? defaultTimeout
-                : result.Status.TimeLimit;
             return result;
         }
 

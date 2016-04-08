@@ -236,7 +236,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var result = new RevalidateFareResult
                         {
                             IsSuccess = true,
-                            IsValid = price == newPrice,
+                            IsValid = true,
                             IsPriceChanged = price != newPrice,
                             NewItinerary = itin
                         };

@@ -59,8 +59,6 @@ namespace Lunggo.ApCommon.Flight.Model
                 ChildCount == otheritin.ChildCount &&
                 InfantCount == otheritin.InfantCount &&
                 TripType == otheritin.TripType &&
-                RequestedCabinClass == otheritin.RequestedCabinClass &&
-                RequestedTripType == otheritin.RequestedTripType &&
                 Trips.Count == otheritin.Trips.Count &&
                 Trips.Zip(otheritin.Trips, (trip, otherTrip) => trip.Identical(otherTrip)).All(x => x);
         }

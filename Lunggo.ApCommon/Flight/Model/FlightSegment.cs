@@ -61,7 +61,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public string Pnr { get; set; }   
         [JsonProperty("rem", NullValueHandling = NullValueHandling.Ignore)]
         public int RemainingSeats { get; set; }
-
+        
         public bool Identical(FlightSegment otherSegment)
         {
             return

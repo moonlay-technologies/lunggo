@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Web;
+using Lunggo.Framework.Extension;
 using RestSharp;
 
 
@@ -216,16 +217,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                         }
                                     }
                                 };
-                                itins.Add(itin);
+                                if (itin.Trips[0].Segments.Count < 2)
+                                    itins.Add(itin);
                                 hasil.IsSuccess = true;
                                 hasil.Itineraries = itins;
-
-                                if (hasil.Itineraries == null)
-                                    return new SearchFlightResult
-                                    {
-                                        Itineraries = new List<FlightItinerary>(),
-                                        IsSuccess = true
-                                    };
                                 #endregion
                                 break;
 
@@ -238,7 +233,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 break;
                         }
                     }
-
+                    if (hasil.Itineraries == null)
+                        return new SearchFlightResult
+                        {
+                            Itineraries = new List<FlightItinerary>(),
+                            IsSuccess = true
+                        };
                     return hasil;
                 }
                 catch

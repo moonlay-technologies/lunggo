@@ -80,6 +80,30 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
+                /*Revalidate Flight Before Book*/
+                RevalidateConditions conditions = new RevalidateConditions
+                {
+                    Itinerary = bookInfo.Itinerary
+                };
+                //conditions.Itinerary = bookInfo.Itinerary;
+                RevalidateFareResult revalidateResult = RevalidateFare(conditions);
+                if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
+                {
+                    return new BookFlightResult
+                    {
+                        IsValid = revalidateResult.IsValid,
+                        ErrorMessages = revalidateResult.ErrorMessages,
+                        Errors = revalidateResult.Errors,
+                        IsItineraryChanged = revalidateResult.IsItineraryChanged,
+                        IsPriceChanged = revalidateResult.IsPriceChanged,
+                        IsSuccess = false,
+                        NewItinerary = revalidateResult.NewItinerary,
+                        NewPrice = revalidateResult.NewPrice,
+                        Status = null
+                    };
+                }
+                bookInfo.Itinerary = revalidateResult.NewItinerary;
+
                 var clientx = CreateAgentClient();
                 var hasil = new BookFlightResult();
                 var Fare = bookInfo.Itinerary.FareId; 
@@ -238,6 +262,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     "&" + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute + "=" + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute;
                 searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var searchResponse = clientx.Execute(searchRequest);
+                var htmlRespon = searchResponse.Content;
+
+                /*LAKUKAN DISINI GET BUAT PRICING DETAIL*/
                 
                 int i = 0;
                 foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Adult))

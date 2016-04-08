@@ -9,6 +9,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Web;
 using RestSharp;
+using System.Diagnostics;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
@@ -23,6 +24,28 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
+                RevalidateConditions conditions = new RevalidateConditions
+                {
+                    Itinerary = bookInfo.Itinerary
+                };
+                //conditions.Itinerary = bookInfo.Itinerary;
+                RevalidateFareResult revalidateResult = RevalidateFare(conditions);
+                if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
+                {
+                    return new BookFlightResult
+                    {
+                        IsValid = revalidateResult.IsValid,
+                        ErrorMessages = revalidateResult.ErrorMessages,
+                        Errors = revalidateResult.Errors,
+                        IsItineraryChanged = revalidateResult.IsItineraryChanged,
+                        IsPriceChanged = revalidateResult.IsPriceChanged,
+                        IsSuccess = false,
+                        NewItinerary = revalidateResult.NewItinerary,
+                        NewPrice = revalidateResult.NewPrice,
+                        Status = null
+                    };
+                }
+                bookInfo.Itinerary = revalidateResult.NewItinerary;
                 var client = CreateAgentClient();
                 Login(client);
 
@@ -40,9 +63,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 int index;
                 if (splitcoreFareId.Count > 16)
                 {
-                    index = 18;
+                    index = 11;
                     origin = splitcoreFareId[index];
-                    dest = splitcoreFareId[index + 10];
+                    dest = splitcoreFareId[21];
                 }
                 else
                 {
@@ -296,6 +319,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         },
                         Errors = new List<FlightError> { FlightError.InvalidInputData }
                     };
+                /*Buat dapat Info Itinerary dan Harga*/
+                var getPaymenturl = @"Payment.aspx";
+                var paymentGetRequest = new RestRequest(getPaymenturl, Method.GET);
+                paymentGetRequest.AddHeader("Referer", "https://book.citilink.co.id/SeatMap.aspx");
+                var paymentGetresponse = client.Execute(paymentGetRequest);
+                var html = paymentGetresponse.Content;
+                CQ detailFlight = (CQ)html;
+                var getPrice = detailFlight["#priceDisplayBody>table:last"].Children().Children().Last().Last().Text().Trim().Split('\n');
+                var harga = getPrice[1].Trim().Replace("Rp.","").Replace(",","");
+                var fixPrice = decimal.Parse(harga);
+
+                var details = detailFlight["#flightDisplayBody>table:last"].Children().Children().Children().Last().Elements.ToArray();
+                List<string> test = new List<string>();
+                /*foreach (var data in details) 
+                {
+                    List.Add(data.)
+                }*/
+ 
+
 
                 // SELECT HOLD (PAYMENT)
 
@@ -333,6 +375,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 
                 paymentRequest.AddParameter("application/x-www-form-urlencoded", paymentPostData, ParameterType.RequestBody);
                 var paymentResponse = client.Execute(paymentRequest);
+
 
                 if (paymentResponse.ResponseUri.AbsolutePath != "/Wait.aspx")
                     return new BookFlightResult

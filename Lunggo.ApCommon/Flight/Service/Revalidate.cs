@@ -35,6 +35,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     if (response.IsSuccess)
                     {
                         outputSet.IsSuccess = true;
+                        outputSet.IsValid = response.IsValid;
                         outputSet.IsItineraryChanged = response.IsItineraryChanged;
                         outputSet.IsPriceChanged = response.IsPriceChanged;
                         outputSet.NewItinerary = response.NewItinerary;

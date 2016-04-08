@@ -310,12 +310,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             };
                             var newPrice = decimal.Parse(hargaBaru);
                             hasil.IsSuccess = true;
-                            hasil.IsValid = harga == newPrice;
+                            hasil.IsValid = true;
                             hasil.IsPriceChanged = harga != newPrice;
+                            hasil.IsItineraryChanged = !conditions.Itinerary.Identical(itin);
                             if (hasil.IsPriceChanged)
+                            {
                                 hasil.NewPrice = newPrice;
+                            }
                             hasil.NewItinerary = itin;
-
                         }
                         else
                         {
@@ -450,8 +452,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             }
                         }
                                 };
+                                var newPrice = decimal.Parse(hargaBaru);
                                 hasil.IsSuccess = true;
-                                hasil.IsValid = harga == Decimal.Parse(hargaBaru);
+                                hasil.IsValid = harga == newPrice;
+                                hasil.IsPriceChanged = harga != newPrice;
+                                hasil.IsItineraryChanged = !conditions.Itinerary.Identical(itin);
+                                if (hasil.IsPriceChanged) 
+                                {
+                                    hasil.NewPrice = newPrice;
+                                }
                                 hasil.NewItinerary = itin;
                             }
                             else
@@ -583,8 +592,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             }
                         }
                                     };
+                                    //hasil.IsSuccess = true;
+                                    //hasil.IsValid = harga == Decimal.Parse(hargaBaru);
+                                    //hasil.NewItinerary = itin;
+                                    var newPrice = decimal.Parse(hargaBaru);
                                     hasil.IsSuccess = true;
-                                    hasil.IsValid = harga == Decimal.Parse(hargaBaru);
+                                    hasil.IsValid = harga == newPrice;
+                                    hasil.IsPriceChanged = harga != newPrice;
+                                    hasil.IsItineraryChanged = !conditions.Itinerary.Identical(itin);
+                                    if (hasil.IsPriceChanged)
+                                    {
+                                        hasil.NewPrice = newPrice;
+                                    }
                                     hasil.NewItinerary = itin;
                                 }
                                 else
