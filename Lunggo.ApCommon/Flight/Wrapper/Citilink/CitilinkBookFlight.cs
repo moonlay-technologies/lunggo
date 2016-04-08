@@ -319,6 +319,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         },
                         Errors = new List<FlightError> { FlightError.InvalidInputData }
                     };
+
                 /*Buat dapat Info Itinerary dan Harga*/
                 var getPaymenturl = @"Payment.aspx";
                 var paymentGetRequest = new RestRequest(getPaymenturl, Method.GET);
@@ -328,16 +329,36 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 CQ detailFlight = (CQ)html;
                 var getPrice = detailFlight["#priceDisplayBody>table:last"].Children().Children().Last().Last().Text().Trim().Split('\n');
                 var harga = getPrice[1].Trim().Replace("Rp.","").Replace(",","");
-                var fixPrice = decimal.Parse(harga);
-
-                var details = detailFlight["#flightDisplayBody>table:last"].Children().Children().Children().Last().Elements.ToArray();
-                List<string> test = new List<string>();
-                /*foreach (var data in details) 
+                var getOriDest = detailFlight["#priceDisplayBody>table:first>caption>div:last"].Text();
+                var details = detailFlight["#flightDisplayBody>table:last"].Children().Children().Children().Elements.ToArray();
+                List<string> eek = new List<string>();
+                int leng = details.Length;
+                for (int x = 1; x <= leng; x+=2) 
                 {
-                    List.Add(data.)
-                }*/
- 
-
+                    if (x == 1)
+                    {
+                        eek.Add(details[x].InnerHTML.Replace("<label>", "").Replace("</label", ""));
+                    }
+                    else 
+                    {
+                        eek.Add(details[x].InnerHTML);
+                    }
+                    
+                }
+                var fixFlight = eek.ElementAt(1).Trim().Split(' ');
+                //All Data
+                var fixPrice = decimal.Parse(harga);
+                var fixAirLineCode =  fixFlight[0];
+                var fixFlightNumber = fixFlight[1];
+                var segments = new List<FlightSegment>();
+                segments.Add(new FlightSegment
+                {
+                    FlightNumber = fixFlightNumber,
+                    AirlineCode = fixAirLineCode,
+                    
+                    //DepartureTime = DateTime.SpecifyKind(, DateTimeKind.Utc)
+                });
+                
 
                 // SELECT HOLD (PAYMENT)
 
