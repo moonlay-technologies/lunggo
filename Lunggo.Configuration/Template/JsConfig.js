@@ -130,3 +130,7 @@ var VeritransTokenConfig = {
     Url: '$veritransTokenPath$',
     ClientKey: '$veritransClientKey$'
 };
+
+var TransferConfig = {
+    Url: '$apiUrl$$transferPaymentPath$'
+};

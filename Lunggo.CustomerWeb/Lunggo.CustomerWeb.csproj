@@ -16,7 +16,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>23322</IISExpressSSLPort>
+    <IISExpressSSLPort>443</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -106,9 +106,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -669,14 +669,13 @@
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\css\neweticket.scss" />
-    <None Include="Assets\images\backtotop.jpg.bak" />
     <Content Include="Assets\images\arrow-white.png" />
     <Content Include="Assets\images\asita-logo.png" />
     <Content Include="Assets\images\at-icon.png" />
     <Content Include="Assets\images\atm-bersama.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
-    <Content Include="Assets\images\backtotop.jpg.bak" />
     <Content Include="Assets\images\bank-bca.png" />
+    <Content Include="Assets\images\Bank-Mandiri.png" />
     <Content Include="Assets\images\bca-logo.jpg" />
     <Content Include="Assets\images\bed-bg.png" />
     <Content Include="Assets\images\benefit-1.jpg" />
@@ -713,7 +712,6 @@
     <Content Include="Assets\images\campaign\hongkong-text.png" />
     <Content Include="Assets\images\campaign\hongkong-thumb.jpg" />
     <Content Include="Assets\images\campaign\hongkong.jpg" />
-    <Content Include="Assets\images\campaign\imlek2016\imlek2016-banner.jpg" />
     <Content Include="Assets\images\campaign\jakarta-text.png" />
     <Content Include="Assets\images\campaign\jakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\jakarta.jpg" />
@@ -861,6 +859,7 @@
     <Content Include="Assets\images\payment-cc.jpg" />
     <Content Include="Assets\images\payment-credit.png" />
     <Content Include="Assets\images\payment-mandiri.jpg" />
+    <Content Include="Assets\images\payment-mandiri.png" />
     <Content Include="Assets\images\payment-method.jpg" />
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />
@@ -1016,6 +1015,9 @@
     <Content Include="Assets\mobile\css\application.min.css">
       <DependentUpon>application.css</DependentUpon>
     </Content>
+    <Content Include="Assets\mobile\images\arrow-down.png" />
+    <Content Include="Assets\mobile\images\arrow-up.png" />
+    <Content Include="Assets\mobile\images\burger-menu-active.png" />
     <Content Include="Assets\mobile\images\burger-sprite.png" />
     <Content Include="Assets\mobile\images\contact-list-bg.png" />
     <Content Include="Assets\mobile\images\contact-map.jpg" />
@@ -1023,12 +1025,21 @@
     <Content Include="Assets\mobile\images\contact-social-bg.png" />
     <Content Include="Assets\mobile\images\flight-history-status.png" />
     <Content Include="Assets\mobile\images\flight-separator.png" />
+    <Content Include="Assets\mobile\images\flight-swap.png" />
     <Content Include="Assets\mobile\images\form-sprite.png" />
+    <Content Include="Assets\mobile\images\howtoorder-image-1.jpg" />
+    <Content Include="Assets\mobile\images\howtoorder-image-2.jpg" />
+    <Content Include="Assets\mobile\images\howtoorder-image-3.jpg" />
+    <Content Include="Assets\mobile\images\howtoorder-image-4.jpg" />
+    <Content Include="Assets\mobile\images\howtoorder-image-5.jpg" />
+    <Content Include="Assets\mobile\images\howtoorder-image-6.jpg" />
+    <Content Include="Assets\mobile\images\howtoorder-image-7.jpg" />
     <Content Include="Assets\mobile\images\login-header-left.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-white.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-yellow.png" />
     <Content Include="Assets\mobile\images\register-header-left.png" />
+    <Content Include="Assets\mobile\images\revalidate-plane.png" />
     <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
     <Content Include="Assets\mobile\images\user-account-bg.png" />
     <Content Include="Assets\mobile\images\yellow-stripe.png" />
@@ -1093,35 +1104,6 @@
     <Content Include="Assets\vendor\intltelinput\js\intlTelInput.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.jquery.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.min.css" />
-    <Content Include="Campaign\Imlek2016\css\imlek2016.css">
-      <DependentUpon>imlek2016.scss</DependentUpon>
-    </Content>
-    <Content Include="Campaign\Imlek2016\css\imlek2016.min.css">
-      <DependentUpon>imlek2016.css</DependentUpon>
-    </Content>
-    <Content Include="Campaign\Imlek2016\images\card-1.png" />
-    <Content Include="Campaign\Imlek2016\images\card-2.png" />
-    <Content Include="Campaign\Imlek2016\images\card-3.png" />
-    <Content Include="Campaign\Imlek2016\images\card-4.png" />
-    <Content Include="Campaign\Imlek2016\images\card-5.png" />
-    <Content Include="Campaign\Imlek2016\images\card-content.jpg" />
-    <Content Include="Campaign\Imlek2016\images\close-btn.png" />
-    <Content Include="Campaign\Imlek2016\images\imlek-bg.png" />
-    <Content Include="Campaign\Imlek2016\images\imlek-close.png" />
-    <Content Include="Campaign\Imlek2016\images\imlek-cloud-1.png" />
-    <Content Include="Campaign\Imlek2016\images\imlek-cloud-2.png" />
-    <Content Include="Campaign\Imlek2016\images\imlek-cloud-3.png" />
-    <Content Include="Campaign\Imlek2016\images\imlek-header.png" />
-    <Content Include="Campaign\Imlek2016\images\imlek-monkey.png" />
-    <Content Include="Campaign\Imlek2016\images\imlek-title.png" />
-    <Content Include="Campaign\Imlek2016\images\imlek-tree.png" />
-    <Content Include="Campaign\Imlek2016\images\voucher-100.png" />
-    <Content Include="Campaign\Imlek2016\images\voucher-150.png" />
-    <Content Include="Campaign\Imlek2016\images\voucher-200.png" />
-    <Content Include="Campaign\Imlek2016\images\voucher-50.png" />
-    <Content Include="Campaign\Imlek2016\images\wrapper-bg.png" />
-    <Content Include="Assets\vendor\transitJS\jquery.transit.min.js" />
-    <Content Include="Campaign\Imlek2016\js\imlek2016.js" />
     <Content Include="checkin.png" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
@@ -1254,15 +1236,15 @@
     <Content Include="Assets\mobile\css\application.scss" />
     <Content Include="Assets\mobile\css\_page_flight.scss" />
     <Content Include="Assets\mobile\css\_page_checkout.scss" />
-    <None Include="Assets\images\backtotop.jpg.bak" />
     <Content Include="Assets\images\subscribe-bg.jpg.bak" />
     <Content Include="Assets\mobile\css\_page_account.scss" />
     <Content Include="Assets\mobile\css\_page_static.scss" />
     <Content Include="Assets\mobile\css\_page_home.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
-    <None Include="Properties\PublishProfiles\dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2596,6 +2578,8 @@
     <Content Include="Views\StaticPage\GetCalendarTerms.mobile.cshtml" />
     <Content Include="Views\StaticPage\VisaWonderfulWednesday.cshtml" />
     <Content Include="Views\StaticPage\DanamonSweetValentine.cshtml" />
+    <Content Include="Views\StaticPage\HowToOrder.mobile.cshtml" />
+    <Content Include="Views\StaticPage\Promo.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2699,11 +2683,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>23321</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:23321/</IISUrl>
+          <IISUrl>http://localhost:23321</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

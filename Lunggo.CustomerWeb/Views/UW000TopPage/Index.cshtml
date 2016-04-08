@@ -1,13 +1,10 @@
-﻿@using Lunggo.Framework.Config
-@{
+﻿@{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-index";
     ViewBag.FooterSubscribe = true;
     ViewBag.FooterPayment = true;
     ViewBag.FooterFeedback = false;
     ViewBag.Title = "Enjoy Your Every Moment";
-
-    //ViewBag.Campaign = true;
     
     // location
     ViewBag.LocationData = new Dictionary<string, string>();
@@ -85,14 +82,6 @@
 
 @section AdditionalCSS{
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
-    
-    @*@if (ViewBag.Campaign)
-    {
-        <!-- imlek start -->
-        <link href="/Campaign/Imlek2016/css/imlek2016.min.css" rel="stylesheet" />
-        <!-- imlek end -->
-    }*@
-
 }
 
 @section AdditionalJS{
@@ -132,13 +121,6 @@
 
     </script>
     <script src="/Assets/Travorama20/js/homeController.js"></script>
-    
-    @*@if (ViewBag.Campaign)
-    {
-        <script src="/Assets/vendor/transitJS/jquery.transit.min.js"></script>
-        <script src="/Campaign/Imlek2016/js/imlek2016.js"></script>
-    }*@
-
 }
 
 
@@ -600,116 +582,3 @@ else
 
     </div>
 </section><!-- .section-feedback -->
-
-
-@*@if (ViewBag.Campaign)
-{
-    <!-- TRAVORAMA IMLEK CAMPAIGN -->
-    <div class="imlek-wrapper">
-    
-        <a href="#" class="imlek-wrapper__close">
-            <img src="/Campaign/Imlek2016/images/imlek-close.png" alt="X" />
-        </a>
-
-        <div class="draw__wrapper">
-        
-            <header class="draw__header">
-                <img src="/Campaign/Imlek2016/images/imlek-header.png" alt="TRAVORAMA - Chinese New Year Celebration" />
-            </header><!-- .draw__header -->
-        
-            <section class="draw__body">
-                
-                <div class="tree">
-                    <img src="/Campaign/Imlek2016/images/imlek-tree.png" alt="Tree" class="main" />
-                    <img src="/Campaign/Imlek2016/images/imlek-monkey.png" alt="Monkey" class="monkey" />
-                    
-                    <div class="card card-1">
-                        <div class="prize__wrapper">
-                            <a href="#" class="prize__close">
-                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                            </a>
-                                
-                            <div class="prize__body">
-                                <p class="loading"><b>Loading</b></p>
-                            </div>
-
-                        </div>
-                        <img src="/Campaign/Imlek2016/images/card-1.png" alt="Card 1" class="envelope" />
-                    </div>
-                    <div class="card card-2">
-                        <div class="prize__wrapper">
-                            <a href="#" class="prize__close">
-                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                            </a>
-
-                            <div class="prize__body">
-                                <p class="loading"><b>Loading</b></p>
-                            </div>
-
-                        </div>
-                        <img src="/Campaign/Imlek2016/images/card-2.png" alt="Card 2" class="envelope" />
-                    </div>
-                    <div class="card card-3">
-                        <div class="prize__wrapper">
-                            <a href="#" class="prize__close">
-                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                            </a>
-
-                            <div class="prize__body">
-                                <p class="loading"><b>Loading</b></p>
-                            </div>
-
-                        </div>
-                        <img src="/Campaign/Imlek2016/images/card-3.png" alt="Card 3" class="envelope" />
-                    </div>
-                    <div class="card card-4">
-                        <div class="prize__wrapper">
-                            <a href="#" class="prize__close">
-                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                            </a>
-
-                            <div class="prize__body">
-                                <p class="loading"><b>Loading</b></p>
-                            </div>
-
-                        </div>
-                        <img src="/Campaign/Imlek2016/images/card-4.png" alt="Card 4" class="envelope" />
-                    </div>
-                    <div class="card card-5">
-                        <div class="prize__wrapper">
-                            <a href="#" class="prize__close">
-                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                            </a>
-
-                            <div class="prize__body">
-                                <p class="loading"><b>Loading</b></p>
-                            </div>
-
-                        </div>
-                        <img src="/Campaign/Imlek2016/images/card-5.png" alt="Card 5" class="envelope" />
-                    </div>
-                
-                    <img src="/Campaign/Imlek2016/images/imlek-title.png" alt="Pilih Keberuntunganmu Sekarang !" class="note" />
-
-                </div><!-- .tree -->
-                
-                <div class="cloud"> 
-                </div><!-- .cloud -->
-            
-                <div class="email">
-                    <div class="form-group">
-                        <p>Masukkan email Anda sebelum memilih angpao</p>
-                        <input type="email" value="" class="form-control" id="imlek__email__address" placeholder="alamat@email.com" />
-                        <p class="help-block text-left">Masukkan alamat email yang valid</p>
-                        <button class="btn btn-yellow" id="imlek__email__submit" data-url="@ConfigManager.GetInstance().GetConfigValue("api","apiUrl")">PILIH ANGPAO</button>
-                        <p>Baca <a href="@Url.Action("Imlek2016","StaticPage")">syarat dan ketentuan disini</a></p>
-                    </div>
-                </div><!-- .email -->
-
-            </section><!-- .draw__bdoy -->
-
-
-        </div><!-- .draw__wrapper -->
-
-    </div><!-- .imlek-wrapper -->
-}*@

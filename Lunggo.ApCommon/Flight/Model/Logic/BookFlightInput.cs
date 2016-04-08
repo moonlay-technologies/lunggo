@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using System;
 
 namespace Lunggo.ApCommon.Flight.Model.Logic
 {
@@ -12,5 +13,6 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public ContactData Contact { get; set; }
         public PaymentInfo Payment { get; set; }
         public string DiscountCode { get; set; }
+        public string TransferToken { get; set; }
     }
 }

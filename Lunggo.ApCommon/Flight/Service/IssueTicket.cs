@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
@@ -27,7 +28,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 var reservation = GetReservation(input.RsvNo);
                 var output = new IssueTicketOutput();
-                foreach (var itin in reservation.Itineraries)
+                Parallel.ForEach(reservation.Itineraries, itin =>
                 {
                     var bookingId = itin.BookingId;
                     var canHold = itin.CanHold;
@@ -55,13 +56,16 @@ namespace Lunggo.ApCommon.Flight.Service
                         output.Errors = response.Errors;
                         output.ErrorMessages = response.ErrorMessages;
                     }
-                    UpdateDb.BookingStatus(new List<BookingStatusInfo> {new BookingStatusInfo
+                    UpdateDb.BookingStatus(new List<BookingStatusInfo>
                     {
-                        BookingId = orderResult.BookingId,
-                        BookingStatus = orderResult.BookingStatus
-                    }});
+                        new BookingStatusInfo
+                        {
+                            BookingId = orderResult.BookingId,
+                            BookingStatus = orderResult.BookingStatus
+                        }
+                    });
                     output.OrderResults.Add(orderResult);
-                }
+                });
                 if (output.OrderResults.TrueForAll(result => result.IsSuccess))
                 {
                     output.IsSuccess = true;

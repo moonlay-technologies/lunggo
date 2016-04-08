@@ -22,7 +22,9 @@
         }
     }
     // flight notice
-    .flight-notice {background:#ff9a24; color:#fff; padding:5px;}
+    .flight-notice {background:#ff9a24; color:#fff; padding:5px;
+        p {margin-bottom:0; font-size:11px;}
+    }
     // flight selection
     .flight-selection {background:#e5e3e4; position:relative; font-weight:bold;
         .flight-info {padding:15px; padding-left:50px;
@@ -59,6 +61,7 @@
                 }
                 .content-right {@extend & .content-left; text-align:right; color:#ff7200;
                     label {font-weight:normal;}
+                    .flight-price-was {margin:0; text-decoration:line-through;}
                     .flight-price {margin-top:0; font-weight:bold; font-size:16px;}
                 }
             }
@@ -126,7 +129,7 @@
             &.filter-group--departure {
                 .filter-group__content {@include clearfix();
                     label {display:block; float:left; width:50%; border:0; margin-bottom:0; padding-top:10px; padding-bottom:10px; position:relative;
-                        .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(50px);}
+                        .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px;}
                         input {display:none;}
                         span {width:100%; padding-left:30px; display:block;}
                         // if active
@@ -159,8 +162,11 @@
 .overlay--flight-sort {
     .overlay__content {padding:0;
         span {display:block; padding:15px;
+            &:before {content:''; width:20px; height:20px; background:#fff; display:inline-block; vertical-align:middle; margin-right:10px; border:3px solid #fff; @include border-radius(50px);}
             &+span {border-top:$border-default;}
-            &.active {background:$color-main-blue; color:#fff;}
+            &.active {color:#fff;
+                &:before {background:#ffca10;}
+            }
         }
         label {display:block; width:100%; padding:12px 0;
             &+label {border-top:$border-default;}
