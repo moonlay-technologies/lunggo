@@ -225,11 +225,14 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (response.ErrorMessages != null)
                     response.ErrorMessages.ForEach(output.AddError);
             }
-            bookResult.RevalidateSet.IsValid = response.IsValid;
-            bookResult.RevalidateSet.IsItineraryChanged = response.IsItineraryChanged;
-            bookResult.RevalidateSet.NewItinerary = response.NewItinerary;
-            bookResult.RevalidateSet.IsPriceChanged = response.IsPriceChanged;
-            bookResult.RevalidateSet.NewPrice = response.NewPrice;
+            bookResult.RevalidateSet = new RevalidateFlightOutputSet
+            {
+                IsValid = response.IsValid,
+                IsItineraryChanged = response.IsItineraryChanged,
+                NewItinerary = response.NewItinerary,
+                IsPriceChanged = response.IsPriceChanged,
+                NewPrice = response.NewPrice
+            };
             return bookResult;
         }
     }

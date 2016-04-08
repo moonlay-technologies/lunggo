@@ -240,6 +240,36 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 }
                 catch
                 {
+                    //Logout
+                    const string url15 = @"/LionAirAgentsPortal/Logout.aspx";
+                    var searchRequest15 = new RestRequest(url15, Method.GET);
+                    searchRequest15.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                    searchRequest15.AddHeader("Content-Encoding", "gzip");
+                    searchRequest15.AddHeader("Host", "agent.lionair.co.id");
+                    searchRequest15.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchRequest15.AddHeader("Referer",
+                        "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + cid);
+                    Thread.Sleep(3000);
+                    var searchResponse15 = clientx.Execute(searchRequest15);
+
+                    //GET PAGE DEFAULT(HOME)
+
+                    const string url16 = @"/LionAirAgentsPortal/Default.aspx";
+                    var searchRequest16 = new RestRequest(url16, Method.GET);
+                    searchRequest16.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                    searchRequest16.AddHeader("Content-Encoding", "gzip");
+                    searchRequest16.AddHeader("Host", "agent.lionair.co.id");
+                    searchRequest16.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchRequest16.AddHeader("Referer",
+                        "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + cid);
+                    Thread.Sleep(3000);
+                    var searchResponse16 = clienty.Execute(searchRequest16);
+
+                    accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
+                    accRs = (RestResponse)clienty.Execute(accReq);
+
                     var isIssued = IsIssued(bookingId);
                     switch (isIssued)
                     {
