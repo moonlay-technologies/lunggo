@@ -32,5 +32,8 @@ namespace Lunggo.ApCommon.Payment.Model
         public string Currency { get; set; }
         [JsonProperty("ref", NullValueHandling = NullValueHandling.Ignore)]
         public Refund Refund { get; set; }
+        public string DiscountCode { get; set; }
+        public string TransferToken { get; set; }
+        public string RsvNo { get; set; }
     }
 }

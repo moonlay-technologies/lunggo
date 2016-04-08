@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;

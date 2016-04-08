@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.BackendWeb.Models;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRepository;

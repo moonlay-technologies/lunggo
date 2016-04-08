@@ -15,7 +15,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Logic
                 if (IsValid(request))
                 {
                     var service = CampaignService.GetInstance();
-                    var voucher = new VoucherRequest
+                    var voucher = new ValidateVoucherRequest
                     {
                         Email = request.Email,
                         Token = request.Token,

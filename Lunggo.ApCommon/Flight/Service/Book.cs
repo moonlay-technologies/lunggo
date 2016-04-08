@@ -104,53 +104,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 Itineraries = itins,
                 Contact = input.Contact,
                 Passengers = input.Passengers,
-                Payment = input.PaymentData,
-                TripType = ParseTripType(trips)
-            };
-            reservation.Payment.Medium = PaymentService.GetInstance().GetPaymentMedium(input.PaymentData.Method);
-            reservation.Payment.TimeLimit = output.TimeLimit;
-            var originalPrice = reservation.Itineraries.Sum(itin => itin.LocalPrice);
-            var campaign = CampaignService.GetInstance().UseVoucherRequest(new VoucherRequest
-            {
-                Email = input.Contact.Email,
-                Token = input.Token,
-                VoucherCode = input.DiscountCode
-            });
-            if (campaign.CampaignVoucher != null)
-            {
-                reservation.Payment.FinalPrice = campaign.DiscountedPrice;
-                reservation.Discount = new Discount
+                TripType = ParseTripType(trips),
+                Payment = new PaymentData
                 {
-                    Code = input.DiscountCode,
-                    Id = campaign.CampaignVoucher.CampaignId.GetValueOrDefault(),
-                    Name = campaign.CampaignVoucher.DisplayName,
-                    Percentage = campaign.CampaignVoucher.ValuePercentage.GetValueOrDefault(),
-                    Constant = campaign.CampaignVoucher.ValueConstant.GetValueOrDefault(),
-                    Nominal = campaign.TotalDiscount
-                };
-            }
-            else
-            {
-                reservation.Payment.FinalPrice = originalPrice;
-                reservation.Discount = new Discount();
-            }
-            if (reservation.Payment.Method == PaymentMethod.BankTransfer)
-            {
-                reservation.TransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
-                reservation.Payment.FinalPrice -= reservation.TransferCode;
-            }
-            else  
-            {
-                //Penambahan disini buat menghapus Transfer Code dan Token Transfer Code jika tidak milih Bank Transfer
-                var dummyTransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
-                var dummyPrice = reservation.Payment.FinalPrice - dummyTransferCode;
-                FlightService.GetInstance().DeleteUniquePriceFromCache(dummyPrice.ToString());
-                FlightService.GetInstance().DeleteTokenTransferCodeFromCache(input.TransferToken);
-            }
-            var transactionDetails = ConstructTransactionDetails(reservation);
-            var itemDetails = ConstructItemDetails(reservation);
-            var payment = PaymentService.GetInstance();
-            payment.ProcessPayment(reservation.Payment, transactionDetails, itemDetails, reservation.Payment.Method);
+                    FinalPrice = itins.Sum(itin => itin.LocalPrice)
+                }
+            };
             return reservation;
         }
 

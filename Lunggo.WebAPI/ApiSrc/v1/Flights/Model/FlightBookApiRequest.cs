@@ -16,13 +16,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public Contact Contact { get; set; }
         [JsonProperty("pax")]
         public List<Passenger> Passengers { get; set; }
-        [JsonProperty("pay")]
-        public Payment Payment { get; set; }
         [JsonProperty("cd")]
         public string DiscountCode { get; set; }
         [JsonProperty("lang")]
         public string Language { get; set; }
-        public string TransferToken { get; set; }
     }
 
     public class Passenger
@@ -45,15 +42,5 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public string PassportCountry { get; set; }
         [JsonProperty("nat")]
         public string Nationality { get; set; }
-    }
-
-    public class Payment
-    {
-        [JsonProperty("met")]
-        public PaymentMethod Method { get; set; }
-        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
-        public UniversalPaymentData Data { get; set; }
-        [JsonProperty("curr")]
-        public string Currency { get; set; }
     }
 }

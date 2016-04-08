@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.AspNet.Identity;

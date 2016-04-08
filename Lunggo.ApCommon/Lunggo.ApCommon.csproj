@@ -171,7 +171,8 @@
     <Compile Include="Campaign\Database\Query\VoucherDecrementQuery.cs" />
     <Compile Include="Campaign\Database\Query\VoucherIncrementQuery.cs" />
     <Compile Include="Campaign\Model\CampaignVoucher.cs" />
-    <Compile Include="Campaign\Model\VoucherRequest.cs" />
+    <Compile Include="Campaign\Model\UseVoucherRequest .cs" />
+    <Compile Include="Campaign\Model\ValidateVoucherRequest.cs" />
     <Compile Include="Campaign\Model\VoucherResponse.cs" />
     <Compile Include="Campaign\Service\CampaignVoucher.cs" />
     <Compile Include="Campaign\Service\ServiceSingleton.cs" />
@@ -436,10 +437,11 @@
     <Compile Include="Payment\Model\PaymentData.cs" />
     <Compile Include="Payment\Model\Refund.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
-    <Compile Include="Payment\PaymentService.cs" />
     <Compile Include="Payment\Query\GetSavedCreditCardQuery.cs" />
     <Compile Include="Payment\Query\GetSavedCreditCardByEmailQuery.cs" />
     <Compile Include="Payment\Query\GetUncheckedTransferConfirmationReportsQuery.cs" />
+    <Compile Include="Payment\Service\PaymentService.cs" />
+    <Compile Include="Payment\Service\Storage.cs" />
     <Compile Include="Payment\Wrapper\Veritrans\Model\Indomaret.cs" />
     <Compile Include="Payment\Wrapper\Veritrans\Model\MandiriEcash.cs" />
     <Compile Include="Payment\Wrapper\Veritrans\Model\IndosatDompetku.cs" />
@@ -481,7 +483,6 @@
     </Compile>
     <Compile Include="Subscriber\Query\GetSubscriberRowQuery.cs" />
     <Compile Include="Subscriber\SubscriberEmailModel.cs" />
-    <Compile Include="TransferIdentifier\TransferIdentifierService.cs" />
     <Compile Include="Travolutionary\TravolutionaryPreBookCheckResponse.cs" />
     <Compile Include="Trie\TrieIndexService.cs" />
     <Compile Include="Trie\TrieNode.cs" />
@@ -748,7 +749,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Identity\Model\" />
-    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

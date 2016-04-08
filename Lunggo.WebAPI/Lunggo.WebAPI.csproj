@@ -249,9 +249,14 @@
     <Compile Include="ApiSrc\v1\Flights\Model\TopDestinationsApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Newsletter\Model\NewsletterSubscribeInput.cs" />
     <Compile Include="ApiSrc\v1\Newsletter\Query\CheckEmailQuery.cs" />
-    <Compile Include="ApiSrc\v1\TransferIdentifier\Model\SavePriceApiResponse.cs" />
-    <Compile Include="ApiSrc\v1\TransferIdentifier\Model\TransferIdentifierApiResponse.cs" />
-    <Compile Include="ApiSrc\v1\TransferIdentifier\TransferIdentifierController.cs" />
+    <Compile Include="ApiSrc\v1\Payment\Logic\CheckPaymentLogic.cs" />
+    <Compile Include="ApiSrc\v1\Payment\Logic\PayLogic.cs" />
+    <Compile Include="ApiSrc\v1\Payment\Logic\GetTransferIdentifierLogic.cs" />
+    <Compile Include="ApiSrc\v1\Payment\Model\PaymentApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Payment\Model\PayApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Payment\Model\TransferIdentifierApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Payment\Model\TransferIdentifierApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Payment\PaymentController.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Logic\GetRoomsLogic.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiResponse.cs" />

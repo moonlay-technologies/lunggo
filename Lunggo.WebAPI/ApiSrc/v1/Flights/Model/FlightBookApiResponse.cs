@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
-    public class FlightBookApiResponse : ApiResponseBase
+    public class FlightBookApiResponse : FlightRevalidateApiResponse
     {
         [JsonProperty("rsvno", NullValueHandling = NullValueHandling.Ignore)]
         public string RsvNo { get; set; }

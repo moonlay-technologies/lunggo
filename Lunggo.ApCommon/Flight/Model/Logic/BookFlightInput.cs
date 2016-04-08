@@ -10,7 +10,6 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public string Token { get; set; }
         public List<FlightPassenger> Passengers { get; set; }
         public Contact Contact { get; set; }
-        public PaymentData PaymentData { get; set; }
         public string DiscountCode { get; set; }
         public string TransferToken { get; set; }
     }

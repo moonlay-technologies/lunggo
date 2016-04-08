@@ -34,9 +34,9 @@ namespace Lunggo.Driver
             //Console.WriteLine(rex.IsMatch("-100.00"));
             //TryNameValueCOllection();
             new BayuDriver().Init();
-            VoucherRequest voucherRequest = new VoucherRequest();
-            voucherRequest.Email = "a@a.com";
-            voucherRequest.VoucherCode = "VC182822";
+            ValidateVoucherRequest validateVoucherRequest = new ValidateVoucherRequest();
+            validateVoucherRequest.Email = "a@a.com";
+            validateVoucherRequest.VoucherCode = "VC182822";
             //var validationStatus = CampaignService.GetInstance().ValidateVoucherRequest(voucherRequest);
             //if (validationStatus == VoucherValidationStatusType.Success)
             //    CampaignService.GetInstance().UseVoucherRequest(voucherRequest);
