@@ -263,6 +263,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var searchResponse = clientx.Execute(searchRequest);
                 var htmlRespon = searchResponse.Content;
+
+                /*LAKUKAN DISINI GET BUAT PRICING DETAIL*/
                 
                 int i = 0;
                 foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Adult))

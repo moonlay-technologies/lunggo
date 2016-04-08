@@ -64,10 +64,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             if (response.PricedItineraries.Any())
             {
                 result.IsSuccess = true;
-                result.IsValid = response.IsValid;
+                result.IsValid = true;
                 result.NewItinerary = MapFlightItinerary(response.PricedItineraries[0], conditions);
                 result.IsPriceChanged = conditions.Itinerary.SupplierPrice !=
                                         decimal.Parse(response.PricedItineraries[0].AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount);
+                result.IsItineraryChanged = !conditions.Itinerary.Identical(result.NewItinerary);
                 if (result.IsPriceChanged)
                     result.NewPrice = decimal.Parse(response.PricedItineraries[0].AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount);
                 result.Errors = null;
