@@ -29,7 +29,7 @@ var FlightSearchConfig = {
             var returnDate = new Date(params.returnDate) || '';
             var origin = params.origin;
             var destination = params.destination;
-            var passenger = [ params.adult, (params.child || 0), (params.infant || 0) ];
+            var passenger = [ params.adult, (params.children || 0), (params.infant || 0) ];
             var cabin = params.cabin.toLowerCase();
             // generate departure param
             departureParam = ( origin + destination ) + ( (('0' + departureDate.getDate()).slice(-2)) + (('0' + (departureDate.getMonth()+1)).slice(-2) ) + (departureDate.getFullYear().toString().substr(2,2)) );

@@ -520,21 +520,21 @@ if (typeof (angular) == 'object') {
                     switch ($rootScope.FlightSearchForm.PassengerPicker.ActiveType) {
                         case 'adult':
                             if ((number + $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger) > $rootScope.FlightSearchForm.PassengerPicker.TotalMaxPassenger ) {
-                                console.log('Passenger cannot more than 9');
+                                console.log('Passenger cannot be more than 9');
                             } else {
                                 $rootScope.FlightSearchForm.Passenger[0] = number;
                             }
                             break;
                         case 'children':
                             if ((number + $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger) > $rootScope.FlightSearchForm.PassengerPicker.TotalMaxPassenger) {
-                                console.log('Passenger cannot more than 9');
+                                console.log('Passenger cannot be more than 9');
                             } else {
                                 $rootScope.FlightSearchForm.Passenger[1] = number;
                             }
                             break;
                         case 'infant':
                             if (((number + $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger) > $rootScope.FlightSearchForm.PassengerPicker.TotalMaxPassenger)) {
-                                console.log('Passenger cannot more than 9');
+                                console.log('Passenger cannot be more than 9');
                             } else {
                                 if (number > $rootScope.FlightSearchForm.Passenger[0]) {
                                     console.log('Infant cannot be more than adult');

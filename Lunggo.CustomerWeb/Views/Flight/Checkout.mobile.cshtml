@@ -190,13 +190,13 @@ default:
                                 <input type="text" value="" class="form-control" required name="passenger_{{$index}}_lastName" placeholder="Ex : Doe" ng-model="Passenger.lastName" />
                             </div>
                         
-                        {{passengers}}
+                        
                             <!-- passenger birth date start -->
                             <div class="form-group important">
                                 <label class="control-label">Tanggal Lahir: </label>
                                 <div class="row">
                                         <div class="col-xs-4">
-                                            <select class="form-control" required name="passenger_{{$index}}_birthDate" ng-model="passenger.birth.date" required ng-change="ValidateBirthday(Passenger)">
+                                            <select class="form-control" required name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" required ng-change="ValidateBirthday(Passenger)">
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'adult'">{{date}}</option>
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'child' && !( Passenger.birth.year == flightDetail.minYearChild && Passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate )">{{date}}</option>
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'infant' && !( (Passenger.birth.year == flightDetail.minYearInfant && Passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate))">{{date}}</option>
