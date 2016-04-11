@@ -6,6 +6,7 @@ using System.Threading;
 using System.Web;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
@@ -37,22 +38,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
-                        }
+                        },
+                        ErrorMessages = new List<string> { "FareId is null" }
                     };
                 }
 
+                var provider = CultureInfo.InvariantCulture;
+                   
                 string origin, dest; //flightId;
                 var flights = new List<string>();
                 var dephrs = new List<string>();
                 int segmentCount;
                 DateTime depdate;
                 int adultCount, childCount, infantCount;
-                //decimal price;
                 string bookingTimeLimit = "";
                 string bookingReference = "";
-                //string price;
                 List<string> listflight;
-                //List<string> listdephr;
                 CabinClass cabinClass;
                 try
                 {
@@ -64,15 +65,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     childCount = Convert.ToInt32(splittedFareId[4]);
                     infantCount = Convert.ToInt32(splittedFareId[5]);
                     cabinClass = FlightService.ParseCabinClass(splittedFareId[6]);
-                    //price = Convert.ToDecimal((splittedFareId[7]));
-                    //flightId = splittedFareId[8];
                     segmentCount = Convert.ToInt32(splittedFareId[9]);
                     listflight = splittedFareId[10].Split('|').ToList();
-                    //listdephr = splittedFareId[11].Split('|').ToList();
                  }
                 catch
                 {
-                    //throw new Exception("haloooo 2");
                     return new BookFlightResult
                     {
                         Errors = new List<FlightError> {FlightError.FareIdNoLongerValid},
@@ -80,7 +77,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        IsSuccess = false
+                        IsSuccess = false,
+                        ErrorMessages = new List<string> { "FareId is no longer valid" }
                     };
                 }
 
@@ -197,21 +195,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var client = CreateAgentClient();
                 //string currentDeposit;
                 var dict = DictionaryService.GetInstance();
-                //var originCountry = dict.GetAirportCountryCode(origin);
                 var destinationCountry = dict.GetAirportCountryCode(dest);
                 var userId = "";
-                //if (originCountry == "ID")
-                //{
                 var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
                 var clientx = new RestClient(cloudAppUrl);
-                //var clientx = new RestClient("http://localhost:14938/");
                 var accReq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
                 var userName = "";
                 RestResponse accRs;
                 var reqTime = DateTime.UtcNow;
-
+                var itin = new FlightItinerary();
                 var msgLogin = "Your login name is inuse";
                 var counter = 0;
+
                 while (msgLogin == "Your login name is inuse" || msgLogin == "There was an error logging you in")
                 {
                     while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
@@ -221,12 +216,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     }
 
                     if (userName.Length == 0)
+                    {
+                        //accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
+                        //accRs = (RestResponse)clientx.Execute(accReq);
                         return new BookFlightResult
                         {
                             Errors = new List<FlightError> {FlightError.TechnicalError},
                             ErrorMessages = new List<string> {"userName is full"}
                         };
-
+                    }
                     bool successLogin;
                     
                     //string msgLogin;
@@ -246,14 +244,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                              searchResponse0.StatusCode == HttpStatusCode.Redirect))
                         {
                             //throw new Exception("haloooo 99999");
+                            accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
+                            accRs = (RestResponse)clientx.Execute(accReq);
                             return new BookFlightResult
                             {
-
                                 Errors = new List<FlightError> {FlightError.InvalidInputData},
                                 Status = new BookingStatusInfo
                                 {
                                     BookingStatus = BookingStatus.Failed
                                 },
+                                ErrorMessages = new List<string> { "error entering default page" },
                                 IsSuccess = false
                             };
                         }
@@ -273,6 +273,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 if (counter >= 31)
                 {
                     //throw new Exception("haloooo 23");
+                    accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
+                    accRs = (RestResponse)clientx.Execute(accReq);
                     return new BookFlightResult
                     {
 
@@ -281,7 +283,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        IsSuccess = false
+                        IsSuccess = false,
+                        ErrorMessages = new List<string> { "Error captcha" }
                     };
                 }
                 
@@ -410,123 +413,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         }
                     }
 
-                    var segments = new List<FlightSegment>();
-                    var arrDate = new DateTime(depdate.Year, depdate.Month, depdate.Day, 0, 0, 0);
                     var txt_OBNNRowID = selectedRows.Last().Id;
-                    foreach (var row in selectedRows)
-                    {
-                        //Column 0
-                        var flightIdty = row.ChildElements.ToList()[0];
-                        var flightNo = "JT 34";
-                        var aircraftNo = "737-900ER";
-                        var airplaneName = "Lion Air";
-                        switch (flightIdty.ChildElements.ToList().Count)
-                        {
-                            case 2:
-                                aircraftNo = flightIdty.ChildElements.ToList()[1].InnerText;
-                                break;
-                            case 1:
-                                aircraftNo = null;
-                                break;
-                        }
-
-                        flightNo = flightIdty.ChildElements.ToList()[0].InnerText;
-                        flights.Add(flightNo);
-                        switch (flightNo.Split(' ')[0])
-                        {
-                            case "JT":
-                                airplaneName = "Lion Air";
-                                break;
-                            case "IW":
-                                airplaneName = "Wings Air";
-                                break;
-                            case "ID":
-                                airplaneName = "Batik Air";
-                                break;
-                            case "OD":
-                                airplaneName = "Malindo Air";
-                                break;
-                            case "SL":
-                                airplaneName = "Thai Lion Air";
-                                break;
-                        }
-
-                        //Column 1
-
-                        var colhidden = row.ChildElements.ToList()[1];
-                        var hidtext = colhidden.InnerText.Split('|')[6];
-                        var airportdeparture = hidtext.SubstringBetween(0, 3);
-                        var airportarrival = hidtext.SubstringBetween(3, hidtext.Length);
-
-                        //Column 2
-
-                        var departure = row.ChildElements.ToList()[2];
-                        var x = departure.InnerText.Split(' ');
-                        var timeDeparture = x[x.Length - 1];
-                        dephrs.Add(timeDeparture);
-                        DateTime depDate;
-                        var jamberangkat = Convert.ToInt32(timeDeparture.Split(':')[0]);
-                        var jamdatang = arrDate.Hour;
-                        var changeDay = jamdatang > jamberangkat;
-
-                        if (changeDay == false)
-                        {
-                            depDate = DateTime.SpecifyKind(new DateTime(arrDate.Year, arrDate.Month, arrDate.Day,
-                                Convert.ToInt32(timeDeparture.Split(':')[0]),
-                                Convert.ToInt32(timeDeparture.Split(':')[1]), 0), DateTimeKind.Utc);
-                        }
-
-                        else
-                        {
-                            var newDay = arrDate.AddDays(1);
-                            depDate = DateTime.SpecifyKind(new DateTime(newDay.Year, newDay.Month, newDay.Day,
-                                Convert.ToInt32(timeDeparture.Split(':')[0]),
-                                Convert.ToInt32(timeDeparture.Split(':')[1]), 0), DateTimeKind.Utc);
-                        }
-
-                        //Column 3
-
-                        var arrival = row.ChildElements.ToList()[3];
-                        var k = arrival.InnerText.Split(' ');
-                        var timeArrival = k[k.Length - 1];
-
-                        jamdatang = Convert.ToInt32(timeArrival.Split(':')[0]);
-                        jamberangkat = Convert.ToInt32(timeDeparture.Split(':')[0]);
-                        changeDay = jamdatang < jamberangkat;
-
-                        if (changeDay)
-                        {
-                            var newDay = depDate.AddDays(1);
-                            arrDate = DateTime.SpecifyKind(new DateTime(newDay.Year, newDay.Month, newDay.Day,
-                                Convert.ToInt32(timeArrival.Split(':')[0]),
-                                Convert.ToInt32(timeArrival.Split(':')[1]), 0), DateTimeKind.Utc);
-                        }
-                        else
-                        {
-                            arrDate = DateTime.SpecifyKind(new DateTime(depDate.Year, depDate.Month, depDate.Day,
-                                Convert.ToInt32(timeArrival.Split(':')[0]),
-                                Convert.ToInt32(timeArrival.Split(':')[1]), 0), DateTimeKind.Utc);
-                        }
-
-                        segments.Add(new FlightSegment
-                        {
-                            AirlineCode = flightNo.Split()[0],
-                            FlightNumber = flightNo.Split()[1],
-                            CabinClass = cabinClass,
-                            DepartureTime = depDate,
-                            ArrivalTime = arrDate,
-                            OperatingAirlineCode = flightNo.Split()[0],
-                            AircraftCode = aircraftNo,
-                            AirlineName = airplaneName,
-                            OperatingAirlineName = airplaneName,
-                            ArrivalAirport = airportarrival,
-                            DepartureAirport = airportdeparture
-                        });
-                    }
-
                     var passengers = adultCount + childCount; //jumlah adult + children
                     var colCollection = new List<List<String>>();
                     var seatCollection = new List<List<String>>();
+                    
                     //PILIH COLUMN YG MASIH AVAILABLE 
                     switch (cabinClass)
                     {
@@ -726,12 +617,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var html6 = searchResponse6.Content;
                         var pagePrice = (CQ)html6;
                         var revalidateFare = pagePrice["#tdAmtTotal"].Text();
-                        var sampah = pagePrice.Text();
-                        var startvs = sampah.IndexOf("__VIEWSTATE");
-                        var xyz = sampah.SubstringBetween(startvs + 12, sampah.Length);
+                        var priceText = pagePrice.Text();
+                        var startvs = priceText.IndexOf("__VIEWSTATE");
+                        var xyz = priceText.SubstringBetween(startvs + 12, priceText.Length);
                         var myvs = HttpUtility.UrlEncode(xyz.Split('|')[0]);
                         var agentprice = revalidateFare.Replace(",", "");
-                        /// bandingin sama yg di search
                         
                         // POST SEBELUM PAGE PASSENGER
                         const string url7 = @"LionAirAgentsIBE/Step2Availability.aspx";
@@ -770,6 +660,163 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var beginning = "__EVENTTARGET=lbContinue&__EVENTARGUMENT=&__VIEWSTATE=" + vs9;// + "&__VIEWSTATEGENERATOR=B80F8107";
                         const string ending =
                             "&txtRemark=&payDet=rbPay_HOLD&CreditCardDisplay1%24CreditCardType=VI&CreditCardDisplay1%24txtCardHolderName=&CreditCardDisplay1%24CreditCardNumber=&CreditCardDisplay1%24CreditCardExpiryMonth=MM&CreditCardDisplay1%24CreditCardExpiryYear=YY&CreditCardDisplay1%24CVVNumber=&AcceptFareConditions=on&FlightInfo=&AXTotal=&DCTotal=&OtherTotal=&nameMismatch=";
+
+                        //NEW ITINERARY TAKEN FROM PASSENGER DATA PAGE
+                        
+                        var flightTableRows = pageBooking["#FlightTable > tbody"].Children().ToList();
+                        var itinRows = flightTableRows.GetRange(1, flightTableRows.Count - 2);
+                        var dicty = DictionaryService.GetInstance();
+                        var newSegments = new List<FlightSegment>();
+                        foreach (var row in itinRows)
+                        {
+                            //Column 0
+                            var column0 = row.ChildElements.ToList()[0];
+                            var flightNo = column0.ChildElements.ToList()[0].InnerText;
+                            var airplaneCode = "";
+                            if (column0.ChildElements.ToList().Count == 1)
+                            {
+                                airplaneCode = null;
+                            }
+                            else
+                            {
+                                airplaneCode = column0.ChildElements.ToList()[1].InnerText;
+                            }
+                            
+                            var airplaneName = "";
+                            switch (flightNo.Split(' ')[0])
+                            {
+                                case "JT":
+                                    airplaneName = "Lion Air";
+                                    break;
+                                case "IW":
+                                    airplaneName = "Wings Air";
+                                    break;
+                                case "ID":
+                                    airplaneName = "Batik Air";
+                                    break;
+                                case "OD":
+                                    airplaneName = "Malindo Air";
+                                    break;
+                                case "SL":
+                                    airplaneName = "Thai Lion Air";
+                                    break;
+                            }
+
+                            const string format1 = "dd MMM";
+                            
+                            //Column 1
+                            var column1 = row.ChildElements.ToList()[1];
+                            var insideText1 = column1.InnerText.Split(')');
+                            //var arrivalCity = string.Join(" ", insideText2.Take(insideText2.Length - 3));
+                            //var middletext2 = insideText2[insideText2.Length - 3];
+                            var departureAirport =
+                                insideText1[insideText1.Length - 2].
+                                    SubstringBetween(insideText1[insideText1.Length - 2].Length - 3,
+                                        insideText1[insideText1.Length - 2].Length);
+                            var departureHour = insideText1.Last().SubstringBetween(0, 5);
+                            var departureDate = column1.ChildElements.ToList()[1].InnerText;
+                            var dateDeparture = DateTime.SpecifyKind(DateTime.ParseExact(departureDate, format1, provider), DateTimeKind.Utc);
+                            if (dateDeparture < DateTime.Now)
+                            {
+                                dateDeparture = DateTime.SpecifyKind(new DateTime(DateTime.Now.AddYears(1).Year, dateDeparture.Month, dateDeparture.Day,
+                                    Convert.ToInt32(departureHour.Split(':')[0]), Convert.ToInt32(departureHour.Split(':')[1]), 0), DateTimeKind.Utc);
+                            }
+                            else
+                            {
+                                dateDeparture = DateTime.SpecifyKind(new DateTime(DateTime.Now.Year, dateDeparture.Month, dateDeparture.Day,
+                                     Convert.ToInt32(departureHour.Split(':')[0]), Convert.ToInt32(departureHour.Split(':')[1]), 0), DateTimeKind.Utc);
+                            }
+
+                            //Column 2
+                            var column2 = row.ChildElements.ToList()[2];
+                            var insideText2 = column2.InnerText.Split(')');
+                             var arrivalAirport = insideText2[insideText2.Length - 2].
+                                SubstringBetween(insideText2[insideText2.Length - 2].Length - 3,
+                                insideText2[insideText2.Length - 2].Length);
+                            var arrivalHour = insideText2.Last().SubstringBetween(0, 5);
+                            var arrivalDate = column2.ChildElements.ToList()[1].InnerText;
+                            var dateArrival = DateTime.SpecifyKind(DateTime.ParseExact(arrivalDate, format1, provider), DateTimeKind.Utc);
+                            if (dateArrival < DateTime.Now)
+                            {
+                                dateArrival = DateTime.SpecifyKind(new DateTime(DateTime.Now.AddYears(1).Year, dateArrival.Month, dateArrival.Day,
+                                    Convert.ToInt32(arrivalHour.Split(':')[0]), Convert.ToInt32(arrivalHour.Split(':')[1]), 0), DateTimeKind.Utc);
+                            }
+                            else
+                            {
+                                dateArrival = DateTime.SpecifyKind(new DateTime(DateTime.Now.Year, dateArrival.Month, dateArrival.Day,
+                                     Convert.ToInt32(arrivalHour.Split(':')[0]), Convert.ToInt32(arrivalHour.Split(':')[1]), 0), DateTimeKind.Utc);
+                            }
+
+                            //Column 3
+
+                            var column3 = row.ChildElements.ToList()[3];
+                            var column3Text = column3.InnerText.Split(new string[] {"stops", "stop"}, StringSplitOptions.RemoveEmptyEntries);
+                            var stopsno = column3Text[0];
+                            var dur = column3Text[1].Split(' ');
+                            var duration = new TimeSpan();
+                            if (dur.Length != 1)
+                            {
+                                duration = new TimeSpan(
+                                Convert.ToInt32(dur[0].SubstringBetween(0, dur[0].Length - 1)),
+                                Convert.ToInt32(dur[1].SubstringBetween(0, dur[1].Length - 1)), 0);
+                            }
+                            else
+                            {
+                                duration = new TimeSpan(0, 
+                                Convert.ToInt32(dur[0].SubstringBetween(0, dur[0].Length - 1)), 0);
+                            }
+
+                            newSegments.Add(new FlightSegment
+                            {
+                                AircraftCode = airplaneCode,
+                                AirlineCode = flightNo.Split()[0],
+                                AirlineName = airplaneName,
+                                ArrivalAirport = arrivalAirport,
+                                ArrivalCity = dicty.GetAirportCity(arrivalAirport),
+                                ArrivalTime = dateArrival,
+                                CabinClass = cabinClass,
+                                DepartureAirport = departureAirport,
+                                DepartureCity = dicty.GetAirportCity(departureAirport),
+                                DepartureTime = dateDeparture,
+                                Duration = duration,
+                                FlightNumber = flightNo.Split()[1],
+                                OperatingAirlineCode = flightNo.Split()[0],
+                                OperatingAirlineName = airplaneName,
+                                StopQuantity = Convert.ToInt32(stopsno)
+                            });
+
+                        }
+
+                        itin = new FlightItinerary
+                        {
+                            AdultCount = adultCount,
+                            ChildCount = childCount,
+                            InfantCount = infantCount,
+                            CanHold = true,
+                            FareType = FareType.Published,
+                            RequireBirthDate = true,
+                            RequirePassport = RequirePassport(newSegments),
+                            RequireSameCheckIn = false,
+                            RequireNationality = true,
+                            RequestedCabinClass = CabinClass.Economy,
+                            TripType = TripType.OneWay,
+                            Supplier = Supplier.LionAir,
+                            SupplierCurrency = "IDR",
+                            SupplierPrice = Convert.ToDecimal(agentprice),
+                            FareId = bookInfo.Itinerary.FareId,
+                            Trips = new List<FlightTrip>
+                            {
+                                new FlightTrip
+                                {
+                                    OriginAirport = origin,
+                                    DestinationAirport = dest,
+                                    DepartureDate = DateTime.SpecifyKind(depdate, DateTimeKind.Utc),
+                                    Segments = newSegments
+                                }
+                            }
+                        };
+
+                        var isItinChanged = !itin.Identical(bookInfo.Itinerary);
 
                         var orderedPassengers = bookInfo.Passengers.OrderBy(x => x.Type);
                         var dataPassenger = "";
@@ -961,10 +1008,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var middle = "";
                         for (var y = 0; y < adultCount + childCount; y++)
                         {
-                            for (var x = 0; x < segments.Count; x++)
+                            for (var x = 0; x < newSegments.Count; x++)
                             {
-                                middle += "&Bag_" + segments.ElementAt(x).DepartureAirport + "%24" 
-                                    + segments.ElementAt(x).ArrivalAirport + "%24" + x + "%24" + y + "=";
+                                middle += "&Bag_" + newSegments.ElementAt(x).DepartureAirport + "%24" 
+                                    + newSegments.ElementAt(x).ArrivalAirport + "%24" + x + "%24" + y + "=";
                             }
                         }
 
@@ -1038,8 +1085,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Thread.Sleep(3000);
                         var searchResponseBooking = client.Execute(searchRequestBooking);
 
+                        //HARGA BARU DI UJUNG
                         var htmlBookingResult = (CQ) searchResponseBooking.Content;
                         var newPrice = htmlBookingResult["#lblTotalFares"].Text().Replace(",","");
+
+                        if (newPrice.Length != 0)
+                            return new BookFlightResult
+                            {
+                                IsSuccess = false,
+                                Errors = new List<FlightError> {FlightError.TechnicalError},
+                                Status = null,
+                                ErrorMessages = new List<string> {"Price is changed!"},
+                                NewPrice = decimal.Parse(newPrice),
+                                IsValid = true,
+                                IsPriceChanged = true,
+                                NewItinerary = itin,
+                                IsItineraryChanged = isItinChanged
+                            };
 
                         const string url9 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
                         var searchRequest9 = new RestRequest(url9, Method.GET);
@@ -1101,7 +1163,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     }
 
                     const string format = "dd MMMM', 'yyyy', 'HH:mm";
-                    var provider = CultureInfo.InvariantCulture;
                     if (bookingReference.Length != 0)
                         return new BookFlightResult
                         {
@@ -1115,9 +1176,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                             bookingTimeLimit.SubstringBetween(0, bookingTimeLimit.Length - 3), format,
                                             provider), DateTimeKind.Utc).AddHours(-7),
                                 BookingStatus = BookingStatus.Booked
-                            }
+                            },
+                            IsValid = true,
+                            IsItineraryChanged = false,
+                            IsPriceChanged = false,
+                            NewItinerary = itin
                         };
-                    //throw new Exception("haloooo 1000000000000");
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -1125,12 +1189,41 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
-                        }
-                        //ErrorMessages = new List<string> { "Web Layout Changed!" }
+                        },
+                        ErrorMessages = new List<string> { "Web Layout Changed!" }
                     };
                 }
                  catch //(Exception e)
                  {
+                     const string url15 = @"/LionAirAgentsPortal/Logout.aspx";
+                     var searchRequest15 = new RestRequest(url15, Method.GET);
+                     searchRequest15.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                     searchRequest15.AddHeader("Content-Encoding", "gzip");
+                     searchRequest15.AddHeader("Host", "agent.lionair.co.id");
+                     searchRequest15.AddHeader("Accept",
+                         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                     searchRequest15.AddHeader("Referer",
+                         "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + cid);
+                     Thread.Sleep(1000);
+                     var searchResponse15 = client.Execute(searchRequest15);
+
+                     //GET PAGE DEFAULT(HOME)
+
+                     const string url16 = @"/LionAirAgentsPortal/Default.aspx";
+                     var searchRequest16 = new RestRequest(url16, Method.GET);
+                     searchRequest16.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                     searchRequest16.AddHeader("Content-Encoding", "gzip");
+                     searchRequest16.AddHeader("Host", "agent.lionair.co.id");
+                     searchRequest16.AddHeader("Accept",
+                         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                     searchRequest16.AddHeader("Referer",
+                         "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + cid);
+                     Thread.Sleep(1000);
+                     var searchResponse16 = client.Execute(searchRequest16);
+
+                     accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
+                     accRs = (RestResponse)clientx.Execute(accReq);
+                     
                     //throw e;
                     return new BookFlightResult
                     {
