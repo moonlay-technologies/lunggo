@@ -42,7 +42,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         ErrorMessages = new List<string> { "FareId is null" }
                     };
                 }
-
+                
                 var provider = CultureInfo.InvariantCulture;
                    
                 string origin, dest; //flightId;
@@ -818,6 +818,43 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                         var isItinChanged = !itin.Identical(bookInfo.Itinerary);
 
+                        //Cek Jika Itinerary berubah
+                        if (isItinChanged)
+                        {
+                            return new BookFlightResult
+                            {
+                                IsSuccess = false,
+                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                Status = null,
+                                ErrorMessages = new List<string> { "Itinerary is Changed!" },
+                                NewPrice = decimal.Parse(agentprice),
+                                IsValid = true,
+                                IsPriceChanged = decimal.Parse(agentprice)!=bookInfo.Itinerary.SupplierPrice,
+                                NewItinerary = itin,
+                                IsItineraryChanged = isItinChanged
+
+                            };
+                        }
+
+                        // Cek Jika harga di Website telah berubah setelah di select
+                        if (Convert.ToDecimal(agentprice) != bookInfo.Itinerary.SupplierPrice) 
+                        {
+                            return new BookFlightResult
+                            {
+                                IsSuccess = false,
+                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                Status = null,
+                                ErrorMessages = new List<string> { "Price is Changed!" },
+                                NewPrice = decimal.Parse(agentprice),
+                                IsValid = true,
+                                IsPriceChanged = true,
+                                NewItinerary = itin,
+                                IsItineraryChanged = isItinChanged
+
+                            };
+                        }
+                        
+
                         var orderedPassengers = bookInfo.Passengers.OrderBy(x => x.Type);
                         var dataPassenger = "";
                         
@@ -1086,22 +1123,42 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var searchResponseBooking = client.Execute(searchRequestBooking);
 
                         //HARGA BARU DI UJUNG
-                        var htmlBookingResult = (CQ) searchResponseBooking.Content;
-                        var newPrice = htmlBookingResult["#lblTotalFares"].Text().Replace(",","");
+                        try
+                        {
+                            var htmlBookingResult = (CQ)searchResponseBooking.Content;
+                            var newPrice = htmlBookingResult["#lblTotalFares"].Text().Replace(",", "");
+                            //Kondisi dimana ada perubahan harga namun udah sama dengan harga kita
+                            if (newPrice.Length != 0 && decimal.Parse(newPrice) != bookInfo.Itinerary.SupplierPrice)
+                            {
+                                return new BookFlightResult
+                                {
+                                    IsSuccess = false,
+                                    Errors = new List<FlightError> { FlightError.TechnicalError },
+                                    Status = null,
+                                    ErrorMessages = new List<string> { "Price is changed!" },
+                                    NewPrice = decimal.Parse(newPrice),
+                                    IsValid = true,
+                                    IsPriceChanged = true,
+                                    NewItinerary = itin,
+                                    IsItineraryChanged = isItinChanged
 
-                        if (newPrice.Length != 0)
+                                };
+                            }
+                        }
+                        catch 
+                        {
                             return new BookFlightResult
                             {
                                 IsSuccess = false,
-                                Errors = new List<FlightError> {FlightError.TechnicalError},
-                                Status = null,
-                                ErrorMessages = new List<string> {"Price is changed!"},
-                                NewPrice = decimal.Parse(newPrice),
-                                IsValid = true,
-                                IsPriceChanged = true,
-                                NewItinerary = itin,
-                                IsItineraryChanged = isItinChanged
+                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                ErrorMessages = new List<string> { "Error di bagian validasi harga di halaman akhir booking" },
+                                Status = new BookingStatusInfo
+                                {
+                                    BookingStatus = BookingStatus.Failed
+                                }
                             };
+                        }
+                        
 
                         const string url9 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
                         var searchRequest9 = new RestRequest(url9, Method.GET);

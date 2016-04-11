@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Web;
 using RestSharp;
 using System.Diagnostics;
+using Lunggo.ApCommon.Constant;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
@@ -329,55 +330,26 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 CQ detailFlight = (CQ)html;
                 var getPrice = detailFlight["#priceDisplayBody>table:last"].Children().Children().Last().Last().Text().Trim().Split('\n');
                 var harga = getPrice[1].Trim().Replace("Rp.","").Replace(",","");
-                var getOriDest = detailFlight["#priceDisplayBody>table:first>caption"].Clone().Children().Remove().End().Text();
-                var splitOriDest = getOriDest.Replace("\r\n", "").Replace("\n", "").Replace("\r", "").Replace("\u0009", "").Trim().Split(new string[] { "to" }, StringSplitOptions.None);
-                var length = splitOriDest[0].Length - 1;
-                var fixOri = splitOriDest[0].Trim().Remove(length - 1).Substring((length-1) - 3);
-                length = splitOriDest[1].Length - 1;
-                var fixDest = splitOriDest[1].Trim().Remove(length - 1).Substring((length - 1) - 3);
-
-                var details = detailFlight["#flightDisplayBody>table:last"].Children().Children().Children().Elements.ToArray();
-                List<string> flightDet = new List<string>();
-                int leng = details.Length;
-                for (int x = 1; x <= leng; x+=2) 
-                {
-                    if (x == 1)
-                    {
-                        flightDet.Add(details[x].InnerHTML.Replace("<label>", "").Replace("</label>", ""));
-                    }
-                    else 
-                    {
-                        flightDet.Add(details[x].InnerHTML);
-                    }
-                    
-                }
-                var format = "dd MMM yy H:mm";
-                CultureInfo provider = new CultureInfo("id-ID");
-                var fixFlight = flightDet.ElementAt(1).Trim().Split(' ');
-                //All Data
                 var fixPrice = decimal.Parse(harga);
-                var fixAirLineCode =  fixFlight[0];
-                var fixFlightNumber = fixFlight[1];
-                var depDate = flightDet.ElementAt(0).Trim() + " " + flightDet.ElementAt(2).Trim();
-                var arrDate = flightDet.ElementAt(0).Trim() + " " + flightDet.ElementAt(3).Trim();
-                depDate = depDate.Contains("Nop")?depDate.Replace("Nop","Nov"):depDate;
-                arrDate = arrDate.Contains("Nop")?arrDate.Replace("Nop","Nov"):arrDate;
-                var departureDate = DateTime.ParseExact(depDate, format, provider);
-                var fixArrivalDate = DateTime.ParseExact(arrDate, format, provider);
-                //var transacUTCDate = DateTime.SpecifyKind(transacDate, DateTimeKind.Utc);
-                /*if (bookInfo.Itinerary.SupplierPrice != fixPrice) 
+                //Cek Harga di Final
+
+                if (bookInfo.Itinerary.SupplierPrice != fixPrice) 
                 {
+                    var fixItin = bookInfo.Itinerary;
+                    fixItin.SupplierPrice = fixPrice;
+
                     return new BookFlightResult
                     {
                         IsValid = true,
                         IsItineraryChanged = false,
                         IsPriceChanged = bookInfo.Itinerary.SupplierPrice != fixPrice,
                         IsSuccess = false,
-                        NewItinerary = bookInfo.Itinerary,
+                        ErrorMessages = new List<string> { "Price is changed!" },
+                        NewItinerary = fixItin,
                         NewPrice = fixPrice,
                         Status = null
                     };
-                }*/
+                }
                 
 
                 // SELECT HOLD (PAYMENT)
