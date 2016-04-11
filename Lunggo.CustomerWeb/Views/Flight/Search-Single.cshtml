@@ -467,7 +467,7 @@
             <div class="container">
                 <div class="flight-review">
                     <header class="flight-review-header">
-                        <h3>Rincian Penerbangan <span class="pull-right close-review" ng-click="closeOverview()" ng-hide="(revalidateFlightParam.validating || revaldiateFlightParam.proceed)">X</span></h3>
+                        <h3>Rincian Penerbangan <span class="pull-right close-review" ng-click="closeOverview()" >X</span></h3>
                     </header>
                     <section class="flight-review-summary">
                         <div class="summary-left">
@@ -516,11 +516,11 @@
                             <h3><sup>Rp</sup> {{flightList[flightSelected].TotalFare | number}}</h3>
                             <p>*Harga termasuk Pajak &amp; Service Charge</p>
                             <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="revalidateFlight(flightSelected)" ng-hide="revalidateFlightParam.validating || revalidateFlightParam.validated" />
-                            <input type="submit" class="btn btn-yellow" value="MEMVALIDASI" disabled ng-show="revalidateFlightParam.validating" />
-                            <div ng-show="revalidateFlightParam.validated && !revalidateFlightParam.available">
-                                <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-show="revalidateFlightParam.newFare" ng-click="revalidateFlight(flightSelected)" ng-disabled="revalidateFlightParam.proceed" />
-                                <input type="submit" class="btn btn-yellow" value="PILIH KEMBALI" ng-hide="revalidateFlightParam.newFare" ng-click="closeOverview()" />
-                            </div>
+                            <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="revalidateSubmit()" />
+                            @*<@*div ng-show="revalidateFlightParam.validated && !revalidateFlightParam.available">*@
+                                @*<input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-show="revalidateFlightParam.newFare" ng-click="revalidateFlight(flightSelected)" ng-disabled="revalidateFlightParam.proceed" />*@
+                                @*<input type="submit" class="btn btn-yellow" value="PILIH KEMBALI" ng-hide="revalidateFlightParam.newFare" ng-click="closeOverview()" />
+                            </div>*@
                         </div>
                     </section>
                     <footer class="flight-review-detail">

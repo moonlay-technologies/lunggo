@@ -385,8 +385,8 @@ app.controller('singleFlightController', [
                         $scope.revalidateFlightParam.available = true;
                         $scope.revalidateFlightParam.token = returnData.Token;
 
-                        $('.push-token input').val($scope.revalidateFlightParam.token);
-                        $('.push-token').submit();
+                        //$('.push-token input').val($scope.revalidateFlightParam.token);
+                        //$('.push-token').submit();
 
                     } else if (returnData.IsValid == false) {
                         $scope.revalidateFlightParam.available = false;
@@ -419,7 +419,8 @@ app.controller('singleFlightController', [
                 $('.push-token').submit();
             }
         }
-        $scope.revalidateSubmit = function() {
+        $scope.revalidateSubmit = function () {
+            $('.push-token input').val($scope.revalidateFlightParam.token);
             $('.push-token').submit();
         }
         $scope.revalidateCancel = function () {

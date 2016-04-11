@@ -35,7 +35,14 @@ namespace Lunggo.ApCommon.Flight.Service
                         FareId = itin.FareId,
                         Trips = itin.Trips
                     };
-                    var response = RevalidateFareInternal(request);
+                    //var response = RevalidateFareInternal(request);
+                    var response = new RevalidateFareResult
+                    {
+                        IsSuccess = true,
+                        IsValid = true,
+                        Itinerary = itin
+                    };
+                    // TODO : CODE ABOVE IS AN EMERGENCY BYPASS, REMOVE ON NEXT UPDATE
                     if (response.IsSuccess)
                     {
                         outputSet.IsSuccess = true;
