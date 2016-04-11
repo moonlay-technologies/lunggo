@@ -19,15 +19,17 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         PassengerTypeName: CheckoutDetail.PassengerName,
         // generate passenger
         GeneratePassenger: function () {
+            var today = new Date();
+            
             if ($scope.CheckoutConfig.Passenger[0] > 0) {
                 for (var i = 0; i < $scope.CheckoutConfig.Passenger[0]; i++) {
-                    var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[0], type: 'adult' };
+                    var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[0], type: 'adult', birth: today };
                     $scope.passengers.push(x);
                 }
             }
             if ($scope.CheckoutConfig.Passenger[1]> 0) {
                 for (var i = 0; i < $scope.CheckoutConfig.Passenger[1]; i++) {
-                    var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[1], type: 'child' };
+                    var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[1], type: 'child'  };
                     $scope.passengers.push(x);
                 }
             }
@@ -520,7 +522,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 return years.reverse();
                 break;
             case 'infant':
-                listYear((departureDate.getFullYear() - 2), $scope.bookingDate.getFullYear());
+                listYear((departureDate.getFullYear() - 2), departureDate.getFullYear());
                 return years.reverse();
                 break;
             case 'passport':

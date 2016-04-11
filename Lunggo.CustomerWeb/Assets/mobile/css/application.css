@@ -64,7 +64,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   border-radius: 2px; }
 
 input[type="text"], input[type="password"], input[type="number"], input[type="email"] {
-  font-size: 16px;
+  font-size: 12px;
   height: auto; }
 
 .site-header {
@@ -1258,6 +1258,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .overlay--flight-detail .overlay__footer h4 {
   margin-top: 0; }
+
+.overlay--flight-detail .overlay__footer h6 {
+  margin-top: 0; 
+  margin-bottom: 0;
+    font-size: 50%;
+}
 
 .page.page-checkout .page__header {
   margin: 0;
