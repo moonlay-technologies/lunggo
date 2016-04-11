@@ -329,35 +329,55 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 CQ detailFlight = (CQ)html;
                 var getPrice = detailFlight["#priceDisplayBody>table:last"].Children().Children().Last().Last().Text().Trim().Split('\n');
                 var harga = getPrice[1].Trim().Replace("Rp.","").Replace(",","");
-                var getOriDest = detailFlight["#priceDisplayBody>table:first>caption>div:last"].Text();
+                var getOriDest = detailFlight["#priceDisplayBody>table:first>caption"].Clone().Children().Remove().End().Text();
+                var splitOriDest = getOriDest.Replace("\r\n", "").Replace("\n", "").Replace("\r", "").Replace("\u0009", "").Trim().Split(new string[] { "to" }, StringSplitOptions.None);
+                var length = splitOriDest[0].Length - 1;
+                var fixOri = splitOriDest[0].Trim().Remove(length - 1).Substring((length-1) - 3);
+                length = splitOriDest[1].Length - 1;
+                var fixDest = splitOriDest[1].Trim().Remove(length - 1).Substring((length - 1) - 3);
+
                 var details = detailFlight["#flightDisplayBody>table:last"].Children().Children().Children().Elements.ToArray();
-                List<string> eek = new List<string>();
+                List<string> flightDet = new List<string>();
                 int leng = details.Length;
                 for (int x = 1; x <= leng; x+=2) 
                 {
                     if (x == 1)
                     {
-                        eek.Add(details[x].InnerHTML.Replace("<label>", "").Replace("</label", ""));
+                        flightDet.Add(details[x].InnerHTML.Replace("<label>", "").Replace("</label>", ""));
                     }
                     else 
                     {
-                        eek.Add(details[x].InnerHTML);
+                        flightDet.Add(details[x].InnerHTML);
                     }
                     
                 }
-                var fixFlight = eek.ElementAt(1).Trim().Split(' ');
+                var format = "dd MMM yy H:mm";
+                CultureInfo provider = new CultureInfo("id-ID");
+                var fixFlight = flightDet.ElementAt(1).Trim().Split(' ');
                 //All Data
                 var fixPrice = decimal.Parse(harga);
                 var fixAirLineCode =  fixFlight[0];
                 var fixFlightNumber = fixFlight[1];
-                var segments = new List<FlightSegment>();
-                segments.Add(new FlightSegment
+                var depDate = flightDet.ElementAt(0).Trim() + " " + flightDet.ElementAt(2).Trim();
+                var arrDate = flightDet.ElementAt(0).Trim() + " " + flightDet.ElementAt(3).Trim();
+                depDate = depDate.Contains("Nop")?depDate.Replace("Nop","Nov"):depDate;
+                arrDate = arrDate.Contains("Nop")?arrDate.Replace("Nop","Nov"):arrDate;
+                var departureDate = DateTime.ParseExact(depDate, format, provider);
+                var fixArrivalDate = DateTime.ParseExact(arrDate, format, provider);
+                //var transacUTCDate = DateTime.SpecifyKind(transacDate, DateTimeKind.Utc);
+                /*if (bookInfo.Itinerary.SupplierPrice != fixPrice) 
                 {
-                    FlightNumber = fixFlightNumber,
-                    AirlineCode = fixAirLineCode,
-                    
-                    //DepartureTime = DateTime.SpecifyKind(, DateTimeKind.Utc)
-                });
+                    return new BookFlightResult
+                    {
+                        IsValid = true,
+                        IsItineraryChanged = false,
+                        IsPriceChanged = bookInfo.Itinerary.SupplierPrice != fixPrice,
+                        IsSuccess = false,
+                        NewItinerary = bookInfo.Itinerary,
+                        NewPrice = fixPrice,
+                        Status = null
+                    };
+                }*/
                 
 
                 // SELECT HOLD (PAYMENT)

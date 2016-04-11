@@ -454,7 +454,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 };
                                 var newPrice = decimal.Parse(hargaBaru);
                                 hasil.IsSuccess = true;
-                                hasil.IsValid = harga == newPrice;
+                                hasil.IsValid = true;
                                 hasil.IsPriceChanged = harga != newPrice;
                                 hasil.IsItineraryChanged = !conditions.Itinerary.Identical(itin);
                                 if (hasil.IsPriceChanged) 
@@ -597,7 +597,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     //hasil.NewItinerary = itin;
                                     var newPrice = decimal.Parse(hargaBaru);
                                     hasil.IsSuccess = true;
-                                    hasil.IsValid = harga == newPrice;
+                                    hasil.IsValid = true;
                                     hasil.IsPriceChanged = harga != newPrice;
                                     hasil.IsItineraryChanged = !conditions.Itinerary.Identical(itin);
                                     if (hasil.IsPriceChanged)
