@@ -261,8 +261,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
 // **********
 // page confirmation
 .page-confirmation {
-    .site-content {padding:24px 0;}
-    .confirmation-content {
+    .site-content {padding:24px 0;
+        .confirmation-content {
         .instruction {
             header {background:$color-main-blue; color:#fff; padding:6px 12px; margin-bottom:12px;}
             .text {padding-left:100px; background:url(/Assets/images/exclamation-mark.png) top left no-repeat; min-height:80px;
@@ -277,10 +277,42 @@ file : /Assets/travorama20/css/_page_checkout.scss
                     }
                 }
             }
+            .transfer-instruction{
+                .order-list{font-size:12px;}
+            }
+            .confirmation-order {background:#f4f4f4;padding:12px;
+                .confirm-order-detail {background:#f4f4f4;margin-top:0px;padding-top:0px;
+                    .confirm-passenger {margin-bottom:24px;
+                        ol {counter-reset:passenger-counter; list-style:none; margin:0; padding:0;
+                            li {position:relative; padding-left:21px; font-size:12px;
+                            &:before {content:'0' counter(passenger-counter); counter-increment:passenger-counter; position:absolute; left:0; color:$color-main-blue; font-weight:bold;}
+                            }
+                        }
+                    }
+                    .confirm-order {
+                        .confirm-flight {padding-left:36px; position:relative;
+                            img {height:36px; margin-right:24px;}
+                            span {font-weight:bold; color:$color-main-blue;}
+                            &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%; background-repeat:no-repeat; border:2px solid $color-main-blue;}
+                            // departure flight
+                             &.departure {}
+                            // return flight
+                            &.return {
+                                &:before {background-position:-16px;}
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
-    .confirmation-form {border-top:$border-default; margin-top:24px;
-        .btn.btn-yellow {padding:9px 48px; font-size:14px;}
+
+    }
+    
+        //confirmation-form {border-top:$border-default; margin-top:24px;
+       // .btn.btn-yellow {padding:9px 48px; font-size:14px;}
+    
+    
     }
     // datepicker
     .ui-datepicker {padding:15px; display:none;
@@ -310,7 +342,6 @@ file : /Assets/travorama20/css/_page_checkout.scss
             .ui-datepicker-unselectable {color:#666;}
         }
     }
-}
 
 
 // **********
@@ -365,6 +396,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
                         &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%; background-repeat:no-repeat; border:2px solid $color-main-blue;}
                         // departure flight
                         &.departure {}
+                        }
                         // return flight
                         &.return {
                             &:before {background-position:-16px;}
@@ -395,8 +427,6 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
         }
     }
-
-}
 
 // *****
 // page overlay
