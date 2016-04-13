@@ -4302,13 +4302,13 @@ file : /Assets/travorama20/css/_page_checkout.scss
       margin-bottom: 24px;
       padding-left: 23px; }
       .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account .va-text {
-        font-size: 11px;
+        font-size: 10px;
         padding-bottom: 2px;
         margin-bottom: 8px; }
       .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account .va-number {
         font-size: 18px;
-        color: #1daee4;
-        padding: 0; }
+        padding: 0;
+        color: #ff6900; }
     .page-thankyou .order-detail section .order-detail-left .order .flight {
       padding-left: 36px;
       position: relative; }

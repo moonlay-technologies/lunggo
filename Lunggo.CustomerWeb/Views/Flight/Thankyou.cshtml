@@ -151,10 +151,13 @@ else
                                             }
                                         </ol>
                                     </div>
-                                    <div class="virtual-account col-xs-4">
-                                        <h4 class="va-text"><b>NO VIRTUAL ACCOUNT</b></h4>
-                                        <h4 class="va-number"><b>@Model.Payment.TargetAccount</b></h4>
-                                    </div>
+                                    @if (Model.Payment.Method == PaymentMethod.VirtualAccount)
+                                    {
+                                        <div class="virtual-account col-xs-4">
+                                            <h4 class="va-text" style="font-size:11px;padding-bottom:2px;margin-bottom:8px;"><b>NO VIRTUAL ACCOUNT</b></h4>
+                                            <h4 class="va-number" style="font-size : 18px; color: #ff6900; padding:0;"><b>@Model.Payment.TargetAccount</b></h4>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="order">
                                     <h4>DETAIL PENERBANGAN</h4>
