@@ -261,8 +261,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
 // **********
 // page confirmation
 .page-confirmation {
-    .site-content {padding:24px 0;
-        .confirmation-content {
+    .site-content {padding:24px 0;}
+    .confirmation-content {
         .instruction {
             header {background:$color-main-blue; color:#fff; padding:6px 12px; margin-bottom:12px;}
             .text {padding-left:100px; background:url(/Assets/images/exclamation-mark.png) top left no-repeat; min-height:80px;
@@ -306,14 +306,9 @@ file : /Assets/travorama20/css/_page_checkout.scss
             }
         }
     }
-
-    }
-    
-        //confirmation-form {border-top:$border-default; margin-top:24px;
+    //confirmation-form {border-top:$border-default; margin-top:24px;
        // .btn.btn-yellow {padding:9px 48px; font-size:14px;}
     
-    
-    }
     // datepicker
     .ui-datepicker {padding:15px; display:none;
         .ui-datepicker-header {padding-bottom:10px;
@@ -342,6 +337,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
             .ui-datepicker-unselectable {color:#666;}
         }
     }
+}
 
 
 // **********
