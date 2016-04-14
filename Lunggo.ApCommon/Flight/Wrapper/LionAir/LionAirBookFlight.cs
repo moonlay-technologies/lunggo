@@ -1129,6 +1129,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     var searchResponsPriceAcceptance = client.Execute(searchRequestPriceAcceptance);
                                 }
                             }
+                            // kalau harga setelah dipilih di page yg banyak radio button beda dengan yg pertama
+                                // kali di search
+
                             else if (bookInfo.Itinerary.SupplierPrice != harga2)
                             {
                                 var newFareId = origin + "+" + dest + "+" + splittedFareId[2] + "+" + adultCount 
@@ -1175,6 +1178,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                         if (newPrice.Length == 0)
                         {
+                            // Kalau normal2 aja
+
+                            var newFareId = origin + "+" + dest + "+" + splittedFareId[2] + "+" + adultCount +
+                                                   "+" + childCount + "+" + infantCount + "+" + splittedFareId[6] +
+                                                   "+" + harga2 + "+" + flightId + "+" + newSegments.Count +
+                                                   "+" + flightNoJoin + "+" + depHrJoin;
+
+                            itin.SupplierPrice = harga2;
+                            itin.FareId = newFareId;
+
                             const string url9 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
                             var searchRequest9 = new RestRequest(url9, Method.GET);
                             searchRequest9.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
@@ -1206,6 +1219,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         }
                         else
                         {
+                            var newFareId = origin + "+" + dest + "+" + splittedFareId[2] + "+" + adultCount +
+                                                   "+" + childCount + "+" + infantCount + "+" + splittedFareId[6] + 
+                                                   "+" + newPrice + "+" + flightId + "+" + newSegments.Count + 
+                                                   "+" + flightNoJoin + "+" + depHrJoin;
+                            itin.SupplierPrice = decimal.Parse(newPrice);
+                            itin.FareId = newFareId;
+
+                            // kalau ini booking ke 2 (setelah booking 1, yang harga naik di ujung)
                             const string url9 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
                             var searchRequest9 = new RestRequest(url9, Method.GET);
                             searchRequest9.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
@@ -1242,6 +1263,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                     const string format = "dd MMMM', 'yyyy', 'HH:mm";
                     if (bookingReference.Length != 0)
+                    {
                         return new BookFlightResult
                         {
                             IsSuccess = true,
@@ -1260,6 +1282,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             IsPriceChanged = false,
                             NewItinerary = itin
                         };
+                    }
                     return new BookFlightResult
                     {
                         IsSuccess = false,

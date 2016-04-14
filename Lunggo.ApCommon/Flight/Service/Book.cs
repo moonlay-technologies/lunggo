@@ -33,9 +33,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 var newItins = bookResults.Select(result => result.RevalidateSet.NewItinerary).ToList();
                 if (output.IsItineraryChanged)
                     output.NewItinerary = ConvertToItineraryForDisplay(BundleItineraries(newItins));
+                AddPriceMargin(newItins);
                 output.IsPriceChanged = bookResults.Exists(result => result.RevalidateSet.IsPriceChanged);
                 if (output.IsPriceChanged)
-                    output.NewPrice = bookResults.Sum(result => result.RevalidateSet.NewPrice);
+                    output.NewPrice = newItins.Sum(itin => itin.LocalPrice);
                 SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.ItinCacheId);
             }
             if (AllAreBooked(bookResults))
