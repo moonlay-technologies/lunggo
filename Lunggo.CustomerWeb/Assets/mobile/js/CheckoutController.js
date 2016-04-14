@@ -347,6 +347,10 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         }
     }//$scope.book
 
+    $scope.Today = {
+        datetoday: new Date(),
+        date: datetoday.getDate
+    }
     // credit card promo checker
     $scope.CreditCardPromo = {
         Type: '',

@@ -736,7 +736,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-home .form-wrapper form {
       padding: 0 30px; }
       .page.page-home .form-wrapper form .form-group p.form-control {
-        font-size: 12px;
+        font-size: 8px;
         padding: 10px 15px;
         height: auto; }
         .page.page-home .form-wrapper form .form-group p.form-control span {
