@@ -49,6 +49,9 @@ namespace Lunggo.ApCommon.Flight.Service
                     SendInstantPaymentReservationNotifToCustomer(reservation.RsvNo);
                 SavePaymentRedirectionUrlInCache(reservation.RsvNo, reservation.Payment.Url, reservation.Payment.TimeLimit);
                 output.RsvNo = reservation.RsvNo;
+                //Delete Itinerary From Cache
+                DeleteItineraryFromCache(input.ItinCacheId);
+                DeleteItinerarySetFromCache(input.ItinCacheId);
             }
             else
             {
@@ -58,9 +61,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.DistinguishErrors();
             }
 
-            //Delete Itinerary From Cache
-            DeleteItineraryFromCache(input.ItinCacheId);
-            DeleteItinerarySetFromCache(input.ItinCacheId);
+            
             return output;
         }
 
@@ -220,7 +221,6 @@ namespace Lunggo.ApCommon.Flight.Service
             else
             {
                 bookResult.IsSuccess = false;
-                itin.BookingId = response.Status.BookingId;
                 response.Errors.ForEach(output.AddError);
                 if (response.ErrorMessages != null)
                     response.ErrorMessages.ForEach(output.AddError);

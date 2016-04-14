@@ -45,19 +45,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 
                 var provider = CultureInfo.InvariantCulture;
                    
-                string origin, dest; //flightId;
-                var flights = new List<string>();
-                var dephrs = new List<string>();
+                string origin, dest, flightId;
                 int segmentCount;
                 DateTime depdate;
                 int adultCount, childCount, infantCount;
-                string bookingTimeLimit = "";
-                string bookingReference = "";
+                var bookingTimeLimit = "";
+                var bookingReference = "";
                 List<string> listflight;
                 CabinClass cabinClass;
+                var splittedFareId = bookInfo.Itinerary.FareId.Split('+');
+
                 try
                 {
-                    var splittedFareId = bookInfo.Itinerary.FareId.Split('+');
                     origin = splittedFareId[0]; //CGK
                     dest = splittedFareId[1]; // SIN
                     depdate = Convert.ToDateTime(splittedFareId[2]);
@@ -65,6 +64,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     childCount = Convert.ToInt32(splittedFareId[4]);
                     infantCount = Convert.ToInt32(splittedFareId[5]);
                     cabinClass = FlightService.ParseCabinClass(splittedFareId[6]);
+                    flightId = splittedFareId[8];
                     segmentCount = Convert.ToInt32(splittedFareId[9]);
                     listflight = splittedFareId[10].Split('|').ToList();
                  }
@@ -193,7 +193,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 // [GET] Search Flight
 
                 var client = CreateAgentClient();
-                //string currentDeposit;
                 var dict = DictionaryService.GetInstance();
                 var destinationCountry = dict.GetAirportCountryCode(dest);
                 var userId = "";
@@ -201,24 +200,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var clientx = new RestClient(cloudAppUrl);
                 var accReq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
                 var userName = "";
-                RestResponse accRs;
                 var reqTime = DateTime.UtcNow;
                 var itin = new FlightItinerary();
                 var msgLogin = "Your login name is inuse";
                 var counter = 0;
 
+                var listDepHr = new List<string>();
+                var listFlightNo = new List<string>();
+
                 while (msgLogin == "Your login name is inuse" || msgLogin == "There was an error logging you in")
                 {
                     while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
                     {
-                        accRs = (RestResponse) clientx.Execute(accReq);
+                        var accRs = (RestResponse) clientx.Execute(accReq);
                         userName = accRs.Content.Trim('"');
                     }
 
                     if (userName.Length == 0)
                     {
-                        //accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
-                        //accRs = (RestResponse)clientx.Execute(accReq);
                         return new BookFlightResult
                         {
                             Errors = new List<FlightError> {FlightError.TechnicalError},
@@ -227,7 +226,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     }
                     bool successLogin;
                     
-                    //string msgLogin;
+                    
                     do
                     {
                         client.BaseUrl = new Uri("https://agent.lionair.co.id");
@@ -243,9 +242,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             (searchResponse0.StatusCode == HttpStatusCode.OK ||
                              searchResponse0.StatusCode == HttpStatusCode.Redirect))
                         {
-                            //throw new Exception("haloooo 99999");
-                            accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
-                            accRs = (RestResponse)clientx.Execute(accReq);
+                            TurnInUsername(clientx, userName);
                             return new BookFlightResult
                             {
                                 Errors = new List<FlightError> {FlightError.InvalidInputData},
@@ -257,6 +254,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 IsSuccess = false
                             };
                         }
+
                         Thread.Sleep(1000);
                         const string url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
                         var searchRequest1 = new RestRequest(url1, Method.GET);
@@ -273,8 +271,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 if (counter >= 31)
                 {
                     //throw new Exception("haloooo 23");
-                    accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
-                    accRs = (RestResponse)clientx.Execute(accReq);
+                    TurnInUsername(clientx, userName);
                     return new BookFlightResult
                     {
 
@@ -564,39 +561,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 "&txtOBNNRowID=" + txt_OBNNRowID +
                                 "&txtIBNNRowID=" +
                                 "&txtUserSelectedOneway=";
-                        //}
-                        //else
-                        //{
-                        //    b =
-                        //    "&txtUpdateInsurance=" +
-                        //    "&Insurance%24txtInsPostbackRequired=no" +
-                        //    "&txtPricingResponse=OK" + "" +
-                        //    "&txtOutFBCsUsed=" + seat +
-                        //    "&txtInFBCsUsed=" +
-                        //    "&txtTaxBreakdown=" +
-                        //    "&lbContinue.x=39&lbContinue.y=11" +
-                        //    "&UcFlightSelection%24TripType=rbOneWay" + "" +
-                        //    "&UcFlightSelection%24DateFlexibility=rbMustTravel" +
-                        //    "&UcFlightSelection%24txtSelOri=" + origin + //CHANGE
-                        //    "&UcFlightSelection%24txtOri=" + cityDep + "%20(" + origin + ")" + //CHANGE
-                        //    "&UcFlightSelection%24ddlDepMonth=" + depdate.ToString("MMM") + "%20" + depdate.Year +
-                        //    "&UcFlightSelection%24ddlDepDay=" + depdate.Day + //CHANGE
-                        //    "&UcFlightSelection%24ddlADTCount=" + adultCount + //CHANGE
-                        //    "&UcFlightSelection%24txtSelDes=" + dest + //CHANGE
-                        //    "&UcFlightSelection%24txtDes=" + cityArr + "%20(" + dest + ")" + //CHANGE
-                        //    "&UcFlightSelection%24ddlCNNCount=" + childCount + //CHANGE
-                        //    "&UcFlightSelection%24ddlINFCount=" + infantCount + //CHANGE
-                        //    "&UcFlightSelection%24txtDepartureDate=" + depdate.ToString("dd") + "%20" + depdate.ToString("MMM") +
-                        //    "%20" + depdate.Year + //CHANGE
-                        //    "&UcFlightSelection%24txtReturnDate=" + depdate.ToString("dd") + "%20" + depdate.ToString("MMM") +
-                        //    "%20" + depdate.Year + //CHANGE
-                        //    "&txtOBNNCellID=" + string.Join("|", priceCollections.ToArray()) +
-                        //    "&txtIBNNCellID=oneway" +
-                        //    "&txtOBNNRowID=" + txt_OBNNRowID +
-                        //    "&txtIBNNRowID=" +
-                        //    "&txtUserSelectedOneway=";
-                        //}
-
+                        
                         // POST BUAT DAPETIN HARGA
                         const string url6 = @"LionAirAgentsIBE/Step2Availability.aspx";
                         var searchRequest6 = new RestRequest(url6, Method.POST);
@@ -634,8 +599,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         searchRequest7.AddHeader("Origin", "https://agent.lionair.co.id");
                         searchRequest7.AddHeader("Cache-Control", "max-age=0");
                         var postData7 = colpost.SubstringBetween(1, colpost.Length) + b +
-                                        "&__EVENTTARGET=&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE=" +
-                                        myvs;//+ "&__VIEWSTATEGENERATOR=" + vsgen; //UBAH KE lbGoBack kalau udah bener
+                                        "&__EVENTTARGET=&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE=" + myvs;
                         searchRequest7.AddParameter("application/x-www-form-urlencoded", postData7,
                             ParameterType.RequestBody);
                         //Thread.Sleep(1000);
@@ -672,15 +636,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             //Column 0
                             var column0 = row.ChildElements.ToList()[0];
                             var flightNo = column0.ChildElements.ToList()[0].InnerText;
-                            var airplaneCode = "";
-                            if (column0.ChildElements.ToList().Count == 1)
-                            {
-                                airplaneCode = null;
-                            }
-                            else
-                            {
-                                airplaneCode = column0.ChildElements.ToList()[1].InnerText;
-                            }
+                            string airplaneCode = column0.ChildElements.ToList().Count == 1 ? null : column0.ChildElements.ToList()[1].InnerText;
                             
                             var airplaneName = "";
                             switch (flightNo.Split(' ')[0])
@@ -707,8 +663,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             //Column 1
                             var column1 = row.ChildElements.ToList()[1];
                             var insideText1 = column1.InnerText.Split(')');
-                            //var arrivalCity = string.Join(" ", insideText2.Take(insideText2.Length - 3));
-                            //var middletext2 = insideText2[insideText2.Length - 3];
                             var departureAirport =
                                 insideText1[insideText1.Length - 2].
                                     SubstringBetween(insideText1[insideText1.Length - 2].Length - 3,
@@ -753,7 +707,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             var column3Text = column3.InnerText.Split(new string[] {"stops", "stop"}, StringSplitOptions.RemoveEmptyEntries);
                             var stopsno = column3Text[0];
                             var dur = column3Text[1].Split(' ');
-                            var duration = new TimeSpan();
+                            TimeSpan duration;
                             if (dur.Length != 1)
                             {
                                 duration = new TimeSpan(
@@ -765,6 +719,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 duration = new TimeSpan(0, 
                                 Convert.ToInt32(dur[0].SubstringBetween(0, dur[0].Length - 1)), 0);
                             }
+
+                            listFlightNo.Add(flightNo);
+                            listDepHr.Add(departureHour);
 
                             newSegments.Add(new FlightSegment
                             {
@@ -787,6 +744,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                         }
 
+                        var depHrJoin = String.Join("|", listDepHr.ToArray());
+                        var flightNoJoin = String.Join("|", listFlightNo.ToArray());
+                        
                         itin = new FlightItinerary
                         {
                             AdultCount = adultCount,
@@ -804,13 +764,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             SupplierCurrency = "IDR",
                             SupplierPrice = Convert.ToDecimal(agentprice),
                             FareId = bookInfo.Itinerary.FareId,
+                            LocalCurrency = "IDR",
                             Trips = new List<FlightTrip>
                             {
                                 new FlightTrip
                                 {
                                     OriginAirport = origin,
                                     DestinationAirport = dest,
-                                    DepartureDate = DateTime.SpecifyKind(depdate, DateTimeKind.Utc),
+                                    DepartureDate = depdate.Date,
                                     Segments = newSegments
                                 }
                             }
@@ -821,6 +782,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         //Cek Jika Itinerary berubah
                         if (isItinChanged)
                         {
+                            LogOut(cid, client);
+                            TurnInUsername(clientx, userName);
+
                             return new BookFlightResult
                             {
                                 IsSuccess = false,
@@ -836,25 +800,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             };
                         }
 
-                        // Cek Jika harga di Website telah berubah setelah di select
-                        if (Convert.ToDecimal(agentprice) != bookInfo.Itinerary.SupplierPrice) 
-                        {
-                            return new BookFlightResult
-                            {
-                                IsSuccess = false,
-                                Errors = new List<FlightError> { FlightError.TechnicalError },
-                                Status = null,
-                                ErrorMessages = new List<string> { "Price is Changed!" },
-                                NewPrice = decimal.Parse(agentprice),
-                                IsValid = true,
-                                IsPriceChanged = true,
-                                NewItinerary = itin,
-                                IsItineraryChanged = isItinChanged
-
-                            };
-                        }
-                        
-
+                        var harga2 = decimal.Parse(agentprice);
                         var orderedPassengers = bookInfo.Passengers.OrderBy(x => x.Type);
                         var dataPassenger = "";
                         
@@ -1121,15 +1067,80 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             ParameterType.RequestBody);
                         Thread.Sleep(3000);
                         var searchResponseBooking = client.Execute(searchRequestBooking);
+                        string newPrice;
 
                         //HARGA BARU DI UJUNG
                         try
                         {
                             var htmlBookingResult = (CQ)searchResponseBooking.Content;
-                            var newPrice = htmlBookingResult["#lblTotalFares"].Text().Replace(",", "");
+                            newPrice = htmlBookingResult["#lblTotalFares"].Text().Replace(",", "");
+                            var vsPriceAcceptance =
+                                HttpUtility.UrlEncode(htmlBookingResult["#__VIEWSTATE"].Attr("value"));
+                            
                             //Kondisi dimana ada perubahan harga namun udah sama dengan harga kita
-                            if (newPrice.Length != 0 && decimal.Parse(newPrice) != bookInfo.Itinerary.SupplierPrice)
+                            if (newPrice.Length != 0 )
                             {
+                                if (decimal.Parse(newPrice) != bookInfo.Itinerary.SupplierPrice)
+                                {
+                                    LogOut(cid, client);
+                                    TurnInUsername(clientx, userName);
+                                    
+                                    var newFareId = origin + "+" + dest + "+" + splittedFareId[2] + "+" + adultCount +
+                                                    "+" +
+                                                    childCount + "+" + infantCount + "+" + splittedFareId[6] + "+" +
+                                                    newPrice + "+" +
+                                                    flightId + "+" + newSegments.Count + "+" + flightNoJoin + "+" +
+                                                    depHrJoin;
+
+                                    itin.SupplierPrice = decimal.Parse(newPrice);
+                                    itin.FareId = newFareId;
+
+                                    return new BookFlightResult
+                                    {
+                                        IsSuccess = false,
+                                        Errors = new List<FlightError> {FlightError.TechnicalError},
+                                        Status = null,
+                                        ErrorMessages = new List<string> {"Price is changed!"},
+                                        NewPrice = decimal.Parse(newPrice),
+                                        IsValid = true,
+                                        IsPriceChanged = true,
+                                        NewItinerary = itin,
+                                        IsItineraryChanged = isItinChanged
+
+                                    };
+                                }
+                                if (decimal.Parse(newPrice) == bookInfo.Itinerary.SupplierPrice)
+                                {
+                                    var postDataPriceAcceptance = "__EVENTTARGET=lbContinue&__EVENTARGUMENT=&__VIEWSTATE="
+                                                                  + vsPriceAcceptance;
+                                    const string urlPriceAcceptance = @"LionAirAgentsIBE/PriceAcceptance.aspx";
+                                    var searchRequestPriceAcceptance = new RestRequest(urlPriceAcceptance, Method.POST);
+                                    searchRequestPriceAcceptance.AddHeader("Accept-Encoding", "gzip, deflate");
+                                    searchRequestPriceAcceptance.AddHeader("Accept",
+                                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                                    searchRequestPriceAcceptance.AddHeader("Referer",
+                                        "https://agent.lionair.co.id/LionAirAgentsIBE/Step3.aspx");
+                                    searchRequestPriceAcceptance.AddHeader("Origin", "https://agent.lionair.co.id");
+                                    searchRequestPriceAcceptance.AddHeader("Cache-Control", "max-age=0");
+                                    searchRequestPriceAcceptance.AddParameter
+                                        ("application/x-www-form-urlencoded", postDataPriceAcceptance,
+                                            ParameterType.RequestBody);
+                                    Thread.Sleep(3000);
+                                    var searchResponsPriceAcceptance = client.Execute(searchRequestPriceAcceptance);
+                                }
+                            }
+                            else if (bookInfo.Itinerary.SupplierPrice != harga2)
+                            {
+                                var newFareId = origin + "+" + dest + "+" + splittedFareId[2] + "+" + adultCount 
+                                    + "+" + childCount + "+" + infantCount + "+" + splittedFareId[6] + "+" + harga2 
+                                    + "+" + flightId + "+" + newSegments.Count + "+" + flightNoJoin + "+" + depHrJoin;
+
+                                itin.SupplierPrice = harga2;
+                                itin.FareId = newFareId;
+
+                                LogOut(cid, client);
+                                TurnInUsername(clientx, userName);
+
                                 return new BookFlightResult
                                 {
                                     IsSuccess = false,
@@ -1147,6 +1158,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         }
                         catch 
                         {
+                            LogOut(cid, client);
+                            TurnInUsername(clientx, userName);
+
                             return new BookFlightResult
                             {
                                 IsSuccess = false,
@@ -1158,65 +1172,72 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 }
                             };
                         }
-                        
 
-                        const string url9 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
-                        var searchRequest9 = new RestRequest(url9, Method.GET);
-                        searchRequest9.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
-                        searchRequest9.AddHeader("Content-Encoding", "gzip");
-                        searchRequest9.AddHeader("Host", "agent.lionair.co.id");
-                        searchRequest9.AddHeader("Accept",
-                            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                        searchRequest9.AddHeader("Referer",
-                            "https://agent.lionair.co.id/LionAirAgentsIBE/OnlineBooking.aspx");
-                        Thread.Sleep(3000);
-                        var searchResponse9 = client.Execute(searchRequest9);
+                        if (newPrice.Length == 0)
+                        {
+                            const string url9 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
+                            var searchRequest9 = new RestRequest(url9, Method.GET);
+                            searchRequest9.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                            searchRequest9.AddHeader("Content-Encoding", "gzip");
+                            searchRequest9.AddHeader("Host", "agent.lionair.co.id");
+                            searchRequest9.AddHeader("Accept",
+                                "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                            searchRequest9.AddHeader("Referer",
+                                "https://agent.lionair.co.id/LionAirAgentsIBE/OnlineBooking.aspx");
+                            Thread.Sleep(3000);
+                            var searchResponse9 = client.Execute(searchRequest9);
 
-                        const string url10 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
-                        var searchRequest10 = new RestRequest(url10, Method.GET);
-                        searchRequest10.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
-                        searchRequest10.AddHeader("Content-Encoding", "gzip");
-                        searchRequest10.AddHeader("Host", "agent.lionair.co.id");
-                        searchRequest10.AddHeader("Accept",
-                            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                        searchRequest10.AddHeader("Referer",
-                            "https://agent.lionair.co.id/LionAirAgentsIBE/OnlineBooking.aspx");
-                        Thread.Sleep(3000);
-                        var searchResponse10 = client.Execute(searchRequest10);
-                        var html10 = searchResponse10.Content;
-                        var bookingData = (CQ) html10;
+                            const string url10 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
+                            var searchRequest10 = new RestRequest(url10, Method.GET);
+                            searchRequest10.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                            searchRequest10.AddHeader("Content-Encoding", "gzip");
+                            searchRequest10.AddHeader("Host", "agent.lionair.co.id");
+                            searchRequest10.AddHeader("Accept",
+                                "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                            searchRequest10.AddHeader("Referer",
+                                "https://agent.lionair.co.id/LionAirAgentsIBE/OnlineBooking.aspx");
+                            Thread.Sleep(3000);
+                            var searchResponse10 = client.Execute(searchRequest10);
+                            var html10 = searchResponse10.Content;
+                            var bookingData = (CQ) html10;
 
-                        bookingReference = bookingData["#lblRefNumber"].Text();
-                        bookingTimeLimit = bookingData["#lblPayByDate"].Text();
+                            bookingReference = bookingData["#lblRefNumber"].Text();
+                            bookingTimeLimit = bookingData["#lblPayByDate"].Text();
+                        }
+                        else
+                        {
+                            const string url9 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
+                            var searchRequest9 = new RestRequest(url9, Method.GET);
+                            searchRequest9.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                            searchRequest9.AddHeader("Content-Encoding", "gzip");
+                            searchRequest9.AddHeader("Host", "agent.lionair.co.id");
+                            searchRequest9.AddHeader("Accept",
+                                "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                            searchRequest9.AddHeader("Referer",
+                                "https://agent.lionair.co.id/LionAirAgentsIBE/Step3.aspx");
+                            Thread.Sleep(3000);
+                            var searchResponse9 = client.Execute(searchRequest9);
 
-                        const string url15 = @"/LionAirAgentsPortal/Logout.aspx";
-                        var searchRequest15 = new RestRequest(url15, Method.GET);
-                        searchRequest15.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
-                        searchRequest15.AddHeader("Content-Encoding", "gzip");
-                        searchRequest15.AddHeader("Host", "agent.lionair.co.id");
-                        searchRequest15.AddHeader("Accept",
-                            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                        searchRequest15.AddHeader("Referer",
-                            "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + cid);
-                        Thread.Sleep(1000);
-                        var searchResponse15 = client.Execute(searchRequest15);
+                            const string url10 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
+                            var searchRequest10 = new RestRequest(url10, Method.GET);
+                            searchRequest10.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                            searchRequest10.AddHeader("Content-Encoding", "gzip");
+                            searchRequest10.AddHeader("Host", "agent.lionair.co.id");
+                            searchRequest10.AddHeader("Accept",
+                                "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                            searchRequest10.AddHeader("Referer",
+                                "https://agent.lionair.co.id/LionAirAgentsIBE/Step3.aspx");
+                            Thread.Sleep(3000);
+                            var searchResponse10 = client.Execute(searchRequest10);
+                            var html10 = searchResponse10.Content;
+                            var bookingData = (CQ)html10;
 
-                        //GET PAGE DEFAULT(HOME)
+                            bookingReference = bookingData["#lblRefNumber"].Text();
+                            bookingTimeLimit = bookingData["#lblPayByDate"].Text();
+                        }
 
-                        const string url16 = @"/LionAirAgentsPortal/Default.aspx";
-                        var searchRequest16 = new RestRequest(url16, Method.GET);
-                        searchRequest16.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
-                        searchRequest16.AddHeader("Content-Encoding", "gzip");
-                        searchRequest16.AddHeader("Host", "agent.lionair.co.id");
-                        searchRequest16.AddHeader("Accept",
-                            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                        searchRequest16.AddHeader("Referer",
-                            "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + cid);
-                        Thread.Sleep(1000);
-                        var searchResponse16 = client.Execute(searchRequest16);
-
-                        accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
-                        accRs = (RestResponse) clientx.Execute(accReq);
+                        LogOut(cid, client);
+                        TurnInUsername(clientx, userName);
                     }
 
                     const string format = "dd MMMM', 'yyyy', 'HH:mm";
@@ -1250,51 +1271,59 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         ErrorMessages = new List<string> { "Web Layout Changed!" }
                     };
                 }
-                 catch //(Exception e)
-                 {
-                     const string url15 = @"/LionAirAgentsPortal/Logout.aspx";
-                     var searchRequest15 = new RestRequest(url15, Method.GET);
-                     searchRequest15.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
-                     searchRequest15.AddHeader("Content-Encoding", "gzip");
-                     searchRequest15.AddHeader("Host", "agent.lionair.co.id");
-                     searchRequest15.AddHeader("Accept",
-                         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                     searchRequest15.AddHeader("Referer",
-                         "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + cid);
-                     Thread.Sleep(1000);
-                     var searchResponse15 = client.Execute(searchRequest15);
-
-                     //GET PAGE DEFAULT(HOME)
-
-                     const string url16 = @"/LionAirAgentsPortal/Default.aspx";
-                     var searchRequest16 = new RestRequest(url16, Method.GET);
-                     searchRequest16.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
-                     searchRequest16.AddHeader("Content-Encoding", "gzip");
-                     searchRequest16.AddHeader("Host", "agent.lionair.co.id");
-                     searchRequest16.AddHeader("Accept",
-                         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                     searchRequest16.AddHeader("Referer",
-                         "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + cid);
-                     Thread.Sleep(1000);
-                     var searchResponse16 = client.Execute(searchRequest16);
-
-                     accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
-                     accRs = (RestResponse)clientx.Execute(accReq);
+                catch //(Exception e)
+                {
+                    LogOut(cid, client);
+                    TurnInUsername(clientx, userName);
                      
-                    //throw e;
                     return new BookFlightResult
-                    {
-                        IsSuccess = false,
-                        Errors = new List<FlightError> {FlightError.TechnicalError},
-                        ErrorMessages = new List<string> {"Web Layout Changed!"},
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        }
-                    };
-                }
+                     {
+                         IsSuccess = false,
+                         Errors = new List<FlightError> {FlightError.TechnicalError},
+                         ErrorMessages = new List<string> {"Web Layout Changed!"},
+                         Status = new BookingStatusInfo
+                         {
+                             BookingStatus = BookingStatus.Failed
+                         }
+                     };
+                 }
+             }
+
+            private void LogOut(string accountId, RestClient client)
+            {
+                const string url15 = @"/LionAirAgentsPortal/Logout.aspx";
+                var searchRequest15 = new RestRequest(url15, Method.GET);
+                searchRequest15.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                searchRequest15.AddHeader("Content-Encoding", "gzip");
+                searchRequest15.AddHeader("Host", "agent.lionair.co.id");
+                searchRequest15.AddHeader("Accept",
+                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                searchRequest15.AddHeader("Referer",
+                    "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + accountId);
+                Thread.Sleep(1000);
+                var searchResponse15 = client.Execute(searchRequest15);
+
+                //GET PAGE DEFAULT(HOME)
+
+                const string url16 = @"/LionAirAgentsPortal/Default.aspx";
+                var searchRequest16 = new RestRequest(url16, Method.GET);
+                searchRequest16.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                searchRequest16.AddHeader("Content-Encoding", "gzip");
+                searchRequest16.AddHeader("Host", "agent.lionair.co.id");
+                searchRequest16.AddHeader("Accept",
+                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                searchRequest16.AddHeader("Referer",
+                    "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + accountId);
+                Thread.Sleep(1000);
+                var searchResponse16 = client.Execute(searchRequest16);
             }
-        }
+
+            private void TurnInUsername(RestClient client, string username)
+            {
+                var accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + username, Method.GET);
+                var accRs = (RestResponse)client.Execute(accReq);
+            }
+         }
      }
  }
 

@@ -114,9 +114,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId,
                     supplierName, fareType);
             var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
-            result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit
-                ? defaultTimeout
-                : result.Status.TimeLimit;
+            if (result.Status != null)
+                result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit
+                    ? defaultTimeout
+                    : result.Status.TimeLimit;
+            if (result.NewItinerary != null)
+                result.NewItinerary.FareId = IdUtil.ConstructIntegratedId(result.NewItinerary.FareId, supplierName, result.NewItinerary.FareType);
             return result;
         }
 
