@@ -39,6 +39,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     $scope.passengers.push(x);
                 }
             }
+            //$scope.incMth();
         },
         // identity requirement
         PassportRequired: CheckoutDetail.PassportRequired,
@@ -47,6 +48,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         // buyer info
         BuyerInfo: CheckoutDetail.BuyerInfo
     };
+
+    $scope.parseInt = parseInt;
 
     $scope.token = CheckoutDetail.Token;
     $scope.currency = 'IDR';
@@ -347,9 +350,11 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         }
     }//$scope.book
 
-    $scope.Today = {
-        datetoday: new Date(),
-        date: datetoday.getDate
+    $scope.tooday = function() {
+        var d = new Date();
+        var x = d.getDate();
+            return x;
+       
     }
     // credit card promo checker
     $scope.CreditCardPromo = {
@@ -460,6 +465,10 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             { name: 'Mrs', value: 'Mistress' },
             { name: 'Ms', value: 'Miss' }
     ];
+    $scope.titleKids = [
+            { name: 'Mr', value: 'Mister' },
+            { name: 'Ms', value: 'Miss' }
+    ];
     // return URL
     $scope.PageConfig.ReturnUrl = document.referrer == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;
 
@@ -504,7 +513,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             { value: 8, name: 'September' },
             { value: 9, name: 'October' },
             { value: 10, name: 'November' },
-            { value: 11, name: 'December' },
+            { value: 11, name: 'December' }
     ];
     $scope.generateYear = function (type) {
         var departureDate = new Date($scope.flightDetail.departureFullDate);
@@ -535,6 +544,12 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 break;
         }
 
+    }
+
+    $scope.incMth = function() {
+        for (var z = 0; z < $scope.passengers.length; z++) {
+            $scope.passengers[z].birth.month = parseInt($scope.passengers[z].birth.month, 10) + 1;
+        }
     }
 
     // init passenger

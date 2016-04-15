@@ -108,9 +108,9 @@ default:
     
         <header class="page__header">
             <div class="step__wrapper">
-                <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01</span></div>
-                <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02</span></div>
-                <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03</span></div>
+                <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01. Data Kontak</span></div>
+                <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02. Data Penumpang</span></div>
+                <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03. Pembayaran</span></div>
             </div>
         </header><!-- .page-header -->
     
@@ -176,7 +176,8 @@ default:
                             <div class="form-group">
                                 <label class="control-label">Title : </label>
                                 <select class="form-control" required ng-model="Passenger.title" name="passenger_{{$index}}_title" ng-init="Passenger.title = titles[0].value">
-                                    <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                                    <option ng-repeat="title in titles" value="{{title.value}}" ng-if="Passenger.type == 'adult'">{{title.name}}</option>
+                                    <option ng-repeat="title in titleKids" value="{{title.value}}" ng-if="Passenger.type != 'adult'">{{title.name}}</option>
                                 </select>
                             </div>
 
@@ -190,29 +191,34 @@ default:
                                 <input type="text" value="" class="form-control" required name="passenger_{{$index}}_lastName" placeholder="Ex : Doe" ng-model="Passenger.lastName" />
                             </div>
                         
-                        
+                            
                             <!-- passenger birth date start -->
                             <div class="form-group important">
                                 <label class="control-label">Tanggal Lahir: </label>
                                 <div class="row">
                                         <div class="col-xs-4">
-                                            <select class="form-control" required name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" required ng-change="ValidateBirthday(Passenger)">
+                                            <select class="form-control" required name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" required ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.date = dates(Passenger.birth.month, Passenger.birth.year)[flightDetail.departureDate-1]">
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'adult'">{{date}}</option>
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'child' && !( Passenger.birth.year == flightDetail.minYearChild && Passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate )">{{date}}</option>
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'infant' && !( (Passenger.birth.year == flightDetail.minYearInfant && Passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate))">{{date}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <select class="form-control" required name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" required ng-change="ValidateBirthday(Passenger)">
+                                            <select class="form-control" required name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" required ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.month = flightDetail.departureMonth">
                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'child' && (!(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth))">{{month.name}}</option>
                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'infant' && (!(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth))">{{month.name}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" required ng-change="ValidateBirthday(Passenger)">
+                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" required ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.year = flightDetail.minYearChild" ng-if="Passenger.type == 'adult'">
                                                 <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
-
+                                            </select>
+                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" required ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.year = flightDetail.minYearInfant" ng-if="Passenger.type == 'child'">
+                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
+                                            </select>
+                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" required ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.year = flightDetail.departureYear" ng-if="Passenger.type == 'infant'">
+                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
                                             </select>
                                         </div>
                                 </div>
@@ -489,7 +495,7 @@ default:
                                 </dl>
                                 <dl>
                                     <dt>Tanggal Lahir</dt>
-                                    <dd>{{Passenger.birth.date}} / {{Passenger.birth.month + 1}} / {{Passenger.birth.year}}</dd>
+                                    <dd>{{Passenger.birth.date}} / {{parseInt(Passenger.birth.month)+1}} / {{Passenger.birth.year}}</dd>
                                 </dl>
                             </li>
                         </ol>
