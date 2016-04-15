@@ -135,8 +135,10 @@ app.controller('checkoutController', [
             url: FlightBookConfig.Url,
             postData: '',
             checked: false,
+            newPrice : '',
             rsvNo: '',
             isSuccess: false,
+            isPriceChanged: false,
             ccChecked: false,
             checkCreditCard: function () {
                 if ($scope.paymentMethod == 'CreditCard') {
@@ -224,6 +226,7 @@ app.controller('checkoutController', [
             },
             send: function () {
                 $scope.book.booking = true;
+                $scope.book.isPriceChanged = false;
 
                 // generate data
                 $scope.book.postData = ' "TransferToken" : "' + $scope.TransferConfig.Token + '" , "Payment.Data.Data0" : "' + $scope.CreditCard.Token + '", "Payment.Data.Data1" : "' + $scope.CreditCard.Name + '", "Payment.Data.Data20" : "' + $scope.loggedIn + '", "Payment.Data.Data9" : "' + $scope.buyerInfo.email + '", "Token":"' + $scope.token + '", "Payment.Currency":"' + $scope.currency + '", "DiscountCode":"' + $scope.voucher.confirmedCode + '", "Payment.Method":"' + $scope.paymentMethod + '", "Contact.Title" :"' + $scope.buyerInfo.title + '","Contact.Name":"' + $scope.buyerInfo.fullname + '", "Contact.CountryCode":"' + $scope.buyerInfo.countryCode + '", "Contact.Phone":"' + $scope.buyerInfo.phone + '","Contact.Email":"' + $scope.buyerInfo.email + '","Language":"' + $scope.language + '"';
@@ -253,7 +256,7 @@ app.controller('checkoutController', [
                 $scope.book.postData = '{' + $scope.book.postData + '}';
                 $scope.book.postData = JSON.parse($scope.book.postData);
 
-                console.log($scope.book.postData);
+                //console.log($scope.book.postData);
 
                 // send form
                 $http({
@@ -263,24 +266,32 @@ app.controller('checkoutController', [
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 }).then(function (returnData) {
                     console.log(returnData);
-
-                    $scope.book.checked = true;
-
+                    
                     if (returnData.data.IsSuccess) {
-                        $scope.book.isSuccess = true;
-                        $scope.book.rsvNo = returnData.data.RsvNo;
+                        if (returnData.data.NewPrice != null) {
+                            $scope.book.isPriceChanged = true;
+                            $scope.book.isSuccess = true;
+                            $scope.book.newPrice = returnData.data.NewPrice;
+                            $scope.book.checked = false;
+                        }
+                        else {
+                            $scope.book.isSuccess = true;
+                            $scope.book.rsvNo = returnData.data.RsvNo;
 
-                        $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
-                        $('form#rsvno').submit();
-
+                            $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                            $('form#rsvno').submit();
+                            $scope.book.checked = true;
+                        }
+                        
+                        
                     } else {
+                        $scope.book.checked = true;
                         $scope.book.isSuccess = false;
                     }
 
                 }, function (returnData) {
                     console.log(returnData);
                     $scope.book.checked = true;
-                    $scope.book.isSuccess = false;
                 });
 
             }
@@ -673,4 +684,4 @@ app.controller('confirmationController', [
         $scope.pageLoaded = true;
 
     }
-]);// confirmation controller
+]);// confirmation controlleris

@@ -66,7 +66,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 {
                     return new FlightBookApiResponse
                     {
-                        IsSuccess = false,
+                        IsSuccess = true,
                         NewPrice = bookServiceResponse.NewPrice,
                         OriginalRequest = request
                     };

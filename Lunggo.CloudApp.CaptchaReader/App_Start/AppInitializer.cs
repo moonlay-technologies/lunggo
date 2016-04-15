@@ -26,7 +26,6 @@ namespace Lunggo.CloudApp.CaptchaReader
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             if (env == "production")
             {
-                Account.AccountList.Add("trv.agent.dua");
                 Account.AccountList.Add("trv.agent.tiga");
                 Account.AccountList.Add("trv.agent.empat");
                 Account.AccountList.Add("trv.agent.lima");
@@ -58,6 +57,7 @@ namespace Lunggo.CloudApp.CaptchaReader
             else
             {
                 Account.AccountList.Add("trv.agent.satu");
+                Account.AccountList.Add("trv.agent.dua");
             }
         }
 
