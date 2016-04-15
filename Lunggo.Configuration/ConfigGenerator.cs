@@ -20,7 +20,7 @@ namespace Lunggo.Configuration
 
     public class ConfigGenerator
     {
-        private const DeploymentEnvironment Environment = DeploymentEnvironment.QA;
+        private const DeploymentEnvironment Environment = DeploymentEnvironment.Production;
         private const bool DeployHtmlTemplate = false;
         private const string FileExtension = "*.properties";
         private const string FinalProjectConfigFile = "application.properties";
@@ -68,7 +68,8 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler4", 
                 "WebJob-FlightSearch.FlightCrawler5",
                 "CloudApp.EticketHandler",
-                "WebJob.BankTransferChecking"
+                "WebJob.BankTransferChecking",
+                "CloudApp.CaptchaReader"
             };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
