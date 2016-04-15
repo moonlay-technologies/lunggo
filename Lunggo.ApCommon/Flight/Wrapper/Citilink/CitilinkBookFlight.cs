@@ -331,13 +331,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var getPrice = detailFlight["#priceDisplayBody>table:last"].Children().Children().Last().Last().Text().Trim().Split('\n');
                 var harga = getPrice[1].Trim().Replace("Rp.","").Replace(",","");
                 var fixPrice = decimal.Parse(harga);
-                //Cek Harga di Final
 
+                //Cek Harga di Final
                 if (bookInfo.Itinerary.SupplierPrice != fixPrice) 
                 {
                     var fixItin = bookInfo.Itinerary;
                     fixItin.SupplierPrice = fixPrice;
-
+                    fixItin.FareId = fixItin.FareId.Replace(bookInfo.Itinerary.SupplierPrice.ToString(),fixPrice.ToString());
+                    
                     return new BookFlightResult
                     {
                         IsValid = true,

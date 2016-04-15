@@ -416,19 +416,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     #endregion
                 }
 
-                else
-                {
-                    return new BookFlightResult
-                    {
-                        IsSuccess = false,
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
-                    };
-                }
-
                 /*END HERE*/
                 
                 int i = 0;

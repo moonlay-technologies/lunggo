@@ -116,6 +116,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\dv1-webjobflightsearch %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\qa-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjobflightsearch.pubxml" />
