@@ -584,6 +584,16 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             }
         }
     }
+
+    $scope.getPassportYear = function () {
+        var now = new Date();
+        var mth = now.getMonth();
+        if ($scope.flightDetail.departureMonth + 6 > mth) {
+            return $scope.flightDetail.departureYear + 1;
+        } else {
+            return $scope.flightDetail.departureYear;
+        }
+    }
     // validate passenger birthday
     $scope.validateBirthday = function (passenger) {
         if (passenger.type != 'adult') {
