@@ -350,12 +350,21 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         }
     }//$scope.book
 
-    $scope.tooday = function() {
-        var d = new Date();
-        var x = d.getDate();
-            return x;
-       
+    $scope.getPassportMonth = function () {
+        if ($scope.flightDetail.departureMonth + 6 > $scope.months.length) {
+            return $scope.flightDetail.departureMonth - 6;
+        } else return $scope.flightDetail.departureMonth + 6;
     }
+
+    $scope.getPassportYear = function () {
+        
+        if ($scope.getPassportMonth() > $scope.flightDetail.departureMonth) {
+            return $scope.flightDetail.departureYear;
+        } else {
+            return ($scope.flightDetail.departureYear + 1);
+        }
+    }
+
     // credit card promo checker
     $scope.CreditCardPromo = {
         Type: '',
@@ -585,15 +594,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         }
     }
 
-    $scope.getPassportYear = function () {
-        var now = new Date();
-        var mth = now.getMonth();
-        if ($scope.flightDetail.departureMonth + 6 > mth) {
-            return $scope.flightDetail.departureYear + 1;
-        } else {
-            return $scope.flightDetail.departureYear;
-        }
-    }
+    
     // validate passenger birthday
     $scope.validateBirthday = function (passenger) {
         if (passenger.type != 'adult') {

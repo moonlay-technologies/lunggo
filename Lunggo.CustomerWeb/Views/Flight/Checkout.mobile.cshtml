@@ -244,21 +244,21 @@ default:
                                     <div class="col-xs-4">
                                         <select class="form-control" name="passenger_{{$index}}_expiryMonth" ng-model="Passenger.passport.expire.month"
                                                 ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)"
-                                                ng-init="Passenger.passport.expire.month = flightDetail.departureMonth + 6">
+                                                ng-init="Passenger.passport.expire.month = getPassportMonth()">
                                             <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.passport.expire.month" ng-if="!(Passenger.passport.expire.year == flightDetail.passportYear && month.value < flightDetail.passportMonth)">{{month.name}}</option>
                                         </select>
                                     </div>
                                     <div class="col-xs-4">
                                         <select class="form-control" name="passenger_{{$index}}_expiryYear" ng-model="Passenger.passport.expire.year"
                                                 ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)"
-                                                ng-init="Passenger.passport.expire.Year= flightDetail.departureYear" ng-if=" flightDetail.departureMonth + 6 > todaymonth()"> 
+                                                ng-init="Passenger.passport.expire.year = getPassportYear()">
                                             <option value="{{year}}" ng-repeat="year in generateYear('passport')" ng-selected="year == Passenger.passport.expire.year">{{year}}</option>
                                         </select>
-                                        <select class="form-control" name="passenger_{{$index}}_expiryYear" ng-model="Passenger.passport.expire.year"
+                                        @*<select class="form-control" name="passenger_{{$index}}_expiryYear" ng-model="Passenger.passport.expire.year"
                                                 ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)"
                                                 ng-init="Passenger.passport.expire.Year= flightDetail.departureYear + 1" ng-if=" flightDetail.departureMonth + 6 < todaymonth()">
                                             <option value="{{year}}" ng-repeat="year in generateYear('passport')" ng-selected="year == Passenger.passport.expire.year">{{year}}</option>
-                                        </select>
+                                        </select>*@
                                     </div>
                                 </div>
                             </div>
