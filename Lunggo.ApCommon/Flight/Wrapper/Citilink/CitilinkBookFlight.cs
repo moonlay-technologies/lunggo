@@ -9,6 +9,8 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Web;
 using RestSharp;
+using System.Diagnostics;
+using Lunggo.ApCommon.Constant;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
@@ -23,10 +25,32 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
+                RevalidateConditions conditions = new RevalidateConditions
+                {
+                    Itinerary = bookInfo.Itinerary
+                };
+                //conditions.Itinerary = bookInfo.Itinerary;
+                RevalidateFareResult revalidateResult = RevalidateFare(conditions);
+                if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
+                {
+                    return new BookFlightResult
+                    {
+                        IsValid = revalidateResult.IsValid,
+                        ErrorMessages = revalidateResult.ErrorMessages,
+                        Errors = revalidateResult.Errors,
+                        IsItineraryChanged = revalidateResult.IsItineraryChanged,
+                        IsPriceChanged = revalidateResult.IsPriceChanged,
+                        IsSuccess = false,
+                        NewItinerary = revalidateResult.NewItinerary,
+                        NewPrice = revalidateResult.NewPrice,
+                        Status = null
+                    };
+                }
+                bookInfo.Itinerary = revalidateResult.NewItinerary;
                 var client = CreateAgentClient();
                 Login(client);
 
-                var splittedFareId = bookInfo.FareId.Split('.').ToList();
+                var splittedFareId = bookInfo.Itinerary.FareId.Split('.').ToList();
                 var date = new DateTime(int.Parse(splittedFareId[4]), int.Parse(splittedFareId[3]), int.Parse(splittedFareId[2]));
                 var adultCount = int.Parse(splittedFareId[5]);
                 var childCount = int.Parse(splittedFareId[6]);
@@ -40,9 +64,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 int index;
                 if (splitcoreFareId.Count > 16)
                 {
-                    index = 18;
+                    index = 11;
                     origin = splitcoreFareId[index];
-                    dest = splitcoreFareId[index + 10];
+                    dest = splitcoreFareId[21];
                 }
                 else
                 {
@@ -297,6 +321,38 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         Errors = new List<FlightError> { FlightError.InvalidInputData }
                     };
 
+                /*Buat dapat Info Itinerary dan Harga*/
+                var getPaymenturl = @"Payment.aspx";
+                var paymentGetRequest = new RestRequest(getPaymenturl, Method.GET);
+                paymentGetRequest.AddHeader("Referer", "https://book.citilink.co.id/SeatMap.aspx");
+                var paymentGetresponse = client.Execute(paymentGetRequest);
+                var html = paymentGetresponse.Content;
+                CQ detailFlight = (CQ)html;
+                var getPrice = detailFlight["#priceDisplayBody>table:last"].Children().Children().Last().Last().Text().Trim().Split('\n');
+                var harga = getPrice[1].Trim().Replace("Rp.","").Replace(",","");
+                var fixPrice = decimal.Parse(harga);
+
+                //Cek Harga di Final
+                if (bookInfo.Itinerary.SupplierPrice != fixPrice) 
+                {
+                    var fixItin = bookInfo.Itinerary;
+                    fixItin.SupplierPrice = fixPrice;
+                    fixItin.FareId = fixItin.FareId.Replace(bookInfo.Itinerary.SupplierPrice.ToString(),fixPrice.ToString());
+                    
+                    return new BookFlightResult
+                    {
+                        IsValid = true,
+                        IsItineraryChanged = false,
+                        IsPriceChanged = bookInfo.Itinerary.SupplierPrice != fixPrice,
+                        IsSuccess = false,
+                        ErrorMessages = new List<string> { "Price is changed!" },
+                        NewItinerary = fixItin,
+                        NewPrice = fixPrice,
+                        Status = null
+                    };
+                }
+                
+
                 // SELECT HOLD (PAYMENT)
 
                 var paymentUrl = @"Payment.aspx";
@@ -333,6 +389,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 
                 paymentRequest.AddParameter("application/x-www-form-urlencoded", paymentPostData, ParameterType.RequestBody);
                 var paymentResponse = client.Execute(paymentRequest);
+
 
                 if (paymentResponse.ResponseUri.AbsolutePath != "/Wait.aspx")
                     return new BookFlightResult

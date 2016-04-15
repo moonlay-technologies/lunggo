@@ -24,12 +24,25 @@ namespace Lunggo.ApCommon.Flight.Service
         public BookFlightOutput BookFlight(BookFlightInput input)
         {
             var output = new BookFlightOutput();
-            var itins = GetItinerarySetFromCache(input.ItinCacheId); 
-            output.BookResults = BookItineraries(itins, input, output);
-            if (AllAreBooked(output.BookResults))
+            var itins = GetItinerarySetFromCache(input.ItinCacheId);
+            var bookResults = BookItineraries(itins, input, output);
+            output.IsValid = bookResults.TrueForAll(result => result.RevalidateSet.IsValid);
+            if (output.IsValid)
+            {
+                output.IsItineraryChanged = bookResults.Exists(result => result.RevalidateSet.IsItineraryChanged);
+                var newItins = bookResults.Select(result => result.RevalidateSet.NewItinerary).ToList();
+                if (output.IsItineraryChanged)
+                    output.NewItinerary = ConvertToItineraryForDisplay(BundleItineraries(newItins));
+                AddPriceMargin(newItins);
+                output.IsPriceChanged = bookResults.Exists(result => result.RevalidateSet.IsPriceChanged);
+                if (output.IsPriceChanged)
+                    output.NewPrice = newItins.Sum(itin => itin.LocalPrice);
+                SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.ItinCacheId);
+            }
+            if (AllAreBooked(bookResults))
             {
                 output.IsSuccess = true;
-                var reservation = CreateReservation(itins, input, output);
+                var reservation = CreateReservation(itins, input, bookResults);
                 InsertDb.Reservation(reservation);
                 if (reservation.Payment.Method == PaymentMethod.BankTransfer)
                     SendPendingPaymentReservationNotifToCustomer(reservation.RsvNo);
@@ -37,18 +50,19 @@ namespace Lunggo.ApCommon.Flight.Service
                     SendInstantPaymentReservationNotifToCustomer(reservation.RsvNo);
                 SavePaymentRedirectionUrlInCache(reservation.RsvNo, reservation.Payment.Url, reservation.Payment.TimeLimit);
                 output.RsvNo = reservation.RsvNo;
+                //Delete Itinerary From Cache
+                DeleteItineraryFromCache(input.ItinCacheId);
+                DeleteItinerarySetFromCache(input.ItinCacheId);
             }
             else
             {
                 output.IsSuccess = false;
-                if (AnyIsBooked(output.BookResults))
+                if (AnyIsBooked(bookResults))
                     output.PartiallySucceed();
                 output.DistinguishErrors();
             }
 
-            //Delete Itinerary From Cache
-            DeleteItineraryFromCache(input.ItinCacheId);
-            DeleteItinerarySetFromCache(input.ItinCacheId);
+            
             return output;
         }
 
@@ -69,7 +83,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return bookResults.All(set => set.IsSuccess);
         }
 
-        private FlightReservation CreateReservation(List<FlightItinerary> itins, BookFlightInput input, BookFlightOutput output)
+        private FlightReservation CreateReservation(List<FlightItinerary> itins, BookFlightInput input, List<BookResult> bookResults)
         {
             var trips =
                 itins.SelectMany(itin => itin.Trips).OrderBy(trip => trip.Segments.First().DepartureTime).ToList();
@@ -84,7 +98,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 TripType = ParseTripType(trips)
             };
             reservation.Payment.Medium = PaymentService.GetInstance().GetPaymentMedium(input.Payment.Method);
-            reservation.Payment.TimeLimit = output.BookResults.Min(res => res.TimeLimit);
+            reservation.Payment.TimeLimit = bookResults.Min(res => res.TimeLimit);
             var originalPrice = reservation.Itineraries.Sum(itin => itin.LocalPrice);
             var campaign = CampaignService.GetInstance().UseVoucherRequest(new VoucherRequest
             {
@@ -115,7 +129,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 reservation.TransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
                 reservation.Payment.FinalPrice -= reservation.TransferCode;
             }
-            else  
+            else
             {
                 //Penambahan disini buat menghapus Transfer Code dan Token Transfer Code jika tidak milih Bank Transfer
                 var dummyTransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
@@ -149,7 +163,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 Id = "1",
                 Name = itemName,
-                Price = (long) reservation.Itineraries.Sum(itin => itin.LocalPrice),
+                Price = (long)reservation.Itineraries.Sum(itin => itin.LocalPrice),
                 Quantity = 1
             });
             if (reservation.Discount.Nominal != 0)
@@ -157,7 +171,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     Id = "2",
                     Name = "Discount",
-                    Price = (long) -reservation.Discount.Nominal,
+                    Price = (long)-reservation.Discount.Nominal,
                     Quantity = 1
                 });
             return itemDetails;
@@ -169,7 +183,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 OrderId = reservation.RsvNo,
                 OrderTime = reservation.RsvTime,
-                Amount = (long) reservation.Payment.FinalPrice
+                Amount = (long)reservation.Payment.FinalPrice
             };
         }
 
@@ -188,8 +202,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var bookInfo = new FlightBookingInfo
             {
-                FareId = itin.FareId,
-                CanHold = itin.CanHold,
+                Itinerary = itin,
                 ContactData = input.Contact,
                 Passengers = input.Passengers
             };
@@ -209,11 +222,18 @@ namespace Lunggo.ApCommon.Flight.Service
             else
             {
                 bookResult.IsSuccess = false;
-                itin.BookingId = response.Status.BookingId;
                 response.Errors.ForEach(output.AddError);
                 if (response.ErrorMessages != null)
                     response.ErrorMessages.ForEach(output.AddError);
             }
+            bookResult.RevalidateSet = new RevalidateFlightOutputSet
+            {
+                IsValid = response.IsValid,
+                IsItineraryChanged = response.IsItineraryChanged,
+                NewItinerary = response.NewItinerary,
+                IsPriceChanged = response.IsPriceChanged,
+                NewPrice = response.NewPrice
+            };
             return bookResult;
         }
     }

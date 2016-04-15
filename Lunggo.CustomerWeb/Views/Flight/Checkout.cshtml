@@ -410,7 +410,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group" ng-if="idRequired" ng-class="{'has-error': passengerForm_{{$index}}.idNumber.$invalid && passengerForm_{{$index}}.idNumber.$touched }">
-                                                    <label class="control-label important">Nomer KTP / SIM</label>
+                                                    <label class="control-label important">Nomor KTP / SIM</label>
                                                     <input type="text" class="form-control" name="passenger_{{$index}}_idNumber" ng-model="passenger.idNumber" value="" ng-required="idRequired" ng-change="passenger.idNumber = passenger.idNumber.split(' ').join('')" />
                                                 </div>
                                                 <div class="form-group" ng-if="nationalityRequired">
@@ -426,14 +426,13 @@
                                     </form>
 
                                 </div><!-- .passengerdetail -->
-
                                 <div class="step-button">
                                     <a class="btn btn-grey" ng-click="changePage(2)">KEMBALI</a>
                                     <button class="btn btn-yellow" ng-click="changePage(4)" ng-disabled="passengersForm.$invalid">LANJUTKAN</button>
-
+                                    
                                 </div>
-                                <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Perika kembali form Anda.</h4>
-
+                                <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Periksa kembali form Anda.</h4>
+                                
                             </div><!-- .content-step#step-3 -->
                             <!-- ******************** -->
                             <div class="content-step" id="step-4" ng-show="currentPage == 4">
@@ -837,8 +836,8 @@
                 </div>
             </div><!-- .page-overlay -->
 
-            <div class="page-overlay booking-flight" ng-show="book.booking">
-                <div class="overlay-content" ng-hide="book.checked">
+            <div class="page-overlay booking-flight" ng-hide="book.checked || !book.booking">
+                <div class="overlay-content" >
                     <header>
                         <h4>Mohon Tunggu</h4>
                     </header>
@@ -855,7 +854,10 @@
                         </div>
                     </section>
                 </div>
-                <div class="overlay-content" ng-show="book.checked && book.isSuccess">
+            </div>
+
+            <div class="page-overlay booking-flight" ng-show="book.checked && book.isSuccess">
+                <div class="overlay-content">
                     <header>
                         <h4>Pemesanan Berhasil</h4>
                     </header>
@@ -863,7 +865,10 @@
                         <p>Penerbangan Tersedia. Mengalihkan Anda ke halaman pembayaran.</p>
                     </section>
                 </div>
-                <div class="overlay-content" ng-show="book.checked && !book.isSuccess">
+            </div>
+
+            <div class="page-overlay booking-flight" ng-show="book.checked && !book.isSuccess">
+                <div class="overlay-content">
                     <header>
                         <h4>Pemesanan Gagal</h4>
                     </header>
@@ -882,10 +887,36 @@
                         </div>
                     </footer>
                 </div>
-            </div><!-- .page-overlay -->
+            </div>
+
+            <div class="page-overlay booking-flight" ng-show="book.isPriceChanged">
+                <div class="overlay-content">
+                    <header>
+                        <h4>Harga Berubah</h4>
+                    </header>
+                    <section>
+                        <p>
+                            Harga tiket untuk penerbangan ini berubah menjadi Rp {{book.newPrice | number : fractionSize}} disebabkan
+                            perubahan dari sistem maskapai
+                        </p>
+                    </section>
+                    <footer>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <a class="btn btn-grey btn-block" href="{{returnUrl}}">KEMBALI</a>
+                                </div>
+                                <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()">
+                                    <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">
+                                </form>
+                            </div>
+                        </div>
+                    </footer>
+
+                </div><!-- .page-overlay -->
+            </div>
 
         </div>
-
 
         <!-- checkout end here -->
                                 break;

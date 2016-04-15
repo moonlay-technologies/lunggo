@@ -18,13 +18,36 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
     {
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
-            if (bookInfo.CanHold)
+            RevalidateConditions conditions = new RevalidateConditions
+            {
+                Itinerary = bookInfo.Itinerary,
+                Trips = bookInfo.Itinerary.Trips
+            };
+            //conditions.Itinerary = bookInfo.Itinerary;
+            RevalidateFareResult revalidateResult = RevalidateFare(conditions);
+            if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
+            {
+                return new BookFlightResult
+                {
+                    IsValid = revalidateResult.IsValid,
+                    ErrorMessages = revalidateResult.ErrorMessages,
+                    Errors = revalidateResult.Errors,
+                    IsItineraryChanged = revalidateResult.IsItineraryChanged,
+                    IsPriceChanged = revalidateResult.IsPriceChanged,
+                    IsSuccess = false,
+                    NewItinerary = revalidateResult.NewItinerary,
+                    NewPrice = revalidateResult.NewPrice,
+                    Status = null
+                };
+            }
+            bookInfo.Itinerary = revalidateResult.NewItinerary;
+            if (bookInfo.Itinerary.CanHold)
             {
                 var airTravelers = bookInfo.Passengers.Select(MapAirTraveler).ToList();
                 var travelerInfo = MapTravelerInfo(bookInfo.ContactData, airTravelers);
                 var request = new AirBookRQ
                 {
-                    FareSourceCode = bookInfo.FareId,
+                    FareSourceCode = bookInfo.Itinerary.FareId,
                     TravelerInfo = travelerInfo,
                     ClientMarkup = 0,
                     PaymentTransactionID = null,

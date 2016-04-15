@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Web;
+using Lunggo.Framework.Extension;
 using RestSharp;
 
 

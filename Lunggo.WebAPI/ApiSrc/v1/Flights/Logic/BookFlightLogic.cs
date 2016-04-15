@@ -61,12 +61,26 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     OriginalRequest = request
                 };
             else
-                return new FlightBookApiResponse
+            {
+                if (bookServiceResponse.IsPriceChanged)
                 {
-                    IsSuccess = false,
-                    Error = bookServiceResponse.Errors[0],
-                    OriginalRequest = request
-                };
+                    return new FlightBookApiResponse
+                    {
+                        IsSuccess = true,
+                        NewPrice = bookServiceResponse.NewPrice,
+                        OriginalRequest = request
+                    };
+                }
+                else
+                {
+                    return new FlightBookApiResponse
+                    {
+                        IsSuccess = false,
+                        Error = bookServiceResponse.Errors[0],
+                        OriginalRequest = request
+                    };
+                }
+            }
         }
 
         private static BookFlightInput PreprocessServiceRequest(FlightBookApiRequest request)

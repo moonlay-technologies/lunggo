@@ -31,11 +31,22 @@ namespace Lunggo.ApCommon.Flight.Model
         public CabinClass CabinClass { get; set; }
         public bool Meal { get; set; }
         public string Baggage { get; set; }
-        public string Pnr { get; set; }   
+        public string Pnr { get; set; }
         public int RemainingSeats { get; set; }
-        
-    }
 
+        public bool Identical(FlightSegment otherSegment)
+        {
+            return
+                DepartureAirport == otherSegment.DepartureAirport &&
+                ArrivalAirport == otherSegment.ArrivalAirport &&
+                DepartureTime == otherSegment.DepartureTime &&
+                ArrivalTime == otherSegment.ArrivalTime &&
+                Duration == otherSegment.Duration &&
+                AirlineCode == otherSegment.AirlineCode &&
+                FlightNumber == otherSegment.FlightNumber &&
+                CabinClass == otherSegment.CabinClass;
+        }
+    }
     public class FlightStop
     {
         public string Airport { get; set; }

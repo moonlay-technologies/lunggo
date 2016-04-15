@@ -13,6 +13,8 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Web;
 using RestSharp;
+using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Dictionary;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
@@ -27,6 +29,28 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
+                RevalidateConditions conditions = new RevalidateConditions
+                {
+                    Itinerary = bookInfo.Itinerary
+                };
+                //conditions.Itinerary = bookInfo.Itinerary;
+                RevalidateFareResult revalidateResult = RevalidateFare(conditions);
+                if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
+                {
+                    return new BookFlightResult
+                    {
+                        IsValid = revalidateResult.IsValid,
+                        ErrorMessages = revalidateResult.ErrorMessages,
+                        Errors = revalidateResult.Errors,
+                        IsItineraryChanged = revalidateResult.IsItineraryChanged,
+                        IsPriceChanged = revalidateResult.IsPriceChanged,
+                        IsSuccess = false,
+                        NewItinerary = revalidateResult.NewItinerary,
+                        NewPrice = revalidateResult.NewPrice,
+                        Status = null
+                    };
+                }
+                bookInfo.Itinerary = revalidateResult.NewItinerary;
                 var client = CreateAgentClient();
                 string origin, dest, coreFareId;
                 DateTime date;
@@ -36,7 +60,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 try
                 {
-                    var splittedFareId = bookInfo.FareId.Split('.').ToList();
+                    var splittedFareId = bookInfo.Itinerary.FareId.Split('.').ToList();
                     origin = splittedFareId[0];
                     dest = splittedFareId[1];
                     date = new DateTime(int.Parse(splittedFareId[4]), int.Parse(splittedFareId[3]),
@@ -315,6 +339,131 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 Thread.Sleep(1000);
 
+                //Get Payment
+                var url = @"/Payment.aspx";
+                var getItinRequest = new RestRequest(url, Method.GET);
+                searchRequest.AddHeader("Referer", "https://booking2.airasia.com/UnitMap.aspx");
+                var getItinResponse = client.Execute(getItinRequest);
+                var html = getItinResponse.Content;
+                CQ searchedHtml = (CQ)html;
+                try
+                {
+                    var newPrice = searchedHtml["#overallTotal"].First().Text().Replace(",", "");
+                    var jlhSegment = searchedHtml[".row2.mtop-row"].ToList();
+                    var length = jlhSegment.Count;
+                    var airport = searchedHtml[".row2.mtop-row>div"].ToArray();
+                    var flightDet = searchedHtml[".right-text.bold.grey1"].ToArray();
+                    var flightArr = searchedHtml[".right-text.grey1"].Not(".bold").ToArray();
+                    var flightDept = searchedHtml[".left-text.grey1"].ToArray();
+
+                    var segments = new List<FlightSegment>();
+                    var format = "dd MMM yyyy HHmm";
+                    var format2 = "dd MMM yyyy";
+                    CultureInfo provider = new CultureInfo("en-US");
+                    var dict = DictionaryService.GetInstance();
+                    for (int index = 0; index < jlhSegment.Count; index++)
+                    {
+                        var splitflightDetail = flightDet[index].InnerHTML.Split(' ');//(new string[] { "  " }, StringSplitOptions.None);
+                        var splitDept = flightDept[index].InnerHTML.Trim().Split(',');
+                        var deptTime = DateTime.ParseExact(splitDept[1].Trim() + " " + splitDept[0].Trim(), format, provider);
+                        var splitArr = flightArr[index].InnerHTML.Trim().Split(',');
+                        var arrTime = DateTime.ParseExact(splitArr[1].Trim() + " " + splitArr[0].Trim(), format, provider);
+                        var departureTime = deptTime.AddHours(-(dict.GetAirportTimeZone(airport[index * 3].InnerHTML.Trim())));
+                        var arrivalTime = arrTime.AddHours(-(dict.GetAirportTimeZone(airport[(index * 3) + 2].InnerHTML.Trim())));
+
+                        segments.Add(new FlightSegment
+                        {
+                            AirlineCode = splitflightDetail[0],
+                            FlightNumber = splitflightDetail[1],
+                            CabinClass = cabinClass,
+                            Rbd = bookInfo.Itinerary.Trips[0].Segments[index].Rbd,
+                            DepartureAirport = airport[index * 3].InnerHTML.Trim(),
+                            DepartureTime = DateTime.SpecifyKind(deptTime, DateTimeKind.Utc),
+                            ArrivalAirport = airport[(index * 3) + 2].InnerHTML.Trim(),
+                            ArrivalTime = DateTime.SpecifyKind(arrTime, DateTimeKind.Utc),
+                            OperatingAirlineCode = splitflightDetail[0],
+                            StopQuantity = 0,
+                            Duration = arrivalTime - departureTime
+                        });
+                    }
+                    var depDate = flightDept[0].InnerHTML.Trim().Split(',');
+                    var itin = new FlightItinerary
+                    {
+                        AdultCount = adultCount,
+                        ChildCount = childCount,
+                        InfantCount = infantCount,
+                        CanHold = true,
+                        FareType = FareType.Published,
+                        RequireBirthDate = true,
+                        RequirePassport = RequirePassport(segments),
+                        RequireSameCheckIn = false,
+                        RequireNationality = true,
+                        RequestedCabinClass = CabinClass.Economy,
+                        TripType = TripType.OneWay,
+                        Supplier = Supplier.AirAsia,
+                        SupplierCurrency = "IDR",
+                        SupplierPrice = decimal.Parse(newPrice),
+                        FareId = bookInfo.Itinerary.FareId,
+                        Trips = new List<FlightTrip>
+                            {
+                                new FlightTrip
+                                {
+                                    OriginAirport = airport[0].InnerHTML,
+                                    DestinationAirport = airport[airport.Length-1].InnerHTML,
+                                    DepartureDate = DateTime.SpecifyKind(DateTime.ParseExact(depDate[1].Trim(), format2, provider),DateTimeKind.Utc),
+                                    Segments = segments
+                                }
+                            }
+                    };
+                    var isItinChanged = !itin.Identical(bookInfo.Itinerary);
+                    if (isItinChanged) 
+                    {
+                        if(newPrice!=""&& decimal.Parse(newPrice)!=bookInfo.Itinerary.SupplierPrice)
+                        {
+                            itin.FareId = itin.FareId.Replace(bookInfo.Itinerary.SupplierPrice.ToString("0"), newPrice);
+                        }
+                        return new BookFlightResult
+                        {
+                            IsValid = true,
+                            IsItineraryChanged = false,
+                            IsPriceChanged = bookInfo.Itinerary.SupplierPrice != decimal.Parse(newPrice),
+                            IsSuccess = false,
+                            ErrorMessages = new List<string> { "Itinerary is changed!" },
+                            NewItinerary = itin,
+                            NewPrice = decimal.Parse(newPrice),
+                            Status = null
+                        };
+                    }
+                    else if (newPrice != "" && decimal.Parse(newPrice) != bookInfo.Itinerary.SupplierPrice) 
+                    {
+                        itin.FareId = itin.FareId.Replace(bookInfo.Itinerary.SupplierPrice.ToString("0"), newPrice);
+                        return new BookFlightResult
+                        {
+                            IsValid = true,
+                            IsItineraryChanged = false,
+                            IsPriceChanged = bookInfo.Itinerary.SupplierPrice != decimal.Parse(newPrice),
+                            IsSuccess = false,
+                            ErrorMessages = new List<string> { "Itinerary is changed!" },
+                            NewItinerary = itin,
+                            NewPrice = decimal.Parse(newPrice),
+                            Status = null
+                        };
+                    }
+                }
+                catch 
+                {
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "Web Layout Changed!, Error while revalidate in last step" }
+                    };
+                }
+
                 // EZPay
 
                 postData = @"isEzPayParams=false";
@@ -408,6 +557,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 paymentRequest2.AddHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
                 paymentRequest2.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var paymentResponse2 = client.Execute(paymentRequest2);
+                
+                //Ambil disini buat harga berubah, dari paymentResponse2
 
                 Thread.Sleep(1000);
 

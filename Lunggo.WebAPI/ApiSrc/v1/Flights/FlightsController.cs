@@ -129,6 +129,12 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
             // HARDCODE-AN
             // HARDCODE-AN
             var apiResponse = FlightLogic.BookFlight(request);
+            //var apiResponse = new FlightBookApiResponse
+            //{
+            //    IsSuccess = true,
+            //    NewPrice = Convert.ToDecimal(200000000),
+
+            //};
             return apiResponse;
         }
 

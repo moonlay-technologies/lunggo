@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             {
                 var client = CreateCustomerClient();
 
-                if (conditions.FareId == null)
+                if (conditions.Itinerary.FareId == null)
                 {
                     return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
                 }
@@ -41,7 +41,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 decimal price;
                 try
                 {
-                    var splittedFareId = conditions.FareId.Split('.').ToList();
+                    var splittedFareId = conditions.Itinerary.FareId.Split('.').ToList();
                     origin = splittedFareId[0];
                     dest = splittedFareId[1];
                     date = new DateTime(int.Parse(splittedFareId[4]), int.Parse(splittedFareId[3]),
@@ -123,7 +123,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     {
                         IsSuccess = true,
                         IsValid = false,
-                        Itinerary = null
+                        NewItinerary = null
                     };
                 }
 
@@ -163,7 +163,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             {
                                 IsSuccess = true,
                                 IsValid = false,
-                                Itinerary = null
+                                NewItinerary = null
                             };
 
                         var newPrice =
@@ -174,6 +174,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         foreach (var segmentFareId in segmentFareIds)
                         {
                             var splittedSegmentFareId = segmentFareId.Split('~').ToArray();
+                            var deptTime = DateTime.Parse(splittedSegmentFareId[5]).AddHours(-(dict.GetAirportTimeZone(splittedSegmentFareId[4])));
+                            var arrTime = DateTime.Parse(splittedSegmentFareId[7]).AddHours(-(dict.GetAirportTimeZone(splittedSegmentFareId[6])));
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = splittedSegmentFareId[0],
@@ -185,6 +187,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 ArrivalAirport = splittedSegmentFareId[6],
                                 ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]),DateTimeKind.Utc),
                                 OperatingAirlineCode = splittedSegmentFareId[0],
+                                Duration = arrTime-deptTime,
                                 StopQuantity = 0
                             });
                         }
@@ -204,7 +207,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             Supplier = Supplier.AirAsia,
                             SupplierCurrency = "IDR",
                             SupplierPrice = newPrice,
-                            FareId = fareIdPrefix + price.ToString("0") + "." + foundFareId,
+                            FareId = fareIdPrefix + newPrice.ToString("0") + "." + foundFareId,
                             Trips = new List<FlightTrip>
                             {
                                 new FlightTrip
@@ -217,28 +220,33 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             }
                         };
 
-                        var fareRow = radio.Parent().Parent().Parent().Parent().Parent();
-                        var durationRows = fareRow.Children().First().MakeRoot()["tr:even"];
+                        /*var durationRows = searchedHtml[".carrier-hover-oneway-header>div:last-child"];
                         itin.Trips[0].Segments = segments.Zip(durationRows, (segment, durationRow) =>
                         {
                             var durationTexts =
-                                durationRow.LastElementChild.FirstElementChild.InnerHTML.Trim().Split(' ').ToList();
+                                durationRow.InnerHTML.Trim().Split(':').ToList();
+                            var splitduration = durationTexts[1].Trim().Split(' ').ToList();
                             var duration = new TimeSpan();
                             duration =
-                                duration.Add(TimeSpan.ParseExact(durationTexts[0], "h'h'", CultureInfo.InvariantCulture));
-                            if (durationTexts.Count > 1)
+                                duration.Add(TimeSpan.ParseExact(splitduration[0], "h'h'", CultureInfo.InvariantCulture));
+                            if (splitduration.Count > 1)
                                 duration =
-                                    duration.Add(TimeSpan.ParseExact(durationTexts[1], "m'm'",
+                                    duration.Add(TimeSpan.ParseExact(splitduration[1], "m'm'",
                                         CultureInfo.InvariantCulture));
                             segment.Duration = duration;
                             return segment;
-                        }).ToList();
-                        return new RevalidateFareResult
+                        }).ToList();*/
+                        var result = new RevalidateFareResult
                         {
                             IsSuccess = true,
-                            IsValid = price == newPrice,
-                            Itinerary = itin
+                            IsValid = true,
+                            IsPriceChanged = price != newPrice,
+                            NewItinerary = itin,
+                            IsItineraryChanged = !conditions.Itinerary.Identical(itin)
                         };
+                        if (result.IsPriceChanged)
+                            result.NewPrice = newPrice;
+                        return result;
                     }
                     else
                     {
@@ -246,7 +254,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             IsSuccess = true,
                             IsValid = false,
-                            Itinerary = null
+                            NewItinerary = null
                         };
                     }
                 }

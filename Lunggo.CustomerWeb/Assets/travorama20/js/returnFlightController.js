@@ -456,6 +456,7 @@ app.controller('returnFlightController', [
 
 
         }
+        $scope.revalidateSubmit = function(){}
 
         // ******************************
         // flight sorting

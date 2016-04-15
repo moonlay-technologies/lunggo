@@ -91,32 +91,35 @@ namespace Lunggo.ApCommon.Flight.Service
             return results;
         }
 
-        public RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
+        private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
         {
-            var supplierName = IdUtil.GetSupplier(conditions.FareId);
-            conditions.FareId = IdUtil.GetCoreId(conditions.FareId);
+            var supplierName = IdUtil.GetSupplier(conditions.Itinerary.FareId);
+            conditions.Itinerary.FareId = IdUtil.GetCoreId(conditions.Itinerary.FareId);
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
 
             var result = supplier.RevalidateFare(conditions);
-            if (result.Itinerary != null)
-                result.Itinerary.FareId = IdUtil.ConstructIntegratedId(result.Itinerary.FareId, supplierName, result.Itinerary.FareType);
+            if (result.NewItinerary != null)
+                result.NewItinerary.FareId = IdUtil.ConstructIntegratedId(result.NewItinerary.FareId, supplierName, result.NewItinerary.FareType);
             return result;
         }
 
-        private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
+        public BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
-            var fareType = IdUtil.GetFareType(bookInfo.FareId);
-            var supplierName = IdUtil.GetSupplier(bookInfo.FareId);
-            bookInfo.FareId = IdUtil.GetCoreId(bookInfo.FareId);
+            var fareType = IdUtil.GetFareType(bookInfo.Itinerary.FareId);
+            var supplierName = IdUtil.GetSupplier(bookInfo.Itinerary.FareId);
+            bookInfo.Itinerary.FareId = IdUtil.GetCoreId(bookInfo.Itinerary.FareId);
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
-            BookFlightResult result = supplier.BookFlight(bookInfo);
-            if (result.Status.BookingId != null)
+            var result = supplier.BookFlight(bookInfo);
+            if (result.Status != null && result.Status.BookingId != null)
                 result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId,
                     supplierName, fareType);
             var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
-            result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit
-                ? defaultTimeout
-                : result.Status.TimeLimit;
+            if (result.Status != null)
+                result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit
+                    ? defaultTimeout
+                    : result.Status.TimeLimit;
+            if (result.NewItinerary != null)
+                result.NewItinerary.FareId = IdUtil.ConstructIntegratedId(result.NewItinerary.FareId, supplierName, result.NewItinerary.FareType);
             return result;
         }
 

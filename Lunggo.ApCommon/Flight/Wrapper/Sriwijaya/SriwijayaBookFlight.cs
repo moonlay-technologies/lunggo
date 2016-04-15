@@ -8,6 +8,8 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Web;
 using RestSharp;
+using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Dictionary;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
@@ -80,9 +82,33 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
+                /*Revalidate Flight Before Book*/
+                RevalidateConditions conditions = new RevalidateConditions
+                {
+                    Itinerary = bookInfo.Itinerary
+                };
+                //conditions.Itinerary = bookInfo.Itinerary;
+                RevalidateFareResult revalidateResult = RevalidateFare(conditions);
+                if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
+                {
+                    return new BookFlightResult
+                    {
+                        IsValid = revalidateResult.IsValid,
+                        ErrorMessages = revalidateResult.ErrorMessages,
+                        Errors = revalidateResult.Errors,
+                        IsItineraryChanged = revalidateResult.IsItineraryChanged,
+                        IsPriceChanged = revalidateResult.IsPriceChanged,
+                        IsSuccess = false,
+                        NewItinerary = revalidateResult.NewItinerary,
+                        NewPrice = revalidateResult.NewPrice,
+                        Status = null
+                    };
+                }
+                bookInfo.Itinerary = revalidateResult.NewItinerary;
+
                 var clientx = CreateAgentClient();
                 var hasil = new BookFlightResult();
-                var Fare = bookInfo.FareId; 
+                var Fare = bookInfo.Itinerary.FareId; 
                 //var Fare =
                 //    "SJ.017.SJ.272.IN.9662.KNO.WGP?2015-11-11|1.0.0|2346000.0.97174,3853813,1953461:X,M,T:S:KNO:WGP:U2s5VlVrNUZXUT09";
                 var ParseFare = Fare.Split('.');
@@ -97,6 +123,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 DateTime tglBerangkat;
                 var Rbd = new List<string>();
 
+                //Untuk 2 Segment
                 if ((ParseFID1.Count > 1) && (ParseFID1.Count <= 3))
                 {
                     FIDsegment1 = ParseFID1[0];
@@ -135,6 +162,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         "%3AU2s5VlVrNUZXUT09";
 
                 }
+                //Untuk 3 Segment
                 else if ((ParseFID1.Count > 3) && (ParseFID1.Count <= 5))
                 {
                     FIDsegment1 = ParseFID1[0];
@@ -171,6 +199,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
                     "&radioFrom0_2=" + FIDsegment3 + "%3A" + Rbd[2] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09";
                 }
+                //Untuk 1 Segment
                 else if (ParseFID1.Count == 1)
                 {
                     FIDsegment1 = ParseFID1[0];
@@ -238,6 +267,156 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     "&" + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute + "=" + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute;
                 searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var searchResponse = clientx.Execute(searchRequest);
+                var htmlRespon = searchResponse.Content;
+                CQ ambilFare = (CQ)htmlRespon;
+
+                /*LAKUKAN DISINI GET BUAT PRICING DETAIL*/
+                if (ParseFID1.Count == 1)
+                {
+                    #region
+                    var cekFID1 = ambilFare["[value*=" + FIDsegment1 + "]"];
+                    var FIDsegments = new List<string>
+                 {
+                     FIDsegment1,FIDsegment2,FIDsegment3
+                 };
+
+                    if ((cekFID1.FirstElement() != null))
+                    {
+                        url = "SJ-Eticket/application/pricingDetail_2.php";
+                        var fareRequest = new RestRequest(url, Method.GET);
+                        fareRequest.AddQueryParameter("vote", FIDsegment1 + ":" + Rbd[0] + ":" + unknownCode + ":" + ognAirport + ":" + arrAirport + ":U2s5VlVrNUZXUT09;;");
+                        fareRequest.AddQueryParameter("name", "radioFrom0_2");
+                        fareRequest.AddQueryParameter("STI", "false");
+                        fareRequest.AddQueryParameter("PC", null);
+                        fareRequest.AddQueryParameter("DataR", "NO ");
+                        var fareResponse = clientx.Execute(fareRequest);
+                        var htmlResponAjax = fareResponse.Content;
+                        CQ ambilDataAjax = (CQ)htmlResponAjax;
+
+                        string departure;
+                        string arrivalRaw;
+                        string arrival;
+                        double plusHari;
+                        string date, bandaraRaw;
+                        var tampungFare = new List<string>();
+                        string tampungFareString = null;
+
+                        var tunjukSelectedgo = ambilDataAjax[".selectedgo"];
+                        var segments = new List<FlightSegment>();
+                        var fareCabin = (ParseFare.Count() - 2);
+                        var dict = DictionaryService.GetInstance();
+                        for (int y = 0; y < 1; y++)
+                        {
+                            var tunjukSetiapBandara = tunjukSelectedgo.MakeRoot()[".selectedgo:nth-child(" + (y + 1) + ")>td:nth-child(3)"];
+                            bandaraRaw = tunjukSetiapBandara.Select(x => x.Cq().Text()).FirstOrDefault();
+                            var bandara = bandaraRaw.Split('-').ToList();
+                            var tunjukSetiapTanggal = tunjukSelectedgo.MakeRoot()[".selectedgo:nth-child(" + (y + 1) + ")>td:nth-child(1)"];
+                            date = tunjukSetiapTanggal.Select(x => x.Cq().Text()).FirstOrDefault();
+                            var tunjukSetiapJamBerangkat = tunjukSelectedgo.MakeRoot()[".selectedgo:nth-child(" + (y + 1) + ")>td:nth-child(5)"];
+                            departure = tunjukSetiapJamBerangkat.Select(x => x.Cq().Text()).FirstOrDefault().Substring(0, 5);
+                            var tunjukSetiapJamTiba = tunjukSelectedgo.MakeRoot()[".selectedgo:nth-child(" + (y + 1) + ")>td:nth-child(6)"];
+                            arrivalRaw = tunjukSetiapJamTiba.Select(x => x.Cq().Text()).FirstOrDefault();
+                            if (arrivalRaw.Length > 8)
+                            {
+                                arrival = arrivalRaw.Substring(0, 5);
+                                var style = NumberStyles.Number;
+                                plusHari = double.Parse((arrivalRaw.Substring(6, 2)), style);
+                            }
+                            else
+                            {
+                                arrival = arrivalRaw.Substring(0, 5);
+                                plusHari = 0;
+                            }
+                            string format = "dd-MMM-yy hh:mm";
+                            //CultureInfo provider = CultureInfo;
+                            var departureDate = DateTime.Parse(date + " " + departure, CultureInfo.CreateSpecificCulture("id-ID"));
+                            var arrivalDate = (DateTime.Parse(date + " " + arrival, CultureInfo.CreateSpecificCulture("id-ID"))).AddDays(plusHari);
+                            var deptime = departureDate.AddHours(-(dict.GetAirportTimeZone(ognAirport)));
+                            var arrtime = arrivalDate.AddHours(-(dict.GetAirportTimeZone(arrAirport)));
+                            tampungFare.Add("" + FIDsegments[y] + ":" + Rbd[y] + ":S:" + bandara[0] + ":" + bandara[1] + ":U2s5VlVrNUZXUT09;");
+                            tampungFareString = string.Join(";", tampungFare.ToArray());
+                            segments.Add(new FlightSegment
+                            {
+                                AirlineCode = ParseFare[y],
+                                FlightNumber = ParseFare[y + 1],
+                                CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
+                                Rbd = Rbd[y],
+                                DepartureAirport = bandara[0],
+                                DepartureTime = DateTime.SpecifyKind(departureDate, DateTimeKind.Utc),
+                                ArrivalAirport = bandara[1],
+                                ArrivalTime = DateTime.SpecifyKind(arrivalDate, DateTimeKind.Utc),
+                                OperatingAirlineCode = ParseFare[y],
+                                Duration = arrtime - deptime,
+                                StopQuantity = 0
+                            });
+                        }
+
+                        var tunjukHarga = ambilDataAjax.MakeRoot()["#fareTotalAmount"];
+                        var hargaBaruRaw = tunjukHarga.Select(x => x.Cq().Text()).FirstOrDefault();
+                        var indexHarga = hargaBaruRaw.IndexOf('\t');
+                        var hargaBaru = hargaBaruRaw.Substring(0, (indexHarga));
+
+                        var itin = new FlightItinerary
+                        {
+                            AdultCount = int.Parse(penumpang[0]),
+                            ChildCount = int.Parse(penumpang[1]),
+                            InfantCount = int.Parse(penumpang[2]),
+                            CanHold = true,
+                            FareType = FareType.Published,
+                            RequireBirthDate = true,
+                            RequirePassport = false,
+                            RequireSameCheckIn = false,
+                            RequireNationality = true,
+                            RequestedCabinClass = CabinClass.Economy,
+                            TripType = TripType.OneWay,
+                            Supplier = Supplier.Sriwijaya,
+                            SupplierCurrency = "IDR",
+                            SupplierRate = 1,
+                            SupplierPrice = Decimal.Parse(hargaBaru),
+                            FareId = Fare,
+                            Trips = new List<FlightTrip>
+                            {
+                                new FlightTrip
+                                {
+                                    OriginAirport = ognAirport,
+                                    DestinationAirport = arrAirport,
+                                    DepartureDate = tglBerangkat,
+                                    Segments = segments
+                                }
+                            }
+                        };
+                        var fixFlight = new BookFlightResult();
+                        var newPrice = decimal.Parse(hargaBaru);
+                        fixFlight.IsSuccess = true;
+                        fixFlight.IsValid = true;
+                        fixFlight.IsPriceChanged = bookInfo.Itinerary.SupplierPrice != newPrice;
+                        fixFlight.IsItineraryChanged = !bookInfo.Itinerary.Identical(itin);
+                        if (hasil.IsPriceChanged)
+                        {
+                            hasil.NewPrice = newPrice;
+                        }
+                        fixFlight.NewItinerary = itin;
+                        if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
+                        {
+                            return fixFlight;
+                        }
+                    }
+                    else
+                    {
+                        return new BookFlightResult
+                        {
+                            IsSuccess = false,
+                            Status = new BookingStatusInfo
+                            {
+                                BookingStatus = BookingStatus.Failed
+                            },
+                            Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
+                        };
+                    }
+                    #endregion
+                }
+
+                /*END HERE*/
                 
                 int i = 0;
                 foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Adult))

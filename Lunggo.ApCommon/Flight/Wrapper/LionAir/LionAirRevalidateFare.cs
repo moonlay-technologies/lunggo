@@ -28,10 +28,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             internal RevalidateFareResult RevalidateFare(RevalidateConditions conditions)
             {
                 //conditions.FareId = "NTX+PKU+14 JUN 2016+7+0+0+Y+404700+FR00_C0_SLOT0+2+IW 1271|JT 235+10:35|13:30";
-                if (conditions.FareId == null)
+                if (conditions.Itinerary.FareId == null)
                 {
                     //throw new Exception("revalidate 1");
-                    return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
+                    return new RevalidateFareResult
+                    {
+                        Errors = new List<FlightError> {FlightError.InvalidInputData},
+                        ErrorMessages = new List<string> { "Input data is invalid" }
+                    };
                 }
 
                 List<string> listflight;
@@ -46,7 +50,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 CabinClass cabinClass;
                 try
                 {
-                    var splittedFareId = conditions.FareId.Split('+');
+                    var splittedFareId = conditions.Itinerary.FareId.Split('+');
                     origin = splittedFareId[0];
                     dest = splittedFareId[1];
                     depdate = Convert.ToDateTime(splittedFareId[2]);
@@ -62,7 +66,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 catch
                 {
                     //throw new Exception("revalidate data parsing error");
-                    return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.FareIdNoLongerValid}};
+                    return new RevalidateFareResult
+                    {
+                        Errors = new List<FlightError> {FlightError.FareIdNoLongerValid},
+                        ErrorMessages = new List<string> { "FareId is no longer valid" }
+                    };
                 }
 
 
@@ -107,16 +115,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 // [GET] Search Flight
 
-                var client = CreateAgentClient();
-                //var dict = DictionaryService.GetInstance();
-                //var originCountry = "ID";
-                //var originCountry = dict.GetAirportCountryCode(origin);
-                // destinationCountry = dict.GetAirportCountryCode(dest);
-                //string currentDeposit;
-                string userId = "";
+                var client = CreateAgentClient();string userId = "";
                 var msgLogin = "Your login name is inuse";
-                //if (originCountry == "ID")
-                //{
                 int counter = 0;
 
                 var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
@@ -134,12 +134,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     }
 
                     if (userName.Length == 0)
+                    {
                         return new RevalidateFareResult
                         {
                             Errors = new List<FlightError> {FlightError.TechnicalError},
                             ErrorMessages = new List<string> {"userName is full"}
                         };
-
+                    }
                     bool successLogin;
                     do
                     {
@@ -156,9 +157,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             (searchResponse0.StatusCode == HttpStatusCode.OK ||
                              searchResponse0.StatusCode == HttpStatusCode.Redirect))
                         {
+                            accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
+                            accRs = (RestResponse)clientx.Execute(accReq);
                             return new RevalidateFareResult
                             {
-                                Errors = new List<FlightError> {FlightError.InvalidInputData}
+                                Errors = new List<FlightError> {FlightError.InvalidInputData},
+                                ErrorMessages = new List<string> { "can't enter page default" }
                             };
                         }
                         Thread.Sleep(1000);
@@ -179,9 +183,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 if (counter >= 21)
                 {
+                    accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
+                    accRs = (RestResponse)clientx.Execute(accReq);
                     return new RevalidateFareResult
                     {
-                        Errors = new List<FlightError> { FlightError.InvalidInputData }
+                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        ErrorMessages = new List<string> { "Captcha is invalid" }
                     };
                 }
                 
@@ -668,7 +675,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Supplier = Supplier.LionAir,
                         SupplierCurrency = "IDR",
                         SupplierPrice = Convert.ToDecimal(agentprice),
-                        FareId = conditions.FareId,
+                        FareId = conditions.Itinerary.FareId,
                         Trips = new List<FlightTrip>
                         {
                             new FlightTrip
@@ -681,18 +688,54 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         }
                     };
 
-                    return new RevalidateFareResult
+                    var newPrice = Convert.ToDecimal(agentprice);
+                    var result = new RevalidateFareResult
                     {
                         IsSuccess = true,
-                        IsValid = (price == Convert.ToDecimal(agentprice)) && isDepHrSame && isFlightSame && isSegmentEqual,
-                        Itinerary = itin
+                        IsValid = true,
+                        IsItineraryChanged = !(isDepHrSame && isFlightSame && isSegmentEqual),
+                        IsPriceChanged = price != newPrice,
+                        NewItinerary = itin,
                     };
-                
+                    if (result.IsPriceChanged)
+                        result.NewPrice = newPrice;
+                    return result;  
+
                 }
 
                 catch //(Exception e)
                 {
                     //throw e;
+                    //GET PAGE LOGOUT
+
+                    const string url15 = @"/LionAirAgentsPortal/Logout.aspx";
+                    var searchRequest15 = new RestRequest(url15, Method.GET);
+                    searchRequest15.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                    searchRequest15.AddHeader("Content-Encoding", "gzip");
+                    searchRequest15.AddHeader("Host", "agent.lionair.co.id");
+                    searchRequest15.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchRequest15.AddHeader("Referer",
+                        "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + cid);
+                    Thread.Sleep(1000);
+                    var searchResponse15 = client.Execute(searchRequest15);
+
+                    //GET PAGE DEFAULT(HOME)
+
+                    const string url16 = @"/LionAirAgentsPortal/Default.aspx";
+                    var searchRequest16 = new RestRequest(url16, Method.GET);
+                    searchRequest16.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                    searchRequest16.AddHeader("Content-Encoding", "gzip");
+                    searchRequest16.AddHeader("Host", "agent.lionair.co.id");
+                    searchRequest16.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchRequest16.AddHeader("Referer",
+                        "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + cid);
+                    Thread.Sleep(1000);
+                    var searchResponse16 = client.Execute(searchRequest16);
+
+                    accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
+                    accRs = (RestResponse)clientx.Execute(accReq);
                     return new RevalidateFareResult
                     {
                         IsSuccess = false,
