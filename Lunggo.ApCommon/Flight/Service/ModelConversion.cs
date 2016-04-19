@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     RsvNo = reservation.RsvNo,
                     RsvTime = reservation.RsvTime,
                     IsIssued = reservation.Itineraries.TrueForAll(itin => itin.BookingStatus == BookingStatus.Ticketed),
-                    TripType = reservation.TripType,
+                    OverallTripType = reservation.OverallTripType,
                     InvoiceNo = reservation.InvoiceNo,
                     Itinerary = ConvertToItineraryForDisplay(BundleItineraries(reservation.Itineraries)),
                     Contact = reservation.Contact,

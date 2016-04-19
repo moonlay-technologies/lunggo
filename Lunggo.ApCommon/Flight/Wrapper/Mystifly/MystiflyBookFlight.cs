@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;

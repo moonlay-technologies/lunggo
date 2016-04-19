@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Extension;
 
@@ -80,7 +81,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                         TimeLimit = reservationRecord.PaymentTimeLimit,
                                         Medium = PaymentMediumCd.Mnemonic(reservationRecord.PaymentMediumCd),
                                         Method = PaymentMethodCd.Mnemonic(reservationRecord.PaymentMethodCd),
-                                        Url = reservationRecord.PaymentUrl
+                                        RedirectionUrl = reservationRecord.PaymentUrl
                                     },
                                     Discount = new Discount
                                     {
@@ -91,7 +92,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                         Constant = reservationRecord.DiscountConstant.GetValueOrDefault(),
                                         Nominal = reservationRecord.DiscountNominal.GetValueOrDefault()
                                     },
-                                    TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
+                                    OverallTripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
                                     Itineraries = new List<FlightItinerary>(),
                                     Passengers = new List<FlightPassenger>()
                                 };
@@ -217,14 +218,14 @@ namespace Lunggo.ApCommon.Flight.Service
                                     },
                                     Payment = new Payment.Model.PaymentData
                                     {
-                                        Id = reservationRecord.PaymentId,
+                                        ExternalId = reservationRecord.PaymentId,
                                         Medium = PaymentMediumCd.Mnemonic(reservationRecord.PaymentMediumCd),
                                         Method = PaymentMethodCd.Mnemonic(reservationRecord.PaymentMethodCd),
                                         TimeLimit = reservationRecord.PaymentTimeLimit,
                                         Time = reservationRecord.PaymentTime,
                                         Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
-                                        TargetAccount = reservationRecord.PaymentTargetAccount,
-                                        Url = reservationRecord.PaymentUrl,
+                                        TransferAccount = reservationRecord.PaymentTargetAccount,
+                                        RedirectionUrl = reservationRecord.PaymentUrl,
                                         FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault(),
                                         PaidAmount = reservationRecord.PaidAmount.GetValueOrDefault(),
                                         Currency = reservationRecord.CurrencyCd,
@@ -239,7 +240,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                         Constant = reservationRecord.DiscountConstant.GetValueOrDefault(),
                                         Nominal = reservationRecord.DiscountNominal.GetValueOrDefault()
                                     },
-                                    TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
+                                    OverallTripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
                                     Itineraries = new List<FlightItinerary>(),
                                     Passengers = new List<FlightPassenger>()
                                 };

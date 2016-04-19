@@ -78,14 +78,14 @@ namespace Lunggo.ApCommon.Flight.Service
                             queryParam.PaymentStatusCd = PaymentStatusCd.Mnemonic(payment.Status);
                         if (payment.Time.HasValue)
                             queryParam.PaymentTime = payment.Time.Value.ToUniversalTime();
-                        if (payment.Id != null)
-                            queryParam.PaymentId = payment.Id;
-                        if (payment.TargetAccount != null)
-                            queryParam.PaymentTargetAccount = payment.TargetAccount;
+                        if (payment.ExternalId != null)
+                            queryParam.PaymentId = payment.ExternalId;
+                        if (payment.TransferAccount != null)
+                            queryParam.PaymentTargetAccount = payment.TransferAccount;
                         if (payment.TimeLimit.HasValue)
                             queryParam.PaymentTimeLimit = payment.TimeLimit.Value.ToUniversalTime();
-                        if (payment.Url != null)
-                            queryParam.PaymentUrl = payment.Url;
+                        if (payment.RedirectionUrl != null)
+                            queryParam.PaymentUrl = payment.RedirectionUrl;
                         if (payment.PaidAmount != null)
                             queryParam.PaidAmount = payment.PaidAmount;
                         if (payment.FinalPrice != null)

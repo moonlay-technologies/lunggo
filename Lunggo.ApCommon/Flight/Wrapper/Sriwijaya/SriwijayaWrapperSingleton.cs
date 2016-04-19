@@ -1,4 +1,5 @@
 ﻿using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
@@ -8,11 +9,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
         private bool _isInitialized;
         private static readonly SriwijayaClientHandler Client = SriwijayaClientHandler.GetClientInstance();
 
-        private const Supplier SupplierNameField = Supplier.Sriwijaya;
+        private const Supplier FlightSupplierNameField = Supplier.Sriwijaya;
 
         internal override Supplier SupplierName
         {
-            get { return SupplierNameField; }
+            get { return FlightSupplierNameField; }
         }
 
         private SriwijayaWrapper()

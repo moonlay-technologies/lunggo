@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.Framework.Encoder;

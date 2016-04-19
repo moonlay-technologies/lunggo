@@ -8,7 +8,7 @@ namespace Lunggo.ApCommon.Identity.User
 {
     public static class UserExtension
     {
-        public static CustomUser GetCustomUser(this IIdentity identity)
+        public static User GetCustomUser(this IIdentity identity)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -97,9 +97,9 @@ namespace Lunggo.ApCommon.Identity.User
             }
         }
 
-        private static CustomUser ToCustomUser(GetUserByAnyQueryRecord userRecord)
+        private static User ToCustomUser(GetUserByAnyQueryRecord userRecord)
         {
-            return new CustomUser
+            return new User
             {
                 Email = userRecord.Email,
                 FirstName = userRecord.FirstName,

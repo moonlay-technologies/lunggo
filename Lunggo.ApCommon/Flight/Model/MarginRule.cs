@@ -35,7 +35,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public bool CountryPairsIsExclusion { get; set; }
         public decimal Coefficient { get; set; }
         public decimal Constant { get; set; }
-        public bool IsFlat { get; set; }            
+        public bool IsFlat { get; set; }
         public int ConstraintCount { get; set; }
         public int Priority { get; set; }
 

@@ -41,7 +41,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Logic
                     };
                 }
 
-                var user = new CustomUser
+                var user = new User
                 {
                     UserName = request.Email,
                     Email = request.Email

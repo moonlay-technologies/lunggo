@@ -16,9 +16,9 @@ using Newtonsoft.Json;
 namespace Lunggo.CustomerWeb.Models
 {
 
-    public class ApplicationUserManager : UserManager<CustomUser>
+    public class ApplicationUserManager : UserManager<User>
     {
-        public ApplicationUserManager(IUserStore<CustomUser> store)
+        public ApplicationUserManager(IUserStore<User> store)
             : base(store)
         {
         }
@@ -26,9 +26,9 @@ namespace Lunggo.CustomerWeb.Models
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options,
             IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new DapperUserStore<CustomUser>());
+            var manager = new ApplicationUserManager(new DapperUserStore<User>());
             // Configure validation logic for usernames
-            manager.UserValidator = new UserValidator<CustomUser>(manager)
+            manager.UserValidator = new UserValidator<User>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
@@ -48,11 +48,11 @@ namespace Lunggo.CustomerWeb.Models
             manager.MaxFailedAccessAttemptsBeforeLockout = 5;
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug in here.
-            manager.RegisterTwoFactorProvider("PhoneCode", new PhoneNumberTokenProvider<CustomUser>
+            manager.RegisterTwoFactorProvider("PhoneCode", new PhoneNumberTokenProvider<User>
             {
                 MessageFormat = "Your security code is: {0}"
             });
-            manager.RegisterTwoFactorProvider("EmailCode", new EmailTokenProvider<CustomUser>
+            manager.RegisterTwoFactorProvider("EmailCode", new EmailTokenProvider<User>
             {
                 Subject = "SecurityCode",
                 BodyFormat = "Your security code is {0}"
@@ -63,7 +63,7 @@ namespace Lunggo.CustomerWeb.Models
             if (dataProtectionProvider != null)
             {
                 manager.UserTokenProvider =
-                    new DataProtectorTokenProvider<CustomUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+                    new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
         }
@@ -105,12 +105,12 @@ namespace Lunggo.CustomerWeb.Models
         }
     }
 
-    public class ApplicationSignInManager : SignInManager<CustomUser, string>
+    public class ApplicationSignInManager : SignInManager<User, string>
     {
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager) :
             base(userManager, authenticationManager) { }
 
-        public override Task<ClaimsIdentity> CreateUserIdentityAsync(CustomUser user)
+        public override Task<ClaimsIdentity> CreateUserIdentityAsync(User user)
         {
             return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
         }

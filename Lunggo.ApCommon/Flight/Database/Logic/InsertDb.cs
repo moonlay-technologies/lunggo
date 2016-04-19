@@ -37,7 +37,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         AdultCount = reservation.Passengers.Count(p => p.Type == PassengerType.Adult),
                         ChildCount = reservation.Passengers.Count(p => p.Type == PassengerType.Child),
                         InfantCount = reservation.Passengers.Count(p => p.Type == PassengerType.Infant),
-                        OverallTripTypeCd = TripTypeCd.Mnemonic(reservation.TripType),
+                        OverallTripTypeCd = TripTypeCd.Mnemonic(reservation.OverallTripType),
                         TotalSupplierPrice = reservation.Itineraries.Sum(itin => itin.FinalIdrPrice),
                         PaymentFeeForCust = 0,
                         PaymentFeeForUs = 0,

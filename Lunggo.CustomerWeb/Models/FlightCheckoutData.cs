@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Model;
 
 namespace Lunggo.CustomerWeb.Models
 {

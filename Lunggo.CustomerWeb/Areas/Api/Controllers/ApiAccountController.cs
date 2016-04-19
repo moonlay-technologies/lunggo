@@ -57,7 +57,7 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
                 return Json(response);
             }
 
-            var user = new CustomUser
+            var user = new User
             {
                 UserName = model.Email,
                 Email = model.Email

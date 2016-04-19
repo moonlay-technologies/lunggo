@@ -176,15 +176,23 @@
     <Compile Include="Campaign\Model\VoucherResponse.cs" />
     <Compile Include="Campaign\Service\CampaignVoucher.cs" />
     <Compile Include="Campaign\Service\ServiceSingleton.cs" />
+    <Compile Include="ProductBase\Constant\ProductType.cs" />
+    <Compile Include="ProductBase\Database\Logic\GetDb.cs" />
+    <Compile Include="ProductBase\Database\Logic\InsertDb.cs" />
+    <Compile Include="ProductBase\Database\Logic\UpdateDb.cs" />
+    <Compile Include="ProductBase\Model\Contact.cs" />
+    <Compile Include="ProductBase\Model\Currency.cs" />
+    <Compile Include="ProductBase\Model\Margin.cs" />
+    <Compile Include="ProductBase\Model\OrderBase.cs" />
+    <Compile Include="ProductBase\Model\Price.cs" />
+    <Compile Include="ProductBase\Model\ReservationBase.cs" />
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumDisplay.cs" />
     <Compile Include="Constant\ReservationType.cs" />
-    <Compile Include="Constant\Supplier.cs" />
+    <Compile Include="Flight\Constant\Supplier.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
     <Compile Include="Constant\CacheIdentifier.cs" />
     <Compile Include="Constant\RsvNoIdentifier.cs" />
-    <Compile Include="Currency\Service\CurrencyService.cs" />
-    <Compile Include="Currency\Model\Deposit.cs" />
     <Compile Include="Dictionary\DictionaryService.cs" />
     <Compile Include="Flight\Constant\BookingStatus.cs" />
     <Compile Include="Flight\Constant\CabinClass.cs" />
@@ -206,7 +214,6 @@
     <Compile Include="Flight\Model\BookFlightResult.cs" />
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
     <Compile Include="Flight\Model\Conditions.cs" />
-    <Compile Include="Flight\Model\Contact.cs" />
     <Compile Include="Flight\Model\Combo.cs" />
     <Compile Include="Flight\Model\Discount.cs" />
     <Compile Include="Flight\Model\FlightOrderInfo.cs" />
@@ -270,7 +277,7 @@
     <Compile Include="Flight\Database\Logic\InsertDb.cs" />
     <Compile Include="Flight\Service\Book.cs" />
     <Compile Include="Flight\Service\CancelBooking.cs" />
-    <Compile Include="Flight\Service\Storage.cs" />
+    <Compile Include="Flight\Service\Caching.cs" />
     <Compile Include="Flight\Service\ModelConversion.cs" />
     <Compile Include="Flight\Service\Payment.cs" />
     <Compile Include="Flight\Service\PriceMargin.cs" />
@@ -420,7 +427,7 @@
     <Compile Include="Identity\Role\Role.cs" />
     <Compile Include="Identity\Role\UserRole.cs" />
     <Compile Include="Identity\UserStore\DapperUserStore.cs" />
-    <Compile Include="Identity\User\CustomUser.cs" />
+    <Compile Include="Identity\User\User.cs" />
     <Compile Include="Identity\User\IdentityUserBase.cs" />
     <Compile Include="Identity\User\UserBase.cs" />
     <Compile Include="Payment\Constant\TransferConfirmationReportStatus.cs" />
@@ -440,8 +447,10 @@
     <Compile Include="Payment\Query\GetSavedCreditCardQuery.cs" />
     <Compile Include="Payment\Query\GetSavedCreditCardByEmailQuery.cs" />
     <Compile Include="Payment\Query\GetUncheckedTransferConfirmationReportsQuery.cs" />
-    <Compile Include="Payment\Service\PaymentService.cs" />
-    <Compile Include="Payment\Service\Storage.cs" />
+    <Compile Include="Payment\Service\TransferConfirmationReport.cs" />
+    <Compile Include="Payment\Service\PaymentProcessor.cs" />
+    <Compile Include="Payment\Service\ServiceSingleton.cs" />
+    <Compile Include="Payment\Service\Caching.cs" />
     <Compile Include="Payment\Wrapper\Veritrans\Model\Indomaret.cs" />
     <Compile Include="Payment\Wrapper\Veritrans\Model\MandiriEcash.cs" />
     <Compile Include="Payment\Wrapper\Veritrans\Model\IndosatDompetku.cs" />
@@ -459,23 +468,38 @@
     <Compile Include="Payment\Wrapper\Veritrans\Model\VeritransResponse.cs" />
     <Compile Include="Payment\Wrapper\Veritrans\Model\VtWeb.cs" />
     <Compile Include="Payment\Wrapper\Veritrans\VeritransWrapper.cs" />
-    <Compile Include="Sequence\ActivityIdSequence.cs" />
-    <Compile Include="Sequence\FlightBookingIdSequence.cs" />
-    <Compile Include="Sequence\FlightPriceMarginRuleIdSequence.cs" />
-    <Compile Include="Sequence\FlightItineraryCacheIdSequence.cs" />
-    <Compile Include="Sequence\ActivityRsvNoSequence.cs" />
-    <Compile Include="Sequence\HotelRsvNoSequence.cs" />
-    <Compile Include="Sequence\FlightRsvNoSequence.cs" />
-    <Compile Include="Sequence\FlightSearchIdSequence.cs" />
-    <Compile Include="Sequence\FlightEticketIdSequence.cs" />
-    <Compile Include="Sequence\FlightPassengerIdSequence.cs" />
-    <Compile Include="Sequence\FlightStopIdSequence.cs" />
-    <Compile Include="Sequence\FlightSegmentIdSequence.cs" />
-    <Compile Include="Sequence\TransferConfirmationReportIdSequence.cs" />
-    <Compile Include="Sequence\FlightTripIdSequence.cs" />
+    <Compile Include="Pricing\Service\Caching.cs" />
+    <Compile Include="Pricing\Service\Currency.cs" />
+    <Compile Include="Pricing\Service\Pricing.cs" />
+    <Compile Include="Pricing\Service\ServiceSingleton.cs" />
+    <Compile Include="ProductBase\Service\ProductServiceBase.cs" />
+    <Compile Include="Sequence\FlightBookingIdSequence.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sequence\FlightItineraryCacheIdSequence.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Sequence\FlightItineraryIdSequence.cs" />
+    <Compile Include="Sequence\FlightPassengerIdSequence.cs" />
+    <Compile Include="Sequence\FlightPriceMarginRuleIdSequence.cs" />
+    <Compile Include="Sequence\RsvNoSequence.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sequence\FlightSearchIdSequence.cs" />
+    <Compile Include="Sequence\FlightSegmentIdSequence.cs" />
+    <Compile Include="Sequence\FlightStopIdSequence.cs" />
+    <Compile Include="Sequence\FlightTripIdSequence.cs" />
+    <Compile Include="Sequence\HotelSearchIdSequence.cs" />
     <Compile Include="Sequence\MemberIdCardSequence.cs" />
-    <Compile Include="Sequence\VoucherSequence.cs" />
+    <Compile Include="Sequence\RoleIdSequence.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sequence\UserIdSequence.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sequence\VoucherSequence.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -491,10 +515,6 @@
     <Compile Include="Query\GetCountryCodeQueryRecord.cs" />
     <Compile Include="Query\GetHotelDetailByIdQuery.cs" />
     <Compile Include="Query\GetHotelDetailBySearchParamQuery.cs" />
-    <Compile Include="Sequence\SampleSequence.cs" />
-    <Compile Include="Sequence\RoleIdSequence.cs" />
-    <Compile Include="Sequence\HotelSearchIdSequence.cs" />
-    <Compile Include="Sequence\UserIdSequence.cs" />
     <Compile Include="Service References\Travolutionary.WebService.Hotel\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -749,6 +769,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Identity\Model\" />
+    <Folder Include="Pricing\Model\" />
+    <Folder Include="ProductBase\Database\Query\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 
 namespace Lunggo.ApCommon.Flight.Wrapper

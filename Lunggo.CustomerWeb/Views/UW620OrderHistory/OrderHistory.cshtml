@@ -198,7 +198,7 @@
                                              <div class="row">
                                                  <div class="col-xs-10">
                                                      <div class="detail">
-                                                         <p>@Html.I18NString("CW00197") : <b>@flight.Itinerary.Trips[0].OriginAirport</b> to <b>@flight.Itinerary.Trips[0].DestinationAirport</b> (@flight.TripType.ToString())</p>
+                                                         <p>@Html.I18NString("CW00197") : <b>@flight.Itinerary.Trips[0].OriginAirport</b> to <b>@flight.Itinerary.Trips[0].DestinationAirport</b> (@flight.OverallTripType.ToString())</p>
                                                          @if (flight.Itinerary.Trips.Count > 1)
                                                          {
                                                              <p>@Html.I18NString("CW00057"): @flight.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy") | @Html.I18NString("CW00058"): @flight.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy")</p>

@@ -4,67 +4,12 @@ using System.Web.Helpers;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.ProductBase.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class FlightItineraryForDisplay : FlightItineraryBase
-    {
-        [JsonProperty("fare")]
-        public decimal TotalFare { get; set; }
-        [JsonProperty("curr")]
-        public string Currency { get; set; }
-        [JsonProperty("trips")]
-        public List<FlightTripForDisplay> Trips { get; set; }
-        [JsonProperty("ofare")]
-        public decimal OriginalFare { get; set; }
-        [JsonProperty("cfare", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal? ComboFare { get; set; }
-    }
-
-    public class FlightItinerary : FlightItineraryBase
-    {
-        public string SearchId { get; set; }
-        public string FareId { get; set; }
-        public string BookingId { get; set; }
-        public BookingStatus BookingStatus { get; set; }
-        public DateTime? TicketTimeLimit { get; set; }
-        public List<FlightTrip> Trips { get; set; }
-        public decimal SupplierPrice { get; set; }
-        public string SupplierCurrency { get; set; }
-        public decimal SupplierRate { get; set; }
-        public decimal OriginalIdrPrice { get; set; }
-        public long MarginId { get; set; }
-        public decimal MarginCoefficient { get; set; }
-        public decimal MarginConstant { get; set; }
-        public decimal MarginNominal { get; set; }
-        public bool MarginIsFlat { get; set; }
-        public decimal FinalIdrPrice { get; set; }
-        public decimal LocalPrice { get; set; }
-        public string LocalCurrency { get; set; }
-        public decimal LocalRate { get; set; }
-        public FareType FareType { get; set; }
-        public Supplier Supplier { get; set; }
-        public TripType RequestedTripType { get; set; }
-
-        public bool Identical(FlightItinerary otheritin)
-        {
-            return
-                RequirePassport == otheritin.RequirePassport &&
-                RequireBirthDate == otheritin.RequireBirthDate &&
-                RequireSameCheckIn == otheritin.RequireSameCheckIn &&
-                RequireNationality == otheritin.RequireNationality &&
-                CanHold == otheritin.CanHold &&
-                AdultCount == otheritin.AdultCount &&
-                ChildCount == otheritin.ChildCount &&
-                InfantCount == otheritin.InfantCount &&
-                TripType == otheritin.TripType &&
-                Trips.Count == otheritin.Trips.Count &&
-                Trips.Zip(otheritin.Trips, (trip, otherTrip) => trip.Identical(otherTrip)).All(x => x);
-        }
-    }
-
-    public class FlightItineraryBase
+    public class FlightItineraryForDisplay
     {
         [JsonProperty("rqpass")]
         public bool RequirePassport { get; set; }
@@ -88,5 +33,55 @@ namespace Lunggo.ApCommon.Flight.Model
         public CabinClass RequestedCabinClass { get; set; }
         [JsonProperty("reg")]
         public int RegisterNumber { get; set; }
+        [JsonProperty("fare")]
+        public decimal TotalFare { get; set; }
+        [JsonProperty("curr")]
+        public string Currency { get; set; }
+        [JsonProperty("trips")]
+        public List<FlightTripForDisplay> Trips { get; set; }
+        [JsonProperty("ofare")]
+        public decimal OriginalFare { get; set; }
+        [JsonProperty("cfare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? ComboFare { get; set; }
+    }
+
+    public class FlightItinerary : OrderBase
+    {
+        public string SearchId { get; set; }
+        public string FareId { get; set; }
+        public string BookingId { get; set; }
+        public bool RequirePassport { get; set; }
+        public bool RequireBirthDate { get; set; }
+        public bool RequireSameCheckIn { get; set; }
+        public bool RequireNationality { get; set; }
+        public bool CanHold { get; set; }
+        public int AdultCount { get; set; }
+        public int ChildCount { get; set; }
+        public int InfantCount { get; set; }
+        public TripType TripType { get; set; }
+        public CabinClass RequestedCabinClass { get; set; }
+        public int RegisterNumber { get; set; }
+        public BookingStatus BookingStatus { get; set; }
+        public DateTime? TicketTimeLimit { get; set; }
+        public List<FlightTrip> Trips { get; set; }
+        public FareType FareType { get; set; }
+        public Supplier Supplier { get; set; }
+        public TripType RequestedTripType { get; set; }
+
+        public bool Identical(FlightItinerary otheritin)
+        {
+            return
+                RequirePassport == otheritin.RequirePassport &&
+                RequireBirthDate == otheritin.RequireBirthDate &&
+                RequireSameCheckIn == otheritin.RequireSameCheckIn &&
+                RequireNationality == otheritin.RequireNationality &&
+                CanHold == otheritin.CanHold &&
+                AdultCount == otheritin.AdultCount &&
+                ChildCount == otheritin.ChildCount &&
+                InfantCount == otheritin.InfantCount &&
+                TripType == otheritin.TripType &&
+                Trips.Count == otheritin.Trips.Count &&
+                Trips.Zip(otheritin.Trips, (trip, otherTrip) => trip.Identical(otherTrip)).All(x => x);
+        }
     }
 }

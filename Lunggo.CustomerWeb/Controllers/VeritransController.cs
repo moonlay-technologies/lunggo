@@ -44,8 +44,8 @@ namespace Lunggo.CustomerWeb.Controllers
                     Method = MapPaymentMethod(notif),
                     Status = MapPaymentStatus(notif),
                     Time = time,
-                    Id = notif.approval_code,
-                    TargetAccount = notif.permata_va_number,
+                    ExternalId = notif.approval_code,
+                    TransferAccount = notif.permata_va_number,
                     FinalPrice = notif.gross_amount
                 };
 

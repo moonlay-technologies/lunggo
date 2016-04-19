@@ -4,6 +4,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model

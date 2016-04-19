@@ -4,9 +4,9 @@ using Microsoft.AspNet.Identity;
 
 namespace Lunggo.ApCommon.Identity.User
 {
-    public class CustomUser : UserBase<string>
+    public class User : UserBase<string>
     {
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<CustomUser,string> manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User,string> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);

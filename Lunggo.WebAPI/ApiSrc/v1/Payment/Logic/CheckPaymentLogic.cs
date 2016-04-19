@@ -40,8 +40,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Payment.Logic
             {
                 PaymentStatus = rsv.Payment.Status,
                 Method = rsv.Payment.Method,
-                RedirectionUrl = rsv.Payment.Url,
-                TransferAccount = rsv.Payment.TargetAccount,
+                RedirectionUrl = rsv.Payment.RedirectionUrl,
+                TransferAccount = rsv.Payment.TransferAccount,
                 StatusCode = HttpStatusCode.OK
             };
         }

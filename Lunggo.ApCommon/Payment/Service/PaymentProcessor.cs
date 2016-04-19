@@ -24,29 +24,6 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        private static readonly PaymentService Instance = new PaymentService();
-        private static readonly VeritransWrapper VeritransWrapper = VeritransWrapper.GetInstance();
-        private bool _isInitialized;
-
-        private PaymentService()
-        {
-            
-        }
-
-        public static PaymentService GetInstance()
-        {
-            return Instance;
-        }
-
-        public void Init()
-        {
-            if (!_isInitialized)
-            {
-                VeritransWrapper.Init();
-                _isInitialized = true;
-            }
-        }
-
         public void SubmitPayment(PaymentData paymentData)
         {
             if (paymentData.RsvNo.IsFlightRsvNo())
@@ -134,7 +111,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (method == PaymentMethod.VirtualAccount)
                 {
                     paymentData.Status = PaymentStatus.Verifying;
-                    paymentData.TargetAccount = paymentResponse.TargetAccount;
+                    paymentData.TransferAccount = paymentResponse.TransferAccount;
                 }
                 else 
                 {
@@ -144,89 +121,8 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             else
             {
-                paymentData.Url = GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
-                paymentData.Status = paymentData.Url != null ? PaymentStatus.Pending : PaymentStatus.Failed;
-            }
-        }
-
-        public void SubmitTransferConfirmationReport(TransferConfirmationReport report, FileInfo file)
-        {
-            var receiptUrl = file != null ? SaveTransferReceipt(report.RsvNo, file) : null;
-            report.Status = TransferConfirmationReportStatus.Unchecked;
-            var reportRecord = new TransferConfirmationReportTableRecord
-            {
-                RsvNo = report.RsvNo,
-                Amount = report.Amount,
-                PaymentTime = report.PaymentTime,
-                RemitterName = report.RemitterName,
-                RemitterBank = report.RemitterBank,
-                RemitterAccount = report.RemitterAccount,
-                BeneficiaryBank = report.BeneficiaryBank,
-                BeneficiaryAccount = report.BeneficiaryAccount,
-                Message = report.Message,
-                ReceiptUrl = receiptUrl,
-                StatusCd = TransferConfirmationReportStatusCd.Mnemonic(TransferConfirmationReportStatus.Unchecked)
-            };
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                try
-                {
-                    TransferConfirmationReportTableRepo.GetInstance().Insert(conn, reportRecord);
-                }
-                catch
-                {
-                    TransferConfirmationReportTableRepo.GetInstance().Update(conn, reportRecord);
-                }
-            }
-            SendTransferConfirmationNoticeToInternal(report.RsvNo);
-        }
-
-        private static string SaveTransferReceipt(string rsvNo, FileInfo file)
-        {
-            file.FileName = rsvNo;
-            var fileDto = new BlobWriteDto
-            {
-                FileBlobModel = new FileBlobModel
-                {
-                    Container = "TransferReceipt",
-                    FileInfo = file
-                },
-                SaveMethod = SaveMethod.Force
-            };
-            return BlobStorageService.GetInstance().WriteFileToBlob(fileDto);
-        }
-
-        public List<TransferConfirmationReport> GetUncheckedTransferConfirmationReports()
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                return
-                    GetUncheckedTransferConfirmationReportsQuery.GetInstance().Execute(conn, null)
-                        .Select(record => new TransferConfirmationReport
-                        {
-                            RsvNo = record.RsvNo,
-                            Amount = record.Amount.GetValueOrDefault(),
-                            PaymentTime = record.PaymentTime.GetValueOrDefault(),
-                            RemitterName = record.RemitterName,
-                            RemitterBank = record.RemitterBank,
-                            RemitterAccount = record.RemitterAccount,
-                            BeneficiaryBank = record.BeneficiaryBank,
-                            BeneficiaryAccount = record.BeneficiaryAccount,
-                            Message = record.Message,
-                            Status = TransferConfirmationReportStatusCd.Mnemonic(record.StatusCd)
-                        }).ToList();
-            }
-        }
-
-        public void UpdateTransferConfirmationReportStatus(string rsvNo, TransferConfirmationReportStatus status)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                TransferConfirmationReportTableRepo.GetInstance().Update(conn, new TransferConfirmationReportTableRecord
-                {
-                    RsvNo = rsvNo,
-                    StatusCd = TransferConfirmationReportStatusCd.Mnemonic(status)
-                });
+                paymentData.RedirectionUrl = GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
+                paymentData.Status = paymentData.RedirectionUrl != null ? PaymentStatus.Pending : PaymentStatus.Failed;
             }
         }
 
@@ -275,13 +171,6 @@ namespace Lunggo.ApCommon.Payment.Service
         {
             var url = VeritransWrapper.GetPaymentUrl(transactionDetails, itemDetails, method);
             return url;
-        }
-
-        public void SendTransferConfirmationNoticeToInternal(string rsvNo)
-        {
-            var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("TransferConfirmationEmail");
-            queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
 
         private static List<ItemDetails> ConstructItemDetails(FlightReservation reservation)

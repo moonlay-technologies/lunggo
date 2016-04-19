@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Lunggo.ApCommon.Flight.Model
+namespace Lunggo.ApCommon.ProductBase.Model
 {
     public class Contact
     {

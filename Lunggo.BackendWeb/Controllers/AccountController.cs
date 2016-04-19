@@ -149,7 +149,7 @@ namespace Lunggo.BackendWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new CustomUser()
+                var user = new User()
                 {
                     UserName = model.Email, 
                     Email = model.Email,
@@ -339,7 +339,7 @@ namespace Lunggo.BackendWeb.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
                 case SignInStatus.Failure:
                 default:
-                    var user = new CustomUser
+                    var user = new User
                     {
                         UserName = loginInfo.ExternalIdentity.Claims.First(claim => claim.Type == "urn:facebook:email").Value,
                         Email = loginInfo.ExternalIdentity.Claims.First(claim => claim.Type == "urn:facebook:email").Value,
@@ -383,7 +383,7 @@ namespace Lunggo.BackendWeb.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new CustomUser { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

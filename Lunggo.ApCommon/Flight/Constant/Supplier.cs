@@ -1,4 +1,4 @@
-namespace Lunggo.ApCommon.Constant
+namespace Lunggo.ApCommon.Flight.Constant
 {
     public enum Supplier
     {
@@ -7,8 +7,7 @@ namespace Lunggo.ApCommon.Constant
         Sriwijaya = 2,
         Citilink = 3,
         AirAsia = 4,
-        HotelsPro = 5,
-        LionAir = 6
+        LionAir = 5
     }
 
     internal class SupplierCd

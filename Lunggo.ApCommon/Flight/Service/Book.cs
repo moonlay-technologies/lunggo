@@ -13,6 +13,8 @@ using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Constant;
+using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
 using System.Diagnostics;
@@ -47,9 +49,9 @@ namespace Lunggo.ApCommon.Flight.Service
                     SendPendingPaymentReservationNotifToCustomer(reservation.RsvNo);
                 if (reservation.Payment.Method == PaymentMethod.VirtualAccount)
                     SendInstantPaymentReservationNotifToCustomer(reservation.RsvNo);
-                SavePaymentRedirectionUrlInCache(reservation.RsvNo, reservation.Payment.Url, reservation.Payment.TimeLimit);
+                SavePaymentRedirectionUrlInCache(reservation.RsvNo, reservation.Payment.RedirectionUrl, reservation.Payment.TimeLimit);
                 output.RsvNo = reservation.RsvNo;
-                output.PaymentUrl = reservation.Payment.Url;
+                output.PaymentUrl = reservation.Payment.RedirectionUrl;
                 output.TimeLimit = reservation.Payment.TimeLimit;
 
                 if (reservation.Payment.Status != PaymentStatus.Failed)
@@ -95,16 +97,18 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private FlightReservation CreateReservation(List<FlightItinerary> itins, BookFlightInput input, List<BookResult> bookResults)
         {
+            var a = new FlightReservation();
+            
             var trips =
                 itins.SelectMany(itin => itin.Trips).OrderBy(trip => trip.Segments.First().DepartureTime).ToList();
             var reservation = new FlightReservation
             {
-                RsvNo = FlightRsvNoSequence.GetInstance().GetNextFlightRsvNo(),
+                RsvNo = RsvNoSequence.GetInstance().GetNext(ProductType.Flight),
                 RsvTime = DateTime.UtcNow,
                 Itineraries = itins,
                 Contact = input.Contact,
                 Passengers = input.Passengers,
-                TripType = ParseTripType(trips),
+                OverallTripType = ParseTripType(trips),
                 Payment = new PaymentData
             {
                     FinalPrice = itins.Sum(itin => itin.LocalPrice)

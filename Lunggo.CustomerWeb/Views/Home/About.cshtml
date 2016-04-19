@@ -36,7 +36,7 @@
 
                 <p>Dear @Model.Contact.Name</p>
                 <p>Terima kasih atas pemesanan tiket pesawat Anda melalui Travorama. </p>
-                <p>Lakukan pembayaran sebesar total tagihan: <b>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> ke nomor <b>virtual account : @Model.Payment.TargetAccount</b></p>
+                <p>Lakukan pembayaran sebesar total tagihan: <b>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> ke nomor <b>virtual account : @Model.Payment.TransferAccount</b></p>
                 <p>Setelah melakukan pembayaran, e-tiket Anda akan diterbitkan dan dikirimkan ke email Anda.</p>
                 <p><b>Penting!</b></p>
                 <p>Lakukan pembayaran sebelum melewati batas waktu. Jika melewati batas waktu maka booking Anda akan dibatalkan otomatis oleh sistem kami. Anda harus melakukan pemesanan ulang dan terdapat kemungkinan perubahan harga.</p>
@@ -51,7 +51,7 @@
                     <li>Di Menu utama, pilih <b>Transaksi Lainnya.</b></li>
                     <li>Pilih <b>Transfer.</b></li>
                     <li>Pilih <b>Antar Bank Online.</b></li>
-                    <li>Masukkan nomor <b>@Model.Payment.TargetAccount</b> (kode 013 dan 16 digit <i>Virtual account</i>).</li>
+                    <li>Masukkan nomor <b>@Model.Payment.TransferAccount</b> (kode 013 dan 16 digit <i>Virtual account</i>).</li>
                     <li>No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.</li>
                     <li>Masukkan jumlah harga tiket yang akan Anda bayar secara lengkap (tanpa pembulatan). Pembayaran untuk dua kode booking harus dilakukan secara terpisah. Setelah itu tekan <b>Benar</b>.</li>
                     <li>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</li>
@@ -65,7 +65,7 @@
                     <li>Pilih <b>ke Rek Bank Lain.</b></li>
                     <li>Masukkan kode <b>013</b> untuk Bank Permata lalu tekan <b>Benar</b>.</li>
                     <li>Masukkan jumlah harga tiket yang akan Anda bayar secara lengkap (tanpa pembulatan). Pembayaran untuk dua atau lebih pesanan harus dilakukan secara terpisah. Setelah itu tekan <b>Benar</b>.</li>
-                    <li>Masukkan <b>@Model.Payment.TargetAccount</b> (16 digit no. <i>virtual account</i> pembayaran) lalu tekan <b>Benar</b>.</li>
+                    <li>Masukkan <b>@Model.Payment.TransferAccount</b> (16 digit no. <i>virtual account</i> pembayaran) lalu tekan <b>Benar</b>.</li>
                     <li>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</li>
                     <li>Transaksi berhasil.</li>
                 </ol>
@@ -76,7 +76,7 @@
                     <li>Pilih <b>Transaksi Pembayaran.</b></li>
                     <li>Pilih <b>Lain-lain</b>.</li>
                     <li>Pilih <b>Pembayaran Virtual Account</b>.</li>
-                    <li>Masukkan 16 digit no. Virtual Account <b>@Model.Payment.TargetAccount</b></li>
+                    <li>Masukkan 16 digit no. Virtual Account <b>@Model.Payment.TransferAccount</b></li>
                     <li>Di halaman konfirmasi akan muncul no. <i>virtual account</i>, lalu tekan <b>Benar</b>.</li>
                     <li>Pilih rekening pembayaran Anda dan tekan <b>Benar</b>.</li>
                     <li>Transaksi Berhasil.</li>
@@ -89,7 +89,7 @@
                     <li>Pilih Ke <b>Rek Bank Lain</b>.</li>
                     <li>Masukkan kode <b>013</b> untuk Bank Permata lalu tekan <b>Benar</b>.</li>
                     <li>Masukkan jumlah harga tiket yang akan Anda bayar secara lengkap (tanpa pembulatan). Pembayaran untuk dua atau lebih pesanan harus dilakukan secara terpisah. Setelah itu tekan <b>Benar</b>.</li>
-                    <li>Masukkan <b>@Model.Payment.TargetAccount</b> (16 digit no. <i>virtual account</i> pembayaran) lalu tekan <b>Benar</b>.</li>
+                    <li>Masukkan <b>@Model.Payment.TransferAccount</b> (16 digit no. <i>virtual account</i> pembayaran) lalu tekan <b>Benar</b>.</li>
                     <li>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</li>
                     <li>Transaksi berhasil.</li>
                 </ol>

@@ -83,7 +83,7 @@ namespace Lunggo.ApCommon.Identity.Auth
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
-            CustomUser user = await new DapperUserStore<CustomUser>().FindByNameAsync(context.UserName);
+            User.User user = await new DapperUserStore<User.User>().FindByNameAsync(context.UserName);
 
             if (user == null)
             {

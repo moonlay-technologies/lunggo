@@ -48,32 +48,6 @@ namespace Lunggo.ApCommon.Flight.Model
         public DateTime DepartureDate { get; set; }
         [JsonProperty("seg")]
         public List<FlightSegment> Segments { get; set; }
-
-        public bool Identical(FlightTrip otherTrip)
-        {
-            if (OriginAirport != otherTrip.OriginAirport ||
-                DestinationAirport != otherTrip.DestinationAirport ||
-                DepartureDate != otherTrip.DepartureDate ||
-                Segments == null ||
-                otherTrip.Segments == null ||
-                Segments.Count != otherTrip.Segments.Count)
-                return false;
-            for (var i = 0; i < Segments.Count; i++)
-            {
-                var segment = Segments[i];
-                var otherSegment = otherTrip.Segments[i];
-                if (segment.DepartureAirport != otherSegment.DepartureAirport ||
-                    segment.ArrivalAirport != otherSegment.ArrivalAirport ||
-                    segment.DepartureTime != otherSegment.DepartureTime ||
-                    segment.ArrivalTime != otherSegment.ArrivalTime ||
-                    segment.Duration != otherSegment.Duration ||
-                    segment.AirlineCode != otherSegment.AirlineCode ||
-                    segment.FlightNumber != otherSegment.FlightNumber ||
-                    segment.CabinClass != otherSegment.CabinClass)
-                    return false;
-            }
-            return true;
-        }
     }
 
     public class Airline
