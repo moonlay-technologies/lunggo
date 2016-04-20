@@ -241,7 +241,8 @@ namespace Lunggo.ApCommon.Flight.Service
                                     },
                                     TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
                                     Itineraries = new List<FlightItinerary>(),
-                                    Passengers = new List<FlightPassenger>()
+                                    Passengers = new List<FlightPassenger>(),
+                                    
                                 };
                             }
                             FlightItinerary itinerary;
@@ -262,6 +263,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     MarginConstant = itineraryRecord.MarginConstant.GetValueOrDefault(),
                                     MarginNominal = itineraryRecord.MarginNominal.GetValueOrDefault(),
                                     MarginIsFlat = itineraryRecord.MarginIsFlat.GetValueOrDefault(),
+                                    LocalPrice = itineraryRecord.LocalPrice.GetValueOrDefault(),
                                     Trips = new List<FlightTrip>()
                                 };
                                 itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);

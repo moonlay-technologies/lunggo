@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
             clauseBuilder.Append(@"r.DiscountNominal, r.DiscountName, r.TransferCode, ");
             clauseBuilder.Append(@"r.VoucherCode, r.FinalPrice, r.PaidAmount, ");
             clauseBuilder.Append(@"i.ItineraryId, i.BookingId, i.RsvNo, i.BookingStatusCd, i.FareTypeCd, i.CanHold, ");
-            clauseBuilder.Append(@"i.MarginId, i.MarginCoefficient, i.MarginConstant, i.MarginNominal, ");
+            clauseBuilder.Append(@"i.LocalPrice, i.MarginId, i.MarginCoefficient, i.MarginConstant, i.MarginNominal, ");
             clauseBuilder.Append(@"t.TripId, t.ItineraryId, t.OriginAirportCd, t.DestinationAirportCd, t.DepartureDate, ");
             clauseBuilder.Append(@"s.SegmentId, s.TripId, s.Pnr, s.OperatingAirlineCd, s.AirlineCd, s.FlightNumber, ");
             clauseBuilder.Append(@"s.DepartureAirportCd, s.DepartureTerminal, s.DepartureTime, ");

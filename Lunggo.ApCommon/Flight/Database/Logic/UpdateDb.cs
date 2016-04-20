@@ -100,6 +100,32 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
             }
 
+            internal static bool SetPayment(string rsvNo, FlightReservation reservation) 
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    var queryParam = new FlightReservationTableRecord();
+                        queryParam.RsvNo = rsvNo;
+                        queryParam.PaymentMediumCd = PaymentMediumCd.Mnemonic(reservation.Payment.Medium);
+                        queryParam.PaymentMethodCd = PaymentMethodCd.Mnemonic(reservation.Payment.Method);
+                        queryParam.PaymentStatusCd = PaymentStatusCd.Mnemonic(reservation.Payment.Status);
+                        queryParam.PaymentTargetAccount = reservation.Payment.TargetAccount;
+                        queryParam.PaymentTimeLimit = reservation.Payment.TimeLimit.Value.ToUniversalTime();
+                        queryParam.PaymentUrl = reservation.Payment.Url;
+                        queryParam.CurrencyCd = reservation.Payment.Currency;
+                        queryParam.VoucherCode = reservation.Discount.Code;
+                        queryParam.DiscountId = reservation.Discount.Id;
+                        queryParam.DiscountName = reservation.Discount.Name;
+                        queryParam.DiscountPercentage = reservation.Discount.Percentage;
+                        queryParam.DiscountConstant = reservation.Discount.Constant;
+                        queryParam.DiscountNominal = reservation.Discount.Nominal;
+                        queryParam.TransferCode = reservation.TransferCode;
+                        queryParam.FinalPrice = reservation.Payment.FinalPrice;
+                    UpdatePaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);
+                    return true;
+                }
+            }
+
             internal static void ConfirmRefund(string rsvNo, RefundInfo refund)
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())

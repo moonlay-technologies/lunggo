@@ -44,11 +44,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.IsSuccess = true;
                 var reservation = CreateReservation(itins, input, bookResults);
                 InsertDb.Reservation(reservation);
-                if (reservation.Payment.Method == PaymentMethod.BankTransfer)
-                    SendPendingPaymentReservationNotifToCustomer(reservation.RsvNo);
-                if (reservation.Payment.Method == PaymentMethod.VirtualAccount)
-                    SendInstantPaymentReservationNotifToCustomer(reservation.RsvNo);
-                SavePaymentRedirectionUrlInCache(reservation.RsvNo, reservation.Payment.Url, reservation.Payment.TimeLimit);
                 output.RsvNo = reservation.RsvNo;
                 //Delete Itinerary From Cache
                 DeleteItineraryFromCache(input.ItinCacheId);
@@ -94,97 +89,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 Itineraries = itins,
                 Contact = input.Contact,
                 Passengers = input.Passengers,
-                Payment = input.Payment,
+                Payment = new PaymentInfo(),
                 TripType = ParseTripType(trips)
             };
-            reservation.Payment.Medium = PaymentService.GetInstance().GetPaymentMedium(input.Payment.Method);
             reservation.Payment.TimeLimit = bookResults.Min(res => res.TimeLimit);
-            var originalPrice = reservation.Itineraries.Sum(itin => itin.LocalPrice);
-            var campaign = CampaignService.GetInstance().UseVoucherRequest(new VoucherRequest
-            {
-                Email = input.Contact.Email,
-                Price = originalPrice,
-                VoucherCode = input.DiscountCode
-            });
-            if (campaign.CampaignVoucher != null)
-            {
-                reservation.Payment.FinalPrice = campaign.DiscountedPrice;
-                reservation.Discount = new DiscountData
-                {
-                    Code = input.DiscountCode,
-                    Id = campaign.CampaignVoucher.CampaignId.GetValueOrDefault(),
-                    Name = campaign.CampaignVoucher.DisplayName,
-                    Percentage = campaign.CampaignVoucher.ValuePercentage.GetValueOrDefault(),
-                    Constant = campaign.CampaignVoucher.ValueConstant.GetValueOrDefault(),
-                    Nominal = campaign.TotalDiscount
-                };
-            }
-            else
-            {
-                reservation.Payment.FinalPrice = originalPrice;
-                reservation.Discount = new DiscountData();
-            }
-            if (reservation.Payment.Method == PaymentMethod.BankTransfer)
-            {
-                reservation.TransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
-                reservation.Payment.FinalPrice -= reservation.TransferCode;
-            }
-            else
-            {
-                //Penambahan disini buat menghapus Transfer Code dan Token Transfer Code jika tidak milih Bank Transfer
-                var dummyTransferCode = FlightService.GetInstance().GetTransferCodeByTokeninCache(input.TransferToken);
-                var dummyPrice = reservation.Payment.FinalPrice - dummyTransferCode;
-                FlightService.GetInstance().DeleteUniquePriceFromCache(dummyPrice.ToString());
-                FlightService.GetInstance().DeleteTokenTransferCodeFromCache(input.TransferToken);
-            }
-            var transactionDetails = ConstructTransactionDetails(reservation);
-            var itemDetails = ConstructItemDetails(reservation);
-            var payment = PaymentService.GetInstance();
-            payment.ProcessPayment(reservation.Payment, transactionDetails, itemDetails, reservation.Payment.Method);
+            reservation.Payment.Status = PaymentStatus.Pending;
             return reservation;
-        }
-
-        private List<ItemDetails> ConstructItemDetails(FlightReservation reservation)
-        {
-            var itemDetails = new List<ItemDetails>();
-            var trips = reservation.Itineraries.SelectMany(itin => itin.Trips).ToList();
-            var itemNameBuilder = new StringBuilder();
-            foreach (var trip in trips)
-            {
-                itemNameBuilder.Append(trip.OriginAirport + "-" + trip.DestinationAirport);
-                itemNameBuilder.Append(" " + trip.DepartureDate.ToString("dd-MM-yyyy"));
-                if (trip != trips.Last())
-                {
-                    itemNameBuilder.Append(", ");
-                }
-            }
-            var itemName = itemNameBuilder.ToString();
-            itemDetails.Add(new ItemDetails
-            {
-                Id = "1",
-                Name = itemName,
-                Price = (long)reservation.Itineraries.Sum(itin => itin.LocalPrice),
-                Quantity = 1
-            });
-            if (reservation.Discount.Nominal != 0)
-                itemDetails.Add(new ItemDetails
-                {
-                    Id = "2",
-                    Name = "Discount",
-                    Price = (long)-reservation.Discount.Nominal,
-                    Quantity = 1
-                });
-            return itemDetails;
-        }
-
-        private TransactionDetails ConstructTransactionDetails(FlightReservation reservation)
-        {
-            return new TransactionDetails
-            {
-                OrderId = reservation.RsvNo,
-                OrderTime = reservation.RsvTime,
-                Amount = (long)reservation.Payment.FinalPrice
-            };
         }
 
         private List<BookResult> BookItineraries(IEnumerable<FlightItinerary> itins, BookFlightInput input, BookFlightOutput output)

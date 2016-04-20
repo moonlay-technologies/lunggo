@@ -1,5 +1,6 @@
 ﻿using System;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Flight.Model;
 
 namespace Lunggo.ApCommon.Payment.Model
 {
@@ -17,6 +18,8 @@ namespace Lunggo.ApCommon.Payment.Model
         public decimal FinalPrice { get; set; }
         public decimal PaidAmount { get; set; }
         public string Currency { get; set; }
+        public string TransferToken { get; set; }
+        public string DiscountCode { get; set; }
         public RefundInfo Refund { get; set; }
     }
 }

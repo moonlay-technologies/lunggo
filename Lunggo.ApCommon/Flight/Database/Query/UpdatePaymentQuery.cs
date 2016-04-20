@@ -44,6 +44,24 @@ namespace Lunggo.ApCommon.Flight.Database.Query
                 clauseBuilder.Append(@"PaymentUrl = @PaymentUrl, ");
             if (condition.PaidAmount != null && condition.PaidAmount != 0M)
                 clauseBuilder.Append(@"PaidAmount = @PaidAmount, ");
+            if (condition.TransferCode != null)
+                clauseBuilder.Append(@"TransferCode = @TransferCode, ");
+            if (condition.FinalPrice != null)
+                clauseBuilder.Append(@"FinalPrice = @FinalPrice, ");
+            if (condition.CurrencyCd != null)
+                clauseBuilder.Append(@"CurrencyCd = @CurrencyCd, ");
+            if (condition.VoucherCode != null)
+                clauseBuilder.Append(@"VoucherCode = @VoucherCode, ");
+            if (condition.DiscountId != null)
+                clauseBuilder.Append(@"DiscountId = @DiscountId, ");
+            if (condition.DiscountName != null)
+                clauseBuilder.Append(@"DiscountName = @DiscountName, ");
+            if (condition.DiscountPercentage != null)
+                clauseBuilder.Append(@"DiscountPercentage = @DiscountPercentage, ");
+            if (condition.DiscountConstant != null)
+                clauseBuilder.Append(@"DiscountConstant = @DiscountConstant, ");
+            if (condition.DiscountNominal != null)
+                clauseBuilder.Append(@"DiscountNominal = @DiscountNominal, ");
             if (condition.PaymentStatusCd != null)
             {
                 clauseBuilder.Append(

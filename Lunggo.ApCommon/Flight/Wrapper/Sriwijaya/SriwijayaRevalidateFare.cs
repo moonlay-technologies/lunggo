@@ -481,7 +481,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             if (ParseFID1.Count == 1)
                             {
                                 #region
-                                var cekFID1 = ambilFare["[value*=" + FIDsegment1 + "]"];
+                                var cekFID1 = ambilFare["[value*='" + FIDsegment1 + "']"];
                                 var FIDsegments = new List<string>
                  {
                      FIDsegment1,FIDsegment2,FIDsegment3

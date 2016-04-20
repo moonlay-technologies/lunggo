@@ -11,10 +11,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public string Token { get; set; }
         public ContactData Contact { get; set; }
         public List<PassengerData> Passengers { get; set; }
-        public PaymentInfo Payment { get; set; }
-        public string DiscountCode { get; set; }
         public string Language { get; set; }
-        public string TransferToken { get; set; }
+        
     }
 
     public class PassengerData
