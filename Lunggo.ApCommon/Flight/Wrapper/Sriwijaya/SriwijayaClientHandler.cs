@@ -66,7 +66,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var postData =
                     "username=" + _userName +
                     "&password=" + _password +
-                    "&Submit=Login" +
+                    "&Submit=Log+In" +
                     "&actions=LOGIN";
                 var request = new RestRequest(url, Method.POST);
                 request.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
