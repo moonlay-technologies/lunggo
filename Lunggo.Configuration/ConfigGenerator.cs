@@ -335,6 +335,7 @@ namespace Lunggo.Configuration
             const string autocompleteAirlinePath = @"/api/v1/autocomplete/airline/";
             const string checkVoucherPath = @"/api/v1/voucher/check";
             const string subscribePath = @"/api/v1/newsletter/subscribe";
+            const string loginPath = @"/id/ApiAccount/Login";
             const string registerPath = @"/id/ApiAccount/Register";
             const string resetPasswordPath = @"/id/ApiAccount/ResetPassword";
             const string forgotPasswordPath = @"/id/ApiAccount/ForgotPassword";
@@ -362,6 +363,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("autocompleteAirlinePath", autocompleteAirlinePath);
             fileTemplate.SetAttribute("checkVoucherPath", checkVoucherPath);
             fileTemplate.SetAttribute("subscribePath", subscribePath);
+            fileTemplate.SetAttribute("loginPath", loginPath);
             fileTemplate.SetAttribute("registerPath", registerPath);
             fileTemplate.SetAttribute("resetPasswordPath", resetPasswordPath);
             fileTemplate.SetAttribute("forgotPasswordPath", forgotPasswordPath);

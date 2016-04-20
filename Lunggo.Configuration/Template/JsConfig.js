@@ -102,6 +102,10 @@ var SubscribeConfig = {
     Url: '$apiUrl$$subscribePath$'
 };
 
+var LoginConfig = {
+    Url: '$rootUrl$$loginPath$'
+};
+
 var RegisterConfig = {
     Url: '$rootUrl$$registerPath$'
 };

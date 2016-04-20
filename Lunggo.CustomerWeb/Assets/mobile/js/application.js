@@ -363,13 +363,15 @@ if (typeof (angular) == 'object') {
             SetOption: function (options, overlay) {
                 overlay = overlay || 'flight-form' ;
                 $('.ui-datepicker').datepicker({
-                    onSelect: function (date) {
+                    onSelect: function(date) {
                         $rootScope.PageConfig.SetOverlay(overlay);
                         $rootScope.DatePicker.Settings.SelectedDate = date;
                         $($rootScope.DatePicker.Settings.Target).val(date);
                         $($rootScope.DatePicker.Settings.Target).trigger('input');
-                    }
-                });
+                    },
+                    showOn: "focus"
+                    //minDate: 0
+            });
                 // set default value for datepicker
                 if (options.MinDate) {
                     $rootScope.DatePicker.Settings.MinDate = options.MinDate;
@@ -378,9 +380,10 @@ if (typeof (angular) == 'object') {
                 }
                 
                 if (options.Target == 'departure') {
+                    $(".ui-datepicker").datepicker("option", "showOn", "hide");
+                    //$(".ui-datepicker").datepicker("option", "showAnim", "hide");
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
-                    $('.ui-datepicker').datepicker();
-                    $('.ui-datepicker').datepicker('option', 'minDate', new Date());
+                    $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.DatePicker.Settings.MinDate);
                     if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.ReturnDate) {
                         $('.ui-datepicker').datepicker('option', 'maxDate', new Date($rootScope.FlightSearchForm.ReturnDate));
                     } else {
@@ -393,11 +396,15 @@ if (typeof (angular) == 'object') {
                         $('.ui-datepicker').datepicker('option', 'minDate', new Date($rootScope.FlightSearchForm.DepartureDate));
                     }
                     if ($rootScope.FlightSearchForm.Trip == "true") {
+                        // $rootScope.DatePicker.Settings.SelectedDate = $rootScope.FlightSearchForm.DepartureDate;
                         if ($rootScope.FlightSearchForm.ReturnDate) {
                             $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.FlightSearchForm.DepartureDate);
                             $('.ui-datepicker').datepicker('option', 'maxDate', null);
+                            //$rootScope.DatePicker.Settings.SelectedDate = $rootScope.FlightSearchForm.ReturnDate;
                         }
                     }
+
+                    
                 }
                 $rootScope.DatePicker.Settings.DateFormat = 'D, dd M yy';
                 $rootScope.DatePicker.Settings.ChangeMonth = false ;
@@ -406,14 +413,9 @@ if (typeof (angular) == 'object') {
                 // set option to datepicker
                 $('.ui-datepicker').datepicker('option', 'prevText', '');
                 $('.ui-datepicker').datepicker('option', 'nextText', '');
-                //$('.ui-datepicker.departure-date').datepicker('option', 'changeMonth', $rootScope.DatePicker.Settings.ChangeMonth);
-                //$('.ui-datepicker.departure-date').datepicker('option', 'changeYear', $rootScope.DatePicker.Settings.ChangeYear);
-                //console.log($rootScope.FlightSearchForm.DepartureDate);
                 $('.ui-datepicker.departure-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
                 $('.ui-datepicker.return-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
-
-                //$('.ui-datepicker').datepicker('option', 'altField', $rootScope.DatePicker.Settings.Target);
-                //$('.ui-datepicker').datepicker('option', 'altFormat', $rootScope.DatePicker.Settings.DateFormat);
+                
                 // set on choose date function
             }
         };// datepicker
@@ -445,26 +447,42 @@ if (typeof (angular) == 'object') {
                     var url = FlightAutocompleteConfig.Url + keyword;
 
                     if (keyword.length >= $rootScope.FlightSearchForm.AutoComplete.MinLength) {
-                        $rootScope.FlightSearchForm.AutoComplete.Loading = true;
-                        // if result exist in cache
-                        if (keyword in $rootScope.FlightSearchForm.AutoComplete.Cache) {
+                        $('autocomplete-loading .text-loading').show();
+                        if (typeof ($rootScope.FlightSearchForm.AutoComplete.Cache[keyword]) != "undefined") {
                             $rootScope.FlightSearchForm.AutoComplete.Result = $rootScope.FlightSearchForm.AutoComplete.Cache[keyword];
-                            $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+                            //console.log('from cache : ');
+                            //console.log(FlightSearchConfig.autocomplete.result);
+                            generateSearchResult($rootScope.FlightSearchForm.AutoComplete.Result);
+                            if ($rootScope.FlightSearchForm.AutoComplete.Result.length > 0) {
+                                $('.autocomplete-no-result').hide();
+                                $('.autocomplete-loading .text-loading').hide();
+                                $('.autocomplete-result').show();
+                            } else {
+                                $('.autocomplete-loading .text-loading').hide();
+                                $('.autocomplete-result').hide();
+                                $('.autocomplete-no-result').show();
+                            }
                         } else {
-                            $.get(url).done(
-                                function (returnData) {
-                                    $rootScope.FlightSearchForm.AutoComplete.Result = returnData;
-                                    $rootScope.FlightSearchForm.AutoComplete.Loading = false;
-                                    // add result to cache
-                                    $rootScope.FlightSearchForm.AutoComplete.Cache[keyword] = returnData;
+                            $.ajax({
+                                url: FlightAutocompleteConfig.Url + keyword
+                            }).done(function(returnData) {
+                                //$('.autocomplete-pre .text-pre').hide();
+                                $('.autocomplete-loading .text-loading').hide();
+                                $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+                                $rootScope.FlightSearchForm.AutoComplete.Result = returnData;
+                                $rootScope.FlightSearchForm.AutoComplete.Cache[keyword] = returnData;
+                                //console.log(returnData);
+                                generateSearchResult($rootScope.FlightSearchForm.AutoComplete.Result);
+                                if (returnData.length > 0) {
+                                    $('.autocomplete-no-result').hide();
+                                    $('.autocomplete-loading .text-loading').hide();
+                                    $('.autocomplete-result').show();
+                                } else {
+                                    $('.autocomplete-loading .text-loading').hide();
+                                    $('.autocomplete-result').hide();
+                                    $('.autocomplete-no-result').show();
                                 }
-                            ).fail(
-                                function (returnData) {
-                                    console.log('Failed to get airport list');
-                                    console.log(returnData);
-                                    $rootScope.FlightSearchForm.AutoComplete.Loading = false;
-                                }
-                            );
+                            });
                         }
                     }
                 },
@@ -484,6 +502,7 @@ if (typeof (angular) == 'object') {
                     } else {
                         $rootScope.FlightSearchForm.AirportDestination = airport;
                     }
+                    console.log(airport);
                 }
             },// auto complete
             PassengerPicker: {
@@ -555,7 +574,7 @@ if (typeof (angular) == 'object') {
 
                 if ($rootScope.FlightSearchForm.DepartureDate == '') {
                     var departure = new Date();
-                    departure.setDate( departure.getDate() + 1 );
+                    departure.setDate( departure.getDate() + 1);
                     $rootScope.FlightSearchForm.DepartureDate = departure;
                 }
 
@@ -584,6 +603,40 @@ if (typeof (angular) == 'object') {
             }// submit
         };//$rootScope.FlightSearchForm
 
+        $('.autocomplete-result ul.result').on('click', 'li', function (overlay) {
+
+            //var overlay = '' || flight
+            var locationCode = $(this).find('.airport__code').html();
+            var locationCity = $(this).find('.airport__location').html().split(",")[0];
+            var locationCountry = $(this).find('.airport__location').html().split(",")[1].trim();
+            var locationName = $(this).find('.airport__name').html();
+            var airport = { City: locationCity, Code: locationCode, Country: locationCountry, Name: locationName };
+            if ($rootScope.FlightSearchForm.AutoComplete.Target == 'departure') {
+                $rootScope.FlightSearchForm.AirportOrigin = airport;
+            } else {
+                $rootScope.FlightSearchForm.AirportDestination = airport;
+            }
+            //$rootScope.PageConfig.SetOverlay();
+        });
+
+        function generateSearchResult(list) {
+            $('.autocomplete-result ul').empty();
+            for (var i = 0 ; i < list.length; i++) {
+                $('.autocomplete-result ul').append
+                (
+                    '<li class="airport">' + 
+                        '<a class="airport__link">' + 
+                        '</a>' +
+                        '<span class="airport__code">'+ list[i].Code +'</span>' +
+                        '<div class="airport__detail">' +
+                            '<p class="airport__location">' + list[i].City + ', ' + list[i].Country + '</p>' +
+                            '<p class="airport__name">' + list[i].Name + '</p>' +
+                        '</div>' +
+                      '</li>'
+                );
+            }
+        }
+
         // set default date for departure date and return date
         if ($rootScope.FlightSearchForm.DepartureDate == '') {
             var departure = new Date();
@@ -591,13 +644,11 @@ if (typeof (angular) == 'object') {
             $rootScope.FlightSearchForm.DepartureDate = departure;
         }
         if ($rootScope.FlightSearchForm.ReturnDate == '') {
-            var todayDate = new Date();
+            //var todayDate = new Date();
             var returnDate = new Date();
-            returnDate.setDate(todayDate.getDate() + 1);
+            returnDate.setDate(returnDate.getDate() + 1);
             $rootScope.FlightSearchForm.ReturnDate = returnDate;
         } 
-
-
     });//app.run
 
 }
@@ -625,3 +676,26 @@ function getParam(name) {
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+//    $rootScope.FlightSearchForm.AutoComplete.Loading = true;
+//    // if result exist in cache
+//    if (keyword in $rootScope.FlightSearchForm.AutoComplete.Cache) {
+//        $rootScope.FlightSearchForm.AutoComplete.Result = $rootScope.FlightSearchForm.AutoComplete.Cache[keyword];
+//        $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+//    } else {
+//        $.get(url).done(
+//            function (returnData) {
+//                $rootScope.FlightSearchForm.AutoComplete.Result = returnData;
+//                $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+//                // add result to cache
+//                $rootScope.FlightSearchForm.AutoComplete.Cache[keyword] = returnData;
+//            }
+//        ).fail(
+//            function (returnData) {
+//                console.log('Failed to get airport list');
+//                console.log(returnData);
+//                $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+//            }
+//        );
+//    }
+//}

@@ -102,28 +102,32 @@ var SubscribeConfig = {
     Url: 'https://api.local.travorama.com/api/v1/newsletter/subscribe'
 };
 
+var LoginConfig = {
+    Url: 'http://local.travorama.com/Api/ApiAccount/Login'
+};
+
 var RegisterConfig = {
-    Url: 'http://local.travorama.com/id/ApiAccount/Register'
+    Url: 'http://local.travorama.com/Api/ApiAccount/Register'
 };
 
 var ResetPasswordConfig = {
-    Url: 'http://local.travorama.com/id/ApiAccount/ResetPassword'
+    Url: 'http://local.travorama.com/Api/ApiAccount/ResetPassword'
 };
 
 var ForgotPasswordConfig = {
-    Url: 'http://local.travorama.com/id/ApiAccount/ForgotPassword'
+    Url: 'http://local.travorama.com/Api/ApiAccount/ForgotPassword'
 };
 
 var ChangePasswordConfig = {
-    Url: 'http://local.travorama.com/id/ApiAccount/ChangePassword'
+    Url: 'http://local.travorama.com/Api/ApiAccount/ChangePassword'
 };
 
 var ChangeProfileConfig = {
-    Url: 'http://local.travorama.com/id/ApiAccount/ChangeProfile'
+    Url: 'http://local.travorama.com/Api/ApiAccount/ChangeProfile'
 };
 
 var ResendConfirmationEmailConfig = {
-    Url: 'http://local.travorama.com/id/ApiAccount/ResendConfirmationEmail'
+    Url: 'http://local.travorama.com/Api/ApiAccount/ResendConfirmationEmail'
 };
 
 var VeritransTokenConfig = {

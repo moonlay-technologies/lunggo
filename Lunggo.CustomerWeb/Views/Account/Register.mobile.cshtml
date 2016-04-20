@@ -33,7 +33,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container" ng-controller = "RegisterController">
 
     <div class="form-wrapper form-wrapper--register">
 
@@ -43,10 +43,10 @@
         </header><!-- .form-wrapper__header -->
 
         <div class="form-wrapper__body">
-            <form class="form register-form form-horizontal" name="RegisterForm" novalidate ng-submit="User.Send()">
+            <form class="form register-form form-horizontal" name="RegisterForm" novalidate ng-submit="Users.Send()">
                 <div class="form-group">
                     <label class="control-label">Alamat Email Anda :</label>
-                    <input type="email" value="" name="Email" class="form-control" ng-model="User.Email" required />
+                    <input type="email" value="" name="Email" class="form-control" ng-model="Users.Email" required />
                 </div>
                 <div class="form-group">
                     <button class="btn btn-yellow btn-block" ng-click="User.Send()" ng-disabled="RegisterForm.$invalid || User.Sending">REGISTER</button>

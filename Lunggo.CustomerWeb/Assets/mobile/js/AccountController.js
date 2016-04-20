@@ -199,7 +199,7 @@ app.controller('RegisterController', ['$http', '$scope', '$rootScope', function(
 
     $scope.PageConfig = $rootScope.PageConfig;
 
-    $scope.User = {
+    $scope.Users = {
         Email: '',
         Message: '',
         Registered: false,
@@ -208,46 +208,63 @@ app.controller('RegisterController', ['$http', '$scope', '$rootScope', function(
         Sending: false,
         Sent : false,
         Send : function() {
-            $scope.User.Sending = true;
+            $scope.Users.Sending = true;
+            //$.ajax({
+            //    url: RegisterConfig.Url,
+            //    type: 'post',
+            //    contentType: "application/x-www-form-urlencoded",
+            //    data: {
+            //         Email: $scope.Users.Email
+            //    },
+            //    success: function (data) {
+            //        console.log("Success!!");
+            //        console.log(data);
+            //        console.log(status);
+            //    },
+            //    error: function (data) {
+            //        console.log(data);
+            //        console.log("error");
+            //    }
+            //});
 
             $http({
                 url: RegisterConfig.Url,
                 method: 'POST',
                 data: {
-                    Email: $scope.User.Email,
+                    'Email': $scope.Users.Email,
                 }
-            }).then(function (returnData) {
+            }).success(function(returnData) {
                 $scope.form.Sending = false;
                 $scope.form.Sent = true;
 
                 switch (returnData.data.Status) {
-                    case "Success":
-                        $scope.User.Registered = false;
-                        $scope.User.EmailSent = false;
-                        $scope.User.EmailConfirmed = false;
-                        $scope.User.Email= '';
-                        break;
-                    case "AlreadyRegistered":
-                        $scope.User.Registered = true;
-                        $scope.User.EmailSent = true;
-                        $scope.User.EmailConfirmed = true;
-                        $scope.User.Email = '';
-                        break;
-                    case "AlreadyRegisteredButUnconfirmed":
-                        $scope.User.Registered = true;
-                        $scope.User.EmailSent = true;
-                        $scope.User.EmailConfirmed = false;
-                        break;
-                    case "InvalidInputData":
-                        $scope.User.Email = '';
-                        break;
+                case "Success":
+                    $scope.Users.Registered = false;
+                    $scope.Users.EmailSent = false;
+                    $scope.Users.EmailConfirmed = false;
+                    $scope.Users.Email = '';
+                    break;
+                case "AlreadyRegistered":
+                    $scope.Users.Registered = true;
+                    $scope.Users.EmailSent = true;
+                    $scope.Users.EmailConfirmed = true;
+                    $scope.Users.Email = '';
+                    break;
+                case "AlreadyRegisteredButUnconfirmed":
+                    $scope.Users.Registered = true;
+                    $scope.Users.EmailSent = true;
+                    $scope.Users.EmailConfirmed = false;
+                    break;
+                case "InvalidInputData":
+                    $scope.Users.Email = '';
+                    break;
                 }
 
-            }, function (returnData) {
+            }).error(function (returnData) {
                 console.log('Failed requesting reset password');
                 console.log(returnData);
-                $scope.User.Sending = false;
-                $scope.User.Sent = false;
+                $scope.Users.Sending = false;
+                $scope.Users.Sent = false;
             });
 
         }

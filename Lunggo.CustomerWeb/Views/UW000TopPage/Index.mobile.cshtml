@@ -65,7 +65,7 @@
                 <div class="form__adult">
                     <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}}</p>
                 </div>
-                <div class="form__children">
+                <div class="form__child">
                     <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('children'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[1]}}</p>
                 </div>
                 <div class="form__infant">
@@ -216,11 +216,11 @@
                 </ul>
             </div><!-- .autocomplete-preload -->
         
-            <<div class="autocomplete-loading" ng-show="FlightSearchForm.AutoComplete.Loading">
+            @*<<div class="autocomplete-loading" ng-show="FlightSearchForm.AutoComplete.Loading">
                 <h4>Mencari Bandara</h4>
             </div><!-- .autocomplete-loading -->
 
-            <div class="autocomplete-result" ng-hide="FlightSearchForm.AutoComplete.Loading">
+            <div class="autocomplete-result" ng-show="!FlightSearchForm.AutoComplete.Loading">
                 <ul class="result" ng-show="FlightSearchForm.AutoComplete.Keyword.length >= FlightSearchForm.AutoComplete.MinLength">
                     <li class="airport" ng-repeat="result in FlightSearchForm.AutoComplete.Result">
                         <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
@@ -231,7 +231,18 @@
                         </div>
                     </li>
                 </ul>
-            </div><!-- .autocomplete-result -->
+            </div><!-- .autocomplete-result -->*@
+            <div class="autocomplete-loading">
+                <h4 class="text-center text-loading">Mencari Bandara</h4>
+            </div>
+
+            <div class="autocomplete-no-result">
+                <h4 class="text-center">Hasil tidak ditemukan</h4>
+            </div>
+
+            <div class="autocomplete-result">
+                <ul class="result" ng-click= "PageConfig.SetOverlay()"></ul>
+            </div>
         </section><!-- .overlay__content -->
     </div><!-- .overlay--airport-select -->
     
