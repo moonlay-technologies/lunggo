@@ -947,7 +947,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     for (var i = 2; i < rows.Count() - 1; i++)
                     {
                         var cols = rows[i].ChildElements.ToList();
-                        for (var j = 4; j < cols.Count; j++)
+                        for (var j = 5; j < cols.Count; j++)
                         {
                             if (cols[j].GetAttribute("class") != "step2_soldcell fareInfo_middle_tconx"
                                 && cols[j].GetAttribute("class") != "step2_soldcell fareInfo_middle_bconx"
