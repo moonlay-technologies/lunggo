@@ -6,7 +6,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
     $scope.Order;
 
     $scope.formMessage = '';
-
+    $scope.NotifBox = false;
     if (order.length) {
         $scope.Order = JSON.parse(order);
     }
@@ -64,6 +64,16 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
     angular.element(document).ready(function () {
         $location.hash('menu');
     });
+
+
+    $scope.$watch('PageConfig.ActivePage', function() {
+        $scope.NotifBox = false;
+
+        //if ($scope.PageConfig.ActivePage == 'menu') {
+        //}
+    });
+    
+
     $scope.$watch(function () {
         return location.hash;
     }, function (value) {
@@ -127,12 +137,14 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                     $scope.UserProfile.updating = false;
                     $scope.UserProfile.updated = true;
                     $scope.formMessage = 'Profile Anda Berhasil Diperbaharui';
+                    $scope.NotifBox = true;
                 }
                 else {
                     console.log(returnData.data.Description);
                     $scope.UserProfile.edit = true;
                     $scope.UserProfile.updating = false;
-                    $scope.formMessage = 'Profile Anda Belum DDiperbaharui';
+                    $scope.formMessage = 'Profile Anda Belum Diperbaharui';
+                    $scope.NotifBox = true;
                 }
             }, function (returnData) {
                 console.log('Failed requesting change profile');
@@ -140,6 +152,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                 $scope.profileForm.edit = true;
                 $scope.UserProfile.updating = false;
                 $scope.formMessage = 'Profile Anda Belum Diperbaharui';
+                $scope.NotifBox = true;
             });
         }
         if (name == 'password') {
@@ -223,6 +236,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                     $scope.UserPassword.Updating = false;
                     $scope.UserPassword.Editing = false;
                     $scope.formMessage = 'Password Anda Telah Berhasil Diperbaharui';
+                    $scope.NotifBox = true;
                 }
                 else {
                     console.log(returnData.data.Description);
@@ -234,6 +248,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                     } else {
                         $scope.formMessage = 'Password yang Anda Masukkan Tidak Tepat';
                     }
+                    $scope.NotifBox = true;
 
                 }
             }, function (returnData) {
@@ -242,6 +257,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                 $scope.UserPassword.Editing = false;
                 $scope.UserPassword.Updating = false;
                 $scope.formMessage = 'Permohonan ganti password Anda gagal';
+                $scope.NotifBox = true;
             });
         }
     };

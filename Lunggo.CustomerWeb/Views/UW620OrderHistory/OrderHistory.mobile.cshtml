@@ -48,7 +48,7 @@
     <h1 class="text-center section-title stripe">Ubah <span>Profile</span></h1>
 </header>
 
-<div class ="form">
+<div class ="form" ng-show ="NotifBox">
     <h3>{{formMessage}}</h3>
 </div>
 
@@ -60,7 +60,7 @@
     <div class="menu-wrapper">
         <ul>
             <li class="menu-profile">
-                <a ng-click="PageConfig.ChangePage('profile')">Ubah Profile</a>
+                <a ng-click="PageConfig.ChangePage('profile'); formMessage = ''">Ubah Profile</a>
             </li>
             <li class="menu-history">
                 <a ng-click="PageConfig.ChangePage('history')">Pemesanan Saya</a>
@@ -108,7 +108,7 @@
                                 <button class="btn btn-gray btn-block" ng-click="UserProfile.Edit()">CANCEL</button>
                             </div>
                             <div class="col-xs-6">
-                                <button class="btn btn-yellow btn-block" ng-disabled="profileForm.$invalid" ng-click="EditProfile.Submit('profileSave'); UserProfile.Edit()">SIMPAN</button>
+                                <button class="btn btn-yellow btn-block" ng-disabled="profileForm.$invalid" ng-click="EditProfile.Submit('profileSave'); UserProfile.Edit(); NotifBox = True">SIMPAN</button>
                             </div>
                         </div>
                     </div>
