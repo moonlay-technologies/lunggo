@@ -4,6 +4,9 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.Countries = $rootScope.Countries;
     $scope.Order;
+
+    $scope.formMessage = '';
+
     if (order.length) {
         $scope.Order = JSON.parse(order);
     }
@@ -91,7 +94,97 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
     $scope.EditProfile = editProfile;
     $scope.EditProfile.Updating = false;
     $scope.EditProfile.Failed = false;
-    $scope.EditProfile.Submit = function() {
+    $scope.EditProfile.Submit = function (name) {
+        // edit profile form
+        if (name == 'profile') {
+            $scope.UserProfile.edit = !($scope.UserProfile.edit);
+            $scope.UserProfile.updated = false;
+        }
+        else if (name == 'profileSave') {
+            console.log('submitting form');
+            $scope.UserProfile.updating = true;
+            // submit form to URL
+            $http({
+                url: ChangeProfileMobileConfig.Url,
+                method: 'POST',
+                data: {
+                    Address: editProfile.address,
+                    FirstName: editProfile.firstname,
+                    LastName: editProfile.lastname,
+                    PhoneNumber: editProfile.phone,
+                    CountryCd: editProfile.country
+                }
+            }).then(function (returnData) {
+                console.log(returnData);
+                if (returnData.data.Status == 'Success') {
+                    console.log('Success requesting change profile');
+                    $scope.UserProfile.address = editProfile.address;
+                    $scope.UserProfile.firstname = editProfile.firstname;
+                    $scope.UserProfile.lastname = editProfile.lastname;
+                    $scope.UserProfile.phone = editProfile.phone;
+                    $scope.UserProfile.country = editProfile.country;
+                    $scope.UserProfile.edit = false;
+                    $scope.UserProfile.updating = false;
+                    $scope.UserProfile.updated = true;
+                    $scope.formMessage = 'Profile Anda Berhasil Diperbaharui';
+                }
+                else {
+                    console.log(returnData.data.Description);
+                    $scope.UserProfile.edit = true;
+                    $scope.UserProfile.updating = false;
+                    $scope.formMessage = 'Profile Anda Belum DDiperbaharui';
+                }
+            }, function (returnData) {
+                console.log('Failed requesting change profile');
+                console.log(returnData);
+                $scope.profileForm.edit = true;
+                $scope.UserProfile.updating = false;
+                $scope.formMessage = 'Profile Anda Belum Diperbaharui';
+            });
+        }
+        if (name == 'password') {
+            $scope.password.edit = !($scope.password.edit);
+            $scope.password.failed = false;
+        }
+        else if (name == 'passwordSave') {
+
+            $scope.password.updating = true;
+            $scope.password.failed = false;
+
+            console.log('submitting form');
+            // submit form to URL
+            $http({
+                url: ChangePasswordConfig.Url,
+                method: 'POST',
+                data: {
+                    NewPassword: $scope.passwordForm.newPassword,
+                    OldPassword: $scope.passwordForm.currentPassword,
+                    ConfirmPassword: $scope.passwordForm.confirmationPassword
+                }
+            }).then(function (returnData) {
+                $scope.passwordForm.newPassword = '';
+                $scope.passwordForm.currentPassword = '';
+                $scope.passwordForm.confirmationPassword = '';
+                if (returnData.data.Status == 'Success') {
+                    console.log('Success requesting reset password');
+                    console.log(returnData);
+                    $scope.password.edit = false;
+                    $scope.password.updating = false;
+                    
+                }
+                else {
+                    console.log(returnData.data.Description);
+                    console.log(returnData);
+                    $scope.password.updating = false;
+                    $scope.password.failed = true;
+                }
+            }, function (returnData) {
+                console.log('Failed requesting reset password');
+                console.log(returnData);
+                $scope.password.edit = true;
+                $scope.password.updating = false;
+            });
+        }
         
     }
     // user password
@@ -100,6 +193,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
         NewPassword: '',
         ConfirmPassword: '',
         Editing: false,
+        Message: '',
         Edit: function() {
             if ($scope.UserPassword.Editing == false) {
                 $scope.UserPassword.Editing = true;
@@ -112,7 +206,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
         Submit: function () {
             $scope.UserPassword.Updating = true;
             $http({
-                url: ChangePasswordConfig.Url,
+                url: ChangePasswordMobileConfig.Url,
                 method: 'POST',
                 data: {
                     NewPassword: $scope.UserPassword.NewPassword,
@@ -128,18 +222,26 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                     console.log(returnData);
                     $scope.UserPassword.Updating = false;
                     $scope.UserPassword.Editing = false;
+                    $scope.formMessage = 'Password Anda Telah Berhasil Diperbaharui';
                 }
                 else {
                     console.log(returnData.data.Description);
                     console.log(returnData);
                     $scope.UserPassword.Updating = false;
                     $scope.UserPassword.Editing = false;
+                    if (returnData.data.Description == 'ModelInvalid') {
+                        $scope.formMessage = 'Password Baru yang Anda Masukkan Tidak Cocok dengan yang Dikonfimasi';
+                    } else {
+                        $scope.formMessage = 'Password yang Anda Masukkan Tidak Tepat';
+                    }
+
                 }
             }, function (returnData) {
                 console.log('Failed requesting reset password');
                 console.log(returnData);
                 $scope.UserPassword.Editing = false;
                 $scope.UserPassword.Updating = false;
+                $scope.formMessage = 'Permohonan ganti password Anda gagal';
             });
         }
     };
@@ -181,15 +283,16 @@ app.controller('LoginController', ['$http', '$scope', '$rootScope', function($ht
     $scope.User = {
         Email: '',
         Password: '',
-        Message: LoginMessage,
+        Message: '',
         Sending: false,
         Sent: false,
-        Send: function() {
+        Send: function () {
+            $scope.User.Message = '',
             $scope.User.Sending = true;
             $('.login-form').submit();
         }
     };
-
+    $scope.User.Message = LoginMessage;
     console.log($scope.User.Message);
 
 }]);// Login Controller
@@ -198,8 +301,8 @@ app.controller('LoginController', ['$http', '$scope', '$rootScope', function($ht
 app.controller('RegisterController', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope) {
 
     $scope.PageConfig = $rootScope.PageConfig;
-
-    $scope.Users = {
+    
+    $scope.User = {
         Email: '',
         Message: '',
         Registered: false,
@@ -208,63 +311,46 @@ app.controller('RegisterController', ['$http', '$scope', '$rootScope', function(
         Sending: false,
         Sent : false,
         Send : function() {
-            $scope.Users.Sending = true;
-            //$.ajax({
-            //    url: RegisterConfig.Url,
-            //    type: 'post',
-            //    contentType: "application/x-www-form-urlencoded",
-            //    data: {
-            //         Email: $scope.Users.Email
-            //    },
-            //    success: function (data) {
-            //        console.log("Success!!");
-            //        console.log(data);
-            //        console.log(status);
-            //    },
-            //    error: function (data) {
-            //        console.log(data);
-            //        console.log("error");
-            //    }
-            //});
-
+            $scope.User.Sending = true;
             $http({
-                url: RegisterConfig.Url,
+                url: RegisterMobileConfig.Url,
                 method: 'POST',
                 data: {
-                    'Email': $scope.Users.Email,
+                    'Email': $scope.User.Email,
                 }
             }).success(function(returnData) {
-                $scope.form.Sending = false;
-                $scope.form.Sent = true;
+                $scope.User.Sending = false;
+                $scope.User.Sent = true;
 
-                switch (returnData.data.Status) {
+                switch (returnData.Status) {
                 case "Success":
-                    $scope.Users.Registered = false;
-                    $scope.Users.EmailSent = false;
-                    $scope.Users.EmailConfirmed = false;
-                    $scope.Users.Email = '';
+                    $scope.User.Registered = false;
+                    $scope.User.EmailSent = false;
+                    $scope.User.EmailConfirmed = false;
+                    $scope.User.Email = '';
                     break;
                 case "AlreadyRegistered":
-                    $scope.Users.Registered = true;
-                    $scope.Users.EmailSent = true;
-                    $scope.Users.EmailConfirmed = true;
-                    $scope.Users.Email = '';
+                    $scope.User.Registered = true;
+                    $scope.User.EmailSent = true;
+                    $scope.User.EmailConfirmed = true;
+                    $scope.User.Email = '';
                     break;
                 case "AlreadyRegisteredButUnconfirmed":
-                    $scope.Users.Registered = true;
-                    $scope.Users.EmailSent = true;
-                    $scope.Users.EmailConfirmed = false;
+                    $scope.User.Registered = true;
+                    $scope.User.EmailSent = true;
+                    $scope.User.EmailConfirmed = false;
                     break;
                 case "InvalidInputData":
-                    $scope.Users.Email = '';
+                    $scope.User.Email = '';
                     break;
                 }
 
-            }).error(function (returnData) {
+            })
+                .error(function (returnData) {
                 console.log('Failed requesting reset password');
                 console.log(returnData);
-                $scope.Users.Sending = false;
-                $scope.Users.Sent = false;
+                $scope.User.Sending = false;
+                $scope.User.Sent = false;
             });
 
         }
@@ -291,7 +377,7 @@ app.controller('ForgotpasswordController', ['$http', '$scope', '$rootScope', fun
             // send form
             // submit form to URL
             $http({
-                url: ForgotPasswordConfig.Url,
+                url: ForgotPasswordMobileConfig.Url,
                 method: 'POST',
                 data: {
                     email: $scope.EmailForm.Email
@@ -308,6 +394,7 @@ app.controller('ForgotpasswordController', ['$http', '$scope', '$rootScope', fun
                         break;
                     case "NotRegistered":
                         $scope.EmailForm.ReturnData.Found = false;
+                        $scope.EmailForm.ReturnData.EmailConfirmed = true;
                         break;
                     case "AlreadyRegisteredButUnconfirmed":
                         $scope.EmailForm.ReturnData.Found = true;
@@ -315,6 +402,7 @@ app.controller('ForgotpasswordController', ['$http', '$scope', '$rootScope', fun
                         break;
                     case "InvalidInputData":
                         $scope.EmailForm.ReturnData.Found = false;
+                        $scope.EmailForm.ReturnData.EmailConfirmed = false;
                         break;
                 }
             }, function (returnData) {
@@ -326,3 +414,53 @@ app.controller('ForgotpasswordController', ['$http', '$scope', '$rootScope', fun
     };
 
 }]);// ForgotPasswordController
+
+app.controller('ResetpasswordController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
+
+        //$scope.userEmail = '';
+
+        $scope.PageConfig = $rootScope.PageConfig;
+        $scope.pageLoaded = true;
+        $scope.form = {
+            submitted: false,
+            submitting: false,
+            lala: false,
+            userEmail: userEmail,
+            code: code,
+            password: ''
+        };
+        $scope.submit = function () {
+            $scope.form.submitting = true;
+
+            $http({
+                url: ResetPasswordMobileConfig.Url,
+                method: 'POST',
+                data: {
+                    Password: $scope.form.password,
+                    ConfirmPassword: $scope.form.password,
+                    Email: $scope.form.userEmail,
+                    Code: $scope.form.code
+                }
+            }).then(function (returnData) {
+                if (returnData.data.Status == 'Success') {
+                    console.log('Success requesting reset password');
+                    console.log(returnData);
+                    $scope.form.submitting = false;
+                    $scope.form.submitted = true;
+                }
+                else {
+                    console.log(returnData.data.Description);
+                    console.log(returnData);
+                    $scope.form.lala= true;
+                }
+            }, function (returnData) {
+                console.log('Failed requesting reset password');
+                console.log(returnData);
+                $scope.form.submitting = false;
+                $scope.form.lala = true;
+            });
+
+        }
+
+    }
+]);

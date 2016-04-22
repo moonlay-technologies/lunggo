@@ -324,6 +324,7 @@ namespace Lunggo.Configuration
         {
             var apiUrl = _configDictionary["@@.*.api.apiUrl@@"];
             var rootUrl = _configDictionary["@@.*.general.rootUrl@@"];
+            var mobileUrl = "http://" + _configDictionary["@@.*.general.mobileUrl@@"];
             const string hotelPath = @"/api/v1/hotels";
             const string roomPath = @"/api/v1/rooms";
             const string flightPath = @"/api/v1/flights";
@@ -373,6 +374,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("veritransTokenPath", veritransTokenPath);
             fileTemplate.SetAttribute("veritransClientKey", veritransClientKey);
             fileTemplate.SetAttribute("transferPaymentPath", transferPaymentPath);
+            fileTemplate.SetAttribute("mobileUrl", mobileUrl);
 
             var fileContent = fileTemplate.ToString();
             string[] projectList = { "BackendWeb", "CustomerWeb" };

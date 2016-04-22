@@ -35,11 +35,23 @@
         phone: parseInt('@User.Identity.GetPhoneNumber()'),
         country: '@User.Identity.GetCountryCd()'
     }
+        if (userProfile.phone === NaN) {
+            userProfile.phone = 0;
+        }
     var order = '@Html.Raw(rsvs.Serialize())';
     </script>
     <!-- angular controller -->
     <script src="/Assets/mobile/js/AccountController.js"></script>
 }
+
+<header class="page__header">
+    <h1 class="text-center section-title stripe">Ubah <span>Profile</span></h1>
+</header>
+
+<div class ="form">
+    <h3>{{formMessage}}</h3>
+</div>
+
 
 <section class="user-menu" ng-show="PageConfig.ActivePage == 'menu'">
     <div class="menu-user">
@@ -96,7 +108,7 @@
                                 <button class="btn btn-gray btn-block" ng-click="UserProfile.Edit()">CANCEL</button>
                             </div>
                             <div class="col-xs-6">
-                                <button class="btn btn-yellow btn-block" ng-disabled="profileForm.$invalid" ng-click="EditProfile.Submit()">SIMPAN</button>
+                                <button class="btn btn-yellow btn-block" ng-disabled="profileForm.$invalid" ng-click="EditProfile.Submit('profileSave'); UserProfile.Edit()">SIMPAN</button>
                             </div>
                         </div>
                     </div>

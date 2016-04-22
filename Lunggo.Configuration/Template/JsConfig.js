@@ -138,3 +138,31 @@ var VeritransTokenConfig = {
 var TransferConfig = {
     Url: '$apiUrl$$transferPaymentPath$'
 };
+
+var LoginMobileConfig = {
+    Url: '$mobileUrl$$loginPath$'
+};
+
+var RegisterMobileConfig = {
+    Url: '$mobileUrl$$registerPath$'
+};
+
+var ResetPasswordMobileConfig = {
+    Url: '$mobileUrl$$resetPasswordPath$'
+};
+
+var ForgotPasswordMobileConfig = {
+    Url: '$mobileUrl$$forgotPasswordPath$'
+};
+
+var ChangePasswordMobileConfig = {
+    Url: '$mobileUrl$$changePasswordPath$'
+};
+
+var ChangeProfileMobileConfig = {
+    Url: '$mobileUrl$$changeProfilePath$'
+};
+
+var ResendConfirmationEmailMobileConfig = {
+    Url: '$mobileUrl$$resendConfirmationEmailPath$'
+};

@@ -103,31 +103,31 @@ var SubscribeConfig = {
 };
 
 var LoginConfig = {
-    Url: 'http://local.travorama.com/Api/ApiAccount/Login'
+    Url: 'http://local.travorama.com/id/ApiAccount/Login'
 };
 
 var RegisterConfig = {
-    Url: 'http://local.travorama.com/Api/ApiAccount/Register'
+    Url: 'http://local.travorama.com/id/ApiAccount/Register'
 };
 
 var ResetPasswordConfig = {
-    Url: 'http://local.travorama.com/Api/ApiAccount/ResetPassword'
+    Url: 'http://local.travorama.com/id/ApiAccount/ResetPassword'
 };
 
 var ForgotPasswordConfig = {
-    Url: 'http://local.travorama.com/Api/ApiAccount/ForgotPassword'
+    Url: 'http://local.travorama.com/id/ApiAccount/ForgotPassword'
 };
 
 var ChangePasswordConfig = {
-    Url: 'http://local.travorama.com/Api/ApiAccount/ChangePassword'
+    Url: 'http://local.travorama.com/id/ApiAccount/ChangePassword'
 };
 
 var ChangeProfileConfig = {
-    Url: 'http://local.travorama.com/Api/ApiAccount/ChangeProfile'
+    Url: 'http://local.travorama.com/id/ApiAccount/ChangeProfile'
 };
 
 var ResendConfirmationEmailConfig = {
-    Url: 'http://local.travorama.com/Api/ApiAccount/ResendConfirmationEmail'
+    Url: 'http://local.travorama.com/id/ApiAccount/ResendConfirmationEmail'
 };
 
 var VeritransTokenConfig = {
@@ -137,4 +137,32 @@ var VeritransTokenConfig = {
 
 var TransferConfig = {
     Url: 'https://api.local.travorama.com/api/v1/transferidentifier'
+};
+
+var LoginMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/Login'
+};
+
+var RegisterMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/Register'
+};
+
+var ResetPasswordMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ResetPassword'
+};
+
+var ForgotPasswordMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ForgotPassword'
+};
+
+var ChangePasswordMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ChangePassword'
+};
+
+var ChangeProfileMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ChangeProfile'
+};
+
+var ResendConfirmationEmailMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ResendConfirmationEmail'
 };

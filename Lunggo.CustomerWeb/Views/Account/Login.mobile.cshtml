@@ -17,6 +17,9 @@
     <!-- angular controller -->
     <script src="/Assets/mobile/js/AccountController.js"></script>
 }
+<header class="page__header">
+    <h1 class="text-center section-title stripe">Log <span>In</span></h1>
+</header>
 
 <div class="error-message bg-warning" ng-show="User.Message">
     <div ng-show="User.Message == 'NotRegistered'">
@@ -29,29 +32,37 @@
     </div>
     <div ng-show="User.Message == 'Failed'">
         <h3>Email / Password Salah</h3>
-        <p>Cek kembali alamat email dan password Anda.</p>
+        <p>Cek kembali alamat e-mail dan password Anda.</p>
     </div>
     <div ng-show="User.Message == 'AlreadyRegisteredButUnconfirmed'">
         <h3>Akun Belum Aktif</h3>
-        <p>Cek kembali alamat email Anda untuk mengaktifkan akun Anda.</p>
+        <p>Cek kembali alamat e-mail Anda untuk mengaktifkan akun Anda.</p>
+        <div class="text-center">
+            <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
+        </div>
     </div>
     <div ng-show="User.Message == 'AlreadyConfirmed'">
         <h3>Akun Anda Telah Aktif</h3>
-        <p>Silahkan login menggunakan email dan password Anda.</p>
+        <p>Silahkan login menggunakan e-mail dan password Anda.</p>
+        <div class="text-center">
+            <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
+        </div>
     </div>
 </div>
 
 <div class="container">
-
+    
     <div class="form-wrapper form-wrapper--login">
     
         <header class="form-wrapper__header">
             <h1 class="form-wrapper__title">Log In</h1>
             <p>Dengan Akun Travorama Anda</p>
         </header><!-- .form-wrapper__header -->
-
+        
         <div class="form-wrapper__body">
-            @using (Html.BeginForm("Login", "Account", new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "login-form form form-horizontal", role = "form", name = "LoginForm", ng_submit = "User.Send()"}))
+            @using (Html.BeginForm("Login", "Account", new {returnUrl = ViewBag.ReturnUrl}, 
+                FormMethod.Post, new {@class = "login-form form form-horizontal", 
+                    role = "form", name = "LoginForm", ng_submit = "User.Send()"}))
             {
                 @Html.AntiForgeryToken()
                 <div class="form-group">

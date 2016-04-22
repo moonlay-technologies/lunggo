@@ -1,4 +1,13 @@
 ﻿@using Lunggo.ApCommon.Identity.User
+@section PageJS{
+    <!-- angular controller -->
+    <script>
+        var firstName = '@User.Identity.GetFirstName()';
+        var lastName = '@User.Identity.GetLastName()';
+        var email = '@User.Identity.Name';
+    </script>
+
+}
 <header class="site-header">
     
     <div class="header-display">
@@ -33,8 +42,22 @@
             <ul>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li class="account">
-                        <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">@User.Identity.GetFirstName() @User.Identity.GetLastName()</a>
+                    if (@User.Identity.GetFirstName().Length != 0 && @User.Identity.GetLastName().Length != 0)
+                    {
+                        <li class="account">
+                            <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">@User.Identity.GetFirstName() @User.Identity.GetLastName()</a>
+                        </li>
+                    }
+
+                    else
+                    {
+                        <li class="account" ng-if="!(firstName != null && lastName != null)">
+                            <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">@User.Identity.Name</a>
+                        </li> 
+                    }
+
+                    <li class="logout @(ViewBag.CurrentPage == "Log Out" ? "active" : "") ">
+                        <a href="@Url.Action("Logout","Account")">Log Out</a>
                     </li>
                 }
                 else
