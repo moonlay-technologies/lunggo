@@ -725,6 +725,41 @@ default:
                 </div>
             </div>
         </div>
+    
+        <div class="popup__wrapper" ng-class="{'active': book.checked == true && book.isSuccess == false}">
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">Pemesanan Gagal</h4>
+                </header>
+                <div class="popup__body">
+                    <div class="container">
+                        <p>Mohon Maaf, pemesanan Anda gagal di proses.</p>
+                    </div>
+                </div>
+                <div class="popup__footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="popup__wrapper" ng-class="{'active': book.isSuccess == true}">
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">Pemesanan Berhasil</h4>
+                </header>
+                <div class="popup__body">
+                    <div class="container">
+                        <p>Penerbangan Tersedia. Mengalihkan Anda ke halaman pembayaran.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div><!-- .page-loaded -->
         

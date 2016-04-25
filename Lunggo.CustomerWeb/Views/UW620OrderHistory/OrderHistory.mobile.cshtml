@@ -55,7 +55,8 @@
 
 <section class="user-menu" ng-show="PageConfig.ActivePage == 'menu'">
     <div class="menu-user">
-        <span>{{UserProfile.firstname}} {{UserProfile.lastname}}</span>
+        <span ng-if="UserProfile.firstname.length != 0 || UserProfile.lastname != 0">{{UserProfile.firstname}} {{UserProfile.lastname}}</span>
+        <span ng-if="UserProfile.firstname.length == 0 && UserProfile.lastname == 0">Hello, New User!</span>
     </div>
     <div class="menu-wrapper">
         <ul>
