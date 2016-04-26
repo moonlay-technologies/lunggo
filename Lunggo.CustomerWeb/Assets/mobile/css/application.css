@@ -64,7 +64,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   border-radius: 2px; }
 
 input[type="text"], input[type="password"], input[type="number"], input[type="email"] {
-  font-size: 12px;
+  font-size: 16px;
   height: auto; }
 
 .site-header {
@@ -174,7 +174,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-weight: 600; }
   .burger-content .burger-content__body {
     padding-top: 60px;
-    background: #fff; }
+    background: #fff;
+    height: 100%;
+    overflow-y: hidden; }
     .burger-content .burger-content__body ul {
       list-style: none;
       margin: 0;

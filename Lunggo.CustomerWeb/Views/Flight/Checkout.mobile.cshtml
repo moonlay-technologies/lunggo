@@ -748,7 +748,7 @@ default:
             </div>
         </div>
     
-        <div class="popup__wrapper" ng-class="{'active': book.isSuccess == true}">
+        <div class="popup__wrapper" ng-class="{'active': book.checked == true && book.isSuccess == true}">
             <div class="popup">
                 <header class="popup__header">
                     <h4 class="popup__title">Pemesanan Berhasil</h4>
@@ -758,6 +758,31 @@ default:
                         <p>Penerbangan Tersedia. Mengalihkan Anda ke halaman pembayaran.</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    
+        <div class="popup__wrapper" ng-class="{'active': book.isPriceChanged == true}">
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">Harga Berubah</h4>
+                </header>
+                <div class="popup__body">
+                    <div class="container">
+                        <p>Harga tiket ini berubah menjadi Rp {{book.NewPrice}} disebabkan perubahan harga dari maskapai.</p>
+                    </div>
+                </div>
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                            </div>
+                            <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()" class="ng-pristine ng-valid">
+                                <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI" ng-disabled="!paymentMethod || !creditCardForm.$valid" disabled="disabled">
+                            </form>
+                        </div>
+                    </div>
+                </footer>
             </div>
         </div>
 

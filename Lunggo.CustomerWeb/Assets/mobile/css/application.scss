@@ -104,8 +104,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
         .burger-content__close {color:#fff; position:absolute; right:15px; top:12px; font-size:24px; font-weight:600;}
     }
-    .burger-content__body {padding-top:$header-height; background:#fff;
-        ul {list-style:none; margin:0; padding:0;
+    .burger-content__body {padding-top:$header-height; background:#fff; height: 100%; overflow-y: hidden; 
+        ul {list-style:none; margin:0; padding:0; 
             li {
                 a {color:$color-main-blue; padding:15px 0px; padding-left:70px; display:block; font-weight:600; position:relative;
                     &:before {content:""; width:30px; height:30px; display:block; position:absolute; margin-left:-40px; top:8px; background-repeat:no-repeat; background-image:url(/Assets/mobile/images/burger-sprite.png);}
@@ -198,7 +198,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // *****
 // site footer
-.site-footer {background-color:#111; color:#fefefe;
+.site-footer {background-color:#111; color:#fefefe; 
     .site-footer-menu {background-color:#303030;
         nav {padding:0 12px;
             ul {list-style:none; margin:0; padding:0;

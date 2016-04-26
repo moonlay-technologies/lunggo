@@ -402,9 +402,7 @@ if (typeof (angular) == 'object') {
                             $('.ui-datepicker').datepicker('option', 'maxDate', null);
                             //$rootScope.DatePicker.Settings.SelectedDate = $rootScope.FlightSearchForm.ReturnDate;
                         }
-                    }
-
-                    
+                    }                   
                 }
                 $rootScope.DatePicker.Settings.DateFormat = 'D, dd M yy';
                 $rootScope.DatePicker.Settings.ChangeMonth = false ;
@@ -450,8 +448,6 @@ if (typeof (angular) == 'object') {
                         $('autocomplete-loading .text-loading').show();
                         if (typeof ($rootScope.FlightSearchForm.AutoComplete.Cache[keyword]) != "undefined") {
                             $rootScope.FlightSearchForm.AutoComplete.Result = $rootScope.FlightSearchForm.AutoComplete.Cache[keyword];
-                            //console.log('from cache : ');
-                            //console.log(FlightSearchConfig.autocomplete.result);
                             generateSearchResult($rootScope.FlightSearchForm.AutoComplete.Result);
                             if ($rootScope.FlightSearchForm.AutoComplete.Result.length > 0) {
                                 $('.autocomplete-no-result').hide();
@@ -466,12 +462,10 @@ if (typeof (angular) == 'object') {
                             $.ajax({
                                 url: FlightAutocompleteConfig.Url + keyword
                             }).done(function(returnData) {
-                                //$('.autocomplete-pre .text-pre').hide();
                                 $('.autocomplete-loading .text-loading').hide();
                                 $rootScope.FlightSearchForm.AutoComplete.Loading = false;
                                 $rootScope.FlightSearchForm.AutoComplete.Result = returnData;
                                 $rootScope.FlightSearchForm.AutoComplete.Cache[keyword] = returnData;
-                                //console.log(returnData);
                                 generateSearchResult($rootScope.FlightSearchForm.AutoComplete.Result);
                                 if (returnData.length > 0) {
                                     $('.autocomplete-no-result').hide();
@@ -646,7 +640,7 @@ if (typeof (angular) == 'object') {
         if ($rootScope.FlightSearchForm.ReturnDate == '') {
             //var todayDate = new Date();
             var returnDate = new Date();
-            returnDate.setDate(returnDate.getDate() + 1);
+            returnDate.setDate(returnDate.getDate());
             $rootScope.FlightSearchForm.ReturnDate = returnDate;
         } 
     });//app.run

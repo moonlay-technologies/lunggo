@@ -192,6 +192,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
     // book
     $scope.book = {
+        isPriceChanged: false,
+        newPrice: '',
         booking: false,
         url: FlightBookConfig.Url,
         postData: '',
@@ -331,13 +333,28 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 $scope.book.checked = true;
 
                 if (returnData.data.IsSuccess) {
-                    $scope.book.isSuccess = true;
-                    $scope.book.rsvNo = returnData.data.RsvNo;
+                    if (returnData.data.NewPrice != null) {
+                        $scope.book.isPriceChanged = true;
+                        $scope.book.isSuccess = true;
+                        $scope.book.newPrice = returnData.data.NewPrice;
+                        $scope.book.checked = false;
+                    }
+                    else {
+                        $scope.book.isSuccess = true;
+                        $scope.book.rsvNo = returnData.data.RsvNo;
 
-                    $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
-                    $('form#rsvno').submit();
+                        $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                        $('form#rsvno').submit();
+                        $scope.book.checked = true;
+                    }
+                    //$scope.book.isSuccess = true;
+                    //$scope.book.rsvNo = returnData.data.RsvNo;
+
+                    //$('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                    //$('form#rsvno').submit();
 
                 } else {
+                    $scope.book.checked = true;
                     $scope.book.isSuccess = false;
                 }
 
