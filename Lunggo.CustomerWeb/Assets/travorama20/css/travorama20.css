@@ -3628,7 +3628,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
       font-weight: bold; }
   .checkout-step.active-1:before, .page-index .checkout-step.active-1.section-reason:after {
     background: #032e55; }
-  .checkout-step.active-4:after {
+  .checkout-step.active-3:after {
     background: #032e55; }
 
 .checkout-content {

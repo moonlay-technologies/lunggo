@@ -26,7 +26,7 @@ app.controller('checkoutController', [
         $scope.checkoutForm = {
             loading: false
         };
-        $scope.paymentMethod = '';
+        //$scope.paymentMethod = ''; //Payments
         $scope.stepClass = '';
         $scope.titles = [
             { name: 'Mr', value: 'Mister' },
@@ -34,44 +34,7 @@ app.controller('checkoutController', [
             { name: 'Ms', value: 'Miss' }
         ];
 
-        $scope.CreditCard = {
-            TwoClickToken: 'false',
-            Name: '',
-            Month: '01',
-            Year: 2016,
-            Cvv: '',
-            Number: ''
-        };
-
-        $scope.TransferConfig = {
-            UniqueCode: 0,
-            Token: '',
-            GetUniqueCode: function (sentPrice) {
-                if (!sentPrice) {
-                    sentPrice = price;
-                }
-                // get unique payment code
-                $http({
-                    method: 'GET',
-                    url: TransferConfig.Url,
-                    params: {
-                        price: sentPrice
-                    }
-                }).then(function (returnData) {
-                    console.log('Getting Unique Payment Code');
-                    console.log(returnData);
-                    $scope.TransferConfig.UniqueCode = returnData.data.transfer_code;
-                    $scope.TransferConfig.Token = returnData.data.token
-
-                }, function (returnData) {
-                    console.log('Failed to get Unique Payment Code');
-                    console.log(returnData);
-                });
-            }
-        };
-        $scope.TransferConfig.GetUniqueCode(price);
-
-        $scope.currency = 'IDR';
+        
         $scope.language = langCode;
         $scope.token = token;
         $scope.trips = trips;
@@ -85,50 +48,8 @@ app.controller('checkoutController', [
                 $scope.expired = true;
             }
         }, 1000);
-        $scope.voucher = {
-            confirmedCode: '',
-            code: '',
-            amount: 0,
-            status: '',
-            checking: false,
-            checked: false,
-            check: function () {
-                $scope.voucher.checking = true;
-                $http({
-                    method: 'GET',
-                    url: CheckVoucherConfig.Url,
-                    params: {
-                        token: $scope.token,
-                        code: $scope.voucher.code,
-                        email: $scope.buyerInfo.email,
-                        price: $scope.initialPrice
-                    }
-                }).then(function (returnData) {
-                    console.log(returnData);
-                    $scope.voucher.checking = false;
-                    $scope.voucher.checked = true;
-                    $scope.voucher.status = returnData.data.ValidationStatus;
-                    if (returnData.data.Discount > 0) {
-                        $scope.voucher.amount = returnData.data.Discount;
-                        $scope.voucher.confirmedCode = $scope.voucher.code;
-                        $scope.voucher.displayName = returnData.data.DisplayName;
-                        // get unique code for transfer payment
-                        $scope.TransferConfig.GetUniqueCode($scope.initialPrice - $scope.voucher.amount);
-                    }
-                }, function (returnData) {
-                    $scope.voucher.checked = true;
-                    $scope.voucher.checking = false;
-                });
-            },
-            reset: function () {
-                $scope.voucher.code = '';
-                $scope.voucher.amount = 0;
-                $scope.voucher.confirmedCode = '';
-                $scope.voucher.checked = false;
-                // get unique code for transfer payment
-                $scope.TransferConfig.GetUniqueCode($scope.initialPrice);
-            }
-        };
+        
+        
 
         $scope.book = {
             booking: false,
@@ -139,97 +60,13 @@ app.controller('checkoutController', [
             rsvNo: '',
             isSuccess: false,
             isPriceChanged: false,
-            ccChecked: false,
-            checkCreditCard: function () {
-                if ($scope.paymentMethod == 'CreditCard') {
-
-                    Veritrans.url = VeritransTokenConfig.Url;
-                    Veritrans.client_key = VeritransTokenConfig.ClientKey;
-                    var card = function () {
-                        if ($scope.CreditCard.TwoClickToken == 'false') {
-                            return {
-                                'card_number': $scope.CreditCard.Number,
-                                'card_exp_month': $scope.CreditCard.Month,
-                                'card_exp_year': $scope.CreditCard.Year,
-                                'card_cvv': $scope.CreditCard.Cvv,
-
-                                // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
-                                'secure': true,
-                                'bank': 'mandiri',
-                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount
-                            }
-                        } else {
-                            return {
-                                'card_cvv': $scope.CreditCard.Cvv,
-                                'token_id': $scope.CreditCard.TwoClickToken,
-
-                                'two_click': true,
-                                'secure': true,
-                                'bank': 'mandiri',
-                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount
-                            }
-                        }
-                    };
-
-                    // run the veritrans function to check credit card
-                    Veritrans.token(card, callback);
-
-                    function callback(response) {
-                        if (response.redirect_url) {
-                            // 3Dsecure transaction. Open 3Dsecure dialog
-                            console.log('Open Dialog 3Dsecure');
-                            openDialog(response.redirect_url);
-
-                        } else if (response.status_code == '200') {
-                            // success 3d secure or success normal
-                            //close 3d secure dialog if any
-                            closeDialog();
-
-                            // store token data in input #token_id and then submit form to merchant server
-                            $("#vt-token").val(response.token_id);
-                            $scope.CreditCard.Token = response.token_id;
-
-                            $scope.book.send();
-
-                        } else {
-                            // failed request token
-                            //close 3d secure dialog if any
-                            closeDialog();
-                            $('#submit-button').removeAttr('disabled');
-                            // Show status message.
-                            $('#message').text(response.status_message);
-                            console.log(JSON.stringify(response));
-                        }
-                    }
-
-                    // Open 3DSecure dialog box
-                    function openDialog(url) {
-                        $.fancybox.open({
-                            href: url,
-                            type: 'iframe',
-                            autoSize: false,
-                            width: 400,
-                            height: 420,
-                            closeBtn: false,
-                            modal: true
-                        });
-                    }
-
-                    // Close 3DSecure dialog box
-                    function closeDialog() {
-                        $.fancybox.close();
-                    }
-
-                } else {
-                    $scope.book.send();
-                }
-            },
+            
             send: function () {
                 $scope.book.booking = true;
                 $scope.book.isPriceChanged = false;
 
                 // generate data
-                $scope.book.postData = ' "TransferToken" : "' + $scope.TransferConfig.Token + '" , "Payment.Data.Data0" : "' + $scope.CreditCard.Token + '", "Payment.Data.Data1" : "' + $scope.CreditCard.Name + '", "Payment.Data.Data20" : "' + $scope.loggedIn + '", "Payment.Data.Data9" : "' + $scope.buyerInfo.email + '", "Token":"' + $scope.token + '", "Payment.Currency":"' + $scope.currency + '", "DiscountCode":"' + $scope.voucher.confirmedCode + '", "Payment.Method":"' + $scope.paymentMethod + '", "Contact.Title" :"' + $scope.buyerInfo.title + '","Contact.Name":"' + $scope.buyerInfo.fullname + '", "Contact.CountryCode":"' + $scope.buyerInfo.countryCode + '", "Contact.Phone":"' + $scope.buyerInfo.phone + '","Contact.Email":"' + $scope.buyerInfo.email + '","Language":"' + $scope.language + '"';
+                $scope.book.postData =' "Token":"' + $scope.token + '",  "Contact.Title" :"' + $scope.buyerInfo.title + '","Contact.Name":"' + $scope.buyerInfo.fullname + '", "Contact.CountryCode":"' + $scope.buyerInfo.countryCode + '", "Contact.Phone":"' + $scope.buyerInfo.phone + '","Contact.Email":"' + $scope.buyerInfo.email + '","Language":"' + $scope.language + '"';
                 for (var i = 0; i < $scope.passengers.length; i++) {
 
                     // check nationality
@@ -256,7 +93,7 @@ app.controller('checkoutController', [
                 $scope.book.postData = '{' + $scope.book.postData + '}';
                 $scope.book.postData = JSON.parse($scope.book.postData);
 
-                //console.log($scope.book.postData);
+                console.log($scope.book.postData);
 
                 // send form
                 $http({
@@ -684,4 +521,4 @@ app.controller('confirmationController', [
         $scope.pageLoaded = true;
 
     }
-]);// confirmation controlleris
+]);// confirmation controller

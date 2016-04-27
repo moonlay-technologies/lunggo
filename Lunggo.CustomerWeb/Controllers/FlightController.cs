@@ -127,24 +127,71 @@ namespace Lunggo.CustomerWeb.Controllers
             
         }
 
+        //Buat ngelempar ke halaman payment
         [RequireHttps]
         [HttpPost]
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
             var flight = FlightService.GetInstance();
+            var reservation = flight.GetReservationForDisplay(rsvNo);
+            if (reservation.RsvTime != null)
+            {
+                return RedirectToAction("Payment", "Flight", new { rsvNo });
+            }
+            else 
+            {
+                TempData["FlightCheckoutOrBookingError"] = true;
+                return RedirectToAction("Checkout");
+            }
+        }
+
+        [RequireHttps]
+        public ActionResult Payment(string rsvNo)
+        {
+            try
+            {
+                var flight = FlightService.GetInstance();
+                var payment = PaymentService.GetInstance();
+                var reservation = flight.GetReservationForDisplay(rsvNo);
+                var savedCreditCards = User.Identity.IsAuthenticated
+                    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
+                    : new List<SavedCreditCard>();
+                return View(new FlightPaymentData
+                {
+                    RsvNo = rsvNo,
+                    Reservation = reservation,
+                    SavedCreditCards = savedCreditCards
+                });
+            }
+            catch
+            {
+                ViewBag.Message = "Failed";
+                return View(new FlightPaymentData
+                {
+                    RsvNo =  rsvNo
+                });
+            }
+        }
+
+        [RequireHttps]
+        [HttpPost]
+        [ActionName("Payment")]
+        public ActionResult PaymentPost(string rsvNo)
+        {
+            var flight = FlightService.GetInstance();
             var paymentUrl = flight.GetBookingRedirectionUrl(rsvNo);
             if (paymentUrl == null)
             {
                 TempData["FlightCheckoutOrBookingError"] = true;
-                return RedirectToAction("Checkout");
+                return RedirectToAction("Payment");
             }
             if (paymentUrl == "DIRECT")
                 return RedirectToAction("Confirmation", "Flight", new { rsvNo });
             else if (paymentUrl == "THIRDPARTYDIRECT")
             {
                 TempData["AllowThisThankyouPage"] = rsvNo;
-                return RedirectToAction("Thankyou", "Flight", new {rsvNo});
+                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
             }
             else
                 return Redirect(paymentUrl);

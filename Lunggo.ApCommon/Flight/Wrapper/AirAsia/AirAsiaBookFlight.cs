@@ -585,7 +585,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 string itinHtml = "";
                 var sw = Stopwatch.StartNew();
-                var retryLimit = new TimeSpan(0, 1, 0);
+                var retryLimit = new TimeSpan(0, 2, 0);
                 var retryInterval = new TimeSpan(0, 0, 2);
                 var waitRequest = new RestRequest("Wait.aspx", Method.GET);
                 waitRequest.AddHeader("Referer", "https://booking2.airasia.com/Wait.aspx");
