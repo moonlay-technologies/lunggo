@@ -11,7 +11,7 @@ app.controller('paymentController', [
         $scope.checkoutForm = {
             loading: false
         };
-        $scope.paymentMethod = ''; // Payment
+        $scope.paymentMethod = ''; //Payment
         $scope.trips = trips;
         $scope.stepClass = '';
 
@@ -108,6 +108,8 @@ app.controller('paymentController', [
             url: FlightPayConfig.Url,
             postData: '',
             rsvNo: '',
+            paying: false,
+            checked:false,
             isSuccess: '',
             ccChecked: false,
             checkCreditCard: function () { //payment
@@ -196,6 +198,7 @@ app.controller('paymentController', [
             },
             send: function () {
                 $scope.pay.isSuccess = "",
+                $scope.pay.paying = true;
                 //generate data
                 $scope.pay.postData = ' "RsvNo" : "' + $scope.rsvNo + '" , "Payment.TransferToken" : "' + $scope.TransferConfig.Token + '" , "Payment.Data.Data0" : "' + $scope.CreditCard.Token + '", "Payment.Data.Data1" : "' + $scope.CreditCard.Name + '", "Payment.Data.Data20" : "' + $scope.loggedIn + '", "Payment.Data.Data9" : "' + $scope.buyerInfo.email + '", "Payment.Currency":"' + $scope.currency + '", "Payment.DiscountCode":"' + $scope.voucher.confirmedCode + '", "Payment.Method":"' + $scope.paymentMethod + '"';
                 $scope.pay.postData = '{' + $scope.pay.postData + '}';
@@ -215,8 +218,10 @@ app.controller('paymentController', [
                         $scope.pay.rsvNo = returnData.data.RsvNo;
                         $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
                         $('form#rsvno').submit();
+                        $scope.pay.checked = true;
                     }
                     else {
+                        $scope.pay.checked = true;
                         $scope.pay.isSuccess= false;
                     }
                 })

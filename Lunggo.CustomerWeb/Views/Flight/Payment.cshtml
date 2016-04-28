@@ -300,7 +300,7 @@
                                         </div>
 
                                         <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a></p>
-                                        <a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>
+                                        <!--<a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>-->
 
                                         <input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">
 
@@ -477,7 +477,7 @@
                 </div>
             </div><!-- .page-overlay -->
 
-            <div class="page-overlay booking-flight" ng-hide="book.checked || !book.booking">
+            <div class="page-overlay booking-flight" ng-hide="!pay.paying">
                 <div class="overlay-content" >
                     <header>
                         <h4>Mohon Tunggu</h4>
@@ -489,7 +489,7 @@
                                     <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
                                 </div>
                                 <div class="col-sm-8">
-                                    <p>Sedang memproses pemesanan Anda ke maskapai. Proses ini dapat berlangsung hingga 5 (lima) menit.</p>
+                                    <p>Sedang memproses pilihan Anda.</p>
                                 </div>
                             </div>
                         </div>
@@ -497,7 +497,7 @@
                 </div>
             </div>
 
-            <div class="page-overlay booking-flight" ng-show="book.checked && book.isSuccess">
+            <!--<div class="page-overlay booking-flight" ng-show="book.checked && book.isSuccess">
                 <div class="overlay-content">
                     <header>
                         <h4>Pemesanan Berhasil</h4>
@@ -554,8 +554,8 @@
                         </div>
                     </footer>
 
-                </div><!-- .page-overlay -->
-            </div>
+                </div>
+            </div>-->
 
         </div>
 

@@ -10,7 +10,7 @@
     ViewBag.SiteHeader = "checkout";
 
     var reservation = FlightService.GetInstance().GetReservationForDisplay(Model.RsvNo);
-
+    
     var beneficiaryBankList = new List<SelectListItem>
     {
         new SelectListItem {Text = "Mandiri", Value = "Mandiri"},
@@ -32,7 +32,7 @@
 
         // development only start
         paymentTimeout = new Date('@Model.TimeLimit.AddMinutes(-30).ToString("u")');
-
+        console.log("TIME OUT"+paymentTimeout);
         // countdown timer
         $('.timer').countdown(paymentTimeout, function(event) {
             $('.timer .hour').text(event.strftime('%H'));

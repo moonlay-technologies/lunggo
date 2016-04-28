@@ -110,7 +110,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         queryParam.PaymentMethodCd = PaymentMethodCd.Mnemonic(reservation.Payment.Method);
                         queryParam.PaymentStatusCd = PaymentStatusCd.Mnemonic(reservation.Payment.Status);
                         queryParam.PaymentTargetAccount = reservation.Payment.TargetAccount;
-                        queryParam.PaymentTimeLimit = reservation.Payment.TimeLimit.Value.ToUniversalTime();
+                        //queryParam.PaymentTimeLimit = reservation.Payment.TimeLimit.Value.ToUniversalTime();
                         queryParam.PaymentUrl = reservation.Payment.Url;
                         queryParam.CurrencyCd = reservation.Payment.Currency;
                         queryParam.VoucherCode = reservation.Discount.Code;
