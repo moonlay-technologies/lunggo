@@ -32,6 +32,7 @@
     {
         ViewBag.Message = "BookExpired";
     }
+
 }
 
 @{
@@ -78,6 +79,7 @@
         var childTypeName = 'Anak';
         var infantPassenger = @Model.Itinerary.InfantCount;
         var infantTypeName = 'Bayi';
+        //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
         // passport or id requirement
         var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
         var idRequired = false;
@@ -331,7 +333,32 @@
                             <!-- ******************** -->
                             <div class="content-step" id="step-3" ng-show="currentPage > 2">
 
-                                <h3><b>RINCIAN</b> PENERBANGAN</h3>
+                                <h3><b>RINCIAN</b> PESANAN</h3>
+                                <!--Info Penumpang-->
+                                <div class="passenger-review">
+                                    <header>
+                                        <span>Daftar Penumpang</span>
+                                    </header>
+                                    <section class="review-content" ng-repeat="passenger in passengers track by $index">
+                                        <div class="passenger-list-item">
+                                            <h3 class="passenger-list-heading"><b>{{$index+1}}. {{passenger.title}} {{passenger.firstname}} {{passenger.lastname}}</b><medium> ({{passenger.typeName}})</medium></h3>
+                                            <div class="passenger-list-content">
+                                                <p>
+                                                    <span class="passenger-label">Tgl. Lahir</span>
+                                                    <span class="passenger-data">{{passenger.birth.date}} {{monthNames[passenger.birth.month]}} {{passenger.birth.year}}</span>
+                                                </p>
+                                                <p ng-if="passportRequired">
+                                                    <span class="passenger-label">Nomor Passport</span>
+                                                    <span class="passenger-data">{{passenger.passport.number}}</span>
+                                                </p>
+                                                <p ng-if="passportRequired">
+                                                    <span class="passenger-label">Masa Berlaku Passport</span>
+                                                    <span class="passenger-data">{{passenger.passport.expire.date}}/{{monthNames[passenger.passport.expire.month]}}/{{passenger.passport.expire.year}}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div><!--Info Penumpang-->
                                 <div class="flight-detail" id="departure-flight" ng-if="trips[0]">
                                     <header>
                                         <span>Penerbangan Pergi</span>
@@ -427,7 +454,7 @@
                                         </div>
                                     </section>
                                 </div><!-- .flight-detail -->
-
+                              
                                 <div class="step-button">
 
                                     <form name="finalForm" id="finalForm" ng-submit="book.send()">
@@ -518,7 +545,7 @@
                                     </footer>
                                 </div><!-- .widget.price-detail -->
                                 <div class="widget flight">
-                                    <div class="flight-detail" id="departure-flight" ng-if="trips[0]">
+                                    <div class="flight-detail" id="departure-flight" ng-if="trips[0]" ng-hide="currentPage>2">
                                         <h3 class="widget-title"><b>RINCIAN</b> PENERBANGAN</h3>
                                         <div>
                                             <header><span>PENERBANGAN PERGI</span></header>

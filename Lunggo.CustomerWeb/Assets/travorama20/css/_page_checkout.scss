@@ -88,6 +88,24 @@ file : /Assets/travorama20/css/_page_checkout.scss
     }
 }
 
+//passenger-review
+.passenger-review{margin-bottom:12px;
+    header {background:$color-main-blue; color:#fff; padding:12px; font-size:14px; font-weight:bold; position:relative;
+            .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
+                &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
+            }
+        }
+    .review-content{padding:12px;padding-bottom:5px; border:$border-default; border-top:none; background:#fff;
+        .passenger-list-item{
+            .passenger-list-heading{margin-top:0px;padding-top:0px; font-size:14px;}
+            .passenger-list-content{margin-left: 19px;
+                .passenger-label{font-size:13px; display:inline-block;width:195px;}
+                .passenger-data{font-size:13px;padding-bottom:2px;}
+            }
+        }
+    }
+}
+
 // passenger detail
 .passenger-detail {margin-bottom:12px;
     

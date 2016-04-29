@@ -48,6 +48,7 @@ app.controller('checkoutController', [
                 $scope.expired = true;
             }
         }, 1000);
+        $scope.monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
         
         
 
