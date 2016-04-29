@@ -585,7 +585,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 string itinHtml = "";
                 var sw = Stopwatch.StartNew();
-                var retryLimit = new TimeSpan(0, 2, 0);
+                var retryLimit = new TimeSpan(0, 1, 0);
                 var retryInterval = new TimeSpan(0, 0, 2);
                 var waitRequest = new RestRequest("Wait.aspx", Method.GET);
                 waitRequest.AddHeader("Referer", "https://booking2.airasia.com/Wait.aspx");
@@ -597,20 +597,39 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Thread.Sleep(retryInterval);
                 }
 
+                var waitItin = new RestRequest("Itinerary.aspx", Method.GET);
+                string temp = "";
                 if (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" || (waitResponse.StatusCode != HttpStatusCode.OK && waitResponse.StatusCode != HttpStatusCode.Redirect))
-                    return new BookFlightResult
+                {
+                    waitItin.AddHeader("Referer", "https://booking2.airasia.com/Wait.aspx");
+                    IRestResponse itinResponse = client.Execute(waitItin);
+                    var itinRes = itinResponse.Content;
+                    var cqitin = (CQ)itinRes;
+                    var bookingId = cqitin["#OptionalHeaderContent_lblBookingNumber"].Text();
+                    if (bookingId == "" || bookingId == null)
                     {
-                        IsSuccess = false,
-                        Status = new BookingStatusInfo
+                        return new BookFlightResult
                         {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
-                    };
+                            IsSuccess = false,
+                            Status = new BookingStatusInfo
+                            {
+                                BookingStatus = BookingStatus.Failed
+                            },
+                            Errors = new List<FlightError> { FlightError.FailedOnSupplier }
+                        };
+                    }
+                    else 
+                    {
+                        temp = itinRes;
+                    }
+
+                    
+                }
+                    
 
                 try
                 {
-                    itinHtml = waitResponse.Content;
+                    itinHtml = temp;
                     var cqHtml = (CQ) itinHtml;
                     var bookingId = cqHtml["#OptionalHeaderContent_lblBookingNumber"].Text();
                     var timeLimitTexts = cqHtml["#mainContent > p"].Text().Split('\n', ',');
