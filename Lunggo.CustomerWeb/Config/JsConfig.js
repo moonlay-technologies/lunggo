@@ -77,6 +77,11 @@ var FlightBookConfig = {
     working: false
 };
 
+var FlightPayConfig = {
+    Url: 'https://api.travorama.com/api/v1/flights/pay',
+    working: false
+};
+
 var GetRulesConfig = {
     Url: 'https://api.travorama.com/api/v1/flights/rules',
     working: false
