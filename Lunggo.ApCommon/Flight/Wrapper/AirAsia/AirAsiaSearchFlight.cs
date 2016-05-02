@@ -51,7 +51,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var destinationCountry = dict.GetAirportCountryCode(trip0.DestinationAirport);
                 var availableFares = new CQ();
                 CQ searchedHtml;
-                if (originCountry == "ID")
+                if (originCountry == "ID" && destinationCountry == "ID")
                 {
                     var url = @"Flight/Select";
                     var searchRequest = new RestRequest(url, Method.GET);
