@@ -51,6 +51,7 @@ namespace Lunggo.ApCommon.Flight.Service
             reservation.Payment.Medium = PaymentService.GetInstance().GetPaymentMedium(input.Payment.Method);
             reservation.Payment.Method = input.Payment.Method;
             reservation.Payment.Currency = input.Payment.Currency;
+            reservation.Payment.Data = input.Payment.Data;
             var originalPrice = reservation.Itineraries.Sum(itin => itin.LocalPrice);
             var campaign = CampaignService.GetInstance().UseVoucherRequest(new VoucherRequest
             {

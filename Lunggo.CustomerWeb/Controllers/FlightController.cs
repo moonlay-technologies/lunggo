@@ -149,30 +149,39 @@ namespace Lunggo.CustomerWeb.Controllers
         [RequireHttps]
         public ActionResult Payment(string rsvNo)
         {
-            try
+            var flight = FlightService.GetInstance();
+            var payment = PaymentService.GetInstance();
+            var reservation = flight.GetReservationForDisplay(rsvNo);
+            if (reservation.Payment.Status == PaymentStatus.Pending)
             {
-                var flight = FlightService.GetInstance();
-                var payment = PaymentService.GetInstance();
-                var reservation = flight.GetReservationForDisplay(rsvNo);
-                var savedCreditCards = User.Identity.IsAuthenticated
-                    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
-                    : new List<SavedCreditCard>();
-                return View(new FlightPaymentData
+                try
                 {
-                    RsvNo = rsvNo,
-                    Reservation = reservation,
-                    TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault(),
-                    SavedCreditCards = savedCreditCards
-                });
+                    var savedCreditCards = User.Identity.IsAuthenticated
+                        ? payment.GetSavedCreditCards(User.Identity.GetEmail())
+                        : new List<SavedCreditCard>();
+                    return View(new FlightPaymentData
+                    {
+                        RsvNo = rsvNo,
+                        Reservation = reservation,
+                        TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault(),
+                        SavedCreditCards = savedCreditCards
+                    });
+
+                }
+                catch
+                {
+                    ViewBag.Message = "Failed";
+                    return View(new FlightPaymentData
+                    {
+                        RsvNo = rsvNo
+                    });
+                }
             }
-            catch
+            else
             {
-                ViewBag.Message = "Failed";
-                return View(new FlightPaymentData
-                {
-                    RsvNo =  rsvNo
-                });
+                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
             }
+            
         }
 
         [RequireHttps]
