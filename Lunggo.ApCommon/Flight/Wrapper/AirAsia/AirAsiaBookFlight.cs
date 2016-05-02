@@ -132,7 +132,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListPassengerType_INFANT="+infantCount +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListSearchBy=columnView" +
                     @"&ControlGroupSearchView%24ButtonSubmit=Search" +
-                    @"&__VIEWSTATEGENERATOR=05F9A2B0"; ;
+                    @"&__VIEWSTATEGENERATOR=05F9A2B0";
 
                 var searchRequest = new RestRequest("Search.aspx", Method.POST);
                 searchRequest.AddHeader("Referer", "https://booking2.airasia.com/Search.aspx");
@@ -293,6 +293,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var travelerResponse = client.Execute(travelerRequest);
 
                 if (travelerResponse.ResponseUri.AbsolutePath != "/UnitMap.aspx" || (travelerResponse.StatusCode != HttpStatusCode.OK && travelerResponse.StatusCode != HttpStatusCode.Redirect))
+
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -302,7 +303,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         },
                         Errors = new List<FlightError> { FlightError.InvalidInputData }
                     };
-
                 Thread.Sleep(1000);
 
                 // [POST] Select Seat

@@ -37,6 +37,7 @@
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/jquery.countdown.min.js"></script>
     <!-- veritrans JS -->
     <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
     <!-- fancybox -->
@@ -44,6 +45,24 @@
 }
 @section PageJS{
     <script>
+        var langCode = 'en';
+        var paymentTimeout = '';
+        var timelimit = 
+
+        // development only start
+        paymentTimeout = new Date('@Model.TimeLimit.AddMinutes(-30).ToString("u")');
+        console.log("TIME OUT"+paymentTimeout);
+        // countdown timer
+        $('.timer').countdown(paymentTimeout, function(event) {
+            $('.timer .hour').text(event.strftime('%H'));
+            $('.timer .minute').text(event.strftime('%M'));
+            $('.timer .second').text(event.strftime('%S'));
+        });
+
+        // date selector
+        $('.date-picker').datepicker({
+            minDate: new Date()
+        });
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var currentPage = 1;
         var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
@@ -63,11 +82,11 @@
             if (Model.Reservation.Itinerary.Trips.Count == 2)
             {
                 @:departureDate = '@Model.Reservation.Itinerary.Trips[1].DepartureDate';
-                                    }
+                                            }
             else
             {
                 @:departureDate = '@Model.Reservation.Itinerary.Trips[0].DepartureDate';
-                                    }
+                                            }
         }
 
         // change current page
@@ -344,10 +363,32 @@
                                             <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount - TransferConfig.UniqueCode | number}}</dd>
                                         </dl>
                                     </div>
-                                    <footer>
+                                    <!--<footer>
                                         <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
-                                    </footer>
+                                    </footer> -->
                                 </div><!-- .widget.price-detail -->
+                                <div class="widget countdown">
+                                    <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
+                                    <div class="widget-content">
+                                        <p>Sisa waktu Anda untuk melakukan pembayaran</p>
+                                        <div class="timer">
+                                            <div>
+                                                <h5 class="hour">00</h5>
+                                                <span>jam</span>
+                                            </div>
+                                            <div class="separator"><h5>:</h5></div>
+                                            <div>
+                                                <h5 class="minute">00</h5>
+                                                <span>menit</span>
+                                            </div>
+                                            <div class="separator"><h5>:</h5></div>
+                                            <div>
+                                                <h5 class="second">00</h5>
+                                                <span>detik</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- .widget.countdown -->
                                 <div class="widget voucher" ng-class="{'hide' : CreditCardPromo.Valid}">
                                     <h3 class="widget-title"><b>KODE</b> VOUCHER</h3>
                                     <div class="widget-content">
@@ -391,15 +432,15 @@
                                                 </div>
                                                 <div class="route">
                                                     <div class="origin">
-                                                        <h5>{{trips[0].Segments[0].DepartureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
-                                                        <h3>{{trips[0].Segments[0].DepartureTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                                        <h5>{{trips[0].Segments[0].DepartureTime | date: 'dd MMM yyyy'}}</h5>
+                                                        <h3>{{trips[0].Segments[0].DepartureTime | date: 'HH:mm'}}</h3>
                                                         <h4>{{trips[0].Segments[0].DepartureCity}} ({{trips[0].Segments[0].DepartureAirport}})</h4>
                                                         <h5>{{trips[0].Segments[0].DepartureAirportName}}</h5>
                                                     </div>
                                                     <div class="duration"></div>
                                                     <div class="destination">
-                                                        <h5>{{trips[0].Segments[ trips[0].Segments.length - 1 ].ArrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
-                                                        <h3>{{trips[0].Segments[ trips[0].Segments.length - 1 ].ArrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                                        <h5>{{trips[0].Segments[ trips[0].Segments.length - 1 ].ArrivalTime | date: 'dd MMM yyyy'}}</h5>
+                                                        <h3>{{trips[0].Segments[ trips[0].Segments.length - 1 ].ArrivalTime | date: 'HH:mm'}}</h3>
                                                         <h4>{{trips[0].Segments[ trips[0].Segments.length - 1 ].ArrivalCity}} ({{trips[0].Segments[ trips[0].Segments.length - 1 ].ArrivalAirport}})</h4>
                                                         <h5>{{trips[0].Segments[ trips[0].Segments.length - 1 ].ArrivalAirportName}}</h5>
                                                     </div>

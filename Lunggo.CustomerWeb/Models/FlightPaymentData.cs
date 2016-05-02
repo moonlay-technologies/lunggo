@@ -11,7 +11,7 @@ namespace Lunggo.CustomerWeb.Models
         //public string Token { get; set; }
         public string RsvNo { get; set; }
         public FlightReservationForDisplay Reservation { get; set; }
-        public PaymentInfo Payment { get; set; }
+        public DateTime TimeLimit { get; set; }
         public List<SavedCreditCard> SavedCreditCards { get; set; }
     }
 }

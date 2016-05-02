@@ -161,6 +161,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     RsvNo = rsvNo,
                     Reservation = reservation,
+                    TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault(),
                     SavedCreditCards = savedCreditCards
                 });
             }
