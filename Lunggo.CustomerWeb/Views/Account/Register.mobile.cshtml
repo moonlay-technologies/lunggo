@@ -17,45 +17,84 @@
     <!-- angular controller -->
     <script src="/Assets/mobile/js/AccountController.js"></script>
 }
+<div class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
+    <header class="page__header">
+        <h1 class="text-center section-title stripe">Sign <span>Up</span></h1>
+    </header>
 
-<div class="error-message bg-warning" ng-show="User.Sent">
-    <div ng-show="!User.Registered">
-        <h3>Terima Kasih</h3>
-        <p>Terima kasih sudah mendaftar di Travorama<br/>Silahkan cek email Anda untuk verifikasi alamat email Anda.</p>
+    <!-- .page__body -->
+    <div class="page__body page-loading" ng-class="{'page-loaded' : pageLoaded}">
+        <div class="page-overlay" ng-show="User.Sent">
+            <div class="overlay-content">
+                <div ng-show="!User.Registered">
+                    <header>
+                        <h4>Terima Kasih</h4>
+                    </header>
+                    <img src="/Assets/images/smile-image.png" alt="Registered">
+                    <section>
+                        <p>Terima kasih sudah mendaftar di Travorama. Silahkan cek e-mail Anda untuk verifikasi alamat e-mail Anda.</p>
+                    </section>
+                    <div class="text-center">
+                        <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = '';">TUTUP</a>
+                    </div>
+                </div>
+                
+                <div ng-show="User.Registered && !User.EmailConfirmed">
+                    <header>
+                        <h4>E-mail Belum Terkonfirmasi</h4>
+                    </header>
+                    <img src="/Assets/images/sad-image.png" alt="Not Confirmed">
+                    <section>
+                        <p>
+                            Silakan cek e-mail Anda untuk mengkonfirmasi alamat e-mail Anda.<br />
+                            <a ng-click="form.resubmit()">Klik di sini</a> untuk mengirim kembali e-mail konfirmasi.
+                        </p>
+                    </section>
+                    <div class="text-center">
+                        <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = ''; User.Name = '';">TUTUP</a>
+                    </div>
+                </div>
+                
+                <div ng-show="User.Registered && User.EmailConfirmed">
+                    <header>
+                        <h4>Terima Kasih</h4>
+                    </header>
+                    <img src="/Assets/images/smile-image.png" alt="Already Registered">
+                    <section>
+                        <p>Anda Telah Terdaftar di Travorama. Silahkan login untuk masuk ke halaman akun Anda.</p>
+                    </section>
+                    <div class="text-center">
+                        <a class="btn btn-yellow" href="@Url.Action("Login", "Account")">LOGIN</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div ng-show="User.Registered && !User.EmailConfirmed">
-        <h3>Email belum terkonfirmasi</h3>
-        <p>Silahkan cek email Anda untuk mengkonfirmasi alamat email Anda.</p>
-    </div>
-    <div ng-show="User.Registered && User.EmailConfirmed">
-        <h3>Telah Terdaftar</h3>
-        <p>Anda telah terdaftar di Travorama<br/>Silahkan login untuk masuk ke halaman akun Anda.</p>
-    </div>
+
+    <div>
+
+        <div class="form-wrapper form-wrapper--register" >
+
+            <header class=" form-wrapper__header">
+                <h1 class="form-wrapper__title">Sign Up</h1>
+                <p>&amp; Dapatkan Banyak Keuntungan!</p>
+            </header><!-- .form-wrapper__header -->
+
+            <div class="form-wrapper__body">
+                <form class="form register-form form-horizontal" name="RegisterForm" novalidate ng-submit="User.Send()">
+                    <div class="form-group">
+                        <label class="control-label">Alamat E-mail Anda :</label>
+                        <input type="email" value="" name="Email" class="form-control" ng-model="User.Email" required />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-yellow btn-block" ng-click="User.Send()" ng-disabled="RegisterForm.$invalid || User.Sending">REGISTER</button>
+                    </div>
+                    <div class="form-group">
+                        <p><b>Sudah memiliki akun?</b> <a href="@Url.Action("Login", "Account")">Login Sekarang</a></p>
+                    </div>
+                </form>
+            </div><!-- .form-wrapper__body -->
+
+        </div><!-- .form-wrapper -->
+    </div><!-- .container -->
 </div>
-
-<div class="container">
-
-    <div class="form-wrapper form-wrapper--register">
-
-        <header class="form-wrapper__header">
-            <h1 class="form-wrapper__title">Sign Up</h1>
-            <p>&amp; Dapatkan Banyak Keuntungan!</p>
-        </header><!-- .form-wrapper__header -->
-
-        <div class="form-wrapper__body">
-            <form class="form register-form form-horizontal" name="RegisterForm" novalidate ng-submit="User.Send()">
-                <div class="form-group">
-                    <label class="control-label">Alamat Email Anda :</label>
-                    <input type="email" value="" name="Email" class="form-control" ng-model="User.Email" required />
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-yellow btn-block" ng-click="User.Send()" ng-disabled="RegisterForm.$invalid || User.Sending">REGISTER</button>
-                </div>
-                <div class="form-group">
-                    <p>Sudah memiliki akun ? <a href="@Url.Action("Login", "Account")">Login Sekarang</a></p>
-                </div>
-            </form>
-        </div><!-- .form-wrapper__body -->
-
-    </div><!-- .form-wrapper -->
-</div><!-- .container -->

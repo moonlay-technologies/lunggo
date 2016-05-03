@@ -78,3 +78,32 @@
         }
     }
 }// page how to order
+
+ .page.page-newsletter{
+     .container{
+         p{
+             color: #3fabe3;
+             font-size: 16px;
+             text-align: center;
+             width: 90%;
+             margin-left: 20px;
+             margin-right: 20px;
+             padding-bottom: 10px;
+         }
+         form{
+             border-top: 1px solid #ccc;
+             padding-top: 20px;
+         }
+     }
+     h1{
+         text-align: center;
+         margin-left: 20px;
+             margin-right: 20px;
+     }
+     .overlay-content{
+         p{
+             color: black;
+             font-size: 12px;
+         }
+     }
+ }

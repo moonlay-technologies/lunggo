@@ -14,8 +14,260 @@ if (typeof (angular) == 'object') {
                 Popular: [
                     { Name: 'Soekarno Hatta Intl.', City: 'Jakarta', Country: 'Indonesia', Code: 'CGK' },
                     { Name: 'Ngurah Rai Intl.', City: 'Denpasar, Bali', Country: 'Indonesia', Code: 'DPS' },
-                    { Name: 'Suvarnabhumi Intl.', City: 'Bangkok', Country: 'Thailand', Code: 'BKK' }
+                    { Name: 'Juanda', City: 'Surabaya', Country: 'Indonesia', Code: 'SUB' },
+                    { Name: 'Kuala Namu Intl.', City: 'Medan', Country: 'Indonesia', Code: 'KNO' },
+                    { Name: 'Sultan Hasanudin', City: 'Makassar', Country: 'Indonesia', Code: 'UPG' },
+                    { Name: 'Adisucipto', City: 'Yogyakarta', Country: 'Indonesia', Code: 'JOG' },
+                    { Name: 'Changi', City: 'Singapore', Country: 'Singapore', Code: 'SIN' },
+                    { Name: 'Suvarnabhumi Intl.', City: 'Bangkok', Country: 'Thailand', Code: 'BKK' },
+                    { Name: 'Hat Yai', City: 'Hat Yai', Country: 'Thailand', Code: 'HDY' },
+                    { Name: 'Phuket Intl.', City: 'Phuket', Country: 'Thailand', Code: 'HKT' },
+                    { Name: 'Sultan Ismail Intl', City: 'Johor Bahru', Country: 'Malaysia', Code: 'JHB' },
+                    { Name: 'Kota-Kinabalu Intl. Arpt.', City: 'Kota Kinabalu', Country: 'Malaysia', Code: 'BKI' },
+                    { Name: 'Kuala Lumpur Intl. Arpt.', City: 'Kuala Lumpur', Country: 'Malaysia', Code: 'KUL' },
+                    { Name: 'Kuching', City: 'Kuching', Country: 'Malaysia', Code: 'KCH' },
+                    { Name: 'Penang Intl.', City: 'Penang', Country: 'Malaysia', Code: 'PEN' },
+                    { Name: 'Phnom Penh Intl.', City: 'Phnom Penh', Country: 'Cambodia', Code: 'PNH' },
+                    { Name: 'Ninoy Aquino Intl.', City: 'Manila', Country: 'Philippines', Code: 'MNL' },
+                    { Name: 'Noibai Intl.', City: 'Hanoi', Country: 'Vietnam', Code: 'HAN' },
+                    { Name: 'Tan Son Nhat Intl.', City: 'Ho Chi Minh City', Country: 'Vietnam', Code: 'SGN' },
+                    { Name: 'Macau Intl.', City: 'Macau', Country: 'Macau', Code: 'MFM' },
+                    { Name: 'New Baiyun', City: 'Guangzhou', Country: 'China', Code: 'CAN' },
+                    { Name: 'Hong Kong Intl.', City: 'Hong Kong', Country: 'Hong Kong', Code: 'HKG' },
+                    { Name: 'Tullamarine', City: 'Melbourne', Country: 'Australia', Code: 'MEL' },
+                    { Name: 'Perth Intl.', City: 'Perth', Country: 'Australia', Code: 'PER' },
+                    { Name: 'Aeroporto Internacional Guarulhos', City: 'Sao Paulo', Country: 'Brazil', Code: 'GRU' },
+                    { Name: 'Hartsfield-jackson Atlanta Intl.', City: 'Atlanta', Country: 'United States', Code: 'ATL' },
+                    { Name: 'Thurgood Marshall', City: 'Baltimore/Washington', Country: 'United States', Code: 'BWI' },
+                    { Name: 'Logan Intl.', City: 'Boston', Country: 'United States', Code: 'BOS' },
+                    { Name: 'Chicago O hare Intl.', City: 'Chicago', Country: 'United States', Code: 'ORD' },
+                    { Name: 'Dallas/Fort Worth Intl.', City: 'Dallas', Country: 'United States', Code: 'DFW' },
+                    { Name: 'McCarran Intl', City: 'Las Vegas', Country: 'United States', Code: 'LAS' },
+                    { Name: 'Los Angeles Intl.', City: 'Los Angeles', Country: 'United States', Code: 'LAX' },
+                    { Name: 'Miami International Airport', City: 'Miami', Country: 'United States', Code: 'MIA' },
+                    { Name: 'Newark Liberty Intl.', City: 'Newark', Country: 'United States', Code: 'EWR' },
+                    { Name: 'Orlando Intl. Arpt.', City: 'Orlando', Country: 'United States', Code: 'MCO' },
+                    { Name: 'San Diego Intl. Arpt.', City: 'San Diego', Country: 'United States', Code: 'SAN' },
+                    { Name: 'San Francisco Intl.', City: 'San Francisco', Country: 'United States', Code: 'SFO' },
+                    { Name: 'Mineta San Jose Intl. Arpt.', City: 'San Jose', Country: 'United States', Code: 'SJC' },
+                    { Name: 'Seattle-Tacoma Intl.', City: 'Seattle', Country: 'United States', Code: 'SEA' },
+                    { Name: 'Lester B. Pearson Intl.', City: 'Toronto', Country: 'Canada', Code: 'YYZ' },
+                    { Name: 'Vancouver International Airport', City: 'Vancouver', Country: 'Canada', Code: 'MFM' }
+                ],
+                Indonesia: [
+                    { Name: 'Soekarno Hatta Intl.', City: 'Jakarta', Country: 'Indonesia', Code: 'CGK' },
+                    { Name: 'Husein Sastranegara', City: 'Bandung', Country: 'Indonesia', Code: 'BDO' },
+                    { Name: 'Adi Sumarmo', City: 'Solo', Country: 'Indonesia', Code: 'SOC' },
+                    { Name: 'Achmad Yani', City: 'Semarang', Country: 'Indonesia', Code: 'SRG' },
+                    { Name: 'Juanda', City: 'Surabaya', Country: 'Indonesia', Code: 'SUB' },
+                    { Name: 'Adisucipto', City: 'Yogyakarta', Country: 'Indonesia', Code: 'JOG' },
+                    { Name: 'Kuala Namu Intl.', City: 'Medan', Country: 'Indonesia', Code: 'KNO' },
+                    { Name: 'Minangkabau Intl. Arpt.', City: 'Padang', Country: 'Indonesia', Code: 'PDG' },
+                    { Name: 'Radin Inten II', City: 'Bandar Lampung', Country: 'Indonesia', Code: 'TKG' },
+                    { Name: 'Sultan Iskandar Muda Arpt.', City: 'Banda Aceh', Country: 'Indonesia', Code: 'BTJ' },
+                    { Name: 'Fatmawati Soekarno', City: 'Bengkulu', Country: 'Indonesia', Code: 'BKS' },
+                    { Name: 'Hang Nadim', City: 'Batam', Country: 'Indonesia', Code: 'BTH' },
+                    { Name: 'Sultan Thaha Syaifuddin', City: 'Jambi', Country: 'Indonesia', Code: 'DJB' },
+                    { Name: 'Depati Amir', City: 'Pangkalpinang', Country: 'Indonesia', Code: 'PGK' },
+                    { Name: 'Sultan Syarif Kasim II', City: 'Pekanbaru', Country: 'Indonesia', Code: 'PKU' },
+                    { Name: 'Pinang Kampai', City: 'Dumai', Country: 'Indonesia', Code: 'DUM' },
+                    { Name: 'Binaka', City: 'Gunung Sitoli', Country: 'Indonesia', Code: 'GNS' },
+                    { Name: 'Maimun Saleh', City: 'Sabang', Country: 'Indonesia', Code: 'SBG' },
+                    { Name: 'Ngurah Rai Intl.', City: 'Denpasar, Bali', Country: 'Indonesia', Code: 'DPS' },
+                    { Name: 'Komodo', City: 'Labuan Bajo', Country: 'Indonesia', Code: 'LBJ' },
+                    { Name: 'Lombok International Airport', City: 'Lombok', Country: 'Indonesia', Code: 'LOP' },
+                    { Name: 'El Tari', City: 'Kupang', Country: 'Indonesia', Code: 'KOE' },
+                    { Name: 'Haliwen', City: 'Atambua', Country: 'Indonesia', Code: 'ABU' },
+                    { Name: 'Muhammad Salahuddin', City: 'Bima', Country: 'Indonesia', Code: 'BMU' },
+                    { Name: 'Sultan Aji Muhammad Sulaiman', City: 'Balikpapan', Country: 'Indonesia', Code: 'BPN' },
+                    { Name: 'Sjamsudin Noor', City: 'Banjarmasin', Country: 'Indonesia', Code: 'BDJ' },
+                    { Name: 'Supadio', City: 'Pontianak', Country: 'Indonesia', Code: 'PNK' },
+                    { Name: 'Tjilik Riwut', City: 'Palangkaraya', Country: 'Indonesia', Code: 'PKY' },
+                    { Name: 'Temindung', City: 'Samarinda', Country: 'Indonesia', Code: 'SRI' },
+                    { Name: 'H. Asan Kampai', City: 'Sampit', Country: 'Indonesia', Code: 'SMQ' },
+                    { Name: 'Rahadi Oesman', City: 'Ketapang', Country: 'Indonesia', Code: 'KTG' },
+                    { Name: 'Sultan Hasanuddin', City: 'Makassar', Country: 'Indonesia', Code: 'UPG' },
+                    { Name: 'Sam Ratulangi', City: 'Manado', Country: 'Indonesia', Code: 'MDC' },
+                    { Name: 'Jalaluddin', City: 'Gorontalo', Country: 'Indonesia', Code: 'GTO' },
+                    { Name: 'Haluoleo', City: 'Kendari', Country: 'Indonesia', Code: 'KDI' },
+                    { Name: 'Mutiara Sis Aljufri', City: 'Palu', Country: 'Indonesia', Code: 'PLW' },
+                    { Name: 'Betoambari', City: 'Baubau', Country: 'Indonesia', Code: 'BUW' },
+                    { Name: 'Kasiguncu', City: 'Poso', Country: 'Indonesia', Code: 'PSJ' },
+                    { Name: 'Pongtiku', City: 'Tana Toraja', Country: 'Indonesia', Code: 'TTR' },
+                    { Name: 'Lalos', City: 'Tolitoli', Country: 'Indonesia', Code: 'TLI' },
+                    { Name: 'Pattimura', City: 'Ambon', Country: 'Indonesia', Code: 'AMQ' },
+                    { Name: 'Sentani', City: 'Jayapura', Country: 'Indonesia', Code: 'DJJ' },
+                    { Name: 'Sultan Babullah', City: 'Ternate', Country: 'Indonesia', Code: 'TTE' },
+                    { Name: 'Jeffman', City: 'Sorong', Country: 'Indonesia', Code: 'SOQ' },
+                    { Name: 'Torea', City: 'Fak Fak', Country: 'Indonesia', Code: 'FKQ' },
+                    { Name: 'Kebar', City: 'Manokwari', Country: 'Indonesia', Code: 'KEQ' },
+                    { Name: 'Kimaan', City: 'Merauke', Country: 'Indonesia', Code: 'KMM' },
+                    { Name: 'Morotai Island', City: 'Pitu', Country: 'Indonesia', Code: 'OTI' },
+                    { Name: 'Frans Kaisepo', City: 'Biak', Country: 'Indonesia', Code: 'BIK' },
+                    { Name: 'Timika', City: 'Tembagapura', Country: 'Indonesia', Code: 'TIM' },
+                    { Name: 'Wamena', City: 'Wamena', Country: 'Indonesia', Code: 'WMX' }
+                ],
+                SouthEastAsia: [
+                    { Name: 'Changi', City: 'Singapore', Country: 'Singapore', Code: 'SIN' },
+                    { Name: 'Suvarnabhumi Intl.', City: 'Bangkok', Country: 'Thailand', Code: 'BKK' },
+                    { Name: 'Hat Yai', City: 'Hat Yai', Country: 'Thailand', Code: 'HDY' },
+                    { Name: 'Phuket Intl.', City: 'Phuket', Country: 'Thailand', Code: 'HKT' },
+                    { Name: 'Sultan Ismail Intl', City: 'Johor Bahru', Country: 'Malaysia', Code: 'JHB' },
+                    { Name: 'Kota-Kinabalu Intl. Arpt.', City: 'Kota Kinabalu', Country: 'Malaysia', Code: 'BKI' },
+                    { Name: 'Kuala Lumpur Intl. Arpt.', City: 'Kuala Lumpur', Country: 'Malaysia', Code: 'KUL' },
+                    { Name: 'Kuching', City: 'Kuching', Country: 'Malaysia', Code: 'KCH' },
+                    { Name: 'Penang Intl.', City: 'Penang', Country: 'Malaysia', Code: 'PEN' },
+                    { Name: 'Ninoy Aquino Intl.', City: 'Manila', Country: 'Philippines', Code: 'MNL' },
+                    { Name: 'Phnom Penh Intl.', City: 'Phnom Penh', Country: 'Cambodia', Code: 'PNH' },
+                    { Name: 'Noibai Intl.', City: 'Hanoi', Country: 'Vietnam', Code: 'HAN' },
+                    { Name: 'Tan Son Nhat Intl.', City: 'Ho Chi Minh City', Country: 'Vietnam', Code: 'SGN' },
+                    { Name: 'Bandar Seri Begwan Intl. Arpt.', City: 'Bandar Seri Begawan', Country: 'Brunei Darussalam', Code: 'BWN' },
+                    { Name: 'Wattay', City: 'Vientiane', Country: 'Laos', Code: 'VTE' },
+                    { Name: 'Mingaladon', City: 'Yangon', Country: 'Myanmar', Code: 'TRGN' },
+                    { Name: 'Presidente Nicolau Lobato Intl. Arpt.', City: 'Dili', Country: 'East Timor', Code: 'DIL'}
+                ],
+                EastAsia: [
+                    { Name: 'Beihai Fucheng', City: 'Beihai', Country: 'China', Code: 'BHY' },
+                    { Name: 'Beijing Capital Int.', City: 'Beijing', Country: 'China', Code: 'PEK' },
+                    { Name: 'Pu Dong', City: 'Shanghai', Country: 'China', Code: 'PVG' },
+                    { Name: 'Shuangliu', City: 'Chengdu', Country: 'China', Code: 'CTU' },
+                    { Name: 'Chongqing Jiangbei Intl', City: 'Chongqing', Country: 'China', Code: 'CKG' },
+                    { Name: 'Ganzhou Huangjin', City: 'Ganzhou', Country: 'China', Code: 'KOW' },
+                    { Name: 'New Baiyun', City: 'Guangzhou', Country: 'China', Code: 'CAN' },
+                    { Name: 'Hangzhou Xiaoshan.', City: 'Hangzhou', Country: 'China', Code: 'HGH' },
+                    { Name: 'Harbin Taiping', City: 'Harbin', Country: 'China', Code: 'HRB' },
+                    { Name: 'Jinan Yaoqiang', City: 'Jinan', Country: 'China', Code: 'TNA' },
+                    { Name: 'Lianyungang', City: 'Lianyungang', Country: 'China', Code: 'LYG' },
+                    { Name: 'Nanchang Changbei', City: 'Nanchang', Country: 'China', Code: 'KHN' },
+                    { Name: 'Nanyang Jiangying', City: 'Nanyang', Country: 'China', Code: 'NNY' },
+                    { Name: 'Shenzhen Baoan', City: 'Shenzen', Country: 'China', Code: 'SZX' },
+                    { Name: 'Tianjin Binhai Intl.', City: 'Tianjin', Country: 'China', Code: 'TSN' },
+                    { Name: 'Xian Xianyang', City: 'Xi An', Country: 'China', Code: 'XIY' },
+                    { Name: 'Zhengzhou Xinzheng', City: 'Zhengzhou', Country: 'China', Code: 'CGO' },
+                    { Name: 'Tokyo Haneda Intl.', City: 'Tokyo', Country: 'Japan', Code: 'HND' },
+                    { Name: 'Kansai', City: 'Kyoto', Country: 'Japan', Code: 'UKY' },
+                    { Name: 'Itami', City: 'Osaka', Country: 'Japan', Code: 'ITM' },
+                    { Name: 'Aomori', City: 'Aomori', Country: 'Japan', Code: 'AOJ' },
+                    { Name: 'Asahikawa', City: 'Asahikawa', Country: 'Japan', Code: 'AKJ' },
+                    { Name: 'Fukuoka', City: 'Fukuoka', Country: 'Japan', Code: 'FUK' },
+                    { Name: 'Hakodate', City: 'Hakodate', Country: 'Japan', Code: 'HKD' },
+                    { Name: 'Hiroshima Intl.', City: 'Hiroshima', Country: 'Japan', Code: 'HIJ' },
+                    { Name: 'Kagoshima', City: 'Kagoshima', Country: 'Japan', Code: 'KOJ' },
+                    { Name: 'Komatsu', City: 'Komatsu', Country: 'Japan', Code: 'KMQ' },
+                    { Name: 'Kumamoto', City: 'Kumamoto', Country: 'Japan', Code: 'KMJ' },
+                    { Name: 'Kushiro', City: 'Kushiro', Country: 'Japan', Code: 'KUH' },
+                    { Name: 'Matsuyama', City: 'Matsuyama', Country: 'Japan', Code: 'MYJ' },
+                    { Name: 'Memanbetsu', City: 'Memanbetsu', Country: 'Japan', Code: 'MMB' },
+                    { Name: 'Nagoya-Komaki AFB', City: 'Nagoya', Country: 'Japan', Code: 'NGO' },
+                    { Name: 'Oita', City: 'Oita', Country: 'Japan', Code: 'OIT' },
+                    { Name: 'Okayama', City: 'Okayama', Country: 'Japan', Code: 'OKJ' },
+                    { Name: 'Naha', City: 'Okinawa', Country: 'Japan', Code: 'OKA' },
+                    { Name: 'New Chitose Arpt.', City: 'Sapporo', Country: 'Japan', Code: 'CTS' },
+                    { Name: 'Takamatsu', City: 'Takamatsu', Country: 'Japan', Code: 'TAK' },
+                    { Name: 'Hong Kong Intl.', City: 'Hong Kong', Country: 'Hong Kong', Code: 'HKG' },
+                    { Name: 'Kaoshiung Intl. Arpt.', City: 'Kaohsiung', Country: 'Taiwan', Code: 'KHH' },
+                    { Name: 'Chingchuankang', City: 'Taichung', Country: 'Taiwan', Code: 'RMQ' },
+                    { Name: 'Taiwan Taoyuan Intl.', City: 'Taipei', Country: 'Taiwan', Code: 'TPE' },
+                    { Name: 'Incheon Intl.', City: 'Seoul', Country: 'South Korea', Code: 'ICN' },
+                    { Name: 'Gimhae', City: 'Busan', Country: 'South Korea', Code: 'PUS' },
+                    { Name: 'Jeju Arpt.', City: 'Jeju', Country: 'South Korea', Code: 'CJU' },
+                    { Name: 'Gwangju', City: 'Gwangju', Country: 'South Korea', Code: 'KWJ' }
+                ],
+                Europe: [
+                    { Name: 'Vienna Intl. Airport', City: 'Vienna', Country: 'Austria', Code: 'VIE' },
+                    { Name: 'Amsterdam-Schiphol', City: 'Amsterdam', Country: 'Netherland', Code: 'AMS' },
+                    { Name: 'Brussels Arpt.', City: 'Brussels', Country: 'Belgium', Code: 'BRU' },
+                    { Name: 'Copenhagen', City: 'Copenhagen', Country: 'Denmark', Code: 'CPH' },
+                    { Name: 'Billund', City: 'Billund', Country: 'Denmark', Code: 'BLL' },
+                    { Name: 'Helsinki-Vantaa', City: 'Helsinki', Country: 'Finland', Code: 'HEL' },
+                    { Name: 'Ferenc Liszt', City: 'Budapest', Country: 'Hungary', Code: 'BUD' },
+                    { Name: 'Esenboga', City: 'Ankara', Country: 'Turkey', Code: 'ESB' },
+                    { Name: 'Ataturk', City: 'Istanbul', Country: 'Turkey', Code: 'IST' },
+                    { Name: 'Belfast Intl. Arpt.', City: 'Belfast', Country: 'United Kingdom', Code: 'BFS' },
+                    { Name: 'Edinburgh', City: 'Edinburgh', Country: 'United Kingdom', Code: 'EDI' },
+                    { Name: 'London Heathrow', City: 'London', Country: 'United Kingdom', Code: 'LHR' },
+                    { Name: 'Manchester', City: 'Manchester', Country: 'United Kingdom', Code: 'MAN' },
+                    { Name: 'Glasgow', City: 'Glasgow', Country: 'United Kingdom', Code: 'GLA' },
+                    { Name: 'Dublin', City: 'Dublin', Country: 'Ireland', Code: 'DUB' },
+                    { Name: 'Berlin Schonefeld Airport', City: 'Berlin', Country: 'Germany', Code: 'SXF' },
+                    { Name: 'Frankfurt Intl. Arpt.', City: 'Frankfurt', Country: 'Germany', Code: 'FRA' },
+                    { Name: 'Hamburg Arpt.', City: 'Hamburg', Country: 'Germany', Code: 'HAM' },
+                    { Name: 'Flughafen Munchen', City: 'Munchen', Country: 'Germany', Code: 'MUC' },
+                    { Name: 'Nuremberg', City: 'Nuremberg', Country: 'Germany', Code: 'NUE' },
+                    { Name: 'EuroArpt. Basel Mulhouse Freiburg', City: 'Basel', Country: 'Switzerland', Code: 'BSL' },
+                    { Name: 'Geneva', City: 'Geneva', Country: 'Switzerland', Code: 'GVA' },
+                    { Name: 'Zurich-Kloten', City: 'Zurich', Country: 'Switzerland', Code: 'ZRH' },
+                    { Name: 'Gardermoen', City: 'Oslo', Country: 'Norway', Code: 'OSL' },
+                    { Name: 'Torp Sandefjord', City: 'Sandefjord', Country: 'Norway', Code: 'TRF' },
+                    { Name: 'Sola', City: 'Stavenger', Country: 'Norway', Code: 'SVG' },
+                    { Name: 'Frederic Chopin', City: 'Warsaw', Country: 'Poland', Code: 'WAW' },
+                    { Name: 'Charles De Gaulle', City: 'Paris', Country: 'France', Code: 'CDG' },
+                    { Name: 'Lyon - Saint-Exupery', City: 'Lyon', Country: 'France', Code: 'LYS' },
+                    { Name: 'Marseille Provence Arpt.', City: 'Marseille', Country: 'France', Code: 'MRS' },
+                    { Name: 'Toulouse-Blagnac', City: 'Toulouse', Country: 'France', Code: 'TLS' },
+                    { Name: 'Václav Havel', City: 'Prague', Country: 'Japan', Code: 'PRG' },
+                    { Name: 'Domodedovo', City: 'Moscow', Country: 'Russia', Code: 'DME' },
+                    { Name: 'Nikola Tesla', City: 'Belgrade', Country: 'Serbia', Code: 'BEG' },
+                    { Name: 'Vienna Intl. Airport.', City: 'Vienna', Country: 'Austria', Code: 'VIE' },
+                    { Name: 'Malpensa', City: 'Milan', Country: 'Italy', Code: 'MXP' },
+                    { Name: 'Leonardo da Vinci Intl.', City: 'Rome', Country: 'Italy', Code: 'FCO' },
+                    { Name: 'Marco Polo', City: 'Venice', Country: 'Italy', Code: 'VCE' },
+                    { Name: 'Eleftherios Venizelos', City: 'Athens', Country: 'Greece', Code: 'ATH' },
+                    { Name: 'Macedonia Intl.', City: 'Thessaloniki', Country: 'Greece', Code: 'SKG' },
+                    { Name: 'El Prat', City: 'Barcelona', Country: 'Spain', Code: 'BCN' },
+                    { Name: 'Adolfo Suárez Madrid–Barajas', City: 'Madrid', Country: 'Spain', Code: 'MAD' },
+                    { Name: 'Arlanda', City: 'Stockholm', Country: 'Sweden', Code: 'ARN' }
+                ],
+                Oceania: [
+                    { Name: 'Adelaide Intl. Arpt.', City: 'Adelaide', Country: 'Australia', Code: 'ADL' },
+                    { Name: 'Brisbane Intl.', City: 'Brisbane', Country: 'Australia', Code: 'BNE' },
+                    { Name: 'Cairns', City: 'Cairns', Country: 'Australia', Code: 'CNS' },
+                    { Name: 'Darwin', City: 'Darwin', Country: 'Australia', Code: 'DRW' },
+                    { Name: 'Gold Coast', City: 'Gold Coast', Country: 'Australia', Code: 'OOL' },
+                    { Name: 'Hobart', City: 'Hobart', Country: 'Australia', Code: 'HBA' },
+                    { Name: 'Mackay', City: 'Mackay', Country: 'Australia', Code: 'MKY' },
+                    { Name: 'Maroochydore', City: 'Sunshine Coast', Country: 'Australia', Code: 'MCY' },
+                    { Name: 'Tullamarine', City: 'Melbourne', Country: 'Australia', Code: 'MEL' },
+                    { Name: 'Perth Intl.', City: 'Perth', Country: 'Australia', Code: 'PER' },
+                    { Name: 'Whitsunday Coast', City: 'Proserpine', Country: 'Australia', Code: 'PPP' },
+                    { Name: 'Sydney', City: 'Sydney', Country: 'Australia', Code: 'SYD' },
+                    { Name: 'Auckland Intl.', City: 'Auckland', Country: 'New Zealand', Code: 'AKL' },
+                    { Name: 'Christchurch Intl.', City: 'Christchurch', Country: 'New Zealand', Code: 'CHC' },
+                    { Name: 'Wellington Intl.', City: 'Wellington', Country: 'New Zealand', Code: 'WLG' },
+                    { Name: 'Faa a', City: 'Papeete', Country: 'French Polynesia', Code: 'PPT' }
+                ],
+                Others: [
+                    { Name: 'Shah Amanat Intl. Arpt.', City: 'Chittagong', Country: 'Bangladesh', Code: 'CGP' },
+                    { Name: 'Shahjalal Intl. Arpt.', City: 'Dhaka', Country: 'Bangladesh', Code: 'DAC' },
+                    { Name: 'Kempegowda Intl. Arpt.', City: 'Bangalore', Country: 'India', Code: 'BLR' },
+                    { Name: 'Chennai Intl. Arpt.', City: 'Chennai', Country: 'India', Code: 'MAA' },
+                    { Name: 'Gaya', City: 'Geneva', Country: 'India', Code: 'GAY' },
+                    { Name: 'Hyderabad Intl. Arpt.', City: 'Hyderabad', Country: 'India', Code: 'HYD' },
+                    { Name: 'Cochin Intl.', City: 'Oslo', Country: 'India', Code: 'COK' },
+                    { Name: 'Netaji Subhas Chandra Bose', City: 'Kolkata', Country: 'India', Code: 'CCU' },
+                    { Name: 'Chhatrapati Shivaji Intl.', City: 'Mumbai', Country: 'India', Code: 'BOM' },
+                    { Name: 'Indira Gandhi Intl.', City: 'New Delhi', Country: 'India', Code: 'DEL' },
+                    { Name: 'Tiruchirappalli Intl.', City: 'Tiruchirappalli', Country: 'India', Code: 'TRZ' },
+                    { Name: 'Lal Bahadur Shastri', City: 'Varanasi', Country: 'India', Code: 'VNS' },
+                    { Name: 'Vishakhapatnam', City: 'Vishakhapatnam', Country: 'India', Code: 'VTZ' },
+                    { Name: 'Tribhuvan', City: 'Kathmandu', Country: 'Nepal', Code: 'KTM' },
+                    { Name: 'Bandaranaike', City: 'Colombo', Country: 'Sri Lanka', Code: 'CMB' },
+                    { Name: 'Male Intl.', City: 'Male', Country: 'Maldives', Code: 'MLE' },
+                    { Name: 'King Fahd Intl. Arpt.', City: 'Dammam', Country: 'Saudi Arabia', Code: 'DMM' },
+                    { Name: 'King Abdulaziz Intl.', City: 'Jeddah', Country: 'Saudi Arabia', Code: 'JED' },
+                    { Name: 'Mohammad Bin Abdulaziz', City: 'Madinah', Country: 'Saudi Arabia', Code: 'MED' },
+                    { Name: 'King Khalid Intl.', City: 'Riyadh', Country: 'Saudi Arabia', Code: 'RUH' },
+                    { Name: 'Bahrain Intl.', City: 'Manama', Country: 'Bahrain', Code: 'BAH' },
+                    { Name: 'Muscat Intl.', City: 'Muscat', Country: 'Oman', Code: 'MCT' },
+                    { Name: 'Hamad Intl.', City: 'Doha', Country: 'Qatar', Code: 'DOH' },
+                    { Name: 'Abu Dhabi Intl.', City: 'Abu Dhabi', Country: 'United Arab Emirates', Code: 'AUH' },
+                    { Name: 'Kuwait Intl.', City: 'Kuwait City', Country: 'Kuwait', Code: 'KWI' },
+                    { Name: 'Cairo Intl.', City: 'Cairo', Country: 'Egypt', Code: 'CAI' },
+                    { Name: 'Queen Alia Intl', City: 'Amman', Country: 'Jordan', Code: 'AMM' }
+
                 ]
+
+                
             },
 
             // **********
@@ -60,14 +312,14 @@ if (typeof (angular) == 'object') {
                 console.log('changing overlay to : ' + overlay);
                 if (typeof(overlay) == 'undefined') {
                     $rootScope.PageConfig.ActiveOverlay = '';
-                    $rootScope.PageConfig.SetBodyNoScroll(false);
+                    $rootScope.PageConfig.SetBodyNoScroll(true);
                 } else {
                     if ( overlay == '' || overlay == ' ' ) {
                         $rootScope.PageConfig.ActiveOverlay = '';
-                        $rootScope.PageConfig.SetBodyNoScroll(false);
+                        $rootScope.PageConfig.SetBodyNoScroll(true);
                     } else {
                         $rootScope.PageConfig.ActiveOverlay = overlay;
-                        $rootScope.PageConfig.SetBodyNoScroll(true);
+                        $rootScope.PageConfig.SetBodyNoScroll(false);
                     }
                 }
             }, // page overlay end
@@ -111,49 +363,58 @@ if (typeof (angular) == 'object') {
             SetOption: function (options, overlay) {
                 overlay = overlay || 'flight-form' ;
                 $('.ui-datepicker').datepicker({
-                    onSelect: function (date) {
+                    onSelect: function(date) {
                         $rootScope.PageConfig.SetOverlay(overlay);
                         $rootScope.DatePicker.Settings.SelectedDate = date;
-                        // $('.ui-datepicker').datepicker('setDate', new Date(date));
                         $($rootScope.DatePicker.Settings.Target).val(date);
                         $($rootScope.DatePicker.Settings.Target).trigger('input');
-                        // console.log($rootScope.DatePicker.Settings.Target);
-                        console.log(date);
-                    }
-                });
-
+                    },
+                    showOn: "focus"
+                    //minDate: 0
+            });
                 // set default value for datepicker
                 if (options.MinDate) {
                     $rootScope.DatePicker.Settings.MinDate = options.MinDate;
                 } else {
                     $rootScope.DatePicker.Settings.MinDate = new Date();
                 }
-                $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.DatePicker.Settings.MinDate);
-
+                
                 if (options.Target == 'departure') {
+                    $(".ui-datepicker").datepicker("option", "showOn", "hide");
+                    //$(".ui-datepicker").datepicker("option", "showAnim", "hide");
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
-                    if ($rootScope.FlightSearchForm.ReturnDate) {
-                        $('.ui-datepicker').datepicker('option', 'maxDate', new Date($rootScope.FlightSearchForm.ReturnDate) );
+                    $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.DatePicker.Settings.MinDate);
+                    if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.ReturnDate) {
+                        $('.ui-datepicker').datepicker('option', 'maxDate', new Date($rootScope.FlightSearchForm.ReturnDate));
+                    } else {
+                        $('.ui-datepicker').datepicker('option', 'maxDate', null);
                     }
+
                 } else {
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-return';
                     if ($rootScope.FlightSearchForm.DepartureDate) {
                         $('.ui-datepicker').datepicker('option', 'minDate', new Date($rootScope.FlightSearchForm.DepartureDate));
                     }
+                    if ($rootScope.FlightSearchForm.Trip == "true") {
+                        // $rootScope.DatePicker.Settings.SelectedDate = $rootScope.FlightSearchForm.DepartureDate;
+                        if ($rootScope.FlightSearchForm.ReturnDate) {
+                            $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.FlightSearchForm.DepartureDate);
+                            $('.ui-datepicker').datepicker('option', 'maxDate', null);
+                            //$rootScope.DatePicker.Settings.SelectedDate = $rootScope.FlightSearchForm.ReturnDate;
+                        }
+                    }                   
                 }
-                $rootScope.DatePicker.Settings.DateFormat = 'yy-mm-dd';
-                $rootScope.DatePicker.Settings.ChangeMonth = false;
+                $rootScope.DatePicker.Settings.DateFormat = 'D, dd M yy';
+                $rootScope.DatePicker.Settings.ChangeMonth = false ;
                 $rootScope.DatePicker.Settings.ChangeYear = false;
+
                 // set option to datepicker
                 $('.ui-datepicker').datepicker('option', 'prevText', '');
                 $('.ui-datepicker').datepicker('option', 'nextText', '');
-                //$('.ui-datepicker.departure-date').datepicker('option', 'changeMonth', $rootScope.DatePicker.Settings.ChangeMonth);
-                //$('.ui-datepicker.departure-date').datepicker('option', 'changeYear', $rootScope.DatePicker.Settings.ChangeYear);
-                //$('.ui-datepicker.departure-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
-                //$('.ui-datepicker').datepicker('option', 'altField', $rootScope.DatePicker.Settings.Target);
-                //$('.ui-datepicker').datepicker('option', 'altFormat', $rootScope.DatePicker.Settings.DateFormat);
+                $('.ui-datepicker.departure-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
+                $('.ui-datepicker.return-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
+                
                 // set on choose date function
-                //console.log($rootScope.DatePicker.Settings);
             }
         };// datepicker
         //$rootScope.DatePicker.SetOption({MinDate: new Date(), Target: '.flight-search-form-departure', ShowMonth: false, ShowYear: false});
@@ -184,26 +445,38 @@ if (typeof (angular) == 'object') {
                     var url = FlightAutocompleteConfig.Url + keyword;
 
                     if (keyword.length >= $rootScope.FlightSearchForm.AutoComplete.MinLength) {
-                        $rootScope.FlightSearchForm.AutoComplete.Loading = true;
-                        // if result exist in cache
-                        if (keyword in $rootScope.FlightSearchForm.AutoComplete.Cache) {
+                        $('autocomplete-loading .text-loading').show();
+                        if (typeof ($rootScope.FlightSearchForm.AutoComplete.Cache[keyword]) != "undefined") {
                             $rootScope.FlightSearchForm.AutoComplete.Result = $rootScope.FlightSearchForm.AutoComplete.Cache[keyword];
-                            $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+                            generateSearchResult($rootScope.FlightSearchForm.AutoComplete.Result);
+                            if ($rootScope.FlightSearchForm.AutoComplete.Result.length > 0) {
+                                $('.autocomplete-no-result').hide();
+                                $('.autocomplete-loading .text-loading').hide();
+                                $('.autocomplete-result').show();
+                            } else {
+                                $('.autocomplete-loading .text-loading').hide();
+                                $('.autocomplete-result').hide();
+                                $('.autocomplete-no-result').show();
+                            }
                         } else {
-                            $.get(url).done(
-                                function (returnData) {
-                                    $rootScope.FlightSearchForm.AutoComplete.Result = returnData;
-                                    $rootScope.FlightSearchForm.AutoComplete.Loading = false;
-                                    // add result to cache
-                                    $rootScope.FlightSearchForm.AutoComplete.Cache[keyword] = returnData;
+                            $.ajax({
+                                url: FlightAutocompleteConfig.Url + keyword
+                            }).done(function(returnData) {
+                                $('.autocomplete-loading .text-loading').hide();
+                                $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+                                $rootScope.FlightSearchForm.AutoComplete.Result = returnData;
+                                $rootScope.FlightSearchForm.AutoComplete.Cache[keyword] = returnData;
+                                generateSearchResult($rootScope.FlightSearchForm.AutoComplete.Result);
+                                if (returnData.length > 0) {
+                                    $('.autocomplete-no-result').hide();
+                                    $('.autocomplete-loading .text-loading').hide();
+                                    $('.autocomplete-result').show();
+                                } else {
+                                    $('.autocomplete-loading .text-loading').hide();
+                                    $('.autocomplete-result').hide();
+                                    $('.autocomplete-no-result').show();
                                 }
-                            ).fail(
-                                function (returnData) {
-                                    console.log('Failed to get airport list');
-                                    console.log(returnData);
-                                    $rootScope.FlightSearchForm.AutoComplete.Loading = false;
-                                }
-                            );
+                            });
                         }
                     }
                 },
@@ -223,7 +496,7 @@ if (typeof (angular) == 'object') {
                     } else {
                         $rootScope.FlightSearchForm.AirportDestination = airport;
                     }
-                    //console.log(airport);
+                    console.log(airport);
                 }
             },// auto complete
             PassengerPicker: {
@@ -260,21 +533,21 @@ if (typeof (angular) == 'object') {
                     switch ($rootScope.FlightSearchForm.PassengerPicker.ActiveType) {
                         case 'adult':
                             if ((number + $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger) > $rootScope.FlightSearchForm.PassengerPicker.TotalMaxPassenger ) {
-                                console.log('Passenger cannot more than 9');
+                                console.log('Passenger cannot be more than 9');
                             } else {
                                 $rootScope.FlightSearchForm.Passenger[0] = number;
                             }
                             break;
                         case 'children':
                             if ((number + $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger) > $rootScope.FlightSearchForm.PassengerPicker.TotalMaxPassenger) {
-                                console.log('Passenger cannot more than 9');
+                                console.log('Passenger cannot be more than 9');
                             } else {
                                 $rootScope.FlightSearchForm.Passenger[1] = number;
                             }
                             break;
                         case 'infant':
                             if (((number + $rootScope.FlightSearchForm.PassengerPicker.TotalCurrentPassenger) > $rootScope.FlightSearchForm.PassengerPicker.TotalMaxPassenger)) {
-                                console.log('Passenger cannot more than 9');
+                                console.log('Passenger cannot be more than 9');
                             } else {
                                 if (number > $rootScope.FlightSearchForm.Passenger[0]) {
                                     console.log('Infant cannot be more than adult');
@@ -295,17 +568,16 @@ if (typeof (angular) == 'object') {
 
                 if ($rootScope.FlightSearchForm.DepartureDate == '') {
                     var departure = new Date();
-                    departure.setDate( departure.getDate() + 1 );
+                    departure.setDate( departure.getDate() + 1);
                     $rootScope.FlightSearchForm.DepartureDate = departure;
                 }
 
                 if ($rootScope.FlightSearchForm.ReturnDate == '') {
                     var todayDate = new Date();
                     var returnDate = new Date();
-                    returnDate.setDate( todayDate.getDate() + 2 );
-
+                    returnDate.setDate(todayDate.getDate() + 2);
                     $rootScope.FlightSearchForm.ReturnDate = returnDate;
-                }
+                } 
 
                 $rootScope.FlightSearchForm.Url = FlightSearchConfig.GenerateSearchParam({
                     trip: ($rootScope.FlightSearchForm.Trip == 'true'),
@@ -325,20 +597,52 @@ if (typeof (angular) == 'object') {
             }// submit
         };//$rootScope.FlightSearchForm
 
+        $('.autocomplete-result ul.result').on('click', 'li', function (overlay) {
+
+            //var overlay = '' || flight
+            var locationCode = $(this).find('.airport__code').html();
+            var locationCity = $(this).find('.airport__location').html().split(",")[0];
+            var locationCountry = $(this).find('.airport__location').html().split(",")[1].trim();
+            var locationName = $(this).find('.airport__name').html();
+            var airport = { City: locationCity, Code: locationCode, Country: locationCountry, Name: locationName };
+            if ($rootScope.FlightSearchForm.AutoComplete.Target == 'departure') {
+                $rootScope.FlightSearchForm.AirportOrigin = airport;
+            } else {
+                $rootScope.FlightSearchForm.AirportDestination = airport;
+            }
+            //$rootScope.PageConfig.SetOverlay();
+        });
+
+        function generateSearchResult(list) {
+            $('.autocomplete-result ul').empty();
+            for (var i = 0 ; i < list.length; i++) {
+                $('.autocomplete-result ul').append
+                (
+                    '<li class="airport">' + 
+                        '<a class="airport__link">' + 
+                        '</a>' +
+                        '<span class="airport__code">'+ list[i].Code +'</span>' +
+                        '<div class="airport__detail">' +
+                            '<p class="airport__location">' + list[i].City + ', ' + list[i].Country + '</p>' +
+                            '<p class="airport__name">' + list[i].Name + '</p>' +
+                        '</div>' +
+                      '</li>'
+                );
+            }
+        }
+
         // set default date for departure date and return date
         if ($rootScope.FlightSearchForm.DepartureDate == '') {
             var departure = new Date();
-            departure.setDate(departure.getDate() + 1);
+            departure.setDate(departure.getDate());
             $rootScope.FlightSearchForm.DepartureDate = departure;
         }
         if ($rootScope.FlightSearchForm.ReturnDate == '') {
-            var todayDate = new Date();
+            //var todayDate = new Date();
             var returnDate = new Date();
-            returnDate.setDate(todayDate.getDate() + 2);
+            returnDate.setDate(returnDate.getDate());
             $rootScope.FlightSearchForm.ReturnDate = returnDate;
-        }
-
-
+        } 
     });//app.run
 
 }
@@ -366,3 +670,26 @@ function getParam(name) {
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+//    $rootScope.FlightSearchForm.AutoComplete.Loading = true;
+//    // if result exist in cache
+//    if (keyword in $rootScope.FlightSearchForm.AutoComplete.Cache) {
+//        $rootScope.FlightSearchForm.AutoComplete.Result = $rootScope.FlightSearchForm.AutoComplete.Cache[keyword];
+//        $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+//    } else {
+//        $.get(url).done(
+//            function (returnData) {
+//                $rootScope.FlightSearchForm.AutoComplete.Result = returnData;
+//                $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+//                // add result to cache
+//                $rootScope.FlightSearchForm.AutoComplete.Cache[keyword] = returnData;
+//            }
+//        ).fail(
+//            function (returnData) {
+//                console.log('Failed to get airport list');
+//                console.log(returnData);
+//                $rootScope.FlightSearchForm.AutoComplete.Loading = false;
+//            }
+//        );
+//    }
+//}

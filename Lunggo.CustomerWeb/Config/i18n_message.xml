@@ -419,19 +419,19 @@
   <Message code="CW00181" lang="id_ID" value="password baru" />
   <Message code="CW00182" lang="en_US" value="Reset your password" />
   <Message code="CW00182" lang="id_ID" value="Reset Password Anda" />
-  <Message code="CW00183" lang="en_US" value="Please insert your email address for us to send you reset instruction's email." />
-  <Message code="CW00183" lang="id_ID" value="Masukan alamat email Anda dan kami akan mengirimkan email instruksi untuk mengganti password Anda." />
+  <Message code="CW00183" lang="en_US" value="Please insert your e-mail address for us to send you reset instruction's email." />
+  <Message code="CW00183" lang="id_ID" value="Masukkan alamat em-ail Anda dan kami akan mengirimkan e-mail instruksi untuk mengganti password Anda." />
   <Message code="CW00184" lang="en_US" value="Email" />
   <Message code="CW00184" lang="id_ID" value="Email" />
   <Message code="CW00185" lang="en_US" value="SUBMIT" />
   <Message code="CW00185" lang="id_ID" value="KIRIM" />
   <Message code="CW00186" lang="en_US" value="SUBMITTING" />
   <Message code="CW00186" lang="id_ID" value="MENGIRIM" />
-  <Message code="CW00187" lang="en_US" value="Checking your order status were never were as easy as on Travorama.com. Insert your order details below." />
-  <Message code="CW00187" lang="id_ID" value="Semakin mudah mengetahui status pemesanan Anda di Travorama.com. Masukan data pemesanan Anda di formulir dibawah." />
-  <Message code="CW00188" lang="en_US" value="If your order hasn't paid yet, you may proceed to continue" />
+  <Message code="CW00187" lang="en_US" value="Checking your order status was never as easy as in Travorama.com. Insert your order details below." />
+  <Message code="CW00187" lang="id_ID" value="Semakin mudah mengetahui status pemesanan Anda di Travorama.com. Masukkan data pemesanan Anda di formulir dibawah." />
+  <Message code="CW00188" lang="en_US" value="If your order hasn't been paid yet, you still can proceed to continue" />
   <Message code="CW00188" lang="id_ID" value="Jika Anda memiliki pemesanan yang belum terbayarkan, pemesanan tersebut juga dapat dilanjutkan" />
-  <Message code="CW00189" lang="en_US" value="Upto 2 hours after your order has been made." />
+  <Message code="CW00189" lang="en_US" value="Up to 2 hours after your order has been made." />
   <Message code="CW00189" lang="id_ID" value="Hingga 2 jam setelah pemesanan awal dilakukan." />
   <Message code="CW00190" lang="en_US" value="Order Number" />
   <Message code="CW00190" lang="id_ID" value="Nomor Pemesanan" />

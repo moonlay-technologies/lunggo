@@ -1,0 +1,121 @@
+﻿@{
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    ViewBag.Title = "Newsletter";
+    ViewBag.BodyClass = "page page-newsletter";
+    ViewBag.AngularController = "NewsletterController";
+}
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+@section PageJS{
+    <!-- angular controller -->
+    <script src="/Assets/mobile/js/StaticController.js"></script>
+    <script>
+        @*var userEmail = @Model.form.userEmail;
+        var name = @Model.form.name;*@
+    </script>
+}
+
+
+<div ng-controller = "NewsletterController" ng-class="{'page-loaded' : pageLoaded}">
+    <header class="page__header">
+        <h1 class="text-center section-title stripe">Subscribe <span>Newsletter</span></h1>
+    </header>
+
+    <!-- .page__body -->
+    <div class="page__body page-loading" ng-class="{'page-loaded' : pageLoaded}">
+        <div class="container page-overlay" ng-show="User.showBox">
+            <div class="overlay-content">
+                <div ng-show="User.Registered">
+                    <header>
+                        <h4>Pendaftaran Newsletter Berhasil</h4>
+                    </header>
+
+                    <img src="/Assets/images/email-send-icon.png" alt="Succeed">
+                    <section>
+                        <p>
+                            Cek e-mail Anda untuk verifikasi pendaftaran info promo.
+                        </p>
+                    </section>
+                    <div class="text-center">
+                        <a ng-click="closeOverlay()" class="btn btn-yellow">KEMBALI</a>
+                    </div>
+                </div>
+
+                @*<div ng-show="User.Registered && User.EmailSent && User.EmailConfirmed">
+                    <header>
+                        <h4>E-mail Sudah Terdaftar</h4>
+                    </header>
+
+                    <img src="/Assets/images/smile-image.png" alt="Already Registered">
+                    <section>
+                        <p>
+                            E-mail Anda sudah terdaftar dalam sistem kami.
+                        </p>
+                    </section>
+                    <div class="text-center">
+                        <a ng-click="closeOverlay()" class="btn btn-yellow">KEMBALI</a>
+                    </div>
+                </div>
+
+                <div ng-show="User.Registered && User.EmailSent && !User.EmailConfirmed">
+                    <header>
+                        <h4>E-mail Belum Terkonfirmasi</h4>
+                    </header>
+
+                    <img src="/Assets/images/sad-image.png" alt="Not Confirmed">
+                    <section>
+                        <p>
+                            E-mail Anda sudah terdaftar, namun belum dikonfirmasi. Silakan cek e-mail Anda untuk konfirmasi.
+                            <a ng-click="form.resubmit()">Klik disini</a> untuk mengirim kembali e-mail konfirmasi.
+                        </p>
+                    </section>
+                    <div class="text-center">
+                        <a ng-click="closeOverlay()" class="btn btn-yellow">KEMBALI</a>
+                    </div>
+                </div>*@
+
+                <div ng-show="!User.Registered">
+                    <header>
+                        <h4>Data Tidak Lengkap</h4>
+                    </header>
+
+                    <img src="/Assets/images/sad-image.png" alt="Not Confirmed">
+                    <section>
+                        <p>
+                           Data yang Anda masukkan belum lengkap. Silakan masukan e-mail Anda dengan format <i>nama@domain.com</i> dan nama Anda.
+                        </p>
+                    </section>
+                    <div class="text-center">
+                        <a ng-click="closeOverlay()" class="btn btn-yellow">KEMBALI</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" ng-show = "!User.showBox">
+        <p><b>Daftar dan Dapatkan</b> Info Promo dan Travel Terkini dari <b>Travorama!</b></p>
+
+        <form name="NewsletterForm" novalidate>
+            <div class="form-group">
+                <label class="control-label">Alamat E-mail:</label>
+                <input class="form-control" type="email" value="" name="userEmail" ng-model="form.userEmail" required />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Nama :</label>
+                <input class="form-control" type="text" value="" name="name" ng-model="form.name" required />
+            </div>
+            <div class="form-group">
+                <button class="btn btn-block btn-yellow" ng-click="User.Send(); form.userEmail = ''; form.name = '';" ng-disabled="NewsletterForm.$invalid || User.Sending">
+                    <span ng-hide="EmailForm.Sending">DAFTAR</span>
+                </button>
+            </div>
+        </form>
+        <!-- .page__body -->
+    </div>
+</div>
+

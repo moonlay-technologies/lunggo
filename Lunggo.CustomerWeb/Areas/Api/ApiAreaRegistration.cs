@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Http;
+using System.Web.Mvc;
 
 namespace Lunggo.CustomerWeb.Areas.Api
 {
@@ -14,7 +15,7 @@ namespace Lunggo.CustomerWeb.Areas.Api
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
-            context.MapRoute(
+            context.Routes.MapHttpRoute(
                 "Api_default",
                 "Api/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }

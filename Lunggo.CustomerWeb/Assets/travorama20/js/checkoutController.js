@@ -457,6 +457,11 @@ app.controller('checkoutController', [
             }
         }
         // validate passenger birthday
+        $scope.todaymonth = function() {
+            var now = new Date();
+            return now.getMonth();
+        };
+
         $scope.validateBirthday = function (passenger) {
             if (passenger.type != 'adult') {
                 // set minimum date for passenger

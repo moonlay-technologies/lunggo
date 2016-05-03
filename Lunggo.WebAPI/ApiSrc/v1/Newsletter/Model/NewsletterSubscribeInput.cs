@@ -7,7 +7,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Newsletter.Model
         [Required]
         [EmailAddress]
         public string Address { get; set; }
-        [Required]
         public string Name { get; set; }
     }
 }

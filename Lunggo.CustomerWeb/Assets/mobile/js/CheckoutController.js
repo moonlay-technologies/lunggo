@@ -4,7 +4,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     // *****
     // general variables
     $scope.PageConfig = $rootScope.PageConfig;
-
+    $scope.pageLoaded = true;
     $scope.CheckoutConfig = {
         Token: CheckoutDetail.Token,
         ExpiryDate: CheckoutDetail.ExpiryDate,
@@ -19,15 +19,17 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         PassengerTypeName: CheckoutDetail.PassengerName,
         // generate passenger
         GeneratePassenger: function () {
+            var today = new Date();
+            
             if ($scope.CheckoutConfig.Passenger[0] > 0) {
                 for (var i = 0; i < $scope.CheckoutConfig.Passenger[0]; i++) {
-                    var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[0], type: 'adult' };
+                    var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[0], type: 'adult', birth: today };
                     $scope.passengers.push(x);
                 }
             }
             if ($scope.CheckoutConfig.Passenger[1]> 0) {
                 for (var i = 0; i < $scope.CheckoutConfig.Passenger[1]; i++) {
-                    var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[1], type: 'child' };
+                    var x = { typeName: $scope.CheckoutConfig.PassengerTypeName[1], type: 'child'  };
                     $scope.passengers.push(x);
                 }
             }
@@ -37,6 +39,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     $scope.passengers.push(x);
                 }
             }
+            //$scope.incMth();
         },
         // identity requirement
         PassportRequired: CheckoutDetail.PassportRequired,
@@ -45,6 +48,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         // buyer info
         BuyerInfo: CheckoutDetail.BuyerInfo
     };
+
+    $scope.parseInt = parseInt;
 
     $scope.token = CheckoutDetail.Token;
     $scope.currency = 'IDR';
@@ -187,6 +192,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
     // book
     $scope.book = {
+        isPriceChanged: false,
+        newPrice: '',
         booking: false,
         url: FlightBookConfig.Url,
         postData: '',
@@ -282,7 +289,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             $scope.book.booking = true;
 
             // generate data
-            $scope.book.postData = ' "TransferToken" : "' + $scope.TransferConfig.Token + '" , "Payment.Data.Data0" : "' + $scope.CreditCard.Token + '", "Payment.Data.Data1" : "' + $scope.CreditCard.Name + '", "Payment.Data.Data20" : "' + $scope.loggedIn + '", "Payment.Data.Data9" : "' + $scope.buyerInfo.email + '", "Token":"' + $scope.token + '", "Payment.Currency":"' + $scope.currency + '", "DiscountCode":"' + $scope.voucher.confirmedCode + '", "Payment.Method":"' + $scope.paymentMethod + '", "Contact.Title" :"' + $scope.buyerInfo.title + '","Contact.Name":"' + $scope.buyerInfo.fullName + '", "Contact.CountryCode":"' + $scope.buyerInfo.countryCode + '", "Contact.Phone":"' + $scope.buyerInfo.phone + '","Contact.Email":"' + $scope.buyerInfo.email + '","Language":"' + $scope.language + '"';
+            $scope.book.postData = ' "TransferToken" : "' + $scope.TransferConfig.Token + '" , "Payment.Data.Data0" : "' + $scope.CreditCard.Token + '", "Payment.Data.Data1" : "' + $scope.CreditCard.Name + '", "Payment.Data.Data20" : "' + $scope.loggedIn + '", "Payment.Data.Data9" : "' + $scope.buyerInfo.email + '", "Token":"' + $scope.token + '", "Payment.Currency":"' + $scope.currency + '", "DiscountCode":"' + $scope.voucher.confirmedCode + '", "Payment.Method":"' + $scope.paymentMethod + '", "Contact.Title" :"' + $scope.buyerInfo.title + '","Contact.Name":"' + $scope.buyerInfo.fullName + '", "Contact.CountryCode":"' + $scope.buyerInfo.countryCode + '", "Contact.Phone":"' + $scope.buyerInfo.phone + '","Contact.Email":"' + $scope.buyerInfo.email + '","Language":"' + 'ID' + '"';
             for (var i = 0; i < $scope.passengers.length; i++) {
 
                 // check nationality
@@ -326,13 +333,28 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 $scope.book.checked = true;
 
                 if (returnData.data.IsSuccess) {
-                    $scope.book.isSuccess = true;
-                    $scope.book.rsvNo = returnData.data.RsvNo;
+                    if (returnData.data.NewPrice != null) {
+                        $scope.book.isPriceChanged = true;
+                        $scope.book.isSuccess = true;
+                        $scope.book.newPrice = returnData.data.NewPrice;
+                        $scope.book.checked = false;
+                    }
+                    else {
+                        $scope.book.isSuccess = true;
+                        $scope.book.rsvNo = returnData.data.RsvNo;
 
-                    $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
-                    $('form#rsvno').submit();
+                        $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                        $('form#rsvno').submit();
+                        $scope.book.checked = true;
+                    }
+                    //$scope.book.isSuccess = true;
+                    //$scope.book.rsvNo = returnData.data.RsvNo;
+
+                    //$('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                    //$('form#rsvno').submit();
 
                 } else {
+                    $scope.book.checked = true;
                     $scope.book.isSuccess = false;
                 }
 
@@ -344,6 +366,21 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
         }
     }//$scope.book
+
+    $scope.getPassportMonth = function () {
+        if ($scope.flightDetail.departureMonth + 6 > $scope.months.length) {
+            return $scope.flightDetail.departureMonth - 6;
+        } else return $scope.flightDetail.departureMonth + 6;
+    }
+
+    $scope.getPassportYear = function () {
+        
+        if ($scope.getPassportMonth() > $scope.flightDetail.departureMonth) {
+            return $scope.flightDetail.departureYear;
+        } else {
+            return ($scope.flightDetail.departureYear + 1);
+        }
+    }
 
     // credit card promo checker
     $scope.CreditCardPromo = {
@@ -378,7 +415,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     var valentineDate = new Date('14 February 2016');
                     if (creditCardString.length > 5 && (jakartaDate.getDate() == valentineDate.getDate() && jakartaDate.getMonth() == valentineDate.getMonth())) {
                         var danamonList = ['456798', '456799', '425857', '432449', '540731', '559228', '516634', '542260', '552239', '523983', '552338'];
-                        var creditCardString = creditCardString.substr(0, 6);
+                        creditCardString = creditCardString.substr(0, 6);
 
                         // if Danamon Card
                         if (danamonList.indexOf(creditCardString) > -1) {
@@ -454,6 +491,10 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             { name: 'Mrs', value: 'Mistress' },
             { name: 'Ms', value: 'Miss' }
     ];
+    $scope.titleKids = [
+            { name: 'Mr', value: 'Mister' },
+            { name: 'Ms', value: 'Miss' }
+    ];
     // return URL
     $scope.PageConfig.ReturnUrl = document.referrer == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;
 
@@ -498,7 +539,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             { value: 8, name: 'September' },
             { value: 9, name: 'October' },
             { value: 10, name: 'November' },
-            { value: 11, name: 'December' },
+            { value: 11, name: 'December' }
     ];
     $scope.generateYear = function (type) {
         var departureDate = new Date($scope.flightDetail.departureFullDate);
@@ -520,7 +561,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 return years.reverse();
                 break;
             case 'infant':
-                listYear((departureDate.getFullYear() - 2), $scope.bookingDate.getFullYear());
+                listYear((departureDate.getFullYear() - 2), departureDate.getFullYear());
                 return years.reverse();
                 break;
             case 'passport':
@@ -529,6 +570,12 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 break;
         }
 
+    }
+
+    $scope.incMth = function() {
+        for (var z = 0; z < $scope.passengers.length; z++) {
+            $scope.passengers[z].birth.month = parseInt($scope.passengers[z].birth.month, 10) + 1;
+        }
     }
 
     // init passenger
@@ -563,6 +610,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             }
         }
     }
+
+    
     // validate passenger birthday
     $scope.validateBirthday = function (passenger) {
         if (passenger.type != 'adult') {

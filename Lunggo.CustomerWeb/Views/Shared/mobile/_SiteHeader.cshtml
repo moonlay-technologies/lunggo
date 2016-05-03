@@ -1,4 +1,13 @@
 ﻿@using Lunggo.ApCommon.Identity.User
+@section PageJS{
+    <!-- angular controller -->
+    <script>
+        var firstName = '@User.Identity.GetFirstName()';
+        var lastName = '@User.Identity.GetLastName()';
+        var email = '@User.Identity.Name';
+    </script>
+
+}
 <header class="site-header">
     
     <div class="header-display">
@@ -33,16 +42,29 @@
             <ul>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li class="account">
-                        <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">@User.Identity.GetFirstName() @User.Identity.GetLastName()</a>
+                   if (@User.Identity.GetFirstName() == null || @User.Identity.GetLastName() == null)
+                    {
+                        <li class="account" ng-if="!(firstName != null && lastName != null)">
+                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">@User.Identity.Name</a>
+                        </li>
+                    }
+                    else if (@User.Identity.GetFirstName().Length != 0 && @User.Identity.GetLastName().Length != 0)
+                    {
+                        <li class="account">
+                            <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">@User.Identity.GetFirstName() @User.Identity.GetLastName()</a>
+                        </li>
+                    }
+
+                    <li class="logout hidden @(ViewBag.CurrentPage == "Log Out" ? "active" : "") ">
+                        <a href="@Url.Action("Logout","Account")">Log Out</a>
                     </li>
                 }
                 else
                 {
                     <li class="login">
-                        <a href="@Url.Action("Login","Account")">Log In / Sign Up</a>
+                        <a href="@Url.Action("Login","Account")">Log In</a>
                     </li>
-                    <li class="register hidden">
+                    <li class="register">
                         <a href="@Url.Action("Register","Account")">Sign Up</a>
                     </li>
                 }
@@ -58,8 +80,8 @@
                 <li class="contact @(ViewBag.CurrentPage == "contact" ? "active" : "")">
                     <a href="@Url.Action("Contact","StaticPage")">Contact Us</a>
                 </li>
-                <li class="newsletter">
-                    <a href="#">Newsletter</a>
+                <li class="newsletter @(ViewBag.CurrentPage == "newsletter" ? "active" : "")" >
+                    <a href="@Url.Action("Newsletter", "StaticPage")">Newsletter</a>
                 </li>
                 <li class="faq @(ViewBag.CurrentPage == "question" ? "active" : "")">
                     <a href="@Url.Action("Question","StaticPage")">FAQ</a>
@@ -70,9 +92,13 @@
                 <li class="hidden howto-order @(ViewBag.CurrentPage == "howtopay" ? "active" : "")">
                     <a href="@Url.Action("HowToPay","StaticPage")">Cara Bayar</a>
                 </li>
-                <li class="about">
+                @*<li class="newsletter">
+                    <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br/> <br />
+                </li>*@
+                
+                @*<li class="about">
                     <a href="#">Tentang Kami</a>
-                </li>
+                </li>*@
             </ul>
         </div><!-- .border-content-body -->
     </div><!-- .burger-content -->

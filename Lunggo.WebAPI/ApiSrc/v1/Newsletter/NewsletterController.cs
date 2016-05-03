@@ -75,9 +75,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Newsletter
 
         private MailchimpSubscriberJson CreateApiJsonBody(NewsletterSubscribeInput input)
         {
-            var nameSplitted = input.Name.Trim().Split((char[]) null);
-            var firstName = nameSplitted[0];
-            var lastName = nameSplitted.Length > 1 ? String.Join(" ", nameSplitted.Skip(1)) : nameSplitted[0];
+            //var nameSplitted = input.Name.Trim().Split((char[]) null);
+            //var firstName = nameSplitted[0];
+            //var lastName = nameSplitted.Length > 1 ? String.Join(" ", nameSplitted.Skip(1)) : nameSplitted[0];
 
             var jsonBody = new MailchimpSubscriberJson
             {
@@ -85,17 +85,15 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Newsletter
                 email_address = input.Address.Trim().ToLowerInvariant(),
                 merge_fields = new MergeFields
                 {
-                    FNAME = firstName,
-                    LNAME = lastName
+                    FNAME = "",
+                    LNAME = ""
                 }
             };
             return jsonBody;
         }
         
     }
-
     
-
     public class MailchimpSubscriberJson
     {
         public String email_address { get; set; }
