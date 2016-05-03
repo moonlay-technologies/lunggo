@@ -1,5 +1,4 @@
 ﻿using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
@@ -17,7 +16,6 @@ namespace Lunggo.WebJob.FlightCrawler
             InitRedisService();
             InitQueueService();
             InitFlightService();
-            InitDictionaryService();
         }
 
         private static void InitRedisService()
@@ -56,13 +54,7 @@ namespace Lunggo.WebJob.FlightCrawler
         private static void InitFlightService()
         {
             var flight = FlightService.GetInstance();
-            flight.Init();
-        }
-
-        private static void InitDictionaryService()
-        {
-            var dict = DictionaryService.GetInstance();
-            dict.Init("");
+            flight.Init("");
         }
 
         private static void InitDatabaseService()

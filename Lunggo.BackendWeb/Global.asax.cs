@@ -6,11 +6,11 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.ProductBase.Constant;
 using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
@@ -36,8 +36,7 @@ namespace Lunggo.BackendWeb
                 Contact = new Contact
                 {
                     Name = "Richardo",
-                    Address = "Bandung",
-                    CountryCode = "62",
+                    CountryCallingCode = "62",
                     Email = "merangkaksanasini@gmail.com",
                     Phone = "85360342424"
                 },

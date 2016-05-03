@@ -1,5 +1,4 @@
 ﻿using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
@@ -22,7 +21,6 @@ namespace Lunggo.WebJob.FlightProcessor
             InitBlobStorageService();
             InitHtmlTemplateService();
             InitMailService();
-            InitDictionaryService();
             InitFlightService();
         }
 
@@ -35,7 +33,7 @@ namespace Lunggo.WebJob.FlightProcessor
         private static void InitFlightService()
         {
             var flight = FlightService.GetInstance();
-            flight.Init();
+            flight.Init("");
         }
 
         private static void InitDatabaseService()
@@ -43,12 +41,6 @@ namespace Lunggo.WebJob.FlightProcessor
             var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
             var db = DbService.GetInstance();
             db.Init(connString);
-        }
-
-        private static void InitDictionaryService()
-        {
-            var dict = DictionaryService.GetInstance();
-            dict.Init("");
         }
 
         private static void InitQueueService()

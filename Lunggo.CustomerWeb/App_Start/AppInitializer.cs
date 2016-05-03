@@ -2,7 +2,6 @@
 using System.Web.WebPages;
 using log4net;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Service;
@@ -33,7 +32,6 @@ namespace Lunggo.CustomerWeb
             InitDatabaseService();
             InitQueueService();
             //InitLogger();
-            InitDictionaryService();
             InitFlightService();
             InitPaymentService();
             InitBrowserDetectionService();
@@ -115,16 +113,10 @@ namespace Lunggo.CustomerWeb
             LunggoLogger.GetInstance().init(Log);
         }
 
-        private static void InitDictionaryService()
-        {
-            var dictionary = DictionaryService.GetInstance();
-            dictionary.Init("Config");
-        }
-
         private static void InitFlightService()
         {
             var flight = FlightService.GetInstance();
-            flight.Init();
+            flight.Init("Config");
         }
 
         private static void InitPaymentService()

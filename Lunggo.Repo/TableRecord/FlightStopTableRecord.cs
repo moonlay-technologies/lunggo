@@ -11,13 +11,13 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? StopId
+		public long? Id
 		{
-		    get { return _StopId; }
+		    get { return _Id; }
 		    set
 		    {
-		        _StopId = value;
-		        IncrementLog("StopId");
+		        _Id = value;
+		        IncrementLog("Id");
 		    }
 		}
 		public long? SegmentId
@@ -121,7 +121,7 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _StopId;
+		private long? _Id;
 		private long? _SegmentId;
 		private String _AirportCd;
 		private DateTime? _ArrivalTime;
@@ -164,7 +164,7 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("StopId", true),
+				new ColumnMetadata("Id", true),
 				new ColumnMetadata("SegmentId", false),
 				new ColumnMetadata("AirportCd", false),
 				new ColumnMetadata("ArrivalTime", false),

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Flight.Query;
 using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Service
@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         detailsResult = MapDetails(response);
                         detailsResult.IsSuccess = true;
 
-                        UpdateDb.Details(response);
+                        UpdateDetailsToDb(response);
                     }
                     else
                     {
@@ -61,6 +61,18 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 return output;
             }
+        }
+
+        private GetTripDetailsResult GetTripDetailsInternal(TripDetailsConditions conditions)
+        {
+            var fareType = IdUtil.GetFareType(conditions.BookingId);
+            var supplierName = IdUtil.GetSupplier(conditions.BookingId);
+            conditions.BookingId = IdUtil.GetCoreId(conditions.BookingId);
+            var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
+            GetTripDetailsResult result = supplier.GetTripDetails(conditions);
+            if (result.BookingId != null)
+                result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, supplierName, fareType);
+            return result;
         }
 
         private static DetailsResult MapDetails(GetTripDetailsResult details)

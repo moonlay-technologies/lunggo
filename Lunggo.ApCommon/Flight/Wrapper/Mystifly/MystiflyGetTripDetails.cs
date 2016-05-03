@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.ApCommon.ProductBase.Constant;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
@@ -90,7 +91,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             {
                 var flightTrips = new List<FlightTrip>();
                 var segments = response.TravelItinerary.ItineraryInfo.ReservationItems;
-                var dict = DictionaryService.GetInstance();
+                var flight = FlightService.GetInstance();
                 var i = 0;
                 foreach (var tripInfo in conditions.Trips)
                 {
@@ -107,7 +108,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                         i++;
                     } while (i < segments.Count() &&
                              segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
-                             dict.GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) !=
+                             flight.GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) !=
                              tripInfo.DestinationAirport);
                     flightTrips.Add(flightTrip);
                 }
@@ -135,7 +136,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         private static FlightSegment MapFlightSegmentDetails(ReservationItem item)
         {
-            var dict = DictionaryService.GetInstance();
+            var flight = FlightService.GetInstance();
             item.OperatingAirlineCode =
                 (item.OperatingAirlineCode != "  " && item.OperatingAirlineCode != " " &&
                  item.OperatingAirlineCode != "" && item.OperatingAirlineCode != null)
@@ -144,23 +145,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             return new FlightSegment
             {
                 DepartureAirport = item.DepartureAirportLocationCode,
-                DepartureAirportName = dict.GetAirportName(item.DepartureAirportLocationCode),
-                DepartureCity = dict.GetAirportCity(item.DepartureAirportLocationCode),
+                DepartureAirportName = flight.GetAirportName(item.DepartureAirportLocationCode),
+                DepartureCity = flight.GetAirportCity(item.DepartureAirportLocationCode),
                 DepartureTerminal = item.DepartureTerminal,
                 DepartureTime = DateTime.SpecifyKind(item.DepartureDateTime,DateTimeKind.Utc),
                 ArrivalAirport = item.ArrivalAirportLocationCode,
-                ArrivalAirportName = dict.GetAirportName(item.ArrivalAirportLocationCode),
-                ArrivalCity = dict.GetAirportCity(item.ArrivalAirportLocationCode),
+                ArrivalAirportName = flight.GetAirportName(item.ArrivalAirportLocationCode),
+                ArrivalCity = flight.GetAirportCity(item.ArrivalAirportLocationCode),
                 ArrivalTime = DateTime.SpecifyKind(item.ArrivalDateTime,DateTimeKind.Utc),
                 ArrivalTerminal = item.ArrivalTerminal,
                 Duration = TimeSpan.FromMinutes(double.Parse(item.JourneyDuration)),
                 AirlineCode = item.MarketingAirlineCode,
-                AirlineName = dict.GetAirlineName(item.MarketingAirlineCode),
-                AirlineLogoUrl = dict.GetAirlineLogoUrl(item.MarketingAirlineCode),
+                AirlineName = flight.GetAirlineName(item.MarketingAirlineCode),
+                AirlineLogoUrl = flight.GetAirlineLogoUrl(item.MarketingAirlineCode),
                 FlightNumber = item.FlightNumber,
                 OperatingAirlineCode = item.OperatingAirlineCode,
-                OperatingAirlineName = dict.GetAirlineName(item.OperatingAirlineCode),
-                OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(item.OperatingAirlineCode),
+                OperatingAirlineName = flight.GetAirlineName(item.OperatingAirlineCode),
+                OperatingAirlineLogoUrl = flight.GetAirlineLogoUrl(item.OperatingAirlineCode),
                 AircraftCode = item.AirEquipmentType,
                 Rbd = item.ResBookDesigCode,
                 StopQuantity = item.StopQuantity,

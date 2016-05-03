@@ -35,7 +35,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Lunggo.Generator.VoucherGenerator.VoucherGenerator</StartupObject>
+    <StartupObject>Lunggo.Generator.TableRepo.TableRepoGenerator</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.StringTemplate">
@@ -63,13 +63,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HotelDesc\HotelDescGenerator.cs" />
-    <Compile Include="HotelDesc\HotelDescGeneratorTest.cs" />
     <Compile Include="TableRepo\ColumnDefinition.cs" />
     <Compile Include="TableRepo\InformationSchemaColumnDefinition.cs" />
     <Compile Include="TableRepo\TableRepoGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TopFlightDestinations\TopFlightDestinationsGenerator.cs" />
     <Compile Include="VoucherGenerator\VoucherGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -90,13 +87,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="VoucherCodes.txt" />
-    <None Include="TopFlightDestinations\TopDestinations.csv" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">
-      <Project>{9a51106c-bd55-40cc-a1c6-6fc3cb74ec8a}</Project>
-      <Name>Lunggo.ApCommon</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

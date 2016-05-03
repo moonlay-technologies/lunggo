@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Constant;
 using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Flight.Service
@@ -36,7 +37,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             try
             {
-                return GetDb.Reservation(rsvNo);
+                return GetReservationFromDb(rsvNo);
             }
             catch
             {
@@ -48,7 +49,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             try
             {
-                var rsv = GetDb.OverviewReservation(rsvNo);
+                var rsv = GetOverviewReservationFromDb(rsvNo);
                 return ConvertToReservationForDisplay(rsv);
             }
             catch
@@ -59,35 +60,30 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public List<FlightReservationForDisplay> GetOverviewReservationsByContactEmail(string contactEmail)
         {
-            var rsvs = GetDb.OverviewReservationsByContactEmail(contactEmail) ?? new List<FlightReservation>();
+            var rsvs = GetOverviewReservationsFromDb(contactEmail) ?? new List<FlightReservation>();
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 
         public List<FlightReservationForDisplay> SearchReservations(FlightReservationSearch search)
         {
-            var rsvs = GetDb.SearchReservations(search);
+            var rsvs = GetSearchReservationsFromDb(search);
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
-        }
-
-        public List<FlightReservation> GetUnpaidReservations()
-        {
-            return GetDb.UnpaidReservations().ToList();
         }
 
         public void ExpireReservations()
         {
-            UpdateDb.ExpireReservations();
+            UpdateExpireReservationsToDb();
         }
 
         internal void CancelReservation(string rsvNo, CancellationType cancellationType)
         {
-            UpdateDb.CancelReservation(rsvNo, cancellationType);
+            UpdateCancelReservationToDb(rsvNo, cancellationType);
         }
 
-        internal void ConfirmReservationRefund(string rsvNo, Refund refund)
-        {
-            UpdateDb.ConfirmRefund(rsvNo, refund);
-        }
+        //internal void ConfirmReservationRefund(string rsvNo, Refund refund)
+        //{
+        //    UpdateConfirmRefundToDb(rsvNo, refund);
+        //}
 
         public byte[] GetEticket(string rsvNo)
         {
@@ -105,34 +101,10 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public void GetAndUpdateBookingStatus(out List<string> ticketedRsvNos, out List<string> scheduleChangedRsvNos)
-        {
-            var statusData = GetBookingStatusInternal();
-            if (statusData.Any())
-                UpdateDb.BookingStatus(statusData);
-            var ticketedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.Ticketed).Select(data => data.BookingId).ToList();
-            var scheduleChangedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.ScheduleChanged).Select(data => data.BookingId).ToList();
-            var rsvNosWithTicketedBooking = ticketedBookingIds.Any()
-                ? GetDb.RsvNoByBookingId(ticketedBookingIds).Distinct()
-                : new List<string>();
-            var rsvsWithTicketedBooking = rsvNosWithTicketedBooking.Select(GetReservation);
-            ticketedRsvNos =
-                rsvsWithTicketedBooking.Where(
-                    rsv =>
-                        rsv.Itineraries.TrueForAll(
-                            itin =>
-                                itin.BookingStatus == BookingStatus.Ticketed ||
-                                itin.BookingStatus == BookingStatus.ScheduleChanged))
-                    .Select(rsv => rsv.RsvNo).ToList();
-            scheduleChangedRsvNos = scheduleChangedBookingIds.Any()
-                ? GetDb.RsvNoByBookingId(scheduleChangedBookingIds).Distinct().ToList()
-                : new List<string>();
-        }
-
-        public void UpdateIssueProgress(string rsvNo, string progressMessage)
-        {
-            UpdateDb.IssueProgress(rsvNo, progressMessage);
-        }
+        //public void UpdateIssueProgress(string rsvNo, string progressMessage)
+        //{
+        //    UpdateIssueProgressToDb(rsvNo, progressMessage);
+        //}
 
         public List<Tuple<FlightTripForDisplay, BookingStatus>> GetAllBookingStatus(string rsvNo)
         {
@@ -140,7 +112,7 @@ namespace Lunggo.ApCommon.Flight.Service
             if (rsv == null)
                 return null;
             return
-                rsv.Itineraries.SelectMany(
+                rsv.Orders.SelectMany(
                     itin =>
                         itin.Trips.Select(
                             trip =>

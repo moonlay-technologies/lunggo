@@ -17,7 +17,7 @@
     {
         <p>Rute Pulang : @Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport | @Model.Itinerary.Trips[1].DepartureDate.ToString("d MMM yyyy")</p>
     }
-    <p>Harga : @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+    <p>Harga : @Model.Payment.FinalPriceIdr.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
     <p>Metode Pembayaran : @Model.Payment.Method</p>
 </body>
 

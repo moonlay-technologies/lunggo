@@ -1,5 +1,4 @@
 ﻿using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
@@ -19,7 +18,6 @@ namespace Lunggo.CloudApp.EticketHandler
         {
             InitConfigurationManager();
             InitDatabaseService();
-            InitDictionaryService();
             InitI18NMessageManager();
             InitQueueService();
             InitTableStorageService();
@@ -39,7 +37,7 @@ namespace Lunggo.CloudApp.EticketHandler
         private static void InitFlightService()
         {
             var flight = FlightService.GetInstance();
-            flight.Init();
+            flight.Init("Config/");
         }
 
         private static void InitDatabaseService()
@@ -47,12 +45,6 @@ namespace Lunggo.CloudApp.EticketHandler
             var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
             var db = DbService.GetInstance();
             db.Init(connString);
-        }
-
-        private static void InitDictionaryService()
-        {
-            var dict = DictionaryService.GetInstance();
-            dict.Init("Config/");
         }
 
         private static void InitI18NMessageManager()

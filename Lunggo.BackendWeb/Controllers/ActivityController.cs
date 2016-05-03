@@ -12,12 +12,12 @@ namespace Lunggo.BackendWeb.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult AddActivity(ActivityModel activity)
-        {
-            new CreateCityActivity().CreateActivity(activity);
-            return null;
-        }
+        //[HttpPost]
+        //public ActionResult AddActivity(ActivityModel activity)
+        //{
+        //    new CreateCityActivity().CreateActivity(activity);
+        //    return null;
+        //}
 
     }
 }

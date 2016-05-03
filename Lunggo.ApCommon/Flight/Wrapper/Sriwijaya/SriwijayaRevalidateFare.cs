@@ -4,9 +4,11 @@ using System.Globalization;
 using System.Linq;
 using CsQuery;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.Framework.Web;
 using RestSharp;
 
@@ -14,10 +16,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
     internal partial class SriwijayaWrapper
     {
-         internal override RevalidateFareResult RevalidateFare(RevalidateConditions conditions)
-         {
-             return Client.RevalidateFare(conditions);
-         }
+        internal override RevalidateFareResult RevalidateFare(RevalidateConditions conditions)
+        {
+            return Client.RevalidateFare(conditions);
+        }
 
         private partial class SriwijayaClientHandler
         {
@@ -205,7 +207,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         {
                             url = "SJ-Eticket/application/pricingDetail_2.php";
                             var fareRequest = new RestRequest(url, Method.GET);
-                            fareRequest.AddQueryParameter("vote", FIDsegment1 + ":" + Rbd[0] + ":" + unknownCode + ":" + ognAirport + ":" + arrAirport + ":U2s5VlVrNUZXUT09;;" + "" + FIDsegment2 + ":" + Rbd[1] + ":" + unknownCode + ":" + ognAirport + ":" + arrAirport + ":U2s5VlVrNUZXUT09;;" );
+                            fareRequest.AddQueryParameter("vote", FIDsegment1 + ":" + Rbd[0] + ":" + unknownCode + ":" + ognAirport + ":" + arrAirport + ":U2s5VlVrNUZXUT09;;" + "" + FIDsegment2 + ":" + Rbd[1] + ":" + unknownCode + ":" + ognAirport + ":" + arrAirport + ":U2s5VlVrNUZXUT09;;");
                             fareRequest.AddQueryParameter("name", "radioFrom0_2");
                             fareRequest.AddQueryParameter("STI", "false");
                             fareRequest.AddQueryParameter("PC", null);
@@ -225,7 +227,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             var tunjukSelectedgo = ambilDataAjax[".selectedgo"];
                             var segments = new List<FlightSegment>();
                             var fareCabin = (ParseFare.Count() - 2);
-                            var dict = DictionaryService.GetInstance();
+                            var flight = FlightService.GetInstance();
                             for (int i = 0; i < 2; i++)
                             {
                                 int j = 2 * i;
@@ -254,8 +256,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 //CultureInfo provider = CultureInfo;
                                 var departureDate = DateTime.Parse(date + " " + departure, CultureInfo.CreateSpecificCulture("id-ID"));
                                 var arrivalDate = (DateTime.Parse(date + " " + arrival, CultureInfo.CreateSpecificCulture("id-ID"))).AddDays(plusHari);
-                                var deptime = departureDate.AddHours(-(dict.GetAirportTimeZone(bandara[0])));
-                                var arrtime = arrivalDate.AddHours(-(dict.GetAirportTimeZone(bandara[1])));
+                                var deptime = departureDate.AddHours(-(flight.GetAirportTimeZone(bandara[0])));
+                                var arrtime = arrivalDate.AddHours(-(flight.GetAirportTimeZone(bandara[1])));
                                 tampungFare.Add("" + FIDsegments[i] + ":" + Rbd[i] + ":S:" + bandara[0] + ":" + bandara[1] + ":U2s5VlVrNUZXUT09;");
                                 tampungFareString = string.Join(";", tampungFare.ToArray());
                                 segments.Add(new FlightSegment
@@ -293,21 +295,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 RequestedCabinClass = CabinClass.Economy,
                                 TripType = TripType.OneWay,
                                 Supplier = Supplier.Sriwijaya,
-                                SupplierCurrency = "IDR",
-                                SupplierRate = 1,
-                                SupplierPrice = decimal.Parse(hargaBaru),
+                                Price = new Price(),
                                 FareId = Fare,
                                 Trips = new List<FlightTrip>
-                        {
-                            new FlightTrip
-                            {
-                                OriginAirport = ognAirport,
-                                DestinationAirport = arrAirport,
-                                DepartureDate = tglBerangkat,
-                                Segments = segments
-                            }
-                        }
+                                {
+                                    new FlightTrip
+                                    {
+                                        OriginAirport = ognAirport,
+                                        DestinationAirport = arrAirport,
+                                        DepartureDate = tglBerangkat,
+                                        Segments = segments
+                                    }
+                                }
                             };
+                            itin.Price.SetSupplier(decimal.Parse(hargaBaru), new Currency("IDR"));
                             var newPrice = decimal.Parse(hargaBaru);
                             hasil.IsSuccess = true;
                             hasil.IsValid = true;
@@ -350,7 +351,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             {
                                 url = "SJ-Eticket/application/pricingDetail_2.php";
                                 var fareRequest = new RestRequest(url, Method.GET);
-                                fareRequest.AddQueryParameter("vote", FIDsegment1 + ":" + Rbd[0] + ":" + unknownCode + ":" + ognAirport + ":" + arrAirport + ":U2s5VlVrNUZXUT09;;" + "" + FIDsegment2 + ":" + Rbd[1] + ":" + unknownCode + ":" + ognAirport + ":" + arrAirport + ":U2s5VlVrNUZXUT09;;" + "" + FIDsegment3 + ":" + Rbd[2] + ":" + unknownCode + ":" + ognAirport + ":" + arrAirport + ":U2s5VlVrNUZXUT09;;" );
+                                fareRequest.AddQueryParameter("vote", FIDsegment1 + ":" + Rbd[0] + ":" + unknownCode + ":" + ognAirport + ":" + arrAirport + ":U2s5VlVrNUZXUT09;;" + "" + FIDsegment2 + ":" + Rbd[1] + ":" + unknownCode + ":" + ognAirport + ":" + arrAirport + ":U2s5VlVrNUZXUT09;;" + "" + FIDsegment3 + ":" + Rbd[2] + ":" + unknownCode + ":" + ognAirport + ":" + arrAirport + ":U2s5VlVrNUZXUT09;;");
                                 fareRequest.AddQueryParameter("name", "radioFrom0_2");
                                 fareRequest.AddQueryParameter("STI", "false");
                                 fareRequest.AddQueryParameter("PC", null);
@@ -370,7 +371,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 var tunjukSelectedgo = ambilDataAjax[".selectedgo"];
                                 var segments = new List<FlightSegment>();
                                 var fareCabin = (ParseFare.Count() - 2);
-                                var dict = DictionaryService.GetInstance();
+                                var flight = FlightService.GetInstance();
                                 for (int i = 0; i < 3; i++)
                                 {
                                     int j = 2 * i;
@@ -398,8 +399,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     //CultureInfo provider = CultureInfo;
                                     var departureDate = DateTime.Parse(date + " " + departure, CultureInfo.CreateSpecificCulture("id-ID"));
                                     var arrivalDate = (DateTime.Parse(date + " " + arrival, CultureInfo.CreateSpecificCulture("id-ID"))).AddDays(plusHari);
-                                    var deptime = departureDate.AddHours(-(dict.GetAirportTimeZone(bandara[0])));
-                                    var arrtime = arrivalDate.AddHours(-(dict.GetAirportTimeZone(bandara[1])));
+                                    var deptime = departureDate.AddHours(-(flight.GetAirportTimeZone(bandara[0])));
+                                    var arrtime = arrivalDate.AddHours(-(flight.GetAirportTimeZone(bandara[1])));
                                     tampungFare.Add("" + FIDsegments[i] + ":" + Rbd[i] + ":S:" + bandara[0] + ":" + bandara[1] + ":U2s5VlVrNUZXUT09;");
                                     tampungFareString = string.Join(";", tampungFare.ToArray());
                                     segments.Add(new FlightSegment
@@ -437,27 +438,26 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     RequestedCabinClass = CabinClass.Economy,
                                     TripType = TripType.OneWay,
                                     Supplier = Supplier.Sriwijaya,
-                                    SupplierCurrency = "IDR",
-                                    SupplierRate = 1,
-                                    SupplierPrice = Decimal.Parse(hargaBaru),
+                                    Price = new Price(),
                                     FareId = Fare,
                                     Trips = new List<FlightTrip>
-                        {
-                            new FlightTrip
-                            {
-                                OriginAirport = ognAirport,
-                                DestinationAirport = arrAirport,
-                                DepartureDate = tglBerangkat,
-                                Segments = segments
-                            }
-                        }
+                                    {
+                                        new FlightTrip
+                                        {
+                                            OriginAirport = ognAirport,
+                                            DestinationAirport = arrAirport,
+                                            DepartureDate = tglBerangkat,
+                                            Segments = segments
+                                        }
+                                    }
                                 };
+                                itin.Price.SetSupplier(Decimal.Parse(hargaBaru), new Currency("IDR"));
                                 var newPrice = decimal.Parse(hargaBaru);
                                 hasil.IsSuccess = true;
                                 hasil.IsValid = harga == newPrice;
                                 hasil.IsPriceChanged = harga != newPrice;
                                 hasil.IsItineraryChanged = !conditions.Itinerary.Identical(itin);
-                                if (hasil.IsPriceChanged) 
+                                if (hasil.IsPriceChanged)
                                 {
                                     hasil.NewPrice = newPrice;
                                 }
@@ -511,7 +511,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     var tunjukSelectedgo = ambilDataAjax[".selectedgo"];
                                     var segments = new List<FlightSegment>();
                                     var fareCabin = (ParseFare.Count() - 2);
-                                    var dict = DictionaryService.GetInstance();
+                                    var flight = FlightService.GetInstance();
                                     for (int i = 0; i < 1; i++)
                                     {
                                         var tunjukSetiapBandara = tunjukSelectedgo.MakeRoot()[".selectedgo:nth-child(" + (i + 1) + ")>td:nth-child(3)"];
@@ -538,8 +538,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         //CultureInfo provider = CultureInfo;
                                         var departureDate = DateTime.Parse(date + " " + departure, CultureInfo.CreateSpecificCulture("id-ID"));
                                         var arrivalDate = (DateTime.Parse(date + " " + arrival, CultureInfo.CreateSpecificCulture("id-ID"))).AddDays(plusHari);
-                                        var deptime = departureDate.AddHours(-(dict.GetAirportTimeZone(ognAirport)));
-                                        var arrtime = arrivalDate.AddHours(-(dict.GetAirportTimeZone(arrAirport)));
+                                        var deptime = departureDate.AddHours(-(flight.GetAirportTimeZone(ognAirport)));
+                                        var arrtime = arrivalDate.AddHours(-(flight.GetAirportTimeZone(arrAirport)));
                                         tampungFare.Add("" + FIDsegments[i] + ":" + Rbd[i] + ":S:" + bandara[0] + ":" + bandara[1] + ":U2s5VlVrNUZXUT09;");
                                         tampungFareString = string.Join(";", tampungFare.ToArray());
                                         segments.Add(new FlightSegment
@@ -577,21 +577,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         RequestedCabinClass = CabinClass.Economy,
                                         TripType = TripType.OneWay,
                                         Supplier = Supplier.Sriwijaya,
-                                        SupplierCurrency = "IDR",
-                                        SupplierRate = 1,
-                                        SupplierPrice = Decimal.Parse(hargaBaru),
+                                        Price = new Price(),
                                         FareId = Fare,
                                         Trips = new List<FlightTrip>
-                        {
-                            new FlightTrip
-                            {
-                                OriginAirport = ognAirport,
-                                DestinationAirport = arrAirport,
-                                DepartureDate = tglBerangkat,
-                                Segments = segments
-                            }
-                        }
+                                        {
+                                            new FlightTrip
+                                            {
+                                                OriginAirport = ognAirport,
+                                                DestinationAirport = arrAirport,
+                                                DepartureDate = tglBerangkat,
+                                                Segments = segments
+                                            }
+                                        }
                                     };
+                                    itin.Price.SetSupplier(Decimal.Parse(hargaBaru), new Currency("IDR"));
                                     //hasil.IsSuccess = true;
                                     //hasil.IsValid = harga == Decimal.Parse(hargaBaru);
                                     //hasil.NewItinerary = itin;

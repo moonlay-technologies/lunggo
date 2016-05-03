@@ -176,31 +176,31 @@ namespace Lunggo.CustomerWeb.Controllers
                 return View(new FlightPaymentConfirmationData
                 {
                     RsvNo = rsvNo,
-                    FinalPrice = reservation.Payment.FinalPrice,
-                    TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault()
+                    FinalPrice = reservation.Payment.FinalPriceIdr,
+                    TimeLimit = reservation.Payment.TimeLimit
                 });
             }
             else
                 return RedirectToAction("Index", "UW000TopPage");
         }
 
-        [HttpPost]
-        public ActionResult Confirmation(TransferConfirmationReport report, HttpPostedFileBase file)
-        {
-            if (!ModelState.IsValid)
-                return RedirectToAction("Confirmation", "Flight", new { report.RsvNo });
-            var fileInfo = file != null && file.ContentLength > 0
-                ? new FileInfo
-                {
-                    FileData = file.InputStream.StreamToByteArray(),
-                    ContentType = file.ContentType,
-                    FileName = file.FileName
-                }
-                : null;
-            var paymentService = PaymentService.GetInstance();
-            paymentService.SubmitTransferConfirmationReport(report, fileInfo);
-            return RedirectToAction("Thankyou", "Flight", new { rsvNo = report.RsvNo });
-        }
+        //[HttpPost]
+        //public ActionResult Confirmation(TransferConfirmationReport report, HttpPostedFileBase file)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return RedirectToAction("Confirmation", "Flight", new { report.RsvNo });
+        //    var fileInfo = file != null && file.ContentLength > 0
+        //        ? new FileInfo
+        //        {
+        //            FileData = file.InputStream.StreamToByteArray(),
+        //            ContentType = file.ContentType,
+        //            FileName = file.FileName
+        //        }
+        //        : null;
+        //    var paymentService = PaymentService.GetInstance();
+        //    paymentService.SubmitTransferConfirmationReport(report, fileInfo);
+        //    return RedirectToAction("Thankyou", "Flight", new { rsvNo = report.RsvNo });
+        //}
 
         public ActionResult TopDestinations()
         {

@@ -36,7 +36,7 @@
 
                 <p>Dear @Model.Contact.Name</p>
                 <p>Terima kasih atas pemesanan tiket pesawat Anda melalui Travorama. </p>
-                <p>Lakukan pembayaran sebesar total tagihan: <b>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> ke nomor <b>virtual account : @Model.Payment.TransferAccount</b></p>
+                <p>Lakukan pembayaran sebesar total tagihan: <b>Rp @Model.Payment.FinalPriceIdr.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> ke nomor <b>virtual account : @Model.Payment.TransferAccount</b></p>
                 <p>Setelah melakukan pembayaran, e-tiket Anda akan diterbitkan dan dikirimkan ke email Anda.</p>
                 <p><b>Penting!</b></p>
                 <p>Lakukan pembayaran sebelum melewati batas waktu. Jika melewati batas waktu maka booking Anda akan dibatalkan otomatis oleh sistem kami. Anda harus melakukan pemesanan ulang dan terdapat kemungkinan perubahan harga.</p>

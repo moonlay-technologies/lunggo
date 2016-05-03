@@ -3,31 +3,24 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Caching;
-using CsQuery.EquationParser.Implementation;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-
+using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.ApCommon.Sequence;
-using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
 using StackExchange.Redis;
-using System.Diagnostics;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        private const string SingleItinKeyPrefix = "9284";
-        private const string ItinBundleKeyPrefix = "3462";
         private const int SupplierIndexCap = 333;
 
         public List<FlightPassenger> GetSavedPassengers(string contactEmail)
         {
-            return GetDb.SavedPassengers(contactEmail);
+            return GetSavedPassengersFromDb(contactEmail);
         }
 
         public void SaveTransacInquiryInCache(string mandiriCacheId, List<KeyValuePair<string, string>> transaction, TimeSpan timeout)
@@ -37,7 +30,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             foreach (var pair in transaction)
             {
-                redisDb.HashSet(redisKey, (RedisValue)pair.Key, (RedisValue)pair.Value);
+                redisDb.HashSet(redisKey, pair.Key, pair.Value);
                 redisDb.KeyExpire(redisKey, timeout);
             }
 
@@ -47,20 +40,13 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             try
             {
-                List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
                 var redisService = RedisService.GetInstance();
                 var redisKey = "mandiriTransactionPrice:" + mandiriCacheId;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
                 var temp = redisDb.HashGetAll(redisKey).ToList();
-                if (temp.Count != 0)
-                {
-                    //return temp.ToDictionary(hashEntry => (string)hashEntry.Name, hashEntry => (string)hashEntry.Value);
-                    return temp.Select(hashEntry => new KeyValuePair<string, string>((string)hashEntry.Name, (string)hashEntry.Value)).ToList();
-                }
-                else
-                {
-                    return null;
-                }
+                return temp.Count != 0
+                    ? temp.Select(hashEntry => new KeyValuePair<string, string>(hashEntry.Name, hashEntry.Value)).ToList()
+                    : null;
             }
             catch
             {
@@ -114,36 +100,6 @@ namespace Lunggo.ApCommon.Flight.Service
             redisDb.StringSet(redisKey, false, expiry - DateTime.UtcNow);
         }
 
-        private int GetSearchingCompletenessInCache(string searchId)
-        {
-            try
-            {
-                var redisService = RedisService.GetInstance();
-                var redisKey = "searchFlightCompleteness:" + searchId;
-                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                var completeness = redisDb.StringGet(redisKey);
-                return (int)completeness;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-
-        private void SetSearchingCompletenessInCache(string searchId, int completeness)
-        {
-            try
-            {
-                var redisService = RedisService.GetInstance();
-                var redisKey = "searchFlightCompleteness:" + searchId;
-                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                var timeout =
-                    Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
-                redisDb.StringSet(redisKey, completeness, TimeSpan.FromMinutes(timeout));
-            }
-            catch { }
-        }
-
         private void SaveSearchedItinerariesToCache(List<List<FlightItinerary>> itinLists, string searchId, int timeout, int supplierIndex)
         {
             if (timeout == 0)
@@ -192,7 +148,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisKey = "searchedSupplierIndices:" + searchId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var length = redisDb.ListLength(redisKey);
-            return redisDb.ListRange(redisKey, 0, length - 1).Select(val => (int) val).Distinct().ToList();
+            return redisDb.ListRange(redisKey, 0, length - 1).Select(val => (int)val).Distinct().ToList();
         }
 
         private List<List<FlightItinerary>> GetSearchedPartialItinerariesFromBufferCache(string searchId, int supplierIndex)
@@ -277,9 +233,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private string SaveItineraryFromSearchToCache(string searchId, int registerNumber, int partNumber)
         {
-            var plainItinCacheId =
-                FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
-            var itinCacheId = CacheIdentifier.Flight + SingleItinKeyPrefix + plainItinCacheId;
+            var itinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
             var itin = GetItineraryFromSearchCache(searchId, registerNumber, partNumber);
 
             if (itin == null)
@@ -291,14 +245,6 @@ namespace Lunggo.ApCommon.Flight.Service
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"));
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(timeout));
-            return itinCacheId;
-        }
-
-        private string SaveItineraryToCache(FlightItinerary itin)
-        {
-            var plainItinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
-            var itinCacheId = CacheIdentifier.Flight + SingleItinKeyPrefix + plainItinCacheId;
-            SaveItineraryToCache(itin, itinCacheId);
             return itinCacheId;
         }
 
@@ -340,15 +286,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
                 var cacheObject = redisDb.StringGet(redisKey);
 
-                if (!cacheObject.IsNullOrEmpty)
-                {
-                    var itinerary = cacheObject.DeconvertTo<FlightItinerary>();
-                    return itinerary;
-                }
-                else
-                {
+                if (cacheObject.IsNullOrEmpty)
                     return null;
-                }
+
+                var itinerary = cacheObject.DeconvertTo<FlightItinerary>();
+                return itinerary;
             }
             catch
             {
@@ -356,7 +298,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private void DeleteItineraryFromCache(string itinCacheId) 
+        private void DeleteItineraryFromCache(string itinCacheId)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "flightItinerary:" + itinCacheId;
@@ -382,50 +324,37 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private string SaveItinerarySetAndBundleToCache(List<FlightItinerary> itinSet, FlightItinerary itinBundle)
+        private string SaveItinerariesToCache(List<FlightItinerary> itins)
         {
-            var plainItinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
-            var itinCacheId = CacheIdentifier.Flight + ItinBundleKeyPrefix + plainItinCacheId;
-            SaveItinerarySetAndBundleToCache(itinSet, itinBundle, itinCacheId);
+            var itinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
+            SaveItinerariesToCache(itins, itinCacheId);
             return itinCacheId;
         }
 
-        private void SaveItinerarySetAndBundleToCache(List<FlightItinerary> itinSet, FlightItinerary itinBundle, string itinCacheId)
+        private void SaveItinerariesToCache(List<FlightItinerary> itins, string itinCacheId)
         {
-            try
-            {
-                var redisService = RedisService.GetInstance();
-                var redisSetKey = "flightItinerarySet:" + itinCacheId;
-                var setCacheObject = itinSet.ToCacheObject();
-                var redisBundleKey = "flightItinerary:" + itinCacheId;
-                var bundleCacheObject = itinBundle.ToCacheObject();
-                var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"));
-                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                redisDb.StringSet(redisSetKey, setCacheObject, TimeSpan.FromMinutes(timeout));
-                redisDb.StringSet(redisBundleKey, bundleCacheObject, TimeSpan.FromMinutes(timeout));
-            }
-            catch { }
+            var redisService = RedisService.GetInstance();
+            var redisKey = "flightItineraries:" + itinCacheId;
+            var setCacheObject = itins.ToCacheObject();
+            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"));
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.StringSet(redisKey, setCacheObject, TimeSpan.FromMinutes(timeout));
         }
 
-        //Buat Method untuk menghapus data pada GetItinerarySetFromCache
-        private List<FlightItinerary> GetItinerarySetFromCache(string itinCacheId)  
+        private List<FlightItinerary> GetItinerariesFromCache(string itinCacheId)
         {
             try
             {
                 var redisService = RedisService.GetInstance();
-                var redisKey = "flightItinerarySet:" + itinCacheId;
+                var redisKey = "flightItineraries:" + itinCacheId;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
                 var cacheObject = redisDb.StringGet(redisKey);
 
-                if (!cacheObject.IsNullOrEmpty)
-                {
-                    var itinerary = cacheObject.DeconvertTo<List<FlightItinerary>>();
-                    return itinerary;
-                }
-                else
-                {
+                if (cacheObject.IsNullOrEmpty)
                     return null;
-                }
+
+                var itinerary = cacheObject.DeconvertTo<List<FlightItinerary>>();
+                return itinerary;
             }
             catch
             {
@@ -433,14 +362,12 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private void DeleteItinerarySetFromCache(string itinCacheId) 
+        private void DeleteItinerariesFromCache(string itinCacheId)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "flightItinerarySet:" + itinCacheId;
+            var redisKey = "flightItineraries:" + itinCacheId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.KeyDelete(redisKey);
-            Debug.Print(redisKey);
-            //redisDb.KeyDelete(redisBundleKey);
         }
 
         private void SavePaymentRedirectionUrlInCache(string rsvNo, string paymentUrl, DateTime? timeLimit)
@@ -467,85 +394,102 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private void SaveActiveMarginRulesToCache(List<MarginRule> rules)
+        private void SaveActiveMarginRulesToCache(List<FlightMarginRule> marginRules)
         {
-            try
-            {
-                var redisService = RedisService.GetInstance();
-                var redisKey = "activeFlightMarginRules";
-                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                var cacheObject = rules.ToCacheObject();
-                redisDb.StringSet(redisKey, cacheObject);
-            }
-            catch { }
+            var redisService = RedisService.GetInstance();
+            var redisMarginsKey = "activeFlightMargins";
+            var redisRulesKey = "activeFlightMarginRules";
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var marginsCacheObject = marginRules.Select(mr => mr.Margin).ToCacheObject();
+            var rulesCacheObject = marginRules.Select(mr => mr.Rule).ToCacheObject();
+            redisDb.StringSet(redisMarginsKey, marginsCacheObject);
+            redisDb.StringSet(redisRulesKey, rulesCacheObject);
         }
 
-        private List<MarginRule> GetAllActiveMarginRulesFromCache()
+        private List<FlightMarginRule> GetAllActiveMarginRulesFromCache()
         {
             try
             {
                 var redisService = RedisService.GetInstance();
-                var redisKey = "activeFlightMarginRules";
+                var redisMarginKey = "activeFlightMargins";
+                var redisRuleKey = "activeFlightMarginRules";
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                var cacheObject = redisDb.StringGet(redisKey);
-                var marginRules = cacheObject.DeconvertTo<List<MarginRule>>();
+                var marginCacheObject = redisDb.StringGet(redisMarginKey);
+                var margins = marginCacheObject.DeconvertTo<List<Margin>>();
+                var ruleCacheObject = redisDb.StringGet(redisRuleKey);
+                var rules = ruleCacheObject.DeconvertTo<List<FlightItineraryRule>>();
+                var marginRules = margins.Zip(rules, (margin, rule) => new FlightMarginRule(margin, rule)).ToList();
                 return marginRules;
             }
             catch
             {
-                return new List<MarginRule>();
+                return new List<FlightMarginRule>();
             }
         }
 
-        private void SaveActiveMarginRulesInBufferCache(List<MarginRule> rules)
+        private void SaveActiveMarginRulesInBufferCache(List<FlightMarginRule> marginRules)
         {
             var redisService = RedisService.GetInstance();
+            var marginsRedisKey = "activeFlightMarginsBuffer";
             var rulesRedisKey = "activeFlightMarginRulesBuffer";
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var rulesCacheObject = rules.ToCacheObject();
+            var marginsCacheObject = marginRules.Select(mr => mr.Margin).ToCacheObject();
+            var rulesCacheObject = marginRules.Select(mr => mr.Rule).ToCacheObject();
+            redisDb.StringSet(marginsRedisKey, marginsCacheObject);
             redisDb.StringSet(rulesRedisKey, rulesCacheObject);
         }
 
-        private void SaveDeletedMarginRulesInBufferCache(List<MarginRule> deletedRules)
+        private void SaveDeletedMarginRulesInBufferCache(List<FlightMarginRule> deletedMarginRules)
         {
             var redisService = RedisService.GetInstance();
+            var deletedMarginsRedisKey = "deletedFlightMarginsBuffer";
             var deletedRulesRedisKey = "deletedFlightMarginRulesBuffer";
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var deletedRulesCacheObject = deletedRules.ToCacheObject();
+            var deletedMarginsCacheObject = deletedMarginRules.Select(mr => mr.Margin).ToCacheObject();
+            var deletedRulesCacheObject = deletedMarginRules.Select(mr => mr.Rule).ToCacheObject();
+            redisDb.StringSet(deletedMarginsRedisKey, deletedMarginsCacheObject);
             redisDb.StringSet(deletedRulesRedisKey, deletedRulesCacheObject);
         }
 
-        private List<MarginRule> GetActiveMarginRulesFromBufferCache()
+        private List<FlightMarginRule> GetActiveMarginRulesFromBufferCache()
         {
             try
             {
                 var redisService = RedisService.GetInstance();
-                var redisKey = "activeFlightMarginRulesBuffer";
+                var redisMarginsKey = "activeFlightMarginsBuffer";
+                var redisRulesKey = "activeFlightMarginRulesBuffer";
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                var cacheObject = redisDb.StringGet(redisKey);
-                var marginRules = cacheObject.DeconvertTo<List<MarginRule>>();
+                var marginsCacheObject = redisDb.StringGet(redisMarginsKey);
+                var rulesCacheObject = redisDb.StringGet(redisRulesKey);
+                var margins = marginsCacheObject.DeconvertTo<List<Margin>>();
+                var rules = rulesCacheObject.DeconvertTo<List<FlightItineraryRule>>();
+                var marginRules = margins.Zip(rules, (margin, rule) => new FlightMarginRule(margin, rule)).ToList();
                 return marginRules;
             }
             catch
             {
-                return new List<MarginRule>();
+                return new List<FlightMarginRule>();
             }
         }
 
-        private List<MarginRule> GetDeletedMarginRulesFromBufferCache()
+        private List<FlightMarginRule> GetDeletedMarginRulesFromBufferCache()
         {
             try
             {
                 var redisService = RedisService.GetInstance();
-                var redisKey = "deletedFlightMarginRulesBuffer";
+                var redisMarginsKey = "deletedFlightMarginsBuffer";
+                var redisRulesKey = "deletedFlightMarginRulesBuffer";
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                var cacheObject = redisDb.StringGet(redisKey);
-                var marginRules = cacheObject.DeconvertTo<List<MarginRule>>();
+                var marginCacheObject = redisDb.StringGet(redisMarginsKey);
+                var rulesCacheObject = redisDb.StringGet(redisRulesKey);
+                var margins = marginCacheObject.DeconvertTo<List<Margin>>();
+                var rules = rulesCacheObject.DeconvertTo<List<FlightItineraryRule>>();
+                var marginRules = margins.Zip(rules, (margin, rule) => new FlightMarginRule(margin, rule)).ToList();
                 return marginRules;
             }
             catch
             {
-                return new List<MarginRule>();
+                return new List<FlightMarginRule>();
             }
         }
 
@@ -569,14 +513,7 @@ namespace Lunggo.ApCommon.Flight.Service
         public void SaveFlightRequestPrices(string searchId, List<FlightItinerary> itins, int itinSetNo = 0)
         {
             var cacheContent = GetFlightRequestPrices(searchId).ToDictionary(e => e.Key, e => e.Value);
-            itins.ForEach(itin =>
-            {
-                try
-                {
-                    cacheContent.Add(itin.RegisterNumber, itin.LocalPrice);
-                }
-                catch { }
-            });
+            itins.ForEach(itin => cacheContent.Add(itin.RegisterNumber, itin.Price.Local));
 
             var redisService = RedisService.GetInstance();
             var redisKey = "flightRequestPrices:" + searchId + ":" + itinSetNo;
@@ -592,11 +529,6 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cache = redisDb.StringGet(redisKey);
             return cache.IsNull ? new Dictionary<int, decimal>() : cache.DeconvertTo<Dictionary<int, decimal>>();
-        }
-
-        private bool IsItinBundleCacheId(string cacheId)
-        {
-            return cacheId.Substring(1, 4) == ItinBundleKeyPrefix;
         }
     }
 }

@@ -128,7 +128,7 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
                 response.Description = response.Status = "ModelInvalid";
                 return Json(response);
             }
-            var updatedUser = User.Identity.GetCustomUser();
+            var updatedUser = User.Identity.GetUser();
             updatedUser.FirstName = model.FirstName;
             updatedUser.LastName = model.LastName;
             updatedUser.CountryCd = model.CountryCd;

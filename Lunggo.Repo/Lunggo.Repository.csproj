@@ -46,8 +46,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableRecord\ContactTableRecord.cs" />
+    <Compile Include="TableRecord\CurrencyTableRecord.cs" />
+    <Compile Include="TableRecord\DiscountTableRecord.cs" />
+    <Compile Include="TableRecord\FlightItineraryRuleTableRecord.cs" />
+    <Compile Include="TableRecord\MarginTableRecord.cs" />
+    <Compile Include="TableRecord\PaymentTableRecord.cs" />
+    <Compile Include="TableRecord\PriceTableRecord.cs" />
     <Compile Include="TableRecord\RefreshTokenTableRecord.cs" />
     <Compile Include="TableRecord\FlightReservationTableRecord.cs" />
+    <Compile Include="TableRecord\RefundTableRecord.cs" />
+    <Compile Include="TableRecord\ReservationStateTableRecord.cs" />
     <Compile Include="TableRecord\SavedCreditCardTableRecord.cs" />
     <Compile Include="TableRecord\CalendarRecipientTableRecord.cs" />
     <Compile Include="TableRecord\CampaignTableRecord.cs" />
@@ -100,8 +109,17 @@
     <Compile Include="TableRecord\UsersTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRepository\ContactRepository.cs" />
+    <Compile Include="TableRepository\CurrencyRepository.cs" />
+    <Compile Include="TableRepository\DiscountRepository.cs" />
+    <Compile Include="TableRepository\FlightItineraryRuleRepository.cs" />
     <Compile Include="TableRepository\FlightReservationRepository.cs" />
+    <Compile Include="TableRepository\MarginRepository.cs" />
+    <Compile Include="TableRepository\PaymentRepository.cs" />
+    <Compile Include="TableRepository\PriceRepository.cs" />
     <Compile Include="TableRepository\RefreshTokenRepository.cs" />
+    <Compile Include="TableRepository\RefundRepository.cs" />
+    <Compile Include="TableRepository\ReservationStateRepository.cs" />
     <Compile Include="TableRepository\SavedCreditCardRepository.cs" />
     <Compile Include="TableRepository\CalendarRecipientRepository.cs" />
     <Compile Include="TableRepository\CampaignRepository.cs" />

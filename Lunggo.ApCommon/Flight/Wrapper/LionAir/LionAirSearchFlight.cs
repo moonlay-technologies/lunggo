@@ -4,11 +4,12 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web.UI;
+using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Model;
 using Newtonsoft.Json;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
@@ -83,8 +84,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var destinationAirport = trip0.DestinationAirport == "JKT" ? "CGK" : trip0.DestinationAirport;
 
                 // [GET] Search Flight
-                var dict = DictionaryService.GetInstance();
-                var originCountry = dict.GetAirportCountryCode(trip0.OriginAirport);
+                var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);
                 CQ availableFares;
                 CQ departureDate;
                 string scr;
@@ -307,7 +307,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var listFlightNo = new List<string>();
                         var listDepHr = new List<string>();
                         var subst1 = fareIds.ElementAt(ind).GetAttribute("id");
-                        var dicty = DictionaryService.GetInstance();
                         if (ind == 0 ||
                             (subst1.SubstringBetween(0, subst1.Length - 2) !=
                              fareIds.ElementAt(ind - 1)
@@ -317,7 +316,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             // Column 0a (Departure Data)
                             var departureInfo = fareIds.ElementAt(ind).ChildElements.ToList()[0].ChildElements.ToList()[0];
                             var airportDeparture = departureInfo.ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
-                            var cityDeparture = dicty.GetAirportCity(airportDeparture);
+                            var cityDeparture = FlightService.GetInstance().GetAirportCity(airportDeparture);
                             var timeDeparture = departureInfo.ChildElements.ToList()[1].InnerText;
                             listDepHr.Add(timeDeparture);
                             var flightNo = departureInfo.ChildElements.ToList()[2].InnerText.TrimEnd(' ');
@@ -333,7 +332,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                             var arrivalInfo = fareIds.ElementAt(ind).ChildElements.ToList()[0].ChildElements.ToList()[2];
                             var airportArrival = arrivalInfo.ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
-                            var cityArrival = dicty.GetAirportCity(airportArrival);
+                            var cityArrival = FlightService.GetInstance().GetAirportCity(airportArrival);
                             var timeArrival = arrivalInfo.ChildElements.ToList()[1].InnerText;
                             var duration = arrivalInfo.ChildElements.ToList()[2].InnerText.Split(' ');
                             var durHour = Int32.Parse(duration[1].SubstringBetween(0, 1));
@@ -409,7 +408,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 // Column 0.a (Departure)
                                 departureInfo = fareIds.ElementAt(j).ChildElements.ToList()[0].ChildElements.ToList()[0];
                                 var airportDeparture2 = departureInfo.ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
-                                var cityDeparture2 = dicty.GetAirportCity(airportDeparture2);
+                                var cityDeparture2 = FlightService.GetInstance().GetAirportCity(airportDeparture2);
                                 var timeDeparture2 = departureInfo.ChildElements.ToList()[1].InnerText;
                                 listDepHr.Add(timeDeparture2);
                                 flightNo = departureInfo.ChildElements.ToList()[2].InnerText.TrimEnd(' ');
@@ -437,7 +436,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                                 arrivalInfo = fareIds.ElementAt(j).ChildElements.ToList()[0].ChildElements.ToList()[2];
                                 airportArrival2 = arrivalInfo.ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
-                                cityArrival2 = dicty.GetAirportCity(airportArrival2);
+                                cityArrival2 = FlightService.GetInstance().GetAirportCity(airportArrival2);
                                 var timeArrival2 = arrivalInfo.ChildElements.ToList()[1].InnerText;
                                 duration = arrivalInfo.ChildElements.ToList()[2].InnerText.Split(' ');
                                 durHour = Int32.Parse(duration[1].SubstringBetween(0, 1));
@@ -525,8 +524,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 RequestedCabinClass = conditions.CabinClass,
                                 TripType = TripType.OneWay,
                                 Supplier = Supplier.LionAir,
-                                SupplierCurrency = "IDR",
-                                SupplierPrice = price,
+                                Price = new Price(),
                                 FareId = importantData,
                                 Trips = new List<FlightTrip>
                                 {
@@ -541,6 +539,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     }
                                 }
                             };
+                            itin.Price.SetSupplier(price, new Currency("IDR"));
                             itins.Add(itin);
                         }
                     }
@@ -577,11 +576,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
             private bool RequirePassport(List<FlightSegment> segments)
             {
-                var dict = DictionaryService.GetInstance();
                 var segmentDepartureAirports = segments.Select(s => s.DepartureAirport);
                 var segmentArrivalAirports = segments.Select(s => s.ArrivalAirport);
                 var segmentAirports = segmentDepartureAirports.Concat(segmentArrivalAirports);
-                var segmentCountries = segmentAirports.Select(dict.GetAirportCountryCode).Distinct();
+                var segmentCountries = segmentAirports.Select(FlightService.GetInstance().GetAirportCountryCode).Distinct();
                 return segmentCountries.Count() > 1;
             }
 

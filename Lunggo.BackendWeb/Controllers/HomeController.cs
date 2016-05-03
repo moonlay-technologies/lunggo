@@ -23,139 +23,139 @@ namespace Lunggo.BackendWeb.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+        //public ActionResult About()
+        //{
+        //    ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+        //public ActionResult Contact()
+        //{
+        //    ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        public ActionResult Dashboard()
-        {
-            return View();
-        }
+        //public ActionResult Dashboard()
+        //{
+        //    return View();
+        //}
 
-        public ActionResult Hotel()
-        {
+        //public ActionResult Hotel()
+        //{
             
-            var query = GetAllHotel.GetInstance();
-            var result = query.Execute(connOpen, new { });
+        //    var query = GetAllHotel.GetInstance();
+        //    var result = query.Execute(connOpen, new { });
             
-            return View(result);
-        }
+        //    return View(result);
+        //}
 
-        public ActionResult Flight()
-        {
-            return View();
-        }
+        //public ActionResult Flight()
+        //{
+        //    return View();
+        //}
 
-        public ActionResult HotelBookingDetail(string rsvno)
-        {
-            var query = GetHotelBookingDetail.GetInstance();
-            var result = query.Execute(connOpen, new
-            {
-                rsvno
-            });
-            //return View(hotelBookTable.FindAll(connHotel).Single((x => x.RsvNo == rsvno)));
-            return View(result.Single());
-        }
+        //public ActionResult HotelBookingDetail(string rsvno)
+        //{
+        //    var query = GetHotelBookingDetail.GetInstance();
+        //    var result = query.Execute(connOpen, new
+        //    {
+        //        rsvno
+        //    });
+        //    //return View(hotelBookTable.FindAll(connHotel).Single((x => x.RsvNo == rsvno)));
+        //    return View(result.Single());
+        //}
 
-        public ActionResult FlightDetail()
-        {
-            return View();
-        }
+        //public ActionResult FlightDetail()
+        //{
+        //    return View();
+        //}
 
-        public ActionResult ListResultId(GetSearchHotelRecord record)
-        {
-            var query = GetSearchHotel.GetInstance();
-            var result = query.Execute(connOpen, new
-            {
-                record.RsvNo
-            });
+        //public ActionResult ListResultId(GetSearchHotelRecord record)
+        //{
+        //    var query = GetSearchHotel.GetInstance();
+        //    var result = query.Execute(connOpen, new
+        //    {
+        //        record.RsvNo
+        //    });
 
-            return View(result);
-        }
+        //    return View(result);
+        //}
 
 
-        public ActionResult ListResultDll(GetSearchHotelRecord record)
-        {
-            var query = GetSearchHotelDetail.GetInstance();
-            var result = query.Execute(connOpen, record, record);
+        //public ActionResult ListResultDll(GetSearchHotelRecord record)
+        //{
+        //    var query = GetSearchHotelDetail.GetInstance();
+        //    var result = query.Execute(connOpen, record, record);
 
-            return View(result);
-        }
+        //    return View(result);
+        //}
 
-        public ActionResult FormHotel()
-        {
-            return View();
-        }
+        //public ActionResult FormHotel()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost, ActionName("FormHotel")]
-        public ActionResult SearchHotelConfirm(GetSearchHotelRecord record)
-        {
-                // TODO: Add update logic here
+        //[HttpPost, ActionName("FormHotel")]
+        //public ActionResult SearchHotelConfirm(GetSearchHotelRecord record)
+        //{
+        //        // TODO: Add update logic here
 
-                if (record.RsvNo != null)
-                {
+        //        if (record.RsvNo != null)
+        //        {
                     
-                    return RedirectToAction("ListResultId", record);
-                }
-                else
-                {
-                    return RedirectToAction("ListResultDll", record);
-                }
+        //            return RedirectToAction("ListResultId", record);
+        //        }
+        //        else
+        //        {
+        //            return RedirectToAction("ListResultDll", record);
+        //        }
                 
            
-        }
+        //}
 
-        public ActionResult BookingPending()
-        {
-            var query = GetBookingPending.GetInstance();
-            var result = query.Execute(connOpen, new { });
+        //public ActionResult BookingPending()
+        //{
+        //    var query = GetBookingPending.GetInstance();
+        //    var result = query.Execute(connOpen, new { });
 
-            return View(result);
-        }
+        //    return View(result);
+        //}
 
-        [HttpPost, ActionName("BookingPending")]
-        public ActionResult BookingPending(List<GetBookingPendingRecord> record)
-        {
-            //TODO: Add update logic here
+        //[HttpPost, ActionName("BookingPending")]
+        //public ActionResult BookingPending(List<GetBookingPendingRecord> record)
+        //{
+        //    //TODO: Add update logic here
            
           
-            for (var i=0; i<record.Count; i++)
-            {
-                if (record[i].rdSelection == "paid")
-                {
-                    if (record[i].Type == "Hotel")
-                    {
-                        var dataRecord = new HotelReservationsTableRecord
-                        {
-                            RsvNo = record[i].RsvNo,
-                            PaymentStatusCd = "02"
-                        };
+        //    for (var i=0; i<record.Count; i++)
+        //    {
+        //        if (record[i].rdSelection == "paid")
+        //        {
+        //            if (record[i].Type == "Hotel")
+        //            {
+        //                var dataRecord = new HotelReservationsTableRecord
+        //                {
+        //                    RsvNo = record[i].RsvNo,
+        //                    PaymentStatusCd = "02"
+        //                };
 
-                        hotelBookTable.Update(connOpen, dataRecord);
-                    }
-                    else if (record[i].Type == "Flight")
-                    {
-                        var dataRecord = new FlightReservationTableRecord
-                        {
-                            RsvNo = record[i].RsvNo,
-                            PaymentStatusCd = "02"
-                        };
+        //                hotelBookTable.Update(connOpen, dataRecord);
+        //            }
+        //            else if (record[i].Type == "Flight")
+        //            {
+        //                var dataRecord = new FlightReservationTableRecord
+        //                {
+        //                    RsvNo = record[i].RsvNo,
+        //                    PaymentStatusCd = "02"
+        //                };
 
-                        flightBookTable.Update(connOpen, dataRecord);
-                    }
-                }
-            }
-            return View("Index");
-        }
+        //                flightBookTable.Update(connOpen, dataRecord);
+        //            }
+        //        }
+        //    }
+        //    return View("Index");
+        //}
     }
 }

@@ -4,8 +4,8 @@
     {
         Undefined = 0,
         Published = 1,
-        Lcc = 2,
-        Consolidated = 3,
+        Private = 2,
+        Consolidated = 3
     }
 
     internal class FareTypeCd
@@ -16,8 +16,8 @@
             {
                 case FareType.Published:
                     return "PUB";
-                case FareType.Lcc:
-                    return "LCC";
+                case FareType.Private:
+                    return "PRI";
                 case FareType.Consolidated:
                     return "CON";
                 default:
@@ -30,8 +30,8 @@
             {
                 case "PUB":
                     return FareType.Published;
-                case "LCC":
-                    return FareType.Lcc;
+                case "PRI":
+                    return FareType.Private;
                 case "CON":
                     return FareType.Consolidated;
                 default:

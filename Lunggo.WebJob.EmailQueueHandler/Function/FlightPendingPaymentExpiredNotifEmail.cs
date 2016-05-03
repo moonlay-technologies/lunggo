@@ -31,11 +31,11 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 
             if (reservation.Payment.Status == PaymentStatus.Pending)
             {
-                flightService.UpdateFlightPayment(rsvNo, new PaymentData
+                PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails
                 {
                     Status = PaymentStatus.Expired
                 });
-                PaymentService.GetInstance().UpdateTransferConfirmationReportStatus(rsvNo, TransferConfirmationReportStatus.Invalid);
+                //PaymentService.GetInstance().UpdateTransferConfirmationReportStatus(rsvNo, TransferConfirmationReportStatus.Invalid);
                 var mailService = MailService.GetInstance();
                 var mailModel = new MailModel
                 {

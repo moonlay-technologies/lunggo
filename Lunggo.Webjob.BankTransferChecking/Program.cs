@@ -18,7 +18,7 @@ namespace Lunggo.Webjob.BankTransferChecking
         {
             Init();
             FlightService flight = FlightService.GetInstance();
-            flight.Init();
+            flight.Init("");
             MandiriClientHandler mandiriClient = MandiriClientHandler.GetClientInstance();
             mandiriClient.Init();
             _bankAccountNumber = mandiriClient.getBankAccount();

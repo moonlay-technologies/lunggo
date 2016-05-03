@@ -14,14 +14,12 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Payment.Logic
         {
             try
             {
-                var generatorToken = Guid.NewGuid();
                 var response = PaymentService.GetInstance()
-                    .GetTransferIdentifier(request.Price, generatorToken.ToString());
+                    .GetTransferIdentifier(request.RsvNo);
                 return new TransferIdentifierApiResponse
                 {
                     StatusCode = HttpStatusCode.OK,
-                    TransferCode = response,
-                    TransferToken = generatorToken.ToString()
+                    TransferCode = response
                 };
             }
             catch

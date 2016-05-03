@@ -9,6 +9,7 @@ using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Constant;
 using Lunggo.Framework.Context;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 
@@ -54,7 +55,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 request.Contact.Name != null &&
                 request.Contact.Phone != null &&
                 request.Contact.Email != null &&
-                request.Contact.CountryCode != null &&
+                request.Contact.CountryCallingCode != null &&
                 request.Passengers != null &&
                 request.Passengers.TrueForAll(p => p.FirstName != null) &&
                 request.Passengers.TrueForAll(p => p.LastName != null) &&

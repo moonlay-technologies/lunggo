@@ -6,11 +6,12 @@ using System.Net;
 using System.Web;
 using CsQuery;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.Framework.Web;
 using RestSharp;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
@@ -52,9 +53,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     trip0.DestinationAirport = "CGK";
 
                 // [GET] Search Flight
-                var dict = DictionaryService.GetInstance();
-                var originCountry = dict.GetAirportCountryCode(trip0.OriginAirport);
-                var destinationCountry = dict.GetAirportCountryCode(trip0.DestinationAirport);
+                var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);
+                var destinationCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.DestinationAirport);
                 var availableFares = new CQ();
                 if (originCountry == "ID")
                 {
@@ -186,8 +186,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             RequestedCabinClass = CabinClass.Economy,
                             TripType = TripType.OneWay,
                             Supplier = Supplier.AirAsia,
-                            SupplierCurrency = "IDR",
-                            SupplierPrice = price,
+                            Price = new Price(),
                             FareId = fareIdPrefix + price.ToString("0") + "." + fareId,
                             Trips = new List<FlightTrip>
                             {
@@ -200,6 +199,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 }
                             }
                         };
+                        itin.Price.SetSupplier(price, new Currency("IDR"));
                         itins.Add(itin);
                     }
                     foreach (var itin in itins)
@@ -243,11 +243,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
             private bool RequirePassport(List<FlightSegment> segments)
             {
-                var dict = DictionaryService.GetInstance();
                 var segmentDepartureAirports = segments.Select(s => s.DepartureAirport);
                 var segmentArrivalAirports = segments.Select(s => s.ArrivalAirport);
                 var segmentAirports = segmentDepartureAirports.Concat(segmentArrivalAirports);
-                var segmentCountries = segmentAirports.Select(dict.GetAirportCountryCode).Distinct();
+                var segmentCountries = segmentAirports.Select(FlightService.GetInstance().GetAirportCountryCode).Distinct();
                 return segmentCountries.Count() > 1;
             }
         }

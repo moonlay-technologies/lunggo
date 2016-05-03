@@ -141,7 +141,7 @@ namespace Lunggo.CloudApp.EticketHandler
                 var queueService = QueueService.GetInstance();
                 var emailQueue = queueService.GetQueueByReference("FlightEticketEmail");
                 emailQueue.AddMessage(new CloudQueueMessage(rsvNo));
-                FlightService.GetInstance().UpdateIssueProgress(rsvNo, "Sending Eticket Email");
+                //FlightService.GetInstance().UpdateIssueProgress(rsvNo, "Sending Eticket Email");
                 Trace.WriteLine("Done Processing Eticket for RsvNo " + rsvNo);
             }
 

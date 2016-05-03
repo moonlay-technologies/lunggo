@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using log4net;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;

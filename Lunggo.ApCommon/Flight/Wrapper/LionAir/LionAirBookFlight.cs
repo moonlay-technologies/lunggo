@@ -6,10 +6,10 @@ using System.Threading;
 using System.Web;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.ProductBase.Constant;
 using Lunggo.Framework.Config;
 using RestSharp;
 using System.Globalization;
@@ -196,9 +196,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 var client = CreateAgentClient();
                 //string currentDeposit;
-                var dict = DictionaryService.GetInstance();
+                var flight = FlightService.GetInstance();
                 //var originCountry = dict.GetAirportCountryCode(origin);
-                var destinationCountry = dict.GetAirportCountryCode(dest);
+                var destinationCountry = flight.GetAirportCountryCode(dest);
                 var userId = "";
                 //if (originCountry == "ID")
                 //{
@@ -998,7 +998,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             "&ddlCountry=ID" + //bookInfo.ContactData.CountryCode + ///change?///
                             "&txtCity=" +
                             "&txtPostCode=" +
-                            "&txtCountryCode1=" + bookInfo.Contact.CountryCode +
+                            "&txtCountryCode1=" + bookInfo.Contact.CountryCallingCode +
                             "&txtAreaCode1=" +
                             "&txtPhoneNumber1=" + bookInfo.Contact.Phone +
                             "&ddlOriNumber=M" +

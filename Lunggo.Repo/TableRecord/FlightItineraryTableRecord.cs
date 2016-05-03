@@ -11,13 +11,13 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? ItineraryId
+		public long? Id
 		{
-		    get { return _ItineraryId; }
+		    get { return _Id; }
 		    set
 		    {
-		        _ItineraryId = value;
-		        IncrementLog("ItineraryId");
+		        _Id = value;
+		        IncrementLog("Id");
 		    }
 		}
 		public String RsvNo
@@ -74,15 +74,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("FareTypeCd");
 		    }
 		}
-		public Boolean? CanHold
-		{
-		    get { return _CanHold; }
-		    set
-		    {
-		        _CanHold = value;
-		        IncrementLog("CanHold");
-		    }
-		}
 		public String SupplierCd
 		{
 		    get { return _SupplierCd; }
@@ -90,114 +81,6 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _SupplierCd = value;
 		        IncrementLog("SupplierCd");
-		    }
-		}
-		public Decimal? SupplierPrice
-		{
-		    get { return _SupplierPrice; }
-		    set
-		    {
-		        _SupplierPrice = value;
-		        IncrementLog("SupplierPrice");
-		    }
-		}
-		public String SupplierCurrencyCd
-		{
-		    get { return _SupplierCurrencyCd; }
-		    set
-		    {
-		        _SupplierCurrencyCd = value;
-		        IncrementLog("SupplierCurrencyCd");
-		    }
-		}
-		public Decimal? SupplierExchangeRate
-		{
-		    get { return _SupplierExchangeRate; }
-		    set
-		    {
-		        _SupplierExchangeRate = value;
-		        IncrementLog("SupplierExchangeRate");
-		    }
-		}
-		public Decimal? OriginalIdrPrice
-		{
-		    get { return _OriginalIdrPrice; }
-		    set
-		    {
-		        _OriginalIdrPrice = value;
-		        IncrementLog("OriginalIdrPrice");
-		    }
-		}
-		public long? MarginId
-		{
-		    get { return _MarginId; }
-		    set
-		    {
-		        _MarginId = value;
-		        IncrementLog("MarginId");
-		    }
-		}
-		public Decimal? MarginCoefficient
-		{
-		    get { return _MarginCoefficient; }
-		    set
-		    {
-		        _MarginCoefficient = value;
-		        IncrementLog("MarginCoefficient");
-		    }
-		}
-		public Decimal? MarginConstant
-		{
-		    get { return _MarginConstant; }
-		    set
-		    {
-		        _MarginConstant = value;
-		        IncrementLog("MarginConstant");
-		    }
-		}
-		public Decimal? MarginNominal
-		{
-		    get { return _MarginNominal; }
-		    set
-		    {
-		        _MarginNominal = value;
-		        IncrementLog("MarginNominal");
-		    }
-		}
-		public Decimal? FinalIdrPrice
-		{
-		    get { return _FinalIdrPrice; }
-		    set
-		    {
-		        _FinalIdrPrice = value;
-		        IncrementLog("FinalIdrPrice");
-		    }
-		}
-		public Decimal? LocalPrice
-		{
-		    get { return _LocalPrice; }
-		    set
-		    {
-		        _LocalPrice = value;
-		        IncrementLog("LocalPrice");
-		    }
-		}
-		public String LocalCurrencyCd
-		{
-		    get { return _LocalCurrencyCd; }
-		    set
-		    {
-		        _LocalCurrencyCd = value;
-		        IncrementLog("LocalCurrencyCd");
-		    }
-		}
-		public Decimal? LocalExchangeRate
-		{
-		    get { return _LocalExchangeRate; }
-		    set
-		    {
-		        _LocalExchangeRate = value;
-		        IncrementLog("LocalExchangeRate");
 		    }
 		}
 		public String InsertBy
@@ -254,45 +137,22 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UpdatePgId");
 		    }
 		}
-		public Boolean? MarginIsFlat
-		{
-		    get { return _MarginIsFlat; }
-		    set
-		    {
-		        _MarginIsFlat = value;
-		        IncrementLog("MarginIsFlat");
-		    }
-		}
 
 		
-		private long? _ItineraryId;
+		private long? _Id;
 		private String _RsvNo;
 		private String _BookingId;
 		private String _BookingStatusCd;
 		private DateTime? _TicketTimeLimit;
 		private String _TripTypeCd;
 		private String _FareTypeCd;
-		private Boolean? _CanHold;
 		private String _SupplierCd;
-		private Decimal? _SupplierPrice;
-		private String _SupplierCurrencyCd;
-		private Decimal? _SupplierExchangeRate;
-		private Decimal? _OriginalIdrPrice;
-		private long? _MarginId;
-		private Decimal? _MarginCoefficient;
-		private Decimal? _MarginConstant;
-		private Decimal? _MarginNominal;
-		private Decimal? _FinalIdrPrice;
-		private Decimal? _LocalPrice;
-		private String _LocalCurrencyCd;
-		private Decimal? _LocalExchangeRate;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
 		private String _UpdateBy;
 		private DateTime? _UpdateDate;
 		private String _UpdatePgId;
-		private Boolean? _MarginIsFlat;
 
 
 		public static FlightItineraryTableRecord CreateNewInstance()
@@ -324,34 +184,20 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("ItineraryId", true),
+				new ColumnMetadata("Id", true),
 				new ColumnMetadata("RsvNo", false),
 				new ColumnMetadata("BookingId", false),
 				new ColumnMetadata("BookingStatusCd", false),
 				new ColumnMetadata("TicketTimeLimit", false),
 				new ColumnMetadata("TripTypeCd", false),
 				new ColumnMetadata("FareTypeCd", false),
-				new ColumnMetadata("CanHold", false),
 				new ColumnMetadata("SupplierCd", false),
-				new ColumnMetadata("SupplierPrice", false),
-				new ColumnMetadata("SupplierCurrencyCd", false),
-				new ColumnMetadata("SupplierExchangeRate", false),
-				new ColumnMetadata("OriginalIdrPrice", false),
-				new ColumnMetadata("MarginId", false),
-				new ColumnMetadata("MarginCoefficient", false),
-				new ColumnMetadata("MarginConstant", false),
-				new ColumnMetadata("MarginNominal", false),
-				new ColumnMetadata("FinalIdrPrice", false),
-				new ColumnMetadata("LocalPrice", false),
-				new ColumnMetadata("LocalCurrencyCd", false),
-				new ColumnMetadata("LocalExchangeRate", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),
 				new ColumnMetadata("UpdateBy", false),
 				new ColumnMetadata("UpdateDate", false),
 				new ColumnMetadata("UpdatePgId", false),
-				new ColumnMetadata("MarginIsFlat", false),
 
             };
         }

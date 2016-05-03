@@ -51,6 +51,8 @@ namespace Lunggo.ApCommon.Flight.Model
         public string OperatingAirlineLogoUrl { get; set; }
         [JsonProperty("stp")]
         public List<FlightStop> Stops { get; set; }
+        [JsonProperty("airtyp")]
+        public AirlineType AirlineType { get; set; }
         [JsonProperty("cbn")]
         public CabinClass CabinClass { get; set; }
         [JsonProperty("meal")]

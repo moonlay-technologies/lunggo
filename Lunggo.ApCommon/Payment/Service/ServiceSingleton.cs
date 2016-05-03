@@ -14,6 +14,7 @@ using Lunggo.ApCommon.Payment.Query;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Pattern;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.SharedModel;
 using Lunggo.Repository.TableRecord;
@@ -22,29 +23,14 @@ using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.ApCommon.Payment.Service
 {
-    public partial class PaymentService
+    public partial class PaymentService : SingletonBase<PaymentService>
     {
-        private static readonly PaymentService Instance = new PaymentService();
         private static readonly VeritransWrapper VeritransWrapper = VeritransWrapper.GetInstance();
-        private bool _isInitialized;
-
-        private PaymentService()
-        {
-            
-        }
-
-        public static PaymentService GetInstance()
-        {
-            return Instance;
-        }
 
         public void Init()
         {
-            if (!_isInitialized)
-            {
-                VeritransWrapper.Init();
-                _isInitialized = true;
-            }
+            Currency.SyncCurrencyData();
+            VeritransWrapper.Init();
         }
     }
 }

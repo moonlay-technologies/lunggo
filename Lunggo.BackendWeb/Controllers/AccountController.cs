@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.BackendWeb.Models;
-using Lunggo.CustomerWeb.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -423,7 +422,7 @@ namespace Lunggo.BackendWeb.Controllers
         {
             var model = new AccountViewModel();
             var flightService = FlightService.GetInstance();
-            model.User = User.Identity.GetCustomUser();
+            model.User = User.Identity.GetUser();
             model.FlightReservations = flightService.GetOverviewReservationsByContactEmail(model.User.Email);
             return View(model);
         }

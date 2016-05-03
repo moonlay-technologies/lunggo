@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using Lunggo.ApCommon.Autocomplete;
-using Lunggo.ApCommon.Dictionary;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.WebAPI.ApiSrc.v1.Autocomplete.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete.Logic
@@ -13,12 +13,12 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete.Logic
     {
         public static AutocompleteAirlinesApiResponse GetAirlineAutocomplete(string prefix)
         {
-            var dict = DictionaryService.GetInstance();
+            var flight = FlightService.GetInstance();
             var autocomplete = AutocompleteManager.GetInstance();
             var airlineIds = autocomplete.GetAirlineIdsAutocomplete(prefix);
             var airlines = airlineIds.Select(id =>
             {
-                var airlineDict = dict.AirlineDict[id];
+                var airlineDict = flight.AirlineDict[id];
                 return new AirlineApi
                 {
                     Code = airlineDict.Code,

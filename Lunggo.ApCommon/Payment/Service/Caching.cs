@@ -27,15 +27,15 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private static void SaveTokenTransferCodeinCache(string token, string transferCode)
+        private static void SaveTokenTransferFeeinCache(string rsvNo, string transferFee)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "transferCodeToken:" + token;
+            var redisKey = "transferCodeToken:" + rsvNo;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            redisDb.StringSet(redisKey, transferCode, TimeSpan.FromMinutes(150));
+            redisDb.StringSet(redisKey, transferFee, TimeSpan.FromMinutes(150));
         }
 
-        private static decimal GetTransferCodeByTokeninCache(string token)
+        private static decimal GetTransferFeeByTokenInCache(string token)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "transferCodeToken:" + token;
@@ -45,7 +45,7 @@ namespace Lunggo.ApCommon.Payment.Service
         }
 
         //Penambahan Method ini buat menghapus token Transfer Code jika tidak dipakai
-        private static void DeleteTokenTransferCodeFromCache(string token)
+        private static void DeleteTokenTransferFeeFromCache(string token)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "transferCodeToken:" + token;

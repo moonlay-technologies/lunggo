@@ -1,4 +1,7 @@
-﻿using Lunggo.ApCommon.Identity.Role;
+﻿using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Lunggo.ApCommon.Identity.Role;
 using Lunggo.ApCommon.Identity.RoleStore;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Identity.UserStore;
@@ -7,13 +10,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 
-namespace Lunggo.CustomerWeb.Models
+namespace Lunggo.BackendWeb
 {
 
     public class ApplicationUserManager : UserManager<User>

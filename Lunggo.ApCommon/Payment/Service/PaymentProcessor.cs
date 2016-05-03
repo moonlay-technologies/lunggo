@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Lunggo.ApCommon.Campaign.Model;
 using Lunggo.ApCommon.Campaign.Service;
@@ -12,6 +13,8 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans;
+using Lunggo.ApCommon.ProductBase.Constant;
+using Lunggo.ApCommon.ProductBase.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
@@ -24,64 +27,62 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public void SubmitPayment(PaymentData paymentData)
+        public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentData paymentData, string discountCode)
         {
-            if (paymentData.RsvNo.IsFlightRsvNo())
-            {
-                ProcessFlightPayment(paymentData);
-            }
-        }
-
-        private static void ProcessFlightPayment(PaymentData paymentData)
-        {
-            var flight = FlightService.GetInstance();
-            var reservation = flight.GetReservation(paymentData.RsvNo);
-
-            reservation.Payment.Medium = GetPaymentMedium(paymentData.Method);
-            reservation.Payment.TimeLimit = paymentData.TimeLimit;
-            var originalPrice = reservation.Itineraries.Sum(itin => itin.LocalPrice);
+            var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
+            paymentDetails.Method = method;
+            paymentDetails.Medium = GetPaymentMedium(method);
             var campaign = CampaignService.GetInstance().UseVoucherRequest(new UseVoucherRequest
             {
-                RsvNo = paymentData.RsvNo,
-                VoucherCode = paymentData.DiscountCode
+                RsvNo = rsvNo,
+                VoucherCode = discountCode
             });
-            if (campaign.CampaignVoucher != null)
+            if (campaign.Discount != null)
             {
-                reservation.Payment.FinalPrice = campaign.DiscountedPrice;
-                reservation.Discount = new Discount
-                {
-                    Code = paymentData.DiscountCode,
-                    Id = campaign.CampaignVoucher.CampaignId.GetValueOrDefault(),
-                    Name = campaign.CampaignVoucher.DisplayName,
-                    Percentage = campaign.CampaignVoucher.ValuePercentage.GetValueOrDefault(),
-                    Constant = campaign.CampaignVoucher.ValueConstant.GetValueOrDefault(),
-                    Nominal = campaign.TotalDiscount
-                };
+                paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
+                paymentDetails.Discount = campaign.Discount;
             }
             else
             {
-                reservation.Payment.FinalPrice = originalPrice;
-                reservation.Discount = new Discount();
+                paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
             }
-            if (reservation.Payment.Method == PaymentMethod.BankTransfer)
+            if (paymentDetails.Method == PaymentMethod.BankTransfer)
             {
-                reservation.TransferCode = GetTransferCodeByTokeninCache(paymentData.TransferToken);
-                reservation.Payment.FinalPrice -= reservation.TransferCode;
+                paymentDetails.TransferFee = -GetTransferFeeByTokenInCache(rsvNo);
+                paymentDetails.FinalPriceIdr += paymentDetails.TransferFee;
             }
             else
             {
                 //Penambahan disini buat menghapus Transfer Code dan Token Transfer Code jika tidak milih Bank Transfer
-                var dummyTransferCode = GetTransferCodeByTokeninCache(paymentData.TransferToken);
-                var dummyPrice = reservation.Payment.FinalPrice - dummyTransferCode;
+                var dummyTransferFee = GetTransferFeeByTokenInCache(rsvNo);
+                var dummyPrice = paymentDetails.OriginalPriceIdr - dummyTransferFee;
                 DeleteUniquePriceFromCache(dummyPrice.ToString(CultureInfo.InvariantCulture));
-                DeleteTokenTransferCodeFromCache(paymentData.TransferToken);
+                DeleteTokenTransferFeeFromCache(rsvNo);
             }
-            var transactionDetails = ConstructTransactionDetails(reservation);
-            var itemDetails = ConstructItemDetails(reservation);
-            ProcessPayment(reservation.Payment, transactionDetails, itemDetails, reservation.Payment.Method);
+            paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
+            var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
+            var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
+            ProcessPayment(paymentDetails, transactionDetails, itemDetails, method);
+            return paymentDetails;
         }
 
-        public static PaymentMedium GetPaymentMedium(PaymentMethod method)
+        public void UpdatePayment(string rsvNo, PaymentDetails payment)
+        {
+            var isUpdated = UpdatePaymentToDb(rsvNo, payment);
+            if (isUpdated && payment.Status == PaymentStatus.Settled)
+            {
+                var service = FlightService.GetService(ProductTypeCd.Parse(rsvNo));
+                var serviceInstance = service.GetMethod("GetInstance").Invoke(null, null);
+                service.GetMethod("Issue").Invoke(serviceInstance, new object[] {rsvNo});
+            }
+        }
+
+        public Dictionary<string, PaymentDetails> GetUnpaids()
+        {
+            return GetUnpaidFromDb();
+        }
+
+        private static PaymentMedium GetPaymentMedium(PaymentMethod method)
         {
             switch (method)
             {
@@ -99,30 +100,30 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private static void ProcessPayment(PaymentData paymentData, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static void ProcessPayment(PaymentDetails paymentDetails, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             if (method == PaymentMethod.BankTransfer || method == PaymentMethod.Credit || method == PaymentMethod.Deposit)
             {
-                paymentData.Status = PaymentStatus.Pending;
+                paymentDetails.Status = PaymentStatus.Pending;
             }
             else if (method == PaymentMethod.CreditCard)// || method == PaymentMethod.VirtualAccount) // Add VA here
             {
-                var paymentResponse = SubmitPayment(paymentData, transactionDetails, itemDetails, method);
+                var paymentResponse = SubmitPayment(paymentDetails, transactionDetails, itemDetails, method);
                 if (method == PaymentMethod.VirtualAccount)
                 {
-                    paymentData.Status = PaymentStatus.Verifying;
-                    paymentData.TransferAccount = paymentResponse.TransferAccount;
+                    paymentDetails.Status = PaymentStatus.Verifying;
+                    paymentDetails.TransferAccount = paymentResponse.TransferAccount;
                 }
-                else 
+                else
                 {
-                    paymentData.Status = paymentResponse.Status;
+                    paymentDetails.Status = paymentResponse.Status;
                 }
-                
+
             }
             else
             {
-                paymentData.RedirectionUrl = GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
-                paymentData.Status = paymentData.RedirectionUrl != null ? PaymentStatus.Pending : PaymentStatus.Failed;
+                paymentDetails.RedirectionUrl = GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
+                paymentDetails.Status = paymentDetails.RedirectionUrl != null ? PaymentStatus.Pending : PaymentStatus.Failed;
             }
         }
 
@@ -130,7 +131,7 @@ namespace Lunggo.ApCommon.Payment.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var savedCards = GetSavedCreditCardByEmailQuery.GetInstance().Execute(conn, new {Email = email});
+                var savedCards = GetSavedCreditCardByEmailQuery.GetInstance().Execute(conn, new { Email = email });
                 return savedCards.ToList();
             }
         }
@@ -140,7 +141,7 @@ namespace Lunggo.ApCommon.Payment.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var savedCard = GetSavedCreditCardQuery.GetInstance()
-                    .Execute(conn, new {Email = email, MaskedCardNumber = maskedCardNumber}).SingleOrDefault();
+                    .Execute(conn, new { Email = email, MaskedCardNumber = maskedCardNumber }).SingleOrDefault();
                 if (savedCard == null)
                     SavedCreditCardTableRepo.GetInstance().Insert(conn, new SavedCreditCardTableRecord
                     {
@@ -161,7 +162,7 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private static PaymentData SubmitPayment(PaymentData payment, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static PaymentDetails SubmitPayment(PaymentDetails payment, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             var paymentResponse = VeritransWrapper.ProcessPayment(payment, transactionDetails, itemDetails, method);
             return paymentResponse;
@@ -173,55 +174,65 @@ namespace Lunggo.ApCommon.Payment.Service
             return url;
         }
 
-        private static List<ItemDetails> ConstructItemDetails(FlightReservation reservation)
+        private static List<ItemDetails> ConstructItemDetails(string rsvNo, PaymentDetails payment)
         {
             var itemDetails = new List<ItemDetails>();
-            var trips = reservation.Itineraries.SelectMany(itin => itin.Trips).ToList();
-            var itemNameBuilder = new StringBuilder();
-            foreach (var trip in trips)
-            {
-                itemNameBuilder.Append(trip.OriginAirport + "-" + trip.DestinationAirport);
-                itemNameBuilder.Append(" " + trip.DepartureDate.ToString("dd-MM-yyyy"));
-                if (trip != trips.Last())
-                {
-                    itemNameBuilder.Append(", ");
-                }
-            }
-            var itemName = itemNameBuilder.ToString();
+            //var trips = reservation.Itineraries.SelectMany(itin => itin.Trips).ToList();
+            //var itemNameBuilder = new StringBuilder();
+            //foreach (var trip in trips)
+            //{
+            //    itemNameBuilder.Append(trip.OriginAirport + "-" + trip.DestinationAirport);
+            //    itemNameBuilder.Append(" " + trip.DepartureDate.ToString("dd-MM-yyyy"));
+            //    if (trip != trips.Last())
+            //    {
+            //        itemNameBuilder.Append(", ");
+            //    }
+            //}
+            //var itemName = itemNameBuilder.ToString();
             itemDetails.Add(new ItemDetails
             {
                 Id = "1",
-                Name = itemName,
-                Price = (long)reservation.Itineraries.Sum(itin => itin.LocalPrice),
+                Name = ProductTypeCd.Parse(rsvNo).ToString(),
+                Price = decimal.ToInt64(payment.OriginalPriceIdr),
                 Quantity = 1
             });
-            if (reservation.Discount.Nominal != 0)
+            if (payment.Discount != null)
                 itemDetails.Add(new ItemDetails
                 {
                     Id = "2",
                     Name = "Discount",
-                    Price = (long)-reservation.Discount.Nominal,
+                    Price = (long)-payment.DiscountNominal,
+                    Quantity = 1
+                });
+            if (payment.TransferFee != 0)
+                itemDetails.Add(new ItemDetails
+                {
+                    Id = "3",
+                    Name = "TransferFee",
+                    Price = (long)-payment.TransferFee,
                     Quantity = 1
                 });
             return itemDetails;
         }
 
-        private static TransactionDetails ConstructTransactionDetails(FlightReservation reservation)
+        private static TransactionDetails ConstructTransactionDetails(string rsvNo, PaymentDetails payment)
         {
             return new TransactionDetails
             {
-                OrderId = reservation.RsvNo,
-                OrderTime = reservation.RsvTime,
-                Amount = (long)reservation.Payment.FinalPrice
+                OrderId = rsvNo,
+                OrderTime = DateTime.UtcNow,
+                Amount = (long)payment.FinalPriceIdr
             };
         }
 
-        public int GetTransferIdentifier(decimal price, string token)
+        public int GetTransferIdentifier(string rsvNo)
         {
             bool isExist = true;
             Random rnd = new Random();
             int uniqueId;
             decimal candidatePrice;
+            var payment = PaymentDetails.GetFromDb(rsvNo);
+            var price = payment.OriginalPriceIdr;
             //Generate Unique Id
             if (price <= 999)
             {
@@ -236,9 +247,9 @@ namespace Lunggo.ApCommon.Payment.Service
                     isExist = IsTransferValueExist(candidatePrice.ToString());
                 } while (isExist);
                 Dictionary<string, int> dict = new Dictionary<string, int>();
-                dict.Add(token, uniqueId);
+                dict.Add(rsvNo, uniqueId);
                 SaveUniquePriceinCache(candidatePrice.ToString(), dict);
-                SaveTokenTransferCodeinCache(token, uniqueId.ToString());
+                SaveTokenTransferFeeinCache(rsvNo, uniqueId.ToString());
             }
 
             return uniqueId;

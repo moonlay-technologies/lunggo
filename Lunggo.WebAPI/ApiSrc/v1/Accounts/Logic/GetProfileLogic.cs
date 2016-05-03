@@ -29,7 +29,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Logic
                         ErrorCode = "ERAGPR01"
                     };
                 }
-                var foundUser = user.Identity.GetCustomUser();
+                var foundUser = user.Identity.GetUser();
                 return new GetProfileApiResponse
                 {
                     Email = foundUser.Email ?? "",

@@ -119,7 +119,7 @@
                                     <td class="description">@Model.Itinerary.Trips[k].Segments[k].AirlineName @Model.Itinerary.Trips[k].OriginAirport-@Model.Itinerary.Trips[k].DestinationAirport @Model.Itinerary.Trips[k].DepartureDate.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                     <td class="qty">@Model.Passengers.Count</td>
                                     <td class="price"></td>
-                                    <td class="total">@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    <td class="total">@Model.Payment.FinalPriceIdr.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                     @{ k++; }
                                 </tr>
                         }                
@@ -140,7 +140,7 @@
                         <tr>
                             <td colspan="3"></td>
                             <td colspan="2"><strong>TOTAL</strong></td>
-                            <td>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                            <td>@Model.Payment.FinalPriceIdr.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                         </tr>
                         <tr>
                             <td colspan="3"></td>
@@ -150,7 +150,7 @@
                         <tr>
                             <td colspan="3"></td>
                             <td colspan="2"><strong>PAYMENT AMOUNT</strong></td>
-                            <td>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                            <td>@Model.Payment.FinalPriceIdr.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                         </tr>
                     </tfoot>
                 </table>

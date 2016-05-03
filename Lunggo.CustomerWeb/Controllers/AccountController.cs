@@ -406,7 +406,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("OrderHistory", "UW620OrderHistory");
             }
-            var updatedUser = User.Identity.GetCustomUser();
+            var updatedUser = User.Identity.GetUser();
             updatedUser.FirstName = model.FirstName;
             updatedUser.LastName = model.LastName;
             updatedUser.CountryCd = model.CountryCd;
@@ -572,7 +572,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             var model = new AccountViewModel();
             var flightService = FlightService.GetInstance();
-            model.User = User.Identity.GetCustomUser();
+            model.User = User.Identity.GetUser();
             model.FlightReservations = flightService.GetOverviewReservationsByContactEmail(model.User.Email);
             return View(model);
         }

@@ -70,7 +70,7 @@ namespace Lunggo.WebJob.FlightCrawlScheduler
         private static void InitFlightService()
         {
             var flight = FlightService.GetInstance();
-            flight.Init();
+            flight.Init("");
         }
 
         private static void InitQueueService()

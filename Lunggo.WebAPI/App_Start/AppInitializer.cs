@@ -1,7 +1,6 @@
 ﻿using System.Web;
 using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Service;
@@ -27,15 +26,13 @@ namespace Lunggo.WebAPI
             InitDatabaseService();
             InitUniqueIdGenerator();
             InitRedisService();
-            InitDictionaryService();
-            InitAutocompleteManager();
             InitFlightService();
             InitQueueService();
             InitMailService();
             InitPaymentService();
             InitTableStorageService();
             InitHtmlTemplateService();
-            
+            InitAutocompleteManager();
         }
 
         private static void InitConfigurationManager()
@@ -89,12 +86,6 @@ namespace Lunggo.WebAPI
             });
         }
 
-        private static void InitDictionaryService()
-        {
-            var dict = DictionaryService.GetInstance();
-            dict.Init("Config");
-        }
-
         private static void InitAutocompleteManager()
         {
             var autocompleteManager = AutocompleteManager.GetInstance();
@@ -104,7 +95,7 @@ namespace Lunggo.WebAPI
         private static void InitFlightService()
         {
             var flight = FlightService.GetInstance();
-            flight.Init();
+            flight.Init("Config");
         }
 
         private static void InitPaymentService()

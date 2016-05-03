@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using CsQuery;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.Framework.Web;
 using Lunggo.Framework.Extension;
 using RestSharp;
@@ -148,12 +150,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                                 Fnumber = ParseFID2[(8*l) + 1].Trim();
                                             }
 
-                                        var dict = DictionaryService.GetInstance();
+                                        var flight = FlightService.GetInstance();
                                         var arrtime = DateTime.Parse(ParseFID2[Airport + 3])
-                                            .AddHours(-(dict.GetAirportTimeZone(ParseFID2[Airport + 2])));
+                                            .AddHours(-(flight.GetAirportTimeZone(ParseFID2[Airport + 2])));
                                         var deptime =
                                             DateTime.Parse(ParseFID2[Airport + 1])
-                                                .AddHours(-(dict.GetAirportTimeZone(ParseFID2[Airport])));
+                                                .AddHours(-(flight.GetAirportTimeZone(ParseFID2[Airport])));
 
                                         segments.Add(new FlightSegment
                                         {
@@ -202,9 +204,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                     RequestedCabinClass = CabinClass.Economy,
                                     TripType = TripType.OneWay,
                                     Supplier = Supplier.Citilink,
-                                    SupplierCurrency = "IDR",
-                                    SupplierRate = 1,
-                                    SupplierPrice = decimal.Parse(harga[1]),
+                                    Price = new Price(),
                                     FareId = prefix + ParseFID1[1],
                                     Trips = new List<FlightTrip>
                                     {
@@ -217,6 +217,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                         }
                                     }
                                 };
+                                itin.Price.SetSupplier(decimal.Parse(harga[1]), new Currency("IDR"));
                                 if (itin.Trips[0].Segments.Count < 2)
                                     itins.Add(itin);
                                 hasil.IsSuccess = true;

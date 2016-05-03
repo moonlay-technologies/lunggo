@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Flight.Model.Logic;
+﻿using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Model.Logic;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -20,6 +21,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.BaggageRules = rules.BaggageRules;
             }
             return output;
+        }
+
+        private GetRulesResult GetRulesInternal(string fareId)
+        {
+            return MystiflyWrapper.GetRules(fareId);
         }
     }
 }

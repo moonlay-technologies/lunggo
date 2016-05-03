@@ -5,6 +5,7 @@ using System.Linq;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.ProductBase.Constant;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Web;
 using RestSharp;

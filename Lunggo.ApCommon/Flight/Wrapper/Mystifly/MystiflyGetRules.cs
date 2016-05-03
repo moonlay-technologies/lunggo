@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
@@ -63,22 +63,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         private static GetRulesResult MapResult(AirRulesRS1 response)
         {
-            var dict = DictionaryService.GetInstance();
+            var flight = FlightService.GetInstance();
             var result = new GetRulesResult();
             if (response.FareRules != null)
             {
                 result.AirlineRules = response.FareRules.Select(fareRule => new AirlineRules
                 {
                     AirlineCode = fareRule.Airline,
-                    AirlineName = dict.GetAirlineName(fareRule.Airline),
+                    AirlineName = flight.GetAirlineName(fareRule.Airline),
                     DepartureAirport = fareRule.CityPair.Substring(0, 3),
-                    DepartureAirportName = dict.GetAirportName(fareRule.CityPair.Substring(0, 3)),
-                    DepartureCity = dict.GetAirportCity(fareRule.CityPair.Substring(0, 3)),
-                    DepartureCountry = dict.GetAirportCountry(fareRule.CityPair.Substring(0, 3)),
+                    DepartureAirportName = flight.GetAirportName(fareRule.CityPair.Substring(0, 3)),
+                    DepartureCity = flight.GetAirportCity(fareRule.CityPair.Substring(0, 3)),
+                    DepartureCountry = flight.GetAirportCountry(fareRule.CityPair.Substring(0, 3)),
                     ArrivalAirport = fareRule.CityPair.Substring(3, 3),
-                    ArrivalAirportName = dict.GetAirportName(fareRule.CityPair.Substring(3, 3)),
-                    ArrivalCity = dict.GetAirportCity(fareRule.CityPair.Substring(3, 3)),
-                    ArrivalCountry = dict.GetAirportCountry(fareRule.CityPair.Substring(3, 3)),
+                    ArrivalAirportName = flight.GetAirportName(fareRule.CityPair.Substring(3, 3)),
+                    ArrivalCity = flight.GetAirportCity(fareRule.CityPair.Substring(3, 3)),
+                    ArrivalCountry = flight.GetAirportCountry(fareRule.CityPair.Substring(3, 3)),
                     Rules = fareRule.RuleDetails.Select(rule => rule.Rules).ToList()
                 }).ToList();
             }
@@ -91,16 +91,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 result.BaggageRules = response.BaggageInfos.Select(baggageRule => new BaggageRules
                 {
                     AirlineCode = baggageRule.FlightNo.Substring(0, 2),
-                    AirlineName = dict.GetAirlineName(baggageRule.FlightNo.Substring(0, 2)),
+                    AirlineName = flight.GetAirlineName(baggageRule.FlightNo.Substring(0, 2)),
                     FlightNumber = baggageRule.FlightNo.Substring(2),
                     DepartureAirport = baggageRule.Departure,
-                    DepartureAirportName = dict.GetAirportName(baggageRule.Departure),
-                    DepartureCity = dict.GetAirportCity(baggageRule.Departure),
-                    DepartureCountry = dict.GetAirportCountry(baggageRule.Departure),
+                    DepartureAirportName = flight.GetAirportName(baggageRule.Departure),
+                    DepartureCity = flight.GetAirportCity(baggageRule.Departure),
+                    DepartureCountry = flight.GetAirportCountry(baggageRule.Departure),
                     ArrivalAirport = baggageRule.Arrival,
-                    ArrivalAirportName = dict.GetAirportName(baggageRule.Arrival),
-                    ArrivalCity = dict.GetAirportCity(baggageRule.Arrival),
-                    ArrivalCountry = dict.GetAirportCountry(baggageRule.Arrival),
+                    ArrivalAirportName = flight.GetAirportName(baggageRule.Arrival),
+                    ArrivalCity = flight.GetAirportCity(baggageRule.Arrival),
+                    ArrivalCountry = flight.GetAirportCountry(baggageRule.Arrival),
                     Baggage = baggageRule.Baggage
                 }).ToList();
             }

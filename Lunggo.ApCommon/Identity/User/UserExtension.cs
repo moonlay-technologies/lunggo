@@ -8,7 +8,7 @@ namespace Lunggo.ApCommon.Identity.User
 {
     public static class UserExtension
     {
-        public static User GetCustomUser(this IIdentity identity)
+        public static User GetUser(this IIdentity identity)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -22,7 +22,7 @@ namespace Lunggo.ApCommon.Identity.User
         {
             if (identity.IsAuthenticated)
             {
-                var customUser = GetCustomUser(identity);
+                var customUser = GetUser(identity);
                 return customUser.FirstName;
             }
             else
@@ -36,7 +36,7 @@ namespace Lunggo.ApCommon.Identity.User
         {
             if (identity.IsAuthenticated)
             {
-                var customUser = GetCustomUser(identity);
+                var customUser = GetUser(identity);
                 return customUser.LastName;
             }
             else
@@ -49,7 +49,7 @@ namespace Lunggo.ApCommon.Identity.User
         {
             if (identity.IsAuthenticated)
             {
-                var customUser = GetCustomUser(identity);
+                var customUser = GetUser(identity);
                 return customUser.Email;
             }
             else
@@ -62,7 +62,7 @@ namespace Lunggo.ApCommon.Identity.User
         {
             if (identity.IsAuthenticated)
             {
-                var customUser = GetCustomUser(identity);
+                var customUser = GetUser(identity);
                 return customUser.CountryCd;
             }
             else
@@ -75,7 +75,7 @@ namespace Lunggo.ApCommon.Identity.User
         {
             if (identity.IsAuthenticated)
             {
-                var customUser = GetCustomUser(identity);
+                var customUser = GetUser(identity);
                 return customUser.PhoneNumber;
             }
             else
@@ -88,7 +88,7 @@ namespace Lunggo.ApCommon.Identity.User
         {
             if (identity.IsAuthenticated)
             {
-                var customUser = GetCustomUser(identity);
+                var customUser = GetUser(identity);
                 return customUser.Address;
             }
             else

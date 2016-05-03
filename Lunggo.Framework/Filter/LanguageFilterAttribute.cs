@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using Lunggo.Framework.Constant;
+using Lunggo.Framework.Context;
 
 namespace Lunggo.Framework.Filter
 {
@@ -27,7 +28,7 @@ namespace Lunggo.Framework.Filter
 
         private void SetLangCodeInHttpContext(String langCode)
         {
-            HttpContext.Current.Items[SystemConstant.HttpContextLangCode] = langCode;
+            OnlineContext.SetActiveLanguageCode(langCode);
         }
     }
 }

@@ -7,14 +7,44 @@ namespace Lunggo.Framework.Context
 {
     public static class OnlineContext
     {
+        public static String GetActiveCurrencyCode()
+        {
+            return (String)HttpContext.Current.Items[SystemConstant.HttpContextCurrencyCode] ?? "IDR";
+        }
+
+        public static void SetActiveCurrencyCode(string currCode)
+        {
+            HttpContext.Current.Items[SystemConstant.HttpContextCurrencyCode] = currCode;
+        }
+
         public static String GetActiveLanguageCode()
         {
-            return (String) HttpContext.Current.Items[SystemConstant.HttpContextLangCode];
+            return (String)HttpContext.Current.Items[SystemConstant.HttpContextLangCode];
         }
 
         public static void SetActiveLanguageCode(string langCode)
         {
             HttpContext.Current.Items[SystemConstant.HttpContextLangCode] = langCode;
+        }
+
+        public static String GetActivePlatformCode()
+        {
+            return (String)HttpContext.Current.Items[SystemConstant.HttpContextPlatformCode];
+        }
+
+        public static void SetActivePlatformCode(string platformCode)
+        {
+            HttpContext.Current.Items[SystemConstant.HttpContextPlatformCode] = platformCode;
+        }
+
+        public static String GetActiveDeviceCode()
+        {
+            return (String)HttpContext.Current.Items[SystemConstant.HttpContextDevice];
+        }
+
+        public static void SetActiveDeviceCode(string deviceCode)
+        {
+            HttpContext.Current.Items[SystemConstant.HttpContextDevice] = deviceCode;
         }
 
         public static String GetDefaultHomePageUrl()

@@ -12,8 +12,14 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightReservationForDisplay
     {
-        [JsonProperty("iss")]
-        public bool IsIssued { get; set; }
+        public string RsvNo { get; set; }
+        public DateTime RsvTime { get; set; }
+        public RsvStatus RsvStatus { get; set; }
+        public CancellationType CancellationType { get; set; }
+        public DateTime? CancellationTime { get; set; }
+        public PaymentDetails Payment { get; set; }
+        public Contact Contact { get; set; }
+        public User User { get; set; }
         [JsonProperty("itin")]
         public FlightItineraryForDisplay Itinerary { get; set; }
         [JsonProperty("pax")]
@@ -22,14 +28,13 @@ namespace Lunggo.ApCommon.Flight.Model
         public TripType OverallTripType { get; set; }
     }
 
-    public class FlightReservation : ReservationBase<FlightReservation>
+    public class FlightReservation : ReservationBase<FlightReservation, FlightItinerary, FlightRsvRule, FlightItineraryRule>
     {
-        protected override ProductType Type
+        public override ProductType Type
         {
             get { return ProductType.Flight; }
         }
 
-        public List<FlightItinerary> Itineraries { get; set; }
         public List<FlightPassenger> Passengers { get; set; }
         public TripType OverallTripType { get; set; }
 

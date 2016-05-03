@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using log4net;
-using Lunggo.ApCommon.Dictionary;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
@@ -31,7 +31,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             InitI18NMessageManager();
             InitMailService();
             InitBlobStorageService();
-            InitDictionaryService();
+            InitFlightService();
             //InitTraceListener();
         }
 
@@ -48,10 +48,10 @@ namespace Lunggo.WebJob.EmailQueueHandler
             db.Init(connString);
         }
 
-        private static void InitDictionaryService()
+        private static void InitFlightService()
         {
-            var dict = DictionaryService.GetInstance();
-            dict.Init("");
+            var flight = FlightService.GetInstance();
+            flight.Init("");
         }
 
         private static void InitI18NMessageManager()

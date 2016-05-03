@@ -1,5 +1,6 @@
 ﻿using System;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.ProductBase.Constant;
 using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Flight.Model

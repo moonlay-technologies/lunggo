@@ -4,9 +4,11 @@ using System.Globalization;
 using System.Linq;
 using CsQuery;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.Framework.Web;
 using RestSharp;
 
@@ -144,11 +146,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                     Fnumber = ParseFID2[(8 * l) + 1].Trim();
                                 }
 
-                            var dict = DictionaryService.GetInstance();
+                            var flight = FlightService.GetInstance();
                             var departureTime = DateTime.Parse(ParseFID2[j + 1]);
                             var arrivalTime = DateTime.Parse(ParseFID2[j + 3]);
-                            var arrtime = arrivalTime.AddHours(-(dict.GetAirportTimeZone(ParseFID2[j + 2])));
-                            var deptime = departureTime.AddHours(-(dict.GetAirportTimeZone(ParseFID2[j])));
+                            var arrtime = arrivalTime.AddHours(-(flight.GetAirportTimeZone(ParseFID2[j + 2])));
+                            var deptime = departureTime.AddHours(-(flight.GetAirportTimeZone(ParseFID2[j])));
                             
                         segments.Add(new FlightSegment
                         {
@@ -184,9 +186,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         RequestedCabinClass = CabinClass.Economy,
                         TripType = TripType.OneWay,
                         Supplier = Supplier.AirAsia,
-                        SupplierCurrency = "IDR",
-                        SupplierRate = 1,
-                        SupplierPrice = newPrice,
+                        Price = new Price(),
                         FareId = prefix + foundFareId,
                         Trips = new List<FlightTrip>
                         {
@@ -199,6 +199,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             }
                         }
                     };
+                    itin.Price.SetSupplier(newPrice, new Currency("IDR"));
                     
                     var result = new RevalidateFareResult
                     {

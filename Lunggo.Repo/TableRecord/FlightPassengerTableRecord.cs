@@ -11,13 +11,13 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? PassengerId
+		public long? Id
 		{
-		    get { return _PassengerId; }
+		    get { return _Id; }
 		    set
 		    {
-		        _PassengerId = value;
-		        IncrementLog("PassengerId");
+		        _Id = value;
+		        IncrementLog("Id");
 		    }
 		}
 		public String RsvNo
@@ -27,6 +27,15 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _RsvNo = value;
 		        IncrementLog("RsvNo");
+		    }
+		}
+		public String TypeCd
+		{
+		    get { return _TypeCd; }
+		    set
+		    {
+		        _TypeCd = value;
+		        IncrementLog("TypeCd");
 		    }
 		}
 		public String TitleCd
@@ -56,15 +65,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("LastName");
 		    }
 		}
-		public DateTime? BirthDate
-		{
-		    get { return _BirthDate; }
-		    set
-		    {
-		        _BirthDate = value;
-		        IncrementLog("BirthDate");
-		    }
-		}
 		public String GenderCd
 		{
 		    get { return _GenderCd; }
@@ -74,31 +74,31 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("GenderCd");
 		    }
 		}
-		public String PassengerTypeCd
+		public DateTime? BirthDate
 		{
-		    get { return _PassengerTypeCd; }
+		    get { return _BirthDate; }
 		    set
 		    {
-		        _PassengerTypeCd = value;
-		        IncrementLog("PassengerTypeCd");
+		        _BirthDate = value;
+		        IncrementLog("BirthDate");
 		    }
 		}
-		public String CountryCd
+		public String NationalityCd
 		{
-		    get { return _CountryCd; }
+		    get { return _NationalityCd; }
 		    set
 		    {
-		        _CountryCd = value;
-		        IncrementLog("CountryCd");
+		        _NationalityCd = value;
+		        IncrementLog("NationalityCd");
 		    }
 		}
-		public String IdNumber
+		public String PassportNumber
 		{
-		    get { return _IdNumber; }
+		    get { return _PassportNumber; }
 		    set
 		    {
-		        _IdNumber = value;
-		        IncrementLog("IdNumber");
+		        _PassportNumber = value;
+		        IncrementLog("PassportNumber");
 		    }
 		}
 		public DateTime? PassportExpiryDate
@@ -108,6 +108,15 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _PassportExpiryDate = value;
 		        IncrementLog("PassportExpiryDate");
+		    }
+		}
+		public String PassportCountryCd
+		{
+		    get { return _PassportCountryCd; }
+		    set
+		    {
+		        _PassportCountryCd = value;
+		        IncrementLog("PassportCountryCd");
 		    }
 		}
 		public String InsertBy
@@ -166,17 +175,18 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _PassengerId;
+		private long? _Id;
 		private String _RsvNo;
+		private String _TypeCd;
 		private String _TitleCd;
 		private String _FirstName;
 		private String _LastName;
-		private DateTime? _BirthDate;
 		private String _GenderCd;
-		private String _PassengerTypeCd;
-		private String _CountryCd;
-		private String _IdNumber;
+		private DateTime? _BirthDate;
+		private String _NationalityCd;
+		private String _PassportNumber;
 		private DateTime? _PassportExpiryDate;
+		private String _PassportCountryCd;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -214,17 +224,18 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("PassengerId", true),
+				new ColumnMetadata("Id", true),
 				new ColumnMetadata("RsvNo", false),
+				new ColumnMetadata("TypeCd", false),
 				new ColumnMetadata("TitleCd", false),
 				new ColumnMetadata("FirstName", false),
 				new ColumnMetadata("LastName", false),
-				new ColumnMetadata("BirthDate", false),
 				new ColumnMetadata("GenderCd", false),
-				new ColumnMetadata("PassengerTypeCd", false),
-				new ColumnMetadata("CountryCd", false),
-				new ColumnMetadata("IdNumber", false),
+				new ColumnMetadata("BirthDate", false),
+				new ColumnMetadata("NationalityCd", false),
+				new ColumnMetadata("PassportNumber", false),
 				new ColumnMetadata("PassportExpiryDate", false),
+				new ColumnMetadata("PassportCountryCd", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

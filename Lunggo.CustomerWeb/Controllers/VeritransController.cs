@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
 using Newtonsoft.Json;
@@ -38,7 +39,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 else
                     time = null;
 
-                var paymentInfo = new PaymentData
+                var paymentInfo = new PaymentDetails
                 {
                     Medium = PaymentMedium.Veritrans,
                     Method = MapPaymentMethod(notif),
@@ -46,13 +47,13 @@ namespace Lunggo.CustomerWeb.Controllers
                     Time = time,
                     ExternalId = notif.approval_code,
                     TransferAccount = notif.permata_va_number,
-                    FinalPrice = notif.gross_amount
+                    FinalPriceIdr = notif.gross_amount
                 };
 
                 if (notif.order_id.IsFlightRsvNo())
                 {
                     var flight = FlightService.GetInstance();
-                    flight.UpdateFlightPayment(notif.order_id, paymentInfo);
+                    PaymentService.GetInstance().UpdatePayment(notif.order_id, paymentInfo);
                 }
             }
             return new EmptyResult();
@@ -64,7 +65,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (rsvNo.IsFlightRsvNo())
             {
                 var flight = FlightService.GetInstance();
-                flight.UpdateFlightPayment(rsvNo, new PaymentData {Status = PaymentStatus.Verifying});
+                PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails {Status = PaymentStatus.Verifying});
                 TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Flight", new {RsvNo = rsvNo});
             }
@@ -78,7 +79,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (rsvNo.IsFlightRsvNo())
             {
                 var flight = FlightService.GetInstance();
-                flight.UpdateFlightPayment(rsvNo, new PaymentData { Status = PaymentStatus.Expired });
+                PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Expired });
                 TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
             }
@@ -92,7 +93,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (rsvNo.IsFlightRsvNo())
             {
                 var flight = FlightService.GetInstance();
-                flight.UpdateFlightPayment(rsvNo, new PaymentData { Status = PaymentStatus.Expired });
+                PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Expired });
                 TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
             }

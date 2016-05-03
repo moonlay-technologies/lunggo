@@ -8,8 +8,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Payment.Model
     {
         [JsonProperty("cd", NullValueHandling = NullValueHandling.Ignore)]
         public int TransferCode { get; set; }
-        [JsonProperty("tkn", NullValueHandling = NullValueHandling.Ignore)]
-        public string TransferToken { get; set; }
 
     }
 }

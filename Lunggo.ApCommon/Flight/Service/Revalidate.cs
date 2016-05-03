@@ -19,9 +19,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
 
             var revalidateSets = new List<RevalidateFlightOutputSet>();
-            var itins = IsItinBundleCacheId(input.Token)
-                ? GetItinerarySetFromCache(input.Token)
-                : new List<FlightItinerary> { GetItineraryFromCache(input.Token) };
+            var itins = GetItinerariesFromCache(input.Token);
             Parallel.ForEach(itins, itin =>
                 {
                     var outputSet = new RevalidateFlightOutputSet();
@@ -60,10 +58,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 newItins.ForEach(itin => itin.RequestedTripType = tripType);
                 AddPriceMargin(newItins);
 
-                if (IsItinBundleCacheId(input.Token))
-                    SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.Token);
-                else
-                    SaveItineraryToCache(newItins.Single(), input.Token);
+                SaveItinerariesToCache(newItins, input.Token);
 
                 output.IsSuccess = true;
                 output.IsValid = revalidateSets.TrueForAll(set => set.IsValid);
@@ -71,7 +66,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     output.IsItineraryChanged = revalidateSets.Exists(set => set.IsItineraryChanged);
                     if (output.IsItineraryChanged)
-                        output.NewItinerary = ConvertToItineraryForDisplay(BundleItineraries(newItins));
+                        output.NewItinerary = ConvertToItineraryForDisplay(newItins);
                     output.IsPriceChanged = revalidateSets.Exists(set => set.IsPriceChanged);
                     if (output.IsPriceChanged)
                         output.NewPrice = revalidateSets.Sum(set => set.NewPrice);
@@ -87,6 +82,18 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.DistinguishErrors();
             }
             return output;
+        }
+
+        private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
+        {
+            var supplierName = IdUtil.GetSupplier(conditions.Itinerary.FareId);
+            conditions.Itinerary.FareId = IdUtil.GetCoreId(conditions.Itinerary.FareId);
+            var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
+
+            var result = supplier.RevalidateFare(conditions);
+            if (result.NewItinerary != null)
+                result.NewItinerary.FareId = IdUtil.ConstructIntegratedId(result.NewItinerary.FareId, supplierName, result.NewItinerary.FareType);
+            return result;
         }
     }
 }

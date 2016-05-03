@@ -1,6 +1,5 @@
 ﻿using System;
 using Lunggo.ApCommon.Identity.User;
-using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Config;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;

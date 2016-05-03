@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 using Lunggo.ApCommon.Autocomplete;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.Framework.Cors;
 using Lunggo.WebAPI.ApiSrc.v1.Autocomplete.Logic;
 using Lunggo.WebAPI.ApiSrc.v1.Autocomplete.Model;

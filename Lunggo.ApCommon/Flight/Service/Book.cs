@@ -18,6 +18,8 @@ using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
 using System.Diagnostics;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Context;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -26,7 +28,7 @@ namespace Lunggo.ApCommon.Flight.Service
         public BookFlightOutput BookFlight(BookFlightInput input)
         {
             var output = new BookFlightOutput();
-            var itins = GetItinerarySetFromCache(input.Token); 
+            var itins = GetItinerariesFromCache(input.Token);
             var bookResults = BookItineraries(itins, input, output);
             output.IsValid = bookResults.TrueForAll(result => result.RevalidateSet.IsValid);
             if (output.IsValid)
@@ -34,17 +36,17 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.IsItineraryChanged = bookResults.Exists(result => result.RevalidateSet.IsItineraryChanged);
                 var newItins = bookResults.Select(result => result.RevalidateSet.NewItinerary).ToList();
                 if (output.IsItineraryChanged)
-                    output.NewItinerary = ConvertToItineraryForDisplay(BundleItineraries(newItins));
+                    output.NewItinerary = ConvertToItineraryForDisplay(newItins);
                 output.IsPriceChanged = bookResults.Exists(result => result.RevalidateSet.IsPriceChanged);
                 if (output.IsPriceChanged)
                     output.NewPrice = bookResults.Sum(result => result.RevalidateSet.NewPrice);
-                SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.Token);
+                SaveItinerariesToCache(newItins, input.Token);
             }
             if (AllAreBooked(bookResults))
             {
                 output.IsSuccess = true;
                 var reservation = CreateReservation(itins, input, bookResults);
-                InsertDb.Reservation(reservation);
+                InsertReservationToDb(reservation);
                 if (reservation.Payment.Method == PaymentMethod.BankTransfer)
                     SendPendingPaymentReservationNotifToCustomer(reservation.RsvNo);
                 if (reservation.Payment.Method == PaymentMethod.VirtualAccount)
@@ -59,8 +61,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 else
                 {
                     output.IsSuccess = false;
-                    output.Errors = new List<FlightError> {FlightError.PaymentFailed};
-            }
+                    output.Errors = new List<FlightError> { FlightError.PaymentFailed };
+                }
             }
             else
             {
@@ -74,7 +76,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
             //Delete Itinerary From Cache
             DeleteItineraryFromCache(input.Token);
-            DeleteItinerarySetFromCache(input.Token);
+            DeleteItinerariesFromCache(input.Token);
             return output;
         }
 
@@ -98,77 +100,36 @@ namespace Lunggo.ApCommon.Flight.Service
         private FlightReservation CreateReservation(List<FlightItinerary> itins, BookFlightInput input, List<BookResult> bookResults)
         {
             var a = new FlightReservation();
-            
+
             var trips =
                 itins.SelectMany(itin => itin.Trips).OrderBy(trip => trip.Segments.First().DepartureTime).ToList();
-            var reservation = new FlightReservation
+            var reservation = new FlightReservation();
+            reservation.RsvNo = RsvNoSequence.GetInstance().GetNext(reservation.Type);
+            reservation.RsvTime = DateTime.UtcNow;
+            reservation.RsvStatus = RsvStatus.Pending;
+            reservation.Orders = itins;
+            reservation.Contact = input.Contact;
+            reservation.Passengers = input.Passengers;
+            reservation.OverallTripType = ParseTripType(trips);
+            reservation.Payment = new PaymentDetails
             {
-                RsvNo = RsvNoSequence.GetInstance().GetNext(ProductType.Flight),
-                RsvTime = DateTime.UtcNow,
-                Itineraries = itins,
-                Contact = input.Contact,
-                Passengers = input.Passengers,
-                OverallTripType = ParseTripType(trips),
-                Payment = new PaymentData
-            {
-                    FinalPrice = itins.Sum(itin => itin.LocalPrice)
-                }
-                };
-            return reservation;
-        }
-
-        private List<ItemDetails> ConstructItemDetails(FlightReservation reservation)
-        {
-            var itemDetails = new List<ItemDetails>();
-            var trips = reservation.Itineraries.SelectMany(itin => itin.Trips).ToList();
-            var itemNameBuilder = new StringBuilder();
-            foreach (var trip in trips)
-            {
-                itemNameBuilder.Append(trip.OriginAirport + "-" + trip.DestinationAirport);
-                itemNameBuilder.Append(" " + trip.DepartureDate.ToString("dd-MM-yyyy"));
-                if (trip != trips.Last())
-                {
-                    itemNameBuilder.Append(", ");
-                }
-            }
-            var itemName = itemNameBuilder.ToString();
-            itemDetails.Add(new ItemDetails
-            {
-                Id = "1",
-                Name = itemName,
-                Price = (long)reservation.Itineraries.Sum(itin => itin.LocalPrice),
-                Quantity = 1
-            });
-            if (reservation.Discount.Nominal != 0)
-                itemDetails.Add(new ItemDetails
-                {
-                    Id = "2",
-                    Name = "Discount",
-                    Price = (long)-reservation.Discount.Nominal,
-                    Quantity = 1
-                });
-            return itemDetails;
-        }
-
-        private TransactionDetails ConstructTransactionDetails(FlightReservation reservation)
-        {
-            return new TransactionDetails
-            {
-                OrderId = reservation.RsvNo,
-                OrderTime = reservation.RsvTime,
-                Amount = (long)reservation.Payment.FinalPrice
+                Status = PaymentStatus.Pending,
+                LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
+                OriginalPriceIdr = reservation.Orders.Sum(order => order.Price.FinalIdr),
+                TimeLimit = reservation.Orders.Min(order => order.TimeLimit.GetValueOrDefault()).AddMinutes(-30),
             };
+            return reservation;
         }
 
         private List<BookResult> BookItineraries(IEnumerable<FlightItinerary> itins, BookFlightInput input, BookFlightOutput output)
         {
             var bookResults = new List<BookResult>();
             if (itins != null)
-            Parallel.ForEach(itins, itin =>
-            {
-                var bookResult = BookItinerary(itin, input, output);
-                bookResults.Add(bookResult);
-            });
+                Parallel.ForEach(itins, itin =>
+                {
+                    var bookResult = BookItinerary(itin, input, output);
+                    bookResults.Add(bookResult);
+                });
             return bookResults;
         }
 
@@ -190,7 +151,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (response.Status.BookingStatus == BookingStatus.Booked)
                 {
                     bookResult.TimeLimit = response.Status.TimeLimit;
-                    itin.TicketTimeLimit = bookResult.TimeLimit;
+                    itin.TimeLimit = bookResult.TimeLimit;
                 }
             }
             else
@@ -209,6 +170,20 @@ namespace Lunggo.ApCommon.Flight.Service
                 NewPrice = response.NewPrice
             };
             return bookResult;
+        }
+
+        public BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
+        {
+            var fareType = IdUtil.GetFareType(bookInfo.Itinerary.FareId);
+            var supplierName = IdUtil.GetSupplier(bookInfo.Itinerary.FareId);
+            bookInfo.Itinerary.FareId = IdUtil.GetCoreId(bookInfo.Itinerary.FareId);
+            var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
+            var result = supplier.BookFlight(bookInfo);
+            if (result.Status != null && result.Status.BookingId != null)
+                result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId,
+                    supplierName, fareType);
+            var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
+            return result;
         }
     }
 

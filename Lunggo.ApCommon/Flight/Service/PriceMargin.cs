@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Currency.Service;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
@@ -15,8 +13,6 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        private const decimal RoundingOrder = 100M;
-
         internal void InitPriceMarginRules()
         {
             PullPriceMarginRulesFromDatabaseToCache();
@@ -28,210 +24,186 @@ namespace Lunggo.ApCommon.Flight.Service
                 return;
 
             var rules = GetAllActiveMarginRulesFromCache();
-            var currency = CurrencyService.GetInstance();
-            var supplierRate = currency.GetSupplierExchangeRate(itins[0].Supplier);
             foreach (var itin in itins)
             {
-                itin.SupplierRate = supplierRate;
-                itin.OriginalIdrPrice = itin.SupplierPrice * itin.SupplierRate;
                 AddPriceMargin(itin, rules);
-                itin.LocalCurrency = "IDR";
-                itin.LocalRate = 1;
-                itin.LocalPrice = itin.FinalIdrPrice * itin.LocalRate;
             }
         }
 
-        internal void AddPriceMargin(FlightItinerary itin, List<MarginRule> rules)
+        internal void AddPriceMargin(FlightItinerary itin, List<FlightMarginRule> marginRules)
         {
-            var rule = GetFirstMatchingRule(itin, rules);   
+            var rule = GetFirstMatchingRule(itin, marginRules);
             ApplyMarginRule(itin, rule);
         }
 
-        public MarginRule GetPriceMarginRule(long ruleId)
-        {
-            var rules = GetAllActiveMarginRulesFromCache();
-            return rules.Single(rule => rule.RuleId == ruleId);
-        }
+        //public FlightMarginRule GetPriceMarginRule(long ruleId)
+        //{
+        //    var rules = GetAllActiveMarginRulesFromCache();
+        //    return rules.Single(rule => rule.RuleId == ruleId);
+        //}
 
-        public List<MarginRule> GetAllPriceMarginRules()
-        {
-            var rules = GetAllActiveMarginRulesFromCache();
-            rules =
-                rules.OrderByDescending(rule => rule.ConstraintCount).ThenBy(rule => rule.Priority).ToList();
-            return rules;
-        }
+        //public List<MarginRule> GetAllPriceMarginRules()
+        //{
+        //    var rules = GetAllActiveMarginRulesFromCache();
+        //    rules =
+        //        rules.OrderByDescending(rule => rule.ConstraintCount).ThenBy(rule => rule.Priority).ToList();
+        //    return rules;
+        //}
 
-        public List<MarginRule> InsertPriceMarginRuleAndRetrieveConflict(MarginRule newRule)
-        {
-            AssignRuleId(newRule);
-            InsertMarginRule(newRule);
-            var conflictingRules = RetrieveConflict(newRule);
-            return conflictingRules;
-        }
+        //public List<MarginRule> InsertPriceMarginRuleAndRetrieveConflict(MarginRule newRule)
+        //{
+        //    AssignRuleId(newRule);
+        //    InsertMarginRule(newRule);
+        //    var conflictingRules = RetrieveConflict(newRule);
+        //    return conflictingRules;
+        //}
 
-        public void DeletePriceMarginRule(long ruleId)
-        {
-            var rules = GetActiveMarginRulesFromBufferCache();
-            var deletedRules = GetDeletedMarginRulesFromBufferCache();
-            var obsoleteRule = rules.Single(rule => rule.RuleId == ruleId);
-            rules.Remove(obsoleteRule);
-            deletedRules.Add(obsoleteRule);
-            SaveActiveMarginRulesInBufferCache(rules);
-            SaveDeletedMarginRulesInBufferCache(deletedRules);
-            PushPriceMarginRulesFromCacheBufferToDatabase();
-        }
+        //public void DeletePriceMarginRule(long ruleId)
+        //{
+        //    var rules = GetActiveMarginRulesFromBufferCache();
+        //    var deletedRules = GetDeletedMarginRulesFromBufferCache();
+        //    var obsoleteRule = rules.Single(rule => rule.RuleId == ruleId);
+        //    rules.Remove(obsoleteRule);
+        //    deletedRules.Add(obsoleteRule);
+        //    SaveActiveMarginRulesInBufferCache(rules);
+        //    SaveDeletedMarginRulesInBufferCache(deletedRules);
+        //    PushPriceMarginRulesFromCacheBufferToDatabase();
+        //}
 
-        public List<MarginRule> UpdatePriceMarginRuleAndRetrieveConflict(MarginRule updatedRule)
-        {
-            DeletePriceMarginRule(updatedRule.RuleId);
-            return InsertPriceMarginRuleAndRetrieveConflict(updatedRule);
-        }
+        //public List<MarginRule> UpdatePriceMarginRuleAndRetrieveConflict(MarginRule updatedRule)
+        //{
+        //    DeletePriceMarginRule(updatedRule.RuleId);
+        //    return InsertPriceMarginRuleAndRetrieveConflict(updatedRule);
+        //}
 
-        public void UpdateResolvedPriceMarginRulesConflict(List<MarginRule> updatedRules)
-        {
-            UpdateConflictingPriceMarginRules(updatedRules);
-        }
+        //public void UpdateResolvedPriceMarginRulesConflict(List<MarginRule> updatedRules)
+        //{
+        //    UpdateConflictingPriceMarginRules(updatedRules);
+        //}
 
         public void PullPriceMarginRulesFromDatabaseToCache()
         {
-            var dbRules = GetDb.ActivePriceMarginRules();
+            var dbRules = GetActivePriceMarginRulesFromDb();
             SaveActiveMarginRulesToCache(dbRules);
             SaveActiveMarginRulesInBufferCache(dbRules);
-            SaveDeletedMarginRulesInBufferCache(new List<MarginRule>());
+            SaveDeletedMarginRulesInBufferCache(new List<FlightMarginRule>());
         }
 
         public void PushPriceMarginRulesFromCacheBufferToDatabase()
         {
             var rules = GetActiveMarginRulesFromBufferCache();
             var deletedRules = GetDeletedMarginRulesFromBufferCache();
-            InsertDb.PriceMarginRules(rules, deletedRules);
+            InsertPriceMarginRulesToDb(rules, deletedRules);
             PullPriceMarginRulesFromDatabaseToCache();
         }
 
         #region HelperMethods
 
-        private static void AssignRuleId(MarginRule newRule)
+        //private static void AssignRuleId(MarginRule newRule)
+        //{
+        //    newRule.RuleId = FlightPriceMarginRuleIdSequence.GetInstance().GetNext();
+        //}
+
+        //private void UpdateConflictingPriceMarginRules(List<MarginRule> updatedRules)
+        //{
+        //    var rules = GetActiveMarginRulesFromBufferCache();
+        //    var constraintCount = updatedRules.First().ConstraintCount;
+        //    var updatedRulesCount = updatedRules.Count();
+        //    var orderedUpdatedRules = updatedRules.OrderBy(rule => rule.Priority);
+        //    var targetIndex = rules.FindIndex(rule => rule.ConstraintCount == constraintCount);
+        //    rules.RemoveRange(targetIndex, updatedRulesCount);
+        //    rules.InsertRange(targetIndex, orderedUpdatedRules);
+        //    SaveActiveMarginRulesInBufferCache(rules);
+        //    PushPriceMarginRulesFromCacheBufferToDatabase();
+        //}
+
+        //private List<MarginRule> RetrieveConflict(MarginRule newRule)
+        //{
+        //    var rules = GetActiveMarginRulesFromBufferCache();
+        //    rules = rules.Where(rule => rule.ConstraintCount == newRule.ConstraintCount)
+        //            .OrderByDescending(rule => rule.Priority)
+        //            .ToList();
+        //    return rules;
+        //}
+
+        //private void InsertMarginRule(MarginRule newRule)
+        //{
+        //    AssignConstraintCount(newRule);
+        //    var rules = GetAllActiveMarginRulesFromCache();
+        //    var index = rules.FindLastIndex(rule => rule.ConstraintCount > newRule.ConstraintCount);
+        //    rules.Insert(index + 1, newRule);
+        //    SaveActiveMarginRulesInBufferCache(rules);
+        //}
+
+        //private void AssignConstraintCount(MarginRule newRule)
+        //{
+        //    var count = 0;
+        //    if (newRule.Airlines.Any())
+        //        count++;
+        //    if (newRule.AirportPairs.Any())
+        //        count++;
+        //    if (newRule.CityPairs.Any())
+        //        count++;
+        //    if (newRule.CountryPairs.Any())
+        //        count++;
+        //    if (newRule.BookingDateSpans.Any())
+        //        count++;
+        //    if (newRule.BookingDays.Any())
+        //        count++;
+        //    if (newRule.BookingDates.Any())
+        //        count++;
+        //    if (newRule.DepartureDateSpans.Any())
+        //        count++;
+        //    if (newRule.DepartureDays.Any())
+        //        count++;
+        //    if (newRule.DepartureDates.Any())
+        //        count++;
+        //    if (newRule.DepartureTimeSpans.Any())
+        //        count++;
+        //    if (newRule.ReturnDateSpans.Any())
+        //        count++;
+        //    if (newRule.ReturnDays.Any())
+        //        count++;
+        //    if (newRule.ReturnDates.Any())
+        //        count++;
+        //    if (newRule.ReturnTimeSpans.Any())
+        //        count++;
+        //    if (newRule.CabinClasses.Any())
+        //        count++;
+        //    if (newRule.TripTypes.Any())
+        //        count++;
+        //    if (newRule.FareTypes.Any())
+        //        count++;
+        //    newRule.ConstraintCount = count;
+        //}
+
+        private static void ApplyMarginRule(FlightItinerary itin, FlightMarginRule marginRule)
         {
-            newRule.RuleId = FlightPriceMarginRuleIdSequence.GetInstance().GetNext();
+            itin.Price.CalculateFinal(marginRule.Margin);
         }
 
-        private void UpdateConflictingPriceMarginRules(List<MarginRule> updatedRules)
+        private FlightMarginRule GetFirstMatchingRule(FlightItinerary itin, List<FlightMarginRule> rules)
         {
-            var rules = GetActiveMarginRulesFromBufferCache();
-            var constraintCount = updatedRules.First().ConstraintCount;
-            var updatedRulesCount = updatedRules.Count();
-            var orderedUpdatedRules = updatedRules.OrderBy(rule => rule.Priority);
-            var targetIndex = rules.FindIndex(rule => rule.ConstraintCount == constraintCount);
-            rules.RemoveRange(targetIndex, updatedRulesCount);
-            rules.InsertRange(targetIndex, orderedUpdatedRules);
-            SaveActiveMarginRulesInBufferCache(rules);
-            PushPriceMarginRulesFromCacheBufferToDatabase();
-        }
-
-        private List<MarginRule> RetrieveConflict(MarginRule newRule)
-        {
-            var rules = GetActiveMarginRulesFromBufferCache();
-            rules = rules.Where(rule => rule.ConstraintCount == newRule.ConstraintCount)
-                    .OrderByDescending(rule => rule.Priority)
-                    .ToList();
-            return rules;
-        }
-
-        private void InsertMarginRule(MarginRule newRule)
-        {
-            AssignConstraintCount(newRule);
-            var rules = GetAllActiveMarginRulesFromCache();
-            var index = rules.FindLastIndex(rule => rule.ConstraintCount > newRule.ConstraintCount);
-            rules.Insert(index + 1, newRule);
-            SaveActiveMarginRulesInBufferCache(rules);
-        }
-
-        private void AssignConstraintCount(MarginRule newRule)
-        {
-            var count = 0;
-            if (newRule.Airlines.Any())
-                count++;
-            if (newRule.AirportPairs.Any())
-                count++;
-            if (newRule.CityPairs.Any())
-                count++;
-            if (newRule.CountryPairs.Any())
-                count++;
-            if (newRule.BookingDateSpans.Any())
-                count++;
-            if (newRule.BookingDays.Any())
-                count++;
-            if (newRule.BookingDates.Any())
-                count++;
-            if (newRule.DepartureDateSpans.Any())
-                count++;
-            if (newRule.DepartureDays.Any())
-                count++;
-            if (newRule.DepartureDates.Any())
-                count++;
-            if (newRule.DepartureTimeSpans.Any())
-                count++;
-            if (newRule.ReturnDateSpans.Any())
-                count++;
-            if (newRule.ReturnDays.Any())
-                count++;
-            if (newRule.ReturnDates.Any())
-                count++;
-            if (newRule.ReturnTimeSpans.Any())
-                count++;
-            if (newRule.CabinClasses.Any())
-                count++;
-            if (newRule.TripTypes.Any())
-                count++;
-            if (newRule.FareTypes.Any())
-                count++;
-            newRule.ConstraintCount = count;
-        }
-
-        private static void ApplyMarginRule(FlightItinerary fare, MarginRule rule)
-        {
-            fare.MarginId = rule.RuleId;
-            fare.MarginIsFlat = rule.IsFlat;
-            if (rule.IsFlat)
+            foreach (var marginRule in rules)
             {
-                fare.FinalIdrPrice = rule.Constant;
-                fare.MarginCoefficient = 0M;
-                fare.MarginConstant = rule.Constant;
-                fare.MarginNominal = fare.OriginalIdrPrice - fare.FinalIdrPrice;    
-            }
-            else
-            {
-                var modifiedFare = fare.OriginalIdrPrice*(1M + rule.Coefficient) + rule.Constant;
-                var roundingAmount = RoundingOrder - (modifiedFare%RoundingOrder);
-                var finalFare = modifiedFare + roundingAmount;
-                fare.MarginCoefficient = rule.Coefficient;
-                fare.MarginConstant = rule.Constant + roundingAmount;
-                fare.MarginNominal = finalFare - fare.OriginalIdrPrice;
-                fare.FinalIdrPrice = finalFare;
-            }
-        }
-
-        private static MarginRule GetFirstMatchingRule(FlightItinerary fare, List<MarginRule> rules)
-        {
-            var rule = new MarginRule();
-            for (var i = 0; i < rules.Count; i++)
-            {
-                rule = rules[i];
+                var rule = marginRule.Rule;
                 if (!BookingDateMatches(rule)) continue;
-                if (!FareTypeMatches(rule, fare)) continue;
-                if (!CabinClassMatches(rule, fare)) continue;
-                if (!TripTypeMatches(rule, fare)) continue;
-                if (!FlightTimeMatches(rule, fare)) continue;
-                if (!PassengerCountMatches(rule, fare)) continue;
-                if (!AirlineMatches(rule, fare)) continue;
-                if (!AirportPairMatches(rule, fare)) continue;
-                if (!CityPairMatches(rule, fare)) continue;
-                if (CountryPairMatches(rule, fare)) break;
+                if (!FareTypeMatches(rule, itin)) continue;
+                if (!CabinClassMatches(rule, itin)) continue;
+                if (!AirlineTypeMatches(rule, itin)) continue;
+                if (!TripTypeMatches(rule, itin)) continue;
+                if (!FlightTimeMatches(rule, itin)) continue;
+                if (!PassengerCountMatches(rule, itin)) continue;
+                if (!AirlineMatches(rule, itin)) continue;
+                if (!AirportPairMatches(rule, itin)) continue;
+                if (!CityPairMatches(rule, itin)) continue;
+                if (!CountryPairMatches(rule, itin)) continue;
+                return marginRule;
             }
-            return rule;
+            return null;
         }
 
-        private static bool BookingDateMatches(MarginRule rule)
+        private static bool BookingDateMatches(FlightItineraryRule rule)
         {
             var nowDate = DateTime.UtcNow.Date;
             var dateSpanOk = !rule.BookingDateSpans.Any() || rule.BookingDateSpans.Any(dateSpan => dateSpan.Contains(nowDate));
@@ -240,14 +212,14 @@ namespace Lunggo.ApCommon.Flight.Service
             return dateSpanOk && dayOk && dateOk;
         }
 
-        private static bool FlightTimeMatches(MarginRule rule, FlightItinerary fare)
+        private static bool FlightTimeMatches(FlightItineraryRule rule, FlightItinerary fare)
         {
             var departureOk = DepartureTimeMatches(rule, fare);
             var returnOk = ReturnTimeMatches(rule, fare);
             return departureOk && returnOk;
         }
 
-        private static bool DepartureTimeMatches(MarginRule rule, FlightItinerary fare)
+        private static bool DepartureTimeMatches(FlightItineraryRule rule, FlightItinerary fare)
         {
             var dates = fare.Trips.First().Segments.Select(segment => segment.DepartureTime.Date).ToList();
             var times = fare.Trips.First().Segments.Select(segment => segment.DepartureTime.TimeOfDay).ToList();
@@ -258,7 +230,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return dateSpanOk && dayOk && dateOk && timeSpanOk;
         }
 
-        private static bool ReturnTimeMatches(MarginRule rule, FlightItinerary fare)
+        private static bool ReturnTimeMatches(FlightItineraryRule rule, FlightItinerary fare)
         {
             if (fare.TripType != TripType.RoundTrip)
                 return true;
@@ -274,28 +246,36 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private static bool TripTypeMatches(MarginRule rule, FlightItinerary fare)
+        private static bool TripTypeMatches(FlightItineraryRule rule, FlightItinerary fare)
         {
             return !rule.TripTypes.Any() || rule.TripTypes.Contains(fare.RequestedTripType);
         }
 
-        private static bool FareTypeMatches(MarginRule rule, FlightItinerary fare)
+        private static bool FareTypeMatches(FlightItineraryRule rule, FlightItinerary fare)
         {
             return !rule.FareTypes.Any() || rule.FareTypes.Contains(fare.FareType);
         }
 
-        private static bool CabinClassMatches(MarginRule rule, FlightItinerary fare)
+        private static bool CabinClassMatches(FlightItineraryRule rule, FlightItinerary fare)
         {
             return !rule.CabinClasses.Any() || rule.CabinClasses.Contains(fare.RequestedCabinClass);
         }
 
-        private static bool PassengerCountMatches(MarginRule rule, FlightItinerary fare)
+        private static bool AirlineTypeMatches(FlightItineraryRule rule, FlightItinerary fare)
+        {
+            var airlineTypes = fare.Trips.SelectMany(trip => trip.Segments)
+                .Select(segment => segment.AirlineType);
+
+            return !rule.AirlineTypes.Any() || airlineTypes.All(airlineType => rule.AirlineTypes.Contains(airlineType));
+        }
+
+        private static bool PassengerCountMatches(FlightItineraryRule rule, FlightItinerary fare)
         {
             var totalPassenger = fare.AdultCount + fare.ChildCount + fare.InfantCount;
             return totalPassenger >= rule.MinPassengers && totalPassenger <= rule.MaxPassengers;
         }
 
-        private static bool AirlineMatches(MarginRule rule, FlightItinerary fare)
+        private static bool AirlineMatches(FlightItineraryRule rule, FlightItinerary fare)
         {
             var airlines = fare.Trips.SelectMany(trip => trip.Segments)
                 .Select(segment => segment.AirlineCode);
@@ -308,7 +288,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 return true;
         }
 
-        private static bool AirportPairMatches(MarginRule rule, FlightItinerary fare)
+        private static bool AirportPairMatches(FlightItineraryRule rule, FlightItinerary fare)
         {
             var farePairs = fare.Trips.Select(trip => new AirportPairRule
             {
@@ -336,18 +316,17 @@ namespace Lunggo.ApCommon.Flight.Service
                 return true;
         }
 
-        private static bool CityPairMatches(MarginRule rule, FlightItinerary fare)
+        private bool CityPairMatches(FlightItineraryRule rule, FlightItinerary fare)
         {
-            var dict = DictionaryService.GetInstance();
             var farePairs = fare.Trips.Select(trip => new AirportPairRule
             {
-                Origin = dict.GetAirportCityCode(trip.OriginAirport),
-                Destination = dict.GetAirportCityCode(trip.DestinationAirport)
+                Origin = GetAirportCityCode(trip.OriginAirport),
+                Destination = GetAirportCityCode(trip.DestinationAirport)
             });
             var returnPair = new AirportPairRule
             {
-                Origin = dict.GetAirportCityCode(fare.Trips.First().OriginAirport),
-                Destination = dict.GetAirportCityCode(fare.Trips.First().DestinationAirport)
+                Origin = GetAirportCityCode(fare.Trips.First().OriginAirport),
+                Destination = GetAirportCityCode(fare.Trips.First().DestinationAirport)
             };
 
             if (rule.CityPairs.Any())
@@ -365,18 +344,17 @@ namespace Lunggo.ApCommon.Flight.Service
                 return true;
         }
 
-        private static bool CountryPairMatches(MarginRule rule, FlightItinerary fare)
+        private bool CountryPairMatches(FlightItineraryRule rule, FlightItinerary fare)
         {
-            var dict = DictionaryService.GetInstance();
             var farePairs = fare.Trips.Select(trip => new AirportPairRule
             {
-                Origin = dict.GetAirportCountryCode(trip.OriginAirport),
-                Destination = dict.GetAirportCountryCode(trip.DestinationAirport)
+                Origin = GetAirportCountryCode(trip.OriginAirport),
+                Destination = GetAirportCountryCode(trip.DestinationAirport)
             });
             var returnPair = new AirportPairRule
             {
-                Origin = dict.GetAirportCountryCode(fare.Trips.First().OriginAirport),
-                Destination = dict.GetAirportCountryCode(fare.Trips.First().DestinationAirport)
+                Origin = GetAirportCountryCode(fare.Trips.First().OriginAirport),
+                Destination = GetAirportCountryCode(fare.Trips.First().DestinationAirport)
             };
 
             if (rule.CountryPairs.Any())

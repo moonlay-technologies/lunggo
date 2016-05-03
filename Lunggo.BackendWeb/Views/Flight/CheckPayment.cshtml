@@ -45,7 +45,7 @@
                                 <td>@reports[i].RemitterName</td>
                                 <td>@reports[i].RemitterBank</td>
                                 <td>@reports[i].RemitterAccount</td>
-                                <td>Rp @rsvs[i].Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                <td>Rp @rsvs[i].Payment.FinalPriceIdr.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                 <td>Rp @reports[i].Amount.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                 <td>
                                     <input type="hidden" name="[@i].RsvNo" value="@reports[i].RsvNo"/>

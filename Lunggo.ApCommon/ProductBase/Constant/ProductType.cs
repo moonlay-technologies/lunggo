@@ -13,4 +13,12 @@ namespace Lunggo.ApCommon.ProductBase.Constant
         Hotel = 2,
         Activity = 3
     }
+
+    internal class ProductTypeCd
+    {
+        internal static ProductType Parse(string rsvNo)
+        {
+            return (ProductType) int.Parse(rsvNo.Substring(0, 1));
+        }
+    }
 }

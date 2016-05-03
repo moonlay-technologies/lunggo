@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Model;
 using FareType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareType;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
@@ -204,9 +206,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 if (flightItinerary.Trips == null)
                     return null;
                 flightItinerary.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
-                flightItinerary.SupplierCurrency = "USD";
-                flightItinerary.SupplierPrice =
-                    decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount);
+                flightItinerary.Price = new Price();
+                flightItinerary.Price.SetSupplier(decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount), new Currency("USD"));
                 MapRequiredFields(pricedItinerary, flightItinerary);
                 flightItinerary.Supplier = Supplier.Mystifly;
                 flightItinerary.FareType = MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType);
@@ -227,18 +228,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
         {
             foreach (var segment in pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments))
             {
-                var dict = DictionaryService.GetInstance();
-                if (!dict.IsAirportCodeExists(segment.DepartureAirportLocationCode) ||
-                    !dict.IsAirportCodeExists(segment.ArrivalAirportLocationCode))
+                var flight = FlightService.GetInstance();
+                if (!flight.IsAirportCodeExists(segment.DepartureAirportLocationCode) ||
+                    !flight.IsAirportCodeExists(segment.ArrivalAirportLocationCode))
                 {
                     return false;
                 }
             }
             foreach (var segment in pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments))
             {
-                var dict = DictionaryService.GetInstance();
-                if (!dict.IsAirlineCodeExists(segment.MarketingAirlineCode) ||
-                    !dict.IsAirlineCodeExists(segment.OperatingAirline.Code))
+                var flight = FlightService.GetInstance();
+                if (!flight.IsAirlineCodeExists(segment.MarketingAirlineCode) ||
+                    !flight.IsAirlineCodeExists(segment.OperatingAirline.Code))
                 {
                     return false;
                 }
@@ -253,7 +254,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 case FareType.Public:
                     return Flight.Constant.FareType.Published;
                 case FareType.WebFare:
-                    return Flight.Constant.FareType.Lcc;
+                    return Flight.Constant.FareType.Private;
                 case FareType.Private:
                     return Flight.Constant.FareType.Consolidated;
                 default:
@@ -333,12 +334,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     }
                 }
             }
-            var dict = DictionaryService.GetInstance();
             var segments = flightItinerary.Trips.SelectMany(trip => trip.Segments).ToList();
             var segmentDepartureAirports = segments.Select(s => s.DepartureAirport);
             var segmentArrivalAirports = segments.Select(s => s.ArrivalAirport);
             var segmentAirports = segmentDepartureAirports.Concat(segmentArrivalAirports);
-            var segmentCountries = segmentAirports.Select(dict.GetAirportCountryCode).Distinct();
+            var segmentCountries = segmentAirports.Select(FlightService.GetInstance().GetAirportCountryCode).Distinct();
             if (segmentCountries.Count() > 1)
                 flightItinerary.RequirePassport = true;
             else if (flightItinerary.RequirePassport)
@@ -350,7 +350,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         private static List<FlightTrip> MapFlightTrips(PricedItinerary pricedItinerary, ConditionsBase conditions)
         {
-            var dict = DictionaryService.GetInstance();
             var flightTrips = new List<FlightTrip>();
             var segments = pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments).ToArray();
             var i = 0;
@@ -359,7 +358,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 try
                 {
                     if (segments[i].DepartureAirportLocationCode != tripInfo.OriginAirport &&
-                            dict.GetAirportCityCode(segments[i].DepartureAirportLocationCode) !=
+                            FlightService.GetInstance().GetAirportCityCode(segments[i].DepartureAirportLocationCode) !=
                                  tripInfo.OriginAirport)
                     {
                         return null;
@@ -376,7 +375,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                         fareTrip.Segments.Add(MapFlightSegment(segments[i]));
                         i++;
                     } while (segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
-                             dict.GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) !=
+                             FlightService.GetInstance().GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) !=
                                 tripInfo.DestinationAirport);
                     flightTrips.Add(fareTrip);
                 }

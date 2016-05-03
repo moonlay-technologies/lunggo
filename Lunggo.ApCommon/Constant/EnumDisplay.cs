@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.ProductBase.Constant;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.I18nMessage;
 
@@ -24,11 +25,11 @@ namespace Lunggo.ApCommon.Constant
             catch { }
             switch (title)
             {
-                case Flight.Constant.Title.Mister:
+                case ProductBase.Constant.Title.Mister:
                     return Msg.GetMessageValue("AC00001", lang);
-                case Flight.Constant.Title.Mistress:
+                case ProductBase.Constant.Title.Mistress:
                     return Msg.GetMessageValue("AC00002", lang);
-                case Flight.Constant.Title.Miss:
+                case ProductBase.Constant.Title.Miss:
                     return Msg.GetMessageValue("AC00003", lang);
                 default:
                     return "";

@@ -61,7 +61,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Logic
                     return new CheckVoucherApiResponse
                     {
                         Discount = response.TotalDiscount,
-                        DisplayName = response.CampaignVoucher.DisplayName,
+                        DisplayName = response.Discount.DisplayName,
                         StatusCode = HttpStatusCode.OK
                     };
                 case VoucherStatus.CampaignHasEnded:

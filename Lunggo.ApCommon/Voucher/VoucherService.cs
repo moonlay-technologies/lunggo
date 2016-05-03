@@ -104,22 +104,22 @@ namespace Lunggo.ApCommon.Voucher
             queue.AddMessage(new CloudQueueMessage(model.Serialize()));
         }
 
-        public decimal CheckVoucherDiscount(string token, string code, string email)
-        {
-            if (token.IsFlightCache())
-            {
-                var flight = FlightService.GetInstance();
-                var itinerary = flight.GetItineraryForDisplay(token);
-                var rules = GetFlightDiscountRules(code, email);
-                var rule = flight.GetMatchingDiscountRule(rules);
-                if (rule != null)
-                    return (itinerary.TotalFare*rule.Coefficient) + rule.Constant;
-                else
-                    return 0;
-            }
-            else 
-                return 0;
-        }
+        //public decimal CheckVoucherDiscount(string token, string code, string email)
+        //{
+        //    if (token.IsFlightCache())
+        //    {
+        //        var flight = FlightService.GetInstance();
+        //        var itinerary = flight.GetItineraryForDisplay(token);
+        //        var rules = GetFlightDiscountRules(code, email);
+        //        var rule = flight.GetMatchingDiscountRule(rules);
+        //        if (rule != null)
+        //            return (itinerary.TotalFare*rule.Coefficient) + rule.Constant;
+        //        else
+        //            return 0;
+        //    }
+        //    else 
+        //        return 0;
+        //}
 
     }
 }

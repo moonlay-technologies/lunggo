@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using Lunggo.ApCommon.Autocomplete;
-using Lunggo.ApCommon.Dictionary;
 using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete.Model

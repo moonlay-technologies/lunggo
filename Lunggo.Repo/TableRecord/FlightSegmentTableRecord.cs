@@ -11,13 +11,13 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? SegmentId
+		public long? Id
 		{
-		    get { return _SegmentId; }
+		    get { return _Id; }
 		    set
 		    {
-		        _SegmentId = value;
-		        IncrementLog("SegmentId");
+		        _Id = value;
+		        IncrementLog("Id");
 		    }
 		}
 		public long? TripId
@@ -63,15 +63,6 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _FlightNumber = value;
 		        IncrementLog("FlightNumber");
-		    }
-		}
-		public String CabinClassCd
-		{
-		    get { return _CabinClassCd; }
-		    set
-		    {
-		        _CabinClassCd = value;
-		        IncrementLog("CabinClassCd");
 		    }
 		}
 		public String AircraftCd
@@ -146,6 +137,33 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Duration");
 		    }
 		}
+		public String Rbd
+		{
+		    get { return _Rbd; }
+		    set
+		    {
+		        _Rbd = value;
+		        IncrementLog("Rbd");
+		    }
+		}
+		public String CabinClassCd
+		{
+		    get { return _CabinClassCd; }
+		    set
+		    {
+		        _CabinClassCd = value;
+		        IncrementLog("CabinClassCd");
+		    }
+		}
+		public String AirlineTypeCd
+		{
+		    get { return _AirlineTypeCd; }
+		    set
+		    {
+		        _AirlineTypeCd = value;
+		        IncrementLog("AirlineTypeCd");
+		    }
+		}
 		public int? StopQuantity
 		{
 		    get { return _StopQuantity; }
@@ -162,6 +180,15 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _Baggage = value;
 		        IncrementLog("Baggage");
+		    }
+		}
+		public Boolean? Meal
+		{
+		    get { return _Meal; }
+		    set
+		    {
+		        _Meal = value;
+		        IncrementLog("Meal");
 		    }
 		}
 		public String InsertBy
@@ -220,13 +247,12 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _SegmentId;
+		private long? _Id;
 		private long? _TripId;
 		private String _Pnr;
 		private String _OperatingAirlineCd;
 		private String _AirlineCd;
 		private String _FlightNumber;
-		private String _CabinClassCd;
 		private String _AircraftCd;
 		private String _DepartureAirportCd;
 		private String _DepartureTerminal;
@@ -235,8 +261,12 @@ namespace Lunggo.Repository.TableRecord
 		private DateTime? _DepartureTime;
 		private DateTime? _ArrivalTime;
 		private TimeSpan? _Duration;
+		private String _Rbd;
+		private String _CabinClassCd;
+		private String _AirlineTypeCd;
 		private int? _StopQuantity;
 		private String _Baggage;
+		private Boolean? _Meal;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -274,13 +304,12 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("SegmentId", true),
+				new ColumnMetadata("Id", true),
 				new ColumnMetadata("TripId", false),
 				new ColumnMetadata("Pnr", false),
 				new ColumnMetadata("OperatingAirlineCd", false),
 				new ColumnMetadata("AirlineCd", false),
 				new ColumnMetadata("FlightNumber", false),
-				new ColumnMetadata("CabinClassCd", false),
 				new ColumnMetadata("AircraftCd", false),
 				new ColumnMetadata("DepartureAirportCd", false),
 				new ColumnMetadata("DepartureTerminal", false),
@@ -289,8 +318,12 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("DepartureTime", false),
 				new ColumnMetadata("ArrivalTime", false),
 				new ColumnMetadata("Duration", false),
+				new ColumnMetadata("Rbd", false),
+				new ColumnMetadata("CabinClassCd", false),
+				new ColumnMetadata("AirlineTypeCd", false),
 				new ColumnMetadata("StopQuantity", false),
 				new ColumnMetadata("Baggage", false),
+				new ColumnMetadata("Meal", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

@@ -23,14 +23,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Payment.Logic
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERPPAY01"
-                    };
-
-                if (!IsTransferTokenProvided(request))
-                    return new PaymentApiResponse
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERPPAY02"
-                    };
+                    };                
 
                 if (NotEligibleForPaymentMethod(request, user))
                     return new PaymentApiResponse
@@ -38,10 +31,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Payment.Logic
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERPPAY03"
                     };
-
-                var paymentData = PreprocessPaymentData(request);
-                PaymentService.GetInstance().SubmitPayment(paymentData);
-                var apiResponse = AssembleApiResponse(paymentData);
+                var paymentDetails = PaymentService.GetInstance().SubmitPayment(request.RsvNo, request.Method, request.Data, request.DiscountCode);
+                var apiResponse = AssembleApiResponse(paymentDetails);
                 return apiResponse;
             }
             catch
@@ -54,14 +45,14 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Payment.Logic
             }
         }
 
-        private static PaymentApiResponse AssembleApiResponse(PaymentData paymentData)
+        private static PaymentApiResponse AssembleApiResponse(PaymentDetails paymentDetails)
         {
             return new PaymentApiResponse
             {
-                PaymentStatus = paymentData.Status,
-                Method = paymentData.Method,
-                RedirectionUrl = paymentData.RedirectionUrl,
-                TransferAccount = paymentData.TransferAccount,
+                PaymentStatus = paymentDetails.Status,
+                Method = paymentDetails.Method,
+                RedirectionUrl = paymentDetails.RedirectionUrl,
+                TransferAccount = paymentDetails.TransferAccount,
                 StatusCode = HttpStatusCode.OK
             };
         }
@@ -78,28 +69,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Payment.Logic
             return
                 request != null &&
                 request.Method != PaymentMethod.Undefined &&
-                request.Currency != null &&
                 request.RsvNo != null;
-        }
-
-        private static bool IsTransferTokenProvided(PayApiRequest request)
-        {
-            return
-                request.Method == PaymentMethod.BankTransfer &&
-                request.TransferToken != null;
-        }
-
-        private static PaymentData PreprocessPaymentData(PayApiRequest request)
-        {
-            var payServiceRequest = new PaymentData
-            {
-                Method = request.Method,
-                Currency = request.Currency,
-                RsvNo = request.RsvNo,
-                TransferToken = request.TransferToken,
-                Data = request.Data
-            };
-            return payServiceRequest;
         }
     }
 }

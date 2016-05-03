@@ -1,6 +1,5 @@
 ﻿using System.Web;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.CloudApp.CaptchaReader.Models;
 using Lunggo.Framework.Config;
@@ -120,16 +119,10 @@ namespace Lunggo.CloudApp.CaptchaReader
             });
         }
 
-        private static void InitDictionaryService()
-        {
-            var dictionary = DictionaryService.GetInstance();
-            dictionary.Init("Config");
-        }
-
         private static void InitFlightService()
         {
             var flight = FlightService.GetInstance();
-            flight.Init();
+            flight.Init("Config");
         }
     }
 }

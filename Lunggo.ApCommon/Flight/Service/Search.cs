@@ -90,11 +90,65 @@ namespace Lunggo.ApCommon.Flight.Service
             SearchFlightInternal(conditions, supplierIndex);
         }
 
+        private void SearchFlightInternal(SearchFlightConditions conditions, int supplierIndex)
+        {
+            var supplier = Suppliers[supplierIndex];
+
+            var conditionsList = new List<SearchFlightConditions> { conditions };
+            if (conditions.Trips.Count > 1)
+                conditionsList.AddRange(conditions.Trips.Select(trip => new SearchFlightConditions
+                {
+                    AdultCount = conditions.AdultCount,
+                    ChildCount = conditions.ChildCount,
+                    InfantCount = conditions.InfantCount,
+                    CabinClass = conditions.CabinClass,
+                    AirlinePreferences = conditions.AirlinePreferences,
+                    AirlineExcludes = conditions.AirlineExcludes,
+                    Trips = new List<FlightTrip> { trip }
+                }));
+
+            var searchId = EncodeSearchConditions(conditions);
+            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
+
+            Parallel.ForEach(conditionsList, partialConditions =>
+            {
+                var result = supplier.SearchFlight(partialConditions);
+                result.Itineraries = result.Itineraries ?? new List<FlightItinerary>();
+                if (result.IsSuccess)
+                    foreach (var itin in result.Itineraries)
+                    {
+                        itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
+                        itin.SearchId = searchId;
+                    }
+                SaveSearchedPartialItinerariesToBufferCache(result.Itineraries, searchId, timeout, supplierIndex, conditionsList.IndexOf(partialConditions));
+            });
+
+            var itinLists = GetSearchedPartialItinerariesFromBufferCache(searchId, supplierIndex);
+            var tripType = ParseTripType(searchId);
+            foreach (var itinList in itinLists)
+            {
+                var sequenceNo = 0;
+                foreach (var itin in itinList)
+                {
+                    itin.RegisterNumber = (supplierIndex * SupplierIndexCap) + sequenceNo++;
+                    itin.RequestedTripType = tripType;
+                }
+            }
+            if (conditions.Trips.Count > 1)
+            {
+                var combos = GenerateCombo(itinLists);
+                SaveCombosToCache(combos, searchId, supplierIndex);
+            }
+            SaveSearchedItinerariesToCache(itinLists, searchId, timeout, supplierIndex);
+            SaveSearchedSupplierIndexToCache(searchId, supplierIndex, timeout);
+            InvalidateSearchingStatusInCache(searchId, supplierIndex);
+        }
+
         private void SetComboFare(List<FlightItineraryForDisplay>[] itinLists, List<FlightItinerary> bundledItins, List<Combo> combos)
         {
             foreach (var combo in combos)
             {
-                combo.Fare = bundledItins.Single(itin => itin.RegisterNumber == combo.BundledRegister).LocalPrice;
+                combo.Fare = bundledItins.Single(itin => itin.RegisterNumber == combo.BundledRegister).Price.Local;
                 var comboFare = combo.Fare / combo.Registers.Length;
                 for (var i = 0; i < combo.Registers.Length; i++)
                 {

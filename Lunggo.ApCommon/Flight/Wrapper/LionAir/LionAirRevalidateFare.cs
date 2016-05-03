@@ -7,10 +7,11 @@ using System.Web;
 using CsQuery;
 using CsQuery.ExtensionMethods.Internal;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.Framework.Config;
 using RestSharp;
 
@@ -406,11 +407,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 Convert.ToInt32(timeArrival.Split(':')[1]), 0), DateTimeKind.Utc);
                         }
 
-                        DictionaryService.GetInstance().GetAirportTimeZone(airportarrival);
-                        DictionaryService.GetInstance().GetAirportTimeZone(airportdeparture);
+                        FlightService.GetInstance().GetAirportTimeZone(airportarrival);
+                        FlightService.GetInstance().GetAirportTimeZone(airportdeparture);
 
-                        var dur = arrDate.AddHours(-DictionaryService.GetInstance().GetAirportTimeZone(airportarrival)) - 
-                            depDate.AddHours(-DictionaryService.GetInstance().GetAirportTimeZone(airportdeparture));
+                        var dur = arrDate.AddHours(-FlightService.GetInstance().GetAirportTimeZone(airportarrival)) - 
+                            depDate.AddHours(-FlightService.GetInstance().GetAirportTimeZone(airportdeparture));
 
                         segments.Add(new FlightSegment
                         {
@@ -666,8 +667,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         RequestedCabinClass = CabinClass.Economy,
                         TripType = TripType.OneWay,
                         Supplier = Supplier.LionAir,
-                        SupplierCurrency = "IDR",
-                        SupplierPrice = Convert.ToDecimal(agentprice),
+                        Price = new Price(),
                         FareId = conditions.Itinerary.FareId,
                         Trips = new List<FlightTrip>
                         {
@@ -680,6 +680,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             }
                         }
                     };
+                    itin.Price.SetSupplier(Convert.ToDecimal(agentprice), new Currency("IDR"));
 
                     var newPrice = Convert.ToDecimal(agentprice);
                     var result = new RevalidateFareResult

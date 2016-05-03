@@ -7,10 +7,11 @@ using System.Security.Cryptography;
 using System.Web;
 using CsQuery;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.Framework.Web;
 using RestSharp;
 
@@ -60,9 +61,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 // [GET] Search Flight
 
-                var dict = DictionaryService.GetInstance();
-                var originCountry = dict.GetAirportCountryCode(origin);
-                var destinationCountry = dict.GetAirportCountryCode(dest);
+                var originCountry = FlightService.GetInstance().GetAirportCountryCode(origin);
+                var destinationCountry = FlightService.GetInstance().GetAirportCountryCode(dest);
                 var searchedHtml = new CQ();
                 if (originCountry == "ID")
                 {
@@ -202,8 +202,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             RequestedCabinClass = CabinClass.Economy,
                             TripType = TripType.OneWay,
                             Supplier = Supplier.AirAsia,
-                            SupplierCurrency = "IDR",
-                            SupplierPrice = newPrice,
+                            Price = new Price(),
                             FareId = fareIdPrefix + price.ToString("0") + "." + foundFareId,
                             Trips = new List<FlightTrip>
                             {
@@ -216,6 +215,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 }
                             }
                         };
+                        itin.Price.SetSupplier(newPrice, new Currency("IDR"));
 
                         var fareRow = radio.Parent().Parent().Parent().Parent().Parent();
                         var durationRows = fareRow.Children().First().MakeRoot()["tr:even"];

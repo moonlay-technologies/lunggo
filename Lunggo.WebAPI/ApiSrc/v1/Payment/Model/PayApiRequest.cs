@@ -13,11 +13,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Payment.Model
         [JsonProperty("met")]
         public PaymentMethod Method { get; set; }
         [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
-        public UniversalPaymentData Data { get; set; }
-        [JsonProperty("curr")]
-        public string Currency { get; set; }
+        public PaymentData Data { get; set; }
         [JsonProperty("tkn")]
-        public string TransferToken { get; set; }
+        public string DiscountCode { get; set; }
         [JsonProperty("rsvno")]
         public string RsvNo { get; set; }
     }

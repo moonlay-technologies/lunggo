@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Dictionary;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -12,58 +9,77 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         internal FlightReservationForDisplay ConvertToReservationForDisplay(FlightReservation reservation)
         {
-            if (reservation != null)
+            if (reservation == null)
+                return null;
+
+            return new FlightReservationForDisplay
             {
-                return new FlightReservationForDisplay
-                {
-                    RsvNo = reservation.RsvNo,
-                    RsvTime = reservation.RsvTime,
-                    IsIssued = reservation.Itineraries.TrueForAll(itin => itin.BookingStatus == BookingStatus.Ticketed),
-                    OverallTripType = reservation.OverallTripType,
-                    InvoiceNo = reservation.InvoiceNo,
-                    Itinerary = ConvertToItineraryForDisplay(BundleItineraries(reservation.Itineraries)),
-                    Contact = reservation.Contact,
-                    Passengers = reservation.Passengers,
-                    Payment = reservation.Payment,
-                    Discount = reservation.Discount.Nominal,
-                    DiscountName = string.IsNullOrWhiteSpace(reservation.Discount.Name) ? "Discount" : reservation.Discount.Name,
-                    VoucherCode = reservation.Discount.Code,
-                    TransferCode = reservation.TransferCode
-                };
-            }
-            else
+                RsvNo = reservation.RsvNo,
+                RsvTime = reservation.RsvTime,
+                RsvStatus = reservation.RsvStatus,
+                CancellationType = reservation.CancellationType,
+                CancellationTime = reservation.CancellationTime,
+                OverallTripType = reservation.OverallTripType,
+                Itinerary = ConvertToItineraryForDisplay(reservation.Orders),
+                Contact = reservation.Contact,
+                Passengers = reservation.Passengers,
+                Payment = reservation.Payment,
+                User = reservation.User
+            };
+        }
+
+        internal FlightItineraryForDisplay ConvertToItineraryForDisplay(List<FlightItinerary> itins)
+        {
+            if (itins == null || itins.Count == 0)
+                return null;
+
+            var totalFare = itins.Sum(itin => itin.Price.Local);
+            var tripType =
+                ParseTripType(
+                    itins.SelectMany(itin => itin.Trips).OrderBy(trip => trip.Segments[0].DepartureTime).ToList());
+            return new FlightItineraryForDisplay
             {
-                return new FlightReservationForDisplay();
-            }
+                AdultCount = itins[0].AdultCount,
+                ChildCount = itins[0].ChildCount,
+                InfantCount = itins[0].InfantCount,
+                RequireBirthDate = itins.Exists(itin => itin.RequireBirthDate),
+                RequirePassport = itins.Exists(itin => itin.RequirePassport),
+                RequireSameCheckIn = itins.Exists(itin => itin.RequireSameCheckIn),
+                RequireNationality = itins.Exists(itin => itin.RequireNationality),
+                RequestedCabinClass = itins[0].RequestedCabinClass,
+                CanHold = itins.TrueForAll(itin => itin.CanHold),
+                Currency = itins[0].Price.LocalCurrency,
+                TripType = tripType,
+                TotalFare = totalFare,
+                Trips = itins[0].Trips.Select(ConvertToTripForDisplay).ToList(),
+                RegisterNumber = 0,
+                OriginalFare = GenerateDummyOriginalFare(totalFare)
+            };
         }
 
         internal FlightItineraryForDisplay ConvertToItineraryForDisplay(FlightItinerary itinerary)
         {
-            if (itinerary != null)
-            {
-                return new FlightItineraryForDisplay
-                {
-                    AdultCount = itinerary.AdultCount,
-                    ChildCount = itinerary.ChildCount,
-                    InfantCount = itinerary.InfantCount,
-                    RequireBirthDate = itinerary.RequireBirthDate,
-                    RequirePassport = itinerary.RequirePassport,
-                    RequireSameCheckIn = itinerary.RequireSameCheckIn,
-                    RequireNationality = itinerary.RequireNationality,
-                    RequestedCabinClass = itinerary.RequestedCabinClass,
-                    CanHold = itinerary.CanHold,
-                    Currency = itinerary.LocalCurrency,
-                    TripType = itinerary.TripType,
-                    TotalFare = itinerary.LocalPrice,
-                    Trips = itinerary.Trips.Select(ConvertToTripForDisplay).ToList(),
-                    RegisterNumber = itinerary.RegisterNumber,
-                    OriginalFare = GenerateDummyOriginalFare(itinerary.LocalPrice)
-                };
-            }
-            else
-            {
+            if (itinerary == null)
                 return null;
-            }
+
+            return new FlightItineraryForDisplay
+            {
+                AdultCount = itinerary.AdultCount,
+                ChildCount = itinerary.ChildCount,
+                InfantCount = itinerary.InfantCount,
+                RequireBirthDate = itinerary.RequireBirthDate,
+                RequirePassport = itinerary.RequirePassport,
+                RequireSameCheckIn = itinerary.RequireSameCheckIn,
+                RequireNationality = itinerary.RequireNationality,
+                RequestedCabinClass = itinerary.RequestedCabinClass,
+                CanHold = itinerary.CanHold,
+                Currency = itinerary.Price.LocalCurrency,
+                TripType = itinerary.TripType,
+                TotalFare = itinerary.Price.Local,
+                Trips = itinerary.Trips.Select(ConvertToTripForDisplay).ToList(),
+                RegisterNumber = itinerary.RegisterNumber,
+                OriginalFare = GenerateDummyOriginalFare(itinerary.Price.Local)
+            };
         }
 
         private static ComboForDisplay ConvertToComboForDisplay(Combo combo)
@@ -77,18 +93,17 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
-        private static FlightTripForDisplay ConvertToTripForDisplay(FlightTrip trip)
+        private FlightTripForDisplay ConvertToTripForDisplay(FlightTrip trip)
         {
-            var dict = DictionaryService.GetInstance();
             return new FlightTripForDisplay
             {
                 Segments = MapSegments(trip.Segments),
                 OriginAirport = trip.OriginAirport,
-                OriginCity = dict.GetAirportCity(trip.OriginAirport),
-                OriginAirportName = dict.GetAirportName(trip.OriginAirport),
+                OriginCity = GetAirportCity(trip.OriginAirport),
+                OriginAirportName = GetAirportName(trip.OriginAirport),
                 DestinationAirport = trip.DestinationAirport,
-                DestinationCity = dict.GetAirportCity(trip.DestinationAirport),
-                DestinationAirportName = dict.GetAirportName(trip.DestinationAirport),
+                DestinationCity = GetAirportCity(trip.DestinationAirport),
+                DestinationAirportName = GetAirportName(trip.DestinationAirport),
                 DepartureDate = trip.DepartureDate,
                 TotalDuration = CalculateTotalDuration(trip),
                 Airlines = GetAirlineList(trip),
@@ -97,27 +112,26 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
-        private static List<FlightSegment> MapSegments(IEnumerable<FlightSegment> segments)
+        private List<FlightSegment> MapSegments(IEnumerable<FlightSegment> segments)
         {
-            var dict = DictionaryService.GetInstance();
             return segments.Select(segment => new FlightSegment
             {
                 DepartureAirport = segment.DepartureAirport,
-                DepartureCity = dict.GetAirportCity(segment.DepartureAirport),
-                DepartureAirportName = dict.GetAirportName(segment.DepartureAirport),
+                DepartureCity = GetAirportCity(segment.DepartureAirport),
+                DepartureAirportName = GetAirportName(segment.DepartureAirport),
                 DepartureTime = segment.DepartureTime,
                 ArrivalAirport = segment.ArrivalAirport,
-                ArrivalCity = dict.GetAirportCity(segment.ArrivalAirport),
-                ArrivalAirportName = dict.GetAirportName(segment.ArrivalAirport),
+                ArrivalCity = GetAirportCity(segment.ArrivalAirport),
+                ArrivalAirportName = GetAirportName(segment.ArrivalAirport),
                 ArrivalTime = segment.ArrivalTime,
                 Duration = segment.Duration,
                 AirlineCode = segment.AirlineCode,
-                AirlineName = dict.GetAirlineName(segment.AirlineCode),
-                AirlineLogoUrl = dict.GetAirlineLogoUrl(segment.AirlineCode),
+                AirlineName = GetAirlineName(segment.AirlineCode),
+                AirlineLogoUrl = GetAirlineLogoUrl(segment.AirlineCode),
                 FlightNumber = segment.FlightNumber,
                 OperatingAirlineCode = segment.OperatingAirlineCode,
-                OperatingAirlineName = dict.GetAirlineName(segment.OperatingAirlineCode),
-                OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(segment.OperatingAirlineCode),
+                OperatingAirlineName = GetAirlineName(segment.OperatingAirlineCode),
+                OperatingAirlineLogoUrl = GetAirlineLogoUrl(segment.OperatingAirlineCode),
                 AircraftCode = segment.AircraftCode,
                 StopQuantity = segment.StopQuantity,
                 Stops = segment.Stops,
@@ -143,16 +157,15 @@ namespace Lunggo.ApCommon.Flight.Service
             return totalFlightDuration + totalTransitDuration;
         }
 
-        private static List<Airline> GetAirlineList(FlightTrip trip)
+        private List<Airline> GetAirlineList(FlightTrip trip)
         {
-            var dict = DictionaryService.GetInstance();
             var segments = trip.Segments;
             var airlineCodes = segments.Select(segment => segment.AirlineCode);
             var airlines = airlineCodes.Distinct().Select(code => new Airline
             {
                 Code = code,
-                Name = dict.GetAirlineName(code),
-                LogoUrl = dict.GetAirlineLogoUrl(code)
+                Name = GetAirlineName(code),
+                LogoUrl = GetAirlineLogoUrl(code)
             });
             return airlines.ToList();
         }

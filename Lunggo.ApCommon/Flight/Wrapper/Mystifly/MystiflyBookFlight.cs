@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.ApCommon.ProductBase.Constant;
 using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Extension;
@@ -245,7 +246,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
         {
             var travelerInfo = new TravelerInfo
             {
-                CountryCode = contact.CountryCode,
+                CountryCode = contact.CountryCallingCode,
                 AreaCode = "",
                 PhoneNumber = contact.Phone,
                 Email = contact.Email,

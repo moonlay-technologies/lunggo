@@ -45,7 +45,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public decimal? ComboFare { get; set; }
     }
 
-    public class FlightItinerary : OrderBase
+    public class FlightItinerary : OrderBase<FlightItineraryRule>
     {
         public string SearchId { get; set; }
         public string FareId { get; set; }
@@ -62,7 +62,6 @@ namespace Lunggo.ApCommon.Flight.Model
         public CabinClass RequestedCabinClass { get; set; }
         public int RegisterNumber { get; set; }
         public BookingStatus BookingStatus { get; set; }
-        public DateTime? TicketTimeLimit { get; set; }
         public List<FlightTrip> Trips { get; set; }
         public FareType FareType { get; set; }
         public Supplier Supplier { get; set; }

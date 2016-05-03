@@ -4,6 +4,7 @@ using Lunggo.ApCommon.Campaign.Model;
 using System;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment.Model;
 
 namespace Lunggo.ApCommon.Campaign.Service
 {
@@ -20,7 +21,17 @@ namespace Lunggo.ApCommon.Campaign.Service
             var voucher = GetDb.GetCampaignVoucher(request.VoucherCode);
             response.Email = request.Email;
             response.VoucherCode = request.VoucherCode;
-            response.CampaignVoucher = voucher;
+            response.Discount = new Discount
+            {
+                Percentage = voucher.ValuePercentage.GetValueOrDefault(),
+                Constant = voucher.ValueConstant.GetValueOrDefault(),
+                Currency = new Currency("IDR"),
+                Name = voucher.CampaignName,
+                Description = voucher.CampaignDescription,
+                DisplayName = voucher.DisplayName,
+                IsFlat = false,
+                IsActive = true,
+            };
 
             var price = GetFlightPrice(request.Token);
 
@@ -45,13 +56,23 @@ namespace Lunggo.ApCommon.Campaign.Service
                 response.Email = reservation.Contact.Email;
                 response.VoucherCode = request.VoucherCode;
 
-                var validationStatus = ValidateVoucher(voucher, reservation.Payment.FinalPrice, reservation.Contact.Email, request.VoucherCode);
+                var validationStatus = ValidateVoucher(voucher, reservation.Payment.FinalPriceIdr, reservation.Contact.Email, request.VoucherCode);
 
                 if (validationStatus == VoucherStatus.Success)
                 {
-                    CalculateVoucherDiscount(voucher, reservation.Payment.FinalPrice, response);
+                    CalculateVoucherDiscount(voucher, reservation.Payment.FinalPriceIdr, response);
                     validationStatus = VoucherDecrement(request.VoucherCode);
-                    response.CampaignVoucher = voucher;
+                    response.Discount = new Discount
+                    {
+                        Percentage = voucher.ValuePercentage.GetValueOrDefault(),
+                        Constant = voucher.ValueConstant.GetValueOrDefault(),
+                        Currency = new Currency("IDR"),
+                        Name = voucher.CampaignName,
+                        Description = voucher.CampaignDescription,
+                        DisplayName = voucher.DisplayName,
+                        IsFlat = false,
+                        IsActive = true,
+                    };
                 }
 
                 response.VoucherStatus = validationStatus;
