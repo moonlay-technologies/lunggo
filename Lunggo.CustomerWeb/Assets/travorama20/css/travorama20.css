@@ -3786,6 +3786,55 @@ file : /Assets/travorama20/css/_page_checkout.scss
         z-index: 2;
         padding: 0 10px; }
 
+.buyer-review {
+  margin-bottom: 12px; }
+  .buyer-review header {
+    background: #1daee4;
+    color: #fff;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative; }
+    .buyer-review header .toggle {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0;
+      background: #028ec3;
+      height: 100%;
+      display: block;
+      width: 40px;
+      cursor: pointer; }
+      .buyer-review header .toggle:after {
+        content: "-";
+        position: absolute;
+        font-size: 28px;
+        color: #fff;
+        font-weight: bold;
+        top: 0;
+        left: 0;
+        text-align: center;
+        width: 100%; }
+  .buyer-review .buyer-content {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-top: none;
+    background: #fff; }
+    .buyer-review .buyer-content .buyer-list-item .buyer-list-heading {
+      margin-top: 0px;
+      padding-top: 0px;
+      font-size: 14px; }
+    .buyer-review .buyer-content .buyer-list-item .buyer-list-content {
+      margin-left: 19px; }
+      .buyer-review .buyer-content .buyer-list-item .buyer-list-content .buyer-label {
+        font-size: 13px;
+        display: inline-block;
+        width: 195px; }
+      .buyer-review .buyer-content .buyer-list-item .buyer-list-content .buyer-data {
+        font-size: 13px;
+        padding-bottom: 2px; }
+
 .passenger-review {
   margin-bottom: 12px; }
   .passenger-review header {
@@ -3817,8 +3866,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
         text-align: center;
         width: 100%; }
   .passenger-review .review-content {
-    padding: 12px;
-    padding-bottom: 5px;
+    padding: 20px;
     border: 1px solid #ccc;
     border-top: none;
     background: #fff; }

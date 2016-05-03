@@ -334,6 +334,27 @@
                             <div class="content-step" id="step-3" ng-show="currentPage > 2">
 
                                 <h3><b>RINCIAN</b> PESANAN</h3>
+                                <!--Info Pemesan-->
+                                <div class="buyer-review">
+                                    <header>
+                                        <span>Data Kontak</span>
+                                    </header>
+                                    <section class="buyer-content">
+                                        <div class="buyer-list-item">
+                                            <h3 class="buyer-list-heading"><b>{{buyerInfo.title}} {{buyerInfo.fullname}}</b></h3>
+                                            <div class="buyer-list-content">
+                                                <p>
+                                                    <span class="buyer-label">No. Telepon</span>
+                                                    <span class="buyer-data">+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</span>
+                                                </p>
+                                                <p>
+                                                    <span class="buyer-label">Email</span>
+                                                    <span class="buyer-data">{{buyerInfo.email}}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div><!--Info Pemesan-->
                                 <!--Info Penumpang-->
                                 <div class="passenger-review">
                                     <header>
