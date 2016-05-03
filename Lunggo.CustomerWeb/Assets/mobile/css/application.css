@@ -268,7 +268,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   font-weight: 600;
   padding-bottom: 15px;
   margin-bottom: 15px;
-  width: 100%; }
+  padding-top: 15px; }
   .section-title h1 {
     text-align: center; }
   .section-title span {
@@ -2035,15 +2035,27 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       border-top: none;
       background: #fff; }
       .passwordform .resetpassword .content p {
-        color: red; }
+        color: red;
+        padding-left: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px; }
     .passwordform .resetpassword.inactive header .toggle:after {
       content: "+"; }
     .passwordform .resetpassword.inactive .passenger-content {
       display: none; }
+    .passwordform .resetpassword h4 {
+      font-size: 16px;
+      font-weight: bold; }
     .passwordform .resetpassword .form-reset {
       padding-left: 10px;
       padding-right: 10px;
       width: 50%; }
+
+.forgotpasswordform {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px; }
 
 .page.page-faqs .question-wrapper > ol {
   padding-left: 25px;
@@ -2185,9 +2197,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   color: #3fabe3;
   font-size: 16px;
   text-align: center;
-  width: 90%;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
   padding-bottom: 10px; }
 
 .page.page-newsletter .container form {
@@ -2196,9 +2207,28 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .page.page-newsletter h1 {
   text-align: center;
-  margin-left: 20px;
-  margin-right: 20px; }
+  margin-left: 10px;
+  margin-right: 10px; }
 
 .page.page-newsletter .overlay-content p {
   color: black;
   font-size: 12px; }
+
+.newsletterform {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+  .newsletterform p {
+    color: #3fabe3;
+    font-size: 16px;
+    text-align: center;
+    width: 90%;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-bottom: 10px; }
+
+.page_header h1 {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px; }

@@ -271,11 +271,16 @@
                 &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
             }
         }
-        .content {padding:12px; border:$border-default; border-top:none; background:#fff; p{color: red;}}
+        .content {padding:12px; border:$border-default; border-top:none; background:#fff; 
+                  p{color: red; padding-left: 10px; margin-top:10px; margin-bottom:10px;}}
         // if passenger form inactive
         &.inactive {
             header .toggle:after {content:"+";}
             .passenger-content {display:none;}
+        }
+        h4{
+            font-size: 16px;
+            font-weight: bold;
         }
         .form-reset{
             padding-left:10px;
@@ -283,4 +288,11 @@
             width: 50%;
         }
     }
+}
+
+.forgotpasswordform{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

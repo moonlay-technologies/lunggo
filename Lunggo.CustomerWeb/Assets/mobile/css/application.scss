@@ -172,11 +172,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page__header {}
 .page__body {}
 
-.section-title {font-weight:600; padding-bottom:15px; margin-bottom:15px; width: 100%;
+.section-title {font-weight:600; padding-bottom:15px; margin-bottom:15px; padding-top: 15px;
     h1{
         text-align: center;
     }
-    span {color:#1eafe4;; text-align: center;}
+    span {color:#1eafe4; text-align: center;}
     // theme
     &.stripe {background:url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;}
 }

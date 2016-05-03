@@ -71,8 +71,7 @@ app.controller('NewsletterController', ['$http', '$scope', '$rootScope', functio
                 alert('Alamat e-mail tidak valid');
             }
 
-            $scope.User.Name = $scope.form.name;
-            if ($scope.User.Email && $scope.User.Name) {
+            if ($scope.User.Email) {
                 $scope.User.SubmitForm();
             } else {
                 alert('Masukkan alamat e-mail dan nama');
@@ -85,7 +84,6 @@ app.controller('NewsletterController', ['$http', '$scope', '$rootScope', functio
                 method: 'POST',
                 data: {
                     'address': $scope.User.Email,
-                    'name': $scope.User.Name,
                 }
             }).success(function (returnData) {
                 $scope.User.showBox = true;
