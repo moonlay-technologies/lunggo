@@ -47,8 +47,6 @@
     <script>
         var langCode = 'en';
         var paymentTimeout = '';
-        var timelimit = 
-
         // development only start
         paymentTimeout = new Date('@Model.TimeLimit.AddMinutes(-30).ToString("u")');
         console.log("TIME OUT"+paymentTimeout);

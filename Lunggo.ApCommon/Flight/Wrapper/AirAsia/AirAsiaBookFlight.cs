@@ -101,7 +101,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var splitted = flightPart.Split('~');
                 var airlineCode = splitted[0];
                 var flightNumber = splitted[1];
-                var hidden = string.Join(" ", date.ToString("yyyyMMdd"), airlineCode, flightNumber,
+                var hidden = string.Join("+", date.ToString("yyyyMMdd"), airlineCode, flightNumber,
                     origin + dest + "IDR");
 
                 // [POST] Search Flight
@@ -119,11 +119,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupSearchView_AvailabilitySearchInputSearchViewdestinationStation1=" + dest +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24TextBoxMarketDestination1=" + dest +
                     @"&ControlGroupSearchView%24MultiCurrencyConversionViewSearchView%24DropDownListCurrency=default" +
-                    @"&date_picker=" + date.Day + "%2F" + date.Month + "%2F" + date.Year +
+                    @"&date_picker=" + date.Month + "%2F" + date.Day + "%2F" + date.Year +
                     @"&date_picker=" +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketDay1=" + date.Day +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketMonth1="+date.Year+"-"+date.Month +
-                    @"&date_picker=" + date2.Day + "%2F" + date2.Month + "%2F" + date2.Year +
+                    @"&date_picker=" + date2.Month + "%2F" + date2.Day + "%2F" + date2.Year +
                     @"&date_picker=" +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketDay2="+date2.Day +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketMonth2=" + date2.Year + "-" + date2.Month +
@@ -165,11 +165,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24TextBoxMarketOrigin1=" + origin +
                     @"&ControlGroupAvailabilitySearchInputSelectView_AvailabilitySearchInputSelectViewdestinationStation1=" + dest +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24TextBoxMarketDestination1=" + dest +
-                    @"&date_picker="+date.Day+"%2F"+date.Month+"%2F" + date.Year +
+                    @"&date_picker=" + date.Month+ "%2F" + date.Day+ "%2F" + date.Year +
                     @"&date_picker=" +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListMarketDay1=" + date.Day +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListMarketMonth1="+date.Year+"-"+date.Month +
-                    @"&date_picker="+date2.Day+"%2F"+date2.Month+"%2F" + date2.Year +
+                    @"&date_picker=" + date2.Month + "%2F" + date2.Day + "%2F" + date2.Year +
                     @"&date_picker=" +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListMarketDay2=" + date2.Day +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListMarketMonth2=" + date2.Year + "-" + date2.Month +
@@ -177,7 +177,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_CHD="+childCount +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_INFANT="+infantCount +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24MultiCurrencyConversionViewSelectView%24DropDownListCurrency=default" +
-                    //@"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListSearchBy=columnView" +
+                    @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListSearchBy=columnView" +
                     @"&ControlGroupSelectView%24AvailabilityInputSelectView%24HiddenFieldTabIndex1=4" +
                     @"&ControlGroupSelectView%24AvailabilityInputSelectView%24market1=" + HttpUtility.UrlEncode(coreFareId) +
                     @"&ControlGroupSelectView%24SpecialNeedsInputSelectView%24RadioButtonWCHYESNO=RadioButtonWCHNO" +
@@ -202,18 +202,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 Thread.Sleep(1000);
 
+                var getTravelerRequest = new RestRequest("Traveler.aspx", Method.GET);
+                getTravelerRequest.AddHeader("Referer", "https://booking2.airasia.com/Select.aspx");
+                var getTravelerResponse = client.Execute(getTravelerRequest);
+                var getVS = getTravelerResponse.Content;
+                var vs = (CQ)getVS;
+                var dataaneh = HttpUtility.UrlEncode(vs["[name='HiFlyerFare']"].Attr("value"));
+                var vs4 = HttpUtility.UrlEncode(vs["#viewState"].Attr("value"));
                 // [POST] Input Data
 
                 postData =
                     @"__EVENTTARGET=CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24LinkButtonSkipToSeatMap" +
                     @"&__EVENTARGUMENT=" +
-                    @"&__VIEWSTATE=%2FwEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgYFSENPTlRST0xHUk9VUFRSQVZFTEVSRkxJR0hUQU5EUFJJQ0UkRmxpZ2h0RGlzcGxheVRyYXZlbGVyVmlldyRTdXJ2ZXlCb3gkMAVdQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkUGFzc2VuZ2VySW5wdXRUcmF2ZWxlclZpZXckQ2hlY2tCb3hJbUZseWluZ18wBWFDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRJbnN1cmFuY2VJbnB1dFRyYXZlbGVyVmlldyRSYWRpb0J1dHRvbk5vSW5zdXJhbmNlBWFDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRJbnN1cmFuY2VJbnB1dFRyYXZlbGVyVmlldyRSYWRpb0J1dHRvbk5vSW5zdXJhbmNlBWJDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRJbnN1cmFuY2VJbnB1dFRyYXZlbGVyVmlldyRSYWRpb0J1dHRvblllc0luc3VyYW5jZQViQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkSW5zdXJhbmNlSW5wdXRUcmF2ZWxlclZpZXckUmFkaW9CdXR0b25ZZXNJbnN1cmFuY2XANPXRpUiKOBVSs5rbl5fvpSsmZw%3D%3D" +
+                    @"&__VIEWSTATE=" + vs4 +
                     @"&pageToken=" +
                     @"&MemberLoginTravelerView2%24TextBoxUserID=" +
                     @"&hdRememberMeEmail=" +
                     @"&MemberLoginTravelerView2%24PasswordFieldPassword=" +
                     @"&memberLogin_chk_RememberMe=on" +
-                    @"&HiFlyerFare=%5BHF%5D" +
+                    @"&HiFlyerFare=" + dataaneh +
                     @"&isAutoSeats=false" +
                     @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24HiddenSelectedCurrencyCode=IDR" +
                     @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24DropDownListTitle=MS" +
