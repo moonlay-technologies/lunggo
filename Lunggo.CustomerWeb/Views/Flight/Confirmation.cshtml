@@ -29,6 +29,7 @@
     <script>
         var langCode = 'en';
         var paymentTimeout = '';
+        window.setTimeout(function () { document.location.reload(true); }, 15000);
 
         // development only start
         paymentTimeout = new Date('@Model.TimeLimit.AddMinutes(-30).ToString("u")');

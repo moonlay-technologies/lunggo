@@ -232,8 +232,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Confirmation(string rsvNo)
         {
             var reservation = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-            if (reservation.Payment.Method == PaymentMethod.BankTransfer &&
-                (reservation.Payment.Status == PaymentStatus.Pending || reservation.Payment.Status == PaymentStatus.Challenged))
+            if (reservation.Payment.Method == PaymentMethod.BankTransfer && reservation.Payment.Status == PaymentStatus.Pending)
             {
                 return View(new FlightPaymentConfirmationData
                 {
@@ -243,7 +242,8 @@ namespace Lunggo.CustomerWeb.Controllers
                 });
             }
             else
-                return RedirectToAction("Index", "UW000TopPage");
+                TempData["AllowThisThankyouPage"] = rsvNo;
+                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
         }
 
         [HttpPost]

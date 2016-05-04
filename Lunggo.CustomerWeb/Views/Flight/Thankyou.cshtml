@@ -220,6 +220,13 @@ else
                                             <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
                                             <img src="/Assets/images/atm-bersama.jpg" alt="Virtual Account" />
                                             break;
+                                        case PaymentMethod.BankTransfer:
+                                            <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
+                                            <img src="/Assets/images/atm-bersama.jpg" alt="Bank Transfer" />
+                                            break;
+                                        case PaymentMethod.CimbClicks:
+                                        <img src="/Assets/images/cimb-clicks-transparan.png" alt="CIMB Clicks" />
+                                            break;
                                         case PaymentMethod.MandiriClickPay:
                                         <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
                                         <img src="/Assets/images/payment-mandiri.png" alt="Mandiri Click Pay" />
