@@ -43,7 +43,7 @@ img {
 
 .btn.block {
   display: block;
-  width: 100%; }
+  width: 50%; }
 
 .error-message {
   padding: 5px 10px;
@@ -738,6 +738,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     position: absolute;
     color: #fff;
     font-weight: bold; }
+
+.container_new {
+  width: 75%; }
 
 /*--------------------*/
 .page.page-home {
@@ -2056,6 +2059,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   margin-right: 10px;
   margin-top: 10px;
   margin-bottom: 10px; }
+
+.forgotpasswordtext p {
+  text-align: justify; }
 
 .page.page-faqs .question-wrapper > ol {
   padding-left: 25px;
