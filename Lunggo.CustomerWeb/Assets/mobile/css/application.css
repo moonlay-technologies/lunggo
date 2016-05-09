@@ -1949,7 +1949,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   position: absolute; }
 
 .page-overlay .overlay-content div section p {
-  /*display: inline-block;*/
+  display: inline-block;
   padding: 15px; }
 
 .page-overlay .overlay-content div img {

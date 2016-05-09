@@ -13,6 +13,14 @@
     <script src="/Config/JsConfig.js"></script>
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script src="datepicker-id.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker($.datepicker.regional["id"]);
+        });
+    </script>
+
+    
 }
 
 @section PageJS {
@@ -91,7 +99,7 @@
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
-            <div class="ui-datepicker departure-date"></div>
+            <div class="ui-datepicker departure-date" id ="datepicker"></div>
         </section>
     </div><!-- .overlay--datepicker-->
 

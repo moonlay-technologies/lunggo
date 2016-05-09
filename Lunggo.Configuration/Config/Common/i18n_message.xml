@@ -209,8 +209,8 @@
   <Message code="CW00076" lang="id_ID" value="DAN DAPATKAN INFO PROMO DAN TRAVEL TERKINI DARI TRAVORAMA" />
   <Message code="CW00077" lang="en_US" value="Your Name" />
   <Message code="CW00077" lang="id_ID" value="Nama Anda" />
-  <Message code="CW00078" lang="en_US" value="Your Email Address" />
-  <Message code="CW00078" lang="id_ID" value="Alamat Email Anda" />
+  <Message code="CW00078" lang="en_US" value="Your E-mail Address" />
+  <Message code="CW00078" lang="id_ID" value="Alamat E-mail Anda" />
   <Message code="CW00079" lang="en_US" value="SUBSCRIBE" />
   <Message code="CW00079" lang="id_ID" value="DAFTAR" />
   <Message code="CW00080" lang="en_US" value="SEARCH" />
@@ -252,7 +252,7 @@
   <Message code="CW00098" lang="en_US" value="Infant Passenger" />
   <Message code="CW00098" lang="id_ID" value="Penumpang Bayi" />
   <Message code="CW00099" lang="en_US" value="Title" />
-  <Message code="CW00099" lang="id_ID" value="Title" />
+  <Message code="CW00099" lang="id_ID" value="Titel" />
   <Message code="CW00100" lang="en_US" value="First Name" />
   <Message code="CW00100" lang="id_ID" value="Nama Depan" />
   <Message code="CW00101" lang="en_US" value="Last Name" />
@@ -299,8 +299,8 @@
   <Message code="CW00121" lang="id_ID" value="GRATIS" />
   <Message code="CW00122" lang="en_US" value="WITH TRAVORAMA ACCOUNT" />
   <Message code="CW00122" lang="id_ID" value="DENGAN AKUN TRAVORAMA" />
-  <Message code="CW00123" lang="en_US" value="Your email address" />
-  <Message code="CW00123" lang="id_ID" value="Alamat email Anda" />
+  <Message code="CW00123" lang="en_US" value="Your e-mail address" />
+  <Message code="CW00123" lang="id_ID" value="Alamat e-mail Anda" />
   <Message code="CW00124" lang="en_US" value="Your account password" />
   <Message code="CW00124" lang="id_ID" value="Akun password anda" />
   <Message code="CW00125" lang="en_US" value="Remember Me" />
@@ -323,8 +323,8 @@
   <Message code="CW00133" lang="id_ID" value="KEANGGOTAAN TRAVORAMA" />
   <Message code="CW00134" lang="en_US" value="PROMO UPDATES" />
   <Message code="CW00134" lang="id_ID" value="INFO PROMO" />
-  <Message code="CW00135" lang="en_US" value="Get promo updates and travel information directly delivered to your email address by Travorama" />
-  <Message code="CW00135" lang="id_ID" value="Dapatkan update promo dan informasi travel langsung dikirimkan ke alamat email anda oleh Travorama" />
+  <Message code="CW00135" lang="en_US" value="Get promo updates and travel information directly delivered to your e-mail address by Travorama" />
+  <Message code="CW00135" lang="id_ID" value="Dapatkan update promo dan informasi travel langsung dikirimkan ke alamat e-mail anda oleh Travorama" />
   <Message code="CW00136" lang="en_US" value="Exclusive Discount" />
   <Message code="CW00136" lang="id_ID" value="Diskon Eksklusif" />
   <Message code="CW00137" lang="en_US" value="We always strive to give our member nice surprises. Get exclusive discount only for Travorama member" />
@@ -419,10 +419,10 @@
   <Message code="CW00181" lang="id_ID" value="password baru" />
   <Message code="CW00182" lang="en_US" value="Reset your password" />
   <Message code="CW00182" lang="id_ID" value="Reset Password Anda" />
-  <Message code="CW00183" lang="en_US" value="Please insert your email address for us to send you reset instruction's email." />
-  <Message code="CW00183" lang="id_ID" value="Masukan alamat email Anda dan kami akan mengirimkan email instruksi untuk mengganti password Anda." />
-  <Message code="CW00184" lang="en_US" value="Email" />
-  <Message code="CW00184" lang="id_ID" value="Email" />
+  <Message code="CW00183" lang="en_US" value="Please insert your e-mail address for us to send you reset instruction's e-mail." />
+  <Message code="CW00183" lang="id_ID" value="Masukan alamat e-mail Anda dan kami akan mengirimkan e-mail instruksi untuk mengganti password Anda." />
+  <Message code="CW00184" lang="en_US" value="E-mail" />
+  <Message code="CW00184" lang="id_ID" value="E-mail" />
   <Message code="CW00185" lang="en_US" value="SUBMIT" />
   <Message code="CW00185" lang="id_ID" value="KIRIM" />
   <Message code="CW00186" lang="en_US" value="SUBMITTING" />
@@ -431,7 +431,7 @@
   <Message code="CW00187" lang="id_ID" value="Semakin mudah mengetahui status pemesanan Anda di Travorama.com. Masukan data pemesanan Anda di formulir dibawah." />
   <Message code="CW00188" lang="en_US" value="If your order hasn't paid yet, you may proceed to continue" />
   <Message code="CW00188" lang="id_ID" value="Jika Anda memiliki pemesanan yang belum terbayarkan, pemesanan tersebut juga dapat dilanjutkan" />
-  <Message code="CW00189" lang="en_US" value="Upto 2 hours after your order has been made." />
+  <Message code="CW00189" lang="en_US" value="Up to 2 hours after your order has been made." />
   <Message code="CW00189" lang="id_ID" value="Hingga 2 jam setelah pemesanan awal dilakukan." />
   <Message code="CW00190" lang="en_US" value="Order Number" />
   <Message code="CW00190" lang="id_ID" value="Nomor Pemesanan" />

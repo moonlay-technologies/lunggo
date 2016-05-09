@@ -1,7 +1,6 @@
 ﻿// check if angular exist
 if (typeof (angular) == 'object') {
     var app = angular.module('Travorama', ['ngRoute']);
-
     // root scope
     app.run(function($rootScope) {
 
@@ -369,7 +368,7 @@ if (typeof (angular) == 'object') {
                         $($rootScope.DatePicker.Settings.Target).val(date);
                         $($rootScope.DatePicker.Settings.Target).trigger('input');
                     },
-                    showOn: "focus"
+                    //showOn: "focus"
                     //minDate: 0
             });
                 // set default value for datepicker
@@ -418,7 +417,7 @@ if (typeof (angular) == 'object') {
             }
         };// datepicker
         //$rootScope.DatePicker.SetOption({MinDate: new Date(), Target: '.flight-search-form-departure', ShowMonth: false, ShowYear: false});
-
+        //$("#id").datepicker($.datepicker.regional["id"]);
         // flight search form
         $rootScope.FlightSearchForm = {
             Trip: 'false',

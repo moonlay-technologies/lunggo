@@ -172,7 +172,7 @@
                                                         <h5>{{segment.DepartureAirportName}}</h5>
                                                     </div>
                                                     <div class="segment-duration">
-                                                        <h5><span>Duration :</span> {{segment.Duration}}</h5>
+                                                        <h5><span>Durasi :</span> {{segment.Duration}}</h5>
                                                     </div>
                                                     <div class="segment-arrival">
                                                         <h5>{{segment.ArrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
@@ -220,7 +220,7 @@
                                                         <h5>{{segment.DepartureAirportName}}</h5>
                                                     </div>
                                                     <div class="segment-duration">
-                                                        <h5><span>Duration :</span> {{segment.Duration}}</h5>
+                                                        <h5><span>Durasi :</span> {{segment.Duration}}</h5>
                                                     </div>
                                                     <div class="segment-arrival">
                                                         <h5>{{segment.ArrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
@@ -300,7 +300,7 @@
                                             </div>
                                             <div class="col-xs-9">
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
-                                                <input type="number" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetPhoneNumber() : "")" id="buyer-phone" placeholder="Ex: 821 2345 6789 (tanpa kode negara)" name="phone" ng-model="buyerInfo.phone" required />
+                                                <input type="number" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetPhoneNumber() : "")" id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />
                                             </div>
                                         </div>
                                     </div>
@@ -711,7 +711,7 @@
                                     <h3 class="widget-title"><b>KODE</b> VOUCHER</h3>
                                     <div class="widget-content">
                                         <span><b>Punya Kupon Travorama ?</b></span>
-                                        <p>Masukan disini</p>
+                                        <p>Masukkan disini</p>
                                         <form class="form" name="voucherForm" novalidate>
                                             <div class="form-group">
                                                 <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />

@@ -413,7 +413,7 @@ app.controller('RegisterController', ['$http', '$scope', '$rootScope', function(
 
                 if (returnData.data.Status == "Success") {
                     $scope.User.Email = '';
-
+                    $scope.User.Resubmitted = true;
                 }
 
             }, function (returnData) {
