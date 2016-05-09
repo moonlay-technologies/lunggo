@@ -278,7 +278,7 @@
                                 <form class="form" id="buyer-form" name="buyerForm" novalidate>
 
                                     <div class="form-group">
-                                        <label class="control-label">Title:</label>
+                                        <label class="control-label">Titel:</label>
                                         <div>
                                             <select class="form-control" id="buyer-title" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
                                                 <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
@@ -288,24 +288,24 @@
                                     <div class="form-group" ng-class="{'has-error' : buyerForm.fullname.$touched && buyerForm.fullname.$invalid}">
                                         <label class="control-label important">Nama Lengkap :</label>
                                         <div>
-                                            <input type="text" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetFirstName() + User.Identity.GetLastName() : "")" id="buyer-fullname" placeholder="Full Name" name="fullname" ng-model="buyerInfo.fullname" required />
+                                            <input type="text" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetFirstName() + User.Identity.GetLastName() : "")" id="buyer-fullname" placeholder="Nama Lengkap" name="fullname" ng-model="buyerInfo.fullname" required />
                                         </div>
                                     </div>
                                     <div class="form-group" ng-class="{'has-error' : (buyerForm.phone.$touched && buyerForm.phone.$invalid) || (buyerForm.countryCode.$touched && buyerForm.countryCode.$invalid)}">
                                         <label class="control-label important">Nomor Telepon:</label>
                                         <div class="row">
                                             <div class="col-xs-3">
-                                                <p>Country Code</p>
+                                                <p>Kode Negara</p>
                                                 <input type="number" name="countryCode" value="@(User.Identity.IsAuthenticated ? User.Identity.GetCountryCd() : "")" class="form-control" placeholder="ex : 62 for Indonesia" required ng-model="buyerInfo.countryCode" maxlength="5" />
                                             </div>
                                             <div class="col-xs-9">
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
-                                                <input type="number" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetPhoneNumber() : "")" id="buyer-phone" placeholder="Ex: 821 2345 6789 (without Country Code)" name="phone" ng-model="buyerInfo.phone" required />
+                                                <input type="number" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetPhoneNumber() : "")" id="buyer-phone" placeholder="Ex: 821 2345 6789 (tanpa kode negara)" name="phone" ng-model="buyerInfo.phone" required />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
-                                        <label class="control-label important">Masukan Alamat Email Anda:</label>
+                                        <label class="control-label important">Masukkan Alamat E-mail Anda:</label>
                                         <div>
                                             <input type="email" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetEmail() : "")" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" name="email" ng-model="buyerInfo.email" required />
                                         </div>
@@ -334,18 +334,18 @@
                                             <div class="passenger-content">
 
                                                 <div class="form-group">
-                                                    <label class="control-label">Title</label>
+                                                    <label class="control-label">Titel</label>
                                                     <select class="form-control" name="passenger_{{$index}}_title" ng-model="passenger.title" ng-init="passenger.title = titles[0].value" required>
                                                         <option ng-repeat="title in titles" value="{{title.value}}" ng-selected="title.value == 'Mister'" ng-if="!(title.value == 'Mistress' && passenger.type != 'adult')">{{title.name}}</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.firstname.$invalid && passengerForm_{{$index}}.firstname.$touched }">
                                                     <label class="control-label important">Nama Depan (dan Nama Tengah) :</label>
-                                                    <input type="text" value="" name="passenger_{{$index}}_firstname" class="form-control" placeholder="First Name" ng-model="passenger.firstname" required />
+                                                    <input type="text" value="" name="passenger_{{$index}}_firstname" class="form-control" placeholder="Nama Depan" ng-model="passenger.firstname" required />
                                                 </div>
                                                 <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.lastname.$invalid && passengerForm_{{$index}}.lastname.$touched }">
                                                     <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
-                                                    <input type="text" value="" name="passenger_{{$index}}_lastname" class="form-control" placeholder="Last Name" ng-model="passenger.lastname" required />
+                                                    <input type="text" value="" name="passenger_{{$index}}_lastname" class="form-control" placeholder="Nama Belakang" ng-model="passenger.lastname" required />
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label important">Tanggal Lahir :</label>

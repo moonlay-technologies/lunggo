@@ -238,8 +238,8 @@
 
         </section><!-- .overlay__content -->
         <footer class="overlay__footer">
-            <div class="container">
-                <div class="row">
+            <div class="container_new">
+                <div class="row1">
                     <div class="col-xs-6">
                         <h5>Harga Total:</h5>
                         <h4><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].TotalFare | number}}</b></h4>
@@ -718,18 +718,18 @@
                 <h4 class="popup__title">Pencarian Kadaluarsa</h4>
             </header>
             <div class="popup__body">
-                <div class="container">
-                    <p>Hasil pencarian Anda kadaluarsa. Silahkan klik tombol dibawah untuk refesh halaman pencarian.</p>
+                <div class="container_new">
+                    <p>Hasil pencarian Anda kadaluarsa. Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
                 </div>
             </div>
             <div class="popup__footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-6 hidden">
+                <div class="container_new">
+                    <div class="row1">
+                        <div class="col12 hidden">
                             <a href="/" class="btn btn-block btn-gray">HOME</a>
                         </div>
-                        <div class="col-xs-12">
-                            <button class="btn btn-block btn-yellow" ng-click="PageConfig.RefreshPage()" ng-disabled="PageConfig.Refreshing">REFRESH</button>
+                        <div class="col12">
+                            <button class="btn btn-block btn-yellow" ng-click="PageConfig.RefreshPage()" ng-disabled="PageConfig.Refreshing">KEMBALI</button>
                         </div>
                     </div>
                 </div>
@@ -741,16 +741,16 @@
     <div class="popup__wrapper">
         <div class="popup">
             <header class="popup__header">
-                <h4 class="popup__title">Roundtrip Flight <span class="close-modal pull-right">X</span></h4>
+                <h4 class="popup__title">Penerbangan Pulang Pergi<span class="close-modal pull-right">X</span></h4>
             </header>
             <div class="popup__body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-4 text-center" style="padding-top:12px;">
+                <div class="container_new">
+                    <div class="row1">
+                        <div class="col4 text-center" style="padding-top:12px;">
                             <img src="/Assets/images/airplane-image.jpg" alt="Airplane" />
                         </div>
-                        <div class="col-xs-8">
-                            <p>Anda telah memilih penerbangan pergi. <b>Silahkan lanjutkan dengan memilih penerbangan pulang</b></p>
+                        <div class="col12">
+                            <p>Anda telah memilih penerbangan pergi. <b>Silakan lanjutkan dengan memilih penerbangan pulang</b></p>
                         </div>
                     </div>
                 </div>

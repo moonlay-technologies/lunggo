@@ -740,7 +740,30 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     font-weight: bold; }
 
 .container_new {
-  width: 75%; }
+  /*width: 80%;
+    margin-left: 10px;
+    margin-right: 10px;*/ }
+  .container_new p {
+    padding: 10px 10px 10px 10px;
+    margin-left: 10px;
+    margin-right: 10px; }
+  .container_new .row1 {
+    padding: 10px 10px 10px 10px;
+    margin-left: 10px;
+    margin-right: 10px; }
+  .container_new .col12 {
+    align-self: center;
+    margin-left: 10px;
+    margin-right: 10px; }
+  .container_new .col-xs-6 {
+    margin-top: -10px; }
+    .container_new .col-xs-6 h6 {
+      width: 200%;
+      font-size: 8px; }
+  .container_new .col-xs-8 {
+    margin-top: -10px; }
+    .container_new .col-xs-8 h5 {
+      font-size: 12px; }
 
 /*--------------------*/
 .page.page-home {
@@ -1924,6 +1947,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   left: 33%;
   top: 20%;
   position: absolute; }
+
+.page-overlay .overlay-content div section p {
+  /*display: inline-block;*/
+  padding: 15px; }
 
 .page-overlay .overlay-content div img {
   padding-left: 15px;

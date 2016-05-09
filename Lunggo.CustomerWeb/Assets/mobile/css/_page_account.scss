@@ -179,6 +179,10 @@
       top: 20%;
       position: absolute;
     }
+    .page-overlay .overlay-content div section p{
+        /*display: inline-block;*/
+      padding: 15px; 
+    }
     .page-overlay .overlay-content div img{
         padding-left: 15px;
         vertical-align: 20%;

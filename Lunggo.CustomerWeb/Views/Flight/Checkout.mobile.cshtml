@@ -125,7 +125,7 @@ default:
                 <form name="BuyerForm" novalidate>
 
                     <div class="form-group">
-                        <label class="control-label">Title : </label>
+                        <label class="control-label">Titel : </label>
                         <select class="form-control" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
                             <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
                         </select>
@@ -151,7 +151,7 @@ default:
                     </div>
 
                     <div class="form-group important">
-                        <label class="control-label">Masukan alamat email Anda : </label>
+                        <label class="control-label">Masukkan alamat e-mail Anda : </label>
                         <input type="email" value="" ng-model="buyerInfo.email" name="Email" class="form-control" placeholder="Ex : mail@travelmadezy.com" required />
                     </div>
 
@@ -176,7 +176,7 @@ default:
                     </header><!-- .passenger__header -->
                     <div class="passenger__body">
                         <div class="form-group">
-                            <label class="control-label">Title : </label>
+                            <label class="control-label">Titel : </label>
                             <select class="form-control" required ng-model="Passenger.title" name="passenger_{{$index}}_title" ng-init="Passenger.title = titles[0].value">
                                 <option ng-repeat="title in titles" value="{{title.value}}" ng-if="Passenger.type == 'adult'">{{title.name}}</option>
                                 <option ng-repeat="title in titleKids" value="{{title.value}}" ng-if="Passenger.type != 'adult'">{{title.name}}</option>
@@ -384,7 +384,7 @@ default:
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-xs-12">
+                                            <div class="col12">
                                                 <label class="control-label">Kadaluarsa</label>
                                             </div>
                                         </div>
@@ -426,7 +426,7 @@ default:
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-xs-12">
+                                            <div class="col12">
                                                 <label class="control-label">CVV Kartu</label>
                                                 <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
                                             </div>
@@ -472,8 +472,8 @@ default:
                 </div><!-- .summary__body -->
             </div><!-- .summar--price -->
             <div class="summary summary--voucher">
-                <div class="container">
-                    <h4>Punya kupon Travorama</h4>
+                <div class="container_new">
+                    <h4>Punya kupon Travorama?</h4>
                     <form class="form form-horizontal">
                         <div class="form-group">
                             <input type="text" value="" class="form-control" ng-model="CheckoutConfig.Voucher.Code" ng-disabled="CheckoutConfig.Voucher.Validated && CheckoutConfig.Voucher.Valid" />
@@ -711,8 +711,8 @@ default:
             </div>
             <div class="popup__footer">
                 <div class="container_new">
-                    <div class="row">
-                        <div class="col-xs-12">
+                    <div class="row1">
+                        <div class="col12">
                             <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
                         </div>
                     </div>
@@ -733,8 +733,8 @@ default:
             </div>
             <div class="popup__footer">
                 <div class="container_new">
-                    <div class="row">
-                        <div class="col-xs-12">
+                    <div class="row1">
+                        <div class="col12">
                             <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
                         </div>
                     </div>
@@ -755,8 +755,8 @@ default:
             </div>
             <div class="popup__footer">
                 <div class="container_new">
-                    <div class="row">
-                        <div class="col-xs-12">
+                    <div class="row1">
+                        <div class="col12">
                             <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
                         </div>
                     </div>
@@ -790,7 +790,7 @@ default:
             </div>
             <footer>
                 <div class="container_new">
-                    <div class="row">
+                    <div class="row1">
                         <div class="col-sm-6">
                             <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
                         </div>

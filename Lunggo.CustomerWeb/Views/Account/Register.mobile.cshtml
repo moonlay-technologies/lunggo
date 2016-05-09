@@ -39,19 +39,34 @@
                     </div>
                 </div>
                 
-                <div ng-show="User.Registered && !User.EmailConfirmed">
+                <div ng-show="User.Registered && !User.EmailConfirmed && !User.Resubmitted">
                     <header>
                         <h4>E-mail Belum Terkonfirmasi</h4>
                     </header>
                     <img src="/Assets/images/sad-image.png" alt="Not Confirmed">
                     <section>
                         <p>
-                            Silakan cek e-mail Anda untuk mengkonfirmasi alamat e-mail Anda.<br />
-                            <a ng-click="form.resubmit()">Klik di sini</a> untuk mengirim kembali e-mail konfirmasi.
+                            E-mail Anda belum terkonfirmasi. Silakan cek e-mail Anda untuk konfirmasi atau
+                            <a ng-click="User.Reconfirm()">klik untuk kirim pesan konfirmasi</a>.
                         </p>
                     </section>
                     <div class="text-center">
-                        <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = ''; User.Name = '';">TUTUP</a>
+                        <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = ''; User.Name = ''; ">TUTUP</a>
+                    </div>
+                </div>
+                
+                <div ng-show="User.Resubmitted">
+                    <header>
+                        <h4>E-mail Konfirmasi Berhasil Dikirim</h4>
+                    </header>
+                    <img src="/Assets/images/smile-image.png" alt="Not Confirmed">
+                    <section>
+                        <p>
+                            Pesan untuk konfirmasi ulang telah terkirim ke e-mail Anda.
+                        </p>
+                    </section>
+                    <div class="text-center">
+                        <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = ''; User.Name = ''; User.ReconfirmSent()">TUTUP</a>
                     </div>
                 </div>
                 
@@ -61,7 +76,7 @@
                     </header>
                     <img src="/Assets/images/smile-image.png" alt="Already Registered">
                     <section>
-                        <p>Anda Telah Terdaftar di Travorama. Silahkan login untuk masuk ke halaman akun Anda.</p>
+                        <p>Anda telah terdaftar di Travorama. Silakan masuk ke halaman akun Anda.</p>
                     </section>
                     <div class="text-center">
                         <a class="btn btn-yellow" href="@Url.Action("Login", "Account")">LOGIN</a>

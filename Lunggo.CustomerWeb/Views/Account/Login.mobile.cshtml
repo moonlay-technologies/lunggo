@@ -48,7 +48,7 @@
                     <img src="/Assets/images/sad-image.png" alt="Registered">
                     <section>
                         <p>
-                            Cek kembali alamat email dan password Anda.
+                            Cek kembali alamat e-mail dan password Anda.
                         </p>
                     </section>
                     <div class="text-center">
@@ -56,18 +56,34 @@
                     </div>
                 </div>
 
-                <div ng-show="User.Message == 'AlreadyRegisteredButUnconfirmed'">
+                <div ng-show="User.Message == 'AlreadyRegisteredButUnconfirmed' && !User.Resubmitted">
                     <header>
                         <h4>Akun Anda Belum Aktif</h4>
                     </header>
                     <img src="/Assets/images/sad-image.png" alt="Registered">
                     <section>
                         <p>
-                            Cek kembali alamat e-mail Anda untuk mengaktifkan akun Anda.
+                            Cek kembali alamat e-mail Anda untuk mengaktifkan akun Anda atau
+                            <a ng-click="User.Reconfirm()">klik untuk kirim pesan konfirmasi</a>.
                         </p>
                     </section>
                     <div class="text-center">
                         <a class="btn btn-yellow" ng-click="closeOverlay()">TUTUP</a>
+                    </div>
+                </div>
+                
+                <div ng-show="User.Resubmitted">
+                    <header>
+                        <h4>E-mail Konfirmasi Berhasil Dikirim</h4>
+                    </header>
+                    <img src="/Assets/images/smile-image.png" alt="Not Confirmed">
+                    <section>
+                        <p>
+                            Pesan untuk konfirmasi ulang telah terkirim ke e-mail Anda.
+                        </p>
+                    </section>
+                    <div class="text-center">
+                        <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = '';  User.Resubmitted = false;">TUTUP</a>
                     </div>
                 </div>
 
@@ -94,12 +110,12 @@
         <div class="form-wrapper form-wrapper--login">
 
             <header class="form-wrapper__header">
-                <h1 class="form-wrapper__title">Log In</h1>
+                <h1 class="form-wrapper__title">Masuk</h1>
                 <p>Dengan Akun Travorama Anda</p>
             </header><!-- .form-wrapper__header -->
 
             <div class="form-wrapper__body">
-                @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl },
+                @using (Html.BeginForm("Login", "Account", new {returnUrl = ViewBag.ReturnUrl},
                     FormMethod.Post, new
                     {
                         @class = "login-form form form-horizontal",
@@ -110,7 +126,7 @@
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group">
-                        <label class="control-label">Alamat Email Anda :</label>
+                        <label class="control-label">Alamat E-mail Anda :</label>
                         <input type="email" value="" name="Email" class="form-control" ng-model="User.Email" required />
                     </div>
                     <div class="form-group">

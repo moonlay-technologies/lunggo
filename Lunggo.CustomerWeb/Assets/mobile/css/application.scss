@@ -421,7 +421,38 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 
 .container_new{
-    width: 75%;
+    /*width: 80%;
+    margin-left: 10px;
+    margin-right: 10px;*/
+    p{
+        padding: 10px 10px 10px 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .row1{
+        padding: 10px 10px 10px 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        
+    }
+    .col12{
+            align-self:center;
+            margin-left: 10px;
+            margin-right: 10px;
+    }
+    .col-xs-6{
+        margin-top: -10px;
+        h6{
+            width: 200%;
+            font-size: 8px;
+        }
+    }
+    .col-xs-8{
+        margin-top: -10px;
+        h5{
+            font-size: 12px;
+        }
+        }
 }
 
 /*--------------------*/
