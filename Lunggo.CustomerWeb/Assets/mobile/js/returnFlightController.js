@@ -377,7 +377,7 @@
                 targetScope.ActiveFlight = flightNumber;
 
                 if ($scope.FlightConfig[0].ActiveFlight != -1 && $scope.FlightConfig[1].ActiveFlight != -1) {
-                    $scope.SetOverlay('summary');
+                    $scope.SetOverlay('summary'); $scope.PageConfig.Validating = false;
                 } else if ($scope.FlightConfig[0].ActiveFlight >= 0 && $scope.FlightConfig[1].ActiveFlight < 0) {
                     $scope.SetPopup('roundtrip-return');
                 } else if ($scope.FlightConfig[0].ActiveFlight < 0 && $scope.FlightConfig[1].ActiveFlight >= 0) {
@@ -388,6 +388,7 @@
                 targetScope.ActiveFlight = -1;
             }
         }
+        
     }
 
     // swap flight

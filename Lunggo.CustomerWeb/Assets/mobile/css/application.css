@@ -827,7 +827,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             color: #666; }
             .page.page-home .form-wrapper form .form__roundtrip .switch label.active {
               background: #0c7399;
-              color: #fff; }
+              color: #fff; 
+            }
       .page.page-home .form-wrapper form .form__passenger:after {
         display: block;
         width: 100%;

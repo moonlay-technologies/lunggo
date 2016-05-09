@@ -49,7 +49,7 @@
     </header>
 
     <header class="page__header">
-        <h1 class="text-center section-title stripe">Ubah <span>Profile</span></h1>
+        <h1 class="text-center section-title stripe">Ubah <span>Profil</span></h1>
     </header>
 
     <section class="user-menu" ng-show="PageConfig.ActivePage == 'menu'">
@@ -60,13 +60,13 @@
         <div class="menu-wrapper">
             <ul>
                 <li class="menu-profile">
-                    <a ng-click="PageConfig.ChangePage('profile'); formMessage = ''">Ubah Profile</a>
+                    <a ng-click="PageConfig.ChangePage('profile'); formMessage = ''">Ubah Profil</a>
                 </li>
                 <li class="menu-history">
                     <a ng-click="PageConfig.ChangePage('history')">Pemesanan Saya</a>
                 </li>
                 <li class="menu-logout">
-                    <a href="@Url.Action("Logout", "Account")">Log Out</a>
+                    <a href="@Url.Action("Logout", "Account")">Keluar</a>
                 </li>
             </ul>
         </div>
@@ -173,7 +173,7 @@
             <li class="" ng-repeat="rsvs in Order" ng-class="{'done' : rsvs.Payment.Status == 3, 'pending' : rsvs.Payment.Status == 2 , 'canceled' : rsvs.Payment.Status == 1 || rsvs.Payment.Status == 5 }">
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="blue">Order ID</span>
+                        <span class="blue">Nomor Pemesanan</span>
                     </div>
                     <div class="col-xs-8">
                         <span class="blue">: <b>{{rsvs.RsvNo}}</b></span>

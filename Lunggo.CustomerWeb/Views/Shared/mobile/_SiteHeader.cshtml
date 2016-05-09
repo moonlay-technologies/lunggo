@@ -56,16 +56,16 @@
                     }
 
                     <li class="logout hidden @(ViewBag.CurrentPage == "Log Out" ? "active" : "") ">
-                        <a href="@Url.Action("Logout","Account")">Log Out</a>
+                        <a href="@Url.Action("Logout","Account")">Keluar</a>
                     </li>
                 }
                 else
                 {
                     <li class="login">
-                        <a href="@Url.Action("Login","Account")">Log In</a>
+                        <a href="@Url.Action("Login","Account")">Masuk</a>
                     </li>
                     <li class="register">
-                        <a href="@Url.Action("Register","Account")">Sign Up</a>
+                        <a href="@Url.Action("Register","Account")">Daftar</a>
                     </li>
                 }
                 <li class="home @(ViewBag.CurrentPage == "home" ? "active" : "") ">
@@ -78,7 +78,7 @@
                     <a href="@Url.Action("Promo","StaticPage")">Promo Berlangsung</a>
                 </li>
                 <li class="contact @(ViewBag.CurrentPage == "contact" ? "active" : "")">
-                    <a href="@Url.Action("Contact","StaticPage")">Contact Us</a>
+                    <a href="@Url.Action("Contact","StaticPage")">Hubungi Kami</a>
                 </li>
                 <li class="newsletter @(ViewBag.CurrentPage == "newsletter" ? "active" : "")" >
                     <a href="@Url.Action("Newsletter", "StaticPage")">Newsletter</a>

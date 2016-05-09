@@ -331,7 +331,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 console.log(returnData);
 
                 $scope.book.checked = true;
-
+                $scope.book.booking = false;
                 if (returnData.data.IsSuccess) {
                     if (returnData.data.NewPrice != null) {
                         $scope.book.isPriceChanged = true;
@@ -354,6 +354,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     //$('form#rsvno').submit();
 
                 } else {
+                    $scope.book.booking = false;
                     $scope.book.checked = true;
                     $scope.book.isSuccess = false;
                 }
@@ -362,6 +363,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 console.log(returnData);
                 $scope.book.checked = true;
                 $scope.book.isSuccess = false;
+                $scope.book.booking = false;
             });
 
         }
