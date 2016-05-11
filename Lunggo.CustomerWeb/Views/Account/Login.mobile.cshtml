@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Masuk";
     ViewBag.BodyClass = "page page-account page-login";
     ViewBag.AngularController = "LoginController";
 }
@@ -33,7 +33,7 @@
                     <section>
                         <p>
                             Alamat e-mail Anda belum terdaftar dalam sistem kami.
-                            <a href="@Url.Action("Register", "Account")">Klik disini</a> untuk mendaftar di Travorama.
+                            <a href="@Url.Action("Register", "Account")">Klik di sini</a> untuk mendaftar di Travorama.
                         </p>
                     </section>
                     <div class="text-center">
@@ -63,7 +63,7 @@
                     <img src="/Assets/images/sad-image.png" alt="Registered">
                     <section>
                         <p>
-                            Cek kembali alamat e-mail Anda untuk mengaktifkan akun Anda atau
+                            Cek kembali alamat e-mail Anda untuk mengaktifkan akun atau
                             <a ng-click="User.Reconfirm()">klik untuk kirim pesan konfirmasi</a>.
                         </p>
                     </section>
@@ -94,7 +94,7 @@
                     <img src="/Assets/images/smile-image.png" alt="Registered">
                     <section>
                         <p>
-                            Silahkan login menggunakan e-mail dan password Anda.
+                            Silakan masuk menggunakan e-mail dan password Anda.
                         </p>
                     </section>
                     <div class="text-center">
@@ -134,7 +134,7 @@
                         <input type="password" value="" name="Password" class="form-control" ng-model="User.Password" required />
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-yellow btn-block" ng-disabled="LoginForm.$invalid || User.Sending">LOGIN</button>
+                        <button type="submit" class="btn btn-yellow btn-block" ng-disabled="LoginForm.$invalid || User.Sending">MASUK</button>
                     </div>
                     <div class="form-group">
                         <a href="@Url.Action("ForgotPassword", "Account")">Lupa Password</a> | <a href="@Url.Action("Register", "Account")">Belum Memiliki Akun?</a>

@@ -13,7 +13,7 @@ namespace Lunggo.Framework.Database
         protected abstract String GetQuery(dynamic condition = null);
         public IEnumerable<TQueryRecord> Execute(IDbConnection conn, dynamic param)
         {
-            return SqlMapper.Query<TQueryRecord>(conn, GetQuery(), param);
+           return SqlMapper.Query<TQueryRecord>(conn, GetQuery(), param);
         }
         public IEnumerable<TQueryRecord> Execute(IDbConnection conn, dynamic param, dynamic condition)
         {

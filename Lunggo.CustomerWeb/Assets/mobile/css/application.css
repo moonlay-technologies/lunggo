@@ -7,7 +7,8 @@ body {
   background: #f9f9f9;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  padding-top: 60px; }
+  padding-top: 60px;
+  height: 100%; }
 
 img {
   max-width: 100%; }
@@ -260,7 +261,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     display: block; }
 
 .site-content {
-  min-height: 350px; }
+  min-height: 100%;
+  /*position: relative;
+               padding: 0 0 100px;   
+               box-sizing: border-box;*/ }
   .site-content a {
     color: #2fb4e6; }
 
@@ -313,7 +317,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .site-footer {
   background-color: #111;
-  color: #fefefe; }
+  color: #fefefe;
+  width: 100%;
+  /*position: relative; height: 100px; bottom: 0; left:0;*/ }
   .site-footer .site-footer-menu {
     background-color: #303030; }
     .site-footer .site-footer-menu nav {
@@ -765,6 +771,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .container_new .col-xs-8 h5 {
       font-size: 12px; }
 
+.page-overlay .overlay-content div section p {
+  display: inline-block; }
+
+.form__flightclass .form-control {
+  height: 35px; }
+
 /*--------------------*/
 .page.page-home {
   background: url(/assets/images/home-page-bg.jpg) top center repeat-x #2fb4e6; }
@@ -827,8 +839,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             color: #666; }
             .page.page-home .form-wrapper form .form__roundtrip .switch label.active {
               background: #0c7399;
-              color: #fff; 
-            }
+              color: #fff; }
       .page.page-home .form-wrapper form .form__passenger:after {
         display: block;
         width: 100%;
@@ -1950,7 +1961,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   position: absolute; }
 
 .page-overlay .overlay-content div section p {
-  display: inline-block;
+  /*display: inline-block;*/
   padding: 15px; }
 
 .page-overlay .overlay-content div img {

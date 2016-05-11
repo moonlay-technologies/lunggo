@@ -22,7 +22,7 @@
 
 <div ng-controller = "NewsletterController" ng-class="{'page-loaded' : pageLoaded}">
     <header class="page_header">
-        <h1 class="text-center section-title stripe">Subscribe <span>Newsletter</span></h1>
+        <h1 class="text-center section-title stripe">Berlangganan <span>Newsletter</span></h1>
     </header>
 
     <!-- .page__body -->
@@ -47,13 +47,13 @@
 
                 <div ng-show="!User.Registered">
                     <header>
-                        <h4>Data Tidak Lengkap</h4>
+                        <h4>Format E-mail Salah</h4>
                     </header>
 
                     <img src="/Assets/images/sad-image.png" alt="Not Confirmed">
                     <section>
                         <p>
-                           Data yang Anda masukkan belum lengkap. Silakan masukan e-mail Anda dengan format <i>nama@domain.com</i> dan nama Anda.
+                            Format e-mail Anda tidak tepat. Silakan masukan e-mail Anda dengan format <i>nama@domain.com</i>
                         </p>
                     </section>
                     <div class="text-center">
@@ -69,7 +69,7 @@
 
         <form name="NewsletterForm" novalidate>
             <div class="form-group">
-                <label class="control-label">Alamat E-mail:</label>
+                <label class="control-label">Masukkan Alamat E-mail Anda:</label>
                 <input class="form-control" type="email" value="" name="userEmail" ng-model="form.userEmail" required />
             </div>
             <div class="form-group">

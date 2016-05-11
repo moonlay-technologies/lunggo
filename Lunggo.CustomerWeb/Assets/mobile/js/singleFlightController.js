@@ -103,7 +103,8 @@
     // functions
 
     // set overlay
-    $scope.SetOverlay = function(overlay) {
+    $scope.SetOverlay = function (overlay) {
+        console.log('changing overlay to : ' + overlay);
         if (!overlay) {
             $scope.PageConfig.ActiveOverlay = '';
             $scope.PageConfig.BodyNoScroll = false;

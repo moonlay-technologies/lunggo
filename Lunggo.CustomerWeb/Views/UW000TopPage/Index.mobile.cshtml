@@ -12,12 +12,7 @@
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Config/JsConfig.js"></script>
     <!-- jquery datepicker -->
-    <script src="/Assets/js/jquery-ui.min.js"></script>
-    <script src="datepicker-id.js"></script>
-   
-
-    
-}
+    <script src="/Assets/js/jquery-ui.min.js"></script>}
 
 @section PageJS {
     <script src="/Assets/mobile/js/HomeController.js"></script>
@@ -27,7 +22,7 @@
     
     <div class="form-wrapper">
 
-        <h1>PEMESANAN <b>TIKET PESAWAT</b></h1>
+        <h1>CARI <b>TIKET PESAWAT</b></h1>
 
         <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
 
@@ -76,7 +71,13 @@
                     <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[2]}}</p>
                 </div>
             </div>
-
+        
+            <div class="form-group form__flightclass">
+                <select class="form-control" name="cabinclass" ng-model="FlightSearchForm.Cabin" ng-init="FlightSearchForm.Cabin = flightclass[0].value">
+                    <option ng-repeat="cabin in flightclass" value="{{cabin.value}}">{{cabin.name}}</option>
+                </select>       
+            </div>
+        
             <div class="form-group form__submit">
                 <button class="btn btn-yellow btn-block btn-lg">CARI</button>
             </div>
@@ -95,7 +96,7 @@
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
-            <div class="ui-datepicker departure-date" id ="datepicker"></div>
+            <div class="ui-datepicker departure-date"></div>
         </section>
     </div><!-- .overlay--datepicker-->
 

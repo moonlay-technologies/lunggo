@@ -1,5 +1,6 @@
 ﻿// check if angular exist
 if (typeof (angular) == 'object') {
+    
     var app = angular.module('Travorama', ['ngRoute']);
     // root scope
     app.run(function($rootScope) {
@@ -315,12 +316,19 @@ if (typeof (angular) == 'object') {
                 } else {
                     if ( overlay == '' || overlay == ' ' ) {
                         $rootScope.PageConfig.ActiveOverlay = '';
-                        $rootScope.PageConfig.SetBodyNoScroll(true);
+                        $rootScope.PageConfig.SetBodyNoScroll(false);
                     } else {
                         $rootScope.PageConfig.ActiveOverlay = overlay;
-                        $rootScope.PageConfig.SetBodyNoScroll(false);
+                        $rootScope.PageConfig.SetBodyNoScroll(true);
                     }
                 }
+                //if (!overlay) {
+                //    $rootScope.PageConfig.ActiveOverlay = '';
+                //    $rootScope.PageConfig.BodyNoScroll = false;
+                //} else {
+                //    $rootScope.PageConfig.ActiveOverlay = overlay;
+                //    $rootScope.PageConfig.BodyNoScroll = true;
+                //}
             }, // page overlay end
 
             // page popup
@@ -348,7 +356,11 @@ if (typeof (angular) == 'object') {
                 }
             }
         };//$rootScope.Countries
-
+        $rootScope.flightclass = [
+            { name: 'Kelas Ekonomi', value: 'y' },
+            { name: 'Kelas Bisnis', value: 'c' },
+            { name: 'Kelas Utama', value: 'f' }
+        ];
         // datepicker
         $rootScope.DatePicker = {
             Settings: {
@@ -372,34 +384,35 @@ if (typeof (angular) == 'object') {
                     //minDate: 0
             });
                 // set default value for datepicker
-                if (options.MinDate) {
-                    $rootScope.DatePicker.Settings.MinDate = options.MinDate;
-                } else {
-                    $rootScope.DatePicker.Settings.MinDate = new Date();
-                }
+                //if (options.MinDate) {
+                //    $rootScope.DatePicker.Settings.MinDate = options.MinDate;
+                //} else {
+                //    $rootScope.DatePicker.Settings.MinDate = new Date();
+                //}
                 
                 if (options.Target == 'departure') {
-                    $(".ui-datepicker").datepicker("option", "showOn", "hide");
-                    //$(".ui-datepicker").datepicker("option", "showAnim", "hide");
+                    //$(".ui-datepicker").datepicker("option", "showOn", "hide");
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
-                    $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.DatePicker.Settings.MinDate);
+                    $('.ui-datepicker').datepicker('option', 'minDate', new Date());
                     if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.ReturnDate) {
                         $('.ui-datepicker').datepicker('option', 'maxDate', new Date($rootScope.FlightSearchForm.ReturnDate));
-                    } else {
+                    } 
+                    
+                    else {
                         $('.ui-datepicker').datepicker('option', 'maxDate', null);
                     }
-
+                    if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.DepartureDate) {
+                        $('.ui-datepicker').datepicker('option', 'maxDate', null);
+                    }
                 } else {
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-return';
                     if ($rootScope.FlightSearchForm.DepartureDate) {
                         $('.ui-datepicker').datepicker('option', 'minDate', new Date($rootScope.FlightSearchForm.DepartureDate));
                     }
                     if ($rootScope.FlightSearchForm.Trip == "true") {
-                        // $rootScope.DatePicker.Settings.SelectedDate = $rootScope.FlightSearchForm.DepartureDate;
                         if ($rootScope.FlightSearchForm.ReturnDate) {
                             $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.FlightSearchForm.DepartureDate);
                             $('.ui-datepicker').datepicker('option', 'maxDate', null);
-                            //$rootScope.DatePicker.Settings.SelectedDate = $rootScope.FlightSearchForm.ReturnDate;
                         }
                     }                   
                 }
@@ -416,8 +429,8 @@ if (typeof (angular) == 'object') {
                 // set on choose date function
             }
         };// datepicker
-        //$rootScope.DatePicker.SetOption({MinDate: new Date(), Target: '.flight-search-form-departure', ShowMonth: false, ShowYear: false});
-        //$("#id").datepicker($.datepicker.regional["id"]);
+        
+
         // flight search form
         $rootScope.FlightSearchForm = {
             Trip: 'false',

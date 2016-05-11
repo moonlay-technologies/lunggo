@@ -49,7 +49,7 @@ $header-height:60px;
 /*--------------------*/
 // General Styling
 
-body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; padding-top:$header-height;}
+body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; padding-top:$header-height; height: 100%;}
 
 img {max-width:100%;}
 
@@ -164,7 +164,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // *****
 // site content
-.site-content {min-height:350px;                
+.site-content {min-height:100%; 
+               /*position: relative;
+               padding: 0 0 100px;   
+               box-sizing: border-box;*/ 
     a {color:#2fb4e6;}
 }
 
@@ -204,6 +207,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // *****
 // site footer
 .site-footer {background-color:#111; color:#fefefe; 
+             width: 100%; /*position: relative; height: 100px; bottom: 0; left:0;*/
     .site-footer-menu {background-color:#303030;
         nav {padding:0 12px;
             ul {list-style:none; margin:0; padding:0;
@@ -453,6 +457,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             font-size: 12px;
         }
         }
+}
+
+.page-overlay .overlay-content div section p {
+  display: inline-block;
+ 
+  }
+
+.form__flightclass .form-control {
+    height: 35px;
 }
 
 /*--------------------*/
