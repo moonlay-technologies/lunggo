@@ -4,13 +4,13 @@ namespace Lunggo.ApCommon.Payment.Model.Data
 {
     public class MandiriClickPay
     {
-        [JsonProperty("card_number")]
+        [JsonProperty("cardNo")]
         public string CardNumber { get; set; }
-        [JsonProperty("input1")]
+        [JsonProperty("cardLast10No")]
         public string CardNumberLast10 { get; set; }
-        [JsonProperty("input2")]
+        [JsonProperty("amount")]
         public long Amount { get; set; }
-        [JsonProperty("input3")]
+        [JsonProperty("randomNumber")]
         public string GivenRandomNumber { get; set; }
         [JsonProperty("token")]
         public string Token { get; set; }

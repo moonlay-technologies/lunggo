@@ -31,7 +31,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Logic
                     if (user.IsInRole("Admin") || user.Identity.GetEmail() == rsv.Contact.Email)
                         return new GetReservationApiResponse
                         {
-                            ReservationType = ReservationType.Flight,
+                            ProductType = ReservationType.Flight,
                             FlightReservation = rsv,
                             StatusCode = HttpStatusCode.OK
                         };

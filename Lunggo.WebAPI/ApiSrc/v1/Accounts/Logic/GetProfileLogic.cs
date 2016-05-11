@@ -35,7 +35,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Logic
                     Email = foundUser.Email ?? "",
                     FirstName = foundUser.FirstName ?? "",
                     LastName = foundUser.LastName ?? "",
-                    CountryCd = foundUser.CountryCd ?? "",
+                    CountryCallingCd = foundUser.CountryCd ?? "",
                     PhoneNumber = foundUser.PhoneNumber ?? "",
                     Address = foundUser.Address ?? ""
                 };

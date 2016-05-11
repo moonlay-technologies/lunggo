@@ -10,13 +10,13 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Payment.Model
 {
     public class PayApiRequest
     {
-        [JsonProperty("met")]
+        [JsonProperty("method")]
         public PaymentMethod Method { get; set; }
         [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentData Data { get; set; }
-        [JsonProperty("tkn")]
+        [JsonProperty("token")]
         public string DiscountCode { get; set; }
-        [JsonProperty("rsvno")]
+        [JsonProperty("rsvNo")]
         public string RsvNo { get; set; }
     }
 }

@@ -5,11 +5,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Model
 {
     public class CheckVoucherApiRequest
     {
-        [JsonProperty("cd")]
+        [JsonProperty("code")]
         public string Code { get; set; }
-        [JsonProperty("em")]
+        [JsonProperty("email")]
         public string Email { get; set; }
-        [JsonProperty("tkn")]
+        [JsonProperty("token")]
         public string Token { get; set; }
     }
 }

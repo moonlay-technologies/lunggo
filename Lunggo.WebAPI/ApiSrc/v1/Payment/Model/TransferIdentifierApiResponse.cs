@@ -6,8 +6,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Payment.Model
 {
     public class TransferIdentifierApiResponse : ApiResponseBase
     {
-        [JsonProperty("cd", NullValueHandling = NullValueHandling.Ignore)]
-        public int TransferCode { get; set; }
+        [JsonProperty("fee", NullValueHandling = NullValueHandling.Ignore)]
+        public int TransferFee { get; set; }
 
     }
 }

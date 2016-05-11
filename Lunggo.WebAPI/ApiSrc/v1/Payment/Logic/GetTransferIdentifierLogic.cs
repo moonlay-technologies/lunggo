@@ -19,7 +19,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Payment.Logic
                 return new TransferIdentifierApiResponse
                 {
                     StatusCode = HttpStatusCode.OK,
-                    TransferCode = response
+                    TransferFee = response
                 };
             }
             catch

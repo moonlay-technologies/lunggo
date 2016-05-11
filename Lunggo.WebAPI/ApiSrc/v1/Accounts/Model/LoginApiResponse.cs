@@ -7,11 +7,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Model
 {
     public class LoginApiResponse : ApiResponseBase
     {
-        [JsonProperty("atkn")]
+        [JsonProperty("accessToken")]
         public string AccessToken { get; set; }
-        [JsonProperty("rtkn")]
+        [JsonProperty("refreshToken")]
         public string RefreshToken { get; set; }
-        [JsonProperty("exp")]
+        [JsonProperty("expTime")]
         public DateTime ExpiryTime { get; set; }
     }
 }

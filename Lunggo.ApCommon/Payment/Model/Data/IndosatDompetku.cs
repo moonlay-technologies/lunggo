@@ -4,7 +4,7 @@ namespace Lunggo.ApCommon.Payment.Model.Data
 {
     public class IndosatDompetku
     {
-        [JsonProperty("msisdn")]
+        [JsonProperty("phone")]
         public string PhoneNumber { get; set; }
     }
 }

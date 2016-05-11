@@ -4,11 +4,11 @@ namespace Lunggo.ApCommon.Payment.Model.Data
 {
     public class TelkomselTcash
     {
-        [JsonProperty("customer")]
+        [JsonProperty("token")]
         public string Token { get; set; }
         [JsonProperty("promo")]
         public bool PromoEnabled { get; set; }
-        [JsonProperty("Is_Reversal")]
+        [JsonProperty("reversal")]
         public int Reversal { get; set; }
     }
 }

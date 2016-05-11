@@ -6,7 +6,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightSelectApiResponse : ApiResponseBase
     {
-        [JsonProperty("tkn", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("token", NullValueHandling = NullValueHandling.Ignore)]
         public string Token { get; set; }
     }
 }

@@ -4,7 +4,7 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class ComboForDisplay
     {
-        [JsonProperty("reg")]
+        [JsonProperty("regs")]
         public int[] Registers { get; set; }
         [JsonProperty("fare")]
         public decimal Fare { get; set; }

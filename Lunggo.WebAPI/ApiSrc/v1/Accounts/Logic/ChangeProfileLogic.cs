@@ -24,7 +24,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Logic
                 var updatedUser = user.Identity.GetUser();
                 updatedUser.FirstName = request.FirstName ?? updatedUser.FirstName;
                 updatedUser.LastName = request.LastName ?? updatedUser.LastName;
-                updatedUser.CountryCd = request.CountryCd ?? updatedUser.CountryCd;
+                updatedUser.CountryCd = request.CountryCallingCd ?? updatedUser.CountryCd;
                 updatedUser.PhoneNumber = request.PhoneNumber ?? updatedUser.PhoneNumber;
                 updatedUser.Address = request.Address ?? updatedUser.Address;
                 var result = userManager.Update(updatedUser);

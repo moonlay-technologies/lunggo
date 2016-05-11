@@ -6,7 +6,7 @@ namespace Lunggo.ApCommon.Payment.Model.Data
     {
         [JsonProperty("type")]
         public int Type { get; set; }
-        [JsonProperty("misc_fee")]
+        [JsonProperty("miscFee")]
         public int MiscFee { get; set; }
         [JsonProperty("description")]
         public string Description { get; set; }

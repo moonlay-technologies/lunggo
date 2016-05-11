@@ -5,15 +5,15 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Model
 {
     public class LoginApiRequest
     {
-        [JsonProperty("em")]
+        [JsonProperty("email")]
         public string Email { get; set; }
-        [JsonProperty("pw")]
+        [JsonProperty("password")]
         public string Password { get; set; }
-        [JsonProperty("rtkn")]
+        [JsonProperty("refreshToken")]
         public string RefreshToken { get; set; }
-        [JsonProperty("cid")]
+        [JsonProperty("clientId")]
         public string ClientId { get; set; }
-        [JsonProperty("csc")]
+        [JsonProperty("clientSecret")]
         public string ClientSecret { get; set; }
     }
 }

@@ -9,19 +9,19 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightIssuanceApiResponse : ApiResponseBase
     {
-        [JsonProperty("iss", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("issuances", NullValueHandling = NullValueHandling.Ignore)]
         public List<TripIssuance> TripIssuances { get; set; }
     }
 
     public class TripIssuance
     {
-        [JsonProperty("ori")]
+        [JsonProperty("origin")]
         public string Origin { get; set; }
-        [JsonProperty("des")]
+        [JsonProperty("destination")]
         public string Destination { get; set; }
-        [JsonProperty("dt")]
+        [JsonProperty("date")]
         public DateTime Date { get; set; }
-        [JsonProperty("st")]
+        [JsonProperty("status")]
         public int Status { get; set; }
     }
 }

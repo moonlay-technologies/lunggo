@@ -7,61 +7,61 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightSegment
     {
-        [JsonProperty("deptm")]
+        [JsonProperty("departureTime")]
         public DateTime DepartureTime { get; set; }
-        [JsonProperty("arrtm")]
+        [JsonProperty("arrivalTime")]
         public DateTime ArrivalTime { get; set; }
-        [JsonProperty("dep")]
+        [JsonProperty("departure")]
         public string DepartureAirport { get; set; }
-        [JsonProperty("arr")]
+        [JsonProperty("arrival")]
         public string ArrivalAirport { get; set; }
-        [JsonProperty("dur")]
+        [JsonProperty("duration")]
         public TimeSpan Duration { get; set; }
-        [JsonProperty("stpqty")]
+        [JsonProperty("stopQty")]
         public int StopQuantity { get; set; }
-        [JsonProperty("aircd")]
+        [JsonProperty("airlineCd")]
         public string AirlineCode { get; set; }
-        [JsonProperty("fno")]
+        [JsonProperty("flightNo")]
         public string FlightNumber { get; set; }
-        [JsonProperty("opaircd")]
+        [JsonProperty("opAirlineCd")]
         public string OperatingAirlineCode { get; set; }
-        [JsonProperty("crft", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("aircraft", NullValueHandling = NullValueHandling.Ignore)]
         public string AircraftCode { get; set; }
         [JsonProperty("rbd")]
         public string Rbd { get; set; }
-        [JsonProperty("deptrm", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("departureTerminal", NullValueHandling = NullValueHandling.Ignore)]
         public string DepartureTerminal { get; set; }
-        [JsonProperty("depct")]
+        [JsonProperty("departureCity")]
         public string DepartureCity { get; set; }
-        [JsonProperty("depnm")]
+        [JsonProperty("departureName")]
         public string DepartureAirportName { get; set; }
-        [JsonProperty("arrtrm", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("arrivalTerminal", NullValueHandling = NullValueHandling.Ignore)]
         public string ArrivalTerminal { get; set; }
-        [JsonProperty("arrct")]
+        [JsonProperty("arrivalCity")]
         public string ArrivalCity { get; set; }
-        [JsonProperty("arrnm")]
+        [JsonProperty("arrivalName")]
         public string ArrivalAirportName { get; set; }
-        [JsonProperty("airnm")]
+        [JsonProperty("airlineName")]
         public string AirlineName { get; set; }
-        [JsonProperty("airlg")]
+        [JsonProperty("airlineLogoUrl")]
         public string AirlineLogoUrl { get; set; }
-        [JsonProperty("opairnm")]
+        [JsonProperty("opAirlineName")]
         public string OperatingAirlineName { get; set; }
-        [JsonProperty("opairlg")]
+        [JsonProperty("opAirlineLogoUrl")]
         public string OperatingAirlineLogoUrl { get; set; }
-        [JsonProperty("stp")]
+        [JsonProperty("stops")]
         public List<FlightStop> Stops { get; set; }
-        [JsonProperty("airtyp")]
+        [JsonIgnore]
         public AirlineType AirlineType { get; set; }
-        [JsonProperty("cbn")]
+        [JsonProperty("cabin")]
         public CabinClass CabinClass { get; set; }
         [JsonProperty("meal")]
         public bool Meal { get; set; }
-        [JsonProperty("bag", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("baggage", NullValueHandling = NullValueHandling.Ignore)]
         public string Baggage { get; set; }
         [JsonProperty("pnr", NullValueHandling = NullValueHandling.Ignore)]
         public string Pnr { get; set; }   
-        [JsonProperty("rem", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("remainingSeats", NullValueHandling = NullValueHandling.Ignore)]
         public int RemainingSeats { get; set; }
         
         public bool Identical(FlightSegment otherSegment)
@@ -80,13 +80,13 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class FlightStop
     {
-        [JsonProperty("air")]
+        [JsonProperty("airport")]
         public string Airport { get; set; }
-        [JsonProperty("arr")]
+        [JsonProperty("arrivalTime")]
         public DateTime ArrivalTime { get; set; }
-        [JsonProperty("dep")]
+        [JsonProperty("departureTime")]
         public DateTime DepartureTime { get; set; }
-        [JsonProperty("dur")]
+        [JsonProperty("duration")]
         public TimeSpan Duration { get; set; }
     }
 }

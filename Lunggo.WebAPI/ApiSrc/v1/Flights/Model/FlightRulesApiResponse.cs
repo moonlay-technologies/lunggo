@@ -8,9 +8,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightRulesApiResponse : ApiResponseBase
     {
-        [JsonProperty("a")]
+        [JsonProperty("airlines")]
         public List<AirlineRules> AirlineRules { get; set; }
-        [JsonProperty("b")]
+        [JsonProperty("baggages")]
         public List<BaggageRules> BaggageRules { get; set; }
     }
 }

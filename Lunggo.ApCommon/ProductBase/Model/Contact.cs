@@ -11,15 +11,15 @@ namespace Lunggo.ApCommon.ProductBase.Model
 {
     public sealed class Contact
     {
-        [JsonProperty("tit")]
+        [JsonProperty("title")]
         public Title Title { get; set; }
-        [JsonProperty("nm")]
+        [JsonProperty("name")]
         public string Name { get; set; }
-        [JsonProperty("ctycd")]
+        [JsonProperty("countryCallCd")]
         public string CountryCallingCode { get; set; }
-        [JsonProperty("ph")]
+        [JsonProperty("phone")]
         public string Phone { get; set; }
-        [JsonProperty("em")]
+        [JsonProperty("email")]
         public string Email { get; set; }
 
         internal void InsertToDb(string rsvNo)

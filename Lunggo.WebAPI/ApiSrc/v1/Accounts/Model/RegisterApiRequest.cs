@@ -7,7 +7,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Model
     {
         [Required]
         [EmailAddress]
-        [JsonProperty("em")]
+        [JsonProperty("email")]
         public string Email { get; set; }
     }
 }

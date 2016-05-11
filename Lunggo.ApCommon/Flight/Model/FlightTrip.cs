@@ -7,13 +7,13 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightTripForDisplay : FlightTripBase
     {
-        [JsonProperty("trnscnt")]
+        [JsonProperty("transitCount")]
         public int TotalTransit { get; set; }
-        [JsonProperty("trns")]
+        [JsonProperty("transits")]
         public List<Transit> Transits { get; set; }
-        [JsonProperty("air")]
+        [JsonProperty("airlines")]
         public List<Airline> Airlines { get; set; }
-        [JsonProperty("dur")]
+        [JsonProperty("totalDuration")]
         public TimeSpan TotalDuration { get; set; }
     }
 
@@ -32,45 +32,45 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class FlightTripBase
     {
-        [JsonProperty("ori")]
+        [JsonProperty("origin")]
         public string OriginAirport { get; set; }
-        [JsonProperty("des")]
-        public string DestinationAirport { get; set; }
-        [JsonProperty("desct")]
-        public string DestinationCity { get; set; }
-        [JsonProperty("desnm")]
-        public string DestinationAirportName { get; set; }
-        [JsonProperty("orict")]
-        public string OriginCity { get; set; }
-        [JsonProperty("orinm")]
+        [JsonProperty("originName")]
         public string OriginAirportName { get; set; }
-        [JsonProperty("dt")]
+        [JsonProperty("originCity")]
+        public string OriginCity { get; set; }
+        [JsonProperty("destination")]
+        public string DestinationAirport { get; set; }
+        [JsonProperty("destinationName")]
+        public string DestinationAirportName { get; set; }
+        [JsonProperty("destinationCity")]
+        public string DestinationCity { get; set; }
+        [JsonProperty("date")]
         public DateTime DepartureDate { get; set; }
-        [JsonProperty("seg")]
+        [JsonProperty("segments")]
         public List<FlightSegment> Segments { get; set; }
     }
 
     public class Airline
     {
-        [JsonProperty("cd")]
+        [JsonProperty("code")]
         public string Code { get; set; }
-        [JsonProperty("nm")]
+        [JsonProperty("name")]
         public string Name { get; set; }
-        [JsonProperty("lg")]
+        [JsonProperty("logoUrl")]
         public string LogoUrl { get; set; }
     }
 
     public class Transit
     {
-        [JsonProperty("stp")]
+        [JsonProperty("stop")]
         public bool IsStop { get; set; }
-        [JsonProperty("air")]
+        [JsonProperty("airport")]
         public string Airport { get; set; }
-        [JsonProperty("arr")]
+        [JsonProperty("arrivalTime")]
         public DateTime ArrivalTime { get; set; }
-        [JsonProperty("dep")]
+        [JsonProperty("departureTime")]
         public DateTime DepartureTime { get; set; }
-        [JsonProperty("dur")]
+        [JsonProperty("duration")]
         public TimeSpan Duration { get; set; }
     }
 

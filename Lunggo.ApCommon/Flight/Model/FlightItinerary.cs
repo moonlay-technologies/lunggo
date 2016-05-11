@@ -11,37 +11,37 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightItineraryForDisplay
     {
-        [JsonProperty("rqpass")]
+        [JsonProperty("reqPassport")]
         public bool RequirePassport { get; set; }
-        [JsonProperty("rqdob")]
+        [JsonProperty("reqDob")]
         public bool RequireBirthDate { get; set; }
-        [JsonProperty("rqsci")]
+        [JsonProperty("reqSameCheckIn")]
         public bool RequireSameCheckIn { get; set; }
-        [JsonProperty("rqnat")]
+        [JsonProperty("reqNationality")]
         public bool RequireNationality { get; set; }
-        [JsonProperty("hld")]
+        [JsonProperty("holdable")]
         public bool CanHold { get; set; }
-        [JsonProperty("adt")]
+        [JsonProperty("adult")]
         public int AdultCount { get; set; }
-        [JsonProperty("chd")]
+        [JsonProperty("child")]
         public int ChildCount { get; set; }
-        [JsonProperty("inf")]
+        [JsonProperty("infant")]
         public int InfantCount { get; set; }
         [JsonProperty("type")]
         public TripType TripType { get; set; }
-        [JsonProperty("rqcbn")]
+        [JsonProperty("reqCabin")]
         public CabinClass RequestedCabinClass { get; set; }
         [JsonProperty("reg")]
         public int RegisterNumber { get; set; }
         [JsonProperty("fare")]
         public decimal TotalFare { get; set; }
-        [JsonProperty("curr")]
+        [JsonProperty("currency")]
         public string Currency { get; set; }
         [JsonProperty("trips")]
         public List<FlightTripForDisplay> Trips { get; set; }
-        [JsonProperty("ofare")]
+        [JsonProperty("originalFare")]
         public decimal OriginalFare { get; set; }
-        [JsonProperty("cfare", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("comboFare", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? ComboFare { get; set; }
     }
 

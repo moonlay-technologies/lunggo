@@ -9,21 +9,21 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightSearchApiResponse : ApiResponseBase
     {
-        [JsonProperty("fl", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("flights", NullValueHandling = NullValueHandling.Ignore)]
         public List<Flight> Flights { get; set; }
-        [JsonProperty("cmb", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("combos", NullValueHandling = NullValueHandling.Ignore)]
         public List<ComboForDisplay> Combos { get; set; }
-        [JsonProperty("exp", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("expTime", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? ExpiryTime { get; set; }
-        [JsonProperty("prog", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("progress", NullValueHandling = NullValueHandling.Ignore)]
         public int? Progress { get; set; }
     }
 
     public class Flight
     {
-        [JsonProperty("cnt")]
+        [JsonProperty("count")]
         public int Count { get; set; }
-        [JsonProperty("opt")]
+        [JsonProperty("options")]
         public List<FlightItineraryForDisplay> Itineraries { get; set; }
     }
 }

@@ -5,9 +5,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Common.Model
 {
     public class ApiResponseBase
     {
-        [JsonProperty("st")]
+        [JsonProperty("status")]
         public HttpStatusCode StatusCode { get; set; }
-        [JsonProperty("err", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("error", NullValueHandling = NullValueHandling.Ignore)]
         public string ErrorCode { get; set; }
     }
 }

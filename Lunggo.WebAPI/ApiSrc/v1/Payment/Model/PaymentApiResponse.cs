@@ -11,13 +11,13 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Payment.Model
 {
     public class PaymentApiResponse : ApiResponseBase
     {
-        [JsonProperty("payst", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("paymentStatus", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentStatus? PaymentStatus { get; set; }
-        [JsonProperty("met", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("method", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentMethod? Method { get; set; }
-        [JsonProperty("url", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("redirectionUrl", NullValueHandling = NullValueHandling.Ignore)]
         public string RedirectionUrl { get; set; }
-        [JsonProperty("acc", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("transferAccount", NullValueHandling = NullValueHandling.Ignore)]
         public string TransferAccount { get; set; }
     }
 }

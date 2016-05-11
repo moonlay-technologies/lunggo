@@ -5,21 +5,21 @@ namespace Lunggo.ApCommon.Payment.Model.Data
 {
     public class CreditCard
     {
-        [JsonProperty("token_id")]
+        [JsonProperty("tokenId")]
         internal string TokenId { get; set; }
         [JsonProperty("bank")]
         public string Bank { get; set; }
-        [JsonProperty("bank")]
+        [JsonProperty("holderName")]
         public string HolderName { get; set; }
-        [JsonProperty("bank")]
+        [JsonProperty("holderEmail")]
         public string HolderEmail { get; set; }
-        [JsonProperty("installment_term")]
+        [JsonProperty("installmentTerm")]
         public int? InstallmentTerm { get; set; }
         [JsonProperty("bins")]
         public List<string> AllowedBins { get; set; }
         //[JsonProperty("type")]
         //public string Type { get; set; }
-        [JsonProperty("save_token_id")]
+        [JsonProperty("saveTokenId")]
         public bool TokenIdSaveEnabled { get; set; }
     }
 }

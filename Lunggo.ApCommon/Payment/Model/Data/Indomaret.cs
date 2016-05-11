@@ -4,9 +4,9 @@ namespace Lunggo.ApCommon.Payment.Model.Data
 {
     public class Indomaret
     {
-        [JsonProperty("Store")]
+        [JsonProperty("storeName")]
         public string StoreName { get; set; }
-        [JsonProperty("Message")]
+        [JsonProperty("label")]
         public string Label { get; set; }
     }
 }
