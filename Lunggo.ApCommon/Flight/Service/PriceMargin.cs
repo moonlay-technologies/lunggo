@@ -179,7 +179,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static void ApplyMarginRule(FlightItinerary itin, FlightMarginRule marginRule)
         {
-            itin.Price.CalculateFinal(marginRule.Margin);
+            itin.Price.SetMargin(marginRule.Margin);
         }
 
         private FlightMarginRule GetFirstMatchingRule(FlightItinerary itin, List<FlightMarginRule> rules)

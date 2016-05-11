@@ -179,6 +179,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 AirlineCode = splittedSegmentFareId[0],
                                 FlightNumber = splittedSegmentFareId[1].Trim(),
                                 CabinClass = cabinClass,
+                                AirlineType = AirlineType.Lcc,
                                 Rbd = foundFareId.Split('~')[1],
                                 DepartureAirport = splittedSegmentFareId[4],
                                 DepartureTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[5]), DateTimeKind.Utc),

@@ -372,14 +372,16 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     RsvNo = reservation.RsvNo,
                     RsvTime = reservation.RsvTime.ToUniversalTime(),
+                    RsvStatusCd = RsvStatusCd.Mnemonic(reservation.RsvStatus),
                     CancellationTypeCd = null,
                     AdultCount = reservation.Passengers.Count(p => p.Type == PassengerType.Adult),
                     ChildCount = reservation.Passengers.Count(p => p.Type == PassengerType.Child),
                     InfantCount = reservation.Passengers.Count(p => p.Type == PassengerType.Infant),
                     OverallTripTypeCd = TripTypeCd.Mnemonic(reservation.OverallTripType),
+                    UserId = reservation.User != null ? reservation.User.Id : null,
                     InsertBy = "LunggoSystem",
                     InsertDate = DateTime.UtcNow,
-                    InsertPgId = "0",
+                    InsertPgId = "0"
                 };
 
                 FlightReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
@@ -441,6 +443,9 @@ namespace Lunggo.ApCommon.Flight.Service
                                 Duration = segment.Duration,
                                 CabinClassCd = CabinClassCd.Mnemonic(segment.CabinClass),
                                 StopQuantity = segment.StopQuantity,
+                                AirlineTypeCd = AirlineTypeCd.Mnemonic(segment.AirlineType),
+                                Meal = segment.Meal,
+                                Rbd = segment.Rbd,
                                 InsertBy = "LunggoSystem",
                                 InsertDate = DateTime.UtcNow,
                                 InsertPgId = "0"

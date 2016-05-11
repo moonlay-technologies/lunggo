@@ -157,6 +157,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             AirlineCode = Acode,
                             FlightNumber = Fnumber,
                             CabinClass = CabinClass.Economy,
+                            AirlineType = AirlineType.Lcc,
                             Rbd = Rbd,
                             DepartureAirport = ParseFID2[j],
                             DepartureTime = DateTime.SpecifyKind(departureTime, DateTimeKind.Utc),

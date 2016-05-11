@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.ProductBase.Model;
+using Lunggo.ApCommon.Sequence;
+using Lunggo.Framework.Context;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -20,7 +23,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
             if (ParseTripType(input.SearchId) == TripType.OneWay)
             {
-                var token = SaveItineraryFromSearchToCache(input.SearchId, input.RegisterNumbers[0], 0);
+                var token = QuarantineItinerary(input.SearchId, input.RegisterNumbers[0], 0);
                 var bundledToken = BundleFlight(new List<string> { token });
                 return new SelectFlightOutput
                 {
@@ -34,7 +37,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
             if (!isFromSameSupplier)
             {
-                var tokens = input.RegisterNumbers.Select(reg => SaveItineraryFromSearchToCache(input.SearchId, reg, input.RegisterNumbers.IndexOf(reg) + 1)).ToList();
+                var tokens = input.RegisterNumbers.Select(reg => QuarantineItinerary(input.SearchId, reg, input.RegisterNumbers.IndexOf(reg) + 1)).ToList();
                 var bundledToken = BundleFlight(tokens);
                 return new SelectFlightOutput
                 {
@@ -56,7 +59,7 @@ namespace Lunggo.ApCommon.Flight.Service
             });
             if (matchedCombo != null)
             {
-                var token = SaveItineraryFromSearchToCache(input.SearchId, matchedCombo.BundledRegister, 0);
+                var token = QuarantineItinerary(input.SearchId, matchedCombo.BundledRegister, 0);
                 var bundledToken = BundleFlight(new List<string> { token });
                 return new SelectFlightOutput
                 {
@@ -66,7 +69,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
-                var tokens = input.RegisterNumbers.Select(reg => SaveItineraryFromSearchToCache(input.SearchId, reg, input.RegisterNumbers.IndexOf(reg) + 1)).ToList();
+                var tokens = input.RegisterNumbers.Select(reg => QuarantineItinerary(input.SearchId, reg, input.RegisterNumbers.IndexOf(reg) + 1)).ToList();
                 var bundledToken = BundleFlight(tokens);
                 return new SelectFlightOutput
                 {
@@ -84,6 +87,22 @@ namespace Lunggo.ApCommon.Flight.Service
             var itins = tokens.Select(GetItineraryFromCache).ToList();
             var newToken = SaveItinerariesToCache(itins);
             return newToken;
+        }
+
+        private string QuarantineItinerary(string searchId, int registerNumber, int partNumber)
+        {
+            var itinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
+            var itin = GetItineraryFromSearchCache(searchId, registerNumber, partNumber);
+
+            if (itin == null)
+                return null;
+
+            var currencies = GetCurrencyStatesFromCache(searchId);
+            var localCurrency = currencies[OnlineContext.GetActiveCurrencyCode()];
+            itin.Price.CalculateFinalAndLocal(localCurrency);
+
+            SaveItineraryToCache(itin, itinCacheId);
+            return itinCacheId;
         }
     }
 }

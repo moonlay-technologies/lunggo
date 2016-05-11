@@ -386,6 +386,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 AirlineCode = flightNo.Split(' ')[0],
                                 FlightNumber = flightNo.Split(' ')[1],
                                 CabinClass = conditions.CabinClass,
+                                AirlineType = AirlineType.Lcc,
                                 DepartureAirport = airportDeparture,
                                 DepartureTime = depDate, //ASK
                                 ArrivalAirport = airportArrival,

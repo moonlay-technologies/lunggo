@@ -84,28 +84,32 @@ namespace Lunggo.ApCommon.ProductBase.Model
             OriginalIdr = price * currency.Rate;
         }
 
-        public void CalculateFinal(Margin margin)
+        public void SetMargin(Margin margin)
         {
             Margin = margin;
+        }
+
+        public void CalculateFinalAndLocal(Currency localCurrency)
+        {
             if (Margin.IsFlat)
             {
-                LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode());
-                FinalIdr = Margin.Constant*Margin.Currency.Rate;
-                Local = FinalIdr/LocalCurrency.Rate;
+                LocalCurrency = localCurrency;
+                FinalIdr = Margin.Constant * Margin.Currency.Rate;
+                Local = FinalIdr / LocalCurrency.Rate;
                 MarginNominal = FinalIdr - OriginalIdr;
             }
             else
             {
-                LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode());
-                var percentageMarginIdr = OriginalIdr*Margin.Percentage/100M;
-                var constantMarginIdr = Margin.Constant*Margin.Currency.Rate;
+                LocalCurrency = localCurrency;
+                var percentageMarginIdr = OriginalIdr * Margin.Percentage / 100M;
+                var constantMarginIdr = Margin.Constant * Margin.Currency.Rate;
                 var semiFinalIdr = OriginalIdr + percentageMarginIdr + constantMarginIdr;
-                var semiLocalIdr = semiFinalIdr/LocalCurrency.Rate;
-                var localRounding = (LocalCurrency.RoundingOrder - (semiLocalIdr%LocalCurrency.RoundingOrder))%
+                var semiLocalIdr = semiFinalIdr / LocalCurrency.Rate;
+                var localRounding = (LocalCurrency.RoundingOrder - (semiLocalIdr % LocalCurrency.RoundingOrder)) %
                                      LocalCurrency.RoundingOrder;
                 Local = semiLocalIdr + localRounding;
-                Rounding = localRounding*LocalCurrency.Rate;
-                FinalIdr = Local*LocalCurrency.Rate;
+                Rounding = localRounding * LocalCurrency.Rate;
+                FinalIdr = Local * LocalCurrency.Rate;
                 MarginNominal = FinalIdr - OriginalIdr;
             }
         }

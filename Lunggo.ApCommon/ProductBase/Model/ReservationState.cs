@@ -19,6 +19,13 @@ namespace Lunggo.ApCommon.ProductBase.Model
         public string Language { get; set; }
         public Currency Currency { get; set; }
 
+        public ReservationState()
+        {
+            Platform = PlatformTypeCd.FrameworkCode(OnlineContext.GetActivePlatformCode());
+            Device = OnlineContext.GetActiveDeviceCode();
+            Language = OnlineContext.GetActiveLanguageCode();
+            Currency = new Currency(OnlineContext.GetActiveCurrencyCode());
+        }
         internal void InsertToDb(string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -26,10 +33,10 @@ namespace Lunggo.ApCommon.ProductBase.Model
                 ReservationStateTableRepo.GetInstance().Insert(conn, new ReservationStateTableRecord
                 {
                     RsvNo = rsvNo,
-                    PlatformCd = PlatformTypeCd.Mnemonic(PlatformTypeCd.FrameworkCode(OnlineContext.GetActivePlatformCode())),
-                    DeviceCd = OnlineContext.GetActiveDeviceCode(),
-                    LanguageCd = OnlineContext.GetActiveLanguageCode(),
-                    CurrencyCd = OnlineContext.GetActiveCurrencyCode(),
+                    PlatformCd = PlatformTypeCd.Mnemonic(Platform),
+                    DeviceCd = Device ?? "",
+                    LanguageCd = Language,
+                    CurrencyCd = Currency,
                     InsertBy = "LunggoSystem",
                     InsertDate = DateTime.UtcNow,
                     InsertPgId = "0"

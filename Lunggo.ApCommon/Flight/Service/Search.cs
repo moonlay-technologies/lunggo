@@ -7,7 +7,9 @@ using CsQuery.ExtensionMethods.Internal;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Context;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 
@@ -55,15 +57,9 @@ namespace Lunggo.ApCommon.Flight.Service
                     for (var i = 0; i < searchedItins.Count; i++)
                         searchedItinLists[i].AddRange(searchedItins[i]);
 
-                if (searchedItinLists.Any())
-                {
-                    for (var itinListIdx = 0; itinListIdx < searchedItinLists.Count; itinListIdx++)
-                    {
-                        var searchedItinList = searchedItinLists[itinListIdx];
-                        AddPriceMargin(searchedItinList);
-                        SaveFlightRequestPrices(input.SearchId, searchedItinList, itinListIdx);
-                    }
-                }
+                var currencies = GetCurrencyStatesFromCache(input.SearchId);
+                var localCurrency = currencies[OnlineContext.GetActiveCurrencyCode()];
+                searchedItinLists.ForEach(list => list.ForEach(itin => itin.Price.CalculateFinalAndLocal(localCurrency)));
 
                 var seachedItinListsForDisplay =
                     searchedItinLists.Skip(ParseTripType(input.SearchId) != TripType.OneWay ? 1 : 0).Select(lists => lists.Select(ConvertToItineraryForDisplay).ToList()).ToArray();
@@ -139,7 +135,15 @@ namespace Lunggo.ApCommon.Flight.Service
                 var combos = GenerateCombo(itinLists);
                 SaveCombosToCache(combos, searchId, supplierIndex);
             }
+            if (itinLists.Any())
+            {
+                foreach (var itinList in itinLists)
+                {
+                    AddPriceMargin(itinList);
+                }
+            }
             SaveSearchedItinerariesToCache(itinLists, searchId, timeout, supplierIndex);
+            SaveCurrencyStatesToCache(searchId, Currency.GetAllCurrencies(), timeout);
             SaveSearchedSupplierIndexToCache(searchId, supplierIndex, timeout);
             InvalidateSearchingStatusInCache(searchId, supplierIndex);
         }
@@ -195,6 +199,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (combo.Registers.Contains(-1))
                     continue;
                 combo.BundledRegister = bundledItin.RegisterNumber;
+                combo.Fare = bundledItin.Price.Local;
                 combos.Add(combo);
             }
             return combos;

@@ -408,6 +408,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         AirlineCode = ParseFare[j],
                                         FlightNumber = ParseFare[j + 1],
                                         CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
+                                        AirlineType = AirlineType.Lcc,
                                         Rbd = Rbd[i],
                                         DepartureAirport = bandara[0],
                                         DepartureTime = DateTime.SpecifyKind(departureDate, DateTimeKind.Utc),

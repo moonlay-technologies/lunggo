@@ -38,6 +38,9 @@ namespace Lunggo.ApCommon.Flight.Model
         public List<FlightPassenger> Passengers { get; set; }
         public TripType OverallTripType { get; set; }
 
-        
+        public FlightReservation()
+        {
+            State = new ReservationState();
+        }
     }
 }

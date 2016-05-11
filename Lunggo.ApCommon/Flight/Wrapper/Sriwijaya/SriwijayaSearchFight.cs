@@ -329,6 +329,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             AirlineCode = codeParse1[0],
                                             FlightNumber = codeParse1[1],
                                             CabinClass = CabinClass.Economy,
+                                            AirlineType = AirlineType.Lcc,
                                             Rbd = rbdEko[code],
                                             DepartureAirport = bandara1,
                                             DepartureTime = DateTime.SpecifyKind(departureTime,DateTimeKind.Utc),

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
@@ -35,6 +37,15 @@ namespace Lunggo.ApCommon.Payment.Model
             RoundingOrder = GetRoundingOrder();
         }
 
+        public Currency(string symbol, decimal rate, decimal roundingOrder)
+        {
+            if (!ValidateSymbol(symbol))
+                return;
+            Symbol = symbol.ToUpper();
+            Rate = rate;
+            RoundingOrder = roundingOrder;
+        }
+
         public decimal GetRoundingOrder()
         {
             var redis = RedisService.GetInstance();
@@ -53,11 +64,17 @@ namespace Lunggo.ApCommon.Payment.Model
             return rate;
         }
 
+        public static Dictionary<string, Currency> GetAllCurrencies()
+        {
+            var currencyList = GetCurrencyList();
+            return currencyList.ToDictionary(c => c, c => new Currency(c));
+        }
+
         public static void SyncCurrencyData()
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var records = GetCurrencyQuery.GetInstance().Execute(conn, null);
+                var records = GetCurrencyQuery.GetInstance().Execute(conn, null).ToList();
                 var redis = RedisService.GetInstance();
                 var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
                 foreach (var record in records)
@@ -67,6 +84,9 @@ namespace Lunggo.ApCommon.Payment.Model
                     redisDb.StringSet(rateKey, (RedisValue)record.Rate.GetValueOrDefault());
                     redisDb.StringSet(roundingOrderKey, (RedisValue)record.RoundingOrder.GetValueOrDefault());
                 }
+                var currencyListKey = "currencies";
+                var currencyList = records.Select(r => r.Symbol);
+                redisDb.StringSet(currencyListKey, currencyList.Serialize());
             }
         }
 
@@ -99,6 +119,15 @@ namespace Lunggo.ApCommon.Payment.Model
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
             var roundingOrderKey = "currencyRoundingOrder:" + symbol;
             redisDb.StringSet(roundingOrderKey, (RedisValue)roundingOrder);
+        }
+
+        private static IEnumerable<string> GetCurrencyList()
+        {
+            var redis = RedisService.GetInstance();
+            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            var currencyListKey = "currencies";
+            var currencyList = ((string) redisDb.StringGet(currencyListKey)).Deserialize<IEnumerable<string>>();
+            return currencyList;
         }
 
         public override string ToString()
