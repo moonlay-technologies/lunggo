@@ -423,7 +423,7 @@
                             <label><b>Pulang-pergi ?</b></label>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" class="hidden" />Tdk</label>
+                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" class="hidden" />Tidak</label>
                             <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'true'}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" class="hidden" />Ya</label>
                         </div>
                     </div>
@@ -525,7 +525,7 @@
                 </div>
                 <ul class="result">
                     <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Popular">
-                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay('flight-form')"></a>
                         <span class="airport__code">{{result.Code}}</span>
                         <div class="airport__detail">
                             <p class="airport__location">{{result.City}}, {{result.Country}}</p>
@@ -538,7 +538,7 @@
                 </div>
                 <ul class="result">
                     <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Indonesia">
-                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay('flight-form')"></a>
                         <span class="airport__code">{{result.Code}}</span>
                         <div class="airport__detail">
                             <p class="airport__location">{{result.City}}, {{result.Country}}</p>
@@ -551,7 +551,7 @@
                 </div>
                 <ul class="result">
                     <li class="airport" ng-repeat="result in PageConfig.PopularDestination.SouthEastAsia">
-                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay('flight-form')"></a>
                         <span class="airport__code">{{result.Code}}</span>
                         <div class="airport__detail">
                             <p class="airport__location">{{result.City}}, {{result.Country}}</p>
@@ -564,7 +564,7 @@
                 </div>
                 <ul class="result">
                     <li class="airport" ng-repeat="result in PageConfig.PopularDestination.EastAsia">
-                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay('flight-form')"></a>
                         <span class="airport__code">{{result.Code}}</span>
                         <div class="airport__detail">
                             <p class="airport__location">{{result.City}}, {{result.Country}}</p>
@@ -577,7 +577,7 @@
                 </div>
                 <ul class="result">
                     <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Europe">
-                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay('flight-form')"></a>
                         <span class="airport__code">{{result.Code}}</span>
                         <div class="airport__detail">
                             <p class="airport__location">{{result.City}}, {{result.Country}}</p>
@@ -590,7 +590,7 @@
                 </div>
                 <ul class="result">
                     <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Oceania">
-                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay('flight-form')"></a>
                         <span class="airport__code">{{result.Code}}</span>
                         <div class="airport__detail">
                             <p class="airport__location">{{result.City}}, {{result.Country}}</p>
@@ -603,7 +603,7 @@
                 </div>
                 <ul class="result">
                     <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Others">
-                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay('flight-form')"></a>
                         <span class="airport__code">{{result.Code}}</span>
                         <div class="airport__detail">
                             <p class="airport__location">{{result.City}}, {{result.Country}}</p>

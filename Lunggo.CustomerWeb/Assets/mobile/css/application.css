@@ -453,7 +453,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     padding: 12px;
     color: #fff;
     height: 60px;
-    display: none; }
+    display: none;
+      z-index: 2;
+  }
   .overlay.active {
     top: 0; }
     .overlay.active .overlay__header {
@@ -838,7 +840,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             text-align: center;
             background: #fff;
             padding: 10px 15px;
-            color: #666; }
+            color: #666;
+              font-size: 10px;
+          }
             .page.page-home .form-wrapper form .form__roundtrip .switch label.active {
               background: #0c7399;
               color: #fff; }

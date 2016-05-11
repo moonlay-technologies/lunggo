@@ -3849,7 +3849,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
         color: #fff;
         color: #fff;
         margin: 0;
-        padding: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
         padding-left: 40px;
         font-size: 12px;
         font-weight: 600; }
