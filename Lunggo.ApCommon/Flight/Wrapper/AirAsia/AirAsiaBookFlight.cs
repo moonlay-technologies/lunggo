@@ -299,6 +299,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 travelerRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var travelerResponse = client.Execute(travelerRequest);
 
+                //GAGAL PAS MASUK KE SINI
                 if (travelerResponse.ResponseUri.AbsolutePath != "/UnitMap.aspx" || (travelerResponse.StatusCode != HttpStatusCode.OK && travelerResponse.StatusCode != HttpStatusCode.Redirect))
 
                     return new BookFlightResult
