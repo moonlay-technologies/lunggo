@@ -836,11 +836,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             width: 50px;
             text-align: center;
             background: #fff;
-            padding: 10px 15px;
-            color: #666; }
+            padding: 10px 10px;
+            color: #666;
+              font-size: 12px;
+          }
             .page.page-home .form-wrapper form .form__roundtrip .switch label.active {
               background: #0c7399;
-              color: #fff; }
+              color: #fff; 
+              font-size: 12px;
+            }
       .page.page-home .form-wrapper form .form__passenger:after {
         display: block;
         width: 100%;
