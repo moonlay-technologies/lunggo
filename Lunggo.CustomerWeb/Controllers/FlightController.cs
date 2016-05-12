@@ -84,7 +84,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     ViewBag.Message = "BookFailed";
                     return View();
-                }
+                } 
 
                 if (token == null)
                 {
