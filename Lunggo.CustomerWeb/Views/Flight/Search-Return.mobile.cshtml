@@ -236,7 +236,7 @@
         <header class="overlay__header">
             <h3 class="overlay__title">
                 DETAIL PENERBANGAN
-                <span class="overlay__close" ng-click="FlightFunctions.SetActiveFlight(); SetOverlay();" ng-hide="PageConfig.Validating">X</span>
+                <span class="overlay__close" ng-click="FlightFunctions.SetActiveFlight(); SetOverlay()" ng-hide="PageConfig.Validating">X</span>
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
@@ -363,14 +363,14 @@
         <header class="overlay__header">
             <h3 class="overlay__title">
                 DETAIL PENERBANGAN
-                <span class="overlay__close hidden" ng-click="FlightFunctions.SetActiveFlight(); SetOverlay();" ng-show="PageConfig.Validating">X</span>
+                <span class="overlay__close" ng-click="FlightFunctions.SetActiveFlight(); SetOverlay();" ng-hide="PageConfig.Validating">X</span>
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
             <div>
                 <div class="flight-title flight-title--departure">
                     <div class="flight-info">
-                        <h4><b>{{FlightConfig[0].FlightRequest.Trips[0].OriginAirport}}</b> to <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationAirport}}</b></h4>
+                        <h4><b>{{FlightConfig[0].FlightRequest.Trips[0].OriginAirport}}</b> ke <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationAirport}}</b></h4>
                         <h5>{{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date: 'EEE,dd MMM yyyy'}}</h5>
                     </div><!-- .flight-info -->
                     <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('departure',-1); FlightFunctions.ResetValidation(); SetSection('departure'); SetOverlay();">GANTI</span></a>
@@ -756,7 +756,7 @@
                             <label><b>Pulang-pergi ?</b></label>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" class="hidden" />Tdk</label>
+                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" class="hidden" />Tidak</label>
                             <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'true'}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" class="hidden" />Ya</label>
                         </div>
                     </div>
@@ -790,6 +790,11 @@
                 </div>
                 <div class="hidden">
 
+                </div>
+                <div class="form-group form__flightclass">
+                    <select class="form-control" name="cabinclass" ng-model="FlightSearchForm.Cabin" ng-init="FlightSearchForm.Cabin = flightclass[0].value">
+                        <option ng-repeat="cabin in flightclass" value="{{cabin.value}}">{{cabin.name}}</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-yellow text-center btn-block btn-lg">CARI</button>
@@ -955,8 +960,8 @@
     <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--departure" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-departure') }">
         <header class="overlay__header">
             <h3 class="overlay__title">
-                <span ng-show="DatePicker.Settings.Target == 'departure'">Pilih Tanggal Keberangkatan</span>
-                <span ng-show="DatePicker.Settings.Target == 'return'">Pilih Tanggal Pulang</span>
+                <span ng-show="DatePicker.Settings.Target == '.flight-search-form-departure'">Pilih Tanggal Keberangkatan</span>
+                <span ng-show="DatePicker.Settings.Target == '.flight-search-form-return'">Pilih Tanggal Pulang</span>
                 <span class="overlay__close" ng-click="SetOverlay('flight-form')">X</span>
             </h3>
         </header><!-- .overlay__header -->

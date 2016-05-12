@@ -67,15 +67,15 @@ else
                                             @if (@User.Identity.IsAuthenticated)
                                             {
                                                 <ul>
-                                                    <li><a href="@Url.Action("OrderHistory", "UW620OrderHistory")">My Account</a></li>
-                                                    <li><a href="@Url.Action("Logout", "Account")">Log Out</a></li>
+                                                    <li><a href="@Url.Action("OrderHistory", "UW620OrderHistory")">Akun Saya</a></li>
+                                                    <li><a href="@Url.Action("Logout", "Account")">Keluar</a></li>
                                                 </ul>
                                             }
                                             else
                                             {
                                                 <ul>
-                                                    <li><a href="@Url.Action("Login", "Account", new {ReturnUrl = Context.Request.Url})">Log In</a></li>
-                                                    <li><a href="@Url.Action("Register", "Account")">Sign Up</a></li>
+                                                    <li><a href="@Url.Action("Login", "Account", new {ReturnUrl = Context.Request.Url})">Masuk</a></li>
+                                                    <li><a href="@Url.Action("Register", "Account")">Daftar</a></li>
                                                 </ul>
                                             }
                                         </div>
@@ -87,9 +87,9 @@ else
                             <nav>
                                 <ul>
                                     <li><a href="@Url.Action("Index", "UW000TopPage")">PENERBANGAN</a></li>
-                                    <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">HOTEL</a></li>
+                                    @*<li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">HOTEL</a></li>
                                     <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">TOUR &amp; ACTIVITY</a></li>
-                                    <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">PROMOTION</a></li>
+                                    <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">PROMOTION</a></li>*@
                                 </ul>
                             </nav>
                         </div>

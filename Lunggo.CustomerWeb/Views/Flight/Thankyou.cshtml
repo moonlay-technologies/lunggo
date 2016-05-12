@@ -49,7 +49,7 @@
         <h2 class="section-title stripe text-center">PEMESANAN <span>GAGAL</span></h2>
 
         <div class="container">
-            <p>Mohon maaf, pesanan no. @Model.RsvNo telah dibatalkan. Silahkan membuat pesanan baru.</p>
+            <p>Mohon maaf, pemesanan dengan no. @Model.RsvNo telah dibatalkan. Silakan membuat pemesanan baru.</p>
         </div>
         <div class="container text-center">
             <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
@@ -64,7 +64,7 @@ else if (Model.Payment.Status == PaymentStatus.Denied)
         <h2 class="section-title stripe text-center">PEMESANAN <span>GAGAL</span></h2>
 
         <div class="container">
-            <p>Mohon maaf, pesanan no. @Model.RsvNo telah ditolak. Silahkan membuat pesanan baru.</p>
+            <p>Mohon maaf, pemesanan dengann no. @Model.RsvNo telah ditolak. Silakan membuat pemesanan baru.</p>
         </div>
         <div class="container text-center">
             <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
@@ -79,7 +79,7 @@ else
         <h2 class="section-title stripe text-center">TERIMA <span>KASIH</span></h2>
 
         <div class="container">
-            <p>Telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-ticket Anda melalui tombol berikut atau mengunduhnya di email setelah :</p>
+            <p>Telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-ticket Anda melalui tombol berikut atau mengunduhnya di e-mail setelah :</p>
 
             <section class="countdown">
             
@@ -118,13 +118,13 @@ else
                             @using (Html.BeginForm())
                             {
                                 <input type="hidden" name="rsvNo" value="@Model.RsvNo" />
-                                <button class="btn btn-yellow block"><span>CEK PESANAN</span></button>
+                                <button class="btn btn-yellow block"><span>CEK PEMESANAN</span></button>
                             }
                         </div>
                     </div>
                 </div>
 
-                <p>Anda dapat  menutup halaman ini dan mengecek status penerbitan e-ticket di menu cek pemesanan setiap saat.</p>
+                <p>Anda dapat menutup halaman ini dan mengecek status penerbitan e-ticket di menu cek pemesanan setiap saat.</p>
 
             </section><!-- .section -->
 

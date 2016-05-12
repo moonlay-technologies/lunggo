@@ -517,6 +517,20 @@
                                                     </section>
                                                 </label>
                                             </div><!-- .payment -->
+                                        
+                                        <div class="payment MandiriBillPayment col-xs-4">
+                                            <label>
+                                                <header>
+                                                    <div class="input-wrapper">
+                                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriBillPayment" ng-model="paymentMethod" />
+                                                    </div>
+                                                    <h5>Mandiri Bill Payment</h5>
+                                                </header>
+                                                <section>
+                                                    <img src="/Assets/images/Bank-Mandiri.jpg" alt="Mandiri Bill Payment" />
+                                                </section>
+                                            </label>
+                                        </div><!-- .payment -->
                                        
                                     </div>
 
@@ -711,7 +725,7 @@
                                     <h3 class="widget-title"><b>KODE</b> VOUCHER</h3>
                                     <div class="widget-content">
                                         <span><b>Punya Kupon Travorama ?</b></span>
-                                        <p>Masukkan disini</p>
+                                        <p>Masukkan di sini</p>
                                         <form class="form" name="voucherForm" novalidate>
                                             <div class="form-group">
                                                 <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
@@ -897,7 +911,7 @@
                     <section>
                         <p>
                             Harga tiket untuk penerbangan ini berubah menjadi Rp {{book.newPrice | number : fractionSize}} disebabkan
-                            perubahan dari sistem maskapai
+                            perubahan dari sistem maskapai.
                         </p>
                     </section>
                     <footer>

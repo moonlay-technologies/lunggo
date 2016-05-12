@@ -49,7 +49,7 @@ $header-height:60px;
 /*--------------------*/
 // General Styling
 
-body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; padding-top:$header-height;}
+body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; padding-top:$header-height; height: 100%;}
 
 img {max-width:100%;}
 
@@ -164,7 +164,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // *****
 // site content
-.site-content {min-height:350px;                
+.site-content {min-height:100%; 
+               /*position: relative;
+               padding: 0 0 100px;   
+               box-sizing: border-box;*/ 
     a {color:#2fb4e6;}
 }
 
@@ -204,6 +207,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // *****
 // site footer
 .site-footer {background-color:#111; color:#fefefe; 
+             width: 100%; /*position: relative; height: 100px; bottom: 0; left:0;*/
     .site-footer-menu {background-color:#303030;
         nav {padding:0 12px;
             ul {list-style:none; margin:0; padding:0;
@@ -233,7 +237,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // *****
 // popup
-.popup__wrapper {background:rgba(0,0,0,0.7); position:fixed; top:0; left:0; width:100%; height:100%; z-index:1000; display:none;
+.popup__wrapper {background:rgba(0,0,0,0.7); position:fixed; top:0; left:0; width:320px; height:100%; z-index:1000; display:none;
     .popup {position:absolute; top:0; right:0; bottom:0; left:0; margin:auto; width:300px; height:200px; background:#fff; @include border-radius($border-radius-default);
         .popup__header {background:#1daee5; color:#fff; padding:12px;
             .popup__title {text-align:center; margin:0; font-weight:bold;}
@@ -318,6 +322,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             input[type="text"] {padding:10px; height:auto;}
         }
         .autocomplete-preload {
+           
             .list__header {
                 h4 {margin:0; background:#dedede; color:#656565; padding:10px; font-weight:bold;}
             }
@@ -453,6 +458,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             font-size: 12px;
         }
         }
+}
+
+.page-overlay .overlay-content div section p {
+  display: inline-block;
+ padding: 10px;
+  }
+
+.form__flightclass .form-control {
+    height: 35px;
 }
 
 /*--------------------*/
