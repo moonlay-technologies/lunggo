@@ -178,6 +178,7 @@
     <Compile Include="Flight\Constant\FareType.cs" />
     <Compile Include="Flight\Constant\FlightError.cs" />
     <Compile Include="Flight\Constant\Gender.cs" />
+    <Compile Include="Flight\Constant\IssueManualType.cs" />
     <Compile Include="Flight\Constant\PassengerType.cs" />
     <Compile Include="Flight\Constant\Title.cs" />
     <Compile Include="Flight\Constant\TripType.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Flight\Utility\IdUtil.cs" />
     <Compile Include="Flight\Utility\Parser.cs" />
     <Compile Include="Flight\Utility\SearchConditionEncoder.cs" />
+    <Compile Include="Flight\Wrapper\AirAsia\AirAsiaGetCurrentBalance.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaIsIssued.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaOrderTicket.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaRevalidateFare.cs" />
@@ -284,6 +286,7 @@
     <Compile Include="Flight\Wrapper\Citilink\CitilinkBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkClientHandler.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkGetBookingStatus.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkGetCurrentBalance.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkGetTripDetails.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkIsIssued.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkOrderTicket.cs" />

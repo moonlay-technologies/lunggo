@@ -13,6 +13,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             private bool _isInitialized;
             private static string _userName;
             private static string _password;
+            private static decimal currentDeposit;
 
             private LionAirClientHandler()
             {
@@ -100,7 +101,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var responseW = client.Execute(requestW);
                 var htmlresp = responseW.Content;
                 var searchedHtml = (CQ)htmlresp;
-               // currentDeposit = GetDeposit(searchedHtml).Replace(",", "");
+                var numberDeposit = searchedHtml["#ctl00_ContentPlaceHolder1_lblCreditAvailable"].Text().Trim().Split(' ');
+                var deposit = numberDeposit[1].Trim().Replace(",", "");
+                if (deposit != null || deposit != "") 
+                {
+                    currentDeposit = decimal.Parse(deposit);
+                }
+                
 
                 // HANDLING CASE IF CAPTCHA IS FALSE
                 var ret = new bool();
@@ -129,6 +136,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 captchaRq.AddFileBytes("captcha", captcha, "captcha");
                 var captchaRs = client.Execute(captchaRq);
                 return captchaRs.Content.Trim('"');
+            }
+
+            //Get Deposit for Lion Air
+            private static decimal getDeposit() 
+            {
+                return currentDeposit;
             }
         }
     }

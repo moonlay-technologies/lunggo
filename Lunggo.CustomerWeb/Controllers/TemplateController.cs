@@ -168,5 +168,10 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult SlightDelayEmail() 
+        {
+            return View();
+        }
+
     }
 }

@@ -19,5 +19,6 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public string BookingId { get; set; }
         public BookingStatus BookingStatus { get; set; }
         public bool IsInstantIssuance { get; set; }
+        public decimal CurrentBalance { get; set; }
     }
 }

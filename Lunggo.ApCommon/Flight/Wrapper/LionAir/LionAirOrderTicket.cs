@@ -229,18 +229,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         case IssueEnum.NotIssued:
                             return new OrderTicketResult
                             {
-                                IsSuccess = false
+                                IsSuccess = false,
+                                CurrentBalance = getDeposit()
                             };
                         case IssueEnum.CheckingError:
                             return new OrderTicketResult
                             {
+                                CurrentBalance = getDeposit(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
                                 ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                                
                             };
                         default:
                             return new OrderTicketResult
                             {
+                                CurrentBalance = getDeposit(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
                                 ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }

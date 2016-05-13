@@ -117,6 +117,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Function\FlightEticketSlightDelayNotifEmail.cs" />
+    <Compile Include="Function\FlightFailedVerificationCreditCardNotifEmail.cs" />
+    <Compile Include="Function\FlightIssueFailedNotifEmail.cs" />
+    <Compile Include="Function\FlightIssueSlightDelayNotifEmail.cs" />
+    <Compile Include="Function\FlightSaySorryFailedIssueNotifEmail.cs" />
     <Compile Include="Init.cs" />
     <Compile Include="Function\FlightChangedEticketEmail.cs" />
     <Compile Include="Function\FlightEticketEmail.cs" />

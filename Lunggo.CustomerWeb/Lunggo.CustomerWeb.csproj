@@ -746,13 +746,19 @@
     <Content Include="Assets\images\email-send-icon.png" />
     <Content Include="Assets\images\email-social.jpg" />
     <Content Include="Assets\images\email-twitter.jpg" />
+    <Content Include="Assets\images\email\bagasi.png" />
+    <Content Include="Assets\images\email\Clip.png" />
     <Content Include="Assets\images\email\close-email-button.jpg" />
+    <Content Include="Assets\images\email\e1_03.png" />
     <Content Include="Assets\images\email\email-footer.png" />
     <Content Include="Assets\images\email\facebook-icon.png" />
     <Content Include="Assets\images\email\flight-departure-icon.png" />
     <Content Include="Assets\images\email\flight-return-icon.png" />
     <Content Include="Assets\images\email\instagram-icon.png" />
+    <Content Include="Assets\images\email\line.png" />
     <Content Include="Assets\images\email\mail-icon.png" />
+    <Content Include="Assets\images\email\mail.png" />
+    <Content Include="Assets\images\email\meal.png" />
     <Content Include="Assets\images\email\no-1.png" />
     <Content Include="Assets\images\email\no-2.png" />
     <Content Include="Assets\images\email\phone-icon.png" />
@@ -761,6 +767,7 @@
     <Content Include="Assets\images\email\specialrelease\mail-left.jpg" />
     <Content Include="Assets\images\email\specialrelease\mail-right.jpg" />
     <Content Include="Assets\images\email\specialrelease\mail-top.jpg" />
+    <Content Include="Assets\images\email\tax.png" />
     <Content Include="Assets\images\email\travorama-logo.jpg" />
     <Content Include="Assets\images\email\twitter-icon.png" />
     <Content Include="Assets\images\enjoy.png" />
@@ -891,6 +898,7 @@
     <Content Include="Assets\images\pop-yogyakarta.jpg" />
     <Content Include="Assets\images\popular-destination-bg-yellow.png" />
     <Content Include="Assets\images\popular-destination-bg.png" />
+    <Content Include="Assets\images\popup\Pop-Up-Book-Flight_03.png" />
     <Content Include="Assets\images\print-image.png" />
     <Content Include="Assets\images\quote-close.png" />
     <Content Include="Assets\images\quote-open.png" />
@@ -2650,6 +2658,7 @@
     <Content Include="Views\Template\eticketnew.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderFlightHistoryDetail.mobile.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderHistory.mobile.cshtml" />
+    <Content Include="Views\Template\SlightDelayEmail.cshtml" />
     <None Include="Views\UW000TopPage\Index.mobile.cshtml.bak" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

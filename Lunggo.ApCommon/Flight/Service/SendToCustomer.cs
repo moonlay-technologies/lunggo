@@ -52,5 +52,46 @@ namespace Lunggo.ApCommon.Flight.Service
             var queue = queueService.GetQueueByReference("FlightPendingPaymentConfirmedNotifEmail");
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
+
+        /* Jika Gagal Issue karna Deposit Abis atau lainnya*/
+        public void SendIssueSlightDelayNotifToCustomer(string message) 
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("FlightIssueSlightDelayNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(message));
+        }
+
+        /*Send Issue Failed into Developer*/
+        public void SendIssueFailedNotifToDeveloper(string message)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("FlightIssueFailedNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(message));
+        }
+
+        /*Jika Salah satu Mistifly dan status udah settled, tapi etiket blom terkirim*/
+        public void SendEticketSlightDelayNotifToCustomer(string rsvNo)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("FlightEticketSlightDelayNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(rsvNo));
+        }
+
+        /*Jika Verifikasi Credit Card Gagal dari Veritrans*/
+        public void SendFailedVerificationCreditCardNotifToCustomer(string rsvNo)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("FlightFailedVerificationCreditCardNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(rsvNo));
+        }
+
+        /*Jika Issue Exception tidak bisa di handle manual*/
+        public void SendSaySorryFailedIssueNotifToCustomer(string rsvNo)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("FlightSaySorryFailedIssueNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(rsvNo));
+        }
+
     }
 }

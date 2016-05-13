@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IOnePoint" contract="Mystifly.OnePointService.Flight.OnePoint" bindingType="basicHttpBinding" address="http://webservices.myfarebox.com/V2/OnePoint.svc" bindingConfiguration="BasicHttpBinding_IOnePoint">
+    <endpoint name="BasicHttpBinding_IOnePoint" contract="Mystifly.OnePointService.Flight.OnePoint" bindingType="basicHttpBinding" address="http://apidemo.myfarebox.com/V2/OnePoint.svc" bindingConfiguration="BasicHttpBinding_IOnePoint">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://webservices.myfarebox.com/V2/OnePoint.svc</serializedValue>
+          <serializedValue>http://apidemo.myfarebox.com/V2/OnePoint.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
