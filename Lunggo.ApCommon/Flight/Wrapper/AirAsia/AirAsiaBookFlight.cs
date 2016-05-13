@@ -100,8 +100,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var flightPart = coreFareId.Split('|')[1];
                 var splitted = flightPart.Split('~');
                 var airlineCode = splitted[0];
-                var flightNumber = splitted[1];
-                var hidden = string.Join(" ", date.ToString("yyyyMMdd"), airlineCode, flightNumber,
+                var flightNumber = splitted[1].Trim(' ');
+                var hidden = string.Join("+", date.ToString("yyyyMMdd"), airlineCode, flightNumber,
                     origin + dest + "IDR");
 
                 // [POST] Search Flight
@@ -119,11 +119,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupSearchView_AvailabilitySearchInputSearchViewdestinationStation1=" + dest +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24TextBoxMarketDestination1=" + dest +
                     @"&ControlGroupSearchView%24MultiCurrencyConversionViewSearchView%24DropDownListCurrency=default" +
-                    @"&date_picker=" + date.Day + "%2F" + date.Month + "%2F" + date.Year +
+                    @"&date_picker=" + date.Month + "%2F" + date.Day + "%2F" + date.Year +
                     @"&date_picker=" +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketDay1=" + date.Day +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketMonth1="+date.Year+"-"+date.Month +
-                    @"&date_picker=" + date2.Day + "%2F" + date2.Month + "%2F" + date2.Year +
+                    @"&date_picker=" + date2.Month + "%2F" + date2.Day + "%2F" + date2.Year +
                     @"&date_picker=" +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketDay2="+date2.Day +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketMonth2=" + date2.Year + "-" + date2.Month +
@@ -132,7 +132,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListPassengerType_INFANT="+infantCount +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListSearchBy=columnView" +
                     @"&ControlGroupSearchView%24ButtonSubmit=Search" +
-                    @"&__VIEWSTATEGENERATOR=05F9A2B0"; ;
+                    @"&__VIEWSTATEGENERATOR=05F9A2B0";
 
                 var searchRequest = new RestRequest("Search.aspx", Method.POST);
                 searchRequest.AddHeader("Referer", "https://booking2.airasia.com/Search.aspx");
@@ -165,11 +165,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24TextBoxMarketOrigin1=" + origin +
                     @"&ControlGroupAvailabilitySearchInputSelectView_AvailabilitySearchInputSelectViewdestinationStation1=" + dest +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24TextBoxMarketDestination1=" + dest +
-                    @"&date_picker="+date.Day+"%2F"+date.Month+"%2F" + date.Year +
+                    @"&date_picker=" + date.Month+ "%2F" + date.Day+ "%2F" + date.Year +
                     @"&date_picker=" +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListMarketDay1=" + date.Day +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListMarketMonth1="+date.Year+"-"+date.Month +
-                    @"&date_picker="+date2.Day+"%2F"+date2.Month+"%2F" + date2.Year +
+                    @"&date_picker=" + date2.Month + "%2F" + date2.Day + "%2F" + date2.Year +
                     @"&date_picker=" +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListMarketDay2=" + date2.Day +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListMarketMonth2=" + date2.Year + "-" + date2.Month +
@@ -177,7 +177,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_CHD="+childCount +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_INFANT="+infantCount +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24MultiCurrencyConversionViewSelectView%24DropDownListCurrency=default" +
-                    //@"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListSearchBy=columnView" +
+                    @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListSearchBy=columnView" +
                     @"&ControlGroupSelectView%24AvailabilityInputSelectView%24HiddenFieldTabIndex1=4" +
                     @"&ControlGroupSelectView%24AvailabilityInputSelectView%24market1=" + HttpUtility.UrlEncode(coreFareId) +
                     @"&ControlGroupSelectView%24SpecialNeedsInputSelectView%24RadioButtonWCHYESNO=RadioButtonWCHNO" +
@@ -202,18 +202,91 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 Thread.Sleep(1000);
 
+                var getTravelerRequest = new RestRequest("Traveler.aspx", Method.GET);
+                getTravelerRequest.AddHeader("Referer", "https://booking2.airasia.com/Select.aspx");
+                var getTravelerResponse = client.Execute(getTravelerRequest);
+                var getVS = getTravelerResponse.Content;
+                var vs = (CQ)getVS;
+                var dataaneh = HttpUtility.UrlEncode(vs["[name='HiFlyerFare']"].Attr("value"));
+                var vs4 = HttpUtility.UrlEncode(vs["#viewState"].Attr("value"));
                 // [POST] Input Data
 
+                Thread.Sleep(1000);
+
+                //postData = @"__EVENTTARGET=CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24LinkButtonSkipToSeatMap" +
+                //            @"&__EVENTARGUMENT=" +
+                //            @"&__VIEWSTATE=%2FwEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgcFSENPTlRST0xHUk9VUFRSQVZFTEVSRkxJR0hUQU5EUFJJQ0UkRmxpZ2h0RGlzcGxheVRyYXZlbGVyVmlldyRTdXJ2ZXlCb3gkMAVdQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkUGFzc2VuZ2VySW5wdXRUcmF2ZWxlclZpZXckQ2hlY2tCb3hJbUZseWluZ18wBVxDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRQYXNzZW5nZXJJbnB1dFRyYXZlbGVyVmlldyRDaGVja0JveEFkZERvY3NfMAVhQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkSW5zdXJhbmNlSW5wdXRUcmF2ZWxlclZpZXckUmFkaW9CdXR0b25Ob0luc3VyYW5jZQVhQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkSW5zdXJhbmNlSW5wdXRUcmF2ZWxlclZpZXckUmFkaW9CdXR0b25Ob0luc3VyYW5jZQViQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkSW5zdXJhbmNlSW5wdXRUcmF2ZWxlclZpZXckUmFkaW9CdXR0b25ZZXNJbnN1cmFuY2UFYkNPTlRST0xHUk9VUF9PVVRFUlRSQVZFTEVSJENPTlRST0xHUk9VUFRSQVZFTEVSJEluc3VyYW5jZUlucHV0VHJhdmVsZXJWaWV3JFJhZGlvQnV0dG9uWWVzSW5zdXJhbmNlidORNQLITt2CkCi749CCAaxW%2FNc%3D"+
+                //            @"&pageToken=&MemberLoginTravelerView2%24TextBoxUserID=" +
+                //            @"&hdRememberMeEmail=" +
+                //            @"&MemberLoginTravelerView2%24PasswordFieldPassword=" +
+                //            @"&memberLogin_chk_RememberMe=on" +
+                //            @"&HiFlyerFare=%5BEC%5D&isAutoSeats=false" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24HiddenSelectedCurrencyCode=IDR" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24DropDownListTitle=MS" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24TextBoxFirstName=DWI" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24TextBoxLastName=AGUSTINA" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24TextBoxWorkPhone=62217248040" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24TextBoxFax=" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24TextBoxEmailAddress=dwi.agustina%40travelmadezy.com" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24DropDownListHomePhoneIDC=93" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24TextBoxHomePhone=62" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24DropDownListOtherPhoneIDC=93" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24TextBoxOtherPhone=6281286375648" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24EmergencyTextBoxGivenName=Given+name" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24EmergencyTextBoxSurname=Family+name%2FSurname" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24DropDownListMobileNo=93" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24EmergencyTextBoxMobileNo=" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24DropDownListRelationship=Other" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24DropDownListTitle_0=MS" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24DropDownListGender_0=2" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24TextBoxFirstName_0=Intan+Dea" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24TextBoxLastName_0=Yutami" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24DropDownListNationality_0=ID" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24DropDownListBirthDateDay_0=21" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24DropDownListBirthDateMonth_0=8" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24DropDownListBirthDateYear_0=1992" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24TextBoxCustomerNumber_0=" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24BaggageLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_journey_1_flightReference_20160630-QZ-262-CGKSIN=SsrQuantity_passengerNumber_0_ssrCode_PBAB_ssrNum_1_flightReference_20160630-QZ-262-CGKSIN" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_MXQZ_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat1_previousSsr_MXQZ_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_VTCB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat1_previousSsr_VTCB_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_NLCB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat1_previousSsr_NLCB_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_CRCB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat1_previousSsr_CRCB_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_NMCB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat1_previousSsr_NMCB_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_NPCB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat1_previousSsr_NPCB_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_SCQZ_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat2_previousSsr_SCQZ_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_RDCB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat2_previousSsr_RDCB_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_SACB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat2_previousSsr_SACB_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_SBCB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat2_previousSsr_SBCB_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_FRCB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat2_previousSsr_FRCB_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_NKCB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat2_previousSsr_NKCB_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_CSCB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat3_previousSsr_CSCB_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_PCCB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat3_previousSsr_PCCB_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_HDCB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat3_previousSsr_HDCB_dropDown=0" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_PRCB_flightReference_20160630-QZ-262-CGKSIN_group_AAmealCat4_previousSsr_PRCB_dropDown=0" +
+                //            @"&ctl00%24BodyContent%24ucTravelerForm1_form%24addOnsPanel1%24mealPanel2%24SelectedMeal_0=" +
+                //            @"&ctl00%24BodyContent%24ucTravelerForm1_form%24addOnsPanel1%24mealPanel2%24SelectedMeal_1=" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24SportEquipInputTravelerView%24SsrQuantity_passengerNumber_0_journey_1_flightReference_20160630-QZ-262-CGKSIN=" +
+                //            @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ComfortKitInputTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_PCMK_flightReference_20160630-QZ-262-CGKSIN_group_AAcomfortKit1_previousSsr_PCMK_dropDown=0" +
+                //            @"&checkBoxInsuranceName=InsuranceInputControlAddOnsViewAjax%24CheckBoxInsuranceAccept" +
+                //            @"&checkBoxInsuranceId=CONTROLGROUP_InsuranceInputControlAddOnsViewAjax_CheckBoxInsuranceAccept" +
+                //            @"&checkBoxAUSNoInsuranceId=InsuranceInputControlAddOnsViewAjax_CheckBoxAUSNo" +
+                //            @"&declineInsuranceLinkButtonId=InsuranceInputControlAddOnsViewAjax_LinkButtonInsuranceDecline" +
+                //            @"&insuranceLinkCancelId=InsuranceInputControlAddOnsViewAjax_LinkButtonInsuranceDecline" +
+                //            @"&radioButtonNoInsuranceId=InsuranceInputControlAddOnsViewAjax_RadioButtonNoInsurance" +
+                //            @"&radioButtonYesInsuranceId=InsuranceInputControlAddOnsViewAjax_RadioButtonYesInsurance" +
+                //            @"&radioButton=on" +
+                //            @"&HiddenFieldPageBookingData=20160630+QZ+262+CGKSINIDR" +
+                //            @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 postData =
                     @"__EVENTTARGET=CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24LinkButtonSkipToSeatMap" +
                     @"&__EVENTARGUMENT=" +
-                    @"&__VIEWSTATE=%2FwEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgYFSENPTlRST0xHUk9VUFRSQVZFTEVSRkxJR0hUQU5EUFJJQ0UkRmxpZ2h0RGlzcGxheVRyYXZlbGVyVmlldyRTdXJ2ZXlCb3gkMAVdQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkUGFzc2VuZ2VySW5wdXRUcmF2ZWxlclZpZXckQ2hlY2tCb3hJbUZseWluZ18wBWFDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRJbnN1cmFuY2VJbnB1dFRyYXZlbGVyVmlldyRSYWRpb0J1dHRvbk5vSW5zdXJhbmNlBWFDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRJbnN1cmFuY2VJbnB1dFRyYXZlbGVyVmlldyRSYWRpb0J1dHRvbk5vSW5zdXJhbmNlBWJDT05UUk9MR1JPVVBfT1VURVJUUkFWRUxFUiRDT05UUk9MR1JPVVBUUkFWRUxFUiRJbnN1cmFuY2VJbnB1dFRyYXZlbGVyVmlldyRSYWRpb0J1dHRvblllc0luc3VyYW5jZQViQ09OVFJPTEdST1VQX09VVEVSVFJBVkVMRVIkQ09OVFJPTEdST1VQVFJBVkVMRVIkSW5zdXJhbmNlSW5wdXRUcmF2ZWxlclZpZXckUmFkaW9CdXR0b25ZZXNJbnN1cmFuY2XANPXRpUiKOBVSs5rbl5fvpSsmZw%3D%3D" +
+                    @"&__VIEWSTATE=" + vs4 +
                     @"&pageToken=" +
                     @"&MemberLoginTravelerView2%24TextBoxUserID=" +
                     @"&hdRememberMeEmail=" +
                     @"&MemberLoginTravelerView2%24PasswordFieldPassword=" +
                     @"&memberLogin_chk_RememberMe=on" +
-                    @"&HiFlyerFare=%5BHF%5D" +
+                    @"&HiFlyerFare=" + dataaneh +
                     @"&isAutoSeats=false" +
                     @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24HiddenSelectedCurrencyCode=IDR" +
                     @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24DropDownListTitle=MS" +
@@ -236,8 +309,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 {
                     var title = passenger.Title == Title.Mister ? "MR" : "MS";
                     postData +=
-                        @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24DropDownListTitle_" + i + "=" + title+
-                        @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24DropDownListGender_" + i + "=" + (int) passenger.Gender +
+                        @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24DropDownListTitle_" + i + "=" + title +
+                        @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24DropDownListGender_" + i + "=" + (int)passenger.Gender +
                         @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24TextBoxFirstName_" + i + "=" + passenger.FirstName +
                         @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24TextBoxLastName_" + i + "=" + passenger.LastName +
                         @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24DropDownListNationality_" + i + "=" + passenger.PassportCountry +
@@ -289,10 +362,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 var travelerRequest = new RestRequest("Traveler.aspx", Method.POST);
                 travelerRequest.AddHeader("Referer", "https://booking2.airasia.com/Traveler.aspx");
+                travelerRequest.AddHeader("Accept",
+                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
                 travelerRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var travelerResponse = client.Execute(travelerRequest);
 
                 if (travelerResponse.ResponseUri.AbsolutePath != "/UnitMap.aspx" || (travelerResponse.StatusCode != HttpStatusCode.OK && travelerResponse.StatusCode != HttpStatusCode.Redirect))
+
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -302,7 +378,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         },
                         Errors = new List<FlightError> { FlightError.InvalidInputData }
                     };
-
                 Thread.Sleep(1000);
 
                 // [POST] Select Seat
@@ -363,7 +438,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var dict = DictionaryService.GetInstance();
                     for (int index = 0; index < jlhSegment.Count; index++)
                     {
-                        var splitflightDetail = flightDet[index].InnerHTML.Split(' ');//(new string[] { "  " }, StringSplitOptions.None);
+                        var splitflightDetail = flightDet[index].InnerHTML.Trim().Split(' ');//(new string[] { "  " }, StringSplitOptions.None);
                         var splitDept = flightDept[index].InnerHTML.Trim().Split(',');
                         var deptTime = DateTime.ParseExact(splitDept[1].Trim() + " " + splitDept[0].Trim(), format, provider);
                         var splitArr = flightArr[index].InnerHTML.Trim().Split(',');
@@ -374,7 +449,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         segments.Add(new FlightSegment
                         {
                             AirlineCode = splitflightDetail[0],
-                            FlightNumber = splitflightDetail[1],
+                            FlightNumber = splitflightDetail[splitflightDetail.Length-1],
                             CabinClass = cabinClass,
                             Rbd = bookInfo.Itinerary.Trips[0].Segments[index].Rbd,
                             DepartureAirport = airport[index * 3].InnerHTML.Trim(),
@@ -431,7 +506,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             ErrorMessages = new List<string> { "Itinerary is changed!" },
                             NewItinerary = itin,
                             NewPrice = decimal.Parse(newPrice),
-                            Status = null
+                            Status = null,
+                            Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
                         };
                     }
                     else if (newPrice != "" && decimal.Parse(newPrice) != bookInfo.Itinerary.SupplierPrice) 
@@ -446,7 +522,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             ErrorMessages = new List<string> { "Itinerary is changed!" },
                             NewItinerary = itin,
                             NewPrice = decimal.Parse(newPrice),
-                            Status = null
+                            Status = null,
+                            Errors = new List<FlightError> { FlightError.TechnicalError}
                         };
                     }
                 }
@@ -585,7 +662,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 string itinHtml = "";
                 var sw = Stopwatch.StartNew();
-                var retryLimit = new TimeSpan(0, 1, 0);
+                var retryLimit = new TimeSpan(0, 0, 30);
                 var retryInterval = new TimeSpan(0, 0, 2);
                 var waitRequest = new RestRequest("Wait.aspx", Method.GET);
                 waitRequest.AddHeader("Referer", "https://booking2.airasia.com/Wait.aspx");
@@ -597,20 +674,39 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Thread.Sleep(retryInterval);
                 }
 
+                var waitItin = new RestRequest("Itinerary.aspx", Method.GET);
+                string temp = "";
                 if (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" || (waitResponse.StatusCode != HttpStatusCode.OK && waitResponse.StatusCode != HttpStatusCode.Redirect))
-                    return new BookFlightResult
+                {
+                    waitItin.AddHeader("Referer", "https://booking2.airasia.com/Wait.aspx");
+                    IRestResponse itinResponse = client.Execute(waitItin);
+                    var itinRes = itinResponse.Content;
+                    var cqitin = (CQ)itinRes;
+                    var bookingId = cqitin["#OptionalHeaderContent_lblBookingNumber"].Text();
+                    if (bookingId == "" || bookingId == null)
                     {
-                        IsSuccess = false,
-                        Status = new BookingStatusInfo
+                        return new BookFlightResult
                         {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
-                    };
+                            IsSuccess = false,
+                            Status = new BookingStatusInfo
+                            {
+                                BookingStatus = BookingStatus.Failed
+                            },
+                            Errors = new List<FlightError> { FlightError.FailedOnSupplier }
+                        };
+                    }
+                    else 
+                    {
+                        temp = itinRes;
+                    }
+
+                    
+                }
+                    
 
                 try
                 {
-                    itinHtml = waitResponse.Content;
+                    itinHtml = temp;
                     var cqHtml = (CQ) itinHtml;
                     var bookingId = cqHtml["#OptionalHeaderContent_lblBookingNumber"].Text();
                     var timeLimitTexts = cqHtml["#mainContent > p"].Text().Split('\n', ',');

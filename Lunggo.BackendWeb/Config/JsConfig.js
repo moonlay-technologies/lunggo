@@ -77,6 +77,11 @@ var FlightBookConfig = {
     working: false
 };
 
+var FlightPayConfig = {
+    Url: 'https://api.local.travorama.com/api/v1/flights/pay',
+    working: false
+};
+
 var GetRulesConfig = {
     Url: 'https://api.local.travorama.com/api/v1/flights/rules',
     working: false
@@ -100,10 +105,6 @@ var CheckVoucherConfig = {
 
 var SubscribeConfig = {
     Url: 'https://api.local.travorama.com/api/v1/newsletter/subscribe'
-};
-
-var LoginConfig = {
-    Url: 'http://local.travorama.com/id/ApiAccount/Login'
 };
 
 var RegisterConfig = {
@@ -137,32 +138,4 @@ var VeritransTokenConfig = {
 
 var TransferConfig = {
     Url: 'https://api.local.travorama.com/api/v1/transferidentifier'
-};
-
-var LoginMobileConfig = {
-    Url: 'http://m.local.travorama.com/id/ApiAccount/Login'
-};
-
-var RegisterMobileConfig = {
-    Url: 'http://m.local.travorama.com/id/ApiAccount/Register'
-};
-
-var ResetPasswordMobileConfig = {
-    Url: 'http://m.local.travorama.com/id/ApiAccount/ResetPassword'
-};
-
-var ForgotPasswordMobileConfig = {
-    Url: 'http://m.local.travorama.com/id/ApiAccount/ForgotPassword'
-};
-
-var ChangePasswordMobileConfig = {
-    Url: 'http://m.local.travorama.com/id/ApiAccount/ChangePassword'
-};
-
-var ChangeProfileMobileConfig = {
-    Url: 'http://m.local.travorama.com/id/ApiAccount/ChangeProfile'
-};
-
-var ResendConfirmationEmailMobileConfig = {
-    Url: 'http://m.local.travorama.com/id/ApiAccount/ResendConfirmationEmail'
 };

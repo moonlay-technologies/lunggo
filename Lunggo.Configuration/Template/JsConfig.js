@@ -77,6 +77,11 @@ var FlightBookConfig = {
     working: false
 };
 
+var FlightPayConfig = {
+    Url: '$apiUrl$$flightPayPath$',
+    working: false
+};
+
 var GetRulesConfig = {
     Url: '$apiUrl$$flightRulesPath$',
     working: false

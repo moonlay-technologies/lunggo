@@ -209,6 +209,8 @@
     <Compile Include="Flight\Model\FlightSegment.cs" />
     <Compile Include="Flight\Model\GetRulesResult.cs" />
     <Compile Include="Flight\Model\GetTripDetailsResult.cs" />
+    <Compile Include="Flight\Model\Logic\PayFlightInput.cs" />
+    <Compile Include="Flight\Model\Logic\PayFlightOutput.cs" />
     <Compile Include="Flight\Model\MarginRule.cs" />
     <Compile Include="Flight\Model\DiscountRule.cs" />
     <Compile Include="Flight\Model\OrderTicketResult.cs" />

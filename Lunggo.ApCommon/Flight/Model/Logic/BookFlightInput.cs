@@ -11,8 +11,5 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public TripType OverallTripType { get; set; }
         public List<FlightPassenger> Passengers { get; set; }
         public ContactData Contact { get; set; }
-        public PaymentInfo Payment { get; set; }
-        public string DiscountCode { get; set; }
-        public string TransferToken { get; set; }
     }
 }

@@ -210,8 +210,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                         }
                                     }
                                 };
-                                if (itin.Trips[0].Segments.Count < 2)
-                                    itins.Add(itin);
+                                //if (itin.Trips[0].Segments.Count < 2)
+                                itins.Add(itin);
                                 hasil.IsSuccess = true;
                                 hasil.Itineraries = itins;
                                 #endregion
