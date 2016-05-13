@@ -361,6 +361,7 @@ if (typeof (angular) == 'object') {
             { name: 'Kelas Bisnis', value: 'c' },
             { name: 'Kelas Utama', value: 'f' }
         ];
+
         // datepicker
         $rootScope.DatePicker = {
             Settings: {

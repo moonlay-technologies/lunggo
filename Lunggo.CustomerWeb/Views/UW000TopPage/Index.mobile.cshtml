@@ -28,13 +28,13 @@
 
             <div class="form-group form__origin">
                 <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('departure'); PageConfig.SetOverlay('airport-select')">
-                    {{FlightSearchForm.AirportOrigin.City}}, {{FlightSearchForm.AirportOrigin.Country}} ({{FlightSearchForm.AirportOrigin.Code}})
+                    {{FlightSearchForm.AirportOrigin.City}} ({{FlightSearchForm.AirportOrigin.Code}})
                 </p>
             </div>
 
             <div class="form-group form__destination">
                 <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('return'); PageConfig.SetOverlay('airport-select')">
-                    {{FlightSearchForm.AirportDestination.City}}, {{FlightSearchForm.AirportDestination.Country}} ({{FlightSearchForm.AirportDestination.Code}})
+                    {{FlightSearchForm.AirportDestination.City}} ({{FlightSearchForm.AirportDestination.Code}})
                 </p>
             </div>
 
@@ -46,7 +46,7 @@
             </div>
 
             <div class="form-group form__roundtrip">
-                <p>Pulang-pergi ?</p>
+                <p>Pulang Pergi ?</p>
                 <div class="switch">
                     <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" class="hidden" />Tidak</label>
                     <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'true'}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" class="hidden" />Ya</label>
