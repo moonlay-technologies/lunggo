@@ -6,36 +6,36 @@ using System.Data;
 
 namespace Lunggo.Repository.TableRepository
 {
-	public class UserClaimsTableRepo : TableDao<UserClaimsTableRecord>, IDbTableRepository<UserClaimsTableRecord> 
+	public class UserRoleTableRepo : TableDao<UserRoleTableRecord>, IDbTableRepository<UserRoleTableRecord> 
     {
-		private static readonly UserClaimsTableRepo Instance = new UserClaimsTableRepo("UserClaims");
+		private static readonly UserRoleTableRepo Instance = new UserRoleTableRepo("UserRole");
         
-        private UserClaimsTableRepo(String tableName) : base(tableName)
+        private UserRoleTableRepo(String tableName) : base(tableName)
         {
             ;
         }
 
-		public static UserClaimsTableRepo GetInstance()
+		public static UserRoleTableRepo GetInstance()
         {
             return Instance;
         }
 
-        public int Insert(IDbConnection connection, UserClaimsTableRecord record)
+        public int Insert(IDbConnection connection, UserRoleTableRecord record)
         {
             return Insert(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-        public int Delete(IDbConnection connection, UserClaimsTableRecord record)
+        public int Delete(IDbConnection connection, UserRoleTableRecord record)
         {
             return Delete(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-		public int Update(IDbConnection connection, UserClaimsTableRecord record)
+		public int Update(IDbConnection connection, UserRoleTableRecord record)
         {
             return Update(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-        public IEnumerable<UserClaimsTableRecord> FindAll(IDbConnection connection)
+        public IEnumerable<UserRoleTableRecord> FindAll(IDbConnection connection)
         {
             return FindAll(connection, CommandDefinition.GetDefaultDefinition());
         }
@@ -45,17 +45,17 @@ namespace Lunggo.Repository.TableRepository
             return DeleteAll(connection, CommandDefinition.GetDefaultDefinition());
         }
 
-        public int Insert(IDbConnection connection, UserClaimsTableRecord record, CommandDefinition definition)
+        public int Insert(IDbConnection connection, UserRoleTableRecord record, CommandDefinition definition)
         {
             return InsertInternal(connection, record, definition);
         }
 
-        public int Delete(IDbConnection connection, UserClaimsTableRecord record, CommandDefinition definition)
+        public int Delete(IDbConnection connection, UserRoleTableRecord record, CommandDefinition definition)
         {
             return DeleteInternal(connection, record, definition);
         }
 
-        public int Update(IDbConnection connection, UserClaimsTableRecord record, CommandDefinition definition)
+        public int Update(IDbConnection connection, UserRoleTableRecord record, CommandDefinition definition)
         {
             return UpdateInternal(connection, record, definition);
         }
@@ -65,7 +65,7 @@ namespace Lunggo.Repository.TableRepository
             return DeleteAllInternal(connection, definition);
         }
 
-        public IEnumerable<UserClaimsTableRecord> FindAll(IDbConnection connection, CommandDefinition definition)
+        public IEnumerable<UserRoleTableRecord> FindAll(IDbConnection connection, CommandDefinition definition)
         {
             return FindAllInternal(connection, definition);
         }

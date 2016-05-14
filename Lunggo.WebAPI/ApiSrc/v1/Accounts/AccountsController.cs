@@ -82,7 +82,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts
         public ApiResponseBase ChangeProfile()
         {
             var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangeProfileApiRequest>();
-            var apiResponse = AccountsLogic.ChangeProfile(request, UserManager, User);
+            var apiResponse = AccountsLogic.ChangeProfile(request, UserManager);
             return apiResponse;
         }
 
@@ -91,7 +91,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts
         [Route("v1/profile")]
         public GetProfileApiResponse GetProfile()
         {
-            var apiResponse = AccountsLogic.GetProfile(User);
+            var apiResponse = AccountsLogic.GetProfile();
             return apiResponse;
         }
 
@@ -100,7 +100,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts
         [Route("v1/trxhistory")]
         public TransactionHistoryApiResponse GetTransactionHistory()
         {
-            var apiResponse = AccountsLogic.GetTransactionHistory(User);
+            var apiResponse = AccountsLogic.GetTransactionHistory();
             return apiResponse;
         }
 
@@ -109,7 +109,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts
         [Route("v1/rsv/{rsvNo}")]
         public GetReservationApiResponse GetOrderDetail(string rsvNo)
         {
-            var apiResponse = AccountsLogic.GetReservation(rsvNo, User);
+            var apiResponse = AccountsLogic.GetReservation(rsvNo);
             return apiResponse;
         }
     }

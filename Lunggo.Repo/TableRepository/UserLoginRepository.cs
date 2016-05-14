@@ -6,36 +6,36 @@ using System.Data;
 
 namespace Lunggo.Repository.TableRepository
 {
-	public class UserLoginsTableRepo : TableDao<UserLoginsTableRecord>, IDbTableRepository<UserLoginsTableRecord> 
+	public class UserLoginTableRepo : TableDao<UserLoginTableRecord>, IDbTableRepository<UserLoginTableRecord> 
     {
-		private static readonly UserLoginsTableRepo Instance = new UserLoginsTableRepo("UserLogins");
+		private static readonly UserLoginTableRepo Instance = new UserLoginTableRepo("UserLogin");
         
-        private UserLoginsTableRepo(String tableName) : base(tableName)
+        private UserLoginTableRepo(String tableName) : base(tableName)
         {
             ;
         }
 
-		public static UserLoginsTableRepo GetInstance()
+		public static UserLoginTableRepo GetInstance()
         {
             return Instance;
         }
 
-        public int Insert(IDbConnection connection, UserLoginsTableRecord record)
+        public int Insert(IDbConnection connection, UserLoginTableRecord record)
         {
             return Insert(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-        public int Delete(IDbConnection connection, UserLoginsTableRecord record)
+        public int Delete(IDbConnection connection, UserLoginTableRecord record)
         {
             return Delete(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-		public int Update(IDbConnection connection, UserLoginsTableRecord record)
+		public int Update(IDbConnection connection, UserLoginTableRecord record)
         {
             return Update(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-        public IEnumerable<UserLoginsTableRecord> FindAll(IDbConnection connection)
+        public IEnumerable<UserLoginTableRecord> FindAll(IDbConnection connection)
         {
             return FindAll(connection, CommandDefinition.GetDefaultDefinition());
         }
@@ -45,17 +45,17 @@ namespace Lunggo.Repository.TableRepository
             return DeleteAll(connection, CommandDefinition.GetDefaultDefinition());
         }
 
-        public int Insert(IDbConnection connection, UserLoginsTableRecord record, CommandDefinition definition)
+        public int Insert(IDbConnection connection, UserLoginTableRecord record, CommandDefinition definition)
         {
             return InsertInternal(connection, record, definition);
         }
 
-        public int Delete(IDbConnection connection, UserLoginsTableRecord record, CommandDefinition definition)
+        public int Delete(IDbConnection connection, UserLoginTableRecord record, CommandDefinition definition)
         {
             return DeleteInternal(connection, record, definition);
         }
 
-        public int Update(IDbConnection connection, UserLoginsTableRecord record, CommandDefinition definition)
+        public int Update(IDbConnection connection, UserLoginTableRecord record, CommandDefinition definition)
         {
             return UpdateInternal(connection, record, definition);
         }
@@ -65,7 +65,7 @@ namespace Lunggo.Repository.TableRepository
             return DeleteAllInternal(connection, definition);
         }
 
-        public IEnumerable<UserLoginsTableRecord> FindAll(IDbConnection connection, CommandDefinition definition)
+        public IEnumerable<UserLoginTableRecord> FindAll(IDbConnection connection, CommandDefinition definition)
         {
             return FindAllInternal(connection, definition);
         }

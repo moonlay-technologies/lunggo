@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Principal;
 using System.Web;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.Framework.Extension;
@@ -17,8 +16,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Logic
 {
     public static partial class AccountsLogic
     {
-        public static ApiResponseBase ChangeProfile(ChangeProfileApiRequest request, ApplicationUserManager userManager, IPrincipal user)
+        public static ApiResponseBase ChangeProfile(ChangeProfileApiRequest request, ApplicationUserManager userManager)
         {
+            var user = HttpContext.Current.User;
             try
             {
                 var updatedUser = user.Identity.GetUser();
@@ -26,7 +26,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Logic
                 updatedUser.LastName = request.LastName ?? updatedUser.LastName;
                 updatedUser.CountryCd = request.CountryCallingCd ?? updatedUser.CountryCd;
                 updatedUser.PhoneNumber = request.PhoneNumber ?? updatedUser.PhoneNumber;
-                updatedUser.Address = request.Address ?? updatedUser.Address;
                 var result = userManager.Update(updatedUser);
                 if (result.Succeeded)
                 {

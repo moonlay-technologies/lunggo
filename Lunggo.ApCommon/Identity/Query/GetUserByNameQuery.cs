@@ -15,7 +15,7 @@ namespace Lunggo.ApCommon.Identity.Query
         protected override string GetQuery(dynamic condition = null)
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.Append("SELECT * FROM Users WHERE LOWER(UserName) = LOWER(@userName)");
+            queryBuilder.Append("SELECT * FROM [User] WHERE LOWER(UserName) = LOWER(@userName)");
             return queryBuilder.ToString();
         }
     }

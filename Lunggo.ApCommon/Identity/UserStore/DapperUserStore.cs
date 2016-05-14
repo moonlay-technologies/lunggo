@@ -82,7 +82,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    var repo = UsersTableRepo.GetInstance();
+                    var repo = UserTableRepo.GetInstance();
                     user.Id = UserIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
                     var newUserRecord = ToUsersTableRecordForInsert(user);
                     repo.Insert(connection, newUserRecord);
@@ -90,9 +90,9 @@ namespace Lunggo.ApCommon.Identity.UserStore
             });
         }
 
-        private UsersTableRecord ToUsersTableRecordForInsert(TUser user)
+        private UserTableRecord ToUsersTableRecordForInsert(TUser user)
         {
-            var record = new UsersTableRecord
+            var record = new UserTableRecord
             {
                 AccessFailedCount = user.AccessFailedCount,
                 Email = user.Email,
@@ -114,9 +114,9 @@ namespace Lunggo.ApCommon.Identity.UserStore
             return record;
         }
 
-        private UserRolesTableRecord ToUserRolesTableRecord(string roleId, string userId)
+        private UserRoleTableRecord ToUserRolesTableRecord(string roleId, string userId)
         {
-            var record = new UserRolesTableRecord
+            var record = new UserRoleTableRecord
             {
                 RoleId = roleId,
                 UserId = userId
@@ -124,9 +124,9 @@ namespace Lunggo.ApCommon.Identity.UserStore
             return record;
         }
 
-        private UserClaimsTableRecord ToUserClaimsTableRecord(string userId, string claimValue, string claimType)
+        private UserClaimTableRecord ToUserClaimsTableRecord(string userId, string claimValue, string claimType)
         {
-            var record = new UserClaimsTableRecord
+            var record = new UserClaimTableRecord
             {
                 UserId = userId,
                 ClaimType = claimType,
@@ -135,9 +135,9 @@ namespace Lunggo.ApCommon.Identity.UserStore
             return record;
         }
 
-        private UsersTableRecord ToUsersTableRecordPkOnly(TUser user)
+        private UserTableRecord ToUsersTableRecordPkOnly(TUser user)
         {
-            var record = new UsersTableRecord
+            var record = new UserTableRecord
             {
                 Id = user.Id
             };
@@ -156,7 +156,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    var repo = UsersTableRepo.GetInstance();
+                    var repo = UserTableRepo.GetInstance();
                     var toBeDeletedUserRecord = ToUsersTableRecordPkOnly(user);
                     repo.Delete(connection, toBeDeletedUserRecord);
                 }
@@ -231,7 +231,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    var repo = UsersTableRepo.GetInstance();
+                    var repo = UserTableRepo.GetInstance();
                     var toBeUpdatedUserRecord = ToUsersTableRecordForInsert(user);
                     repo.Update(connection, toBeUpdatedUserRecord);
                 }
@@ -254,7 +254,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    var repo = UserLoginsTableRepo.GetInstance();
+                    var repo = UserLoginTableRepo.GetInstance();
                     var toBeInsertedRecord = ToUserLoginsTableRecord(user, login);
                     repo.Insert(connection, toBeInsertedRecord);
                 }
@@ -262,9 +262,9 @@ namespace Lunggo.ApCommon.Identity.UserStore
             });
         }
 
-        private UserLoginsTableRecord ToUserLoginsTableRecord(TUser user, UserLoginInfo login)
+        private UserLoginTableRecord ToUserLoginsTableRecord(TUser user, UserLoginInfo login)
         {
-            var record = new UserLoginsTableRecord
+            var record = new UserLoginTableRecord
             {
                 LoginProvider = login.LoginProvider,
                 ProviderKey = login.ProviderKey,
@@ -330,7 +330,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    var repo = UserLoginsTableRepo.GetInstance();
+                    var repo = UserLoginTableRepo.GetInstance();
                     var toBeDeletedRecord = ToUserLoginTableRecordPkOnly(user, login);
                     repo.Delete(connection, toBeDeletedRecord);
                 }
@@ -338,9 +338,9 @@ namespace Lunggo.ApCommon.Identity.UserStore
             });
         }
 
-        private UserLoginsTableRecord ToUserLoginTableRecordPkOnly(TUser user, UserLoginInfo login)
+        private UserLoginTableRecord ToUserLoginTableRecordPkOnly(TUser user, UserLoginInfo login)
         {
-            var record = new UserLoginsTableRecord
+            var record = new UserLoginTableRecord
             {
                 UserId = user.Id,
                 ProviderKey = login.ProviderKey,
@@ -511,7 +511,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             }
             using (var connection = DbService.GetInstance().GetOpenConnection())
             {
-                var repo = UserClaimsTableRepo.GetInstance();
+                var repo = UserClaimTableRepo.GetInstance();
                 var toUserClaimsTableRecord = ToUserClaimsTableRecord(user.Id, claim.Value, claim.Type);
                 repo.Insert(connection, toUserClaimsTableRecord);
             }
@@ -531,7 +531,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             }
             using (var connection = DbService.GetInstance().GetOpenConnection())
             {
-                var repo = UserClaimsTableRepo.GetInstance();
+                var repo = UserClaimTableRepo.GetInstance();
                 var toUserClaimsTableRecord = ToUserClaimsTableRecord(user.Id, claim.Value, claim.Type);
                 repo.Delete(connection, toUserClaimsTableRecord);
             }
@@ -563,7 +563,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             }
             using (var connection = DbService.GetInstance().GetOpenConnection())
             {
-                var repo = UserRolesTableRepo.GetInstance();
+                var repo = UserRoleTableRepo.GetInstance();
                 var toUserRolesTableRecord = ToUserRolesTableRecord(roleEntity.Id, user.Id);
                 repo.Insert(connection, toUserRolesTableRecord);
             }
@@ -593,7 +593,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 var userId = user.Id;
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    var repo = UserRolesTableRepo.GetInstance();
+                    var repo = UserRoleTableRepo.GetInstance();
                     var toUserRolesTableRecord = ToUserRolesTableRecord(roleEntity.Id, user.Id);
                     repo.Delete(connection, toUserRolesTableRecord);
                 }

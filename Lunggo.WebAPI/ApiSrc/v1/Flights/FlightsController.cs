@@ -60,7 +60,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         public FlightBookApiResponse BookFlight()
         {
             var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightBookApiRequest>();
-            var apiResponse = FlightLogic.BookFlight(request, User);
+            var apiResponse = FlightLogic.BookFlight(request);
             return apiResponse;
         }
 

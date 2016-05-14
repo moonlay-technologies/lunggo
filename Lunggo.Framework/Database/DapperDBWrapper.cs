@@ -58,14 +58,14 @@ namespace Lunggo.Framework.Database
         private String CreateFindAllQuery(String tableName)
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.AppendFormat("SELECT * FROM {0}", tableName);
+            queryBuilder.AppendFormat("SELECT * FROM [{0}]", tableName);
             return queryBuilder.ToString();
         }
 
         private String CreateDeleteAllQuery(String tableName)
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.AppendFormat("DELETE FROM {0}", tableName);
+            queryBuilder.AppendFormat("DELETE FROM [{0}]", tableName);
             return queryBuilder.ToString();
         }
 
@@ -120,14 +120,14 @@ namespace Lunggo.Framework.Database
         private String CreateSelectAllColumnClause(TableRecord record)
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.AppendFormat("SELECT * FROM {0}", record.GetTableName());
+            clauseBuilder.AppendFormat("SELECT * FROM [{0}]", record.GetTableName());
             return clauseBuilder.ToString();
         }
 
         private String CreateDeleteClause(TableRecord record)
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.AppendFormat("DELETE FROM {0}", record.GetTableName());
+            clauseBuilder.AppendFormat("DELETE FROM [{0}]", record.GetTableName());
             return clauseBuilder.ToString();
         }
 

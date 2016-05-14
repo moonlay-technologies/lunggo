@@ -5,13 +5,22 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class UserRolesTableRecord : Lunggo.Framework.Database.TableRecord
+    public class UserClaimTableRecord : Lunggo.Framework.Database.TableRecord
     {
 
         private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
+		public long? Id
+		{
+		    get { return _Id; }
+		    set
+		    {
+		        _Id = value;
+		        IncrementLog("Id");
+		    }
+		}
 		public String UserId
 		{
 		    get { return _UserId; }
@@ -21,35 +30,46 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UserId");
 		    }
 		}
-		public String RoleId
+		public String ClaimType
 		{
-		    get { return _RoleId; }
+		    get { return _ClaimType; }
 		    set
 		    {
-		        _RoleId = value;
-		        IncrementLog("RoleId");
+		        _ClaimType = value;
+		        IncrementLog("ClaimType");
+		    }
+		}
+		public String ClaimValue
+		{
+		    get { return _ClaimValue; }
+		    set
+		    {
+		        _ClaimValue = value;
+		        IncrementLog("ClaimValue");
 		    }
 		}
 
 		
+		private long? _Id;
 		private String _UserId;
-		private String _RoleId;
+		private String _ClaimType;
+		private String _ClaimValue;
 
 
-		public static UserRolesTableRecord CreateNewInstance()
+		public static UserClaimTableRecord CreateNewInstance()
         {
-            var record = new UserRolesTableRecord();
+            var record = new UserClaimTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public UserRolesTableRecord()
+		public UserClaimTableRecord()
         {
             ;
         }
 
-        static UserRolesTableRecord()
+        static UserClaimTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -58,15 +78,17 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "UserRoles";
+            _tableName = "UserClaims";
         }
 
         private static void InitRecordMetadata()
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("UserId", true),
-				new ColumnMetadata("RoleId", true),
+				new ColumnMetadata("Id", true),
+				new ColumnMetadata("UserId", false),
+				new ColumnMetadata("ClaimType", false),
+				new ColumnMetadata("ClaimValue", false),
 
             };
         }

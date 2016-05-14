@@ -13,7 +13,10 @@ namespace Lunggo.ApCommon.Identity.Query
         protected override string GetQuery(dynamic condition = null)
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.Append("select b.Name from UserRoles a left join Roles b on a.RoleId = b.Id where a.UserId = @UserId");
+            queryBuilder.Append("SELECT b.Name " +
+                                "FROM [User]Role AS a " +
+                                "LEFT JOIN Role AS b ON a.RoleId = b.Id " +
+                                "WHERE a.UserId = @UserId");
             return queryBuilder.ToString();
         }
     }

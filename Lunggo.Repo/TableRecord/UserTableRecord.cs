@@ -5,7 +5,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class UsersTableRecord : Lunggo.Framework.Database.TableRecord
+    public class UserTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
@@ -175,20 +175,20 @@ namespace Lunggo.Repository.TableRecord
 		private String _Address;
 
 
-		public static UsersTableRecord CreateNewInstance()
+		public static UserTableRecord CreateNewInstance()
         {
-            var record = new UsersTableRecord();
+            var record = new UserTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public UsersTableRecord()
+		public UserTableRecord()
         {
             ;
         }
 
-        static UsersTableRecord()
+        static UserTableRecord()
         {
             InitTableName();
             InitRecordMetadata();

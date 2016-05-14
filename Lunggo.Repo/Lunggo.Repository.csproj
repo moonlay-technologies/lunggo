@@ -90,23 +90,23 @@
     <Compile Include="TableRecord\PersonTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TableRecord\RolesTableRecord.cs">
+    <Compile Include="TableRecord\RoleTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TableRecord\TableCobaSemuaTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TableRecord\UsdExchangeRateTableRecord.cs" />
-    <Compile Include="TableRecord\UserClaimsTableRecord.cs">
+    <Compile Include="TableRecord\UserClaimTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TableRecord\UserLoginsTableRecord.cs">
+    <Compile Include="TableRecord\UserLoginTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TableRecord\UserRolesTableRecord.cs">
+    <Compile Include="TableRecord\UserRoleTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TableRecord\UsersTableRecord.cs">
+    <Compile Include="TableRecord\UserTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TableRepository\ContactRepository.cs" />
@@ -153,23 +153,23 @@
     <Compile Include="TableRepository\PersonRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TableRepository\RolesRepository.cs">
+    <Compile Include="TableRepository\RoleRepository.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TableRepository\TableCobaSemuaRepository.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TableRepository\UsdExchangeRateRepository.cs" />
-    <Compile Include="TableRepository\UserClaimsRepository.cs">
+    <Compile Include="TableRepository\UserClaimRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TableRepository\UserLoginsRepository.cs">
+    <Compile Include="TableRepository\UserLoginRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TableRepository\UserRolesRepository.cs">
+    <Compile Include="TableRepository\UserRoleRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TableRepository\UsersRepository.cs">
+    <Compile Include="TableRepository\UserRepository.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

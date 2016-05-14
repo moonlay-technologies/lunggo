@@ -5,14 +5,14 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class UserClaimsTableRecord : Lunggo.Framework.Database.TableRecord
+    public class RoleTableRecord : Lunggo.Framework.Database.TableRecord
     {
 
         private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? Id
+		public String Id
 		{
 		    get { return _Id; }
 		    set
@@ -21,55 +21,35 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Id");
 		    }
 		}
-		public String UserId
+		public String Name
 		{
-		    get { return _UserId; }
+		    get { return _Name; }
 		    set
 		    {
-		        _UserId = value;
-		        IncrementLog("UserId");
-		    }
-		}
-		public String ClaimType
-		{
-		    get { return _ClaimType; }
-		    set
-		    {
-		        _ClaimType = value;
-		        IncrementLog("ClaimType");
-		    }
-		}
-		public String ClaimValue
-		{
-		    get { return _ClaimValue; }
-		    set
-		    {
-		        _ClaimValue = value;
-		        IncrementLog("ClaimValue");
+		        _Name = value;
+		        IncrementLog("Name");
 		    }
 		}
 
 		
-		private long? _Id;
-		private String _UserId;
-		private String _ClaimType;
-		private String _ClaimValue;
+		private String _Id;
+		private String _Name;
 
 
-		public static UserClaimsTableRecord CreateNewInstance()
+		public static RoleTableRecord CreateNewInstance()
         {
-            var record = new UserClaimsTableRecord();
+            var record = new RoleTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public UserClaimsTableRecord()
+		public RoleTableRecord()
         {
             ;
         }
 
-        static UserClaimsTableRecord()
+        static RoleTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -78,7 +58,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "UserClaims";
+            _tableName = "Roles";
         }
 
         private static void InitRecordMetadata()
@@ -86,9 +66,7 @@ namespace Lunggo.Repository.TableRecord
             _recordMetadata = new List<ColumnMetadata>
             {
 				new ColumnMetadata("Id", true),
-				new ColumnMetadata("UserId", false),
-				new ColumnMetadata("ClaimType", false),
-				new ColumnMetadata("ClaimValue", false),
+				new ColumnMetadata("Name", false),
 
             };
         }

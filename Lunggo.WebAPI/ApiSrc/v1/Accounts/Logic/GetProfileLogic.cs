@@ -17,8 +17,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Logic
 {
     public static partial class AccountsLogic
     {
-        public static GetProfileApiResponse GetProfile(IPrincipal user)
+        public static GetProfileApiResponse GetProfile()
         {
+            var user = HttpContext.Current.User;
             try
             {
                 if (user == null)
@@ -36,8 +37,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Logic
                     FirstName = foundUser.FirstName ?? "",
                     LastName = foundUser.LastName ?? "",
                     CountryCallingCd = foundUser.CountryCd ?? "",
-                    PhoneNumber = foundUser.PhoneNumber ?? "",
-                    Address = foundUser.Address ?? ""
+                    PhoneNumber = foundUser.PhoneNumber ?? ""
                 };
             }
             catch

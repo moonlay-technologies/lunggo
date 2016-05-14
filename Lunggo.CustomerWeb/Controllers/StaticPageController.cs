@@ -52,7 +52,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
 
                 var EmailList = CalendarRecipientTableRepo.GetInstance().FindAll(con).ToList();
-                var UserEmailList = UsersTableRepo.GetInstance().FindAll(con).ToList();
+                var UserEmailList = UserTableRepo.GetInstance().FindAll(con).ToList();
                 if (EmailList.Exists(x => x.Email == email))
                 {
                     ViewBag.Message = "DataExists";

@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.User;
+using Lunggo.ApCommon.ProductBase.Constant;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.v1.Accounts.Model;
 using Lunggo.WebAPI.ApiSrc.v1.Common.Model;
@@ -20,8 +21,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Logic
 {
     public static partial class AccountsLogic
     {
-        public static GetReservationApiResponse GetReservation(string rsvNo, IPrincipal user)
+        public static GetReservationApiResponse GetReservation(string rsvNo)
         {
+            var user = HttpContext.Current.User;
             try
             {
                 if (rsvNo.IsFlightRsvNo())
@@ -31,7 +33,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Logic
                     if (user.IsInRole("Admin") || user.Identity.GetEmail() == rsv.Contact.Email)
                         return new GetReservationApiResponse
                         {
-                            ProductType = ReservationType.Flight,
+                            ProductType = ProductType.Flight,
                             FlightReservation = rsv,
                             StatusCode = HttpStatusCode.OK
                         };

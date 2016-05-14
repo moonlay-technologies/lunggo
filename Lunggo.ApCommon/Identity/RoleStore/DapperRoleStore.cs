@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Identity.RoleStore
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    var repo = RolesTableRepo.GetInstance();
+                    var repo = RoleTableRepo.GetInstance();
                     role.Id = RoleIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
                     var toBeInsertedRecord = ToRolesTableRecord(role);
                     repo.Insert(connection, toBeInsertedRecord);
@@ -36,9 +36,9 @@ namespace Lunggo.ApCommon.Identity.RoleStore
             });
         }
 
-        private RolesTableRecord ToRolesTableRecord(TRole role)
+        private RoleTableRecord ToRolesTableRecord(TRole role)
         {
-            var record = new RolesTableRecord
+            var record = new RoleTableRecord
             {
                 Id = role.Id,
                 Name = role.Name
@@ -46,9 +46,9 @@ namespace Lunggo.ApCommon.Identity.RoleStore
             return record;
         }
 
-        private RolesTableRecord ToRolesTableRecordPkOnly(TRole role)
+        private RoleTableRecord ToRolesTableRecordPkOnly(TRole role)
         {
-            var record = new RolesTableRecord
+            var record = new RoleTableRecord
             {
                 Id = role.Id
             };
@@ -77,7 +77,7 @@ namespace Lunggo.ApCommon.Identity.RoleStore
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    var repo = RolesTableRepo.GetInstance();
+                    var repo = RoleTableRepo.GetInstance();
                     var toBeDeletedRecord = ToRolesTableRecordPkOnly(role);
                     repo.Delete(connection, toBeDeletedRecord);
                 }
@@ -124,7 +124,7 @@ namespace Lunggo.ApCommon.Identity.RoleStore
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    var repo = RolesTableRepo.GetInstance();
+                    var repo = RoleTableRepo.GetInstance();
                     var toBeInsertedRecord = ToRolesTableRecord(role);
                     repo.Update(connection, toBeInsertedRecord);
                 }

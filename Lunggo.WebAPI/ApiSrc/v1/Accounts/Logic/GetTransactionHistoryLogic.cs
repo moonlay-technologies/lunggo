@@ -20,8 +20,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Accounts.Logic
 {
     public static partial class AccountsLogic
     {
-        public static TransactionHistoryApiResponse GetTransactionHistory(IPrincipal user)
+        public static TransactionHistoryApiResponse GetTransactionHistory()
         {
+            var user = HttpContext.Current.User;
             try
             {
                 var email = user.Identity.GetEmail();

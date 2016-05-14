@@ -5,31 +5,13 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class UserLoginsTableRecord : Lunggo.Framework.Database.TableRecord
+    public class UserRoleTableRecord : Lunggo.Framework.Database.TableRecord
     {
 
         private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public String LoginProvider
-		{
-		    get { return _LoginProvider; }
-		    set
-		    {
-		        _LoginProvider = value;
-		        IncrementLog("LoginProvider");
-		    }
-		}
-		public String ProviderKey
-		{
-		    get { return _ProviderKey; }
-		    set
-		    {
-		        _ProviderKey = value;
-		        IncrementLog("ProviderKey");
-		    }
-		}
 		public String UserId
 		{
 		    get { return _UserId; }
@@ -39,27 +21,35 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UserId");
 		    }
 		}
+		public String RoleId
+		{
+		    get { return _RoleId; }
+		    set
+		    {
+		        _RoleId = value;
+		        IncrementLog("RoleId");
+		    }
+		}
 
 		
-		private String _LoginProvider;
-		private String _ProviderKey;
 		private String _UserId;
+		private String _RoleId;
 
 
-		public static UserLoginsTableRecord CreateNewInstance()
+		public static UserRoleTableRecord CreateNewInstance()
         {
-            var record = new UserLoginsTableRecord();
+            var record = new UserRoleTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public UserLoginsTableRecord()
+		public UserRoleTableRecord()
         {
             ;
         }
 
-        static UserLoginsTableRecord()
+        static UserRoleTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -68,16 +58,15 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "UserLogins";
+            _tableName = "UserRoles";
         }
 
         private static void InitRecordMetadata()
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("LoginProvider", true),
-				new ColumnMetadata("ProviderKey", true),
 				new ColumnMetadata("UserId", true),
+				new ColumnMetadata("RoleId", true),
 
             };
         }

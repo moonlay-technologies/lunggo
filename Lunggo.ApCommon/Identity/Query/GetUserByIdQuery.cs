@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Identity.Query
         protected override string GetQuery(dynamic condition = null)
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.Append("SELECT * FROM Users WHERE Id = @Id");
+            queryBuilder.Append("SELECT * FROM [User] WHERE Id = @Id");
             return queryBuilder.ToString();
         }
     }
