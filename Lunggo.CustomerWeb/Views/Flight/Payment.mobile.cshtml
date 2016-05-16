@@ -104,7 +104,7 @@
 
     </script>
     <!-- angular controller -->
-    <script src="/Assets/mobile/js/paymentController.js"></script>
+    <script src="/Assets/travorama20/js/paymentController.js"></script>
 }
 
 @switch ((string)ViewBag.Message)
@@ -254,10 +254,10 @@
                                 <div class="input-wrapper">
                                     <input type="radio" name="paymentMethod" value="@PaymentMethod.CimbClicks" ng-model="paymentMethod" />
                                 </div>
-                                <h5>CIMB Niaga</h5>
+                                <h5>CIMB Clicks</h5>
                             </header>
                             <section>
-                                <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Niaga" />
+                                <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Clicks" />
                             </section>
                         </label>
                         <label>
@@ -407,19 +407,22 @@
             </header>
             <section>
                 <div class="container_new">
-                    @*<div class="row1">*@
-                        @*<div class="col12 text-align">
+                    <div class="row1">
+                        <div class="col12 text-align">
                             <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
-                        </div>*@
-                        <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
+                        </div>
+                        <div class="col12">
+                            <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
                             <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
-                        
-                    @*</div>*@
+                        </div>
+                    </div>
                 </div>
             </section>
             <footer>
                 <div class="container_new">
                     <div class="row1">
+                        <div class="col12">
+                        </div>
                         <div class="col12">
                             <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
                         </div>
@@ -436,14 +439,14 @@
             </header>
             <section>
                 <div class="container_new">
-                    
-                    @*<div>
-                        <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
-                    </div>*@
-                    <div >
-                        <p>Sedang memproses pilihan Anda.</p>
+                    <div class="row1">
+                        <div class="col12 text-align">
+                            <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
+                        </div>
+                        <div class="col12">
+                            <p>Sedang memproses pilihan Anda.</p>
+                        </div>
                     </div>
-                    
                 </div>
             </section>
         </div>

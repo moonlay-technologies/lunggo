@@ -24,7 +24,22 @@ app.controller('paymentController', [
             Cvv: '',
             Number: ''
         };
-
+        $scope.PageConfig.ExpiryDate = {
+            Expired: false,
+            Time: $scope.CheckoutConfig.ExpiryDate,
+            Start: function () {
+                var expiryTime = new Date($scope.PageConfig.ExpiryDate.Time);
+                if ($scope.PageConfig.ExpiryDate.Expired || $scope.PageConfig.ExpiryDate.Starting) return;
+                $interval(function () {
+                    $scope.PageConfig.ExpiryDate.Starting = true;
+                    var nowTime = new Date();
+                    if (nowTime > expiryTime) {
+                        $scope.PageConfig.ExpiryDate.Expired = true;
+                    }
+                }, 1000);
+            },
+            Starting: false
+        };
         //Unique Code For Bank Transfer
         $scope.TransferConfig = {
             UniqueCode: 0,
@@ -103,24 +118,6 @@ app.controller('paymentController', [
                 $scope.TransferConfig.GetUniqueCode($scope.initialPrice);
             }
         };
-
-        $scope.PageConfig.ExpiryDate = {
-            Expired: false,
-            Time: $scope.CheckoutConfig.ExpiryDate,
-            Start: function () {
-                var expiryTime = new Date($scope.PageConfig.ExpiryDate.Time);
-                if ($scope.PageConfig.ExpiryDate.Expired || $scope.PageConfig.ExpiryDate.Starting) return;
-                $interval(function () {
-                    $scope.PageConfig.ExpiryDate.Starting = true;
-                    var nowTime = new Date();
-                    if (nowTime > expiryTime) {
-                        $scope.PageConfig.ExpiryDate.Expired = true;
-                    }
-                }, 1000);
-            },
-            Starting: false
-        };
-        $scope.PageConfig.ExpiryDate.Start();
 
         $scope.pay = {
             url: FlightPayConfig.Url,
@@ -243,7 +240,6 @@ app.controller('paymentController', [
                         $scope.pay.isSuccess= false;
                     }
                 })
-
                 $scope.pay.paying = false;
             }
         }

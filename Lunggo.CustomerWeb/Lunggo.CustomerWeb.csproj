@@ -1060,6 +1060,7 @@
     <Content Include="Assets\mobile\images\user-account-bg.png" />
     <Content Include="Assets\mobile\images\yellow-stripe.png" />
     <Content Include="Assets\mobile\js\HomeController.js" />
+    <Content Include="Assets\mobile\js\paymentController.js" />
     <Content Include="Assets\mobile\js\StaticController.js" />
     <Content Include="Assets\mobile\js\AccountController.js" />
     <Content Include="Assets\mobile\js\application.js" />

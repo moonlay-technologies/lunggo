@@ -749,6 +749,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   /*width: 80%;
     margin-left: 10px;
     margin-right: 10px;*/ }
+   .container_new h3 {
+       padding: 10px 10px 10px 10px;
+    margin-left: 10px;
+    margin-right: 10px; 
+   }
   .container_new p {
     padding: 10px 10px 10px 10px;
     margin-left: 10px;
