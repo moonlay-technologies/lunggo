@@ -22,7 +22,7 @@
 
 @{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
-    ViewBag.BodyClass = "page page-checkout page-flight-checkout";
+    ViewBag.BodyClass = "page page-checkout";
     ViewBag.AngularController = "paymentController";
     ViewBag.SiteHeader = "Payment";
     ViewBag.Title = "Payment";
@@ -115,10 +115,88 @@
 <div ng-app="travorama" ng-controller="paymentController" >
     <section class="checkout-content">
 
-        <div class="page-step-3" id="step-4">
+        <div class="page__body" id="step-4">
             <h3><b>METODE</b> PEMBAYARAN</h3>
 
             <hr />
+            <div class="summary summary--price">
+                <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
+                <div class="summary__body">
+                    <dl>
+                        <dt>Total Tiket</dt>
+                        <dd><sup>Rp</sup> {{initialPrice | number}}</dd>
+                    </dl>
+                    <dl ng-show="CheckoutConfig.Voucher.Validated && CheckoutConfig.Voucher.Valid">
+                        <dt>Potongan Harga</dt>
+                        <dd><sup>Rp</sup>- {{voucher.amount| number}}</dd>
+                    </dl>
+                    <dl ng-show="paymentMethod == '@PaymentMethod.BankTransfer'">
+                        <dt>Kode Unik Transfer</dt>
+                        <dd><sup>Rp</sup>- {{TransferConfig.UniqueCode | number}}</dd>
+                    </dl>
+                    <dl class="total-price">
+                        <dt>Total</dt>
+                        <dd ng-if="paymentMethod != '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount | number}}</dd>
+                        <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount - TransferConfig.UniqueCode | number}}</dd>
+                    </dl>
+                </div><!-- .summary__body -->
+            </div><!-- .summar--price -->
+
+            <div class="summary summary--voucher">
+                <div class="container_new">
+                    <h4>Punya kupon Travorama?</h4>
+                    <p>Masukkan di sini</p>
+
+                    <form class="form form-horizontal">
+                        <div class="form-group">
+                            <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherNotFound'">Kode voucher salah</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Di bawah pembelian minimum</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignNotStartedYet'">Voucher belum dapat digunakan</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignHasEnded'">Voucher sudah tidak dapat digunakan</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignInactive'">Voucher tidak dapat digunakan</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'NoVoucherRemaining'">Voucher sudah habis</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'EmailNotEligible'">Voucher tidak dapat digunakan</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'UpdateError'">Voucher tidak dapat digunakan</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
+                            <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-6 col-xs-offset-6">
+                                <input type="submit" value="REDEEM" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
+                                <input type="submit" value="RESET" class="btn btn-yellow form-control" ng-click="voucher.reset()" ng-show="voucher.checked" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- .summary--voucher-->
+
+            <div class="widget countdown">
+                <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
+                <div class="widget-content">
+                    <p>Sisa waktu Anda untuk melakukan pembayaran</p>
+                    <div class="timer">
+                        <div>
+                            <h5 class="hour">00</h5>
+                            <span>jam</span>
+                        </div>
+                        <div class="separator"><h5>:</h5></div>
+                        <div>
+                            <h5 class="minute">00</h5>
+                            <span>menit</span>
+                        </div>
+                        <div class="separator"><h5>:</h5></div>
+                        <div>
+                            <h5 class="second">00</h5>
+                            <span>detik</span>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .widget.countdown -->
+            <br /><br />
+
             <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
 
             <div class="summary summary--payment">
@@ -168,7 +246,29 @@
                                 <h5>Mandiri ClickPay</h5>
                             </header>
                             <section>
-                                <img src="/Assets/images/payment-mandiri.jpg" alt="Bank Transfer" />
+                                <img src="/Assets/images/payment-mandiri.jpg" alt="Mandiri Clickpay" />
+                            </section>
+                        </label>
+                        <label>
+                            <header>
+                                <div class="input-wrapper">
+                                    <input type="radio" name="paymentMethod" value="@PaymentMethod.CimbClicks" ng-model="paymentMethod" />
+                                </div>
+                                <h5>CIMB Niaga</h5>
+                            </header>
+                            <section>
+                                <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Niaga" />
+                            </section>
+                        </label>
+                        <label>
+                            <header>
+                                <div class="input-wrapper">
+                                    <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriBillPayment" ng-model="paymentMethod" />
+                                </div>
+                                <h5>Mandiri Bill Payment</h5>
+                            </header>
+                            <section>
+                                <img src="/Assets/images/Bank-Mandiri.jpg" alt="Mandiri Bill Payment" />
                             </section>
                         </label>
 
@@ -176,7 +276,6 @@
 
                 </div><!-- .summary__body -->
             </div><!-- .summary--payment -->
-            
             @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && true /*tambah kredit kart baru*/ ))
             {
 
@@ -266,83 +365,8 @@
                 </div>
                                 <!-- .credit-card-form -->
             }
-            <div class="widget countdown">
-                <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
-                <div class="widget-content">
-                    <p>Sisa waktu Anda untuk melakukan pembayaran</p>
-                    <div class="timer">
-                        <div>
-                            <h5 class="hour">00</h5>
-                            <span>jam</span>
-                        </div>
-                        <div class="separator"><h5>:</h5></div>
-                        <div>
-                            <h5 class="minute">00</h5>
-                            <span>menit</span>
-                        </div>
-                        <div class="separator"><h5>:</h5></div>
-                        <div>
-                            <h5 class="second">00</h5>
-                            <span>detik</span>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- .widget.countdown -->
-            <br/><br/>
 
-            <div class="summary summary--voucher">
-                <div class="container">
-                    <h4>Punya kupon Travorama?</h4>
-                    <p>Masukkan di sini</p>
-
-                    <form class="form form-horizontal">
-                        <div class="form-group">
-                            <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
-                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherNotFound'">Kode voucher salah</p>
-                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
-                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Di bawah pembelian minimum</p>
-                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignNotStartedYet'">Voucher belum dapat digunakan</p>
-                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignHasEnded'">Voucher sudah tidak dapat digunakan</p>
-                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignInactive'">Voucher tidak dapat digunakan</p>
-                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'NoVoucherRemaining'">Voucher sudah habis</p>
-                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'EmailNotEligible'">Voucher tidak dapat digunakan</p>
-                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'UpdateError'">Voucher tidak dapat digunakan</p>
-                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
-                            <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="col-xs-6 col-xs-offset-6">
-                                <input type="submit" value="REDEEM" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
-                                <input type="submit" value="RESET" class="btn btn-yellow form-control" ng-click="voucher.reset()" ng-show="voucher.checked" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div><!-- .summary--voucher-->
             
-            <div class="summary summary--price">
-                <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
-                <div class="summary__body">
-                    <dl>
-                        <dt>Total Tiket</dt>
-                        <dd><sup>Rp</sup> {{initialPrice | number}}</dd>
-                    </dl>
-                    <dl ng-show="CheckoutConfig.Voucher.Validated && CheckoutConfig.Voucher.Valid">
-                        <dt>Potongan Harga</dt>
-                        <dd><sup>Rp</sup>- {{voucher.amount| number}}</dd>
-                    </dl>
-                    <dl ng-show="paymentMethod == '@PaymentMethod.BankTransfer'">
-                        <dt>Kode Unik Transfer</dt>
-                        <dd><sup>Rp</sup>- {{TransferConfig.UniqueCode | number}}</dd>
-                    </dl>
-                    <dl class="total-price">
-                        <dt>Total</dt>
-                        <dd ng-if="paymentMethod != '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount | number}}</dd>
-                        <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount - TransferConfig.UniqueCode | number}}</dd>
-                    </dl>
-                </div><!-- .summary__body -->
-            </div><!-- .summar--price -->
             <div class="step-button">
 
                 <form name="finalForm" id="finalForm" ng-submit="pay.checkCreditCard()">
@@ -376,6 +400,54 @@
         </div>
     </section><!-- .checkout-content -->
 
+    <div class="page-overlay flight-expired" ng-show="expired">
+        <div class="overlay-content">
+            <header>
+                <h4>Checkout Kadaluarsa</h4>
+            </header>
+            <section>
+                <div class="container_new">
+                    @*<div class="row1">*@
+                        @*<div class="col12 text-align">
+                            <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
+                        </div>*@
+                        <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
+                            <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
+                        
+                    @*</div>*@
+                </div>
+            </section>
+            <footer>
+                <div class="container_new">
+                    <div class="row1">
+                        <div class="col12">
+                            <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+
+    <div class="page-overlay booking-flight" ng-hide="!pay.paying">
+        <div class="overlay-content">
+            <header>
+                <h4>Mohon Tunggu</h4>
+            </header>
+            <section>
+                <div class="container_new">
+                    
+                    @*<div>
+                        <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
+                    </div>*@
+                    <div >
+                        <p>Sedang memproses pilihan Anda.</p>
+                    </div>
+                    
+                </div>
+            </section>
+        </div>
+    </div>
 
 </div>
         <!-- checkout end here -->
