@@ -104,24 +104,6 @@ app.controller('paymentController', [
             }
         };
 
-        $scope.PageConfig.ExpiryDate = {
-            Expired: false,
-            Time: $scope.CheckoutConfig.ExpiryDate,
-            Start: function () {
-                var expiryTime = new Date($scope.PageConfig.ExpiryDate.Time);
-                if ($scope.PageConfig.ExpiryDate.Expired || $scope.PageConfig.ExpiryDate.Starting) return;
-                $interval(function () {
-                    $scope.PageConfig.ExpiryDate.Starting = true;
-                    var nowTime = new Date();
-                    if (nowTime > expiryTime) {
-                        $scope.PageConfig.ExpiryDate.Expired = true;
-                    }
-                }, 1000);
-            },
-            Starting: false
-        };
-        $scope.PageConfig.ExpiryDate.Start();
-
         $scope.pay = {
             url: FlightPayConfig.Url,
             postData: '',
@@ -243,8 +225,6 @@ app.controller('paymentController', [
                         $scope.pay.isSuccess= false;
                     }
                 })
-
-                $scope.pay.paying = false;
             }
         }
         
