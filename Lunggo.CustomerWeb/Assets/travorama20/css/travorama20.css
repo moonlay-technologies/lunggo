@@ -270,7 +270,7 @@ input[type=number]::-webkit-outer-spin-button {
       padding: 0 30px;
       position: relative; }
       .search-location .location-body .location-recommend .tab-header a.nav-click {
-        width: 50%;
+        width: 30px;
         height: 60px;
         display: block;
         background-color: #999999;
@@ -751,7 +751,7 @@ file : /Assets/travorama20/css/_page_index.scss
         padding: 0; }
         .page-index .section-search .search-form .tab-header nav ul li {
           float: left;
-          width: 50%;
+          width: 33.333333334%;
           list-style: none;
           border-right: 2px solid #bdbdbd; }
           .page-index .section-search .search-form .tab-header nav ul li a {
@@ -3947,8 +3947,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
         color: #fff;
         color: #fff;
         margin: 0;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding: 10px;
         padding-left: 40px;
         font-size: 12px;
         font-weight: 600; }

@@ -369,11 +369,11 @@
                                                     <span class="passenger-data">{{passenger.birth.date}} {{months[passenger.birth.month].name}} {{passenger.birth.year}}</span>
                                                 </p>
                                                 <p ng-if="passportRequired">
-                                                    <span class="passenger-label">Nomor Passport</span>
+                                                    <span class="passenger-label">Nomor Paspor</span>
                                                     <span class="passenger-data">{{passenger.passport.number}}</span>
                                                 </p>
                                                 <p ng-if="passportRequired">
-                                                    <span class="passenger-label">Masa Berlaku Passport</span>
+                                                    <span class="passenger-label">Masa Berlaku Paspor</span>
                                                     <span class="passenger-data">{{passenger.passport.expire.date}} {{months[passenger.passport.expire.month].name}} {{passenger.passport.expire.year}}</span>
                                                 </p>
                                             </div>
@@ -381,12 +381,12 @@
                                                 </section>
                                 </div><!--Info Penumpang-->
                                 <div class="flight-detail" id="departure-flight" ng-if="trips[0]">
-                                                <header>
+                                    <header>
                                         <span>Penerbangan Pergi</span>
                                         <div class="fare-detail">
                                             <b>{{trips[0].OriginAirport}}</b> ke <b>{{trips[0].DestinationAirport}}</b> | {{trips[0].Segments[0].DepartureTime | date: 'dd-MM-yyyy' : 'UTC'}}
                                                     </div>
-                                                </header>
+                                    </header>
                                     <section class="detail-content">
                                         <div ng-repeat="segment in trips[0].Segments track by $index">
                                             <div class="transit" ng-if="$index > 0">
@@ -402,7 +402,7 @@
                                                 </div>
                                                 <div class="segment-left">
                                                     <img ng-src="{{segment.AirlineLogoUrl}}" alt="{{AirlineName}}" class="segment-airline-logo" />
-                                    </div>
+                                                </div>
                                                 <div class="segment-right">
                                                     <div class="segment-departure">
                                                         <h5>{{segment.DepartureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
@@ -412,36 +412,19 @@
                                                     </div>
                                                     <div class="segment-duration">
                                                         <h5><span>Durasi :</span> {{segment.Duration}}</h5>
-                                                        </div>
-                                                        <h5>CIMB Clicks</h5>
-                                                    </header>
-                                                    <section>
-                                                        <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Clicks" />
-                                                    </section>
-                                                </label>
-                                            </div><!-- .payment -->
-                                        
-                                        <div class="payment MandiriBillPayment col-xs-4">
-                                            <label>
-                                                <header>
-                                                    <div class="input-wrapper">
-                                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriBillPayment" ng-model="paymentMethod" />
                                                     </div>
-                                                    <h5>Mandiri Bill Payment</h5>
-                                                </header>
-                                                <section>
-                                                    <img src="/Assets/images/Bank-Mandiri.jpg" alt="Mandiri Bill Payment" />
-                                                </section>
-                                            </label>
-                                        </div><!-- .payment -->
-                                       
-                                    </div>
+                                                    <div class="segment-arrival">
+                                                        <h5>{{segment.ArrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                                        <h3>{{segment.ArrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                                        <h4>{{segment.ArrivalCity}} ({{segment.ArrivalAirport}})</h4>
+                                                        <h5>{{segment.ArrivalAirportName}}</h5>
                                                     </div>
+                                                </div><!-- .payment -->
                                                 <div class="segment-operator" ng-if="segment.AirlineCode != segment.OperatingAirlineCode">
-                                                    <p>Penerbangan ini di operasikan oleh <img ng-src="{{segment.OperatingAirlineLogoUrl}}" /> <span>{{segment.OperatingAirlineName}}</span></p>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                    <p>Penerbangan ini dioperasikan oleh <img ng-src="{{segment.OperatingAirlineLogoUrl}}" /> <span>{{segment.OperatingAirlineName}}</span></p>
+                                                 </div>
+                                           </div>
+                                        </div>
                                     </section>
                                 </div><!-- .flight-detail -->
                                             
@@ -792,7 +775,7 @@
             </div>
 
         </div>
-
+@*</div>*@
         <!-- checkout end here -->
                                 break;
     case "BookExpired":
