@@ -18,9 +18,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 return output;
             }
 
-            var revalidateSets = new List<RevalidateFlightOutputSet>();
+                var revalidateSets = new List<RevalidateFlightOutputSet>();
             var itins = GetItinerariesFromCache(input.Token);
-            Parallel.ForEach(itins, itin =>
+                Parallel.ForEach(itins, itin =>
                 {
                     var outputSet = new RevalidateFlightOutputSet();
                     var request = new RevalidateConditions
@@ -50,39 +50,39 @@ namespace Lunggo.ApCommon.Flight.Service
                     revalidateSets.Add(outputSet);
                 });
 
-            if (revalidateSets.TrueForAll(set => set.IsSuccess))
-            {
-                var newItins = revalidateSets.Select(set => set.NewItinerary).ToList();
+                if (revalidateSets.TrueForAll(set => set.IsSuccess))
+                {
+                    var newItins = revalidateSets.Select(set => set.NewItinerary).ToList();
                 var searchId = itins[0].SearchId;
                 var tripType = ParseTripType(searchId);
                 newItins.ForEach(itin => itin.RequestedTripType = tripType);
-                AddPriceMargin(newItins);
+                    AddPriceMargin(newItins);
 
                 SaveItinerariesToCache(newItins, input.Token);
 
-                output.IsSuccess = true;
-                output.IsValid = revalidateSets.TrueForAll(set => set.IsValid);
-                if (output.IsValid)
-                {
-                    output.IsItineraryChanged = revalidateSets.Exists(set => set.IsItineraryChanged);
-                    if (output.IsItineraryChanged)
+                    output.IsSuccess = true;
+                    output.IsValid = revalidateSets.TrueForAll(set => set.IsValid);
+                    if (output.IsValid)
+                    {
+                        output.IsItineraryChanged = revalidateSets.Exists(set => set.IsItineraryChanged);
+                        if (output.IsItineraryChanged)
                         output.NewItinerary = ConvertToItineraryForDisplay(newItins);
-                    output.IsPriceChanged = revalidateSets.Exists(set => set.IsPriceChanged);
-                    if (output.IsPriceChanged)
-                        output.NewPrice = revalidateSets.Sum(set => set.NewPrice);
-                    SaveItineraryToCache(newItins[0], input.Token);
+                        output.IsPriceChanged = revalidateSets.Exists(set => set.IsPriceChanged);
+                        if (output.IsPriceChanged)
+                            output.NewPrice = revalidateSets.Sum(set => set.NewPrice);
+                        SaveItineraryToCache(newItins[0], input.Token);
+                    }
+                    output.Token = input.Token;
                 }
-                output.Token = input.Token;
+                else
+                {
+                    if (revalidateSets.Any(set => set.IsSuccess))
+                        output.PartiallySucceed();
+                    output.IsSuccess = false;
+                    output.DistinguishErrors();
+                }
+                return output;
             }
-            else
-            {
-                if (revalidateSets.Any(set => set.IsSuccess))
-                    output.PartiallySucceed();
-                output.IsSuccess = false;
-                output.DistinguishErrors();
-            }
-            return output;
-        }
 
         private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
         {

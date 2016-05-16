@@ -11,6 +11,7 @@ using Lunggo.ApCommon.ProductBase.Constant;
 using Lunggo.Framework.Web;
 using RestSharp;
 using System.Diagnostics;
+using Lunggo.ApCommon.Constant;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
@@ -320,6 +321,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         },
                         Errors = new List<FlightError> { FlightError.InvalidInputData }
                     };
+
                 /*Buat dapat Info Itinerary dan Harga*/
                 var getPaymenturl = @"Payment.aspx";
                 var paymentGetRequest = new RestRequest(getPaymenturl, Method.GET);
@@ -331,14 +333,26 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var harga = getPrice[1].Trim().Replace("Rp.","").Replace(",","");
                 var fixPrice = decimal.Parse(harga);
 
-                var details = detailFlight["#flightDisplayBody>table:last"].Children().Children().Children().Last().Elements.ToArray();
-                List<string> test = new List<string>();
-                /*foreach (var data in details) 
+                //Cek Harga di Final
+                if (bookInfo.Itinerary.Price.Supplier != fixPrice) 
                 {
-                    List.Add(data.)
-                }*/
- 
-
+                    var fixItin = bookInfo.Itinerary;
+                    fixItin.Price.Supplier = fixPrice;
+                    fixItin.FareId = fixItin.FareId.Replace(bookInfo.Itinerary.Price.Supplier.ToString(),fixPrice.ToString());
+                    
+                    return new BookFlightResult
+                    {
+                        IsValid = true,
+                        IsItineraryChanged = false,
+                        IsPriceChanged = bookInfo.Itinerary.Price.Supplier != fixPrice,
+                        IsSuccess = false,
+                        ErrorMessages = new List<string> { "Price is changed!" },
+                        NewItinerary = fixItin,
+                        NewPrice = fixPrice,
+                        Status = null
+                    };
+                }
+                
 
                 // SELECT HOLD (PAYMENT)
 

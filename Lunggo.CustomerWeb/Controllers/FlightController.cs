@@ -128,21 +128,23 @@ namespace Lunggo.CustomerWeb.Controllers
             
         }
 
+        //Buat ngelempar ke halaman payment
         [RequireHttps]
         [HttpPost]
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
             var flight = FlightService.GetInstance();
-            var paymentUrl = flight.GetBookingRedirectionUrl(rsvNo);
-            if (paymentUrl != null)
-                return Redirect(paymentUrl);
-            else
+            var reservation = flight.GetReservationForDisplay(rsvNo);
+            if (reservation.RsvTime != null)
             {
-                TempData["AllowThisThankyouPage"] = rsvNo;
-                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
+                return RedirectToAction("Payment", "Flight", new { rsvNo });
             }
-
+            else 
+            {
+                TempData["FlightCheckoutOrBookingError"] = true;
+                return RedirectToAction("Checkout");
+            }
         }
 
         public ActionResult Thankyou(string rsvNo)
@@ -170,8 +172,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Confirmation(string rsvNo)
         {
             var reservation = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-            if (reservation.Payment.Method == PaymentMethod.BankTransfer &&
-                (reservation.Payment.Status == PaymentStatus.Pending || reservation.Payment.Status == PaymentStatus.Challenged))
+            if (reservation.Payment.Method == PaymentMethod.BankTransfer && reservation.Payment.Status == PaymentStatus.Pending)
             {
                 return View(new FlightPaymentConfirmationData
                 {
@@ -181,7 +182,8 @@ namespace Lunggo.CustomerWeb.Controllers
                 });
             }
             else
-                return RedirectToAction("Index", "UW000TopPage");
+                TempData["AllowThisThankyouPage"] = rsvNo;
+                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
         }
 
         //[HttpPost]

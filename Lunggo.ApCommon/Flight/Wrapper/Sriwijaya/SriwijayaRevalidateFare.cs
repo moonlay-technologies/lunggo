@@ -455,7 +455,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 itin.Price.SetSupplier(Decimal.Parse(hargaBaru), new Currency("IDR"));
                                 var newPrice = decimal.Parse(hargaBaru);
                                 hasil.IsSuccess = true;
-                                hasil.IsValid = harga == newPrice;
+                                hasil.IsValid = true;
                                 hasil.IsPriceChanged = harga != newPrice;
                                 hasil.IsItineraryChanged = !conditions.Itinerary.Identical(itin);
                                 if (hasil.IsPriceChanged)
@@ -482,7 +482,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             if (ParseFID1.Count == 1)
                             {
                                 #region
-                                var cekFID1 = ambilFare["[value*=" + FIDsegment1 + "]"];
+                                var cekFID1 = ambilFare["[value*='" + FIDsegment1 + "']"];
                                 var FIDsegments = new List<string>
                  {
                      FIDsegment1,FIDsegment2,FIDsegment3
@@ -597,7 +597,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     //hasil.NewItinerary = itin;
                                     var newPrice = decimal.Parse(hargaBaru);
                                     hasil.IsSuccess = true;
-                                    hasil.IsValid = harga == newPrice;
+                                    hasil.IsValid = true;
                                     hasil.IsPriceChanged = harga != newPrice;
                                     hasil.IsItineraryChanged = !conditions.Itinerary.Identical(itin);
                                     if (hasil.IsPriceChanged)

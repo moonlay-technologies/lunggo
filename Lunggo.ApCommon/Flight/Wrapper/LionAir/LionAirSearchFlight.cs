@@ -518,7 +518,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 InfantCount = conditions.InfantCount,
                                 CanHold = true,
                                 FareType = FareType.Published,
-                                RequireBirthDate = false,
+                                RequireBirthDate = true,
                                 RequirePassport = RequirePassport(segments),
                                 RequireSameCheckIn = false,
                                 RequireNationality = true,
@@ -533,7 +533,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     {
                                         OriginAirport = airportDeparture,
                                         DestinationAirport = lastAirport,
-                                        DepartureDate = depDate,
+                                        DepartureDate = depDate.Date,
                                         DestinationCity = lastDest,
                                         OriginCity = cityDeparture,
                                         Segments = segments
@@ -546,8 +546,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     }
 
                     //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "ID")).ToList();
-                    itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "OD")).ToList();
-                    itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "SL")).ToList();
+                    //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "OD")).ToList();
+                    //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "SL")).ToList();
                     if (trip0.DestinationAirport != "JKT")
                     {
                         itins = itins.Where(itin => itin.Trips[0].Segments.Last().ArrivalAirport == trip0.DestinationAirport).ToList();

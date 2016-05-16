@@ -734,6 +734,7 @@
     <Content Include="Assets\images\check.png" />
     <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\choose-travorama.png" />
+    <Content Include="Assets\images\cimb-clicks-transparan.png" />
     <Content Include="Assets\images\cimb-clicks.jpg" />
     <Content Include="Assets\images\contact-sprite.jpg" />
     <Content Include="Assets\images\creditCard.jpg" />
@@ -1074,6 +1075,7 @@
     <Content Include="Assets\travorama20\js\checkoutController.js" />
     <Content Include="Assets\travorama20\js\countries.js" />
     <Content Include="Assets\travorama20\js\homeController.js" />
+    <Content Include="Assets\travorama20\js\paymentController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
     <Content Include="Assets\travorama20\js\bootstrap.min.js" />
@@ -1272,7 +1274,9 @@
     <Content Include="Assets\mobile\css\_page_home.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
+    <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2592,6 +2596,7 @@
     <None Include="Views\Flight\Checkout.mobile.cshtml.bak" />
     <Content Include="Views\Flight\Eticket.cshtml" />
     <Content Include="Views\Flight\Confirmation.mobile.cshtml" />
+    <Content Include="Views\Flight\Payment.cshtml" />
     <None Include="Views\Flight\SearchResultList-Single.mobile.cshtml.bak" />
     <Content Include="Views\Template\eticket3.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.cshtml" />

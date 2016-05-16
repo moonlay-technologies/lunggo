@@ -17,6 +17,7 @@ using RestSharp;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
+using System.Diagnostics;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
@@ -56,7 +57,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);
                 var destinationCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.DestinationAirport);
                 var availableFares = new CQ();
-                if (originCountry == "ID")
+                CQ searchedHtml;
+                if (originCountry == "ID" && destinationCountry == "ID")
                 {
                     var url = @"Flight/Select";
                     var searchRequest = new RestRequest(url, Method.GET);
@@ -74,14 +76,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var searchResponse = client.Execute(searchRequest);
 
                     var html = searchResponse.Content;
+                    Debug.Print(html.ToString());
 
                     if (searchResponse.ResponseUri.AbsolutePath != "/Flight/Select" && (searchResponse.StatusCode == HttpStatusCode.OK || searchResponse.StatusCode == HttpStatusCode.Redirect))
                         return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
-
-                    var searchedHtml = (CQ)html;
+                    searchedHtml = (CQ)html;
                     availableFares = searchedHtml[".radio-markets"];
                 }
-
                 //else if (destinationCountry == "ID")
                 //{
                 //    var url = @"http://booking.airasia.com/Flight/InternalSelect" +
@@ -203,29 +204,27 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         itin.Price.SetSupplier(price, new Currency("IDR"));
                         itins.Add(itin);
                     }
-                    foreach (var itin in itins)
+                    //var oriFareId = itin.FareId.Split('.').Last();
+                    //var radio = availableFares.Single(fare => fare.Value == oriFareId).Cq();
+                    //var fareRow = searchedHtml[".carrier-hover-header,.carrier-hover-return"].Children().Last();//radio.Parent().Parent().Parent().Parent().Parent();
+                    var durationRows = searchedHtml[".carrier-hover-oneway-header>div:last-child"];
+                    var flattenedSegments = itins.SelectMany(itin => itin.Trips[0].Segments).ToList();
+                    for (var i = 0; i < flattenedSegments.Count; i++)
                     {
-                        var oriFareId = itin.FareId.Split('.').Last();
-                        var radio = availableFares.Single(fare => fare.Value == oriFareId).Cq();
-                        var fareRow = radio.Parent().Parent().Parent().Parent().Parent();
-                        var durationRows = fareRow.Children().First().MakeRoot()["tr:even"];
-                        var segments = itin.Trips[0].Segments;
-                        var newSegments = segments.Zip(durationRows, (segment, durationRow) =>
-                        {
-                            var durationTexts =
-                                durationRow.LastElementChild.FirstElementChild.InnerHTML.Trim().Split(' ').ToList();
-                            var duration = new TimeSpan();
+                        var durationRow = durationRows[i];
+                        var segment = flattenedSegments[i];
+                        var durationTexts =
+                            durationRow.InnerHTML.Trim().Split(':').ToList();
+                        var splitduration = durationTexts[1].Trim().Split(' ').ToList();
+                        var duration = new TimeSpan();
+                        duration =
+                            duration.Add(TimeSpan.ParseExact(splitduration[0], "h'h'", CultureInfo.InvariantCulture));
+                        if (splitduration.Count > 1)
                             duration =
-                                duration.Add(TimeSpan.ParseExact(durationTexts[0], "h'h'", CultureInfo.InvariantCulture));
-                            if (durationTexts.Count > 1)
-                                duration =
-                                    duration.Add(TimeSpan.ParseExact(durationTexts[1], "m'm'",
-                                        CultureInfo.InvariantCulture));
-                            segment.Duration = duration;
-                            return segment;
-                        }).ToList();
-                        itin.Trips[0].Segments = newSegments;
-                    }
+                                duration.Add(TimeSpan.ParseExact(splitduration[1], "m'm'",
+                                    CultureInfo.InvariantCulture));
+                        segment.Duration = duration;
+                    };
                     return new SearchFlightResult
                     {
                         IsSuccess = true,

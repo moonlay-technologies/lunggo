@@ -171,9 +171,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 CultureInfo.CreateSpecificCulture("id-ID"));
                         var segmentFareIds = foundFareId.Split('|').Last().Split('^');
                         var segments = new List<FlightSegment>();
+                        var flight = FlightService.GetInstance();
                         foreach (var segmentFareId in segmentFareIds)
                         {
                             var splittedSegmentFareId = segmentFareId.Split('~').ToArray();
+                            var deptTime = DateTime.Parse(splittedSegmentFareId[5]).AddHours(-(flight.GetAirportTimeZone(splittedSegmentFareId[4])));
+                            var arrTime = DateTime.Parse(splittedSegmentFareId[7]).AddHours(-(flight.GetAirportTimeZone(splittedSegmentFareId[6])));
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = splittedSegmentFareId[0],
@@ -186,6 +189,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 ArrivalAirport = splittedSegmentFareId[6],
                                 ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]),DateTimeKind.Utc),
                                 OperatingAirlineCode = splittedSegmentFareId[0],
+                                Duration = arrTime-deptTime,
                                 StopQuantity = 0
                             });
                         }
@@ -204,7 +208,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             TripType = TripType.OneWay,
                             Supplier = Supplier.AirAsia,
                             Price = new Price(),
-                            FareId = fareIdPrefix + price.ToString("0") + "." + foundFareId,
+                            FareId = fareIdPrefix + newPrice.ToString("0") + "." + foundFareId,
                             Trips = new List<FlightTrip>
                             {
                                 new FlightTrip
@@ -218,28 +222,29 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         };
                         itin.Price.SetSupplier(newPrice, new Currency("IDR"));
 
-                        var fareRow = radio.Parent().Parent().Parent().Parent().Parent();
-                        var durationRows = fareRow.Children().First().MakeRoot()["tr:even"];
+                        /*var durationRows = searchedHtml[".carrier-hover-oneway-header>div:last-child"];
                         itin.Trips[0].Segments = segments.Zip(durationRows, (segment, durationRow) =>
                         {
                             var durationTexts =
-                                durationRow.LastElementChild.FirstElementChild.InnerHTML.Trim().Split(' ').ToList();
+                                durationRow.InnerHTML.Trim().Split(':').ToList();
+                            var splitduration = durationTexts[1].Trim().Split(' ').ToList();
                             var duration = new TimeSpan();
                             duration =
-                                duration.Add(TimeSpan.ParseExact(durationTexts[0], "h'h'", CultureInfo.InvariantCulture));
-                            if (durationTexts.Count > 1)
+                                duration.Add(TimeSpan.ParseExact(splitduration[0], "h'h'", CultureInfo.InvariantCulture));
+                            if (splitduration.Count > 1)
                                 duration =
-                                    duration.Add(TimeSpan.ParseExact(durationTexts[1], "m'm'",
+                                    duration.Add(TimeSpan.ParseExact(splitduration[1], "m'm'",
                                         CultureInfo.InvariantCulture));
                             segment.Duration = duration;
                             return segment;
-                        }).ToList();
+                        }).ToList();*/
                         var result = new RevalidateFareResult
                         {
                             IsSuccess = true,
                             IsValid = true,
                             IsPriceChanged = price != newPrice,
-                            NewItinerary = itin
+                            NewItinerary = itin,
+                            IsItineraryChanged = !conditions.Itinerary.Identical(itin)
                         };
                         if (result.IsPriceChanged)
                             result.NewPrice = newPrice;

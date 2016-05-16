@@ -219,8 +219,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                     }
                                 };
                                 itin.Price.SetSupplier(decimal.Parse(harga[1]), new Currency("IDR"));
-                                if (itin.Trips[0].Segments.Count < 2)
-                                    itins.Add(itin);
+                                //if (itin.Trips[0].Segments.Count < 2)
+                                itins.Add(itin);
                                 hasil.IsSuccess = true;
                                 hasil.Itineraries = itins;
                                 #endregion
