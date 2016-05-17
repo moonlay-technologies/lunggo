@@ -225,6 +225,7 @@ app.controller('paymentController', [
                         $scope.pay.isSuccess= false;
                     }
                 })
+                $scope.pay.paying = false;
             }
         }
         

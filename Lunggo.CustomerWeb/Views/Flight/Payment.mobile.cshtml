@@ -25,7 +25,7 @@
     ViewBag.BodyClass = "page page-checkout";
     ViewBag.AngularController = "paymentController";
     ViewBag.SiteHeader = "Payment";
-    ViewBag.Title = "Payment";
+    ViewBag.Title = "Pembayaran";
 }
 @section AdditionalCSS {
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
@@ -112,7 +112,7 @@
     default:
         <!-- payment start here -->
 
-<div ng-app="travorama" ng-controller="paymentController" >
+<div ng-app="travorama" ng-controller="paymentController" ng-class="{'page-loaded' : pageLoaded}">
     <section class="checkout-content">
 
         <div class="page__body" id="step-4">
@@ -366,7 +366,7 @@
                                 <!-- .credit-card-form -->
             }
 
-            
+
             <div class="step-button">
 
                 <form name="finalForm" id="finalForm" ng-submit="pay.checkCreditCard()">
@@ -399,58 +399,46 @@
             </div>
         </div>
     </section><!-- .checkout-content -->
-
+    
     <div class="page-overlay flight-expired" ng-show="expired">
-        <div class="overlay-content">
-            <header>
-                <h4>Checkout Kadaluarsa</h4>
-            </header>
-            <section>
-                <div class="container_new">
-                    @*<div class="row1">*@
-                        @*<div class="col12 text-align">
-                            <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
-                        </div>*@
-                        <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
-                            <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
-                        
-                    @*</div>*@
-                </div>
-            </section>
-            <footer>
-                <div class="container_new">
-                    <div class="row1">
-                        <div class="col12">
-                            <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
+            <div class="overlay-content">
+                <header>
+                    <h4>Checkout Kadaluarsa</h4>
+                </header>
+                <section>
+                    <div class="container_new">
+                      <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
+                      <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
+                    </div>
+                </section>
+                <footer>
+                    <div class="container_new">
+                        <div class="row1">
+                            <div class="col12">
+                                <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </footer>
-        </div>
-    </div><!-- .page-overlay -->
+                </footer>
+            </div>
+        </div><!-- .page-overlay -->
 
-    <div class="page-overlay booking-flight" ng-hide="!pay.paying">
+    <div class="page-overlay booking-flight"  ng-show ="pay.paying">
         <div class="overlay-content">
             <header>
                 <h4>Mohon Tunggu</h4>
             </header>
             <section>
                 <div class="container_new">
-                    
-                    @*<div>
-                        <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
-                    </div>*@
-                    <div >
+                    <div>
                         <p>Sedang memproses pilihan Anda.</p>
                     </div>
-                    
                 </div>
             </section>
         </div>
     </div>
 
-</div>
-        <!-- checkout end here -->
+</div><!-- checkout end here -->
                                 break;
     case "BookExpired":
     @:[Ini ceritanya page booking expired]
