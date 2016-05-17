@@ -73,7 +73,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                         payment.Status = PaymentStatus.Denied;
                     }
                     return payment;
-                /*case PaymentMethod.VirtualAccount:
+                case PaymentMethod.VirtualAccount:
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
@@ -86,7 +86,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     {
                         payment.Status = PaymentStatus.Denied;
                     }
-                    return payment; */
+                    return payment; 
                 default:
                     payment.Status = PaymentStatus.Denied;
                     return payment;
@@ -170,14 +170,14 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     TokenIdSaveEnabled = data.Data20
                 };
             }
-           /* //Add Here for Payment Method Virtual Account
+            //Add Here for Payment Method Virtual Account
             else if (method == PaymentMethod.VirtualAccount) 
             {
                 requestParams.BankTransfer = new BankTransfer
                 {
                     Bank = "permata"
                 };
-            }*/
+            }
             var jsonRequestParams = JsonConvert.SerializeObject(requestParams);
             var dataStream = request.GetRequestStream();
             using (var streamWriter = new StreamWriter(dataStream))

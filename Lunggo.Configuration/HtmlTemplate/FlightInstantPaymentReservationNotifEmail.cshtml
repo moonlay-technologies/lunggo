@@ -108,7 +108,7 @@
                         <table width="100%" style="margin-bottom: 0px;">
                             <tr>
                                 <td>
-                                    <p style="margin-bottom:0px;">Melakukan pembayaran sejumlah total tagihan : Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) </b>ke nomor akun virtual tujuan.</p>
+                                    <p style="margin-bottom:0px;">Melakukan pembayaran sejumlah total tagihan : Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) </b>ke nomor akun virtual tujuan : <b>@Model.Payment.TargetAccount</b></p>
                                 </td>
                             </tr>
                             <tr>
@@ -128,7 +128,7 @@
                                         <li><p>Di Menu utama, pilih <b>Transaksi Lainnya </b>.</p></li>
                                         <li><p>Pilih <b>Transfer</b>.</p></li>
                                         <li><p>Pilih <b>Antar Bank Online</b>.</p></li>
-                                        <li><p>Masukkan nomor kode 013 dan 16 digit nomor akun virtual pembayaran.</p></li>
+                                        <li><p>Masukkan nomor <b>013 @Model.Payment.TargetAccount</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).</p></li>
                                         <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
                                         <li><p>No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.</p></li>
                                         <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</p></li>
@@ -146,7 +146,7 @@
                                         <li><p>Pilih <b>Ke Rek Bank Lain</b>.</p></li>
                                         <li><p>Masukkan kode <b>013</b> (Kode Bank Permata) lalu tekan <b>Benar</b>.</p></li>
                                         <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
-                                        <li><p>Masukkan 16 digit nomor akun virtual pembayaran lalu tekan <b>Benar</b>.</p></li>
+                                        <li><p>Masukkan <b>@Model.Payment.TargetAccount</b> (16 digit nomor akun virtual pembayaran) lalu tekan <b>Benar</b>.</p></li>
                                         <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</p></li>
                                         <li><p>Transaksi berhasil.</p></li>
                                     </ol>
@@ -160,7 +160,7 @@
                                         <li><p>Di Menu utama, pilih <b>Transaksi Lainnya</b>.</p></li>
                                         <li><p>Pilih <b>Transaksi Pembayaran</b>.</p></li>
                                         <li><p>Pilih <b>Pembayaran Virtual Account</b>.</p></li>
-                                        <li><p>Masukkan 16 digit nomor akun virtual pembayaran.</p></li>
+                                        <li><p>Masukkan 16 digit nomor akun virtual pembayaran <b>@Model.Payment.TargetAccount</b>.</p></li>
                                         <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</p></li>
                                         <li><p>Transaksi berhasil.</p></li>
                                     </ol>

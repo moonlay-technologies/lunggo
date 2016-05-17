@@ -2629,6 +2629,7 @@
     <Content Include="Views\StaticPage\HowToOrder.mobile.cshtml" />
     <Content Include="Views\StaticPage\Promo.mobile.cshtml" />
     <Content Include="Views\StaticPage\Newsletter.mobile.cshtml" />
+    <Content Include="Views\Template\ConfirmationRaw.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2665,6 +2666,7 @@
     <Content Include="Views\Template\eticketnew.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderFlightHistoryDetail.mobile.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderHistory.mobile.cshtml" />
+    <Content Include="Views\Template\PendingConfirmed.cshtml" />
     <None Include="Views\UW000TopPage\Index.mobile.cshtml.bak" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
