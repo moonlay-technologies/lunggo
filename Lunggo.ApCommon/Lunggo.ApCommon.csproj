@@ -303,6 +303,7 @@
     <Compile Include="Flight\Wrapper\LionAir\LionAirGetBookingStatus.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Flight\Wrapper\LionAir\LionAirGetCurrentBalance.cs" />
     <Compile Include="Flight\Wrapper\LionAir\LionAirGetTripDetails.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -335,6 +336,7 @@
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaClientHandler.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaGetBookingStatus.cs" />
+    <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaGetCurrentBalance.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaGetTripDetails.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaIsIssued.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaOrderTicket.cs" />
