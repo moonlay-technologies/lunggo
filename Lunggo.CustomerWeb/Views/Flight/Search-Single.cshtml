@@ -134,7 +134,7 @@
             <div class="row">
                 <div class="col-sm-9">
                     <div class="result-form-left">
-                        <h3><b>@originCityNames[0]</b> (@data.Trips[0].OriginAirport) to <b>@destinationCityNames[0]</b> (@data.Trips[0].DestinationAirport) </h3>
+                        <h3><b>@originCityNames[0]</b> (@data.Trips[0].OriginAirport) ke <b>@destinationCityNames[0]</b> (@data.Trips[0].DestinationAirport) </h3>
                         <h4><b>@data.Trips[0].DepartureDate.ToString("dd-MMM-yyyy")</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>
                     </div>
                 </div>
@@ -560,7 +560,7 @@
                                                 <h5>{{segment.DepartureAirportName}}</h5>
                                             </div>
                                             <div class="segment-duration">
-                                                <h5><span>Duration :</span> {{segment.Duration}}</h5>
+                                                <h5><span>Durasi :</span> {{segment.Duration}}</h5>
                                             </div>
                                             <div class="segment-arrival">
                                                 <h5>{{segment.ArrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>

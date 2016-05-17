@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Identity.User;
+﻿using System.Web.Http.Cors;
+using Lunggo.ApCommon.Identity.User;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
@@ -40,6 +41,7 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
         }
 
         [HttpPost]
+        [EnableCors("*", "*", "*")]
         [AllowAnonymous]
         public async Task<JsonResult> Register(RegisterViewModel model)
         {
@@ -81,6 +83,7 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
         }
 
         [HttpPost]
+        [EnableCors("*", "*", "*")]
         [AllowAnonymous]
         public async Task<JsonResult> ResendConfirmationEmail(RegisterViewModel model)
         {
@@ -120,6 +123,7 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
 
 
         [HttpPost]
+        [EnableCors("*", "*", "*")]
         public async Task<JsonResult> ChangeProfile(ChangeProfileViewModel model)
         {
             AccountResponseModel response = new AccountResponseModel();
@@ -145,6 +149,7 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
         }
 
         [HttpPost]
+        [EnableCors("*", "*", "*")]
         [AllowAnonymous]
         public async Task<JsonResult> ForgotPassword(ForgotPasswordViewModel model)
         {
@@ -176,6 +181,7 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
         }
 
         [HttpPost]
+        [EnableCors("*", "*", "*")]
         [AllowAnonymous]
         public async Task<JsonResult> ResetPassword(Lunggo.CustomerWeb.Models.ResetPasswordViewModel model)
         {
@@ -224,6 +230,7 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
         }
 
         [HttpPost]
+        [EnableCors("*", "*", "*")]
         public async Task<JsonResult> ChangePassword(ChangePasswordViewModel model)
         {
             AccountResponseModel response = new AccountResponseModel();

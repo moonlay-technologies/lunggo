@@ -966,6 +966,7 @@ function flightFormSearchFunctions() {
             $('.form-flight-destination').val($(this).text());
         }
         hideLocation();
+        console.log("BERHASIL");
     });
     // on keypress on form flight search
     $('.form-flight-location').keyup(function (evt) {

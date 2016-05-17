@@ -53,7 +53,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
                 client.AddDefaultHeader("Host", "book.citilink.co.id");
                 client.AddDefaultHeader("Origin", "https://book.citilink.co.id");
-                client.AddDefaultHeader("Referer", "https://book.citilink.co.id/LoginAgent.aspx?culture=id-ID");
+                //client.AddDefaultHeader("Referer", "https://book.citilink.co.id/LoginAgent.aspx?culture=id-ID");
                 client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
                 client.CookieContainer = new CookieContainer();
                 return client;
@@ -63,13 +63,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
             {
                 var url = "LoginAgent.aspx";
                 var request = new RestRequest(url, Method.POST);
-                string postData = @"ControlGroupLoginAgentView$AgentLoginView$ButtonLogIn=Log+In" +
-                     @"&ControlGroupLoginAgentView$AgentLoginView$PasswordFieldPassword=" + _password +
-                     @"&ControlGroupLoginAgentView$AgentLoginView$TextBoxUserID=" + _userName +
+                string postData = @"ControlGroupLoginAgentView%24AgentLoginView%24ButtonLogIn=Log+In" +
+                     @"&ControlGroupLoginAgentView%24AgentLoginView%24PasswordFieldPassword=" + _password +
+                     @"&ControlGroupLoginAgentView%24AgentLoginView%24TextBoxUserID=" + _userName +
                      @"&__EVENTARGUMENT=" +
                      @"&__EVENTTARGET=" +
-                     @"&__VIEWSTATE=/wEPDwUBMGRkBsrCYiDYbQKCOcoq/UTudEf14vk=" +
-                     @"&pageToken";
+                     @"&__VIEWSTATE=%2FwEPDwUBMGRkBsrCYiDYbQKCOcoq%2FUTudEf14vk%3D" +
+                     @"&pageToken=";
+                request.AddHeader("Referer", "https://book.citilink.co.id/LoginAgent.aspx?culture=id-ID");
                 request.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 client.Execute(request);
             }

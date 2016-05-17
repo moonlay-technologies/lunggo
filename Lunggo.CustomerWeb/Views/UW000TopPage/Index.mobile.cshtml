@@ -10,10 +10,9 @@
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
-
+    <script src="/Config/JsConfig.js"></script>
     <!-- jquery datepicker -->
-    <script src="/Assets/js/jquery-ui.min.js"></script>
-}
+    <script src="/Assets/js/jquery-ui.min.js"></script>}
 
 @section PageJS {
     <script src="/Assets/mobile/js/HomeController.js"></script>
@@ -23,40 +22,40 @@
     
     <div class="form-wrapper">
 
-        <h1><b>FLIGHT</b> BOOKING</h1>
+        <h1>CARI <b>TIKET PESAWAT</b></h1>
 
         <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
 
             <div class="form-group form__origin">
                 <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('departure'); PageConfig.SetOverlay('airport-select')">
-                    {{FlightSearchForm.AirportOrigin.City}}, {{FlightSearchForm.AirportOrigin.Country}} ({{FlightSearchForm.AirportOrigin.Code}})
+                    {{FlightSearchForm.AirportOrigin.City}} ({{FlightSearchForm.AirportOrigin.Code}})
                 </p>
             </div>
 
             <div class="form-group form__destination">
                 <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('return'); PageConfig.SetOverlay('airport-select')">
-                    {{FlightSearchForm.AirportDestination.City}}, {{FlightSearchForm.AirportDestination.Country}} ({{FlightSearchForm.AirportDestination.Code}})
+                    {{FlightSearchForm.AirportDestination.City}} ({{FlightSearchForm.AirportDestination.Code}})
                 </p>
             </div>
 
             <div class="form-group form__departure">
                 <p class="form-control" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-departure')">
-                    <b>Berangkat</b> <span>{{FlightSearchForm.DepartureDate | date : 'd-MMM-yyyy'}}</span>
+                    <b>Berangkat</b> <span>{{FlightSearchForm.DepartureDate | date : 'EEE, dd MMM yyyy'}}</span>
                 </p>
                 <input type="text" value="" ng-model="FlightSearchForm.DepartureDate" class="flight-search-form-departure hidden" />
             </div>
 
             <div class="form-group form__roundtrip">
-                <p>Roundtrip ?</p>
+                <p>Pulang Pergi ?</p>
                 <div class="switch">
-                    <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" class="hidden" />No</label>
-                    <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'true'}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" class="hidden" />Yes</label>
+                    <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" class="hidden" />Tidak</label>
+                    <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'true'}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" class="hidden" />Ya</label>
                 </div>
             </div>
 
             <div class="form-group form__return" ng-hide="FlightSearchForm.Trip == 'false'">
                 <p class="form-control" ng-click="DatePicker.SetOption({Target : 'return'}, ' '); PageConfig.SetOverlay('datepicker-return')">
-                    <b>Kembali</b> <span>{{FlightSearchForm.ReturnDate | date : 'd-MMM-yyyy'}}</span>
+                    <b>Kembali</b> <span>{{FlightSearchForm.ReturnDate | date : 'EEE, dd MMM yyyy'}}</span>
                     <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />
                 </p>
             </div>
@@ -72,9 +71,15 @@
                     <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[2]}}</p>
                 </div>
             </div>
-
+        
+            <div class="form-group form__flightclass">
+                <select class="form-control" name="cabinclass" ng-model="FlightSearchForm.Cabin" ng-init="FlightSearchForm.Cabin = flightclass[0].value">
+                    <option ng-repeat="cabin in flightclass" value="{{cabin.value}}">{{cabin.name}}</option>
+                </select>       
+            </div>
+        
             <div class="form-group form__submit">
-                <button class="btn btn-yellow btn-block btn-lg">SEARCH</button>
+                <button class="btn btn-yellow btn-block btn-lg">CARI</button>
             </div>
 
         </form><!-- .flight-form -->
@@ -113,13 +118,13 @@
         <header class="overlay__header">
             <h3 class="overlay__title">
                 <small>PILIH TUJUAN PENERBANGAN</small>
-                 <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+                 <span class="overlay__close" ng-click="PageConfig.SetOverlay();">X</span>
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
         
             <div class="autocomplete-input">
-                <input type="text" class="form-control" name="name" value="" placeholder="Masukan lokasi tujuan penerbangan" ng-model="FlightSearchForm.AutoComplete.Keyword" ng-change="FlightSearchForm.AutoComplete.GetAirport()" />
+                <input type="text" class="form-control" name="name" value="" placeholder="Masukkan lokasi tujuan penerbangan" ng-model="FlightSearchForm.AutoComplete.Keyword" ng-change="FlightSearchForm.AutoComplete.GetAirport()" />
             </div><!-- .autocomplete-input -->
         
             <div class="autocomplete-preload" ng-show="FlightSearchForm.AutoComplete.Keyword.length < FlightSearchForm.AutoComplete.MinLength">
@@ -127,7 +132,85 @@
                     <h4>POPULAR DESTINATION</h4>
                 </div>
                 <ul class="result">
-                    <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Popular">
+                    <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Popular" >
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay();" ></a>
+                        <span class="airport__code">{{result.Code}}</span>
+                        <div class="airport__detail">
+                            <p class="airport__location">{{result.City}}, {{result.Country}}</p>
+                            <p class="airport__name">{{result.Name}}</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="list__header">
+                    <h4>INDONESIA</h4>
+                </div>
+                <ul class="result">
+                    <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Indonesia">
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <span class="airport__code">{{result.Code}}</span>
+                        <div class="airport__detail">
+                            <p class="airport__location">{{result.City}}, {{result.Country}}</p>
+                            <p class="airport__name">{{result.Name}}</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="list__header">
+                    <h4>ASIA TENGGARA</h4>
+                </div>
+                <ul class="result">
+                    <li class="airport" ng-repeat="result in PageConfig.PopularDestination.SouthEastAsia">
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <span class="airport__code">{{result.Code}}</span>
+                        <div class="airport__detail">
+                            <p class="airport__location">{{result.City}}, {{result.Country}}</p>
+                            <p class="airport__name">{{result.Name}}</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="list__header">
+                    <h4>ASIA TIMUR</h4>
+                </div>
+                <ul class="result">
+                    <li class="airport" ng-repeat="result in PageConfig.PopularDestination.EastAsia">
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <span class="airport__code">{{result.Code}}</span>
+                        <div class="airport__detail">
+                            <p class="airport__location">{{result.City}}, {{result.Country}}</p>
+                            <p class="airport__name">{{result.Name}}</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="list__header">
+                    <h4>EROPA</h4>
+                </div>
+                <ul class="result">
+                    <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Europe">
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <span class="airport__code">{{result.Code}}</span>
+                        <div class="airport__detail">
+                            <p class="airport__location">{{result.City}}, {{result.Country}}</p>
+                            <p class="airport__name">{{result.Name}}</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="list__header">
+                    <h4>OSEANIA</h4>
+                </div>
+                <ul class="result">
+                    <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Oceania">
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
+                        <span class="airport__code">{{result.Code}}</span>
+                        <div class="airport__detail">
+                            <p class="airport__location">{{result.City}}, {{result.Country}}</p>
+                            <p class="airport__name">{{result.Name}}</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="list__header">
+                    <h4>DESTINASI LAINNYA</h4>
+                </div>
+                <ul class="result">
+                    <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Others">
                         <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
                         <span class="airport__code">{{result.Code}}</span>
                         <div class="airport__detail">
@@ -137,23 +220,18 @@
                     </li>
                 </ul>
             </div><!-- .autocomplete-preload -->
+        
+            <div class="autocomplete-loading">
+                <h4 class="text-center text-loading">Mencari Bandara</h4>
+            </div>
 
-            <div class="autocomplete-loading" ng-show="FlightSearchForm.AutoComplete.Loading">
-                <h4>Mencari Bandara</h4>
-            </div><!-- .autocomplete-loading -->
+            <div class="autocomplete-no-result">
+                <h4 class="text-center">Hasil tidak ditemukan</h4>
+            </div>
 
-            <div class="autocomplete-result" ng-hide="FlightSearchForm.AutoComplete.Loading">
-                <ul class="result" ng-show="FlightSearchForm.AutoComplete.Keyword.length >= FlightSearchForm.AutoComplete.MinLength">
-                    <li class="airport" ng-repeat="result in FlightSearchForm.AutoComplete.Result">
-                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay()"></a>
-                        <span class="airport__code">{{result.Code}}</span>
-                        <div class="airport__detail">
-                            <p class="airport__location">{{result.City}}, {{result.Country}}</p>
-                            <p class="airport__name">{{result.Name}}</p>
-                        </div>
-                    </li>
-                </ul>
-            </div><!-- .autocomplete-result -->
+            <div class="autocomplete-result">
+                <ul class="result" ng-click= "PageConfig.SetOverlay()"></ul>
+            </div>
         </section><!-- .overlay__content -->
     </div><!-- .overlay--airport-select -->
     

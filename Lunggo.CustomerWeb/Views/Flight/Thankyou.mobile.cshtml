@@ -40,7 +40,7 @@
                 <h1 class="text-center">Belum Ada Reservasi</h1>
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Belum ada reservasi. Silahkan buat reservasi Anda.</p>
+                        <p>Belum ada reservasi. Silakan buat reservasi Anda.</p>
                     </div>
                     <div class="col-sm-6">
                         <div class="ticket-print">
@@ -56,11 +56,11 @@
 
         <div class="transaction-denied">
             <h1 class="text-center">Transaksi Ditolak</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non vestibulum justo. Nullam nec magna eros. Suspendisse pretium, libero ac mattis fringilla, mauris ante tristique quam, id pharetra turpis turpis sed dui.</p>
+            <p>Mohon maaf, pesanan dengan no. @Model.RsvNo telah ditolak. Silakan membuat pesanan baru.</p>
         </div>
 
 
-        <h1 class="text-center">Terima kasih atas pesanan Anda</h1>
+        <h1 class="text-center">Terima kasih atas Pemesanan Anda</h1>
 
             break;
 
@@ -68,7 +68,7 @@
 
         <div class="payment-timer">
 
-            <h2 class="text-center payment-title">Selesaikan pembayaran Anda</h2>
+            <h2 class="text-center payment-title">Selesaikan Pembayaran Anda</h2>
 
             <div class="row">
                 <div class="col-sm-6">
@@ -89,13 +89,13 @@
 
         <div class="container">
             <h1 class="thank-you text-center"><img src="/Assets/images/terima-kasih.png" alt="Thank You" /></h1>
-            <p class="text-center">Telah memesan penerbangan di Travorama. Anda dapat mencetak e-Ticket Anda melalui tombol berikut atau mengunduhnya di email Anda @Model.Contact.Email setelah :</p>
+            <p class="text-center">Telah memesan penerbangan di Travorama. Anda dapat mencetak e-Ticket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda @Model.Contact.Email setelah :</p>
             <div class="ticket-wrapper">
                 <div class="row text-center">
                     <div class="col-sm-12">
                         <div class="ticket-print">
                             <a href="#" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span> Cetak e-Ticket</a>
-                            <p>Anda dapat menutup halaman inxi dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</p>
+                            <p>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</p>
                         </div>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
 
     }
 
-    </div>
+    <div>
     </div>
 
     @if (Model.Payment.Status == PaymentStatus.Settled)
@@ -124,7 +124,7 @@
                             <div class="col-sm-4 receipt-summary">
 
                                 <div class="receipt-number">
-                                    <h3>Nomer Pemesanan</h3>
+                                    <h3>Nomor Pesanan</h3>
                                     <h4>@Model.RsvNo</h4>
                                 </div>
 

@@ -4133,9 +4133,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
   .travorama-login.active .login-content {
     display: block; }
 
-.hasDatepicker {
-  position: relative; }
-
+/*.hasDatepicker {position:relative;}*/
 .page-checkout .ui-datepicker {
   width: 250px !important;
   position: relative;

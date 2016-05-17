@@ -20,7 +20,7 @@ namespace Lunggo.Configuration
 
     public class ConfigGenerator
     {
-        private const DeploymentEnvironment Environment = DeploymentEnvironment.Development2;
+        private const DeploymentEnvironment Environment = DeploymentEnvironment.Local;
         private const bool DeployHtmlTemplate = false;
         private const string FileExtension = "*.properties";
         private const string FinalProjectConfigFile = "application.properties";
@@ -325,6 +325,7 @@ namespace Lunggo.Configuration
         {
             var apiUrl = _configDictionary["@@.*.api.apiUrl@@"];
             var rootUrl = _configDictionary["@@.*.general.rootUrl@@"];
+            var mobileUrl = "http://" + _configDictionary["@@.*.general.mobileUrl@@"];
             const string hotelPath = @"/api/v1/hotels";
             const string roomPath = @"/api/v1/rooms";
             const string flightPath = @"/api/v1/flights";
@@ -337,6 +338,7 @@ namespace Lunggo.Configuration
             const string autocompleteAirlinePath = @"/api/v1/autocomplete/airline/";
             const string checkVoucherPath = @"/api/v1/voucher/check";
             const string subscribePath = @"/api/v1/newsletter/subscribe";
+            const string loginPath = @"/id/ApiAccount/Login";
             const string registerPath = @"/id/ApiAccount/Register";
             const string resetPasswordPath = @"/id/ApiAccount/ResetPassword";
             const string forgotPasswordPath = @"/id/ApiAccount/ForgotPassword";
@@ -365,6 +367,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("autocompleteAirlinePath", autocompleteAirlinePath);
             fileTemplate.SetAttribute("checkVoucherPath", checkVoucherPath);
             fileTemplate.SetAttribute("subscribePath", subscribePath);
+            fileTemplate.SetAttribute("loginPath", loginPath);
             fileTemplate.SetAttribute("registerPath", registerPath);
             fileTemplate.SetAttribute("resetPasswordPath", resetPasswordPath);
             fileTemplate.SetAttribute("forgotPasswordPath", forgotPasswordPath);
@@ -374,6 +377,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("veritransTokenPath", veritransTokenPath);
             fileTemplate.SetAttribute("veritransClientKey", veritransClientKey);
             fileTemplate.SetAttribute("transferPaymentPath", transferPaymentPath);
+            fileTemplate.SetAttribute("mobileUrl", mobileUrl);
 
             var fileContent = fileTemplate.ToString();
             string[] projectList = { "BackendWeb", "CustomerWeb" };

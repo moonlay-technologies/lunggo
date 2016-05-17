@@ -49,7 +49,7 @@ $header-height:60px;
 /*--------------------*/
 // General Styling
 
-body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; padding-top:$header-height;}
+body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; padding-top:$header-height; height: 100%;}
 
 img {max-width:100%;}
 
@@ -63,16 +63,16 @@ img {max-width:100%;}
 .btn {@include border-radius($border-radius-default);}
 .btn.btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; font-weight:bold;}
 .btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; border:2px solid #adadad;}
-.btn.block {display:block; width:100%;}
+.btn.block {display:block; width:50%;}
 
-.error-message {padding:5px 10px;}
+.error-message {padding:5px 10px; background-color: #1daee4;}
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {-webkit-appearance:none;-moz-appearance:none; margin:0;}
 
 input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea {@include border-radius($border-radius-default);}
 .form-control {@include border-radius($border-radius-default)}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"] {font-size:16px; height:auto;}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"] {font-size:12px; height:auto;}
 
 // *****
 // site header
@@ -104,8 +104,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
         .burger-content__close {color:#fff; position:absolute; right:15px; top:12px; font-size:24px; font-weight:600;}
     }
-    .burger-content__body {padding-top:$header-height; background:#fff;
-        ul {list-style:none; margin:0; padding:0;
+    .burger-content__body {padding-top:$header-height; background:#fff; height: 100%; overflow-y: hidden; 
+        ul {list-style:none; margin:0; padding:0; 
             li {
                 a {color:$color-main-blue; padding:15px 0px; padding-left:70px; display:block; font-weight:600; position:relative;
                     &:before {content:""; width:30px; height:30px; display:block; position:absolute; margin-left:-40px; top:8px; background-repeat:no-repeat; background-image:url(/Assets/mobile/images/burger-sprite.png);}
@@ -164,7 +164,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // *****
 // site content
-.site-content {min-height:350px;
+.site-content {min-height:100%; 
+               /*position: relative;
+               padding: 0 0 100px;   
+               box-sizing: border-box;*/ 
     a {color:#2fb4e6;}
 }
 
@@ -172,8 +175,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page__header {}
 .page__body {}
 
-.section-title {font-weight:600; padding-bottom:15px; margin-bottom:15px;
-    span {color:#1eafe4;}
+.section-title {font-weight:600; padding-bottom:15px; margin-bottom:15px; padding-top: 15px;
+    h1{
+        text-align: center;
+    }
+    span {color:#1eafe4; text-align: center;}
     // theme
     &.stripe {background:url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;}
 }
@@ -192,13 +198,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .form-wrapper__header:before {background-image:url(/Assets/mobile/images/login-header-left.png);}
     }
     &.form-wrapper--register {
-        .form-wrapper__header:before {background-image:url(/Assets/mobile/images/register-header-left.png);}
+        .form-wrapper__header:before {
+            background-image:url(/Assets/mobile/images/register-header-left.png);
+        }
     }
 }
 
 // *****
 // site footer
-.site-footer {background-color:#111; color:#fefefe;
+.site-footer {background-color:#111; color:#fefefe; 
+             width: 100%; /*position: relative; height: 100px; bottom: 0; left:0;*/
     .site-footer-menu {background-color:#303030;
         nav {padding:0 12px;
             ul {list-style:none; margin:0; padding:0;
@@ -209,7 +218,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             }
         }
     }
-    .site-footer-social {text-align:center; padding:12px 0;
+    .site-footer-social {text-align:center; padding:12px 0; 
         nav {margin-bottom:12px;
             .facebook {
                 .fa-circle {color:#4a6eaa;}
@@ -228,7 +237,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // *****
 // popup
-.popup__wrapper {background:rgba(0,0,0,0.7); position:fixed; top:0; left:0; width:100%; height:100%; z-index:1000; display:none;
+.popup__wrapper {background:rgba(0,0,0,0.7); position:fixed; top:0; left:0; width:320px; height:100%; z-index:1000; display:none;
     .popup {position:absolute; top:0; right:0; bottom:0; left:0; margin:auto; width:300px; height:200px; background:#fff; @include border-radius($border-radius-default);
         .popup__header {background:#1daee5; color:#fff; padding:12px;
             .popup__title {text-align:center; margin:0; font-weight:bold;}
@@ -256,7 +265,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
         .overlay__close {float:right; font-size:19px;}
     }
-    .overlay__content, .overlay__body {background:#fff; min-height:100%; padding:12px; /*padding-bottom:$header-height;*/}
+    .overlay__content, .overlay__body {background:#fff; min-height:100%; padding:12px; z-index: 1; top: 60px;/*padding-bottom:$header-height;*/}
     .overlay__footer {position:fixed; width:100%; bottom:0; left:0; background:#616161; padding:12px; color:#fff; height:$header-height; display:none;}
     // if active
     &.active {top:0;
@@ -313,6 +322,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             input[type="text"] {padding:10px; height:auto;}
         }
         .autocomplete-preload {
+           
             .list__header {
                 h4 {margin:0; background:#dedede; color:#656565; padding:10px; font-weight:bold;}
             }
@@ -320,11 +330,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .autocomplete-loading {}
         ul.result {
             li.airport {padding:10px 0; position:relative;
-                .airport__link {position:absolute; display:block; width:100%; height:100%; left:0; top:0; z-index:2;}
+                .airport__link {position:absolute; display:block; width:100%; height:100%; left:0; top:0; z-index:2; }
                 .airport__code {display:inline-block; vertical-align:middle; font-weight:bold; font-size:32px; padding-left:15px; padding-right:15px; color:$color-main-blue; width:30%; text-align:center;}
                 .airport__detail {display:inline-block; vertical-align:middle; font-size:14px; width:65%;
-                    .airport__location {margin:0; font-weight:600; margin-bottom:5px;}
-                    .airport__name {margin:0;}
+                    .airport__location {z-index:3; margin:0; font-weight:600; margin-bottom:5px;}
+                    .airport__name {z-index:3; margin:0;}
                 }
             }
             //
@@ -411,6 +421,53 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
 }
 
+.notifbox{width: 100%; height: 40px; background-color: #1daee4; margin-bottom: 15px;
+    h3{font-size: 14px; position: absolute; color: #fff; font-weight: bold;}
+}
+
+.container_new{
+    /*width: 80%;
+    margin-left: 10px;
+    margin-right: 10px;*/
+    p{
+        padding: 10px 10px 10px 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .row1{
+        padding: 10px 10px 10px 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        
+    }
+    .col12{
+            align-self:center;
+            margin-left: 10px;
+            margin-right: 10px;
+    }
+    .col-xs-6{
+        margin-top: -10px;
+        h6{
+            width: 200%;
+            font-size: 8px;
+        }
+    }
+    .col-xs-8{
+        margin-top: -10px;
+        h5{
+            font-size: 12px;
+        }
+        }
+}
+
+.page-overlay .overlay-content div section p {
+  display: inline-block;
+ padding: 10px;
+  }
+
+.form__flightclass .form-control {
+    height: 35px;
+}
 
 /*--------------------*/
 // Include

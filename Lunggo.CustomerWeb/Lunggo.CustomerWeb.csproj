@@ -113,6 +113,10 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Select.HtmlToPdf">
       <HintPath>..\packages\Select.HtmlToPdf.1.2.0.0\lib\net40\Select.HtmlToPdf.dll</HintPath>
     </Reference>
@@ -134,6 +138,10 @@
       <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.2\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -147,6 +155,10 @@
     <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.2\lib\net45\System.Web.Http.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -213,6 +225,7 @@
     <Compile Include="App_Start\LunggoConfig\LunggoBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\ApiAccountController.cs" />
     <Compile Include="Areas\Api\Models\AccountApiResponseModel.cs" />
@@ -2597,6 +2610,7 @@
     <Content Include="Views\Flight\Eticket.cshtml" />
     <Content Include="Views\Flight\Confirmation.mobile.cshtml" />
     <Content Include="Views\Flight\Payment.cshtml" />
+    <Content Include="Views\Flight\Payment.mobile.cshtml" />
     <None Include="Views\Flight\SearchResultList-Single.mobile.cshtml.bak" />
     <Content Include="Views\Template\eticket3.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.cshtml" />
@@ -2613,6 +2627,7 @@
     <Content Include="Views\StaticPage\DanamonSweetValentine.cshtml" />
     <Content Include="Views\StaticPage\HowToOrder.mobile.cshtml" />
     <Content Include="Views\StaticPage\Promo.mobile.cshtml" />
+    <Content Include="Views\StaticPage\Newsletter.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2688,6 +2703,10 @@
     <ProjectReference Include="..\Lunggo.Repo\Lunggo.Repository.csproj">
       <Project>{50b8c0c0-6b28-46fd-ba90-771d8c9f12a1}</Project>
       <Name>Lunggo.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lunggo.WebAPI\Lunggo.WebAPI.csproj">
+      <Project>{94c45b65-f662-4262-a745-0d023f9c9ff9}</Project>
+      <Name>Lunggo.WebAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

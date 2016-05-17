@@ -33,25 +33,25 @@
 
                 <div class="order-detail">
                     <header class="content-header">
-                        <h3>ORDER ID : <b>@Model.RsvNo</b></h3>
+            <h3>NOMOR PEMESANAN: <b>@Model.RsvNo</b></h3>
                     </header>
                     <section class="content-body">
 
                         <div class="info-buyer">
                             <header>
                                 <h4>
-                                    <b>BUYER INFO</b>
-                                    @if (Model.Payment.Status != PaymentStatus.Settled)
+                        <b>INFO PEMESANAN</b>
+                        @if (Model.Payment.Status == PaymentStatus.Settled)
                                     {
-                                        <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow hidden" disabled>@Html.I18NString("CW00198")</button>
+                            <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow">@Html.I18NString("CW00198")</button>
                                     }
-                                    else
+                        else if (Model.Payment.Status == PaymentStatus.Pending)
                                     {
-                                        <a href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow hidden" target="_blank">@Html.I18NString("CW00198")</a>
+                            <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" disabled>@Html.I18NString("CW00198")</button>
                                     }
-                                    @if (Model.Payment.Method == PaymentMethod.BankTransfer && Model.Payment.Status == PaymentStatus.Pending)
+                        else
                                     {
-                                        <a style="margin-right: 6px;" href="@Url.Action("Confirmation", "Flight", new {rsvNo = Model.RsvNo})" target="_blank" class="pull-right btn btn-yellow hidden">Confirm</a>
+                            <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow hidden">@Html.I18NString("CW00198")</button>
                                     }
                                 </h4>
                             </header>
@@ -64,37 +64,37 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-xs-4">Order Name</label>
+                            <label class="control-label col-xs-4">Nama Pemesan</label>
                                         <div class="col-xs-8">
                                             <p class="form-control-static">@Model.Contact.Name</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-xs-4">Order Date</label>
+                            <label class="control-label col-xs-4">Tanggal Pemesanan</label>
                                         <div class="col-xs-8">
                                             <p class="form-control-static">{{orderDate | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-xs-4">Order Type</label>
+                            <label class="control-label col-xs-4">Tipe</label>
                                         <div class="col-xs-8">
-                                            <p class="form-control-static">Flight</p>
+                                <p class="form-control-static">Penerbangan</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-xs-4">Order Final Price</label>
+                            <label class="control-label col-xs-4">Harga Pemesanan</label>
                                         <div class="col-xs-8">
                                             <p class="form-control-static">Rp @Model.Payment.FinalPriceIdr.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-xs-4">Payment Method</label>
+                            <label class="control-label col-xs-4">Metode Pembayaran</label>
                                         <div class="col-xs-8">
                                             <p class="form-control-static">@EnumDisplay.PaymentMethod(Model.Payment.Method)</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-xs-4">Payment Status</label>
+                            <label class="control-label col-xs-4">Status Pembayaran</label>
                                         <div class="col-xs-8">
                                             <p class="form-control-static">@EnumDisplay.PaymentStatus(Model.Payment.Status)</p>
                                         </div>

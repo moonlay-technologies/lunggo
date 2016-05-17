@@ -124,7 +124,7 @@
                                 <h3><b>METODE</b> PEMBAYARAN</h3>
 
                                 <hr />
-                                <p>Silahkan pilih <b>metode pembayaran</b> dibawah ini yang ingin Anda gunakan:</p>
+                                <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
 
                                 <div class="payment-wrapper">
 
@@ -189,19 +189,33 @@
                                             </label>
                                         </div><!-- .payment -->
                                         
-                                            <div class="payment cimbClicks col-xs-4">
-                                                <label>
-                                                    <header>
-                                                        <div class="input-wrapper">
-                                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.CimbClicks" ng-model="paymentMethod" />
-                                                        </div>
-                                                        <h5>CIMB Clicks</h5>
-                                                    </header>
-                                                    <section>
-                                                        <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Clicks" />
-                                                    </section>
-                                                </label>
-                                            </div><!-- .payment -->
+                                        <div class="payment cimbClicks col-xs-4">
+                                            <label>
+                                                <header>
+                                                    <div class="input-wrapper">
+                                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.CimbClicks" ng-model="paymentMethod" />
+                                                    </div>
+                                                    <h5>CIMB Clicks</h5>
+                                                </header>
+                                                <section>
+                                                    <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Clicks" />
+                                                </section>
+                                            </label>
+                                        </div><!-- .payment -->
+                                        
+                                        <div class="payment MandiriBillPayment col-xs-4">
+                                            <label>
+                                                <header>
+                                                    <div class="input-wrapper">
+                                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriBillPayment" ng-model="paymentMethod" />
+                                                    </div>
+                                                    <h5>Mandiri Bill Payment</h5>
+                                                </header>
+                                                <section>
+                                                    <img src="/Assets/images/Bank-Mandiri.jpg" alt="Mandiri Bill Payment" />
+                                                </section>
+                                            </label>
+                                        </div><!-- .payment -->
                                        
                                     </div>
 
@@ -391,13 +405,13 @@
                                     <h3 class="widget-title"><b>KODE</b> VOUCHER</h3>
                                     <div class="widget-content">
                                         <span><b>Punya Kupon Travorama ?</b></span>
-                                        <p>Masukan disini</p>
+                                        <p>Masukkan di sini</p>
                                         <form class="form" name="voucherForm" novalidate>
                                             <div class="form-group">
                                                 <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherNotFound'">Kode voucher salah</p>
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Dibawah pembelian minimum</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Di bawah pembelian minimum</p>
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignNotStartedYet'">Voucher belum dapat digunakan</p>
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignHasEnded'">Voucher sudah tidak dapat digunakan</p>
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignInactive'">Voucher tidak dapat digunakan</p>
@@ -497,7 +511,7 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
-                                    <p>Silahkan klik tombol dibawah untuk kembali ke halaman pencarian.</p>
+                                    <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
                                 </div>
                             </div>
                         </div>

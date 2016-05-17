@@ -1,6 +1,7 @@
 ﻿.page.page-checkout {
     // *****
     // page header
+
     .page__header {margin:0; padding:0; @include clearfix(); overflow:hidden;
         .step__wrapper {position:relative;
             .step {float:left; width:33.3333334%; background:#2eb4e7; color:#fff; border-right:1px solid #1c99c7; position:relative; z-index:2; @include skew-x(-30deg);
@@ -28,7 +29,8 @@
 
     // page body
     .page__body {padding:10px;
-
+        .page-loading {display:none;}
+        .page-loaded {display:block;}
         .page-step-1 {}
         .page-step-2 {
             .btn.btn-yellow {margin-top:25px;}
@@ -73,10 +75,10 @@
                 li {}
             }
             dl {margin-bottom:5px; color:#333; @include clearfix();
-                dt {float:left; width:50%; font-weight:normal; position:relative;
+                dt {float:left; width:30%; font-weight:normal; position:relative;
                     &:after {position:absolute; content:':'; right:10px;}
                 }
-                dd {float:left; width:50%; font-weight:bold;}
+                dd {float:left; width:70%; font-weight:bold;}
             }
         }
         // voucher

@@ -6,7 +6,7 @@
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Konfirmasi Pembayaran";
     ViewBag.BodyClass = "page page-confirmation";
-    ViewBag.AngularController = "FlightConfirmationController";
+   // ViewBag.AngularController = "FlightConfirmationController";
     
     ViewBag.SiteHeader = "checkout";
 
@@ -52,134 +52,141 @@
 }
 
 <div>
-
-    <section class="checkout-step {{stepClass}} hidden">
-        <div class="container">
-            <div class="step step-1" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span>01. <b>Data Pesanan</b></span></div>
-            <div class="step step-2" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span>02. <b>Data Kontak</b></span></div>
-            <div class="step step-3" ng-class="{'active' : currentPage == 3, 'inactive' : currentPage > 3}"><span>03. <b>Data Penumpang</b></span></div>
-            <div class="step step-4" ng-class="{'active' : currentPage == 4}"><span>04. <b>Pembayaran</b></span></div>
+    
+    @*<header class="page__header" ng-init ="PageConfig.ActivePage = 3">
+        <div class="step__wrapper">
+            <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01. Data Kontak</span></div>
+            <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02. Data Penumpang</span></div>
+            <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03. Pembayaran</span></div>
         </div>
-    </section><!-- .checkout-step -->
+    </header><!-- .page-header -->*@
+    @*<section class="step__wrapper" ng-init ="PageConfig.ChangePage(3)">
+            <div class="container">
+                <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01. <b>Data Pesanan</b></span></div>
+                <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02. <b>Data Kontak</b></span></div>
+                <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03. <b>Data Penumpang</b></span></div>
+                <div class="step step-4" ng-class="{'active' : PageConfig.ActivePage == 3}"><span>04. <b>Pembayaran</b></span></div>
+            </div>
+        </section><!-- .checkout-step -->*@
 
-    <div class="confirmation-content">
+        <div class="confirmation-content">
 
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
 
-                    <div class="instruction">
-                        <h3>PANDUAN <b>TRANSFER</b></h3>
-                        <header>
-                            <h4>No. Pesanan: <b>@Model.RsvNo</b></h4>
-                        </header>
-                        <section class="text">
-                            <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima eTicket akan dikirimkan ke Email Anda dalam waktu max <b>60 menit</b></p>
-                            <p>Mohon selesaikan pembayaran melalui <b>ATM / Internet Banking / M-Banking</b></p>
-                        </section>
-                        <section class="bank-detail">
-                            <div class="bank">
-                                <div class="image-wrapper">
-                                    <img src="/Assets/images/Bank-Mandiri.png" alt="Bank Mandiri" />
-                                </div>
-                                <dl>
-                                    <dt>Nama Bank</dt>
-                                    <dd>Bank Mandiri</dd>
-                                </dl>
-                                <dl>
-                                    <dt>Atas Nama</dt>
-                                    <dd>TRAVEL MADEZY INTERNASIONAL</dd>
-                                </dl>
-                                <dl>
-                                    <dt>Nomor Rekening</dt>
-                                    <dd>1020006675802</dd>
-                                </dl>
-                                <dl>
-                                    <dt>Jumlah</dt>
-                                    <dd>Rp @Model.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
-                                </dl>
-                                
-                            </div><!-- .bank -->
-                        </section><!-- .bank-detail -->
-                    </div>
-                    
-                    <div class="countdown">
-                        <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
-                        <div class="widget-content">
-                            <p>Sisa waktu Anda untuk melakukan pembayaran</p>
-                            <div class="timer">
-                                <div>
-                                    <h5 class="hour">00</h5>
-                                    <span>jam</span>
-                                </div>
-                                <div class="separator"><h5>:</h5></div>
-                                <div>
-                                    <h5 class="minute">00</h5>
-                                    <span>menit</span>
-                                </div>
-                                <div class="separator"><h5>:</h5></div>
-                                <div>
-                                    <h5 class="second">00</h5>
-                                    <span>detik</span>
+                        <div class="instruction">
+                            <h3>PANDUAN <b>TRANSFER</b></h3>
+                            <header>
+                                <h4>Nomor Pesanan: <b>@Model.RsvNo</b></h4>
+                            </header>
+                            <section class="text">
+                                <p>Pemesanan dan harga sudah dikonfirmasi oleh maskapai. Setelah pembayaran diterima, e-ticket akan dikirimkan ke e-mail Anda dalam waktu maksimum <b>60 menit</b></p>
+                                <p>Mohon selesaikan pembayaran melalui <b>ATM / Internet Banking / M-Banking</b></p>
+                            </section>
+                            <section class="bank-detail">
+                                <div class="bank">
+                                    <div class="image-wrapper">
+                                        <img src="/Assets/images/Bank-Mandiri.png" alt="Bank Mandiri" />
+                                    </div>
+                                    <dl>
+                                        <dt>Nama Bank</dt>
+                                        <dd>Bank Mandiri</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>Atas Nama</dt>
+                                        <dd>TRAVEL MADEZY INTERNASIONAL</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>Nomor Rekening</dt>
+                                        <dd>1020006675802</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>Jumlah</dt>
+                                        <dd>Rp @Model.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                    </dl>
+
+                                </div><!-- .bank -->
+                            </section><!-- .bank-detail -->
+                        </div>
+
+                        <div class="widget countdown">
+                            <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
+                            <div class="widget-content">
+                                <p>Sisa waktu Anda untuk melakukan pembayaran</p>
+                                <div class="timer">
+                                    <div>
+                                        <h5 class="hour">00</h5>
+                                        <span>jam</span>
+                                    </div>
+                                    <div class="separator"><h5>:</h5></div>
+                                    <div>
+                                        <h5 class="minute">00</h5>
+                                        <span>menit</span>
+                                    </div>
+                                    <div class="separator"><h5>:</h5></div>
+                                    <div>
+                                        <h5 class="second">00</h5>
+                                        <span>detik</span>
+                                    </div>
                                 </div>
                             </div>
+                        </div><!-- .widget.countdown -->
+
+                        <div class="confirmation-form">
+                            <h3><b>KONFIRMASI</b> PEMBAYARAN</h3>
+                            <section>
+
+                                @using (@Html.BeginForm("Confirmation", "Flight", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form", @name = "confirmationForm", @novalidate = "novalidate"}))
+                                {
+                                    <input type="hidden" name="report.RsvNo" value="@Model.RsvNo"/>
+                                    <div class="form-group">
+                                        <label class="important control-label">Nama Pemilik Rekening:</label>
+                                        <input type="text" name="report.RemitterName" value="" class="form-control" placeholder="Nama Pengirim" required ng-model="UserForm.Confirmation.Name" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="important control-label">Nama Bank:</label>
+                                        <input type="text" name="report.RemitterBank" value="" class="form-control" placeholder="Bank Pengirim" required ng-model="UserForm.Confirmation.Bank.Name" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="important control-label">Nomor Rekening:</label>
+                                        <input type="text" name="report.RemitterAccount" value="" class="form-control" placeholder="Nomor Rekening" required ng-model="UserForm.Confirmation.Bank.Number" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="important control-label">Jumlah Transfer:</label>
+                                        <input type="number" name="report.Amount" value="" class="form-control" placeholder="Jumlah Transfer" required ng-model="UserForm.Confirmation.Amount" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="important control-label">Tanggal Transfer:</label>
+                                        <input type="text" name="report.PaymentTime" class="form-control datepicker" id="payment-date" required ng-model="UserForm.Confirmation.TransferDate" ng-click="PageConfig.SetOverlay('datepicker');DatePicker.SetOption({Target: '#payment-date', ShowMonth: true, ShowYear: true})" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="btn btn-yellow" type="submit" value="KONFIRMASI" ng-disabled="confirmationForm.$invalid" />
+                                    </div>
+                                }
+
+                            </section>
                         </div>
-                    </div><!-- .widget.countdown -->
 
-                    <div class="confirmation-form">
-                        <h3><b>KONFIRMASI</b> PEMBAYARAN</h3>
-                        <section>
-
-                            @using (@Html.BeginForm("Confirmation", "Flight", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form", @name = "confirmationForm", @novalidate = "novalidate"}))
-                            {
-                                <input type="hidden" name="report.RsvNo" value="@Model.RsvNo"/>
-                                <div class="form-group">
-                                    <label class="important control-label">Nama Pemilik Rekening:</label>
-                                    <input type="text" name="report.RemitterName" value="" class="form-control" placeholder="Nama Pengirim" required ng-model="UserForm.Confirmation.Name" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="important control-label">Nama Bank:</label>
-                                    <input type="text" name="report.RemitterBank" value="" class="form-control" placeholder="Bank Pengirim" required ng-model="UserForm.Confirmation.Bank.Name" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="important control-label">Nomor Rekening:</label>
-                                    <input type="text" name="report.RemitterAccount" value="" class="form-control" placeholder="Nomor Rekening" required ng-model="UserForm.Confirmation.Bank.Number" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="important control-label">Jumlah Transfer:</label>
-                                    <input type="number" name="report.Amount" value="" class="form-control" placeholder="Jumlah Transfer" required ng-model="UserForm.Confirmation.Amount" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="important control-label">Tanggal Transfer:</label>
-                                    <input type="text" name="report.PaymentTime" class="form-control datepicker" id="payment-date" required ng-model="UserForm.Confirmation.TransferDate" ng-click="PageConfig.SetOverlay('datepicker');DatePicker.SetOption({Target: '#payment-date', ShowMonth: true, ShowYear: true})" />
-                                </div>
-                                <div class="form-group">
-                                    <input class="btn btn-yellow" type="submit" value="KONFIRMASI" ng-disabled="confirmationForm.$invalid" />
-                                </div>
-                            }
-
-                        </section>
                     </div>
+                </div><!-- .row -->
+            </div><!-- .container -->
 
-                </div>
-            </div><!-- .row -->
-        </div><!-- .container -->
+        </div><!-- .confirmation-content -->
 
-    </div><!-- .confirmation-content -->
+    </div>
 
-</div>
-
-<div class="overlay datepicker" ng-class="{'active' : PageConfig.Overlay == 'datepicker'}">
-    <header class="overlay__header">
-        <h3 class="overlay__title">
-            Lorem ipsum dolor sit amet
-            <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
-        </h3>
-    </header><!-- .overlay__header -->
-    <div class="overlay__body">
-        <div class="ui-datepicker"></div>
-    </div><!-- .overlay__body -->
-    <footer class="overlay__footer hidden">
-        <button class="btn btn-yellow btn-block" ng-click="PageConfig.SetOverlay('')">KONFIRMASI</button>
-    </footer>
-</div>
+    <div class="overlay datepicker" ng-class="{'active' : PageConfig.Overlay == 'datepicker'}">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                Lorem ipsum dolor sit amet
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <div class="overlay__body">
+            <div class="ui-datepicker"></div>
+        </div><!-- .overlay__body -->
+        <footer class="overlay__footer hidden">
+            <button class="btn btn-yellow btn-block" ng-click="PageConfig.SetOverlay('')">KONFIRMASI</button>
+        </footer>
+    </div>

@@ -35,184 +35,197 @@
         phone: parseInt('@User.Identity.GetPhoneNumber()'),
         country: '@User.Identity.GetCountryCd()'
     }
+        if (userProfile.phone === NaN) {
+            userProfile.phone = 0;
+        }
     var order = '@Html.Raw(rsvs.Serialize())';
     </script>
     <!-- angular controller -->
     <script src="/Assets/mobile/js/AccountController.js"></script>
 }
-
-<section class="user-menu" ng-show="PageConfig.ActivePage == 'menu'">
-    <div class="menu-user">
-        <span>{{UserProfile.firstname}} {{UserProfile.lastname}}</span>
-    </div>
-    <div class="menu-wrapper">
-        <ul>
-            <li class="menu-profile">
-                <a ng-click="PageConfig.ChangePage('profile')">Ubah Profile</a>
-            </li>
-            <li class="menu-history">
-                <a ng-click="PageConfig.ChangePage('history')">Pemesanan Saya</a>
-            </li>
-            <li class="menu-logout">
-                <a href="@Url.Action("Logout", "Account")">Log Out</a>
-            </li>
-        </ul>
-    </div>
-</section><!-- .user-menu -->
-
-<section class="user-profile" ng-show="PageConfig.ActivePage == 'profile'">
-    <div class="form-wrapper">
-        <div class="profile-form">
-            <header>
-                <span>Login ID</span>
-            </header>
-            <div>
-                <form name="profileForm" novalidate class="form">
-                    <div class="form-group">
-                        <label class="control-label">Nama Depan:</label>
-                        <p class="form-control-static" ng-hide="UserProfile.Editing">{{UserProfile.firstname}}</p>
-                        <input type="text" value="" class="form-control" ng-model="EditProfile.firstname" ng-show="UserProfile.Editing" required />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Nama Belakang:</label>
-                        <p class="form-control-static" ng-hide="UserProfile.Editing">{{UserProfile.lastname}}</p>
-                        <input type="text" value="" class="form-control" ng-model="EditProfile.lastname" ng-show="UserProfile.Editing" required />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">No Telepon:</label>
-                        <p class="form-control-static" ng-hide="UserProfile.Editing">{{UserProfile.phone}}</p>
-                        <input type="number" value="" class="form-control" ng-model="EditProfile.phone" ng-show="UserProfile.Editing" required />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Kewarganegaraan:</label>
-                        <p class="form-control-static" ng-hide="UserProfile.Editing">{{Countries.GetCountry(UserProfile.country)}}</p>
-                        <select class="form-control" ng-model="EditProfile.country" ng-show="UserProfile.Editing" required>
-                            <option ng-repeat="country in Countries.List" value="{{country.dial_code}}" ng-selected="country.dial_code == UserProfile.country">{{country.name}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group" ng-show="UserProfile.Editing">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <button class="btn btn-gray btn-block" ng-click="UserProfile.Edit()">CANCEL</button>
-                            </div>
-                            <div class="col-xs-6">
-                                <button class="btn btn-yellow btn-block" ng-disabled="profileForm.$invalid" ng-click="EditProfile.Submit()">SIMPAN</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" ng-hide="UserProfile.Editing">
-                        <button class="btn btn-yellow btn-block" ng-click="UserProfile.Edit()">UBAH PROFIL</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="form-wrapper">
-        <div class="password-form">
-            <header>
-                <span>Password</span>
-            </header>
-            <div>
-                <form name="passwordForm" ng-submit="UserPassword.Submit()" novalidate class="form">
-                    <div class="form-group" ng-hide="UserPassword.Editing">
-                        <label class="control-label">Password:</label>
-                        <p class="form-control-static">*****</p>
-                    </div>
-                    <div ng-show="UserPassword.Editing">
-                        <div class="form-group">
-                            <label class="control-label">Password Saat Ini:</label>
-                            <input type="password" value="" class="form-control" ng-model="UserPassword.CurrentPassword" required />
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Password Baru:</label>
-                            <input type="password" value="" class="form-control" ng-model="UserPassword.NewPassword" required />
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Konfirmasi Password Baru:</label>
-                            <input type="password" value="" class="form-control" ng-model="UserPassword.ConfirmPassword" required />
-                        </div>
-                    </div>
-                    <div class="form-group" ng-show="UserPassword.Editing">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <button class="btn btn-gray btn-block" ng-click="UserPassword.Edit()">CANCEL</button>
-                            </div>
-                            <div class="col-xs-6">
-                                <button class="btn btn-yellow btn-block" ng-disabled="passwordForm.$invalid" ng-click="UserPassword.Submit()">SIMPAN</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" ng-hide="UserPassword.Editing">
-                        <a class="btn btn-yellow btn-block" ng-click="UserPassword.Edit()">UBAH PASSWORD</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section><!-- .user-profile -->
-
-<section class="user-history" ng-show="PageConfig.ActivePage == 'history'">
-    
-    <header class="page-title">
-        <span>PEMESANAN SAYA</span>
+<div class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
+    <header class="notifbox" ng-hide="!NotifBox">
+        <h3>{{formMessage}}</h3>
     </header>
 
-    <ul class="history-list">
-        <li class="" ng-repeat="rsvs in Order" ng-class="{'done' : rsvs.Payment.Status == 3, 'pending' : rsvs.Payment.Status == 2 , 'canceled' : rsvs.Payment.Status == 1 || rsvs.Payment.Status == 5 }">
-            <div class="row">
-                <div class="col-xs-4">
-                    <span class="blue">Order ID</span>
-                </div>
-                <div class="col-xs-8">
-                    <span class="blue">: <b>{{rsvs.RsvNo}}</b></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    <span>Maskapai</span>
-                </div>
-                <div class="col-xs-8">
-                    <span class="blue">: <b>{{rsvs.Itinerary.Trips[0].Segments[0].AirlineName}}</b></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    <span>Tujuan</span>
-                </div>
-                <div class="col-xs-8">
-                    <span>: <b>{{rsvs.Itinerary.Trips[0].OriginAirport}}</b> to <b>{{rsvs.Itinerary.Trips[0].DestinationAirport}}</b> ({{FlightType(rsvs.TripType)}})</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    <span>Berangkat</span>
-                </div>
-                <div class="col-xs-8">
-                    <span>: <b>{{rsvs.Itinerary.Trips[0].DepartureDate | date}}</b></span>
-                </div>
-            </div>
-            <div class="row" ng-show="rsvs.Itinerary.Trips[1].DepartureDate">
-                <div class="col-xs-4">
-                    <span>Kembali</span>
-                </div>
-                <div class="col-xs-8">
-                    <span>: <b>{{rsvs.Itinerary.Trips[1].DepartureDate | date}}</b></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    <span>Status</span>
-                </div>
-                <div class="col-xs-8">
-                    <span>: <b>{{OrderStatus(rsvs.Payment.Status)}}</b></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <a ng-href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory")?rsvNo={{rsvs.RsvNo}}" class="btn btn-yellow">detail</a>
-                </div>
-            </div>
-        </li>
-    </ul>
+    <header class="page__header">
+        <h1 class="text-center section-title stripe">Ubah <span>Profil</span></h1>
+    </header>
 
-</section><!-- .user-history -->
+    <section class="user-menu" ng-show="PageConfig.ActivePage == 'menu'">
+        <div class="menu-user">
+            <span ng-if="UserProfile.firstname.length != 0 || UserProfile.lastname != 0">{{UserProfile.firstname}} {{UserProfile.lastname}}</span>
+            <span ng-if="UserProfile.firstname.length == 0 && UserProfile.lastname == 0">Hello, New User!</span>
+        </div>
+        <div class="menu-wrapper">
+            <ul>
+                <li class="menu-profile">
+                    <a ng-click="PageConfig.ChangePage('profile'); formMessage = ''">Ubah Profil</a>
+                </li>
+                <li class="menu-history">
+                    <a ng-click="PageConfig.ChangePage('history')">Pemesanan Saya</a>
+                </li>
+                <li class="menu-logout">
+                    <a href="@Url.Action("Logout", "Account")">Keluar</a>
+                </li>
+            </ul>
+        </div>
+    </section><!-- .user-menu -->
+
+    <section class="user-profile" ng-show="PageConfig.ActivePage == 'profile'">
+        <div class="form-wrapper">
+            <div class="profile-form">
+                <header>
+                    <span>Login ID</span>
+                </header>
+                <div>
+                    <form name="profileForm" novalidate class="form">
+                        <div class="form-group">
+                            <label class="control-label">Nama Depan:</label>
+                            <p class="form-control-static" ng-hide="UserProfile.Editing">{{UserProfile.firstname}}</p>
+                            <input type="text" value="" class="form-control" ng-model="EditProfile.firstname" ng-show="UserProfile.Editing" required />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Nama Belakang:</label>
+                            <p class="form-control-static" ng-hide="UserProfile.Editing">{{UserProfile.lastname}}</p>
+                            <input type="text" value="" class="form-control" ng-model="EditProfile.lastname" ng-show="UserProfile.Editing" required />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">No Telepon:</label>
+                            <p class="form-control-static" ng-hide="UserProfile.Editing">{{UserProfile.phone}}</p>
+                            <input type="number" value="" class="form-control" ng-model="EditProfile.phone" ng-show="UserProfile.Editing" required />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Kewarganegaraan:</label>
+                            <p class="form-control-static" ng-hide="UserProfile.Editing">{{Countries.GetCountry(UserProfile.country)}}</p>
+                            <select class="form-control" ng-model="EditProfile.country" ng-show="UserProfile.Editing" required>
+                                <option ng-repeat="country in Countries.List" value="{{country.dial_code}}" ng-selected="country.dial_code == UserProfile.country">{{country.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group" ng-show="UserProfile.Editing">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <button class="btn btn-gray btn-block" ng-click="UserProfile.Edit()">CANCEL</button>
+                                </div>
+                                <div class="col-xs-6">
+                                    <button class="btn btn-yellow btn-block" ng-disabled="profileForm.$invalid" ng-click="EditProfile.Submit('profileSave'); UserProfile.Edit(); NotifBox = True">SIMPAN</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-hide="UserProfile.Editing">
+                            <button class="btn btn-yellow btn-block" ng-click="UserProfile.Edit()">UBAH PROFIL</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="form-wrapper">
+            <div class="password-form">
+                <header>
+                    <span>Password</span>
+                </header>
+                <div>
+                    <form name="passwordForm" ng-submit="UserPassword.Submit()" novalidate class="form">
+                        <div class="form-group" ng-hide="UserPassword.Editing">
+                            <label class="control-label">Password:</label>
+                            <p class="form-control-static">*****</p>
+                        </div>
+                        <div ng-show="UserPassword.Editing">
+                            <div class="form-group">
+                                <label class="control-label">Password Saat Ini:</label>
+                                <input type="password" value="" class="form-control" ng-model="UserPassword.CurrentPassword" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Password Baru:</label>
+                                <input type="password" value="" class="form-control" ng-model="UserPassword.NewPassword" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Konfirmasi Password Baru:</label>
+                                <input type="password" value="" class="form-control" ng-model="UserPassword.ConfirmPassword" required />
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="UserPassword.Editing">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <button class="btn btn-gray btn-block" ng-click="UserPassword.Edit()">CANCEL</button>
+                                </div>
+                                <div class="col-xs-6">
+                                    <button class="btn btn-yellow btn-block" ng-disabled="passwordForm.$invalid" ng-click="UserPassword.Submit()">SIMPAN</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-hide="UserPassword.Editing">
+                            <a class="btn btn-yellow btn-block" ng-click="UserPassword.Edit()">UBAH PASSWORD</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section><!-- .user-profile -->
+
+    <section class="user-history" ng-show="PageConfig.ActivePage == 'history'">
+
+        <header class="page-title">
+            <span>PEMESANAN SAYA</span>
+        </header>
+
+        <ul class="history-list">
+            <li class="" ng-repeat="rsvs in Order" ng-class="{'done' : rsvs.Payment.Status == 3, 'pending' : rsvs.Payment.Status == 2 , 'canceled' : rsvs.Payment.Status == 1 || rsvs.Payment.Status == 5 }">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <span class="blue">Nomor Pemesanan</span>
+                    </div>
+                    <div class="col-xs-8">
+                        <span class="blue">: <b>{{rsvs.RsvNo}}</b></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <span>Maskapai</span>
+                    </div>
+                    <div class="col-xs-8">
+                        <span class="blue">: <b>{{rsvs.Itinerary.Trips[0].Segments[0].AirlineName}}</b></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <span>Tujuan</span>
+                    </div>
+                    <div class="col-xs-8">
+                        <span>: <b>{{rsvs.Itinerary.Trips[0].OriginAirport}}</b> to <b>{{rsvs.Itinerary.Trips[0].DestinationAirport}}</b> ({{FlightType(rsvs.TripType)}})</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <span>Berangkat</span>
+                    </div>
+                    <div class="col-xs-8">
+                        <span>: <b>{{rsvs.Itinerary.Trips[0].DepartureDate | date}}</b></span>
+                    </div>
+                </div>
+                <div class="row" ng-show="rsvs.Itinerary.Trips[1].DepartureDate">
+                    <div class="col-xs-4">
+                        <span>Kembali</span>
+                    </div>
+                    <div class="col-xs-8">
+                        <span>: <b>{{rsvs.Itinerary.Trips[1].DepartureDate | date}}</b></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <span>Status</span>
+                    </div>
+                    <div class="col-xs-8">
+                        <span>: <b>{{OrderStatus(rsvs.Payment.Status)}}</b></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a ng-href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory")?rsvNo={{rsvs.RsvNo}}" class="btn btn-yellow">Detail</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+    </section><!-- .user-history -->
+</div>
