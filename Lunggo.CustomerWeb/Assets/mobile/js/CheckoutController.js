@@ -383,6 +383,11 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         }
     }//$scope.book
 
+    $scope.getPassportDateInit = function () {
+        var datego = new Date($scope.flightDetail.departureFullDate);
+        return new Date(new Date(datego).setMonth(datego.getMonth() + 6));
+    }
+
     $scope.getPassportMonth = function () {
         if ($scope.flightDetail.departureMonth + 6 > $scope.months.length) {
             return $scope.flightDetail.departureMonth - 6;

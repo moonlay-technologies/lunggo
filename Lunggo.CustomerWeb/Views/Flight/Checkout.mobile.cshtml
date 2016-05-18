@@ -185,12 +185,12 @@ default:
 
                         <div class="form-group important">
                             <label class="control-label">Nama Depan (dan Nama Tengah) : </label>
-                            <input type="text" value="" class="form-control" required name="passenger_{{$index}}_firstName" placeholder="Ex : Jhon" ng-model="Passenger.firstName" />
+                            <input type="text" value="" class="form-control" required name="passenger_{{$index}}_firstName" placeholder="Ex : John" ng-model="Passenger.firstName" />
                         </div>
 
                         <div class="form-group important">
                             <label class="control-label">Nama Belakang / Nama Keluarga: </label>
-                            <input type="text" value="" class="form-control" required name="passenger_{{$index}}_lastName" placeholder="Ex : Doe" ng-model="Passenger.lastName" />
+                            <input type="text" value="" class="form-control" required name="passenger_{{$index}}_lastName" placeholder="Ex : Smith" ng-model="Passenger.lastName" />
                         </div>
 
 
@@ -227,6 +227,7 @@ default:
                         </div>
                         <!-- passenger birth date end-->
                         <!-- passenger passport start -->
+                        
                         <div class="form-group" ng-if="CheckoutConfig.PassportRequired">
                             <label class="control-label">No. Passport</label>
                             <input type="text" value="" class="form-control" name="passenger_{{$index}}_passportNumber" ng-model="Passenger.passport.number" ng-required="CheckoutConfig.PassportRequired" />
@@ -245,14 +246,14 @@ default:
                                 <div class="col-xs-4">
                                     <select class="form-control" name="passenger_{{$index}}_expiryMonth" ng-model="Passenger.passport.expire.month"
                                             ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)"
-                                            ng-init="Passenger.passport.expire.month = getPassportMonth()">
+                                            ng-init="Passenger.passport.expire.month = getPassportDateInit().getMonth()">
                                         <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.passport.expire.month" ng-if="!(Passenger.passport.expire.year == flightDetail.passportYear && month.value < flightDetail.passportMonth)">{{month.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-4">
                                     <select class="form-control" name="passenger_{{$index}}_expiryYear" ng-model="Passenger.passport.expire.year"
                                             ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)"
-                                            ng-init="Passenger.passport.expire.year = getPassportYear()">
+                                            ng-init="Passenger.passport.expire.year = getPassportDateInit().getFullYear()">
                                         <option value="{{year}}" ng-repeat="year in generateYear('passport')" ng-selected="year == Passenger.passport.expire.year">{{year}}</option>
                                     </select>
                                 </div>
@@ -273,6 +274,7 @@ default:
                 </div><!-- .passenger -->
 
                 <div class="form-group">
+                    <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
                     <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
                 </div>
 
@@ -289,19 +291,6 @@ default:
                         <dt>Total Tiket</dt>
                         <dd><sup>Rp</sup> {{CheckoutConfig.Price | number}}</dd>
                     </dl>
-                    @*<dl ng-show="CheckoutConfig.Voucher.Validated && CheckoutConfig.Voucher.Valid">
-                        <dt>Potongan Harga</dt>
-                        <dd><sup>Rp</sup>- {{CheckoutConfig.Voucher.Amount | number}}</dd>
-                    </dl>
-                    <dl ng-show="paymentMethod == '@PaymentMethod.BankTransfer'">
-                        <dt>Kode Unik Transfer</dt>
-                        <dd><sup>Rp</sup>- {{TransferConfig.UniqueCode | number}}</dd>
-                    </dl>
-                    <dl class="total-price">
-                        <dt>Total</dt>
-                        <dd ng-if="paymentMethod != '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{CheckoutConfig.Price - CheckoutConfig.Voucher.Amount | number}}</dd>
-                        <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{CheckoutConfig.Price - CheckoutConfig.Voucher.Amount - TransferConfig.UniqueCode | number}}</dd>
-                    </dl>*@
                 </div><!-- .summary__body -->
             </div><!-- .summar--price -->
 
@@ -354,7 +343,6 @@ default:
                                 <dd>{{Passenger.passport.expire.date}} / {{parseInt(Passenger.passport.expire.month)+1}} / {{Passenger.passport.expire.year}}</dd>
                             </dl>
                         </li>
-
                     </ol>
                 </div><!-- .summary__body -->
             </div><!-- .summary--passenger -->
@@ -363,6 +351,7 @@ default:
                 <div class="overlay__body overlay__content">
                     <div class=" flight-fare-wrapper">
                         <h3><b>DETAIL</b> PENERBANGAN</h3>
+                        <h4><b>BERANGKAT</b></h4>
                         <div ng-if="CheckoutConfig.Trips[0]">
                             <div class="flight-title flight-title--departure">
                                 <div class="flight-info">
@@ -380,7 +369,7 @@ default:
                                         </div><!-- .flight__number -->
                                         <div class="flight__content">
                                             <div class="flight__summary">
-                                                <img class="flight__image" ng-src="@trips[0].Airlines[0].LogoUrl" alt="@trips[0].Airlines[0].Name">
+                                                <img class="flight__image" src="@trips[0].Airlines[0].LogoUrl" alt="@trips[0].Airlines[0].Name">
                                                 <div class="flight__airline">
                                                     <h4><b>@trips[0].Airlines[0].Name</b></h4>
                                                     <h5>@trips[0].Airlines[0].Code-@trips[0].Segments[segment].FlightNumber</h5>
@@ -404,24 +393,24 @@ default:
                                         </div><!-- .flight__content -->
                                     </div><!-- .flight -->
                                     @if (trips[0].Transits.Count > 0 && segment < trips[0].TotalTransit)
-                                        {
-                                            <div class="transit">
-                                                <span>Transit di @trips[0].Transits.ElementAt(segment).Airport selama <b>@trips[0].Transits.ElementAt(segment).Duration</b></span>
-                                            </div><!-- .transit -->
-                                        }   
+                                    {
+                                        <div class="transit">
+                                            <span>Transit di @trips[0].Transits.ElementAt(segment).Airport selama <b>@trips[0].Transits.ElementAt(segment).Duration</b></span>
+                                        </div><!-- .transit -->
+                                    }   
                                 </div> <!-- .flight-wrapper -->
                             }
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </div><!-- .flight-fare-wrapper -->
+                </div><!-- .overlay__body -->
+            </div><!-- .overlay--flight-detail -->
             
         @if (trips.Count > 1)
         {
             <div class="overlay--flight-detail">
                 <div class="overlay__body overlay__content">
                     <div class=" flight-fare-wrapper">
-                        <div>
+                        <h4><b>KEMBALI</b></h4>
                             <div class="flight-title flight-title--departure">
                                 <div class="flight-info">
                                     <h4><b>@trips[1].OriginAirport</b> ke <b>@trips[1].DestinationAirport</b></h4>
@@ -438,7 +427,7 @@ default:
                                         </div><!-- .flight__number -->
                                         <div class="flight__content">
                                             <div class="flight__summary">
-                                                <img class="flight__image" ng-src="@trips[1].Airlines[0].LogoUrl" alt="@trips[1].Airlines[0].Name">
+                                                <img class="flight__image" src="@trips[1].Airlines[0].LogoUrl" alt="@trips[1].Airlines[0].Name">
                                                 <div class="flight__airline">
                                                     <h4><b>@trips[1].Airlines[0].Name</b></h4>
                                                     <h5>@trips[1].Airlines[0].Code-@trips[1].Segments[segment].FlightNumber</h5>
@@ -469,10 +458,10 @@ default:
                                     }
                                 </div> <!-- .flight-wrapper -->
                             }
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        
+                    </div><!-- .flight-fare-wrapper -->
+                </div><!-- .overlay-body.overlay-content -->
+            </div><!-- .overlay--flight-detail -->
         }
          
             <form name="finalForm" ng-submit="book.send()">
@@ -514,24 +503,16 @@ default:
                     <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
                 </div>
 
-                @*<p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a></p>*@
-                <input type="submit" class="btn btn-yellow btn-block" value="{{ !book.booking ? 'PESAN' : 'MEMPROSES' }}" @*ng-disabled="(!paymentMethod || !creditCardForm.$valid) || book.booking"*@>
+                <a class="btn btn-grey " ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(2)">KEMBALI</a>
+                <input type="submit" class="btn btn-yellow" value="{{ !book.booking ? 'PESAN' : 'MEMPROSES' }}" >
 
             </form><!-- finalForm -->
 
             <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
                 <input type="text" name="RsvNo" value="" id="rsvno-input" />
             </form>   
-        </div><!-- .flight-detail-wrapper -->
-        
-        
-
-
-    </div><!-- .page-step-3 -->
-
-    <!-- .page-body -->
-    <!-- flight detail overlay -->
-    
+        </div><!-- .page-step-3 -->
+    </div><!-- .page-body -->
 
     <!-- additional overlay page start -->
     <div class="overlay datepicker overlay--theme--blue" id="calendar-overlay">

@@ -209,16 +209,16 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Thankyou(string rsvNo)
         {
-            if (TempData["AllowThisThankyouPage"] as string == rsvNo)
-            {
+            //if (TempData["AllowThisThankyouPage"] as string == rsvNo)
+            //{
                 var service = FlightService.GetInstance();
                 var summary = service.GetReservationForDisplay(rsvNo);
                 return View(summary);
-            }
-            else
-            {
-                return RedirectToAction("Index", "UW000TopPage");
-            }
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index", "UW000TopPage");
+            //}
         }
 
         [HttpPost]

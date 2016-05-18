@@ -15,8 +15,10 @@
 }
 
 @{
+    var payment = Model.Payment.Status;
     var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
     FlightSegment prevSegment = null;
+    
 }
 
 @section AdditionalJS {
@@ -81,7 +83,7 @@ else
         <h2 class="section-title stripe text-center">TERIMA <span>KASIH</span></h2>
 
         <div class="container">
-            <p>Telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-ticket Anda melalui tombol berikut atau mengunduhnya di e-mail setelah :</p>
+            <p>Telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-ticket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda: @Model.Contact.Email.</p>
 
             <section class="countdown">
             
@@ -132,7 +134,7 @@ else
 
             <section class="order-detail">
                 <header>
-                    <h4><b>Detail Pesanan</b> <span class="pull-right">Order ID: <b>@Model.RsvNo</b></span></h4>
+                    <h4><b>Detail Pesanan</b> <span class="pull-right">Nomor Pesanan: <b>@Model.RsvNo</b></span></h4>
                 </header>
                 <section>
 

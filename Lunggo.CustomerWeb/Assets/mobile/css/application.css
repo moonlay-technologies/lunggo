@@ -271,8 +271,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .section-title {
   font-weight: 600;
   padding-bottom: 15px;
-  margin-bottom: 15px;
-  padding-top: 15px; }
+  padding-top: 10px; }
   .section-title h1 {
     text-align: center; }
   .section-title span {
@@ -1191,7 +1190,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .overlay--flight-detail .overlay__content {
   padding: 0;
-  padding-bottom: 60px; }
+  /*padding-bottom: 60px;*/ }
   .overlay--flight-detail .overlay__content .flight-title {
     background: #e5e3e4;
     position: relative; }
@@ -1392,15 +1391,38 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         transform: skewX(30deg); }
 
 .page.page-checkout .page__body {
-  padding: 10px; }
+  padding-right: 10px; 
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
   .page.page-checkout .page__body .page-step-2 .btn.btn-yellow {
-    margin-top: 25px; }
+    margin-top: 25px; 
+    width: 49%;
+    position: relative;
+    
+  }
+  .page.page-checkout .page__body .page-step-2 .btn.btn-grey {
+    margin-top: 25px;
+    width: 49%;
+    position: relative;
+  }
   .page.page-checkout .page__body .step-button .btn.btn-yellow {
-        width: 95%;
+    width: 100%;
     text-align: center;
     position: relative;
-    left: 2.5%;}
-
+  }
+  .page.page-checkout .page__body .page-step-3 .btn.btn-yellow {
+    margin-top: 25px; 
+    width: 49%;
+    position: relative;
+    padding-bottom: 10px;
+  }
+  .page.page-checkout .page__body .page-step-3 .btn.btn-grey {
+    margin-top: 25px;
+    width: 49%;
+    position: relative;
+      padding-bottom: 10px;
+  }
 .page.page-checkout .passenger {
   background: #fff;
   border: 1px solid #ccc; }
@@ -1414,22 +1436,22 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-checkout .passenger .passenger__body {
     padding: 10px; }
 
-.page.page-checkout .summary .summary__title {
+ .summary .summary__title {
   color: #333; }
 
-.page.page-checkout .summary.summary--price dl:after {
+ .summary.summary--price dl:after {
   display: block;
   width: 100%;
   content: "";
   clear: both; }
 
-.page.page-checkout .summary.summary--price dl dt {
+ .summary.summary--price dl dt {
   float: left;
   width: 50%;
   font-weight: normal;
   position: relative;
   padding-left: 12px; }
-  .page.page-checkout .summary.summary--price dl dt:before {
+   .summary.summary--price dl dt:before {
     position: absolute;
     content: '';
     width: 7px;
@@ -1438,24 +1460,32 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     top: 3px;
     left: 0; }
 
-.page.page-checkout .summary.summary--price dl dd {
+ .summary.summary--price dl dd {
   float: left;
   width: 50%;
   text-align: right;
   font-weight: bold; }
 
-.page.page-checkout .summary.summary--price dl.total-price {
+ .summary.summary--price dl.total-price {
   border-top: 1px solid #ccc;
   padding-top: 10px; }
-  .page.page-checkout .summary.summary--price dl.total-price dt {
+   .summary.summary--price dl.total-price dt {
     width: 35%; }
-    .page.page-checkout .summary.summary--price dl.total-price dt:before {
+     .summary.summary--price dl.total-price dt:before {
       display: none; }
-  .page.page-checkout .summary.summary--price dl.total-price dd {
+   .summary.summary--price dl.total-price dd {
     width: 65%;
     color: #ff7200;
     font-size: 16px; }
 
+   .summary.summary--price h5 {
+       font-size: 14px;
+       font-weight: bold;
+   }
+   .summary.summary--price .text p{
+       margin-left: 0;
+       margin-right: 0;
+   }
 .page.page-checkout .summary.summary--passenger {
   color: #63c6ec; }
   .page.page-checkout .summary.summary--passenger h4 {
@@ -1539,10 +1569,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding-top: 0; }
 
 .page.page-checkout .overlay--flight-detail .flight-fare-wrapper {
-  padding: 10px; }
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
   .page.page-checkout .overlay--flight-detail .flight-fare-wrapper .fare-note {
     background: #eaeaea;
-    padding: 10px; }
+      padding-bottom: 10px;
+  padding-top: 10px; }
 
 .page.page-checkout .overlay--flight-detail dl:after {
   display: block;
@@ -1583,11 +1616,24 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #ff7200;
     font-size: 16px; }
 
+  .page.page-confirmation .container_new {
+      margin: -20px;
+  }
+
+  .page.page-confirmation .container_new p{
+      margin: 0;
+      padding: 10px 0;
+  }
 .page.page-confirmation .instruction header {
   background: #2fb4e6;
   color: #fff;
   padding: 5px 10px;
   margin-bottom: 10px; }
+
+.page.page-confirmation .instruction .text-center {
+    padding: 10px;
+    
+}
 
 .page.page-confirmation .instruction .bank-detail .bank {
   background: #caedfa;
@@ -1662,6 +1708,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       vertical-align: top;
       margin-left: 6px;
       margin-right: 6px; }
+
+    .page-confirmation .confirmation-content {
+    padding-bottom: 30px;
+}
 .page.page-confirmation .confirmation-form .control-label.important:after {
   content: '*';
   color: red; }
@@ -2301,3 +2351,49 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   text-align: center;
   margin-top: 10px;
   margin-bottom: 10px; }
+
+.thankyou-review {
+    margin: 5px;
+    
+}
+
+.thankyou-review h3{
+        font-size: 20px;
+    }
+
+.payment-detail h5 {
+    color: #1daee4;
+    font-weight: bold; }
+
+ .summary.summary--payment label {
+  border: 1px solid #ccc;
+  display: block;
+  width: 100%;
+  background: #fff;
+  color: #fff; }
+   .summary.summary--payment label header {
+    background: #36b6e7;
+    position: relative; }
+     .summary.summary--payment label header:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+     .summary.summary--payment label header .input-wrapper {
+      float: left;
+      background: #028ec3;
+      width: 30px;
+      text-align: center;
+      position: absolute;
+      height: 100%;
+      padding-top: 5px; }
+     .summary.summary--payment label header h5 {
+      padding: 10px;
+      margin: 0;
+      float: left;
+      padding-left: 40px;
+      font-weight: bold;
+      width: 100%; }
+   .summary.summary--payment label section {
+    text-align: center;
+    padding: 5px; }

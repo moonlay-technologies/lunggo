@@ -25,7 +25,7 @@
     ViewBag.BodyClass = "page-checkout page-checkout-flight";
 
     ViewBag.SiteHeader = "checkout";
-    ViewBag.Title = "Payment";
+    ViewBag.Title = "Pembayaran";
 }
 @section AdditionalCSS {
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
@@ -123,7 +123,7 @@
                             <div class="content-step" id="step-4">
                                 <h3><b>METODE</b> PEMBAYARAN</h3>
 
-                                <hr />
+                                
                                 <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
 
                                 <div class="payment-wrapper">
@@ -212,7 +212,7 @@
                                                     <h5>Mandiri Bill Payment</h5>
                                                 </header>
                                                 <section>
-                                                    <img src="/Assets/images/Bank-Mandiri.jpg" alt="Mandiri Bill Payment" />
+                                                    <img src="/Assets/images/Bank-Mandiri-small.jpg" alt="Mandiri Bill Payment" />
                                                 </section>
                                             </label>
                                         </div><!-- .payment -->
@@ -424,7 +424,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-xs-6 col-xs-offset-6">
-                                                        <input type="submit" value="REDEEM" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
+                                                        <input type="submit" value="CEK" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
                                                         <input type="submit" value="RESET" class="btn btn-yellow form-control" ng-click="voucher.reset()" ng-show="voucher.checked" />
                                                     </div>
                                                 </div>

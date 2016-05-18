@@ -689,6 +689,9 @@
     <Content Include="Assets\images\atm-bersama.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
     <Content Include="Assets\images\bank-bca.png" />
+    <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
+    <Content Include="Assets\images\Bank-Mandiri.bmp" />
+    <Content Include="Assets\images\Bank-Mandiri.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
     <Content Include="Assets\images\bca-logo.jpg" />
     <Content Include="Assets\images\bed-bg.png" />
