@@ -24,7 +24,6 @@ using Lunggo.Repository.TableRepository;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Authenticators;
-using Lunggo.WebAPI.ApiSrc.v1.Newsletter.Model;
 
 namespace Lunggo.CustomerWeb.Controllers
 {

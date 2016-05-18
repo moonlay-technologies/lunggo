@@ -454,6 +454,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             FlightNumber = splitflightDetail[splitflightDetail.Length-1],
                             CabinClass = cabinClass,
                             Rbd = bookInfo.Itinerary.Trips[0].Segments[index].Rbd,
+                            AirlineType = AirlineType.Lcc,
                             DepartureAirport = airport[index * 3].InnerHTML.Trim(),
                             DepartureTime = DateTime.SpecifyKind(deptTime, DateTimeKind.Utc),
                             ArrivalAirport = airport[(index * 3) + 2].InnerHTML.Trim(),

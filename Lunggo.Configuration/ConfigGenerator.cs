@@ -15,12 +15,13 @@ namespace Lunggo.Configuration
         Development1 = 6,
         QA = 7,
         Production = 8,
-        Development2 = 9
+        Development2 = 9,
+        Development3 = 10
     }
 
     public class ConfigGenerator
     {
-        private const DeploymentEnvironment Environment = DeploymentEnvironment.Local;
+        private const DeploymentEnvironment Environment = DeploymentEnvironment.Development3;
         private const bool DeployHtmlTemplate = false;
         private const string FileExtension = "*.properties";
         private const string FinalProjectConfigFile = "application.properties";
