@@ -855,11 +855,14 @@
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\list-bg.png" />
     <Content Include="Assets\images\list-detail-close.png" />
+    <Content Include="Assets\images\load.gif" />
     <Content Include="Assets\images\loading-icon.png" />
     <Content Include="Assets\images\loading-image-dark.gif" />
     <Content Include="Assets\images\loading-image.gif" />
+    <Content Include="Assets\images\loading-new.gif" />
     <Content Include="Assets\images\loading-plane.png" />
     <Content Include="Assets\images\loading-sample.png" />
+    <Content Include="Assets\images\loading.gif" />
     <Content Include="Assets\images\lock-image.jpg" />
     <Content Include="Assets\images\login-bg.jpg" />
     <Content Include="Assets\images\logo-color.png" />

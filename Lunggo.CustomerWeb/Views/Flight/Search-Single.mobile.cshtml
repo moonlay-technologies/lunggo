@@ -104,6 +104,7 @@
 
     <script src="/Assets/mobile/js/singleFlightController.js"></script>
 }
+
 <div class="page-loading" ng-class="{'page-loaded':PageConfig.Loaded}">
     <form class="hidden push-token" id="pushToken" action="/id/Flight/Select" method="post">
         <input type="text" name="Token" id="fareToken" value="" />
@@ -133,6 +134,10 @@
     <section class="flight-notice" ng-show="FlightConfig[0].FlightList.length > 0">
         <p>Tampilan harga untuk <b>{{ FlightConfig[0].FlightRequest.AdultCount + FlightConfig[0].FlightRequest.ChildCount + FlightConfig[0].FlightRequest.InfantCount | number }} orang</b> ({{FlightConfig[0].FlightRequest.AdultCount}} Dewasa<span ng-if="FlightConfig[0].FlightRequest.ChildCount > 0">, {{FlightConfig[0].FlightRequest.ChildCount}} Anak</span><span ng-if="FlightConfig[0].FlightRequest.InfantCount">, {{FlightConfig[0].FlightRequest.InfantCount}} Bayi</span>)</p>
     </section><!-- .flight-notice -->
+    
+    <section class="container_new flight-list" ng-show="FlightConfig[0].FlightList.length == 0 && !(!departureFlight.length && FlightConfig[0].FlightRequest.Progress == 100)">
+        <img class="loading-image" src="/Assets/images/load.gif" alt="Loading" />
+    </section>
 
     <section class="flight-list">
     

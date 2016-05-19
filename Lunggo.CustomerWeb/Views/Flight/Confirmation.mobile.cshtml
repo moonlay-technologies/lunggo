@@ -8,8 +8,6 @@
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Konfirmasi Pembayaran";
     ViewBag.BodyClass = "page page-confirmation";
-    // ViewBag.AngularController = "FlightConfirmationController";
-    
     ViewBag.SiteHeader = "checkout";
 
     var reservation = FlightService.GetInstance().GetReservationForDisplay(Model.RsvNo);
