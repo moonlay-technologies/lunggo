@@ -6,7 +6,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
-    public static partial class AccountsLogic
+    public static partial class AccountLogic
     {
         public static ApiResponseBase ForgotPassword(ForgotPasswordApiRequest request, ApplicationUserManager userManager)
         {
@@ -53,7 +53,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERAFPW99"
+                    ErrorCode = "ERRGEN99"
                 };
             }
         }

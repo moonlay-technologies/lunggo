@@ -22,7 +22,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 return new TopDestinationsApiResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERFTOP99"
+                    ErrorCode = "ERRGEN99"
                 };
             }
         }

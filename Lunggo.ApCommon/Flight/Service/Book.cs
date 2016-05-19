@@ -84,8 +84,6 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private FlightReservation CreateReservation(List<FlightItinerary> itins, BookFlightInput input, List<BookResult> bookResults)
         {
-            var a = new FlightReservation();
-
             var trips =
                 itins.SelectMany(itin => itin.Trips).OrderBy(trip => trip.Segments.First().DepartureTime).ToList();
             var reservation = new FlightReservation();

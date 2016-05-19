@@ -5,7 +5,7 @@ using Lunggo.WebAPI.ApiSrc.Account.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
-    public static partial class AccountsLogic
+    public static partial class AccountLogic
     {
         public static GetProfileApiResponse GetProfile()
         {
@@ -35,7 +35,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 return new GetProfileApiResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERAGPR99"
+                    ErrorCode = "ERRGEN99"
                 };
             }
         }

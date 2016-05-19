@@ -39,7 +39,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 return new CheckVoucherApiResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERVCHE99"
+                    ErrorCode = "ERRGEN99"
                 };
             }
         }
@@ -101,7 +101,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERVCHE99"
+                        ErrorCode = "ERRGEN99"
                     };
             }
         }

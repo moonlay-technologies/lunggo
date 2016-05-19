@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class FlightSegment
+    public class FlightSegmentForDisplay
     {
         [JsonProperty("departureTime")]
         public DateTime DepartureTime { get; set; }
@@ -51,8 +51,6 @@ namespace Lunggo.ApCommon.Flight.Model
         public string OperatingAirlineLogoUrl { get; set; }
         [JsonProperty("stops")]
         public List<FlightStop> Stops { get; set; }
-        [JsonProperty("type")]
-        public AirlineType AirlineType { get; set; }
         [JsonProperty("cabin")]
         public CabinClass CabinClass { get; set; }
         [JsonProperty("meal")]
@@ -60,8 +58,53 @@ namespace Lunggo.ApCommon.Flight.Model
         [JsonProperty("baggage", NullValueHandling = NullValueHandling.Ignore)]
         public string Baggage { get; set; }
         [JsonProperty("pnr", NullValueHandling = NullValueHandling.Ignore)]
-        public string Pnr { get; set; }   
+        public string Pnr { get; set; }
         [JsonProperty("remainingSeats", NullValueHandling = NullValueHandling.Ignore)]
+        public int RemainingSeats { get; set; }
+
+        public bool Identical(FlightSegment otherSegment)
+        {
+            return
+                DepartureAirport == otherSegment.DepartureAirport &&
+                ArrivalAirport == otherSegment.ArrivalAirport &&
+                DepartureTime == otherSegment.DepartureTime &&
+                ArrivalTime == otherSegment.ArrivalTime &&
+                Duration == otherSegment.Duration &&
+                AirlineCode == otherSegment.AirlineCode &&
+                FlightNumber == otherSegment.FlightNumber &&
+                CabinClass == otherSegment.CabinClass;
+        }
+    }
+
+    public class FlightSegment
+    {
+        public DateTime DepartureTime { get; set; }
+        public DateTime ArrivalTime { get; set; }
+        public string DepartureAirport { get; set; }
+        public string ArrivalAirport { get; set; }
+        public TimeSpan Duration { get; set; }
+        public int StopQuantity { get; set; }
+        public string AirlineCode { get; set; }
+        public string FlightNumber { get; set; }
+        public string OperatingAirlineCode { get; set; }
+        public string AircraftCode { get; set; }
+        public string Rbd { get; set; }
+        public string DepartureTerminal { get; set; }
+        public string DepartureCity { get; set; }
+        public string DepartureAirportName { get; set; }
+        public string ArrivalTerminal { get; set; }
+        public string ArrivalCity { get; set; }
+        public string ArrivalAirportName { get; set; }
+        public string AirlineName { get; set; }
+        public string AirlineLogoUrl { get; set; }
+        public string OperatingAirlineName { get; set; }
+        public string OperatingAirlineLogoUrl { get; set; }
+        public List<FlightStop> Stops { get; set; }
+        public AirlineType AirlineType { get; set; }
+        public CabinClass CabinClass { get; set; }
+        public bool Meal { get; set; }
+        public string Baggage { get; set; }
+        public string Pnr { get; set; }   
         public int RemainingSeats { get; set; }
         
         public bool Identical(FlightSegment otherSegment)

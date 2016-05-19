@@ -40,7 +40,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("/login")]
+        [Route("login")]
         public LoginApiResponse Login()
         {
             var request = Request.Content.ReadAsStringAsync().Result.Deserialize<LoginApiRequest>();
@@ -50,7 +50,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("/register")]
+        [Route("register")]
         public ApiResponseBase Register()
         {
             var request = Request.Content.ReadAsStringAsync().Result.Deserialize<RegisterApiRequest>();
@@ -60,7 +60,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("/forgot")]
+        [Route("forgot")]
         public ApiResponseBase ForgotPassword()
         {
             var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ForgotPasswordApiRequest>();
@@ -70,7 +70,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPatch]
         [Authorize]
-        [Route("/profile")]
+        [Route("profile")]
         public ApiResponseBase ChangeProfile()
         {
             var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangeProfileApiRequest>();
@@ -80,7 +80,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpGet]
         [Authorize]
-        [Route("/profile")]
+        [Route("profile")]
         public GetProfileApiResponse GetProfile()
         {
             var apiResponse = AccountLogic.GetProfile();
@@ -89,7 +89,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpGet]
         [Authorize]
-        [Route("/trxhistory")]
+        [Route("trxhistory")]
         public TransactionHistoryApiResponse GetTransactionHistory()
         {
             var apiResponse = AccountLogic.GetTransactionHistory();
@@ -98,7 +98,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpGet]
         [Authorize]
-        [Route("/rsv/{rsvNo}")]
+        [Route("rsv/{rsvNo}")]
         public GetReservationApiResponse GetOrderDetail(string rsvNo)
         {
             var apiResponse = AccountLogic.GetReservation(rsvNo);

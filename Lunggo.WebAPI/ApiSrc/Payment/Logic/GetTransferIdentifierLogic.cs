@@ -23,7 +23,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 return new TransferIdentifierApiResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERPTRF99"
+                    ErrorCode = "ERRGEN99"
                 };
             }
         }

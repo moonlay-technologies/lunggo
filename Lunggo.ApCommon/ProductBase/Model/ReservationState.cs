@@ -26,6 +26,7 @@ namespace Lunggo.ApCommon.ProductBase.Model
             Language = OnlineContext.GetActiveLanguageCode();
             Currency = new Currency(OnlineContext.GetActiveCurrencyCode());
         }
+
         internal void InsertToDb(string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())

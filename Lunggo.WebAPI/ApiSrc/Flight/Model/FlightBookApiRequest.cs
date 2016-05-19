@@ -15,6 +15,8 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Model
         public Contact Contact { get; set; }
         [JsonProperty("pax")]
         public List<Passenger> Passengers { get; set; }
+        [JsonProperty("lang")]
+        public string LanguageCode { get; set; }
     }
 
     public class Passenger

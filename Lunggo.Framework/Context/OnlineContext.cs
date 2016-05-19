@@ -14,17 +14,17 @@ namespace Lunggo.Framework.Context
 
         public static void SetActiveCurrencyCode(string currCode)
         {
-            HttpContext.Current.Items[SystemConstant.HttpContextCurrencyCode] = currCode;
+            HttpContext.Current.Items[SystemConstant.HttpContextCurrencyCode] = currCode.ToUpper();
         }
 
         public static String GetActiveLanguageCode()
         {
-            return (String)HttpContext.Current.Items[SystemConstant.HttpContextLangCode];
+            return (String)HttpContext.Current.Items[SystemConstant.HttpContextLangCode] ?? "ID";
         }
 
         public static void SetActiveLanguageCode(string langCode)
         {
-            HttpContext.Current.Items[SystemConstant.HttpContextLangCode] = langCode;
+            HttpContext.Current.Items[SystemConstant.HttpContextLangCode] = langCode.ToUpper();
         }
 
         public static String GetActivePlatformCode()

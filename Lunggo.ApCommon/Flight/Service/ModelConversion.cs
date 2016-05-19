@@ -112,18 +112,20 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
-        private List<FlightSegment> MapSegments(IEnumerable<FlightSegment> segments)
+        private List<FlightSegmentForDisplay> MapSegments(IEnumerable<FlightSegment> segments)
         {
-            return segments.Select(segment => new FlightSegment
+            return segments.Select(segment => new FlightSegmentForDisplay
             {
                 DepartureAirport = segment.DepartureAirport,
                 DepartureCity = GetAirportCity(segment.DepartureAirport),
                 DepartureAirportName = GetAirportName(segment.DepartureAirport),
                 DepartureTime = segment.DepartureTime,
+                DepartureTerminal = segment.DepartureTerminal,
                 ArrivalAirport = segment.ArrivalAirport,
                 ArrivalCity = GetAirportCity(segment.ArrivalAirport),
                 ArrivalAirportName = GetAirportName(segment.ArrivalAirport),
                 ArrivalTime = segment.ArrivalTime,
+                ArrivalTerminal = segment.ArrivalTerminal,
                 Duration = segment.Duration,
                 AirlineCode = segment.AirlineCode,
                 AirlineName = GetAirlineName(segment.AirlineCode),
@@ -139,7 +141,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 Pnr = segment.Pnr,
                 Rbd = segment.Rbd,
                 Meal = segment.Meal,
-                RemainingSeats = segment.RemainingSeats
+                Baggage = segment.Baggage,
+                RemainingSeats = segment.RemainingSeats,
             }).ToList();
         }
 

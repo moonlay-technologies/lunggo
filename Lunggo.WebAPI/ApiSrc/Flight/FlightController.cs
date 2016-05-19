@@ -11,7 +11,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
     {
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("/flight/{searchId}/{progress}")]
+        [Route("flight/{searchId}/{progress}")]
         public FlightSearchApiResponse SearchFlights(string searchId, int progress)
         {
             var request = new FlightSearchApiRequest
@@ -25,7 +25,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("/flight/select")]
+        [Route("flight/select")]
         public FlightSelectApiResponse SelectFlight()
             {
             var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightSelectApiRequest>();
@@ -35,7 +35,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("/flight/revalidate/{token}")]
+        [Route("flight/revalidate/{token}")]
         public FlightRevalidateApiResponse RevalidateFlight(string token)
         {
             var request = new FlightRevalidateApiRequest
@@ -48,7 +48,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("/flight/book")]
+        [Route("flight/book")]
         public FlightBookApiResponse BookFlight()
         {
             var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightBookApiRequest>();
@@ -64,7 +64,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("/flight/issue")]
+        [Route("flight/issue")]
         public ApiResponseBase IssueFlight()
         {
             var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightIssueApiRequest>();
@@ -74,7 +74,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("/flight/check/{rsvNo}")]
+        [Route("flight/check/{rsvNo}")]
         public FlightIssuanceApiResponse CheckFlightIssuance(string rsvNo)
         {
             var request = new FlightIssuanceApiRequest
@@ -87,7 +87,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         //[HttpGet]
         //[LunggoCorsPolicy]
-        //[Route("/flight/{SearchId}/rules/{ItinIndex}")]
+        //[Route("flight/{SearchId}/rules/{ItinIndex}")]
         //public FlightRulesApiResponse GetFlightRules(HttpRequestMessage httpRequest, [FromUri] FlightRulesApiRequest request)
         //{
         //    var apiResponse = FlightLogic.GetRules(request);
@@ -96,7 +96,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         //[HttpPost]
         //[LunggoCorsPolicy]
-        //[Route("/flight/cancel")]
+        //[Route("flight/cancel")]
         //public FlightCancelApiResponse CancelFlightBooking(HttpRequestMessage httpRequest, [FromUri] FlightCancelApiRequest request)
         //{
         //    return FlightLogic.CancelBooking(request);
@@ -104,7 +104,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         //[HttpPost]
         //[LunggoCorsPolicy]
-        //[Route("/flight/expire")]
+        //[Route("flight/expire")]
         //public ExpireReservationsApiResponse ExpireFlightReservations(HttpRequestMessage httpRequest)
         //{
         //    return FlightLogic.ExpireReservations();
@@ -112,7 +112,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("/flight/top")]
+        [Route("flight/top")]
         public TopDestinationsApiResponse TopDestinations()
         {
             var apiResponse = FlightLogic.TopDestinations();

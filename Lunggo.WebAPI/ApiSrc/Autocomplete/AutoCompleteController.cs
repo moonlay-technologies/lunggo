@@ -12,7 +12,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete
     {
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("/autocomplete/airlines/{prefix}")]
+        [Route("autocomplete/airlines/{prefix}")]
         public AutocompleteAirlinesApiResponse Airlines(string prefix)
         {
             return AutocompleteLogic.GetAirlineAutocomplete(prefix);
@@ -20,7 +20,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete
 
         [HttpGet]   
         [LunggoCorsPolicy]
-        [Route("/autocomplete/airlines")]
+        [Route("autocomplete/airlines")]
         public AutocompleteAirlinesApiResponse Airlines()
         {
             return AutocompleteLogic.GetAirlineAutocomplete("");
@@ -28,7 +28,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("/autocomplete/airports/{prefix}")]
+        [Route("autocomplete/airports/{prefix}")]
         public AutocompleteAirportsApiResponse Airports(string prefix)
         {
             return AutocompleteLogic.GetAirportAutocomplete(prefix);
@@ -36,7 +36,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("/autocomplete/airports")]
+        [Route("autocomplete/airports")]
         public AutocompleteAirportsApiResponse Airports()
         {
             return AutocompleteLogic.GetAirportAutocomplete("");
@@ -44,7 +44,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("/autocomplete/hotellocations/{prefix}")]
+        [Route("autocomplete/hotellocations/{prefix}")]
         public AutocompleteHotelLocationsApiResponse HotelLocations(string prefix)
         {
             return AutocompleteLogic.GetHotelLocationAutocomplete(prefix);
@@ -52,7 +52,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("/autocomplete/lastupdate")]
+        [Route("autocomplete/lastupdate")]
         public AutocompleteLastUpdateApiResponse LastUpdate()
         {
             return new AutocompleteLastUpdateApiResponse

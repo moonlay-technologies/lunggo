@@ -8,7 +8,7 @@ using Lunggo.WebAPI.ApiSrc.Account.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
-    public static partial class AccountsLogic
+    public static partial class AccountLogic
     {
         public static GetReservationApiResponse GetReservation(string rsvNo)
         {
@@ -52,7 +52,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 return new GetReservationApiResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERARSV99"
+                    ErrorCode = "ERRGEN99"
                 };
             }
         }

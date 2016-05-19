@@ -33,7 +33,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 return new FlightSearchApiResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERFSEA99"
+                    ErrorCode = "ERRGEN99"
                 };
             }
         }

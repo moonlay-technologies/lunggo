@@ -6,7 +6,7 @@ using Lunggo.WebAPI.ApiSrc.Account.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
-    public static partial class AccountsLogic
+    public static partial class AccountLogic
     {
         public static TransactionHistoryApiResponse GetTransactionHistory()
         {
@@ -28,7 +28,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 return new TransactionHistoryApiResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERATRH99"
+                    ErrorCode = "ERRGEN99"
                 };
             }
         }

@@ -7,7 +7,7 @@ using RestSharp;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
-    public static partial class AccountsLogic
+    public static partial class AccountLogic
     {
         public static LoginApiResponse Login(LoginApiRequest request, HttpRequestMessage httpRequest)
         {
@@ -72,7 +72,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 return new LoginApiResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERALOG99"
+                    ErrorCode = "ERRGEN99"
                 };
             }
         }

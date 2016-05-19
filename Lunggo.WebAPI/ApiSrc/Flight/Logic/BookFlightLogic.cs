@@ -17,29 +17,29 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
         {
             try
             {
-            if (IsValid(request))
-            {
-                OnlineContext.SetActiveLanguageCode(request.Language);
-                var bookServiceRequest = PreprocessServiceRequest(request);
-                var bookServiceResponse = FlightService.GetInstance().BookFlight(bookServiceRequest);
-                    var apiResponse = AssembleApiResponse(bookServiceResponse);
-                return apiResponse;
-            }
-            else
-            {
-                return new FlightBookApiResponse
+                if (IsValid(request))
                 {
+                    OnlineContext.SetActiveLanguageCode(request.LanguageCode);
+                    var bookServiceRequest = PreprocessServiceRequest(request);
+                    var bookServiceResponse = FlightService.GetInstance().BookFlight(bookServiceRequest);
+                    var apiResponse = AssembleApiResponse(bookServiceResponse);
+                    return apiResponse;
+                }
+                else
+                {
+                    return new FlightBookApiResponse
+                    {
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERFBOO01"
-                };
+                    };
+                }
             }
-        }
             catch
             {
                 return new FlightBookApiResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERFBOO99"
+                    ErrorCode = "ERRGEN99"
                 };
             }
         }
@@ -70,19 +70,19 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                     StatusCode = HttpStatusCode.OK
                 };
             else if (!bookServiceResponse.Errors.Any())
+            {
+                return new FlightBookApiResponse
                 {
-                    return new FlightBookApiResponse
-                    {
                     IsValid = bookServiceResponse.IsValid,
                     IsItineraryChanged = bookServiceResponse.IsItineraryChanged,
                     IsPriceChanged = bookServiceResponse.IsPriceChanged,
                     NewItinerary = bookServiceResponse.NewItinerary,
-                        NewPrice = bookServiceResponse.NewPrice,
+                    NewPrice = bookServiceResponse.NewPrice,
                     StatusCode = HttpStatusCode.OK
-                    };
-                }
-                else
-                {
+                };
+            }
+            else
+            {
                 if (bookServiceResponse.Errors[0] == FlightError.PartialSuccess)
                     bookServiceResponse.Errors.RemoveAt(0);
                 switch (bookServiceResponse.Errors[0])
@@ -101,8 +101,8 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                         };
                     case FlightError.BookingIdNoLongerValid:
                     case FlightError.FareIdNoLongerValid:
-                    return new FlightBookApiResponse
-                    {
+                        return new FlightBookApiResponse
+                        {
                             StatusCode = HttpStatusCode.Accepted,
                             ErrorCode = "ERFBOO03"
                         };
@@ -116,13 +116,13 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                         return new FlightBookApiResponse
                         {
                             StatusCode = HttpStatusCode.InternalServerError,
-                            ErrorCode = "ERFBOO99"
-                    };
+                            ErrorCode = "ERRGEN99"
+                        };
                     default:
                         return new FlightBookApiResponse
                         {
                             StatusCode = HttpStatusCode.InternalServerError,
-                            ErrorCode = "ERFBOO99"
+                            ErrorCode = "ERRGEN99"
                         };
                 }
             }
