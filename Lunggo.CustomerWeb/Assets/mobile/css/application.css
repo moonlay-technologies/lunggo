@@ -861,7 +861,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             width: 50px;
             text-align: center;
             background: #fff;
-            padding: 10px 15px;
+            padding: 10px 10px;
             color: #666; }
             .page.page-home .form-wrapper form .form__roundtrip .switch label.active {
               background: #0c7399;
@@ -1439,19 +1439,19 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-checkout .summary .summary__title {
   color: #333; }
 
-.page.page-checkout .summary.summary--price dl:after {
+ .summary.summary--price dl:after {
   display: block;
   width: 100%;
   content: "";
   clear: both; }
 
-.page.page-checkout .summary.summary--price dl dt {
+ .summary.summary--price dl dt {
   float: left;
   width: 50%;
   font-weight: normal;
   position: relative;
   padding-left: 12px; }
-  .page.page-checkout .summary.summary--price dl dt:before {
+   .summary.summary--price dl dt:before {
     position: absolute;
     content: '';
     width: 7px;
@@ -1460,20 +1460,20 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     top: 3px;
     left: 0; }
 
-.page.page-checkout .summary.summary--price dl dd {
+ .summary.summary--price dl dd {
   float: left;
   width: 50%;
   text-align: right;
   font-weight: bold; }
 
-.page.page-checkout .summary.summary--price dl.total-price {
+ .summary.summary--price dl.total-price {
   border-top: 1px solid #ccc;
   padding-top: 10px; }
-  .page.page-checkout .summary.summary--price dl.total-price dt {
+   .summary.summary--price dl.total-price dt {
     width: 35%; }
-    .page.page-checkout .summary.summary--price dl.total-price dt:before {
+     .summary.summary--price dl.total-price dt:before {
       display: none; }
-  .page.page-checkout .summary.summary--price dl.total-price dd {
+   .summary.summary--price dl.total-price dd {
     width: 65%;
     color: #ff7200;
     font-size: 16px; }
@@ -1665,6 +1665,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-confirmation .confirmation-form .control-label.important:after {
   content: '*';
   color: red; }
+.page-checkout.page-checkout-flight .btn.btn-yellow {
+    width: 100%;
+}
 
 .page.page-useraccount .menu-user {
   display: block;
@@ -2302,3 +2305,22 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   margin-top: 10px;
   margin-bottom: 10px; }
 
+.page-checkout.page-checkout-flight .btn.btn-yellow {
+    width: 100%;
+}
+.confirmation-content .container_new .row1{
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    padding: 0 ;
+    
+}
+
+.confirmation-content .container_new .row1 p{
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 10px;
+    padding: 0;
+}
