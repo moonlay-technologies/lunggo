@@ -26,7 +26,7 @@ namespace Lunggo.CustomerWeb
         void Session_Start(object sender, EventArgs e)
         {
             // Redirect mobile users to the mobile home page
-            /*
+            
             var httpRequest = Request;
             if (httpRequest.Browser.IsMobileDevice)
             {
@@ -51,7 +51,7 @@ namespace Lunggo.CustomerWeb
                     Response.Redirect(redirectTo);
                 }
             }
-            */
+            
         }
         
     }

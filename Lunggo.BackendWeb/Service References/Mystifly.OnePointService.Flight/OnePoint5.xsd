@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="Mystifly.OnePoint.OnePointEntities" elementFormDefault="qualified" targetNamespace="Mystifly.OnePoint.OnePointEntities" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" />
+  <xs:import schemaLocation="http://webservices.myfarebox.com/V2/OnePoint.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" />
   <xs:complexType name="ExtraService">
     <xs:sequence>
       <xs:element minOccurs="0" name="Services" nillable="true" type="tns:ArrayOfService" />
