@@ -87,7 +87,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #fff;
     text-align: center;
     height: 60px; }
-    .site-header .header-display .site-menu, .site-header .header-display .user-menu, .site-header .header-display .flight-swap, .site-header .header-display .flight-detail {
+    .site-header .header-display .site-menu, .site-header .header-display .user-menu, .site-header .header-display .flight-swap, .site-header .header-display .flight-detail, .site-header .header-display .promo{
       width: 30px;
       height: 30px;
       background: url(/Assets/mobile/images/mobile-header-sprite.png) no-repeat;
@@ -107,6 +107,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background: url(/Assets/mobile/images/flight-swap.png);
       left: auto;
       right: 10px; }
+    .site-header .header-display .promo {
+      background: url(/Assets/mobile/images/promo-logo.png);
+      left: auto;
+      right: 20px; }
     .site-header .header-display .flight-detail {
       width: 40px;
       background: none;

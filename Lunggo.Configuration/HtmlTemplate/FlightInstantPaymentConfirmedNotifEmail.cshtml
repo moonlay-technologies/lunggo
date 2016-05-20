@@ -78,7 +78,7 @@
                             </td>
                             <td width="5%"></td>
                             <td width="20%">
-                                <p style="opacity: 0.5;">Metode Pembayaran.</p>
+                                <p style="opacity: 0.5;">Metode Pembayaran</p>
                                 <p style=""><b>@EnumDisplay.PaymentMethod(Model.Payment.Method)</b></p>
                             </td>
                         </tr>
@@ -88,7 +88,7 @@
                         <thead>
                             <tr>
                                 <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px solid; ">
-                                    <p style="color: #15b1e4; text-align: left;"><b>Detail Order</b></p>
+                                    <p style="color: #15b1e4; text-align: left;"><b>Detail Pemesanan</b></p>
                                 </th>
                             </tr>
                         </thead>
@@ -108,7 +108,7 @@
                         </tr>
                         <tr>
                             <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left;">Order Date</p>
+                                <p style="color: #15b1e4; text-align: left;">Tanggal Pemesanan</p>
                             </td>
                             <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
                                 <p style="color: #15b1e4; text-align: center;">:</p>
@@ -122,13 +122,13 @@
                         </tr>
                         <tr>
                             <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left;">Order Type</p>
+                                <p style="color: #15b1e4; text-align: left;">Tipe Pesanan</p>
                             </td>
                             <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
                                 <p style="color: #15b1e4; text-align: center;">:</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left;">Flight</p>
+                                <p style="color: #15b1e4; text-align: left;">Penerbangan</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
@@ -136,7 +136,7 @@
                         </tr>
                         <tr>
                             <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left;">Order Price</p>
+                                <p style="color: #15b1e4; text-align: left;">Harga</p>
                             </td>
                             <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
                                 <p style="color: #15b1e4; text-align: center;">:</p>
@@ -150,7 +150,7 @@
                         </tr>
                         <tr>
                             <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left;">Order By</p>
+                                <p style="color: #15b1e4; text-align: left;">Dipesan oleh</p>
                             </td>
                             <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
                                 <p style="color: #15b1e4; text-align: center;">:</p>
@@ -205,7 +205,7 @@
                         <thead>
                             <tr>
                                 <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px solid; ">
-                                    <p style="color: #15b1e4; text-align: left"><b>Flight Details</b></p>
+                                    <p style="color: #15b1e4; text-align: left"><b>Detail Penerbangan</b></p>
                                 </th>
                             </tr>
                         </thead>
@@ -216,7 +216,7 @@
                         if (segment != Model.Itinerary.Trips[0].Segments.First())
                         {
                             var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
-                            <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;"><span style="background:#fff;padding:0 10px;color:#15b1e4;">Transit Duration : @transitDuration.ToString()</span></p>
+                            <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;"><span style="background:#fff;padding:0 10px;color:#15b1e4;">Lama Transit : @transitDuration.ToString()</span></p>
                         }
                         <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
                         <tbody>
@@ -225,7 +225,7 @@
                                 <td width="4%" rowspan="4"></td>
                                 <td width="25%">@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                 <td width="3" rowspan="4"></td>
-                                <td width="25%" rowspan="4"><p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Duration:</b> @segment.Duration</p></td>
+                                <td width="25%" rowspan="4"><p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Durasi:</b> @segment.Duration</p></td>
                                 <td width="3" rowspan="4"></td>
                                 <td width="25%">@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                             </tr>
@@ -260,7 +260,7 @@
                             if (segment != Model.Itinerary.Trips[1].Segments.First())
                             {
                                 var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
-                                <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;"><span style="background:#fff;padding:0 10px;color:#15b1e4;">Transit Duration : @transitDuration.ToString()</span></p>
+                                <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;"><span style="background:#fff;padding:0 10px;color:#15b1e4;">Lama Transit : @transitDuration.ToString()</span></p>
                             }
                             <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
                                 <tbody>
@@ -269,7 +269,7 @@
                                         <td width="4%" rowspan="4"></td>
                                         <td width="25%">@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                         <td width="3" rowspan="4"></td>
-                                        <td width="25%" rowspan="4"><p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Duration:</b> @segment.Duration</p></td>
+                                        <td width="25%" rowspan="4"><p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Durasi:</b> @segment.Duration</p></td>
                                         <td width="3" rowspan="4"></td>
                                         <td width="25%">@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                     </tr>
@@ -301,7 +301,7 @@
 
                     @*<p>Kuitansi pembayaran Anda telah disertakan sebagai attachment.</p>*@
                     <p>
-                        E-tiket Anda akan dikirimkan secara otomatis ke email Anda maksimal <span style="color: #15b1e4;">@jamMaxEtiket.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.ToString("HH:mm") WIB</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">cs@travorama.com.</span>
+                        E-tiket Anda akan dikirimkan secara otomatis ke e-mail Anda maksimal <span style="color: #15b1e4;">@jamMaxEtiket.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.ToString("HH:mm") WIB</span> , jika sampai saat tersebut Anda belum menerima e-tiket, mohon hubungi kami melalui e-mail <span style="color: #15b1e4;">cs@travorama.com.</span>
 
                     </p>
                 </td>

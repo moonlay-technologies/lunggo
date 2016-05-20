@@ -864,6 +864,7 @@
     <Content Include="Assets\images\lock-image.jpg" />
     <Content Include="Assets\images\login-bg.jpg" />
     <Content Include="Assets\images\logo-color.png" />
+    <Content Include="Assets\images\logo-promo.jpg" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\main-menu-arrow.png" />
     <Content Include="Assets\images\mandiri-logo.jpg" />
@@ -873,6 +874,7 @@
     <Content Include="Assets\images\menu-icon.png" />
     <Content Include="Assets\images\nav-sprite.png" />
     <Content Include="Assets\images\no-image.png" />
+    <Content Include="Assets\images\notif-promo.jpg" />
     <Content Include="Assets\images\order-flight-list-bg.png" />
     <Content Include="Assets\images\paperplane-icon.png" />
     <Content Include="Assets\images\payment-atm.jpg" />
@@ -1058,6 +1060,7 @@
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-white.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-yellow.png" />
+    <Content Include="Assets\mobile\images\promo-logo.png" />
     <Content Include="Assets\mobile\images\register-header-left.png" />
     <Content Include="Assets\mobile\images\revalidate-plane.png" />
     <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
