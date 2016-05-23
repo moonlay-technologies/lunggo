@@ -210,7 +210,7 @@
                                 </form><!-- #buyer-form -->
 
                                 <div class="step-button">
-                                    <button class="btn btn-yellow" ng-click="changePage(2)">LANJUTKAN</button>
+                                    <button class="btn btn-yellow" ng-click="changePage(2)" ng-disabled="buyerForm.$invalid">LANJUTKAN</button>
                                 </div>
 
                             </div><!-- .content-step#step-1 -->
@@ -326,7 +326,7 @@
                                     
                                 <div class="step-button">
                                     <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                                    <button class="btn btn-yellow" ng-click="changePage(3)" ng-disabled="buyerForm.$invalid">LANJUTKAN</button>
+                                    <button class="btn btn-yellow" ng-click="changePage(3)" ng-disabled="passengersForm.$invalid">LANJUTKAN</button>
                                 </div>
                                 <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Periksa kembali form Anda.</h4>
                                 
@@ -519,7 +519,7 @@
                                         </div>
 
                                         <a class="btn btn-grey" ng-click="changePage(2)" ng-disabled="checkoutForm.loading">KEMBALI</a>
-                                        <input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'PESAN' : 'MEMPROSES' }}">
+                                        <input type="submit" ng-disabled="finalForm.$invalid" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'PESAN' : 'MEMPROSES' }}">
 
                                     </form>
 
