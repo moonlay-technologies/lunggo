@@ -20,7 +20,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
             else
                 return new OrderTicketResult
                 {
-                    IsSuccess = true,
+                    CurrentBalance = Client.GetCurrentBalance(),
+                    IsSuccess = false,
                     BookingId = bookingId,
                     IsInstantIssuance = true
                 };

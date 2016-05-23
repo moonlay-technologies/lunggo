@@ -28,8 +28,8 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
-            dynamic emailData = reservation;
-            emailData.caseType =caseType;
+            //dynamic emailData = reservation;
+            //emailData.caseType =caseType;
 
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
@@ -40,7 +40,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama"
             };
             Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(emailData, mailModel, "FlightIssueSlightDelayNotifEmail");
+            mailService.SendEmail(reservation, mailModel, "FlightIssueSlightDelayNotifEmail");
 
             Console.WriteLine("Done Processing Flight Issue Slight Delay Notif Email for RsvNo " + rsvNo);
         }

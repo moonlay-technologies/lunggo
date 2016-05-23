@@ -132,6 +132,7 @@ namespace Lunggo.ApCommon.Flight.Service
             OrderTicketResult result = supplier.OrderTicket(bookingId, canHold);
             if (result.BookingId != null)
                 result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, supplierName, fareType);
+            result.SupplierName = supplier.SupplierName.ToString(); // this is getting suppliername, but as a number
             return result;
         }
 

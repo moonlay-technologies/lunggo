@@ -31,6 +31,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             configuration.DashboardConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
 
             JobHost host = new JobHost(configuration);
+            //Function.ProcessEmailQueue.FlightIssueFailedNotifEmail("137816601979+AirAsia;435671;1231562");
             host.RunAndBlock();
 
         }

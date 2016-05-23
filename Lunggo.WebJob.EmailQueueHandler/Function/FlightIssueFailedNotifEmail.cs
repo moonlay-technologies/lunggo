@@ -18,7 +18,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var sw = new Stopwatch();
             var splitMessage = message.Split('+');
             var rsvNo = splitMessage[0];
-            var caseType = splitMessage[1];
+            
+            
+
             Console.WriteLine("Processing Flight Issue Failed Notif Email for RsvNo " + rsvNo + "...");
 
             Console.WriteLine("Getting Required Data...");
@@ -28,8 +30,27 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
-            dynamic emailData = reservation;
-            emailData.caseType = caseType;
+            /*dynamic emailData = reservation;
+            if (splitMessage.Length > 2)
+            {
+                int index = 0;
+                for (int i = 1; i < splitMessage.Length; i++)
+                {
+                    var splitSupplier = splitMessage[i].Split(';');
+                    emailData.SupplierName[index] = splitSupplier[0];
+                    emailData.LocalPrice[index] = splitSupplier[1];
+                    emailData.CurrentDeposit[index] = splitSupplier[2];
+                    index++;
+                }
+                emailData.ItinCount = index;
+            }
+            else 
+            {
+                var splitSupplier = splitMessage[1].Split(';');
+                emailData.SupplierName = splitSupplier[0];
+                emailData.SupplierName = splitSupplier[1];
+                emailData.SupplierName = splitSupplier[2];
+            }*/
 
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
@@ -40,7 +61,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama"
             };
             Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(emailData, mailModel, "FlightIssueFailedNotifEmail");
+            mailService.SendEmail(reservation, mailModel, "FlightIssueFailedNotifEmail");
 
             Console.WriteLine("Done Processing Flight Issue Failed Notif Email for RsvNo " + rsvNo);
         }

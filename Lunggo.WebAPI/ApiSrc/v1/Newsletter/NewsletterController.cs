@@ -17,19 +17,25 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Newsletter
         [LunggoCorsPolicy]
         [Route("api/v1/newsletter/subscribe")]
         [HttpPost]
-        public bool NewsletterSubscribe(HttpRequestMessage httpRequest, [FromBody] NewsletterSubscribeInput input)
+        public NewsletterSubscribeOutput NewsletterSubscribe(HttpRequestMessage httpRequest, [FromBody] NewsletterSubscribeInput input)
         {
             if (!ModelState.IsValid)
             {
-                return false;
+                return new NewsletterSubscribeOutput
+                {
+                    IsSuccess = false,
+                    IsMemberExist = false
+                };
             }
             var client = CreateApiClient();
             var request = CreateApiRequest();
             var jsonBody = CreateApiJsonBody(input);
             request.AddJsonBody(jsonBody);
             var response = client.Execute(request);
-            return IsApiResponseValid(response);
-
+            return new NewsletterSubscribeOutput { 
+                IsSuccess = IsApiResponseValid(response),
+                IsMemberExist = IsMemberExist(response)
+            };
         }
 
         private bool IsApiResponseValid(IRestResponse response)
@@ -40,16 +46,21 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Newsletter
             }
             else
             {
-                if (!String.IsNullOrEmpty(response.Content))
-                {
-                    var jObject = JObject.Parse(response.Content);
-                    var errorReason = (String) jObject["title"];
-                    return errorReason == "Member Exists";
-                }
-                else
-                {
-                    return false;
-                }
+                return false;
+            }
+        }
+
+        private bool IsMemberExist(IRestResponse response) 
+        {
+            if (!String.IsNullOrEmpty(response.Content))
+            {
+                var jObject = JObject.Parse(response.Content);
+                var errorReason = (String)jObject["title"];
+                return errorReason == "Member Exists";
+            }
+            else
+            {
+                return false;
             }
         }
 

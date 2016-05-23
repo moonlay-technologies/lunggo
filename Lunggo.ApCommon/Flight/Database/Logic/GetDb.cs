@@ -264,6 +264,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     MarginNominal = itineraryRecord.MarginNominal.GetValueOrDefault(),
                                     MarginIsFlat = itineraryRecord.MarginIsFlat.GetValueOrDefault(),
                                     LocalPrice = itineraryRecord.LocalPrice.GetValueOrDefault(),
+                                    SupplierPrice = itineraryRecord.LocalPrice.GetValueOrDefault(),
                                     Trips = new List<FlightTrip>()
                                 };
                                 itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);

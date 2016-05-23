@@ -20,6 +20,35 @@
         {
             @RenderSection("AdditionalCSS");
         }
+        
+        @section AdditionalCSS{
+            <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
+
+            @*@if (ViewBag.Campaign)
+            {
+                <!-- imlek start -->
+                <link href="/Campaign/Imlek2016/css/imlek2016.min.css" rel="stylesheet" />
+                <!-- imlek end -->
+            }*@
+
+        }
+
+        @section AdditionalJS{
+            <!-- additional Angular JS-->
+            <script src="/Assets/js/angular.min.js"></script>
+            <script src="/Assets/js/angular-animate.min.js"></script>
+            <script src="/Assets/js/angular-route.min.js"></script>
+            <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+            <script src="/Assets/js/js.cookie.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        }
+        
+        @section PageJS{
+        <script>
+            newsletterFormFunctions();
+        </script>
+  
+        }
 
         <link rel="stylesheet" href="/Assets/travorama20/css/travorama20.css">
         <!-- Start of travelmadezy Zendesk Widget script -->
@@ -27,6 +56,7 @@
 /*<![CDATA[*/window.zEmbed || function (e, t) { var n, o, d, i, s, a = [], r = document.createElement("iframe"); window.zEmbed = function () { a.push(arguments) }, window.zE = window.zE || window.zEmbed, r.src = "javascript:false", r.title = "", r.role = "presentation", (r.frameElement || r).style.cssText = "display: none", d = document.getElementsByTagName("script"), d = d[d.length - 1], d.parentNode.insertBefore(r, d), i = r.contentWindow, s = i.document; try { o = s } catch (c) { n = document.domain, r.src = 'javascript:var d=document.open();d.domain="' + n + '";void(0);', o = s } o.open()._l = function () { var o = this.createElement("script"); n && (this.domain = n), o.id = "js-iframe-async", o.src = e, this.t = +new Date, this.zendeskHost = t, this.zEQueue = a, this.body.appendChild(o) }, o.write('<body onload="document._l();">'), o.close() }("//assets.zendesk.com/embeddable_framework/main.js", "travelmadezy.zendesk.com");
             /*]]>*/</script>
         <!-- End of travelmadezy Zendesk Widget script -->
+        
         
         <!-- Facebook Pixel Code -->
         <script>
@@ -103,13 +133,101 @@
     </script>
 
     <div class="page-newsletter">
-        <div class="overlay-content">
+        <div class=" overlay-content">
             <section>
-                <p class="header"><img src="~/Assets/images/popup/header1.png"/></p>
+                <p class="header"><img src="~/Assets/images/popup/header1.png" /></p>
                 <p class="popup-text"><span style="color:#ffffff">Dapatkan informasi harga tiket murah dengan</span><span style="color:#ffd632"> <b>mendaftarkan email Anda</b></span></p>
-                <span class="email"><input class="input-type" type="email" placeholder="Masukkan Email Anda"></span>
-                <button class="btn btn-yellow">SUBMIT</button>
+                <form class="form-newsletter">
+                    <div class="form-group">
+                        <span><input type="text" name="name" value="" style="text-align:center;" class="input-type" placeholder="Masukkan Email Anda"></span>
+                        <input type="submit" class="btn btn-yellow" value="SUBMIT" onclick="newsletterFormFunctions()" />
+                    </div>
+                </form>
             </section>
+        </div>
+    </div>
+
+    <!-- *HARGA BERUBAH*  -->
+    <!--<div class="priceChaged-popup">
+        <div class="overlay-content">
+            <section style="padding-top:45px; padding-left:200px;padding-bottom:0px;margin-bottom:0px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:5px;"><span style="color: #15b1e4; font-size:26px"><b>Harga berubah*</b></span></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Maskapai baru saja mengupdate harga tiket dari <span style="color: #15b1e4;font-size:13px"><b>Rp 500.000</b></span> menjadi <span style="color: #15b1e4;font-size:13px"><b>Rp 700.000</b></span></span></div>
+                <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/paymentyellowstrip.png"></div>
+                <div style="padding-right:5px;padding-top:5px;padding-bottom:0px;margin-bottom:0px;"><span style="font-size:10px"><b>*Dapat berlangsung hingga 5(lima) menit</b></span></div>
+                <div style="padding-top:0px;margin-top:0px"><hr style="color:#15b1e4;padding-top:2px;"><div></div></div>
+            </section>
+            <div style="padding-top:0px;margin-top:0px;padding-left:200px;">
+                <a class="button_popup" href="#"><b>CARI ULANG</b></a>
+                <a class="button_popup" href="#"><b>LANJUTKAN</b></a>
+            </div>
+        </div>
+    </div>-->
+
+    <!-- *METODE PEMBAYARAN GAGAL*  -->
+    <!--<div class="payment-popup">
+        <div class="overlay-content">
+            <section style="padding-top:40px; padding-left:200px;padding-right:30px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:15px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Transaksi pembayaran Anda gagal dilakukan.</span></div>
+                <div style="padding-top:10px;"><span style="font-size:11px">Silahkan pilih<span style="color: #15b1e4;font-size:11px"><b> metode pembayaran lain</b></span></span></div>
+                <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/paymentyellowstrip.png"></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:5px;">
+                <b><a class="button_popup" href="#">LANJUTKAN</a></b>
+            </div>
+        </div>
+    </div>-->
+
+    <!-- *PEMESANAN GAGAL*  -->
+    <!--<div class="bookfailed-popup">
+        <div class="overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Tiket penerbangan tidak dapat diproses karena kursi <span style="color: #15b1e4;font-size:13px"><b>telah terisi penuh</b></span></span></div>
+                <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:30px;">
+                <b><a class="button_popup" href="#">CARI ULANG</a></b></div>
+        </div>
+     </div>-->
+
+    <!--<div class="loading-popup">
+        <div class="overlay-content">
+            <section style="padding-top:40px; padding-left:170px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:15px;"><span style="color: #15b1e4; font-size:17px"><i><b>Mohon Tunggu...</b></i></span></div>
+                <div><img src="/Assets/images/popup/loading-strip2.png"></div>
+                <div style="padding-top:5px;"><span style="font-size:16px"><b>Kami sedang</b></span></div>
+                <span style="color: #15b1e4; font-size:16px"><b>memproses</b></span>
+                <div><span style="font-size:16px"><b>pemesanan Anda</b></span></div>
+                <div><span style="font-size:16px"><b>ke maskapai</b></span></div>
+                <div style="padding-right:5px;padding-top:20px"><span style="font-size:10px"><b>*Dapat berlangsung hingga 5(lima) menit</b></span></div>
+                <div style="padding-top:15px"><img src="/Assets/images/popup/quotation1.png"><span style="font-size:12px;">Oh the Places</span></div>
+                <div><span style="font-size:12px;">You'll go<img src="/Assets/images/popup/quotation2.png"></span></div>
+                <div><span><i>-Dr. Seuss</i></span></div>
+            </section>
+        </div>
+    </div>-->
+
+    <div class="modal thankyou-popup" tabindex="-1" aria-hidden="true" role="dialog" aria-labelledby="myLargeModalLabel" id="thankyou">
+        <div class="overlay-content">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <section style="padding-top:65px; padding-left:300px;">
+                        <p align="right" style="padding-right:15px; margin-bottom:0px;"><a  class="close-popup" href="#thankyou"><img src="~/Assets/images/popup/close.png" /></a></p>
+                        <p style="padding-bottom:5px;"><img src="~/Assets/images/popup/text_thnks.png" /></p>
+                        <p><span style="color:#ffffff;font-size:12px;"><b>Anda telah terdaftar di mailing list kami</b></span></p>
+                        <p><span style="color:#ffffff;font-size:12px;padding-left:15px;">dan Anda akan jadi yang pertama tahu</span></p>
+                        <p><span style="color:#ffffff;font-size:12px;padding-left:35px;">apabila ada penawaran khusus</span></p>
+                        <p style="padding-left:90px;padding-top:7px;"><img src="~/Assets/images/popup/stars.png" /></p>
+                    </section>
+                </div>
+            </div>
+            
         </div>
     </div>
 </body>

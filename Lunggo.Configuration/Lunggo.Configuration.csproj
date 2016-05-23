@@ -643,6 +643,9 @@
     <None Include="Config\CloudApp.EticketHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightIssueFailedNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightIssueSlightDelayNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ImlekPromoEmail.cshtml" />
     <None Include="HtmlTemplate\GetCalendarEmail.cshtml" />
     <None Include="HtmlTemplate\ReservationNotice.cshtml" />

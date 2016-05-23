@@ -22,7 +22,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             else
                 return new OrderTicketResult
                 {
-                    IsSuccess = true,
+                    CurrentBalance = Client.GetCurrentBalance(),
+                    IsSuccess = false,
                     BookingId = bookingId,
                     IsInstantIssuance = true
                 };

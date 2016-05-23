@@ -25,7 +25,9 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public IssueTicketOutput CommenceIssueTicket(IssueTicketInput input)
         {
-            decimal  currentBalance=0;
+            List<string> supplier = new List<string>();
+            List<decimal> balance = new List<decimal>();
+            List<decimal> localPrice = new List<decimal>();
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var reservation = GetReservation(input.RsvNo);
@@ -35,7 +37,9 @@ namespace Lunggo.ApCommon.Flight.Service
                     var bookingId = itin.BookingId;
                     var canHold = itin.CanHold;
                     var response = OrderTicketInternal(bookingId, canHold);
-                    currentBalance = response.CurrentBalance;
+                    balance.Add(response.CurrentBalance);
+                    supplier.Add(response.SupplierName);
+                    localPrice.Add(itin.SupplierPrice);
                     var orderResult = new OrderResult();
                     if (response.IsSuccess)
                     {
@@ -85,7 +89,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 else
                 {
                     int casetype = GetCaseType();
-                    var depositPriceItin = IsInsufficientDeposit(input.RsvNo ,currentBalance);
+                    var supplierInfoItin = ConcatenateMessage(supplier,balance,localPrice);
                     if (casetype != 0)
                     {
                         SendIssueSlightDelayNotifToCustomer(reservation.RsvNo + "+" + casetype.ToString());
@@ -95,7 +99,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);
                     }
 
-                    SendIssueFailedNotifToDeveloper(reservation.RsvNo + "+" + depositPriceItin);
+                    SendIssueFailedNotifToDeveloper(reservation.RsvNo + "+" + supplierInfoItin);
                     
                     //Jika berhasil cuma berhasil satu doang
                     if (output.OrderResults.Any(set => set.IsSuccess))
@@ -126,18 +130,23 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private string IsInsufficientDeposit(string rsvNo, decimal balance)
+        private string ConcatenateMessage(List<string>supplierName, List<decimal>balance,List<decimal>localPrice)
         {
+       
             string balanceAndItinPrice = "";
-            var reservation = FlightService.GetInstance().GetReservation(rsvNo);
-            var supplierPrice = reservation.Itineraries.Sum(itin => itin.LocalPrice);
-            if (balance != 0)
+            for(int i=0;i<supplierName.Count;i++)
             {
-               if(balance<supplierPrice)
-               {
-                   balanceAndItinPrice = balance.ToString() + ";" + supplierPrice.ToString();
-               }
+                if (i != supplierName.Count - 1)
+                {
+                    balanceAndItinPrice = supplierName[i] + ";" + localPrice[i] + ";" + balance[i] + "+";
+                }
+                else 
+                {
+                    balanceAndItinPrice = supplierName[i] + ";" + localPrice[i] + ";" + balance[i];
+                }
+                
             }
+
 
             return balanceAndItinPrice;
 

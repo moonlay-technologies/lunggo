@@ -14,11 +14,11 @@
 <body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:12px;">
 
 
-    <table style="margin-left:auto; margin-right:auto; margin-top:10px; margin-bottom:10px; width:700px; height:1500px; max-width:700px; display:block; background:url(/Assets/images/email/e1_03.png);">
+    <table style="margin-left:auto; margin-right:auto; width:100%; max-width:700px; display:block; background:#ffffff;"><!--background:url(/Assets/images/email/e1_03.png);">-->
         <thead width="100%">
             <tr width="100%">
-                <th width="15%" style="padding-top:0px; right:0px"><!--<img src="~/Assets/images/email/Clip.png" align="right" style="width:70px; height:90px;padding-right: 10px;" />--></th>
-                <th colspan="3" width="70%" style="padding-top:110px; padding-right:160px;">
+                <th width="5%"></th>
+                <th colspan="2" width="90%" style="padding-top:30px;">
                     <p style="text-align:right;">
                         <a href="http://travorama.com" style="text-decoration:none;">
                             <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" />
@@ -26,16 +26,16 @@
                         <br />
                     </p>
                 </th>
-                <th width="15%" style="padding-top:0px; right:0px"></th>
+                <th width="5%"></th>
             </tr>
         </thead>
         <tbody width="100%">
             <tr width="100%">
-                <td width="15%" style="padding-top:2em;"></td>
-                <td colspan="2" width="70%" style="padding-top:2em; padding-right:60px;">
+                <td width="5%"></td>
+                <td colspan="2" width="90%">
 
                     <!-- CONTENT  -->
-                    <p style="font-size:16px;"><b>Hi <span style="color: #15b1e4;"> Miss Juliana </span></b></span></p>
+                    <p style="font-size:16px;"><b>Hi <span style="color: #15b1e4;"> Miss Juliana </span></b></p>
                     Terima kasih telah menggunakan <b>Travorama</b> untuk reservasi Anda
                     <br /><b>Pemesanan Anda  berhasil.</b>
                     <br /><br />
@@ -103,13 +103,30 @@
                         Apabila Anda belum menerima <i>e-ticket</i> setelah jangka waktu tersebut, mohon hubungi kami melalui email ke <span style="color: #15b1e4;">cs@travorama.com</span>
                     </p>
 
-                    <p style="margin-bottom:30px; font-size:11px;">Mohon maaf atas ketidaknyamanan dalam proses pengiriman e-ticket Anda.</p>
+                    <p style="margin-bottom:10px; font-size:11px;">Mohon maaf atas ketidaknyamanan dalam proses pengiriman e-ticket Anda.</p>
+
+                    <p><b>Silahkan pilih opsi dibawah ini untuk konfirmasi ulang :</b></p>
+                    
+                    <table>
+                        <tr> 
+                            <td width="40%"><a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left:20%; text-decoration: none; font-family:arial, helvetica, sans-serif;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       width: 60%; padding-top: 17px; padding-bottom: 17px; text-align: center; margin-top: 18px; margin-bottom: 18px; font-size: 11px; color: #333333;"
+                       href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/StaticPage/GetCalendar?Email=" + Model)" target="_blank"><b>REFUND TICKET</b></a></td>
+                            <td width="20%"></td>
+                            <td width="40%"><a style="background-color: #15b1e4; border: #e9d14d; display: inline-block; margin-left:20%; text-decoration: none; font-family:arial, helvetica, sans-serif;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       width: 60%; padding-top: 17px; padding-bottom: 17px; text-align: center; margin-top: 18px; margin-bottom: 18px; font-size: 11px; color: #333333;"
+                       href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/StaticPage/GetCalendar?Email=" + Model)" target="_blank"><b>KIRIM E-TICKET</b></a></td>
+                        </tr>
+                    </table>
+
+                    <p style="margin-bottom:30px;">Apabila Anda tidak memilih salah satu opsi, maka proses pemesanan Anda akan dilanjutkan.</p>
+
                 </td>
-                <td width="15%" style="padding-top:2em;"></td>
+                <td width="5%"></td>
             </tr>
             <tr width="100%">
-                <td width="15%"></td>
-                <td colspan="2" width="70%">
+                <td width="5%"></td>
+                <td colspan="2" width="90%">
                     <table width="100%">
                         <tr>
                             <td width="30%" style="padding-bottom: 1em;"><h4 style="color:#15b1e4;"><b>Further Information: </b></h4></td>
@@ -124,7 +141,7 @@
                         </tr>
                     </table>
                 </td>
-                <td width="15%"></td>
+                <td width="5%"></td>
             </tr>
         </tbody>
     </table>

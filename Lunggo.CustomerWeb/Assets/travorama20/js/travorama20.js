@@ -149,6 +149,80 @@ function subscribeFormFunctions() {
 
 }
 
+
+function newsletterFormFunctions() {
+    console.log('Saving data');
+}
+$(document).ready(function () {
+    $('form.form-newsletter input[type="submit"]').click(function (evt) {
+        validateNewsletterForm();
+    });
+
+    function validateNewsletterForm() {
+        $('form.form-newsletter input[type="submit"]').prop('disabled', true);
+        $('form.form-newsletter input[type="submit"]').val('LOADING');
+        email = $('form.form-newsletter input.input-type').val();
+        console.log('Masuk Sini');
+        //console.log('email' + NewsletterConfig.email);
+
+        if ($('form.form-newsletter input.input-type').val()) {
+            var emailValue = $('form.form-newsletter input.input-type').val();
+            console.log('email validation : ' + validateEmail(emailValue));
+            if (validateEmail(emailValue)) {
+                email = emailValue;
+                submitNewsletterForm();
+            } else {
+                email = '';
+                alert('Alamat email tidak valid');
+                recheckForm();
+            }
+        } else {
+            $('form.form-newsletter input.input-type').attr('placeholder', 'Mohon masukan Alamat Email Anda');
+            $('form.form-newsletter input.input-type').parent().addClass('has-error');
+            recheckForm();
+        }
+    }
+
+    function recheckForm() {
+        $('form.form-newsletter input[type="submit"]').removeProp('disabled');
+        $('form.form-newsletter input[type="submit"]').val('SUBMIT');
+    }
+
+    function submitNewsletterForm() {
+        $('form.form-newsletter .input-type').prop('disabled', true);
+        email = $('form.form-newsletter input.input-type').val();
+        subscriberName = 'subscriber';
+        $.ajax({
+            url: SubscribeConfig.Url,
+            method: 'POST',
+            data: { address: email, name: subscriberName }
+        }).done(function (returnData) {
+            console.log('done');
+            console.log(returnData);
+            if (returnData.IsSuccess) {
+                $('.page-newsletter').hide();
+                $('.thankyou-popup').modal('show');
+                $('.close-popup').click(function (e) {
+                    e.preventDefault();
+                    $('.thankyou-popup').modal('hide');
+                });
+            }
+            else
+            {
+                if (returnData.IsMemberExist) {
+                    console.log('Member Exist');
+                }
+                else
+                {
+                    console.log('failed');
+                }
+            }
+            
+        });
+    }
+});
+
+
 //********************
 // flight page functions
 function flightPageFunctions() {
