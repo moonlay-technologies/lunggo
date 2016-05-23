@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -200,11 +201,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     //var radio = availableFares.Single(fare => fare.Value == oriFareId).Cq();
                     //var fareRow = searchedHtml[".carrier-hover-header,.carrier-hover-return"].Children().Last();//radio.Parent().Parent().Parent().Parent().Parent();
                     var durationRows = searchedHtml[".carrier-hover-oneway-header>div:last-child"];
+                    var durationForLayover = searchedHtml[".carrier-hover"].ToList();
+                    var durs = new List<IDomObject>();
+                    foreach (var childrow in durationForLayover.Select(row => row.ChildElements.ToList()))
+                    {
+                        durs.AddRange((from child in childrow where child.ChildElements.ToList().Count == 3 select child.ChildElements.ToList()[2]).Cast<IDomObject>());
+                    }
                     var flattenedSegments = itins.SelectMany(itin => itin.Trips[0].Segments).ToList();
                     for (var i = 0; i < flattenedSegments.Count; i++)
                     {
-                        var durationRow = durationRows[i];
+                        var durationRow = durationRows[i] ?? durs.ElementAt(i);
                         var segment = flattenedSegments[i];
+                        
                         var durationTexts =
                             durationRow.InnerHTML.Trim().Split(':').ToList();
                         var splitduration = durationTexts[1].Trim().Split(' ').ToList();
