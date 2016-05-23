@@ -26,9 +26,9 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
         private static string _unfinishedRedirectUrl;
         private static string _errorRedirectUrl;
 
-        private const string FinishRedirectPath = @"/Veritrans/PaymentFinish";
-        private const string UnfinishRedirectPath = @"/Veritrans/PaymentUnfinish";
-        private const string ErrorRedirectPath = @"/Veritrans/PaymentError";
+        private const string FinishRedirectPath = @"/id/Veritrans/PaymentFinish";
+        private const string UnfinishRedirectPath = @"/id/Veritrans/PaymentUnfinish";
+        private const string ErrorRedirectPath = @"/id/Veritrans/PaymentError";
 
         private VeritransWrapper()
         {
