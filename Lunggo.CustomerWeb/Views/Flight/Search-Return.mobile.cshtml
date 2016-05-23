@@ -157,7 +157,7 @@
             <a ng-click="FlightFunction.SetActiveFlight('return',-1); SetSection('return');" class="change-departure"><span>Ganti</span></a>
         </div><!-- .flight-selection -->
 
-        <div class="flight" ng-click="FlightFunctions.ShowDetail('departure',Flight.IndexNo);" ng-repeat="Flight in departureFlight = (FlightConfig[0].FlightList | filter:FlightFiltering.AirlineFilter('departure') | filter:FlightFiltering.TransitFilter('departure') | filter:FlightFiltering.DepartureTimeFilter('departure') | filter:FlightFiltering.ArrivalTimeFilter('departure') | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert)" id="flight-{{Flight.IndexNo}}">
+        <div class="flight" ng-repeat="Flight in departureFlight = (FlightConfig[0].FlightList | filter:FlightFiltering.AirlineFilter('departure') | filter:FlightFiltering.TransitFilter('departure') | filter:FlightFiltering.DepartureTimeFilter('departure') | filter:FlightFiltering.ArrivalTimeFilter('departure') | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert)" id="flight-{{Flight.IndexNo}}">
             <div class="flight-header">
                 <h4 class="flight-airline">
                     <img ng-src="{{Flight.Trips[0].Segments[0].AirlineLogoUrl}}" alt="{{Flight.Trips[0].Segments[0].AirlineName}}" class="flight-airline-image" />
@@ -185,7 +185,7 @@
                 </div>
             </div>
             <div class="flight-footer">
-                <a class="flight-detail-button">Lihat Detail &gt;</a>
+                <a class="flight-detail-button" ng-click="FlightFunctions.ShowDetail('departure',Flight.IndexNo);">Lihat Detail &gt;</a>
                 <a ng-click="FlightFunctions.SetActiveFlight('departure',Flight.IndexNo); $event.stopPropagation();" class="btn btn-yellow pull-right flight-order">PESAN</a>
             </div>
         </div>
@@ -201,7 +201,7 @@
             <a ng-click="FlightFunction.SetActiveFlight('departure',-1); SetSection('departure');" class="change-departure"><span>Ganti</span></a>
         </div><!-- .flight-selection -->
 
-        <div class="flight" ng-click="FlightFunctions.ShowDetail('return',Flight.IndexNo);" ng-repeat="Flight in returnFlight = (FlightConfig[1].FlightList | filter:FlightFiltering.AirlineFilter('return') | filter:FlightFiltering.TransitFilter('return') | filter:FlightFiltering.DepartureTimeFilter('return') | filter:FlightFiltering.ArrivalTimeFilter('return') | orderBy:FlightConfig[1].FlightSort.Value:FlightConfig[1].FlightSort.Invert)" id="flight-{{Flight.IndexNo}}">
+        <div class="flight" ng-repeat="Flight in returnFlight = (FlightConfig[1].FlightList | filter:FlightFiltering.AirlineFilter('return') | filter:FlightFiltering.TransitFilter('return') | filter:FlightFiltering.DepartureTimeFilter('return') | filter:FlightFiltering.ArrivalTimeFilter('return') | orderBy:FlightConfig[1].FlightSort.Value:FlightConfig[1].FlightSort.Invert)" id="flight-{{Flight.IndexNo}}">
             <div class="flight-header">
                 <h4 class="flight-airline">
                     <img ng-src="{{Flight.Trips[0].Segments[0].AirlineLogoUrl}}" alt="{{Flight.Trips[0].Segments[0].AirlineName}}" class="flight-airline-image" />
@@ -228,7 +228,7 @@
                 </div>
             </div>
             <div class="flight-footer">
-                <a class="flight-detail-button">Lihat Detail &gt;</a>
+                <a class="flight-detail-button" ng-click="FlightFunctions.ShowDetail('return',Flight.IndexNo);">Lihat Detail &gt;</a>
                 <a ng-click="FlightFunctions.SetActiveFlight('return',Flight.IndexNo); $event.stopPropagation();" class="btn btn-yellow pull-right flight-order">PESAN</a>
             </div>
         </div>
@@ -343,8 +343,9 @@
                         <h5>Harga Total:</h5>
                         <h4><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].DetailFlight ].TotalFare | number}}</b></h4>
                         <h6>*Harga Sudah Termasuk Pajak dan Service Charges</h6>
+                    </div>
                     <div class="col-xs-6">
-                        <a ng-click="FlightFunctions.SetActiveFlight('departure',FlightConfig[0].DetailFlight); SetSection('return'); SetOverlay();" class="btn btn-yellow btn-block">PESAN</a>
+                        <a ng-click="FlightFunctions.SetActiveFlight('departure',FlightConfig[0].DetailFlight); SetSection('departure'); SetOverlay();" class="btn btn-yellow btn-block">PESAN</a>
                     </div>
                 </div>
             </div>
@@ -356,7 +357,7 @@
                         <h6>*Harga Sudah Termasuk Pajak dan Service Charges</h6>
                     </div>
                     <div class="col-xs-6">
-                        <a ng-click="FlightFunctions.SetActiveFlight('return',FlightConfig[1].DetailFlight)" class="btn btn-yellow btn-block">PESAN</a>
+                        <a ng-click="FlightFunctions.SetActiveFlight('return',FlightConfig[1].DetailFlight); SetSection('return'); SetOverlay();" class="btn btn-yellow btn-block">PESAN</a>
                     </div>
                 </div>
             </div>

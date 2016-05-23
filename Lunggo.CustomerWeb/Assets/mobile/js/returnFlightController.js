@@ -377,7 +377,9 @@
                 targetScope.ActiveFlight = flightNumber;
 
                 if ($scope.FlightConfig[0].ActiveFlight != -1 && $scope.FlightConfig[1].ActiveFlight != -1) {
-                    $scope.SetOverlay('summary'); $scope.PageConfig.Validating = false;
+                    //$scope.SetOverlay('summary'); 
+                    $scope.PageConfig.Validating = false;
+                    $scope.FlightFunctions.Revalidate($scope.FlightConfig[0].ActiveFlight, $scope.FlightConfig[1].ActiveFlight);
                 } else if ($scope.FlightConfig[0].ActiveFlight >= 0 && $scope.FlightConfig[1].ActiveFlight < 0) {
                     $scope.SetPopup('roundtrip-return');
                 } else if ($scope.FlightConfig[0].ActiveFlight < 0 && $scope.FlightConfig[1].ActiveFlight >= 0) {
@@ -402,6 +404,7 @@
 
     // show flight detail
     $scope.FlightFunctions.ShowDetail = function (targetScope, flightNumber) {
+        
         targetScope = targetScope == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1];
         // set detail flight
         targetScope.DetailFlight = flightNumber;

@@ -148,13 +148,13 @@
         </div>
 
         <div class="flight" ng-repeat="Flight in departureFlight = 
-             (FlightConfig[0].FlightList | filter:FlightFiltering.AirlineFilter('departure') | filter:FlightFiltering.TransitFilter('departure') | filter:FlightFiltering.DepartureTimeFilter('departure') | filter:FlightFiltering.ArrivalTimeFilter('arrival') | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert)" id="flight-{{Flight.IndexNo}}" ng-click="FlightFunctions.SetActiveFlight(Flight.IndexNo)">
+             (FlightConfig[0].FlightList | filter:FlightFiltering.AirlineFilter('departure') | filter:FlightFiltering.TransitFilter('departure') | filter:FlightFiltering.DepartureTimeFilter('departure') | filter:FlightFiltering.ArrivalTimeFilter('arrival') | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert)" id="flight-{{Flight.IndexNo}}" >
             <div class="flight-header">
                 <h4 class="flight-airline">
                     <img ng-src="{{Flight.Trips[0].Segments[0].AirlineLogoUrl}}" alt="{{Flight.Trips[0].Segments[0].AirlineName}}" class="flight-airline-image" />
                     <span>{{Flight.Trips[0].Segments[0].AirlineName}}</span>
                 </h4>
-            </div>
+            </div>                                                                                                             
             <div class="flight-content">
                 <div class="content-left">
                     <h4 class="flight-time">
@@ -176,8 +176,9 @@
                 </div>
             </div>
             <div class="flight-footer">
-                <a class="flight-detail-button">Lihat Detail &gt;</a>
-                <a class="btn btn-yellow pull-right flight-order">PESAN</a>
+                <a class="flight-detail-button" ng-click="FlightFunctions.SetActiveFlight(Flight.IndexNo)">Lihat Detail &gt;</a>
+                <a class="btn btn-yellow pull-right flight-order" ng-click="FlightConfig[0].ActiveFlight = Flight.IndexNo;
+                   FlightFunctions.Revalidate(FlightConfig[0].ActiveFlight)">PESAN</a>
             </div>
         </div>
 
