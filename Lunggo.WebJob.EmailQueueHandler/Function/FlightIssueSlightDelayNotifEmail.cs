@@ -28,8 +28,8 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
-            //dynamic emailData = reservation;
-            //emailData.caseType =caseType;
+            dynamic emailData = reservation;
+            emailData.caseType =caseType;
 
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel

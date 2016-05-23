@@ -424,6 +424,19 @@ input[type=number]::-webkit-outer-spin-button {
   background-image: linear-gradient(to bottom, #FFD65E, #FEBF04);
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#FFD65E, endColorstr=#FEBF04); }
 
+.btn.popup-btn-yellow {
+  background: #ffd632;
+  border: 2px solid #ebb600;
+  color: #4f3500;
+  font-weight: bold;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px; }
+
+.btn.popup-block {
+  display: block;
+  width: 100%; }
+
 /*.button_popup:hover{
  border:1px solid #CE9A01;
  background-color: #FFC92B; background-image: -webkit-gradient(linear, left top, left bottom, from(#FFC92B), to(#CE9A01));
@@ -534,8 +547,8 @@ input[type=number]::-webkit-outer-spin-button {
   background: rgba(0, 0, 0, 0.7);
   visibility: visible; }
   .loading-popup .overlay-content {
-    width: 350px;
-    height: 352px;
+    width: 380px;
+    height: 382px;
     background: url("/Assets/images/popup/pleasewait350px.png");
     position: absolute;
     margin: auto;

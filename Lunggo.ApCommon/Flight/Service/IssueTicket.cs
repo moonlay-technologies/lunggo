@@ -136,7 +136,7 @@ namespace Lunggo.ApCommon.Flight.Service
             string balanceAndItinPrice = "";
             for(int i=0;i<supplierName.Count;i++)
             {
-                if (i != supplierName.Count - 1)
+                if (i != supplierName.Count - 1 && i>1)
                 {
                     balanceAndItinPrice = supplierName[i] + ";" + localPrice[i] + ";" + balance[i] + "+";
                 }

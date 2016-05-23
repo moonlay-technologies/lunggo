@@ -30,7 +30,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
-            /*dynamic emailData = reservation;
+            dynamic emailData = reservation;
             if (splitMessage.Length > 2)
             {
                 int index = 0;
@@ -50,12 +50,13 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 emailData.SupplierName = splitSupplier[0];
                 emailData.SupplierName = splitSupplier[1];
                 emailData.SupplierName = splitSupplier[2];
-            }*/
+                emailData.ItinCount = 1;
+            }
 
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
             {
-                RecipientList = new[] { "developer@travelmadezy.com" },
+                RecipientList = new[] { "suheri@travelmadezy.com" },
                 Subject = envPrefix + env == "production" ? "Issue Failed - No Pemesanan :  " + rsvNo : "[TEST] Ignore This Email",
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama"

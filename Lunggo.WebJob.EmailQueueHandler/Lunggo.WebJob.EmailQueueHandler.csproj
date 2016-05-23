@@ -163,6 +163,8 @@
     </Content>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\dv1-webjob %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob.pubxml" />
