@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
 @model Lunggo.ApCommon.Flight.Model.FlightNotifDeveloper
 @{ var env = ConfigManager.GetInstance().GetConfigValue("general", "environment"); }
@@ -15,19 +16,19 @@
     {
         <p>Itinerary : 1</p>
         <p>Airline Agent : @Model.FlightIssueData[0].SupplierName</p>
-        <p>Reservation Price : @Model.FlightIssueData[0].SupplierPrice</p>
-        <p>Current Deposit : @Model.FlightIssueData[0].CurentDeposit</p>
+        <p>Reservation Price : Rp. @Model.FlightIssueData[0].SupplierPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+        <p>Current Deposit : Rp. @Model.FlightIssueData[0].CurentDeposit.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
 
         <p>Itinerary : 2</p>
         <p>Airline Agent : @Model.FlightIssueData[1].SupplierName</p>
-        <p>Reservation Price : @Model.FlightIssueData[1].SupplierPrice</p>
-        <p>Current Deposit : @Model.FlightIssueData[1].CurentDeposit</p>
+        <p>Reservation Price : Rp. @Model.FlightIssueData[1].SupplierPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+        <p>Current Deposit : Rp. @Model.FlightIssueData[1].CurentDeposit</p>
     }
     else
     {
         <p>Airline Agent : @Model.FlightIssueData[0].SupplierName</p>
-        <p>Reservation Price : @Model.FlightIssueData[0].SupplierPrice</p>
-        <p>Current Deposit : @Model.FlightIssueData[0].CurentDeposit</p>
+        <p>Reservation Price : Rp. @Model.FlightIssueData[0].SupplierPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+        <p>Current Deposit : Rp. @Model.FlightIssueData[0].CurentDeposit.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
     }
 
     </body>
