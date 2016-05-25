@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
 @using Lunggo.Framework.Config
-@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+@model Lunggo.ApCommon.Flight.Model.FlightNotifDeveloper
 @{ var env = ConfigManager.GetInstance().GetConfigValue("general", "environment"); }
 <html>
 <head>
@@ -11,14 +11,25 @@
 <body>
     <p>@(env != "production" ? "THIS IS A TEST EMAIL. PLEASE IGNORE THIS DREADED EMAIL. SORRY FOR THE INCONVENIENCE." : "")</p>
     <p>Reservation Number : @Model.RsvNo</p>
-    @for (int i = 0; i < Model.ItinCount; i++)
+    @if (Model.FlightIssueData.Count > 1)
     {
-        <p>Itinerary : @i</p>
-        <p>Airline Agent : @Model.SupplierName[i]</p>
-        <p>Reservation Price : @Model.LocalPrice[i]</p>
-        <p>Current Deposit : @Model.CurrentDeposit[i]</p>
+        <p>Itinerary : 1</p>
+        <p>Airline Agent : @Model.FlightIssueData[0].SupplierName</p>
+        <p>Reservation Price : @Model.FlightIssueData[0].SupplierPrice</p>
+        <p>Current Deposit : @Model.FlightIssueData[0].CurentDeposit</p>
+
+        <p>Itinerary : 2</p>
+        <p>Airline Agent : @Model.FlightIssueData[1].SupplierName</p>
+        <p>Reservation Price : @Model.FlightIssueData[1].SupplierPrice</p>
+        <p>Current Deposit : @Model.FlightIssueData[1].CurentDeposit</p>
+    }
+    else
+    {
+        <p>Airline Agent : @Model.FlightIssueData[0].SupplierName</p>
+        <p>Reservation Price : @Model.FlightIssueData[0].SupplierPrice</p>
+        <p>Current Deposit : @Model.FlightIssueData[0].CurentDeposit</p>
     }
 
-</body>
+    </body>
 
 </html>

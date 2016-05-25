@@ -4,6 +4,8 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
+using Lunggo.ApCommon.Flight.Model;
+using System.Collections.Generic;
 
 namespace Lunggo.WebJob.EmailQueueHandler.Function
 {
@@ -30,28 +32,26 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
-            dynamic emailData = reservation;
-            if (splitMessage.Length > 2)
+            List<FlightIssueData> IssueData = new List<FlightIssueData>();
+
+            for (int i = 1; i < splitMessage.Length; i++)
             {
-                int index = 0;
-                for (int i = 1; i < splitMessage.Length; i++)
-                {
-                    var splitSupplier = splitMessage[i].Split(';');
-                    emailData.SupplierName[index] = splitSupplier[0];
-                    emailData.LocalPrice[index] = splitSupplier[1];
-                    emailData.CurrentDeposit[index] = splitSupplier[2];
-                    index++;
-                }
-                emailData.ItinCount = index;
+                var splitSupplier = splitMessage[i].Split(';');
+                var localPrice = decimal.Parse(splitSupplier[1]);
+                var currentDeposit = decimal.Parse(splitSupplier[2]);
+                var singleData = new FlightIssueData { 
+                    SupplierName = splitSupplier[0],
+                    SupplierPrice = localPrice,
+                    CurentDeposit = currentDeposit
+                };
+                IssueData.Add(singleData);
             }
-            else 
+
+            var SlightDelayData = new FlightNotifDeveloper
             {
-                var splitSupplier = splitMessage[1].Split(';');
-                emailData.SupplierName = splitSupplier[0];
-                emailData.SupplierName = splitSupplier[1];
-                emailData.SupplierName = splitSupplier[2];
-                emailData.ItinCount = 1;
-            }
+                RsvNo = rsvNo,
+                FlightIssueData = IssueData
+            };
 
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
@@ -62,7 +62,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama"
             };
             Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(reservation, mailModel, "FlightIssueFailedNotifEmail");
+            mailService.SendEmail(SlightDelayData, mailModel, "FlightIssueFailedNotifEmail");
 
             Console.WriteLine("Done Processing Flight Issue Failed Notif Email for RsvNo " + rsvNo);
         }

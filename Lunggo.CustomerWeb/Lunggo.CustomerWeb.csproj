@@ -919,6 +919,7 @@
     <Content Include="Assets\images\popup\paymentyellowstrip.png" />
     <Content Include="Assets\images\popup\pleasewait350px.png" />
     <Content Include="Assets\images\popup\Pop-Up-Book-Flight_03.png" />
+    <Content Include="Assets\images\popup\popup-close.png" />
     <Content Include="Assets\images\popup\pricechanged500px.png" />
     <Content Include="Assets\images\popup\pricechanged620px.png" />
     <Content Include="Assets\images\popup\pricechanged_400px.png" />

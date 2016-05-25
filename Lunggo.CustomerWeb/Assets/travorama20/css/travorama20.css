@@ -437,15 +437,12 @@ input[type=number]::-webkit-outer-spin-button {
   display: block;
   width: 100%; }
 
-/*.button_popup:hover{
- border:1px solid #CE9A01;
- background-color: #FFC92B; background-image: -webkit-gradient(linear, left top, left bottom, from(#FFC92B), to(#CE9A01));
- background-image: -webkit-linear-gradient(top, #FFC92B, #CE9A01);
- background-image: -moz-linear-gradient(top, #FFC92B, #CE9A01);
- background-image: -ms-linear-gradient(top, #FFC92B, #CE9A01);
- background-image: -o-linear-gradient(top, #FFC92B, #CE9A01);
- background-image: linear-gradient(to bottom, #FFC92B, #CE9A01);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#FFC92B, endColorstr=#CE9A01);
-}*/
+.btn.book-failed {
+  width: 30%; }
+
+.btn.price-changed {
+  width: 40%; }
+
 .page-overlay {
   position: fixed;
   width: 100%;
@@ -509,32 +506,100 @@ input[type=number]::-webkit-outer-spin-button {
     -moz-border-radius: 2px;
     border-radius: 2px;
     overflow: hidden; }
-    .page-newsletter .overlay-content section .header {
+    .page-newsletter .overlay-content section .normal-flow {
+      display: block; }
+      .page-newsletter .overlay-content section .normal-flow .header {
+        padding-top: 55px;
+        padding-left: 130px;
+        margin-bottom: 5px; }
+      .page-newsletter .overlay-content section .normal-flow .popup-text {
+        padding-top: 0px;
+        margin-top: 0px;
+        padding-left: 130px;
+        font-size: 12px;
+        padding-right: 5px; }
+      .page-newsletter .overlay-content section .normal-flow .form-newsletter {
+        padding-left: 130px; }
+        .page-newsletter .overlay-content section .normal-flow .form-newsletter .form-group .input-type {
+          height: 28px;
+          width: 155px; }
+    .page-newsletter .overlay-content section .member-exist {
+      display: none;
       padding-top: 55px;
-      padding-left: 130px;
-      margin-bottom: 5px; }
-    .page-newsletter .overlay-content section .popup-text {
-      padding-top: 0px;
-      margin-top: 0px;
-      padding-left: 130px;
-      font-size: 12px;
-      padding-right: 5px; }
-    .page-newsletter .overlay-content section .form-newsletter {
       padding-left: 130px; }
-      .page-newsletter .overlay-content section .form-newsletter .form-group .input-type {
-        height: 28px;
-        width: 155px; }
   .page-newsletter footer {
     bottom: 15px;
     left: 0;
     width: 100%; }
 
-.thankyou-popup .overlay-content .modal-body {
+.thankyou-popup .overlay-content .modal-content .modal-body {
+  width: 620px;
+  height: 296px;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: url("/Assets/images/popup/thankyou2_600px.png");
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
   overflow: hidden; }
+
+/*.modal {
+}
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+}
+.vertical-align-center {
+    //To center vertically
+    display: table-cell;
+    vertical-align: middle;
+}
+.modal-content {
+    // Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it
+    width:620px;
+    height:296px;
+    background:url("/Assets/images/popup/thankyou2_600px.png") no-repeat; 
+    //To center horizontally
+    margin: 0 auto;
+    border-radius: 0 !important;
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important;
+    $baseBorderRadius: 0;
+    $navbar-border-radius: 0;
+    -webkit-box-shadow: 0 5px 15px rgba(0,0,0,0);
+    -moz-box-shadow: 0 5px 15px rgba(0,0,0,0);
+    -o-box-shadow: 0 5px 15px rgba(0,0,0,0);
+    box-shadow: 0 5px 15px rgba(0,0,0,0);
+}*/
+.thankyou-popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  display: none; }
+  .thankyou-popup .overlay-content {
+    width: 620px;
+    height: 296px;
+    background: url("/Assets/images/popup/thankyou2_600px.png");
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    overflow: hidden; }
 
 .loading-popup {
   display: block;

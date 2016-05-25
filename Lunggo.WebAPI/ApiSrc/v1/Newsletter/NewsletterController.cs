@@ -9,6 +9,9 @@ using Lunggo.WebAPI.ApiSrc.v1.Newsletter.Model;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Authenticators;
+using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Framework.Queue;
+using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Newsletter
 {
@@ -32,10 +35,17 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Newsletter
             var jsonBody = CreateApiJsonBody(input);
             request.AddJsonBody(jsonBody);
             var response = client.Execute(request);
-            return new NewsletterSubscribeOutput { 
+            var result =  new NewsletterSubscribeOutput{
                 IsSuccess = IsApiResponseValid(response),
                 IsMemberExist = IsMemberExist(response)
             };
+            if (result.IsSuccess && !result.IsMemberExist) 
+            {
+                var queueService = QueueService.GetInstance();
+                var queue = queueService.GetQueueByReference("RegisterSubscribeEmail");
+                queue.AddMessage(new CloudQueueMessage(input.Address));
+            }
+            return result;
         }
 
         private bool IsApiResponseValid(IRestResponse response)

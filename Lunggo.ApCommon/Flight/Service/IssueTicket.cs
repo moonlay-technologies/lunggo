@@ -107,8 +107,8 @@ namespace Lunggo.ApCommon.Flight.Service
                         output.PartiallySucceed();
                     }//End
                     output.IsSuccess = false;
-                    output.Errors = output.Errors.Distinct().ToList();
-                    output.ErrorMessages = output.ErrorMessages.Distinct().ToList();
+                    //output.Errors = output.Errors.Distinct().ToList();
+                    //output.ErrorMessages = output.ErrorMessages.Distinct().ToList();
                 }
                 UpdateIssueStatus(input.RsvNo, output);
                 return output;

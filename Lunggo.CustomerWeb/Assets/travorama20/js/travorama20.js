@@ -160,7 +160,7 @@ $(document).ready(function () {
 
     function validateNewsletterForm() {
         $('form.form-newsletter input[type="submit"]').prop('disabled', true);
-        $('form.form-newsletter input[type="submit"]').val('LOADING');
+        //$('form.form-newsletter input[type="submit"]').val('LOADING');
         email = $('form.form-newsletter input.input-type').val();
         console.log('Masuk Sini');
         //console.log('email' + NewsletterConfig.email);
@@ -185,12 +185,16 @@ $(document).ready(function () {
 
     function recheckForm() {
         $('form.form-newsletter input[type="submit"]').removeProp('disabled');
-        $('form.form-newsletter input[type="submit"]').val('SUBMIT');
+        $('form.form-newsletter input[type="submit"]').val('DAFTAR');
     }
 
     function submitNewsletterForm() {
         $('form.form-newsletter .input-type').prop('disabled', true);
         email = $('form.form-newsletter input.input-type').val();
+        var div = document.getElementById("thankyou");
+        /*if (div.style.display !== "none") {
+            div.style.display = "none";
+        }*/
         subscriberName = 'subscriber';
         $.ajax({
             url: SubscribeConfig.Url,
@@ -201,16 +205,29 @@ $(document).ready(function () {
             console.log(returnData);
             if (returnData.IsSuccess) {
                 $('.page-newsletter').hide();
-                $('.thankyou-popup').modal('show');
+                //$('.thankyou-popup').show();
+                //$('.thankyou-popup').modal('show');
+                //$('#myModal').modal('show');
+                div.style.display = "block";
                 $('.close-popup').click(function (e) {
                     e.preventDefault();
-                    $('.thankyou-popup').modal('hide');
+                    //$('.thankyou-popup').hide();
+                    //$('#myModal').modal('hide');
+                    div.style.display = "none";
                 });
             }
             else
             {
+                var normalflow = document.getElementById("normalflow");
+                var memberexist = document.getElementById("memberexist");
                 if (returnData.IsMemberExist) {
-                    console.log('Member Exist');
+                    normalflow.style.display = "none";
+                    memberexist.style.display = "block";
+                    var close = document.getElementById("newsletter");
+                    $('.close-member').click(function (e) {
+                        e.preventDefault();
+                        close.style.display = "none";
+                    });
                 }
                 else
                 {

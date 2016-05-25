@@ -631,7 +631,7 @@
 
             </section><!-- .checkout-content -->
 
-            <div class="page-overlay flight-expired" ng-show="expired">
+            <!--<div class="page-overlay flight-expired" ng-show="expired">
                 <div class="overlay-content">
                     <header>
                         <h4>Checkout Kadaluarsa</h4>
@@ -661,9 +661,22 @@
                         </div>
                     </footer>
                 </div>
-            </div><!-- .page-overlay -->
+            </div>--><!-- .page-overlay -->
+            <div class="bookfailed-popup" ng-show="expired">
+                <div class="overlay-content">
+                    <section style="padding-top:60px; padding-left:225px;">
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                        <div style="padding-top:5px;"><span style="font-size:13px">Waktu pembayaran Anda<span style="color: #15b1e4;font-size:13px"><b> sudah habis</b></span>.</span></div>
+                        <div><span style="font-size:13px">Silahkan klik tombol dibawah untuk kembali ke halaman pencarian.</span></div>
+                    </section>
+                    <div align="right" style="padding-right:30px;padding-top:30px;">
+                        <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+                    </div>
+                </div>
+            </div>
 
-            <div class="page-overlay booking-flight" ng-hide="book.checked || !book.booking">
+            <!--<div class="page-overlay booking-flight" ng-hide="book.checked || !book.booking">
                 <div class="overlay-content">
                     <header>
                         <h4>Mohon Tunggu</h4>
@@ -681,9 +694,26 @@
                         </div>
                     </section>
                 </div>
+            </div> -->
+            <div class="loading-popup" ng-hide="book.checked || !book.booking">
+                <div class="overlay-content">
+                    <section style="padding-top:40px; padding-left:190px;">
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:17px"><i><b>Mohon Tunggu...</b></i></span></div>
+                        <div><img src="/Assets/images/popup/loading-strip2.png"></div>
+                        <div style="padding-top:15px;"><span style="font-size:14px"><b>Kami sedang</b></span></div>
+                        <span style="color: #15b1e4; font-size:14px"><b>memproses*</b></span>
+                        <div><span style="font-size:14px"><b>pemesanan Anda</b></span></div>
+                        <div><span style="font-size:14px"><b>ke maskapai</b></span></div>
+                        <div style="padding-right:8px;padding-top:20px"><span style="font-size:9px"><b>*Dapat berlangsung hingga 5(lima) menit</b></span></div>
+                        <div style="padding-top:20px"><img src="/Assets/images/popup/quotation1.png"><span style="font-size:12px;">Oh the Places</span></div>
+                        <div><span style="font-size:12px;">You'll go<img src="/Assets/images/popup/quotation2.png"></span></div>
+                        <div><span><i>-Dr. Seuss</i></span></div>
+                    </section>
+                </div>
             </div>
 
-            <div class="page-overlay booking-flight" ng-show="book.checked && book.isSuccess">
+            <!--<div class="page-overlay booking-flight" ng-show="book.checked && book.isSuccess">
                 <div class="overlay-content">
                     <header>
                         <h4>Pemesanan Berhasil</h4>
@@ -692,9 +722,21 @@
                         <p>Penerbangan Tersedia. Mengalihkan Anda ke halaman pembayaran.</p>
                     </section>
                 </div>
+            </div>-->
+
+            <div class="bookfailed-popup" ng-show="book.checked && book.isSuccess">
+                <div class=" overlay-content">
+                <section style="padding-top:60px; padding-left:225px;">
+                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                    <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Pemesanan Berhasil</b></span></div>
+                    <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                    <div style="padding-top:5px;"><span style="font-size:14px">Penerbangan Tersedia.</span></div>
+                    <div style="padding-top:5px;"><span style="font-size:14px">Mengalihkan Anda ke halaman pembayaran.</span></div>
+                </section>
+            </div>
             </div>
 
-            <div class="page-overlay booking-flight" ng-show="book.checked && !book.isSuccess">
+            <!--<div class="page-overlay booking-flight" ng-show="book.checked && !book.isSuccess">
                 <div class="overlay-content">
                     <header>
                         <h4>Pemesanan Gagal</h4>
@@ -714,9 +756,23 @@
                         </div>
                     </footer>
                 </div>
+            </div>-->
+
+            <div class="bookfailed-popup" ng-show="book.checked && !book.isSuccess">
+                <div class="overlay-content">
+                    <section style="padding-top:60px; padding-left:225px;">
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                        <div style="padding-top:5px;"><span style="font-size:13px">Tiket penerbangan tidak dapat diproses karena kursi <span style="color: #15b1e4;font-size:13px"><b>telah terisi penuh</b></span></span></div>
+                        <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>
+                    </section>
+                    <div align="right" style="padding-right:30px;padding-top:30px;">
+                        <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+                    </div>
+                </div>
             </div>
 
-            <div class="page-overlay booking-flight" ng-show="book.isPriceChanged">
+            <!--<div class="page-overlay booking-flight" ng-show="book.isPriceChanged">
                 <div class="overlay-content">
                     <header>
                         <h4>Harga Berubah</h4>
@@ -733,16 +789,32 @@
                                 <div class="col-sm-6">
                                     <a class="btn btn-grey btn-block" href="{{returnUrl}}">KEMBALI</a>
                                 </div>
-                                <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()">
-                                    <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">
+                                <form name="finalForm" id="finalForm" ng-submit="book.send()">
+                                    <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI" ng-disabled="(checkoutForm.loading)">
                                 </form>
                             </div>
                         </div>
                     </footer>
 
-                </div><!-- .page-overlay -->
-            </div>
+                </div>
+            </div>-->
 
+            <div class="priceChaged-popup" ng-show="book.isPriceChanged">
+                <div class="overlay-content">
+                    <section style="padding-top:45px; padding-left:200px;padding-bottom:0px;margin-bottom:0px;">
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div style="padding-top:5px;"><span style="color: #15b1e4; font-size:26px"><b>Harga berubah*</b></span></div>
+                        <div style="padding-top:5px;"><span style="font-size:13px">Maskapai baru saja mengupdate harga tiket dari <span style="color: #15b1e4;font-size:13px"><b>Rp {{totalPrice | number : fractionSize}}</b></span> menjadi <span style="color: #15b1e4;font-size:13px"><b>Rp {{book.newPrice | number : fractionSize}}</b></span></span></div>
+                        <div align="right" style="padding-right:10px"><img src="/Assets/images/popup/paymentyellowstrip.png"></div>
+                        <div style="padding-right:5px;padding-top:5px;padding-bottom:0px;margin-bottom:0px;"><span style="font-size:10px"><b>*Dapat berlangsung hingga 5(lima) menit</b></span></div>
+                        <div style="padding-top:0px;margin-top:0px"><hr style="color:#15b1e4;padding-bottom:15px;margin-bottom:0px;padding-top:0px;margin-top:3px;margin-right:75px;" /></div>
+                        <div style="padding-top:0px;margin-top:0px;">
+                            <span style="padding-bottom:10px;padding-top:0px;margin-top:0px;margin-bottom:0px;"><a class="btn popup-btn-yellow price-changed" href="{{returnUrl}}">CARI ULANG</a></span>
+                            <span style="padding-left:40px;padding-bottom:10px;padding-top:0px;margin-top:0px;margin-bottom:0px;"><a class="btn popup-btn-yellow price-changed" href="book.send()"><b>LANJUTKAN</b></a></span>
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
 
         <!-- checkout end here -->

@@ -516,7 +516,7 @@
                 </div>
             </div><!-- .page-overlay -->
 
-            <div class="page-overlay booking-flight" ng-hide="!pay.paying">
+            <!--<div class="page-overlay booking-flight" ng-hide="!pay.paying">
                 <div class="overlay-content" >
                     <header>
                         <h4>Mohon Tunggu</h4>
@@ -534,6 +534,17 @@
                         </div>
                     </section>
                 </div>
+            </div>-->
+
+            <div class="bookfailed-popup" ng-hide="!pay.paying">
+                <div class=" overlay-content">
+                <section style="padding-top:60px; padding-left:225px;">
+                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                    <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Tunggu...</b></span></div>
+                    <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                    <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
+                </section>
+            </div>
             </div>
 
             <!--<div class="page-overlay booking-flight" ng-show="book.checked && book.isSuccess">

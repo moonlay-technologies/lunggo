@@ -132,106 +132,42 @@
     });
     </script>
 
-    <div class="page-newsletter">
+    <div class="page-newsletter" id="newsletter">
         <div class=" overlay-content">
             <section>
-                <p class="header"><img src="~/Assets/images/popup/header1.png" /></p>
-                <p class="popup-text"><span style="color:#ffffff">Dapatkan informasi harga tiket murah dengan</span><span style="color:#ffd632"> <b>mendaftarkan email Anda</b></span></p>
-                <form class="form-newsletter">
-                    <div class="form-group">
-                        <span><input type="text" name="name" value="" style="text-align:center;" class="input-type" placeholder="Masukkan Email Anda"></span>
-                        <input type="submit" class="btn btn-yellow" value="SUBMIT" onclick="newsletterFormFunctions()" />
-                    </div>
-                </form>
+                <div class="normal-flow" id="normalflow">
+                    <p class="header"><img src="~/Assets/images/popup/header1.png" /></p>
+                    <p class="popup-text"><span style="color:#ffffff">Dapatkan informasi harga tiket murah dengan</span><span style="color:#ffd632"> <b>mendaftarkan email Anda</b></span></p>
+                    <form class="form-newsletter">
+                        <div class="form-group">
+                            <span><input type="email" name="email" value="" style="text-align:center;" class="input-type" placeholder="Masukkan Email Anda"></span>
+                            <input type="submit" class="btn btn-yellow" value="DAFTAR" onclick="newsletterFormFunctions()" />
+                        </div>
+                    </form>
+                </div>
+                <div class="member-exist" id="memberexist">
+                    <p align="right" style="padding-bottom:5px;padding-right:10px;margin-right:0px;margin-bottom:0px;"><a  class="close-member" href="#"><img src="/Assets/images/popup/popup-close.png" width="20px" height="20px"></a></p>
+                    <p>
+                        <span style="color:#ffffff;font-size:13px;text-align: justify;text-justify: inter-word;">Email yang Anda gunakan telah terdaftar. Terima kasih telah bergabung dengan Travorama</span>
+                    </p>
+                </div>
+                
             </section>
         </div>
     </div>
 
-    <!-- *HARGA BERUBAH*  -->
-    <!--<div class="priceChaged-popup">
+    <div class="thankyou-popup"id="thankyou">
         <div class="overlay-content">
-            <section style="padding-top:45px; padding-left:200px;padding-bottom:0px;margin-bottom:0px;">
-                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                <div style="padding-top:5px;"><span style="color: #15b1e4; font-size:26px"><b>Harga berubah*</b></span></div>
-                <div style="padding-top:5px;"><span style="font-size:13px">Maskapai baru saja mengupdate harga tiket dari <span style="color: #15b1e4;font-size:13px"><b>Rp 500.000</b></span> menjadi <span style="color: #15b1e4;font-size:13px"><b>Rp 700.000</b></span></span></div>
-                <div align="right" style="padding-right:10px"><img src="/Assets/images/popup/paymentyellowstrip.png"></div>
-                <div style="padding-right:5px;padding-top:5px;padding-bottom:0px;margin-bottom:0px;"><span style="font-size:10px"><b>*Dapat berlangsung hingga 5(lima) menit</b></span></div>
-                <div style="padding-top:0px;margin-top:0px"><hr style="color:#15b1e4;padding-top:2px;"></div>
-                <div style="padding-top:0px;margin-top:0px;width:50%">
-                    <span><a class="btn popup-btn-yellow popup-block" href="#">CARI ULANG</a></span>
-                </div>
-                <div style="width:40%">
-                    <span><a class="btn popup-btn-yellow popup-block" href="#"><b>LANJUTKAN</b></a></span>
-                </div>
-            </section>
-           
-        </div>
-    </div>-->
-
-    <!-- *METODE PEMBAYARAN GAGAL*  -->
-    <!--<div class="payment-popup">
-        <div class="overlay-content">
-            <section style="padding-top:40px; padding-left:200px;padding-right:30px;">
-                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                <div style="padding-top:15px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
-                <div style="padding-top:5px;"><span style="font-size:13px">Transaksi pembayaran Anda gagal dilakukan.</span></div>
-                <div style="padding-top:10px;"><span style="font-size:11px">Silahkan pilih<span style="color: #15b1e4;font-size:11px"><b> metode pembayaran lain</b></span></span></div>
-                <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/paymentyellowstrip.png"></div>
-            </section>
-            <div align="right" style="padding-right:30px;padding-top:5px;">
-                <b><a class="button_popup" href="#">LANJUTKAN</a></b>
-            </div>
-        </div>
-    </div>-->
-
-    <!-- *PEMESANAN GAGAL*  -->
-    <!--<div class="bookfailed-popup">
-        <div class="overlay-content">
-            <section style="padding-top:60px; padding-left:225px;">
-                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
-                <div style="padding-top:5px;"><span style="font-size:13px">Tiket penerbangan tidak dapat diproses karena kursi <span style="color: #15b1e4;font-size:13px"><b>telah terisi penuh</b></span></span></div>
-                <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>
-            </section>
-            <div align="right" style="padding-right:30px;padding-top:30px;">
-                <b><a class="button_popup" href="#">CARI ULANG</a></b></div>
-        </div>
-     </div>-->
-
-    <div class="loading-popup">
-        <div class="overlay-content">
-            <section style="padding-top:40px; padding-left:200px;">
-                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                <div style="padding-top:15px;"><span style="color: #15b1e4; font-size:17px"><i><b>Mohon Tunggu...</b></i></span></div>
-                <div><img src="/Assets/images/popup/loading-strip2.png"></div>
-                <div style="padding-top:5px;"><span style="font-size:16px"><b>Kami sedang</b></span></div>
-                <span style="color: #15b1e4; font-size:16px"><b>memproses</b></span>
-                <div><span style="font-size:16px"><b>pemesanan Anda</b></span></div>
-                <div><span style="font-size:16px"><b>ke maskapai</b></span></div>
-                <div style="padding-right:5px;padding-top:20px"><span style="font-size:10px"><b>*Dapat berlangsung hingga 5(lima) menit</b></span></div>
-                <div style="padding-top:15px"><img src="/Assets/images/popup/quotation1.png"><span style="font-size:12px;">Oh the Places</span></div>
-                <div><span style="font-size:12px;">You'll go<img src="/Assets/images/popup/quotation2.png"></span></div>
-                <div><span><i>-Dr. Seuss</i></span></div>
+            <section style="padding-top:65px; padding-left:300px;">
+                <p align="right" style="padding-right:15px; margin-bottom:0px;"><a class="close-popup" href="#thankyou"><img src="~/Assets/images/popup/close.png" /></a></p>
+                <p style="padding-bottom:5px;"><img src="~/Assets/images/popup/text_thnks.png" /></p>
+                <p><span style="color:#ffffff;font-size:12px;"><b>Anda telah terdaftar di mailing list kami</b></span></p>
+                <p><span style="color:#ffffff;font-size:12px;padding-left:15px;">dan Anda akan jadi yang pertama tahu</span></p>
+                <p><span style="color:#ffffff;font-size:12px;padding-left:35px;">apabila ada penawaran khusus</span></p>
+                <p style="padding-left:90px;padding-top:7px;"><img src="~/Assets/images/popup/stars.png" /></p>
             </section>
         </div>
     </div>
 
-    <div class="modal thankyou-popup" tabindex="-1" aria-hidden="true" role="dialog" aria-labelledby="myLargeModalLabel" id="thankyou">
-        <div class="overlay-content">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <section style="padding-top:65px; padding-left:300px;">
-                        <p align="right" style="padding-right:15px; margin-bottom:0px;"><a  class="close-popup" href="#thankyou"><img src="~/Assets/images/popup/close.png" /></a></p>
-                        <p style="padding-bottom:5px;"><img src="~/Assets/images/popup/text_thnks.png" /></p>
-                        <p><span style="color:#ffffff;font-size:12px;"><b>Anda telah terdaftar di mailing list kami</b></span></p>
-                        <p><span style="color:#ffffff;font-size:12px;padding-left:15px;">dan Anda akan jadi yang pertama tahu</span></p>
-                        <p><span style="color:#ffffff;font-size:12px;padding-left:35px;">apabila ada penawaran khusus</span></p>
-                        <p style="padding-left:90px;padding-top:7px;"><img src="~/Assets/images/popup/stars.png" /></p>
-                    </section>
-                </div>
-            </div>
-            
-        </div>
-    </div>
 </body>
 </html>

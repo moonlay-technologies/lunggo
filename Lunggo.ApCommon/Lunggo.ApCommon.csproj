@@ -195,10 +195,13 @@
     <Compile Include="Flight\Model\Conditions.cs" />
     <Compile Include="Flight\Model\ContactData.cs" />
     <Compile Include="Flight\Model\DiscountData.cs" />
+    <Compile Include="Flight\Model\FlightIssueData.cs" />
+    <Compile Include="Flight\Model\FlightNotifDeveloper.cs" />
     <Compile Include="Flight\Model\FlightOrderInfo.cs" />
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightSearchPackage.cs" />
+    <Compile Include="Flight\Model\FlightSlightDelay.cs" />
     <Compile Include="Flight\Model\FlightTrip.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingInput.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingOutput.cs" />

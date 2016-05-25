@@ -170,7 +170,7 @@
             </div>
         </div>
 
-        <div class="page-overlay" ng-show="expiry.expired">
+        <!--<div class="page-overlay" ng-show="expiry.expired">
             <div class="overlay-content validating-flight">
                 <header>
                     <h4>Pencarian Kadaluarsa</h4>
@@ -200,7 +200,21 @@
                     </div>
                 </footer>
             </div>
-        </div><!-- .page-overlay -->
+        </div>--> <!-- .page-overlay -->
+
+        <div class="bookfailed-popup" ng-show="expiry.expired">
+            <div class="overlay-content">
+                <section style="padding-top:60px; padding-left:225px;">
+                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                    <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:22px"><b>Pencarian Kadaluarsa</b></span></div>
+                    <div style="padding-top:5px;"><span style="font-size:13px">Halaman pencarian Anda <span style="color: #15b1e4;font-size:13px"><b> sudah kadaluarsa</b></span>.</span></div>
+                    <div><span style="font-size:13px">Silahkan klik tombol di bawah ini untuk memparbaharui halaman pencarian Anda.</span></div>
+                </section>
+                <div align="right" style="padding-right:30px;padding-top:20px;">
+                    <a class="btn popup-btn-yellow book-failed" onclick="location.reload();"><b>REFRESH</b></a>
+                </div>
+            </div>
+        </div>
 
 
         <form action="@Url.Action("Select", "Flight")" method="POST" class="hidden push-token">
