@@ -1078,7 +1078,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                                     flightId + "+" + newSegments.Count + "+" + flightNoJoin + "+" +
                                                     depHrJoin;
 
-                                    itin.Price.Supplier = decimal.Parse(newPrice);
+                                    itin.Price.SetSupplier(decimal.Parse(newPrice), new Currency("IDR"));
                                     itin.FareId = newFareId;
 
                                     return new BookFlightResult
@@ -1124,7 +1124,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     + "+" + childCount + "+" + infantCount + "+" + splittedFareId[6] + "+" + harga2 
                                     + "+" + flightId + "+" + newSegments.Count + "+" + flightNoJoin + "+" + depHrJoin;
 
-                                itin.Price.Supplier = harga2;
+                                itin.Price.SetSupplier(harga2, new Currency("IDR"));
                                 itin.FareId = newFareId;
 
                                 LogOut(cid, client);
@@ -1171,7 +1171,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                                    "+" + harga2 + "+" + flightId + "+" + newSegments.Count +
                                                    "+" + flightNoJoin + "+" + depHrJoin;
 
-                            itin.Price.Supplier = harga2;
+                            itin.Price.SetSupplier(harga2, new Currency("IDR"));
                             itin.FareId = newFareId;
 
                         const string url9 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
@@ -1209,7 +1209,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                                    "+" + childCount + "+" + infantCount + "+" + splittedFareId[6] + 
                                                    "+" + newPrice + "+" + flightId + "+" + newSegments.Count + 
                                                    "+" + flightNoJoin + "+" + depHrJoin;
-                            itin.Price.Supplier = decimal.Parse(newPrice);
+                            itin.Price.SetSupplier(decimal.Parse(newPrice), new Currency("IDR"));
                             itin.FareId = newFareId;
 
                             // kalau ini booking ke 2 (setelah booking 1, yang harga naik di ujung)

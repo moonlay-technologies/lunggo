@@ -37,7 +37,6 @@ namespace Lunggo.ApCommon.ProductBase.Model
                     CurrencyCd = Currency,
                     IsFlat = IsFlat,
                     IsActive = IsActive
-
                 });
             }
         }

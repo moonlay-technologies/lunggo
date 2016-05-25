@@ -79,7 +79,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 return View(model);
             }
 
-            var user = new CustomUser
+            var user = new User
             {
                 UserName = model.Email,
                 Email = model.Email

@@ -12,13 +12,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
     internal partial class CitilinkWrapper
     {
-        internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
+        internal override IssueTicketResult OrderTicket(string bookingId, bool canHold)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             if (env == "production")
                 return Client.OrderTicket(bookingId);
             else
-                return new OrderTicketResult
+                return new IssueTicketResult
                 {
                     IsSuccess = true,
                     BookingId = bookingId,
@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
         private partial class CitilinkClientHandler
         {
             
-            internal OrderTicketResult OrderTicket(string bookingId)
+            internal IssueTicketResult OrderTicket(string bookingId)
             {
                 var hariIni = DateTime.Now.Day;
                 var bulanIni = DateTime.Now.Month;
@@ -73,7 +73,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 listRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var listResponse = clientx.Execute(listRequest);
                 if (listResponse.ResponseUri.AbsolutePath != "/BookingListTravelAgent.aspx")
-                    return new OrderTicketResult
+                    return new IssueTicketResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier }
@@ -111,7 +111,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 selectRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var selectResponse = clientx.Execute(selectRequest);
                 if (selectResponse.ResponseUri.AbsolutePath != "/Payment.aspx")
-                    return new OrderTicketResult
+                    return new IssueTicketResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier }
@@ -181,7 +181,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     listRequest2.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                     var listResponse2 = clientx.Execute(listRequest2);
                     if (listResponse2.ResponseUri.AbsolutePath != "/BookingListTravelAgent.aspx")
-                        return new OrderTicketResult
+                        return new IssueTicketResult
                         {
                             IsSuccess = false,
                             Errors = new List<FlightError> { FlightError.FailedOnSupplier }
@@ -226,7 +226,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     var tunjukStatus = ambilDataRespon["#itineraryBody>"];
                     var tunjukTr = tunjukStatus.MakeRoot()["tr:nth-child(2)>td:nth-child(2)"];
                     var statusPembayaran = tunjukTr.Select(x => x.Cq().Text()).FirstOrDefault();
-                    var hasil = new OrderTicketResult();
+                    var hasil = new IssueTicketResult();
 
                     if ((statusPembayaran == "Konfirm") || (statusPembayaran == "Confirmed"))
                         {
@@ -249,25 +249,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     switch (isIssued)
                     {
                         case IssueEnum.IssueSuccess:
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = true,
                                 BookingId = bookingId
                             };
                         case IssueEnum.NotIssued:
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = false
                             };
                         case IssueEnum.CheckingError:
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
                                 ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
                             };
                         default:
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },

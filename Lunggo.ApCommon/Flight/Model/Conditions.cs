@@ -6,6 +6,7 @@ namespace Lunggo.ApCommon.Flight.Model
     public class TripDetailsConditions : ConditionsBase
     {
         public string BookingId { get; set; }
+        public Supplier Supplier { get; set; }
     }
 
     public class RevalidateConditions : ConditionsBase

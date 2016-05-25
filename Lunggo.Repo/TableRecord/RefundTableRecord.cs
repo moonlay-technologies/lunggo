@@ -11,13 +11,13 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? PaymentId
+		public String RsvNo
 		{
-		    get { return _PaymentId; }
+		    get { return _RsvNo; }
 		    set
 		    {
-		        _PaymentId = value;
-		        IncrementLog("PaymentId");
+		        _RsvNo = value;
+		        IncrementLog("RsvNo");
 		    }
 		}
 		public DateTime? Time
@@ -157,7 +157,7 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _PaymentId;
+		private String _RsvNo;
 		private DateTime? _Time;
 		private String _BeneficiaryBank;
 		private String _BeneficiaryAccount;
@@ -204,7 +204,7 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("PaymentId", true),
+				new ColumnMetadata("RsvNo", true),
 				new ColumnMetadata("Time", false),
 				new ColumnMetadata("BeneficiaryBank", false),
 				new ColumnMetadata("BeneficiaryAccount", false),

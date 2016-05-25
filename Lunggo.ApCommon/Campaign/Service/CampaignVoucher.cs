@@ -21,16 +21,15 @@ namespace Lunggo.ApCommon.Campaign.Service
             var voucher = GetDb.GetCampaignVoucher(request.VoucherCode);
             response.Email = request.Email;
             response.VoucherCode = request.VoucherCode;
-            response.Discount = new Discount
+            response.Discount = new UsedDiscount
             {
-                Percentage = voucher.ValuePercentage.GetValueOrDefault(),
-                Constant = voucher.ValueConstant.GetValueOrDefault(),
-                Currency = new Currency("IDR"),
                 Name = voucher.CampaignName,
                 Description = voucher.CampaignDescription,
                 DisplayName = voucher.DisplayName,
-                IsFlat = false,
-                IsActive = true,
+                Percentage = voucher.ValuePercentage.GetValueOrDefault(),
+                Constant = voucher.ValueConstant.GetValueOrDefault(),
+                Currency = new Currency("IDR"),
+                IsFlat = false
             };
 
             var price = GetFlightPrice(request.Token);
@@ -62,16 +61,15 @@ namespace Lunggo.ApCommon.Campaign.Service
                 {
                     CalculateVoucherDiscount(voucher, reservation.Payment.FinalPriceIdr, response);
                     validationStatus = VoucherDecrement(request.VoucherCode);
-                    response.Discount = new Discount
+                    response.Discount = new UsedDiscount
                     {
-                        Percentage = voucher.ValuePercentage.GetValueOrDefault(),
-                        Constant = voucher.ValueConstant.GetValueOrDefault(),
-                        Currency = new Currency("IDR"),
                         Name = voucher.CampaignName,
                         Description = voucher.CampaignDescription,
                         DisplayName = voucher.DisplayName,
+                        Percentage = voucher.ValuePercentage.GetValueOrDefault(),
+                        Constant = voucher.ValueConstant.GetValueOrDefault(),
+                        Currency = new Currency("IDR"),
                         IsFlat = false,
-                        IsActive = true,
                     };
                 }
 

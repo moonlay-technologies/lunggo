@@ -13,11 +13,7 @@ using Lunggo.Framework.Context;
 
 namespace Lunggo.ApCommon.ProductBase.Model
 {
-    public abstract class ReservationBase<TRsv, TOrder, TRsvRule, TOrderRule>
-        where TRsv : ReservationBase<TRsv, TOrder, TRsvRule, TOrderRule>
-        where TOrder : OrderBase<TOrderRule>
-        where TRsvRule : RsvRuleBase<TOrderRule>
-        where TOrderRule : OrderRuleBase
+    public abstract class ReservationBase<TRsv> where TRsv : ReservationBase<TRsv>
     {
         public abstract ProductType Type { get; }
         public string RsvNo { get; set; }
@@ -28,8 +24,6 @@ namespace Lunggo.ApCommon.ProductBase.Model
         public PaymentDetails Payment { get; set; }
         public Contact Contact { get; set; }
         public User User { get; set; }
-        public List<TOrder> Orders { get; set; }
-        public TRsvRule Rule { get; set; }
         public ReservationState State { get; set; }
 
         //protected ReservationBase()

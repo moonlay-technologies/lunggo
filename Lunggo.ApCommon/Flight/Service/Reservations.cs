@@ -112,7 +112,7 @@ namespace Lunggo.ApCommon.Flight.Service
             if (rsv == null)
                 return null;
             return
-                rsv.Orders.SelectMany(
+                rsv.Itineraries.SelectMany(
                     itin =>
                         itin.Trips.Select(
                             trip =>

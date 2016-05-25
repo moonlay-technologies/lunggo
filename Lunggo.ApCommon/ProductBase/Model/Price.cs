@@ -12,15 +12,15 @@ namespace Lunggo.ApCommon.ProductBase.Model
 {
     public sealed partial class Price
     {
-        public decimal Supplier { get; set; }
-        public Currency SupplierCurrency { get; set; }
-        public decimal OriginalIdr { get; set; }
-        public Margin Margin { get; set; }
-        public decimal Rounding { get; set; }
-        public decimal MarginNominal { get; set; }
-        public decimal FinalIdr { get; set; }
-        public decimal Local { get; set; }
-        public Currency LocalCurrency { get; set; }
+        public decimal Supplier { get; private set; }
+        public Currency SupplierCurrency { get; private set; }
+        public decimal OriginalIdr { get; private set; }
+        public UsedMargin Margin { get; private set; }
+        public decimal Rounding { get; private set; }
+        public decimal MarginNominal { get; private set; }
+        public decimal FinalIdr { get; private set; }
+        public decimal Local { get; private set; }
+        public Currency LocalCurrency { get; private set; }
 
         internal void InsertToDb(long orderId)
         {
@@ -28,14 +28,13 @@ namespace Lunggo.ApCommon.ProductBase.Model
             {
                 PriceTableRepo.GetInstance().Insert(conn, new PriceTableRecord
                 {
-                    Id = PriceIdSequence.GetInstance().GetNext(),
                     OrderId = orderId,
-                    MarginId = Margin.Id,
                     SupplierPrice = Supplier,
                     SupplierCurrencyCd = SupplierCurrency,
                     SupplierRate = SupplierCurrency.Rate,
                     OriginalPriceIdr = OriginalIdr,
                     MarginNominal = MarginNominal,
+                    Rounding = Rounding,
                     FinalPriceIdr = FinalIdr,
                     LocalPrice = Local,
                     LocalCurrencyCd = LocalCurrency,
@@ -44,10 +43,11 @@ namespace Lunggo.ApCommon.ProductBase.Model
                     InsertDate = DateTime.UtcNow,
                     InsertPgId = "0"
                 });
+                Margin.InsertToDb(orderId);
             }
         }
 
-        internal static Price GetFromDb(long orderId, out long orderRuleId)
+        internal static Price GetFromDb(long orderId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -58,10 +58,11 @@ namespace Lunggo.ApCommon.ProductBase.Model
                     SupplierCurrency = new Currency(record.SupplierCurrencyCd, record.SupplierRate.GetValueOrDefault()),
                     OriginalIdr = record.OriginalPriceIdr.GetValueOrDefault(),
                     MarginNominal = record.MarginNominal.GetValueOrDefault(),
+                    Rounding = record.Rounding.GetValueOrDefault(),
                     FinalIdr = record.FinalPriceIdr.GetValueOrDefault(),
                     Local = record.LocalPrice.GetValueOrDefault(),
                     LocalCurrency = new Currency(record.LocalCurrencyCd, record.LocalRate.GetValueOrDefault()),
-                    Margin = Margin.GetFromDb(record.MarginId.GetValueOrDefault(), out orderRuleId)
+                    Margin = UsedMargin.GetFromDb(orderId),  
                 };
             }
         }
@@ -71,7 +72,7 @@ namespace Lunggo.ApCommon.ProductBase.Model
             protected override string GetQuery(dynamic condition = null)
             {
                 return "SELECT MarginId, SupplierPrice, SupplierCurrencyCd, SupplierRate, OriginalPriceIdr, MarginNominal, " +
-                       "FinalPriceIdr, LocalPrice, LocalCurrencyCd, LocalRate " +
+                       "Rounding, FinalPriceIdr, LocalPrice, LocalCurrencyCd, LocalRate " +
                        "FROM Price " +
                        "WHERE OrderId = @OrderId";
             }
@@ -86,7 +87,15 @@ namespace Lunggo.ApCommon.ProductBase.Model
 
         public void SetMargin(Margin margin)
         {
-            Margin = margin;
+            Margin = new UsedMargin
+            {
+                Name = margin.Name,
+                Description = margin.Description,
+                Percentage = margin.Percentage,
+                Constant = margin.Constant,
+                Currency = margin.Currency,
+                IsFlat = margin.IsFlat
+            };
         }
 
         public void CalculateFinalAndLocal(Currency localCurrency)

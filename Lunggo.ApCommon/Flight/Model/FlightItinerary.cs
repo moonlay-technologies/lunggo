@@ -45,7 +45,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public decimal? ComboFare { get; set; }
     }
 
-    public class FlightItinerary : OrderBase<FlightItineraryRule>
+    public class FlightItinerary : OrderBase
     {
         public string SearchId { get; set; }
         public string FareId { get; set; }

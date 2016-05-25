@@ -113,7 +113,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (result.IsSuccess)
                     foreach (var itin in result.Itineraries)
                     {
-                        itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
                         itin.SearchId = searchId;
                     }
                 SaveSearchedPartialItinerariesToBufferCache(result.Itineraries, searchId, timeout, supplierIndex, conditionsList.IndexOf(partialConditions));

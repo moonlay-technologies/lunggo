@@ -47,8 +47,8 @@ namespace Lunggo.ApCommon.Payment.Service
                     LocalFinalPrice = paymentRecord.LocalFinalPrice.GetValueOrDefault(),
                     LocalPaidAmount = paymentRecord.LocalPaidAmount.GetValueOrDefault(),
                     InvoiceNo = paymentRecord.InvoiceNo,
-                    Refund = Refund.GetFromDb(paymentRecord.Id.GetValueOrDefault()),
-                    Discount = Discount.GetFromDb(paymentRecord.Id.GetValueOrDefault())
+                    Refund = Refund.GetFromDb(rsvNo),
+                    Discount = UsedDiscount.GetFromDb(rsvNo)
                 };
             }
         }

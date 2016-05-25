@@ -90,7 +90,7 @@ namespace Lunggo.ApCommon.Flight.Service
             reservation.RsvNo = RsvNoSequence.GetInstance().GetNext(reservation.Type);
             reservation.RsvTime = DateTime.UtcNow;
             reservation.RsvStatus = RsvStatus.Pending;
-            reservation.Orders = itins;
+            reservation.Itineraries = itins;
             reservation.Contact = input.Contact;
             reservation.Passengers = input.Passengers;
             reservation.OverallTripType = ParseTripType(trips);
@@ -98,8 +98,8 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 Status = PaymentStatus.Pending,
                 LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
-                OriginalPriceIdr = reservation.Orders.Sum(order => order.Price.FinalIdr),
-                TimeLimit = reservation.Orders.Min(order => order.TimeLimit.GetValueOrDefault()).AddMinutes(-30),
+                OriginalPriceIdr = reservation.Itineraries.Sum(order => order.Price.FinalIdr),
+                TimeLimit = reservation.Itineraries.Min(order => order.TimeLimit.GetValueOrDefault()).AddMinutes(-30),
             };
             return reservation;
         }
@@ -157,21 +157,16 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
-            var fareType = IdUtil.GetFareType(bookInfo.Itinerary.FareId);
-            var supplierName = IdUtil.GetSupplier(bookInfo.Itinerary.FareId);
-            bookInfo.Itinerary.FareId = IdUtil.GetCoreId(bookInfo.Itinerary.FareId);
+            var fareType = bookInfo.Itinerary.FareType;
+            var supplierName = bookInfo.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
             var result = supplier.BookFlight(bookInfo);
-            if (result.Status != null && result.Status.BookingId != null)
-                result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId,
-                    supplierName, fareType);
+                
             var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
             if (result.Status != null)
                 result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit
                     ? defaultTimeout
                     : result.Status.TimeLimit;
-            if (result.NewItinerary != null)
-                result.NewItinerary.FareId = IdUtil.ConstructIntegratedId(result.NewItinerary.FareId, supplierName, result.NewItinerary.FareType);
             return result;
         }
     }

@@ -21,7 +21,7 @@ namespace Lunggo.Configuration
 
     public class ConfigGenerator
     {
-        private const DeploymentEnvironment Environment = DeploymentEnvironment.Development3;
+        private const DeploymentEnvironment Environment = DeploymentEnvironment.Development2;
         private const bool DeployHtmlTemplate = false;
         private const string FileExtension = "*.properties";
         private const string FinalProjectConfigFile = "application.properties";

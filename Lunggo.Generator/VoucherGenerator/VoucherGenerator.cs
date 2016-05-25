@@ -22,10 +22,10 @@ namespace Lunggo.Generator.VoucherGenerator
         //  CARI PERHATIAN
         //  CARI PERHATIAN
         const CharactersPosition POSITION = CharactersPosition.Front;
-        const string FIXED_CHARACTERS = "IM67";
-        const string FORMAT_VOUCHER = "ZZZY";//FORMAT VOUCHER LIAT DI BAWAH
-        static int sequenceStartFrom = 451;
-        static int sequenceEndAt = 600;
+        const string FIXED_CHARACTERS = "TRVMCL";
+        const string FORMAT_VOUCHER = "ZZY";//FORMAT VOUCHER LIAT DI BAWAH
+        static int sequenceStartFrom = 1;
+        static int sequenceEndAt = 10;
         //  CARI PERHATIAN
         //  CARI PERHATIAN
         //  CARI PERHATIAN

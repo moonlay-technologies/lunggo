@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.WebPages;
+using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -15,6 +16,7 @@ namespace Lunggo.ApCommon.Flight.Service
         public Dictionary<long, CountryDict> CountryDict;
 
         private static Dictionary<string, string> _airlineNameDict;
+        private static Dictionary<string, AirlineType> _airlineTypeDict;
         private static Dictionary<string, string> _airportNameDict;
         private static Dictionary<string, string> _airportCityDict;
         private static Dictionary<string, string> _airportCityCodeDict;
@@ -70,6 +72,18 @@ namespace Lunggo.ApCommon.Flight.Service
             catch
             {
                 return "";
+            }
+        }
+
+        public AirlineType GetAirlineType(string code)
+        {
+            try
+            {
+                return _airlineTypeDict[code];
+            }
+            catch
+            {
+                return AirlineType.Undefined;
             }
         }
 
@@ -194,10 +208,12 @@ namespace Lunggo.ApCommon.Flight.Service
                     {
                         Code = splittedLine[1],
                         Name = splittedLine[2],
+                        Type = AirlineTypeCd.Mnemonic(splittedLine[3])
                     });
                 }
             }
             _airlineNameDict = result.Values.ToDictionary(dict => dict.Code, dict => dict.Name);
+            _airlineTypeDict = result.Values.ToDictionary(dict => dict.Code, dict => dict.Type);
             return result;
         }
 
@@ -290,6 +306,7 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public string Code { get; set; }
         public string Name { get; set; }
+        public AirlineType Type { get; set; }
     }
 
     public class AirportDict

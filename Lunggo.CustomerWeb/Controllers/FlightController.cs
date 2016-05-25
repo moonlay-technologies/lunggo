@@ -177,7 +177,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 return View(new FlightPaymentConfirmationData
                 {
                     RsvNo = rsvNo,
-                    FinalPrice = reservation.Payment.FinalPriceIdr,
+                    FinalPrice = reservation.Payment.FinalPrice,
                     TimeLimit = reservation.Payment.TimeLimit
                 });
             }

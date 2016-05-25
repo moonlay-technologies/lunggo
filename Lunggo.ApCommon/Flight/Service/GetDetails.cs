@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Query;
@@ -13,26 +15,26 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                if (input.BookingIds == null)
-                    input.BookingIds = GetBookingIdQuery.GetInstance().Execute(conn, new { input.RsvNo }).ToList();
-                var tripInfoRecords = GetTripInfoQuery.GetInstance().Execute(conn, new { BookingId = input.BookingIds });
-                var tripInfos = tripInfoRecords.Select(record => new FlightTrip
-                {
-                    OriginAirport = record.OriginAirportCd,
-                    DestinationAirport = record.DestinationAirportCd,
-                    DepartureDate = record.DepartureDate.GetValueOrDefault()
-                }).ToList();
+                var conditions = GetBookingIdAndSupplierQuery.GetInstance().Execute(conn, new {input.RsvNo})
+                    .Select(r => new TripDetailsConditions
+                    {
+                        BookingId = r.BookingId,
+                        Supplier = SupplierCd.Mnemonic(r.SupplierCd)
+                    })
+                    .ToList();
 
                 var output = new GetDetailsOutput();
-                Parallel.ForEach(input.BookingIds, bookingId =>
+                Parallel.ForEach(conditions, condition =>
                 {
-                    var detailsResult = new DetailsResult();
-                    var request = new TripDetailsConditions
+                    var tripInfoRecords = GetTripInfoQuery.GetInstance().Execute(conn, new { condition.BookingId });
+                    condition.Trips = tripInfoRecords.Select(record => new FlightTrip
                     {
-                        BookingId = bookingId,
-                        Trips = tripInfos
-                    };
-                    var response = GetTripDetailsInternal(request);
+                        OriginAirport = record.OriginAirportCd,
+                        DestinationAirport = record.DestinationAirportCd,
+                        DepartureDate = record.DepartureDate.GetValueOrDefault()
+                    }).ToList();
+                    var detailsResult = new DetailsResult();
+                    var response = GetTripDetailsInternal(condition);
                     if (response.IsSuccess)
                     {
                         detailsResult = MapDetails(response);
@@ -65,13 +67,9 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private GetTripDetailsResult GetTripDetailsInternal(TripDetailsConditions conditions)
         {
-            var fareType = IdUtil.GetFareType(conditions.BookingId);
-            var supplierName = IdUtil.GetSupplier(conditions.BookingId);
-            conditions.BookingId = IdUtil.GetCoreId(conditions.BookingId);
+            var supplierName = conditions.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
-            GetTripDetailsResult result = supplier.GetTripDetails(conditions);
-            if (result.BookingId != null)
-                result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, supplierName, fareType);
+            var result = supplier.GetTripDetails(conditions);
             return result;
         }
 

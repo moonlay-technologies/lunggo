@@ -4,12 +4,11 @@ using Lunggo.ApCommon.ProductBase.Constant;
 
 namespace Lunggo.ApCommon.ProductBase.Model
 {
-    public abstract class OrderBase<TOrderRule> where TOrderRule : OrderRuleBase
+    public abstract class OrderBase
     {
         //public abstract ProductType Type { get; }
         public Price Price { get; set; }
         public DateTime? TimeLimit { get; set; }
-        public TOrderRule Rule { get; set; }
 
         //public void SetPrice(decimal supplierPrice, string supplierCurrency)
         //{

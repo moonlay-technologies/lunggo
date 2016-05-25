@@ -5,16 +5,16 @@ var SystemConfig = {
 };
 
 var SearchHotelConfig = {
-    Url: 'https://dv3-api.azurewebsites.net/api/v1/hotels',
+    Url: 'https://dv2-api.azurewebsites.net/api/v1/hotels',
     ResultCount: 24
 };
 
 var SearchRoomConfig = {
-    Url: 'https://dv3-api.azurewebsites.net/api/v1/rooms'
+    Url: 'https://dv2-api.azurewebsites.net/api/v1/rooms'
 };
 
 var FlightSearchConfig = {
-    Url: 'https://dv3-api.azurewebsites.net/api/v1/flights',
+    Url: 'https://dv2-api.azurewebsites.net/api/v1/flights',
     // generate search URL
     GenerateSearchParam: function (params) {
         if (typeof (params) == 'object') {
@@ -68,71 +68,71 @@ var FlightSearchConfig = {
 };
 
 var RevalidateConfig = {
-    Url: 'https://dv3-api.azurewebsites.net/api/v1/flights/revalidate',
+    Url: 'https://dv2-api.azurewebsites.net/api/v1/flights/revalidate',
     working: false
 };
 
 var FlightBookConfig = {
-    Url: 'https://dv3-api.azurewebsites.net/api/v1/flights/book',
+    Url: 'https://dv2-api.azurewebsites.net/api/v1/flights/book',
     working: false
 };
 
 var FlightPayConfig = {
-    Url: 'https://dv3-api.azurewebsites.net/api/v1/flights/pay',
+    Url: 'https://dv2-api.azurewebsites.net/api/v1/flights/pay',
     working: false
 };
 
 var GetRulesConfig = {
-    Url: 'https://dv3-api.azurewebsites.net/api/v1/flights/rules',
+    Url: 'https://dv2-api.azurewebsites.net/api/v1/flights/rules',
     working: false
 };
 
 var HotelAutocompleteConfig = {
-    Url: 'https://dv3-api.azurewebsites.net/api/v1/autocomplete/hotellocation/'
+    Url: 'https://dv2-api.azurewebsites.net/api/v1/autocomplete/hotellocation/'
 };
 
 var FlightAutocompleteConfig = {
-    Url: 'https://dv3-api.azurewebsites.net/api/v1/autocomplete/airport/'
+    Url: 'https://dv2-api.azurewebsites.net/api/v1/autocomplete/airport/'
 };
 
 var AirlineAutocompleteConfig = {
-    Url: 'https://dv3-api.azurewebsites.net/api/v1/autocomplete/airline/'
+    Url: 'https://dv2-api.azurewebsites.net/api/v1/autocomplete/airline/'
 };
 
 var CheckVoucherConfig = {
-    Url: 'https://dv3-api.azurewebsites.net/api/v1/voucher/check'
+    Url: 'https://dv2-api.azurewebsites.net/api/v1/voucher/check'
 };
 
 var SubscribeConfig = {
-    Url: 'https://dv3-api.azurewebsites.net/api/v1/newsletter/subscribe'
+    Url: 'https://dv2-api.azurewebsites.net/api/v1/newsletter/subscribe'
 };
 
 var LoginConfig = {
-    Url: 'http://dv3-cw.azurewbsites.net/id/ApiAccount/Login'
+    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/Login'
 };
 
 var RegisterConfig = {
-    Url: 'http://dv3-cw.azurewbsites.net/id/ApiAccount/Register'
+    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/Register'
 };
 
 var ResetPasswordConfig = {
-    Url: 'http://dv3-cw.azurewbsites.net/id/ApiAccount/ResetPassword'
+    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/ResetPassword'
 };
 
 var ForgotPasswordConfig = {
-    Url: 'http://dv3-cw.azurewbsites.net/id/ApiAccount/ForgotPassword'
+    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/ForgotPassword'
 };
 
 var ChangePasswordConfig = {
-    Url: 'http://dv3-cw.azurewbsites.net/id/ApiAccount/ChangePassword'
+    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/ChangePassword'
 };
 
 var ChangeProfileConfig = {
-    Url: 'http://dv3-cw.azurewbsites.net/id/ApiAccount/ChangeProfile'
+    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/ChangeProfile'
 };
 
 var ResendConfirmationEmailConfig = {
-    Url: 'http://dv3-cw.azurewbsites.net/id/ApiAccount/ResendConfirmationEmail'
+    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/ResendConfirmationEmail'
 };
 
 var VeritransTokenConfig = {
@@ -141,33 +141,33 @@ var VeritransTokenConfig = {
 };
 
 var TransferConfig = {
-    Url: 'https://dv3-api.azurewebsites.net/api/v1/transferidentifier'
+    Url: 'https://dv2-api.azurewebsites.net/api/v1/transferidentifier'
 };
 
 var LoginMobileConfig = {
-    Url: 'http://http://dv3-cw.azurewbsites.net/id/ApiAccount/Login'
+    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/Login'
 };
 
 var RegisterMobileConfig = {
-    Url: 'http://http://dv3-cw.azurewbsites.net/id/ApiAccount/Register'
+    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/Register'
 };
 
 var ResetPasswordMobileConfig = {
-    Url: 'http://http://dv3-cw.azurewbsites.net/id/ApiAccount/ResetPassword'
+    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/ResetPassword'
 };
 
 var ForgotPasswordMobileConfig = {
-    Url: 'http://http://dv3-cw.azurewbsites.net/id/ApiAccount/ForgotPassword'
+    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/ForgotPassword'
 };
 
 var ChangePasswordMobileConfig = {
-    Url: 'http://http://dv3-cw.azurewbsites.net/id/ApiAccount/ChangePassword'
+    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/ChangePassword'
 };
 
 var ChangeProfileMobileConfig = {
-    Url: 'http://http://dv3-cw.azurewbsites.net/id/ApiAccount/ChangeProfile'
+    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/ChangeProfile'
 };
 
 var ResendConfirmationEmailMobileConfig = {
-    Url: 'http://http://dv3-cw.azurewbsites.net/id/ApiAccount/ResendConfirmationEmail'
+    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/ResendConfirmationEmail'
 };

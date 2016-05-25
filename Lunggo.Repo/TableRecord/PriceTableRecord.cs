@@ -11,15 +11,6 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? Id
-		{
-		    get { return _Id; }
-		    set
-		    {
-		        _Id = value;
-		        IncrementLog("Id");
-		    }
-		}
 		public long? OrderId
 		{
 		    get { return _OrderId; }
@@ -27,15 +18,6 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _OrderId = value;
 		        IncrementLog("OrderId");
-		    }
-		}
-		public long? MarginId
-		{
-		    get { return _MarginId; }
-		    set
-		    {
-		        _MarginId = value;
-		        IncrementLog("MarginId");
 		    }
 		}
 		public Decimal? SupplierPrice
@@ -83,6 +65,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("MarginNominal");
 		    }
 		}
+        public Decimal? Rounding
+        {
+            get { return _Rounding; }
+            set
+            {
+                _Rounding = value;
+                IncrementLog("Rounding");
+            }
+        }
 		public Decimal? FinalPriceIdr
 		{
 		    get { return _FinalPriceIdr; }
@@ -175,14 +166,13 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _Id;
 		private long? _OrderId;
-		private long? _MarginId;
 		private Decimal? _SupplierPrice;
 		private String _SupplierCurrencyCd;
 		private Decimal? _SupplierRate;
 		private Decimal? _OriginalPriceIdr;
 		private Decimal? _MarginNominal;
+		private Decimal? _Rounding;
 		private Decimal? _FinalPriceIdr;
 		private Decimal? _LocalPrice;
 		private String _LocalCurrencyCd;
@@ -224,14 +214,13 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("Id", true),
-				new ColumnMetadata("OrderId", false),
-				new ColumnMetadata("MarginId", false),
+				new ColumnMetadata("OrderId", true),
 				new ColumnMetadata("SupplierPrice", false),
 				new ColumnMetadata("SupplierCurrencyCd", false),
 				new ColumnMetadata("SupplierRate", false),
 				new ColumnMetadata("OriginalPriceIdr", false),
 				new ColumnMetadata("MarginNominal", false),
+				new ColumnMetadata("Rounding", false),
 				new ColumnMetadata("FinalPriceIdr", false),
 				new ColumnMetadata("LocalPrice", false),
 				new ColumnMetadata("LocalCurrencyCd", false),

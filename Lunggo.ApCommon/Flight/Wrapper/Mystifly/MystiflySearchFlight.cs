@@ -419,7 +419,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 Meal = !string.IsNullOrEmpty(flightSegment.MealCode),
                 RemainingSeats = flightSegment.SeatsRemaining.Number,
                 StopQuantity = flightSegment.StopQuantity,
-                Stops = stops
+                Stops = stops,
+                AirlineType = FlightService.GetInstance().GetAirlineType(flightSegment.MarketingAirlineCode)
             };
             return segment;
         }

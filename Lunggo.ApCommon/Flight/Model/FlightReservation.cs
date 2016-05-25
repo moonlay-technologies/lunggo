@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Constant;
-
 using System;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Payment.Model;
@@ -12,29 +11,38 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightReservationForDisplay
     {
+        [JsonProperty("rsvNo")]
         public string RsvNo { get; set; }
+        [JsonProperty("rsvTime")]
         public DateTime RsvTime { get; set; }
+        [JsonProperty("rsvStatus")]
         public RsvStatus RsvStatus { get; set; }
+        [JsonProperty("cancelType")]
         public CancellationType CancellationType { get; set; }
+        [JsonProperty("cancelTime")]
         public DateTime? CancellationTime { get; set; }
-        public PaymentDetails Payment { get; set; }
+        [JsonProperty("payment")]
+        public PaymentDetailsForDisplay Payment { get; set; }
+        [JsonProperty("contact")]
         public Contact Contact { get; set; }
+        [JsonProperty("user")]
         public User User { get; set; }
         [JsonProperty("itin")]
         public FlightItineraryForDisplay Itinerary { get; set; }
         [JsonProperty("pax")]
         public List<FlightPassenger> Passengers { get; set; }
-        [JsonProperty("typ")]
+        [JsonProperty("tripType")]
         public TripType OverallTripType { get; set; }
     }
 
-    public class FlightReservation : ReservationBase<FlightReservation, FlightItinerary, FlightRsvRule, FlightItineraryRule>
+    public class FlightReservation : ReservationBase<FlightReservation>
     {
         public override ProductType Type
         {
             get { return ProductType.Flight; }
         }
 
+        public List<FlightItinerary> Itineraries { get; set; }
         public List<FlightPassenger> Passengers { get; set; }
         public TripType OverallTripType { get; set; }
 

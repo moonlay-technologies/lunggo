@@ -13,13 +13,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
     internal partial class SriwijayaWrapper
     {
-        internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
+        internal override IssueTicketResult OrderTicket(string bookingId, bool canHold)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             if (env == "production")
                 return Client.OrderTicket(bookingId);
             else
-                return new OrderTicketResult
+                return new IssueTicketResult
                 {
                     IsSuccess = true,
                     BookingId = bookingId,
@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
         private partial class SriwijayaClientHandler
         {
-            internal OrderTicketResult OrderTicket(string bookingId)
+            internal IssueTicketResult OrderTicket(string bookingId)
             {
                 var clientx = CreateAgentClient();
                 var untukEncode = "ticketing:" + bookingId + ":STEP2";
@@ -65,7 +65,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var tunjukStatusBook = tunjukClassTarget.MakeRoot()[".bookingCode"];
                     var statusBook = tunjukClassTarget.Select(x => x.Cq().Text()).FirstOrDefault();
 
-                    var hasil = new OrderTicketResult();
+                    var hasil = new IssueTicketResult();
                     if ((statusBook == "Confirm") || (statusBook == "Confirmed"))
                     {
                         hasil.BookingId = bookingId;
@@ -88,20 +88,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     {
                         case IssueEnum.IssueSuccess:
                             Logout(clientx);
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = true,
                                 BookingId = bookingId
                             };
                         case IssueEnum.NotIssued:
                             Logout(clientx);
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = false
                             };
                         case IssueEnum.CheckingError:
                             Logout(clientx);
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
@@ -109,7 +109,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             };
                         default:
                             Logout(clientx);
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },

@@ -73,7 +73,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 Contact = Contact.GetFromDb(rsvNo),
                                 Payment = PaymentDetails.GetFromDb(rsvNo),
                                 OverallTripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
-                                Orders = new List<FlightItinerary>(),
+                                Itineraries = new List<FlightItinerary>(),
                                 Passengers = new List<FlightPassenger>()
                             };
                         }
@@ -87,7 +87,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 Trips = new List<FlightTrip>()
                             };
                             itineraryLookup.Add(itineraryRecord.Id.GetValueOrDefault(), itinerary);
-                            reservation.Orders.Add(itinerary);
+                            reservation.Itineraries.Add(itinerary);
                         }
                         FlightTrip trip;
                         if (!tripLookup.TryGetValue(tripRecord.Id.GetValueOrDefault(), out trip))
@@ -178,7 +178,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 Contact = Contact.GetFromDb(rsvNo),
                                 Payment = PaymentDetails.GetFromDb(rsvNo),
                                 OverallTripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
-                                Orders = new List<FlightItinerary>(),
+                                Itineraries = new List<FlightItinerary>(),
                                 Passengers = new List<FlightPassenger>(),
                                 State = ReservationState.GetFromDb(rsvNo)
                             };
@@ -188,7 +188,6 @@ namespace Lunggo.ApCommon.Flight.Service
                             !itineraryLookup.TryGetValue(itineraryRecord.Id.GetValueOrDefault(),
                                 out itinerary))
                         {
-                            long orderRuleId;
                             itinerary = new FlightItinerary
                             {
                                 BookingId = itineraryRecord.BookingId,
@@ -197,12 +196,11 @@ namespace Lunggo.ApCommon.Flight.Service
                                 Supplier = SupplierCd.Mnemonic(itineraryRecord.SupplierCd),
                                 TimeLimit = itineraryRecord.TicketTimeLimit,
                                 Trips = new List<FlightTrip>(),
-                                Price = Price.GetFromDb(itineraryRecord.Id.GetValueOrDefault(), out orderRuleId),
-                                FareType = FareTypeCd.Mnemonic(itineraryRecord.FareTypeCd),
-                                Rule = FlightItineraryRule.GetFromDb(orderRuleId)
+                                Price = Price.GetFromDb(itineraryRecord.Id.GetValueOrDefault()),
+                                FareType = FareTypeCd.Mnemonic(itineraryRecord.FareTypeCd)
                             };
                             itineraryLookup.Add(itineraryRecord.Id.GetValueOrDefault(), itinerary);
-                            reservation.Orders.Add(itinerary);
+                            reservation.Itineraries.Add(itinerary);
                         }
                         FlightTrip trip;
                         if (!tripLookup.TryGetValue(tripRecord.Id.GetValueOrDefault(), out trip))
@@ -388,7 +386,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 reservation.Contact.InsertToDb(reservation.RsvNo);
                 reservation.State.InsertToDb(reservation.RsvNo);
 
-                foreach (var itin in reservation.Orders)
+                foreach (var itin in reservation.Itineraries)
                 {
                     var itineraryId = FlightItineraryIdSequence.GetInstance().GetNext();
                     var itineraryRecord = new FlightItineraryTableRecord
@@ -398,8 +396,8 @@ namespace Lunggo.ApCommon.Flight.Service
                         BookingId = itin.BookingId,
                         BookingStatusCd = BookingStatusCd.Mnemonic(BookingStatus.Booked),
                         TicketTimeLimit = itin.TimeLimit,
-                        FareTypeCd = FareTypeCd.Mnemonic(IdUtil.GetFareType(itin.BookingId)),
-                        SupplierCd = SupplierCd.Mnemonic(IdUtil.GetSupplier(itin.BookingId)),
+                        FareTypeCd = FareTypeCd.Mnemonic(itin.FareType),
+                        SupplierCd = SupplierCd.Mnemonic(itin.Supplier),
                         TripTypeCd = TripTypeCd.Mnemonic(itin.TripType),
                         InsertBy = "LunggoSystem",
                         InsertDate = DateTime.UtcNow,

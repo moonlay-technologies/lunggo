@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
+        internal override IssueTicketResult OrderTicket(string bookingId, bool canHold)
         {
             if (canHold)
             {
@@ -23,7 +23,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     Target = Client.Target,
                     ExtensionData = null
                 };
-                var result = new OrderTicketResult();
+                var result = new IssueTicketResult();
                 var retry = 0;
                 var done = false;
                 while (!done)
@@ -81,7 +81,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     Target = Client.Target,
                     ExtensionData = null,
                 };
-                var result = new OrderTicketResult();
+                var result = new IssueTicketResult();
                 var retry = 0;
                 var done = false;
                 while (!done)
@@ -142,18 +142,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             }
         }
 
-        private static OrderTicketResult MapResult(AirOrderTicketRS response)
+        private static IssueTicketResult MapResult(AirOrderTicketRS response)
         {
-            return new OrderTicketResult
+            return new IssueTicketResult
             {
                 BookingId = response.UniqueID,
                 IsInstantIssuance = false
             };
         }
 
-        private static OrderTicketResult MapBookResult(AirBookRS response)
+        private static IssueTicketResult MapBookResult(AirBookRS response)
         {
-            return new OrderTicketResult
+            return new IssueTicketResult
             {
                 BookingId = response.UniqueID,
                 IsInstantIssuance = true

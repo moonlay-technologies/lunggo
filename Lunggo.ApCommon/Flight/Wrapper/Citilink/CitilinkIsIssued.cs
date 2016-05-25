@@ -116,7 +116,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     var statusPembayaran = tunjukTr.Select(x => x.Cq().Text()).FirstOrDefault();
                     isIssued = tunjukTr.FirstElement() != null;
 
-                    var hasil = new OrderTicketResult();
+                    var hasil = new IssueTicketResult();
                     
                     if ((statusPembayaran == "Konfirm") || (statusPembayaran == "Confirmed"))
                     {

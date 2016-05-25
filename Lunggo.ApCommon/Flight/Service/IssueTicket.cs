@@ -68,11 +68,14 @@ namespace Lunggo.ApCommon.Flight.Service
                     (reservation.Payment.Method != PaymentMethod.Credit &&
                      reservation.Payment.Status == PaymentStatus.Settled))
                 {
-                    Parallel.ForEach(reservation.Orders, itin =>
+                    Parallel.ForEach(reservation.Itineraries, itin =>
                 {
-                    var bookingId = itin.BookingId;
-                    var canHold = itin.CanHold;
-                    var response = OrderTicketInternal(bookingId, canHold);
+                    var response = IssueTicketInternal(new IssueTicketInfo
+                    {
+                        BookingId = itin.BookingId,
+                        CanHold = itin.CanHold,
+                        Supplier = itin.Supplier
+                    });
                     var orderResult = new OrderResult();
                     if (response.IsSuccess)
                     {
@@ -84,14 +87,14 @@ namespace Lunggo.ApCommon.Flight.Service
                         orderResult.IsInstantIssuance = response.IsInstantIssuance;
                         UpdateBookingIdQuery.GetInstance().Execute(conn, new
                         {
-                            BookingId = bookingId,
+                            BookingId = itin.BookingId,
                             NewBookingId = orderResult.BookingId,
                         });
                     }
                     else
                     {
                         orderResult.IsSuccess = false;
-                        orderResult.BookingId = bookingId;
+                        orderResult.BookingId = itin.BookingId;
                         orderResult.BookingStatus = BookingStatus.Failed;
                         output.Errors = response.Errors;
                         output.ErrorMessages = response.ErrorMessages;
@@ -141,15 +144,11 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public OrderTicketResult OrderTicketInternal(string bookingId, bool canHold)
+        public IssueTicketResult IssueTicketInternal(IssueTicketInfo info)
         {
-            var fareType = IdUtil.GetFareType(bookingId);
-            var supplierName = IdUtil.GetSupplier(bookingId);
-            bookingId = IdUtil.GetCoreId(bookingId);
+            var supplierName = info.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
-            OrderTicketResult result = supplier.OrderTicket(bookingId, canHold);
-            if (result.BookingId != null)
-                result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, supplierName, fareType);
+            IssueTicketResult result = supplier.OrderTicket(info.BookingId, info.CanHold);
             return result;
         }
 

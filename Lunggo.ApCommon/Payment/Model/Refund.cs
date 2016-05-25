@@ -20,13 +20,13 @@ namespace Lunggo.ApCommon.Payment.Model
         public decimal Amount { get; set; }
         public decimal AmountIdr { get; set; }
 
-        internal void InsertToDb(long paymentId)
+        internal void InsertToDb(string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 RefundTableRepo.GetInstance().Insert(conn, new RefundTableRecord
                 {
-                    PaymentId = paymentId,
+                    RsvNo = rsvNo,
                     Time = Time,
                     BeneficiaryBank = BeneficiaryBank,
                     BeneficiaryAccount = BeneficiaryAccount,
@@ -43,11 +43,11 @@ namespace Lunggo.ApCommon.Payment.Model
             }
         }
 
-        internal static Refund GetFromDb(long paymentId)
+        internal static Refund GetFromDb(string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var record = GetRefundQuery.GetInstance().Execute(conn, new { PaymentId = paymentId }).SingleOrDefault();
+                var record = GetRefundQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).SingleOrDefault();
                 if (record == null)
                     return null;
                 return new Refund
@@ -71,7 +71,7 @@ namespace Lunggo.ApCommon.Payment.Model
                 return "SELECT Time, BeneficiaryBank, BeneficiaryAccount, RemitterBank, RemitterAccount, " +
                        "CurrencyCd, Rate, Amount, AmountIdr " +
                        "FROM Refund " +
-                       "WHERE PaymentId = @PaymentId";
+                       "WHERE RsvNo = @RsvNo";
             }
         }
     }

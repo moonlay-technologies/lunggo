@@ -14,13 +14,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
     internal partial class AirAsiaWrapper
     {
-        internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
+        internal override IssueTicketResult OrderTicket(string bookingId, bool canHold)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             if (env == "production")
                 return Client.OrderTicket(bookingId);
             else
-                return new OrderTicketResult
+                return new IssueTicketResult
                 {
                     IsSuccess = true,
                     BookingId = bookingId,
@@ -30,12 +30,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
         private partial class AirAsiaClientHandler
         {
-            internal OrderTicketResult OrderTicket(string bookingId)
+            internal IssueTicketResult OrderTicket(string bookingId)
             {
                 var clientx = CreateAgentClient();
 
                 if (!Login(clientx))
-                    return new OrderTicketResult
+                    return new IssueTicketResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.TechnicalError },
@@ -50,7 +50,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var listResponse = clientx.Execute(listRequest);
 
                 if (listResponse.ResponseUri.AbsolutePath != "/BookingList.aspx" && (listResponse.StatusCode == HttpStatusCode.OK || listResponse.StatusCode == HttpStatusCode.Redirect))
-                    return new OrderTicketResult
+                    return new IssueTicketResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier }
@@ -74,7 +74,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var filterResponse = clientx.Execute(filterRequest);
 
                 if (filterResponse.ResponseUri.AbsolutePath != "/BookingList.aspx" && (filterResponse.StatusCode == HttpStatusCode.OK || filterResponse.StatusCode == HttpStatusCode.Redirect))
-                    return new OrderTicketResult
+                    return new IssueTicketResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier }
@@ -98,7 +98,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var selectResponse = clientx.Execute(selectRequest);
 
                 if (selectResponse.ResponseUri.AbsolutePath != "/ChangeItinerary.aspx" && selectResponse.StatusCode != HttpStatusCode.OK)
-                    return new OrderTicketResult
+                    return new IssueTicketResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier }
@@ -125,7 +125,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var changeItinHtml = itinResponse.Content;
 
                 if (itinResponse.ResponseUri.AbsolutePath != "/PaymentChange.aspx" && (itinResponse.StatusCode == HttpStatusCode.OK || itinResponse.StatusCode == HttpStatusCode.Redirect))
-                    return new OrderTicketResult
+                    return new IssueTicketResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier }
@@ -185,7 +185,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     if (waitResponse.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" && (waitResponse.StatusCode == HttpStatusCode.OK || waitResponse.StatusCode == HttpStatusCode.Redirect))
                         throw new Exception();
 
-                    return new OrderTicketResult
+                    return new IssueTicketResult
                     {
                         IsSuccess = true,
                         BookingId = bookingId
@@ -197,26 +197,26 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     switch (isIssued)
                     {
                         case IssueEnum.IssueSuccess:
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = true,
                                 BookingId = bookingId,
                                 IsInstantIssuance = true
                             };
                         case IssueEnum.NotIssued:
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = false
                             };
                         case IssueEnum.CheckingError:
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
                                 ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
                             };
                         default:
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },

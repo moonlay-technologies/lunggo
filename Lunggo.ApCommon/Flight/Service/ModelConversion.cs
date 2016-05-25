@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Payment.Service;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -20,10 +21,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 CancellationType = reservation.CancellationType,
                 CancellationTime = reservation.CancellationTime,
                 OverallTripType = reservation.OverallTripType,
-                Itinerary = ConvertToItineraryForDisplay(reservation.Orders),
+                Itinerary = ConvertToItineraryForDisplay(reservation.Itineraries),
                 Contact = reservation.Contact,
                 Passengers = reservation.Passengers,
-                Payment = reservation.Payment,
+                Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
                 User = reservation.User
             };
         }

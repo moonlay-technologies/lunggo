@@ -513,5 +513,15 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             return (bool?)redisDb.StringGet(redisKey);
         }
+
+        private static List<TopDestination> GetTopDestinationsFromCache()
+        {
+            var redisService = RedisService.GetInstance();
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
+            var cacheKey = ConfigManager.GetInstance().GetConfigValue("flight", "topdestinationcachekey");
+            var rawTopDestinationsListFromCache = redisDb.StringGet(cacheKey);
+            var topDestinations = rawTopDestinationsListFromCache.DeconvertTo<List<TopDestination>>();
+            return topDestinations;
+        }
     }
 }

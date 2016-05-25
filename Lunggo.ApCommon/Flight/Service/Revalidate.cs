@@ -86,13 +86,9 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
         {
-            var supplierName = IdUtil.GetSupplier(conditions.Itinerary.FareId);
-            conditions.Itinerary.FareId = IdUtil.GetCoreId(conditions.Itinerary.FareId);
+            var supplierName = conditions.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
-
             var result = supplier.RevalidateFare(conditions);
-            if (result.NewItinerary != null)
-                result.NewItinerary.FareId = IdUtil.ConstructIntegratedId(result.NewItinerary.FareId, supplierName, result.NewItinerary.FareType);
             return result;
         }
     }

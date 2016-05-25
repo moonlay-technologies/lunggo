@@ -11,15 +11,6 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? Id
-		{
-		    get { return _Id; }
-		    set
-		    {
-		        _Id = value;
-		        IncrementLog("Id");
-		    }
-		}
 		public String RsvNo
 		{
 		    get { return _RsvNo; }
@@ -27,15 +18,6 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _RsvNo = value;
 		        IncrementLog("RsvNo");
-		    }
-		}
-		public long? DiscountId
-		{
-		    get { return _DiscountId; }
-		    set
-		    {
-		        _DiscountId = value;
-		        IncrementLog("DiscountId");
 		    }
 		}
 		public String MediumCd
@@ -265,9 +247,7 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _Id;
 		private String _RsvNo;
-		private long? _DiscountId;
 		private String _MediumCd;
 		private String _MethodCd;
 		private String _StatusCd;
@@ -324,9 +304,7 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("Id", true),
 				new ColumnMetadata("RsvNo", false),
-				new ColumnMetadata("DiscountId", false),
 				new ColumnMetadata("MediumCd", false),
 				new ColumnMetadata("MethodCd", false),
 				new ColumnMetadata("StatusCd", false),

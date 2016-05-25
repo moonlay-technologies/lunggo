@@ -16,13 +16,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 {
     internal partial class LionAirWrapper
     {
-        internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
+        internal override IssueTicketResult OrderTicket(string bookingId, bool canHold)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             if (env == "production")
                 return Client.OrderTicket(bookingId);
             else
-                return new OrderTicketResult
+                return new IssueTicketResult
                 {
                     IsSuccess = true,
                     BookingId = bookingId,
@@ -32,7 +32,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
         private partial class LionAirClientHandler
         {
-            internal OrderTicketResult OrderTicket(string bookingId)
+            internal IssueTicketResult OrderTicket(string bookingId)
             {
                 var clientx = CreateAgentClient();
                 clientx.FollowRedirects = false;
@@ -57,7 +57,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     }
 
                     if (userName.Length == 0)
-                        return new OrderTicketResult
+                        return new IssueTicketResult
                         {
                             Errors = new List<FlightError> {FlightError.TechnicalError},
                             ErrorMessages = new List<string> {"userName is full"}
@@ -78,7 +78,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         if (searchResponse0.ResponseUri.AbsolutePath != "/lionairagentsportal/default.aspx" &&
                             (searchResponse0.StatusCode == HttpStatusCode.OK ||
                              searchResponse0.StatusCode == HttpStatusCode.Redirect))
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 Errors = new List<FlightError> {FlightError.InvalidInputData}
                             };
@@ -204,7 +204,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var abc = IsIssued(bookingId);
                     var isIssuedByFunction = abc == IssueEnum.IssueSuccess;
                     var isIssuedx = isIssued && isIssuedByFunction;
-                    return new OrderTicketResult
+                    return new IssueTicketResult
                     {
                         IsSuccess = isIssuedx,
                         BookingId = isIssuedx ? bookingRef : null,
@@ -220,26 +220,26 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     switch (isIssued)
                     {
                         case IssueEnum.IssueSuccess:
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = true,
                                 BookingId = bookingId,
                                 IsInstantIssuance = true
                             };
                         case IssueEnum.NotIssued:
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = false
                             };
                         case IssueEnum.CheckingError:
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
                                 ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
                             };
                         default:
-                            return new OrderTicketResult
+                            return new IssueTicketResult
                             {
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },

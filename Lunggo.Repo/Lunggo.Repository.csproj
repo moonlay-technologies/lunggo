@@ -82,6 +82,8 @@
     <Compile Include="TableRecord\SubscriberTableRecord.cs" />
     <Compile Include="TableRecord\SupplierTableRecord.cs" />
     <Compile Include="TableRecord\TransferConfirmationReportTableRecord.cs" />
+    <Compile Include="TableRecord\UsedDiscountTableRecord.cs" />
+    <Compile Include="TableRecord\UsedMarginTableRecord.cs" />
     <Compile Include="TableRecord\VoucherRecipientsTableRecord.cs" />
     <Compile Include="TableRecord\VoucherTableRecord.cs" />
     <Compile Include="TableRecord\HotelReservationRoomDetailsTableRecord.cs" />
@@ -145,6 +147,8 @@
     <Compile Include="TableRepository\SubscriberRepository.cs" />
     <Compile Include="TableRepository\SupplierRepository.cs" />
     <Compile Include="TableRepository\TransferConfirmationReportRepository.cs" />
+    <Compile Include="TableRepository\UsedDiscountRepository.cs" />
+    <Compile Include="TableRepository\UsedMarginRepository.cs" />
     <Compile Include="TableRepository\VoucherRecipientsRepository.cs" />
     <Compile Include="TableRepository\VoucherRepository.cs" />
     <Compile Include="TableRepository\HotelReservationRoomDetailsRepository.cs" />

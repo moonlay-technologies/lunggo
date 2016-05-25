@@ -7,6 +7,7 @@ using System.Web;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.ProductBase.Constant;
 using Lunggo.Framework.Web;
 using RestSharp;
@@ -337,7 +338,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 if (bookInfo.Itinerary.Price.Supplier != fixPrice) 
                 {
                     var fixItin = bookInfo.Itinerary;
-                    fixItin.Price.Supplier = fixPrice;
+                    fixItin.Price.SetSupplier(fixPrice, new Currency("IDR"));
                     fixItin.FareId = fixItin.FareId.Replace(bookInfo.Itinerary.Price.Supplier.ToString(),fixPrice.ToString());
                     
                     return new BookFlightResult

@@ -11,40 +11,61 @@ using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Payment.Model
 {
+    public class PaymentDetailsForDisplay
+    {
+        [JsonProperty("method", NullValueHandling = NullValueHandling.Ignore)]
+        public PaymentMethod Method { get; set; }
+        [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
+        public PaymentStatus Status { get; set; }
+        [JsonProperty("time", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? Time { get; set; }
+        [JsonProperty("timeLimit", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime TimeLimit { get; set; }
+        [JsonProperty("transferAccount", NullValueHandling = NullValueHandling.Ignore)]
+        public string TransferAccount { get; set; }
+        [JsonProperty("redirectionUrl", NullValueHandling = NullValueHandling.Ignore)]
+        public string RedirectionUrl { get; set; }
+        [JsonProperty("originalPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal OriginalPrice { get; set; }
+        [JsonProperty("discountCode", NullValueHandling = NullValueHandling.Ignore)]
+        public string DiscountCode { get; set; }
+        [JsonProperty("discountNominal", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal DiscountNominal { get; set; }
+        [JsonProperty("discountName", NullValueHandling = NullValueHandling.Ignore)]
+        public string DiscountName { get; set; }
+        [JsonProperty("transferFee", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal TransferFee { get; set; }
+        [JsonProperty("currency", NullValueHandling = NullValueHandling.Ignore)]
+        public Currency Currency { get; set; }
+        [JsonProperty("finalPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal FinalPrice { get; set; }
+        [JsonProperty("refund", NullValueHandling = NullValueHandling.Ignore)]
+        public Refund Refund { get; set; }
+        [JsonProperty("invoice", NullValueHandling = NullValueHandling.Ignore)]
+        public string InvoiceNo { get; set; }
+    }
+
     public class PaymentDetails
     {
-        [JsonProperty("med")]
         public PaymentMedium Medium { get; set; }
-        [JsonProperty("met")]
         public PaymentMethod Method { get; set; }
-        [JsonProperty("st")]
         public PaymentStatus Status { get; set; }
-        [JsonProperty("tm")]
         public DateTime? Time { get; set; }
-        [JsonProperty("lim")]
         public DateTime TimeLimit { get; set; }
-        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentData Data { get; set; }
-        [JsonProperty("account")]
         public string TransferAccount { get; set; }
-        [JsonProperty("url")]
         public string RedirectionUrl { get; set; }
-        [JsonProperty("id")]
         public string ExternalId { get; set; }
-        [JsonProperty("curr")]
         public decimal OriginalPriceIdr { get; set; }
         public string DiscountCode { get; set; }
         public decimal DiscountNominal { get; set; }
-        public Discount Discount { get; set; }
+        public UsedDiscount Discount { get; set; }
         public decimal TransferFee { get; set; }
         public decimal FinalPriceIdr { get; set; }
-        [JsonProperty("paid")]
         public decimal PaidAmountIdr { get; set; }
-        [JsonProperty("id")]
         public Currency LocalCurrency { get; set; }
         public decimal LocalFinalPrice { get; set; }
         public decimal LocalPaidAmount { get; set; }
-        [JsonProperty("ref", NullValueHandling = NullValueHandling.Ignore)]
         public Refund Refund { get; set; }
         public string InvoiceNo { get; set; }
 
@@ -55,8 +76,6 @@ namespace Lunggo.ApCommon.Payment.Model
                 PaymentTableRepo.GetInstance().Insert(conn, new PaymentTableRecord
                 {
                     RsvNo = rsvNo,
-                    Id = PaymentIdSequence.GetInstance().GetNext(),
-                    DiscountId = Discount.Id,
                     MediumCd = PaymentMediumCd.Mnemonic(Medium),
                     MethodCd = PaymentMethodCd.Mnemonic(Method),
                     StatusCd = PaymentStatusCd.Mnemonic(Status),
@@ -108,7 +127,7 @@ namespace Lunggo.ApCommon.Payment.Model
                     LocalFinalPrice = record.LocalFinalPrice.GetValueOrDefault(),
                     LocalPaidAmount = record.LocalPaidAmount.GetValueOrDefault(),
                     InvoiceNo = record.InvoiceNo,
-                    Discount = Discount.GetFromDb(record.DiscountId.GetValueOrDefault())
+                    Discount = UsedDiscount.GetFromDb(rsvNo)
                 };
             }
         }
@@ -117,7 +136,7 @@ namespace Lunggo.ApCommon.Payment.Model
         {
             protected override string GetQuery(dynamic condition = null)
             {
-                return "SELECT Id, DiscountId, MediumCd, DiscountId, MethodCd, StatusCd, Time, TimeLimit, Account, " +
+                return "SELECT MediumCd, DiscountId, MethodCd, StatusCd, Time, TimeLimit, Account, " +
                        "Url, ExternalId, DiscountCode, OriginalPrice, DiscountNominal, TransferFee, FinalPrice, " +
                        "PaidAmount, LocalCurrencyCd, LocalRate, LocalFinalPrice, LocalPaidAmount, InvoiceNo " +
                        "FROM Payment " +

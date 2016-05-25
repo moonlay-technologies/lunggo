@@ -58,7 +58,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var tunjukStatusBook = tunjukClassTarget.MakeRoot()[".bookingCode"];
                     var statusBook = tunjukClassTarget.Select(x => x.Cq().Text()).FirstOrDefault();
 
-                    var hasil = new OrderTicketResult();
+                    var hasil = new IssueTicketResult();
                     if ((statusBook == "Confirm") || (statusBook == "Confirmed"))
                     {
                         hasil.BookingId = bookingId;
