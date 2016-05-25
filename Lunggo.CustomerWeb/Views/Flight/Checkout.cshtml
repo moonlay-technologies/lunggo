@@ -270,14 +270,14 @@
                                                 </div>
                                                 <!-- passport detail for international flight -->
                                                 <div class="form-group" ng-if="passportRequired">
-                                                    <label class="control-label important">Passport</label>
+                                                    <label class="control-label important">Paspor</label>
                                                     <div class="row">
                                                         <div class="col-xs-6" ng-class="{'has-error' : passengerForm_{{$index}}.passportNumber.$invalid && passengerForm_{{$index}}.passportNumber.$touched}">
-                                                            <label class="control-label"><small>No. Passport</small></label>
+                                                            <label class="control-label"><small>No. Paspor</small></label>
                                                             <input type="text" value="" class="form-control" name="passenger_{{$index}}_passportNumber" ng-model="passenger.passport.number" ng-required="passportRequired" />
                                                         </div>
                                                         <div class="col-xs-6">
-                                                            <label class="control-label"><small>Passport Country</small></label>
+                                                            <label class="control-label"><small>Negara Penerbit Paspor</small></label>
                                                             <select class="form-control" name="passenger_{{$index}}_passportCountry" ng-model="passenger.passport.country" ng-init="passenger.passport.country = 'ID'" ng-required="passportRequired">
                                                                 <option ng-repeat="country in countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
                                                             </select>
@@ -285,7 +285,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-xs-12">
-                                                            <label class="control-label"><small>Passport Expires</small></label>
+                                                            <label class="control-label"><small>Tanggal Kadaluarsa Paspor</small></label>
                                                             <div class="row">
                                                                 <div class="col-xs-4">
                                                                     <select class="form-control" name="passenger_{{$index}}_expiryDate" ng-model="passenger.passport.expire.date" ng-required="passportRequired" ng-change="validatePassport(passenger)">
@@ -597,7 +597,7 @@
                                         </form>
                                     </div>
                                 </div><!-- .widget.voucher -->
-                                <div class="widget flight" ng-show="currentPage > 1">
+                                <div class="widget flight" @*ng-show="currentPage > 1"*@>
                                     <div class="flight-detail" id="departure-flight" ng-if="trips[0]">
                                         <h3 class="widget-title"><b>RINCIAN</b> PENERBANGAN</h3>
                                         <div>

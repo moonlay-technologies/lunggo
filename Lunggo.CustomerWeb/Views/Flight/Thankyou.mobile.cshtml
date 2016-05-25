@@ -15,7 +15,6 @@
 
 @{
     var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
-    var a = PaymentStatus.Undefined;
     var dep = Model.Itinerary.Trips[0];
     var ret = Model.Itinerary.Trips[0];
     if (Model.Itinerary.Trips.Count > 1)
@@ -120,12 +119,23 @@
                         {
                             <li>
                                 <h4>
-                                    <span>@passenger.Title</span>
+                                    <span>@EnumDisplay.Title(passenger.Title) </span>
                                     @passenger.FirstName @passenger.LastName
                                 </h4>
                                 <dl>
                                     <dt>Jenis Tiket</dt>
-                                    <dd>@passenger.Type</dd>
+                                    @if (passenger.Type == PassengerType.Adult)
+                                    {
+                                        <dd>Dewasa</dd>
+                                    }
+                                    @if (passenger.Type == PassengerType.Child)
+                                    {
+                                        <dd>Anak</dd>
+                                    }
+                                    @if (passenger.Type == PassengerType.Infant)
+                                    {
+                                        <dd>Bayi</dd>
+                                    }
                                 </dl>
 
                             </li>
@@ -166,7 +176,9 @@
                                                 <h5><b>(@dep.Segments[segment].DepartureAirport) @dep.Segments[segment].DepartureCity</b></h5>
                                                 <h5>@dep.Segments[segment].DepartureAirportName</h5>
                                             </div>
-                                            <div class="flight__separator"></div>
+                                            <div class="flight__separator">
+                                                <h5><b>Durasi: </b>@dep.Segments[segment].Duration</h5>
+                                            </div>
                                             <div class="flight__arrival">
                                                 <h5>@dep.Segments[segment].ArrivalTime.ToString("d MMM yyyy")</h5>
                                                 <h4><b>@dep.Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
@@ -179,7 +191,7 @@
                                 @if (dep.Transits.Count > 0 && segment < dep.TotalTransit)
                                 {
                                     <div class="transit">
-                                        <span>Transit di @dep.Transits.ElementAt(segment).Airport selama <b>@dep.Transits.ElementAt(segment).Duration</b></span>
+                                        <span>Transit di @dep.Segments[segment].ArrivalCity selama <b>@dep.Transits.ElementAt(segment).Duration</b></span>
                                     </div><!-- .transit -->
                                 }
                             </div> <!-- .flight-wrapper -->
@@ -224,7 +236,9 @@
                                                 <h5><b>(@ret.Segments[segment].DepartureAirport) @ret.Segments[segment].DepartureCity</b></h5>
                                                 <h5>@ret.Segments[segment].DepartureAirportName</h5>
                                             </div>
-                                            <div class="flight__separator"></div>
+                                            <div class="flight__separator">
+                                                <h5><b>Durasi: </b>@ret.Segments[segment].Duration</h5>
+                                            </div>
                                             <div class="flight__arrival">
                                                 <h5>@ret.Segments[segment].ArrivalTime.ToString("d MMM yyyy")</h5>
                                                 <h4><b>@ret.Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
@@ -237,7 +251,7 @@
                                 @if (ret.Transits.Count > 0 && segment < ret.TotalTransit)
                                 {
                                     <div class="transit">
-                                        <span>Transit di @ret.Transits.ElementAt(segment).Airport selama <b>@ret.Transits.ElementAt(segment).Duration</b></span>
+                                        <span>Transit di @ret.Segments[segment].ArrivalCity selama <b>@ret.Transits.ElementAt(segment).Duration</b></span>
                                     </div><!-- .transit -->
                                 }
                             </div> <!-- .flight-wrapper -->

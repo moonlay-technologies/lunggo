@@ -2177,7 +2177,7 @@ file: /Assets/travorama20/css/_page_flight.scss
       position: relative; }
       .page-flight .flight .flight-detail .segment .segment-left:after, .page-flight .flight .flight-detail .segment .segment-right:after, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right:after, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right:after, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right:after, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right:after {
         content: "";
-        background-image: url(/Assets/images/flight-segment-separator.png);
+        /*background-image: url(/Assets/images/flight-segment-separator.png);*/
         background-repeat: no-repeat;
         background-size: contain;
         width: 10px;
@@ -2592,7 +2592,9 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 .page-flight.page-flight-return .search-result-container > .inactive {
   width: 290px;
-  opacity: 0.5; }
+  opacity: 0.5;
+    cursor: pointer;
+}
   .page-flight.page-flight-return .search-result-container > .inactive .search-result-warning {
     display: none; }
   .page-flight.page-flight-return .search-result-container > .inactive .search-result-filter {

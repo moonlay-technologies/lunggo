@@ -183,7 +183,7 @@
                             </div>
                             <div class="col-sm-8">
                                 <h3>Halaman Pencarian Anda <b>Sudah Kadaluarsa</b></h3>
-                                <p>Silahkan klik tombol di bawah ini untuk memparbaharui halaman pencarian Anda.</p>
+                                <p>Silakan klik tombol di bawah ini untuk memparbaharui halaman pencarian Anda.</p>
                             </div>
                         </div>
                     </div>
@@ -210,7 +210,7 @@
         <!-- ****************************** -->
     
         <div class="no-flight" ng-show="!loading && !loadingFlight && !flightList.length">
-            <h3 class="text-center">Penerbangan tidak ditemukan.<br/> Silahkan mencari mengganti tanggal penerbangan atau rute Anda.</h3>
+            <h3 class="text-center">Penerbangan tidak ditemukan.<br/> Silakan mencari mengganti tanggal penerbangan atau rute Anda.</h3>
         </div>
 
         <div ng-hide="!loading && !loadingFlight && !flightList.length">
@@ -218,7 +218,7 @@
             <div class="container" ng-hide="!flightList.length && loading && loadingFlight">
                 <h3><b>HASIL</b> PENCARIAN</h3>
             </div>
-            <div class="search-result-filter" ng-show="flightRequest.Progress == 100">
+            <div class="search-result-filter" ng-show="flightRequest.Progress > 0">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
@@ -406,7 +406,7 @@
                             <div class="flight-summary-right">
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.TotalFare | number}}</h4>
                                 <small>Sudah Termasuk Pajak &amp; Service Charge</small>
-                                <a class="btn btn-yellow" ng-click="revalidateFlight(flight.IndexNo)">PESAN</a>
+                                <a class="btn btn-yellow" ng-click="revalidateFlight(flight.IndexNo);">PESAN</a>
                             </div>
                         </div><!-- .flight-summary -->
                         <div class="flight-detail">
@@ -424,7 +424,7 @@
                                     </div>
                                     <div class="segment-left">
                                         <img ng-src="{{segment.AirlineLogoUrl}}" alt="{{segment.AirlineName}}" class="segment-airline-logo" />
-                                        <h5 class="segment-airline-name">{{segment.AirlineName}}</h5>
+                                            <h5 class="segment-airline-name">{{segment.AirlineName}}</h5>
                                         <h5 class="segment-airline-number">{{segment.AirlineCode}}-{{segment.FlightNumber}}</h5>
                                         <div class="segment-detail flight-facility" ng-show="{{segment.Meal || segment.Baggage || segment.Tax}}">
                                             <span ng-show="segment.Meal" class="flight-meal"></span>
@@ -463,7 +463,7 @@
         </div>
     
         <!-- flight review -->
-        <div class="flight-review-wrapper" ng-show="flightSelected >= 0" ng-class="{'active': overviewDetailShown}">
+        <div class="flight-review-wrapper" ng-show="overviewDetailShown" ng-class="{'active': overviewDetailShown}">
             <div class="container">
                 <div class="flight-review">
                     <header class="flight-review-header">

@@ -229,12 +229,12 @@ default:
                         <!-- passenger passport start -->
                         
                         <div class="form-group" ng-if="CheckoutConfig.PassportRequired">
-                            <label class="control-label">No. Passport</label>
+                            <label class="control-label">No. Paspor</label>
                             <input type="text" value="" class="form-control" name="passenger_{{$index}}_passportNumber" ng-model="Passenger.passport.number" ng-required="CheckoutConfig.PassportRequired" />
                         </div>
 
                         <div class="form-group important" ng-if="CheckoutConfig.PassportRequired">
-                            <label class="control-label">Tanggal Kadaluarsa Passport: </label>
+                            <label class="control-label">Tanggal Kadaluarsa Paspor: </label>
                             <div class="row">
                                 <div class="col-xs-4">
                                     <select class="form-control" name="passenger_{{$index}}_expiryDate" ng-model="Passenger.passport.expire.date"
@@ -258,6 +258,13 @@ default:
                                     </select>
                                 </div>
                             </div>
+                        </div>
+                    
+                        <div class="form-group" ng-if ="CheckoutConfig.PassportRequired">
+                            <label class="control-label">Negara Penerbit Paspor</label>
+                            <select class="form-control" name="passenger_{{$index}}_passportCountry" ng-model="Passenger.passport.country" ng-init="Passenger.passport.country = 'ID'" ng-required="CheckoutConfig.NationalityRequired">
+                                <option ng-repeat="country in Countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
+                            </select>
                         </div>
                         <!-- passenger passport end -->
                         <!-- passenger nationality start -->
@@ -382,7 +389,9 @@ default:
                                                     <h5><b>(@trips[0].Segments[segment].DepartureAirport) @trips[0].Segments[segment].DepartureCity</b></h5>
                                                     <h5>@trips[0].Segments[segment].DepartureAirportName</h5>
                                                 </div>
-                                                <div class="flight__separator"></div>
+                                                <div class="flight__separator">
+                                                    <h5><b>Durasi: </b>@trips[0].Segments[segment].Duration</h5>
+                                                </div>
                                                 <div class="flight__arrival">
                                                     <h5>@trips[0].Segments[segment].ArrivalTime.ToString("d MMM yyyy")</h5>
                                                     <h4><b>@trips[0].Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
@@ -395,7 +404,7 @@ default:
                                     @if (trips[0].Transits.Count > 0 && segment < trips[0].TotalTransit)
                                     {
                                         <div class="transit">
-                                            <span>Transit di @trips[0].Transits.ElementAt(segment).Airport selama <b>@trips[0].Transits.ElementAt(segment).Duration</b></span>
+                                            <span>Transit di @trips[0].Segments[segment].ArrivalCity selama <b>@trips[0].Transits.ElementAt(segment).Duration</b></span>
                                         </div><!-- .transit -->
                                     }   
                                 </div> <!-- .flight-wrapper -->
@@ -440,7 +449,9 @@ default:
                                                     <h5><b>(@trips[1].Segments[segment].DepartureAirport) @trips[1].Segments[segment].DepartureCity</b></h5>
                                                     <h5>@trips[1].Segments[segment].DepartureAirportName</h5>
                                                 </div>
-                                                <div class="flight__separator"></div>
+                                                <div class="flight__separator">
+                                                    <h5><b>Durasi: </b>@trips[1].Segments[segment].Duration</h5>
+                                                </div>
                                                 <div class="flight__arrival">
                                                     <h5>@trips[1].Segments[segment].ArrivalTime.ToString("d MMM yyyy")</h5>
                                                     <h4><b>@trips[1].Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
@@ -453,7 +464,7 @@ default:
                                     @if (trips[1].Transits.Count > 0 && segment < trips[1].TotalTransit)
                                     {
                                         <div class="transit">
-                                            <span>Transit di @trips[1].Transits.ElementAt(segment).Airport selama <b>@trips[1].Transits.ElementAt(segment).Duration</b></span>
+                                            <span>Transit di @trips[1].Segments[segment].ArrivalCity selama <b>@trips[1].Transits.ElementAt(segment).Duration</b></span>
                                         </div><!-- .transit -->
                                     }
                                 </div> <!-- .flight-wrapper -->
