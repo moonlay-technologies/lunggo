@@ -36,20 +36,21 @@
 
                     <!-- CONTENT  -->
                     <p style="font-size:16px;"><b>Hi <span style="color: #15b1e4;"> Miss Juliana </span></b></p>
-                    Terima kasih telah menggunakan <b>Travorama</b> untuk reservasi Anda
-                    <br /><b>Pemesanan Anda  berhasil.</b>
-                    <br /><br />
+                    <span style="font-size:13px;">Terima kasih telah menggunakan <b>Travorama</b> untuk reservasi Anda.</span>
+                    <br /><br/>
+                    <p><b>Mohon Maaf</b>, pemesanan Anda gagal dikarenakan kesalahan sistem dalam proses verifikasi Credit Card. Anda dapat melakukan pemesanan ulang 
+                    tiket di <span style="color: #15b1e4;">www.travorama.com</span> dengan pilihan metode pembayaran lain.</p>
+
                     <p style="margin-bottom:10px;">Berikut Rincian Penerbangan Anda : </p>
                     <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 3px dotted #15b1e4; margin-bottom: 4%; ">
                         <thead>
                             <tr>
                                 <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px dotted; ">
-                                    <p style="color: #15b1e4; text-align: left"><b>Flight Details</b></p>
+                                    <p style="color: #15b1e4; text-align: left"><b>Detail Penerbangan</b></p>
                                 </th>
                             </tr>
                         </thead>
                     </table>
-                    <p style="color: #15b1e4;">(Roundtrip)</p>
 
                     <table width="100%">
                         <tr>
@@ -98,28 +99,7 @@
                         </tr>
                     </table>
 
-                    <p style="margin-bottom:11px; font-size:11px;">
-                        Karena terdapat keterlambatan pengiriman <i>e-ticket</i> Anda akan dikirimkan paling lambat <b>3(tiga) jam</b> setelah Anda menerima email ini.
-                        Apabila Anda belum menerima <i>e-ticket</i> setelah jangka waktu tersebut, mohon hubungi kami melalui email ke <span style="color: #15b1e4;">cs@travorama.com</span>
-                    </p>
-
-                    <p style="margin-bottom:10px; font-size:11px;">Mohon maaf atas ketidaknyamanan dalam proses pengiriman e-ticket Anda.</p>
-
-                    <p><b>Silahkan pilih opsi dibawah ini untuk konfirmasi ulang :</b></p>
-                    
-                    <table>
-                        <tr> 
-                            <td width="40%"><a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left:20%; text-decoration: none; font-family:arial, helvetica, sans-serif;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       width: 60%; padding-top: 17px; padding-bottom: 17px; text-align: center; margin-top: 18px; margin-bottom: 18px; font-size: 11px; color: #333333;"
-                       href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/StaticPage/GetCalendar?Email=" + Model)" target="_blank"><b>REFUND TICKET</b></a></td>
-                            <td width="20%"></td>
-                            <td width="40%"><a style="background-color: #15b1e4; border: #e9d14d; display: inline-block; margin-left:20%; text-decoration: none; font-family:arial, helvetica, sans-serif;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       width: 60%; padding-top: 17px; padding-bottom: 17px; text-align: center; margin-top: 18px; margin-bottom: 18px; font-size: 11px; color: #333333;"
-                       href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/StaticPage/GetCalendar?Email=" + Model)" target="_blank"><b>KIRIM E-TICKET</b></a></td>
-                        </tr>
-                    </table>
-
-                    <p style="margin-bottom:30px;">Apabila Anda tidak memilih salah satu opsi, maka proses pemesanan Anda akan dilanjutkan.</p>
+                    <p style="margin-bottom:30px;">Mohon maaf atas ketidaknyamanan dalam proses pemesanan Anda.</p>
 
                 </td>
                 <td width="5%"></td>
