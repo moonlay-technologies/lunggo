@@ -152,7 +152,7 @@ app.controller('singleFlightController', [
             hours = hours;
             minutes = minutes;
             seconds = seconds;
-            return hours + "h " + minutes + "m";
+            return hours + "j " + minutes + "m";
         }
 
         // get date
