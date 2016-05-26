@@ -8,12 +8,12 @@
 
     // ********************
     // variables
-    $.datepicker.setDefaults(
-            $.extend(
-            { 'dateFormat': 'dd-mm-yy' },
-            $.datepicker.regional['id']
-            )
-        );
+    //$.datepicker.setDefaults(
+    //        $.extend(
+    //        { 'dateFormat': 'dd-mm-yy' },
+    //        $.datepicker.regional['id']
+    //        )
+    //    );
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.FlightSearchForm = $rootScope.FlightSearchForm;
 

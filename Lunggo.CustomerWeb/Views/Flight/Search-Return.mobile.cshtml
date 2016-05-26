@@ -799,14 +799,14 @@
                     </div>
                     <div class="form-group">
                         <p class="form-control form-date form-departure-date" ng-click="DatePicker.SetOption({Target: 'departure'}); SetOverlay('datepicker-departure')"
-                           ng-init="FlightSearchForm.DepartureDate = '@trips[0].DepartureDate.ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))'">
+                           ng-init="FlightSearchForm.DepartureDate = '@trips[0].DepartureDate.ToString("ddd, d MMM yyyy")'">
                             <b>Berangkat : </b> {{FlightSearchForm.DepartureDate | date: 'EEE, d-MMM-yyyy'}}
                         </p>
                         <input type="text" value="" ng-model="FlightSearchForm.DepartureDate" class="flight-search-form-departure hidden" />
                     </div>
                     <div class="form-group" ng-hide="FlightSearchForm.Trip == 'false'">
                         <p class="form-control form-date form-return-date" ng-click="DatePicker.SetOption({Target: 'return'}); SetOverlay('datepicker-departure')"
-                           ng-init="FlightSearchForm.ReturnDate = '@trips[1].DepartureDate.ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))'">
+                           ng-init="FlightSearchForm.ReturnDate = '@trips[1].DepartureDate.ToString("ddd, d MMM yyyy")'">
                             <b>Kembali: </b> {{FlightSearchForm.ReturnDate | date : 'EEE, d-MMM-yyyy'}}
                         </p>
                         <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />

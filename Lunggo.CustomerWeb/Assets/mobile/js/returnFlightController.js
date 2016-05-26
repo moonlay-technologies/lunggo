@@ -6,12 +6,12 @@
         $scope.FlightFunctions.GetFlight('departure');
         $scope.FlightFunctions.GetFlight('return');
     });
-    $.datepicker.setDefaults(
-            $.extend(
-            { 'dateFormat': 'dd-mm-yy' },
-            $.datepicker.regional['id']
-            )
-        );
+    //$.datepicker.setDefaults(
+    //        $.extend(
+    //        { 'dateFormat': 'dd-mm-yy' },
+    //        $.datepicker.regional['id']
+    //        )
+    //    );
 
     // **********
     // variables
