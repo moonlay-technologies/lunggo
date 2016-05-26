@@ -29,7 +29,7 @@ var FlightSearchConfig = {
             var returnDate = new Date(params.returnDate) || '';
             var origin = params.origin;
             var destination = params.destination;
-            var passenger = [ params.adult, (params.child || 0), (params.infant || 0) ];
+            var passenger = [ params.adult, (params.children || 0), (params.infant || 0) ];
             var cabin = params.cabin.toLowerCase();
             // generate departure param
             departureParam = ( origin + destination ) + ( (('0' + departureDate.getDate()).slice(-2)) + (('0' + (departureDate.getMonth()+1)).slice(-2) ) + (departureDate.getFullYear().toString().substr(2,2)) );
@@ -107,6 +107,10 @@ var SubscribeConfig = {
     Url: 'https://api.local.travorama.com/api/v1/newsletter/subscribe'
 };
 
+var LoginConfig = {
+    Url: 'http://local.travorama.com/id/ApiAccount/Login'
+};
+
 var RegisterConfig = {
     Url: 'http://local.travorama.com/id/ApiAccount/Register'
 };
@@ -138,4 +142,32 @@ var VeritransTokenConfig = {
 
 var TransferConfig = {
     Url: 'https://api.local.travorama.com/api/v1/transferidentifier'
+};
+
+var LoginMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/Login'
+};
+
+var RegisterMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/Register'
+};
+
+var ResetPasswordMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ResetPassword'
+};
+
+var ForgotPasswordMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ForgotPassword'
+};
+
+var ChangePasswordMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ChangePassword'
+};
+
+var ChangeProfileMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ChangeProfile'
+};
+
+var ResendConfirmationEmailMobileConfig = {
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ResendConfirmationEmail'
 };
