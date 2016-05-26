@@ -109,6 +109,7 @@ app.controller('paymentController', [
             postData: '',
             rsvNo: '',
             paying: false,
+            ccdata: false,
             checked:false,
             isSuccess: '',
             ccChecked: false,
@@ -119,6 +120,7 @@ app.controller('paymentController', [
                     Veritrans.client_key = VeritransTokenConfig.ClientKey;
                     var card = function () {
                         if ($scope.CreditCard.TwoClickToken == 'false') {
+                            $scope.pay.ccdata = true;
                             return {
                                 'card_number': $scope.CreditCard.Number,
                                 'card_exp_month': $scope.CreditCard.Month,
@@ -225,6 +227,7 @@ app.controller('paymentController', [
                         $scope.pay.isSuccess= false;
                     }
                 })
+                $scope.pay.paying = false;
             }
         }
         

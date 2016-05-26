@@ -3,6 +3,7 @@
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Flight.Model
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 @{
@@ -14,7 +15,10 @@
 }
 
 @{
+    var payment = Model.Payment.Status;
     var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
+    FlightSegment prevSegment = null;
+    
 }
 
 @section AdditionalJS {
@@ -49,7 +53,7 @@
         <h2 class="section-title stripe text-center">PEMESANAN <span>GAGAL</span></h2>
 
         <div class="container">
-            <p>Mohon maaf, pesanan no. @Model.RsvNo telah dibatalkan. Silahkan membuat pesanan baru.</p>
+            <p>Mohon maaf, pemesanan dengan no. @Model.RsvNo telah dibatalkan. Silakan membuat pemesanan baru.</p>
         </div>
         <div class="container text-center">
             <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
@@ -64,7 +68,7 @@ else if (Model.Payment.Status == PaymentStatus.Denied)
         <h2 class="section-title stripe text-center">PEMESANAN <span>GAGAL</span></h2>
 
         <div class="container">
-            <p>Mohon maaf, pesanan no. @Model.RsvNo telah ditolak. Silahkan membuat pesanan baru.</p>
+            <p>Mohon maaf, pemesanan dengann no. @Model.RsvNo telah ditolak. Silakan membuat pemesanan baru.</p>
         </div>
         <div class="container text-center">
             <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
@@ -79,7 +83,7 @@ else
         <h2 class="section-title stripe text-center">TERIMA <span>KASIH</span></h2>
 
         <div class="container">
-            <p>Telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-ticket Anda melalui tombol berikut atau mengunduhnya di email setelah :</p>
+            <p>Terima kasih telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda: @Model.Contact.Email.</p>
 
             <section class="countdown">
             
@@ -118,19 +122,19 @@ else
                             @using (Html.BeginForm())
                             {
                                 <input type="hidden" name="rsvNo" value="@Model.RsvNo" />
-                                <button class="btn btn-yellow block"><span>CEK PESANAN</span></button>
+                                <button class="btn btn-yellow block"><span>CEK PEMESANAN</span></button>
                             }
                         </div>
                     </div>
                 </div>
 
-                <p>Anda dapat  menutup halaman ini dan mengecek status penerbitan e-ticket di menu cek pemesanan setiap saat.</p>
+                <p>Anda dapat menutup halaman ini dan mengecek status penerbitan e-tiket di menu cek pemesanan setiap saat.</p>
 
             </section><!-- .section -->
 
             <section class="order-detail">
                 <header>
-                    <h4><b>Detail Pesanan</b> <span class="pull-right">Order ID: <b>@Model.RsvNo</b></span></h4>
+                    <h4><b>Detail Pesanan</b> <span class="pull-right">Nomor Pesanan: <b>@Model.RsvNo</b></span></h4>
                 </header>
                 <section>
 
@@ -138,51 +142,114 @@ else
                         <div class="row">
 
                             <div class="order-detail-left col-xs-8">
-                                <div class="passenger">
-                                    <h4>INFO PENUMPANG</h4>
+                                <div class="va-passenger col-xs-12">
+                                    <div class="passenger col-xs-8">
+                                        <h4>INFO PENUMPANG</h4>
 
-                                    <ol>
-                                        @foreach (var passenger in Model.Passengers)
-                                        {
-                                            <li><p>@EnumDisplay.PassengerType(passenger.Type) : @EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p></li>
-                                        }
-                                    </ol>
-
+                                        <ol>
+                                            @foreach (var passenger in Model.Passengers)
+                                            {
+                                                <li><p>@EnumDisplay.PassengerType(passenger.Type) : @EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p></li>
+                                            }
+                                        </ol>
+                                    </div>
+                                    @if (Model.Payment.Method == PaymentMethod.VirtualAccount)
+                                    {
+                                        <div class="virtual-account col-xs-4">
+                                            <h4 class="va-text" style="font-size:11px;padding-bottom:2px;margin-bottom:8px;"><b>NO VIRTUAL ACCOUNT</b></h4>
+                                            <h4 class="va-number" style="font-size : 18px; color: #ff6900; padding:0;"><b>@Model.Payment.TargetAccount</b></h4>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="order">
                                     <h4>DETAIL PENERBANGAN</h4>
 
                                     <div class="flight departure">
-                                        @foreach (var segment in Model.Itinerary.Trips[0].Segments)
-                                        {
-                                            <p><img src="@segment.AirlineLogoUrl" alt="@segment.AirlineName" /> <span>@segment.AirlineName</span> </p>
-                                            <div class="row">
-                                                <div class="col-xs-3">
-                                                    <p>Berangkat : </p>
+                                        <p>Berangkat : </p>
+                                        <div class="row">
+                                            @foreach (var segment in Model.Itinerary.Trips[0].Segments)
+                                            {
+                                                if (segment != Model.Itinerary.Trips[0].Segments.First())
+                                                {
+                                                    var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
+                                                    <div class="col-xs-12" style="padding-top:5px;">
+                                                        <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;"><span style="background:#f4f4f4;padding:0 10px;color:#15b1e4;">Transit Duration : @transitDuration.ToString()</span></p>
+                                                    </div>
+                                                     <!-- .transit -->
+                                                }
+                                                <div class="col-xs-2">
+                                                    <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                    <p><span>@segment.AirlineName</span></p>
                                                 </div>
-                                                <div class="col-xs-9">
-                                                    <p>@segment.DepartureCity (@segment.DepartureAirport) - @segment.ArrivalCity (@segment.ArrivalAirport)</p>
-                                                    <p>@segment.DepartureTime.ToString("dddd, d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                <div class="col-xs-10">
+                                                    <div class="col-xs-12">
+                                                        <div class="col-xs-4">
+                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureTime.ToString("HH:mm")</b></p>
+                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
+                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureAirportName</p>
+                                                        </div>
+                                                        <div class="col-xs-4" style="align-content:center;">
+                                                            <p></p>
+                                                            <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Durasi:</b> @segment.Duration</p>
+                                                            <p></p>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalTime.ToString("HH:mm")</b></p>
+                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
+                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalAirportName</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        }
+                                                prevSegment = segment;
+                                            }
+                                        </div>
                                     </div>
                                     @if (Model.Itinerary.Trips.Count > 1)
                                     {
                                         <div class="flight return">
-                                            @foreach (var segment in Model.Itinerary.Trips[0].Segments)
-                                            {
-                                                <p><img src="@segment.AirlineLogoUrl" alt="@segment.AirlineName" /> <span>@segment.AirlineName</span> </p>
-                                                <div class="row">
-                                                    <div class="col-xs-3">
-                                                        <p>Berangkat : </p>
+                                            <p>Kembali : </p>
+                                            <div class="row">
+                                                @foreach (var segment in Model.Itinerary.Trips[1].Segments)
+                                                {
+                                                    if (segment != Model.Itinerary.Trips[1].Segments.First())
+                                                    {
+                                                        var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
+                                                        <div class="col-xs-12" style="padding-top:5px;">
+                                                            <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;"><span style="background:#f4f4f4;padding:0 10px;color:#15b1e4;">Transit Duration : @transitDuration.ToString()</span></p>
+                                                        </div>
+
+                                                        <!-- .transit -->
+                                                    }
+                                                    <div class="col-xs-2">
+                                                        <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                        <p><span>@segment.AirlineName</span></p>
                                                     </div>
-                                                    <div class="col-xs-9">
-                                                        <p>@segment.DepartureCity (@segment.DepartureAirport) - @segment.ArrivalCity (@segment.ArrivalAirport)</p>
-                                                        <p>@segment.DepartureTime.ToString("dddd, d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                    <div class="col-xs-10">
+                                                        <div class="col-xs-12">
+                                                            <div class="col-xs-4">
+                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureTime.ToString("HH:mm")</b></p>
+                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
+                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureAirportName</p>
+                                                            </div>
+                                                            <div class="col-xs-4" style="align-content:center;">
+                                                                <p></p>
+                                                                <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Durasi:</b> @segment.Duration</p>
+                                                                <p></p>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalTime.ToString("HH:mm")</b></p>
+                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
+                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalAirportName</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            }
+                                                    prevSegment = segment;
+                                                }
+                                            </div>
                                         </div>
                                     }
                                 </div>

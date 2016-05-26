@@ -113,6 +113,10 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Select.HtmlToPdf">
       <HintPath>..\packages\Select.HtmlToPdf.1.2.0.0\lib\net40\Select.HtmlToPdf.dll</HintPath>
     </Reference>
@@ -134,6 +138,10 @@
       <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.2\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -147,6 +155,10 @@
     <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.2\lib\net45\System.Web.Http.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -213,6 +225,7 @@
     <Compile Include="App_Start\LunggoConfig\LunggoBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\ApiAccountController.cs" />
     <Compile Include="Areas\Api\Models\AccountApiResponseModel.cs" />
@@ -676,6 +689,8 @@
     <Content Include="Assets\images\atm-bersama.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
     <Content Include="Assets\images\bank-bca.png" />
+    <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
+    <Content Include="Assets\images\Bank-Mandiri.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
     <Content Include="Assets\images\bca-logo.jpg" />
     <Content Include="Assets\images\bed-bg.png" />
@@ -854,14 +869,17 @@
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\list-bg.png" />
     <Content Include="Assets\images\list-detail-close.png" />
+    <Content Include="Assets\images\load.gif" />
     <Content Include="Assets\images\loading-icon.png" />
     <Content Include="Assets\images\loading-image-dark.gif" />
     <Content Include="Assets\images\loading-image.gif" />
+    <Content Include="Assets\images\loading-new.gif" />
     <Content Include="Assets\images\loading-plane.png" />
     <Content Include="Assets\images\loading-sample.png" />
     <Content Include="Assets\images\lock-image.jpg" />
     <Content Include="Assets\images\login-bg.jpg" />
     <Content Include="Assets\images\logo-color.png" />
+    <Content Include="Assets\images\logo-promo.jpg" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\main-menu-arrow.png" />
     <Content Include="Assets\images\mandiri-logo.jpg" />
@@ -871,6 +889,7 @@
     <Content Include="Assets\images\menu-icon.png" />
     <Content Include="Assets\images\nav-sprite.png" />
     <Content Include="Assets\images\no-image.png" />
+    <Content Include="Assets\images\notif-promo.jpg" />
     <Content Include="Assets\images\order-flight-list-bg.png" />
     <Content Include="Assets\images\paperplane-icon.png" />
     <Content Include="Assets\images\payment-atm.jpg" />
@@ -1036,6 +1055,7 @@
     <Content Include="Assets\js\angularApp.js" />
     <Content Include="Assets\js\angular_app.js" />
     <Content Include="Assets\js\application.js" />
+    <Content Include="Assets\js\date-id-ID.js" />
     <Content Include="Assets\js\jquery-ui.min.js" />
     <Content Include="Assets\js\jquery.countdown.min.js" />
     <Content Include="Assets\js\jquery.cycle2.js.map" />
@@ -1043,6 +1063,7 @@
     <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\jquery.range-min.js" />
     <Content Include="Assets\js\jquery.sticky.js" />
+    <Content Include="Assets\js\jquery.ui.datepicker-id.js" />
     <Content Include="Assets\js\jquery.ui.touch-punch.min.js" />
     <Content Include="Assets\js\js.cookie.js" />
     <Content Include="Assets\js\jssor.slider.mini.js" />
@@ -1081,6 +1102,7 @@
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-white.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-yellow.png" />
+    <Content Include="Assets\mobile\images\promo-logo.png" />
     <Content Include="Assets\mobile\images\register-header-left.png" />
     <Content Include="Assets\mobile\images\revalidate-plane.png" />
     <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
@@ -1315,9 +1337,7 @@
     <Content Include="Assets\mobile\css\_page_home.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
-    <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-qa-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2638,6 +2658,7 @@
     <Content Include="Views\Flight\Eticket.cshtml" />
     <Content Include="Views\Flight\Confirmation.mobile.cshtml" />
     <Content Include="Views\Flight\Payment.cshtml" />
+    <Content Include="Views\Flight\Payment.mobile.cshtml" />
     <None Include="Views\Flight\SearchResultList-Single.mobile.cshtml.bak" />
     <Content Include="Views\Template\eticket3.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.cshtml" />
@@ -2654,6 +2675,8 @@
     <Content Include="Views\StaticPage\DanamonSweetValentine.cshtml" />
     <Content Include="Views\StaticPage\HowToOrder.mobile.cshtml" />
     <Content Include="Views\StaticPage\Promo.mobile.cshtml" />
+    <Content Include="Views\StaticPage\Newsletter.mobile.cshtml" />
+    <Content Include="Views\Template\ConfirmationRaw.cshtml" />
     <Content Include="Views\Template\EmailSubscribeVoucher.cshtml" />
     <Content Include="Views\Template\EmailSubscribe.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
@@ -2692,6 +2715,7 @@
     <Content Include="Views\Template\eticketnew.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderFlightHistoryDetail.mobile.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderHistory.mobile.cshtml" />
+    <Content Include="Views\Template\PendingConfirmed.cshtml" />
     <Content Include="Views\Template\SlightDelayEmail.cshtml" />
     <None Include="Views\UW000TopPage\Index.mobile.cshtml.bak" />
     <None Include="Views\Web.Debug.config">
@@ -2733,6 +2757,10 @@
     <ProjectReference Include="..\Lunggo.Repo\Lunggo.Repository.csproj">
       <Project>{50b8c0c0-6b28-46fd-ba90-771d8c9f12a1}</Project>
       <Name>Lunggo.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lunggo.WebAPI\Lunggo.WebAPI.csproj">
+      <Project>{94c45b65-f662-4262-a745-0d023f9c9ff9}</Project>
+      <Name>Lunggo.WebAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

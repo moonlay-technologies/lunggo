@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
+using Lunggo.ApCommon.Identity.User;
 using Lunggo.CustomerWeb.Models;
 using System.Threading.Tasks;
 using Lunggo.Repository.TableRepository;
@@ -6,6 +8,8 @@ using Lunggo.Repository.TableRecord;
 using Lunggo.Framework.Database;
 using System.Linq;
 using System;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -41,6 +45,61 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Contact()
         {
             return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult Newsletter()
+        {
+            return View();
+        }
+
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register(RegisterViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Message = "InvalidInputData";
+                return View(model);
+            }
+
+            var foundUser = await UserManager.FindByEmailAsync(model.Email);
+            if (foundUser != null)
+            {
+                ViewBag.Message = foundUser.EmailConfirmed ? "AlreadyRegistered" : "AlreadyRegisteredButUnconfirmed";
+                return View(model);
+            }
+
+            var user = new CustomUser
+            {
+                UserName = model.Email,
+                Email = model.Email
+            };
+            var result = await UserManager.CreateAsync(user);
+            if (result.Succeeded)
+            {
+                var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
+                    protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl);
+                ViewBag.Message = "ConfirmationEmailSent";
+                return View();
+            }
+            else
+            {
+                ViewBag.Message = "Failed";
+                return View(model);
+            }
+
         }
 
         [HttpGet]

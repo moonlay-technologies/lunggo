@@ -1,13 +1,16 @@
-﻿@using System.Globalization
+﻿@using System.Diagnostics.Eventing.Reader
+@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Flight.Service
-@model Lunggo.CustomerWeb.Models.FlightPaymentConfirmationData
+@using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 @{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Konfirmasi Pembayaran";
     ViewBag.BodyClass = "page page-confirmation";
-    ViewBag.AngularController = "FlightConfirmationController";
-    
     ViewBag.SiteHeader = "checkout";
 
     var reservation = FlightService.GetInstance().GetReservationForDisplay(Model.RsvNo);
@@ -17,6 +20,16 @@
         new SelectListItem {Text = "Mandiri", Value = "Mandiri"},
         new SelectListItem {Text = "BCA", Value = "BCA"},
     };
+    var dep = Model.Itinerary.Trips[0];
+    var ret = Model.Itinerary.Trips[0];
+    if (Model.Itinerary.Trips.Count > 1)
+    {
+        ret = Model.Itinerary.Trips[1];
+    }
+}
+@{
+    DateTime timelimit = (DateTime)Model.Payment.TimeLimit;
+    FlightSegment prevSegment = null;
 }
 
 @section AdditionalJS {
@@ -28,23 +41,23 @@
 }
 @section PageJS{
     <script>
-        var langCode = 'en';
-        var paymentTimeout = '';
+    var langCode = 'en';
+    var paymentTimeout = '';
 
-        // development only start
-        paymentTimeout = new Date('@Model.TimeLimit.ToString("u")');
+    // development only start
+    paymentTimeout = new Date('@timelimit.AddMinutes(-30).ToString("u")');
 
-        // countdown timer
-        $('.timer').countdown(paymentTimeout, function(event) {
-            $('.timer .hour').text(event.strftime('%H'));
-            $('.timer .minute').text(event.strftime('%M'));
-            $('.timer .second').text(event.strftime('%S'));
-        });
+    // countdown timer
+    $('.timer').countdown(paymentTimeout, function (event) {
+        $('.timer .hour').text(event.strftime('%H'));
+        $('.timer .minute').text(event.strftime('%M'));
+        $('.timer .second').text(event.strftime('%S'));
+    });
 
-        // date selector
-        $('.date-picker').datepicker({
-            minDate: new Date()
-        });
+    // date selector
+    $('.date-picker').datepicker({
+        minDate: new Date()
+    });
 
     </script>
     <!-- angular controller -->
@@ -52,31 +65,57 @@
 }
 
 <div>
-
-    <section class="checkout-step {{stepClass}} hidden">
-        <div class="container">
-            <div class="step step-1" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span>01. <b>Data Pesanan</b></span></div>
-            <div class="step step-2" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span>02. <b>Data Kontak</b></span></div>
-            <div class="step step-3" ng-class="{'active' : currentPage == 3, 'inactive' : currentPage > 3}"><span>03. <b>Data Penumpang</b></span></div>
-            <div class="step step-4" ng-class="{'active' : currentPage == 4}"><span>04. <b>Pembayaran</b></span></div>
-        </div>
-    </section><!-- .checkout-step -->
-
     <div class="confirmation-content">
 
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
+        <div class="container_new">
+            <div class="row1">
+                <div class="col12">
 
                     <div class="instruction">
-                        <h3>PANDUAN <b>TRANSFER</b></h3>
+                        <div class="page__header">
+                            <h1 class="text-center section-title stripe">Panduan <span>Transfer</span></h1>
+                        </div>
                         <header>
-                            <h4>No. Pesanan: <b>@Model.RsvNo</b></h4>
+                            <h4>Nomor Pesanan: <b>@Model.RsvNo</b></h4>
                         </header>
+                        
+                        <div class="summary summary--price">
+                            
+                                <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
+                                <div class="summary__body">
+                                    <dl>
+                                        <dt>Total Tiket</dt>
+                                        <dd>Rp @((Model.Payment.FinalPrice + Model.Discount + Model.TransferCode).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                    </dl>
+                                    @if (Model.Discount != 0)
+                                    {
+                                        <dl>
+                                            <dt>Potongan Harga</dt>
+                                            <dd>- Rp @Model.Discount.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                        </dl>
+                                    }
+                                    @if (Model.TransferCode != 0)
+                                    {
+                                        <dl>
+                                            <dt>Kode Unik Pembayaran</dt>
+                                            <dd>- Rp @Model.TransferCode.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                        </dl>
+                                    }
+                                    <dl class="total-price">
+                                        <dt>Total</dt>
+                                        <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                    </dl>
+                                <footer>
+                                    <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
+                                </footer>
+                            </div><!-- .widget.price-detail -->
+                        </div><!-- .widget-container -->
+                       
                         <section class="text">
-                            <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima eTicket akan dikirimkan ke Email Anda dalam waktu max <b>60 menit</b></p>
+                            <p>Pemesanan dan harga sudah dikonfirmasi oleh maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maksimum <b>60 menit</b>.</p>
                             <p>Mohon selesaikan pembayaran melalui <b>ATM / Internet Banking / M-Banking</b></p>
                         </section>
+
                         <section class="bank-detail">
                             <div class="bank">
                                 <div class="image-wrapper">
@@ -96,14 +135,23 @@
                                 </dl>
                                 <dl>
                                     <dt>Jumlah</dt>
-                                    <dd>Rp @Model.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                    <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                 </dl>
-                                
                             </div><!-- .bank -->
                         </section><!-- .bank-detail -->
+                     </div>
+                        
+                    <div class="transfer-instruction">
+                        <!--<section> -->
+                        <ol style="margin-left:5px;padding-left:5px;margin-top:5px;">
+                            <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Pastikan Anda melakukan transfer ke rekening <b>Travel Madezy Internasional</b></li>
+                            <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
+                            <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">E-tiket akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
+                        </ol>
+                        <!--Bagian Form Konfirmasi yang dihilangin-->
                     </div>
                     
-                    <div class="countdown">
+                    <div class="widget countdown">
                         <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
                         <div class="widget-content">
                             <p>Sisa waktu Anda untuk melakukan pembayaran</p>
@@ -125,51 +173,167 @@
                             </div>
                         </div>
                     </div><!-- .widget.countdown -->
+                    <br/> 
+                    
+                    <div class="overlay--flight-detail">
+                        <div class="overlay__body overlay__content">
+                            <div class=" flight-fare-wrapper">
+                                <h2><b>RINCIAN</b> PENERBANGAN</h2>
+                                <h3><b>DETAIL</b> PESANAN</h3>
+                                <h4>Nomor Reservasi: <b>@Model.RsvNo</b></h4>
+                                <div class="summary summary--passenger">
+                                    <h3 class="summary__title"><b>DAFTAR</b> PENUMPANG</h3>
+                                    <div class="summary__body">
+                                        <ol>
+                                            @foreach (var passenger in Model.Passengers)
+                                            {
+                                                <li>
+                                                    <h4>
+                                                        <span>@EnumDisplay.Title(passenger.Title) </span>
+                                                        @passenger.FirstName @passenger.LastName
+                                                    </h4>
+                                                    <dl>
+                                                        <dt>Jenis Tiket</dt>
+                                                        @if (passenger.Type == PassengerType.Adult)
+                                                        {
+                                                            <dd>Dewasa</dd>
+                                                        }
+                                                        @if (passenger.Type == PassengerType.Child)
+                                                        {
+                                                            <dd>Anak</dd>
+                                                        }
+                                                        @if (passenger.Type == PassengerType.Infant)
+                                                        {
+                                                            <dd>Bayi</dd>
+                                                        }
+                                                    </dl>
+                                                </li>
+                                            }
+                                        </ol>
+                                    </div><!-- .summary__body -->
+                                </div><!-- .summary--passenger -->
 
-                    <div class="confirmation-form">
-                        <h3><b>KONFIRMASI</b> PEMBAYARAN</h3>
-                        <section>
+                                <h4><b>BERANGKAT</b></h4>
+                                <div class="flight-title flight-title--departure">
+                                    <div class="flight-info">
+                                        <h4><b>@dep.OriginAirport</b> ke <b>@dep.DestinationAirport</b></h4>
+                                        <h5>@dep.DepartureDate.ToString("ddd, d MMM yyyy")</h5>
+                                    </div><!-- .flight-info -->
+                                </div><!-- .flight-title -->
+                                    @for (var segment = 0; segment < dep.Segments.Count; segment++)
+                                    {
+                                        <div class="flight-wrapper">
+                                            <div class="flight">
+                                                <div class="flight__number">
+                                                    <span>@(segment + 1)</span>
+                                                </div><!-- .flight__number -->
+                                                <div class="flight__content">
+                                                    <div class="flight__summary">
+                                                        <img class="flight__image" src="@dep.Airlines[0].LogoUrl" alt="@dep.Airlines[0].Name">
+                                                        <div class="flight__airline">
+                                                            <h4><b>@dep.Airlines[0].Name</b></h4>
+                                                            <h5>@dep.Airlines[0].Code-@dep.Segments[segment].FlightNumber</h5>
+                                                        </div>
+                                                    </div><!-- .flight__summary -->
+                                                    <div class="flight__detail">
+                                                        <div class="flight__departure">
+                                                            <h5>@dep.Segments[segment].DepartureTime.ToString("d MMM yyyy")</h5>
+                                                            <h4><b>@dep.Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
+                                                            <h5><b>(@dep.Segments[segment].DepartureAirport) @dep.Segments[segment].DepartureCity</b></h5>
+                                                            <h5>@dep.Segments[segment].DepartureAirportName</h5>
+                                                        </div>
+                                                        <div class="flight__separator">
+                                                            <h5><b>Durasi: </b>@dep.Segments[segment].Duration</h5>
+                                                        </div>
+                                                        <div class="flight__arrival">
+                                                            <h5>@dep.Segments[segment].ArrivalTime.ToString("d MMM yyyy")</h5>
+                                                            <h4><b>@dep.Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
+                                                            <h5><b>(@dep.Segments[segment].ArrivalAirport) @dep.Segments[segment].ArrivalCity</b></h5>
+                                                            <h5>@dep.Segments[segment].ArrivalAirportName</h5>
+                                                        </div><!-- .flight__arrival -->
+                                                    </div><!-- .flight__detail -->
+                                                </div><!-- .flight__content -->
+                                            </div><!-- .flight -->
+                                            @if (dep.Transits.Count > 0 && segment < dep.TotalTransit)
+                                            {
+                                                <div class="transit">
+                                                    <span>Transit di @dep.Segments[segment].ArrivalCity selama <b>@dep.Transits.ElementAt(segment).Duration</b></span>
+                                                </div><!-- .transit -->
+                                            }
+                                        </div> <!-- .flight-wrapper -->
+                                    }
+                                
+                            </div>
+                        </div>
+                    </div>  
+                    
+                    @if (Model.Itinerary.Trips.Count > 1)
+                    {
+                        <div class="overlay--flight-detail">
+                            <div class="overlay__body overlay__content">
+                                <div class=" flight-fare-wrapper">
+                                    <h4><b>KEMBALI</b></h4>
+                                        <div class="flight-title flight-title--departure">
+                                            <div class="flight-info">
+                                                <h4><b>@ret.OriginAirport</b> ke <b>@ret.DestinationAirport</b></h4>
+                                                <h5>@ret.DepartureDate.ToString("ddd, d MMM yyyy")</h5>
+                                            </div><!-- .flight-info -->
+                                        </div><!-- .flight-title -->
+                                        @for (var segment = 0; segment < ret.Segments.Count; segment++)
+                                        {
+                                            <div class="flight-wrapper">
 
-                            @using (@Html.BeginForm("Confirmation", "Flight", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form", @name = "confirmationForm", @novalidate = "novalidate"}))
-                            {
-                                <input type="hidden" name="report.RsvNo" value="@Model.RsvNo"/>
-                                <div class="form-group">
-                                    <label class="important control-label">Nama Pemilik Rekening:</label>
-                                    <input type="text" name="report.RemitterName" value="" class="form-control" placeholder="Nama Pengirim" required ng-model="UserForm.Confirmation.Name" />
+                                                <div class="flight">
+                                                    <div class="flight__number">
+                                                        <span>@(segment + 1)</span>
+                                                    </div><!-- .flight__number -->
+                                                    <div class="flight__content">
+                                                        <div class="flight__summary">
+                                                            <img class="flight__image" src="@ret.Airlines[0].LogoUrl" alt="@ret.Airlines[0].Name">
+                                                            <div class="flight__airline">
+                                                                <h4><b>@ret.Airlines[0].Name</b></h4>
+                                                                <h5>@ret.Airlines[0].Code-@ret.Segments[segment].FlightNumber</h5>
+                                                            </div>
+                                                        </div><!-- .flight__summary -->
+                                                        <div class="flight__detail">
+                                                            <div class="flight__departure">
+                                                                <h5>@ret.Segments[segment].DepartureTime.ToString("d MMM yyyy")</h5>
+                                                                <h4><b>@ret.Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
+                                                                <h5><b>(@ret.Segments[segment].DepartureAirport) @ret.Segments[segment].DepartureCity</b></h5>
+                                                                <h5>@ret.Segments[segment].DepartureAirportName</h5>
+                                                            </div>
+                                                            <div class="flight__separator">
+                                                                <h5><b>Durasi: </b>@ret.Segments[segment].Duration</h5>
+                                                            </div>
+                                                            <div class="flight__arrival">
+                                                                <h5>@ret.Segments[segment].ArrivalTime.ToString("d MMM yyyy")</h5>
+                                                                <h4><b>@ret.Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
+                                                                <h5><b>(@ret.Segments[segment].ArrivalAirport) @ret.Segments[segment].ArrivalCity</b></h5>
+                                                                <h5>@ret.Segments[segment].ArrivalAirportName</h5>
+                                                            </div><!-- .flight__arrival -->
+                                                        </div><!-- .flight__detail -->
+                                                    </div><!-- .flight__content -->
+                                                </div><!-- .flight -->
+                                                @if (ret.Transits.Count > 0 && segment < ret.TotalTransit)
+                                                {
+                                                    <div class="transit">
+                                                        <span>Transit di @ret.Segments[segment].ArrivalCity selama <b>@ret.Transits.ElementAt(segment).Duration</b></span>
+                                                    </div><!-- .transit -->
+                                                }
+                                            </div> <!-- .flight-wrapper -->
+                                        }
+                                   
                                 </div>
-                                <div class="form-group">
-                                    <label class="important control-label">Nama Bank:</label>
-                                    <input type="text" name="report.RemitterBank" value="" class="form-control" placeholder="Bank Pengirim" required ng-model="UserForm.Confirmation.Bank.Name" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="important control-label">Nomor Rekening:</label>
-                                    <input type="text" name="report.RemitterAccount" value="" class="form-control" placeholder="Nomor Rekening" required ng-model="UserForm.Confirmation.Bank.Number" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="important control-label">Jumlah Transfer:</label>
-                                    <input type="number" name="report.Amount" value="" class="form-control" placeholder="Jumlah Transfer" required ng-model="UserForm.Confirmation.Amount" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="important control-label">Tanggal Transfer:</label>
-                                    <input type="text" name="report.PaymentTime" class="form-control datepicker" id="payment-date" required ng-model="UserForm.Confirmation.TransferDate" ng-click="PageConfig.SetOverlay('datepicker');DatePicker.SetOption({Target: '#payment-date', ShowMonth: true, ShowYear: true})" />
-                                </div>
-                                <div class="form-group">
-                                    <input class="btn btn-yellow" type="submit" value="KONFIRMASI" ng-disabled="confirmationForm.$invalid" />
-                                </div>
-                            }
-
-                        </section>
-                    </div>
-
+                            </div>
+                        </div>
+                    }
                 </div>
             </div><!-- .row -->
         </div><!-- .container -->
-
     </div><!-- .confirmation-content -->
-
 </div>
 
-<div class="overlay datepicker" ng-class="{'active' : PageConfig.Overlay == 'datepicker'}">
+@*<div class="overlay datepicker" ng-class="{'active' : PageConfig.Overlay == 'datepicker'}">
     <header class="overlay__header">
         <h3 class="overlay__title">
             Lorem ipsum dolor sit amet
@@ -182,4 +346,4 @@
     <footer class="overlay__footer hidden">
         <button class="btn btn-yellow btn-block" ng-click="PageConfig.SetOverlay('')">KONFIRMASI</button>
     </footer>
-</div>
+</div>*@

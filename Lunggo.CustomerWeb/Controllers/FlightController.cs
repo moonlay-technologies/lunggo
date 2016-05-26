@@ -84,7 +84,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     ViewBag.Message = "BookFailed";
                     return View();
-                }
+                } 
 
                 if (token == null)
                 {
@@ -209,16 +209,16 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Thankyou(string rsvNo)
         {
-            if (TempData["AllowThisThankyouPage"] as string == rsvNo)
-            {
+            //if (TempData["AllowThisThankyouPage"] as string == rsvNo)
+            //{
                 var service = FlightService.GetInstance();
                 var summary = service.GetReservationForDisplay(rsvNo);
                 return View(summary);
-            }
-            else
-            {
-                return RedirectToAction("Index", "UW000TopPage");
-            }
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index", "UW000TopPage");
+            //}
         }
 
         [HttpPost]
@@ -234,19 +234,22 @@ namespace Lunggo.CustomerWeb.Controllers
             var reservation = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
             if (reservation.Payment.Method == PaymentMethod.BankTransfer && reservation.Payment.Status == PaymentStatus.Pending)
             {
-                return View(new FlightPaymentConfirmationData
+                /*return View(new FlightPaymentConfirmationData
                 {
                     RsvNo = rsvNo,
                     FinalPrice = reservation.Payment.FinalPrice,
                     TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault()
-                });
+                });*/
+                var service = FlightService.GetInstance();
+                var summary = service.GetReservationForDisplay(rsvNo);
+                return View(summary);
             }
             else
                 TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Flight", new { rsvNo });
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult Confirmation(TransferConfirmationReport report, HttpPostedFileBase file)
         {
             if (!ModelState.IsValid)
@@ -262,7 +265,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var paymentService = PaymentService.GetInstance();
             paymentService.SubmitTransferConfirmationReport(report, fileInfo);
             return RedirectToAction("Thankyou", "Flight", new { rsvNo = report.RsvNo });
-        }
+        }*/
 
         public ActionResult TopDestinations()
         {

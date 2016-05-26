@@ -78,3 +78,54 @@
         }
     }
 }// page how to order
+
+ .page.page-newsletter{
+     .container{
+         p{
+             color: #3fabe3;
+             font-size: 16px;
+             text-align: center;
+             margin-left: 10px;
+             margin-right: 10px;
+             padding-bottom: 10px;
+         }
+         form{
+             border-top: 1px solid #ccc;
+             padding-top: 20px;
+         }
+     }
+     h1{
+         text-align: center;
+         margin-left: 10px;
+         margin-right: 10px;
+     }
+     .overlay-content{
+         p{
+             color: black;
+             font-size: 12px;
+         }
+     }
+ }
+
+ .newsletterform{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    p{
+             color: #3fabe3;
+             font-size: 16px;
+             text-align: center;
+             width: 90%;
+             margin-left: 20px;
+             margin-right: 20px;
+             padding-bottom: 10px;
+         }
+}
+
+.page_header h1{
+    text-align: center;
+    
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

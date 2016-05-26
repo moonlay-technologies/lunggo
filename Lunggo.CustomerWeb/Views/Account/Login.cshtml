@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Masuk";
     ViewBag.BodyClass = "page-account page-account-login";
     var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
     var facebookProvider = loginProviders.First();
@@ -63,7 +63,7 @@
     <div class="page-overlay" ng-show="overlay">
         <div class="overlay-content">
             <header>
-                <h4>LOGIN GAGAL</h4>
+                <h4>PROSES MASUK GAGAL</h4>
             </header>
             <section>
                 <div>
@@ -75,23 +75,23 @@
                             <div class="col-sm-8">
                                 <div ng-show="message == 'NotRegistered'">
                                     <h3>Anda belum terdaftar di Travorama</h3>
-                                    <p><a href="@Url.Action("Register", "Account")">Klik disini</a> untuk mendaftar di Travorama.</p>
+                                    <p><a href="@Url.Action("Register", "Account")">Klik di sini</a> untuk mendaftar di Travorama.</p>
                                 </div>
                                 <div ng-show="message == 'InvalidInputData'">
-                                    <h3>Email / Password Salah</h3>
-                                    <p>Cek kembali alamat email dan password Anda.</p>
+                                    <h3>E-mail / Password Salah</h3>
+                                    <p>Cek kembali alamat e-mail dan password Anda.</p>
                                 </div>
                                 <div ng-show="message == 'Failed'">
-                                    <h3>Email / Password Salah</h3>
-                                    <p>Cek kembali alamat email dan password Anda.</p>
+                                    <h3>E-mail / Password Salah</h3>
+                                    <p>Cek kembali alamat e-mail dan password Anda.</p>
                                 </div>
                                 <div ng-show="message == 'AlreadyRegisteredButUnconfirmed'">
                                     <h3>Akun Belum Aktif</h3>
-                                    <p>Cek kembali alamat email Anda untuk mengaktifkan akun Anda.</p>
+                                    <p>Cek kembali alamat e-mail Anda untuk mengaktifkan akun Anda.</p>
                                 </div>
                                 <div ng-show="message == 'AlreadyConfirmed'">
                                     <h3>Akun Anda Telah Aktif</h3>
-                                    <p>Silahkan login menggunakan email dan password Anda.</p>
+                                    <p>Silakan masuk menggunakan e-mail dan password Anda.</p>
                                 </div>
                             </div>
                         </div>

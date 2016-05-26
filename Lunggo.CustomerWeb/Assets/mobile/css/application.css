@@ -3,11 +3,16 @@
 /*--------------------*/
 /* mixins */
 /*--------------------*/
+@media only screen and (min-width: 400px) {
+  .page.page-flight .flight-summary {
+    background-color: red; } }
+
 body {
   background: #f9f9f9;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  padding-top: 60px; }
+  padding-top: 60px;
+  height: 100%; }
 
 img {
   max-width: 100%; }
@@ -43,10 +48,11 @@ img {
 
 .btn.block {
   display: block;
-  width: 100%; }
+  width: 50%; }
 
 .error-message {
-  padding: 5px 10px; }
+  padding: 5px 10px;
+  background-color: #1daee4; }
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -64,7 +70,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   border-radius: 2px; }
 
 input[type="text"], input[type="password"], input[type="number"], input[type="email"] {
-  font-size: 16px;
+  font-size: 12px;
   height: auto; }
 
 .site-header {
@@ -81,7 +87,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #fff;
     text-align: center;
     height: 60px; }
-    .site-header .header-display .site-menu, .site-header .header-display .user-menu, .site-header .header-display .flight-swap, .site-header .header-display .flight-detail {
+    .site-header .header-display .site-menu, .site-header .header-display .user-menu, .site-header .header-display .flight-swap, .site-header .header-display .flight-detail, .site-header .header-display .promo{
       width: 30px;
       height: 30px;
       background: url(/Assets/mobile/images/mobile-header-sprite.png) no-repeat;
@@ -92,7 +98,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       left: 10px; }
     .site-header .header-display .site-logo {
       height: 30px;
-      margin-top: 15px; }
+      margin-top: 15px; 
+    }
     .site-header .header-display .user-menu {
       background-position: 0 0;
       left: auto;
@@ -101,6 +108,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background: url(/Assets/mobile/images/flight-swap.png);
       left: auto;
       right: 10px; }
+    .site-header .header-display .promo {
+      background: url(/Assets/mobile/images/promo-logo.png);
+      left: auto;
+      right: 20px; }
     .site-header .header-display .flight-detail {
       width: 40px;
       background: none;
@@ -174,7 +185,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-weight: 600; }
   .burger-content .burger-content__body {
     padding-top: 60px;
-    background: #fff; }
+    background: #fff;
+    height: 100%;
+    overflow-y: hidden; }
     .burger-content .burger-content__body ul {
       list-style: none;
       margin: 0;
@@ -257,7 +270,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     display: block; }
 
 .site-content {
-  min-height: 350px; }
+  min-height: 100%;
+  /*position: relative;
+               padding: 0 0 100px;   
+               box-sizing: border-box;*/ }
   .site-content a {
     color: #2fb4e6; }
 
@@ -265,8 +281,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   font-weight: 600;
   padding-bottom: 15px;
   margin-bottom: 15px; }
+  .section-title h1 {
+    text-align: center; }
   .section-title span {
-    color: #1eafe4; }
+    color: #1eafe4;
+    text-align: center; }
   .section-title.stripe {
     background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat; }
 
@@ -306,7 +325,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .site-footer {
   background-color: #111;
-  color: #fefefe; }
+  color: #fefefe;
+  width: 100%;
+  height:110px }
   .site-footer .site-footer-menu {
     background-color: #303030; }
     .site-footer .site-footer-menu nav {
@@ -426,9 +447,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #fff;
     min-height: 100%;
     padding: 12px;
+    z-index: 1;
+    top: 60px;
     /*padding-bottom:$header-height;*/ }
   .overlay .overlay__footer {
-    position: fixed;
+      position: fixed;
     width: 100%;
     bottom: 0;
     left: 0;
@@ -539,7 +562,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       height: 100%;
       left: 0;
       top: 0;
-      z-index: 2; }
+      z-index: 0; }
     .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__code {
       display: inline-block;
       vertical-align: middle;
@@ -556,10 +579,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-size: 14px;
       width: 65%; }
       .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__detail .airport__location {
+        z-index: 3;
         margin: 0;
         font-weight: 600;
         margin-bottom: 5px; }
       .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__detail .airport__name {
+        z-index: 3;
         margin: 0; }
   .overlay.overlay--airport-select .overlay__content ul.result + li {
     border-top: 1px solid #ccc; }
@@ -717,6 +742,72 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     text-align: center;
     padding: 5px; }
 
+.notifbox {
+  width: 100%;
+  height: 40px;
+  background-color: #1daee4;
+  margin-bottom: 15px; }
+  .notifbox h3 {
+    font-size: 14px;
+    position: absolute;
+    color: #fff;
+    font-weight: bold; }
+
+.container_new {
+  /*width: 80%;
+    margin-left: 10px;
+    margin-right: 10px;*/ }
+  .container_new p {
+    padding: 10px 10px 10px 10px;
+    margin-left: 10px;
+    margin-right: 10px; }
+  .container_new .row1 {
+    padding: 10px 10px 10px 10px;
+    margin-left: 10px;
+    margin-right: 10px; }
+  .container_new .col12 {
+    align-self: center;
+    margin-left: 10px;
+    margin-right: 10px; }
+  .container_new .col-xs-6 {
+    margin-top: -10px; }
+    .container_new .col-xs-6 h6 {
+      width: 200%;
+      font-size: 8px; }
+  .container_new .col-xs-8 {
+    margin-top: -10px; }
+    .container_new .col-xs-8 h5 {
+      font-size: 12px; }
+
+.page-overlay .overlay-content div section p {
+  display: inline-block;
+  padding: 10px; }
+
+.form__flightclass .form-control {
+  height: 35px; }
+
+.thankyou-words {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px; }
+  .thankyou-words .section-title.stripe {
+    padding-bottom: 15px;
+    padding-top: 0; }
+  .thankyou-words .overlay__body.overlay__content {
+    padding-bottom: 20px; }
+  .thankyou-words h5 {
+    font-weight: bold;
+    font-size: 10px; }
+
+.loading-image {
+  margin: 40%; }
+
+.page-step-2 .btn.btn-grey.form-control, .page-step-2 .btn.btn-yellow.form-control {
+  width: 49%;
+  position: relative;
+  margin-top: 10px;
+  text-align: center; }
+
 /*--------------------*/
 .page.page-home {
   background: url(/assets/images/home-page-bg.jpg) top center repeat-x #2fb4e6; }
@@ -775,7 +866,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             width: 50px;
             text-align: center;
             background: #fff;
-            padding: 10px 15px;
+            padding: 10px 10px;
             color: #666; }
             .page.page-home .form-wrapper form .form__roundtrip .switch label.active {
               background: #0c7399;
@@ -820,7 +911,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         background-position: -44px 0; }
 
 .page.page-flight .flight-loading {
-  background: #ffae93;
+  background: whitesmoke;
   display: block;
   width: 100%;
   height: 5px;
@@ -998,10 +1089,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-size: 16px; }
   .page.page-flight .flight-list .flight .flight-footer .flight-detail-button {
     display: inline-block;
-    padding: 3px 0; }
+    padding: 3px 0;
+      z-index: 0;
+  }
   .page.page-flight .flight-list .flight .flight-footer .flight-order {
     padding-top: 3px;
-    padding-bottom: 3px; }
+    padding-bottom: 3px; z-index: 0;}
 
 .overlay--flight-form .overlay__content {
   background: #1daee4; }
@@ -1130,7 +1223,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .overlay--flight-detail .overlay__content {
   padding: 0;
-  padding-bottom: 60px; }
+  padding-bottom: 20px; }
   .overlay--flight-detail .overlay__content .flight-title {
     background: #e5e3e4;
     position: relative; }
@@ -1227,7 +1320,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           height: 100%;
           position: absolute;
           background: url(/Assets/mobile/images/flight-separator.png) center center no-repeat;
-          left: 45%; }
+          left: 35%;
+            top: 20px;
+        }
+        .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail .flight__separator h5{
+            text-align: center;
+        }
         .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail .flight__arrival {
           margin-left: 10%; }
   .overlay--flight-detail .overlay__content .flight-wrapper .transit {
@@ -1250,7 +1348,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       position: relative;
       margin-left: auto;
       margin-right: auto;
-      font-weight: 600; }
+      font-weight: 600; 
+
+    }
 
 .overlay--flight-detail .overlay__footer h5 {
   margin-top: 0;
@@ -1332,9 +1432,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .page.page-checkout .page__body {
   padding: 10px; }
-  .page.page-checkout .page__body .page-step-2 .btn.btn-yellow {
-    margin-top: 25px; }
-
+  .page.page-checkout .page__body .page-loading {
+    display: none; }
+  .page.page-checkout .page__body .page-loaded {
+    display: block; }
+  
 .page.page-checkout .passenger {
   background: #fff;
   border: 1px solid #ccc; }
@@ -1351,19 +1453,19 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-checkout .summary .summary__title {
   color: #333; }
 
-.page.page-checkout .summary.summary--price dl:after {
+ .summary.summary--price dl:after {
   display: block;
   width: 100%;
   content: "";
   clear: both; }
 
-.page.page-checkout .summary.summary--price dl dt {
+ .summary.summary--price dl dt {
   float: left;
   width: 50%;
   font-weight: normal;
   position: relative;
   padding-left: 12px; }
-  .page.page-checkout .summary.summary--price dl dt:before {
+   .summary.summary--price dl dt:before {
     position: absolute;
     content: '';
     width: 7px;
@@ -1372,20 +1474,20 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     top: 3px;
     left: 0; }
 
-.page.page-checkout .summary.summary--price dl dd {
+ .summary.summary--price dl dd {
   float: left;
   width: 50%;
   text-align: right;
   font-weight: bold; }
 
-.page.page-checkout .summary.summary--price dl.total-price {
+ .summary.summary--price dl.total-price {
   border-top: 1px solid #ccc;
   padding-top: 10px; }
-  .page.page-checkout .summary.summary--price dl.total-price dt {
+   .summary.summary--price dl.total-price dt {
     width: 35%; }
-    .page.page-checkout .summary.summary--price dl.total-price dt:before {
+     .summary.summary--price dl.total-price dt:before {
       display: none; }
-  .page.page-checkout .summary.summary--price dl.total-price dd {
+   .summary.summary--price dl.total-price dd {
     width: 65%;
     color: #ff7200;
     font-size: 16px; }
@@ -1407,7 +1509,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       clear: both; }
     .page.page-checkout .summary.summary--passenger dl dt {
       float: left;
-      width: 50%;
+      width: 30%;
       font-weight: normal;
       position: relative; }
       .page.page-checkout .summary.summary--passenger dl dt:after {
@@ -1416,7 +1518,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         right: 10px; }
     .page.page-checkout .summary.summary--passenger dl dd {
       float: left;
-      width: 50%;
+      width: 70%;
       font-weight: bold; }
 
 .page.page-checkout .summary.summary--voucher {
@@ -1472,8 +1574,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding: 10px;
   padding-top: 0; }
 
-.page.page-checkout .overlay--flight-detail .flight-fare-wrapper {
-  padding: 10px; }
+/*.page.page-checkout .overlay--flight-detail .flight-fare-wrapper {
+  padding: 10px; }*/
   .page.page-checkout .overlay--flight-detail .flight-fare-wrapper .fare-note {
     background: #eaeaea;
     padding: 10px; }
@@ -1551,25 +1653,25 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         top: 0;
         left: 0; }
 
-.page.page-confirmation .countdown .widget-content {
+ .countdown .widget-content {
   background: #ffd632;
   padding: 15px; }
-  .page.page-confirmation .countdown .widget-content .timer {
+   .countdown .widget-content .timer {
     background: #ffefb0;
     padding: 12px;
     text-align: center;
     border-bottom: 1px solid #dab939;
     color: #4d4e4e; }
-    .page.page-confirmation .countdown .widget-content .timer > div {
+     .countdown .widget-content .timer > div {
       display: inline-block; }
-    .page.page-confirmation .countdown .widget-content .timer h5 {
+     .countdown .widget-content .timer h5 {
       font-weight: bold;
       font-size: 36px;
       margin-bottom: 0;
       margin-top: 0; }
-    .page.page-confirmation .countdown .widget-content .timer span {
+     .countdown .widget-content .timer span {
       font-size: 12px; }
-    .page.page-confirmation .countdown .widget-content .timer .separator {
+     .countdown .widget-content .timer .separator {
       vertical-align: top;
       margin-left: 6px;
       margin-right: 6px; }
@@ -1577,6 +1679,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-confirmation .confirmation-form .control-label.important:after {
   content: '*';
   color: red; }
+.page-checkout.page-checkout-flight .btn.btn-yellow {
+    width: 100%;
+}
 
 .page.page-useraccount .menu-user {
   display: block;
@@ -1850,6 +1955,194 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-contact .contact-social a.instagram:before {
       background-position: -110px 0; }
 
+.page-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7); }
+
+.page-overlay .overlay-content {
+  width: 92%;
+  height: 220px;
+  background: #fff;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  overflow: hidden; }
+
+.page-overlay .overlay-content header {
+  background: #1daee4;
+  text-align: center;
+  color: #fff;
+  padding: 15px; }
+
+.page-overlay .overlay-content header h4 {
+  margin: 0;
+  font-weight: 600; }
+
+.page-overlay .overlay-content header .close {
+  color: #fff;
+  opacity: 1; }
+
+.page-overlay .overlay-content div section {
+  /*display: inline-block;*/
+  padding: 15px;
+  width: 70%;
+  left: 33%;
+  top: 20%;
+  position: absolute; }
+
+.page-overlay .overlay-content div section p {
+  /*display: inline-block;*/
+  padding: 15px; }
+
+.page-overlay .overlay-content div img {
+  padding-left: 15px;
+  vertical-align: 20%;
+  position: absolute;
+  top: 30%; }
+
+.page-overlay .overlay-content div div a {
+  display: inline-block;
+  width: 30%;
+  right: 20%;
+  bottom: 15%;
+  position: absolute; }
+
+/*.page-overlay .overlay-content section p {
+        top: 30%; 
+        position: absolute;
+        left: 40%;
+      }*/
+.page-overlay .overlay-content section a {
+  cursor: pointer; }
+
+.page-overlay .overlay-content footer {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%; }
+
+/*.page.page-account.page-login{
+    .form-wrapper{
+        margin-top: 30px;
+        margin-right:30px;
+    }
+}*/
+/*.page-resetpassword.page-password {
+    /*.form-wrapper {
+        padding: 0;        
+        border:1px solid #ccc;
+        .header-title{
+            //padding-left: 10px;
+            padding-top: 5px;
+            font-weight: bold;
+            background: #1daee4;
+            color: white;
+            margin-top: -15px;
+            height: 25px;
+            font-size: 12px;
+        }
+    }
+    .container{
+        p{
+            margin-bottom:30px;
+            padding-left: 10px;
+        }
+        .col-xs-offset-4{
+            margin-left: 15px;
+            float:left;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 33.33%;
+            p {
+                width: 150px;
+                color: red;
+            }
+        }
+    }
+    .form-group{
+        width: 100%;
+    }
+
+}*/
+.page-password.page-check-order .page__body h4 {
+  font-size: 8px;
+  color: green; }
+
+.passwordform {
+  margin-left: 10px;
+  margin-right: 10px; }
+  .passwordform .resetpassword {
+    padding-bottom: 12px; }
+    .passwordform .resetpassword header {
+      background: #1daee4;
+      color: #fff;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: bold;
+      position: relative; }
+      .passwordform .resetpassword header .toggle {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0;
+        background: #028ec3;
+        height: 100%;
+        display: block;
+        width: 40px;
+        cursor: pointer; }
+        .passwordform .resetpassword header .toggle:after {
+          content: "-";
+          position: absolute;
+          font-size: 28px;
+          color: #fff;
+          font-weight: bold;
+          top: 0;
+          left: 0;
+          text-align: center;
+          width: 100%; }
+    .passwordform .resetpassword .content {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-top: none;
+      background: #fff; }
+      .passwordform .resetpassword .content p {
+        color: red;
+        padding-left: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px; }
+    .passwordform .resetpassword.inactive header .toggle:after {
+      content: "+"; }
+    .passwordform .resetpassword.inactive .passenger-content {
+      display: none; }
+    .passwordform .resetpassword h4 {
+      font-size: 16px;
+      font-weight: bold; }
+    .passwordform .resetpassword .form-reset {
+      padding-left: 10px;
+      padding-right: 10px;
+      width: 50%; }
+
+.forgotpasswordform {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+
+.forgotpasswordtext p {
+  text-align: justify; }
+
 .page.page-faqs .question-wrapper > ol {
   padding-left: 25px;
   list-style: none;
@@ -1985,3 +2278,78 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-weight: bold; }
     .page.page-howtoorder .howto-content .howto-note p span {
       color: #1daee4; }
+
+.page.page-newsletter .container p {
+  color: #3fabe3;
+  font-size: 16px;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-bottom: 10px; }
+
+.page.page-newsletter .container form {
+  border-top: 1px solid #ccc;
+  padding-top: 20px; }
+
+.page.page-newsletter h1 {
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px; }
+
+.page.page-newsletter .overlay-content p {
+  color: black;
+  font-size: 12px; }
+
+.newsletterform {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+  .newsletterform p {
+    color: #3fabe3;
+    font-size: 16px;
+    text-align: center;
+    width: 90%;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-bottom: 10px; }
+
+.page_header h1 {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+
+.page-checkout.page-checkout-flight .btn.btn-yellow {
+    width: 100%;
+}
+.confirmation-content .container_new .row1{
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    padding: 0 ;
+    
+}
+
+.confirmation-content .container_new .row1 p{
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 10px;
+    padding: 0;
+}
+
+.upper-top {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+.scroll {
+    width: 100%;
+    z-index: 0;
+    position: relative;
+    top: 105px;
+    left: 0;
+    margin-bottom: 110px;
+}

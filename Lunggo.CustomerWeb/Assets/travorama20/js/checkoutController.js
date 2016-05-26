@@ -158,18 +158,18 @@ app.controller('checkoutController', [
         $scope.infantPassenger = [];
 
         $scope.months = [
-            { value: 0, name: 'January' },
-            { value: 1, name: 'February' },
-            { value: 2, name: 'March' },
+            { value: 0, name: 'Januari' },
+            { value: 1, name: 'Februari' },
+            { value: 2, name: 'Maret' },
             { value: 3, name: 'April' },
-            { value: 4, name: 'May' },
-            { value: 5, name: 'June' },
-            { value: 6, name: 'July' },
-            { value: 7, name: 'August' },
+            { value: 4, name: 'Mei' },
+            { value: 5, name: 'Juni' },
+            { value: 6, name: 'Juli' },
+            { value: 7, name: 'Agustus' },
             { value: 8, name: 'September' },
-            { value: 9, name: 'October' },
+            { value: 9, name: 'Oktober' },
             { value: 10, name: 'November' },
-            { value: 11, name: 'December' },
+            { value: 11, name: 'Desember' }
         ];
 
         $scope.flightDetail = {};
@@ -394,6 +394,14 @@ app.controller('checkoutController', [
             }
         });
 
+        $scope.changeTitle = function(title) {
+            if (title == 'Mister')
+                return 'Tn.';
+            else if (title == 'Mistress')
+                return 'Ny.';
+            else if (title == 'Miss')
+                return 'Nn.';
+        }
 
         // toggle Travorama Login
         $scope.toggleLogin = function () {

@@ -90,7 +90,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 string scr;
                 var depDateText = "";
 
-                if (originCountry == "ID")
+                
                 {
                     // Calling The Zeroth Page
                     client.BaseUrl = new Uri("http://www.lionair.co.id");
@@ -176,15 +176,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var x = availableFares.Length;
                     var y = availableFares.Count();
                 }
-                else
-                {
-                    return new SearchFlightResult
-                    {
-                        IsSuccess = true,
-                        Itineraries = new List<FlightItinerary>()
-                    };
-                }
-
+                
                 var pricefunc = new GetLionAirPrice(scr);
                 try
                 {

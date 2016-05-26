@@ -1008,7 +1008,7 @@ file : /Assets/travorama20/css/_page_index.scss
         padding: 0; }
         .page-index .section-search .search-form .tab-header nav ul li {
           float: left;
-          width: 33.333333334%;
+          width: 50%;
           list-style: none;
           border-right: 2px solid #bdbdbd; }
           .page-index .section-search .search-form .tab-header nav ul li a {
@@ -2434,7 +2434,7 @@ file: /Assets/travorama20/css/_page_flight.scss
       position: relative; }
       .page-flight .flight .flight-detail .segment .segment-left:after, .page-flight .flight .flight-detail .segment .segment-right:after, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right:after, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right:after, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right:after, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right:after {
         content: "";
-        background-image: url(/Assets/images/flight-segment-separator.png);
+        /*background-image: url(/Assets/images/flight-segment-separator.png);*/
         background-repeat: no-repeat;
         background-size: contain;
         width: 10px;
@@ -2849,7 +2849,9 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 .page-flight.page-flight-return .search-result-container > .inactive {
   width: 290px;
-  opacity: 0.5; }
+  opacity: 0.5;
+    cursor: pointer;
+}
   .page-flight.page-flight-return .search-result-container > .inactive .search-result-warning {
     display: none; }
   .page-flight.page-flight-return .search-result-container > .inactive .search-result-filter {
@@ -4390,9 +4392,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
   .travorama-login.active .login-content {
     display: block; }
 
-.hasDatepicker {
-  position: relative; }
-
+/*.hasDatepicker {position:relative;}*/
 .page-checkout .ui-datepicker {
   width: 250px !important;
   position: relative;
@@ -4495,12 +4495,57 @@ file : /Assets/travorama20/css/_page_checkout.scss
       width: 50%;
       font-weight: bold; }
 
-.page-confirmation .confirmation-form {
-  border-top: 1px solid #ccc;
-  margin-top: 24px; }
-  .page-confirmation .confirmation-form .btn.btn-yellow {
-    padding: 9px 48px;
-    font-size: 14px; }
+.page-confirmation .confirmation-content .instruction .transfer-instruction .order-list {
+  font-size: 12px; }
+
+.page-confirmation .confirmation-content .instruction .confirmation-order {
+  background: #f4f4f4;
+  padding: 12px; }
+  .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail {
+    background: #f4f4f4;
+    margin-top: 0px;
+    padding-top: 0px; }
+    .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-passenger {
+      margin-bottom: 24px; }
+      .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-passenger ol {
+        counter-reset: passenger-counter;
+        list-style: none;
+        margin: 0;
+        padding: 0; }
+        .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-passenger ol li {
+          position: relative;
+          padding-left: 21px;
+          font-size: 12px; }
+          .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-passenger ol li:before, .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-passenger ol .page-index li.section-reason:after, .page-index .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-passenger ol li.section-reason:after {
+            content: "0" counter(passenger-counter);
+            counter-increment: passenger-counter;
+            position: absolute;
+            left: 0;
+            color: #1daee4;
+            font-weight: bold; }
+    .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight {
+      padding-left: 36px;
+      position: relative; }
+      .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight img {
+        height: 36px;
+        margin-right: 24px; }
+      .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight span {
+        font-weight: bold;
+        color: #1daee4; }
+      .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight:before, .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .page-index .confirm-flight.section-reason:after, .page-index .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight.section-reason:after {
+        content: '';
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #1daee4;
+        background-image: url(/Assets/images/plane-updown-sprite.png);
+        background-size: 200%;
+        background-repeat: no-repeat;
+        border: 2px solid #1daee4; }
+      .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight.return:before, .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .page-index .confirm-flight.return.section-reason:after, .page-index .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight.return.section-reason:after {
+        background-position: -16px; }
 
 .page-confirmation .ui-datepicker {
   padding: 15px;
@@ -4593,24 +4638,37 @@ file : /Assets/travorama20/css/_page_checkout.scss
     margin-bottom: 18px; }
   .page-thankyou .order-detail section .order-detail-left {
     padding: 12px 24px; }
-    .page-thankyou .order-detail section .order-detail-left .passenger {
-      margin-bottom: 24px; }
-      .page-thankyou .order-detail section .order-detail-left .passenger ol {
+    .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger {
+      margin-bottom: 24px;
+      padding-left: 0px;
+      margin-left: 0; }
+      .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger ol {
         counter-reset: passenger-counter;
         list-style: none;
         margin: 0;
         padding: 0; }
-        .page-thankyou .order-detail section .order-detail-left .passenger ol li {
+        .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger ol li {
           position: relative;
           padding-left: 21px;
           font-size: 12px; }
-          .page-thankyou .order-detail section .order-detail-left .passenger ol li:before, .page-thankyou .order-detail section .order-detail-left .passenger ol .page-index li.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-left .passenger ol li.section-reason:after {
+          .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger ol li:before, .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger ol .page-index li.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger ol li.section-reason:after {
             content: "0" counter(passenger-counter);
             counter-increment: passenger-counter;
             position: absolute;
             left: 0;
             color: #1daee4;
             font-weight: bold; }
+    .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account {
+      margin-bottom: 24px;
+      padding-left: 23px; }
+      .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account .va-text {
+        font-size: 10px;
+        padding-bottom: 2px;
+        margin-bottom: 8px; }
+      .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account .va-number {
+        font-size: 18px;
+        padding: 0;
+        color: #ff6900; }
     .page-thankyou .order-detail section .order-detail-left .order .flight {
       padding-left: 36px;
       position: relative; }
@@ -4634,57 +4692,58 @@ file : /Assets/travorama20/css/_page_checkout.scss
         background-size: 200%;
         background-repeat: no-repeat;
         border: 2px solid #1daee4; }
-      .page-thankyou .order-detail section .order-detail-left .order .flight.return:before, .page-thankyou .order-detail section .order-detail-left .order .page-index .flight.return.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-left .order .flight.return.section-reason:after {
-        background-position: -16px; }
-  .page-thankyou .order-detail section .order-detail-right {
-    background: #e9e7e8;
-    padding: 12px 24px;
-    height: 100%;
-    position: absolute;
-    right: 0; }
-    .page-thankyou .order-detail section .order-detail-right .price-detail {
-      margin-bottom: 24px; }
-      .page-thankyou .order-detail section .order-detail-right .price-detail dl:before, .page-thankyou .order-detail section .order-detail-right .price-detail .page-index dl.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-right .price-detail dl.section-reason:after, .page-thankyou .order-detail section .order-detail-right .price-detail dl:after {
-        display: block;
-        width: 100%;
+    .page-thankyou .order-detail section .order-detail-left .order.return:before, .page-thankyou .order-detail section .order-detail-left .page-index .order.return.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-left .order.return.section-reason:after {
+      background-position: -16px; }
+
+.page-thankyou .order-detail .order-detail-right {
+  background: #e9e7e8;
+  padding: 12px 24px;
+  height: 100%;
+  position: absolute;
+  right: 0; }
+  .page-thankyou .order-detail .order-detail-right .price-detail {
+    margin-bottom: 24px; }
+    .page-thankyou .order-detail .order-detail-right .price-detail dl:before, .page-thankyou .order-detail .order-detail-right .price-detail .page-index dl.section-reason:after, .page-index .page-thankyou .order-detail .order-detail-right .price-detail dl.section-reason:after, .page-thankyou .order-detail .order-detail-right .price-detail dl:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .page-thankyou .order-detail .order-detail-right .price-detail dl dt {
+      width: 55%;
+      float: left;
+      font-weight: normal;
+      position: relative;
+      padding-left: 12px; }
+      .page-thankyou .order-detail .order-detail-right .price-detail dl dt:before, .page-thankyou .order-detail .order-detail-right .price-detail dl .page-index dt.section-reason:after, .page-index .page-thankyou .order-detail .order-detail-right .price-detail dl dt.section-reason:after {
         content: "";
-        clear: both; }
-      .page-thankyou .order-detail section .order-detail-right .price-detail dl dt {
-        width: 55%;
-        float: left;
-        font-weight: normal;
-        position: relative;
-        padding-left: 12px; }
-        .page-thankyou .order-detail section .order-detail-right .price-detail dl dt:before, .page-thankyou .order-detail section .order-detail-right .price-detail dl .page-index dt.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-right .price-detail dl dt.section-reason:after {
-          content: "";
-          width: 6px;
-          height: 6px;
-          position: absolute;
-          top: 3px;
-          left: 0;
-          background: #ff6900; }
-      .page-thankyou .order-detail section .order-detail-right .price-detail dl dd {
-        width: 45%;
-        float: left;
-        text-align: right;
-        font-weight: bold; }
-      .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price {
-        border-top: 1px solid #ccc;
-        padding-top: 12px; }
-        .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price dt {
-          width: 40%; }
-          .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price dt:before, .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price .page-index dt.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price dt.section-reason:after {
-            content: "";
-            width: 0;
-            height: 0; }
-        .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price dd {
-          width: 60%;
-          color: #ff6900;
-          font-weight: bold;
-          font-size: 16px; }
-    .page-thankyou .order-detail section .order-detail-right .payment-detail h5 {
-      color: #1daee4;
+        width: 6px;
+        height: 6px;
+        position: absolute;
+        top: 3px;
+        left: 0;
+        background: #ff6900; }
+    .page-thankyou .order-detail .order-detail-right .price-detail dl dd {
+      width: 45%;
+      float: left;
+      text-align: right;
       font-weight: bold; }
+    .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price {
+      border-top: 1px solid #ccc;
+      padding-top: 12px; }
+      .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dt {
+        width: 40%; }
+        .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dt:before, .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price .page-index dt.section-reason:after, .page-index .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dt.section-reason:after {
+          content: "";
+          width: 0;
+          height: 0; }
+      .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dd {
+        width: 60%;
+        color: #ff6900;
+        font-weight: bold;
+        font-size: 16px; }
+  .page-thankyou .order-detail .order-detail-right .payment-detail h5 {
+    color: #1daee4;
+    font-weight: bold; }
 
 .page-overlay.flight-expired {
   z-index: 9999; }

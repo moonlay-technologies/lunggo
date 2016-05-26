@@ -1,7 +1,13 @@
-﻿using Lunggo.ApCommon.Flight.Service;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Voucher;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
+using Lunggo.Framework.Cors;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -15,11 +21,14 @@ using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRepository;
-using Lunggo.Repository.TableRecord;
+using Newtonsoft.Json.Linq;
+using RestSharp;
+using RestSharp.Authenticators;
+using Lunggo.WebAPI.ApiSrc.v1.Newsletter.Model;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
-    [Authorize]
+    [System.Web.Mvc.Authorize]
     public class AccountController : Controller
     {
         public AccountController()
@@ -42,7 +51,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // GET: /Account/Login
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -59,8 +68,8 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // POST: /Account/Login
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
@@ -114,7 +123,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // GET: /Account/VerifyCode
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl)
         {
             // Require that the user has already logged in via username/password or external login
@@ -132,8 +141,8 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // POST: /Account/VerifyCode
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
         {
@@ -158,7 +167,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -166,8 +175,8 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // POST: /Account/Register
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -209,7 +218,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // GET: /Account/ConfirmEmail
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
@@ -262,7 +271,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // GET: /Account/ForgotPassword
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
@@ -270,8 +279,8 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // POST: /Account/ForgotPassword
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
@@ -303,7 +312,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // GET: /Account/ForgotPasswordConfirmation
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -311,7 +320,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // GET: /Account/ResetPassword
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult ResetPassword(string code, string email)
         {
             if (email == null)
@@ -323,8 +332,8 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // POST: /Account/ResetPassword
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
@@ -374,7 +383,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // GET: /Account/ResetPasswordConfirmation
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
@@ -382,7 +391,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // POST: /Account/Manage
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
@@ -398,7 +407,7 @@ namespace Lunggo.CustomerWeb.Controllers
             return RedirectToAction("OrderHistory", "UW620OrderHistory");
         }
 
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangeProfile(ChangeProfileViewModel model)
         {
@@ -423,8 +432,8 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // POST: /Account/ExternalLogin
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
@@ -434,7 +443,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // GET: /Account/SendCode
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl)
         {
             var userId = await SignInManager.GetVerifiedUserIdAsync();
@@ -449,8 +458,8 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // POST: /Account/SendCode
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendCode(SendCodeViewModel model)
         {
@@ -469,7 +478,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // GET: /Account/ExternalLoginCallback
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
@@ -516,8 +525,8 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
@@ -562,7 +571,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // GET: /Account/ExternalLoginFailure
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
             return View();
@@ -635,5 +644,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
         #endregion
-    }
+
+
+    }   
 }

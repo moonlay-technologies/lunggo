@@ -103,12 +103,12 @@
                                 </td>
                             </tr>
                         </table>
-                        <p>Untuk mendapatkan e-ticket, lakukan pembayaran sesuai langkah berikut:</p>
+                        <p>Untuk mendapatkan e-tiket, lakukan pembayaran sesuai langkah berikut:</p>
                         
                         <table width="100%" style="margin-bottom: 0px;">
                             <tr>
                                 <td>
-                                    <p style="margin-bottom:0px;">Melakukan pembayaran sejumlah total tagihan : Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) </b>ke nomor akun virtual tujuan.</p>
+                                    <p style="margin-bottom:0px;">Melakukan pembayaran sejumlah total tagihan : Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) </b>ke nomor akun virtual tujuan : <b>@Model.Payment.TargetAccount</b></p>
                                 </td>
                             </tr>
                             <tr>
@@ -122,61 +122,61 @@
                         <table>
                             <tr>
                                 <td>
-                                    <p style ="margin-left:4px;">Cara Pembayaran lewat <b>ATM Mandiri/Jaringan ATM Bersama</b>:</p>
+                                    <p style ="margin-left:4px;">Cara Pembayaran Lewat <b>ATM Mandiri/Jaringan ATM Bersama</b>:</p>
                                     <ol>
                                         <li><p>Masukkan PIN Anda.</p></li>
-                                        <li><p>Di Menu utama, pilih <b>Transaksi Lainnya </b>.</p></li>
+                                        <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya </b>.</p></li>
                                         <li><p>Pilih <b>Transfer</b>.</p></li>
                                         <li><p>Pilih <b>Antar Bank Online</b>.</p></li>
-                                        <li><p>Masukkan nomor kode 013 dan 16 digit nomor akun virtual pembayaran.</p></li>
+                                        <li><p>Masukkan nomor <b>013 @Model.Payment.TargetAccount</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).</p></li>
                                         <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
                                         <li><p>No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.</p></li>
-                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</p></li>
+                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
                                         <li><p>Transaksi berhasil.</p></li>
                                     </ol>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <p>Cara Pembayaran lewat <b>ATM BCA/Jaringan ATM PRIMA</b>:</p>
+                                    <p>Cara Pembayaran Lewat <b>ATM BCA/Jaringan ATM PRIMA</b>:</p>
                                     <ol>
                                         <li><p>Masukkan PIN Anda.</p></li>
-                                        <li><p>Di Menu utama, pilih <b>Transaksi Lainnya</b>.</p></li>
+                                        <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
                                         <li><p>Pilih <b>Transfer</b>.</p></li>
-                                        <li><p>Pilih <b>Ke Rek Bank Lain</b>.</p></li>
+                                        <li><p>Pilih <b>Ke Rekening Bank Lain</b>.</p></li>
                                         <li><p>Masukkan kode <b>013</b> (Kode Bank Permata) lalu tekan <b>Benar</b>.</p></li>
                                         <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
-                                        <li><p>Masukkan 16 digit nomor akun virtual pembayaran lalu tekan <b>Benar</b>.</p></li>
-                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</p></li>
+                                        <li><p>Masukkan <b>@Model.Payment.TargetAccount</b> (16 digit nomor akun virtual pembayaran) lalu tekan <b>Benar</b>.</p></li>
+                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
                                         <li><p>Transaksi berhasil.</p></li>
                                     </ol>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <p>Cara Pembayaran lewat <b>ATM Bank Permata/Jaringan ATM Alto</b>:</p>
+                                    <p>Cara Pembayaran Lewat <b>ATM Bank Permata/Jaringan ATM Alto</b>:</p>
                                     <ol>
                                         <li><p>Masukkan PIN Anda.</p></li>
-                                        <li><p>Di Menu utama, pilih <b>Transaksi Lainnya</b>.</p></li>
+                                        <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
                                         <li><p>Pilih <b>Transaksi Pembayaran</b>.</p></li>
                                         <li><p>Pilih <b>Pembayaran Virtual Account</b>.</p></li>
-                                        <li><p>Masukkan 16 digit nomor akun virtual pembayaran.</p></li>
-                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</p></li>
+                                        <li><p>Masukkan 16 digit nomor akun virtual pembayaran <b>@Model.Payment.TargetAccount</b>.</p></li>
+                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
                                         <li><p>Transaksi berhasil.</p></li>
                                     </ol>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="margin-bottom:10px">Setelah itu, mohon tunggu hingga e-ticket/voucher diterbitkan dan dikirim ke email Anda maks. 60 menit</p>
+                                    <p style="margin-bottom:10px">Setelah itu, mohon tunggu hingga e-tiket/voucher diterbitkan dan dikirim ke e-mail Anda maks. 60 menit</p>
                                 </td>
                             </tr>
                         </table>
                     
                         <p style="opacity: 0.8; font-size: 10px; font-style: italic; margin-bottom: 40px;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> dengan mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama @Model.RsvNo</span></p>
                         <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 20px;" width="100%" />
-                        <p>Email tagihan ini bukan merupakan bukti pembayaran yang sah dan tidak dapat ditukar menjadi tiket apapun.</p>
-                        <p style=" font-size: 11px; font-style: italic; margin-bottom: 50px;">Email ini ditujukan hanya untuk @Model.Contact.Name, karena Anda telah melakukan pemesanan melalui Travorama</p>
+                        <p>E-mail tagihan ini bukan merupakan bukti pembayaran yang sah dan tidak dapat ditukar menjadi tiket apapun.</p>
+                        <p style=" font-size: 11px; font-style: italic; margin-bottom: 50px;">E-mail ini ditujukan hanya untuk @Model.Contact.Name, karena Anda telah melakukan pemesanan melalui Travorama</p>
 
                         </td>
                         <td width="5%"></td>

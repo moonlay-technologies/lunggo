@@ -29,7 +29,7 @@ var FlightSearchConfig = {
             var returnDate = new Date(params.returnDate) || '';
             var origin = params.origin;
             var destination = params.destination;
-            var passenger = [ params.adult, (params.child || 0), (params.infant || 0) ];
+            var passenger = [ params.adult, (params.children || 0), (params.infant || 0) ];
             var cabin = params.cabin.toLowerCase();
             // generate departure param
             departureParam = ( origin + destination ) + ( (('0' + departureDate.getDate()).slice(-2)) + (('0' + (departureDate.getMonth()+1)).slice(-2) ) + (departureDate.getFullYear().toString().substr(2,2)) );
@@ -107,6 +107,10 @@ var SubscribeConfig = {
     Url: '$apiUrl$$subscribePath$'
 };
 
+var LoginConfig = {
+    Url: '$rootUrl$$loginPath$'
+};
+
 var RegisterConfig = {
     Url: '$rootUrl$$registerPath$'
 };
@@ -138,4 +142,32 @@ var VeritransTokenConfig = {
 
 var TransferConfig = {
     Url: '$apiUrl$$transferPaymentPath$'
+};
+
+var LoginMobileConfig = {
+    Url: '$mobileUrl$$loginPath$'
+};
+
+var RegisterMobileConfig = {
+    Url: '$mobileUrl$$registerPath$'
+};
+
+var ResetPasswordMobileConfig = {
+    Url: '$mobileUrl$$resetPasswordPath$'
+};
+
+var ForgotPasswordMobileConfig = {
+    Url: '$mobileUrl$$forgotPasswordPath$'
+};
+
+var ChangePasswordMobileConfig = {
+    Url: '$mobileUrl$$changePasswordPath$'
+};
+
+var ChangeProfileMobileConfig = {
+    Url: '$mobileUrl$$changeProfilePath$'
+};
+
+var ResendConfirmationEmailMobileConfig = {
+    Url: '$mobileUrl$$resendConfirmationEmailPath$'
 };

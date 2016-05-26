@@ -1,0 +1,340 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:12px;">
+
+
+    <table style="margin-left:auto; margin-right:auto; width:100%; max-width:700px; display:block; background:#ffffff;">
+        <thead width="100%">
+            <tr width="100%">
+                <th width="5%"></th>
+                <th colspan="2" width="90%" style="padding-top:30px;">
+                    <p style="text-align:right;">
+                        <a href="http://travorama.com" style="text-decoration:none;">
+                            <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" />
+                        </a>
+                        <br />
+                        <a href="https://www.facebook.com/travorama" style="text-decoration:none;">
+                            <img src="/Assets/images/email-facebook.jpg" alt="Travorama on Facebook" />
+                        </a>
+                        <a href="https://twitter.com/travoramaid" style="text-decoration:none;">
+                            <img src="/Assets/images/email-twitter.jpg" alt="Travorama on Twitter" />
+                        </a>
+                        <a href="https://instagram.com/travorama" style="text-decoration:none;">
+                            <img src="/Assets/images/email-instagram.jpg" alt="Travorama on Instagram" />
+                        </a>
+                    </p>
+                </th>
+                <th width="5%"></th>
+            </tr>
+        </thead>
+        <tbody width="100%">
+            <tr width="100%">
+                <td width="5%"></td>
+                <td colspan="2" width="90%">
+
+                    <!-- CONTENT  -->
+
+                    <p>Dear <span style="color: #15b1e4;">Draxler, </span></p>
+                    <p><b>Travorama.com</b> telah mengkonfirmasi pembayaran untuk transaksi berikut : </p>
+
+                    <table width="100%" style="margin-bottom: 20px;" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td>
+                                <hr style="border-color: #f5f5f5; opacity: 0.2;" />
+                            </td>
+                            <td width="5%"></td>
+                            <td>
+                                <hr style="border-color: #f5f5f5; opacity: 0.2;" />
+                            </td>
+                            <td width="5%"></td>
+                            <td>
+                                <hr style="border-color: #f5f5f5; opacity: 0.2;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%">
+                                <p style="">No. Pemesanan</p>
+                                <p style=""><b>121616542485</b></p>
+                            </td>
+                            <td width="5%"></td>
+                            <td width="20%">
+                                <p style="">Waktu.</p>
+                                <p style=""><b>21 Mar 16 - Pk 17:58 WIB</b></p>
+                            </td>
+                            <td width="5%"></td>
+                            <td width="20%">
+                                <p style="opacity: 0.5;">Metode Pembayaran.</p>
+                                <p style=""><b>Credit Card</b></p>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 3px #15b1e4 solid; margin-bottom: 50px; ">
+                        <thead>
+                            <tr>
+                                <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px solid; ">
+                                    <p style="color: #15b1e4; text-align: left;"><b>Detail Order</b></p>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left;">User ID</p>
+                            </td>
+                            <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: center;">:</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left;">suheri@travelmadezy.com</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left;">Order Date</p>
+                            </td>
+                            <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: center;">:</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left;">21 March 2016</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left;">Order Type</p>
+                            </td>
+                            <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: center;">:</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left;">Flight</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left;">Order Price</p>
+                            </td>
+                            <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: center;">:</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left;">Rp 5.000</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left;">Order By</p>
+                            </td>
+                            <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: center;">:</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left; text-decoration:none;">Draxler</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                        </tr>
+                        <tr>
+                            <td width="25%" rowspan="2">
+                                <p style="color: #15b1e4; text-align: left;">Guest Name</p>
+                            </td>
+                            <td width="8%">
+                                <p style="color: #15b1e4; text-align: center;">:</p>
+                            </td>
+                            <td>
+                                <p style="color: #15b1e4; text-align: left;">1. Julian Draxler</p>
+                                <p style="color: #15b1e4; text-align: left;">2. Draxler Junior</p>
+                            </td>
+                            <td width="20%"></td>
+                            <td width="5%" style="padding-right: 1%;">
+                                <hr style="border-color:#15b1e4;" />
+                            </td>
+                            <td width="7%">
+                                Adult
+                            </td>
+                        </tr>
+                            <tr>
+                                <td width="8%">
+                                    <p style="color: #15b1e4; text-align: center;">:</p>
+                                </td>
+                                <td>
+                                    <p style="color: #15b1e4; text-align: left;">Julian Draxlers</p>
+                                </td>
+                                <td width="20%"></td>
+                                <td width="5%" style="padding-right: 1%;">
+                                    <hr style="border-color:#15b1e4;" />
+                                </td>
+                                <td width="7%">
+                                    Adult
+                                </td>
+                            </tr>
+                    </table>
+                    <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 3px #15b1e4 solid; margin-bottom: 30px; ">
+                        <thead>
+                            <tr>
+                                <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px solid; ">
+                                    <p style="color: #15b1e4; text-align: left"><b>Flight Details</b></p>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                        <p style="color: #15b1e4; margin-top:1px; padding-top:1px;">(Roundtrip)</p>
+
+                        <table width="100%" style="margin-bottom: 40px;">
+                            <tr>
+                                <td width="3%" style="padding-top: 15px; vertical-align: top;">
+                                    <img src="/Assets/images/email/flight-departure-icon.png" />
+                                </td>
+                                <td style="color: #15b1e4; text-align: center;" width="2%">
+                                    <img width="100%" height="auto" src="~/Assets/images/airlines/AK.png" />
+                                    Berangkat
+                                </td>
+                                <td rowspan="2" width="6%">
+                                    <p style="text-align: center;">:</p>
+                                </td>
+                                <td rowspan="2" width="70%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td style="color: #15b1e4;">Sriwijaya SW-007</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #15b1e4;" width="30%">Jakarta</td>
+                                            <td rowspan="2" width="25%"><hr style="border-color: #f5f5f5; opacity: 0.2;" /></td>
+                                            <td style="color: #15b1e4;" width="30%">Surabaya</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #15b1e4;" width="10%">22 July 2016 Pk 07.30<td>
+                                            <td style="color: #15b1e4;" width="10%">22 July 2016<td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 10px;"></td>
+                                <td style="height: 10px;"></td>
+                            </tr>
+                            <tr>
+                                <td width="3%" style="padding-top: 15px; vertical-align: top;">
+                                    <img src="/Assets/images/email/flight-return-icon.png" />
+                                </td>
+                                <td style="color: #15b1e4; text-align: center;" width="2%">
+                                    <img width="100%" height="auto" src="~/Assets/images/airlines/GA.png" />
+                                    Kembali
+                                </td>
+                                <td rowspan="2" width="6%">
+                                    <p style="text-align: center;">:</p>
+                                </td>
+                                <td rowspan="2" width="40%">
+                                    <p style="color: #15b1e4;"><b>Garuda - GASPKI</b></p>
+                                    <p style="color: #15b1e4;">Kualanamu - SoeHatta</p>
+                                    <p style="color: #15b1e4;">Monday, 10 Apr 2016</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 10px;"></td>
+                                <td style="height: 10px;"></td>
+                            </tr>
+                            <tr>
+                                <td width="3%" style="padding-top: 15px; vertical-align: top;">
+                                    <img src="/Assets/images/email/flight-departure-icon.png" />
+                                </td>
+                                <td style="color: #15b1e4; text-align: center;" width="2%">
+                                    <img width="100%" height="auto" src="~/Assets/images/airlines/AK.png" />
+                                    Berangkat
+                                </td>
+                                <td rowspan="2" width="6%">
+                                    <p style="text-align: center;">:</p>
+                                </td>
+                                <td rowspan="2" width="40%">
+                                    <p style="color: #15b1e4;"><b>Air Asia - AK47</b></p>
+                                    <p style="color: #15b1e4;">Soe-Hatta - Kualanamu</p>
+                                    <p style="color: #15b1e4;"> Sunday, 10 Apr 2016</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 10px;"></td>
+                                <td style="height: 10px;"></td>
+                            </tr>
+                            <tr>
+                                <td width="3%" style="padding-top: 15px; vertical-align: top;">
+                                    <img src="/Assets/images/email/flight-return-icon.png" />
+                                </td>
+                                <td style="color: #15b1e4; text-align: center;" width="2%">
+                                    <img width="100%" height="auto" src="~/Assets/images/airlines/GA.png" />
+                                    Kembali
+                                </td>
+                                <td rowspan="2" width="6%">
+                                    <p style="text-align: center;">:</p>
+                                </td>
+                                <td rowspan="2" width="40%">
+                                    <p style="color: #15b1e4;"><b>Garuda - GASPKI</b></p>
+                                    <p style="color: #15b1e4;">Kualanamu - SoeHatta</p>
+                                    <p style="color: #15b1e4;">Monday, 10 Apr 2016</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 10px;"></td>
+                                <td style="height: 10px;"></td>
+                            </tr>
+                        </table>
+
+                    @*<p>Kuitansi pembayaran Anda telah disertakan sebagai attachment.</p>*@
+                    <p>E-tiket Anda akan dikirimkan secara otomatis ke email Anda maksimal <span style="color: #15b1e4;">Selasa, 5 Apr 2016 </span>,  pukul <span style="color: #15b1e4;"> 17:00 WIB</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">cs@travorama.com.</span>
+
+                </td>
+                <td width="5%"></td>
+            </tr>
+        </tbody>
+        <tfoot width="100%">
+            <tr>
+                <td></td>
+                <td style="width: 60%;"><img style="width: 100%;" src="/Assets/images/email/plane-email-bg.jpg" /></td>
+                <td style="padding-bottom:40px;">
+
+                    <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
+
+                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy International</h4>
+                        <p style="margin-top:0; margin-bottom:5px;">
+                            <span style="color:#1daee5;">A.</span> Equity Tower 25th Floor, SCBD lot 9<br />Jl. Jenderal Sudirman Kav.52-53<br />Jakarta 12190
+                        </p>
+                        <p style="margin-top:0;">
+                            <!--<span style="color:#1daee5;">T.</span> 021 724 808 48-->
+                        </p>
+
+                    </address>
+
+                </td>
+
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+</body>
+</html>
