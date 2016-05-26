@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -25,14 +26,14 @@ namespace Lunggo.ApCommon.Flight.Service
         private static readonly AirAsiaWrapper AirAsiaWrapper = AirAsiaWrapper.GetInstance();
         private static readonly CitilinkWrapper CitilinkWrapper = CitilinkWrapper.GetInstance();
         private static readonly SriwijayaWrapper SriwijayaWrapper = SriwijayaWrapper.GetInstance();
-        //private static readonly LionAirWrapper LionAirWrapper = LionAirWrapper.GetInstance();
+        private static readonly LionAirWrapper LionAirWrapper = LionAirWrapper.GetInstance();
         private static readonly Dictionary<String,FlightSupplierWrapperBase> Suppliers = new Dictionary<string, FlightSupplierWrapperBase>()
         {
             { "1", MystiflyWrapper},
             { "2", AirAsiaWrapper},
             { "3", CitilinkWrapper},
             { "4", SriwijayaWrapper},
-            //{ "5", LionAirWrapper}
+            { "5", LionAirWrapper}
         };
 
         private bool _isInitialized;

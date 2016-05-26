@@ -60,7 +60,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             }
 
             private static bool Login(RestClient client, byte[] img, string viewstate, string eventval, 
-                out string linkgoto, string userName, out string checkLogin)
+                out string linkgoto, string userName, out string checkLogin,out string currentDeposit)
             {
                 
                 //READ CAPTCHA
@@ -103,10 +103,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var searchedHtml = (CQ)htmlresp;
                 var numberDeposit = searchedHtml["#ctl00_ContentPlaceHolder1_lblCreditAvailable"].Text().Trim().Split(' ');
                 var deposit = numberDeposit[1].Trim().Replace(",", "");
-                if (deposit != null || deposit != "") 
-                {
-                    currentDeposit = decimal.Parse(deposit);
-                }
+                currentDeposit = deposit;
                 
 
                 // HANDLING CASE IF CAPTCHA IS FALSE

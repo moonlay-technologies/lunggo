@@ -168,6 +168,7 @@
     <None Include="Properties\PublishProfiles\dv1-webjob %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-webjob %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-webjob %286%29.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %287%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob.pubxml" />

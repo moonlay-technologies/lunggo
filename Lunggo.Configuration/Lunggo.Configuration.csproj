@@ -646,6 +646,7 @@
     <None Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueFailedNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueSlightDelayNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightSaySorryFailedIssueNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ImlekPromoEmail.cshtml" />
     <None Include="HtmlTemplate\GetCalendarEmail.cshtml" />
     <None Include="HtmlTemplate\RegisterSubscribeEmail.cshtml" />

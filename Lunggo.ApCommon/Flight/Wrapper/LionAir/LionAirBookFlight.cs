@@ -200,6 +200,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var clientx = new RestClient(cloudAppUrl);
                 var accReq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
                 var userName = "";
+                var currentDeposit = "";
                 var reqTime = DateTime.UtcNow;
                 var itin = new FlightItinerary();
                 var msgLogin = "Your login name is inuse";
@@ -261,7 +262,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var searchResponse1 = client.Execute(searchRequest1);
                         Thread.Sleep(1000);
                         successLogin = Login(client, searchResponse1.RawBytes, viewstate, eventval, out userId, userName,
-                            out msgLogin); //, out currentDeposit);
+                            out msgLogin, out currentDeposit);
                         Thread.Sleep(1000);
                         counter++;
                     } while (!successLogin && counter < 31 && (msgLogin != "Your login name is inuse"

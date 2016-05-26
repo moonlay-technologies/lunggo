@@ -56,8 +56,8 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
             {
-                RecipientList = new[] { "suheri@travelmadezy.com" },
-                Subject = envPrefix + env == "production" ? "Issue Failed - No Pemesanan :  " + rsvNo : "[TEST] Ignore This Email",
+                RecipientList = new[] { "developer@travelmadezy.com" },
+                Subject = envPrefix + env == "production" ? "Issue Ticket Failed - No Pemesanan :  " + rsvNo : "[TEST] Ignore This Email",
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama"
             };
