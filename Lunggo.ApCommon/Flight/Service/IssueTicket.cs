@@ -81,6 +81,11 @@ namespace Lunggo.ApCommon.Flight.Service
                         var detailsInput = new GetDetailsInput { RsvNo = input.RsvNo };
                         GetAndUpdateNewDetails(detailsInput);
                         SendEticketToCustomer(input.RsvNo);
+                        //Send Eticket Slight Delay if Choosing Mystifly
+                        if (supplier.Contains("Mystifly")) 
+                        {
+                            SendEticketSlightDelayNotifToCustomer(input.RsvNo);
+                        }
                         if (reservation.Payment.Method != PaymentMethod.BankTransfer)
                             SendInstantPaymentConfirmedNotifToCustomer(input.RsvNo);
                         InsertDb.SavedPassengers(reservation.Contact.Email, reservation.Passengers);
@@ -93,6 +98,14 @@ namespace Lunggo.ApCommon.Flight.Service
                     if (casetype != 0)
                     {
                         SendIssueSlightDelayNotifToCustomer(reservation.RsvNo + "+" + casetype.ToString());
+                        //Testing
+                        /*if (supplier.Contains("Mystifly"))
+                        {
+                            SendEticketSlightDelayNotifToCustomer(input.RsvNo);
+                        }
+                        SendFailedVerificationCreditCardNotifToCustomer(input.RsvNo);
+                        SendEticketSlightDelayNotifToCustomer(input.RsvNo); 
+                        SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);*/
                     }
                     else 
                     {

@@ -29,7 +29,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] { reservation.Contact.Email },
-                Subject = envPrefix + "[Travorama] CHANGE THIS - No. Pemesanan " + reservation.RsvNo,
+                Subject = envPrefix + "[Travorama] Pemesanan Gagal Melalui Credit Card - No. Pemesanan " + reservation.RsvNo,
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama"
             };

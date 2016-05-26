@@ -644,6 +644,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightFailedVerificationCreditCardNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueFailedNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueSlightDelayNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightSaySorryFailedIssueNotifEmail.cshtml" />
