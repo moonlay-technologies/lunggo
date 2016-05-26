@@ -37,8 +37,16 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             for (int i = 1; i < splitMessage.Length; i++)
             {
                 var splitSupplier = splitMessage[i].Split(';');
-                var localPrice = decimal.Parse(splitSupplier[1]);
-                var currentDeposit = decimal.Parse(splitSupplier[2]);
+                decimal localPrice = 0;
+                decimal currentDeposit = 0;
+                if (splitSupplier[1] != "" || splitSupplier[1] != null) 
+                {
+                    localPrice = decimal.Parse(splitSupplier[1]);
+                }
+                if (splitSupplier[2] != "" || splitSupplier[2] != null)
+                {
+                    currentDeposit = decimal.Parse(splitSupplier[2]);
+                }
                 var singleData = new FlightIssueData { 
                     SupplierName = splitSupplier[0],
                     SupplierPrice = localPrice,

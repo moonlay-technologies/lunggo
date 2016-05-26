@@ -16,19 +16,66 @@
     {
         <p>Itinerary : 1</p>
         <p>Airline Agent : @Model.FlightIssueData[0].SupplierName</p>
-        <p>Reservation Price : Rp. @Model.FlightIssueData[0].SupplierPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-        <p>Current Deposit : Rp. @Model.FlightIssueData[0].CurentDeposit.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+        @if (Model.FlightIssueData[0].SupplierPrice != 0)
+        {
+            <p>Reservation Price : Rp. @Model.FlightIssueData[0].SupplierPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+        }
+        else
+        {
+            <p>Reservation Price : Failed to get Reservation Price</p>
+        }
+
+        @if (Model.FlightIssueData[0].CurentDeposit != 0)
+        {
+            <p>Current Deposit : Rp. @Model.FlightIssueData[0].CurentDeposit.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+        }
+        else
+        {
+            <p>Current Deposit : Failed to get Deposit</p>
+        }
+
 
         <p>Itinerary : 2</p>
         <p>Airline Agent : @Model.FlightIssueData[1].SupplierName</p>
-        <p>Reservation Price : Rp. @Model.FlightIssueData[1].SupplierPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-        <p>Current Deposit : Rp. @Model.FlightIssueData[1].CurentDeposit</p>
+        @if (Model.FlightIssueData[1].SupplierPrice != 0)
+        {
+            <p>Reservation Price : Rp. @Model.FlightIssueData[1].SupplierPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+        }
+        else
+        {
+            <p>Reservation Price : Failed to get Reservation Price</p>
+        }
+
+        @if (Model.FlightIssueData[1].CurentDeposit != 0)
+        {
+            <p>Current Deposit : Rp. @Model.FlightIssueData[1].CurentDeposit.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+        }
+        else
+        {
+            <p>Current Deposit : Failed to get Deposit</p>
+        }
+        
     }
     else
     {
         <p>Airline Agent : @Model.FlightIssueData[0].SupplierName</p>
-        <p>Reservation Price : Rp. @Model.FlightIssueData[0].SupplierPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-        <p>Current Deposit : Rp. @Model.FlightIssueData[0].CurentDeposit.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+        @if (Model.FlightIssueData[0].SupplierPrice != 0)
+        {
+            <p>Reservation Price : Rp. @Model.FlightIssueData[0].SupplierPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+        }
+        else
+        {
+            <p>Reservation Price : Failed to get Reservation Price</p>
+        }
+
+        @if (Model.FlightIssueData[0].CurentDeposit != 0)
+        {
+            <p>Current Deposit : Rp. @Model.FlightIssueData[0].CurentDeposit.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+        }
+        else
+        {
+            <p>Current Deposit : Failed to get Deposit</p>
+        }
     }
 
     </body>

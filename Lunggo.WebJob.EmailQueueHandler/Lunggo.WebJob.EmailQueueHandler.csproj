@@ -164,6 +164,7 @@
     </Content>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\dv1-webjob %2810%29.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %2811%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-webjob %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-webjob %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-webjob %284%29.pubxml" />
