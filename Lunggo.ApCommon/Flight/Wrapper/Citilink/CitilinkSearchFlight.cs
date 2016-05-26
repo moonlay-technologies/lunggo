@@ -54,6 +54,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 try
                 {
                     var cobaAmbilTable = (CQ) htmlRespon;
+
                     var isi = cobaAmbilTable[".w99>tbody>tr:not([class^='trSSR'])"];
                     
                     int i = isi.Count();
@@ -95,27 +96,27 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 string Acode;
                                 string Fnumber;
 
-                                
-                                url = "TaxAndFeeInclusiveDisplayAjax-resource.aspx";
-                                var fareRequest = new RestRequest(url, Method.GET);
-                                fareRequest.AddQueryParameter("flightKeys", FID);
-                                fareRequest.AddQueryParameter("numberOfMarkets", "1");
-                                fareRequest.AddQueryParameter("keyDelimeter", ",");
-                                fareRequest.AddQueryParameter("ssrs", "FLEX");
-                                var fareResponse = client.Execute(fareRequest);
-
-                                var responAjax = fareResponse.Content;
-
-                                var ambilDataAjax = (CQ) responAjax;
-
-                                //Price 
-                                var harga = "1 2".Split(' ');
-                                var tunjukHarga = ambilDataAjax["#taxAndFeeInclusiveTotal"];
-                                var ambilharga = tunjukHarga.Select(x => x.Cq().Text()).FirstOrDefault();
-                                var segments = new List<FlightSegment>();
-                                if (ambilharga != null)
+                                if ((ParseFID2.Count - 1)/8 == 1)
                                 {
-                                    harga = ambilharga.Split('.');
+                                    url = "TaxAndFeeInclusiveDisplayAjax-resource.aspx";
+                                    var fareRequest = new RestRequest(url, Method.GET);
+                                    fareRequest.AddQueryParameter("flightKeys", FID);
+                                    fareRequest.AddQueryParameter("numberOfMarkets", "1");
+                                    fareRequest.AddQueryParameter("keyDelimeter", ",");
+                                    fareRequest.AddQueryParameter("ssrs", "FLEX");
+                                    var fareResponse = client.Execute(fareRequest);
+
+                                    var responAjax = fareResponse.Content;
+
+                                    var ambilDataAjax = (CQ)responAjax;
+
+                                    //Price 
+
+                                    var tunjukHarga = ambilDataAjax["#taxAndFeeInclusiveTotal"];
+                                    var ambilharga = tunjukHarga.Select(x => x.Cq().Text()).FirstOrDefault();
+                                    var harga = ambilharga.Split('.');
+
+                                    var segments = new List<FlightSegment>();
 
                                     if (ParseFID2.Count > 7)
                                     {
@@ -168,18 +169,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                     }
 
                                     var prefix =
-                                    "" + conditions.Trips[0].OriginAirport + "" +
-                                    "." + conditions.Trips[0].DestinationAirport + "" +
-                                    "." + conditions.Trips[0].DepartureDate.Day + "" +
-                                    "." + conditions.Trips[0].DepartureDate.Month + "" +
-                                    "." + conditions.Trips[0].DepartureDate.Year + "" +
-                                    "." + conditions.AdultCount + "" +
-                                    "." + conditions.ChildCount + "" +
-                                    "." + conditions.InfantCount + "" +
-                                    "." + ParseFID2[0].Trim() + "" +
-                                    "." + ParseFID2[1].Trim() + "" +
-                                    "." + decimal.Parse(harga[1]) + "" +
-                                    ".";
+                                        "" + conditions.Trips[0].OriginAirport + "" +
+                                        "." + conditions.Trips[0].DestinationAirport + "" +
+                                        "." + conditions.Trips[0].DepartureDate.Day + "" +
+                                        "." + conditions.Trips[0].DepartureDate.Month + "" +
+                                        "." + conditions.Trips[0].DepartureDate.Year + "" +
+                                        "." + conditions.AdultCount + "" +
+                                        "." + conditions.ChildCount + "" +
+                                        "." + conditions.InfantCount + "" +
+                                        "." + ParseFID2[0].Trim() + "" +
+                                        "." + ParseFID2[1].Trim() + "" +
+                                        "." + decimal.Parse(harga[1]) + "" +
+                                        ".";
 
                                     var itin = new FlightItinerary
                                     {
@@ -213,8 +214,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                     //if (itin.Trips[0].Segments.Count < 2)
                                     itins.Add(itin);
                                 }
-                                
-
                                 
                                 hasil.IsSuccess = true;
                                 hasil.Itineraries = itins;

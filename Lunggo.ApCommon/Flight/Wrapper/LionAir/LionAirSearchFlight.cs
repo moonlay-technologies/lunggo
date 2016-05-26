@@ -79,7 +79,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 };
 
                 var originAirport = trip0.OriginAirport == "JKT" ? "CGK" : trip0.OriginAirport;
-                    
+
                 var destinationAirport = trip0.DestinationAirport == "JKT" ? "CGK" : trip0.DestinationAirport;
 
                 // [GET] Search Flight
@@ -90,7 +90,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 string scr;
                 var depDateText = "";
 
-                
+
                 {
                     // Calling The Zeroth Page
                     client.BaseUrl = new Uri("http://www.lionair.co.id");
@@ -105,465 +105,520 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                          searchResponse0.StatusCode == HttpStatusCode.Redirect))
                         return new SearchFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
 
-                    // Calling The First Page
-                    client.BaseUrl = new Uri("https://secure2.lionair.co.id");
-                    const string url = @"lionairibe2/OnlineBooking.aspx";
-                    var searchRequest = new RestRequest(url, Method.GET);
-                    searchRequest.AddHeader("Referer", "http://www.lionair.co.id");
-                    searchRequest.AddQueryParameter("trip_type", "one way");
-                    searchRequest.AddQueryParameter("date_flexibility", "fixed");
-                    searchRequest.AddQueryParameter("depart", originAirport);
-                    searchRequest.AddQueryParameter("dest.1", destinationAirport);
-                    searchRequest.AddQueryParameter("date.0", trip0.DepartureDate.ToString("ddMMM"));
-                    searchRequest.AddQueryParameter("date.1", trip0.DepartureDate.ToString("ddMMM"));
-                    searchRequest.AddQueryParameter("persons.0",
-                        conditions.AdultCount.ToString(CultureInfo.InvariantCulture));
-                    searchRequest.AddQueryParameter("persons.1",
-                        conditions.ChildCount.ToString(CultureInfo.InvariantCulture));
-                    searchRequest.AddQueryParameter("persons.2",
-                        conditions.InfantCount.ToString(CultureInfo.InvariantCulture));
-                    //searchRequest.AddQueryParameter("origin", "EN");
-                    //searchRequest.AddQueryParameter("usercountry", "ID");
-
-                    ServicePointManager.ServerCertificateValidationCallback +=
-                        (sender, certificate, chain, sslPolicyErrors) => true;
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 |
-                                                           SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
-
-                    var searchResponse = client.Execute(searchRequest);
-
-                    if (searchResponse.ResponseUri.AbsolutePath != "/lionairibe2/OnlineBooking.aspx" &&
-                        (searchResponse.StatusCode == HttpStatusCode.OK ||
-                         searchResponse.StatusCode == HttpStatusCode.Redirect))
-                        return new SearchFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
-
-                    //Calling The Second Page
-                    const string url2 = @"lionairibe2/OnlineBooking.aspx";
-                    var searchRequest2 = new RestRequest(url2, Method.GET);
-                    searchRequest2.AddHeader("Referer", "https://secure2.lionair.co.id");
-
-                    ServicePointManager.ServerCertificateValidationCallback +=
-                        (sender, certificate, chain, sslPolicyErrors) => true;
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 |
-                                                           SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
-
-                    var searchResponse2 = client.Execute(searchRequest2);
-                    var html2 = searchResponse2.Content;
-
-                    if (searchResponse2.ResponseUri.AbsolutePath != "/lionairibe2/OnlineBooking.aspx" &&
-                        (searchResponse2.StatusCode == HttpStatusCode.OK ||
-                         searchResponse2.StatusCode == HttpStatusCode.Redirect))
-                        return new SearchFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
-
-                    var searchedHtml = (CQ) html2;
-                    //Getting rows of all flights
-                    availableFares = searchedHtml[".flight-matrix-row"];
-
-                    //Getting departure date in DD MMM YYYY format (23 Jun 2016)
-                    departureDate = searchedHtml[
-                        ".box-content.searchdetails .row .col-md-6.col-sm-12.col-xs-12.border-right.rel-pos .row " +
-                        ".col-md-6.col-sm-6.col-xs-6.pr20>p>label"].Text();
-                    var departureDateText = departureDate.Text().Trim(' ');
-                    var departureDateText1 = departureDateText.Trim('\n').Trim(' ').Split(' ');
-                    depDateText = String.Join(" ", departureDateText1.Skip(1));
-
-                    //Getting price formula script
-                    var pageScript = html2;
-                    var startIndex = pageScript.IndexOf("{'fares'");
-                    var endIndex = pageScript.IndexOf("})");
-                    scr = pageScript.Substring(startIndex, endIndex + 1 - startIndex);
-
-                    var x = availableFares.Length;
-                    var y = availableFares.Count();
-                }
-                
-                var pricefunc = new GetLionAirPrice(scr);
-                try
-                {
-                    //var retidx = 0;
-                    var fareIds = new List<IDomObject>();
-                    //var index = new List<int>();
-                    switch (conditions.CabinClass)
+                    if (originCountry == "ID")
                     {
-                        case CabinClass.Economy:
-                        {
-                            var j = 0;
-                            var it = 0;
-                            
-                            while (it < availableFares.Length)
+                        // Calling The First Page
+                        client.BaseUrl = new Uri("https://secure2.lionair.co.id");
+                        const string url = @"lionairibe2/OnlineBooking.aspx";
+                        var searchRequest = new RestRequest(url, Method.GET);
+                        searchRequest.AddHeader("Referer", "http://www.lionair.co.id");
+                        searchRequest.AddQueryParameter("trip_type", "one way");
+                        searchRequest.AddQueryParameter("date_flexibility", "fixed");
+                        searchRequest.AddQueryParameter("depart", originAirport);
+                        searchRequest.AddQueryParameter("dest.1", destinationAirport);
+                        searchRequest.AddQueryParameter("date.0", trip0.DepartureDate.ToString("ddMMM"));
+                        searchRequest.AddQueryParameter("date.1", trip0.DepartureDate.ToString("ddMMM"));
+                        searchRequest.AddQueryParameter("persons.0",
+                            conditions.AdultCount.ToString(CultureInfo.InvariantCulture));
+                        searchRequest.AddQueryParameter("persons.1",
+                            conditions.ChildCount.ToString(CultureInfo.InvariantCulture));
+                        searchRequest.AddQueryParameter("persons.2",
+                            conditions.InfantCount.ToString(CultureInfo.InvariantCulture));
+                        //searchRequest.AddQueryParameter("origin", "EN");
+                        //searchRequest.AddQueryParameter("usercountry", "ID");
+
+                        ServicePointManager.ServerCertificateValidationCallback +=
+                            (sender, certificate, chain, sslPolicyErrors) => true;
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 |
+                                                               SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
+
+                        var searchResponse = client.Execute(searchRequest);
+
+                        if (searchResponse.ResponseUri.AbsolutePath != "/lionairibe2/OnlineBooking.aspx" &&
+                            (searchResponse.StatusCode == HttpStatusCode.OK ||
+                             searchResponse.StatusCode == HttpStatusCode.Redirect))
+                            return new SearchFlightResult
                             {
-                                if (availableFares[it].ChildElements.ToList().Count == 4)
-                                {
-                                    if ((availableFares[it].ChildElements.ToList()[1].GetAttribute("class") !=
-                                         "flight-class sold-flight" &&
-                                         availableFares[it].ChildElements.ToList()[1].GetAttribute("class") !=
-                                         "flight-class not-available")
-                                        || (availableFares[it].ChildElements.ToList()[2].GetAttribute("class") !=
-                                         "flight-class sold-flight" &&
-                                         availableFares[it].ChildElements.ToList()[2].GetAttribute("class") !=
-                                         "flight-class not-available"))
-                                    {
-                                        fareIds.Add(availableFares[it]);
-                                        j = it + 1;
-                                        while ((j != availableFares.Count()) &&
-                                               (availableFares[j - 1].GetAttribute("id").SubstringBetween(0, (availableFares[j - 1].GetAttribute("id").Length - 2))
-                                                == availableFares[j].GetAttribute("id").SubstringBetween(0, availableFares[j].GetAttribute("id").Length - 2))
-                                            )
-                                        {
-                                            fareIds.Add(availableFares[j]);
-                                            j += 1;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        j = it + 1;
-                                        //Skipping the second etc rows after getting the first row, because price is 1st row
-                                        while ((j != availableFares.Count()) &&
-                                               (availableFares[j - 1].GetAttribute("id")
-                                                   .SubstringBetween(0,
-                                                       (availableFares[j - 1].GetAttribute("id").Length - 2))
-                                                ==
-                                                availableFares[j].GetAttribute("id")
-                                                    .SubstringBetween(0, availableFares[j].GetAttribute("id").Length - 2))
-                                               && j != availableFares.Count())
-                                        {
-                                            j += 1;
-                                        }
-                                    }
-                                }
-                                it = j;
-                            }
-                        }
-                            break;
-                        case CabinClass.Business:
-                        {
-                            var j = 0;
-                            var it = 0;
-                            while (it < availableFares.Count())
-                            {
-                                if (availableFares[it].ChildElements.ToList().Count == 4)
-                                {
-                                    if ((availableFares[it].ChildElements.ToList()[3].GetAttribute("class") !=
-                                         "flight-class sold-flight" &&
-                                         availableFares[it].ChildElements.ToList()[3].GetAttribute("class") !=
-                                         "flight-class not-available"))
-                                    {
-                                        fareIds.Add(availableFares[it]);
-                                        j = it + 1;
-                                            
-                                        while ((j != availableFares.Count()) &&
-                                                (availableFares[j - 1].GetAttribute("id")
-                                                    .SubstringBetween(0,
-                                                        (availableFares[j - 1].GetAttribute("id").Length - 2))
-                                                == availableFares[j].GetAttribute("id").SubstringBetween(0,availableFares[j].GetAttribute("id").Length - 2)))
-                                        {
-                                            fareIds.Add(availableFares[j]);
-                                            j += 1;
-                                        }
-                                        
-                                    }
-                                    else
-                                    {
-                                        j = it + 1;
-                                        while ((j != availableFares.Count()) &&
-                                               (availableFares[j - 1].GetAttribute("id")
-                                                   .SubstringBetween(0,
-                                                       (availableFares[j - 1].GetAttribute("id").Length - 2))
-                                                ==
-                                                availableFares[j].GetAttribute("id")
-                                                    .SubstringBetween(0, availableFares[j].GetAttribute("id").Length - 2))
-                                               && j != availableFares.Count())
-                                        {
-                                            j += 1;
-                                        }
-                                    }
-                                }
-                                it = j;
-                            }
-                        }
-                            break;
-                        default:
-                            fareIds = new List<IDomObject>();
-                            break;
+                                Errors = new List<FlightError> {FlightError.InvalidInputData}
+                            };
                     }
-
-                    var itins = new List<FlightItinerary>();
-                    
-                    for (var ind = 0; ind < fareIds.Count; ind++)
+                    else
                     {
-                        //For index 0 or all segment 1
-                        var segments = new List<FlightSegment>();
-                        var cityArrival2 = "";
-                        var airportArrival2 = "";
-                        //var cityDeparture2 = "";
-                        var listFlightNo = new List<string>();
-                        var listDepHr = new List<string>();
-                        var subst1 = fareIds.ElementAt(ind).GetAttribute("id");
-                        var dicty = DictionaryService.GetInstance();
-                        if (ind == 0 ||
-                            (subst1.SubstringBetween(0, subst1.Length - 2) !=
-                             fareIds.ElementAt(ind - 1)
-                                 .GetAttribute("id")
-                                 .SubstringBetween(0, fareIds.ElementAt(ind - 1).GetAttribute("id").Length - 2)))
+                        return new SearchFlightResult
                         {
-                            // Column 0a (Departure Data)
-                            var departureInfo = fareIds.ElementAt(ind).ChildElements.ToList()[0].ChildElements.ToList()[0];
-                            var airportDeparture = departureInfo.ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
-                            var cityDeparture = dicty.GetAirportCity(airportDeparture);
-                            var timeDeparture = departureInfo.ChildElements.ToList()[1].InnerText;
-                            listDepHr.Add(timeDeparture);
-                            var flightNo = departureInfo.ChildElements.ToList()[2].InnerText.TrimEnd(' ');
-                            listFlightNo.Add(flightNo);
-                            var airplaneName = departureInfo.ChildElements.ToList()[2].ChildElements.ToList()[0].InnerText;
+                            IsSuccess = true,
+                            Itineraries = new List<FlightItinerary>()
+                        };
+                    }
+                    try
+                    {
+                        //Calling The Second Page
+                        const string url2 = @"lionairibe2/OnlineBooking.aspx";
+                        var searchRequest2 = new RestRequest(url2, Method.GET);
+                        searchRequest2.AddHeader("Referer", "https://secure2.lionair.co.id");
 
-                            const string format = "dd MMM yyyy HH:mm";
-                            var provider = CultureInfo.InvariantCulture;
-                            var depDates = depDateText + " " + timeDeparture; // 28 Jan 2016 10:30 //
-                            var depDate = DateTime.SpecifyKind(DateTime.ParseExact(depDates, format, provider), DateTimeKind.Utc);
-                            
-                            // Column 0c (Arrival Data)
+                        ServicePointManager.ServerCertificateValidationCallback +=
+                            (sender, certificate, chain, sslPolicyErrors) => true;
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 |
+                                                               SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
 
-                            var arrivalInfo = fareIds.ElementAt(ind).ChildElements.ToList()[0].ChildElements.ToList()[2];
-                            var airportArrival = arrivalInfo.ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
-                            var cityArrival = dicty.GetAirportCity(airportArrival);
-                            var timeArrival = arrivalInfo.ChildElements.ToList()[1].InnerText;
-                            var duration = arrivalInfo.ChildElements.ToList()[2].InnerText.Split(' ');
-                            var durHour = Int32.Parse(duration[1].SubstringBetween(0, 1));
-                            var durMin = Int32.Parse(duration[2].SubstringBetween(0, 2));
-                            var dur = new TimeSpan(0, durHour, durMin, 0, 0);
+                        var searchResponse2 = client.Execute(searchRequest2);
+                        var html2 = searchResponse2.Content;
 
-                            var jamdatang = Convert.ToInt32(timeArrival.Split(':')[0]);
-                            var jambrgkt = Convert.ToInt32(timeDeparture.Split(':')[0]);
-                            DateTime arrDate;
-                            if (jamdatang < jambrgkt)
+                        if (searchResponse2.ResponseUri.AbsolutePath != "/lionairibe2/OnlineBooking.aspx" &&
+                            (searchResponse2.StatusCode == HttpStatusCode.OK ||
+                             searchResponse2.StatusCode == HttpStatusCode.Redirect))
+                            return new SearchFlightResult
                             {
-                                var x = depDate.AddDays(1);
-                                arrDate = DateTime.SpecifyKind(new DateTime(x.Year, x.Month, x.Day,
-                                    Convert.ToInt32(timeArrival.Split(':')[0]),
-                                    Convert.ToInt32(timeArrival.Split(':')[1]), 0), DateTimeKind.Utc);
-                            }
-                            else
-                            {
-                                arrDate = DateTime.SpecifyKind(new DateTime(depDate.Year, depDate.Month, depDate.Day,
-                                    Convert.ToInt32(timeArrival.Split(':')[0]),
-                                    Convert.ToInt32(timeArrival.Split(':')[1]), 0), DateTimeKind.Utc);
-                            }
+                                Errors = new List<FlightError> {FlightError.InvalidInputData}
+                            };
 
-                            
-                            //Calculate Price
+                        var searchedHtml = (CQ) html2;
+                        //Getting rows of all flights
+                        availableFares = searchedHtml[".flight-matrix-row"];
 
-                            string priceId; //FR00_C0_SLOT0
-                            if (conditions.CabinClass == CabinClass.Economy)
+                        //Getting departure date in DD MMM YYYY format (23 Jun 2016)
+                        departureDate = searchedHtml[
+                            ".box-content.searchdetails .row .col-md-6.col-sm-12.col-xs-12.border-right.rel-pos .row " +
+                            ".col-md-6.col-sm-6.col-xs-6.pr20>p>label"].Text();
+                        var departureDateText = departureDate.Text().Trim(' ');
+                        var departureDateText1 = departureDateText.Trim('\n').Trim(' ').Split(' ');
+                        depDateText = String.Join(" ", departureDateText1.Skip(1));
+
+                        //Getting price formula script
+                        var pageScript = html2;
+                        var startIndex = pageScript.IndexOf("{'fares'");
+                        var endIndex = pageScript.IndexOf("})");
+                        scr = pageScript.Substring(startIndex, endIndex + 1 - startIndex);
+
+                        var x = availableFares.Length;
+                        var y = availableFares.Count();
+
+
+                        var pricefunc = new GetLionAirPrice(scr);
+
+                        //var retidx = 0;
+                        var fareIds = new List<IDomObject>();
+                        //var index = new List<int>();
+                        switch (conditions.CabinClass)
+                        {
+                            case CabinClass.Economy:
                             {
-                                if (fareIds.ElementAt(ind).ChildElements.ToList()[1].InnerText != "Sold Out" &&
-                                    fareIds.ElementAt(ind).ChildElements.ToList()[1].InnerText != "N/A")
+                                var j = 0;
+                                var it = 0;
+
+                                while (it < availableFares.Length)
                                 {
-                                    priceId = fareIds.ElementAt(ind).ChildElements.ToList()[1].GetAttribute("id");
+                                    if (availableFares[it].ChildElements.ToList().Count == 4)
+                                    {
+                                        if ((availableFares[it].ChildElements.ToList()[1].GetAttribute("class") !=
+                                             "flight-class sold-flight" &&
+                                             availableFares[it].ChildElements.ToList()[1].GetAttribute("class") !=
+                                             "flight-class not-available")
+                                            || (availableFares[it].ChildElements.ToList()[2].GetAttribute("class") !=
+                                                "flight-class sold-flight" &&
+                                                availableFares[it].ChildElements.ToList()[2].GetAttribute("class") !=
+                                                "flight-class not-available"))
+                                        {
+                                            fareIds.Add(availableFares[it]);
+                                            j = it + 1;
+                                            while ((j != availableFares.Count()) &&
+                                                   (availableFares[j - 1].GetAttribute("id")
+                                                       .SubstringBetween(0,
+                                                           (availableFares[j - 1].GetAttribute("id").Length - 2))
+                                                    ==
+                                                    availableFares[j].GetAttribute("id")
+                                                        .SubstringBetween(0,
+                                                            availableFares[j].GetAttribute("id").Length - 2))
+                                                )
+                                            {
+                                                fareIds.Add(availableFares[j]);
+                                                j += 1;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            j = it + 1;
+                                            //Skipping the second etc rows after getting the first row, because price is 1st row
+                                            while ((j != availableFares.Count()) &&
+                                                   (availableFares[j - 1].GetAttribute("id")
+                                                       .SubstringBetween(0,
+                                                           (availableFares[j - 1].GetAttribute("id").Length - 2))
+                                                    ==
+                                                    availableFares[j].GetAttribute("id")
+                                                        .SubstringBetween(0,
+                                                            availableFares[j].GetAttribute("id").Length - 2))
+                                                   && j != availableFares.Count())
+                                            {
+                                                j += 1;
+                                            }
+                                        }
+                                    }
+                                    it = j;
                                 }
-                                else
+                            }
+                                break;
+                            case CabinClass.Business:
+                            {
+                                var j = 0;
+                                var it = 0;
+                                while (it < availableFares.Count())
                                 {
-                                    priceId = fareIds.ElementAt(ind).ChildElements.ToList()[2].GetAttribute("id");
+                                    if (availableFares[it].ChildElements.ToList().Count == 4)
+                                    {
+                                        if ((availableFares[it].ChildElements.ToList()[3].GetAttribute("class") !=
+                                             "flight-class sold-flight" &&
+                                             availableFares[it].ChildElements.ToList()[3].GetAttribute("class") !=
+                                             "flight-class not-available"))
+                                        {
+                                            fareIds.Add(availableFares[it]);
+                                            j = it + 1;
+
+                                            while ((j != availableFares.Count()) &&
+                                                   (availableFares[j - 1].GetAttribute("id")
+                                                       .SubstringBetween(0,
+                                                           (availableFares[j - 1].GetAttribute("id").Length - 2))
+                                                    ==
+                                                    availableFares[j].GetAttribute("id")
+                                                        .SubstringBetween(0,
+                                                            availableFares[j].GetAttribute("id").Length - 2)))
+                                            {
+                                                fareIds.Add(availableFares[j]);
+                                                j += 1;
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            j = it + 1;
+                                            while ((j != availableFares.Count()) &&
+                                                   (availableFares[j - 1].GetAttribute("id")
+                                                       .SubstringBetween(0,
+                                                           (availableFares[j - 1].GetAttribute("id").Length - 2))
+                                                    ==
+                                                    availableFares[j].GetAttribute("id")
+                                                        .SubstringBetween(0,
+                                                            availableFares[j].GetAttribute("id").Length - 2))
+                                                   && j != availableFares.Count())
+                                            {
+                                                j += 1;
+                                            }
+                                        }
+                                    }
+                                    it = j;
                                 }
                             }
-                            else
-                            {
-                                priceId = fareIds.ElementAt(ind).ChildElements.ToList()[3].GetAttribute("id");
-                            }
+                                break;
+                            default:
+                                fareIds = new List<IDomObject>();
+                                break;
+                        }
 
-                            pricefunc.SetId(priceId);
-                            decimal price = pricefunc.GetPrice(conditions.AdultCount, conditions.ChildCount,
-                                conditions.InfantCount);
+                        var itins = new List<FlightItinerary>();
 
-                            segments.Add(new FlightSegment
+                        for (var ind = 0; ind < fareIds.Count; ind++)
+                        {
+                            //For index 0 or all segment 1
+                            var segments = new List<FlightSegment>();
+                            var cityArrival2 = "";
+                            var airportArrival2 = "";
+                            //var cityDeparture2 = "";
+                            var listFlightNo = new List<string>();
+                            var listDepHr = new List<string>();
+                            var subst1 = fareIds.ElementAt(ind).GetAttribute("id");
+                            var dicty = DictionaryService.GetInstance();
+                            if (ind == 0 ||
+                                (subst1.SubstringBetween(0, subst1.Length - 2) !=
+                                 fareIds.ElementAt(ind - 1)
+                                     .GetAttribute("id")
+                                     .SubstringBetween(0, fareIds.ElementAt(ind - 1).GetAttribute("id").Length - 2)))
                             {
-                                AirlineCode = flightNo.Split(' ')[0],
-                                FlightNumber = flightNo.Split(' ')[1],
-                                CabinClass = conditions.CabinClass,
-                                DepartureAirport = airportDeparture,
-                                DepartureTime = depDate, //ASK
-                                ArrivalAirport = airportArrival,
-                                ArrivalTime = arrDate, //ASK
-                                OperatingAirlineCode = flightNo.Split(' ')[0],
-                                //StopQuantity = Convert.ToInt32(stopNo),
-                                Duration = dur,
-                                //AircraftCode = aircraftNo,
-                                DepartureCity = cityDeparture,
-                                ArrivalCity = cityArrival,
-                                AirlineName = airplaneName,
-                                OperatingAirlineName = airplaneName,
-                                
-                            });
-                            var j = ind + 1;
-                            while ((j != fareIds.Count) && (subst1.SubstringBetween(0, subst1.Length - 2) ==
-                                                            fareIds.ElementAt(j).GetAttribute("id").SubstringBetween(0,
-                                                                    fareIds.ElementAt(ind + 1).GetAttribute("id").Length -2)))
-                            {
-                                // Column 0.a (Departure)
-                                departureInfo = fareIds.ElementAt(j).ChildElements.ToList()[0].ChildElements.ToList()[0];
-                                var airportDeparture2 = departureInfo.ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
-                                var cityDeparture2 = dicty.GetAirportCity(airportDeparture2);
-                                var timeDeparture2 = departureInfo.ChildElements.ToList()[1].InnerText;
-                                listDepHr.Add(timeDeparture2);
-                                flightNo = departureInfo.ChildElements.ToList()[2].InnerText.TrimEnd(' ');
+                                // Column 0a (Departure Data)
+                                var departureInfo =
+                                    fareIds.ElementAt(ind).ChildElements.ToList()[0].ChildElements.ToList()[0];
+                                var airportDeparture =
+                                    departureInfo.ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
+                                var cityDeparture = dicty.GetAirportCity(airportDeparture);
+                                var timeDeparture = departureInfo.ChildElements.ToList()[1].InnerText;
+                                listDepHr.Add(timeDeparture);
+                                var flightNo = departureInfo.ChildElements.ToList()[2].InnerText.TrimEnd(' ');
                                 listFlightNo.Add(flightNo);
-                                airplaneName = departureInfo.ChildElements.ToList()[2].ChildElements.ToList()[0].InnerText;
+                                var airplaneName =
+                                    departureInfo.ChildElements.ToList()[2].ChildElements.ToList()[0].InnerText;
 
-                                jamdatang = Convert.ToInt32(timeArrival.Split(':')[0]);
-                                jambrgkt = Convert.ToInt32(timeDeparture2.Split(':')[0]);
-                                DateTime depDate2;
-                                if (jambrgkt < jamdatang)
-                                {
-                                    DateTime x = arrDate.AddDays(1);
-                                    depDate2 = DateTime.SpecifyKind(new DateTime(x.Year, x.Month, x.Day,
-                                        Convert.ToInt32(timeDeparture2.Split(':')[0]),
-                                        Convert.ToInt32(timeDeparture2.Split(':')[1]), 0), DateTimeKind.Utc);
-                                }
-                                else
-                                {
-                                    depDate2 = DateTime.SpecifyKind(new DateTime(arrDate.Year, arrDate.Month, arrDate.Day,
-                                        Convert.ToInt32(timeDeparture2.Split(':')[0]),
-                                        Convert.ToInt32(timeDeparture2.Split(':')[1]), 0), DateTimeKind.Utc);
-                                }
+                                const string format = "dd MMM yyyy HH:mm";
+                                var provider = CultureInfo.InvariantCulture;
+                                var depDates = depDateText + " " + timeDeparture; // 28 Jan 2016 10:30 //
+                                var depDate = DateTime.SpecifyKind(DateTime.ParseExact(depDates, format, provider),
+                                    DateTimeKind.Utc);
 
-                                // Column 0.c (Arrival)
+                                // Column 0c (Arrival Data)
 
-                                arrivalInfo = fareIds.ElementAt(j).ChildElements.ToList()[0].ChildElements.ToList()[2];
-                                airportArrival2 = arrivalInfo.ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
-                                cityArrival2 = dicty.GetAirportCity(airportArrival2);
-                                var timeArrival2 = arrivalInfo.ChildElements.ToList()[1].InnerText;
-                                duration = arrivalInfo.ChildElements.ToList()[2].InnerText.Split(' ');
-                                durHour = Int32.Parse(duration[1].SubstringBetween(0, 1));
-                                durMin = Int32.Parse(duration[2].SubstringBetween(0, 2));
-                                dur = new TimeSpan(0, durHour, durMin, 0, 0);
+                                var arrivalInfo =
+                                    fareIds.ElementAt(ind).ChildElements.ToList()[0].ChildElements.ToList()[2];
+                                var airportArrival =
+                                    arrivalInfo.ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
+                                var cityArrival = dicty.GetAirportCity(airportArrival);
+                                var timeArrival = arrivalInfo.ChildElements.ToList()[1].InnerText;
+                                var duration = arrivalInfo.ChildElements.ToList()[2].InnerText.Split(' ');
+                                var durHour = Int32.Parse(duration[1].SubstringBetween(0, 1));
+                                var durMin = Int32.Parse(duration[2].SubstringBetween(0, 2));
+                                var dur = new TimeSpan(0, durHour, durMin, 0, 0);
 
-                                jamdatang = Convert.ToInt32(timeArrival2.Split(':')[0]);
-                                jambrgkt = Convert.ToInt32(timeDeparture2.Split(':')[0]);
-
-                                DateTime arrDate2;
+                                var jamdatang = Convert.ToInt32(timeArrival.Split(':')[0]);
+                                var jambrgkt = Convert.ToInt32(timeDeparture.Split(':')[0]);
+                                DateTime arrDate;
                                 if (jamdatang < jambrgkt)
                                 {
-                                    var x = depDate2.AddDays(1);
-                                    arrDate2 = DateTime.SpecifyKind(new DateTime(x.Year, x.Month, x.Day,
-                                        Convert.ToInt32(timeArrival2.Split(':')[0]),
-                                        Convert.ToInt32(timeArrival2.Split(':')[1]), 0), DateTimeKind.Utc);
+                                    var W = depDate.AddDays(1);
+                                    arrDate = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                                        Convert.ToInt32(timeArrival.Split(':')[0]),
+                                        Convert.ToInt32(timeArrival.Split(':')[1]), 0), DateTimeKind.Utc);
                                 }
                                 else
                                 {
-                                    arrDate2 = DateTime.SpecifyKind(new DateTime(depDate2.Year, depDate2.Month, depDate2.Day,
-                                        Convert.ToInt32(timeArrival2.Split(':')[0]),
-                                        Convert.ToInt32(timeArrival2.Split(':')[1]), 0), DateTimeKind.Utc);
+                                    arrDate =
+                                        DateTime.SpecifyKind(new DateTime(depDate.Year, depDate.Month, depDate.Day,
+                                            Convert.ToInt32(timeArrival.Split(':')[0]),
+                                            Convert.ToInt32(timeArrival.Split(':')[1]), 0), DateTimeKind.Utc);
                                 }
 
-                                arrDate = arrDate2;
-                                timeArrival = timeArrival2;
+
+                                //Calculate Price
+
+                                string priceId; //FR00_C0_SLOT0
+                                if (conditions.CabinClass == CabinClass.Economy)
+                                {
+                                    if (fareIds.ElementAt(ind).ChildElements.ToList()[1].InnerText != "Sold Out" &&
+                                        fareIds.ElementAt(ind).ChildElements.ToList()[1].InnerText != "N/A")
+                                    {
+                                        priceId = fareIds.ElementAt(ind).ChildElements.ToList()[1].GetAttribute("id");
+                                    }
+                                    else
+                                    {
+                                        priceId = fareIds.ElementAt(ind).ChildElements.ToList()[2].GetAttribute("id");
+                                    }
+                                }
+                                else
+                                {
+                                    priceId = fareIds.ElementAt(ind).ChildElements.ToList()[3].GetAttribute("id");
+                                }
+
+                                pricefunc.SetId(priceId);
+                                decimal price = pricefunc.GetPrice(conditions.AdultCount, conditions.ChildCount,
+                                    conditions.InfantCount);
 
                                 segments.Add(new FlightSegment
                                 {
                                     AirlineCode = flightNo.Split(' ')[0],
                                     FlightNumber = flightNo.Split(' ')[1],
                                     CabinClass = conditions.CabinClass,
-                                    DepartureAirport = airportDeparture2,
-                                    DepartureTime =
-                                        depDate2,
-                                    ArrivalAirport = airportArrival2,
-                                    ArrivalTime = arrDate2,
+                                    DepartureAirport = airportDeparture,
+                                    DepartureTime = depDate, //ASK
+                                    ArrivalAirport = airportArrival,
+                                    ArrivalTime = arrDate, //ASK
                                     OperatingAirlineCode = flightNo.Split(' ')[0],
-                                    //StopQuantity = Int32.Parse(stopNo),
+                                    //StopQuantity = Convert.ToInt32(stopNo),
                                     Duration = dur,
                                     //AircraftCode = aircraftNo,
-                                    DepartureCity = cityDeparture2,
-                                    ArrivalCity = cityArrival2,
+                                    DepartureCity = cityDeparture,
+                                    ArrivalCity = cityArrival,
                                     AirlineName = airplaneName,
                                     OperatingAirlineName = airplaneName,
+
                                 });
-                                j += 1;
-                            }
-
-                            var depHrJoin = String.Join("|", listDepHr.ToArray());
-                            var flightNoJoin = String.Join("|", listFlightNo.ToArray());
-
-                            string lastDest;
-                            string lastAirport;
-                            if (segments.Count > 1)
-                            {
-                                lastDest = cityArrival2; lastAirport = airportArrival2;
-                            }
-                            else
-                            {
-                                lastDest = cityArrival; lastAirport = airportArrival;
-                            }
-                                
-                            var importantData = originAirport + "+"
-                                                   + destinationAirport + "+"
-                                                   + depDateText + "+"
-                                                   + conditions.AdultCount + "+"
-                                                   + conditions.ChildCount + "+"
-                                                   + conditions.InfantCount + "+"
-                                                   + FlightService.ParseCabinClass(conditions.CabinClass) + "+"
-                                                   + price + "+" + priceId.SubstringBetween(21, priceId.Length) + "+" +
-                                                   + segments.Count + "+" + flightNoJoin + "+" + depHrJoin;
-
-                            var itin = new FlightItinerary
-                            {
-                                AdultCount = conditions.AdultCount,
-                                ChildCount = conditions.ChildCount,
-                                InfantCount = conditions.InfantCount,
-                                CanHold = true,
-                                FareType = FareType.Published,
-                                RequireBirthDate = true,
-                                RequirePassport = RequirePassport(segments),
-                                RequireSameCheckIn = false,
-                                RequireNationality = true,
-                                RequestedCabinClass = conditions.CabinClass,
-                                TripType = TripType.OneWay,
-                                Supplier = Supplier.LionAir,
-                                SupplierCurrency = "IDR",
-                                SupplierPrice = price,
-                                FareId = importantData,
-                                Trips = new List<FlightTrip>
+                                var j = ind + 1;
+                                while ((j != fareIds.Count) && (subst1.SubstringBetween(0, subst1.Length - 2) ==
+                                                                fareIds.ElementAt(j)
+                                                                    .GetAttribute("id")
+                                                                    .SubstringBetween(0,
+                                                                        fareIds.ElementAt(ind + 1)
+                                                                            .GetAttribute("id")
+                                                                            .Length - 2)))
                                 {
-                                    new FlightTrip
+                                    // Column 0.a (Departure)
+                                    departureInfo =
+                                        fareIds.ElementAt(j).ChildElements.ToList()[0].ChildElements.ToList()[0];
+                                    var airportDeparture2 =
+                                        departureInfo.ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
+                                    var cityDeparture2 = dicty.GetAirportCity(airportDeparture2);
+                                    var timeDeparture2 = departureInfo.ChildElements.ToList()[1].InnerText;
+                                    listDepHr.Add(timeDeparture2);
+                                    flightNo = departureInfo.ChildElements.ToList()[2].InnerText.TrimEnd(' ');
+                                    listFlightNo.Add(flightNo);
+                                    airplaneName =
+                                        departureInfo.ChildElements.ToList()[2].ChildElements.ToList()[0].InnerText;
+
+                                    jamdatang = Convert.ToInt32(timeArrival.Split(':')[0]);
+                                    jambrgkt = Convert.ToInt32(timeDeparture2.Split(':')[0]);
+                                    DateTime depDate2;
+                                    if (jambrgkt < jamdatang)
                                     {
-                                        OriginAirport = airportDeparture,
-                                        DestinationAirport = lastAirport,
-                                        DepartureDate = depDate.Date,
-                                        DestinationCity = lastDest,
-                                        OriginCity = cityDeparture,
-                                        Segments = segments
+                                        DateTime date_a = arrDate.AddDays(1);
+                                        depDate2 = DateTime.SpecifyKind(new DateTime(date_a.Year, date_a.Month, date_a.Day,
+                                            Convert.ToInt32(timeDeparture2.Split(':')[0]),
+                                            Convert.ToInt32(timeDeparture2.Split(':')[1]), 0), DateTimeKind.Utc);
                                     }
+                                    else
+                                    {
+                                        depDate2 =
+                                            DateTime.SpecifyKind(new DateTime(arrDate.Year, arrDate.Month, arrDate.Day,
+                                                Convert.ToInt32(timeDeparture2.Split(':')[0]),
+                                                Convert.ToInt32(timeDeparture2.Split(':')[1]), 0), DateTimeKind.Utc);
+                                    }
+
+                                    // Column 0.c (Arrival)
+
+                                    arrivalInfo =
+                                        fareIds.ElementAt(j).ChildElements.ToList()[0].ChildElements.ToList()[2];
+                                    airportArrival2 =
+                                        arrivalInfo.ChildElements.ToList()[0].ChildElements.ToList()[0].InnerText;
+                                    cityArrival2 = dicty.GetAirportCity(airportArrival2);
+                                    var timeArrival2 = arrivalInfo.ChildElements.ToList()[1].InnerText;
+                                    duration = arrivalInfo.ChildElements.ToList()[2].InnerText.Split(' ');
+                                    durHour = Int32.Parse(duration[1].SubstringBetween(0, 1));
+                                    durMin = Int32.Parse(duration[2].SubstringBetween(0, 2));
+                                    dur = new TimeSpan(0, durHour, durMin, 0, 0);
+
+                                    jamdatang = Convert.ToInt32(timeArrival2.Split(':')[0]);
+                                    jambrgkt = Convert.ToInt32(timeDeparture2.Split(':')[0]);
+
+                                    DateTime arrDate2;
+                                    if (jamdatang < jambrgkt)
+                                    {
+                                        var date_a = depDate2.AddDays(1);
+                                        arrDate2 = DateTime.SpecifyKind(new DateTime(date_a.Year, date_a.Month, date_a.Day,
+                                            Convert.ToInt32(timeArrival2.Split(':')[0]),
+                                            Convert.ToInt32(timeArrival2.Split(':')[1]), 0), DateTimeKind.Utc);
+                                    }
+                                    else
+                                    {
+                                        arrDate2 =
+                                            DateTime.SpecifyKind(
+                                                new DateTime(depDate2.Year, depDate2.Month, depDate2.Day,
+                                                    Convert.ToInt32(timeArrival2.Split(':')[0]),
+                                                    Convert.ToInt32(timeArrival2.Split(':')[1]), 0), DateTimeKind.Utc);
+                                    }
+
+                                    arrDate = arrDate2;
+                                    timeArrival = timeArrival2;
+
+                                    segments.Add(new FlightSegment
+                                    {
+                                        AirlineCode = flightNo.Split(' ')[0],
+                                        FlightNumber = flightNo.Split(' ')[1],
+                                        CabinClass = conditions.CabinClass,
+                                        DepartureAirport = airportDeparture2,
+                                        DepartureTime =
+                                            depDate2,
+                                        ArrivalAirport = airportArrival2,
+                                        ArrivalTime = arrDate2,
+                                        OperatingAirlineCode = flightNo.Split(' ')[0],
+                                        //StopQuantity = Int32.Parse(stopNo),
+                                        Duration = dur,
+                                        //AircraftCode = aircraftNo,
+                                        DepartureCity = cityDeparture2,
+                                        ArrivalCity = cityArrival2,
+                                        AirlineName = airplaneName,
+                                        OperatingAirlineName = airplaneName,
+                                    });
+                                    j += 1;
                                 }
-                            };
-                            itins.Add(itin);
+
+                                var depHrJoin = String.Join("|", listDepHr.ToArray());
+                                var flightNoJoin = String.Join("|", listFlightNo.ToArray());
+
+                                string lastDest;
+                                string lastAirport;
+                                if (segments.Count > 1)
+                                {
+                                    lastDest = cityArrival2;
+                                    lastAirport = airportArrival2;
+                                }
+                                else
+                                {
+                                    lastDest = cityArrival;
+                                    lastAirport = airportArrival;
+                                }
+
+                                var importantData = originAirport + "+"
+                                                    + destinationAirport + "+"
+                                                    + depDateText + "+"
+                                                    + conditions.AdultCount + "+"
+                                                    + conditions.ChildCount + "+"
+                                                    + conditions.InfantCount + "+"
+                                                    + FlightService.ParseCabinClass(conditions.CabinClass) + "+"
+                                                    + price + "+" + priceId.SubstringBetween(21, priceId.Length) + "+" +
+                                                    + segments.Count + "+" + flightNoJoin + "+" + depHrJoin;
+
+                                var itin = new FlightItinerary
+                                {
+                                    AdultCount = conditions.AdultCount,
+                                    ChildCount = conditions.ChildCount,
+                                    InfantCount = conditions.InfantCount,
+                                    CanHold = true,
+                                    FareType = FareType.Published,
+                                    RequireBirthDate = true,
+                                    RequirePassport = RequirePassport(segments),
+                                    RequireSameCheckIn = false,
+                                    RequireNationality = true,
+                                    RequestedCabinClass = conditions.CabinClass,
+                                    TripType = TripType.OneWay,
+                                    Supplier = Supplier.LionAir,
+                                    SupplierCurrency = "IDR",
+                                    SupplierPrice = price,
+                                    FareId = importantData,
+                                    Trips = new List<FlightTrip>
+                                    {
+                                        new FlightTrip
+                                        {
+                                            OriginAirport = airportDeparture,
+                                            DestinationAirport = lastAirport,
+                                            DepartureDate = depDate.Date,
+                                            DestinationCity = lastDest,
+                                            OriginCity = cityDeparture,
+                                            Segments = segments
+                                        }
+                                    }
+                                };
+                                itins.Add(itin);
+                            }
                         }
-                    }
 
-                    //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "ID")).ToList();
-                    //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "OD")).ToList();
-                    //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "SL")).ToList();
-                    if (trip0.DestinationAirport != "JKT")
-                    {
-                        itins = itins.Where(itin => itin.Trips[0].Segments.Last().ArrivalAirport == trip0.DestinationAirport).ToList();
-                    }
+                        //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "ID")).ToList();
+                        //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "OD")).ToList();
+                        //itins = itins.Where(itin => !itin.Trips[0].Segments.Exists(seg => seg.AirlineCode == "SL")).ToList();
+                        if (trip0.DestinationAirport != "JKT")
+                        {
+                            itins =
+                                itins.Where(
+                                    itin => itin.Trips[0].Segments.Last().ArrivalAirport == trip0.DestinationAirport)
+                                    .ToList();
+                        }
 
-                    if (trip0.OriginAirport != "JKT")
-                    {
-                        itins = itins.Where(itin => itin.Trips[0].Segments.First().DepartureAirport == trip0.OriginAirport).ToList();
+                        if (trip0.OriginAirport != "JKT")
+                        {
+                            itins =
+                                itins.Where(
+                                    itin => itin.Trips[0].Segments.First().DepartureAirport == trip0.OriginAirport)
+                                    .ToList();
+                        }
+
+
+                        return new SearchFlightResult
+                        {
+                            IsSuccess = true,
+                            Itineraries = itins
+                        };
                     }
-                    
-                   
-                    return new SearchFlightResult
+                    catch
                     {
-                        IsSuccess = true,
-                        Itineraries = itins
-                    };
-                }
-                catch
-                {
-                    return new SearchFlightResult
-                    {
-                        Errors = new List<FlightError> {FlightError.TechnicalError},
-                        ErrorMessages = new List<string> {"Web Layout Changed!"}
-                    };
+                        return new SearchFlightResult
+                        {
+                            Errors = new List<FlightError> {FlightError.TechnicalError},
+                            ErrorMessages = new List<string> {"Web Layout Changed!"}
+                        };
+                    }
                 }
             }
 
