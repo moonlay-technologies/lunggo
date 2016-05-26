@@ -342,7 +342,7 @@
                                                 </header>
                                     <section class="buyer-content">
                                         <div class="buyer-list-item">
-                                            <h3 class="buyer-list-heading"><b>{{buyerInfo.title}} {{buyerInfo.fullname}}</b></h3>
+                                            <h3 class="buyer-list-heading"><b>{{changeTitle(buyerInfo.title)}} {{buyerInfo.fullname}}</b></h3>
                                             <div class="buyer-list-content">
                                                 <p>
                                                     <span class="buyer-label">No. Telepon</span>
@@ -363,7 +363,7 @@
                                                 </header>
                                     <section class="review-content" ng-repeat="passenger in passengers track by $index">
                                         <div class="passenger-list-item">
-                                            <h3 class="passenger-list-heading"><b>{{$index+1}}. {{passenger.title}} {{passenger.firstname}} {{passenger.lastname}}</b><medium> ({{passenger.typeName}})</medium></h3>
+                                            <h3 class="passenger-list-heading"><b>{{$index+1}}. {{changeTitle(passenger.title)}} {{passenger.firstname}} {{passenger.lastname}}</b><medium> ({{passenger.typeName}})</medium></h3>
                                             <div class="passenger-list-content">
                                                 <p>
                                                     <span class="passenger-label">Tgl. Lahir</span>
@@ -563,7 +563,7 @@
                                         </dl>
                                     </div>
                                     <footer>
-                                        <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
+                                        <small>*Harga akan dikonfirmasi kembali sebelum proses pembayaran</small>
                                     </footer>
                                 </div><!-- .widget.price-detail -->
                                 <div class="widget voucher" ng-show="currentPage == 4" ng-class="{'hide' : CreditCardPromo.Valid}">

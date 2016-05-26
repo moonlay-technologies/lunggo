@@ -1015,6 +1015,7 @@
     <Content Include="Assets\js\angularApp.js" />
     <Content Include="Assets\js\angular_app.js" />
     <Content Include="Assets\js\application.js" />
+    <Content Include="Assets\js\date-id-ID.js" />
     <Content Include="Assets\js\jquery-ui.min.js" />
     <Content Include="Assets\js\jquery.countdown.min.js" />
     <Content Include="Assets\js\jquery.cycle2.js.map" />
@@ -1022,6 +1023,7 @@
     <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\jquery.range-min.js" />
     <Content Include="Assets\js\jquery.sticky.js" />
+    <Content Include="Assets\js\jquery.ui.datepicker-id.js" />
     <Content Include="Assets\js\jquery.ui.touch-punch.min.js" />
     <Content Include="Assets\js\js.cookie.js" />
     <Content Include="Assets\js\jssor.slider.mini.js" />

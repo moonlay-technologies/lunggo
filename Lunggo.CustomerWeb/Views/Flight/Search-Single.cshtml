@@ -1,4 +1,5 @@
-﻿@using Lunggo.ApCommon.Dictionary
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Dictionary
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Flight.Service
@@ -115,6 +116,7 @@
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/singleFlightController.js"></script>
+    <script src="https://github.com/angular/angular.js/blob/master/src/ngLocale/angular-locale_id-id.js"></script>
 }
 
 @if (isValid)
@@ -135,7 +137,7 @@
                 <div class="col-sm-9">
                     <div class="result-form-left">
                         <h3><b>@originCityNames[0]</b> (@data.Trips[0].OriginAirport) ke <b>@destinationCityNames[0]</b> (@data.Trips[0].DestinationAirport) </h3>
-                        <h4><b>@data.Trips[0].DepartureDate.ToString("dd-MMM-yyyy")</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>
+                        <h4><b>@data.Trips[0].DepartureDate.ToString("dd MMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>
                     </div>
                 </div>
                 <div class="col-sm-3">
@@ -382,7 +384,7 @@
                                         <div class="summary-top-right-top">
                                             <div class="flight-date-departure">
                                                 <h4>{{flight.Trips[0].Segments[0].DepartureAirport}} <span>{{flight.Trips[0].Segments[0].DepartureTime | date :'HH:mm' : 'UTC'}}</span></h4>
-                                                <h5>{{flight.Trips[0].Segments[0].DepartureTime | date : 'dd - MMM - yyyy' : 'UTC'}}</h5>
+                                                <h5>{{flight.Trips[0].Segments[0].DepartureTime | date : 'dd MMM yyyy' : 'UTC'}}</h5>
                                             </div>
                                             <div class="flight-date-duration">
                                                 <h5 class="time"><span>{{msToTime(flight.Trips[0].TotalDuration)}}</span></h5>
@@ -488,7 +490,7 @@
                                     <div class="flight-date">
                                         <div class="flight-date-departure">
                                             <h4>{{flightList[flightSelected].Trips[0].OriginAirport}} <span>{{flightList[flightSelected].Trips[0].Segments[0].DepartureTime | date :'HH:mm' : 'UTC'}}</span></h4>
-                                            <h5>{{flightList[flightSelected].Trips[0].Segments[0].DepartureTime | date :'dd - MMM - yyyy' : 'UTC'}}</h5>
+                                            <h5>{{flightList[flightSelected].Trips[0].Segments[0].DepartureTime | date :'dd MMM yyyy' : 'UTC'}}</h5>
                                         </div>
                                         <div class="flight-date-duration">
                                             <h5 class="time"><span>{{msToTime(flightList[flightSelected].Trips[0].TotalDuration)}}</span></h5>

@@ -1,4 +1,5 @@
-﻿@using Lunggo.ApCommon.Identity.User
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Identity.User
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
@@ -308,7 +309,7 @@ default:
                     <ol>
                         <li>
                             <h4>
-                                <span>{{buyerInfo.title}}</span>
+                                <span>{{changeTitle(buyerInfo.title)}}</span>
                                 {{buyerInfo.fullName}}
                             </h4>
                             <dl>
@@ -330,7 +331,7 @@ default:
                     <ol>
                         <li ng-repeat="Passenger in passengers">
                             <h4>
-                                <span>{{Passenger.title}}</span>
+                                <span>{{changeTitle(Passenger.title)}}</span>
                                 {{Passenger.firstName}} {{Passenger.lastName}}
                             </h4>
                             <dl>
@@ -363,7 +364,7 @@ default:
                             <div class="flight-title flight-title--departure">
                                 <div class="flight-info">
                                     <h4><b>@trips[0].OriginAirport</b> ke <b>@trips[0].DestinationAirport</b></h4>
-                                    <h5>@trips[0].DepartureDate.ToString("ddd, d MMM yyyy")</h5>
+                                    <h5>@trips[0].DepartureDate.ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                 </div><!-- .flight-info -->
                             </div><!-- .flight-title -->
                             @for (var segment = 0; segment < trips[0].Segments.Count; segment++)
@@ -384,7 +385,7 @@ default:
                                             </div><!-- .flight__summary -->
                                             <div class="flight__detail">
                                                 <div class="flight__departure">
-                                                    <h5>@trips[0].Segments[segment].DepartureTime.ToString("d MMM yyyy")</h5>
+                                                    <h5>@trips[0].Segments[segment].DepartureTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                                     <h4><b>@trips[0].Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
                                                     <h5><b>(@trips[0].Segments[segment].DepartureAirport) @trips[0].Segments[segment].DepartureCity</b></h5>
                                                     <h5>@trips[0].Segments[segment].DepartureAirportName</h5>
@@ -423,7 +424,7 @@ default:
                             <div class="flight-title flight-title--departure">
                                 <div class="flight-info">
                                     <h4><b>@trips[1].OriginAirport</b> ke <b>@trips[1].DestinationAirport</b></h4>
-                                    <h5>@trips[1].DepartureDate.ToString("ddd, d MMM yyyy")</h5>
+                                    <h5>@trips[1].DepartureDate.ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                 </div><!-- .flight-info -->
                             </div><!-- .flight-title -->
                             @for (var segment = 0; segment < trips[1].Segments.Count; segment++)
@@ -444,7 +445,7 @@ default:
                                             </div><!-- .flight__summary -->
                                             <div class="flight__detail">
                                                 <div class="flight__departure">
-                                                    <h5>@trips[1].Segments[segment].DepartureTime.ToString("d MMM yyyy")</h5>
+                                                    <h5>@trips[1].Segments[segment].DepartureTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                                     <h4><b>@trips[1].Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
                                                     <h5><b>(@trips[1].Segments[segment].DepartureAirport) @trips[1].Segments[segment].DepartureCity</b></h5>
                                                     <h5>@trips[1].Segments[segment].DepartureAirportName</h5>

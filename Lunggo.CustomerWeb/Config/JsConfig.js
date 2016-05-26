@@ -1,5 +1,11 @@
 //******************************************
 // Variables
+//$.datepicker.setDefaults(
+        //    $.extend(
+        //    { 'dateFormat': 'dd-mm-yy' },
+        //    $.datepicker.regional['id']
+        //    )
+        //);
 var SystemConfig = {
     SystemBusy: false
 };

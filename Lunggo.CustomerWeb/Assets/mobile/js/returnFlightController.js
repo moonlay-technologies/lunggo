@@ -6,7 +6,12 @@
         $scope.FlightFunctions.GetFlight('departure');
         $scope.FlightFunctions.GetFlight('return');
     });
-
+    $.datepicker.setDefaults(
+            $.extend(
+            { 'dateFormat': 'dd-mm-yy' },
+            $.datepicker.regional['id']
+            )
+        );
 
     // **********
     // variables
@@ -221,7 +226,7 @@
         hours = hours;
         minutes = minutes;
         seconds = seconds;
-        return hours + "h " + minutes + "m";
+        return hours + "j " + minutes + "m";
     }
 
 

@@ -394,6 +394,14 @@ app.controller('checkoutController', [
             }
         });
 
+        $scope.changeTitle = function(title) {
+            if (title == 'Mister')
+                return 'Tn.';
+            else if (title == 'Mistress')
+                return 'Ny.';
+            else if (title == 'Miss')
+                return 'Nn.';
+        }
 
         // toggle Travorama Login
         $scope.toggleLogin = function () {

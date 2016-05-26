@@ -48,7 +48,14 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         // buyer info
         BuyerInfo: CheckoutDetail.BuyerInfo
     };
-
+    $scope.changeTitle = function (title) {
+        if (title == 'Mister')
+            return 'Tn.';
+        else if (title == 'Mistress')
+            return 'Ny.';
+        else if (title == 'Miss')
+            return 'Nn.';
+    }
     $scope.parseInt = parseInt;
 
     $scope.token = CheckoutDetail.Token;

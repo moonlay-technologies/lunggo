@@ -1,4 +1,5 @@
-﻿@using Lunggo.ApCommon.Dictionary
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Dictionary
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Flight.Service
@@ -150,7 +151,7 @@
             <div class="col-sm-9">
                 <div class="result-form-left">
                     <h3><b>@originCityNames[0]</b> (@data.Trips[0].OriginAirport) ke <b>@originCityNames[1]</b> (@data.Trips[0].DestinationAirport) </h3>
-                    <h4><b>@data.Trips[0].DepartureDate.ToString("dd-MMM-yyyy") - @data.Trips[1].DepartureDate.ToString("dd-MMM-yyyy")</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>
+                    <h4><b>@data.Trips[0].DepartureDate.ToString("dd-MMM-yyyy") - @data.Trips[1].DepartureDate.ToString("dd MMM yyyy")</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>
                 </div>
             </div>
             <div class="col-sm-3">
@@ -239,7 +240,7 @@
                 <h4>01</h4>
                 <div>
                     <h5>Penerbangan Pergi</h5>
-                    <p>@originCityNames[0] <span class="separator"></span> @originCityNames[1] , <span class="route-date">@data.Trips[0].DepartureDate.ToString("dddd, dd-MMMM-yyyy")</span> </p>
+                    <p>@originCityNames[0] <span class="separator"></span> @originCityNames[1] , <span class="route-date">@data.Trips[0].DepartureDate.ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID"))</span> </p>
                 </div>
             </div><!-- .search-result-title -->
 
@@ -567,7 +568,7 @@
                 <h4>02</h4>
                 <div>
                     <h5>Penerbangan Pulang</h5>
-                    <p>@originCityNames[1] <span class="separator"></span> @originCityNames[0] , <span class="route-date">@data.Trips[1].DepartureDate.ToString("dddd, dd-MMMM-yyyy")</span> </p>
+                    <p>@originCityNames[1] <span class="separator"></span> @originCityNames[0] , <span class="route-date">@data.Trips[1].DepartureDate.ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID"))</span> </p>
                 </div>
             </div><!-- .search-result-title -->
 
@@ -917,7 +918,7 @@
                                 <div class="flight-date">
                                     <div class="flight-date-departure">
                                         <h4>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].OriginAirport}} <span>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime | date :'HH:mm' : 'UTC'}}</span></h4>
-                                        <h5>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime | date :'dd - MMM - yyyy' : 'UTC'}}</h5>
+                                        <h5>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime | date :'dd MMM yyyy' : 'UTC'}}</h5>
                                     </div>
                                     <div class="flight-date-duration">
                                         <h5 class="time"><span>{{msToTime(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].TotalDuration)}}</span></h5>
@@ -928,7 +929,7 @@
                                     </div>
                                     <div class="flight-date-arrival">
                                         <h4>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].DestinationAirport}} <span>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments.length - 1 ].ArrivalTime | date : 'HH:mm' : 'UTC'}} <span class="overday" ng-if="getFullDate(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments.length - 1 ].ArrivalTime) != getFullDate(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime)">{{getOverdayDate((departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime),(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments.length - 1 ].ArrivalTime))}}</span></span></h4>
-                                        <h5>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments.length - 1 ].ArrivalTime | date : 'dd - MMM - yyyy' : 'UTC'}}</h5>
+                                        <h5>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments.length - 1 ].ArrivalTime | date : 'dd MMM yyyy' : 'UTC'}}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -951,7 +952,7 @@
                                 <div class="flight-date">
                                     <div class="flight-date-departure">
                                         <h4>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].OriginAirport}} <span>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime | date :'HH:mm' : 'UTC'}}</span></h4>
-                                        <h5>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime | date :'dd - MMM - yyyy' : 'UTC'}}</h5>
+                                        <h5>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime | date :'dd MMM yyyy' : 'UTC'}}</h5>
                                     </div>
                                     <div class="flight-date-duration">
                                         <h5 class="time">{{msToTime(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].TotalDuration)}}</h5>
@@ -962,7 +963,7 @@
                                     </div>
                                     <div class="flight-date-arrival">
                                         <h4>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].DestinationAirport}} <span>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments.length - 1 ].ArrivalTime | date : 'HH:mm' : 'UTC'}} <span class="overday" ng-if="getFullDate(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments.length - 1 ].ArrivalTime) != getFullDate(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime)">{{getOverdayDate((returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime),(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments.length - 1 ].ArrivalTime))}}</span></span></h4>
-                                        <h5>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments.length - 1 ].ArrivalTime | date : 'dd - MMM - yyyy' : 'UTC'}}</h5>
+                                        <h5>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments.length - 1 ].ArrivalTime | date : 'dd MMM yyyy' : 'UTC'}}</h5>
                                     </div>
                                 </div>
                             </div>
