@@ -29,9 +29,9 @@ app.controller('checkoutController', [
         //$scope.paymentMethod = ''; //Payments
         $scope.stepClass = '';
         $scope.titles = [
-            { name: 'Mr', value: 'Mister' },
-            { name: 'Mrs', value: 'Mistress' },
-            { name: 'Ms', value: 'Miss' }
+            { name: 'Tn.', value: 'Mister' },
+            { name: 'Ny.', value: 'Mistress' },
+            { name: 'Nn.', value: 'Miss' }
         ];
 
         

@@ -151,7 +151,7 @@
                         <div class="flight-title flight-title--departure">
                             <div class="flight-info">
                                 <h4><b>@dep.OriginAirport</b> ke <b>@dep.DestinationAirport</b></h4>
-                                <h5>@dep.DepartureDate.ToString("ddd, d MMM yyyy")</h5>
+                                <h5>@dep.DepartureDate.ToString("ddd, d MMM yyyy", , new CultureInfo("id-ID"))</h5>
                             </div><!-- .flight-info -->
                         </div><!-- .flight-title -->
                         @for (var segment = 0; segment < dep.Segments.Count; segment++)
@@ -171,7 +171,7 @@
                                         </div><!-- .flight__summary -->
                                         <div class="flight__detail">
                                             <div class="flight__departure">
-                                                <h5>@dep.Segments[segment].DepartureTime.ToString("d MMM yyyy")</h5>
+                                                <h5>@dep.Segments[segment].DepartureTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                                 <h4><b>@dep.Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
                                                 <h5><b>(@dep.Segments[segment].DepartureAirport) @dep.Segments[segment].DepartureCity</b></h5>
                                                 <h5>@dep.Segments[segment].DepartureAirportName</h5>
@@ -180,7 +180,7 @@
                                                 <h5><b>Durasi: </b>@dep.Segments[segment].Duration</h5>
                                             </div>
                                             <div class="flight__arrival">
-                                                <h5>@dep.Segments[segment].ArrivalTime.ToString("d MMM yyyy")</h5>
+                                                <h5>@dep.Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                                 <h4><b>@dep.Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
                                                 <h5><b>(@dep.Segments[segment].ArrivalAirport) @dep.Segments[segment].ArrivalCity</b></h5>
                                                 <h5>@dep.Segments[segment].ArrivalAirportName</h5>
@@ -210,7 +210,7 @@
                         <div class="flight-title flight-title--departure">
                             <div class="flight-info">
                                 <h4><b>@ret.OriginAirport</b> ke <b>@ret.DestinationAirport</b></h4>
-                                <h5>@ret.DepartureDate.ToString("ddd, d MMM yyyy")</h5>
+                                <h5>@ret.DepartureDate.ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
                             </div><!-- .flight-info -->
                         </div><!-- .flight-title -->
                         @for (var segment = 0; segment < ret.Segments.Count; segment++)
@@ -231,7 +231,7 @@
                                         </div><!-- .flight__summary -->
                                         <div class="flight__detail">
                                             <div class="flight__departure">
-                                                <h5>@ret.Segments[segment].DepartureTime.ToString("d MMM yyyy")</h5>
+                                                <h5>@ret.Segments[segment].DepartureTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                                 <h4><b>@ret.Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
                                                 <h5><b>(@ret.Segments[segment].DepartureAirport) @ret.Segments[segment].DepartureCity</b></h5>
                                                 <h5>@ret.Segments[segment].DepartureAirportName</h5>
@@ -240,7 +240,7 @@
                                                 <h5><b>Durasi: </b>@ret.Segments[segment].Duration</h5>
                                             </div>
                                             <div class="flight__arrival">
-                                                <h5>@ret.Segments[segment].ArrivalTime.ToString("d MMM yyyy")</h5>
+                                                <h5>@ret.Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                                 <h4><b>@ret.Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
                                                 <h5><b>(@ret.Segments[segment].ArrivalAirport) @ret.Segments[segment].ArrivalCity</b></h5>
                                                 <h5>@ret.Segments[segment].ArrivalAirportName</h5>

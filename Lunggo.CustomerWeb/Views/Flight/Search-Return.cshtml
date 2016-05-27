@@ -238,7 +238,7 @@
                 <div><span style="font-size:13px">Silakan klik tombol di bawah ini untuk memperbaharui halaman pencarian Anda.</span></div>
             </section>
             <div align="right" style="padding-right:30px;padding-top:20px;">
-                <a class="btn popup-btn-yellow book-failed" href="#"><b>REFRESH</b></a>
+                <a class="btn popup-btn-yellow book-failed" href="#"><b>CARI LAGI</b></a>
             </div>
         </div>
     </div>
@@ -329,7 +329,7 @@
                     <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block" ng-click="setChosenFlight('departure',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
-            <div class="search-result-filter" @*ng-hide="(departureFlightConfig.loading && departureFlightConfig.loadingFlight) || (!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length)"*@>
+            <div class="search-result-filter" ng-hide="(departureFlightConfig.loading && departureFlightConfig.loadingFlight) || (!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length)">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>

@@ -203,7 +203,7 @@
                                     <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
                                         <label class="control-label important">Masukkan Alamat E-mail Anda:</label>
                                         <div>
-                                            <input type="email" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetEmail() : "")" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" name="email" ng-model="buyerInfo.email" required />
+                                            <input type="email" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetEmail() : "")" id="buyer-email" placeholder="Ex: name@domain.com" name="email" ng-model="buyerInfo.email" required />
                                         </div>
                                     </div>
 
@@ -225,7 +225,7 @@
                                     <form novalidate name="passengersForm">
                                         <div class="passenger-form" id="passenger-{{$index}}" ng-repeat="passenger in passengers track by $index" ng-init="initPassenger(passenger)">
                                             <header>
-                                                <span>Penumpang {{$index + 1}} ({{passenger.typeName}}) <span ng-show="passenger.firstname || passenger.lastname"> : {{ passenger.title + ' ' + passenger.firstname + ' ' + passenger.lastname}}</span></span>
+                                                <span>Penumpang {{$index + 1}} ({{passenger.typeName}}) <span ng-show="passenger.firstname || passenger.lastname"> : {{ changeTitle(passenger.title) + ' ' + passenger.firstname + ' ' + passenger.lastname}}</span></span>
                                                 <span class="toggle hidden"></span>
                                             </header>
                                             <div class="passenger-content">
@@ -700,7 +700,7 @@
                         <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
                         <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
                         <div style="padding-top:5px;"><span style="font-size:13px">Waktu pembayaran Anda<span style="color: #15b1e4;font-size:13px"><b> sudah habis</b></span>.</span></div>
-                        <div><span style="font-size:13px">Silahkan klik tombol dibawah untuk kembali ke halaman pencarian.</span></div>
+                        <div><span style="font-size:13px">Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</span></div>
                     </section>
                     <div align="right" style="padding-right:30px;padding-top:30px;">
                         <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
@@ -799,7 +799,7 @@
                         <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>
                     </section>
                     <div align="right" style="padding-right:30px;padding-top:30px;">
-                        <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+                        <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI LAGI</b></a>
                     </div>
                 </div>
             </div>

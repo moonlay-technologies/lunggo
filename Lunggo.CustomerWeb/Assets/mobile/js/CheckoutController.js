@@ -515,13 +515,13 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     $scope.Countries = Countries;
     //titles
     $scope.titles = [
-            { name: 'Mr', value: 'Mister' },
-            { name: 'Mrs', value: 'Mistress' },
-            { name: 'Ms', value: 'Miss' }
+            { name: 'Tn.', value: 'Mister' },
+            { name: 'Ny.', value: 'Mistress' },
+            { name: 'Nn.', value: 'Miss' }
     ];
     $scope.titleKids = [
-            { name: 'Mr', value: 'Mister' },
-            { name: 'Ms', value: 'Miss' }
+            { name: 'Tn.', value: 'Mister' },
+            { name: 'Nn.', value: 'Miss' }
     ];
     // return URL
     $scope.PageConfig.ReturnUrl = document.referrer == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;

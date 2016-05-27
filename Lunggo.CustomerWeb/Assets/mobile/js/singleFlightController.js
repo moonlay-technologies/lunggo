@@ -217,6 +217,7 @@
                     if (returnData.FlightList.length) {
                         $scope.FlightFunctions.GenerateFlightList(returnData.FlightList);
                     }
+                    $scope.FlightFunctions.PostRequest('departure');
                     // set expiry if progress == 100
                     if ($scope.FlightConfig[0].FlightRequest.Progress == 100) {
                         $scope.FlightConfig[0].FlightExpiry.time = returnData.ExpiryTime;

@@ -285,12 +285,13 @@
                     // generate flight
                     $scope.FlightFunctions.GenerateFlightList(targetScope.Name, returnData.FlightList);
 
+                    $scope.FlightFunctions.CompleteGetFlight(targetScope.Name);
                     // set expiry if progress == 100
                     if (targetScope.FlightRequest.Progress == 100) {
 
                         $scope.PageConfig.ExpiryDate.Time = returnData.ExpiryTime;
                         $scope.PageConfig.ExpiryDate.Start();
-                        $scope.FlightFunctions.CompleteGetFlight(targetScope.Name);
+                        //$scope.FlightFunctions.CompleteGetFlight(targetScope.Name);
 
                     } else {
                         targetScope.FlightRequest.FinalProgress = targetScope.FlightRequest.Progress;
