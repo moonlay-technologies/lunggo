@@ -223,7 +223,7 @@
 
             <div class="flight-wrapper" ng-repeat="Segment in FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Segments track by $index">
                 <div class="transit" ng-if="$index > 0">
-                    <span>Transit di {{Segment.DepartureCity}} selama <b>{{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Transits[$index-1].Duration | date : 'HH:mm'}}</b></span>
+                    <span>Transit di {{Segment.DepartureCity}} ({{Segment.DepartureAirport}}) selama <b>{{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Transits[$index-1].Duration | date : 'HH:mm'}}</b></span>
                 </div>
                 <div class="flight">
                     <div class="flight__number">
@@ -250,7 +250,7 @@
                             <div class="flight__arrival">
                                 <h5>{{Segment.ArrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
                                 <h4><b>{{Segment.ArrivalTime | date : 'HH:mm' : 'UTC'}}</b></h4>
-                                <h5><b>{{Segment.ArrivalCity}}({{Segment.ArrivalAirport}})</b></h5>
+                                <h5><b>{{Segment.ArrivalCity}} ({{Segment.ArrivalAirport}})</b></h5>
                                 <h5>{{Segment.ArrivalAirportName}}</h5>
                             </div>
                         </div>
@@ -296,10 +296,10 @@
                     <h4 class="filter-group__title">Berdasarkan Transit:</h4>
                 </div>
                 <div class="filter-group__content">
-                    <label ng-class="{ 'active' : FlightConfig[0].FlightFilter.Transit[0]}">
+                    <label ng-class="{ 'active' : FlightConfig[0].FlightFilter.Transit[0]}" >
                         <div class="switch"></div>
                         <span>Langsung</span>
-                        <input type="checkbox" value="false" ng-model="FlightConfig[0].FlightFilter.Transit[0]" />
+                        <input type="checkbox" value="false" ng-model="FlightConfig[0].FlightFilter.Transit[0]"/>
                     </label>
                     <label ng-class="{ 'active' : FlightConfig[0].FlightFilter.Transit[1]}">
                         <div class="switch"></div>
@@ -503,7 +503,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-yellow text-center btn-block btn-lg">CARI</button>
+                    <button class="btn btn-yellow text-center btn-block btn-lg" ng-click="SetOverlay()">CARI</button>
                 </div>
             </form>
         </section><!-- .overlay__content -->
