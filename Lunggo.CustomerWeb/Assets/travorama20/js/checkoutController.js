@@ -123,8 +123,23 @@ app.controller('checkoutController', [
                         
                         
                     } else {
-                        $scope.book.checked = true;
-                        $scope.book.isSuccess = false;
+                        if (returnData.data.NewPrice != null) {
+                            $scope.book.isPriceChanged = true;
+                            $scope.book.isSuccess = false;
+                            $scope.book.newPrice = returnData.data.NewPrice;
+                            $scope.book.checked = false;
+                        }
+                        else {
+                            $scope.book.isSuccess = false;
+                            //$scope.book.rsvNo = returnData.data.RsvNo;
+
+                            //$('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                            //$('form#rsvno').submit();
+                            $scope.book.checked = true;
+                        }
+
+                        //$scope.book.checked = true;
+                        //$scope.book.isSuccess = false;
                     }
 
                 }, function (returnData) {
