@@ -285,7 +285,7 @@
                 <div class="flight-detail" ng-show="departureFlightConfig.chosenFlightDetail">
                     <div ng-repeat="segment in departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments track by $index">
                         <div class="transit" ng-if="$index > 0">
-                            <p>Transit di {{segment.DepartureCity}} selama {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                            <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
                         </div>
                         <div class="segment">
                             <div class="segment-number">
@@ -534,7 +534,7 @@
                             <h3>Detail Penerbangan <span class="close-flight-detail pull-right" ng-click="setActiveFlight('departure',-1)">X</span></h3>
                             <div ng-repeat="segment in flight.Trips[0].Segments track by $index">
                                 <div class="transit" ng-if="$index > 0">
-                                    <p>Transit di {{segment.DepartureCity}} selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                                    <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-number">
@@ -613,7 +613,7 @@
                 <div class="flight-detail" ng-show="returnFlightConfig.chosenFlightDetail">
                     <div ng-repeat="segment in returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments track by $index">
                         <div class="transit" ng-if="$index > 0">
-                            <p>Transit di {{segment.DepartureCity}} selama {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                            <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
                         </div>
                         <div class="segment">
                             <div class="segment-number">
@@ -862,7 +862,7 @@
                             <h3>Detail Penerbangan <span class="close-flight-detail pull-right" ng-click="setActiveFlight('return',-1)">X</span></h3>
                             <div ng-repeat="segment in flight.Trips[0].Segments track by $index">
                                 <div class="transit" ng-if="$index > 0">
-                                    <p>Transit di {{segment.DepartureCity}} selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                                    <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-number">
@@ -1012,7 +1012,7 @@
                         <section class="flight-detail">
                             <div ng-repeat="segment in departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments track by $index">
                                 <div class="transit" ng-if="$index > 0">
-                                    <p>Transit di {{segment.DepartureCity}} selama {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                                    <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-number">
@@ -1061,7 +1061,7 @@
                         <section class="flight-detail">
                             <div ng-repeat="segment in returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments">
                                 <div class="transit" ng-if="$index > 0">
-                                    <p>Transit di {{segment.DepartureCity}} selama {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                                    <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-number">

@@ -391,7 +391,7 @@
                                     <section class="detail-content">
                                         <div ng-repeat="segment in trips[0].Segments track by $index">
                                             <div class="transit" ng-if="$index > 0">
-                                                <p>Transit di {{segment.DepartureCity}} selama {{trips[0].Transits[ $index - 1 ].Duration}}</p>
+                                                <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{trips[0].Transits[ $index - 1 ].Duration}}</p>
                                             </div>
                                             <div class="segment">
                                                 <h5 class="segment-airline-name">{{segment.AirlineName}} {{segment.AirlineCode}}-{{segment.FlightNumber}} <span class="pull-right"></span></h5>

@@ -59,7 +59,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 return client;
             }
 
-            private static bool Login(RestClient client, byte[] img, string viewstate, string eventval, 
+            private bool Login(RestClient client, byte[] img, string viewstate, string eventval, 
                 out string linkgoto, string userName, out string checkLogin,out string currentDeposit)
             {
                 
@@ -101,25 +101,44 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var responseW = client.Execute(requestW);
                 var htmlresp = responseW.Content;
                 var searchedHtml = (CQ)htmlresp;
-                var numberDeposit = searchedHtml["#ctl00_ContentPlaceHolder1_lblCreditAvailable"].Text().Trim().Split(' ');
-                var deposit = numberDeposit[1].Trim().Replace(",", "");
-                currentDeposit = deposit;
-                
-
-                // HANDLING CASE IF CAPTCHA IS FALSE
-                var ret = new bool();
-                var test = searchedHtml.Text().Substring(0, 6);
-                if (test != "Object")
+                try
                 {
-                    ret = true;
-                }
-                checkLogin = searchedHtml["#trLoginError"].Text();
-                if (checkLogin.Length != 0)
-                    ret = false;
+                    var numberDeposit =
+                        searchedHtml["#ctl00_ContentPlaceHolder1_lblCreditAvailable"].Text().Trim().Split(' ');
+                    var deposit = numberDeposit[1].Trim().Replace(",", "");
+                    currentDeposit = deposit;
 
-                linkgoto = searchedHtml["#ctl00_tblMenu > tbody > tr:nth-child(5) > td > a"].Attr("href");//.Children(".menu").ToList()[4].Children().Attr("a");
-                return ret;
-                
+
+                    // HANDLING CASE IF CAPTCHA IS FALSE
+                    var ret = new bool();
+                    var test = searchedHtml.Text().Substring(0, 6);
+                    if (test != "Object")
+                    {
+                        ret = true;
+                    }
+                    checkLogin = searchedHtml["#trLoginError"].Text();
+                    if (checkLogin.Length != 0)
+                        ret = false;
+
+                    linkgoto = searchedHtml["#ctl00_tblMenu > tbody > tr:nth-child(5) > td > a"].Attr("href");
+                        //.Children(".menu").ToList()[4].Children().Attr("a");
+                    return ret;
+
+                }
+                catch
+                {
+                    //TurnInId(client, userName);
+                    linkgoto = "";
+                    checkLogin = "";
+                    currentDeposit = "";
+                    return false;
+                }                   
+            }
+
+            private void TurnInId(RestClient client, string username)
+            {
+                var accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + username, Method.GET);
+                var accRs = (RestResponse)client.Execute(accReq);
             }
             private static string ReadCaptcha(byte[] captcha)
             {
