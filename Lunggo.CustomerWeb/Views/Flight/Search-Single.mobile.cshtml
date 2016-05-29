@@ -76,6 +76,9 @@
     ViewBag.AngularController = "SingleFlightController";
 }
 
+@section AdditionalCSS{
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+}
 @section AdditionalJS {
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
@@ -83,7 +86,6 @@
     
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
-    @*<script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>*@
 
 }
 @section PageJS{
@@ -109,9 +111,6 @@
     <script src="/Assets/mobile/js/singleFlightController.js"></script>
 }
 
-<div class="upper-top page-loading" ng-class="{'page-loaded':PageConfig.Loaded}">
-    
-</div>
 <div class="page-loading" ng-class="{'page-loaded':PageConfig.Loaded}">
     
     
@@ -160,7 +159,7 @@
             </div>
 
             <div class="flight" ng-repeat="Flight in departureFlight =
-             (FlightConfig[0].FlightList | filter:FlightFiltering.AirlineFilter('departure') | filter:FlightFiltering.TransitFilter('departure') | filter:FlightFiltering.DepartureTimeFilter('departure') | filter:FlightFiltering.ArrivalTimeFilter('arrival') | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert)"
+             (FlightConfig[0].FlightList |filter : FlightFiltering.PriceFilter() | filter:FlightFiltering.AirlineFilter('departure') | filter: FlightFiltering.TransitFilter('departure') | filter:FlightFiltering.DepartureTimeFilter('departure') | filter:FlightFiltering.ArrivalTimeFilter('arrival') | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert)"
                  id="flight-{{Flight.IndexNo}}" ng-click="FlightFunctions.SetActiveFlight(Flight.IndexNo)">
                 <div class="flight-header">
                     <h4 class="flight-airline">
@@ -285,11 +284,22 @@
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
-            <div class="filter-group filter-group--price hidden">
+            <div class="filter-group filter-group--price ">
                 <div class="filter-group__header">
                     <h4 class="filter-group__title">Berdasarkan Harga:</h4>
+                 </div>
+                <div class="filter-group__content">
+                    <div class="slider price-slider" id="price-slider"></div>
+                    <div class="slider-minmax">
+                        <span>Rp {{priceFilterParam.current[0] | number}}</span>
+                        <span class="pull-right">Rp {{priceFilterParam.current[1] | number}}</span>
+                    </div>
+                    <div class="hidden">
+                        <input type="text" name="priceSliderValueMin" value="" class="price-slider-min" ng-model="priceFilterParam.current[0]" />
+                        <input type="text" name="priceSliderValueMax" value="" class="price-slider-max" ng-model="priceFilterParam.current[1]" />
+                    </div>
+
                 </div>
-                <div class="filter-group__content"></div>
             </div>
             <div class="filter-group filter-group--transit">
                 <div class="filter-group__header">
