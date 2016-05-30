@@ -260,6 +260,7 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
     .overlay-content {width:373px; height:164px; background:url("/Assets/images/popup/fullframe.png"); margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
         section {
             .normal-flow{display:block;
+                .close-newsletter{padding-top:55px;}
                 .header{padding-top:55px;padding-left:130px;margin-bottom:5px;}
                 .popup-text{padding-top:0px;margin-top:0px; padding-left:130px; font-size:12px;padding-right:5px;}
                 .form-newsletter{padding-left:130px;

@@ -102,9 +102,12 @@
     <script src="/Assets/js/angular-route.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
 }
+
 @section PageJS{
     <script>
+        newsletterFormFunctions();
         indexPageFunctions();
         subscribeFormFunctions();
         var indexPageDestination = '@ViewBag.DestinationName' || '';
@@ -606,6 +609,44 @@ else
 
     </div>
 </section><!-- .section-feedback -->
+
+<!--<div class="page-newsletter" id="newsletter">
+    <div class=" overlay-content">
+        <section>
+            <div class="normal-flow" id="normalflow">
+
+                <p class="header"><img src="~/Assets/images/popup/header1.png" /></p>
+                <p class="popup-text"><span style="color:#ffffff">Dapatkan informasi harga tiket murah dengan</span><span style="color:#ffd632"> <b>mendaftarkan e-mail Anda</b></span></p>
+                <form class="form-newsletter">
+                    <div class="form-group">
+                        <span><input type="email" name="email" value="" style="text-align:center;" class="input-type" placeholder="Masukkan E-mail Anda"></span>
+                        <input type="submit" class="btn btn-yellow" value="DAFTAR" onclick="newsletterFormFunctions()" />
+                    </div>
+                </form>
+            </div>
+            <div class="member-exist" id="memberexist">
+                <p align="right" style="padding-bottom:5px;padding-right:10px;margin-right:0px;margin-bottom:0px;"><a class="close-member" href="#"><img src="/Assets/images/popup/popup-close.png" width="20px" height="20px"></a></p>
+                <p>
+                    <span style="color:#ffffff;font-size:13px;text-align: justify;text-justify: inter-word;">Email yang Anda gunakan telah terdaftar. Terima kasih telah bergabung dengan Travorama</span>
+                </p>
+            </div>
+
+        </section>
+    </div>
+</div>
+
+<div class="thankyou-popup" id="thankyou">
+    <div class="overlay-content">
+        <section style="padding-top:65px; padding-left:300px;">
+            <p align="right" style="padding-right:15px; margin-bottom:0px;"><a class="close-popup" href="#thankyou"><img src="~/Assets/images/popup/close.png" /></a></p>
+            <p style="padding-bottom:5px;"><img src="~/Assets/images/popup/text_thnks.png" /></p>
+            <p><span style="color:#ffffff;font-size:12px;"><b>Anda telah terdaftar di mailing list kami</b></span></p>
+            <p><span style="color:#ffffff;font-size:12px;padding-left:15px;">dan Anda akan jadi yang pertama tahu</span></p>
+            <p><span style="color:#ffffff;font-size:12px;padding-left:35px;">apabila ada penawaran khusus</span></p>
+            <p style="padding-left:90px;padding-top:7px;"><img src="~/Assets/images/popup/stars.png" /></p>
+        </section>
+    </div>
+</div> -->
 
 
 @*@if (ViewBag.Campaign)
