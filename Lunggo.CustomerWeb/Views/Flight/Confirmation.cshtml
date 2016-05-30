@@ -75,52 +75,128 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-8">
-
+                    
                     <div class="instruction">
-                        <h3>PANDUAN <b>TRANSFER</b></h3>
-                        <header>
-                            <h4 class="text-right">No. Pesanan: <b>@Model.RsvNo</b></h4>
-                        </header>
-                        <section class="text">
-                            <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maksimum <b>60 menit</b></p>
-                            <p>Mohon selesaikan pembayaran melalui <b>ATM / Internet Banking / M-Banking</b></p>
-                        </section>
-                        <section class="bank-detail">
-                            <div class="bank">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <img src="/Assets/images/Bank-Mandiri.png" alt="Bank Mandiri" />
-                                    </div>
-                                    <div class="col-xs-8">
-                                        <dl>
-                                            <dt>Nama Bank</dt>
-                                            <dd>: Bank Mandiri</dd>
-                                        </dl>
-                                        <dl>
-                                            <dt>Atas Nama</dt>
-                                            <dd>: TRAVEL MADEZY INTERNASIONAL</dd>
-                                        </dl>
-                                        <dl>
-                                            <dt>Nomor Rekening</dt>
-                                            <dd>: 1020006675802</dd>
-                                        </dl>
-                                        <dl>
-                                            <dt>Jumlah</dt>
-                                            <dd>: Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
-                                        </dl>
+                        @if (Model.Payment.Method == PaymentMethod.VirtualAccount)
+                        {
+                            <h3>PANDUAN <b>TRANSFER</b></h3>
+                            <header>
+                                <h4 class="text-right">No. Pesanan: <b>@Model.RsvNo</b></h4>
+                            </header>
+                            <section class="text">
+                                <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, eTicket akan dikirimkan ke Email Anda dalam waktu max <b>60 menit</b></p>
+                                <p>Mohon selesaikan pembayaran melalui <b>ATM</b></p>
+                            </section>
+                            <section class="bank-detail">
+                                <div class="bank">
+                                    <div class="row">
+                                        <p align="center"><span style="font-size:13px;">No Virtual Account:</span> <span style="font-size:15px;"><b>@Model.Payment.TargetAccount</b></span></p>
                                     </div>
                                 </div>
+                            </section>
+                            <table>
+                            <tr>
+                                <td>
+                                    <p style ="margin-left:4px;">Cara Pembayaran Lewat <b>ATM Mandiri/Jaringan ATM Bersama</b>:</p>
+                                    <ol>
+                                        <li><p>Masukkan PIN Anda.</p></li>
+                                        <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya </b>.</p></li>
+                                        <li><p>Pilih <b>Transfer</b>.</p></li>
+                                        <li><p>Pilih <b>Antar Bank Online</b>.</p></li>
+                                        <li><p>Masukkan nomor <b>013 @Model.Payment.TargetAccount</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).</p></li>
+                                        <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
+                                        <li><p>No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.</p></li>
+                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
+                                        <li><p>Transaksi berhasil.</p></li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Cara Pembayaran Lewat <b>ATM BCA/Jaringan ATM PRIMA</b>:</p>
+                                    <ol>
+                                        <li><p>Masukkan PIN Anda.</p></li>
+                                        <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
+                                        <li><p>Pilih <b>Transfer</b>.</p></li>
+                                        <li><p>Pilih <b>Ke Rekening Bank Lain</b>.</p></li>
+                                        <li><p>Masukkan kode <b>013</b> (Kode Bank Permata) lalu tekan <b>Benar</b>.</p></li>
+                                        <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
+                                        <li><p>Masukkan <b>@Model.Payment.TargetAccount</b> (16 digit nomor akun virtual pembayaran) lalu tekan <b>Benar</b>.</p></li>
+                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
+                                        <li><p>Transaksi berhasil.</p></li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Cara Pembayaran Lewat <b>ATM Bank Permata/Jaringan ATM Alto</b>:</p>
+                                    <ol>
+                                        <li><p>Masukkan PIN Anda.</p></li>
+                                        <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
+                                        <li><p>Pilih <b>Transaksi Pembayaran</b>.</p></li>
+                                        <li><p>Pilih <b>Pembayaran Virtual Account</b>.</p></li>
+                                        <li><p>Masukkan 16 digit nomor akun virtual pembayaran <b>@Model.Payment.TargetAccount</b>.</p></li>
+                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
+                                        <li><p>Transaksi berhasil.</p></li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="margin-bottom:10px">Setelah itu, mohon tunggu hingga e-tiket/voucher diterbitkan dan dikirim ke e-mail Anda maks. 60 menit</p>
+                                </td>
+                            </tr>
+                        </table>
+                        }
+                        else
+                        {
+                            <h3>PANDUAN <b>TRANSFER</b></h3>
+                            <header>
+                                <h4 class="text-right">No. Pesanan: <b>@Model.RsvNo</b></h4>
+                            </header>
+                            <section class="text">
+                                <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maksimum <b>60 menit</b></p>
+                                <p>Mohon selesaikan pembayaran melalui <b>ATM / Internet Banking / M-Banking</b></p>
+                            </section>
+                            <section class="bank-detail">
+                                <div class="bank">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <img src="/Assets/images/Bank-Mandiri.png" alt="Bank Mandiri" />
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <dl>
+                                                <dt>Nama Bank</dt>
+                                                <dd>: Bank Mandiri</dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Atas Nama</dt>
+                                                <dd>: TRAVEL MADEZY INTERNASIONAL</dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Nomor Rekening</dt>
+                                                <dd>: 1020006675802</dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Jumlah</dt>
+                                                <dd>: Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="transfer-instruction">
+                                <!--<section> -->
+                                <ol style="margin-left:5px;padding-left:5px;margin-top:5px;">
+                                    <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Pastikan Anda melakukan transfer ke rekening <b>Travel Madezy Internasional</b></li>
+                                    <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
+                                    <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">E-tiket akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
+                                </ol>
+                                <!--Bagian Form Konfirmasi yang dihilangin-->
                             </div>
-                        </section>
-                        <div class="transfer-instruction">
-                            <!--<section> -->
-                            <ol style="margin-left:5px;padding-left:5px;margin-top:5px;">
-                                <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Pastikan Anda melakukan transfer ke rekening <b>Travel Madezy Internasional</b></li>
-                                <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
-                                <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">E-tiket akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
-                            </ol>
-                            <!--Bagian Form Konfirmasi yang dihilangin-->
-                        </div>
+                        }
+                        
+                        <!-- Kondisi nya dikasi sampai sini-->
                         <header style="margin-bottom:0px; margin-top:25px;">
                             <h4>DETAIL <b>PESANAN</b></h4>
                         </header>

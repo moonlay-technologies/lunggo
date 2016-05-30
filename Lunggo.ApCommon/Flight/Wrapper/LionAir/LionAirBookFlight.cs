@@ -1145,13 +1145,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 LogOut(cid, client);
                                 TurnInUsername(clientx, userName);
 
+                                //newPrice itu harga nya null, padahal dicoba untuk parse
                                 return new BookFlightResult
                                 {
-                                    IsSuccess = true,
+                                    IsSuccess = false,
                                     Errors = new List<FlightError> { FlightError.TechnicalError },
                                     Status = null,
                                     ErrorMessages = new List<string> { "Price is changed!" },
-                                    NewPrice = decimal.Parse(newPrice),
+                                    NewPrice = harga2,
                                     IsValid = true,
                                     IsPriceChanged = true,
                                     NewItinerary = itin,

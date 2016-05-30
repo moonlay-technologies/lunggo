@@ -820,7 +820,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <a class="btn btn-grey btn-block" href="{{returnUrl}}">KEMBALI</a>
-                                </div>
+                                </div> 
                                 <form name="finalForm" id="finalForm" ng-submit="book.send()">
                                     <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI" ng-disabled="(checkoutForm.loading)">
                                 </form>
@@ -829,7 +829,7 @@
                     </footer>
 
                 </div>
-            </div>-->
+            </div> -->
 
             <div class="priceChaged-popup" ng-show="book.isPriceChanged">
                 <div class="overlay-content">
@@ -840,10 +840,27 @@
                         <div align="right" style="padding-right:10px"><img src="/Assets/images/popup/paymentyellowstrip.png"></div>
                         <div style="padding-right:5px;padding-top:5px;padding-bottom:0px;margin-bottom:0px;"><span style="font-size:10px"><b>*Dapat berlangsung hingga 5(lima) menit</b></span></div>
                         <div style="padding-top:0px;margin-top:0px"><hr style="color:#15b1e4;padding-bottom:15px;margin-bottom:0px;padding-top:0px;margin-top:3px;margin-right:75px;" /></div>
-                        <div style="padding-top:0px;margin-top:0px;">
+                        
+                        <footer>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <a class="btn btn-grey btn-block" href="{{returnUrl}}">CARI ULANG</a>
+                                    </div>
+                                    <form name="finalForm" id="finalForm" ng-submit="book.send()">
+                                        <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-disabled="(checkoutForm.loading)">
+                                    </form>
+                                </div>
+                            </div>
+                        </footer>
+                        <!--<div style="padding-top:0px;margin-top:0px;">
                             <span style="padding-bottom:10px;padding-top:0px;margin-top:0px;margin-bottom:0px;"><a class="btn popup-btn-yellow price-changed" href="{{returnUrl}}">CARI ULANG</a></span>
-                            <span style="padding-left:40px;padding-bottom:10px;padding-top:0px;margin-top:0px;margin-bottom:0px;"><a class="btn popup-btn-yellow price-changed" href="book.send()"><b>LANJUTKAN</b></a></span>
-                        </div>
+                            <span style="padding-left:40px;padding-bottom:10px;padding-top:0px;margin-top:0px;margin-bottom:0px;">
+                                <form name="finalForm" id="finalForm" ng-submit="book.send()">
+                                    <span style="padding-left:40px;padding-bottom:10px;padding-top:0px;margin-top:0px;margin-bottom:0px;"><a class="btn popup-btn-yellow price-changed" href="#"><b>LANJUTKAN</b></a></span>
+                                </form>
+                            </span>   
+                        </div>-->
                     </section>
                 </div>
             </div>
