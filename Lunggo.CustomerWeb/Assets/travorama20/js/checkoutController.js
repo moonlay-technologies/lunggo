@@ -65,6 +65,7 @@ app.controller('checkoutController', [
             send: function () {
                 $scope.book.booking = true;
                 $scope.book.isPriceChanged = false;
+                $scope.book.checked = false;
 
                 // generate data
                 $scope.book.postData =' "Token":"' + $scope.token + '",  "Contact.Title" :"' + $scope.buyerInfo.title + '","Contact.Name":"' + $scope.buyerInfo.fullname + '", "Contact.CountryCode":"' + $scope.buyerInfo.countryCode + '", "Contact.Phone":"' + $scope.buyerInfo.phone + '","Contact.Email":"' + $scope.buyerInfo.email + '","Language":"' + $scope.language + '"';
@@ -127,7 +128,7 @@ app.controller('checkoutController', [
                             $scope.book.isPriceChanged = true;
                             $scope.book.isSuccess = false;
                             $scope.book.newPrice = returnData.data.NewPrice;
-                            $scope.book.checked = false;
+                            $scope.book.checked = true;
                         }
                         else {
                             $scope.book.isSuccess = false;
