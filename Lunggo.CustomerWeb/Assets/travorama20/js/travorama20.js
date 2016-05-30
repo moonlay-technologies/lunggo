@@ -149,6 +149,97 @@ function subscribeFormFunctions() {
 
 }
 
+
+function newsletterFormFunctions() {
+    console.log('Saving data');
+}
+$(document).ready(function () {
+    $('form.form-newsletter input[type="submit"]').click(function (evt) {
+        validateNewsletterForm();
+    });
+
+    function validateNewsletterForm() {
+        $('form.form-newsletter input[type="submit"]').prop('disabled', true);
+        //$('form.form-newsletter input[type="submit"]').val('LOADING');
+        email = $('form.form-newsletter input.input-type').val();
+        console.log('Masuk Sini');
+        //console.log('email' + NewsletterConfig.email);
+
+        if ($('form.form-newsletter input.input-type').val()) {
+            var emailValue = $('form.form-newsletter input.input-type').val();
+            console.log('email validation : ' + validateEmail(emailValue));
+            if (validateEmail(emailValue)) {
+                email = emailValue;
+                submitNewsletterForm();
+            } else {
+                email = '';
+                alert('Alamat email tidak valid');
+                recheckForm();
+            }
+        } else {
+            $('form.form-newsletter input.input-type').attr('placeholder', 'Mohon masukan Alamat Email Anda');
+            $('form.form-newsletter input.input-type').parent().addClass('has-error');
+            recheckForm();
+        }
+    }
+
+    function recheckForm() {
+        $('form.form-newsletter input[type="submit"]').removeProp('disabled');
+        $('form.form-newsletter input[type="submit"]').val('DAFTAR');
+    }
+
+    function submitNewsletterForm() {
+        $('form.form-newsletter .input-type').prop('disabled', true);
+        email = $('form.form-newsletter input.input-type').val();
+        var div = document.getElementById("thankyou");
+        /*if (div.style.display !== "none") {
+            div.style.display = "none";
+        }*/
+        subscriberName = 'subscriber';
+        $.ajax({
+            url: SubscribeConfig.Url,
+            method: 'POST',
+            data: { address: email, name: subscriberName }
+        }).done(function (returnData) {
+            console.log('done');
+            console.log(returnData);
+            if (returnData.IsSuccess) {
+                $('.page-newsletter').hide();
+                //$('.thankyou-popup').show();
+                //$('.thankyou-popup').modal('show');
+                //$('#myModal').modal('show');
+                div.style.display = "block";
+                $('.close-popup').click(function (e) {
+                    e.preventDefault();
+                    //$('.thankyou-popup').hide();
+                    //$('#myModal').modal('hide');
+                    div.style.display = "none";
+                });
+            }
+            else
+            {
+                var normalflow = document.getElementById("normalflow");
+                var memberexist = document.getElementById("memberexist");
+                if (returnData.IsMemberExist) {
+                    normalflow.style.display = "none";
+                    memberexist.style.display = "block";
+                    var close = document.getElementById("newsletter");
+                    $('.close-member').click(function (e) {
+                        e.preventDefault();
+                        close.style.display = "none";
+                    });
+                }
+                else
+                {
+                    console.log('failed');
+                }
+            }
+            
+        });
+    }
+});
+
+
 //********************
 // flight page functions
 function flightPageFunctions() {
@@ -164,19 +255,35 @@ function flightPageFunctions() {
     });
     // toggle filter
     $('.search-result-filter .filter-trigger span').click(function () {
-        $(this).parent().siblings().removeClass('active');
-        $(this).parent().addClass('active');
-        var targetFilter = $(this).attr('data-target');
-        $('.search-result-filter .filter-content>div').removeClass('active');
-        $('.search-result-filter .filter-content>div#'+targetFilter).addClass('active');
+        
+        //if (ct % 2 == 0) {
+            $(this).parent().siblings().removeClass('active');
+            $(this).parent().addClass('active');
+            var targetFilter = $(this).attr('data-target');
+            if ($('.search-result-filter .filter-content>div#' + targetFilter).hasClass("active")) {
+                $('.search-result-filter .close-filter').click();
+                    ct += 1;
+            } else {
+                $('.search-result-filter .filter-content>div').removeClass('active');
+                $('.search-result-filter .filter-content>div#' + targetFilter).addClass('active');
+                ct += 1;
+            }
+            
+        //} else {
+        //    $('.search-result-filter .close-filter').click();
+        //    ct += 1;
+        //}
+        //$('.search-result-filter .filter-content>div#'+targetFilter).slideToggle("slow");
     });
     // close filter
     $('.search-result-filter .close-filter').click(function() {
         $(this).parent().removeClass('active');
         $(this).parent().parent().siblings('.filter-trigger').children().removeClass('active');
+        ct += 1;
     });
 }
 
+var ct = 0;
 var flightPageSearchFormParam = {
     type: 'return',
     origin: '',

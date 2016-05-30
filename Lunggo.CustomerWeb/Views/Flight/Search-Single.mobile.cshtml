@@ -30,13 +30,16 @@
         trips = tripPart.Split('.').Select(info => new FlightTrip
         {
             OriginAirport = info.Substring(0, 3),
+            OriginCity = DictionaryService.GetInstance().GetAirportCity(info.Substring(0, 3)),
             DestinationAirport = info.Substring(3, 3),
+            DestinationCity = DictionaryService.GetInstance().GetAirportCity(info.Substring(3, 3)),
             DepartureDate = new DateTime(
                 2000 + int.Parse(info.Substring(10, 2)),
                 int.Parse(info.Substring(8, 2)),
                 int.Parse(info.Substring(6, 2)))
         }).ToList();
 
+        
         foreach (var trip in trips)
         {
             originAirportNames.Add(DictionaryService.GetInstance().GetAirportName(trip.OriginAirport));
@@ -68,11 +71,14 @@
 
 @{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
-    ViewBag.Title = "Flight Search Page";
+    ViewBag.Title = "Pencarian Penerbangan Sejalan";
     ViewBag.BodyClass = "page page-flight single-flight";
     ViewBag.AngularController = "SingleFlightController";
 }
 
+@section AdditionalCSS{
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+}
 @section AdditionalJS {
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
@@ -106,10 +112,12 @@
 }
 
 <div class="page-loading" ng-class="{'page-loaded':PageConfig.Loaded}">
+    
+    
     <form class="hidden push-token" id="pushToken" action="/id/Flight/Select" method="post">
         <input type="text" name="Token" id="fareToken" value="" />
     </form>
-    
+
     <div class="flight-loading" ng-hide="FlightConfig[0].FlightRequest.Progress == 100">
         <div class="flight-progress" style="width:{{FlightConfig[0].FlightRequest.Progress}}%;"></div>
     </div><!-- .flight-loading -->
@@ -118,7 +126,7 @@
         <div class="summary-left">
             <p>
                 <b>Penerbangan Pergi</b><br />
-                <b>{{FlightConfig[0].FlightRequest.Trips[0].OriginAirport}}</b> ke <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationAirport}}</b> - {{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'EEE, dd MMM yyyy'}}
+                <b>{{FlightConfig[0].FlightRequest.Trips[0].OriginCity}}</b> ke <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationCity}}</b> - {{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'EEE, dd MMM yyyy'}}
             </p>
         </div>
         <a ng-click="PageConfig.SetOverlay('flight-form')" class="summary-right"><span>GANTI</span></a>
@@ -130,25 +138,29 @@
             <a ng-click="PageConfig.SetOverlay('flight-sort')">SORTIR</a>
         </div>
     </section><!-- .flight-sort -->
-    
     <section class="flight-notice" ng-show="FlightConfig[0].FlightList.length > 0">
-        <p>Tampilan harga untuk <b>{{ FlightConfig[0].FlightRequest.AdultCount + FlightConfig[0].FlightRequest.ChildCount + FlightConfig[0].FlightRequest.InfantCount | number }} orang</b> ({{FlightConfig[0].FlightRequest.AdultCount}} Dewasa<span ng-if="FlightConfig[0].FlightRequest.ChildCount > 0">, {{FlightConfig[0].FlightRequest.ChildCount}} Anak</span><span ng-if="FlightConfig[0].FlightRequest.InfantCount">, {{FlightConfig[0].FlightRequest.InfantCount}} Bayi</span>)</p>
+        <p>Tampilan harga untuk <b>{{ FlightConfig[0].FlightRequest.AdultCount + FlightConfig[0].FlightRequest.ChildCount + FlightConfig[0].FlightRequest.InfantCount | number }} orang</b> 
+            ({{FlightConfig[0].FlightRequest.AdultCount}} Dewasa<span ng-if="FlightConfig[0].FlightRequest.ChildCount > 0">, 
+                                                                    {{FlightConfig[0].FlightRequest.ChildCount}} Anak</span><span ng-if="FlightConfig[0].FlightRequest.InfantCount">, 
+                                                                                                                                {{FlightConfig[0].FlightRequest.InfantCount}} Bayi</span>)
+        </p>
     </section><!-- .flight-notice -->
-    
+
     <section class="container_new flight-list" ng-show="FlightConfig[0].FlightList.length == 0 && !(!departureFlight.length && FlightConfig[0].FlightRequest.Progress == 100)">
         <img class="loading-image" src="/Assets/images/load.gif" alt="Loading" />
     </section>
 
     <section class="flight-list">
-    
+
         <div ng-show="!departureFlight.length && FlightConfig[0].FlightRequest.Progress == 100">
             <div class="container">
                 <h3>Penerbangan tidak ditemukan.</h3>
             </div>
         </div>
 
-        <div class="flight" ng-repeat="Flight in departureFlight = 
-             (FlightConfig[0].FlightList | filter:FlightFiltering.AirlineFilter('departure') | filter:FlightFiltering.TransitFilter('departure') | filter:FlightFiltering.DepartureTimeFilter('departure') | filter:FlightFiltering.ArrivalTimeFilter('arrival') | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert)" id="flight-{{Flight.IndexNo}}" ng-click="FlightFunctions.SetActiveFlight(Flight.IndexNo)">
+        <div class="flight" ng-repeat="Flight in departureFlight =
+            (FlightConfig[0].FlightList | filter : FlightFiltering.PriceFilter() | filter:FlightFiltering.AirlineFilter('departure') | filter: FlightFiltering.TransitFilter('departure') | filter:FlightFiltering.DepartureTimeFilter('departure') | filter:FlightFiltering.ArrivalTimeFilter('arrival') | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert)"
+                id="flight-{{Flight.IndexNo}}" ng-click="FlightFunctions.SetActiveFlight(Flight.IndexNo)">
             <div class="flight-header">
                 <h4 class="flight-airline">
                     <img ng-src="{{Flight.Trips[0].Segments[0].AirlineLogoUrl}}" alt="{{Flight.Trips[0].Segments[0].AirlineName}}" class="flight-airline-image" />
@@ -164,7 +176,7 @@
                         <span class="overday" ng-show="(getOverdayDate(Flight.Trips[0].Segments[0].DepartureTime,Flight.Trips[0].Segments[ Flight.Trips[0].Segments.length - 1 ].ArrivalTime) != 0)">{{getOverdayDate(Flight.Trips[0].Segments[0].DepartureTime,Flight.Trips[0].Segments[ Flight.Trips[0].Segments.length - 1 ].ArrivalTime)}}</span>
                     </h4>
                     <h5 class="flight-duration">
-                        {{msToTime( Flight.Trips[0].TotalDuration )}},
+                        {{msToTime( Flight.Trips[0].TotalDuration)}},
                         <span ng-show="Flight.Trips[0].TotalTransit == 0">Langsung</span>
                         <span ng-show="Flight.Trips[0].TotalTransit > 0">{{Flight.Trips[0].TotalTransit}} Transit</span>
                     </h5>
@@ -177,13 +189,13 @@
             </div>
             <div class="flight-footer">
                 <a class="flight-detail-button">Lihat Detail &gt;</a>
-                <a class="btn btn-yellow pull-right flight-order">PESAN</a>
+                <a class="btn btn-yellow pull-right flight-order" ng-click="$event.stopPropagation(); FlightConfig[0].ActiveFlight = Flight.IndexNo;
+                FlightFunctions.Revalidate(FlightConfig[0].ActiveFlight)">PESAN</a>
             </div>
         </div>
 
     </section><!-- .flight-list -->
-    
-
+   
     <!-- overlays -->
     <!-- overlay - flight detail -->
     <div class="overlay overlay--theme--blue overlay--flight-detail" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-detail')}">
@@ -196,8 +208,8 @@
         <section class="overlay__content">
             <div class="flight-title flight-title--departure">
                 <div class="flight-info">
-                    <h4><b>{{FlightConfig[0].FlightRequest.Trips[0].OriginAirport}}</b> ke <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationAirport}}</b></h4>
-                    <h5>{{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'EEE,dd MMM yyyy'}}</h5>
+                    <h4><b>{{FlightConfig[0].FlightRequest.Trips[0].OriginCity}}</b> ke <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationCity}}</b></h4>
+                    <h5>{{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'EEE, dd MMM yyyy'}}</h5>
                 </div>
                 <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight()">GANTI</span></a>
             </div><!-- .flight-title -->
@@ -209,7 +221,7 @@
 
             <div class="flight-wrapper" ng-repeat="Segment in FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Segments track by $index">
                 <div class="transit" ng-if="$index > 0">
-                    <span>Transit di {{Segment.DepartureCity}} selama <b>{{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Transits[$index-1].Duration}}</b></span>
+                    <span>Transit di {{Segment.DepartureCity}} ({{Segment.DepartureAirport}}) selama <b>{{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Transits[$index-1].Duration | date : 'HH:mm'}}</b></span>
                 </div>
                 <div class="flight">
                     <div class="flight__number">
@@ -227,14 +239,16 @@
                             <div class="flight__departure">
                                 <h5>{{Segment.DepartureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
                                 <h4><b>{{Segment.DepartureTime | date : 'HH:mm' : 'UTC'}}</b></h4>
-                                <h5><b>({{Segment.DepartureAirport}}) {{Segment.DepartureCity}}</b></h5>
+                                <h5><b>{{Segment.DepartureCity}} ({{Segment.DepartureAirport}}) </b></h5>
                                 <h5>{{Segment.DepartureAirportName}}</h5>
                             </div>
-                            <div class="flight__separator"></div>
+                            <div class="flight__separator">
+                                <h5><b>Durasi: </b>{{(Segment.Duration) | date : 'HH:mm'}}</h5>
+                            </div>
                             <div class="flight__arrival">
                                 <h5>{{Segment.ArrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
                                 <h4><b>{{Segment.ArrivalTime | date : 'HH:mm' : 'UTC'}}</b></h4>
-                                <h5><b>({{Segment.ArrivalAirport}}) {{Segment.ArrivalCity}}</b></h5>
+                                <h5><b>{{Segment.ArrivalCity}} ({{Segment.ArrivalAirport}})</b></h5>
                                 <h5>{{Segment.ArrivalAirportName}}</h5>
                             </div>
                         </div>
@@ -269,21 +283,32 @@
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
-            <div class="filter-group filter-group--price hidden">
+            <div class="filter-group filter-group--price">
                 <div class="filter-group__header">
                     <h4 class="filter-group__title">Berdasarkan Harga:</h4>
+                 </div>
+                <div class="filter-group__content">
+                    <div class="slider price-slider" id="price-slider"></div>
+                    <div class="slider-minmax">
+                        <span>Rp {{priceFilterParam.current[0] | number}}</span>
+                        <span class="pull-right">Rp {{priceFilterParam.current[1] | number}}</span>
+                    </div>
+                    <div class="hidden">
+                        <input type="text" name="priceSliderValueMin" value="" class="price-slider-min" ng-model="priceFilterParam.current[0]" />
+                        <input type="text" name="priceSliderValueMax" value="" class="price-slider-max" ng-model="priceFilterParam.current[1]" />
+                    </div>
+
                 </div>
-                <div class="filter-group__content"></div>
             </div>
             <div class="filter-group filter-group--transit">
                 <div class="filter-group__header">
                     <h4 class="filter-group__title">Berdasarkan Transit:</h4>
                 </div>
                 <div class="filter-group__content">
-                    <label ng-class="{ 'active' : FlightConfig[0].FlightFilter.Transit[0]}">
+                    <label ng-class="{ 'active' : FlightConfig[0].FlightFilter.Transit[0]}" >
                         <div class="switch"></div>
                         <span>Langsung</span>
-                        <input type="checkbox" value="false" ng-model="FlightConfig[0].FlightFilter.Transit[0]" />
+                        <input type="checkbox" value="false" ng-model="FlightConfig[0].FlightFilter.Transit[0]"/>
                     </label>
                     <label ng-class="{ 'active' : FlightConfig[0].FlightFilter.Transit[1]}">
                         <div class="switch"></div>
@@ -417,7 +442,7 @@
     <div class="overlay overlay--theme--blue overlay--flight-form" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-form')}">
         <header class="overlay__header">
             <h3 class="overlay__title">
-                GANTI PENERBANGAN
+                <b>GANTI PENERBANGAN</b>
                 <span class="overlay__close" ng-click="SetOverlay()">X</span>
             </h3>
         </header><!-- .overlay__header -->
@@ -487,7 +512,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-yellow text-center btn-block btn-lg">CARI</button>
+                    <button class="btn btn-yellow text-center btn-block btn-lg" ng-click="SetOverlay()">CARI</button>
                 </div>
             </form>
         </section><!-- .overlay__content -->

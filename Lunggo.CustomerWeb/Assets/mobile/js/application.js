@@ -4,7 +4,14 @@ if (typeof (angular) == 'object') {
     var app = angular.module('Travorama', ['ngRoute']);
     // root scope
     app.run(function($rootScope) {
-
+        //$.datepicker.setDefaults(
+        //    $.extend(
+        //    { 'dateFormat': 'dd/mm/yy' },
+        //    $.datepicker.regional['id']
+        //    )
+        //);
+        //$.datepicker($.datepicker.regional["id-ID"]);
+        $('.ui-datepicker').addClass('notranslate');
         // general page config and function
         $rootScope.PageConfig = {
             
@@ -363,6 +370,7 @@ if (typeof (angular) == 'object') {
         ];
 
         // datepicker
+        
         $rootScope.DatePicker = {
             Settings: {
                 MinDate: '',
@@ -375,13 +383,15 @@ if (typeof (angular) == 'object') {
             SetOption: function (options, overlay) {
                 overlay = overlay || 'flight-form' ;
                 $('.ui-datepicker').datepicker({
+                    
                     onSelect: function(date) {
                         $rootScope.PageConfig.SetOverlay(overlay);
                         $rootScope.DatePicker.Settings.SelectedDate = date;
                         $($rootScope.DatePicker.Settings.Target).val(date);
                         $($rootScope.DatePicker.Settings.Target).trigger('input');
                     },
-                    //showOn: "focus"
+                    
+                    //showO
                     //minDate: 0
             });
                 // set default value for datepicker
@@ -415,7 +425,8 @@ if (typeof (angular) == 'object') {
                             $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.FlightSearchForm.DepartureDate);
                             $('.ui-datepicker').datepicker('option', 'maxDate', null);
                         }
-                    }                   
+                    }
+                   
                 }
                 $rootScope.DatePicker.Settings.DateFormat = 'D, dd M yy';
                 $rootScope.DatePicker.Settings.ChangeMonth = false ;

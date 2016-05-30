@@ -168,12 +168,22 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
-        public ActionResult ConfirmationRaw() 
+        public ActionResult SlightDelayEmail() 
         {
             return View();
         }
 
-        public ActionResult PendingConfirmed()
+        public ActionResult EmailSubscribeVoucher()
+        {
+            return View();
+        }
+
+        public ActionResult EmailSubscribe()
+        {
+            return View();
+        }
+
+        public ActionResult ConfirmationRaw() 
         {
             return View();
         }

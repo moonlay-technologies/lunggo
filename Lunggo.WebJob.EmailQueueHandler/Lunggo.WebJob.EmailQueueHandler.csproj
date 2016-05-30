@@ -117,6 +117,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Function\FlightEticketSlightDelayNotifEmail.cs" />
+    <Compile Include="Function\FlightFailedVerificationCreditCardNotifEmail.cs" />
+    <Compile Include="Function\FlightIssueFailedNotifEmail.cs" />
+    <Compile Include="Function\FlightIssueSlightDelayNotifEmail.cs" />
+    <Compile Include="Function\FlightSaySorryFailedIssueNotifEmail.cs" />
+    <Compile Include="Function\RegisterSubscribeEmail.cs" />
     <Compile Include="Init.cs" />
     <Compile Include="Function\FlightChangedEticketEmail.cs" />
     <Compile Include="Function\FlightEticketEmail.cs" />
@@ -141,7 +147,9 @@
     <Content Include="Airline.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Airport.csv" />
+    <Content Include="Airport.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="App.config" />
     <Content Include="application.properties">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -155,6 +163,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %2810%29.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %2811%29.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %285%29.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %286%29.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %287%29.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %288%29.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob %289%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob.pubxml" />

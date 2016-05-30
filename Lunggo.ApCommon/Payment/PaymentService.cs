@@ -69,9 +69,12 @@ namespace Lunggo.ApCommon.Payment
             {
                 paymentInfo.Url = "THIRDPARTYDIRECT";
                 var paymentResponse = SubmitPayment(paymentInfo, transactionDetails, itemDetails, method);
+                if (method == PaymentMethod.MandiriBillPayment || method == PaymentMethod.VirtualAccount) 
+                {
+                    paymentInfo.Status = PaymentStatus.Pending;
+                }
                 if (method == PaymentMethod.VirtualAccount)
                 {
-                    paymentInfo.Status = PaymentStatus.Verifying;
                     paymentInfo.TargetAccount = paymentResponse.TargetAccount;
                 }
                 else 
