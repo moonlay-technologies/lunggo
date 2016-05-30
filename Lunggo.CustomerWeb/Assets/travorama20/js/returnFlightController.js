@@ -847,8 +847,7 @@ app.controller('returnFlightController', [
 
         }
 
-
-
+        
     }
 ]);// flight controller
 

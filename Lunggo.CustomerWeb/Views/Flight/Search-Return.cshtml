@@ -658,7 +658,7 @@
                     <input type="submit" value="GANTI PENERBANGAN PULANG" class="btn btn-grey block" ng-click="setChosenFlight('return',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
-            <div class="search-result-filter" @*ng-hide="(returnFlightConfig.loading && returnFlightConfig.loadingFlight) || (!returnFlightConfig.loading && !returnFlightConfig.loadingFlight && !returnFlightConfig.flightList.length*@)">
+            <div class="search-result-filter" ng-hide="(returnFlightConfig.loading && returnFlightConfig.loadingFlight) || (!returnFlightConfig.loading && !returnFlightConfig.loadingFlight && !returnFlightConfig.flightList.length)">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
