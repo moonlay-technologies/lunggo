@@ -271,11 +271,13 @@ app.controller('returnFlightController', [
         // set page active section
         $scope.setPageActiveSection = function (target) {
             if (target == 'departure') {
+                
                 if ($scope.departureFlightConfig.chosenFlight < 0) {
                     $scope.pageConfig.activeFlightSection = 'departure';
                 }
                 
             } else if (target == 'return') {
+                
                 if ($scope.returnFlightConfig.chosenFlight < 0) {
                     $scope.pageConfig.activeFlightSection = 'return';
                 }
@@ -792,7 +794,7 @@ app.controller('returnFlightController', [
                 range: true,
                 min: targetScope.flightFilter.price.initial[0],
                 max: targetScope.flightFilter.price.initial[1],
-                step: 50000,
+                step: 100,
                 values: [targetScope.flightFilter.price.initial[0], targetScope.flightFilter.price.initial[1]],
                 create: function (event, ui) {
                     $('.'+targetFlight+'-price-slider-min').val(targetScope.flightFilter.price.initial[0]);

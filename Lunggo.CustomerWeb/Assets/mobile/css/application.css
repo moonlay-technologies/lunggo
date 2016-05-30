@@ -1147,7 +1147,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #fff; }
     .slider .ui-slider-handle:focus {
       border: 0; }
-
+    .slider-minmax {
+        color: #fed446; }
 
 .overlay--flight-filter .overlay__content .filter-group {
   padding: 12px; }

@@ -231,14 +231,14 @@
                             return a - b;
                         }
                         $scope.priceFilterParam.prices.sort(sortNumber);
-                        $scope.priceFilterParam.initial[0] = Math.floor($scope.priceFilterParam.prices[0]);
-                        $scope.priceFilterParam.initial[1] = Math.round($scope.priceFilterParam.prices[$scope.priceFilterParam.prices.length - 1]);
+                        $scope.priceFilterParam.initial[0] = ($scope.priceFilterParam.prices[0]);
+                        $scope.priceFilterParam.initial[1] = ($scope.priceFilterParam.prices[$scope.priceFilterParam.prices.length - 1]);
                         
                         $('.price-slider').slider({
                             range: true,
                             min: $scope.priceFilterParam.initial[0],
                             max: $scope.priceFilterParam.initial[1],
-                            step: 50000,
+                            step: 100,
                             values: [$scope.priceFilterParam.initial[0], $scope.priceFilterParam.initial[1]],
                             create: function (event, ui) {
                                 $('.price-slider-min').val($scope.priceFilterParam.initial[0]);
@@ -432,9 +432,7 @@
         return function(flight) {
             if (flight.TotalFare >= $scope.priceFilterParam.current[0] && flight.TotalFare <= $scope.priceFilterParam.current[1]) {
                 return flight;
-            } else {
-                return flight;
-            }
+                } 
         }
     }
 
