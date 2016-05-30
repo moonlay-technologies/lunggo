@@ -25,7 +25,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                  RecipientList = new[] { address },
                  FromMail = "no-reply@travorama.com",
                  FromName = "Travorama",
-                 Subject = envPrefix + "[Travorama] Terimakasih, Anda telah subscribe di Travorama"
+                 Subject = envPrefix + "[Travorama] Terimakasih, Anda telah berlangganan di Travorama"
              };
              mailService.SendEmail(address, mailModel, "RegisterSubscribeEmail");
              sw.Stop();

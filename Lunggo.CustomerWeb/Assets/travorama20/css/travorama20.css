@@ -508,6 +508,8 @@ input[type=number]::-webkit-outer-spin-button {
     overflow: hidden; }
     .page-newsletter .overlay-content section .normal-flow {
       display: block; }
+      .page-newsletter .overlay-content section .normal-flow .close-newsletter {
+        padding-top: 55px; }
       .page-newsletter .overlay-content section .normal-flow .header {
         padding-top: 55px;
         padding-left: 130px;
@@ -1008,7 +1010,7 @@ file : /Assets/travorama20/css/_page_index.scss
         padding: 0; }
         .page-index .section-search .search-form .tab-header nav ul li {
           float: left;
-          width: 50%;
+          width: 33.333333334%;
           list-style: none;
           border-right: 2px solid #bdbdbd; }
           .page-index .section-search .search-form .tab-header nav ul li a {
@@ -2434,7 +2436,7 @@ file: /Assets/travorama20/css/_page_flight.scss
       position: relative; }
       .page-flight .flight .flight-detail .segment .segment-left:after, .page-flight .flight .flight-detail .segment .segment-right:after, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right:after, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right:after, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right:after, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right:after {
         content: "";
-        /*background-image: url(/Assets/images/flight-segment-separator.png);*/
+        background-image: url(/Assets/images/flight-segment-separator.png);
         background-repeat: no-repeat;
         background-size: contain;
         width: 10px;
@@ -2849,9 +2851,7 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 .page-flight.page-flight-return .search-result-container > .inactive {
   width: 290px;
-  opacity: 0.5;
-    cursor: pointer;
-}
+  opacity: 0.5; }
   .page-flight.page-flight-return .search-result-container > .inactive .search-result-warning {
     display: none; }
   .page-flight.page-flight-return .search-result-container > .inactive .search-result-filter {
