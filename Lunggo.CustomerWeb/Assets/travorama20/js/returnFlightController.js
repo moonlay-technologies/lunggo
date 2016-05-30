@@ -274,10 +274,12 @@ app.controller('returnFlightController', [
                 if ($scope.departureFlightConfig.chosenFlight < 0) {
                     $scope.pageConfig.activeFlightSection = 'departure';
                 }
+                
             } else if (target == 'return') {
                 if ($scope.returnFlightConfig.chosenFlight < 0) {
                     $scope.pageConfig.activeFlightSection = 'return';
                 }
+                
             }
         }
 
@@ -847,7 +849,6 @@ app.controller('returnFlightController', [
 
         }
 
-        
     }
 ]);// flight controller
 

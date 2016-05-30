@@ -183,7 +183,7 @@
         <input type="text" name="token" value="" class="fareToken" />
     </form>
     
-    <div class="page-progress" ng-show="(departureFlightConfig.flightSearchParams.FinalProgress < 100) && (returnFlightConfig.flightSearchParams.FinalProgress < 100)">
+    <div class="page-progress" ng-show="(departureFlightConfig.flightSearchParams.FinalProgress < 100) || (returnFlightConfig.flightSearchParams.FinalProgress < 100)">
         <div class="container">
             <b>Mencari Penerbangan...</b>
             <div class="progress-wrapper">

@@ -256,17 +256,23 @@ function flightPageFunctions() {
     // toggle filter
     $('.search-result-filter .filter-trigger span').click(function () {
         
-        if (ct % 2 == 0) {
+        //if (ct % 2 == 0) {
             $(this).parent().siblings().removeClass('active');
             $(this).parent().addClass('active');
             var targetFilter = $(this).attr('data-target');
-            $('.search-result-filter .filter-content>div').removeClass('active');
-            $('.search-result-filter .filter-content>div#' + targetFilter).addClass('active');
-            ct += 1;
-        } else {
-            $('.search-result-filter .close-filter').click();
-            ct += 1;
-        }
+            if ($('.search-result-filter .filter-content>div#' + targetFilter).hasClass("active")) {
+                $('.search-result-filter .close-filter').click();
+                    ct += 1;
+            } else {
+                $('.search-result-filter .filter-content>div').removeClass('active');
+                $('.search-result-filter .filter-content>div#' + targetFilter).addClass('active');
+                ct += 1;
+            }
+            
+        //} else {
+        //    $('.search-result-filter .close-filter').click();
+        //    ct += 1;
+        //}
         //$('.search-result-filter .filter-content>div#'+targetFilter).slideToggle("slow");
     });
     // close filter
