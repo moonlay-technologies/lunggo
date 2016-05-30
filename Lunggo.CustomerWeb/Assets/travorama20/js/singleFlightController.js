@@ -604,7 +604,7 @@ app.controller('singleFlightController', [
                     range: true,
                     min: $scope.priceFilterParam.initial[0],
                     max: $scope.priceFilterParam.initial[1],
-                    step: 50000,
+                    step: 100,
                     values: [$scope.priceFilterParam.initial[0], $scope.priceFilterParam.initial[1]],
                     create: function (event, ui) {
                         $('.price-slider-min').val($scope.priceFilterParam.initial[0]);
