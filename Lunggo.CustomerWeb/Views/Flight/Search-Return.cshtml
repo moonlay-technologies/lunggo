@@ -1,4 +1,5 @@
-﻿@using System.Globalization
+﻿
+@using System.Globalization
 @using Lunggo.ApCommon.Dictionary
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
@@ -238,7 +239,7 @@
                 <div><span style="font-size:13px">Silakan klik tombol di bawah ini untuk memperbaharui halaman pencarian Anda.</span></div>
             </section>
             <div align="right" style="padding-right:30px;padding-top:20px;">
-                <a class="btn popup-btn-yellow book-failed" href="#"><b>REFRESH</b></a>
+                <a class="btn popup-btn-yellow book-failed" href="#"><b>CARI LAGI</b></a>
             </div>
         </div>
     </div>
@@ -284,7 +285,7 @@
                 <div class="flight-detail" ng-show="departureFlightConfig.chosenFlightDetail">
                     <div ng-repeat="segment in departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments track by $index">
                         <div class="transit" ng-if="$index > 0">
-                            <p>Transit di {{segment.DepartureCity}} selama {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                            <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
                         </div>
                         <div class="segment">
                             <div class="segment-number">
@@ -329,7 +330,7 @@
                     <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block" ng-click="setChosenFlight('departure',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
-            <div class="search-result-filter" @*ng-hide="(departureFlightConfig.loading && departureFlightConfig.loadingFlight) || (!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length)"*@>
+            <div class="search-result-filter" ng-hide="(departureFlightConfig.loading && departureFlightConfig.loadingFlight) || (!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length)">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
@@ -475,7 +476,7 @@
                 </div>
             </div><!-- .search-result-sort -->
             <div class="no-flight" ng-show="!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length">
-                <h3 class="text-center">Penerbangan tidak ditemukan.<br /> Silahkan mencari /  mengganti tanggal penerbangan atau rute Anda.</h3>
+                <h3 class="text-center">Penerbangan tidak ditemukan.<br /> Silakan mencari /  mengganti tanggal penerbangan atau rute Anda.</h3>
             </div>
             <div class="search-result-list" ng-hide="!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length">
                 <div class="container">
@@ -533,7 +534,7 @@
                             <h3>Detail Penerbangan <span class="close-flight-detail pull-right" ng-click="setActiveFlight('departure',-1)">X</span></h3>
                             <div ng-repeat="segment in flight.Trips[0].Segments track by $index">
                                 <div class="transit" ng-if="$index > 0">
-                                    <p>Transit di {{segment.DepartureCity}} selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                                    <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-number">
@@ -612,7 +613,7 @@
                 <div class="flight-detail" ng-show="returnFlightConfig.chosenFlightDetail">
                     <div ng-repeat="segment in returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments track by $index">
                         <div class="transit" ng-if="$index > 0">
-                            <p>Transit di {{segment.DepartureCity}} selama {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                            <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
                         </div>
                         <div class="segment">
                             <div class="segment-number">
@@ -803,7 +804,7 @@
                 </div>
             </div><!-- .search-result-sort -->
             <div class="no-flight" ng-show="!returnFlightConfig.loading && !returnFlightConfig.loadingFlight && !returnFlightConfig.flightList.length">
-                <h3 class="text-center">Penerbangan tidak ditemukan.<br /> Silahkan mencari /  mengganti tanggal penerbangan atau rute Anda.</h3>
+                <h3 class="text-center">Penerbangan tidak ditemukan.<br /> Silakan mencari /  mengganti tanggal penerbangan atau rute Anda.</h3>
             </div>
             <div class="search-result-list" ng-hide="!returnFlightConfig.loading && !returnFlightConfig.loadingFlight && !returnFlightConfig.flightList.length">
                 <div class="container">
@@ -861,7 +862,7 @@
                             <h3>Detail Penerbangan <span class="close-flight-detail pull-right" ng-click="setActiveFlight('return',-1)">X</span></h3>
                             <div ng-repeat="segment in flight.Trips[0].Segments track by $index">
                                 <div class="transit" ng-if="$index > 0">
-                                    <p>Transit di {{segment.DepartureCity}} selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                                    <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-number">
@@ -1011,7 +1012,7 @@
                         <section class="flight-detail">
                             <div ng-repeat="segment in departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments track by $index">
                                 <div class="transit" ng-if="$index > 0">
-                                    <p>Transit di {{segment.DepartureCity}} selama {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                                    <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-number">
@@ -1060,7 +1061,7 @@
                         <section class="flight-detail">
                             <div ng-repeat="segment in returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments">
                                 <div class="transit" ng-if="$index > 0">
-                                    <p>Transit di {{segment.DepartureCity}} selama {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                                    <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-number">

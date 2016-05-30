@@ -82,6 +82,7 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
+
 }
 
 @section PageJS{
@@ -210,10 +211,10 @@
                     <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
                     <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:22px"><b>Pencarian Kadaluarsa</b></span></div>
                     <div style="padding-top:5px;"><span style="font-size:13px">Halaman pencarian Anda <span style="color: #15b1e4;font-size:13px"><b> sudah kadaluarsa</b></span>.</span></div>
-                    <div><span style="font-size:13px">Silahkan klik tombol di bawah ini untuk memparbaharui halaman pencarian Anda.</span></div>
+                    <div><span style="font-size:13px">Silakan klik tombol di bawah ini untuk memparbaharui halaman pencarian Anda.</span></div>
                 </section>
                 <div align="right" style="padding-right:30px;padding-top:20px;">
-                    <a class="btn popup-btn-yellow book-failed" onclick="location.reload();"><b>REFRESH</b></a>
+                    <a class="btn popup-btn-yellow book-failed" onclick="location.reload();"><b>CARI LAGI</b></a>
                 </div>
             </div>
         </div>
@@ -234,22 +235,21 @@
             <div class="container" ng-hide="!flightList.length && loading && loadingFlight">
                 <h3><b>HASIL</b> PENCARIAN</h3>
             </div>
-            <div class="search-result-filter" ng-show="flightRequest.Progress > 0">
+            <div class="search-result-filter" ng-show="flightRequest.Progress == 100">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
                     </div>
                     <div class="filter-right">
-
                         <div class="filter-trigger">
-                            <div class="filter-stop"><span class="switch-filter" data-target="filter-transit">Pemberhentian</span></div>
+                            <div class="filter-stop"><span class="switch-filter" data-toggle="collapse" data-target="filter-transit">Pemberhentian</span></div>
                             <div class="filter-price"><span class="switch-filter" data-target="filter-price">Harga</span></div>
-                            <div class="filter-airline"><span class="switch-filter" data-target="filter-airline">Maskapai</span></div>
+                            <div class="filter-airline"><span class="switch-filter" data-toggle="collapse" data-target="filter-airline">Maskapai</span></div>
                             <div class="filter-time"><span class="switch-filter" data-target="filter-time">Waktu Penerbangan</span></div>
                         </div>
-                        <div class="filter-content">
-                            <div id="filter-transit" class="filter-transit">
-                                <div class="close-filter">X</div>
+                        <div class="filter-content" >
+                            <div id="filter-transit" class="filter-transit collapse">
+                                <div class= "close-filter">X</div>
                                 <h3>Saring Berdasarkan Pemberhentian 
                                     <span class="pull-right">
                                         <label class="select-all" ng-click="stopFilterParam.direct = true; stopFilterParam.one = true; stopFilterParam.two = true">Pilih Semua</label>
@@ -409,7 +409,7 @@
                                             </div>
                                             <div class="flight-date-arrival">
                                                 <h4>{{flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalAirport}} <span>{{flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime | date : 'HH:mm' : 'UTC'}}</span><span class="overday" ng-if="getFullDate(flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime) != getFullDate(flight.Trips[0].Segments[0].DepartureTime)">{{getOverdayDate((flight.Trips[0].Segments[0].DepartureTime),(flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime))}}</span></h4>
-                                                <h5>{{flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime | date : 'dd - MMM - yyyy' : 'UTC'}}</h5>
+                                                <h5>{{flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime | date : 'dd MMM yyyy' : 'UTC'}}</h5>
                                             </div>
                                         </div>
                                         <div class="summary-top-right-bottom flight-button">
@@ -429,7 +429,7 @@
                             <h3>Detail Penerbangan <span class="close-flight-detail pull-right" ng-click="setFlightActive(-1)">X</span></h3>
                             <div ng-repeat="segment in flight.Trips[0].Segments track by $index">
                                 <div class="transit" ng-if="$index > 0">
-                                    <p>Transit di {{segment.DepartureCity}} selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                                    <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-number">

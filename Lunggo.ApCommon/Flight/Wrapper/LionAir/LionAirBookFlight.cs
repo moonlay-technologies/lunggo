@@ -1147,7 +1147,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                                 return new BookFlightResult
                                 {
-                                    IsSuccess = false,
+                                    IsSuccess = true,
                                     Errors = new List<FlightError> { FlightError.TechnicalError },
                                     Status = null,
                                     ErrorMessages = new List<string> { "Price is changed!" },

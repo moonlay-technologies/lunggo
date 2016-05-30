@@ -37,7 +37,7 @@
 
 @{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
-    ViewBag.Title = "Checkout Page";
+    ViewBag.Title = "Checkout";
     ViewBag.BodyClass = "page page-checkout page-flight-checkout";
     ViewBag.AngularController = "CheckoutController";
     ViewBag.FlightDetail = "true";
@@ -363,7 +363,7 @@ default:
                         <div ng-if="CheckoutConfig.Trips[0]">
                             <div class="flight-title flight-title--departure">
                                 <div class="flight-info">
-                                    <h4><b>@trips[0].OriginAirport</b> ke <b>@trips[0].DestinationAirport</b></h4>
+                                    <h4><b>@trips[0].OriginCity</b> ke <b>@trips[0].DestinationCity</b></h4>
                                     <h5>@trips[0].DepartureDate.ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                 </div><!-- .flight-info -->
                             </div><!-- .flight-title -->
@@ -387,16 +387,16 @@ default:
                                                 <div class="flight__departure">
                                                     <h5>@trips[0].Segments[segment].DepartureTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                                     <h4><b>@trips[0].Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
-                                                    <h5><b>(@trips[0].Segments[segment].DepartureAirport) @trips[0].Segments[segment].DepartureCity</b></h5>
+                                                    <h5><b>@trips[0].Segments[segment].DepartureCity (@trips[0].Segments[segment].DepartureAirport)</b></h5>
                                                     <h5>@trips[0].Segments[segment].DepartureAirportName</h5>
                                                 </div>
                                                 <div class="flight__separator">
                                                     <h5><b>Durasi: </b>@trips[0].Segments[segment].Duration</h5>
                                                 </div>
                                                 <div class="flight__arrival">
-                                                    <h5>@trips[0].Segments[segment].ArrivalTime.ToString("d MMM yyyy")</h5>
+                                                    <h5>@trips[0].Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                                     <h4><b>@trips[0].Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
-                                                    <h5><b>(@trips[0].Segments[segment].ArrivalAirport) @trips[0].Segments[segment].ArrivalCity</b></h5>
+                                                    <h5><b>@trips[0].Segments[segment].ArrivalCity (@trips[0].Segments[segment].ArrivalAirport)</b></h5>
                                                     <h5>@trips[0].Segments[segment].ArrivalAirportName</h5>
                                                 </div><!-- .flight__arrival -->
                                             </div><!-- .flight__detail -->
@@ -423,7 +423,7 @@ default:
                         <h4><b>KEMBALI</b></h4>
                             <div class="flight-title flight-title--departure">
                                 <div class="flight-info">
-                                    <h4><b>@trips[1].OriginAirport</b> ke <b>@trips[1].DestinationAirport</b></h4>
+                                    <h4><b>@trips[1].OriginCity</b> ke <b>@trips[1].DestinationCity</b></h4>
                                     <h5>@trips[1].DepartureDate.ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                 </div><!-- .flight-info -->
                             </div><!-- .flight-title -->
@@ -447,16 +447,16 @@ default:
                                                 <div class="flight__departure">
                                                     <h5>@trips[1].Segments[segment].DepartureTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                                     <h4><b>@trips[1].Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
-                                                    <h5><b>(@trips[1].Segments[segment].DepartureAirport) @trips[1].Segments[segment].DepartureCity</b></h5>
+                                                    <h5><b>@trips[1].Segments[segment].DepartureCity (@trips[1].Segments[segment].DepartureAirport)</b></h5>
                                                     <h5>@trips[1].Segments[segment].DepartureAirportName</h5>
                                                 </div>
                                                 <div class="flight__separator">
                                                     <h5><b>Durasi: </b>@trips[1].Segments[segment].Duration</h5>
                                                 </div>
                                                 <div class="flight__arrival">
-                                                    <h5>@trips[1].Segments[segment].ArrivalTime.ToString("d MMM yyyy")</h5>
+                                                    <h5>@trips[1].Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                                     <h4><b>@trips[1].Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
-                                                    <h5><b>(@trips[1].Segments[segment].ArrivalAirport) @trips[1].Segments[segment].ArrivalCity</b></h5>
+                                                    <h5><b>@trips[1].Segments[segment].ArrivalCity (@trips[1].Segments[segment].ArrivalAirport)</b></h5>
                                                     <h5>@trips[1].Segments[segment].ArrivalAirportName</h5>
                                                 </div><!-- .flight__arrival -->
                                             </div><!-- .flight__detail -->
