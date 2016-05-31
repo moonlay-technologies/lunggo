@@ -3,10 +3,10 @@ using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Payment.Model
 {
-    public class TransferIdentifierApiResponse : ApiResponseBase
+    public class TransferFeeApiResponse : ApiResponseBase
     {
         [JsonProperty("fee", NullValueHandling = NullValueHandling.Ignore)]
-        public int TransferFee { get; set; }
+        public decimal TransferFee { get; set; }
 
     }
 }

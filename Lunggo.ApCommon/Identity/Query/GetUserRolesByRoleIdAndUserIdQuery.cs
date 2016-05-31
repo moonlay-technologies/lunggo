@@ -15,7 +15,7 @@ namespace Lunggo.ApCommon.Identity.Query
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.Append("SELECT * " +
-                                "FROM [User]Role " +
+                                "FROM [UserRole] " +
                                 "WHERE RoleId = @RoleId AND UserId = @UserId");
             return queryBuilder.ToString();
         }

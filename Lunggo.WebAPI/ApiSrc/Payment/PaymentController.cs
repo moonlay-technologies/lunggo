@@ -15,7 +15,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         public PaymentApiResponse Pay()
         {
             var request = Request.Content.ReadAsStringAsync().Result.Deserialize<PayApiRequest>();
-            var apiResponse = PaymentLogic.Pay(request, User);
+            var apiResponse = PaymentLogic.Pay(request);
             return apiResponse;
         }
 
@@ -31,18 +31,19 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("payment/transferfee")]
-        public TransferIdentifierApiResponse GetTransferIdentifier()
+        public TransferFeeApiResponse GetTransferIdentifier()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<TransferIdentifierApiRequest>();
-            var apiResponse = PaymentLogic.GetTransferIdentifier(request);
+            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<TransferFeeApiRequest>();
+            var apiResponse = PaymentLogic.GetTransferFee(request);
             return apiResponse;
         }
 
-        [HttpGet]
+        [HttpPost]
         [LunggoCorsPolicy]
         [Route("payment/checkvoucher")]
-        public CheckVoucherApiResponse CheckVoucher(CheckVoucherApiRequest request)
+        public CheckVoucherApiResponse CheckVoucher()
         {
+            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<CheckVoucherApiRequest>();
             var apiResponse = VoucherLogic.CheckVoucher(request);
             return apiResponse;
         }

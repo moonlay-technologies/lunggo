@@ -250,11 +250,11 @@
     <Compile Include="ApiSrc\Newsletter\Query\CheckEmailQuery.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckPaymentLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\PayLogic.cs" />
-    <Compile Include="ApiSrc\Payment\Logic\GetTransferIdentifierLogic.cs" />
+    <Compile Include="ApiSrc\Payment\Logic\GetTransferFeeLogic.cs" />
     <Compile Include="ApiSrc\Payment\Model\PaymentApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\PayApiRequest.cs" />
-    <Compile Include="ApiSrc\Payment\Model\TransferIdentifierApiRequest.cs" />
-    <Compile Include="ApiSrc\Payment\Model\TransferIdentifierApiResponse.cs" />
+    <Compile Include="ApiSrc\Payment\Model\TransferFeeApiRequest.cs" />
+    <Compile Include="ApiSrc\Payment\Model\TransferFeeApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\PaymentController.cs" />
     <Compile Include="ApiSrc\Rooms\Logic\GetRoomsLogic.cs" />
     <Compile Include="ApiSrc\Rooms\Object\RoomSearchApiRequest.cs" />

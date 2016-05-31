@@ -4,12 +4,14 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Lunggo.ApCommon.Campaign.Model;
 using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
@@ -94,6 +96,9 @@ namespace Lunggo.ApCommon.Flight.Service
             reservation.Contact = input.Contact;
             reservation.Passengers = input.Passengers;
             reservation.OverallTripType = ParseTripType(trips);
+            reservation.User = HttpContext.Current.User != null
+                ? HttpContext.Current.User.Identity.GetUser()
+                : null;
             reservation.Payment = new PaymentDetails
             {
                 Status = PaymentStatus.Pending,

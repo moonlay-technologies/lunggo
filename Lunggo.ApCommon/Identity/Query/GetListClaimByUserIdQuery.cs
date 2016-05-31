@@ -15,7 +15,7 @@ namespace Lunggo.ApCommon.Identity.Query
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.Append("SELECT * " +
-                                "FROM [User]Claim " +
+                                "FROM [UserClaim] " +
                                 "WHERE UserId = @Id");
             return queryBuilder.ToString();
         }

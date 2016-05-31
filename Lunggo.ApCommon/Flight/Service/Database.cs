@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Query;
+using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.ProductBase.Constant;
@@ -31,7 +32,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 var rsvNos =
                     GetRsvNosByContactEmailQuery.GetInstance()
-                        .Execute(conn, new { ContactEmail = contactEmail })
+                        .Execute(conn, new { Email = contactEmail })
                         .ToList();
                 if (!rsvNos.Any())
                     return null;
@@ -62,7 +63,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 var segmentLookup = new Dictionary<long, FlightSegment>();
                 var passengerLookup = new Dictionary<long, FlightPassenger>();
                 reservation = GetReservationQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = rsvNo },
-                    (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord) =>
+                    (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord, stopRecord) =>
                     {
                         if (reservation == null)
                         {
@@ -84,6 +85,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         {
                             itinerary = new FlightItinerary
                             {
+                                Price = Price.GetFromDb(itineraryRecord.Id.GetValueOrDefault()),
                                 Trips = new List<FlightTrip>()
                             };
                             itineraryLookup.Add(itineraryRecord.Id.GetValueOrDefault(), itinerary);
@@ -163,9 +165,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 var itineraryLookup = new Dictionary<long, FlightItinerary>();
                 var tripLookup = new Dictionary<long, FlightTrip>();
                 var segmentLookup = new Dictionary<long, FlightSegment>();
+                var stopLookup = new Dictionary<long, FlightStop>();
                 var passengerLookup = new Dictionary<long, FlightPassenger>();
                 reservation = GetReservationQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = rsvNo },
-                    (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord) =>
+                    (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord, stopRecord) =>
                     {
                         if (reservationRecord == null)
                             return reservation;
@@ -180,7 +183,8 @@ namespace Lunggo.ApCommon.Flight.Service
                                 OverallTripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
                                 Itineraries = new List<FlightItinerary>(),
                                 Passengers = new List<FlightPassenger>(),
-                                State = ReservationState.GetFromDb(rsvNo)
+                                State = ReservationState.GetFromDb(rsvNo),
+                                User = User.GetFromDb(reservationRecord.UserId)
                             };
                         }
                         FlightItinerary itinerary;
@@ -197,7 +201,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 TimeLimit = itineraryRecord.TicketTimeLimit,
                                 Trips = new List<FlightTrip>(),
                                 Price = Price.GetFromDb(itineraryRecord.Id.GetValueOrDefault()),
-                                FareType = FareTypeCd.Mnemonic(itineraryRecord.FareTypeCd)
+                                FareType = FareTypeCd.Mnemonic(itineraryRecord.FareTypeCd),
                             };
                             itineraryLookup.Add(itineraryRecord.Id.GetValueOrDefault(), itinerary);
                             reservation.Itineraries.Add(itinerary);
@@ -249,10 +253,22 @@ namespace Lunggo.ApCommon.Flight.Service
                             segmentLookup.Add(segmentRecord.Id.GetValueOrDefault(), segment);
                             trip.Segments.Add(segment);
                         }
+                        FlightStop stop;
+                        if (stopRecord != null && !stopLookup.TryGetValue(stopRecord.Id.GetValueOrDefault(), out stop))
+                        {
+                            stop = new FlightStop
+                            {
+                                Airport = stopRecord.AirportCd,
+                                DepartureTime = stopRecord.DepartureTime.GetValueOrDefault(),
+                                ArrivalTime = stopRecord.ArrivalTime.GetValueOrDefault(),
+                                Duration = stopRecord.Duration.GetValueOrDefault()
+                            };
+                            stopLookup.Add(stopRecord.Id.GetValueOrDefault(), stop);
+                            segment.Stops.Add(stop);
+                            segment.StopQuantity++;
+                        }
                         FlightPassenger passenger;
-                        if (
-                            !passengerLookup.TryGetValue(passengerRecord.Id.GetValueOrDefault(),
-                                out passenger))
+                        if (!passengerLookup.TryGetValue(passengerRecord.Id.GetValueOrDefault(), out passenger))
                         {
                             passenger = new FlightPassenger
                             {
@@ -385,6 +401,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 FlightReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
                 reservation.Contact.InsertToDb(reservation.RsvNo);
                 reservation.State.InsertToDb(reservation.RsvNo);
+                reservation.Payment.InsertToDb(reservation.RsvNo);
 
                 foreach (var itin in reservation.Itineraries)
                 {

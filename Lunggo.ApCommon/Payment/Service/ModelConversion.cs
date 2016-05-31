@@ -25,7 +25,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 OriginalPrice = payment.OriginalPriceIdr / payment.LocalCurrency.Rate,
                 DiscountCode = payment.DiscountCode,
                 DiscountNominal = payment.DiscountNominal / payment.LocalCurrency.Rate,
-                DiscountName = payment.Discount.DisplayName,
+                DiscountName = payment.Discount != null ? payment.Discount.DisplayName : null,
                 TransferFee = payment.TransferFee / payment.LocalCurrency.Rate,
                 Currency = payment.LocalCurrency,
                 FinalPrice = payment.LocalFinalPrice,

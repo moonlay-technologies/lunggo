@@ -17,14 +17,14 @@ namespace Lunggo.ApCommon.Flight.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT RsvNo ");
-            clauseBuilder.Append("FROM FlightReservation ");
+            clauseBuilder.Append("FROM Contact ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE ContactEmail = @ContactEmail");
+            clauseBuilder.Append("WHERE Email = @Email");
             return clauseBuilder.ToString();
         }
     }

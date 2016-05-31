@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using RestSharp;
@@ -9,7 +10,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
     public static partial class AccountLogic
     {
-        public static LoginApiResponse Login(LoginApiRequest request, HttpRequestMessage httpRequest)
+        public static LoginApiResponse Login(LoginApiRequest request)
         {
             try
             {
@@ -20,7 +21,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                         ErrorCode = "ERALOG01"
                     };
 
-                var tokenClient = new RestClient(httpRequest.RequestUri.GetLeftPart(UriPartial.Authority));
+                var tokenClient = new RestClient(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority));
                 var tokenRequest = new RestRequest("/oauth/token", Method.POST);
                 var postData =
                     "client_id=" + request.ClientId +

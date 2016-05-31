@@ -12,31 +12,39 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [HttpGet]
         [LunggoCorsPolicy]
         [Route("flight/{searchId}/{progress}")]
-        public FlightSearchApiResponse SearchFlights(string searchId, int progress)
+        public ApiResponseBase SearchFlights(string searchId, int progress)
         {
             var request = new FlightSearchApiRequest
             {
                 SearchId = searchId,
                 Progress = progress
-                };
+            };
             var apiResponse = FlightLogic.SearchFlights(request);
             return apiResponse;
-            }
+        }
 
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("flight/select")]
-        public FlightSelectApiResponse SelectFlight()
+        public ApiResponseBase SelectFlight()
+        {
+            FlightSelectApiRequest request = null;
+            try
             {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightSelectApiRequest>();
-            var apiResponse = FlightLogic.SelectFlight(request);
-                return apiResponse;
+                request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightSelectApiRequest>();
             }
+            catch
+            {
+                return ApiResponseBase.ReturnInvalidJson();
+            }
+            var apiResponse = FlightLogic.SelectFlight(request);
+            return apiResponse;
+        }
 
         [HttpGet]
         [LunggoCorsPolicy]
         [Route("flight/revalidate/{token}")]
-        public FlightRevalidateApiResponse RevalidateFlight(string token)
+        public ApiResponseBase RevalidateFlight(string token)
         {
             var request = new FlightRevalidateApiRequest
             {
@@ -49,9 +57,17 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("flight/book")]
-        public FlightBookApiResponse BookFlight()
+        public ApiResponseBase BookFlight()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightBookApiRequest>();
+            FlightBookApiRequest request = null;
+            try
+            {
+                request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightBookApiRequest>();
+            }
+            catch
+            {
+                return ApiResponseBase.ReturnInvalidJson();
+            }
             var apiResponse = FlightLogic.BookFlight(request);
             //var apiResponse = new FlightBookApiResponse
             //{
@@ -67,7 +83,15 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [Route("flight/issue")]
         public ApiResponseBase IssueFlight()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightIssueApiRequest>();
+            FlightIssueApiRequest request = null;
+            try
+            {
+                request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightIssueApiRequest>();
+            }
+            catch
+            {
+                return ApiResponseBase.ReturnInvalidJson();
+            }
             var apiResponse = FlightLogic.IssueFlight(request);
             return apiResponse;
         }
@@ -75,12 +99,9 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [HttpGet]
         [LunggoCorsPolicy]
         [Route("flight/check/{rsvNo}")]
-        public FlightIssuanceApiResponse CheckFlightIssuance(string rsvNo)
+        public ApiResponseBase CheckFlightIssuance(string rsvNo)
         {
-            var request = new FlightIssuanceApiRequest
-        {
-                RsvNo = rsvNo
-            };
+            var request = new FlightIssuanceApiRequest {RsvNo = rsvNo};
             var apiResponse = FlightLogic.CheckFlightIssuance(request);
             return apiResponse;
         }
@@ -113,7 +134,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [HttpGet]
         [LunggoCorsPolicy]
         [Route("flight/top")]
-        public TopDestinationsApiResponse TopDestinations()
+        public ApiResponseBase TopDestinations()
         {
             var apiResponse = FlightLogic.TopDestinations();
             return apiResponse;

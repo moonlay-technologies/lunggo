@@ -7,13 +7,14 @@ using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.ProductBase.Constant;
 using Lunggo.Framework.Context;
+using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
 {
     public static partial class FlightLogic
     {
-        public static FlightBookApiResponse BookFlight(FlightBookApiRequest request)
+        public static ApiResponseBase BookFlight(FlightBookApiRequest request)
         {
             try
             {
@@ -36,11 +37,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             }
             catch
             {
-                return new FlightBookApiResponse
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERRGEN99"
-                };
+                return ApiResponseBase.Return500();
             }
         }
 

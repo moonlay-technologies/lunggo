@@ -31,11 +31,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             }
             catch
             {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERRGEN99"
-                };
+                return ApiResponseBase.Return500();
             }
         }
 

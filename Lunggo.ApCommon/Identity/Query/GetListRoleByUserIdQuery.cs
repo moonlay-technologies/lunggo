@@ -14,8 +14,8 @@ namespace Lunggo.ApCommon.Identity.Query
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.Append("SELECT b.Name " +
-                                "FROM [User]Role AS a " +
-                                "LEFT JOIN Role AS b ON a.RoleId = b.Id " +
+                                "FROM [UserRole] AS a " +
+                                "LEFT JOIN [Role] AS b ON a.RoleId = b.Id " +
                                 "WHERE a.UserId = @UserId");
             return queryBuilder.ToString();
         }

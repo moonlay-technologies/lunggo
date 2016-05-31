@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Identity.Query
             queryBuilder.Append(
                 "SELECT u.* " +
                 "FROM [User] AS u " +
-                "INNER JOIN UserLogin AS l ON l.UserId = u.Id " +
+                "INNER JOIN [UserLogin] AS l ON l.UserId = u.Id " +
                 "WHERE l.LoginProvider = @loginProvider AND l.ProviderKey = @providerKey"
             );
             return queryBuilder.ToString();

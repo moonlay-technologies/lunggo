@@ -45,7 +45,11 @@ namespace Lunggo.ApCommon.ProductBase.Model
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var record = GetContactQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single();
+                var record = GetContactQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).SingleOrDefault();
+
+                if (record == null)
+                    return null;
+
                 return new Contact
                 {
                     Title = TitleCd.Mnemonic(record.TitleCd),

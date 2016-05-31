@@ -16,5 +16,23 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
         {
             Version = "1.0";
         }
+
+        public static ApiResponseBase Return500()
+        {
+            return new ApiResponseBase
+            {
+                StatusCode = HttpStatusCode.InternalServerError,
+                ErrorCode = "ERRGEN99"
+            };
+        }
+
+        public static ApiResponseBase ReturnInvalidJson()
+        {
+            return new ApiResponseBase
+            {
+                StatusCode = HttpStatusCode.BadRequest,
+                ErrorCode = "ERRGEN98"
+            };
+        }
     }
 }

@@ -80,7 +80,7 @@ namespace Lunggo.Framework.Database
         private String CreateUpdateClause(TableRecord record)
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.AppendFormat("UPDATE {0} ", record.GetTableName());
+            clauseBuilder.AppendFormat("UPDATE [{0}] ", record.GetTableName());
             return clauseBuilder.ToString();
         }
 
@@ -181,7 +181,7 @@ namespace Lunggo.Framework.Database
         private String GetAssembledInsertQuery(String tableName, String columnNames, String queryParams)
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.AppendFormat("INSERT {0} ({1}) VALUES ({2})", tableName, columnNames, queryParams);
+            queryBuilder.AppendFormat("INSERT [{0}] ({1}) VALUES ({2})", tableName, columnNames, queryParams);
             return queryBuilder.ToString();
         }
 

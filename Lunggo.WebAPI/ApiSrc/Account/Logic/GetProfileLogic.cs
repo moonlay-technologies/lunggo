@@ -27,7 +27,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     FirstName = foundUser.FirstName ?? "",
                     LastName = foundUser.LastName ?? "",
                     CountryCallingCd = foundUser.CountryCd ?? "",
-                    PhoneNumber = foundUser.PhoneNumber ?? ""
+                    PhoneNumber = foundUser.PhoneNumber ?? "",
+                    StatusCode = HttpStatusCode.OK
                 };
             }
             catch

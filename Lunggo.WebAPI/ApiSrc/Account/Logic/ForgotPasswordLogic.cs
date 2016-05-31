@@ -12,7 +12,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
         {
             try
             {
-                if (IsValid(request))
+                if (!IsValid(request))
                 {
                     return new ApiResponseBase
                     {

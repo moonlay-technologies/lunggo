@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Security.Principal;
+using System.Web;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
@@ -9,10 +10,11 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 {
     public static partial class PaymentLogic
     {
-        public static PaymentApiResponse Pay(PayApiRequest request, IPrincipal user)
+        public static PaymentApiResponse Pay(PayApiRequest request)
         {
             try
             {
+                var user = HttpContext.Current.User;
                 if (!IsValid(request))
                     return new PaymentApiResponse
                     {
@@ -24,7 +26,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     return new PaymentApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERPPAY03"
+                        ErrorCode = "ERPPAY02"
                     };
                 var paymentDetails = PaymentService.GetInstance().SubmitPayment(request.RsvNo, request.Method, request.Data, request.DiscountCode);
                 var apiResponse = AssembleApiResponse(paymentDetails);

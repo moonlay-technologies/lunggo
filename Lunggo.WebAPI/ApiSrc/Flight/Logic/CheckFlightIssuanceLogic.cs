@@ -5,13 +5,14 @@ using System.Net;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
 {
     public static partial class FlightLogic
     {
-        public static FlightIssuanceApiResponse CheckFlightIssuance(FlightIssuanceApiRequest request)
+        public static ApiResponseBase CheckFlightIssuance(FlightIssuanceApiRequest request)
         {
             try
             {
@@ -32,11 +33,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             }
             catch
             {
-                return new FlightIssuanceApiResponse
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERRGEN99"
-                };
+                return ApiResponseBase.Return500();
             }
         }
 

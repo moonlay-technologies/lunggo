@@ -15,7 +15,7 @@ namespace Lunggo.ApCommon.Identity.Query
         protected override string GetQuery(dynamic condition = null)
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.Append("SELECT * FROM Roles WHERE Upper(Name) = Upper(@Name)");
+            queryBuilder.Append("SELECT * FROM [Role] WHERE Upper(Name) = Upper(@Name)");
             return queryBuilder.ToString();
         }
     }

@@ -2,13 +2,14 @@
 using System.Net;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
 {
     public static partial class FlightLogic
     {
-        public static FlightSelectApiResponse SelectFlight(FlightSelectApiRequest request)
+        public static ApiResponseBase SelectFlight(FlightSelectApiRequest request)
         {
             try
             {
@@ -31,11 +32,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             }
             catch
             {
-                return new FlightSelectApiResponse
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERRGEN99"
-                };
+                return ApiResponseBase.Return500();
             }
         }
 

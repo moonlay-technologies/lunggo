@@ -17,8 +17,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     var service = CampaignService.GetInstance();
                     var voucher = new ValidateVoucherRequest
                     {
-                        Email = request.Email,
-                        Token = request.Token,
+                        Token = request.RsvNo,
                         VoucherCode = request.Code
                     };
                     var response = service.ValidateVoucherRequest(voucher);
@@ -49,8 +48,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             return
                 request != null &&
                 request.Code != null &&
-                request.Email != null &&
-                request.Token != null;
+                request.RsvNo != null;
         }
 
         private static CheckVoucherApiResponse AssembleApiResponse(VoucherResponse response)

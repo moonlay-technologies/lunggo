@@ -44,7 +44,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         public LoginApiResponse Login()
         {
             var request = Request.Content.ReadAsStringAsync().Result.Deserialize<LoginApiRequest>();
-            var apiResponse = AccountLogic.Login(request, Request);
+            var apiResponse = AccountLogic.Login(request);
             return apiResponse;
         }
 

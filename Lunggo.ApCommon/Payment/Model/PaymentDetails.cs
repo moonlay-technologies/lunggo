@@ -106,7 +106,11 @@ namespace Lunggo.ApCommon.Payment.Model
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var record = GetPaymentQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single();
+                var record = GetPaymentQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).SingleOrDefault();
+
+                if (record == null)
+                    return null;
+
                 return new PaymentDetails
                 {
                     Medium = PaymentMediumCd.Mnemonic(record.MediumCd),
@@ -127,7 +131,8 @@ namespace Lunggo.ApCommon.Payment.Model
                     LocalFinalPrice = record.LocalFinalPrice.GetValueOrDefault(),
                     LocalPaidAmount = record.LocalPaidAmount.GetValueOrDefault(),
                     InvoiceNo = record.InvoiceNo,
-                    Discount = UsedDiscount.GetFromDb(rsvNo)
+                    Discount = UsedDiscount.GetFromDb(rsvNo),
+                    Refund = Refund.GetFromDb(rsvNo)
                 };
             }
         }
@@ -136,9 +141,9 @@ namespace Lunggo.ApCommon.Payment.Model
         {
             protected override string GetQuery(dynamic condition = null)
             {
-                return "SELECT MediumCd, DiscountId, MethodCd, StatusCd, Time, TimeLimit, Account, " +
-                       "Url, ExternalId, DiscountCode, OriginalPrice, DiscountNominal, TransferFee, FinalPrice, " +
-                       "PaidAmount, LocalCurrencyCd, LocalRate, LocalFinalPrice, LocalPaidAmount, InvoiceNo " +
+                return "SELECT MediumCd, MethodCd, StatusCd, Time, TimeLimit, TransferAccount, RedirectionUrl, " +
+                       "ExternalId, DiscountCode, OriginalPriceIdr, DiscountNominal, TransferFee, FinalPriceIdr, " +
+                       "PaidAmountIdr, LocalCurrencyCd, LocalRate, LocalFinalPrice, LocalPaidAmount, InvoiceNo " +
                        "FROM Payment " +
                        "WHERE RsvNo = @RsvNo";
             }

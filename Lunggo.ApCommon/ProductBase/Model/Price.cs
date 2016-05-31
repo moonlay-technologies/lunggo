@@ -12,15 +12,15 @@ namespace Lunggo.ApCommon.ProductBase.Model
 {
     public sealed partial class Price
     {
-        public decimal Supplier { get; private set; }
-        public Currency SupplierCurrency { get; private set; }
-        public decimal OriginalIdr { get; private set; }
-        public UsedMargin Margin { get; private set; }
-        public decimal Rounding { get; private set; }
-        public decimal MarginNominal { get; private set; }
-        public decimal FinalIdr { get; private set; }
-        public decimal Local { get; private set; }
-        public Currency LocalCurrency { get; private set; }
+        public decimal Supplier { get; set; }
+        public Currency SupplierCurrency { get; set; }
+        public decimal OriginalIdr { get; set; }
+        public UsedMargin Margin { get; set; }
+        public decimal Rounding { get; set; }
+        public decimal MarginNominal { get; set; }
+        public decimal FinalIdr { get; set; }
+        public decimal Local { get; set; }
+        public Currency LocalCurrency { get; set; }
 
         internal void InsertToDb(long orderId)
         {
@@ -71,7 +71,7 @@ namespace Lunggo.ApCommon.ProductBase.Model
         {
             protected override string GetQuery(dynamic condition = null)
             {
-                return "SELECT MarginId, SupplierPrice, SupplierCurrencyCd, SupplierRate, OriginalPriceIdr, MarginNominal, " +
+                return "SELECT SupplierPrice, SupplierCurrencyCd, SupplierRate, OriginalPriceIdr, MarginNominal, " +
                        "Rounding, FinalPriceIdr, LocalPrice, LocalCurrencyCd, LocalRate " +
                        "FROM Price " +
                        "WHERE OrderId = @OrderId";

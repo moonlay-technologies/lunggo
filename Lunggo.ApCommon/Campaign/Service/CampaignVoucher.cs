@@ -1,9 +1,11 @@
 ﻿using System.Runtime.InteropServices;
+using System.Web;
 using Lunggo.ApCommon.Campaign.Constant;
 using Lunggo.ApCommon.Campaign.Model;
 using System;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Payment.Model;
 
 namespace Lunggo.ApCommon.Campaign.Service
@@ -17,9 +19,10 @@ namespace Lunggo.ApCommon.Campaign.Service
         public VoucherResponse ValidateVoucherRequest(ValidateVoucherRequest request)
         {
             var response = new VoucherResponse();
+            var user = HttpContext.Current.User;
 
             var voucher = GetDb.GetCampaignVoucher(request.VoucherCode);
-            response.Email = request.Email;
+            response.Email = HttpContext.Current.User.Identity.GetEmail();
             response.VoucherCode = request.VoucherCode;
             response.Discount = new UsedDiscount
             {
@@ -34,7 +37,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
             var price = GetFlightPrice(request.Token);
 
-            var validationStatus = ValidateVoucher(voucher, price, request.Email, request.VoucherCode);
+            var validationStatus = ValidateVoucher(voucher, price, user.Identity.GetEmail(), request.VoucherCode);
 
             if (validationStatus == VoucherStatus.Success)
             {

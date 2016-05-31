@@ -225,14 +225,15 @@ namespace Lunggo.ApCommon.Payment.Service
             };
         }
 
-        public int GetTransferIdentifier(string rsvNo)
+        public decimal GetTransferFee(string rsvNo)
         {
-            bool isExist = true;
-            Random rnd = new Random();
-            int uniqueId;
-            decimal candidatePrice;
+            decimal uniqueId;
             var payment = PaymentDetails.GetFromDb(rsvNo);
-            var price = payment.OriginalPriceIdr;
+
+            if (payment == null)
+                return -1;
+
+            var price = payment.LocalFinalPrice;
             //Generate Unique Id
             if (price <= 999)
             {
@@ -240,16 +241,18 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             else
             {
+                bool isExist;
+                decimal candidatePrice;
+                var rnd = new Random();
                 do
                 {
                     uniqueId = rnd.Next(1, 999);
                     candidatePrice = price - uniqueId;
                     isExist = IsTransferValueExist(candidatePrice.ToString());
                 } while (isExist);
-                Dictionary<string, int> dict = new Dictionary<string, int>();
-                dict.Add(rsvNo, uniqueId);
-                SaveUniquePriceinCache(candidatePrice.ToString(), dict);
-                SaveTokenTransferFeeinCache(rsvNo, uniqueId.ToString());
+                var dict = new Dictionary<string, decimal> {{rsvNo, uniqueId}};
+                SaveUniquePriceinCache(candidatePrice.ToString(CultureInfo.InvariantCulture), dict);
+                SaveTokenTransferFeeinCache(rsvNo, uniqueId.ToString(CultureInfo.InvariantCulture));
             }
 
             return uniqueId;

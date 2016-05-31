@@ -97,7 +97,7 @@ namespace Lunggo.ApCommon.Identity.User
             }
         }
 
-        private static User ToCustomUser(GetUserByAnyQueryRecord userRecord)
+        internal static User ToCustomUser(GetUserByAnyQueryRecord userRecord)
         {
             return new User
             {

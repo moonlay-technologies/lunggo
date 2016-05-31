@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Identity.Query
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.Append("SELECT LoginProvider, ProviderKey " +
-                                "FROM [User]Login " +
+                                "FROM [UserLogin] " +
                                 "WHERE UserId = @Id");
             return queryBuilder.ToString();
         }

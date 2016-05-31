@@ -40,7 +40,8 @@ namespace Lunggo.ApCommon.Payment.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "transferCodeToken:" + token;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var price = Decimal.Parse(redisDb.StringGet(redisKey));
+            var priceString = redisDb.StringGet(redisKey);
+            var price = priceString.IsNullOrEmpty ? 0 : Decimal.Parse(priceString);
             return price;
         }
 
@@ -53,14 +54,14 @@ namespace Lunggo.ApCommon.Payment.Service
             redisDb.KeyDelete(redisKey);
         }
 
-        private static void SaveUniquePriceinCache(string price, Dictionary<string, int> dict)
+        private static void SaveUniquePriceinCache(string price, Dictionary<string, decimal> dict)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "transferUniquePrice:" + price;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             foreach (var pair in dict)
             {
-                redisDb.HashSet(redisKey, pair.Key, pair.Value);
+                redisDb.HashSet(redisKey, pair.Key, (RedisValue) pair.Value);
                 redisDb.KeyExpire(redisKey, TimeSpan.FromMinutes(150));
             }
 
