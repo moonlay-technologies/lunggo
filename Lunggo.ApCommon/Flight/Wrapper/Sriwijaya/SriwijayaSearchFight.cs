@@ -393,8 +393,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                        new FlightTrip()
                                        {
                                            Segments = segments,
-                                           OriginAirport = conditions.Trips[0].OriginAirport,
-                                           DestinationAirport = conditions.Trips[0].DestinationAirport,
+                                           OriginAirport = firstOri,
+                                           DestinationAirport = firstDest,
                                            DepartureDate = DateTime.SpecifyKind(conditions.Trips[0].DepartureDate,DateTimeKind.Utc)
                                        }
                                     }
