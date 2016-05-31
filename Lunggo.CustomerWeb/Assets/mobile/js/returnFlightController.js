@@ -67,7 +67,7 @@
                 AirlineSelected: [],
                 Price: {
                     initial: [-1, -1],
-                    current: [-1, -1],
+                    current: [0, 1000000000],
                     prices: []
                 }
             },
@@ -127,7 +127,7 @@
                 AirlineSelected: [],
                 Price: {
                     initial: [-1, -1],
-                    current: [-1, -1],
+                    current: [0, 1000000000],
                     prices: []
                 }
             },
