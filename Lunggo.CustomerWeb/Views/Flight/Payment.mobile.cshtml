@@ -25,7 +25,7 @@
     ViewBag.BodyClass = "page page-checkout";
     ViewBag.AngularController = "paymentController";
     ViewBag.SiteHeader = "Payment";
-    ViewBag.Title = "Payment";
+    ViewBag.Title = "Pembayaran";
 }
 @section AdditionalCSS {
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
@@ -104,7 +104,7 @@
 
     </script>
     <!-- angular controller -->
-    <script src="/Assets/mobile/js/paymentController.js"></script>
+    <script src="/Assets/travorama20/js/paymentController.js"></script>
 }
 
 @switch ((string)ViewBag.Message)
@@ -112,13 +112,13 @@
     default:
         <!-- payment start here -->
 
-<div ng-app="travorama" ng-controller="paymentController" >
+<div ng-app="travorama" ng-controller="paymentController" ng-class="{'page-loaded' : pageLoaded}">
     <section class="checkout-content">
-
+    
+        <div class="page__header">
+            <h1 class="text-center section-title stripe">Metode <span>Pembayaran</span></h1>
+        </div>
         <div class="page__body" id="step-4">
-            <h3><b>METODE</b> PEMBAYARAN</h3>
-
-            <hr />
             <div class="summary summary--price">
                 <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
                 <div class="summary__body">
@@ -165,7 +165,7 @@
 
                         <div class="form-group">
                             <div class="col-xs-6 col-xs-offset-6">
-                                <input type="submit" value="REDEEM" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
+                                <input type="submit" value="CEK" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
                                 <input type="submit" value="RESET" class="btn btn-yellow form-control" ng-click="voucher.reset()" ng-show="voucher.checked" />
                             </div>
                         </div>
@@ -173,34 +173,12 @@
                 </div>
             </div><!-- .summary--voucher-->
 
-            <div class="widget countdown">
-                <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
-                <div class="widget-content">
-                    <p>Sisa waktu Anda untuk melakukan pembayaran</p>
-                    <div class="timer">
-                        <div>
-                            <h5 class="hour">00</h5>
-                            <span>jam</span>
-                        </div>
-                        <div class="separator"><h5>:</h5></div>
-                        <div>
-                            <h5 class="minute">00</h5>
-                            <span>menit</span>
-                        </div>
-                        <div class="separator"><h5>:</h5></div>
-                        <div>
-                            <h5 class="second">00</h5>
-                            <span>detik</span>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- .widget.countdown -->
-            <br /><br />
+            
 
             <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
 
             <div class="summary summary--payment">
-                <h3 class="summary__title"><b>METODE</b> PEMBAYARAN</h3>
+                <h3 class="summary__title"><b>ALTERNATIF</b> PEMBAYARAN</h3>
                 <div class="summary__body">
 
                     <form name="paymentMethodForm">
@@ -282,7 +260,7 @@
                 <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
 
                     <form name="creditCardForm" novalidate>
-                        <h3 class="no-spacing">Detail <b>Kartu Kredit</b></h3>
+                        <h3 class="no-spacing"><b>Detail </b>Kartu Kredit</h3>
 
                         <!-- credit card selector start -->
                         <div class="form-group">
@@ -365,8 +343,31 @@
                 </div>
                                 <!-- .credit-card-form -->
             }
-
             
+            <div class="widget countdown">
+                <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
+                <div class="widget-content">
+                    <p>Sisa waktu Anda untuk melakukan pembayaran</p>
+                    <div class="timer">
+                        <div>
+                            <h5 class="hour">00</h5>
+                            <span>jam</span>
+                        </div>
+                        <div class="separator"><h5>:</h5></div>
+                        <div>
+                            <h5 class="minute">00</h5>
+                            <span>menit</span>
+                        </div>
+                        <div class="separator"><h5>:</h5></div>
+                        <div>
+                            <h5 class="second">00</h5>
+                            <span>detik</span>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .widget.countdown -->
+            <br /> 
+
             <div class="step-button">
 
                 <form name="finalForm" id="finalForm" ng-submit="pay.checkCreditCard()">
@@ -399,58 +400,47 @@
             </div>
         </div>
     </section><!-- .checkout-content -->
-
-    <div class="page-overlay flight-expired" ng-show="expired">
-        <div class="overlay-content">
-            <header>
-                <h4>Checkout Kadaluarsa</h4>
-            </header>
-            <section>
-                <div class="container_new">
-                    @*<div class="row1">*@
-                        @*<div class="col12 text-align">
-                            <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
-                        </div>*@
-                        <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
-                            <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
-                        
-                    @*</div>*@
-                </div>
-            </section>
-            <footer>
-                <div class="container_new">
-                    <div class="row1">
-                        <div class="col12">
-                            <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
+    
+    @*<div class="page-overlay flight-expired" ng-show="expired">
+            <div class="overlay-content">
+                <header>
+                    <h4>Checkout Kadaluarsa</h4>
+                </header>
+                <section>
+                    <div class="container_new">
+                      <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
+                      <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
+                    </div>
+                </section>
+                <footer>
+                    <div class="container_new">
+                        <div class="row1">
+                            <div class="col12">
+                                <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </footer>
-        </div>
-    </div><!-- .page-overlay -->
+                </footer>
+            </div>
+        </div><!-- .page-overlay -->
 
-    <div class="page-overlay booking-flight" ng-hide="!pay.paying">
+    <div class="page-overlay booking-flight"  ng-hide ="!pay.paying">
         <div class="overlay-content">
             <header>
                 <h4>Mohon Tunggu</h4>
             </header>
             <section>
                 <div class="container_new">
-                    
-                    @*<div>
-                        <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
-                    </div>*@
-                    <div >
+                    <div>
                         <p>Sedang memproses pilihan Anda.</p>
                     </div>
-                    
                 </div>
             </section>
         </div>
     </div>
-
-</div>
-        <!-- checkout end here -->
+    *@
+    
+</div><!-- checkout end here -->
                                 break;
     case "BookExpired":
     @:[Ini ceritanya page booking expired]

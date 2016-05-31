@@ -3,6 +3,10 @@
 /*--------------------*/
 /* mixins */
 /*--------------------*/
+@media only screen and (min-width: 400px) {
+  .page.page-flight .flight-summary {
+    background-color: red; } }
+
 body {
   background: #f9f9f9;
   font-family: 'Open Sans', sans-serif;
@@ -83,7 +87,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #fff;
     text-align: center;
     height: 60px; }
-    .site-header .header-display .site-menu, .site-header .header-display .user-menu, .site-header .header-display .flight-swap, .site-header .header-display .flight-detail {
+    .site-header .header-display .site-menu, .site-header .header-display .user-menu, .site-header .header-display .flight-swap, .site-header .header-display .flight-detail, .site-header .header-display .promo{
       width: 30px;
       height: 30px;
       background: url(/Assets/mobile/images/mobile-header-sprite.png) no-repeat;
@@ -94,7 +98,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       left: 10px; }
     .site-header .header-display .site-logo {
       height: 30px;
-      margin-top: 15px; }
+      margin-top: 15px; 
+    }
     .site-header .header-display .user-menu {
       background-position: 0 0;
       left: auto;
@@ -103,6 +108,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background: url(/Assets/mobile/images/flight-swap.png);
       left: auto;
       right: 10px; }
+    .site-header .header-display .promo {
+      background: url(/Assets/mobile/images/promo-logo.png);
+      left: auto;
+      right: 20px; }
     .site-header .header-display .flight-detail {
       width: 40px;
       background: none;
@@ -271,8 +280,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .section-title {
   font-weight: 600;
   padding-bottom: 15px;
-  margin-bottom: 15px;
-  padding-top: 15px; }
+  margin-bottom: 15px; }
   .section-title h1 {
     text-align: center; }
   .section-title span {
@@ -319,7 +327,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background-color: #111;
   color: #fefefe;
   width: 100%;
-  /*position: relative; height: 100px; bottom: 0; left:0;*/ }
+  height:110px }
   .site-footer .site-footer-menu {
     background-color: #303030; }
     .site-footer .site-footer-menu nav {
@@ -443,7 +451,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     top: 60px;
     /*padding-bottom:$header-height;*/ }
   .overlay .overlay__footer {
-    position: fixed;
+      position: fixed;
     width: 100%;
     bottom: 0;
     left: 0;
@@ -554,7 +562,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       height: 100%;
       left: 0;
       top: 0;
-      z-index: 2; }
+      z-index: 0; }
     .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__code {
       display: inline-block;
       vertical-align: middle;
@@ -778,6 +786,28 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .form__flightclass .form-control {
   height: 35px; }
 
+.thankyou-words {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px; }
+  .thankyou-words .section-title.stripe {
+    padding-bottom: 15px;
+    padding-top: 0; }
+  .thankyou-words .overlay__body.overlay__content {
+    padding-bottom: 20px; }
+  .thankyou-words h5 {
+    font-weight: bold;
+    font-size: 10px; }
+
+.loading-image {
+  margin: 40%; }
+
+.page-step-2 .btn.btn-grey.form-control, .page-step-2 .btn.btn-yellow.form-control {
+  width: 49%;
+  position: relative;
+  margin-top: 10px;
+  text-align: center; }
+
 /*--------------------*/
 .page.page-home {
   background: url(/assets/images/home-page-bg.jpg) top center repeat-x #2fb4e6; }
@@ -836,7 +866,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             width: 50px;
             text-align: center;
             background: #fff;
-            padding: 10px 15px;
+            padding: 10px 10px;
             color: #666; }
             .page.page-home .form-wrapper form .form__roundtrip .switch label.active {
               background: #0c7399;
@@ -881,7 +911,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         background-position: -44px 0; }
 
 .page.page-flight .flight-loading {
-  background: #ffae93;
+  background: whitesmoke;
   display: block;
   width: 100%;
   height: 5px;
@@ -1059,10 +1089,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-size: 16px; }
   .page.page-flight .flight-list .flight .flight-footer .flight-detail-button {
     display: inline-block;
-    padding: 3px 0; }
+    padding: 3px 0;
+      z-index: 0;
+  }
   .page.page-flight .flight-list .flight .flight-footer .flight-order {
     padding-top: 3px;
-    padding-bottom: 3px; }
+    padding-bottom: 3px; z-index: 0;}
 
 .overlay--flight-form .overlay__content {
   background: #1daee4; }
@@ -1098,6 +1130,25 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           -webkit-border-radius: 2px;
           -moz-border-radius: 2px;
           border-radius: 2px; }
+
+        .slider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: #666; }
+  .slider .ui-slider-range {
+    background: #fed446; }
+  .slider .ui-slider-handle {
+    background: #dedede;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    width: 15px;
+    height: 15px;
+    color: #fff; }
+    .slider .ui-slider-handle:focus {
+      border: 0; }
+    .slider-minmax {
+        color: #fed446; }
 
 .overlay--flight-filter .overlay__content .filter-group {
   padding: 12px; }
@@ -1191,7 +1242,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .overlay--flight-detail .overlay__content {
   padding: 0;
-  padding-bottom: 60px; }
+  padding-bottom: 20px; }
   .overlay--flight-detail .overlay__content .flight-title {
     background: #e5e3e4;
     position: relative; }
@@ -1288,7 +1339,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           height: 100%;
           position: absolute;
           background: url(/Assets/mobile/images/flight-separator.png) center center no-repeat;
-          left: 45%; }
+          left: 35%;
+            top: 20px;
+        }
+        .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail .flight__separator h5{
+            text-align: center;
+        }
         .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail .flight__arrival {
           margin-left: 10%; }
   .overlay--flight-detail .overlay__content .flight-wrapper .transit {
@@ -1311,7 +1367,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       position: relative;
       margin-left: auto;
       margin-right: auto;
-      font-weight: 600; }
+      font-weight: 600; 
+
+    }
 
 .overlay--flight-detail .overlay__footer h5 {
   margin-top: 0;
@@ -1393,14 +1451,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .page.page-checkout .page__body {
   padding: 10px; }
-  .page.page-checkout .page__body .page-step-2 .btn.btn-yellow {
-    margin-top: 25px; }
-  .page.page-checkout .page__body .step-button .btn.btn-yellow {
-        width: 95%;
-    text-align: center;
-    position: relative;
-    left: 2.5%;}
-
+  .page.page-checkout .page__body .page-loading {
+    display: none; }
+  .page.page-checkout .page__body .page-loaded {
+    display: block; }
+  
 .page.page-checkout .passenger {
   background: #fff;
   border: 1px solid #ccc; }
@@ -1417,19 +1472,19 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-checkout .summary .summary__title {
   color: #333; }
 
-.page.page-checkout .summary.summary--price dl:after {
+ .summary.summary--price dl:after {
   display: block;
   width: 100%;
   content: "";
   clear: both; }
 
-.page.page-checkout .summary.summary--price dl dt {
+ .summary.summary--price dl dt {
   float: left;
   width: 50%;
   font-weight: normal;
   position: relative;
   padding-left: 12px; }
-  .page.page-checkout .summary.summary--price dl dt:before {
+   .summary.summary--price dl dt:before {
     position: absolute;
     content: '';
     width: 7px;
@@ -1438,20 +1493,20 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     top: 3px;
     left: 0; }
 
-.page.page-checkout .summary.summary--price dl dd {
+ .summary.summary--price dl dd {
   float: left;
   width: 50%;
   text-align: right;
   font-weight: bold; }
 
-.page.page-checkout .summary.summary--price dl.total-price {
+ .summary.summary--price dl.total-price {
   border-top: 1px solid #ccc;
   padding-top: 10px; }
-  .page.page-checkout .summary.summary--price dl.total-price dt {
+   .summary.summary--price dl.total-price dt {
     width: 35%; }
-    .page.page-checkout .summary.summary--price dl.total-price dt:before {
+     .summary.summary--price dl.total-price dt:before {
       display: none; }
-  .page.page-checkout .summary.summary--price dl.total-price dd {
+   .summary.summary--price dl.total-price dd {
     width: 65%;
     color: #ff7200;
     font-size: 16px; }
@@ -1473,7 +1528,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       clear: both; }
     .page.page-checkout .summary.summary--passenger dl dt {
       float: left;
-      width: 35%;
+      width: 30%;
       font-weight: normal;
       position: relative; }
       .page.page-checkout .summary.summary--passenger dl dt:after {
@@ -1482,7 +1537,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         right: 10px; }
     .page.page-checkout .summary.summary--passenger dl dd {
       float: left;
-      width: 65%;
+      width: 70%;
       font-weight: bold; }
 
 .page.page-checkout .summary.summary--voucher {
@@ -1538,8 +1593,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding: 10px;
   padding-top: 0; }
 
-.page.page-checkout .overlay--flight-detail .flight-fare-wrapper {
-  padding: 10px; }
+/*.page.page-checkout .overlay--flight-detail .flight-fare-wrapper {
+  padding: 10px; }*/
   .page.page-checkout .overlay--flight-detail .flight-fare-wrapper .fare-note {
     background: #eaeaea;
     padding: 10px; }
@@ -1617,54 +1672,35 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         top: 0;
         left: 0; }
 
-.page.page-confirmation .countdown .widget-content {
+ .countdown .widget-content {
   background: #ffd632;
   padding: 15px; }
-  .page.page-confirmation .countdown .widget-content .timer {
+   .countdown .widget-content .timer {
     background: #ffefb0;
     padding: 12px;
     text-align: center;
     border-bottom: 1px solid #dab939;
     color: #4d4e4e; }
-    .page.page-confirmation .countdown .widget-content .timer > div {
+     .countdown .widget-content .timer > div {
       display: inline-block; }
-    .page.page-confirmation .countdown .widget-content .timer h5 {
+     .countdown .widget-content .timer h5 {
       font-weight: bold;
       font-size: 36px;
       margin-bottom: 0;
       margin-top: 0; }
-    .page.page-confirmation .countdown .widget-content .timer span {
+     .countdown .widget-content .timer span {
       font-size: 12px; }
-    .page.page-confirmation .countdown .widget-content .timer .separator {
+     .countdown .widget-content .timer .separator {
       vertical-align: top;
       margin-left: 6px;
       margin-right: 6px; }
 
-    .page.page-checkout .countdown .widget-content {
-  background: #ffd632;
-  padding: 15px; }
-  .page.page-checkout .countdown .widget-content .timer {
-    background: #ffefb0;
-    padding: 12px;
-    text-align: center;
-    border-bottom: 1px solid #dab939;
-    color: #4d4e4e; }
-    .page.page-checkout .countdown .widget-content .timer > div {
-      display: inline-block; }
-    .page.page-checkout .countdown .widget-content .timer h5 {
-      font-weight: bold;
-      font-size: 36px;
-      margin-bottom: 0;
-      margin-top: 0; }
-    .page.page-checkout .countdown .widget-content .timer span {
-      font-size: 12px; }
-    .page.page-checkout .countdown .widget-content .timer .separator {
-      vertical-align: top;
-      margin-left: 6px;
-      margin-right: 6px; }
 .page.page-confirmation .confirmation-form .control-label.important:after {
   content: '*';
   color: red; }
+.page-checkout.page-checkout-flight .btn.btn-yellow {
+    width: 100%;
+}
 
 .page.page-useraccount .menu-user {
   display: block;
@@ -2301,3 +2337,38 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   text-align: center;
   margin-top: 10px;
   margin-bottom: 10px; }
+
+.page-checkout.page-checkout-flight .btn.btn-yellow {
+    width: 100%;
+}
+.confirmation-content .container_new .row1{
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    padding: 0 ;
+    
+}
+
+.confirmation-content .container_new .row1 p{
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 10px;
+    padding: 0;
+}
+
+.upper-top {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+.scroll {
+    width: 100%;
+    z-index: 0;
+    position: relative;
+    top: 105px;
+    left: 0;
+    margin-bottom: 110px;
+}

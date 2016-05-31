@@ -80,6 +80,28 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     };
                 }
 
+                var firstOri ="";
+                var firstDest ="";
+
+                if (trip0.OriginAirport == "JKT")
+                {
+                    firstOri = "CGK";
+                }
+                else 
+                {
+                    firstOri = trip0.OriginAirport;
+                }
+
+                if (trip0.DestinationAirport == "JKT")
+                {
+                    firstDest = "CGK";
+                }
+                else 
+                {
+                    firstDest = trip0.DestinationAirport;
+                }
+
+
                 //SEARCH
                 url = "application/?action=booking";
                 var searchRequest = new RestRequest(url, Method.POST);
@@ -90,8 +112,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                  @"&returndaterange=0" +
                                  @"&return=NO" +
                                  @"&Submit=Pencarian" +
-                                 @"&ruteTujuan=" + trip0.DestinationAirport +
-                                 @"&ruteBerangkat=" + trip0.OriginAirport +
+                                 @"&ruteTujuan=" + firstDest +
+                                 @"&ruteBerangkat=" + firstOri +
                                  @"&vSub=YES";
                 searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var searchResponse = client.Execute(searchRequest);
@@ -377,15 +399,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         Price = new Price(),
                                         FareId = prefix + FID,
                                         Trips = new List<FlightTrip>
-                                        {
-                                           new FlightTrip()
-                                           {
-                                               Segments = segments,
+                                    {
+                                       new FlightTrip()
+                                       {
+                                           Segments = segments,
                                                OriginAirport = trip0.OriginAirport,
                                                DestinationAirport = trip0.DestinationAirport,
                                                DepartureDate = DateTime.SpecifyKind(trip0.DepartureDate,DateTimeKind.Utc)
-                                           }
-                                        }
+                                       }
+                                    }
                                     };
                                     itin.Price.SetSupplier(decimal.Parse(harga[1]), new Currency("IDR"));
                                     itins.Add(itin);

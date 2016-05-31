@@ -1,6 +1,6 @@
 ﻿.imlek-wrapper {
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -137,8 +137,8 @@
         z-index: 10; }
       .imlek-wrapper .draw__wrapper .draw__body .email {
         position: absolute;
-        top: 50%;
-        left: 50%;
+        bottom:0%;
+        left: 5%;
         width: 300px;
         margin-top: -150px;
         margin-left: -150px;

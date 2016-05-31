@@ -44,6 +44,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var clienty = new RestClient(cloudAppUrl);
                 var accReq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
                 var userName = "";
+                var currentDeposit = "";
                 RestResponse accRs;
                 var reqTime = DateTime.UtcNow;
                 var msgLogin = "Your login name is inuse";
@@ -86,7 +87,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var searchRequest1 = new RestRequest(url1, Method.GET);
                         var searchResponse1 = clientx.Execute(searchRequest1);
                         successLogin = Login(clientx, searchResponse1.RawBytes, viewstate, eventval, out userId,
-                            userName, out msgLogin); // out currentDeposit);
+                            userName, out msgLogin, out currentDeposit);
                     } while (!successLogin && (msgLogin != "Your login name is inuse"
                         && msgLogin != "There was an error logging you in"));
                 }
@@ -229,18 +230,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         case IssueEnum.NotIssued:
                             return new IssueTicketResult
                             {
-                                IsSuccess = false
+                                IsSuccess = false,
+                                CurrentBalance = GetCurrentBalance()
                             };
                         case IssueEnum.CheckingError:
                             return new IssueTicketResult
                             {
+                                CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
                                 ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                                
                             };
                         default:
                             return new IssueTicketResult
                             {
+                                CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
                                 ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }

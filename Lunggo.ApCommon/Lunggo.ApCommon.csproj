@@ -212,6 +212,7 @@
     <Compile Include="Flight\Constant\FareType.cs" />
     <Compile Include="Flight\Constant\FlightError.cs" />
     <Compile Include="Flight\Constant\Gender.cs" />
+    <Compile Include="Flight\Constant\IssueManualType.cs" />
     <Compile Include="Flight\Constant\PassengerType.cs" />
     <Compile Include="Flight\Constant\Supplier.cs" />
     <Compile Include="Flight\Constant\TripType.cs" />
@@ -219,11 +220,18 @@
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
     <Compile Include="Flight\Model\Combo.cs" />
     <Compile Include="Flight\Model\Conditions.cs" />
+    <Compile Include="Flight\Model\ContactData.cs" />
+    <Compile Include="Flight\Model\DiscountData.cs" />
+    <Compile Include="Flight\Model\FlightIssueData.cs" />
+    <Compile Include="Flight\Model\FlightNotifDeveloper.cs" />
+    <Compile Include="Flight\Model\FlightOrderInfo.cs" />
     <Compile Include="Flight\Model\FlightItineraryRule.cs" />
     <Compile Include="Flight\Model\FlightMarginRule.cs" />
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
+    <Compile Include="Flight\Model\FlightSearchPackage.cs" />
+    <Compile Include="Flight\Model\FlightSlightDelay.cs" />
     <Compile Include="Flight\Model\FlightTrip.cs" />
     <Compile Include="Flight\Model\IssueTicketInfo.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingInput.cs" />
@@ -295,6 +303,7 @@
     <Compile Include="Flight\Service\Search.cs" />
     <Compile Include="Flight\Utility\Parser.cs" />
     <Compile Include="Flight\Utility\SearchConditionEncoder.cs" />
+    <Compile Include="Flight\Wrapper\AirAsia\AirAsiaGetCurrentBalance.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaIsIssued.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaOrderTicket.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaRevalidateFare.cs" />
@@ -307,6 +316,7 @@
     <Compile Include="Flight\Wrapper\Citilink\CitilinkBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkClientHandler.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkGetBookingStatus.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkGetCurrentBalance.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkGetTripDetails.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkIsIssued.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkOrderTicket.cs" />
@@ -323,6 +333,7 @@
     <Compile Include="Flight\Wrapper\LionAir\LionAirGetBookingStatus.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Flight\Wrapper\LionAir\LionAirGetCurrentBalance.cs" />
     <Compile Include="Flight\Wrapper\LionAir\LionAirGetTripDetails.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -355,6 +366,7 @@
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaClientHandler.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaGetBookingStatus.cs" />
+    <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaGetCurrentBalance.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaGetTripDetails.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaIsIssued.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaOrderTicket.cs" />

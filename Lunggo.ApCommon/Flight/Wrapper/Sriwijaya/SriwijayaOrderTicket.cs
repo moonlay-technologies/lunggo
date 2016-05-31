@@ -74,6 +74,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     }
                     else
                     {
+                        hasil.CurrentBalance = GetCurrentBalance();
                         hasil.IsSuccess = false;
                         hasil.Errors = new List<FlightError> { FlightError.FailedOnSupplier };
                     }
@@ -97,12 +98,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             Logout(clientx);
                             return new IssueTicketResult
                             {
+                                CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false
                             };
                         case IssueEnum.CheckingError:
                             Logout(clientx);
                             return new IssueTicketResult
                             {
+                                CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
                                 ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
@@ -111,6 +114,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             Logout(clientx);
                             return new IssueTicketResult
                             {
+                                CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
                                 ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }

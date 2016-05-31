@@ -1,0 +1,161 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:13px;">
+
+
+    <table style="margin-left:auto; margin-right:auto; width:100%; max-width:700px; display:block; background:#ffffff;">
+        <thead width="100%">
+            <tr width="100%">
+                <th width="5%"></th>
+                <th colspan="2" width="90%" style="padding-top:30px;">
+                    <p style="text-align:right;">
+                        <a href="http://travorama.com" style="text-decoration:none;">
+                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travorama-logo-color.png")" alt="Travorama" />
+                        </a>
+                        <br />
+                    </p>
+                </th>
+                <th width="5%"></th>
+            </tr>
+        </thead>
+        <tbody width="100%">
+            <tr width="100%">
+                <td width="5%"></td>
+                <td colspan="2" width="90%">
+
+                    <!-- CONTENT  -->
+                    <p style="font-size:16px;"><b>Hi <span style="color: #15b1e4;"> @Model.Contact.Name </span></b></p>
+                    <span style="font-size:13px;">Terima kasih telah menggunakan <b>Travorama</b> untuk reservasi Anda.</span>
+                    <br /><br />
+                    <p>
+                        <b>Mohon Maaf</b>, pemesanan Anda gagal dikarenakan kesalahan sistem dalam proses verifikasi Credit Card. Anda dapat melakukan pemesanan ulang
+                        tiket di <span style="color: #15b1e4;">www.travorama.com</span> dengan pilihan metode pembayaran lain.
+                    </p>
+
+                    <p style="margin-bottom:10px;">Berikut Rincian Penerbangan Anda : </p>
+                    <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 3px dotted #15b1e4; margin-bottom: 4%; ">
+                        <thead>
+                            <tr>
+                                <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px dotted; ">
+                                    <p style="color: #15b1e4; text-align: left"><b>Rincian Penerbangan</b></p>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    @if (Model.Itinerary.Trips.Count > 1)
+                    {
+                        <table width="100%">
+                            <tr>
+                                <td width="3%" style="padding-top: 15px; vertical-align: top;">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-departure-icon.png")" />
+                                </td>
+                                <td style="color: #15b1e4; text-align: center;" width="2%">
+                                    <img width="100%" height="auto" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
+                                    Berangkat
+                                </td>
+                                <td rowspan="2" width="6%">
+                                    <p style="text-align: center;">:</p>
+                                </td>
+                                <td rowspan="2" width="40%">
+                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Itinerary.Trips[0].Segments[0].FlightNumber</b></p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 10px;"></td>
+                                <td style="height: 10px;"></td>
+                            </tr>
+                            <tr>
+                                <td width="3%" style="padding-top: 15px; vertical-align: top;">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-return-icon.png")" />
+                                </td>
+                                <td style="color: #15b1e4; text-align: center;" width="2%">
+                                    <img width="100%" height="auto" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[1].Segments[0].AirlineLogoUrl)" />
+                                    Kembali
+                                </td>
+                                <td rowspan="2" width="6%">
+                                    <p style="text-align: center;">:</p>
+                                </td>
+                                <td rowspan="2" width="40%">
+                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[1].Segments[0].AirlineName - @Model.Itinerary.Trips[1].Segments[0].AirlineCode-@Model.Itinerary.Trips[1].Segments[0].FlightNumber</b></p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 10px;"></td>
+                                <td style="height: 10px;"></td>
+                            </tr>
+                        </table>
+                    }
+                    else
+                    {
+                        <table width="100%">
+                            <tr>
+                                <td width="3%" style="padding-top: 15px; vertical-align: top;">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-departure-icon.png")" />
+                                </td>
+                                <td style="color: #15b1e4; text-align: center;" width="2%">
+                                    <img width="100%" height="auto" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
+                                    Berangkat
+                                </td>
+                                <td rowspan="2" width="6%">
+                                    <p style="text-align: center;">:</p>
+                                </td>
+                                <td rowspan="2" width="40%">
+                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Itinerary.Trips[0].Segments[0].FlightNumber</b></p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 10px;"></td>
+                                <td style="height: 10px;"></td>
+                            </tr>
+                        </table>
+                    }
+
+                    <p style="margin-bottom:30px; font-size:12px;">Mohon maaf atas ketidaknyamanan dalam proses pemesanan Anda.</p>
+
+                </td>
+                <td width="5%"></td>
+            </tr>
+            <tr width="100%">
+                <td width="5%"></td>
+                <td colspan="2" width="90%">
+                    <table width="100%">
+                        <tr>
+                            @{
+                                var travoramastring = "@travorama";
+                                var twitter = "@travoramaid";
+                            }
+                            <td width="30%" style="padding-bottom: 1em;"><h4 style="color:#15b1e4;"><b>Further Information: </b></h4></td>
+                            <td style="text-align:left;padding-bottom:1em;" width="20%"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/line.png")" /> @travoramastring</td>
+                            <td colspan="2" style="text-align:left; padding-bottom:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/mail.png")" /> cs@travorama </td>
+                        </tr>
+                        <tr>
+                            <td width="30%"><h4 style="color:#15b1e4;"><b>Follow Us On: </b></h4></td>
+                            <td style="text-align:left;" width="20%"><img style="width:30px;height:30px;" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-facebook.jpg")" /> travorama</td>
+                            <td style="text-align:left" width="20%"><img style="width:30px;height:30px;" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-twitter.jpg")" /> @twitter</td>
+                            <td style="text-align:left"><img style="width:30px;height:30px;" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-instagram.jpg")" /> @travoramastring</td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="5%"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

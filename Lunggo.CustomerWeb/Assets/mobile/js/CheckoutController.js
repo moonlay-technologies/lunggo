@@ -48,7 +48,14 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         // buyer info
         BuyerInfo: CheckoutDetail.BuyerInfo
     };
-
+    $scope.changeTitle = function (title) {
+        if (title == 'Mister')
+            return 'Tn.';
+        else if (title == 'Mistress')
+            return 'Ny.';
+        else if (title == 'Miss')
+            return 'Nn.';
+    }
     $scope.parseInt = parseInt;
 
     $scope.token = CheckoutDetail.Token;
@@ -383,6 +390,11 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         }
     }//$scope.book
 
+    $scope.getPassportDateInit = function () {
+        var datego = new Date($scope.flightDetail.departureFullDate);
+        return new Date(new Date(datego).setMonth(datego.getMonth() + 6));
+    }
+
     $scope.getPassportMonth = function () {
         if ($scope.flightDetail.departureMonth + 6 > $scope.months.length) {
             return $scope.flightDetail.departureMonth - 6;
@@ -503,13 +515,13 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     $scope.Countries = Countries;
     //titles
     $scope.titles = [
-            { name: 'Mr', value: 'Mister' },
-            { name: 'Mrs', value: 'Mistress' },
-            { name: 'Ms', value: 'Miss' }
+            { name: 'Tn.', value: 'Mister' },
+            { name: 'Ny.', value: 'Mistress' },
+            { name: 'Nn.', value: 'Miss' }
     ];
     $scope.titleKids = [
-            { name: 'Mr', value: 'Mister' },
-            { name: 'Ms', value: 'Miss' }
+            { name: 'Tn.', value: 'Mister' },
+            { name: 'Nn.', value: 'Miss' }
     ];
     // return URL
     $scope.PageConfig.ReturnUrl = document.referrer == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;

@@ -27,9 +27,9 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
         private static string _unfinishedRedirectUrl;
         private static string _errorRedirectUrl;
 
-        private const string FinishRedirectPath = @"/Veritrans/PaymentFinish";
-        private const string UnfinishRedirectPath = @"/Veritrans/PaymentUnfinish";
-        private const string ErrorRedirectPath = @"/Veritrans/PaymentError";
+        private const string FinishRedirectPath = @"/id/Veritrans/PaymentFinish";
+        private const string UnfinishRedirectPath = @"/id/Veritrans/PaymentUnfinish";
+        private const string ErrorRedirectPath = @"/id/Veritrans/PaymentError";
 
         private VeritransWrapper()
         {
@@ -74,7 +74,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                         payment.Status = PaymentStatus.Failed;
                     }
                     return payment;
-                /*case PaymentMethod.VirtualAccount:
+                case PaymentMethod.VirtualAccount:
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
@@ -87,7 +87,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     {
                         payment.Status = PaymentStatus.Denied;
                     }
-                    return payment; */
+                    return payment; 
                 default:
                     payment.Status = PaymentStatus.Failed;
                     return payment;
@@ -171,14 +171,14 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     TokenIdSaveEnabled = data.CreditCard.TokenIdSaveEnabled
                 };
             }
-           /* //Add Here for Payment Method Virtual Account
+            //Add Here for Payment Method Virtual Account
             else if (method == PaymentMethod.VirtualAccount) 
             {
                 requestParams.BankTransfer = new BankTransfer
                 {
                     Bank = "permata"
                 };
-            }*/
+            }
             var jsonRequestParams = JsonConvert.SerializeObject(requestParams);
             var dataStream = request.GetRequestStream();
             using (var streamWriter = new StreamWriter(dataStream))

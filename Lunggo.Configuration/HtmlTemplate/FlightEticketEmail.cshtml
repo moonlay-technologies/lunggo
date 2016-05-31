@@ -45,12 +45,12 @@
                     <!-- CONTENT  -->
 
                     <p style="font-size: 12px">Dear <span style="color: #15b1e4">@Model.Contact.Name,</span></p>
-                    <p style="font-size: 12px">Terima Kasih telah mempercayai <b>Travorama</b> dalam pemesanan tiket pesawat Anda.  <br /> Pemesanan Anda telah dikonfirmasi dengan sukses.</p>
-                    <p style="font-size: 12px">E-tiket Anda terdapat di attachment atau klik tombol berikut untuk mendownload e-ticket Anda :</p>
+                    <p style="font-size: 12px">Terima kasih telah mempercayai <b>Travorama</b> dalam pemesanan tiket pesawat Anda.  <br /> Pemesanan Anda telah dikonfirmasi dengan sukses.</p>
+                    <p style="font-size: 12px">E-tiket Anda terdapat di attachment atau klik tombol berikut untuk mendownload e-tiket Anda :</p>
 
                     <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left:15%; text-decoration: none; font-family:arial, helvetica, sans-serif;
                             width: 70%; padding-top: 17px; padding-bottom: 17px; text-align: center; font-size: 11px; color: #333333; margin-top: 10px;"
-                       href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Eticket?rsvNo="+Model.RsvNo)" target="_blank"><b>DOWNLOAD E-TICKET</b></a>
+                       href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Eticket?rsvNo="+Model.RsvNo)" target="_blank"><b>DOWNLOAD E-TIKET</b></a>
 
                     <p style="font-size: 9px; text-align: center; margin-bottom: 30px;"><b>Print e-tiket Anda di atas kertas ukuran A4 untuk ditunjukkan pada proses check-in di bandara.</b></p>
                     <p style="font-size: 9px; text-align: center; ">*(Invoice / kwitansi pembayaran juga telah disertakan sebagai attachment)</p>
@@ -185,7 +185,7 @@
                         }
                     </table>
                     <p style="color: #15b1e4; font-size: 10px; font-style: italic;">*Sertakan juga dokumen yang diperlukan, seperti kartu identitas Anda berupa KTP/SIM (rute domestik), Paspor (rute Internasional).</p>
-                    <p style="color: #15b1e4; font-size: 10px; margin-bottom: 20px; font-style: italic;">*Harap tiba di bandara 1 jam sebelum waktu keberangkatan. Waktu yang tertera adalah waktu lokal bandara setempat..</p>
+                    <p style="color: #15b1e4; font-size: 10px; margin-bottom: 20px; font-style: italic;">*Harap tiba di bandara 1 jam sebelum waktu keberangkatan. Waktu yang tertera adalah waktu lokal bandara setempat.</p>
                     <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 3%;" width="100%" />
                     <p style="font-size: 10px; font-style: italic; margin-bottom: 30px;">Email ini ditujukan hanya untuk @Model.Contact.Name, karena Anda telah melakukan pemesanan melalui Travorama</p>
 

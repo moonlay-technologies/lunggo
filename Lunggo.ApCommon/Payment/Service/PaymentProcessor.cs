@@ -106,12 +106,15 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 paymentDetails.Status = PaymentStatus.Pending;
             }
-            else if (method == PaymentMethod.CreditCard)// || method == PaymentMethod.VirtualAccount) // Add VA here
+            else if (method == PaymentMethod.CreditCard || method == PaymentMethod.VirtualAccount)
             {
                 var paymentResponse = SubmitPayment(paymentDetails, transactionDetails, itemDetails, method);
+                if (method == PaymentMethod.MandiriBillPayment || method == PaymentMethod.VirtualAccount)
+                {
+                    paymentDetails.Status = PaymentStatus.Pending;
+                }
                 if (method == PaymentMethod.VirtualAccount)
                 {
-                    paymentDetails.Status = PaymentStatus.Verifying;
                     paymentDetails.TransferAccount = paymentResponse.TransferAccount;
                 }
                 else

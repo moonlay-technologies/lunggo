@@ -83,11 +83,14 @@ namespace Lunggo.ApCommon.Payment.Service
                         queryParam.Time = payment.Time.Value.ToUniversalTime();
                     if (payment.TransferAccount != null)
                         queryParam.TransferAccount = payment.TransferAccount;
-                    queryParam.TimeLimit = payment.TimeLimit.ToUniversalTime();
+                    if (payment.TimeLimit != null)
+                        queryParam.TimeLimit = payment.TimeLimit.ToUniversalTime();
                     if (payment.RedirectionUrl != null)
                         queryParam.RedirectionUrl = payment.RedirectionUrl;
-                    queryParam.PaidAmountIdr = payment.PaidAmountIdr;
-                    queryParam.LocalPaidAmount = payment.LocalPaidAmount;
+                    if (payment.PaidAmountIdr != 0)
+                        queryParam.PaidAmountIdr = payment.PaidAmountIdr;
+                    if (payment.LocalPaidAmount != 0)
+                        queryParam.LocalPaidAmount = payment.LocalPaidAmount;
                     UpdatePaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);
                     return true;
                 }

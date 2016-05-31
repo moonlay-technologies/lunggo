@@ -199,6 +199,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         case IssueEnum.IssueSuccess:
                             return new IssueTicketResult
                             {
+                                CurrentBalance = GetCurrentBalance(), 
                                 IsSuccess = true,
                                 BookingId = bookingId,
                                 IsInstantIssuance = true
@@ -206,11 +207,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         case IssueEnum.NotIssued:
                             return new IssueTicketResult
                             {
+                                CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false
                             };
                         case IssueEnum.CheckingError:
                             return new IssueTicketResult
                             {
+                                CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
                                 ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
@@ -218,6 +221,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         default:
                             return new IssueTicketResult
                             {
+                                CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
                                 ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }

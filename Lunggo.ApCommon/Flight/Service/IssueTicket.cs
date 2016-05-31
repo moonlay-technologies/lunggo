@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
+using System;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -36,12 +37,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 (reservation.Payment.Method != PaymentMethod.Credit &&
                  reservation.Payment.Status == PaymentStatus.Settled))
             {
-                var queueService = QueueService.GetInstance();
-                var queue = queueService.GetQueueByReference("FlightIssueTicket");
-                queue.AddMessage(new CloudQueueMessage(input.RsvNo));
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("FlightIssueTicket");
+            queue.AddMessage(new CloudQueueMessage(input.RsvNo));
                 output.IsSuccess = true;
                 return output;
-            }
+        }
             else
             {
                 output.IsSuccess = false;
@@ -52,6 +53,9 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public IssueTicketOutput CommenceIssueTicket(IssueTicketInput input)
         {
+            List<string> supplier = new List<string>();
+            List<decimal> balance = new List<decimal>();
+            List<decimal> localPrice = new List<decimal>();
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var reservation = GetReservation(input.RsvNo);
@@ -68,7 +72,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     (reservation.Payment.Method != PaymentMethod.Credit &&
                      reservation.Payment.Status == PaymentStatus.Settled))
                 {
-                    Parallel.ForEach(reservation.Itineraries, itin =>
+                Parallel.ForEach(reservation.Itineraries, itin =>
                 {
                     var response = IssueTicketInternal(new IssueTicketInfo
                     {
@@ -76,6 +80,9 @@ namespace Lunggo.ApCommon.Flight.Service
                         CanHold = itin.CanHold,
                         Supplier = itin.Supplier
                     });
+                    balance.Add(response.CurrentBalance);
+                    supplier.Add(response.SupplierName);
+                    localPrice.Add(itin.SupplierPrice);
                     var orderResult = new OrderResult();
                     if (response.IsSuccess)
                     {
@@ -102,45 +109,72 @@ namespace Lunggo.ApCommon.Flight.Service
                     UpdateBookingStatusToDb(new List<BookingStatusInfo>
                     {
                         new BookingStatusInfo
-                    {
-                        BookingId = orderResult.BookingId,
-                        BookingStatus = orderResult.BookingStatus
+                        {
+                            BookingId = orderResult.BookingId,
+                            BookingStatus = orderResult.BookingStatus
                         }
                     });
                     output.OrderResults.Add(orderResult);
                 });
-                    if (output.OrderResults.TrueForAll(result => result.IsSuccess))
+                if (output.OrderResults.TrueForAll(result => result.IsSuccess))
+                {
+                    output.IsSuccess = true;
+                    if (output.OrderResults.TrueForAll(result => result.IsInstantIssuance))
                     {
-                        output.IsSuccess = true;
-                        if (output.OrderResults.TrueForAll(result => result.IsInstantIssuance))
+                        var detailsInput = new GetDetailsInput { RsvNo = input.RsvNo };
+                        GetAndUpdateNewDetails(detailsInput);
+                        SendEticketToCustomer(input.RsvNo);
+                        //Send Eticket Slight Delay if Choosing Mystifly
+                        if (supplier.Contains("Mystifly")) 
                         {
-                            var detailsInput = new GetDetailsInput { RsvNo = input.RsvNo };
-                            GetAndUpdateNewDetails(detailsInput);
-                            SendEticketToCustomer(input.RsvNo);
-                            if (reservation.Payment.Method != PaymentMethod.BankTransfer)
-                                SendInstantPaymentConfirmedNotifToCustomer(input.RsvNo);
+                            SendEticketSlightDelayNotifToCustomer(input.RsvNo);
+                        }
+                        if (reservation.Payment.Method != PaymentMethod.BankTransfer)
+                            SendInstantPaymentConfirmedNotifToCustomer(input.RsvNo);
                             InsertSavedPassengersToDb(reservation.Contact.Email, reservation.Passengers);
-                        }
                     }
-                    else
+                }
+                else
+                {
+                    int casetype = GetCaseType();
+                    var supplierInfoItin = ConcatenateMessage(supplier,balance,localPrice);
+                    if (casetype != 0)
                     {
-                        if (output.OrderResults.Any(set => set.IsSuccess))
+                        SendIssueSlightDelayNotifToCustomer(reservation.RsvNo + "+" + casetype.ToString());
+                        //Testing
+                        /*if (supplier.Contains("Mystifly"))
                         {
-                            output.PartiallySucceed();
+                            SendEticketSlightDelayNotifToCustomer(input.RsvNo);
                         }
-                        output.IsSuccess = false;
-                        output.Errors = output.Errors.Distinct().ToList();
-                        output.ErrorMessages = output.ErrorMessages.Distinct().ToList();
+                        SendFailedVerificationCreditCardNotifToCustomer(input.RsvNo);
+                        SendEticketSlightDelayNotifToCustomer(input.RsvNo); 
+                        SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);*/
+                }
+                else
+                {
+                        SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);
                     }
-                    UpdateIssueStatus(input.RsvNo, output);
-                    return output;
+
+                    SendIssueFailedNotifToDeveloper(reservation.RsvNo + "+" + supplierInfoItin);
+                    
+                    //Jika berhasil cuma berhasil satu doang
+                    if (output.OrderResults.Any(set => set.IsSuccess))
+                    {
+                        output.PartiallySucceed();
+                    }//End
+                    output.IsSuccess = false;
+                    //output.Errors = output.Errors.Distinct().ToList();
+                    //output.ErrorMessages = output.ErrorMessages.Distinct().ToList();
+                }
+                UpdateIssueStatus(input.RsvNo, output);
+                return output;
                 }
                 else
                 {
                     output.IsSuccess = false;
                     output.Errors = new List<FlightError> { FlightError.NotEligibleToIssue };
                     return output;
-                }
+            }
             }
         }
 
@@ -149,6 +183,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var supplierName = info.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
             IssueTicketResult result = supplier.OrderTicket(info.BookingId, info.CanHold);
+            result.SupplierName = supplier.SupplierName.ToString();
             return result;
         }
 
@@ -165,6 +200,61 @@ namespace Lunggo.ApCommon.Flight.Service
                 var progressMessages = "Issue Failed : " + errorMsgs + "; " + errors;
                 //UpdateIssueProgressToDb(rsvNo, progressMessages);
             }
+        }
+
+        private string ConcatenateMessage(List<string>supplierName, List<decimal>balance,List<decimal>localPrice)
+        {
+       
+            string balanceAndItinPrice = "";
+            for(int i=0;i<supplierName.Count;i++)
+            {
+                if (i != supplierName.Count - 1 && i>1)
+                {
+                    balanceAndItinPrice = supplierName[i] + ";" + localPrice[i] + ";" + balance[i] + "+";
+                }
+                else 
+                {
+                    balanceAndItinPrice = supplierName[i] + ";" + localPrice[i] + ";" + balance[i];
+                }
+                
+            }
+
+
+            return balanceAndItinPrice;
+
+        }
+
+        private static int GetCaseType() 
+        {
+            var datenow = DateTime.UtcNow.AddHours(+7);
+            int casetype;
+            DateTime myDate = DateTime.Parse(datenow.Month + "/" + datenow.Day + "/" + datenow.Year + " 04:00:00 PM");
+            if ((datenow <= myDate) && (datenow.DayOfWeek != DayOfWeek.Sunday && datenow.DayOfWeek != DayOfWeek.Saturday))
+            {
+                //Issue ticket 3 jam
+                casetype = (int)IssueManualType.WorkingHourCase;
+            }
+            else if ((datenow > myDate && datenow.DayOfWeek != DayOfWeek.Sunday && datenow.DayOfWeek != DayOfWeek.Saturday && datenow.DayOfWeek != DayOfWeek.Friday) || (datenow.DayOfWeek == DayOfWeek.Sunday))
+            {
+                //Issue ticket 1 hari
+                casetype = (int)IssueManualType.SundayOrNotWorkingHourCase;
+            }
+            else if (datenow > myDate && datenow.DayOfWeek == DayOfWeek.Friday)
+            {
+                //Issue ticket 3 hari
+                casetype = (int)IssueManualType.FridayNotWorkingHourCase;
+            }
+            else if (datenow.DayOfWeek == DayOfWeek.Saturday)
+            {
+                //Issue ticket 2 hari
+                casetype = (int)IssueManualType.SaturdayCase;
+            }
+            else
+            {
+                //Error System
+                casetype = (int)IssueManualType.ErrorSystem;
+            }
+            return casetype;
         }
     }
 }

@@ -125,6 +125,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     else
                     {
                         isIssued = false;
+
                     }   
                 }
                 switch (isIssued)

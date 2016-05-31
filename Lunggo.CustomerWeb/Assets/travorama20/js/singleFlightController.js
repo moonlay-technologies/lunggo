@@ -152,7 +152,7 @@ app.controller('singleFlightController', [
             hours = hours;
             minutes = minutes;
             seconds = seconds;
-            return hours + "h " + minutes + "m";
+            return hours + "j " + minutes + "m";
         }
 
         // get date
@@ -387,7 +387,7 @@ app.controller('singleFlightController', [
 
                         $('.push-token input').val($scope.revalidateFlightParam.token);
                         //$('.push-token').submit();
-
+                        $scope.revalidateSubmit();
                     } else if (returnData.IsValid == false) {
                         $scope.revalidateFlightParam.available = false;
                         $scope.revalidateFlightParam.validating = false;
@@ -420,7 +420,8 @@ app.controller('singleFlightController', [
             }
         }
         $scope.revalidateSubmit = function () {
-            $('.push-token input').val($scope.revalidateFlightParam.token);
+            //$('.push-token input').val($scope.revalidateFlightParam.token);
+            $scope.revalidateFlightParam.proceed = true;
             $('.push-token').submit();
         }
         $scope.revalidateCancel = function () {
@@ -603,7 +604,7 @@ app.controller('singleFlightController', [
                     range: true,
                     min: $scope.priceFilterParam.initial[0],
                     max: $scope.priceFilterParam.initial[1],
-                    step: 50000,
+                    step: 100,
                     values: [$scope.priceFilterParam.initial[0], $scope.priceFilterParam.initial[1]],
                     create: function (event, ui) {
                         $('.price-slider-min').val($scope.priceFilterParam.initial[0]);

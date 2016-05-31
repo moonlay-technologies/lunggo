@@ -25,7 +25,7 @@
     ViewBag.BodyClass = "page-checkout page-checkout-flight";
 
     ViewBag.SiteHeader = "checkout";
-    ViewBag.Title = "Payment";
+    ViewBag.Title = "Pembayaran";
 }
 @section AdditionalCSS {
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
@@ -123,7 +123,7 @@
                             <div class="content-step" id="step-4">
                                 <h3><b>METODE</b> PEMBAYARAN</h3>
 
-                                <hr />
+                                
                                 <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
 
                                 <div class="payment-wrapper">
@@ -212,7 +212,7 @@
                                                     <h5>Mandiri Bill Payment</h5>
                                                 </header>
                                                 <section>
-                                                    <img src="/Assets/images/Bank-Mandiri.jpg" alt="Mandiri Bill Payment" />
+                                                    <img src="/Assets/images/Bank-Mandiri-small.jpg" alt="Mandiri Bill Payment" />
                                                 </section>
                                             </label>
                                         </div><!-- .payment -->
@@ -309,7 +309,7 @@
 
                                         </form>
                                     </div>
-                                <!-- .credit-card-form -->
+                                    <!-- .credit-card-form -->
                                 }
 
                                 <div class="step-button">
@@ -376,8 +376,8 @@
                                         </dl>
                                     </div>
                                     <!--<footer>
-                                        <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
-                                    </footer> -->
+                                            <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
+                                        </footer> -->
                                 </div><!-- .widget.price-detail -->
                                 <div class="widget countdown">
                                     <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
@@ -424,7 +424,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-xs-6 col-xs-offset-6">
-                                                        <input type="submit" value="REDEEM" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
+                                                        <input type="submit" value="CEK" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
                                                         <input type="submit" value="RESET" class="btn btn-yellow form-control" ng-click="voucher.reset()" ng-show="voucher.checked" />
                                                     </div>
                                                 </div>
@@ -530,7 +530,7 @@
                 </div>
             </div><!-- .page-overlay -->
 
-            <div class="page-overlay booking-flight" ng-hide="!pay.paying">
+            <!--<div class="page-overlay booking-flight" ng-hide="!pay.paying">
                 <div class="overlay-content" >
                     <header>
                         <h4>Mohon Tunggu</h4>
@@ -548,69 +548,20 @@
                         </div>
                     </section>
                 </div>
-            </div>
-
-            <!--<div class="page-overlay booking-flight" ng-show="book.checked && book.isSuccess">
-                <div class="overlay-content">
-                    <header>
-                        <h4>Pemesanan Berhasil</h4>
-                    </header>
-                    <section>
-                        <p>Penerbangan Tersedia. Mengalihkan Anda ke halaman pembayaran.</p>
-                    </section>
-                </div>
-            </div>
-
-            <div class="page-overlay booking-flight" ng-show="book.checked && !book.isSuccess">
-                <div class="overlay-content">
-                    <header>
-                        <h4>Pemesanan Gagal</h4>
-                    </header>
-                    <section>
-                        <p>Mohon Maaf, pemesanan Anda gagal di proses.</p>
-                    </section>
-                    <footer>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                </div>
-                                <div class="col-sm-6">
-                                    <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-                </div>
-            </div>
-
-            <div class="page-overlay booking-flight" ng-show="book.isPriceChanged">
-                <div class="overlay-content">
-                    <header>
-                        <h4>Harga Berubah</h4>
-                    </header>
-                    <section>
-                        <p>
-                            Harga tiket untuk penerbangan ini berubah menjadi Rp {{book.newPrice | number : fractionSize}} disebabkan
-                            perubahan dari sistem maskapai
-                        </p>
-                    </section>
-                    <footer>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <a class="btn btn-grey btn-block" href="{{returnUrl}}">KEMBALI</a>
-                                </div>
-                                <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()">
-                                    <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">
-                                </form>
-                            </div>
-                        </div>
-                    </footer>
-
-                </div>
             </div>-->
 
+            <div class="bookfailed-popup" ng-hide="!pay.paying">
+                <div class=" overlay-content">
+                <section style="padding-top:60px; padding-left:225px;">
+                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                    <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Tunggu...</b></span></div>
+                    <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                    <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
+                </section>
+            </div>
+            </div>
         </div>
+    
 
         <!-- checkout end here -->
                                 break;

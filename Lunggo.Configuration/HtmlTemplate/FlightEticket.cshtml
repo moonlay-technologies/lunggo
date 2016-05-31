@@ -39,9 +39,9 @@
                     </div>
                     <div class="col-xs-8">
                         <div class="page-header-right">
-                            <div class="page-title"><h3>E-TICKET</h3></div>
+                            <div class="page-title"><h3>E-TIKET</h3></div>
                             <div class="page-help">
-                                <p>Any Problem? Contact Us :</p>
+                                <p>Butuh Bantuan? Hubungi kami :</p>
                                 <p><span>E. </span>cs@travorama.com</p>
                             </div>
                         </div>
@@ -58,9 +58,9 @@
                         {
                             if (segment != Model.Itinerary.Trips[0].Segments.First())
                             {
-                                var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
+                                var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
                                 <div class="transit">
-                                    <p><b>Transit Duration :</b> @transitDuration.ToString(@"h'h 'm'm'")</p>
+                                    <p><b>Lama Transit :</b> @transitDuration.ToString(@"h'h 'm'm'")</p>
                                 </div>
                             <!-- .transit -->
                             }
@@ -95,7 +95,7 @@
                                         <h3>@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
                                     </div>
                                     <div class="duration">
-                                        <h3>Duration - @segment.Duration</h3>
+                                        <h3>Durasi - @segment.Duration</h3>
                                     </div>
                                     <div class="arrival-date">
                                         @{ var jamKembali = segment.ArrivalTime;}
@@ -151,7 +151,7 @@
                         <td width="10%" rowspan="2"></td>
                     </tr>
                     <tr>
-                        <td width="35%" align="center" style="padding-top:1em;">Tunjukkan <b>e-ticket</b> dan <b>identitas</b><br /> para penumpang saat check-in</td>
+                        <td width="35%" align="center" style="padding-top:1em;">Tunjukkan <b>e-tiket</b> dan <b>identitas</b><br /> para penumpang saat check-in</td>
                         <td width="35%" align="center" style="padding-top:1em;">Check-in <b>paling lambat 90 menit</b><br />sebelum keberangkatan</td>
                 </table>
             </section><!-- .page-content -->
@@ -177,9 +177,9 @@
                     </div>
                     <div class="col-xs-8">
                         <div class="page-header-right">
-                            <div class="page-title"><h3>E-TICKET</h3></div>
+                            <div class="page-title"><h3>E-TIKET</h3></div>
                             <div class="page-help">
-                                <p>Any Problem? Contact Us :</p>
+                                <p>Butuh Bantuan? Hubungi Kami :</p>
                                 <p><span>E. </span>cs@travorama.com</p>
                             </div>
                         </div>
@@ -196,9 +196,9 @@
                         {
                             if (segment != Model.Itinerary.Trips[1].Segments.First())
                             {
-                                var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
+                                var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
                                 <div class="transit">
-                                    <p><b>Transit Duration :</b> @transitDuration.ToString(@"h'h 'm'm'")</p>
+                                    <p><b>Lama Transit:</b> @transitDuration.ToString(@"h'h 'm'm'")</p>
                                 </div>
                              <!-- .transit -->
                             }
@@ -318,9 +318,9 @@
                     </div>
                     <div class="col-xs-8">
                         <div class="page-header-right">
-                            <div class="page-title"><h3>E-TICKET</h3></div>
+                            <div class="page-title"><h3>E-TIKET</h3></div>
                             <div class="page-help">
-                                <p>Any Problem? Contact Us :</p>
+                                <p>Butuh Bantuan? Hubungi Kami :</p>
                                 <p><span>E. </span>cs@travorama.com</p>
                             </div>
                         </div>
@@ -430,7 +430,7 @@
                         <td width="10%" rowspan="2"></td>
                     </tr>
                     <tr>
-                        <td width="35%" align="center" style="padding-top:1em;">Tunjukkan <b>e-ticket</b> dan <b>identitas</b><br /> para penumpang saat check-in</td>
+                        <td width="35%" align="center" style="padding-top:1em;">Tunjukkan <b>e-tiket</b> dan <b>identitas</b><br /> para penumpang saat check-in</td>
                         <td width="35%" align="center" style="padding-top:1em;">Check-in <b>paling lambat 90 menit</b><br />sebelum keberangkatan</td>
                 </table>
             </section><!-- .page-content -->

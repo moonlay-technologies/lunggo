@@ -33,9 +33,18 @@
         .page-loaded {display:block;}
         .page-step-1 {}
         .page-step-2 {
-            .btn.btn-yellow {margin-top:25px;}
+            .btn.btn-yellow {width: 49%;
+        position: relative;
+        margin-top: 10px;
+        text-align: center;
+            }
+        .page-step-3 {
+            .btn.btn-yellow, .btn.btn-grey {width: 49%;
+        position: relative;
+        margin-top: 10px;
+        text-align: center;
+             }
         }
-        .page-step-3 {}
 
     }
 
@@ -131,7 +140,7 @@
 
 
 // page confirmation
-.page.page-confirmation {
+.page.page-confirmation, .page-checkout {
     .instruction {
         header {background:#2fb4e6; color:#fff; padding:5px 10px; margin-bottom:10px;}
         // bank detail
