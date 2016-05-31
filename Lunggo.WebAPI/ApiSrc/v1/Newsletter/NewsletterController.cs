@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Cors;
+using Lunggo.WebAPI.ApiSrc.Newsletter.Model;
 using Lunggo.WebAPI.ApiSrc.v1.Newsletter.Model;
 using Newtonsoft.Json.Linq;
 using RestSharp;

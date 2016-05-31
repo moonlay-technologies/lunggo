@@ -1,6 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Antlr.Runtime.Misc;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.Framework.Filter;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -183,9 +186,14 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
-        public ActionResult ConfirmationRaw() 
+        [DeviceDetectionFilter]
+        public ActionResult Confirmation(string x)
         {
-            return View();
+            var flight = FlightService.GetInstance();
+            var rsv = flight.GetReservationForDisplay("140516536279");
+            rsv.Payment.Method = (PaymentMethod) Enum.Parse(typeof (PaymentMethod), x);
+            rsv.Payment.TransferAccount = "123457890";
+            return View(rsv);
         }
 
     }

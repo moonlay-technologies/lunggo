@@ -39,7 +39,7 @@ namespace Lunggo.Framework.Context
 
         public static String GetActiveDeviceCode()
         {
-            return (String)HttpContext.Current.Items[SystemConstant.HttpContextDevice];
+            return HttpContext.Current.Items[SystemConstant.HttpContextDevice].ToString();
         }
 
         public static void SetActiveDeviceCode(string deviceCode)

@@ -15,10 +15,11 @@ namespace Lunggo.ApCommon.ProductBase.Model
 
         private static Type[] ListOrderRules()
         {
-            return (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-             from assemblyType in domainAssembly.GetTypes()
-             where typeof(OrderRuleBase).IsAssignableFrom(assemblyType)
-             select assemblyType).OrderBy(type => type.GetProperty("Type")).ToArray();
+            //return (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+            // from assemblyType in domainAssembly.GetTypes()
+            // where typeof(OrderRuleBase).IsAssignableFrom(assemblyType)
+            // select assemblyType).OrderBy(type => type.GetProperty("Type")).ToArray();
+            return null;
         }
 
         protected abstract ProductType Type { get; }

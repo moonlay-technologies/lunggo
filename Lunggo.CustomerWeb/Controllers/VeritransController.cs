@@ -53,7 +53,6 @@ namespace Lunggo.CustomerWeb.Controllers
                 var flight = FlightService.GetInstance();
                 if (notif.order_id.IsFlightRsvNo())
                 {
-                    var flight = FlightService.GetInstance();
                     PaymentService.GetInstance().UpdatePayment(notif.order_id, paymentInfo);
                 }
                 if (paymentInfo.Method == PaymentMethod.CreditCard && paymentInfo.Status == PaymentStatus.Denied) 

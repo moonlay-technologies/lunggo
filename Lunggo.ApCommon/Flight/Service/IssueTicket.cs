@@ -82,7 +82,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     });
                     balance.Add(response.CurrentBalance);
                     supplier.Add(response.SupplierName);
-                    localPrice.Add(itin.SupplierPrice);
+                    localPrice.Add(itin.Price.Supplier);
                     var orderResult = new OrderResult();
                     if (response.IsSuccess)
                     {

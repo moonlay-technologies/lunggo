@@ -7,7 +7,6 @@ using System.Web;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
@@ -60,7 +59,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         searchedHtml = html0;
                         var viewstate = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
                         var eventval = HttpUtility.UrlEncode(searchedHtml["#__EVENTVALIDATION"].Attr("value"));
-                        FlightService.ParseCabinClass(CabinClass.Economy);
+                        FlightService.GetInstance().ParseCabinClass(CabinClass.Economy);
                         if (searchResponse0.ResponseUri.AbsolutePath != "/lionairagentsportal/default.aspx" &&
                             (searchResponse0.StatusCode == HttpStatusCode.OK ||
                              searchResponse0.StatusCode == HttpStatusCode.Redirect)) 

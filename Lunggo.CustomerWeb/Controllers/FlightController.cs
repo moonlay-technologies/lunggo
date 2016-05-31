@@ -164,7 +164,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     {
                         RsvNo = rsvNo,
                         Reservation = reservation,
-                        TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault(),
+                        TimeLimit = reservation.Payment.TimeLimit,
                         SavedCreditCards = savedCreditCards
                     });
 
@@ -198,13 +198,14 @@ namespace Lunggo.CustomerWeb.Controllers
                 TempData["FlightCheckoutOrBookingError"] = true;
                 return RedirectToAction("Payment");
             }
-            if (paymentUrl == "DIRECT" || reservation.Payment.Method == PaymentMethod.VirtualAccount)
-                return RedirectToAction("Confirmation", "Flight", new { rsvNo });
-            else if (paymentUrl == "THIRDPARTYDIRECT")
+            if (reservation.Payment.Method == PaymentMethod.BankTransfer || reservation.Payment.Method == PaymentMethod.VirtualAccount)
+                return RedirectToAction("Confirmation", "Flight", new {rsvNo});
+            else
             {
                 TempData["AllowThisThankyouPage"] = rsvNo;
-                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
+                return RedirectToAction("Thankyou", "Flight", new {rsvNo});
             }
+        }
 
         public ActionResult Thankyou(string rsvNo)
         {

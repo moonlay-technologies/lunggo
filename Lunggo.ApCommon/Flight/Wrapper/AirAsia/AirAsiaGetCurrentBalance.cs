@@ -11,7 +11,6 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Web;
 using RestSharp;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using System.Collections.Generic;
 using System;
 

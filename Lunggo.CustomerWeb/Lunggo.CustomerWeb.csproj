@@ -270,6 +270,7 @@
     <Compile Include="Models\CalendarRecipientData.cs" />
     <Compile Include="Models\FlightCheckoutData.cs" />
     <Compile Include="Models\FlightPaymentConfirmationData.cs" />
+    <Compile Include="Models\FlightPaymentData.cs" />
     <Compile Include="Models\FlightSearchData.cs" />
     <Compile Include="Models\FlightSelectData.cs" />
     <Compile Include="Models\FlightThankyouData.cs" />
@@ -2680,6 +2681,8 @@
     <Content Include="Views\Template\ConfirmationRaw.cshtml" />
     <Content Include="Views\Template\EmailSubscribeVoucher.cshtml" />
     <Content Include="Views\Template\EmailSubscribe.cshtml" />
+    <Content Include="Views\Template\Confirmation.cshtml" />
+    <Content Include="Views\Template\Confirmation.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

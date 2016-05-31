@@ -80,7 +80,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     content = GetResponseContent(response);
                     if (content != null)
                     {
-                        payment.TargetAccount = content.PermataVANumber;
+                        payment.TransferAccount= content.PermataVANumber;
                         payment.Status = PaymentResult(content);
                     }
                     else

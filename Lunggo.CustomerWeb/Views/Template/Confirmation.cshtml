@@ -1,24 +1,30 @@
-﻿
-@{
-    ViewBag.Title = "Confirmation";
-}
-
-@using System.Globalization
+﻿@using System.Globalization
 @using Lunggo.ApCommon.Flight.Service
-@model Lunggo.CustomerWeb.Models.FlightPaymentConfirmationData
+@using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Flight.Model
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-checkout page-confirmation";
     ViewBag.Title = "Konfirmasi Pembayaran";
-
+    
     ViewBag.SiteHeader = "checkout";
+
+    //var reservation = FlightService.GetInstance().GetReservationForDisplay(Model.RsvNo);
 
     var beneficiaryBankList = new List<SelectListItem>
     {
         new SelectListItem {Text = "Mandiri", Value = "Mandiri"},
         new SelectListItem {Text = "BCA", Value = "BCA"},
     };
+}
+@{
+    DateTime timelimit = (DateTime)Model.Payment.TimeLimit;
+    FlightSegmentForDisplay prevSegment = null;
 }
 
 @section AdditionalJS {
@@ -28,112 +34,285 @@
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/jquery.countdown.min.js"></script>
 }
+@section PageJS{
+    <script>
+        var langCode = 'en';
+        var paymentTimeout = '';
 
+        // development only start
+        paymentTimeout = new Date('@timelimit.AddMinutes(-30).ToString("u")');
+
+        // countdown timer
+        $('.timer').countdown(paymentTimeout, function(event) {
+            $('.timer .hour').text(event.strftime('%H'));
+            $('.timer .minute').text(event.strftime('%M'));
+            $('.timer .second').text(event.strftime('%S'));
+        });
+
+        // date selector
+        $('.date-picker').datepicker({
+            minDate: new Date()
+        });
+
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/checkoutController.js"></script>
+}
+
+<div ng-app="travorama" ng-controller="confirmationController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
+
+    <section class="checkout-step {{stepClass}} hidden">
+        <div class="container">
+            <div class="step step-1" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span>01. <b>Data Pesanan</b></span></div>
+            <div class="step step-2" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span>02. <b>Data Kontak</b></span></div>
+            <div class="step step-3" ng-class="{'active' : currentPage == 3, 'inactive' : currentPage > 3}"><span>03. <b>Data Penumpang</b></span></div>
+            <div class="step step-4" ng-class="{'active' : currentPage == 4}"><span>04. <b>Pembayaran</b></span></div>
+        </div>
+    </section><!-- .checkout-step -->
 
     <div class="confirmation-content">
 
         <div class="container">
             <div class="row">
                 <div class="col-xs-8">
-
+                    
                     <div class="instruction">
-                        <h3>PANDUAN <b>TRANSFER</b></h3>
-                        <header>
-                            <h4 class="text-right">No. Pesanan: <b>121616583180</b></h4>
-                        </header>
-                        <section class="text">
-                            <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, eTicket akan dikirimkan ke Email Anda dalam waktu max <b>60 menit</b></p>
-                            <p>Mohon selesaikan pembayaran melalui <b>ATM / Internet Banking / M-Banking</b></p>
-                        </section>
-                        <section class="bank-detail">
-                            <div class="bank">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <img src="/Assets/images/Bank-Mandiri.png" alt="Bank Mandiri" />
-                                    </div>
-                                    <div class="col-xs-8">
-                                        <dl>
-                                            <dt>Nama Bank</dt>
-                                            <dd>: Bank Mandiri</dd>
-                                        </dl>
-                                        <dl>
-                                            <dt>Atas Nama</dt>
-                                            <dd>: TRAVEL MADEZY INTERNASIONAL</dd>
-                                        </dl>
-                                        <dl>
-                                            <dt>Nomor Rekening</dt>
-                                            <dd>: 1020006675802</dd>
-                                        </dl>
-                                        <dl>
-                                            <dt>Jumlah</dt>
-                                            <dd>: Rp 219.900</dd>
-                                        </dl>
+                        @if (Model.Payment.Method == PaymentMethod.VirtualAccount)
+                        {
+                            <h3>PANDUAN <b>TRANSFER</b></h3>
+                            <header>
+                                <h4 class="text-right">No. Pesanan: <b>@Model.RsvNo</b></h4>
+                            </header>
+                            <section class="text">
+                                <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, eTicket akan dikirimkan ke Email Anda dalam waktu max <b>60 menit</b></p>
+                                <p>Mohon selesaikan pembayaran melalui <b>ATM</b></p>
+                            </section>
+                            <section class="bank-detail">
+                                <div class="bank">
+                                    <div class="row">
+                                        <p align="center"><span style="font-size:13px;">No Virtual Account:</span> <span style="font-size:15px;"><b>@Model.Payment.TransferAccount</b></span></p>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
-                    </div>
-
-                    <div class="transfer-instruction">
-                        <h3><b>PANDUAN TRANSFER</b></h3>
-                        <!--<section> -->
-                        <ol sstyle="margin-left:0px;padding-left:0px;">
-                            <li class="order-list" style="margin-bottom:5px; margin-left:0px;padding-left:0px;">Pastikan Anda melakukan transfer ke rekening <b>Travel Madezy Internasional</b></li>
-                            <li class="order-list" style="margin-bottom:5px; margin-left:0px;padding-left:0px;">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
-                            <li class="order-list" style="margin-bottom:5px; margin-left:0px;padding-left:0px;">E-tiket akan dikirimkan secara otomatis ke email Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
-                        </ol>  
-                           <!--Bagian Form Konfirmasi yang dihilangin-->
-                        <section class="order-detail">
-                            <section>
-                                <h3>DETAIL <b>PESANAN</b></h3>
-                                <div class="container">
+                            </section>
+                            <table>
+                            <tr>
+                                <td>
+                                    <p style ="margin-left:4px;">Cara Pembayaran Lewat <b>ATM Mandiri/Jaringan ATM Bersama</b>:</p>
+                                    <ol>
+                                        <li><p>Masukkan PIN Anda.</p></li>
+                                        <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya </b>.</p></li>
+                                        <li><p>Pilih <b>Transfer</b>.</p></li>
+                                        <li><p>Pilih <b>Antar Bank Online</b>.</p></li>
+                                        <li><p>Masukkan nomor <b>013 @Model.Payment.TransferAccount</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).</p></li>
+                                        <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
+                                        <li><p>No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.</p></li>
+                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
+                                        <li><p>Transaksi berhasil.</p></li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Cara Pembayaran Lewat <b>ATM BCA/Jaringan ATM PRIMA</b>:</p>
+                                    <ol>
+                                        <li><p>Masukkan PIN Anda.</p></li>
+                                        <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
+                                        <li><p>Pilih <b>Transfer</b>.</p></li>
+                                        <li><p>Pilih <b>Ke Rekening Bank Lain</b>.</p></li>
+                                        <li><p>Masukkan kode <b>013</b> (Kode Bank Permata) lalu tekan <b>Benar</b>.</p></li>
+                                        <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
+                                        <li><p>Masukkan <b>@Model.Payment.TransferAccount</b> (16 digit nomor akun virtual pembayaran) lalu tekan <b>Benar</b>.</p></li>
+                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
+                                        <li><p>Transaksi berhasil.</p></li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Cara Pembayaran Lewat <b>ATM Bank Permata/Jaringan ATM Alto</b>:</p>
+                                    <ol>
+                                        <li><p>Masukkan PIN Anda.</p></li>
+                                        <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
+                                        <li><p>Pilih <b>Transaksi Pembayaran</b>.</p></li>
+                                        <li><p>Pilih <b>Pembayaran Virtual Account</b>.</p></li>
+                                        <li><p>Masukkan 16 digit nomor akun virtual pembayaran <b>@Model.Payment.TransferAccount</b>.</p></li>
+                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
+                                        <li><p>Transaksi berhasil.</p></li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="margin-bottom:10px">Setelah itu, mohon tunggu hingga e-tiket/voucher diterbitkan dan dikirim ke e-mail Anda maks. 60 menit</p>
+                                </td>
+                            </tr>
+                        </table>
+                        }
+                        else
+                        {
+                            <h3>PANDUAN <b>TRANSFER</b></h3>
+                            <header>
+                                <h4 class="text-right">No. Pesanan: <b>@Model.RsvNo</b></h4>
+                            </header>
+                            <section class="text">
+                                <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maksimum <b>60 menit</b></p>
+                                <p>Mohon selesaikan pembayaran melalui <b>ATM / Internet Banking / M-Banking</b></p>
+                            </section>
+                            <section class="bank-detail">
+                                <div class="bank">
                                     <div class="row">
-                                        <div class="order-detail-left col-xs-12">
-                                            <div class="passenger">
-                                                <h4>INFO PENUMPANG</h4>
+                                        <div class="col-xs-4">
+                                            <img src="/Assets/images/Bank-Mandiri.png" alt="Bank Mandiri" />
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <dl>
+                                                <dt>Nama Bank</dt>
+                                                <dd>: Bank Mandiri</dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Atas Nama</dt>
+                                                <dd>: TRAVEL MADEZY INTERNASIONAL</dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Nomor Rekening</dt>
+                                                <dd>: 1020006675802</dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Jumlah</dt>
+                                                <dd>: Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="transfer-instruction">
+                                <!--<section> -->
+                                <ol style="margin-left:5px;padding-left:5px;margin-top:5px;">
+                                    <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Pastikan Anda melakukan transfer ke rekening <b>Travel Madezy Internasional</b></li>
+                                    <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
+                                    <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">E-tiket akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
+                                </ol>
+                                <!--Bagian Form Konfirmasi yang dihilangin-->
+                            </div>
+                        }
+                        
+                        <!-- Kondisi nya dikasi sampai sini-->
+                        <header style="margin-bottom:0px; margin-top:25px;">
+                            <h4>DETAIL <b>PESANAN</b></h4>
+                        </header>
+                        <section class="confirmation-order" style="margin-top:0px;">
+                            <div class="confirm-order-detail">
+                                <div class="confirm-passenger">
+                                    <h4><b>INFO PENUMPANG</b></h4>
+                                    <ol>
+                                        @foreach (var passenger in Model.Passengers)
+                                        {
+                                            <li><p>@EnumDisplay.PassengerType(passenger.Type) : @EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p></li>
+                                        }
+                                    </ol>
 
-                                                <ol>
-                                                    <li><p>Dewasa: Mr. Gianluigi Buffon</p></li>
-                                                </ol>
+                                </div>
+                                <div class="confirm-order">
+                                    <h4><b>DETAIL PENERBANGAN</b></h4>
 
-                                            </div>
-                                            <div class="order">
-                                                <h4>DETAIL PENERBANGAN</h4>
-
-                                                <div class="flight departure">
-
-                                                    <div class="row">
-                                                        <div class="col-xs-3">
-                                                            <p>Berangkat : </p>
+                                    <div class="confirm-flight departure">
+                                        <p>Berangkat : </p>
+                                        <div class="row">
+                                            
+                                            @foreach (var segment in Model.Itinerary.Trips[0].Segments)
+                                            {
+                                                if (segment != Model.Itinerary.Trips[0].Segments.First())
+                                                {
+                                                    var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
+                                                    <div class="col-xs-12" style="padding-top:5px;">
+                                                        <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;">
+                                                            <span style="background:#f4f4f4;padding:0 10px;color:#15b1e4;">Transit di @segment.DepartureCity (@segment.DepartureAirport) selama @transitDuration.ToString()</span>
+                                                        </p>
+                                                    </div>
+                                                    <!-- .transit -->
+                                                }
+                                                <div class="col-xs-2">
+                                                    <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                    <p><span>@segment.AirlineName</span></p>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <div class="col-xs-12">
+                                                        <div class="col-xs-4">
+                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureTime.ToString("HH:mm")</b></p>
+                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
+                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureAirportName</p>
                                                         </div>
-                                                        <div class="col-xs-9">
-                                                            <p> Jakarta (CGK) - Denpasar (DPS)</p>
-                                                            <p>Rabu, 20 Apr 2016</p>
+                                                        <div class="col-xs-4" style="align-content:center;">
+                                                            <p></p>
+                                                            <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Durasi:</b> @segment.Duration</p>
+                                                            <p></p>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalTime.ToString("HH:mm")</b></p>
+                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
+                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalAirportName</p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="flight return">
-                                                    <div class="row">
-                                                        <div class="col-xs-3">
-                                                            <p>Kembali : </p>
+                                                prevSegment = segment;
+                                            }
+                                        </div>
+                                    </div>
+                                    @if (Model.Itinerary.Trips.Count > 1)
+                                    {
+                                        <div class="confirm-flight return" style="margin-top: 20px;">
+                                            <p>Kembali : </p>
+                                            <div class="row">
+                                                @foreach (var segment in Model.Itinerary.Trips[1].Segments)
+                                                {
+                                                    if (segment != Model.Itinerary.Trips[1].Segments.First())
+                                                    {
+                                                        var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
+                                                        <div class="col-xs-12" style="padding-top:5px;">
+                                                            <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;">
+                                                                <span style="background:#f4f4f4;padding:0 10px;color:#15b1e4;">Transit di @segment.DepartureCity (@segment.DepartureAirport) selama @transitDuration.ToString()</span>
+                                                            </p>
                                                         </div>
-                                                        <div class="col-xs-9">
-                                                            <p>Jakarta (CGK) - Denpasar (DPS)</p>
-                                                            <p>Rabu, 20 Apr 2016</p>
-                                                        </div>
+
+                                                        <!-- .transit -->
+                                                    }
+                                                    <div class="col-xs-2">
+                                                        <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                        <p><span>@segment.AirlineName</span></p>
                                                     </div>
+                                                    <div class="col-xs-10">
+                                                        <div class="col-xs-12">
+                                                            <div class="col-xs-4">
+                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureTime.ToString("HH:mm")</b></p>
+                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
+                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureAirportName</p>
+                                                            </div>
+                                                            <div class="col-xs-4" style="align-content:center;">
+                                                                <p></p>
+                                                                <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Durasi:</b> @segment.Duration</p>
+                                                                <p></p>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalTime.ToString("HH:mm")</b></p>
+                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
+                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalAirportName</p>
+                                                            </div>
+                                                        </div>
                                                 </div>
+                                                prevSegment = segment;
+                                                }
                                             </div>
                                         </div>
-
-                                    </div>
+                                    }
                                 </div>
-
-                            </section>
+                            </div>
                         </section><!-- .order-detail -->
                         <!--</section>-->
                     </div>
-
                 </div>
                 <div class="col-xs-4">
                     <div class="widget-container">
@@ -142,21 +321,30 @@
                             <div class="widget-content">
                                 <dl>
                                     <dt>Total Tiket</dt>
-                                    <dd>Rp 260.000</dd>
+                                    <dd>Rp @((Model.Payment.FinalPrice + Model.Payment.DiscountNominal + Model.Payment.TransferFee).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                 </dl>
-                                <dl>
-                                    <dt>Potongan Harga</dt>
-                                    <dd>- Rp 40.000</dd>
-                                </dl>
-                                <dl>
-                                    <dt>Kode Unik Pembayaran</dt>
-                                    <dd>- Rp 100</dd>
-                                </dl>    
+                                @if (Model.Payment.DiscountNominal != 0)
+                                {
+                                    <dl>
+                                        <dt>Potongan Harga</dt>
+                                        <dd>- Rp @Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                    </dl>
+                                }
+                                @if (Model.Payment.TransferFee != 0)
+                                {
+                                    <dl>
+                                        <dt>Kode Unik Pembayaran</dt>
+                                        <dd>- Rp @Model.Payment.TransferFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                    </dl>
+                                }
                                 <dl class="total-price">
                                     <dt>Total</dt>
-                                    <dd>Rp 219.900</dd>
+                                    <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                 </dl>
                             </div>
+                            <footer>
+                                <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
+                            </footer>
                         </div><!-- .widget.price-detail -->
                         <div class="widget countdown">
                             <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
@@ -186,3 +374,5 @@
         </div>
 
     </div><!-- .confirmation-content -->
+
+</div>
