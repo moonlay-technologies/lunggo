@@ -120,7 +120,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 try
                 {
-
                     IEnumerable<string> fareIds;
                     switch (conditions.CabinClass)
                     {
@@ -150,9 +149,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 CultureInfo.CreateSpecificCulture("id-ID"));
                         var segmentFareIds = fareId.Split('|').Last().Split('^');
                         var segments = new List<FlightSegment>();
+                        
                         foreach (var segmentFareId in segmentFareIds)
                         {
                             var splittedSegmentFareId = segmentFareId.Split('~').ToArray();
+                            var deptTime = DateTime.Parse(splittedSegmentFareId[5]).AddHours(-(dict.GetAirportTimeZone(splittedSegmentFareId[4])));
+                            var arrTime = DateTime.Parse(splittedSegmentFareId[7]).AddHours(-(dict.GetAirportTimeZone(splittedSegmentFareId[6])));
+                            var duration = arrTime - deptTime;
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = splittedSegmentFareId[0],
@@ -164,7 +167,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 ArrivalAirport = splittedSegmentFareId[6],
                                 ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]), DateTimeKind.Utc),
                                 OperatingAirlineCode = splittedSegmentFareId[0],
-                                StopQuantity = 0
+                                StopQuantity = 0,
+                                Duration =  duration
                             });
                         }
                         var itin = new FlightItinerary
@@ -223,7 +227,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             duration =
                                 duration.Add(TimeSpan.ParseExact(splitduration[1], "m'm'",
                                     CultureInfo.InvariantCulture));
-                        segment.Duration = duration;
+                        //segment.Duration = duration;
                     };
                     return new SearchFlightResult
                     {
