@@ -68,6 +68,28 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     };
                 }
 
+                var firstOri ="";
+                var firstDest ="";
+
+                if (conditions.Trips[0].OriginAirport == "JKT")
+                {
+                    firstOri = "CGK";
+                }
+                else 
+                {
+                    firstOri = conditions.Trips[0].OriginAirport;
+                }
+
+                if (conditions.Trips[0].DestinationAirport == "JKT")
+                {
+                    firstDest = "CGK";
+                }
+                else 
+                {
+                    firstDest = conditions.Trips[0].DestinationAirport;
+                }
+
+
                 //SEARCH
                 url = "application/?action=booking";
                 var searchRequest = new RestRequest(url, Method.POST);
@@ -78,8 +100,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                  @"&returndaterange=0" +
                                  @"&return=NO" +
                                  @"&Submit=Pencarian" +
-                                 @"&ruteTujuan=" + conditions.Trips[0].DestinationAirport +
-                                 @"&ruteBerangkat=" + conditions.Trips[0].OriginAirport +
+                                 @"&ruteTujuan=" + firstDest +
+                                 @"&ruteBerangkat=" + firstOri +
                                  @"&vSub=YES";
                 searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var searchResponse = client.Execute(searchRequest);

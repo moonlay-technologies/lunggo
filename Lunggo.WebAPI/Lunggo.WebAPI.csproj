@@ -186,6 +186,7 @@
     <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Newsletter\Model\NewsletterSubscribeInput.cs" />
+    <Compile Include="ApiSrc\v1\Newsletter\Model\NewsletterSubscribeOutput.cs" />
     <Compile Include="ApiSrc\v1\Newsletter\Query\CheckEmailQuery.cs" />
     <Compile Include="ApiSrc\v1\TransferIdentifier\Model\SavePriceApiResponse.cs" />
     <Compile Include="ApiSrc\v1\TransferIdentifier\Model\TransferIdentifierApiResponse.cs" />

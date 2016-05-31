@@ -191,12 +191,13 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             var flight = FlightService.GetInstance();
             var paymentUrl = flight.GetBookingRedirectionUrl(rsvNo);
+            var reservation = flight.GetReservationForDisplay(rsvNo);
             if (paymentUrl == null)
             {
                 TempData["FlightCheckoutOrBookingError"] = true;
                 return RedirectToAction("Payment");
             }
-            if (paymentUrl == "DIRECT")
+            if (paymentUrl == "DIRECT" || reservation.Payment.Method == PaymentMethod.VirtualAccount)
                 return RedirectToAction("Confirmation", "Flight", new { rsvNo });
             else if (paymentUrl == "THIRDPARTYDIRECT")
             {
@@ -232,7 +233,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Confirmation(string rsvNo)
         {
             var reservation = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-            if (reservation.Payment.Method == PaymentMethod.BankTransfer && reservation.Payment.Status == PaymentStatus.Pending)
+            if ((reservation.Payment.Method == PaymentMethod.BankTransfer || reservation.Payment.Method == PaymentMethod.VirtualAccount) && reservation.Payment.Status == PaymentStatus.Pending)
             {
                 /*return View(new FlightPaymentConfirmationData
                 {

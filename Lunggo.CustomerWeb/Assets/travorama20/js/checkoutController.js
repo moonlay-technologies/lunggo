@@ -29,9 +29,9 @@ app.controller('checkoutController', [
         //$scope.paymentMethod = ''; //Payments
         $scope.stepClass = '';
         $scope.titles = [
-            { name: 'Mr', value: 'Mister' },
-            { name: 'Mrs', value: 'Mistress' },
-            { name: 'Ms', value: 'Miss' }
+            { name: 'Tn.', value: 'Mister' },
+            { name: 'Ny.', value: 'Mistress' },
+            { name: 'Nn.', value: 'Miss' }
         ];
 
         
@@ -65,6 +65,7 @@ app.controller('checkoutController', [
             send: function () {
                 $scope.book.booking = true;
                 $scope.book.isPriceChanged = false;
+                $scope.book.checked = false;
 
                 // generate data
                 $scope.book.postData =' "Token":"' + $scope.token + '",  "Contact.Title" :"' + $scope.buyerInfo.title + '","Contact.Name":"' + $scope.buyerInfo.fullname + '", "Contact.CountryCode":"' + $scope.buyerInfo.countryCode + '", "Contact.Phone":"' + $scope.buyerInfo.phone + '","Contact.Email":"' + $scope.buyerInfo.email + '","Language":"' + $scope.language + '"';
@@ -123,8 +124,23 @@ app.controller('checkoutController', [
                         
                         
                     } else {
-                        $scope.book.checked = true;
-                        $scope.book.isSuccess = false;
+                        if (returnData.data.NewPrice != null) {
+                            $scope.book.isPriceChanged = true;
+                            $scope.book.isSuccess = false;
+                            $scope.book.newPrice = returnData.data.NewPrice;
+                            $scope.book.checked = true;
+                        }
+                        else {
+                            $scope.book.isSuccess = false;
+                            //$scope.book.rsvNo = returnData.data.RsvNo;
+
+                            //$('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                            //$('form#rsvno').submit();
+                            $scope.book.checked = true;
+                        }
+
+                        //$scope.book.checked = true;
+                        //$scope.book.isSuccess = false;
                     }
 
                 }, function (returnData) {
@@ -394,6 +410,14 @@ app.controller('checkoutController', [
             }
         });
 
+        $scope.changeTitle = function(title) {
+            if (title == 'Mister')
+                return 'Tn.';
+            else if (title == 'Mistress')
+                return 'Ny.';
+            else if (title == 'Miss')
+                return 'Nn.';
+        }
 
         // toggle Travorama Login
         $scope.toggleLogin = function () {

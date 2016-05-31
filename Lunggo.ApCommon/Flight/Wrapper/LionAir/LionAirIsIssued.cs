@@ -30,6 +30,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var clienty = new RestClient(cloudAppUrl);
                 var accReq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
                 var userName = "";
+                var currentDeposit = "";
                 var accRs = new RestResponse();
                 var reqTime = DateTime.UtcNow;
                 var ctr = 0;
@@ -66,7 +67,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var searchRequest1 = new RestRequest(url1, Method.GET);
                         var searchResponse1 = clientx.Execute(searchRequest1);
                         successLogin = Login(clientx, searchResponse1.RawBytes, viewstate, eventval, out userId,
-                            userName, out msgLogin); //, out currentDeposit);
+                            userName, out msgLogin, out currentDeposit);
                         ctr++;
                     } while (!successLogin && (msgLogin != "Your login name is inuse"
                         && msgLogin != "There was an error logging you in"));
