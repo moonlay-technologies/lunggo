@@ -54,11 +54,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var postData =
                     @"form_build_id=form-443a2fb12e018591436589029dabcde0" +
                     @"&form_id=flute_location_language_form" +
-                    @"&form_id=flute_location_language_form" +
                     @"&location=ID" +
+                    @"&language=ID"+
                     @"op=Choose";
                 langRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var langResponse = client.Execute(langRequest);
+                var temp = langResponse.ResponseUri.AbsoluteUri;
                 if (langResponse.StatusCode != HttpStatusCode.OK)
                 {
                     return new SearchFlightResult
@@ -392,8 +393,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                        new FlightTrip()
                                        {
                                            Segments = segments,
-                                           OriginAirport = conditions.Trips[0].OriginAirport,
-                                           DestinationAirport = conditions.Trips[0].DestinationAirport,
+                                           OriginAirport = firstOri,
+                                           DestinationAirport = firstDest,
                                            DepartureDate = DateTime.SpecifyKind(conditions.Trips[0].DepartureDate,DateTimeKind.Utc)
                                        }
                                     }
