@@ -312,7 +312,7 @@
                                                 </div>
                                                 <div class="form-group" ng-if="nationalityRequired">
                                                     <label class="control-label">Kewarganegaraan</label>
-                                                    <select class="form-control" name="passenger_{{$index}}_passportCountry" ng-model="passenger.passport.country" ng-init="passenger.passport.country = 'ID'" ng-required="nationalityRequired">
+                                                    <select class="form-control" name="passenger_{{$index}}_nationality" ng-model="passenger.nationality" ng-init="passenger.nationality= 'ID'" ng-required="nationalityRequired">
                                                         <option ng-repeat="country in countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
                                                     </select>
                                                 </div>
@@ -506,6 +506,7 @@
                                                 <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Year" value="" ng-model="passenger.passport.expire.year" />
                                                 <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Month" value="" ng-model="passenger.passport.expire.month" />
                                                 <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Date" value="" ng-model="passenger.passport.expire.date" />
+                                                <input type="text" name="Passengers[{{$index}}].PassportCountry" value="" ng-model="passenger.passport.country" />
                                                 <input type="text" name="Passengers[{{$index}}].idNumber" value="" ng-model="passenger.idNumber" />
                                                 <input type="text" name="Passengers[{{$index}}].Country" value="" ng-model="passenger.nationality" />
 

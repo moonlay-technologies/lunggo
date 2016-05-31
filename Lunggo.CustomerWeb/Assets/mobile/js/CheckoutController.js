@@ -300,18 +300,19 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             for (var i = 0; i < $scope.passengers.length; i++) {
 
                 // check nationality
-                if (!$scope.passportRequired) {
+                if (!$scope.CheckoutConfig.PassportRequired) {
                     $scope.passengers[i].passport.number = '';
                     $scope.passengers[i].passport.expire = {};
                     $scope.passengers[i].passport.expire.date = '';
                     $scope.passengers[i].passport.expire.month = '';
                     $scope.passengers[i].passport.expire.year = '';
                     $scope.passengers[i].passport.expire.full = '';
+                    $scope.passengers[i].passport.country = '';
                     if (!$scope.CheckoutConfig.NationalityRequired) {
-                        $scope.passengers[i].passport.country = '';
+                        $scope.passengers[i].nationality = '';
                     }
                 }
-                if (!$scope.idRequired) {
+                if (!$scope.CheckoutConfig.IdRequired) {
                     $scope.passengers[i].idNumber = '';
                 }
 
@@ -327,14 +328,15 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
                 $scope.book.postData = $scope.book.postData
                     + (',"Passengers[' + i + '].Type": "' + $scope.passengers[i].type
-                        + '", "Passengers[' + i + '].Title": "' + $scope.passengers[i].title + '", "Passengers[' + i + '].FirstName":"'
-                        + $scope.passengers[i].firstName + '", "Passengers[' + i + '].LastName": "'
-                        + $scope.passengers[i].lastName + '", "Passengers[' + i + '].BirthDate":"'
-                        + $scope.passengers[i].birth.full + '", "Passengers[' + i + '].PassportNumber":"'
-                        + $scope.passengers[i].passport.number
+                        + '", "Passengers[' + i + '].Title": "' + $scope.passengers[i].title
+                        + '", "Passengers[' + i + '].FirstName":"' + $scope.passengers[i].firstName
+                        + '", "Passengers[' + i + '].LastName": "' + $scope.passengers[i].lastName
+                        + '", "Passengers[' + i + '].BirthDate":"' + $scope.passengers[i].birth.full
+                        + '", "Passengers[' + i + '].PassportNumber":"' + $scope.passengers[i].passport.number
                         + '", "Passengers[' + i + '].PassportExpiryDate":"' + $scope.passengers[i].passport.expire.full
+                        + '", "Passengers[' + i + '].PassportCountry":"' + $scope.passengers[i].passport.country
                         + '", "Passengers[' + i + '].idNumber":"' + $scope.passengers[i].idNumber
-                        + '", "Passengers[' + i + '].Country":"' + $scope.passengers[i].passport.country +'"');
+                        + '", "Passengers[' + i + '].Country":"' + $scope.passengers[i].nationality +'"');
                 //);
             }
             $scope.book.postData = '{' + $scope.book.postData + '}';
