@@ -103,6 +103,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var flightNumber = splitted[1].Trim(' ');
                 var hidden = string.Join("+", date.ToString("yyyyMMdd"), airlineCode, flightNumber,
                     origin + dest + "IDR");
+                var rep = (splitted.Length - 1)/8;
+                var data = "";
+                for (var m = 0; m < rep; m++)
+                {
+                    data += splitted[8*m].Trim(' ').Trim('^') + "+" 
+                        + splitted[1 + 8*m].Trim(' ') + "+"
+                        + splitted[4 + 8*m] + splitted[6 + 8*m];
+                    if (m != rep - 1)
+                    {
+                        data += HttpUtility.UrlEncode("/ "); ;
+                    }
+                }
+
+                hidden = string.Join("+", date.ToString("yyyyMMdd"), data);
+                hidden = string.Join("", hidden, "IDR");
 
                 // [POST] Search Flight
 
