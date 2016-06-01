@@ -340,7 +340,7 @@ default:
                             </dl>
                             <dl>
                                 <dt>Tanggal Lahir</dt>
-                                <dd>{{Passenger.birth.date}} / {{parseInt(Passenger.birth.month)+1}} / {{Passenger.birth.year}}</dd>
+                                <dd>{{Passenger.birth.date}} {{months[Passenger.birth.month].name}} {{Passenger.birth.year}}</dd>
                             </dl>
                             <dl ng-if="CheckoutConfig.PassportRequired">
                                 <dt>No. Paspor</dt>
@@ -348,7 +348,7 @@ default:
                             </dl>
                             <dl ng-if="CheckoutConfig.PassportRequired">
                                 <dt>Tgl. Kadaluarsa Paspor</dt>
-                                <dd>{{Passenger.passport.expire.date}} / {{parseInt(Passenger.passport.expire.month)+1}} / {{Passenger.passport.expire.year}}</dd>
+                                <dd>{{Passenger.passport.expire.date}} {{months[Passenger.passport.expire.month].name}} {{Passenger.passport.expire.year}}</dd>
                             </dl>
                             
                             

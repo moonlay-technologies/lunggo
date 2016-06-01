@@ -4,6 +4,7 @@ using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using CsQuery;
 using Lunggo.ApCommon.Constant;
@@ -149,6 +150,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 CultureInfo.CreateSpecificCulture("id-ID"));
                         var segmentFareIds = fareId.Split('|').Last().Split('^');
                         var segments = new List<FlightSegment>();
+                        var stops = Regex.Matches(fareId, "THRU").Count;
                         
                         foreach (var segmentFareId in segmentFareIds)
                         {
@@ -167,7 +169,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 ArrivalAirport = splittedSegmentFareId[6],
                                 ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]), DateTimeKind.Utc),
                                 OperatingAirlineCode = splittedSegmentFareId[0],
-                                StopQuantity = 0,
+                                StopQuantity = stops,
                                 Duration =  duration
                             });
                         }
