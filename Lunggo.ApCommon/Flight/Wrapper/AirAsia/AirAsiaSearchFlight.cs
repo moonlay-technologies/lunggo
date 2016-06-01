@@ -7,6 +7,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using CsQuery;
+using CsQuery.StringScanner.ExtensionMethods;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
@@ -52,6 +53,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var originCountry = dict.GetAirportCountryCode(trip0.OriginAirport);
                 var destinationCountry = dict.GetAirportCountryCode(trip0.DestinationAirport);
                 var availableFares = new CQ();
+                var flightTable = new CQ();
                 CQ searchedHtml;
                 if (originCountry == "ID")
                 {
@@ -77,6 +79,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
                     searchedHtml = (CQ)html;
                     availableFares = searchedHtml[".radio-markets"];
+                    flightTable = searchedHtml[".avail-table-detail-table"];
                 }
                 //else if (destinationCountry == "ID")
                 //{
@@ -177,15 +180,155 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 OperatingAirlineCode = splittedSegmentFareId[0],
                                 StopQuantity = segmentStop,
                                 Duration =  duration,
-                                Stops = new List<FlightStop>
-                                {
-                                    new FlightStop()
-                                    {
-                                        Airport = whereStop,
-                                    }
-                                }
+                                //Stops = new List<FlightStop>
+                                //{
+                                //    new FlightStop()
+                                //    {
+                                //        Airport = whereStop,
+                                //    }
+                                //}
                             });
                         }
+
+                        //PARSING DATA UNTUK DATA STOP
+
+                        foreach (var flight in flightTable)
+                        {
+                            //ambil row2nya (.fare-light-row)
+                            var rows = flight.ChildElements.ToList()[0].ChildElements.ToList();
+                            //cek apa jumlah rownya sama dengan segmen
+                            if (rows.Count> segments.Count)
+                            {
+                                for (var x = 1; x < rows.Count - 1; x++)
+                                {
+                                    //ambil data kode airport nya dan jamnya
+                                    var deptArpt =
+                                        rows[x].ChildElements.ToList()[1].
+                                            ChildElements.ToList()[0].
+                                                ChildElements.ToList()[1].InnerHTML.SubstringBetween(1, 4);
+                                    var arrvArpt =
+                                        rows[x].ChildElements.ToList()[3].
+                                            ChildElements.ToList()[0].
+                                                ChildElements.ToList()[1].InnerHTML.SubstringBetween(1, 4);
+
+                                    var depTimeStop = new DateTime();
+                                    var arrTimeStop = new DateTime();
+                                    //Kalau masuk ke Segmen ke2
+                                    if (deptArpt == segments.ElementAt(0).ArrivalAirport)
+                                    {
+                                        var arrvHrAtStop = rows[x].ChildElements.ToList()[3].
+                                                ChildElements.ToList()[0].
+                                                    ChildElements.ToList()[0].InnerHTML;
+                                        var deptHrAtStop = rows[x+1].ChildElements.ToList()[1].
+                                                ChildElements.ToList()[0].
+                                                    ChildElements.ToList()[0].InnerHTML;
+
+                                        var jambrg = segments.ElementAt(1).DepartureTime.Hour;
+                                        var jamdtg = Convert.ToInt32(arrvHrAtStop.Split(':')[0]);
+
+                                        if (jambrg > jamdtg)
+                                        {
+                                            //Kedatangan di stop udah beda hari dgn keberangkatan segmen
+                                            var W = segments.ElementAt(1).DepartureTime.AddDays(1);
+                                            arrTimeStop = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
+                                        else
+                                        {
+                                            var W = segments.ElementAt(1).DepartureTime;
+                                            arrTimeStop = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
+
+                                        jambrg = Convert.ToInt32(deptHrAtStop.Split(':')[0]);
+                                        jamdtg = segments.ElementAt(1).ArrivalTime.Hour;
+
+                                        if (jambrg > jamdtg)
+                                        {
+                                            //Kedatangan di segmen1 udah beda hari dgn keberangkatan di stop
+                                            var W = segments.ElementAt(1).ArrivalTime.AddDays(-1);
+                                            depTimeStop = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
+                                        else
+                                        {
+                                            var W = segments.ElementAt(1).ArrivalTime;
+                                            depTimeStop = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
+
+                                        var durationAtStop = depTimeStop - arrTimeStop;
+
+                                        segments.ElementAt(1).Stops[0].ArrivalTime = arrTimeStop;
+                                        segments.ElementAt(1).Stops[0].DepartureTime = depTimeStop;
+                                        segments.ElementAt(1).Stops[0].Duration = durationAtStop;
+                                        segments.ElementAt(1).Stops[0].Airport = deptArpt;
+
+                                    }
+                                   
+                                    if (arrvArpt == segments.ElementAt(0).ArrivalAirport)
+                                    {
+                                        var arrvHrAtStop = rows[x-1].ChildElements.ToList()[3].
+                                                 ChildElements.ToList()[0].
+                                                     ChildElements.ToList()[0].InnerHTML;
+                                        var deptHrAtStop = rows[x].ChildElements.ToList()[1].
+                                                ChildElements.ToList()[0].
+                                                    ChildElements.ToList()[0].InnerHTML;
+
+                                        var jambrg = segments.ElementAt(0).DepartureTime.Hour;
+                                        var jamdtg = Convert.ToInt32(arrvHrAtStop.Split(':')[0]); 
+
+                                        if (jambrg > jamdtg)
+                                        {
+                                            //Kedatangan di stop udah beda hari dgn keberangkatan segmen
+                                            var W = segments.ElementAt(0).DepartureTime.AddDays(1);
+                                            arrTimeStop = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
+                                        else
+                                        {
+                                            var W = segments.ElementAt(1).DepartureTime;
+                                            arrTimeStop = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
+
+                                        jambrg = Convert.ToInt32(deptHrAtStop.Split(':')[0]);
+                                        jamdtg = segments.ElementAt(0).ArrivalTime.Hour;
+
+                                        if (jambrg > jamdtg)
+                                        {
+                                            
+                                            var W = segments.ElementAt(0).ArrivalTime.AddDays(-1);
+                                            depTimeStop = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
+                                        else
+                                        {
+                                            var W = segments.ElementAt(0).ArrivalTime;
+                                            depTimeStop = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
+
+                                        var durationAtStop = depTimeStop - arrTimeStop;
+
+                                        segments.ElementAt(0).Stops[0].ArrivalTime = arrTimeStop;
+                                        segments.ElementAt(0).Stops[0].DepartureTime = depTimeStop;
+                                        segments.ElementAt(0).Stops[0].Duration = durationAtStop;
+                                        segments.ElementAt(0).Stops[0].Airport = arrvArpt;
+
+                                    }
+                                }
+                            }
+                        }
+
                         var itin = new FlightItinerary
                         {
                             AdultCount = conditions.AdultCount,
