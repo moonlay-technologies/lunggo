@@ -154,7 +154,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var segmentFareIds = fareId.Split('|').Last().Split('^');
                         var segments = new List<FlightSegment>();
                         var stops = Regex.Matches(fareId, "THRU").Count;
-                        
+                        var whereStop = "";
                         foreach (var segmentFareId in segmentFareIds)
                         {
                             var splittedSegmentFareId = segmentFareId.Split('~').ToArray();
@@ -163,7 +163,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             {
                                 segmentStop = stops;
                             }
-                            var whereStop = splittedSegmentFareId[splittedSegmentFareId.Length - 1];
+                            whereStop = splittedSegmentFareId[splittedSegmentFareId.Length - 1];
                             var deptTime = DateTime.Parse(splittedSegmentFareId[5]).AddHours(-(dict.GetAirportTimeZone(splittedSegmentFareId[4])));
                             var arrTime = DateTime.Parse(splittedSegmentFareId[7]).AddHours(-(dict.GetAirportTimeZone(splittedSegmentFareId[6])));
                             var duration = arrTime - deptTime;
@@ -263,10 +263,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                                         var durationAtStop = depTimeStop - arrTimeStop;
 
-                                        segments.ElementAt(1).Stops[0].ArrivalTime = arrTimeStop;
-                                        segments.ElementAt(1).Stops[0].DepartureTime = depTimeStop;
-                                        segments.ElementAt(1).Stops[0].Duration = durationAtStop;
-                                        segments.ElementAt(1).Stops[0].Airport = deptArpt;
+                                        var segmentStops = new List<FlightStop>
+                                        {
+                                            new FlightStop()
+                                            {
+                                                Airport = whereStop,
+                                                ArrivalTime = arrTimeStop,
+                                                Duration = durationAtStop,
+                                                DepartureTime = depTimeStop
+                                            }
+                                        };
+                                        segments.ElementAt(1).Stops = segmentStops;
 
                                     }
                                    
@@ -292,7 +299,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                         }
                                         else
                                         {
-                                            var W = segments.ElementAt(1).DepartureTime;
+                                            var W = segments.ElementAt(0).DepartureTime;
                                             arrTimeStop = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
                                                 Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
                                                 Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
@@ -319,10 +326,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                                         var durationAtStop = depTimeStop - arrTimeStop;
 
-                                        segments.ElementAt(0).Stops[0].ArrivalTime = arrTimeStop;
-                                        segments.ElementAt(0).Stops[0].DepartureTime = depTimeStop;
-                                        segments.ElementAt(0).Stops[0].Duration = durationAtStop;
-                                        segments.ElementAt(0).Stops[0].Airport = arrvArpt;
+                                        var segmentStops = new List<FlightStop>
+                                        {
+                                            new FlightStop()
+                                            {
+                                                Airport = whereStop,
+                                                ArrivalTime = arrTimeStop,
+                                                Duration = durationAtStop,
+                                                DepartureTime = depTimeStop
+                                            }
+                                        };
+                                        segments.ElementAt(0).Stops = segmentStops;
 
                                     }
                                 }
