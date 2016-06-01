@@ -151,17 +151,6 @@ namespace Lunggo.ApCommon.Flight.Service
             var result = new List<Transit>();
             for (var i = 0; i < segments.Count; i++)
             {
-                if (segments[i].Stops != null)
-                {
-                    result.AddRange(segments[i].Stops.Select(stop => new Transit
-                    {
-                        IsStop = true,
-                        Airport = stop.Airport,
-                        ArrivalTime = stop.ArrivalTime,
-                        DepartureTime = stop.DepartureTime,
-                        Duration = stop.DepartureTime - stop.ArrivalTime
-                    }));
-                }
                 if (i != 0)
                 {
                     result.Add(new Transit

@@ -55,8 +55,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var availableFares = new CQ();
                 var flightTable = new CQ();
                 CQ searchedHtml;
-                if (originCountry == "ID")
-                {
+                //if (originCountry == "ID")
+                //{
                     var url = @"Flight/Select";
                     var searchRequest = new RestRequest(url, Method.GET);
                     searchRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
@@ -80,45 +80,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     searchedHtml = (CQ)html;
                     availableFares = searchedHtml[".radio-markets"];
                     flightTable = searchedHtml[".avail-table-detail-table"];
-                }
-                //else if (destinationCountry == "ID")
-                //{
-                //    var url = @"http://booking.airasia.com/Flight/InternalSelect" +
-                //              @"?o1=" + trip0.DestinationAirport +
-                //              @"&d1=" + trip0.OriginAirport +
-                //              @"&dd1=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
-                //              @"&dd2=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
-                //              @"&ADT=" + conditions.AdultCount +
-                //              @"&CHD=" + conditions.ChildCount +
-                //              @"&inl=" + conditions.InfantCount +
-                //              @"&r=true" +
-                //              @"&s=true" +
-                //              @"&mon=true" +
-                //              @"&culture=id-ID" +
-                //              @"&cc=IDR";
-                //    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                //    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                //    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                //    client.Headers["User-Agent"] =
-                //        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                //    client.Headers["Origin"] = "https://booking2.airasia.com";
-                //    client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
-                //    var html = client.DownloadString(url);
-                //
-                //    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
-                //        return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
-                //
-                //    var searchedHtml = (CQ)html;
-                //    availableFares = searchedHtml[".js_availability_container:nth-child(2) .radio-markets"];
                 //}
-                else
-                {
-                    return new SearchFlightResult
-                    {
-                        IsSuccess = true,
-                        Itineraries = new List<FlightItinerary>()
-                    };
-                }
+                
+                //else
+                //{
+                //    return new SearchFlightResult
+                //    {
+                //        IsSuccess = true,
+                //        Itineraries = new List<FlightItinerary>()
+                //    };
+                //}
 
                 // [Scrape]
 
@@ -144,7 +115,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                        FlightService.ParseCabinClass(conditions.CabinClass) + ".";
                     foreach (var fareId in fareIds)
                     {
-                        var url = @"Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
+                        url = @"Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
                         var fareRequest = new RestRequest(url, Method.GET);
                         fareRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
                         var itinHtml = (CQ)client.Execute(fareRequest).Content;
@@ -154,7 +125,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var segmentFareIds = fareId.Split('|').Last().Split('^');
                         var segments = new List<FlightSegment>();
                         var stops = Regex.Matches(fareId, "THRU").Count;
-                        var whereStop = "";
+                        
                         foreach (var segmentFareId in segmentFareIds)
                         {
                             var splittedSegmentFareId = segmentFareId.Split('~').ToArray();
@@ -163,7 +134,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             {
                                 segmentStop = stops;
                             }
-                            whereStop = splittedSegmentFareId[splittedSegmentFareId.Length - 1];
                             var deptTime = DateTime.Parse(splittedSegmentFareId[5]).AddHours(-(dict.GetAirportTimeZone(splittedSegmentFareId[4])));
                             var arrTime = DateTime.Parse(splittedSegmentFareId[7]).AddHours(-(dict.GetAirportTimeZone(splittedSegmentFareId[6])));
                             var duration = arrTime - deptTime;
@@ -213,9 +183,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                                     var depTimeStop = new DateTime();
                                     var arrTimeStop = new DateTime();
-                                    //Kalau masuk ke Segmen ke2
+                                   
                                     if (deptArpt == segments.ElementAt(0).ArrivalAirport)
                                     {
+                                        //STOP ADA DI SEGMEN 2
                                         var arrvHrAtStop = rows[x].ChildElements.ToList()[3].
                                                 ChildElements.ToList()[0].
                                                     ChildElements.ToList()[0].InnerHTML;
@@ -267,7 +238,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                         {
                                             new FlightStop()
                                             {
-                                                Airport = whereStop,
+                                                Airport = arrvArpt,
                                                 ArrivalTime = arrTimeStop,
                                                 Duration = durationAtStop,
                                                 DepartureTime = depTimeStop
@@ -279,6 +250,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                    
                                     if (arrvArpt == segments.ElementAt(0).ArrivalAirport)
                                     {
+                                        //STOP ADA DI SEGMEN 1
                                         var arrvHrAtStop = rows[x-1].ChildElements.ToList()[3].
                                                  ChildElements.ToList()[0].
                                                      ChildElements.ToList()[0].InnerHTML;
@@ -330,7 +302,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                         {
                                             new FlightStop()
                                             {
-                                                Airport = whereStop,
+                                                Airport = deptArpt,
                                                 ArrivalTime = arrTimeStop,
                                                 Duration = durationAtStop,
                                                 DepartureTime = depTimeStop
@@ -373,34 +345,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         };
                         itins.Add(itin);
                     }
-                    //var oriFareId = itin.FareId.Split('.').Last();
-                    //var radio = availableFares.Single(fare => fare.Value == oriFareId).Cq();
-                    //var fareRow = searchedHtml[".carrier-hover-header,.carrier-hover-return"].Children().Last();//radio.Parent().Parent().Parent().Parent().Parent();
-                    var durationRows = searchedHtml[".carrier-hover-oneway-header>div:last-child"];
-                    var durationForLayover = searchedHtml[".carrier-hover"].ToList();
-                    var durs = new List<IDomObject>();
-                    foreach (var childrow in durationForLayover.Select(row => row.ChildElements.ToList()))
-                    {
-                        durs.AddRange((from child in childrow where child.ChildElements.ToList().Count == 3 select child.ChildElements.ToList()[2]).Cast<IDomObject>());
-                    }
-                    var flattenedSegments = itins.SelectMany(itin => itin.Trips[0].Segments).ToList();
-                    for (var i = 0; i < flattenedSegments.Count; i++)
-                    {
-                        var durationRow = durationRows[i] ?? durs.ElementAt(i);
-                        var segment = flattenedSegments[i];
-                        
-                        var durationTexts =
-                            durationRow.InnerHTML.Trim().Split(':').ToList();
-                        var splitduration = durationTexts[1].Trim().Split(' ').ToList();
-                        var duration = new TimeSpan();
-                        duration =
-                            duration.Add(TimeSpan.ParseExact(splitduration[0], "h'h'", CultureInfo.InvariantCulture));
-                        if (splitduration.Count > 1)
-                            duration =
-                                duration.Add(TimeSpan.ParseExact(splitduration[1], "m'm'",
-                                    CultureInfo.InvariantCulture));
-                        //segment.Duration = duration;
-                    };
+                    
                     return new SearchFlightResult
                     {
                         IsSuccess = true,
@@ -429,3 +374,62 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         }
     }
 }
+//else if (destinationCountry == "ID")
+//{
+//    var url = @"http://booking.airasia.com/Flight/InternalSelect" +
+//              @"?o1=" + trip0.DestinationAirport +
+//              @"&d1=" + trip0.OriginAirport +
+//              @"&dd1=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
+//              @"&dd2=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
+//              @"&ADT=" + conditions.AdultCount +
+//              @"&CHD=" + conditions.ChildCount +
+//              @"&inl=" + conditions.InfantCount +
+//              @"&r=true" +
+//              @"&s=true" +
+//              @"&mon=true" +
+//              @"&culture=id-ID" +
+//              @"&cc=IDR";
+//    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+//    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+//    client.Headers["Upgrade-Insecure-Requests"] = "1";
+//    client.Headers["User-Agent"] =
+//        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+//    client.Headers["Origin"] = "https://booking2.airasia.com";
+//    client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
+//    var html = client.DownloadString(url);
+//
+//    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+//        return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
+//
+//    var searchedHtml = (CQ)html;
+//    availableFares = searchedHtml[".js_availability_container:nth-child(2) .radio-markets"];
+//}
+
+//var oriFareId = itin.FareId.Split('.').Last();
+//var radio = availableFares.Single(fare => fare.Value == oriFareId).Cq();
+//var fareRow = searchedHtml[".carrier-hover-header,.carrier-hover-return"].Children().Last();//radio.Parent().Parent().Parent().Parent().Parent();
+//var durationRows = searchedHtml[".carrier-hover-oneway-header>div:last-child"];
+//var durationForLayover = searchedHtml[".carrier-hover"].ToList();
+//var durs = new List<IDomObject>();
+//foreach (var childrow in durationForLayover.Select(row => row.ChildElements.ToList()))
+//{
+//    durs.AddRange((from child in childrow where child.ChildElements.ToList().Count == 3 select child.ChildElements.ToList()[2]).Cast<IDomObject>());
+//}
+//var flattenedSegments = itins.SelectMany(itin => itin.Trips[0].Segments).ToList();
+//for (var i = 0; i < flattenedSegments.Count; i++)
+//{
+//    var durationRow = durationRows[i] ?? durs.ElementAt(i);
+//    var segment = flattenedSegments[i];
+
+//    var durationTexts =
+//        durationRow.InnerHTML.Trim().Split(':').ToList();
+//    var splitduration = durationTexts[1].Trim().Split(' ').ToList();
+//    var duration = new TimeSpan();
+//    duration =
+//        duration.Add(TimeSpan.ParseExact(splitduration[0], "h'h'", CultureInfo.InvariantCulture));
+//    if (splitduration.Count > 1)
+//        duration =
+//            duration.Add(TimeSpan.ParseExact(splitduration[1], "m'm'",
+//                CultureInfo.InvariantCulture));
+//    //segment.Duration = duration;
+//};
