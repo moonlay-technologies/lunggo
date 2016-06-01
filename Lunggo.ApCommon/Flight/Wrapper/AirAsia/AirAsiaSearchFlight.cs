@@ -155,6 +155,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         foreach (var segmentFareId in segmentFareIds)
                         {
                             var splittedSegmentFareId = segmentFareId.Split('~').ToArray();
+                            var segmentStop = 0;
+                            if (splittedSegmentFareId[splittedSegmentFareId.Length - 1].Length != 0)
+                            {
+                                segmentStop = stops;
+                            }
+                            var whereStop = splittedSegmentFareId[splittedSegmentFareId.Length - 1];
                             var deptTime = DateTime.Parse(splittedSegmentFareId[5]).AddHours(-(dict.GetAirportTimeZone(splittedSegmentFareId[4])));
                             var arrTime = DateTime.Parse(splittedSegmentFareId[7]).AddHours(-(dict.GetAirportTimeZone(splittedSegmentFareId[6])));
                             var duration = arrTime - deptTime;
@@ -169,8 +175,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 ArrivalAirport = splittedSegmentFareId[6],
                                 ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]), DateTimeKind.Utc),
                                 OperatingAirlineCode = splittedSegmentFareId[0],
-                                StopQuantity = stops,
-                                Duration =  duration
+                                StopQuantity = segmentStop,
+                                Duration =  duration,
+                                Stops = new List<FlightStop>
+                                {
+                                    new FlightStop()
+                                    {
+                                        Airport = whereStop,
+                                    }
+                                }
                             });
                         }
                         var itin = new FlightItinerary
