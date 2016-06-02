@@ -297,6 +297,16 @@
     <Compile Include="Flight\Wrapper\Citilink\CitilinkSearchFlight.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkWrapperSingleton.cs" />
     <Compile Include="Flight\Wrapper\FlightSupplierWrapperBase.cs" />
+    <Compile Include="Flight\Wrapper\Garuda\GarudaBookFlight.cs" />
+    <Compile Include="Flight\Wrapper\Garuda\GarudaClientHandler.cs" />
+    <Compile Include="Flight\Wrapper\Garuda\GarudaGetBookingStatus.cs" />
+    <Compile Include="Flight\Wrapper\Garuda\GarudaGetCurrentBalance.cs" />
+    <Compile Include="Flight\Wrapper\Garuda\GarudaGetTripDetails.cs" />
+    <Compile Include="Flight\Wrapper\Garuda\GarudaIsIssued.cs" />
+    <Compile Include="Flight\Wrapper\Garuda\GarudaOrderTicket.cs" />
+    <Compile Include="Flight\Wrapper\Garuda\GarudaRevalidateFare.cs" />
+    <Compile Include="Flight\Wrapper\Garuda\GarudaSearchFlight.cs" />
+    <Compile Include="Flight\Wrapper\Garuda\GarudaWrapperSingleton.cs" />
     <Compile Include="Flight\Wrapper\LionAir\LionAirBookFlight.cs">
       <SubType>Code</SubType>
     </Compile>
