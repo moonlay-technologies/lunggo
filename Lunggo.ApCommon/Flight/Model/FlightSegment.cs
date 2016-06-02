@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Flight.Model
         [JsonProperty("arrival")]
         public string ArrivalAirport { get; set; }
         [JsonProperty("duration")]
-        public TimeSpan Duration { get; set; }
+        public double Duration { get; set; }
         [JsonProperty("stopQty")]
         public int StopQuantity { get; set; }
         [JsonProperty("airlineCd")]
@@ -50,30 +50,19 @@ namespace Lunggo.ApCommon.Flight.Model
         [JsonProperty("opAirlineLogoUrl")]
         public string OperatingAirlineLogoUrl { get; set; }
         [JsonProperty("stops")]
-        public List<FlightStop> Stops { get; set; }
+        public List<FlightStopForDisplay> Stops { get; set; }
         [JsonProperty("cabin")]
         public CabinClass CabinClass { get; set; }
         [JsonProperty("meal")]
-        public bool Meal { get; set; }
+        public bool IsMealIncluded { get; set; }
+        [JsonProperty("tax")]
+        public bool IsPscIncluded { get; set; }
         [JsonProperty("baggage", NullValueHandling = NullValueHandling.Ignore)]
         public string Baggage { get; set; }
         [JsonProperty("pnr", NullValueHandling = NullValueHandling.Ignore)]
         public string Pnr { get; set; }
         [JsonProperty("remainingSeats", NullValueHandling = NullValueHandling.Ignore)]
         public int RemainingSeats { get; set; }
-
-        public bool Identical(FlightSegment otherSegment)
-        {
-            return
-                DepartureAirport == otherSegment.DepartureAirport &&
-                ArrivalAirport == otherSegment.ArrivalAirport &&
-                DepartureTime == otherSegment.DepartureTime &&
-                ArrivalTime == otherSegment.ArrivalTime &&
-                Duration == otherSegment.Duration &&
-                AirlineCode == otherSegment.AirlineCode &&
-                FlightNumber == otherSegment.FlightNumber &&
-                CabinClass == otherSegment.CabinClass;
-        }
     }
 
     public class FlightSegment
@@ -102,7 +91,8 @@ namespace Lunggo.ApCommon.Flight.Model
         public List<FlightStop> Stops { get; set; }
         public AirlineType AirlineType { get; set; }
         public CabinClass CabinClass { get; set; }
-        public bool Meal { get; set; }
+        public bool IsMealIncluded { get; set; }
+        public bool IsPscIncluded { get; set; }
         public string Baggage { get; set; }
         public string Pnr { get; set; }   
         public int RemainingSeats { get; set; }
@@ -119,17 +109,5 @@ namespace Lunggo.ApCommon.Flight.Model
                 FlightNumber == otherSegment.FlightNumber &&
                 CabinClass == otherSegment.CabinClass;
         }
-    }
-
-    public class FlightStop
-    {
-        [JsonProperty("airport")]
-        public string Airport { get; set; }
-        [JsonProperty("arrivalTime")]
-        public DateTime ArrivalTime { get; set; }
-        [JsonProperty("departureTime")]
-        public DateTime DepartureTime { get; set; }
-        [JsonProperty("duration")]
-        public TimeSpan Duration { get; set; }
     }
 }

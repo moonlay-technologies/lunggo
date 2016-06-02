@@ -228,6 +228,7 @@
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
     <Compile Include="Flight\Model\FlightSlightDelay.cs" />
+    <Compile Include="Flight\Model\FlightStop.cs" />
     <Compile Include="Flight\Model\FlightTrip.cs" />
     <Compile Include="Flight\Model\IssueTicketInfo.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingInput.cs" />

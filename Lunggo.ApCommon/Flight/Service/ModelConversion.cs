@@ -106,7 +106,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 DestinationCity = GetAirportCity(trip.DestinationAirport),
                 DestinationAirportName = GetAirportName(trip.DestinationAirport),
                 DepartureDate = trip.DepartureDate,
-                TotalDuration = CalculateTotalDuration(trip),
+                TotalDuration = CalculateTotalDuration(trip).TotalMilliseconds,
                 Airlines = GetAirlineList(trip),
                 TotalTransit = CalculateTotalTransit(trip),
                 Transits = MapTransitDetails(trip)
@@ -127,7 +127,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 ArrivalAirportName = GetAirportName(segment.ArrivalAirport),
                 ArrivalTime = segment.ArrivalTime,
                 ArrivalTerminal = segment.ArrivalTerminal,
-                Duration = segment.Duration,
+                Duration = segment.Duration.TotalMilliseconds,
                 AirlineCode = segment.AirlineCode,
                 AirlineName = GetAirlineName(segment.AirlineCode),
                 AirlineLogoUrl = GetAirlineLogoUrl(segment.AirlineCode),
@@ -137,13 +137,28 @@ namespace Lunggo.ApCommon.Flight.Service
                 OperatingAirlineLogoUrl = GetAirlineLogoUrl(segment.OperatingAirlineCode),
                 AircraftCode = segment.AircraftCode,
                 StopQuantity = segment.StopQuantity,
-                Stops = segment.Stops,
+                Stops = MapStops(segment.Stops),
                 CabinClass = segment.CabinClass,
                 Pnr = segment.Pnr,
                 Rbd = segment.Rbd,
-                Meal = segment.Meal,
+                IsMealIncluded = segment.IsMealIncluded,
+                IsPscIncluded = segment.IsPscIncluded,
                 Baggage = segment.Baggage,
                 RemainingSeats = segment.RemainingSeats,
+            }).ToList();
+        }
+
+        private List<FlightStopForDisplay> MapStops(IEnumerable<FlightStop> stops)
+        {
+            if (stops == null)
+                return null;
+
+            return stops.Select(stop => new FlightStopForDisplay
+            {
+                Airport = stop.Airport,
+                ArrivalTime = stop.ArrivalTime,
+                DepartureTime = stop.DepartureTime,
+                Duration = stop.Duration.Milliseconds
             }).ToList();
         }
 
@@ -188,7 +203,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         Airport = stop.Airport,
                         ArrivalTime = stop.ArrivalTime,
                         DepartureTime = stop.DepartureTime,
-                        Duration = stop.DepartureTime - stop.ArrivalTime
+                        Duration = (stop.DepartureTime - stop.ArrivalTime).TotalMilliseconds
                     }));
                 }
                 if (i != 0)
@@ -199,7 +214,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         Airport = segments[i].DepartureAirport,
                         ArrivalTime = segments[i - 1].ArrivalTime,
                         DepartureTime = segments[i].DepartureTime,
-                        Duration = segments[i].DepartureTime - segments[i - 1].ArrivalTime
+                        Duration = (segments[i].DepartureTime - segments[i - 1].ArrivalTime).TotalMilliseconds
                     });
                 }
             }

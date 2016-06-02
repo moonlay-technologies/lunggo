@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Flight.Model
         [JsonProperty("airlines")]
         public List<Airline> Airlines { get; set; }
         [JsonProperty("totalDuration")]
-        public TimeSpan TotalDuration { get; set; }
+        public double TotalDuration { get; set; }
         [JsonProperty("origin")]
         public string OriginAirport { get; set; }
         [JsonProperty("originName")]
@@ -75,7 +75,7 @@ namespace Lunggo.ApCommon.Flight.Model
         [JsonProperty("departureTime")]
         public DateTime DepartureTime { get; set; }
         [JsonProperty("duration")]
-        public TimeSpan Duration { get; set; }
+        public double Duration { get; set; }
     }
 
 

@@ -1,10 +1,19 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Runtime.Serialization;
+using Lunggo.WebAPI.ApiSrc.Flight.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Common.Model
 {
+    [KnownType("GetDerivedTypes")]
     public class ApiResponseBase
     {
+        private static readonly IEnumerable<Type> DerivedTypes = PopulateDerivedTypes();
+
         [JsonProperty("status")]
         public HttpStatusCode StatusCode { get; set; }
         [JsonProperty("error", NullValueHandling = NullValueHandling.Ignore)]
@@ -33,6 +42,19 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
                 StatusCode = HttpStatusCode.BadRequest,
                 ErrorCode = "ERRGEN98"
             };
+        }
+
+        private static IEnumerable<Type> PopulateDerivedTypes()
+        {
+            return (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+                    from assemblyType in domainAssembly.GetTypes()
+                    where typeof(ApiResponseBase).IsAssignableFrom(assemblyType)
+                    select assemblyType);
+        }
+
+        private static IEnumerable<Type> GetDerivedTypes()
+        {
+            return DerivedTypes;
         }
     }
 }
