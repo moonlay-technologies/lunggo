@@ -41,8 +41,6 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
             foreach (var ticketedRsvNo in ticketedRsvNos)
             {
                 Console.WriteLine("Processing Ticketed " + ticketedRsvNo + "...");
-                var detailsInput = new GetDetailsInput {RsvNo = ticketedRsvNo};
-                flightService.GetAndUpdateNewDetails(detailsInput);
                 flightService.SendEticketToCustomer(ticketedRsvNo);
             }
         }
@@ -53,8 +51,6 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
             foreach (var scheduleChangedRsvNo in scheduleChangedRsvNos)
             {
                 Console.WriteLine("Processing Schedule Changed " + scheduleChangedRsvNo + "...");
-                var detailsInput = new GetDetailsInput { RsvNo = scheduleChangedRsvNo };
-                flightService.GetAndUpdateNewDetails(detailsInput);
                 flightService.SendChangedEticketToCustomer(scheduleChangedRsvNo);
             }
         }
