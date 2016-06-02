@@ -374,8 +374,15 @@
                                                     <span class="passenger-data">{{passenger.passport.number}}</span>
                                                 </p>
                                                 <p ng-if="passportRequired">
-                                                    <span class="passenger-label">Masa Berlaku Paspor</span>
+                                                    <span class="passenger-label">Tgl. Kadaluarsa Paspor</span>
                                                     <span class="passenger-data">{{passenger.passport.expire.date}} {{months[passenger.passport.expire.month].name}} {{passenger.passport.expire.year}}</span>
+                                                </p>
+                                                <p ng-if="passportRequired">
+                                                    <span class="passenger-label">Negara Penerbit Paspor</span>
+                                                    <span class="passenger-data">{{displayCountry(passenger.passport.country)}}</span>
+                                                <p ng-if="nationalityRequired">
+                                                    <span class="passenger-label">Kewarganegaraan</span>
+                                                    <span class="passenger-data">{{displayCountry(passenger.nationality)}}</span>
                                                 </p>
                                             </div>
                                         </div>

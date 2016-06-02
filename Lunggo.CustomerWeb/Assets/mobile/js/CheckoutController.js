@@ -515,6 +515,13 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     $scope.CheckoutConfig.GeneratePassenger();
     // countries
     $scope.Countries = Countries;
+    $scope.displayCountry = function (code) {
+        for (var i = 0; i < $scope.Countries.length; i++) {
+            if ($scope.Countries[i].code === code) {
+                return $scope.Countries[i].name;
+            }
+        }
+    }
     //titles
     $scope.titles = [
             { name: 'Tn.', value: 'Mister' },

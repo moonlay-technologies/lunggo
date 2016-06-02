@@ -263,7 +263,7 @@ default:
                     
                         <div class="form-group" ng-if ="CheckoutConfig.PassportRequired">
                             <label class="control-label">Negara Penerbit Paspor</label>
-                            <select class="form-control" name="passenger_{{$index}}_passportCountry" ng-model="Passenger.passport.country" ng-init="Passenger.passport.country = 'ID'" ng-required="CheckoutConfig.NationalityRequired">
+                            <select class="form-control" name="passenger_{{$index}}_passportCountry" ng-model="Passenger.passport.country" ng-init="Passenger.passport.country = 'ID'" ng-required="CheckoutConfig.PassportRequired">
                                 <option ng-repeat="country in Countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
                             </select>
                         </div>
@@ -350,7 +350,14 @@ default:
                                 <dt>Tgl. Kadaluarsa Paspor</dt>
                                 <dd>{{Passenger.passport.expire.date}} {{months[Passenger.passport.expire.month].name}} {{Passenger.passport.expire.year}}</dd>
                             </dl>
-                            
+                            <dl ng-if="CheckoutConfig.PassportRequired">
+                                <dt>Negara Penerbit Paspor</dt>
+                                <dd>{{displayCountry(Passenger.passport.country)}}</dd>
+                            </dl>
+                            <dl ng-if="CheckoutConfig.NationalityRequired">
+                                <dt>Kewarganegaraan</dt>
+                                <dd>{{displayCountry(Passenger.nationality)}}</dd>
+                            </dl>
                             
                         </li>
                     </ol>
