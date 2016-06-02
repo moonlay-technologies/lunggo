@@ -20,6 +20,27 @@ app.controller('singleFlightController', [
         $scope.loading = false;
         $scope.loadingFlight = false;
         $scope.flightList = [];
+        $scope.Progress = 0;
+        var cabin = FlightSearchConfig.flightForm.cabin;
+        if (cabin != 'y' || cabin != 'c' || cabin != 'f') {
+                switch (cabin) {
+                    case 'Economy':
+                        cabin = 'y';
+                        break;
+                    case 'Business':
+                        cabin = 'c';
+                        break;
+                    case 'First':
+                        cabin = 'f';
+                        break;
+                }
+            }
+        var departureDate = new Date(FlightSearchConfig.flightForm.departureDate) || '';
+        var origin = FlightSearchConfig.flightForm.origin;
+        var destination = FlightSearchConfig.flightForm.destination;
+        var passengerParam = FlightSearchConfig.flightForm.passenger.adult + '' + FlightSearchConfig.flightForm.passenger.child + '' + FlightSearchConfig.flightForm.passenger.infant + '' + cabin;
+        var departureParam = (origin + destination) + ((('0' + departureDate.getDate()).slice(-2)) + (('0' + (departureDate.getMonth() + 1)).slice(-2)) + (departureDate.getFullYear().toString().substr(2, 2)));
+        $scope.flightFixRequest = '/' + departureParam + '-' + passengerParam;
         $scope.pristine = true;
         $scope.flightRequest = {
             CabinClass: FlightSearchConfig.flightForm.cabin,
@@ -143,15 +164,18 @@ app.controller('singleFlightController', [
 
         // milisecond to hour
         $scope.msToTime = function(duration) {
+
             var milliseconds = parseInt((duration % 1000) / 100),
-                seconds = parseInt((duration / 1000) % 60),
-                minutes = parseInt((duration / (1000 * 60)) % 60),
-                hours = parseInt((duration / (1000 * 60 * 60)));
-                // hours = parseInt((duration / (1000 * 60 * 60)) % 24);
-                // days = parseInt((duration / (1000 * 60 * 60 * 24)));
+                 seconds = parseInt((duration / 1000) % 60),
+                 minutes = parseInt((duration / (1000 * 60)) % 60),
+                 hours = parseInt((duration / (1000 * 60 * 60)));
+                 //hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+                 //days = parseInt((duration / (1000 * 60 * 60 * 24)));
             hours = hours;
             minutes = minutes;
             seconds = seconds;
+            //var hours = convertedDuration[0];
+            //var minutes = convertedDuration[1];
             return hours + "j " + minutes + "m";
         }
 
@@ -253,17 +277,17 @@ app.controller('singleFlightController', [
         };
         $scope.stopFilter = function(flight) {
             if ($scope.stopFilterParam.direct) {
-                if (flight.Trips[0].TotalTransit == 0) {
+                if (flight.trips[0].transitCount == 0) {
                     return flight;
                 }
             }
             if ($scope.stopFilterParam.one) {
-                if (flight.Trips[0].TotalTransit == 1) {
+                if (flight.trips[0].transitCount == 1) {
                     return flight;
                 }
             }
             if ($scope.stopFilterParam.two) {
-                if (flight.Trips[0].TotalTransit > 1) {
+                if (flight.trips[0].transitCount > 1) {//flight.Trips[0].TotalTransit > 1) {
                     return flight;
                 }
             }
@@ -277,7 +301,7 @@ app.controller('singleFlightController', [
         };
         $scope.priceFilter = function (flight) {
             if (!$scope.loading && !$scope.loadingFlight) {
-                if (flight.TotalFare >= $scope.priceFilterParam.current[0] && flight.TotalFare <= $scope.priceFilterParam.current[1]) {
+                if (flight.fare >= $scope.priceFilterParam.current[0] && flight.fare <= $scope.priceFilterParam.current[1]) {
                     return flight;
                 }
             } else {
@@ -338,10 +362,10 @@ app.controller('singleFlightController', [
             arrival : [0,24]
         };
         $scope.timeFilter = function(flight) {
-            if ($scope.getHour(flight.Trips[0].Segments[0].DepartureTime) >= parseInt($scope.timeFilterParam.departure[0])
-                && $scope.getHour(flight.Trips[0].Segments[0].DepartureTime) <= parseInt($scope.timeFilterParam.departure[1])
-                && $scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) >= parseInt($scope.timeFilterParam.arrival[0])
-                && $scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) <= parseInt($scope.timeFilterParam.arrival[1])
+            if ($scope.getHour(flight.trips[0].segments[0].departureTime) >= parseInt($scope.timeFilterParam.departure[0])
+                && $scope.getHour(flight.trips[0].segments[0].departureTime) <= parseInt($scope.timeFilterParam.departure[1])
+                && $scope.getHour(flight.trips[0].segments[flight.trips[0].segments.length - 1].arrivalTime) >= parseInt($scope.timeFilterParam.arrival[0])
+                && $scope.getHour(flight.trips[0].segments[flight.trips[0].segments.length - 1].arrivalTime) <= parseInt($scope.timeFilterParam.arrival[1])
             ) {
                 return flight;
             }
@@ -451,10 +475,13 @@ app.controller('singleFlightController', [
             if ($scope.flightRequest.Progress < 100) {
                 // **********
                 // ajax
-                $http.get(FlightSearchConfig.Url, {
-                    params: {
-                        request: $scope.flightRequest
-                    }
+                console.log("Ini URL nya : " + FlightSearchConfig.Url);
+                console.log("Concate Message : " + $scope.flightFixRequest);
+                console.log("Gabungan : " + FlightSearchConfig.Url + $scope.flightFixRequest+ '/' + $scope.Progress);
+                $http.get(FlightSearchConfig.Url + $scope.flightFixRequest + '/' + $scope.Progress, {
+                    //params: {
+                      //  request: $scope.flightRequest
+                    //}
                 }).success(function(returnData) {
 
                     // set searchID
@@ -462,16 +489,32 @@ app.controller('singleFlightController', [
                     $scope.flightRequest.SearchId = returnData.SearchId;
 
                     // set flight request if pristine
-                    if ($scope.pristine == true) {
+                    /*if ($scope.pristine == true) {
                         $scope.pristine = false;
                         for (var i = 0; i < returnData.MaxRequest; i++) {
                             $scope.flightRequest.Requests.push(i + 1);
                         }
                         $scope.flightRequest.MaxProgress = 100 / (returnData.MaxRequest);
-                    }
+                    }*/
 
                     // if granted request is not null
-                    if (returnData.GrantedRequests.length) {
+                    
+                    $scope.Progress = returnData.progress;
+                    if ($scope.Progress == 100) {
+                        $scope.expiry.time = returnData.expTime;
+                    } else {
+                        $scope.flightRequest.FinalProgress = $scope.Progress;
+                    }
+                    if (returnData.flights.length)
+                    {
+                        $scope.generateFlightList(returnData.flights[0].options);
+                    }
+                    
+
+                    console.log('Progress : ' + $scope.Progress + ' %');
+                    console.log(returnData);
+
+                    /*if (returnData.GrantedRequests.length) {
                         console.log('Granted request  : '+returnData.GrantedRequests);
                         for (var i = 0; i < returnData.GrantedRequests.length; i++) {
                             // add to completed
@@ -486,23 +529,23 @@ app.controller('singleFlightController', [
                         }
 
                         // update total progress
-                        $scope.flightRequest.Progress = ((returnData.MaxRequest - $scope.flightRequest.Requests.length) / returnData.MaxRequest) * 100;
-                        $scope.flightRequest.MaxProgress = (100 / returnData.MaxRequest) * ($scope.flightRequest.Completed.length + 1);
+                        $scope.flightRequest.Progress = returnData.progress//((returnData.MaxRequest - $scope.flightRequest.Requests.length) / returnData.MaxRequest) * 100;
+                        //$scope.flightRequest.MaxProgress = (100 / returnData.MaxRequest) * ($scope.flightRequest.Completed.length + 1);
                         
                         // set expiry if progress == 100
                         if ($scope.flightRequest.Progress == 100) {
-                            $scope.expiry.time = returnData.ExpiryTime;
+                            $scope.expiry.time = returnData.expTime;
                         } else {
                             $scope.flightRequest.FinalProgress = $scope.flightRequest.Progress;
                         }
 
                         // generate flight
-                        $scope.generateFlightList(returnData.FlightList);
+                        $scope.generateFlightList(returnData.flights);
                         
 
                         console.log('Progress : '+ $scope.flightRequest.Progress +' %');
                         console.log(returnData);
-                    }
+                    }*/
 
                     //console.log(returnData);
                     // loop the function
@@ -570,14 +613,14 @@ app.controller('singleFlightController', [
 
                     // *****
                     // populate prices
-                    $scope.priceFilterParam.prices.push($scope.flightList[i].TotalFare);
+                    $scope.priceFilterParam.prices.push($scope.flightList[i].fare);
 
                     // *****
                     // populate airline tag
                     $scope.flightList[i].AirlinesTag = [];
-                    for (var x = 0 ; x < $scope.flightList[i].Trips[0].Airlines.length; x++) {
-                        $scope.airlineFilterParam.airlinesList.push($scope.flightList[i].Trips[0].Airlines[x]);
-                        $scope.flightList[i].AirlinesTag.push($scope.flightList[i].Trips[0].Airlines[x].Code);
+                    for (var x = 0 ; x < $scope.flightList[i].trips[0].airlines.length; x++) {
+                        $scope.airlineFilterParam.airlinesList.push($scope.flightList[i].trips[0].airlines[x]);
+                        $scope.flightList[i].AirlinesTag.push($scope.flightList[i].trips[0].airlines[x].code);
                     }
 
                 }

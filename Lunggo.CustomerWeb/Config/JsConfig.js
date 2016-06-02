@@ -14,7 +14,7 @@ var SearchRoomConfig = {
 };
 
 var FlightSearchConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/api/v1/flights',
+    Url: 'https://dv2-api.azurewebsites.net/flight',
     // generate search URL
     GenerateSearchParam: function (params) {
         if (typeof (params) == 'object') {
