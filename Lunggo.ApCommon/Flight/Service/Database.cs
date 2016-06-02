@@ -459,7 +459,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 CabinClassCd = CabinClassCd.Mnemonic(segment.CabinClass),
                                 StopQuantity = segment.StopQuantity,
                                 AirlineTypeCd = AirlineTypeCd.Mnemonic(segment.AirlineType),
-                                Meal = segment.Meal,
+                                Meal = segment.IsMealIncluded,
                                 Rbd = segment.Rbd,
                                 InsertBy = "LunggoSystem",
                                 InsertDate = DateTime.UtcNow,

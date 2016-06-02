@@ -416,7 +416,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 AircraftCode = flightSegment.OperatingAirline.Equipment,
                 Rbd = flightSegment.ResBookDesigCode,
                 CabinClass = MapCabinClass(flightSegment.CabinClassCode),
-                Meal = !string.IsNullOrEmpty(flightSegment.MealCode),
+                IsMealIncluded = !string.IsNullOrEmpty(flightSegment.MealCode),
                 RemainingSeats = flightSegment.SeatsRemaining.Number,
                 StopQuantity = flightSegment.StopQuantity,
                 Stops = stops,
