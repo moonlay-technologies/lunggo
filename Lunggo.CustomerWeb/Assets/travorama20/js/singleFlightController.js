@@ -472,7 +472,7 @@ app.controller('singleFlightController', [
             console.log('request : ' + $scope.flightRequest.Requests);
             
 
-            if ($scope.flightRequest.Progress < 100) {
+            if ($scope.Progress < 100) {
                 // **********
                 // ajax
                 console.log("Ini URL nya : " + FlightSearchConfig.Url);
@@ -502,6 +502,7 @@ app.controller('singleFlightController', [
                     $scope.Progress = returnData.progress;
                     if ($scope.Progress == 100) {
                         $scope.expiry.time = returnData.expTime;
+                        $scope.flightRequest.FinalProgress = $scope.Progress;
                     } else {
                         $scope.flightRequest.FinalProgress = $scope.Progress;
                     }
