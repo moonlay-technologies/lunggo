@@ -8,7 +8,7 @@ app.controller('singleFlightController', [
         angular.element(document).ready(function () {
             $scope.getFlight();
             // start progress animation
-            $scope.ProgressAnimation();
+            //$scope.ProgressAnimation();
 
         });
 
@@ -238,19 +238,19 @@ app.controller('singleFlightController', [
             $scope.selectedRules = -1;
             switch (sort) {
                 case 'airline':
-                    $scope.sort.value = 'Trips[0].Airlines[0].Name';
+                    $scope.sort.value = 'trips[0].airlines[0].name';
                     break;
                 case 'departure':
-                    $scope.sort.value = 'Trips[0].Segments[0].DepartureTime';
+                    $scope.sort.value = 'trips[0].segments[0].departureTime';
                     break;
                 case 'duration':
-                    $scope.sort.value = 'Trips[0].TotalDuration';
+                    $scope.sort.value = 'trips[0].totalDuration';
                     break;
                 case 'arrival':
-                    $scope.sort.value = 'Trips[0].Segments[(Trips[0].Segments.length-1)].ArrivalTime';
+                    $scope.sort.value = 'trips[0].segments[(trips[0].segments.length-1)].arrivalTime';
                     break;
                 case 'price':
-                    $scope.sort.value = 'TotalFare';
+                    $scope.sort.value = 'fare';
                     break;
             }
         }
@@ -321,7 +321,7 @@ app.controller('singleFlightController', [
             $scope.airlineFilterParam.selected = [];
             for (var i = 0; i < $scope.airlineFilterParam.airlines.length; i++) {
                 if ($scope.airlineFilterParam.airlines[i].checked == true) {
-                    $scope.airlineFilterParam.selected.push($scope.airlineFilterParam.airlines[i].Code);
+                    $scope.airlineFilterParam.selected.push($scope.airlineFilterParam.airlines[i].code);
                 }
             }
         }
@@ -592,7 +592,7 @@ app.controller('singleFlightController', [
                 $scope.flightList.push(data[i]);
             }
 
-            if ($scope.flightRequest.Progress == 100) {
+            if ($scope.Progress == 100) {
 
                 console.log('Generating Filter');
 
@@ -633,11 +633,11 @@ app.controller('singleFlightController', [
                 $scope.priceFilterParam.initial[0] = Math.floor($scope.priceFilterParam.prices[0]);
                 $scope.priceFilterParam.initial[1] = Math.round($scope.priceFilterParam.prices[$scope.priceFilterParam.prices.length - 1]);
 
-                // remove duplicatae from airlines
+                // remove duplicate from airlines
                 var dupes = {};
                 $.each($scope.airlineFilterParam.airlinesList, function (i, el) {
-                    if (!dupes[el.Code]) {
-                        dupes[el.Code] = true;
+                    if (!dupes[el.code]) {
+                        dupes[el.code] = true;
                         $scope.airlineFilterParam.airlines.push(el);
                     }
                 });
