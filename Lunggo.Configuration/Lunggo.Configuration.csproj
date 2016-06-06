@@ -104,6 +104,7 @@
     <None Include="Config\BackendWeb\flight.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\BackendWeb\Garuda.properties" />
     <None Include="Config\BackendWeb\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
@@ -152,6 +153,7 @@
     <None Include="Config\CloudApp.CaptchaReader\flight.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\CloudApp.CaptchaReader\Garuda.properties" />
     <None Include="Config\CloudApp.CaptchaReader\general.properties">
       <SubType>Designer</SubType>
     </None>
@@ -171,6 +173,7 @@
     <None Include="Config\CloudApp.CaptchaReader\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\CloudApp.EticketHandler\Garuda.properties" />
     <None Include="Config\CustomerWeb\airAsia.properties" />
     <None Include="Config\CustomerWeb\Airline.csv" />
     <None Include="Config\CustomerWeb\Airport.csv" />
@@ -184,6 +187,7 @@
     <None Include="Config\CustomerWeb\facebook.properties" />
     <None Include="Config\CustomerWeb\flight.properties" />
     <None Include="Config\CustomerWeb\freshdesk.properties" />
+    <None Include="Config\CustomerWeb\Garuda.properties" />
     <None Include="Config\CustomerWeb\general.properties" />
     <None Include="Config\CustomerWeb\hotel.properties" />
     <None Include="Config\CustomerWeb\HotelLocation.csv" />
@@ -204,6 +208,7 @@
     </None>
     <None Include="Config\WebAPI\Country.csv" />
     <Content Include="Config\WebAPI\eng.traineddata" />
+    <None Include="Config\WebAPI\Garuda.properties" />
     <None Include="Config\WebAPI\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
@@ -216,15 +221,19 @@
     <None Include="Config\WebAPI\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\Garuda.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler1\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\Garuda.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler2\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\Garuda.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler3\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\Garuda.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler5\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -239,6 +248,7 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler5\flight.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\Garuda.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler5\general.properties">
       <SubType>Designer</SubType>
     </None>
@@ -271,6 +281,7 @@
     <None Include="Config\WebJob.BankTransferChecking\facebook.properties" />
     <None Include="Config\WebJob.BankTransferChecking\flight.properties" />
     <None Include="Config\WebJob.BankTransferChecking\freshdesk.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\Garuda.properties" />
     <None Include="Config\WebJob.BankTransferChecking\general.properties" />
     <None Include="Config\WebJob.BankTransferChecking\hotel.properties" />
     <None Include="Config\WebJob.BankTransferChecking\HotelLocation.csv" />
@@ -295,6 +306,7 @@
     <None Include="Config\WebJob.EmailQueueHandler\flight.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.EmailQueueHandler\Garuda.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\general.properties">
       <SubType>Designer</SubType>
     </None>
@@ -404,6 +416,7 @@
     <None Include="Config\WebJob.FlightCrawlScheduler\citilink.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.FlightCrawlScheduler\Garuda.properties" />
     <None Include="Config\WebJob.FlightCrawlScheduler\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
@@ -463,6 +476,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.FlightProcessor\freshdesk.properties" />
+    <None Include="Config\WebJob.FlightProcessor\Garuda.properties" />
     <None Include="Config\WebJob.FlightProcessor\general.properties">
       <SubType>Designer</SubType>
     </None>
@@ -494,6 +508,7 @@
     <None Include="Config\WebJob.MystiflyQueueHandler\citilink.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.MystiflyQueueHandler\Garuda.properties" />
     <None Include="Config\WebJob.MystiflyQueueHandler\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
@@ -521,6 +536,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.PriceIdentifierGenerator\freshdesk.properties" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\Garuda.properties" />
     <None Include="Config\WebJob.PriceIdentifierGenerator\general.properties">
       <SubType>Designer</SubType>
     </None>
@@ -546,6 +562,7 @@
     <None Include="Config\WebJob.PriceIdentifierGenerator\veritrans.properties" />
     <None Include="Config\WebJob.PriceIdentifierGenerator\zendesk.properties" />
     <None Include="Config\WebJob.TicketQueueHandler\azureStorage.properties" />
+    <None Include="Config\WebJob.TicketQueueHandler\Garuda.properties" />
     <None Include="Config\WebJob.TicketQueueHandler\general.properties">
       <SubType>Designer</SubType>
     </None>
