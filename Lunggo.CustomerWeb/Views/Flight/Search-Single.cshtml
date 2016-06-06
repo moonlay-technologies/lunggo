@@ -174,38 +174,7 @@
             </div>
         </div>
 
-        <!--<div class="page-overlay" ng-show="expiry.expired">
-            <div class="overlay-content validating-flight">
-                <header>
-                    <h4>Pencarian Kadaluarsa</h4>
-                </header>
-                <section>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-4 text-align">
-                                <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
-                            </div>
-                            <div class="col-sm-8">
-                                <h3>Halaman Pencarian Anda <b>Sudah Kadaluarsa</b></h3>
-                                <p>Silakan klik tombol di bawah ini untuk memparbaharui halaman pencarian Anda.</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <footer>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6">
-                            </div>
-                            <div class="col-sm-6">
-                                <a class="btn btn-yellow btn-block" onclick="location.reload();">REFRESH</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
-        </div>--> <!-- .page-overlay -->
-
+        <!-- Pop Up Search Expired -->
         <div class="bookfailed-popup" ng-show="expiry.expired">
             <div class="overlay-content">
                 <section style="padding-top:60px; padding-left:225px;">
@@ -236,7 +205,7 @@
             <div class="container" ng-hide="!flightList.length && loading && loadingFlight">
                 <h3><b>HASIL</b> PENCARIAN</h3>
             </div>
-            <div class="search-result-filter" ng-show="flightRequest.Progress == 100">
+            <div class="search-result-filter" ng-show="Progress == 100">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
@@ -289,28 +258,28 @@
                                         <div class="col-sm-3">
                                             <div class="airline">
                                                 <label>
-                                                    <input type="checkbox" name="{{airlineFilterParam.airlines[$index].Name}}" ng-init="airlineFilterParam.airlines[$index].checked = true" value="{{airlineFilterParam.airlines[$index].Code}}" ng-model="airlineFilterParam.airlines[$index].checked" ng-click="checkAirline()" /> <img ng-src="{{airlineFilterParam.airlines[$index].LogoUrl}}" alt="{{airlineFilterParam.airlines[$index].Name}}" /><span>{{airlineFilterParam.airlines[$index].Name}}</span>
+                                                    <input type="checkbox" name="{{airlineFilterParam.airlines[$index].name}}" ng-init="airlineFilterParam.airlines[$index].checked = true" value="{{airlineFilterParam.airlines[$index].code}}" ng-model="airlineFilterParam.airlines[$index].checked" ng-click="checkAirline()" /> <img ng-src="{{airlineFilterParam.airlines[$index].logoUrl}}" alt="{{airlineFilterParam.airlines[$index].name}}" /><span>{{airlineFilterParam.airlines[$index].name}}</span>
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col-sm-3" ng-if="airlineFilterParam.airlines[$index + 1] != null">
                                             <div class="airline">
                                                 <label>
-                                                    <input type="checkbox" name="{{airlineFilterParam.airlines[$index + 1].Name}}" ng-init="airlineFilterParam.airlines[$index + 1].checked = true" value="{{airlineFilterParam.airlines[$index + 1].Code}}" ng-model="airlineFilterParam.airlines[$index + 1].checked" ng-click="checkAirline()" /> <img ng-src="{{airlineFilterParam.airlines[$index + 1].LogoUrl}}" alt="{{airlineFilterParam.airlines[$index + 1].Name}}" /><span>{{airlineFilterParam.airlines[$index + 1].Name}}</span>
+                                                    <input type="checkbox" name="{{airlineFilterParam.airlines[$index + 1].name}}" ng-init="airlineFilterParam.airlines[$index + 1].checked = true" value="{{airlineFilterParam.airlines[$index + 1].code}}" ng-model="airlineFilterParam.airlines[$index + 1].checked" ng-click="checkAirline()" /> <img ng-src="{{airlineFilterParam.airlines[$index + 1].logoUrl}}" alt="{{airlineFilterParam.airlines[$index + 1].name}}" /><span>{{airlineFilterParam.airlines[$index + 1].name}}</span>
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col-sm-3" ng-if="airlineFilterParam.airlines[$index + 2] != null">
                                             <div class="airline">
                                                 <label>
-                                                    <input type="checkbox" name="{{airlineFilterParam.airlines[$index + 2].Name}}" ng-init="airlineFilterParam.airlines[$index + 2].checked = true" value="{{airlineFilterParam.airlines[$index + 2].Code}}" ng-model="airlineFilterParam.airlines[$index + 2].checked" ng-click="checkAirline()" /> <img ng-src="{{airlineFilterParam.airlines[$index + 2].LogoUrl}}" alt="{{airlineFilterParam.airlines[$index + 2].Name}}" /><span>{{airlineFilterParam.airlines[$index + 2].Name}}</span>
+                                                    <input type="checkbox" name="{{airlineFilterParam.airlines[$index + 2].name}}" ng-init="airlineFilterParam.airlines[$index + 2].checked = true" value="{{airlineFilterParam.airlines[$index + 2].code}}" ng-model="airlineFilterParam.airlines[$index + 2].checked" ng-click="checkAirline()" /> <img ng-src="{{airlineFilterParam.airlines[$index + 2].logoUrl}}" alt="{{airlineFilterParam.airlines[$index + 2].name}}" /><span>{{airlineFilterParam.airlines[$index + 2].name}}</span>
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col-sm-3" ng-if="airlineFilterParam.airlines[$index + 3] != null">
                                             <div class="airline">
                                                 <label>
-                                                    <input type="checkbox" name="{{airlineFilterParam.airlines[$index + 3].Name}}" ng-init="airlineFilterParam.airlines[$index + 3].checked = true" value="{{airlineFilterParam.airlines[$index + 3].Code}}" ng-model="airlineFilterParam.airlines[$index + 3].checked" ng-click="checkAirline()" /> <img ng-src="{{airlineFilterParam.airlines[$index + 3].LogoUrl}}" alt="{{airlineFilterParam.airlines[$index + 3].Name}}" /><span>{{airlineFilterParam.airlines[$index + 3].Name}}</span>
+                                                    <input type="checkbox" name="{{airlineFilterParam.airlines[$index + 3].name}}" ng-init="airlineFilterParam.airlines[$index + 3].checked = true" value="{{airlineFilterParam.airlines[$index + 3].code}}" ng-model="airlineFilterParam.airlines[$index + 3].checked" ng-click="checkAirline()" /> <img ng-src="{{airlineFilterParam.airlines[$index + 3].logoUrl}}" alt="{{airlineFilterParam.airlines[$index + 3].name}}" /><span>{{airlineFilterParam.airlines[$index + 3].name}}</span>
                                                 </label>
                                             </div>
                                         </div>
