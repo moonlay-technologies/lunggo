@@ -1,5 +1,5 @@
 ﻿using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Newtonsoft.Json;
 

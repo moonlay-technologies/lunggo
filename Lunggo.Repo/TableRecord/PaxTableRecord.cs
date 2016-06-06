@@ -5,7 +5,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class FlightPassengerTableRecord : Lunggo.Framework.Database.TableRecord
+    public class PaxTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
@@ -195,20 +195,20 @@ namespace Lunggo.Repository.TableRecord
 		private String _UpdatePgId;
 
 
-		public static FlightPassengerTableRecord CreateNewInstance()
+		public static PaxTableRecord CreateNewInstance()
         {
-            var record = new FlightPassengerTableRecord();
+            var record = new PaxTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public FlightPassengerTableRecord()
+		public PaxTableRecord()
         {
             ;
         }
 
-        static FlightPassengerTableRecord()
+        static PaxTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -217,7 +217,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "FlightPassenger";
+            _tableName = "Pax";
         }
 
         private static void InitRecordMetadata()

@@ -1,8 +1,6 @@
 ﻿using System;
-using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
 
-namespace Lunggo.ApCommon.ProductBase.Model
+namespace Lunggo.ApCommon.Product.Model
 {
     public abstract class OrderBase
     {

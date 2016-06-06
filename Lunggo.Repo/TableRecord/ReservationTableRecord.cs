@@ -5,7 +5,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class FlightReservationTableRecord : Lunggo.Framework.Database.TableRecord
+    public class ReservationTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
@@ -63,42 +63,6 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _UserId = value;
 		        IncrementLog("UserId");
-		    }
-		}
-		public int? AdultCount
-		{
-		    get { return _AdultCount; }
-		    set
-		    {
-		        _AdultCount = value;
-		        IncrementLog("AdultCount");
-		    }
-		}
-		public int? ChildCount
-		{
-		    get { return _ChildCount; }
-		    set
-		    {
-		        _ChildCount = value;
-		        IncrementLog("ChildCount");
-		    }
-		}
-		public int? InfantCount
-		{
-		    get { return _InfantCount; }
-		    set
-		    {
-		        _InfantCount = value;
-		        IncrementLog("InfantCount");
-		    }
-		}
-		public String OverallTripTypeCd
-		{
-		    get { return _OverallTripTypeCd; }
-		    set
-		    {
-		        _OverallTripTypeCd = value;
-		        IncrementLog("OverallTripTypeCd");
 		    }
 		}
 		public String InsertBy
@@ -163,10 +127,6 @@ namespace Lunggo.Repository.TableRecord
 		private String _CancellationTypeCd;
 		private DateTime? _CancellationTime;
 		private String _UserId;
-		private int? _AdultCount;
-		private int? _ChildCount;
-		private int? _InfantCount;
-		private String _OverallTripTypeCd;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -175,20 +135,20 @@ namespace Lunggo.Repository.TableRecord
 		private String _UpdatePgId;
 
 
-		public static FlightReservationTableRecord CreateNewInstance()
+		public static ReservationTableRecord CreateNewInstance()
         {
-            var record = new FlightReservationTableRecord();
+            var record = new ReservationTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public FlightReservationTableRecord()
+		public ReservationTableRecord()
         {
             ;
         }
 
-        static FlightReservationTableRecord()
+        static ReservationTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -197,7 +157,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "FlightReservation";
+            _tableName = "Reservation";
         }
 
         private static void InitRecordMetadata()
@@ -210,10 +170,6 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("CancellationTypeCd", false),
 				new ColumnMetadata("CancellationTime", false),
 				new ColumnMetadata("UserId", false),
-				new ColumnMetadata("AdultCount", false),
-				new ColumnMetadata("ChildCount", false),
-				new ColumnMetadata("InfantCount", false),
-				new ColumnMetadata("OverallTripTypeCd", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

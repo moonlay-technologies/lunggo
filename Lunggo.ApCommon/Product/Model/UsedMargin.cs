@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
-using Lunggo.ApCommon.ProductBase.Query;
-using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 
-namespace Lunggo.ApCommon.ProductBase.Model
+namespace Lunggo.ApCommon.Product.Model
 {
     public sealed class UsedMargin
     {
@@ -21,13 +16,13 @@ namespace Lunggo.ApCommon.ProductBase.Model
         public Currency Currency { get; set; }
         public bool IsFlat { get; set; }
 
-        internal void InsertToDb(long orderId)
+        internal void InsertToDb(long priceId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 UsedMarginTableRepo.GetInstance().Insert(conn, new UsedMarginTableRecord
                 {
-                    OrderId = orderId,
+                    PriceId = priceId,
                     Name = Name,
                     Description = Description,
                     Percentage = Percentage,
@@ -41,11 +36,11 @@ namespace Lunggo.ApCommon.ProductBase.Model
             }
         }
 
-        internal static UsedMargin GetFromDb(long orderId)
+        internal static UsedMargin GetFromDb(long priceId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var record = GetUsedMarginQuery.GetInstance().Execute(conn, new { OrderId = orderId }).Single();
+                var record = GetUsedMarginQuery.GetInstance().Execute(conn, new { PriceId = priceId }).Single();
                 return new UsedMargin
                 {
                     Name = record.Name,
@@ -64,7 +59,7 @@ namespace Lunggo.ApCommon.ProductBase.Model
             {
                 return "SELECT Name, Description, Percentage, Constant, CurrencyCd, IsFlat " +
                        "FROM UsedMargin " +
-                       "WHERE OrderId = @OrderId";
+                       "WHERE PriceId = @PriceId";
             }
         }
     }

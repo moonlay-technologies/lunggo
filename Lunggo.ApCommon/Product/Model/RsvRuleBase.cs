@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.ProductBase.Constant;
+﻿using System.Globalization;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Sequence;
 
-namespace Lunggo.ApCommon.ProductBase.Model
+namespace Lunggo.ApCommon.Product.Model
 {
     public abstract class RsvRuleBase<TOrderRule> where TOrderRule : OrderRuleBase
     {

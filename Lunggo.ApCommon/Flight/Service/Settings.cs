@@ -13,7 +13,7 @@ using Lunggo.ApCommon.Flight.Wrapper.Citilink;
 using Lunggo.ApCommon.Flight.Wrapper.LionAir;
 using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
 using Lunggo.ApCommon.Flight.Wrapper.Sriwijaya;
-using Lunggo.ApCommon.ProductBase.Service;
+using Lunggo.ApCommon.Product.Service;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Config;
 

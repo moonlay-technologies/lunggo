@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Linq;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
 using Lunggo.ApCommon.Sequence;
-using Lunggo.Framework.Context;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 
-namespace Lunggo.ApCommon.ProductBase.Model
+namespace Lunggo.ApCommon.Product.Model
 {
-    public sealed partial class Price
+    public class Price
     {
         public decimal Supplier { get; set; }
         public Currency SupplierCurrency { get; set; }
@@ -22,13 +20,15 @@ namespace Lunggo.ApCommon.ProductBase.Model
         public decimal Local { get; set; }
         public Currency LocalCurrency { get; set; }
 
-        internal void InsertToDb(long orderId)
+        internal long InsertToDb()
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
+                var priceId = PriceIdSequence.GetInstance().GetNext();
+
                 PriceTableRepo.GetInstance().Insert(conn, new PriceTableRecord
                 {
-                    OrderId = orderId,
+                    Id = priceId,
                     SupplierPrice = Supplier,
                     SupplierCurrencyCd = SupplierCurrency,
                     SupplierRate = SupplierCurrency.Rate,
@@ -43,15 +43,16 @@ namespace Lunggo.ApCommon.ProductBase.Model
                     InsertDate = DateTime.UtcNow,
                     InsertPgId = "0"
                 });
-                Margin.InsertToDb(orderId);
+                Margin.InsertToDb(priceId);
+                return priceId;
             }
         }
 
-        internal static Price GetFromDb(long orderId)
+        internal static Price GetFromDb(long priceId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var record = GetPriceQuery.GetInstance().Execute(conn, new { OrderId = orderId }).Single();
+                var record = GetPriceQuery.GetInstance().Execute(conn, new { Id = priceId }).Single();
                 return new Price
                 {
                     Supplier = record.SupplierPrice.GetValueOrDefault(),
@@ -62,7 +63,7 @@ namespace Lunggo.ApCommon.ProductBase.Model
                     FinalIdr = record.FinalPriceIdr.GetValueOrDefault(),
                     Local = record.LocalPrice.GetValueOrDefault(),
                     LocalCurrency = new Currency(record.LocalCurrencyCd, record.LocalRate.GetValueOrDefault()),
-                    Margin = UsedMargin.GetFromDb(orderId),  
+                    Margin = UsedMargin.GetFromDb(priceId),  
                 };
             }
         }
@@ -74,7 +75,7 @@ namespace Lunggo.ApCommon.ProductBase.Model
                 return "SELECT SupplierPrice, SupplierCurrencyCd, SupplierRate, OriginalPriceIdr, MarginNominal, " +
                        "Rounding, FinalPriceIdr, LocalPrice, LocalCurrencyCd, LocalRate " +
                        "FROM Price " +
-                       "WHERE OrderId = @OrderId";
+                       "WHERE Id = @Id";
             }
         }
 

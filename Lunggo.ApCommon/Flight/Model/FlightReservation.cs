@@ -3,8 +3,8 @@ using Lunggo.ApCommon.Flight.Constant;
 using System;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
-using Lunggo.ApCommon.ProductBase.Model;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Flight.Model
@@ -30,9 +30,7 @@ namespace Lunggo.ApCommon.Flight.Model
         [JsonProperty("itin")]
         public FlightItineraryForDisplay Itinerary { get; set; }
         [JsonProperty("pax")]
-        public List<FlightPassenger> Passengers { get; set; }
-        [JsonProperty("tripType")]
-        public TripType OverallTripType { get; set; }
+        public List<Pax> Passengers { get; set; }
     }
 
     public class FlightReservation : ReservationBase<FlightReservation>
@@ -43,8 +41,6 @@ namespace Lunggo.ApCommon.Flight.Model
         }
 
         public List<FlightItinerary> Itineraries { get; set; }
-        public List<FlightPassenger> Passengers { get; set; }
-        public TripType OverallTripType { get; set; }
 
         public FlightReservation()
         {

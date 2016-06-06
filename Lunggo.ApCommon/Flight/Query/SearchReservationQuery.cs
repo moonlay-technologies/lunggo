@@ -19,11 +19,11 @@ namespace Lunggo.ApCommon.Flight.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT DISTINCT r.RsvNo ");
-            clauseBuilder.Append("FROM FlightReservation AS r ");
+            clauseBuilder.Append("FROM Reservation AS r ");
             clauseBuilder.Append("INNER JOIN FlightItinerary AS i ON r.RsvNo = i.RsvNo ");
             clauseBuilder.Append("INNER JOIN FlightTrip AS t ON i.ItineraryId = t.ItineraryId ");
             clauseBuilder.Append("INNER JOIN FlightSegment AS s ON t.TripId = s.TripId ");
-            clauseBuilder.Append("INNER JOIN FlightPassenger AS p ON r.RsvNo = p.RsvNo ");
+            clauseBuilder.Append("INNER JOIN Pax AS p ON r.RsvNo = p.RsvNo ");
             return clauseBuilder.ToString();
         }
 

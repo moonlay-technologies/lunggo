@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.ProductBase.Model;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Config;
@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         private const int SupplierIndexCap = 333;
 
-        public List<FlightPassenger> GetSavedPassengers(string contactEmail)
+        public List<Pax> GetSavedPassengers(string contactEmail)
         {
             return GetSavedPassengersFromDb(contactEmail);
         }

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
-using Lunggo.ApCommon.ProductBase.Model;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 
 namespace Lunggo.CustomerWeb.Models
 {
@@ -17,13 +17,13 @@ namespace Lunggo.CustomerWeb.Models
         public PaymentDetails PaymentDetailsData { get; set; }
         public string DiscountCode { get; set; }
         public DateTime ExpiryTime { get; set; }
-        public List<FlightPassenger> SavedPassengers { get; set; }
+        public List<Pax> SavedPassengers { get; set; }
         public List<SavedCreditCard> SavedCreditCards { get; set; }
     }
 
     public class PassengerData
     {
-        public PassengerType Type { get; set; }
+        public PaxType Type { get; set; }
         public Title Title { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

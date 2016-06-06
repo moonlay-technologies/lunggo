@@ -6,13 +6,12 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-using Lunggo.ApCommon.ProductBase.Constant;
-using Lunggo.ApCommon.ProductBase.Model;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
 using Gender = Lunggo.ApCommon.Flight.Constant.Gender;
-using PassengerType = Lunggo.ApCommon.Flight.Constant.PassengerType;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
@@ -131,7 +130,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             return bookingId;
         }
 
-        private static AirTraveler MapAirTraveler(FlightPassenger passenger)
+        private static AirTraveler MapAirTraveler(Pax passenger)
         {
             var airTraveler = new AirTraveler
             {
@@ -150,22 +149,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             return airTraveler;
         }
 
-        private static ApCommon.Mystifly.OnePointService.Flight.PassengerType MapPassengerType(FlightPassenger passenger)
+        private static ApCommon.Mystifly.OnePointService.Flight.PassengerType MapPassengerType(Pax passenger)
         {
             switch (passenger.Type)
             {
-                case PassengerType.Adult:
+                case PaxType.Adult:
                     return ApCommon.Mystifly.OnePointService.Flight.PassengerType.ADT;
-                case PassengerType.Child:
+                case PaxType.Child:
                     return ApCommon.Mystifly.OnePointService.Flight.PassengerType.CHD;
-                case PassengerType.Infant:
+                case PaxType.Infant:
                     return ApCommon.Mystifly.OnePointService.Flight.PassengerType.INF;
                 default:
                     return ApCommon.Mystifly.OnePointService.Flight.PassengerType.Default;
             }
         }
 
-        private static ApCommon.Mystifly.OnePointService.Flight.Gender MapGender(FlightPassenger passenger)
+        private static ApCommon.Mystifly.OnePointService.Flight.Gender MapGender(Pax passenger)
         {
             switch (passenger.Gender)
             {
@@ -178,7 +177,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             }
         }
 
-        private static PassengerName MapPassengerName(FlightPassenger passenger)
+        private static PassengerName MapPassengerName(Pax passenger)
         {
             var passengerName = new PassengerName
             {
@@ -190,11 +189,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             return passengerName;
         }
 
-        private static PassengerTitle MapPassengerTitle(FlightPassenger passenger)
+        private static PassengerTitle MapPassengerTitle(Pax passenger)
         {
             switch (passenger.Type)
             {
-                case PassengerType.Adult:
+                case PaxType.Adult:
                     switch (passenger.Title)
                     {
                         case Title.Mister:
@@ -206,7 +205,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                         default:
                             return PassengerTitle.Default;
                     }
-                case PassengerType.Child:
+                case PaxType.Child:
                     switch (passenger.Title)
                     {
                         case Title.Mister:
@@ -216,7 +215,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                         default:
                             return PassengerTitle.Default;
                     }
-                case PassengerType.Infant:
+                case PaxType.Infant:
                     switch (passenger.Title)
                     {
                         case Title.Mister:
@@ -230,7 +229,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             }
         }
 
-        private static Passport MapPassport(FlightPassenger passenger)
+        private static Passport MapPassport(Pax passenger)
         {
             var passport = new Passport
             {

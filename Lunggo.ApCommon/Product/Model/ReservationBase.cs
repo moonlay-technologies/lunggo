@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Security.Principal;
-using System.Web;
 using Lunggo.ApCommon.Identity.User;
-using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
-using Lunggo.ApCommon.Sequence;
-using Lunggo.Framework.Context;
+using Lunggo.ApCommon.Product.Constant;
 
-namespace Lunggo.ApCommon.ProductBase.Model
+namespace Lunggo.ApCommon.Product.Model
 {
     public abstract class ReservationBase<TRsv> where TRsv : ReservationBase<TRsv>
     {
@@ -25,6 +18,7 @@ namespace Lunggo.ApCommon.ProductBase.Model
         public Contact Contact { get; set; }
         public User User { get; set; }
         public ReservationState State { get; set; }
+        public List<Pax> Pax { get; set; }
 
         //protected ReservationBase()
         //{

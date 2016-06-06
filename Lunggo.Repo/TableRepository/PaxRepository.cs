@@ -6,36 +6,36 @@ using System.Data;
 
 namespace Lunggo.Repository.TableRepository
 {
-	public class FlightPassengerTableRepo : TableDao<FlightPassengerTableRecord>, IDbTableRepository<FlightPassengerTableRecord> 
+	public class PaxTableRepo : TableDao<PaxTableRecord>, IDbTableRepository<PaxTableRecord> 
     {
-		private static readonly FlightPassengerTableRepo Instance = new FlightPassengerTableRepo("FlightPassenger");
+		private static readonly PaxTableRepo Instance = new PaxTableRepo("Pax");
         
-        private FlightPassengerTableRepo(String tableName) : base(tableName)
+        private PaxTableRepo(String tableName) : base(tableName)
         {
             ;
         }
 
-		public static FlightPassengerTableRepo GetInstance()
+		public static PaxTableRepo GetInstance()
         {
             return Instance;
         }
 
-        public int Insert(IDbConnection connection, FlightPassengerTableRecord record)
+        public int Insert(IDbConnection connection, PaxTableRecord record)
         {
             return Insert(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-        public int Delete(IDbConnection connection, FlightPassengerTableRecord record)
+        public int Delete(IDbConnection connection, PaxTableRecord record)
         {
             return Delete(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-		public int Update(IDbConnection connection, FlightPassengerTableRecord record)
+		public int Update(IDbConnection connection, PaxTableRecord record)
         {
             return Update(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-        public IEnumerable<FlightPassengerTableRecord> FindAll(IDbConnection connection)
+        public IEnumerable<PaxTableRecord> FindAll(IDbConnection connection)
         {
             return FindAll(connection, CommandDefinition.GetDefaultDefinition());
         }
@@ -45,17 +45,17 @@ namespace Lunggo.Repository.TableRepository
             return DeleteAll(connection, CommandDefinition.GetDefaultDefinition());
         }
 
-        public int Insert(IDbConnection connection, FlightPassengerTableRecord record, CommandDefinition definition)
+        public int Insert(IDbConnection connection, PaxTableRecord record, CommandDefinition definition)
         {
             return InsertInternal(connection, record, definition);
         }
 
-        public int Delete(IDbConnection connection, FlightPassengerTableRecord record, CommandDefinition definition)
+        public int Delete(IDbConnection connection, PaxTableRecord record, CommandDefinition definition)
         {
             return DeleteInternal(connection, record, definition);
         }
 
-        public int Update(IDbConnection connection, FlightPassengerTableRecord record, CommandDefinition definition)
+        public int Update(IDbConnection connection, PaxTableRecord record, CommandDefinition definition)
         {
             return UpdateInternal(connection, record, definition);
         }
@@ -65,7 +65,7 @@ namespace Lunggo.Repository.TableRepository
             return DeleteAllInternal(connection, definition);
         }
 
-        public IEnumerable<FlightPassengerTableRecord> FindAll(IDbConnection connection, CommandDefinition definition)
+        public IEnumerable<PaxTableRecord> FindAll(IDbConnection connection, CommandDefinition definition)
         {
             return FindAllInternal(connection, definition);
         }

@@ -16,8 +16,8 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SELECT PassengerId ");
-            clauseBuilder.Append(@"FROM FlightPassenger ");
+            clauseBuilder.Append(@"SELECT Id ");
+            clauseBuilder.Append(@"FROM Pax ");
             return clauseBuilder.ToString();
         }
 

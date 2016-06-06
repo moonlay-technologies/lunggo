@@ -54,9 +54,9 @@
     <Compile Include="TableRecord\PaymentTableRecord.cs" />
     <Compile Include="TableRecord\PriceTableRecord.cs" />
     <Compile Include="TableRecord\RefreshTokenTableRecord.cs" />
-    <Compile Include="TableRecord\FlightReservationTableRecord.cs" />
     <Compile Include="TableRecord\RefundTableRecord.cs" />
     <Compile Include="TableRecord\ReservationStateTableRecord.cs" />
+    <Compile Include="TableRecord\ReservationTableRecord.cs" />
     <Compile Include="TableRecord\SavedCreditCardTableRecord.cs" />
     <Compile Include="TableRecord\CalendarRecipientTableRecord.cs" />
     <Compile Include="TableRecord\CampaignTableRecord.cs" />
@@ -72,7 +72,7 @@
     <Compile Include="TableRecord\CountriesTableRecord.cs" />
     <Compile Include="TableRecord\FlightEticketTableRecord.cs" />
     <Compile Include="TableRecord\FlightItineraryTableRecord.cs" />
-    <Compile Include="TableRecord\FlightPassengerTableRecord.cs" />
+    <Compile Include="TableRecord\PaxTableRecord.cs" />
     <Compile Include="TableRecord\FlightPriceMarginRuleTableRecord.cs" />
     <Compile Include="TableRecord\FlightSavedPassengerTableRecord.cs" />
     <Compile Include="TableRecord\FlightSegmentTableRecord.cs" />
@@ -115,12 +115,12 @@
     <Compile Include="TableRepository\CurrencyRepository.cs" />
     <Compile Include="TableRepository\DiscountRepository.cs" />
     <Compile Include="TableRepository\FlightItineraryRuleRepository.cs" />
-    <Compile Include="TableRepository\FlightReservationRepository.cs" />
     <Compile Include="TableRepository\MarginRepository.cs" />
     <Compile Include="TableRepository\PaymentRepository.cs" />
     <Compile Include="TableRepository\PriceRepository.cs" />
     <Compile Include="TableRepository\RefreshTokenRepository.cs" />
     <Compile Include="TableRepository\RefundRepository.cs" />
+    <Compile Include="TableRepository\ReservationRepository.cs" />
     <Compile Include="TableRepository\ReservationStateRepository.cs" />
     <Compile Include="TableRepository\SavedCreditCardRepository.cs" />
     <Compile Include="TableRepository\CalendarRecipientRepository.cs" />
@@ -137,7 +137,7 @@
     <Compile Include="TableRepository\CountriesRepository.cs" />
     <Compile Include="TableRepository\FlightEticketRepository.cs" />
     <Compile Include="TableRepository\FlightItineraryRepository.cs" />
-    <Compile Include="TableRepository\FlightPassengerRepository.cs" />
+    <Compile Include="TableRepository\PaxRepository.cs" />
     <Compile Include="TableRepository\FlightPriceMarginRuleRepository.cs" />
     <Compile Include="TableRepository\FlightSavedPassengerRepository.cs" />
     <Compile Include="TableRepository\FlightSegmentRepository.cs" />

@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
-using Lunggo.ApCommon.ProductBase.Query;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 
-namespace Lunggo.ApCommon.ProductBase.Model
+namespace Lunggo.ApCommon.Product.Model
 {
     public sealed class Margin
     {

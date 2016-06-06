@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.ProductBase.Constant;
-using Lunggo.ApCommon.ProductBase.Model;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Sequence;
 
 namespace Lunggo.ApCommon.Sequence

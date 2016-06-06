@@ -5,7 +5,8 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-using Lunggo.ApCommon.ProductBase.Constant;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
@@ -170,12 +171,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             };
         }
 
-        private static List<FlightPassenger> MapDetailsPassengerInfo(AirTripDetailsRS response)
+        private static List<Pax> MapDetailsPassengerInfo(AirTripDetailsRS response)
         {
-            var passengerInfoDetails = new List<FlightPassenger>();
+            var passengerInfoDetails = new List<Pax>();
             foreach (var customerInfo in response.TravelItinerary.ItineraryInfo.CustomerInfos)
             {
-                var passengerInfo = new FlightPassenger
+                var passengerInfo = new Pax
                 {
                     Title = MapDetailsPassengerTitle(customerInfo),
                     FirstName = customerInfo.Customer.PaxName.PassengerFirstName,
@@ -204,18 +205,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             }
         }
 
-        private static Flight.Constant.PassengerType MapDetailsPassengerType(CustomerInfo customerInfo)
+        private static Flight.Constant.PaxType MapDetailsPassengerType(CustomerInfo customerInfo)
         {
             switch (customerInfo.Customer.PassengerType)
             {
                 case PassengerType.ADT:
-                    return Flight.Constant.PassengerType.Adult;
+                    return Flight.Constant.PaxType.Adult;
                 case PassengerType.CHD:
-                    return Flight.Constant.PassengerType.Child;
+                    return Flight.Constant.PaxType.Child;
                 case PassengerType.INF:
-                    return Flight.Constant.PassengerType.Infant;
+                    return Flight.Constant.PaxType.Infant;
                 default:
-                    return Flight.Constant.PassengerType.Adult;
+                    return Flight.Constant.PaxType.Adult;
             }
         }
 

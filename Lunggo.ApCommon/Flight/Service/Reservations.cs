@@ -7,7 +7,7 @@ using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Flight.Service

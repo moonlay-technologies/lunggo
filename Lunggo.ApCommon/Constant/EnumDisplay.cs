@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Payment.Constant;
-using Lunggo.ApCommon.ProductBase.Constant;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.I18nMessage;
 
@@ -25,18 +25,18 @@ namespace Lunggo.ApCommon.Constant
             catch { }
             switch (title)
             {
-                case ProductBase.Constant.Title.Mister:
+                case Product.Constant.Title.Mister:
                     return Msg.GetMessageValue("AC00001", lang);
-                case ProductBase.Constant.Title.Mistress:
+                case Product.Constant.Title.Mistress:
                     return Msg.GetMessageValue("AC00002", lang);
-                case ProductBase.Constant.Title.Miss:
+                case Product.Constant.Title.Miss:
                     return Msg.GetMessageValue("AC00003", lang);
                 default:
                     return "";
             }
         }
 
-        public static string PassengerType(PassengerType type)
+        public static string PassengerType(PaxType type)
         {
             var lang = "en_US";
             try
@@ -46,11 +46,11 @@ namespace Lunggo.ApCommon.Constant
             catch { }
             switch (type)
             {
-                case Flight.Constant.PassengerType.Adult:
+                case Flight.Constant.PaxType.Adult:
                     return Msg.GetMessageValue("AC00025", lang);
-                case Flight.Constant.PassengerType.Child:
+                case Flight.Constant.PaxType.Child:
                     return Msg.GetMessageValue("AC00026", lang);
-                case Flight.Constant.PassengerType.Infant:
+                case Flight.Constant.PaxType.Infant:
                     return Msg.GetMessageValue("AC00027", lang);
                 default:
                     return "";

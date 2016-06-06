@@ -1,6 +1,6 @@
 ﻿namespace Lunggo.ApCommon.Flight.Constant
 {
-    public enum PassengerType
+    public enum PaxType
     {
         Undefined = 0,
         Adult = 1,
@@ -8,35 +8,35 @@
         Infant = 3
     }
 
-    internal class PassengerTypeCd
+    internal class PaxTypeCd
     {
-        internal static string Mnemonic(PassengerType type)
+        internal static string Mnemonic(PaxType type)
         {
             switch (type)
             {
-                case PassengerType.Adult:
+                case PaxType.Adult:
                     return "ADT";
-                case PassengerType.Child:
+                case PaxType.Child:
                     return "CHD";
-                case PassengerType.Infant:
+                case PaxType.Infant:
                     return "INF";
                 default:
                     return null;
             }
         }
 
-        internal static PassengerType Mnemonic(string type)
+        internal static PaxType Mnemonic(string type)
         {
             switch (type)
             {
                 case "ADT":
-                    return PassengerType.Adult;
+                    return PaxType.Adult;
                 case "CHD":
-                    return PassengerType.Child;
+                    return PaxType.Child;
                 case "INF":
-                    return PassengerType.Infant;
+                    return PaxType.Infant;
                 default:
-                    return PassengerType.Undefined;
+                    return PaxType.Undefined;
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace Lunggo.ApCommon.ProductBase.Constant
+﻿namespace Lunggo.ApCommon.Product.Constant
 {
     public enum CancellationType
     {

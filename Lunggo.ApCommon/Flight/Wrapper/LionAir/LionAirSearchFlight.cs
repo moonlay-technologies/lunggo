@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web.UI;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Model;
+using Lunggo.ApCommon.Product.Model;
 using Newtonsoft.Json;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;

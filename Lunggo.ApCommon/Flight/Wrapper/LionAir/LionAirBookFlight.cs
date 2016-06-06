@@ -10,8 +10,8 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
-using Lunggo.ApCommon.ProductBase.Model;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Config;
 using RestSharp;
 using System.Globalization;
@@ -83,8 +83,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     };
                 }
 
-                var infants = bookInfo.Passengers.Where(pax => pax.Type == PassengerType.Infant);
-                var children = bookInfo.Passengers.Where(pax => pax.Type == PassengerType.Child);
+                var infants = bookInfo.Passengers.Where(pax => pax.Type == PaxType.Infant);
+                var children = bookInfo.Passengers.Where(pax => pax.Type == PaxType.Child);
                 bool isInfantValid = true;
                 bool isChildValid = true;
                 foreach (var inft in infants)
@@ -817,7 +817,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                         title = "Miss";
                                         break;
                                     case Title.Mister:
-                                        title = orderedPassengers.ElementAt(i).Type == PassengerType.Adult ? "Mr" : "Mstr";
+                                        title = orderedPassengers.ElementAt(i).Type == PaxType.Adult ? "Mr" : "Mstr";
                                         break;
                                     case Title.Mistress:
                                         title = "Mrs";
@@ -827,7 +827,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 
                                 switch (orderedPassengers.ElementAt(i).Type)
                                 {
-                                    case PassengerType.Adult:
+                                    case PaxType.Adult:
                                         mealrequest = "No+Preference";
                                         dataPassenger +=
                                             "&NameBlock" + (i + 1) + "%24ddlTitle=" + title +
@@ -840,7 +840,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                             "&NameBlock" + (i + 1) + "%24txtFFNo=" +
                                             "&NameBlock" + (i + 1) + "%24ddlMealRequest=" + mealrequest;
                                         break;
-                                    case PassengerType.Child:
+                                    case PaxType.Child:
                                         mealrequest = "No+Preference";
                                         dataPassenger +=
                                             "&NameBlock" + (i + 1) + "%24ddlTitle=" + title +
@@ -859,7 +859,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                             orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year +
                                             "&NameBlock" + (i + 1) + "%24ddlMealRequest=" + mealrequest;
                                         break;
-                                    case PassengerType.Infant:
+                                    case PaxType.Infant:
                                         mealrequest = "BBML";
                                         dataPassenger +=
                                             "&NameBlock" + (i + 1) + "%24ddlTitle=" + title +
@@ -906,14 +906,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                         title = "Miss";
                                         break;
                                     case Title.Mister:
-                                        title = orderedPassengers.ElementAt(i).Type == PassengerType.Adult ? "Mr" : "Mstr";
+                                        title = orderedPassengers.ElementAt(i).Type == PaxType.Adult ? "Mr" : "Mstr";
                                         break;
                                     case Title.Mistress:
                                         title = "Mrs";
                                         break;
                                 }
 
-                                if (orderedPassengers.ElementAt(i).Type == PassengerType.Infant)
+                                if (orderedPassengers.ElementAt(i).Type == PaxType.Infant)
                                 {
                                     mealrequest = "BBML";
                                     dataPassenger +=
