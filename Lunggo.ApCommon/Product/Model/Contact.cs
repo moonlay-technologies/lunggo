@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
-using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.ProductBase.Constant;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using Newtonsoft.Json;
 
-namespace Lunggo.ApCommon.ProductBase.Model
+namespace Lunggo.ApCommon.Product.Model
 {
     public sealed class Contact
     {

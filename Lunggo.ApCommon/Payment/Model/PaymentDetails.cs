@@ -2,7 +2,6 @@
 using System.Linq;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Payment.Constant;
-using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;

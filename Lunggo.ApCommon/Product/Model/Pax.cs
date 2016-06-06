@@ -1,14 +1,14 @@
 ﻿using System;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.ProductBase.Constant;
+using Lunggo.ApCommon.Product.Constant;
 using Newtonsoft.Json;
 
-namespace Lunggo.ApCommon.Flight.Model
+namespace Lunggo.ApCommon.Product.Model
 {
-    public class FlightPassenger
+    public class Pax
     {
         [JsonProperty("typ")]
-        public PassengerType Type { get; set; }
+        public PaxType Type { get; set; }
         [JsonProperty("tit")]
         public Title Title { get; set; }
         [JsonProperty("fst")]

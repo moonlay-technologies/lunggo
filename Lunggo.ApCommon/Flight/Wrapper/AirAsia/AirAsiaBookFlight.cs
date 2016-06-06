@@ -12,8 +12,8 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
-using Lunggo.ApCommon.ProductBase.Model;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Web;
 using RestSharp;
 using Lunggo.ApCommon.Constant;
@@ -307,7 +307,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24EmergencyTextBoxMobileNo=" +
                     @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24DropDownListRelationship=Other";
                 int i = 0;
-                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Adult))
+                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PaxType.Adult))
                 {
                     var title = passenger.Title == Title.Mister ? "MR" : "MS";
                     postData +=
@@ -322,7 +322,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24TextBoxCustomerNumber_" + i + "=";
                     i++;
                 }
-                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Child))
+                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PaxType.Child))
                 {
                     postData +=
                         @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24DropDownListTitle_" + i + "=CHD" +
@@ -337,7 +337,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     i++;
                 }
                 i = 0;
-                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Infant))
+                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PaxType.Infant))
                 {
                     postData +=
                         @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24DropDownListAssign_" + i + "_" + i + "=" + i +

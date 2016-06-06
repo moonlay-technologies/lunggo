@@ -4,7 +4,7 @@ using System.Web.Helpers;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.ProductBase.Model;
+using Lunggo.ApCommon.Product.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Flight.Model
@@ -21,19 +21,25 @@ namespace Lunggo.ApCommon.Flight.Model
         public bool RequireNationality { get; set; }
         [JsonProperty("holdable")]
         public bool CanHold { get; set; }
-        [JsonProperty("adult")]
+        [JsonProperty("adultCount")]
         public int AdultCount { get; set; }
-        [JsonProperty("child")]
+        [JsonProperty("childCount")]
         public int ChildCount { get; set; }
-        [JsonProperty("infant")]
+        [JsonProperty("infantCount")]
         public int InfantCount { get; set; }
+        [JsonProperty("adultFare")]
+        public decimal AdultFare { get; set; }
+        [JsonProperty("childFare")]
+        public decimal ChildFare { get; set; }
+        [JsonProperty("infantFare")]
+        public decimal InfantFare { get; set; }
         [JsonProperty("type")]
         public TripType TripType { get; set; }
         [JsonProperty("reqCabin")]
         public CabinClass RequestedCabinClass { get; set; }
         [JsonProperty("reg")]
         public int RegisterNumber { get; set; }
-        [JsonProperty("fare")]
+        [JsonProperty("totalFare")]
         public decimal TotalFare { get; set; }
         [JsonProperty("currency")]
         public string Currency { get; set; }
@@ -58,14 +64,17 @@ namespace Lunggo.ApCommon.Flight.Model
         public int AdultCount { get; set; }
         public int ChildCount { get; set; }
         public int InfantCount { get; set; }
+        public decimal AdultPricePortion { get; set; }
+        public decimal ChildPricePortion { get; set; }
+        public decimal InfantPricePortion { get; set; }
         public TripType TripType { get; set; }
+        public TripType RequestedTripType { get; set; }
         public CabinClass RequestedCabinClass { get; set; }
         public int RegisterNumber { get; set; }
         public BookingStatus BookingStatus { get; set; }
         public List<FlightTrip> Trips { get; set; }
         public FareType FareType { get; set; }
-        public Supplier Supplier { get; set; }
-        public TripType RequestedTripType { get; set; }
+        public Supplier Supplier { get; set; }        
 
         public bool Identical(FlightItinerary otheritin)
         {

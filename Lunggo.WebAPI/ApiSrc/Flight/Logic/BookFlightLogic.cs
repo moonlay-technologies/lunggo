@@ -5,7 +5,8 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.ProductBase.Constant;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Context;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
@@ -53,7 +54,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 request.Passengers.TrueForAll(p => p.FirstName != null) &&
                 request.Passengers.TrueForAll(p => p.LastName != null) &&
                 request.Passengers.TrueForAll(p => p.Title != Title.Undefined) &&
-                request.Passengers.TrueForAll(p => p.Type != PassengerType.Undefined);
+                request.Passengers.TrueForAll(p => p.Type != PaxType.Undefined);
         }
 
         private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse)
@@ -136,9 +137,9 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             return bookServiceRequest;
         }
 
-        private static List<FlightPassenger> MapPassengers(IEnumerable<Passenger> passengers)
+        private static List<Pax> MapPassengers(IEnumerable<Passenger> passengers)
         {
-            return passengers.Select(passenger => new FlightPassenger
+            return passengers.Select(passenger => new Pax
             {
                 Type = passenger.Type,
                 Title = passenger.Title,

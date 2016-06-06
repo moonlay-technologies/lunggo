@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Lunggo.ApCommon.Product.Model;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
@@ -7,7 +8,7 @@ namespace Lunggo.ApCommon.Flight.Model
         internal string BookingId { get; set; }
         internal int FlightSegmentCount { get; set; }
         internal FlightItinerary Itinerary { get; set; }
-        internal List<FlightPassenger> Passengers { get; set; }
+        internal List<Pax> Passengers { get; set; }
         internal decimal TotalFare { get; set; }
         internal decimal AdultTotalFare { get; set; }
         internal decimal ChildTotalFare { get; set; }

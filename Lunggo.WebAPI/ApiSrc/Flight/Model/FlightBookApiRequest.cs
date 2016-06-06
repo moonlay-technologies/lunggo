@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.ProductBase.Constant;
-using Lunggo.ApCommon.ProductBase.Model;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Flight.Model
@@ -22,7 +22,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Model
     public class Passenger
     {
         [JsonProperty("type")]
-        public PassengerType Type { get; set; }
+        public PaxType Type { get; set; }
         [JsonProperty("title")]
         public Title Title { get; set; }
         [JsonProperty("first")]

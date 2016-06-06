@@ -20,10 +20,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 RsvStatus = reservation.RsvStatus,
                 CancellationType = reservation.CancellationType,
                 CancellationTime = reservation.CancellationTime,
-                OverallTripType = reservation.OverallTripType,
                 Itinerary = ConvertToItineraryForDisplay(reservation.Itineraries),
                 Contact = reservation.Contact,
-                Passengers = reservation.Passengers,
+                Passengers = reservation.Pax,
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
                 User = reservation.User
             };
@@ -35,9 +34,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 return null;
 
             var totalFare = itins.Sum(itin => itin.Price.Local);
-            var tripType =
-                ParseTripType(
-                    itins.SelectMany(itin => itin.Trips).OrderBy(trip => trip.Segments[0].DepartureTime).ToList());
+            var adultFare = itins.Sum(itin => itin.AdultPricePortion*itin.Price.Local);
+            var childFare = itins.Sum(itin => itin.ChildPricePortion*itin.Price.Local);
+            var infantFare = itins.Sum(itin => itin.InfantPricePortion*itin.Price.Local);
+
             return new FlightItineraryForDisplay
             {
                 AdultCount = itins[0].AdultCount,
@@ -50,8 +50,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 RequestedCabinClass = itins[0].RequestedCabinClass,
                 CanHold = itins.TrueForAll(itin => itin.CanHold),
                 Currency = itins[0].Price.LocalCurrency,
-                TripType = tripType,
+                TripType = itins[0].RequestedTripType,
                 TotalFare = totalFare,
+                AdultFare = adultFare,
+                ChildFare = childFare,
+                InfantFare = infantFare,
                 Trips = itins[0].Trips.Select(ConvertToTripForDisplay).ToList(),
                 RegisterNumber = 0,
                 OriginalFare = GenerateDummyOriginalFare(totalFare)

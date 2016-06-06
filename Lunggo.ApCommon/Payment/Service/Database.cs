@@ -10,7 +10,6 @@ using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
-using Lunggo.ApCommon.ProductBase.Model;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 

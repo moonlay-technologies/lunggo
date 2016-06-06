@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.ProductBase.Model;
-using Lunggo.Framework.Database;
+﻿using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 
-namespace Lunggo.ApCommon.ProductBase.Query
+namespace Lunggo.ApCommon.Product.Query
 {
     internal class GetAllOrderMarginsQuery : QueryBase<GetAllOrderMarginsQuery, MarginTableRecord>
     {

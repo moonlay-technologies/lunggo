@@ -131,7 +131,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         }
                         if (reservation.Payment.Method != PaymentMethod.BankTransfer)
                             SendInstantPaymentConfirmedNotifToCustomer(input.RsvNo);
-                            InsertSavedPassengersToDb(reservation.Contact.Email, reservation.Passengers);
+                            InsertSavedPassengersToDb(reservation.Contact.Email, reservation.Pax);
                     }
                 }
                 else

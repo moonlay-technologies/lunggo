@@ -8,7 +8,7 @@ using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Web;
 using RestSharp;
 using System.Diagnostics;
@@ -199,7 +199,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     @"&CONTROLGROUPPASSENGER$ItineraryDistributionInputPassengerView$Distribution=2" +
                     @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$RadioButtonInsurance=No";
                 int i = 0;
-                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Adult))
+                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PaxType.Adult))
                 {
                     var title = passenger.Title == Title.Mister ? "MR" : "MS";
                     passPostData +=
@@ -221,7 +221,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 
                     i++;
                 }
-                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Child))
+                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PaxType.Child))
                 {
                     var title = passenger.Title == Title.Mister ? "MR" : "MS";
                     passPostData +=
@@ -243,7 +243,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     i++;
                 }
                 i = 0;
-                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Infant))
+                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PaxType.Infant))
                 {
                     passPostData +=
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListTitle_" + i + "_" + i + "=" +
@@ -295,14 +295,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     //"&__VIEWSTATE=/wEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgEFN0NvbnRyb2xHcm91cFVuaXRNYXBWaWV3JFVuaXRNYXBWaWV3Q29udHJvbCRDaGVja0JveFNlYXRC9WoNScpqWuAJVhj4Iqw3MUfIjw=="
                           @"&pageToken=";
                 int j = 0;
-                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Adult))
+                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PaxType.Adult))
                 {
                     seatPostData +=
                          @"&ControlGroupUnitMapView$UnitMapViewControl$EquipmentConfiguration_0_PassengerNumber_" + j + "=" +
                          @"&ControlGroupUnitMapView$UnitMapViewControl$HiddenEquipmentConfiguration_0_PassengerNumber_" + j + "=";
                     j++;
                 }
-                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Child))
+                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PaxType.Child))
                 {
                     seatPostData +=
                          @"&ControlGroupUnitMapView$UnitMapViewControl$EquipmentConfiguration_0_PassengerNumber_" + j + "=" +

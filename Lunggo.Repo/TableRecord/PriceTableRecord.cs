@@ -11,13 +11,13 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? OrderId
+		public long? Id
 		{
-		    get { return _OrderId; }
+		    get { return _Id; }
 		    set
 		    {
-		        _OrderId = value;
-		        IncrementLog("OrderId");
+		        _Id = value;
+		        IncrementLog("Id");
 		    }
 		}
 		public Decimal? SupplierPrice
@@ -65,15 +65,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("MarginNominal");
 		    }
 		}
-        public Decimal? Rounding
-        {
-            get { return _Rounding; }
-            set
-            {
-                _Rounding = value;
-                IncrementLog("Rounding");
-            }
-        }
+		public Decimal? Rounding
+		{
+		    get { return _Rounding; }
+		    set
+		    {
+		        _Rounding = value;
+		        IncrementLog("Rounding");
+		    }
+		}
 		public Decimal? FinalPriceIdr
 		{
 		    get { return _FinalPriceIdr; }
@@ -166,7 +166,7 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _OrderId;
+		private long? _Id;
 		private Decimal? _SupplierPrice;
 		private String _SupplierCurrencyCd;
 		private Decimal? _SupplierRate;
@@ -214,7 +214,7 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("OrderId", true),
+				new ColumnMetadata("Id", true),
 				new ColumnMetadata("SupplierPrice", false),
 				new ColumnMetadata("SupplierCurrencyCd", false),
 				new ColumnMetadata("SupplierRate", false),

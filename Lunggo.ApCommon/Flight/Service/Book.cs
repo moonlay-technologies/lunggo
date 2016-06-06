@@ -15,8 +15,7 @@ using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
-using Lunggo.ApCommon.ProductBase.Model;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
 using System.Diagnostics;
@@ -94,8 +93,7 @@ namespace Lunggo.ApCommon.Flight.Service
             reservation.RsvStatus = RsvStatus.Pending;
             reservation.Itineraries = itins;
             reservation.Contact = input.Contact;
-            reservation.Passengers = input.Passengers;
-            reservation.OverallTripType = ParseTripType(trips);
+            reservation.Pax = input.Passengers;
             reservation.User = HttpContext.Current.User != null
                 ? HttpContext.Current.User.Identity.GetUser()
                 : null;

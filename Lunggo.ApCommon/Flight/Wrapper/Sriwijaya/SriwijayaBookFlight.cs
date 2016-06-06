@@ -7,8 +7,8 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.ProductBase.Constant;
-using Lunggo.ApCommon.ProductBase.Model;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Web;
 using RestSharp;
@@ -20,64 +20,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
     {
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
-           
-            //var sementara = new FlightBookingInfo
-            //{
-            //    FareId = "SJ.017.SJ.272.IN.9662.KNO.WGP?2015-11-11|1.1.1|2346000.0.3820089,3853792,1953189:X,T,Q:S:KNO:WGP:U2s5VlVrNUZXUT09",
-            //    ContactData = new ContactData
-            //    {
-            //        Name = "Fani",
-            //        Phone = "08172182371",
-            //    },
-            //    Passengers = new List<FlightPassenger>
-            //    {
-            //        new FlightPassenger
-            //        {
-            //            FirstName = "Fani",
-            //            LastName = "Abdullah",
-            //            DateOfBirth = new DateTime(1976,4,3),
-            //            Gender = Gender.Male,
-            //            Title = Title.Mister,
-            //            PassportNumber = "9320183092141",
-            //            Type = PassengerType.Adult
-            //        },
-            //        //new FlightPassenger
-            //        //{
-            //        //    FirstName = "Nina",
-            //        //    LastName = "Luthvia",
-            //        //    DateOfBirth = new DateTime(1980,7,5).Date,
-            //        //    Gender = Gender.Female,
-            //        //    Title = Title.Miss,
-            //        //    PassportNumber = "9310182091131",
-            //        //    Type = PassengerType.Adult
-            //        //},
-            //        new FlightPassenger
-            //        {
-            //            FirstName = "Habibi",
-            //            LastName = "",
-            //            DateOfBirth = new DateTime(2005,11,7).Date,
-            //            Gender = Gender.Male,
-            //            Title = Title.Mister,
-            //            Type = PassengerType.Child
-            //        },
-            //        //new FlightPassenger
-            //        //{
-            //        //    FirstName = "Dhimas",
-            //        //    LastName = "Alvian",
-            //        //    DateOfBirth = new DateTime(2015,2,1).Date,
-            //        //    Gender = Gender.Male,
-            //        //    Type = PassengerType.Infant
-            //        //},
-            //        new FlightPassenger
-            //        {
-            //            FirstName = "Shinta",
-            //            LastName = "Julia",
-            //            DateOfBirth = new DateTime(2014,12,19).Date,
-            //            Gender = Gender.Female,
-            //            Type = PassengerType.Infant
-            //        }
-            //    }
-            //};
             return Client.BookFlight(bookInfo);
         }
 
@@ -422,7 +364,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 /*END HERE*/
                 
                 int i = 0;
-                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Adult))
+                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PaxType.Adult))
                 {
                     var title = passenger.Title == Title.Mister ? "MR" : "MRS";
                     bookingParams +=
@@ -436,7 +378,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     i++;
                 }
                 i = 0;
-                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Child))
+                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PaxType.Child))
                 {
                     var title = passenger.Title == Title.Mister ? "MSTR" : "MISS";
                     bookingParams +=
@@ -449,7 +391,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     i++;
                 }
                 i = 0;
-                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Infant))
+                foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PaxType.Infant))
                 {
                     bookingParams +=
                         "&infantFirst" + i + "=" + passenger.FirstName +

@@ -2,22 +2,22 @@
 
 namespace Lunggo.ApCommon.Sequence
 {
-    public class FlightPassengerIdSequence : SequenceBase
+    public class PaxIdSequence : SequenceBase
     {
-        private static readonly FlightPassengerIdSequence Instance = new FlightPassengerIdSequence();
+        private static readonly PaxIdSequence Instance = new PaxIdSequence();
         private readonly SequenceProperties _properties;
 
-        private FlightPassengerIdSequence()
+        private PaxIdSequence()
         {
             _properties = new SequenceProperties
             {
-                Name = "FlightPassengerIdSequence",
+                Name = "PaxIdSequence",
                 InitialValue = 747
             };
             Init(_properties);
         }
 
-        public static FlightPassengerIdSequence GetInstance()
+        public static PaxIdSequence GetInstance()
         {
             return Instance;
         }

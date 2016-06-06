@@ -11,13 +11,13 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? OrderId
+		public long? PriceId
 		{
-		    get { return _OrderId; }
+		    get { return _PriceId; }
 		    set
 		    {
-		        _OrderId = value;
-		        IncrementLog("OrderId");
+		        _PriceId = value;
+		        IncrementLog("PriceId");
 		    }
 		}
 		public String Name
@@ -130,7 +130,7 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _OrderId;
+		private long? _PriceId;
 		private String _Name;
 		private String _Description;
 		private Decimal? _Percentage;
@@ -174,7 +174,7 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("OrderId", true),
+				new ColumnMetadata("PriceId", true),
 				new ColumnMetadata("Name", false),
 				new ColumnMetadata("Description", false),
 				new ColumnMetadata("Percentage", false),
