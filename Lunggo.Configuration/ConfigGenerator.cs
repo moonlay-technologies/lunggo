@@ -12,17 +12,16 @@ namespace Lunggo.Configuration
     public enum DeploymentEnvironment
     {
         Local = 5,
-        Development1 = 6,
-        QA = 7,
-        Production = 8,
-        Development2 = 9,
-        Development3 = 10
+        DV1 = 6,
+        DV2 = 7,
+        QA = 8,
+        Production = 9
     }
 
     public class ConfigGenerator
     {
-        private const DeploymentEnvironment Environment = DeploymentEnvironment.Development2;
-        private const bool DeployHtmlTemplate = false;
+        private const DeploymentEnvironment Environment = DeploymentEnvironment.DV2;
+        private const bool DeployHtmlTemplate = true;
         private const string FileExtension = "*.properties";
         private const string FinalProjectConfigFile = "application.properties";
         private const string RootProject = "Lunggo";
@@ -329,7 +328,7 @@ namespace Lunggo.Configuration
             var mobileUrl = "http://" + _configDictionary["@@.*.general.mobileUrl@@"];
             const string hotelPath = @"/api/v1/hotels";
             const string roomPath = @"/api/v1/rooms";
-            const string flightPath = @"/flight";
+            const string flightPath = @"/api/v1/flights";
             const string flightRevalidatePath = @"/api/v1/flights/revalidate";
             const string flightBookPath = @"/api/v1/flights/book";
             const string flightPayPath = @"/api/v1/flights/pay";

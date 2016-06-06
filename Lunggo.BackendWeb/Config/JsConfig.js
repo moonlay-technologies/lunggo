@@ -5,16 +5,16 @@ var SystemConfig = {
 };
 
 var SearchHotelConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/api/v1/hotels',
+    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/hotels',
     ResultCount: 24
 };
 
 var SearchRoomConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/api/v1/rooms'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/rooms'
 };
 
 var FlightSearchConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/flight',
+    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/flights',
     // generate search URL
     GenerateSearchParam: function (params) {
         if (typeof (params) == 'object') {
@@ -68,71 +68,71 @@ var FlightSearchConfig = {
 };
 
 var RevalidateConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/api/v1/flights/revalidate',
+    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/flights/revalidate',
     working: false
 };
 
 var FlightBookConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/api/v1/flights/book',
+    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/flights/book',
     working: false
 };
 
 var FlightPayConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/api/v1/flights/pay',
+    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/flights/pay',
     working: false
 };
 
 var GetRulesConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/api/v1/flights/rules',
+    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/flights/rules',
     working: false
 };
 
 var HotelAutocompleteConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/api/v1/autocomplete/hotellocation/'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/autocomplete/hotellocation/'
 };
 
 var FlightAutocompleteConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/api/v1/autocomplete/airport/'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/autocomplete/airport/'
 };
 
 var AirlineAutocompleteConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/api/v1/autocomplete/airline/'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/autocomplete/airline/'
 };
 
 var CheckVoucherConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/api/v1/voucher/check'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/voucher/check'
 };
 
 var SubscribeConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/api/v1/newsletter/subscribe'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/newsletter/subscribe'
 };
 
 var LoginConfig = {
-    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/Login'
+    Url: 'http://www.dv2.travorama.com/id/ApiAccount/Login'
 };
 
 var RegisterConfig = {
-    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/Register'
+    Url: 'http://www.dv2.travorama.com/id/ApiAccount/Register'
 };
 
 var ResetPasswordConfig = {
-    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/ResetPassword'
+    Url: 'http://www.dv2.travorama.com/id/ApiAccount/ResetPassword'
 };
 
 var ForgotPasswordConfig = {
-    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/ForgotPassword'
+    Url: 'http://www.dv2.travorama.com/id/ApiAccount/ForgotPassword'
 };
 
 var ChangePasswordConfig = {
-    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/ChangePassword'
+    Url: 'http://www.dv2.travorama.com/id/ApiAccount/ChangePassword'
 };
 
 var ChangeProfileConfig = {
-    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/ChangeProfile'
+    Url: 'http://www.dv2.travorama.com/id/ApiAccount/ChangeProfile'
 };
 
 var ResendConfirmationEmailConfig = {
-    Url: 'http://dv2-cw.azurewbsites.net/id/ApiAccount/ResendConfirmationEmail'
+    Url: 'http://www.dv2.travorama.com/id/ApiAccount/ResendConfirmationEmail'
 };
 
 var VeritransTokenConfig = {
@@ -141,33 +141,33 @@ var VeritransTokenConfig = {
 };
 
 var TransferConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/api/v1/transferidentifier'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/transferidentifier'
 };
 
 var LoginMobileConfig = {
-    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/Login'
+    Url: 'http://m.dv2.travorama.com/id/ApiAccount/Login'
 };
 
 var RegisterMobileConfig = {
-    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/Register'
+    Url: 'http://m.dv2.travorama.com/id/ApiAccount/Register'
 };
 
 var ResetPasswordMobileConfig = {
-    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/ResetPassword'
+    Url: 'http://m.dv2.travorama.com/id/ApiAccount/ResetPassword'
 };
 
 var ForgotPasswordMobileConfig = {
-    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/ForgotPassword'
+    Url: 'http://m.dv2.travorama.com/id/ApiAccount/ForgotPassword'
 };
 
 var ChangePasswordMobileConfig = {
-    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/ChangePassword'
+    Url: 'http://m.dv2.travorama.com/id/ApiAccount/ChangePassword'
 };
 
 var ChangeProfileMobileConfig = {
-    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/ChangeProfile'
+    Url: 'http://m.dv2.travorama.com/id/ApiAccount/ChangeProfile'
 };
 
 var ResendConfirmationEmailMobileConfig = {
-    Url: 'http://http://dv2-cw.azurewbsites.net/id/ApiAccount/ResendConfirmationEmail'
+    Url: 'http://m.dv2.travorama.com/id/ApiAccount/ResendConfirmationEmail'
 };
