@@ -66,6 +66,10 @@ namespace Lunggo.ApCommon.Flight.Service
             if (itinerary == null)
                 return null;
 
+            var adultFare = itinerary.AdultPricePortion*itinerary.Price.Local;
+            var childFare = itinerary.ChildPricePortion * itinerary.Price.Local;
+            var infantFare = itinerary.InfantPricePortion * itinerary.Price.Local;
+
             return new FlightItineraryForDisplay
             {
                 AdultCount = itinerary.AdultCount,
@@ -80,6 +84,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 Currency = itinerary.Price.LocalCurrency,
                 TripType = itinerary.TripType,
                 TotalFare = itinerary.Price.Local,
+                AdultFare = adultFare,
+                ChildFare = childFare,
+                InfantFare = infantFare,
                 Trips = itinerary.Trips.Select(ConvertToTripForDisplay).ToList(),
                 RegisterNumber = itinerary.RegisterNumber,
                 OriginalFare = GenerateDummyOriginalFare(itinerary.Price.Local)

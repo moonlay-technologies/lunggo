@@ -169,6 +169,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var newPrice =
                             decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'),
                                 CultureInfo.CreateSpecificCulture("id-ID"));
+                        var breakdownPrice = itinHtml["[data-accordion-id='priceFareTaxesFeesContent0']"].Single().ChildElements.ToList();
+                        var adultPrice = 0M;
+                        var childPrice = 0M;
+                        var infantPrice = 0M;
+                        try
+                        {
+                            adultPrice = decimal.Parse(breakdownPrice[0].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
+                            childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
+                            infantPrice = decimal.Parse(breakdownPrice[2].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
+                        }
+                        catch { }
+                        var isPscIncluded =
+                            itinHtml.Is(":contains('Pajak Bandara'), :contains('Biaya Layanan Penumpang')");
                         var segmentFareIds = foundFareId.Split('|').Last().Split('^');
                         var segments = new List<FlightSegment>();
                         var flight = FlightService.GetInstance();
@@ -190,7 +203,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]),DateTimeKind.Utc),
                                 OperatingAirlineCode = splittedSegmentFareId[0],
                                 Duration = arrTime-deptTime,
-                                StopQuantity = 0
+                                StopQuantity = 0,
+                                IsMealIncluded = false,
+                                IsPscIncluded = isPscIncluded
                             });
                         }
                         var itin = new FlightItinerary
@@ -208,6 +223,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             TripType = TripType.OneWay,
                             Supplier = Supplier.AirAsia,
                             Price = new Price(),
+                            AdultPricePortion = adultPrice/newPrice,
+                            ChildPricePortion = childPrice/newPrice,
+                            InfantPricePortion = infantPrice/newPrice,
                             FareId = fareIdPrefix + newPrice.ToString("0") + "." + foundFareId,
                             Trips = new List<FlightTrip>
                             {

@@ -14,7 +14,7 @@ var SearchRoomConfig = {
 };
 
 var FlightSearchConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/flights',
+    Url: 'https://travorama-dv2-api.azurewebsites.net/flight',
     // generate search URL
     GenerateSearchParam: function (params) {
         if (typeof (params) == 'object') {
@@ -68,7 +68,7 @@ var FlightSearchConfig = {
 };
 
 var SelectConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/flight/select',
+    Url: 'https://travorama-dv2-api.azurewebsites.net/flight/select',
     working: false
 };
 
