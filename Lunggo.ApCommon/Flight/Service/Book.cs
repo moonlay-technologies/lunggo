@@ -94,7 +94,7 @@ namespace Lunggo.ApCommon.Flight.Service
             reservation.Itineraries = itins;
             reservation.Contact = input.Contact;
             reservation.Pax = input.Passengers;
-            reservation.User = HttpContext.Current.User != null
+            reservation.User = HttpContext.Current.User.Identity.IsAuthenticated
                 ? HttpContext.Current.User.Identity.GetUser()
                 : null;
             reservation.Payment = new PaymentDetails

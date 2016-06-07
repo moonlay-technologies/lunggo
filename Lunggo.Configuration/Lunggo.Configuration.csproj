@@ -101,12 +101,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\BackendWeb\api.properties" />
+    <None Include="Config\BackendWeb\cw.properties" />
+    <None Include="Config\BackendWeb\facebook.properties" />
     <None Include="Config\BackendWeb\flight.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\BackendWeb\Garuda.properties" />
     <None Include="Config\BackendWeb\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\BackendWeb\mandrill.properties" />
     <None Include="Config\BackendWeb\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
@@ -145,6 +150,7 @@
     <None Include="Config\CloudApp.CaptchaReader\flight.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\CloudApp.CaptchaReader\Garuda.properties" />
     <None Include="Config\CloudApp.CaptchaReader\general.properties">
       <SubType>Designer</SubType>
     </None>
@@ -163,6 +169,7 @@
     <None Include="Config\CloudApp.CaptchaReader\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\CloudApp.EticketHandler\Garuda.properties" />
     <None Include="Config\Common\Airline.csv" />
     <None Include="Config\Common\Airport.csv" />
     <None Include="Config\Common\Country.csv" />
@@ -177,6 +184,7 @@
     <None Include="Config\CustomerWeb\facebook.properties" />
     <None Include="Config\CustomerWeb\flight.properties" />
     <None Include="Config\CustomerWeb\freshdesk.properties" />
+    <None Include="Config\CustomerWeb\Garuda.properties" />
     <None Include="Config\CustomerWeb\general.properties" />
     <None Include="Config\CustomerWeb\hotel.properties" />
     <None Include="Config\CustomerWeb\lionAir.properties" />
@@ -195,6 +203,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Config\WebAPI\eng.traineddata" />
+    <None Include="Config\WebAPI\Garuda.properties" />
     <None Include="Config\WebAPI\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
@@ -207,15 +216,19 @@
     <None Include="Config\WebAPI\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\Garuda.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler1\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\Garuda.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler2\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\Garuda.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler3\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\Garuda.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler5\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -227,6 +240,7 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler5\flight.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\Garuda.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler5\general.properties">
       <SubType>Designer</SubType>
     </None>
@@ -255,9 +269,11 @@
     <None Include="Config\WebJob.BankTransferChecking\facebook.properties" />
     <None Include="Config\WebJob.BankTransferChecking\flight.properties" />
     <None Include="Config\WebJob.BankTransferChecking\freshdesk.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\Garuda.properties" />
     <None Include="Config\WebJob.BankTransferChecking\general.properties" />
     <None Include="Config\WebJob.BankTransferChecking\hotel.properties" />
     <None Include="Config\WebJob.BankTransferChecking\lionAir.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\mandiri.properties" />
     <None Include="Config\WebJob.BankTransferChecking\mandrill.properties" />
     <None Include="Config\WebJob.BankTransferChecking\mystifly.properties" />
     <None Include="Config\WebJob.BankTransferChecking\redis.properties" />
@@ -275,6 +291,7 @@
     <None Include="Config\WebJob.EmailQueueHandler\flight.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.EmailQueueHandler\Garuda.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\general.properties">
       <SubType>Designer</SubType>
     </None>
@@ -371,6 +388,7 @@
     <None Include="Config\WebJob.FlightCrawlScheduler\citilink.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.FlightCrawlScheduler\Garuda.properties" />
     <None Include="Config\WebJob.FlightCrawlScheduler\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
@@ -423,6 +441,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.FlightProcessor\freshdesk.properties" />
+    <None Include="Config\WebJob.FlightProcessor\Garuda.properties" />
     <None Include="Config\WebJob.FlightProcessor\general.properties">
       <SubType>Designer</SubType>
     </None>
@@ -453,6 +472,7 @@
     <None Include="Config\WebJob.MystiflyQueueHandler\citilink.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.MystiflyQueueHandler\Garuda.properties" />
     <None Include="Config\WebJob.MystiflyQueueHandler\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
@@ -477,6 +497,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.PriceIdentifierGenerator\freshdesk.properties" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\Garuda.properties" />
     <None Include="Config\WebJob.PriceIdentifierGenerator\general.properties">
       <SubType>Designer</SubType>
     </None>
@@ -501,6 +522,7 @@
     <None Include="Config\WebJob.PriceIdentifierGenerator\veritrans.properties" />
     <None Include="Config\WebJob.PriceIdentifierGenerator\zendesk.properties" />
     <None Include="Config\WebJob.TicketQueueHandler\azureStorage.properties" />
+    <None Include="Config\WebJob.TicketQueueHandler\Garuda.properties" />
     <None Include="Config\WebJob.TicketQueueHandler\general.properties">
       <SubType>Designer</SubType>
     </None>
@@ -647,6 +669,16 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">
+      <Project>{9A51106C-BD55-40CC-A1C6-6FC3CB74EC8A}</Project>
+      <Name>Lunggo.ApCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
+      <Project>{e0624ffe-a4c2-44f5-9f9f-8c71f3b32aed}</Project>
+      <Name>Lunggo.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Config\Common\i18n_message.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -656,12 +688,7 @@
     </Content>
     <None Include="HtmlTemplate\FlightEticket.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
-      <Project>{e0624ffe-a4c2-44f5-9f9f-8c71f3b32aed}</Project>
-      <Name>Lunggo.Framework</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
