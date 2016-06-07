@@ -103,15 +103,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 // Calling The Zeroth Page
                 client.BaseUrl = new Uri("https://www.garuda-indonesia.com");
                 string url0 = @"";
-                //const string url0 = @"id/id/index.page";
                 var searchRequest0 = new RestRequest(url0, Method.GET);
                 searchRequest0.AddHeader("Host", "www.garuda-indonesia.com");
                 searchRequest0.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
                 searchRequest0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
                 searchRequest0.AddHeader("Upgrade-Insecure-Requests", "1");
                 var searchResponse0 = client.Execute(searchRequest0);
-                //var html0 = searchResponse0.Content;
-
+                
                 url0 = @"id/id/index.page";
                 searchRequest0 = new RestRequest(url0, Method.GET);
                 searchResponse0 = client.Execute(searchRequest0);
@@ -122,7 +120,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         searchResponse0.StatusCode == HttpStatusCode.Redirect))
                     return new SearchFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
 
-                var scr = "";
+
+                var startIndex = html0.IndexOf("var citylist =");
+                var endIndex = html0.LastIndexOf("var cities");
+                var scr = html0.SubstringBetween(startIndex + 15, endIndex-2).Replace("\n", "").Replace("\t", "");
 
                 var depAirport = GetGarudaAirport(scr, originAirport).Replace("+", "%20");
                 var arrAirport = GetGarudaAirport(scr, destinationAirport).Replace("+", "%20");
@@ -235,15 +236,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                        
                     var searchResult = client.Execute(search);
                     flightResultPage = searchResult.Content;
-
-
-                    //if (searchResponse.ResponseUri.AbsolutePath != url &&
-                    //    (searchResponse.StatusCode == HttpStatusCode.OK ||
-                    //     searchResponse.StatusCode == HttpStatusCode.Redirect))
-                    //    return new SearchFlightResult
-                    //    {
-                    //        Errors = new List<FlightError> { FlightError.InvalidInputData }
-                    //    };
                 }
                 else
                 {
