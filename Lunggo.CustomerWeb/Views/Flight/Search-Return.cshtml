@@ -993,7 +993,7 @@
                         <label>Harga Total:</label>
                         <h3><sup>Rp</sup> {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].fare + returnFlightConfig.flightList[returnFlightConfig.chosenFlight].fare | number}}</h3>
                         <p>*Harga termasuk Pajak &amp; Service Charge</p>
-                        <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" @*ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" ng-click="pageConfig.redirectingPage"*@ />
+                        <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="selectFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" @*ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" ng-click="pageConfig.redirectingPage"*@ />
                         @*<input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="revalidateSubmit()" />*@
                         @*<div ng-show="pageConfig.flightsValidated && (!departureFlightConfig.validateAvailable || !returnFlightConfig.validateAvailable )">
                             <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-show="(departureFlightConfig.validateNewfare || returnFlightConfig.validateNewfare)" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" ng-disabled="pageConfig.redirectingPage" />

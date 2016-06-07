@@ -67,6 +67,11 @@ var FlightSearchConfig = {
     }
 };
 
+var SelectConfig = {
+    Url: 'https://dv2-api.azurewebsites.net/flight/select',
+    working: false
+};
+
 var RevalidateConfig = {
     Url: 'https://dv2-api.azurewebsites.net/api/v1/flights/revalidate',
     working: false

@@ -67,6 +67,11 @@ var FlightSearchConfig = {
     }
 };
 
+var SelectConfig = {
+    Url: '$apiUrl$$flightSelectPath$',
+    working: false
+};
+
 var RevalidateConfig = {
     Url: '$apiUrl$$flightRevalidatePath$',
     working: false

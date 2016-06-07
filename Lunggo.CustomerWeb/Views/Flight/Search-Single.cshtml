@@ -383,7 +383,7 @@
                                             </div>
                                         </div>
                                         <div class="summary-top-right-bottom flight-button">
-                                            <a ng-click="setFlightActive(flight.IndexNo)" class="flight-detail-trigger">Detail Penerbangan <span class="caret"></span></a>
+                                            <a ng-click="setFlightActive(flight.IndexNo)" class="flight-detail-trigger">Detail Penerbangan {{flight.IndexNo}} <span class="caret"></span></a>
                                             <!-- <a class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a> -->
                                         </div><!-- .flight-button -->
                                     </div><!-- .flight-date -->
@@ -392,7 +392,7 @@
                             <div class="flight-summary-right">
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.fare | number}}</h4>
                                 <small>Sudah Termasuk Pajak &amp; Service Charge</small>
-                                <a class="btn btn-yellow" ng-click="revalidateFlight(flight.IndexNo);">PESAN</a>
+                                <a class="btn btn-yellow" ng-click="selectFlight(flight.IndexNo);">PESAN</a>
                             </div>
                         </div><!-- .flight-summary -->
                         <div class="flight-detail">
@@ -453,17 +453,17 @@
             <div class="container">
                 <div class="flight-review">
                     <header class="flight-review-header">
-                        <h3>Rincian Penerbangan <span class="pull-right close-review" ng-click="closeOverview()" @*ng-hide="(revalidateFlightParam.validating || revaldiateFlightParam.proceed)"*@>X</span></h3>
+                        <h3>Rincian Penerbangan <span class="pull-right close-review" ng-click="closeOverview()">X</span></h3>
                     </header>
                     <section class="flight-review-summary">
                         <div class="summary-left">
 
-                            <section class="summary-flight flight-departure" ng-class="{'warning' : (revalidateFlightParam.validated && !revalidateFlightParam.available)}">
+                            <section class="summary-flight flight-departure" ng-class="{'warning' : (selectFlightParam.validated && !selectFlightParam.available)}">
                                 <header class="flight-header">
                                     <h3>
                                         Penerbangan Pergi
-                                        <span class="warning" ng-disabled="revalidateFlightParam.validating" ng-if="revalidateFlightParam.validated && revalidateFlightParam.newFare && !revalidateFlightParam.available">Harga Penerbangan Berubah - Harga Baru Rp. {{flightList[flightSelected].fare | number}}</span>
-                                        <span class="warning" ng-if="revalidateFlightParam.validated && !revalidateFlightParam.newFare && !revalidateFlightParam.available">Penerbangan Pergi Tidak Tersedia</span>
+                                        <span class="warning" ng-disabled="selectFlightParam.validating" ng-if="selectFlightParam.validated && selectFlightParam.newFare && !selectFlightParam.available">Harga Penerbangan Berubah - Harga Baru Rp. {{flightList[flightSelected].fare | number}}</span>
+                                        <span class="warning" ng-if="selectFlightParam.validated && !selectFlightParam.newFare && !selectFlightParam.available">Penerbangan Pergi Tidak Tersedia</span>
                                     </h3>
                                 </header>
                                 <div class="flight-content">
@@ -502,7 +502,7 @@
                             <h3><sup>Rp</sup> {{flightList[flightSelected].fare | number}}</h3>
                             <p>*Harga termasuk Pajak &amp; Service Charge</p>
                             @*<input type="submit" class="btn btn-yellow" value="PESAN" ng-click="revalidateFlight(flightSelected)" ng-hide="revalidateFlightParam.validating || revalidateFlightParam.validated" />*@
-                            <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="revalidateSubmit()" ng-disabled="!revalidateFlightParam.validated" />
+                            <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="selectSubmit()" ng-disabled="!selectFlightParam.validated" />
                             @*<div ng-show="revalidateFlightParam.validated && !revalidateFlightParam.available">
                                 <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-show="revalidateFlightParam.newFare" ng-click="revalidateFlight(flightSelected)" ng-disabled="revalidateFlightParam.proceed" />
                                 <input type="submit" class="btn btn-yellow" value="PILIH KEMBALI" ng-hide="revalidateFlightParam.newFare" ng-click="closeOverview()" />

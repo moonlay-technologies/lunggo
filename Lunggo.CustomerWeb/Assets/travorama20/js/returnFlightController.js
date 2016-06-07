@@ -372,7 +372,7 @@ app.controller('returnFlightController', [
 
         // ******************************
         // revalidate flights
-        $scope.revalidateFlight = function (departureFlightIndexNo, returnFlightIndexNo) {
+        $scope.selectFlight = function (departureFlightIndexNo, returnFlightIndexNo) {
 
             if ($scope.pageConfig.flightsValidated) {
 
@@ -386,92 +386,37 @@ app.controller('returnFlightController', [
 
             } else {
 
-                // revalidate departure flight
-                console.log('validating departure flight no : '+ departureFlightIndexNo);
+                // select flight
+                console.log('validating departure flight no : ' + departureFlightIndexNo + ',return flight no : ' + returnFlightIndexNo + 'SearchId : ' + $scope.returnFlightConfig.searchId);
+                //console.log('Dep Req : ' + $scope.departureFlightConfig.flightList[departureFlightIndexNo].reg + ':::: Ret Req :' + $scope.returnFlightConfig.flightList[returnFlightIndexNo].reg);
                 $scope.departureFlightConfig.validating = true;
-                $http.get(RevalidateConfig.Url, {
-                    params: {
-                        SearchId: $scope.departureFlightConfig.searchId,
-                        ItinIndex: $scope.departureFlightConfig.flightList[departureFlightIndexNo].RegisterNumber,
-                        SecureCode: $scope.departureFlightConfig.flightSearchParams.SecureCode
-                    }
+                $scope.returnFlightConfig.validating = true;
+                $http.post(SelectConfig.Url, {
+                    searchId: $scope.returnFlightConfig.searchId,
+                    regs: [$scope.departureFlightConfig.flightList[departureFlightIndexNo].reg, $scope.returnFlightConfig.flightList[returnFlightIndexNo].reg],
                 }).success(function (returnData) {
                     $scope.departureFlightConfig.validating = false;
-                    if (returnData.IsValid == true) {
-                        console.log('departure flight available');
-                        $scope.departureFlightConfig.validateToken = returnData.Token;
+                    $scope.returnFlightConfig.validating = false;
+                    if ((returnData.token != "" || returnData.token != null) && returnData.status == "200") {
+                        console.log('flight available');
+                        $scope.departureFlightConfig.validateToken = returnData.token;
                         $scope.departureFlightConfig.validateAvailable = true;
+                        $scope.returnFlightConfig.validateToken = returnData.token;
+                        $scope.returnFlightConfig.validateAvailable = true;
                         if ($scope.returnFlightConfig.validating == false) {
                             flightsValidated();
                         }
-                    } else if (returnData.IsValid == false) {
-                        console.log('departure flight unavailable');
+                    }
+                    else
+                    {
+                        console.log('flight unavailable');
                         $scope.departureFlightConfig.validateAvailable = false;
-                        if (returnData.IsOtherFareAvailable == true) {
-                            $scope.departureFlightConfig.validateToken = returnData.Token;
-                            console.log('departure flight has new price');
-                            $scope.departureFlightConfig.validateNewfare = true;
-                            $scope.departureFlightConfig.flightList[departureFlightIndexNo].TotalFare = returnData.NewFare;
-                            if ($scope.returnFlightConfig.validating == false) {
-                                flightsValidated();
-                            }
-                        } else if (returnData.IsOtherFareAvailable == false) {
-                            console.log('departure flight is gone');
-                            $scope.departureFlightConfig.validateNewfare = false;
-                            $scope.departureFlightConfig.flightList[departureFlightIndexNo].available = false;
-                            if ($scope.returnFlightConfig.validating == false) {
-                                flightsValidated();
-                            }
-                        }
+                        $scope.returnFlightConfig.validateAvailable = false;
                     }
                 }).error(function (data) {
                     $scope.departureFlightConfig.validating = false;
-                    console.log('ERROR Validating Departure Flight :');
-                    console.log(data);
-                    console.log('--------------------');
-                });
-
-                // revalidate return flight
-                console.log('validating return flight no : '+returnFlightIndexNo);
-                $scope.returnFlightConfig.validating = true;
-                $http.get(RevalidateConfig.Url, {
-                    params: {
-                        SearchId: $scope.returnFlightConfig.searchId,
-                        ItinIndex: $scope.returnFlightConfig.flightList[returnFlightIndexNo].RegisterNumber,
-                        SecureCode: $scope.returnFlightConfig.flightSearchParams.SecureCode
-                    }
-                }).success(function (returnData) {
                     $scope.returnFlightConfig.validating = false;
-                    if (returnData.IsValid == true) {
-                        console.log('return flight available');
-                        $scope.returnFlightConfig.validateToken = returnData.Token;
-                        $scope.returnFlightConfig.validateAvailable = true;
-                        if ($scope.departureFlightConfig.validating == false) {
-                            flightsValidated();
-                        }
-                    } else if (returnData.IsValid == false) {
-                        console.log('return flight unavailable');
-                        $scope.returnFlightConfig.validateAvailable = false;
-                        if (returnData.IsOtherFareAvailable == true) {
-                            $scope.returnFlightConfig.validateToken = returnData.Token;
-                            console.log('return flight has new price');
-                            $scope.returnFlightConfig.validateNewfare = true;
-                            $scope.returnFlightConfig.flightList[returnFlightIndexNo].TotalFare = returnData.NewFare;
-                            if ($scope.departureFlightConfig.validating == false) {
-                                flightsValidated();
-                            }
-                        } else if (returnData.IsOtherFareAvailable == false) {
-                            console.log('return flight is gone');
-                            $scope.returnFlightConfig.validateNewfare = false;
-                            $scope.returnFlightConfig.flightList[returnFlightIndexNo].Available = false;
-                            if ($scope.departureFlightConfig.validating == false) {
-                                flightsValidated();
-                            }
-                        }
-                    }
-                }).error(function (data) {
-                    $scope.returnFlightConfig.validatingFlight = false;
-                    console.log('ERROR Validating Departure Flight :');
+                    console.log('ERROR Validating Flight :');
                     console.log(data);
                     console.log('--------------------');
                 });
@@ -485,7 +430,7 @@ app.controller('returnFlightController', [
                     if ($scope.departureFlightConfig.validateAvailable == true && $scope.returnFlightConfig.validateAvailable == true) {
                         console.log('flight available. Will be redirected.');
                         $scope.pageConfig.redirectingPage = true;
-                        var fareToken = $scope.departureFlightConfig.validateToken + '.' + $scope.returnFlightConfig.validateToken;
+                        var fareToken = $scope.departureFlightConfig.validateToken;;
                         console.log('Token : '+fareToken);
                         $('.pushToken .fareToken').val(fareToken);
                         $('.pushToken').submit();
@@ -496,7 +441,7 @@ app.controller('returnFlightController', [
 
 
         }
-        $scope.revalidateSubmit = function(){}
+        $scope.selectSubmit = function(){}
 
         // ******************************
         // flight sorting
@@ -669,8 +614,8 @@ app.controller('returnFlightController', [
                 }).success(function (returnData) {
 
                     // set search ID
-                    targetScope.flightSearchParams.SearchId = returnData.SearchId;
-                    targetScope.searchId = returnData.SearchId;
+                    //targetScope.flightSearchParams.SearchId = targetScope.flightSearchParams;
+                    targetScope.searchId = targetScope.flightSearchParams;
 
                     if (!$scope.pageConfig.expiry.time) {
                         $scope.pageConfig.expiry.time = returnData.expTime;
