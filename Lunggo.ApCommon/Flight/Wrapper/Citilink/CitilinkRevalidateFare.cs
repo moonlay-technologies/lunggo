@@ -100,6 +100,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     var ambilharga = tunjukHarga.Select(x => x.Cq().Text()).FirstOrDefault();
                     var harga = ambilharga.Split('.');
                     var newPrice = decimal.Parse(harga[1]);
+                    var breakdownHarga = ambilDataAjax[".itern-rgt-txt-2>p>span"];
+                    var hargaAdult = 0M;
+                    var hargaChild = 0M;
+                    var hargaInfant = 0M;
+                    try
+                    {
+                        hargaAdult = decimal.Parse(breakdownHarga[0].InnerText.Split('.')[1]);
+                        hargaChild = decimal.Parse(breakdownHarga[1].InnerText.Split('.')[1]);
+                        hargaInfant = decimal.Parse(breakdownHarga[2].InnerText.Split('.')[1]);
+                    }
+                    catch { }
+                    var isPscIncluded = ambilDataAjax.Text().Contains("PSC");
 
                     var prefix =
                         "" + origin + "" +
@@ -165,7 +177,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             ArrivalTime = DateTime.SpecifyKind(arrivalTime, DateTimeKind.Utc),
                             OperatingAirlineCode = Acode,
                             Duration = arrtime-deptime,
-                            StopQuantity = 0
+                            StopQuantity = 0,
+                            IsMealIncluded = false,
+                            IsPscIncluded = isPscIncluded
                         });
                         j = j + 8;
                         }
@@ -188,6 +202,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         TripType = TripType.OneWay,
                         Supplier = Supplier.AirAsia,
                         Price = new Price(),
+                        AdultPricePortion = hargaAdult/newPrice,
+                        ChildPricePortion = hargaChild/newPrice,
+                        InfantPricePortion = hargaInfant/newPrice,
                         FareId = prefix + foundFareId,
                         Trips = new List<FlightTrip>
                         {
