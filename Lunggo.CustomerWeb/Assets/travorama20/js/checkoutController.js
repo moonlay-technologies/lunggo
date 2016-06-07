@@ -110,7 +110,7 @@ app.controller('checkoutController', [
                         + '", "Passengers[' + i + '].PassportExpiryDate":"' + $scope.passengers[i].passport.expire.full
                         + '", "Passengers[' + i + '].PassportCountry":"' + $scope.passengers[i].passport.country
                         + '", "Passengers[' + i + '].idNumber":"' + $scope.passengers[i].idNumber
-                        + '", "Passengers[' + i + '].Country":"' + $scope.passengers[i].nationality + '"');
+                        + '", "Passengers[' + i + '].Country":"' + $scope.passengers[i].passport.country + '"');
                 }
                 $scope.book.postData = '{' + $scope.book.postData + '}';
                 $scope.book.postData = JSON.parse($scope.book.postData);

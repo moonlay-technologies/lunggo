@@ -1135,8 +1135,8 @@
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\travorama20\js\accountController.js" />
-    <Content Include="Assets\travorama20\js\checkoutController.js" />
     <Content Include="Assets\travorama20\js\countries.js" />
+    <Content Include="Assets\travorama20\js\checkoutController.js" />
     <Content Include="Assets\travorama20\js\homeController.js" />
     <Content Include="Assets\travorama20\js\paymentController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />

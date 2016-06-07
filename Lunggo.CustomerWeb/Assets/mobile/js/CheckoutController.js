@@ -307,7 +307,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     $scope.passengers[i].passport.expire.month = '';
                     $scope.passengers[i].passport.expire.year = '';
                     $scope.passengers[i].passport.expire.full = '';
-                    $scope.passengers[i].passport.country = '';
+                    //$scope.passengers[i].passport.country = '';
                     if (!$scope.CheckoutConfig.NationalityRequired) {
                         $scope.passengers[i].nationality = '';
                     }
@@ -336,7 +336,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                         + '", "Passengers[' + i + '].PassportExpiryDate":"' + $scope.passengers[i].passport.expire.full
                         + '", "Passengers[' + i + '].PassportCountry":"' + $scope.passengers[i].passport.country
                         + '", "Passengers[' + i + '].idNumber":"' + $scope.passengers[i].idNumber
-                        + '", "Passengers[' + i + '].Country":"' + $scope.passengers[i].nationality +'"');
+                        + '", "Passengers[' + i + '].Country":"' + $scope.passengers[i].passport.country +'"');
                 //);
             }
             $scope.book.postData = '{' + $scope.book.postData + '}';

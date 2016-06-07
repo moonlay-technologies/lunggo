@@ -626,7 +626,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
 
                 var waitItin = new RestRequest("Itinerary.aspx", Method.GET);
-                string temp = "";
+                string temp = waitResponse.Content;
                 if (waitResponse.ResponseUri.AbsolutePath != "/Itinerary.aspx" || (waitResponse.StatusCode != HttpStatusCode.OK && waitResponse.StatusCode != HttpStatusCode.Redirect))
                 {
                     waitItin.AddHeader("Referer", "https://booking2.airasia.com/Wait.aspx");
