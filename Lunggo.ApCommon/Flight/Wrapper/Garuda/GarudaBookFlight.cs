@@ -519,7 +519,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         TripType = TripType.OneWay,
                         Supplier = Supplier.Garuda,
                         SupplierCurrency = "IDR",
-                        SupplierPrice = (newprice),
+                        SupplierPrice = newprice,
                         FareId = newFareId,
                         LocalCurrency = "IDR",
                         Trips = new List<FlightTrip>
