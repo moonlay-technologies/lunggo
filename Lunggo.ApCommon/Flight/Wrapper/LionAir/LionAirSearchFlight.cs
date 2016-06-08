@@ -14,7 +14,6 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using RestSharp;
-//using RestSharp.Deserializers;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
@@ -404,8 +403,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             }
 
                             pricefunc.SetId(priceId);
-                            decimal price = pricefunc.GetPrice(conditions.AdultCount, conditions.ChildCount,
-                                conditions.InfantCount);
+                            var adultPrice = pricefunc.GetAdultPrice(conditions.AdultCount);
+                            var childPrice = pricefunc.GetChildPrice(conditions.ChildCount);
+                            var infantPrice = pricefunc.GetInfantPrice(conditions.InfantCount);
+                            var price = adultPrice + childPrice + infantPrice;
 
                             segments.Add(new FlightSegment
                             {
@@ -425,7 +426,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 ArrivalCity = cityArrival,
                                 AirlineName = airplaneName,
                                 OperatingAirlineName = airplaneName,
-                                
+                                IsMealIncluded = flightNo.Split(' ')[0] == "ID",
+                                IsPscIncluded = true
                             });
                             var j = ind + 1;
                             while ((j != fareIds.Count) && (subst1.SubstringBetween(0, subst1.Length - 2) ==
@@ -521,6 +523,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     ArrivalCity = cityArrival2,
                                     AirlineName = airplaneName,
                                     OperatingAirlineName = airplaneName,
+                                    IsMealIncluded = flightNo.Split(' ')[0] == "ID",
+                                    IsPscIncluded = true
                                 });
                                 j += 1;
                             }
@@ -566,6 +570,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 TripType = TripType.OneWay,
                                 Supplier = Supplier.LionAir,
                                 Price = new Price(),
+                                AdultPricePortion = adultPrice/price,
+                                ChildPricePortion = childPrice/price,
+                                InfantPricePortion = infantPrice/price,
                                 FareId = importantData,
                                 Trips = new List<FlightTrip>
                                 {
@@ -580,7 +587,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     }
                                 }
                             };
-                            itin.Price.SetSupplier(price, new Currency("IDR"));
+                            itin.Price.SetSupplier(price, new Currency(pricefunc.GetCurrency()));
                             itins.Add(itin);
                         }
                     }
@@ -727,52 +734,54 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return temp;
                 }
 
-                public int GetPrice(int adult, int child, int infant)
+                public bool IsPscIncluded()
                 {
                     dynamic fare = WorkOutTripTotals();
-                    var totalprice = 0;
-                    int adultPrice;
-                    int childPrice;
-                    int infantPrice;
-                    if (child != 0 && infant != 0)
-                    {
-                        adultPrice = Convert.ToInt32(fare.PaxFares[0].Base) +
-                                     Convert.ToInt32(fare.PaxFares[0].Taxes);
-                        childPrice = Convert.ToInt32(fare.PaxFares[1].Base) +
-                                     Convert.ToInt32(fare.PaxFares[1].Taxes);
-                        infantPrice = Convert.ToInt32(fare.PaxFares[2].Base) +
-                                      Convert.ToInt32(fare.PaxFares[2].Taxes);
+                    return fare.TaxBreakdown.D5 != null && fare.TaxBreakdown.D5 != "0";
+                }
 
-                        totalprice = adult*adultPrice + child*childPrice + infant*infantPrice;
-                    }
-                    else if (child != 0 && infant == 0)
-                    {
-                        adultPrice = Convert.ToInt32(fare.PaxFares[0].Base) +
-                                     Convert.ToInt32(fare.PaxFares[0].Taxes);
-                        childPrice = Convert.ToInt32(fare.PaxFares[1].Base) +
-                                     Convert.ToInt32(fare.PaxFares[1].Taxes);
+                public string GetCurrency()
+                {
+                    return _priceScript.Curr;
+                }
 
-                        totalprice = adult*adultPrice + child*childPrice;
-                    }
-                    else if (child == 0 && infant != 0)
-                    {
+                public decimal GetAdultPrice(int adult)
+                {
+                    if (adult == 0)
+                        return 0M;
 
-                        adultPrice = Convert.ToInt32(fare.PaxFares[0].Base) +
-                                     Convert.ToInt32(fare.PaxFares[0].Taxes);
-                        infantPrice = Convert.ToInt32(fare.PaxFares[1].Base) +
-                                      Convert.ToInt32(fare.PaxFares[1].Taxes);
+                    dynamic fare = WorkOutTripTotals();
+                    var adultPrice1 = Convert.ToDecimal(fare.PaxFares[0].Base) +
+                                     Convert.ToDecimal(fare.PaxFares[0].Taxes) +
+                                     Convert.ToDecimal(fare.PaxFares[0].GST);
+                    var adultPrice = adultPrice1*adult;
+                    return adultPrice;
+                }
 
-                        totalprice = adult*adultPrice + infant*infantPrice;
-                    }
-                    else if (child == 0 && infant == 0)
-                    {
+                public decimal GetChildPrice(int child)
+                {
+                    if (child == 0)
+                        return 0M;
 
-                        adultPrice = Convert.ToInt32(fare.PaxFares[0].Base) +
-                                     Convert.ToInt32(fare.PaxFares[0].Taxes);
-                        totalprice = adult*adultPrice;
-                    }
+                    dynamic fare = WorkOutTripTotals();
+                    var childPrice1 = Convert.ToDecimal(fare.PaxFares[1].Base) +
+                                     Convert.ToDecimal(fare.PaxFares[1].Taxes) +
+                                     Convert.ToDecimal(fare.PaxFares[1].GST);
+                    var childPrice = childPrice1 * child;
+                    return childPrice;
+                }
 
-                    return totalprice;
+                public decimal GetInfantPrice(int infant)
+                {
+                    if (infant == 0)
+                        return 0M;
+
+                    dynamic fare = WorkOutTripTotals();
+                    var infantPrice1 = Convert.ToDecimal(fare.PaxFares[2].Base) +
+                                     Convert.ToDecimal(fare.PaxFares[2].Taxes) +
+                                     Convert.ToDecimal(fare.PaxFares[2].GST);
+                    var infantPrice = infantPrice1 * infant;
+                    return infantPrice;
                 }
             }
         }

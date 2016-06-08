@@ -281,7 +281,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         hargaInfant = decimal.Parse(ambilDataAjax2["#fareDetailInfant .priceDetail"].Last().Text());
                                     }
                                     catch { }
-                                    var isPscIncluded = ambilDataAjax2.Text().Contains("PSC");
 
                                     //Iterate per Segment
                                     for (int code = 0; code < jumlahSegment; code++)
@@ -370,7 +369,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             OperatingAirlineCode = codeParse1[0],
                                             StopQuantity = 0,
                                             Duration = arrtime - deptime,
-                                            IsMealIncluded = false,
+                                            IsMealIncluded = true,
                                             IsPscIncluded = true
                                         });
                                     }
@@ -648,7 +647,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             OperatingAirlineCode = codeParse1[0],
                                             StopQuantity = 0,
                                             Duration = arrtime - deptime,
-                                            IsMealIncluded = false,
+                                            IsMealIncluded = true,
                                             IsPscIncluded = true
                                         });
                                     }

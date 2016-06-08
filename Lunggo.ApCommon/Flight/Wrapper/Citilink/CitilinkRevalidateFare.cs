@@ -111,7 +111,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         hargaInfant = decimal.Parse(breakdownHarga[2].InnerText.Split('.')[1]);
                     }
                     catch { }
-                    var isPscIncluded = ambilDataAjax.Text().Contains("PSC");
 
                     var prefix =
                         "" + origin + "" +
@@ -179,7 +178,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             Duration = arrtime-deptime,
                             StopQuantity = 0,
                             IsMealIncluded = false,
-                            IsPscIncluded = isPscIncluded
+                            IsPscIncluded = true
                         });
                         j = j + 8;
                         }
