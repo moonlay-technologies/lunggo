@@ -128,6 +128,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var depAirport = GetGarudaAirport(scr, originAirport).Replace("+", "%20");
                 var arrAirport = GetGarudaAirport(scr, destinationAirport).Replace("+", "%20");
 
+                if (depAirport.Length == 0 || arrAirport.Length == 0)
+                {
+                    return new SearchFlightResult
+                    {
+                        
+                        IsSuccess = true,
+                        Itineraries = new List<FlightItinerary>()
+                        
+                    };
+                }
                 var adParam = (CQ)html0;
                 var idParam = adParam["#paramforads"].Attr("value");
                 var iw_component = adParam[".iw_component"].Attr("id");
@@ -285,7 +295,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 DateTime.SpecifyKind(
                                     DateTime.ParseExact(segment.EndDate, format, CultureInfo.InvariantCulture),
                                     DateTimeKind.Utc);
-                            fareId = segment.Airline.Code + "-" + segment.FlightNumber + "|";
+                            fareId = fareId + segment.Airline.Code + "-" + segment.FlightNumber + "|";
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = segment.Airline.Code,
@@ -387,7 +397,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                         fareId = trip0.OriginAirport + "+" + trip0.DestinationAirport + "+" +
                             trip0.DepartureDate.Day + "+" + trip0.DepartureDate.Month + "+" +
-                            trip0.DepartureDate.Year + "+" + conditions.AdultCount + "+" +
+                            trip0.DepartureDate.Year + "+" +  segments.ElementAt(0).DepartureTime.Hour + "+" +
+                            segments.ElementAt(0).DepartureTime.Minute + "+" + 
+                            conditions.AdultCount + "+" +
                             conditions.ChildCount + "+" + conditions.InfantCount + "+" +
                             FlightService.ParseCabinClass(conditions.CabinClass) + "+" +
                             price + "+" + fareId.SubstringBetween(0, fareId.Length - 1);

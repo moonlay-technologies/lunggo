@@ -194,7 +194,9 @@
     <None Include="Config\CustomerWeb\lionAir.properties" />
     <None Include="Config\CustomerWeb\mandrill.properties" />
     <None Include="Config\CustomerWeb\mystifly.properties" />
-    <None Include="Config\CustomerWeb\redis.properties" />
+    <None Include="Config\CustomerWeb\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\sriwijaya.properties" />
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\zendesk.properties" />
@@ -288,7 +290,9 @@
     <None Include="Config\WebJob.BankTransferChecking\lionAir.properties" />
     <None Include="Config\WebJob.BankTransferChecking\mandrill.properties" />
     <None Include="Config\WebJob.BankTransferChecking\mystifly.properties" />
-    <None Include="Config\WebJob.BankTransferChecking\redis.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.BankTransferChecking\sriwijaya.properties" />
     <None Include="Config\WebJob.BankTransferChecking\veritrans.properties" />
     <None Include="Config\WebJob.BankTransferChecking\zendesk.properties" />
@@ -315,6 +319,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.EmailQueueHandler\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.EmailQueueHandler\redis.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.EmailQueueHandler\sriwijaya.properties">
@@ -650,6 +657,9 @@
     <None Include="Config\Driver\veritrans.properties" />
     <None Include="Config\Driver\zendesk.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\mandrill.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.TicketQueueHandler\redis.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.TicketQueueHandler\zendesk.properties" />

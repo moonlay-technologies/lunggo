@@ -5,12 +5,14 @@ using System.Net;
 using System.Threading;
 using System.Web;
 using CsQuery;
+using CsQuery.EquationParser.Implementation;
 using CsQuery.StringScanner.ExtensionMethods;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using RestSharp;
@@ -55,18 +57,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 List<string> listflight;
                 CabinClass cabinClass;
                 var splittedFareId = bookInfo.Itinerary.FareId.Split('+');
-
+                string price;
                 try
                 {
                     origin = splittedFareId[0]; //CGK
                     dest = splittedFareId[1]; // SIN
                     depdate = new DateTime(Convert.ToInt32(splittedFareId[4]), Convert.ToInt32(splittedFareId[3]),
-                        Convert.ToInt32(splittedFareId[2]));
-                    adultCount = Convert.ToInt32(splittedFareId[5]);
-                    childCount = Convert.ToInt32(splittedFareId[6]);
-                    infantCount = Convert.ToInt32(splittedFareId[7]);
-                    cabinClass = FlightService.ParseCabinClass(splittedFareId[8]);
-                    listflight = splittedFareId[9].Split('|').ToList();
+                        Convert.ToInt32(splittedFareId[2]), Convert.ToInt32(splittedFareId[5]), Convert.ToInt32(splittedFareId[6]), 0);
+                    adultCount = Convert.ToInt32(splittedFareId[7]);
+                    childCount = Convert.ToInt32(splittedFareId[8]);
+                    infantCount = Convert.ToInt32(splittedFareId[9]);
+                    cabinClass = FlightService.ParseCabinClass(splittedFareId[10]);
+                    price = splittedFareId[11];
+                    listflight = splittedFareId[12].Split('|').ToList();
                 }
                 catch
                 {
@@ -226,48 +229,49 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var accReq = new RestRequest("/api/GarudaAccount/ChooseUserId", Method.GET);
                 var userName = "";
                 var reqTime = DateTime.UtcNow;
-                var itin = new FlightItinerary();
+                var newitin = new FlightItinerary();
                 var successLogin = false;
                 var counter = 0;
 
-                while (!successLogin && counter < 31)
-                {
-                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
-                    {
-                        var accRs = (RestResponse) clientx.Execute(accReq);
-                        userName = accRs.Content.Trim('"');
-                    }
+                successLogin = Login(client, "SA3ALEU", "Travorama1234");
+                //while (!successLogin && counter < 31)
+                //{
+                //    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
+                //    {
+                //        var accRs = (RestResponse) clientx.Execute(accReq);
+                //        userName = accRs.Content.Trim('"');
+                //    }
 
-                    if (userName.Length == 0)
-                    {
-                        return new BookFlightResult
-                        {
-                            Errors = new List<FlightError> {FlightError.TechnicalError},
-                            ErrorMessages = new List<string> {"All usernames are used"}
-                        };
-                    }
+                //    if (userName.Length == 0)
+                //    {
+                //        return new BookFlightResult
+                //        {
+                //            Errors = new List<FlightError> {FlightError.TechnicalError},
+                //            ErrorMessages = new List<string> {"All usernames are used"}
+                //        };
+                //    }
 
-                    var password = userName == "SA3ALEU1" ? "Standar123" : "Travorama1234";
-                    counter++;
-                    successLogin = Login(client, userName, password);
-                }
+                //    var password = userName == "SA3ALEU1" ? "Standar123" : "Travorama1234";
+                //    counter++;
+                //    successLogin = Login(client, userName, password);
+                //}
 
-                if (counter >= 31)
-                {
-                    TurnInUsername(clientx, userName);
-                    return new BookFlightResult
-                    {
+                //if (counter >= 31)
+                //{
+                //    TurnInUsername(clientx, userName);
+                //    return new BookFlightResult
+                //    {
 
-                        Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        IsSuccess = false,
-                        ErrorMessages = new List<string> {"Can't get id"}
-                    };
-                }
-                
+                //        Errors = new List<FlightError> {FlightError.InvalidInputData},
+                //        Status = new BookingStatusInfo
+                //        {
+                //            BookingStatus = BookingStatus.Failed
+                //        },
+                //        IsSuccess = false,
+                //        ErrorMessages = new List<string> {"Can't get id"}
+                //    };
+                //}
+                string returnPath;
                 urlweb = @"web/order/e-retail";
                 searchReqAgent0 = new RestRequest(urlweb, Method.GET);
                 searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/dashboard/welcome");
@@ -277,6 +281,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
                 searchResAgent0 = client.Execute(searchReqAgent0);
                 var htmlX = searchResAgent0.Content;
+                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
                 //POST 
 
@@ -295,14 +300,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var depAirport = GetGarudaAirportBooking(scr, origin).Replace("+", "%20");
                 var arrAirport = GetGarudaAirportBooking(scr, dest).Replace("+", "%20");
 
+                if (depAirport.Length == 0 || arrAirport.Length == 0)
+                {
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Errors = new List<FlightError> {FlightError.InvalidInputData},
+                        ErrorMessages = new List<string> { "Airports are not available in agent site"}
+                    };
+                }
                 var postdata =
                     "Inputs%5BoriginDetail%5D=" + depAirport +
                     "&Inputs%5Borigin%5D=" + origin +
                     "&Inputs%5BdestDetail%5D=" + arrAirport +
                     "&Inputs%5Bdest%5D=" + dest +
                     "&Inputs%5BtripType%5D=o" +
-                    "&Inputs%5BoutDate%5D=" + splittedFareId[4] + "-" + splittedFareId[3] + "-" + splittedFareId[2] + "-" + //2016-06-06
-                    "&Inputs%5BretDate%5D=" + splittedFareId[4] + "-" + splittedFareId[3] + "-" + splittedFareId[2] + "-" +
+                    "&Inputs%5BoutDate%5D=" + splittedFareId[4] + "-" + splittedFareId[3] + "-" + splittedFareId[2] +  //2016-06-06
+                    "&Inputs%5BretDate%5D=" + splittedFareId[4] + "-" + splittedFareId[3] + "-" + splittedFareId[2] + 
                     "&Inputs%5Badults%5D=" + adultCount +
                     "&Inputs%5Bchilds%5D=" + childCount +
                     "&Inputs%5Binfants%5D=" + infantCount + 
@@ -311,9 +325,273 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                 searchReqAgent0.AddParameter("application/x-www-form-urlencoded", postdata, ParameterType.RequestBody);
                 searchResAgent0 = client.Execute(searchReqAgent0);
+                var htmlFlight = searchResAgent0.Content;
+                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
                 try
                 {
+                    var htmlFlightList = (CQ) htmlFlight;
+                    var tableFlight = htmlFlightList[".gtable"];
+                    var rows = tableFlight[0].ChildElements.ToList()[1].ChildElements.ToList();
+                    //var selectedRows = (from flightNo in listflight from row in rows let x = flightNo.Replace("-", "") let y = row.ChildElements.ToList()[1].InnerText where flightNo.Replace("-", "") == row.ChildElements.ToList()[1].InnerText select row).Cast<IDomObject>().ToList();
+                    var selectedRows =  new List<IDomObject>();
+                    
+                    var v = 2;
+                    while (v < rows.Count())
+                    {
+                        var currentRow = rows.ElementAt(v);
+                        var currentPlane = currentRow.ChildElements.ToList()[1].InnerText;
+                        var w = 0;
+                        if (currentPlane == listflight.ElementAt(w).Replace("-", ""))
+                        {
+                            selectedRows.Add(rows[v]);
+                            var z =  v + 1;
+                            w += 1;
+                            while (z < rows.Count && z < v + listflight.Count)
+                            {
+                                currentPlane = rows.ElementAt(z).ChildElements.ToList()[0].InnerText;
+                                if (currentPlane == listflight.ElementAt(w).Replace("-", ""))
+                                {
+                                    selectedRows.Add(rows[z]);
+                                }
+                                else
+                                {
+                                    selectedRows.Clear();
+                                    break; // masuk ke loop yg plg luar
+                                }
+                                z += 1;
+                                w += 1;
+                            }
+                            v = z;
+                        }
+                        else
+                        {
+                            v += 1;
+                        }
+                    }
+
+                    var duration = new TimeSpan();
+                    DateTime oriHr, arrHr;
+                    var depdateTemp = depdate;
+                    var flightstring = "";
+                    var segments = new List<FlightSegment>();
+                    var inputsdepoptlist = new List<string>();
+                    var valuesdepoptlist = new List<string>();
+                    for(var ind = 0; ind < selectedRows.Count; ind++)
+                    {
+                        var ct = 1;
+                        if (ind != 0)
+                        {
+                            ct = 0;
+                        }
+                        var airlineCode = selectedRows[ind].ChildElements.ToList()[ct].InnerText.SubstringBetween(0, 2);
+                        var flightNumber = selectedRows[ind].ChildElements.ToList()[ct].InnerText.SubstringBetween(2, 5);
+                        flightstring += airlineCode + "-" + flightNumber + "|";
+                        var depdata = selectedRows[ind].ChildElements.ToList()[ct + 1].InnerText;
+                        var oriAirport = depdata.SubstringBetween(0, 3);
+                        var oriHour = depdata.SubstringBetween(depdata.Length-5, depdata.Length);
+                        var a = Convert.ToInt32(oriHour.Split('.')[0]);
+                        var b = depdateTemp.Hour;
+                        if (Convert.ToInt32(oriHour.Split('.')[0]) < depdateTemp.Hour)
+                        {
+                            var W = depdateTemp.AddDays(1);
+                            oriHr = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                                Convert.ToInt32(oriHour.Split('.')[0]),
+                                Convert.ToInt32(oriHour.Split('.')[1]), 0), DateTimeKind.Utc);
+                        }
+                        else 
+                        {
+                            oriHr = DateTime.SpecifyKind(new DateTime(depdateTemp.Year, depdateTemp.Month, depdateTemp.Day,
+                                        Convert.ToInt32(oriHour.Split('.')[0]),
+                                        Convert.ToInt32(oriHour.Split('.')[1]), 0), DateTimeKind.Utc); 
+                        }
+
+                        var arrdata = selectedRows[ind].ChildElements.ToList()[ct + 2].InnerText;
+                        var desAirport = arrdata.SubstringBetween(0, 3);
+                        var desHour = arrdata.SubstringBetween(arrdata.Length-5, arrdata.Length);
+                        if (Convert.ToInt32(desHour.Split('.')[0]) < oriHr.Hour)
+                        {
+                            var W = oriHr.AddDays(1);
+                            arrHr = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                                Convert.ToInt32(desHour.Split('.')[0]),
+                                Convert.ToInt32(desHour.Split('.')[1]), 0), DateTimeKind.Utc);
+                            depdateTemp = arrHr;
+                        }
+                        else
+                        {
+                            var W = oriHr;
+                            arrHr = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                               Convert.ToInt32(desHour.Split('.')[0]),
+                               Convert.ToInt32(desHour.Split('.')[1]), 0), DateTimeKind.Utc);
+                            depdateTemp = arrHr;
+                        }
+                        duration = arrHr.AddHours(-(dict.GetAirportTimeZone(desAirport))) -
+                                   oriHr.AddHours(-(dict.GetAirportTimeZone(oriAirport)));
+
+                        segments.Add(new FlightSegment
+                        {
+                            DepartureAirport = oriAirport,
+                            DepartureTime = oriHr,
+                            AirlineCode = airlineCode,
+                            FlightNumber = flightNumber,
+                            ArrivalAirport = desAirport,
+                            ArrivalTime = arrHr,
+                            Duration = duration,
+                            CabinClass = cabinClass,
+                        });
+
+                        var run = ct + 3;
+                        var flag = false;
+                        while (run < selectedRows[ind].ChildElements.ToList().Count && !flag)
+                        {
+                            var temp = selectedRows[ind].ChildElements.ToList()[run].InnerText;
+                            if (temp != "-")
+                            {
+                                var input =
+                                    selectedRows[ind].ChildElements.ToList()[run].ChildElements.ToList()[1].GetAttribute(
+                                        "name");
+                                var value = selectedRows[ind].ChildElements.ToList()[run].ChildElements.ToList()[1].GetAttribute(
+                                        "value");
+                                inputsdepoptlist.Add(input);
+                                valuesdepoptlist.Add(value);
+                                flag = true;
+                            }
+                            else
+                            {
+                                run++;
+                            }
+                        }
+                    }
+
+                    var classDeptOptKey = selectedRows[0].GetAttribute("class");
+                    var valueDeptOptKey = classDeptOptKey[classDeptOptKey.Length - 1];
+                    //POST UNTUK CEK HARGA
+                    postdata = "";
+                    for (var ind = 1; ind < inputsdepoptlist.Count; ind++)
+                    {
+                        postdata += "&" + HttpUtility.UrlEncode(inputsdepoptlist[ind]) + "="
+                            + HttpUtility.UrlEncode(valuesdepoptlist[ind]); 
+                    }
+
+                    postdata = HttpUtility.UrlEncode(inputsdepoptlist[0]) + "="
+                            + HttpUtility.UrlEncode(valuesdepoptlist[0]) + postdata + "&" 
+                            + HttpUtility.UrlEncode("Inputs[depOptKey]") + "="
+                            + valueDeptOptKey;
+
+                    urlweb = @"web/order/checkFare";
+                    searchReqAgent0 = new RestRequest(urlweb, Method.POST);
+                    searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/order/selectFlight");
+                    searchReqAgent0.AddHeader("Accept",
+                        "text/html, */*; q=0.01");
+                    searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, br");
+                    searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                    searchReqAgent0.AddHeader("Origin", "https://gosga.garuda-indonesia.com");
+                    searchReqAgent0.AddHeader("X-Requested-With", "XMLHttpRequest");
+                    searchReqAgent0.AddParameter("application/x-www-form-urlencoded", postdata, ParameterType.RequestBody);
+                    searchResAgent0 = client.Execute(searchReqAgent0);
+                    htmlFlight = searchResAgent0.Content;
+                    returnPath = searchResAgent.ResponseUri.AbsolutePath;
+
+                    urlweb = @"web/order/checkFare";
+                    searchReqAgent0 = new RestRequest(urlweb, Method.POST);
+                    searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/order/selectFlight");
+                    searchReqAgent0.AddHeader("Accept",
+                        "text/html, */*; q=0.01");
+                    searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, br");
+                    searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                    searchReqAgent0.AddHeader("Origin", "https://gosga.garuda-indonesia.com");
+                    searchReqAgent0.AddHeader("X-Requested-With", "XMLHttpRequest");
+                    postdata += "&btnSubmit=1";
+                    searchReqAgent0.AddParameter("application/x-www-form-urlencoded", postdata, ParameterType.RequestBody);
+                    searchResAgent0 = client.Execute(searchReqAgent0);
+                    var htmlPrice = (CQ) searchResAgent0.Content;
+                    returnPath = searchResAgent.ResponseUri.AbsolutePath;
+
+                    var classprice = htmlPrice["#sidebarTotal"].Text().Replace(",","");
+                    var newprice = Convert.ToDecimal(classprice);
+
+                    var newFareId = origin + "+" + dest + "+" + segments.ElementAt(0).DepartureTime.Day + "+" +
+                            segments.ElementAt(0).DepartureTime.Month + "+" +
+                            segments.ElementAt(0).DepartureTime.Year + "+" +
+                            segments.ElementAt(0).DepartureTime.Hour + "+" + 
+                            segments.ElementAt(0).DepartureTime.Minute + "+" +
+                            adultCount + "+" + childCount + "+" + infantCount + "+" + splittedFareId[10] + "+" +
+                            price + "+" + flightstring.SubstringBetween(0, flightstring.Length - 1);
+
+                    newitin = new FlightItinerary
+                    {
+                        AdultCount = adultCount,
+                        ChildCount = childCount,
+                        InfantCount = infantCount,
+                        CanHold = true,
+                        FareType = FareType.Published,
+                        RequireBirthDate = true,
+                        RequirePassport = RequirePassport(segments),
+                        RequireSameCheckIn = false,
+                        RequireNationality = true,
+                        RequestedCabinClass = cabinClass,
+                        TripType = TripType.OneWay,
+                        Supplier = Supplier.Garuda,
+                        SupplierCurrency = "IDR",
+                        SupplierPrice = (newprice),
+                        FareId = newFareId,
+                        LocalCurrency = "IDR",
+                        Trips = new List<FlightTrip>
+                            {
+                                new FlightTrip
+                                {
+                                    OriginAirport = origin,
+                                    DestinationAirport = dest,
+                                    DepartureDate = depdate.Date,
+                                    Segments = segments
+                                }
+                            }
+                    };
+
+                    var isItinChanged = !newitin.Identical(bookInfo.Itinerary);
+
+                    if (isItinChanged)
+                    {
+                        LogOut(returnPath, client);
+                        TurnInUsername(clientx, userName);
+
+                        return new BookFlightResult
+                        {
+                            IsSuccess = false,
+                            Errors = new List<FlightError> { FlightError.TechnicalError },
+                            Status = null,
+                            ErrorMessages = new List<string> { "Itinerary is Changed!" },
+                            NewPrice = newprice,
+                            IsValid = true,
+                            IsPriceChanged = newprice != bookInfo.Itinerary.SupplierPrice,
+                            NewItinerary = newitin,
+                            IsItineraryChanged = isItinChanged
+
+                        };
+                    }
+
+                    if (newprice != Convert.ToDecimal(price))
+                    {
+                        LogOut(returnPath, client);
+                        TurnInUsername(clientx, userName);
+
+                        return new BookFlightResult
+                        {
+                            IsSuccess = false,
+                            Errors = new List<FlightError> { FlightError.TechnicalError },
+                            Status = null,
+                            ErrorMessages = new List<string> { "Price is Changed!" },
+                            NewPrice = newprice,
+                            IsValid = true,
+                            IsPriceChanged = newprice != bookInfo.Itinerary.SupplierPrice,
+                            NewItinerary = newitin,
+                            IsItineraryChanged = isItinChanged
+
+                        };
+                    }
+
+                    LogOut(returnPath, client);
+                    TurnInUsername(clientx, userName);
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -327,7 +605,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 }
                 catch //(Exception e)
                 {
-                    LogOut("", client);
+                    LogOut(returnPath, client);
                     TurnInUsername(clientx, userName);
 
                     return new BookFlightResult
@@ -342,14 +620,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     };
                 }
             }
-                
         }
 
         private static void LogOut(string lasturlweb, RestClient clientAgent)
         {
             var urlweb = @"web/user/logout";
             var logoutReq = new RestRequest(urlweb, Method.GET);
-            logoutReq.AddHeader("Referer", "https://gosga.garuda-indonesia.com/" + lasturlweb); //tergantung terakhirnya di mana
+            logoutReq.AddHeader("Referer", "https://gosga.garuda-indonesia.com" + lasturlweb); //tergantung terakhirnya di mana
             logoutReq.AddHeader("Accept",
                 "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
             logoutReq.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
@@ -371,7 +648,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
             public string CityName { get; set; }
             public string CountryCode { get; set; }
             public string CountryName { get; set; }
-
         }
         
         private static string GetGarudaAirportBooking(string scr, string code)

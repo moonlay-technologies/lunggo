@@ -759,7 +759,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             RequirePassport = RequirePassport(newSegments),
                             RequireSameCheckIn = false,
                             RequireNationality = true,
-                            RequestedCabinClass = CabinClass.Economy,
+                            RequestedCabinClass = cabinClass,
                             TripType = TripType.OneWay,
                             Supplier = Supplier.LionAir,
                             SupplierCurrency = "IDR",

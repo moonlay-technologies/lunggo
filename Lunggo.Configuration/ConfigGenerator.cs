@@ -12,10 +12,10 @@ namespace Lunggo.Configuration
     public enum DeploymentEnvironment
     {
         Local = 5,
-        Development1 = 6,
-        QA = 7,
-        Production = 8,
-        Development2 = 9
+        DV1 = 6,
+        DV2 = 7,
+        QA = 8,
+        Production = 9
     }
 
     public class ConfigGenerator

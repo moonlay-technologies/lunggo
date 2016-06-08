@@ -49,6 +49,8 @@ namespace Lunggo.ApCommon.Constant
                     return Supplier.AirAsia;
                 case "LION":
                     return Supplier.LionAir;
+                case "GARU":
+                    return Supplier.Garuda;
                 default:
                     return Supplier.Undefined;
             }
