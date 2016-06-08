@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Threading;
-using System.Web;
 using CsQuery;
-using CsQuery.EquationParser.Implementation;
 using CsQuery.StringScanner.ExtensionMethods;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using RestSharp;
-using System.Globalization;
 using HttpUtility = RestSharp.Extensions.MonoHttp.HttpUtility;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
@@ -47,9 +41,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     };
                 }
 
-                var provider = CultureInfo.InvariantCulture;
-
-                string origin, dest, flightId;
+                string origin, dest;
                 DateTime depdate;
                 int adultCount, childCount, infantCount;
                 var bookingTimeLimit = "";
@@ -208,7 +200,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 searchReqAgent.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
                 searchReqAgent.AddHeader("Host", "gosga.garuda-indonesia.com");
                 var searchResAgent = client.Execute(searchReqAgent);
-                var htmlsearchresp = searchResAgent.Content;
 
                 urlweb = @"web/user/login/id";
                 var searchReqAgent0 = new RestRequest(urlweb, Method.GET);
@@ -218,11 +209,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
                 searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
                 var searchResAgent0 = client.Execute(searchReqAgent0);
-                htmlsearchresp = searchResAgent0.Content;
-
-
+                
                 var dict = DictionaryService.GetInstance();
-                var destinationCountry = dict.GetAirportCountryCode(dest);
 
                 var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
                 var clientx = new RestClient(cloudAppUrl);
@@ -271,7 +259,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 //        ErrorMessages = new List<string> {"Can't get id"}
                 //    };
                 //}
-                string returnPath;
+
                 urlweb = @"web/order/e-retail";
                 searchReqAgent0 = new RestRequest(urlweb, Method.GET);
                 searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/dashboard/welcome");
@@ -281,7 +269,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
                 searchResAgent0 = client.Execute(searchReqAgent0);
                 var htmlX = searchResAgent0.Content;
-                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+                string returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
                 //POST 
 
@@ -370,8 +358,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         }
                     }
 
-                    var duration = new TimeSpan();
-                    DateTime oriHr, arrHr;
                     var depdateTemp = depdate;
                     var flightstring = "";
                     var segments = new List<FlightSegment>();
@@ -390,12 +376,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         var depdata = selectedRows[ind].ChildElements.ToList()[ct + 1].InnerText;
                         var oriAirport = depdata.SubstringBetween(0, 3);
                         var oriHour = depdata.SubstringBetween(depdata.Length-5, depdata.Length);
-                        var a = Convert.ToInt32(oriHour.Split('.')[0]);
-                        var b = depdateTemp.Hour;
+                        DateTime oriHr;
                         if (Convert.ToInt32(oriHour.Split('.')[0]) < depdateTemp.Hour)
                         {
-                            var W = depdateTemp.AddDays(1);
-                            oriHr = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                            var w = depdateTemp.AddDays(1);
+                            oriHr = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
                                 Convert.ToInt32(oriHour.Split('.')[0]),
                                 Convert.ToInt32(oriHour.Split('.')[1]), 0), DateTimeKind.Utc);
                         }
@@ -409,24 +394,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         var arrdata = selectedRows[ind].ChildElements.ToList()[ct + 2].InnerText;
                         var desAirport = arrdata.SubstringBetween(0, 3);
                         var desHour = arrdata.SubstringBetween(arrdata.Length-5, arrdata.Length);
+                        DateTime arrHr;
                         if (Convert.ToInt32(desHour.Split('.')[0]) < oriHr.Hour)
                         {
-                            var W = oriHr.AddDays(1);
-                            arrHr = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                            var w = oriHr.AddDays(1);
+                            arrHr = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
                                 Convert.ToInt32(desHour.Split('.')[0]),
                                 Convert.ToInt32(desHour.Split('.')[1]), 0), DateTimeKind.Utc);
                             depdateTemp = arrHr;
                         }
                         else
                         {
-                            var W = oriHr;
-                            arrHr = DateTime.SpecifyKind(new DateTime(W.Year, W.Month, W.Day,
+                            var w = oriHr;
+                            arrHr = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
                                Convert.ToInt32(desHour.Split('.')[0]),
                                Convert.ToInt32(desHour.Split('.')[1]), 0), DateTimeKind.Utc);
                             depdateTemp = arrHr;
                         }
-                        duration = arrHr.AddHours(-(dict.GetAirportTimeZone(desAirport))) -
-                                   oriHr.AddHours(-(dict.GetAirportTimeZone(oriAirport)));
+                        TimeSpan duration = arrHr.AddHours(-(dict.GetAirportTimeZone(desAirport))) -
+                                            oriHr.AddHours(-(dict.GetAirportTimeZone(oriAirport)));
 
                         segments.Add(new FlightSegment
                         {
@@ -490,7 +476,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     searchReqAgent0.AddParameter("application/x-www-form-urlencoded", postdata, ParameterType.RequestBody);
                     searchResAgent0 = client.Execute(searchReqAgent0);
                     htmlFlight = searchResAgent0.Content;
-                    returnPath = searchResAgent.ResponseUri.AbsolutePath;
+                    returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
                     urlweb = @"web/order/checkFare";
                     searchReqAgent0 = new RestRequest(urlweb, Method.POST);
@@ -505,7 +491,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     searchReqAgent0.AddParameter("application/x-www-form-urlencoded", postdata, ParameterType.RequestBody);
                     searchResAgent0 = client.Execute(searchReqAgent0);
                     var htmlPrice = (CQ) searchResAgent0.Content;
-                    returnPath = searchResAgent.ResponseUri.AbsolutePath;
+                    returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
                     var classprice = htmlPrice["#sidebarTotal"].Text().Replace(",","");
                     var newprice = Convert.ToDecimal(classprice);
@@ -590,6 +576,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         };
                     }
 
+                    urlweb = @"web/order/pax";
+                    searchReqAgent0 = new RestRequest(urlweb, Method.GET);
+                    searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/order/selectFlight");
+                    searchReqAgent0.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                    searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                    searchResAgent0 = client.Execute(searchReqAgent0);
+                    returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+
                     LogOut(returnPath, client);
                     TurnInUsername(clientx, userName);
                     return new BookFlightResult
@@ -640,17 +636,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
             var accRs = (RestResponse)client.Execute(accReq);
         }
 
-        private class Airport
-        {
-            public string AirportCode { get; set; }
-            public string AirportName { get; set; }
-            public string CityCode { get; set; }
-            public string CityName { get; set; }
-            public string CountryCode { get; set; }
-            public string CountryName { get; set; }
-        }
-        
-        private static string GetGarudaAirportBooking(string scr, string code)
+       private static string GetGarudaAirportBooking(string scr, string code)
         {
             var airportScr = scr.Deserialize<List<List<string>>>();
             var arpt = "";
@@ -658,7 +644,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
             {
                 arpt =
                     HttpUtility.UrlEncode(arp.ElementAt(3) + " (" + arp.ElementAt(2) + "), " + arp.ElementAt(1)
-                                          + " (" + arp.ElementAt(0) + "), " + arp.ElementAt(5));
+                                            + " (" + arp.ElementAt(0) + "), " + arp.ElementAt(5));
             }
             return arpt;
         }
