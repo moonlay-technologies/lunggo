@@ -113,7 +113,7 @@ var SubscribeConfig = {
 };
 
 var LoginConfig = {
-    Url: '$rootUrl$$loginPath$'
+    Url: '$apiUrl$$loginPath$'
 };
 
 var RegisterConfig = {
@@ -175,4 +175,105 @@ var ChangeProfileMobileConfig = {
 
 var ResendConfirmationEmailMobileConfig = {
     Url: '$mobileUrl$$resendConfirmationEmailPath$'
+};
+
+// Create cookie for credential login
+/*function SetCookie(name, value, expires) {
+    document.cookie = name + "=" + value + expires + "; path=/";
+};*/
+
+function setCookie(cname, cvalue, expTime) {
+    var d = new Date(expTime);
+    //d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires+ "; path=/";
+}
+
+function setRefreshCookie(cname, cvalue)
+{
+    var d = new Date();
+    d.setTime(d.getTime() + (9999 * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
+}
+
+function isValid()
+{
+    var token = getCookie('accesstoken');
+    var refreshToken = getCookie('refreshtoken');
+    if (token !=null) {
+        return true;
+    }
+    else
+    {
+        if (refreshToken != null) {
+            //call API to get token
+        }
+        else
+        {
+            return true;
+        }
+    }
+}
+
+//Get Value from Cookie
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+
+//Delete Specific value from Cookie
+function eraseCookie(name) {
+    setCookie(name, "", -1);
+}
+
+function deleteCookie(name, path) {
+    // If the cookie exists
+    if (getCookie(name))
+        setCookie(name, "", -1, path);
+}
+
+$scope.getLogin = {
+    url: LoginConfig.Url,
+    isSuccess: false,
+    isChecked: false,
+    postData: '',
+
+    login: function () {
+        $scope.getLogin.checked = false;
+
+        // generate data
+        $scope.book.postData = '{' + $scope.book.postData + '}';
+        $scope.book.postData = JSON.parse($scope.book.postData);
+
+        console.log($scope.book.postData);
+
+        // send form
+        $http({
+            method: 'POST',
+            url: $scope.getLogin.url,
+            data: $.param($scope.book.postData),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).then(function (returnData) {
+            console.log(returnData);
+
+            if (returnData.data.IsSuccess) {
+            } else {
+                
+            }
+
+        }, function (returnData) {
+            console.log(returnData);
+            $scope.book.checked = true;
+        });
+
+    }
+
 };

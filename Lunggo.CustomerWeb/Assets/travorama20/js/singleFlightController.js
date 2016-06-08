@@ -7,8 +7,6 @@ app.controller('singleFlightController', [
         // on document ready
         angular.element(document).ready(function () {
             $scope.getFlight();
-            // start progress animation
-            //$scope.ProgressAnimation();
 
         });
 
@@ -287,7 +285,7 @@ app.controller('singleFlightController', [
                 }
             }
             if ($scope.stopFilterParam.two) {
-                if (flight.trips[0].transitCount > 1) {//flight.Trips[0].TotalTransit > 1) {
+                if (flight.trips[0].transitCount > 1) {
                     return flight;
                 }
             }
@@ -398,8 +396,6 @@ app.controller('singleFlightController', [
                 $http.post(SelectConfig.Url, {
                     searchId: SelectConfig.SearchId,
                     regs: [$scope.flightList[indexNo].reg],
-
-                    //SecureCode: $scope.flightRequest.SecureCode
                 }).success(function(returnData) {
                     $scope.selectFlightParam.validated = true;
                     console.log(indexNo);
@@ -448,19 +444,13 @@ app.controller('singleFlightController', [
             $scope.loading = true;
             $scope.loadingFlight = true;
 
-            // console.log('----------');
-            // console.log('Getting flight list with parameter');
-            // console.log(FlightSearchConfig.flightForm);
-
             console.log('request : ' + $scope.flightRequest.Requests);
             
 
             if ($scope.Progress < 100) {
                 // **********
                 // ajax
-                console.log("Ini URL nya : " + FlightSearchConfig.Url);
-                console.log("Concate Message : " + $scope.flightFixRequest);
-                console.log("Gabungan : " + FlightSearchConfig.Url + $scope.flightFixRequest+ '/' + $scope.Progress);
+                console.log("Request : " + FlightSearchConfig.Url + $scope.flightFixRequest+ '/' + $scope.Progress);
                 $http.get(FlightSearchConfig.Url + '/' + $scope.flightFixRequest + '/' + $scope.Progress, {
                     //params: {
                       //  request: $scope.flightRequest

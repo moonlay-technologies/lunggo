@@ -5,6 +5,7 @@ using Lunggo.WebAPI.ApiSrc.Account.Logic;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Microsoft.AspNet.Identity.Owin;
+using Lunggo.Framework.Cors;
 
 namespace Lunggo.WebAPI.ApiSrc.Account
 {
@@ -40,6 +41,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [AllowAnonymous]
+        [LunggoCorsPolicy]
         [Route("login")]
         public LoginApiResponse Login()
         {
@@ -49,6 +51,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         }
 
         [HttpPost]
+        [LunggoCorsPolicy]
         [AllowAnonymous]
         [Route("register")]
         public ApiResponseBase Register()
@@ -59,6 +62,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         }
 
         [HttpPost]
+        [LunggoCorsPolicy]
         [AllowAnonymous]
         [Route("forgot")]
         public ApiResponseBase ForgotPassword()
@@ -69,6 +73,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         }
 
         [HttpPatch]
+        [LunggoCorsPolicy]
         [Authorize]
         [Route("profile")]
         public ApiResponseBase ChangeProfile()
@@ -79,6 +84,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         }
 
         [HttpGet]
+        [LunggoCorsPolicy]
         [Authorize]
         [Route("profile")]
         public GetProfileApiResponse GetProfile()
@@ -88,6 +94,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         }
 
         [HttpGet]
+        [LunggoCorsPolicy]
         [Authorize]
         [Route("trxhistory")]
         public TransactionHistoryApiResponse GetTransactionHistory()
@@ -97,6 +104,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         }
 
         [HttpGet]
+        [LunggoCorsPolicy]
         [Authorize]
         [Route("rsv/{rsvNo}")]
         public GetReservationApiResponse GetOrderDetail(string rsvNo)

@@ -51,9 +51,9 @@ namespace Lunggo.CustomerWeb.Controllers
         //
         // GET: /Account/Login
         [System.Web.Mvc.AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login()
         {
-            ViewBag.ReturnUrl = returnUrl;
+            //ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 

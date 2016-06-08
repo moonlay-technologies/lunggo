@@ -14,7 +14,7 @@ var SearchRoomConfig = {
 };
 
 var FlightSearchConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/flights',
+    Url: 'https://travorama-dv2-api.azurewebsites.net/flight',
     // generate search URL
     GenerateSearchParam: function (params) {
         if (typeof (params) == 'object') {
@@ -68,7 +68,7 @@ var FlightSearchConfig = {
 };
 
 var SelectConfig = {
-    Url: 'https://dv2-api.azurewebsites.net/flight/select',
+    Url: 'https://travorama-dv2-api.azurewebsites.net/flight/select',
     working: false
 };
 
@@ -113,7 +113,7 @@ var SubscribeConfig = {
 };
 
 var LoginConfig = {
-    Url: 'http://www.dv2.travorama.com/id/ApiAccount/Login'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/login'
 };
 
 var RegisterConfig = {
@@ -150,7 +150,7 @@ var TransferConfig = {
 };
 
 var LoginMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/id/ApiAccount/Login'
+    Url: 'http://m.dv2.travorama.com/login'
 };
 
 var RegisterMobileConfig = {
@@ -176,3 +176,40 @@ var ChangeProfileMobileConfig = {
 var ResendConfirmationEmailMobileConfig = {
     Url: 'http://m.dv2.travorama.com/id/ApiAccount/ResendConfirmationEmail'
 };
+
+// Create cookie for credential login
+/*function SetCookie(name, value, expires) {
+    document.cookie = name + "=" + value + expires + "; path=/";
+};*/
+
+function setCookie(cname, cvalue, expTime) {
+    var d = new Date(expTime);
+    //d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires+ "; path=/";
+}
+
+//Get Value from Cookie
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+
+//Delete Specific value from Cookie
+function eraseCookie(name) {
+    setCookie(name, "", -1);
+}
+
+function deleteCookie(name, path) {
+    // If the cookie exists
+    if (getCookie(name))
+        setCookie(name, "", -1, path);
+}
+

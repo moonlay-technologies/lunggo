@@ -13,7 +13,7 @@
 }
 @section PageJS{
     <script>
-        var langCode = 'en';
+        var langCode = 'id';
         var loginMessage = '@ViewBag.Message';
     </script>
     <!-- angular controller -->
@@ -25,14 +25,7 @@
 
         <div class="row">
             <div class="col-xs-4 col-xs-offset-7">
-                @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form form form-horizontal", role = "form", name = "loginForm", ng_submit= "form.submit()" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <hgroup>
-                        <h1>@Html.I18NString("CW00129")</h1>
-                        <h4>@Html.I18NString("CW00122")</h4>
-                    </hgroup>
-
+                <form class="form register-form form-horizontal" name="loginForm" novalidate ng-submit="form.submit()">
                     <div class="form-group">
                         <input type="email" name="Email" value="" placeholder="@Html.I18NString("CW00123")" ng-model="form.email" class="form-control" required />
                     </div>
@@ -52,9 +45,8 @@
                     <div class="form-group text-right">
                         <a href="@Url.Action("ForgotPassword", "Account")">@Html.I18NString("CW00126")</a> | <a href="@Url.Action("Register", "Account")">@Html.I18NString("CW00127")</a>
                     </div>
-
-                }
-
+                </form>
+                    
             </div>
         </div>
 
@@ -73,23 +65,23 @@
                                 <img src="/Assets/images/sad-image.png" alt="Smile" />
                             </div>
                             <div class="col-sm-8">
-                                <div ng-show="message == 'NotRegistered'">
+                                <div ng-show="errorMessage == 'NotRegistered'">
                                     <h3>Anda belum terdaftar di Travorama</h3>
                                     <p><a href="@Url.Action("Register", "Account")">Klik di sini</a> untuk mendaftar di Travorama.</p>
                                 </div>
-                                <div ng-show="message == 'InvalidInputData'">
+                                <div ng-show="errorMessage == 'InvalidInputData'">
                                     <h3>E-mail / Password Salah</h3>
                                     <p>Cek kembali alamat e-mail dan password Anda.</p>
                                 </div>
-                                <div ng-show="message == 'Failed'">
+                                <div ng-show="errorMessage == 'Failed'">
                                     <h3>E-mail / Password Salah</h3>
                                     <p>Cek kembali alamat e-mail dan password Anda.</p>
                                 </div>
-                                <div ng-show="message == 'AlreadyRegisteredButUnconfirmed'">
+                                <div ng-show="errorMessage == 'AlreadyRegisteredButUnconfirmed'">
                                     <h3>Akun Belum Aktif</h3>
                                     <p>Cek kembali alamat e-mail Anda untuk mengaktifkan akun Anda.</p>
                                 </div>
-                                <div ng-show="message == 'AlreadyConfirmed'">
+                                <div ng-show="errorMessage == 'AlreadyConfirmed'">
                                     <h3>Akun Anda Telah Aktif</h3>
                                     <p>Silakan masuk menggunakan e-mail dan password Anda.</p>
                                 </div>

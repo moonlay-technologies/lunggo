@@ -1,6 +1,8 @@
 ﻿// Travorama Account controller
 app.controller('accountController', [
-    '$http', '$scope' , function($http, $scope) {   
+    '$http', '$scope', function ($http, $scope) {
+
+        //$scope.returnUrl = document.referrer == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;
 
         var hash = (location.hash);
 
@@ -249,12 +251,6 @@ app.controller('orderDetailController', [
         $scope.currentSection = 'order';
         $scope.orderDate = new Date(orderDate);
         $scope.refundDate = refundDate ? (new Date(refundDate)) : '-';
-        /*
-        $scope.contactDetail = contactDetail;
-        $scope.passengerDetail = passengerDetail;
-        $scope.flightDetail = flightDetail;
-        $scope.refundDetail = refundDetail;
-        */
     }
 ]);
 
@@ -320,10 +316,12 @@ app.controller('checkController', [
 
 // Travorama Check Order Controller
 app.controller('authController', [
-    '$scope', function ($scope) {
+    '$scope', '$http', function ($scope, $http) {
 
         $scope.pageLoaded = true;
         $scope.message = loginMessage;
+        $scope.returnUrl = document.referrer;
+        $scope.errorMessage = '';
         if ( $scope.message ) {
             $scope.overlay = true;
         } else {
@@ -336,11 +334,47 @@ app.controller('authController', [
             email: '',
             password: '',
             submitting: false,
-            submit: function() {
-                $scope.form.submitting = true;
-                $('.login-form').submit();
-            }
+            isLogin: false,
+            submitted:false
         };
+        /*
+        
+        */
+        $scope.form.submit = function () {
+            $scope.form.submitting = true;
+            $http.post(LoginConfig.Url, {
+                email: $scope.form.email,
+                password: $scope.form.password,
+                clientId: 'Jajal',
+                clientSecret: 'Standar'
+            }).success(function (returnData) {
+                $scope.form.submitting = false;
+                $scope.form.submitted = true;
+                if (returnData.status == "200") {
+                    setCookie('accesstoken', returnData.accessToken, returnData.expTime);
+                    setRefreshCookie('refreshtoken', returnData.refreshToken);
+
+                    window.location.href = $scope.returnUrl;
+                }
+                else {
+                    $scope.overlay = true;
+                    if (returnData.error == 'ERALOG01'){ $scope.errorMessage = 'RefreshNeeded'; }
+                    else if (returnData.error == 'ERALOG02') { $scope.errorMessage = 'InvalidInputData'; }
+                    else if (returnData.error == 'ERALOG03') { $scope.errorMessage = 'AlreadyRegisteredButUnconfirmed'; }
+                    else if (returnData.error == 'ERALOG04') { $scope.errorMessage = 'Failed'; }//InvalideClientIdorClientSecret
+                    else if (returnData.error == 'ERALOG05') { $scope.errorMessage = 'NotRegistered'; }
+                    else { $scope.errorMessage = 'Failed'; }//Problem in Server
+                    console.log('Error : '+returnData.error);
+                }
+                //console.log(returnData);
+            }, function (returnData) {
+                console.log('Failed to Login');
+                console.log(returnData);
+                $scope.form.submitting = false;
+                $scope.form.submitted = false;
+                $scope.form.isLogin = false;
+            });
+        }
 
     }
 ]);// auth controller

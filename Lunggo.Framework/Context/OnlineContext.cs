@@ -19,12 +19,12 @@ namespace Lunggo.Framework.Context
 
         public static String GetActiveLanguageCode()
         {
-            return (String)HttpContext.Current.Items[SystemConstant.HttpContextLangCode] ?? "ID";
+            return (String)HttpContext.Current.Items[SystemConstant.HttpContextLangCode] ?? "id";
         }
 
         public static void SetActiveLanguageCode(string langCode)
         {
-            HttpContext.Current.Items[SystemConstant.HttpContextLangCode] = langCode.ToUpper();
+            HttpContext.Current.Items[SystemConstant.HttpContextLangCode] = langCode.ToLower();
         }
 
         public static String GetActivePlatformCode()

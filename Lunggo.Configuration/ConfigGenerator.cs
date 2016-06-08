@@ -21,7 +21,7 @@ namespace Lunggo.Configuration
     public class ConfigGenerator
     {
         private const DeploymentEnvironment Environment = DeploymentEnvironment.DV2;
-        private const bool DeployHtmlTemplate = true;
+        private const bool DeployHtmlTemplate = false;
         private const string FileExtension = "*.properties";
         private const string FinalProjectConfigFile = "application.properties";
         private const string RootProject = "Lunggo";
@@ -339,7 +339,7 @@ namespace Lunggo.Configuration
             const string autocompleteAirlinePath = @"/api/v1/autocomplete/airline/";
             const string checkVoucherPath = @"/api/v1/voucher/check";
             const string subscribePath = @"/api/v1/newsletter/subscribe";
-            const string loginPath = @"/id/ApiAccount/Login";
+            const string loginPath = @"/login";
             const string registerPath = @"/id/ApiAccount/Register";
             const string resetPasswordPath = @"/id/ApiAccount/ResetPassword";
             const string forgotPasswordPath = @"/id/ApiAccount/ForgotPassword";
