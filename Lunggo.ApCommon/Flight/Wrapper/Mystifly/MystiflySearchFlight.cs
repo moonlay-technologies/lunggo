@@ -207,12 +207,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     return null;
                 flightItinerary.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
                 flightItinerary.Price = new Price();
-                flightItinerary.Price.SetSupplier(decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount), new Currency("USD"));
+                flightItinerary.Price.SetSupplier(
+                    decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount), 
+                    new Currency(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.CurrencyCode));
+                MapPassengerCount(pricedItinerary, flightItinerary);
+                CalculateBreakdownPortion(flightItinerary, pricedItinerary);
                 MapRequiredFields(pricedItinerary, flightItinerary);
                 flightItinerary.Supplier = Supplier.Mystifly;
                 flightItinerary.FareType = MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType);
                 flightItinerary.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
-                MapPassengerCount(pricedItinerary, flightItinerary);
                 flightItinerary.FareId = pricedItinerary.AirItineraryPricingInfo.FareSourceCode;
                 if (conditions is SearchFlightConditions)
                     flightItinerary.RequestedCabinClass = (conditions as SearchFlightConditions).CabinClass;
@@ -221,6 +224,35 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             else
             {
                 return null;
+            }
+        }
+
+        private static void CalculateBreakdownPortion(FlightItinerary flightItinerary, PricedItinerary pricedItinerary)
+        {
+            var adultBreakdown =
+                pricedItinerary.AirItineraryPricingInfo.PTC_FareBreakdowns.SingleOrDefault(
+                    ptc => ptc.PassengerTypeQuantity.Code == PassengerType.ADT);
+            var childBreakdown =
+                pricedItinerary.AirItineraryPricingInfo.PTC_FareBreakdowns.SingleOrDefault(
+                    ptc => ptc.PassengerTypeQuantity.Code == PassengerType.CHD);
+            var infantBreakdown =
+                pricedItinerary.AirItineraryPricingInfo.PTC_FareBreakdowns.SingleOrDefault(
+                    ptc => ptc.PassengerTypeQuantity.Code == PassengerType.INF);
+
+            if (adultBreakdown != null)
+            {
+                var adultPrice = decimal.Parse(adultBreakdown.PassengerFare.TotalFare.Amount);
+                flightItinerary.AdultPricePortion = adultPrice / flightItinerary.Price.Supplier;
+            }
+            if (childBreakdown != null)
+            {
+                var childPrice = decimal.Parse(childBreakdown.PassengerFare.TotalFare.Amount);
+                flightItinerary.ChildPricePortion = childPrice / flightItinerary.Price.Supplier;
+            }
+            if (infantBreakdown != null)
+            {
+                var infantPrice = decimal.Parse(infantBreakdown.PassengerFare.TotalFare.Amount);
+                flightItinerary.InfantPricePortion = infantPrice / flightItinerary.Price.Supplier;
             }
         }
 
@@ -352,6 +384,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
         {
             var flightTrips = new List<FlightTrip>();
             var segments = pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments).ToArray();
+            var isPscIncluded =
+                pricedItinerary.AirItineraryPricingInfo.PTC_FareBreakdowns[0].PassengerFare.Taxes.Any(
+                    tax => tax.TaxCode == "D5");
             var i = 0;
             foreach (var tripInfo in conditions.Trips)
             {
@@ -372,7 +407,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     };
                     do
                     {
-                        fareTrip.Segments.Add(MapFlightSegment(segments[i]));
+                        fareTrip.Segments.Add(MapFlightSegment(segments[i], isPscIncluded));
                         i++;
                     } while (segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
                              FlightService.GetInstance().GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) !=
@@ -387,7 +422,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             return flightTrips;
         }
 
-        private static FlightSegment MapFlightSegment(ApCommon.Mystifly.OnePointService.Flight.FlightSegment flightSegment)
+        private static FlightSegment MapFlightSegment(ApCommon.Mystifly.OnePointService.Flight.FlightSegment flightSegment, bool isPscIncluded)
         {
             var stops = new List<FlightStop>();
             if (flightSegment.StopQuantity > 0)
@@ -417,6 +452,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 Rbd = flightSegment.ResBookDesigCode,
                 CabinClass = MapCabinClass(flightSegment.CabinClassCode),
                 IsMealIncluded = !string.IsNullOrEmpty(flightSegment.MealCode),
+                IsPscIncluded = isPscIncluded,
                 RemainingSeats = flightSegment.SeatsRemaining.Number,
                 StopQuantity = flightSegment.StopQuantity,
                 Stops = stops,
