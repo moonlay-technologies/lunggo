@@ -62,10 +62,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 
                 try
                 {
-                    var cobaAmbilTable = (CQ) htmlRespon;
+                    var cobaAmbilTable = (CQ)htmlRespon;
 
                     var isi = cobaAmbilTable[".w99>tbody>tr:not([class^='trSSR'])"];
-                    
+
                     int i = isi.Count();
 
                     var itins = new List<FlightItinerary>();
@@ -105,39 +105,49 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 string Acode;
                                 string Fnumber;
 
-                                if ((ParseFID2.Count - 1)/8 == 1)
+                                if ((ParseFID2.Count - 1) / 8 == 1)
                                 {
-                                url = "TaxAndFeeInclusiveDisplayAjax-resource.aspx";
-                                var fareRequest = new RestRequest(url, Method.GET);
-                                fareRequest.AddQueryParameter("flightKeys", FID);
-                                fareRequest.AddQueryParameter("numberOfMarkets", "1");
-                                fareRequest.AddQueryParameter("keyDelimeter", ",");
-                                fareRequest.AddQueryParameter("ssrs", "FLEX");
-                                var fareResponse = client.Execute(fareRequest);
+                                    url = "TaxAndFeeInclusiveDisplayAjax-resource.aspx";
+                                    var fareRequest = new RestRequest(url, Method.GET);
+                                    fareRequest.AddQueryParameter("flightKeys", FID);
+                                    fareRequest.AddQueryParameter("numberOfMarkets", "1");
+                                    fareRequest.AddQueryParameter("keyDelimeter", ",");
+                                    fareRequest.AddQueryParameter("ssrs", "FLEX");
+                                    var fareResponse = client.Execute(fareRequest);
 
-                                var responAjax = fareResponse.Content;
+                                    var responAjax = fareResponse.Content;
 
                                     var ambilDataAjax = (CQ)responAjax;
 
-                                //Price 
+                                    //Price 
 
-                                var tunjukHarga = ambilDataAjax["#taxAndFeeInclusiveTotal"];
-                                var ambilharga = tunjukHarga.Select(x => x.Cq().Text()).FirstOrDefault();
-                                var harga = ambilharga.Split('.');
-
-                                var segments = new List<FlightSegment>();
-
-                                if (ParseFID2.Count > 7)
-                                {
-                                        int jumlahSegment = ((ParseFID2.Count) - 1) / 8;
-                                    int Airport = 4;
-                                    for (int l = 0; l < jumlahSegment; l++)
+                                    var tunjukHarga = ambilDataAjax["#taxAndFeeInclusiveTotal"];
+                                    var ambilharga = tunjukHarga.Select(x => x.Cq().Text()).FirstOrDefault();
+                                    var harga = decimal.Parse(ambilharga.Split('.')[1]);
+                                    var breakdownHarga = ambilDataAjax[".itern-rgt-txt-2>p>span"];
+                                    var hargaAdult = 0M;
+                                    var hargaChild = 0M;
+                                    var hargaInfant = 0M;
+                                    try
                                     {
+                                        hargaAdult = decimal.Parse(breakdownHarga[0].InnerText.Split('.')[1]);
+                                        hargaChild = decimal.Parse(breakdownHarga[1].InnerText.Split('.')[1]);
+                                        hargaInfant = decimal.Parse(breakdownHarga[2].InnerText.Split('.')[1]);
+                                    } catch { }
+
+                                    var segments = new List<FlightSegment>();
+
+                                    if (ParseFID2.Count > 7)
+                                    {
+                                        int jumlahSegment = ((ParseFID2.Count) - 1) / 8;
+                                        int Airport = 4;
+                                        for (int l = 0; l < jumlahSegment; l++)
+                                        {
                                             if (ParseFID2[(8 * l)].Length > 2)
                                             {
                                                 Acode = ParseFID2[(8 * l)].Substring(1, 2);
                                             }
-                                        else
+                                            else
                                             {
                                                 Acode = ParseFID2[(8 * l)];
                                             }
@@ -146,69 +156,74 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                             {
                                                 Fnumber = ParseFID2[(8 * l) + 1].Substring(0, 4).Trim();
                                             }
-                                        else
+                                            else
                                             {
                                                 Fnumber = ParseFID2[(8 * l) + 1].Trim();
                                             }
 
-                                        var flight = FlightService.GetInstance();
-                                        var arrtime = DateTime.Parse(ParseFID2[Airport + 3])
-                                            .AddHours(-(flight.GetAirportTimeZone(ParseFID2[Airport + 2])));
-                                        var deptime =
-                                            DateTime.Parse(ParseFID2[Airport + 1])
-                                                .AddHours(-(flight.GetAirportTimeZone(ParseFID2[Airport])));
+                                            var flight = FlightService.GetInstance();
+                                            var arrtime = DateTime.Parse(ParseFID2[Airport + 3])
+                                                .AddHours(-(flight.GetAirportTimeZone(ParseFID2[Airport + 2])));
+                                            var deptime =
+                                                DateTime.Parse(ParseFID2[Airport + 1])
+                                                    .AddHours(-(flight.GetAirportTimeZone(ParseFID2[Airport])));
 
-                                        segments.Add(new FlightSegment
-                                        {
+                                            segments.Add(new FlightSegment
+                                            {
 
-                                            AirlineCode = Acode,
-                                            FlightNumber = Fnumber,
-                                            CabinClass = conditions.CabinClass,
-                                            AirlineType = AirlineType.Lcc,
-                                            Rbd = Rbd,
-                                            DepartureAirport = ParseFID2[Airport],
+                                                AirlineCode = Acode,
+                                                FlightNumber = Fnumber,
+                                                CabinClass = conditions.CabinClass,
+                                                AirlineType = AirlineType.Lcc,
+                                                Rbd = Rbd,
+                                                DepartureAirport = ParseFID2[Airport],
                                                 DepartureTime = DateTime.SpecifyKind(DateTime.Parse(ParseFID2[Airport + 1]), DateTimeKind.Utc),
-                                            ArrivalAirport = ParseFID2[Airport + 2],
-                                            ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(ParseFID2[Airport + 3]), DateTimeKind.Utc),
-                                            OperatingAirlineCode = Acode,
-                                            StopQuantity = 0,
-                                            Duration = arrtime - deptime
-                                        });
-                                        Airport = Airport + 8;
+                                                ArrivalAirport = ParseFID2[Airport + 2],
+                                                ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(ParseFID2[Airport + 3]), DateTimeKind.Utc),
+                                                OperatingAirlineCode = Acode,
+                                                StopQuantity = 0,
+                                                Duration = arrtime - deptime,
+                                                IsMealIncluded = false,
+                                                IsPscIncluded = true
+                                            });
+                                            Airport = Airport + 8;
+                                        }
                                     }
-                                }
 
-                                var prefix =
-                                    "" + conditions.Trips[0].OriginAirport + "" +
-                                    "." + conditions.Trips[0].DestinationAirport + "" +
-                                    "." + conditions.Trips[0].DepartureDate.Day + "" +
-                                    "." + conditions.Trips[0].DepartureDate.Month + "" +
-                                    "." + conditions.Trips[0].DepartureDate.Year + "" +
-                                    "." + conditions.AdultCount + "" +
-                                    "." + conditions.ChildCount + "" +
-                                    "." + conditions.InfantCount + "" +
-                                    "." + ParseFID2[0].Trim() + "" +
-                                    "." + ParseFID2[1].Trim() + "" +
-                                    "." + decimal.Parse(harga[1]) + "" +
-                                    ".";
+                                    var prefix =
+                                        "" + conditions.Trips[0].OriginAirport + "" +
+                                        "." + conditions.Trips[0].DestinationAirport + "" +
+                                        "." + conditions.Trips[0].DepartureDate.Day + "" +
+                                        "." + conditions.Trips[0].DepartureDate.Month + "" +
+                                        "." + conditions.Trips[0].DepartureDate.Year + "" +
+                                        "." + conditions.AdultCount + "" +
+                                        "." + conditions.ChildCount + "" +
+                                        "." + conditions.InfantCount + "" +
+                                        "." + ParseFID2[0].Trim() + "" +
+                                        "." + ParseFID2[1].Trim() + "" +
+                                        "." + harga + "" +
+                                        ".";
 
-                                var itin = new FlightItinerary
-                                {
-                                    AdultCount = conditions.AdultCount,
-                                    ChildCount = conditions.ChildCount,
-                                    InfantCount = conditions.InfantCount,
-                                    CanHold = true,
-                                    FareType = FareType.Published,
-                                    RequireBirthDate = true,
-                                    RequirePassport = false,
-                                    RequireSameCheckIn = false,
-                                    RequireNationality = true,
-                                    RequestedCabinClass = CabinClass.Economy,
-                                    TripType = TripType.OneWay,
-                                    Supplier = Supplier.Citilink,
-                                    Price = new Price(),
-                                    FareId = prefix + ParseFID1[1],
-                                    Trips = new List<FlightTrip>
+                                    var itin = new FlightItinerary
+                                    {
+                                        AdultCount = conditions.AdultCount,
+                                        ChildCount = conditions.ChildCount,
+                                        InfantCount = conditions.InfantCount,
+                                        CanHold = true,
+                                        FareType = FareType.Published,
+                                        RequireBirthDate = true,
+                                        RequirePassport = false,
+                                        RequireSameCheckIn = false,
+                                        RequireNationality = true,
+                                        RequestedCabinClass = CabinClass.Economy,
+                                        TripType = TripType.OneWay,
+                                        Supplier = Supplier.Citilink,
+                                        Price = new Price(),
+                                        AdultPricePortion = hargaAdult/harga,
+                                        ChildPricePortion = hargaChild/harga,
+                                        InfantPricePortion = hargaInfant/harga,
+                                        FareId = prefix + ParseFID1[1],
+                                        Trips = new List<FlightTrip>
                                     {
                                         new FlightTrip()
                                         {
@@ -218,18 +233,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                             DepartureDate = DateTime.SpecifyKind(conditions.Trips[0].DepartureDate,DateTimeKind.Utc)
                                         }
                                     }
-                                };
-                                itin.Price.SetSupplier(decimal.Parse(harga[1]), new Currency("IDR"));
-                                //if (itin.Trips[0].Segments.Count < 2)
-                                itins.Add(itin);
+                                    };
+                                    itin.Price.SetSupplier(harga, new Currency("IDR"));
+                                    //if (itin.Trips[0].Segments.Count < 2)
+                                    itins.Add(itin);
                                 }
-                                
+
                                 hasil.IsSuccess = true;
                                 hasil.Itineraries = itins;
                                 #endregion
                                 break;
 
-                            case CabinClass.Business :
+                            case CabinClass.Business:
                                 return new SearchFlightResult
                                 {
                                     Itineraries = new List<FlightItinerary>(),

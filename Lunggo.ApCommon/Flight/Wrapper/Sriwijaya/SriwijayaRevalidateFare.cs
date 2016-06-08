@@ -265,6 +265,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     AirlineCode = ParseFare[j],
                                     FlightNumber = ParseFare[j + 1],
                                     CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
+                                    AirlineType = AirlineType.Lcc,
                                     Rbd = Rbd[i],
                                     DepartureAirport = bandara[0],
                                     DepartureTime = DateTime.SpecifyKind(departureDate, DateTimeKind.Utc),
@@ -272,14 +273,26 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     ArrivalTime = DateTime.SpecifyKind(arrivalDate, DateTimeKind.Utc),
                                     OperatingAirlineCode = ParseFare[j],
                                     Duration = arrtime - deptime,
-                                    StopQuantity = 0
+                                    StopQuantity = 0,
+                                    IsMealIncluded = true,
+                                    IsPscIncluded = true
                                 });
                             }
 
                             var tunjukHarga = ambilDataAjax.MakeRoot()["#fareTotalAmount"];
                             var hargaBaruRaw = tunjukHarga.Select(x => x.Cq().Text()).FirstOrDefault();
                             var indexHarga = hargaBaruRaw.IndexOf('\t');
-                            var hargaBaru = hargaBaruRaw.Substring(0, (indexHarga));
+                            var hargaBaru = decimal.Parse(hargaBaruRaw.Substring(0, (indexHarga)));
+                            var hargaAdult = 0M;
+                            var hargaChild = 0M;
+                            var hargaInfant = 0M;
+                            try
+                            {
+                                hargaAdult = decimal.Parse(ambilDataAjax["#fareDetailAdult .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                                hargaChild = decimal.Parse(ambilDataAjax["#fareDetailChild .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                                hargaInfant = decimal.Parse(ambilDataAjax["#fareDetailInfant .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                            }
+                            catch { }
 
                             var itin = new FlightItinerary
                             {
@@ -296,6 +309,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 TripType = TripType.OneWay,
                                 Supplier = Supplier.Sriwijaya,
                                 Price = new Price(),
+                                AdultPricePortion = hargaAdult/hargaBaru,
+                                ChildPricePortion = hargaChild/hargaBaru,
+                                InfantPricePortion = hargaInfant/hargaBaru,
                                 FareId = Fare,
                                 Trips = new List<FlightTrip>
                                 {
@@ -308,15 +324,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     }
                                 }
                             };
-                            itin.Price.SetSupplier(decimal.Parse(hargaBaru), new Currency("IDR"));
-                            var newPrice = decimal.Parse(hargaBaru);
+                            itin.Price.SetSupplier(hargaBaru, new Currency("IDR"));
                             hasil.IsSuccess = true;
                             hasil.IsValid = true;
-                            hasil.IsPriceChanged = harga != newPrice;
+                            hasil.IsPriceChanged = harga != hargaBaru;
                             hasil.IsItineraryChanged = !conditions.Itinerary.Identical(itin);
                             if (hasil.IsPriceChanged)
                             {
-                                hasil.NewPrice = newPrice;
+                                hasil.NewPrice = hargaBaru;
                             }
                             hasil.NewItinerary = itin;
                         }
@@ -416,14 +431,26 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         ArrivalTime = DateTime.SpecifyKind(arrivalDate, DateTimeKind.Utc),
                                         OperatingAirlineCode = ParseFare[j],
                                         Duration = arrtime - deptime,
-                                        StopQuantity = 0
+                                        StopQuantity = 0,
+                                        IsMealIncluded = true,
+                                        IsPscIncluded = true
                                     });
                                 }
 
                                 var tunjukHarga = ambilDataAjax.MakeRoot()["#fareTotalAmount"];
                                 var hargaBaruRaw = tunjukHarga.Select(x => x.Cq().Text()).FirstOrDefault();
                                 var indexHarga = hargaBaruRaw.IndexOf('\t');
-                                var hargaBaru = hargaBaruRaw.Substring(0, (indexHarga));
+                                var hargaBaru = decimal.Parse(hargaBaruRaw.Substring(0, (indexHarga)));
+                                var hargaAdult = 0M;
+                                var hargaChild = 0M;
+                                var hargaInfant = 0M;
+                                try
+                                {
+                                    hargaAdult = decimal.Parse(ambilDataAjax["#fareDetailAdult .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                                    hargaChild = decimal.Parse(ambilDataAjax["#fareDetailChild .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                                    hargaInfant = decimal.Parse(ambilDataAjax["#fareDetailInfant .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                                }
+                                catch { }
 
                                 var itin = new FlightItinerary
                                 {
@@ -440,6 +467,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     TripType = TripType.OneWay,
                                     Supplier = Supplier.Sriwijaya,
                                     Price = new Price(),
+                                    AdultPricePortion = hargaAdult/hargaBaru,
+                                    ChildPricePortion = hargaChild/hargaBaru,
+                                    InfantPricePortion = hargaInfant/hargaBaru,
                                     FareId = Fare,
                                     Trips = new List<FlightTrip>
                                     {
@@ -452,15 +482,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         }
                                     }
                                 };
-                                itin.Price.SetSupplier(Decimal.Parse(hargaBaru), new Currency("IDR"));
-                                var newPrice = decimal.Parse(hargaBaru);
+                                itin.Price.SetSupplier(hargaBaru, new Currency("IDR"));
                                 hasil.IsSuccess = true;
                                 hasil.IsValid = true;
-                                hasil.IsPriceChanged = harga != newPrice;
+                                hasil.IsPriceChanged = harga != hargaBaru;
                                 hasil.IsItineraryChanged = !conditions.Itinerary.Identical(itin);
                                 if (hasil.IsPriceChanged)
                                 {
-                                    hasil.NewPrice = newPrice;
+                                    hasil.NewPrice = hargaBaru;
                                 }
                                 hasil.NewItinerary = itin;
                             }
@@ -548,6 +577,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             AirlineCode = ParseFare[i],
                                             FlightNumber = ParseFare[i + 1],
                                             CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
+                                            AirlineType = AirlineType.Lcc,
                                             Rbd = Rbd[i],
                                             DepartureAirport = bandara[0],
                                             DepartureTime = DateTime.SpecifyKind(departureDate, DateTimeKind.Utc),
@@ -555,14 +585,26 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             ArrivalTime = DateTime.SpecifyKind(arrivalDate, DateTimeKind.Utc),
                                             OperatingAirlineCode = ParseFare[i],
                                             Duration = arrtime - deptime,
-                                            StopQuantity = 0
+                                            StopQuantity = 0,
+                                            IsMealIncluded = true,
+                                            IsPscIncluded = true
                                         });
                                     }
 
                                     var tunjukHarga = ambilDataAjax.MakeRoot()["#fareTotalAmount"];
                                     var hargaBaruRaw = tunjukHarga.Select(x => x.Cq().Text()).FirstOrDefault();
                                     var indexHarga = hargaBaruRaw.IndexOf('\t');
-                                    var hargaBaru = hargaBaruRaw.Substring(0, (indexHarga));
+                                    var hargaBaru = decimal.Parse(hargaBaruRaw.Substring(0, (indexHarga)));
+                                    var hargaAdult = 0M;
+                                    var hargaChild = 0M;
+                                    var hargaInfant = 0M;
+                                    try
+                                    {
+                                        hargaAdult = decimal.Parse(ambilDataAjax["#fareDetailAdult .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                                        hargaChild = decimal.Parse(ambilDataAjax["#fareDetailChild .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                                        hargaInfant = decimal.Parse(ambilDataAjax["#fareDetailInfant .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                                    }
+                                    catch { }
 
                                     var itin = new FlightItinerary
                                     {
@@ -579,6 +621,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         TripType = TripType.OneWay,
                                         Supplier = Supplier.Sriwijaya,
                                         Price = new Price(),
+                                        AdultPricePortion = hargaAdult/hargaBaru,
+                                        ChildPricePortion = hargaChild/hargaBaru,
+                                        InfantPricePortion = hargaInfant/hargaBaru,
                                         FareId = Fare,
                                         Trips = new List<FlightTrip>
                                         {
@@ -591,18 +636,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             }
                                         }
                                     };
-                                    itin.Price.SetSupplier(Decimal.Parse(hargaBaru), new Currency("IDR"));
+                                    itin.Price.SetSupplier(hargaBaru, new Currency("IDR"));
                                     //hasil.IsSuccess = true;
                                     //hasil.IsValid = harga == Decimal.Parse(hargaBaru);
                                     //hasil.NewItinerary = itin;
-                                    var newPrice = decimal.Parse(hargaBaru);
                                     hasil.IsSuccess = true;
                                     hasil.IsValid = true;
-                                    hasil.IsPriceChanged = harga != newPrice;
+                                    hasil.IsPriceChanged = harga != hargaBaru;
                                     hasil.IsItineraryChanged = !conditions.Itinerary.Identical(itin);
                                     if (hasil.IsPriceChanged)
                                     {
-                                        hasil.NewPrice = newPrice;
+                                        hasil.NewPrice = hargaBaru;
                                     }
                                     hasil.NewItinerary = itin;
                                 }

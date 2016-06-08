@@ -435,7 +435,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             OperatingAirlineName = airplaneName,
                             ArrivalAirport = airportarrival,
                             DepartureAirport = airportdeparture,
-                            Duration = dur
+                            Duration = dur,
+                            IsMealIncluded = flightNo.Split(' ')[0] == "ID",
+                            IsPscIncluded = true
                         });
                     }
 
@@ -534,7 +536,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var priceCollections = colCollection.Select(seg => seg[seg.Count - 1]).ToList();
                     //string seat = string.Join("|", seatCollection.Select(seg => seg[seg.Count - 1]).ToArray());
 
-                    var agentprice = "";
+                    var agentprice = 0M;
+                    var agentcurr = "";
                     if (priceCollections.Count != 0) // Kalau casenya cabin business kdg2 suka habis
                     {
                         var postdata = new CreatePostData();
@@ -628,7 +631,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var pagePrice = (CQ) html6;
 
                         var revalidateFare = pagePrice["#tdAmtTotal"].Text();
-                        agentprice = revalidateFare.Replace(",", "");
+                        agentprice = decimal.Parse(revalidateFare.Replace(",", ""));
+                        agentcurr = pagePrice["#tdCurrTotal"].Text();
                         
                         //GET PAGE LOGOUT
 
@@ -677,6 +681,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         TripType = TripType.OneWay,
                         Supplier = Supplier.LionAir,
                         Price = new Price(),
+                        AdultPricePortion = conditions.Itinerary.AdultPricePortion,
+                        ChildPricePortion = conditions.Itinerary.ChildPricePortion,
+                        InfantPricePortion = conditions.Itinerary.InfantCount,
                         FareId = conditions.Itinerary.FareId,
                         Trips = new List<FlightTrip>
                         {
@@ -689,9 +696,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             }
                         }
                     };
-                    itin.Price.SetSupplier(Convert.ToDecimal(agentprice), new Currency("IDR"));
+                    itin.Price.SetSupplier(agentprice, new Currency(agentcurr));
 
-                    var newPrice = Convert.ToDecimal(agentprice);
+                    var newPrice = agentprice;
                     var result = new RevalidateFareResult
                     {
                         IsSuccess = true,

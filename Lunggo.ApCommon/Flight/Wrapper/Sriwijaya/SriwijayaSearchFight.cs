@@ -57,20 +57,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var hasil = new SearchFlightResult();
                 var convertBulan = trip0.DepartureDate.ToString("MMMM");
                 var bulan3 = convertBulan.Substring(0, 3);
-                Login(client);
 
                 //ISI BAHASA
+
+                var url0 = "/";
+                var rq0 = new RestRequest(url0, Method.GET);
+                client.Execute(rq0);
 
                 var url = "welcome.php";
                 var langRequest = new RestRequest(url, Method.POST);
                 var postData =
                     @"form_build_id=form-443a2fb12e018591436589029dabcde0" +
                     @"&form_id=flute_location_language_form" +
-                    @"&form_id=flute_location_language_form" +
                     @"&location=ID" +
+                    @"&language=ID"+
                     @"op=Choose";
                 langRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var langResponse = client.Execute(langRequest);
+                var temp = langResponse.ResponseUri.AbsoluteUri;
                 if (langResponse.StatusCode != HttpStatusCode.OK)
                 {
                     return new SearchFlightResult
@@ -80,28 +84,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     };
                 }
 
-                var firstOri ="";
-                var firstDest ="";
-
-                if (trip0.OriginAirport == "JKT")
-                {
-                    firstOri = "CGK";
-                }
-                else 
-                {
-                    firstOri = trip0.OriginAirport;
-                }
-
-                if (trip0.DestinationAirport == "JKT")
-                {
-                    firstDest = "CGK";
-                }
-                else 
-                {
-                    firstDest = trip0.DestinationAirport;
-                }
-
-
+                url = "/location-block.php";
+                var locRequest = new RestRequest(url, Method.GET);
+                locRequest.AddHeader("X-Requested-With", "XMLHttpRequest");
+                client.Execute(locRequest);
+                
                 //SEARCH
                 url = "application/?action=booking";
                 var searchRequest = new RestRequest(url, Method.POST);
@@ -112,8 +99,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                  @"&returndaterange=0" +
                                  @"&return=NO" +
                                  @"&Submit=Pencarian" +
-                                 @"&ruteTujuan=" + firstDest +
-                                 @"&ruteBerangkat=" + firstOri +
+                                 @"&ruteTujuan=" + trip0.DestinationAirport +
+                                 @"&ruteBerangkat=" + trip0.OriginAirport +
                                  @"&vSub=YES";
                 searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var searchResponse = client.Execute(searchRequest);
@@ -273,6 +260,28 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     var tampungPesawat = new List<string>();
                                     string tampungPesawatString = null;
 
+                                    //Price 
+
+                                    fareRequest.AddQueryParameter("break", "YES");
+                                    var fareResponse2 = client.Execute(fareRequest);
+                                    var responAjax2 = fareResponse2.Content;
+
+                                    CQ ambilDataAjax2 = (CQ)responAjax2;
+
+                                    var tunjukHarga = ambilDataAjax2[".priceDetail.bold"];
+                                    var ambilharga = tunjukHarga.Select(x => x.Cq().Text()).LastOrDefault();
+                                    var harga = decimal.Parse(ambilharga.Split(' ')[1]);
+                                    var hargaAdult = 0M;
+                                    var hargaChild = 0M;
+                                    var hargaInfant = 0M;
+                                    try
+                                    {
+                                        hargaAdult = decimal.Parse(ambilDataAjax2["#fareDetailAdult .priceDetail"].Last().Text());
+                                        hargaChild = decimal.Parse(ambilDataAjax2["#fareDetailChild .priceDetail"].Last().Text());
+                                        hargaInfant = decimal.Parse(ambilDataAjax2["#fareDetailInfant .priceDetail"].Last().Text());
+                                    }
+                                    catch { }
+
                                     //Iterate per Segment
                                     for (int code = 0; code < jumlahSegment; code++)
                                     {
@@ -359,15 +368,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             ArrivalTime = DateTime.SpecifyKind(arrivalTime, DateTimeKind.Utc),
                                             OperatingAirlineCode = codeParse1[0],
                                             StopQuantity = 0,
-                                            Duration = arrtime - deptime
+                                            Duration = arrtime - deptime,
+                                            IsMealIncluded = true,
+                                            IsPscIncluded = true
                                         });
                                     }
-
-                                    //Price 
-
-                                    var tunjukHarga = ambilDataAjax[".totalPrice"];
-                                    var ambilharga = tunjukHarga.Select(x => x.Cq().Text()).FirstOrDefault();
-                                    var harga = ambilharga.Split(' ');
 
                                     var prefix =
                                         "" + tampungPesawatString + "" +
@@ -379,7 +384,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         "|" + conditions.AdultCount + "" +
                                         "." + conditions.ChildCount + "" +
                                         "." + conditions.InfantCount + "" +
-                                        "|" + decimal.Parse(harga[1]) + "" +
+                                        "|" + harga + "" +
                                         "." + "1.";
 
                                     var itin = new FlightItinerary
@@ -397,6 +402,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         TripType = TripType.OneWay,
                                         Supplier = Supplier.Sriwijaya,
                                         Price = new Price(),
+                                        AdultPricePortion = hargaAdult/harga,
+                                        ChildPricePortion = hargaChild/harga,
+                                        InfantPricePortion = hargaInfant/harga,
                                         FareId = prefix + FID,
                                         Trips = new List<FlightTrip>
                                     {
@@ -409,7 +417,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                        }
                                     }
                                     };
-                                    itin.Price.SetSupplier(decimal.Parse(harga[1]), new Currency("IDR"));
+                                    itin.Price.SetSupplier(harga, new Currency("IDR"));
                                     itins.Add(itin);
                                     hasil.IsSuccess = true;
                                     hasil.Itineraries = itins;
@@ -535,6 +543,29 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     //    };
                                     //}
 
+                                    //Price 
+
+                                    fareRequest.AddQueryParameter("break", "YES");
+                                    var fareResponse2 = client.Execute(fareRequest);
+                                    var responAjax2 = fareResponse2.Content;
+
+                                    CQ ambilDataAjax2 = (CQ)responAjax2;
+
+                                    var tunjukHarga = ambilDataAjax2[".priceDetail.bold"];
+                                    var ambilharga = tunjukHarga.Select(x => x.Cq().Text()).LastOrDefault();
+                                    var harga = decimal.Parse(ambilharga.Split(' ')[1]);
+                                    var hargaAdult = 0M;
+                                    var hargaChild = 0M;
+                                    var hargaInfant = 0M;
+                                    try
+                                    {
+                                        hargaAdult = decimal.Parse(ambilDataAjax2["#fareDetailAdult .priceDetail"].Last().Text());
+                                        hargaChild = decimal.Parse(ambilDataAjax2["#fareDetailChild .priceDetail"].Last().Text());
+                                        hargaInfant = decimal.Parse(ambilDataAjax2["#fareDetailInfant .priceDetail"].Last().Text());
+                                    }
+                                    catch { }
+                                    var isPscIncluded = ambilDataAjax2.Text().Contains("PSC");
+
                                     var segments = new List<FlightSegment>();
                                     var tampungPesawat = new List<string>();
                                     string tampungPesawatString = null;
@@ -615,17 +646,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             ArrivalTime = DateTime.SpecifyKind(arrivalTime,DateTimeKind.Utc),
                                             OperatingAirlineCode = codeParse1[0],
                                             StopQuantity = 0,
-                                            Duration = arrtime - deptime
+                                            Duration = arrtime - deptime,
+                                            IsMealIncluded = true,
+                                            IsPscIncluded = true
                                         });
                                     }
-
-                                    //Price 
-
-                                    var tunjukHarga = ambilDataAjax[".totalPrice"];
-                                    var ambilharga = tunjukHarga.Select(x => x.Cq().Text()).FirstOrDefault();
-                                    var harga = ambilharga.Split(' ');
-
-                                    
 
                                     var prefix =
                                          "" + tampungPesawatString + "" +
@@ -637,7 +662,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         "|" + conditions.AdultCount + "" +
                                         "." + conditions.ChildCount + "" +
                                         "." + conditions.InfantCount + "" +
-                                        "|" + decimal.Parse(harga[1]) + "" + 
+                                        "|" + harga + "" + 
                                         "." + "2.";
 
                                     var itin = new FlightItinerary
@@ -655,6 +680,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         TripType = TripType.OneWay,
                                         Supplier = Supplier.Citilink,
                                         Price = new Price(),
+                                        AdultPricePortion = hargaAdult/harga,
+                                        ChildPricePortion = hargaChild/harga,
+                                        InfantPricePortion = hargaInfant/harga,
                                         FareId = prefix + FIDB,
                                         Trips = new List<FlightTrip>
                                         {
@@ -667,7 +695,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                            }
                                         }
                                     };
-                                    itin.Price.SetSupplier(decimal.Parse(harga[1]), new Currency("IDR"));
+                                    itin.Price.SetSupplier(harga, new Currency("IDR"));
                                     itins.Add(itin);
                                     hasil.IsSuccess = true;
                                     hasil.Itineraries = itins;
