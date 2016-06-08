@@ -39,8 +39,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
             {
                 var client = new RestClient("https://www.sriwijayaair.co.id");
                 client.AddDefaultHeader("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6");
+                client.AddDefaultHeader("Accept", "application/json, application/xml, text/json, text/x-json, text/javascript, text/xml");
                 client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
-                client.AddDefaultHeader("Referer", "https://www.sriwijayaair.co.id/welcome.php");
                 client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
                 client.CookieContainer = new CookieContainer();
                 return client;

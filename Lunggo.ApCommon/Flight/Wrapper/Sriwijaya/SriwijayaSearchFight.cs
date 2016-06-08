@@ -57,20 +57,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var hasil = new SearchFlightResult();
                 var convertBulan = trip0.DepartureDate.ToString("MMMM");
                 var bulan3 = convertBulan.Substring(0, 3);
-                Login(client);
 
                 //ISI BAHASA
+
+                var url0 = "/";
+                var rq0 = new RestRequest(url0, Method.GET);
+                client.Execute(rq0);
 
                 var url = "welcome.php";
                 var langRequest = new RestRequest(url, Method.POST);
                 var postData =
                     @"form_build_id=form-443a2fb12e018591436589029dabcde0" +
                     @"&form_id=flute_location_language_form" +
-                    @"&form_id=flute_location_language_form" +
                     @"&location=ID" +
+                    @"&language=ID"+
                     @"op=Choose";
                 langRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var langResponse = client.Execute(langRequest);
+                var temp = langResponse.ResponseUri.AbsoluteUri;
                 if (langResponse.StatusCode != HttpStatusCode.OK)
                 {
                     return new SearchFlightResult
@@ -80,28 +84,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     };
                 }
 
-                var firstOri ="";
-                var firstDest ="";
-
-                if (trip0.OriginAirport == "JKT")
-                {
-                    firstOri = "CGK";
-                }
-                else 
-                {
-                    firstOri = trip0.OriginAirport;
-                }
-
-                if (trip0.DestinationAirport == "JKT")
-                {
-                    firstDest = "CGK";
-                }
-                else 
-                {
-                    firstDest = trip0.DestinationAirport;
-                }
-
-
+                url = "/location-block.php";
+                var locRequest = new RestRequest(url, Method.GET);
+                locRequest.AddHeader("X-Requested-With", "XMLHttpRequest");
+                client.Execute(locRequest);
+                
                 //SEARCH
                 url = "application/?action=booking";
                 var searchRequest = new RestRequest(url, Method.POST);
@@ -112,8 +99,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                  @"&returndaterange=0" +
                                  @"&return=NO" +
                                  @"&Submit=Pencarian" +
-                                 @"&ruteTujuan=" + firstDest +
-                                 @"&ruteBerangkat=" + firstOri +
+                                 @"&ruteTujuan=" + trip0.DestinationAirport +
+                                 @"&ruteBerangkat=" + trip0.OriginAirport +
                                  @"&vSub=YES";
                 searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var searchResponse = client.Execute(searchRequest);
@@ -384,7 +371,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             StopQuantity = 0,
                                             Duration = arrtime - deptime,
                                             IsMealIncluded = false,
-                                            IsPscIncluded = isPscIncluded
+                                            IsPscIncluded = true
                                         });
                                     }
 
@@ -662,7 +649,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             StopQuantity = 0,
                                             Duration = arrtime - deptime,
                                             IsMealIncluded = false,
-                                            IsPscIncluded = isPscIncluded
+                                            IsPscIncluded = true
                                         });
                                     }
 
