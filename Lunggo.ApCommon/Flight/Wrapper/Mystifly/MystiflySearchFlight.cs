@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        private static readonly string[] AirlinesExclude = {"SJ", "IN", "AK", "QZ", "D7", "XT", "QG", "JT", "IW", "ID"};
+        private static readonly string[] AirlinesExclude = {"SJ", "IN", "AK", "QZ", "D7", "XT", "QG", "JT", "IW", "ID", "GA"};
 
         internal override SearchFlightResult SearchFlight(SearchFlightConditions conditions)
         {
