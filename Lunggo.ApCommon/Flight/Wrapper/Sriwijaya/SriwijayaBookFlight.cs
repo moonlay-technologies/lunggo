@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
     {
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
-           
+
             //var sementara = new FlightBookingInfo
             //{
             //    FareId = "SJ.017.SJ.272.IN.9662.KNO.WGP?2015-11-11|1.1.1|2346000.0.3820089,3853792,1953189:X,T,Q:S:KNO:WGP:U2s5VlVrNUZXUT09",
@@ -95,7 +95,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     {
                         IsValid = revalidateResult.IsValid,
                         ErrorMessages = revalidateResult.ErrorMessages,
-                        Errors = revalidateResult.Errors,
+                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
                         IsItineraryChanged = revalidateResult.IsItineraryChanged,
                         IsPriceChanged = revalidateResult.IsPriceChanged,
                         IsSuccess = false,
@@ -108,7 +108,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                 var clientx = CreateAgentClient();
                 var hasil = new BookFlightResult();
-                var Fare = bookInfo.Itinerary.FareId; 
+                var Fare = bookInfo.Itinerary.FareId;
                 //var Fare =
                 //    "SJ.017.SJ.272.IN.9662.KNO.WGP?2015-11-11|1.0.0|2346000.0.97174,3853813,1953461:X,M,T:S:KNO:WGP:U2s5VlVrNUZXUT09";
                 var ParseFare = Fare.Split('.');
@@ -156,9 +156,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     jumlahSegment = 2;
 
                     bookingParams =
-                        "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport +
+                        "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport +
                         "%3AU2s5VlVrNUZXUT09" +
-                        "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport +
+                        "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport +
                         "%3AU2s5VlVrNUZXUT09";
 
                 }
@@ -195,9 +195,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     jumlahSegment = 3;
 
                     bookingParams =
-                    "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
-                    "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
-                    "&radioFrom0_2=" + FIDsegment3 + "%3A" + Rbd[2] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09";
+                    "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
+                    "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
+                    "&radioFrom0_2=" + FIDsegment3 + "%3A" + Rbd[2] + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09";
                 }
                 //Untuk 1 Segment
                 else if (ParseFID1.Count == 1)
@@ -232,7 +232,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     jumlahSegment = 1;
 
                     bookingParams =
-                        "radioFrom=" + FIDsegment1 + "%3A" + Rbd[0] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport +
+                        "radioFrom=" + FIDsegment1 + "%3A" + Rbd[0] + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport +
                         "%3AU2s5VlVrNUZXUT09";
 
                 }
@@ -417,7 +417,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 }
 
                 /*END HERE*/
-                
+
                 int i = 0;
                 foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Adult))
                 {
@@ -428,7 +428,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         "&adultLast" + i + "=" + passenger.LastName +
                         "&adultId" + i + "=" + passenger.PassportNumber +
                         "&adultDOB" + i + "=" + passenger.DateOfBirth.GetValueOrDefault().ToString("yyyy-MM-dd") +
-                        "&adultSSR" + i + "=" ;
+                        "&adultSSR" + i + "=";
 
                     i++;
                 }
@@ -451,12 +451,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     bookingParams +=
                         "&infantFirst" + i + "=" + passenger.FirstName +
                         "&infantLast" + i + "=" + passenger.LastName +
-                        "&infantDOB"+ i +"=" + passenger.DateOfBirth.GetValueOrDefault().ToString("yyyy-MM-dd") +
+                        "&infantDOB" + i + "=" + passenger.DateOfBirth.GetValueOrDefault().ToString("yyyy-MM-dd") +
                         "&reffInf" + i + "=" + i;
                     i++;
                 }
 
-                tahun2dgt = tglBerangkat.Year.ToString().Substring(2,2);
+                tahun2dgt = tglBerangkat.Year.ToString().Substring(2, 2);
                 var featuringEncode1 = ("From:0:" + jumlahSegment + "").Base64Encode();
                 var featuringEncode2 = featuringEncode1.Base64Encode();
 
@@ -489,7 +489,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     "&featuring=" + featuringEncode2 +
                     "&" + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute + "=" + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute;
                 var encode1 =
-                    ("prosesBookingDirect." +DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute+ ":prosesBookingDirect").Base64Encode();
+                    ("prosesBookingDirect." + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute + ":prosesBookingDirect").Base64Encode();
                 var encode2 = encode1.Base64Encode();
 
                 url = "SJ-Eticket/application/menu_others.php?reffNo=" + encode2;
@@ -498,11 +498,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var bookResponse = clientx.Execute(bookRequest);
                 var bookingResult = bookResponse.Content;
                 //var bookingResult = System.IO.File.ReadAllText(@"C:\Users\User\Documents\Kerja\Crawl\mbuhlali.txt");
-                
+
                 if (bookResponse.ResponseUri.AbsoluteUri.Contains("/application/?action=Check"))
                 {
                     CQ ambilDataBooking = (CQ)bookingResult;
-                    
+
                     var tunjukKodeBook = ambilDataBooking.MakeRoot()[".bookingCode>input"];
                     var kodeBook = tunjukKodeBook.Select(x => x.Cq().Attr("value")).FirstOrDefault();
 
@@ -515,7 +515,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     checkRequest.AddParameter("application/x-www-form-urlencoded", checkParams, ParameterType.RequestBody);
                     var checkResponse = clientx.Execute(checkRequest);
                     var cekresult = checkResponse.Content;
-                    
+
                     CQ ambilTimeLimit = (CQ)cekresult;
 
                     var tunjukTimeLimit = ambilTimeLimit.MakeRoot()[".timeLimit"];
@@ -524,19 +524,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var status = new BookingStatusInfo();
                     string format = "dd/MM/yyyy h:mm:ss tt z";
                     //CultureInfo provider = CultureInfo.InvariantCulture;
-                    var timeLimitDate = DateTime.Parse(timelimitParse[0]+ "/" + timelimitParse[1] + "/" + timelimitParse[2]+" "+timelimitParse[3]);
+                    var timeLimitDate = DateTime.Parse(timelimitParse[0] + "/" + timelimitParse[1] + "/" + timelimitParse[2] + " " + timelimitParse[3]);
                     var timeLimitGMT = timelimitParse[4].Substring(4, 2);
                     var timeLimitFinal = DateTime.Parse(timeLimitDate + " " + timeLimitGMT);
-                    
+
                     status.BookingId = kodeBook;
                     status.BookingStatus = BookingStatus.Booked;
                     status.TimeLimit = timeLimitFinal.ToUniversalTime();
-                
+
                     hasil.Status = status;
                     hasil.IsSuccess = true;
                     return hasil;
-                
-                }else
+
+                }
+                else
                 {
                     return new BookFlightResult
                     {
@@ -545,9 +546,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> {FlightError.FareIdNoLongerValid}
+                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
                     };
-                
+
                 }
             }
         }

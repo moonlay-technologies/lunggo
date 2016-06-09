@@ -11,6 +11,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public DateTime? TimeLimit { get; set; }
         public Decimal? NewPrice { get; set; }
         public FlightError Error { get; set; }
+        public string ErrorMessage { get; set; }
         public FlightBookApiRequest OriginalRequest { get; set; }
     }
 }

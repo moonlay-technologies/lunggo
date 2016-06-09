@@ -37,7 +37,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     {
                         IsValid = revalidateResult.IsValid,
                         ErrorMessages = revalidateResult.ErrorMessages,
-                        Errors = revalidateResult.Errors,
+                        Errors = new List<FlightError>{FlightError.FareIdNoLongerValid},
                         IsItineraryChanged = revalidateResult.IsItineraryChanged,
                         IsPriceChanged = revalidateResult.IsPriceChanged,
                         IsSuccess = false,
@@ -329,29 +329,30 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var html = paymentGetresponse.Content;
                 CQ detailFlight = (CQ)html;
                 var getPrice = detailFlight["#priceDisplayBody>table:last"].Children().Children().Last().Last().Text().Trim().Split('\n');
-                var harga = getPrice[1].Trim().Replace("Rp.","").Replace(",","");
+                var harga = getPrice[1].Trim().Replace("Rp.", "").Replace(",", "");
                 var fixPrice = decimal.Parse(harga);
 
                 //Cek Harga di Final
-                if (bookInfo.Itinerary.SupplierPrice != fixPrice) 
+                if (bookInfo.Itinerary.SupplierPrice != fixPrice)
                 {
                     var fixItin = bookInfo.Itinerary;
                     fixItin.SupplierPrice = fixPrice;
-                    fixItin.FareId = fixItin.FareId.Replace(bookInfo.Itinerary.SupplierPrice.ToString(),fixPrice.ToString());
-                    
+                    fixItin.FareId = fixItin.FareId.Replace(bookInfo.Itinerary.SupplierPrice.ToString(), fixPrice.ToString());
+
                     return new BookFlightResult
                     {
                         IsValid = true,
                         IsItineraryChanged = false,
                         IsPriceChanged = bookInfo.Itinerary.SupplierPrice != fixPrice,
                         IsSuccess = false,
+                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
                         ErrorMessages = new List<string> { "Price is changed!" },
                         NewItinerary = fixItin,
                         NewPrice = fixPrice,
                         Status = null
                     };
                 }
-                
+
 
                 // SELECT HOLD (PAYMENT)
 
@@ -386,7 +387,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                    @"&CONTROLGROUPPAYMENTBOTTOM%24ControlGroupPaymentInputViewPaymentView%24AgreementPaymentInputViewPaymentView%24CheckBoxAgreement=on" +
                    @"&CONTROLGROUPPAYMENTBOTTOM%24ControlGroupPaymentInputViewPaymentView%24storedPaymentId=" +
                    @"&CONTROLGROUPPAYMENTBOTTOM%24ButtonSubmit=Lanjutkan";
-                
+
                 paymentRequest.AddParameter("application/x-www-form-urlencoded", paymentPostData, ParameterType.RequestBody);
                 var paymentResponse = client.Execute(paymentRequest);
 

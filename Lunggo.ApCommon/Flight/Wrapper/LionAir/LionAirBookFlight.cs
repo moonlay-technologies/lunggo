@@ -1152,7 +1152,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     IsSuccess = false,
                                     Errors = new List<FlightError> { FlightError.TechnicalError },
                                     Status = null,
-                                    ErrorMessages = new List<string> { "Price is changed!" },
+                                    ErrorMessages = new List<string> { "Price is changed!2" },
                                     NewPrice = harga2,
                                     IsValid = true,
                                     IsPriceChanged = true,
@@ -1306,7 +1306,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                      {
                          IsSuccess = false,
                          Errors = new List<FlightError> {FlightError.TechnicalError},
-                         ErrorMessages = new List<string> {"Web Layout Changed!"},
+                         ErrorMessages = new List<string> {"Web Layout Changed!2"},
                          Status = new BookingStatusInfo
                          {
                              BookingStatus = BookingStatus.Failed

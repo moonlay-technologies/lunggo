@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
@@ -77,6 +78,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     {
                         IsSuccess = false,
                         Error = bookServiceResponse.Errors[0],
+                        ErrorMessage = bookServiceResponse.ErrorMessages != null ? String.Join(" | ", bookServiceResponse.ErrorMessages) : null,
                         OriginalRequest = request
                     };
                 }
