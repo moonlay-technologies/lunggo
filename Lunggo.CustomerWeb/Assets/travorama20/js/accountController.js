@@ -8,6 +8,8 @@ app.controller('accountController', [
 
         // variables
         $scope.pageLoaded = true;
+        $scope.isLogin = isAuthenticated();
+        $scope.email = 'Test';
         $scope.currentSection = '';
         $scope.profileForm = {
             active : false
@@ -50,6 +52,35 @@ app.controller('accountController', [
         // functions
         $scope.changeSection = function (name) {
             $scope.currentSection = name;
+        }
+
+        $scope.getProfile = function (name)
+        {
+            $scope.firstName = '';
+            $scope.lastnName = '';
+            $http.post(GetProfileConfig.Url, {
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+            }).success(function (returnData) {
+                if (returnData.status == "200") {
+                    console.log('Success getting Profile');
+                    console.log(returnData);
+                }
+                else {
+                    console.log('There is an error');
+                    console.log('Error : ' + returnData.error);
+                    console.log(returnData);
+                }
+            }, function (returnData) {
+                console.log('Failed to Login');
+                console.log(returnData);
+            });
+        }
+
+        //use this for logout(delete access and refreshToken in cookie)
+        $scope.logout = function ()
+        {
+            eraseCookie('accesstoken');
+            eraseCookie('refreshtoken');
         }
 
         $scope.editForm = function (name) {
@@ -361,12 +392,11 @@ app.controller('authController', [
                     if (returnData.error == 'ERALOG01'){ $scope.errorMessage = 'RefreshNeeded'; }
                     else if (returnData.error == 'ERALOG02') { $scope.errorMessage = 'InvalidInputData'; }
                     else if (returnData.error == 'ERALOG03') { $scope.errorMessage = 'AlreadyRegisteredButUnconfirmed'; }
-                    else if (returnData.error == 'ERALOG04') { $scope.errorMessage = 'Failed'; }//InvalideClientIdorClientSecret
+                    else if (returnData.error == 'ERALOG04') { $scope.errorMessage = 'Failed'; }
                     else if (returnData.error == 'ERALOG05') { $scope.errorMessage = 'NotRegistered'; }
-                    else { $scope.errorMessage = 'Failed'; }//Problem in Server
+                    else { $scope.errorMessage = 'Failed'; }
                     console.log('Error : '+returnData.error);
                 }
-                //console.log(returnData);
             }, function (returnData) {
                 console.log('Failed to Login');
                 console.log(returnData);

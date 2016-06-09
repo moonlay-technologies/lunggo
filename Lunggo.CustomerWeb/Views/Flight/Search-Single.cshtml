@@ -390,7 +390,7 @@
                                 </div><!-- .summary-top -->
                             </div>
                             <div class="flight-summary-right">
-                                <h4 class="flight-price"><sup>Rp</sup> {{flight.fare | number}}</h4>
+                                <h4 class="flight-price"><sup>Rp</sup> {{flight.totalFare | number}}</h4>
                                 <small>Sudah Termasuk Pajak &amp; Service Charge</small>
                                 <a class="btn btn-yellow" ng-click="selectFlight(flight.IndexNo);">PESAN</a>
                             </div>
@@ -462,7 +462,7 @@
                                 <header class="flight-header">
                                     <h3>
                                         Penerbangan Pergi
-                                        <span class="warning" ng-disabled="selectFlightParam.validating" ng-if="selectFlightParam.validated && selectFlightParam.newFare && !selectFlightParam.available">Harga Penerbangan Berubah - Harga Baru Rp. {{flightList[flightSelected].fare | number}}</span>
+                                        <span class="warning" ng-disabled="selectFlightParam.validating" ng-if="selectFlightParam.validated && selectFlightParam.newFare && !selectFlightParam.available">Harga Penerbangan Berubah - Harga Baru Rp. {{flightList[flightSelected].totalFare | number}}</span>
                                         <span class="warning" ng-if="selectFlightParam.validated && !selectFlightParam.newFare && !selectFlightParam.available">Penerbangan Pergi Tidak Tersedia</span>
                                     </h3>
                                 </header>
@@ -499,7 +499,7 @@
                         </div>
                         <div class="summary-right">
                             <label>Harga Total:</label>
-                            <h3><sup>Rp</sup> {{flightList[flightSelected].fare | number}}</h3>
+                            <h3><sup>Rp</sup> {{flightList[flightSelected].totalFare | number}}</h3>
                             <p>*Harga termasuk Pajak &amp; Service Charge</p>
                             @*<input type="submit" class="btn btn-yellow" value="PESAN" ng-click="revalidateFlight(flightSelected)" ng-hide="revalidateFlightParam.validating || revalidateFlightParam.validated" />*@
                             <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="selectSubmit()" ng-disabled="!selectFlightParam.validated" />

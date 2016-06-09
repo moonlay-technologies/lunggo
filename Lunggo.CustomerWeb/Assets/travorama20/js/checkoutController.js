@@ -68,7 +68,7 @@ app.controller('checkoutController', [
                 $scope.book.checked = false;
 
                 // generate data
-                $scope.book.postData =' "Token":"' + $scope.token + '",  "Contact.Title" :"' + $scope.buyerInfo.title + '","Contact.Name":"' + $scope.buyerInfo.fullname + '", "Contact.CountryCode":"' + $scope.buyerInfo.countryCode + '", "Contact.Phone":"' + $scope.buyerInfo.phone + '","Contact.Email":"' + $scope.buyerInfo.email + '","Language":"' + $scope.language + '"';
+                $scope.book.postData =' "token":"' + $scope.token + '",  "contact.title" :"' + $scope.buyerInfo.title + '","contact.first":"' + $scope.buyerInfo.fullname + '", "contact.countryCallCd":"' + $scope.buyerInfo.countryCode + '", "contact.phone":"' + $scope.buyerInfo.phone + '","contact.email":"' + $scope.buyerInfo.email + '","lang":"' + $scope.language + '"';
                 for (var i = 0; i < $scope.passengers.length; i++) {
 
                     // check nationality
@@ -90,7 +90,7 @@ app.controller('checkoutController', [
                     // passport expiry date
                     $scope.passengers[i].passport.expire.full = $scope.passengers[i].passport.expire.year + '/' + ('0' + (parseInt($scope.passengers[i].passport.expire.month) + 1)).slice(-2) + '/' + ('0' + $scope.passengers[i].passport.expire.date).slice(-2);
 
-                    $scope.book.postData = $scope.book.postData + (',"Passengers[' + i + '].Type": "' + $scope.passengers[i].type + '", "Passengers[' + i + '].Title": "' + $scope.passengers[i].title + '", "Passengers[' + i + '].FirstName":"' + $scope.passengers[i].firstname + '", "Passengers[' + i + '].LastName": "' + $scope.passengers[i].lastname + '", "Passengers[' + i + '].BirthDate":"' + $scope.passengers[i].birth.full + '", "Passengers[' + i + '].PassportNumber":"' + $scope.passengers[i].passport.number + '", "Passengers[' + i + '].PassportExpiryDate":"' + $scope.passengers[i].passport.expire.full + '", "Passengers[' + i + '].idNumber":"' + $scope.passengers[i].idNumber + '", "Passengers[' + i + '].Country":"' + $scope.passengers[i].passport.country + '"');
+                    $scope.book.postData = $scope.book.postData + (',"Passengers[' + i + '].type": "' + $scope.passengers[i].type + '", "Passengers[' + i + '].title": "' + $scope.passengers[i].title + '", "Passengers[' + i + '].first":"' + $scope.passengers[i].firstname + '", "Passengers[' + i + '].last": "' + $scope.passengers[i].lastname + '", "Passengers[' + i + '].dob":"' + $scope.passengers[i].birth.full + '", "Passengers[' + i + '].passportNo":"' + $scope.passengers[i].passport.number + '", "Passengers[' + i + '].passportExp":"' + $scope.passengers[i].passport.expire.full + '", "Passengers[' + i + '].nationality":"' + $scope.passengers[i].passport.country + '", "Passengers[' + i + '].passportCountry":"' + $scope.passengers[i].passport.country + '"');
                 }
                 $scope.book.postData = '{' + $scope.book.postData + '}';
                 $scope.book.postData = JSON.parse($scope.book.postData);

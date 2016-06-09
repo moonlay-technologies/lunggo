@@ -116,6 +116,10 @@ var LoginConfig = {
     Url: '$apiUrl$$loginPath$'
 };
 
+var GetProfileConfig = {
+    Url: '$apiUrl$$getProfilePath$'
+};
+
 var RegisterConfig = {
     Url: '$rootUrl$$registerPath$'
 };
@@ -177,11 +181,6 @@ var ResendConfirmationEmailMobileConfig = {
     Url: '$mobileUrl$$resendConfirmationEmailPath$'
 };
 
-// Create cookie for credential login
-/*function SetCookie(name, value, expires) {
-    document.cookie = name + "=" + value + expires + "; path=/";
-};*/
-
 function setCookie(cname, cvalue, expTime) {
     var d = new Date(expTime);
     //d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -201,17 +200,65 @@ function isValid()
 {
     var token = getCookie('accesstoken');
     var refreshToken = getCookie('refreshtoken');
-    if (token !=null) {
+    if (token) {
         return true;
     }
     else
     {
         if (refreshToken != null) {
-            //call API to get token
+            //jQuery.get(GetProfileConfig.Url, function (response) {
+              //  console.log('Response : '+response);
+            //});
+            $http.post(LoginConfig.Url, {
+                refreshToken: getCookie('refreshtoken'),
+                clientId: 'Jajal',
+                clientSecret: 'Standar'
+            }).success(function (returnData) {
+                if (returnData.status == "200") {
+                    setCookie('accesstoken', returnData.accessToken, returnData.expTime);
+                    setRefreshCookie('refreshtoken', returnData.refreshToken);
+                    return true;
+                }
+                else {
+                    if (returnData.error == 'ERALOG01') { $scope.errorMessage = 'RefreshNeeded'; }
+                    else if (returnData.error == 'ERALOG02') { $scope.errorMessage = 'InvalidInputData'; }
+                    else if (returnData.error == 'ERALOG03') { $scope.errorMessage = 'AlreadyRegisteredButUnconfirmed'; }
+                    else if (returnData.error == 'ERALOG04') { $scope.errorMessage = 'Failed'; }
+                    else if (returnData.error == 'ERALOG05') { $scope.errorMessage = 'NotRegistered'; }
+                    else { $scope.errorMessage = 'Failed'; }
+                    return false;
+                    console.log('Error : ' + returnData.error);
+                }
+            }, function (returnData) {
+                console.log('Failed to Refresh Token');
+                console.log(returnData);
+                return false;
+            });
         }
         else
         {
             return true;
+        }
+    }
+}
+
+
+function isAuthenticated() {
+    var token = getCookie('accesstoken');
+    var refreshToken = getCookie('refreshtoken');
+    if (token) {
+        return true;
+    }
+    else {
+        if (refreshToken != null) {
+            jQuery.get(GetProfileConfig.Url, function (response) {
+                console.log('Response : ' + response);
+            });
+            return true;
+
+        }
+        else {
+            return false;
         }
     }
 }

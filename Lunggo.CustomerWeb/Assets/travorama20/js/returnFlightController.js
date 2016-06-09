@@ -467,7 +467,7 @@ app.controller('returnFlightController', [
                     targetFlight.flightSort.value = 'trips[0].totalDuration';
                     break;
                 case 'price':
-                    targetFlight.flightSort.value = 'fare';
+                    targetFlight.flightSort.value = 'totalFare';
                     break;
             }
         }
@@ -528,7 +528,7 @@ app.controller('returnFlightController', [
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
             return function (flight) {
                 if (!targetScope.loading && !targetScope.loadingFlight) {
-                    if (flight.fare >= targetScope.flightFilter.price.current[0] && flight.fare <= targetScope.flightFilter.price.current[1]) {
+                    if (flight.totalFare >= targetScope.flightFilter.price.current[0] && flight.totalFare <= targetScope.flightFilter.price.current[1]) {
                         return flight;
                     }
                 } else {
@@ -702,7 +702,7 @@ app.controller('returnFlightController', [
                     };
 
                     // populate prices
-                    targetScope.flightFilter.price.prices.push(targetScope.flightList[i].fare);
+                    targetScope.flightFilter.price.prices.push(targetScope.flightList[i].totalFare);
 
                     // populate airline code
                     targetScope.flightList[i].AirlinesTag = [];

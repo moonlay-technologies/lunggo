@@ -78,7 +78,7 @@ var RevalidateConfig = {
 };
 
 var FlightBookConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/flights/book',
+    Url: 'https://travorama-dv2-api.azurewebsites.net/flight/book',
     working: false
 };
 
@@ -114,6 +114,10 @@ var SubscribeConfig = {
 
 var LoginConfig = {
     Url: 'https://travorama-dv2-api.azurewebsites.net/login'
+};
+
+var GetProfileConfig = {
+    Url: 'https://travorama-dv2-api.azurewebsites.net/profile'
 };
 
 var RegisterConfig = {
@@ -177,11 +181,6 @@ var ResendConfirmationEmailMobileConfig = {
     Url: 'http://m.dv2.travorama.com/id/ApiAccount/ResendConfirmationEmail'
 };
 
-// Create cookie for credential login
-/*function SetCookie(name, value, expires) {
-    document.cookie = name + "=" + value + expires + "; path=/";
-};*/
-
 function setCookie(cname, cvalue, expTime) {
     var d = new Date(expTime);
     //d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -189,27 +188,24 @@ function setCookie(cname, cvalue, expTime) {
     document.cookie = cname + "=" + cvalue + "; " + expires+ "; path=/";
 }
 
-//Get Value from Cookie
-function getCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+function setRefreshCookie(cname, cvalue)
+{
+    var d = new Date();
+    d.setTime(d.getTime() + (9999 * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
+}
+
+function isValid()
+{
+    var token = getCookie('accesstoken');
+    var refreshToken = getCookie('refreshtoken');
+    if (token) {
+        return true;
     }
-    return null;
-}
-
-
-//Delete Specific value from Cookie
-function eraseCookie(name) {
-    setCookie(name, "", -1);
-}
-
-function deleteCookie(name, path) {
-    // If the cookie exists
-    if (getCookie(name))
-        setCookie(name, "", -1, path);
-}
-
+    else
+    {
+        if (refreshToken != null) {
+            //jQuery.get(GetProfileConfig.Url, function (response) {
+              //  console.log('Response : '+response);
+            //});
