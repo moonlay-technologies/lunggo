@@ -172,8 +172,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         var searchResponse1 = client.Execute(searchRequest1);
 
                         Thread.Sleep(1000);
-
-                        successLogin = Login(client, "A", "B");
+                        string a;
+                        successLogin = Login(client, "A", "B", out a);
                         Thread.Sleep(1000);
                         counter++;
                     } while (!successLogin && counter < 21 && (msgLogin != "Your login name is inuse"

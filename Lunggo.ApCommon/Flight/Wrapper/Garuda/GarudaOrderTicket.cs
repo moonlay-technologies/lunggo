@@ -19,15 +19,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
         internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            if (env == "production")
+            //if (env == "production")
                 return Client.OrderTicket(bookingId);
-            else
-                return new OrderTicketResult
-                {
-                    IsSuccess = true,
-                    BookingId = bookingId,
-                    IsInstantIssuance = true
-                };
+            //else
+            //    return new OrderTicketResult
+            //    {
+            //        IsSuccess = true,
+            //        BookingId = bookingId,
+            //        IsInstantIssuance = true
+            //    };
         }
 
         private partial class GarudaClientHandler
@@ -35,107 +35,129 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
             internal OrderTicketResult OrderTicket(string bookingId)
             {
                 var clientx = CreateAgentClient();
-                clientx.FollowRedirects = false;
                 CQ searchedHtml;
                 var userId = "";
-                //string currentDeposit;
+                
+                // [GET] Search Flight
+                clientx.BaseUrl = new Uri("https://gosga.garuda-indonesia.com");
+                string urlweb = @"";
+                var searchReqAgent = new RestRequest(urlweb, Method.GET);
+                searchReqAgent.AddHeader("Accept",
+                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                searchReqAgent.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                searchReqAgent.AddHeader("Host", "gosga.garuda-indonesia.com");
+                var searchResAgent = clientx.Execute(searchReqAgent);
+
+                urlweb = @"web/user/login/id";
+                var searchReqAgent0 = new RestRequest(urlweb, Method.GET);
+                searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/");
+                searchReqAgent0.AddHeader("Accept",
+                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                var searchResAgent0 = clientx.Execute(searchReqAgent0);
 
                 var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
                 var clienty = new RestClient(cloudAppUrl);
                 var accReq = new RestRequest("/api/GarudaAccount/ChooseUserId", Method.GET);
                 var userName = "";
-                var currentDeposit = "";
-                RestResponse accRs;
                 var reqTime = DateTime.UtcNow;
-                var msgLogin = "Your login name is inuse";
-                
-                while (msgLogin == "Your login name is inuse" || msgLogin == "There was an error logging you in")
+                var newitin = new FlightItinerary();
+                var successLogin = false;
+                var counter = 0;
+                string returnpath = "";
+
+                //successLogin = Login(clientx, "SA3ALEU1", "Standar123", out returnpath);
+                while (!successLogin && counter < 31 && returnpath != "/web/dashboard/welcome")
                 {
-                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
+                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && (userName.Length == 0))
+                    //|| returnpath != "/web/dashboard/welcome")
                     {
-                        accRs = (RestResponse) clienty.Execute(accReq);
+                        
+                        var accRs = (RestResponse)clienty.Execute(accReq);
                         userName = accRs.Content.Trim('"');
                     }
 
                     if (userName.Length == 0)
+                    {
                         return new OrderTicketResult
                         {
-                            Errors = new List<FlightError> {FlightError.TechnicalError},
-                            ErrorMessages = new List<string> {"userName is full"}
+                            Errors = new List<FlightError> { FlightError.TechnicalError },
+                            ErrorMessages = new List<string> { "All usernames are used" }
                         };
+                    }
 
-                    bool successLogin;
-                    do
-                    {
-                        clientx.BaseUrl = new Uri("https://agent.Garuda.co.id");
-                        const string url0 = @"/Garudaagentsportal/default.aspx";
-                        var searchRequest0 = new RestRequest(url0, Method.GET);
-                        var searchResponse0 = clientx.Execute(searchRequest0);
-                        var html0 = searchResponse0.Content;
-                        searchedHtml = html0;
-                        var viewstate = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
-                        var eventval = HttpUtility.UrlEncode(searchedHtml["#__EVENTVALIDATION"].Attr("value"));
-                        FlightService.ParseCabinClass(CabinClass.Economy);
-                        if (searchResponse0.ResponseUri.AbsolutePath != "/Garudaagentsportal/default.aspx" &&
-                            (searchResponse0.StatusCode == HttpStatusCode.OK ||
-                             searchResponse0.StatusCode == HttpStatusCode.Redirect))
-                            return new OrderTicketResult
-                            {
-                                Errors = new List<FlightError> {FlightError.InvalidInputData}
-                            };
-                        const string url1 = @"/Garudaagentsportal/CaptchaGenerator.aspx";
-                        var searchRequest1 = new RestRequest(url1, Method.GET);
-                        var searchResponse1 = clientx.Execute(searchRequest1);
-                        successLogin = Login(clientx, "A", "B");
-                    } while (!successLogin && (msgLogin != "Your login name is inuse"
-                        && msgLogin != "There was an error logging you in"));
+                    var password = userName == "SA3ALEU1" ? "Standar123" : "Travorama1234";
+                    counter++;
+                    successLogin = Login(clientx, userName, password, out returnpath);
                 }
-                // Page Welcome
-                var startind = userId.IndexOf("consID");
-                var cid = userId.SubstringBetween(startind, userId.Length);
-                cid = cid.SubstringBetween(7, cid.Length);
 
-                //Page Masukin Booking Id
-                var url3 = @"/LionAgentsOPS/TicketingQueue.aspx?consID=" + cid;
-                var searchRequest3 = new RestRequest(url3, Method.GET);
-                searchRequest3.AddHeader("Referer",
-                   "https://agent.Garuda.co.id/GarudaAgentsPortal/Agents/Welcome.aspx?consID=" + cid);
-                searchRequest3.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
-                searchRequest3.AddHeader("Accept",
-                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                var searchResponse3 = clientx.Execute(searchRequest3);
-                Thread.Sleep(1000);
-                var html3 = searchResponse3.Content;
-                searchedHtml = html3;
-                var vs = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
+                if (counter >= 31)
+                {
+                    TurnInUsername(clientx, userName);
+                    return new OrderTicketResult
+                    {
 
-                //Post data booking id
-                var searchRequest4 = new RestRequest(url3, Method.POST);
-                searchRequest4.AddHeader("Referer",
-                    "https://agent.Garuda.co.id/LionAgentsOPS/TicketingQueue.aspx?consID=" + cid);
-                searchRequest4.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
-                searchRequest4.AddHeader("Accept",
+                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        ErrorMessages = new List<string> { "Can't get id" }
+                    };
+                }
+
+                urlweb = @"web/order/ticket";
+                searchReqAgent0 = new RestRequest(urlweb, Method.GET);
+                searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/dashboard/welcome");
+                searchReqAgent0.AddHeader("Accept",
                     "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                const string beginning = "__EVENTTARGET=lbSearch&__EVENTARGUMENT=&__VIEWSTATE=";
-                var ending = "&txtBookingReloc=" + bookingId + "&txtPassengerName=&ddlDateSelection=";
-                var postData4 = beginning + vs + ending;
-                searchRequest4.AddParameter("application/x-www-form-urlencoded", postData4, ParameterType.RequestBody);
-                Thread.Sleep(3000);
-                var searchResponse4 = clientx.Execute(searchRequest4);
-                
-                //Page Tampilin Reservasi
-                var url5 = @"/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId;
-                var searchRequest5 = new RestRequest(url5, Method.GET);
-                searchRequest5.AddHeader("Referer",
-                    "https://agent.Garuda.co.id/LionAgentsOPS/TicketingQueue.aspx?consID=" + cid);
-                searchRequest5.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
-                searchRequest5.AddHeader("Accept",
+                searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                searchResAgent0 = clientx.Execute(searchReqAgent0);
+                string returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+
+                searchReqAgent0 = new RestRequest(urlweb, Method.POST);
+                searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/order/ticket");
+                searchReqAgent0.AddHeader("Accept",
                     "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                var searchResponse5 = clientx.Execute(searchRequest5);
-                Thread.Sleep(3000);
-                var html8 = searchResponse5.Content;
-                searchedHtml = (CQ) html8;
-                var vsPostToPay = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
+                searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, br");
+                searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                searchReqAgent0.AddHeader("Origin", "https://gosga.garuda-indonesia.com");
+
+                var postdata =
+                    "selectTransactionType=noneretail" +
+                    "&selectTransactionConnector=live" +
+                    "&PageInput%5Bstatus%5D=ALL" +
+                    "&PageInput%5Btrx_date_start%5D=" +
+                    "&PageInput%5Btrx_date_end%5D=" +
+                    "&PageInput%5Bkeyword%5D=" + bookingId +
+                    "&btnQuery=&PageInput%5Bpage%5D=1&PageInput%5BgoToPage%5D=&PageInput%5Blimit%5D=10&PageInput%5Bsortby%5D=";
+
+                searchReqAgent0.AddParameter("application/x-www-form-urlencoded", postdata, ParameterType.RequestBody);
+                searchResAgent0 = clientx.Execute(searchReqAgent0);
+                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+                var htmlListTickets = (CQ) searchResAgent0.Content;
+
+                var tableToTicket = htmlListTickets["#table2"];
+                var linktoTicket = tableToTicket[0].ChildElements.ToList()[1].
+                    ChildElements.ToList()[0].ChildElements.ToList()[3].ChildElements.ToList()[0].GetAttribute("href");
+
+                linktoTicket = linktoTicket.SubstringBetween(linktoTicket.Length - 40, linktoTicket.Length);
+
+                urlweb = @"" + linktoTicket;
+                searchReqAgent0 = new RestRequest(urlweb, Method.GET);
+                searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/order/ticket/live");
+                searchReqAgent0.AddHeader("Accept",
+                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                searchResAgent0 = clientx.Execute(searchReqAgent0);
+                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+
+
+                LogOut(returnPath, clientx);
+                TurnInUsername(clienty, userName);
+
+                var url5 = "";
+                var vsPostToPay = "";
+                var cid = "";
 
                 try
                 {

@@ -70,7 +70,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         const string url1 = @"/Garudaagentsportal/CaptchaGenerator.aspx";
                         var searchRequest1 = new RestRequest(url1, Method.GET);
                         var searchResponse1 = clientx.Execute(searchRequest1);
-                        successLogin = Login(clientx, "A", "B");
+                        string a;
+                        successLogin = Login(clientx, "A", "B", out a);
                     } while (!successLogin && (msgLogin != "Your login name is inuse"
                         && msgLogin != "There was an error logging you in"));
                 }

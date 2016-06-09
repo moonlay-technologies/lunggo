@@ -58,15 +58,8 @@ namespace Lunggo.BackendWeb
                 },
                 Itinerary = itin
             });*/
-            FlightService.GetInstance().CommenceSearchFlight("BTJAMQ060816-321y".Base64Encode(), 6);
-            //FlightService.GetInstance().RevalidateFareInternal(new RevalidateConditions
-            //{
-            //    Itinerary = new FlightItinerary
-            //    {
-            //        FareId = "GARUPUB12346",
-            //    }
-            //});
-            //FlightService.GetInstance().OrderTicketInternal("LIONPUBMAZUYR", true);
+            //FlightService.GetInstance().CommenceSearchFlight("BTJAMQ060816-321y".Base64Encode(), 6);
+            FlightService.GetInstance().OrderTicketInternal("GARUPUB7TL2M8", true);
             //FlightService.GetInstance().is
             /*FlightService.GetInstance().BookFlight(new BookFlightInput
             {

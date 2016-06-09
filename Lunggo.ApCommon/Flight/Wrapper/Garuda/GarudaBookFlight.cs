@@ -224,45 +224,50 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var newitin = new FlightItinerary();
                 var successLogin = false;
                 var counter = 0;
+                var returnpath = "";
+                //successLogin = Login(client, "SA3ALEU1", "Standar123");
+                while (!successLogin && counter < 31 && returnpath != "/web/dashboard/welcome")
+                {
+                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && (userName.Length == 0 ))
+                    //|| returnpath != "/web/dashboard/welcome")
+                    {
+                        //if (returnpath != "/web/dashboard/welcome")
+                        //{
+                        //    TurnInUsername(clientx, userName);
+                        //}
+                        var accRs = (RestResponse)clientx.Execute(accReq);
+                        userName = accRs.Content.Trim('"');
+                    }
 
-                successLogin = Login(client, "SA3ALEU1", "Standar123");
-                //while (!successLogin && counter < 31)
-                //{
-                //    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
-                //    {
-                //        var accRs = (RestResponse) clientx.Execute(accReq);
-                //        userName = accRs.Content.Trim('"');
-                //    }
+                    if (userName.Length == 0)
+                    {
+                        return new BookFlightResult
+                        {
+                            Errors = new List<FlightError> { FlightError.TechnicalError },
+                            ErrorMessages = new List<string> { "All usernames are used" }
+                        };
+                    }
 
-                //    if (userName.Length == 0)
-                //    {
-                //        return new BookFlightResult
-                //        {
-                //            Errors = new List<FlightError> {FlightError.TechnicalError},
-                //            ErrorMessages = new List<string> {"All usernames are used"}
-                //        };
-                //    }
+                    var password = userName == "SA3ALEU1" ? "Standar123" : "Travorama1234";
+                    counter++;
+                    successLogin = Login(client, userName, password, out returnpath);
+                }
 
-                //    var password = userName == "SA3ALEU1" ? "Standar123" : "Travorama1234";
-                //    counter++;
-                //    successLogin = Login(client, userName, password);
-                //}
+                if (counter >= 31)
+                {
+                    TurnInUsername(clientx, userName);
+                    return new BookFlightResult
+                    {
 
-                //if (counter >= 31)
-                //{
-                //    TurnInUsername(clientx, userName);
-                //    return new BookFlightResult
-                //    {
-
-                //        Errors = new List<FlightError> {FlightError.InvalidInputData},
-                //        Status = new BookingStatusInfo
-                //        {
-                //            BookingStatus = BookingStatus.Failed
-                //        },
-                //        IsSuccess = false,
-                //        ErrorMessages = new List<string> {"Can't get id"}
-                //    };
-                //}
+                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        IsSuccess = false,
+                        ErrorMessages = new List<string> { "Can't get id" }
+                    };
+                }
 
                 urlweb = @"web/order/e-retail";
                 searchReqAgent0 = new RestRequest(urlweb, Method.GET);
@@ -618,7 +623,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         switch (orderedPassengers.ElementAt(i).Title)
                         {
                             case Title.Miss:
-                                title = "MISS";
+                                title = orderedPassengers.ElementAt(i).Type == PassengerType.Adult ? "MS" : "MISS";
                                 break;
                             case Title.Mister:
                                 title = orderedPassengers.ElementAt(i).Type == PassengerType.Adult ? "MR" : "MSTR";
@@ -711,21 +716,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     searchResAgent0 = client.Execute(searchReqAgent0);
                     returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
-                    //if (returnPath != "/web/order/purchase")
-                    //{
-                    //    LogOut(returnPath, client);
-                    //    TurnInUsername(clientx, userName);
-                    //    return new BookFlightResult
-                    //    {
-                    //        IsSuccess = false,
-                    //        Errors = new List<FlightError> { FlightError.InvalidInputData},
-                    //        Status = new BookingStatusInfo
-                    //        {
-                    //            BookingStatus = BookingStatus.Failed
-                    //        },
-                    //        ErrorMessages = new List<string> { "Total characters of infant+adult name may exceed 32" }
-                    //    };
-                    //}
+                    if (returnPath != "/web/order/purchase")
+                    {
+                        LogOut(returnPath, client);
+                        TurnInUsername(clientx, userName);
+                        return new BookFlightResult
+                        {
+                            IsSuccess = false,
+                            Errors = new List<FlightError> { FlightError.InvalidInputData },
+                            Status = new BookingStatusInfo
+                            {
+                                BookingStatus = BookingStatus.Failed
+                            },
+                            ErrorMessages = new List<string> { "Total characters of infant+adult name may exceed 32" }
+                        };
+                    }
 
                     postdata = "Inputs%5BpayType%5D=OL&Inputs%5BdebitBank%5D=&Inputs%5BkbUsername%5D=&Inputs%5BacceptTerm%5D=yes&btnContinue=++++++Lanjutkan++++++";
                     urlweb = @"web/order/purchase";

@@ -58,7 +58,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 return client;
             }
 
-            private bool Login(RestClient client, string username, string password)
+            private bool Login(RestClient client, string username, string password, out string returnpath)
             {
 
                 var url = "web/user/login";
@@ -76,19 +76,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 request.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/user/login/id");
                 request.AddHeader("Cache-Control", "max-age=0");
                 var response = client.Execute(request);
-                var a = response.ResponseUri.AbsolutePath;
-
-                //url = "web/dashboard/welcome";
-                //var request1 = new RestRequest(url, Method.GET);
-                //request1.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                //request1.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
-                //request1.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/user/login/id");
-                //request1.AddHeader("Cache-Control", "max-age=0");
-                //request1.AddHeader("Host", "gosga.garuda-indonesia.com");
-                
-                //var searchResAgent = client.Execute(request1);
-                //var htmlsearchresp = searchResAgent.Content;
-                //a = searchResAgent.ResponseUri.AbsolutePath;
+                returnpath = response.ResponseUri.AbsolutePath;
 
                 return response.ResponseUri.AbsolutePath == "/web/dashboard/welcome";             
             }
