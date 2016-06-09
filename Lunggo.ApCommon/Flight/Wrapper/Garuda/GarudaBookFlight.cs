@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
@@ -46,10 +47,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 int adultCount, childCount, infantCount;
                 var bookingTimeLimit = "";
                 var bookingReference = "";
+               
                 List<string> listflight;
                 CabinClass cabinClass;
                 var splittedFareId = bookInfo.Itinerary.FareId.Split('+');
                 string price;
+
                 try
                 {
                     origin = splittedFareId[0]; //CGK
@@ -211,6 +214,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var searchResAgent0 = client.Execute(searchReqAgent0);
                 
                 var dict = DictionaryService.GetInstance();
+                var destinationCountry = dict.GetAirportCountryCode(dest);
 
                 var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
                 var clientx = new RestClient(cloudAppUrl);
@@ -221,7 +225,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var successLogin = false;
                 var counter = 0;
 
-                successLogin = Login(client, "SA3ALEU", "Travorama1234");
+                successLogin = Login(client, "SA3ALEU1", "Standar123");
                 //while (!successLogin && counter < 31)
                 //{
                 //    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
@@ -297,6 +301,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         ErrorMessages = new List<string> { "Airports are not available in agent site"}
                     };
                 }
+                string cabinstring;
+
+                if (cabinClass == CabinClass.Economy)
+                {
+                    cabinstring = "eco";
+                }
+                else if (cabinClass == CabinClass.Business)
+                {
+                    cabinstring = "exe";
+                }
+                else
+                {
+                    cabinstring = "1st";
+                }
+
                 var postdata =
                     "Inputs%5BoriginDetail%5D=" + depAirport +
                     "&Inputs%5Borigin%5D=" + origin +
@@ -308,7 +327,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     "&Inputs%5Badults%5D=" + adultCount +
                     "&Inputs%5Bchilds%5D=" + childCount +
                     "&Inputs%5Binfants%5D=" + infantCount + 
-                    "&Inputs%5BserviceClass%5D=eco" +
+                    "&Inputs%5BserviceClass%5D=" + cabinstring +
                     "&btnSubmit=+Cari";
 
                 searchReqAgent0.AddParameter("application/x-www-form-urlencoded", postdata, ParameterType.RequestBody);
@@ -586,8 +605,178 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     searchResAgent0 = client.Execute(searchReqAgent0);
                     returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
+                    var orderedPassengers = bookInfo.Passengers.OrderBy(x => x.Type);
+                    var dataPassenger = "";
+                    var adultIndex = 1;
+                    var childIndex = 1;
+                    var infantIndex = 1;
+
+                   
+                    for (var i = 0; i < orderedPassengers.Count(); i++)
+                    {
+                        var title = "";
+                        switch (orderedPassengers.ElementAt(i).Title)
+                        {
+                            case Title.Miss:
+                                title = "MISS";
+                                break;
+                            case Title.Mister:
+                                title = orderedPassengers.ElementAt(i).Type == PassengerType.Adult ? "MR" : "MSTR";
+                                break;
+                            case Title.Mistress:
+                                title = "MRS";
+                                break;
+                        }
+
+                        var name = orderedPassengers.ElementAt(i).FirstName.Split(' ').ToList();
+                        var firstname = name[0];
+                        var middlename = String.Join("", name.Skip(1).ToArray());
+                        switch (orderedPassengers.ElementAt(i).Type)
+                        {
+                            case PassengerType.Adult:
+                                dataPassenger +=
+                                    "&Inputs%5Badt%5D%5B"+ adultIndex + "%5D%5Bnameprefix%5D=" + title +
+                                    "&Inputs%5Badt%5D%5B"+ adultIndex + "%5D%5Bfirstname%5D=" + firstname +
+                                    "&Inputs%5Badt%5D%5B"+ adultIndex + "%5D%5Bmiddlename%5D=" + middlename +
+                                    "&Inputs%5Badt%5D%5B"+ adultIndex + "%5D%5Blastname%5D=" + 
+                                        orderedPassengers.ElementAt(i).LastName +
+                                    "&Inputs%5Badt%5D%5B"+ adultIndex + "%5D%5Bgff%5D=";
+
+                                adultIndex += 1;
+                                        
+                                break;
+                            case PassengerType.Child:
+                                dataPassenger +=
+                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5Bnameprefix%5D=" + title +
+                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5Bfirstname%5D=" + firstname +
+                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5Bmiddlename%5D=" + middlename +
+                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5Blastname%5D=" + 
+                                        orderedPassengers.ElementAt(i).LastName +
+                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5Bgff%5D=" +
+                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5BbirthDD%5D=" + 
+                                        orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd") +
+                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5BbirthMM%5D=" +
+                                        orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("MM") +
+                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5BbirthYY%5D=" +
+                                        orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year +
+                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5BChildDate%5D="
+                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year + "-" 
+                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("MM") + "-"
+                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd") ;
+
+                                childIndex++;
+                                break;
+                            case PassengerType.Infant:
+                                dataPassenger +=
+                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5Bnameprefix%5D=" + title +
+                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5Bfirstname%5D=" + firstname +
+                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5Bmiddlename%5D=" + middlename +
+                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5Blastname%5D=" + 
+                                        orderedPassengers.ElementAt(i).LastName +
+                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5Bgff%5D=" +
+                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5BbirthDD%5D=" + 
+                                        orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd") +
+                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5BbirthMM%5D=" +
+                                        orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("MM") +
+                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5BbirthYY%5D=" +
+                                        orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year +
+                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5BChildDate%5D="
+                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year + "-" 
+                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("MM") + "-"
+                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd") ;
+                                infantIndex++;
+                                break;
+                        }
+                    }
+
+                    dataPassenger +=
+                        "&Inputs%5BaddAdult%5D=" +
+                        "&Inputs%5BaddChild%5D=" +
+                        "&Inputs%5BaddInfant%5D=" +
+                        "&Inputs%5BcontactPaxKey%5D=1" +
+                        "&Inputs%5Bcontact_phone%5D=" +
+                        "&Inputs%5Bcontact_mobileph%5D=" + bookInfo.ContactData.CountryCode + bookInfo.ContactData.Phone +
+                        "&btnContinue=++++++Lanjutkan++++++";
+
+                    urlweb = @"web/order/pax";
+                    searchReqAgent0 = new RestRequest(urlweb, Method.POST);
+                    searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/order/pax");
+                    searchReqAgent0.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, br");
+                    searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                    searchReqAgent0.AddHeader("Origin", "https://gosga.garuda-indonesia.com");
+                    searchReqAgent0.AddHeader("Cache-Control", "max-age=0");
+                    searchReqAgent0.AddParameter("application/x-www-form-urlencoded",dataPassenger, ParameterType.RequestBody);
+                    searchResAgent0 = client.Execute(searchReqAgent0);
+                    returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+
+                    //if (returnPath != "/web/order/purchase")
+                    //{
+                    //    LogOut(returnPath, client);
+                    //    TurnInUsername(clientx, userName);
+                    //    return new BookFlightResult
+                    //    {
+                    //        IsSuccess = false,
+                    //        Errors = new List<FlightError> { FlightError.InvalidInputData},
+                    //        Status = new BookingStatusInfo
+                    //        {
+                    //            BookingStatus = BookingStatus.Failed
+                    //        },
+                    //        ErrorMessages = new List<string> { "Total characters of infant+adult name may exceed 32" }
+                    //    };
+                    //}
+
+                    postdata = "Inputs%5BpayType%5D=OL&Inputs%5BdebitBank%5D=&Inputs%5BkbUsername%5D=&Inputs%5BacceptTerm%5D=yes&btnContinue=++++++Lanjutkan++++++";
+                    urlweb = @"web/order/purchase";
+                    searchReqAgent0 = new RestRequest(urlweb, Method.POST);
+                    searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/order/purchase");
+                    searchReqAgent0.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, br");
+                    searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                    searchReqAgent0.AddHeader("Origin", "https://gosga.garuda-indonesia.com");
+                    searchReqAgent0.AddHeader("Cache-Control", "max-age=0");
+                    searchReqAgent0.AddParameter("application/x-www-form-urlencoded", postdata, ParameterType.RequestBody);
+                    searchResAgent0 = client.Execute(searchReqAgent0);
+                    returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+
+                    var htmlConfirmation = (CQ) searchResAgent0.Content;
+                    var dataConfirmation = htmlConfirmation["#Confirm"];
+                    bookingReference = dataConfirmation[0].ChildElements.ToList()[2].ChildElements.ToList()[0].
+                        ChildElements.ToList()[3].InnerText;
+                    bookingTimeLimit = dataConfirmation[0].ChildElements.ToList()[2].ChildElements.ToList()[0].
+                        ChildElements.ToList()[9].InnerText;
+
+                    var xy = bookingTimeLimit.SubstringBetween(0, bookingTimeLimit.Length - 4);
+
+                    const string format = "ddMMMyyyy HH:mm";
+                    var timeLimit =
+                        DateTime.SpecifyKind(
+                            DateTime.ParseExact(
+                                bookingTimeLimit.SubstringBetween(0, bookingTimeLimit.Length - 4), format,
+                                CultureInfo.InvariantCulture), DateTimeKind.Utc).AddHours(-7);
+
                     LogOut(returnPath, client);
                     TurnInUsername(clientx, userName);
+                    if (bookingReference.Length != 0)
+                    {
+                        return new BookFlightResult
+                        {
+                            IsSuccess = true,
+                            Status = new BookingStatusInfo
+                            {
+                                BookingId = bookingReference,
+                                TimeLimit = timeLimit,
+                                BookingStatus = BookingStatus.Booked
+                            },
+                            IsValid = true,
+                            IsItineraryChanged = false,
+                            IsPriceChanged = false,
+                            NewItinerary = newitin
+                        };
+                    }
+
                     return new BookFlightResult
                     {
                         IsSuccess = false,
