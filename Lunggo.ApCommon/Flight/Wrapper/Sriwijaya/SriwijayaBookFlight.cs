@@ -95,7 +95,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     {
                         IsValid = revalidateResult.IsValid,
                         ErrorMessages = revalidateResult.ErrorMessages,
-                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                        Errors = revalidateResult.Errors,
                         IsItineraryChanged = revalidateResult.IsItineraryChanged,
                         IsPriceChanged = revalidateResult.IsPriceChanged,
                         IsSuccess = false,

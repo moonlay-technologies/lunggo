@@ -36,8 +36,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     return new BookFlightResult
                     {
                         IsValid = revalidateResult.IsValid,
+                        Errors = revalidateResult.Errors,
                         ErrorMessages = revalidateResult.ErrorMessages,
-                        Errors = new List<FlightError>{FlightError.FareIdNoLongerValid},
                         IsItineraryChanged = revalidateResult.IsItineraryChanged,
                         IsPriceChanged = revalidateResult.IsPriceChanged,
                         IsSuccess = false,
