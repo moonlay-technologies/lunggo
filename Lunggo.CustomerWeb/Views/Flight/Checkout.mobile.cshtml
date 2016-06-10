@@ -60,40 +60,41 @@
 }
 @section PageJS{
     <script>
-        var langCode = '@OnlineContext.GetActiveLanguageCode()';
-        // Checkout Detail
-        var CheckoutDetail = {
-            Token: '@Model.Token',
-            ExpiryDate: '@Model.ExpiryTime.ToString("o")',
-            Trips: @Html.Raw(Model.Itinerary.Trips.Serialize()),
-            Price: @Model.Itinerary.TotalFare,
-            // passenger
-            Passenger: [@Model.Itinerary.AdultCount, @Model.Itinerary.ChildCount, @Model.Itinerary.InfantCount],
-            PassengerName: ['Dewasa', 'Anak', 'Bayi'],
-            // identity requirement
-            PassportRequired: @Model.Itinerary.RequirePassport.ToString().ToLower(),
-            IdRequired: false,
-            NationalityRequired: @Model.Itinerary.RequireNationality.ToString().ToLower(),
-            // departure date
+    var langCode = '@OnlineContext.GetActiveLanguageCode()';
+    // Checkout Detail
+    var CheckoutDetail = {
+        Token: '@Model.Token',
+        ExpiryDate: '@Model.ExpiryTime.ToString("o")',
+        Trips: @Html.Raw(Model.Itinerary.Trips.Serialize()),
+        Price: @Model.Itinerary.TotalFare,
+        // passenger
+        Passenger: [@Model.Itinerary.AdultCount, @Model.Itinerary.ChildCount, @Model.Itinerary.InfantCount],
+        PassengerName: ['Dewasa', 'Anak', 'Bayi'],
+        // identity requirement
+        PassportRequired: @Model.Itinerary.RequirePassport.ToString().ToLower(),
+        IdRequired: false,
+        NationalityRequired: @Model.Itinerary.RequireNationality.ToString().ToLower(),
+        BirthDateRequired: @Model.Itinerary.RequireBirthDate.ToString().ToLower(),
+        // departure date
             DepartureDate: '',
-            // buyer info
-            BuyerInfo: {
-                LoggedIn : @User.Identity.IsAuthenticated.ToString().ToLower(),
-                FirstName: '@User.Identity.GetFirstName()',
-                LastName: '@User.Identity.GetLastName()',
-                FullName : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
-                CountryCode : '@User.Identity.GetCountryCd()',
-                Phone: '@User.Identity.GetPhoneNumber()',
-                Email: '@User.Identity.GetEmail()'
-            }
-        };
+        // buyer info
+        BuyerInfo: {
+        LoggedIn : @User.Identity.IsAuthenticated.ToString().ToLower(),
+        FirstName: '@User.Identity.GetFirstName()',
+        LastName: '@User.Identity.GetLastName()',
+        FullName : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+        CountryCode : '@User.Identity.GetCountryCd()',
+        Phone: '@User.Identity.GetPhoneNumber()',
+        Email: '@User.Identity.GetEmail()'
+        }
+    };
 
-        @if (Model.Itinerary.Trips != null){
+    @if (Model.Itinerary.Trips != null){
             if (Model.Itinerary.Trips.Count == 2){
                 @:CheckoutDetail.DepartureDate = '@Model.Itinerary.Trips[1].DepartureDate';
-            } else {
+                } else {
                 @:CheckoutDetail.DepartureDate = '@Model.Itinerary.Trips[0].DepartureDate';
-            }
+                }
         }
 
     </script>
@@ -196,31 +197,31 @@ default:
 
 
                         <!-- passenger birth date start -->
-                        <div class="form-group important">
+                        <div class="form-group important" ng-if="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
                             <label class="control-label">Tanggal Lahir: </label>
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <select class="form-control" required name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" required ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.date = dates(Passenger.birth.month, Passenger.birth.year)[flightDetail.departureDate-1]">
+                                    <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.date = dates(Passenger.birth.month, Passenger.birth.year)[flightDetail.departureDate-1]" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
                                         <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'adult'">{{date}}</option>
                                         <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'child' && !( Passenger.birth.year == flightDetail.minYearChild && Passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate )">{{date}}</option>
                                         <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'infant' && !( (Passenger.birth.year == flightDetail.minYearInfant && Passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate))">{{date}}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-4">
-                                    <select class="form-control" required name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" required ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.month = flightDetail.departureMonth">
+                                    <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.month = flightDetail.departureMonth" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
                                         <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
                                         <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'child' && (!(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth))">{{month.name}}</option>
                                         <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'infant' && (!(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth))">{{month.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-4">
-                                    <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" required ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.year = flightDetail.minYearChild" ng-if="Passenger.type == 'adult'">
+                                    <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.year = flightDetail.minYearChild" ng-if="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'" ng-required="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'">
                                         <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
                                     </select>
-                                    <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" required ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.year = flightDetail.minYearInfant" ng-if="Passenger.type == 'child'">
+                                    <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.year = flightDetail.minYearInfant" ng-if="Passenger.type == 'child'">
                                         <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
                                     </select>
-                                    <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" required ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.year = flightDetail.departureYear" ng-if="Passenger.type == 'infant'">
+                                    <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-init="Passenger.birth.year = flightDetail.departureYear" ng-if="Passenger.type == 'infant'">
                                         <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
                                     </select>
                                 </div>

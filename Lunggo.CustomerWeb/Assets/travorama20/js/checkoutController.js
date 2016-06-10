@@ -239,6 +239,7 @@ app.controller('checkoutController', [
         $scope.passportRequired = passportRequired;
         $scope.idRequired = idRequired;
         $scope.nationalityRequired = nationalityRequired;
+        $scope.birthDateRequired = birthDateRequired;
 
         $scope.bookingDate = new Date();
 

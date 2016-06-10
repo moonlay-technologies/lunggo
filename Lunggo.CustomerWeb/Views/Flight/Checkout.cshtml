@@ -84,6 +84,7 @@
         var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
         var idRequired = false;
         var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
+        var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
         var departureDate;
         @if (Model.Itinerary.Trips != null)
         {
@@ -244,25 +245,25 @@
                                                     <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
                                                     <input type="text" value="" name="passenger_{{$index}}_lastname" class="form-control" placeholder="Nama Belakang" ng-model="passenger.lastname" required />
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" ng-if="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
                                                     <label class="control-label important">Tanggal Lahir :</label>
                                                     <div class="row">
                                                         <div class="col-xs-4">
-                                                            <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="passenger.birth.date" required ng-change="validateBirthday(passenger)">
+                                                            <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="passenger.birth.date" ng-change="validateBirthday(passenger)" ng-required="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
                                                                 <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'adult'">{{date}}</option>
                                                                 <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'child' && !( passenger.birth.year == flightDetail.minYearChild && passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate )">{{date}}</option>
                                                                 <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'infant' && !( (passenger.birth.year == flightDetail.minYearInfant && passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate))">{{date}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xs-4">
-                                                            <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="passenger.birth.month" required ng-change="validateBirthday(passenger)">
+                                                            <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="passenger.birth.month" ng-change="validateBirthday(passenger)" ng-required="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
                                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'adult'">{{month.name}}</option>
                                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'child' && (!(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth))">{{month.name}}</option>
                                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'infant' && (!(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth))">{{month.name}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xs-4">
-                                                            <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="passenger.birth.year" required ng-change="validateBirthday(passenger)">
+                                                            <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="passenger.birth.year" ng-change="validateBirthday(passenger)" ng-required="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
                                                                 <option value="{{year}}" ng-repeat="year in generateYear(passenger.type)" ng-selected="year == passenger.birth.year">{{year}}</option>
                                                             </select>
                                                         </div>

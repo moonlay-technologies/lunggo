@@ -45,6 +45,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         PassportRequired: CheckoutDetail.PassportRequired,
         IdRequired: CheckoutDetail.IdRequired,
         NationalityRequired: CheckoutDetail.NationalityRequired,
+        BirthDateRequired: CheckoutDetail.BirthDateRequired,
         // buyer info
         BuyerInfo: CheckoutDetail.BuyerInfo
     };
