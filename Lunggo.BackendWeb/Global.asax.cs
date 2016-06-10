@@ -60,60 +60,7 @@ namespace Lunggo.BackendWeb
             });*/
             //FlightService.GetInstance().CommenceSearchFlight("BTJAMQ060816-321y".Base64Encode(), 6);
             FlightService.GetInstance().OrderTicketInternal("GARUPUB7TL2M8", true);
-            //FlightService.GetInstance().is
-            /*FlightService.GetInstance().BookFlight(new BookFlightInput
-            {
-                ItinCacheId = "",
-                OverallTripType = TripType.OneWay,
-                Contact = new ContactData
-                {
-                    Name = "Intan Dea Yutami",
-                    Address = "Bandung",
-                    CountryCode = "ID",
-                    Email = "intandea@gmail.com",
-                    Phone = "6281223513163",
-                    Title = Title.Miss
-                },
-                Passengers = new List<FlightPassenger>
-                {
-                    new FlightPassenger
-                    {
-                        DateOfBirth = new DateTime(1992,6,23),
-                        FirstName = "Intan Dea",
-                        LastName = "Yutami",
-                        Gender = Gender.Female,
-                        PassportCountry = "ID",
-                        PassportExpiryDate = new DateTime(2017,6,23),
-                        PassportNumber = "A8409575",
-                        Title = Title.Miss,
-                        Type = PassengerType.Adult
-                    },
-                    new FlightPassenger
-                    {
-                        DateOfBirth = new DateTime(2007,5,10),
-                        FirstName = "Anak yang",
-                        LastName = "Pertama",
-                        Gender = Gender.Female,
-                        PassportCountry = "ID",
-                        PassportExpiryDate = new DateTime(2017,4,23),
-                        PassportNumber = "A3452901",
-                        Title = Title.Miss,
-                        Type = PassengerType.Child
-                    },
-                    new FlightPassenger
-                    {
-                        DateOfBirth = new DateTime(2015,9,19),
-                        FirstName = "Anak yang",
-                        LastName = "Kedua",
-                        Gender = Gender.Male,
-                        PassportCountry = "ID",
-                        PassportExpiryDate = new DateTime(2017,4,23),
-                        PassportNumber = "A4528769",
-                        Title = Title.Mister,
-                        Type = PassengerType.Infant
-                    }
-                },
-            });*/
+            
         }
     }
 }
