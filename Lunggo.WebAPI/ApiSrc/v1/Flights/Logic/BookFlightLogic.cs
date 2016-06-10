@@ -48,8 +48,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 request.Passengers.TrueForAll(p => p.LastName != null) &&
                 request.Passengers.TrueForAll(p => p.Title != Title.Undefined) &&
                 request.Passengers.TrueForAll(p => p.Type != PassengerType.Undefined);
-                //request.Payment != null &&
-                //request.Payment.Method != PaymentMethod.Undefined;
+            //request.Payment != null &&
+            //request.Payment.Method != PaymentMethod.Undefined;
         }
 
         private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse, FlightBookApiRequest request)
@@ -108,7 +108,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 DateOfBirth = passenger.BirthDate,
                 PassportNumber = passenger.PassportNumber,
                 PassportExpiryDate = passenger.PassportExpiryDate,
-                PassportCountry = passenger.Country
+                PassportCountry = passenger.Country,
+                Nationality = passenger.Nationality
             }).ToList();
         }
     }

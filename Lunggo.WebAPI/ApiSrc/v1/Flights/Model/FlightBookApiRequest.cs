@@ -25,5 +25,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public string PassportNumber { get; set; }
         public DateTime? PassportExpiryDate { get; set; }
         public string Country { get; set; }
+        public string Nationality { get; set; }
     }
 }

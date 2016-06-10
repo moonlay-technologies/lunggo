@@ -106,6 +106,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     }
     $scope.flightDetail.generateDepartureDate($scope.flightDetail.departureFullDate);
 
+    $scope.bookingDate = new Date();
+
     // payment detail
     $scope.paymentDetail = {
         method : ''
@@ -327,18 +329,21 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     + '/' + ('0' + (parseInt($scope.passengers[i].birth.month) + 1)).slice(-2) + '/'
                     + ('0' + $scope.passengers[i].birth.date).slice(-2);
 
-                $scope.book.postData = $scope.book.postData
-                    + (',"Passengers[' + i + '].Type": "' + $scope.passengers[i].type
-                        + '", "Passengers[' + i + '].Title": "' + $scope.passengers[i].title
-                        + '", "Passengers[' + i + '].FirstName":"' + $scope.passengers[i].firstName
-                        + '", "Passengers[' + i + '].LastName": "' + $scope.passengers[i].lastName
-                        + '", "Passengers[' + i + '].BirthDate":"' + $scope.passengers[i].birth.full
-                        + '", "Passengers[' + i + '].PassportNumber":"' + $scope.passengers[i].passport.number
+                $scope.book.postData = $scope.book.postData + (',"Passengers[' + i + '].Type": "' + $scope.passengers[i].type
+                    + '", "Passengers[' + i + '].Title": "' + $scope.passengers[i].title
+                    + '", "Passengers[' + i + '].FirstName":"' + $scope.passengers[i].firstName
+                    + '", "Passengers[' + i + '].LastName": "' + $scope.passengers[i].lastName + '"');
+                if ($scope.CheckoutConfig.BirthDateRequired || $scope.passengers[i].type == 'child' || $scope.passengers[i].type == 'infant') {
+                    $scope.book.postData = $scope.book.postData + (', "Passengers[' + i + '].BirthDate":"' + $scope.passengers[i].birth.full + '"');
+                }
+                if ($scope.CheckoutConfig.PassportRequired) {
+                    $scope.book.postData = $scope.book.postData + (', "Passengers[' + i + '].PassportNumber":"' + $scope.passengers[i].passport.number
                         + '", "Passengers[' + i + '].PassportExpiryDate":"' + $scope.passengers[i].passport.expire.full
-                        + '", "Passengers[' + i + '].PassportCountry":"' + $scope.passengers[i].passport.country
-                        + '", "Passengers[' + i + '].idNumber":"' + $scope.passengers[i].idNumber
-                        + '", "Passengers[' + i + '].Country":"' + $scope.passengers[i].passport.country +'"');
-                //);
+                        + '", "Passengers[' + i + '].PassportCountry":"' + $scope.passengers[i].passport.country + '"');
+                }
+                if ($scope.CheckoutConfig.NationalityRequired) {
+                    $scope.book.postData = $scope.book.postData + (', "Passengers[' + i + '].Nationality":"' + $scope.passengers[i].nationality + '"');
+                }
             }
             $scope.book.postData = '{' + $scope.book.postData + '}';
             $scope.book.postData = JSON.parse($scope.book.postData);
@@ -637,7 +642,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 year: ($scope.flightDetail.departureYear - 2)
             };
         }
-        if (nationalityRequired == true) {
+        if ($scope.CheckoutConfig.NationalityRequired == true) {
             passenger.nationality = 'Indonesia';
         }
         passenger.passport = {
@@ -717,7 +722,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         }
     });
     $scope.$watch(function () {
-            return location.hash;
+        return location.hash;
     }, function (value) {
         if (!$scope.PageConfig.ActivePageChanged) {
             $scope.PageConfig.ChangePage(1);

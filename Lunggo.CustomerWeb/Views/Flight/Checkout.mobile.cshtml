@@ -170,11 +170,11 @@ default:
             <h3><b>DATA</b> PENUMPANG</h3>
 
             <form novalidate name="PassengerForm">
-                <div class="passenger passenger-{{$index}}" id="passenger-{{$index}}" ng-repeat="Passenger in passengers track by $index">
-                    <header class="passenger__header">
-                        <h4 class="passenger__title" ng-if="Passenger.type == 'adult'">Penumpang {{$index + 1}} (Dewasa)</h4>
-                        <h4 class="passenger__title" ng-if="Passenger.type == 'child'">Penumpang {{$index + 1}} (Anak)</h4>
-                        <h4 class="passenger__title" ng-if="Passenger.type == 'infant'">Penumpang {{$index + 1}} (Bayi)</h4>
+                <div class="passenger passenger-{{$index}}" id="passenger-{{$index}}" ng-repeat="Passenger in passengers track by $index" ng-init="initPassenger(Passenger)">
+                    <header class=" passenger__header">
+                    <h4 class="passenger__title" ng-if="Passenger.type == 'adult'">Penumpang {{$index + 1}} (Dewasa)</h4>
+                    <h4 class="passenger__title" ng-if="Passenger.type == 'child'">Penumpang {{$index + 1}} (Anak)</h4>
+                    <h4 class="passenger__title" ng-if="Passenger.type == 'infant'">Penumpang {{$index + 1}} (Bayi)</h4>
                     </header><!-- .passenger__header -->
                     <div class="passenger__body">
                         <div class="form-group">
@@ -229,7 +229,7 @@ default:
                         </div>
                         <!-- passenger birth date end-->
                         <!-- passenger passport start -->
-                        
+
                         <div class="form-group" ng-if="CheckoutConfig.PassportRequired">
                             <label class="control-label">No. Paspor</label>
                             <input type="text" value="" class="form-control" name="passenger_{{$index}}_passportNumber" ng-model="Passenger.passport.number" ng-required="CheckoutConfig.PassportRequired" />
@@ -261,8 +261,8 @@ default:
                                 </div>
                             </div>
                         </div>
-                    
-                        <div class="form-group" ng-if ="CheckoutConfig.PassportRequired">
+
+                        <div class="form-group" ng-if="CheckoutConfig.PassportRequired">
                             <label class="control-label">Negara Penerbit Paspor</label>
                             <select class="form-control" name="passenger_{{$index}}_passportCountry" ng-model="Passenger.passport.country" ng-init="Passenger.passport.country = 'ID'" ng-required="CheckoutConfig.PassportRequired">
                                 <option ng-repeat="country in Countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
@@ -635,7 +635,7 @@ default:
             </header>
             <div class="popup__body">
                 <div class="container_new">
-                    <p>Harga tiket ini berubah menjadi Rp {{book.NewPrice}} disebabkan perubahan harga dari maskapai.</p>
+                    <p>Harga tiket ini berubah menjadi Rp {{book.newPrice}} disebabkan perubahan harga dari maskapai.</p>
                 </div>
             </div>
             <footer>
@@ -644,8 +644,8 @@ default:
                         <div class="col-sm-6">
                             <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
                         </div>
-                        <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()" class="ng-pristine ng-valid">
-                            <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI" ng-disabled="!paymentMethod || !creditCardForm.$valid" disabled="disabled">
+                        <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()" class="ng-pristine ng-valid col-sm-6">
+                            <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI">
                         </form>
                     </div>
                 </div>
