@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using FareType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareType;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
@@ -124,6 +125,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         private static TravelPreferences MapTravelPreferences(SearchFlightConditions conditions)
         {
+            // Disable GA for domestic
+            var airlinesExclude = AirlinesExclude.ToList();
+            if (
+                conditions.Trips.TrueForAll(
+                    trip =>
+                        DictionaryService.GetInstance().GetAirportCountryCode(trip.OriginAirport) == "ID" &&
+                        DictionaryService.GetInstance().GetAirportCountryCode(trip.DestinationAirport) == "ID"))
+            {
+                airlinesExclude.Add("GA");
+            }
+
             var airTripType = SetAirTripType(conditions);
             var cabinType = SetCabinType(conditions);
             return new TravelPreferences
@@ -131,7 +143,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 AirTripType = airTripType,
                 CabinPreference = cabinType,
                 MaxStopsQuantity = MaxStopsQuantity.All,
-                VendorExcludeCodes = conditions.AirlineExcludes != null ? conditions.AirlineExcludes.ToArray() : AirlinesExclude,
+                VendorExcludeCodes = conditions.AirlineExcludes != null ? conditions.AirlineExcludes.ToArray() : airlinesExclude.ToArray(),
                 VendorPreferenceCodes = conditions.AirlinePreferences != null ? conditions.AirlinePreferences.ToArray() : null,
                 ExtensionData = null
             };

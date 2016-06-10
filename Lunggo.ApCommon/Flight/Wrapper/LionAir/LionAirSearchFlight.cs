@@ -551,6 +551,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                                     + price + "+" + priceId.SubstringBetween(21, priceId.Length) + "+" +
                                                     + segments.Count + "+" + flightNoJoin + "+" + depHrJoin;
 
+                                var isInternational = CheckInternationality(segments);
+
                                 var itin = new FlightItinerary
                                 {
                                     AdultCount = conditions.AdultCount,
@@ -558,10 +560,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     InfantCount = conditions.InfantCount,
                                     CanHold = true,
                                     FareType = FareType.Published,
-                                    RequireBirthDate = true,
-                                    RequirePassport = RequirePassport(segments),
+                                    RequireBirthDate = isInternational,
+                                    RequirePassport = isInternational,
                                     RequireSameCheckIn = false,
-                                    RequireNationality = true,
+                                    RequireNationality = isInternational,
                                     RequestedCabinClass = conditions.CabinClass,
                                     TripType = TripType.OneWay,
                                     Supplier = Supplier.LionAir,
@@ -622,7 +624,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 }
             }
 
-            private bool RequirePassport(List<FlightSegment> segments)
+            private bool CheckInternationality(List<FlightSegment> segments)
             {
                 var dict = DictionaryService.GetInstance();
                 var segmentDepartureAirports = segments.Select(s => s.DepartureAirport);

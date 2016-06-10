@@ -132,7 +132,8 @@ namespace Lunggo.ApCommon.Flight.Service
             else
             {
                 bookResult.IsSuccess = false;
-                response.Errors.ForEach(output.AddError);
+                if (response.Errors != null)
+                    response.Errors.ForEach(output.AddError);
                 if (response.ErrorMessages != null)
                     response.ErrorMessages.ForEach(output.AddError);
             }
