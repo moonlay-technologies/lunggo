@@ -180,6 +180,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             infantPrice = decimal.Parse(breakdownPrice[2].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
                         }
                         catch { }
+                        var currency = itinHtml[".section-total-display-currency>span>strong"].Text();
                         var isPscIncluded =
                             itinHtml.Is(":contains('Pajak Bandara'), :contains('Biaya Layanan Penumpang')");
                         var segmentFareIds = foundFareId.Split('|').Last().Split('^');
@@ -238,7 +239,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 }
                             }
                         };
-                        itin.Price.SetSupplier(newPrice, new Currency("IDR"));
+                        itin.Price.SetSupplier(newPrice, new Currency(currency));
 
                         /*var durationRows = searchedHtml[".carrier-hover-oneway-header>div:last-child"];
                         itin.Trips[0].Segments = segments.Zip(durationRows, (segment, durationRow) =>

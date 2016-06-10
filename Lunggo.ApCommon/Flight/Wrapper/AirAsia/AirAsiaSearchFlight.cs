@@ -166,10 +166,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             adultPrice = decimal.Parse(breakdownPrice[0].LastElementChild.InnerText.Trim().Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
                             childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Trim().Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
                             infantPrice = decimal.Parse(breakdownPrice[2].LastElementChild.InnerText.Trim().Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
-                        } catch { }
+                        }
+                        catch { }
+                        var currency = itinHtml[".section-total-display-currency>span>strong"].Text();
                         var itinHtmlText = itinHtml.Text();
                         var isPscIncluded = itinHtmlText.Contains("Pajak Bandara") ||
-                                            itinHtmlText.Contains("Biaya Layanan Penumpang");
+                                            itinHtmlText.Contains("Biaya Layanan Penumpang") ||
+                                            itinHtmlText.Contains("Airport Tax") ||
+                                            itinHtmlText.Contains("Passenger Service Fee");
                         var segmentFareIds = fareId.Split('|').Last().Split('^');
                         var segments = new List<FlightSegment>();
                         foreach (var segmentFareId in segmentFareIds)
@@ -207,9 +211,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             TripType = TripType.OneWay,
                             Supplier = Supplier.AirAsia,
                             Price = new Price(),
-                            AdultPricePortion = adultPrice*conditions.AdultCount/price,
-                            ChildPricePortion = childPrice*conditions.ChildCount/price,
-                            InfantPricePortion = infantPrice*conditions.InfantCount/price,
+                            AdultPricePortion = adultPrice * conditions.AdultCount / price,
+                            ChildPricePortion = childPrice * conditions.ChildCount / price,
+                            InfantPricePortion = infantPrice * conditions.InfantCount / price,
                             FareId = fareIdPrefix + price.ToString("0") + "." + fareId,
                             Trips = new List<FlightTrip>
                             {
@@ -222,7 +226,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 }
                             }
                         };
-                        itin.Price.SetSupplier(price, new Currency("IDR"));
+                        itin.Price.SetSupplier(price, new Currency(currency));
                         itins.Add(itin);
                     }
                     //var oriFareId = itin.FareId.Split('.').Last();
@@ -240,7 +244,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     {
                         var durationRow = durationRows[i] ?? durs.ElementAt(i);
                         var segment = flattenedSegments[i];
-                        
+
                         var durationTexts =
                             durationRow.InnerHTML.Trim().Split(':').ToList();
                         var splitduration = durationTexts[1].Trim().Split(' ').ToList();

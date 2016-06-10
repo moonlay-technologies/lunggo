@@ -124,14 +124,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&date_picker=" + date.Month + "%2F" + date.Day + "%2F" + date.Year +
                     @"&date_picker=" +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketDay1=" + date.Day +
-                    @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketMonth1="+date.Year+"-"+date.Month +
+                    @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketMonth1=" + date.Year + "-" + date.Month +
                     @"&date_picker=" + date2.Month + "%2F" + date2.Day + "%2F" + date2.Year +
                     @"&date_picker=" +
-                    @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketDay2="+date2.Day +
+                    @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketDay2=" + date2.Day +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListMarketMonth2=" + date2.Year + "-" + date2.Month +
-                    @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListPassengerType_ADT="+adultCount +
-                    @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListPassengerType_CHD="+childCount +
-                    @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListPassengerType_INFANT="+infantCount +
+                    @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListPassengerType_ADT=" + adultCount +
+                    @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListPassengerType_CHD=" + childCount +
+                    @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListPassengerType_INFANT=" + infantCount +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListSearchBy=columnView" +
                     @"&ControlGroupSearchView%24ButtonSubmit=Search" +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
@@ -167,17 +167,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24TextBoxMarketOrigin1=" + origin +
                     @"&ControlGroupAvailabilitySearchInputSelectView_AvailabilitySearchInputSelectViewdestinationStation1=" + dest +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24TextBoxMarketDestination1=" + dest +
-                    @"&date_picker=" + date.Month+ "%2F" + date.Day+ "%2F" + date.Year +
+                    @"&date_picker=" + date.Month + "%2F" + date.Day + "%2F" + date.Year +
                     @"&date_picker=" +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListMarketDay1=" + date.Day +
-                    @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListMarketMonth1="+date.Year+"-"+date.Month +
+                    @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListMarketMonth1=" + date.Year + "-" + date.Month +
                     @"&date_picker=" + date2.Month + "%2F" + date2.Day + "%2F" + date2.Year +
                     @"&date_picker=" +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListMarketDay2=" + date2.Day +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListMarketMonth2=" + date2.Year + "-" + date2.Month +
-                    @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_ADT="+adultCount +
-                    @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_CHD="+childCount +
-                    @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_INFANT="+infantCount +
+                    @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_ADT=" + adultCount +
+                    @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_CHD=" + childCount +
+                    @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListPassengerType_INFANT=" + infantCount +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24MultiCurrencyConversionViewSelectView%24DropDownListCurrency=default" +
                     @"&ControlGroupAvailabilitySearchInputSelectView%24AvailabilitySearchInputSelectView%24DropDownListSearchBy=columnView" +
                     @"&ControlGroupSelectView%24AvailabilityInputSelectView%24HiddenFieldTabIndex1=4" +
@@ -426,6 +426,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 try
                 {
                     var newPrice = searchedHtml["#overallTotal"].First().Text().Replace(",", "");
+
+                    var priceBreakdown = searchedHtml["#section_1>.row1>.right-text.black2"].ToList();
+                    var adultPrice = decimal.Parse(priceBreakdown[0].InnerText.Split(' ')[2]);
+                    var childPrice = 0M;
+                    var infantPrice = 0M;
+                    if (bookInfo.Itinerary.ChildCount > 0)
+                        childPrice = decimal.Parse(priceBreakdown[1].InnerText.Split(' ')[2]);
+                    if (bookInfo.Itinerary.InfantCount > 0)
+                        infantPrice = bookInfo.Itinerary.ChildCount > 0
+                            ? decimal.Parse(priceBreakdown[2].InnerText.Split(' ')[2])
+                            : decimal.Parse(priceBreakdown[1].InnerText.Split(' ')[2]);
+                    var currency = searchedHtml[".total-currency"].FirstElement().InnerText;
+                    var searchedHtmlText = searchedHtml.Text();
+                    var isPscIncluded = searchedHtmlText.Contains("Pajak Bandara") ||
+                                        searchedHtmlText.Contains("Biaya Layanan Penumpang") ||
+                                        searchedHtmlText.Contains("Airport Tax") ||
+                                        searchedHtmlText.Contains("Passenger Service Fee");
+
                     var jlhSegment = searchedHtml[".row2.mtop-row"].ToList();
                     var length = jlhSegment.Count;
                     var airport = searchedHtml[".row2.mtop-row>div"].ToArray();
@@ -451,7 +469,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         segments.Add(new FlightSegment
                         {
                             AirlineCode = splitflightDetail[0],
-                            FlightNumber = splitflightDetail[splitflightDetail.Length-1],
+                            FlightNumber = splitflightDetail[splitflightDetail.Length - 1],
                             CabinClass = cabinClass,
                             Rbd = bookInfo.Itinerary.Trips[0].Segments[index].Rbd,
                             AirlineType = AirlineType.Lcc,
@@ -492,12 +510,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 }
                             }
                     };
-                    itin.Price.SetSupplier(decimal.Parse(newPrice), new Currency("IDR"));
+                    itin.Price.SetSupplier(decimal.Parse(newPrice), new Currency(currency));
 
                     var isItinChanged = !itin.Identical(bookInfo.Itinerary);
-                    if (isItinChanged) 
+                    if (isItinChanged)
                     {
-                        if(newPrice!=""&& decimal.Parse(newPrice)!=bookInfo.Itinerary.Price.Supplier)
+                        if (newPrice != "" && decimal.Parse(newPrice) != bookInfo.Itinerary.Price.Supplier)
                         {
                             itin.FareId = itin.FareId.Replace(bookInfo.Itinerary.Price.Supplier.ToString("0"), newPrice);
                         }
@@ -514,7 +532,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
                         };
                     }
-                    else if (newPrice != "" && decimal.Parse(newPrice) != bookInfo.Itinerary.Price.Supplier) 
+                    else if (newPrice != "" && decimal.Parse(newPrice) != bookInfo.Itinerary.Price.Supplier)
                     {
                         itin.FareId = itin.FareId.Replace(bookInfo.Itinerary.Price.Supplier.ToString("0"), newPrice);
                         return new BookFlightResult
@@ -527,11 +545,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             NewItinerary = itin,
                             NewPrice = decimal.Parse(newPrice),
                             Status = null,
-                            Errors = new List<FlightError> { FlightError.TechnicalError}
+                            Errors = new List<FlightError> { FlightError.TechnicalError }
                         };
                     }
                 }
-                catch 
+                catch
                 {
                     return new BookFlightResult
                     {
@@ -600,7 +618,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
 
                 if (paymentResponse.ResponseUri.AbsolutePath != "/Payment.aspx" || (paymentResponse.StatusCode != HttpStatusCode.OK && paymentResponse.StatusCode != HttpStatusCode.Redirect))
-                    return new BookFlightResult { 
+                    return new BookFlightResult
+                    {
                         IsSuccess = false,
                         Status = new BookingStatusInfo
                         {
@@ -638,7 +657,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 paymentRequest2.AddHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
                 paymentRequest2.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var paymentResponse2 = client.Execute(paymentRequest2);
-                
+
                 //Ambil disini buat harga berubah, dari paymentResponse2
 
                 Thread.Sleep(1000);
@@ -652,7 +671,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
 
                 if (paymentResponse2.ResponseUri.AbsolutePath != "/Wait.aspx" || (paymentResponse2.StatusCode != HttpStatusCode.OK && paymentResponse2.StatusCode != HttpStatusCode.Redirect))
-                    return new BookFlightResult { 
+                    return new BookFlightResult
+                    {
                         IsSuccess = false,
                         Status = new BookingStatusInfo
                         {
@@ -699,19 +719,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             Errors = new List<FlightError> { FlightError.FailedOnSupplier }
                         };
                     }
-                    else 
+                    else
                     {
                         temp = itinRes;
                     }
 
-                    
+
                 }
-                    
+
 
                 try
                 {
                     itinHtml = temp;
-                    var cqHtml = (CQ) itinHtml;
+                    var cqHtml = (CQ)itinHtml;
                     var bookingId = cqHtml["#OptionalHeaderContent_lblBookingNumber"].Text();
                     var timeLimitTexts = cqHtml["#mainContent > p"].Text().Split('\n', ',');
                     var timeLimitDateText = timeLimitTexts[2].Trim(' ', '\n');
@@ -727,7 +747,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingId = bookingId,
                             BookingStatus = BookingStatus.Booked,
-                            TimeLimit = DateTime.SpecifyKind(timeLimitFinal,DateTimeKind.Utc)
+                            TimeLimit = DateTime.SpecifyKind(timeLimitFinal, DateTimeKind.Utc)
                         }
                     };
                 }
