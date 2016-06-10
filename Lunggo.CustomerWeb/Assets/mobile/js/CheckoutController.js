@@ -121,7 +121,6 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         Cvv: '',
         Number: ''
     }//$scope.CreditCard
-    
     // transfer config
     $scope.TransferConfig = {
         UniqueCode: 0,
@@ -678,6 +677,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             }
         }
     }
+
+    
     // validate passport expiry date
     $scope.validatePassport = function (passenger) {
         if (passenger.passport.expire.year == $scope.flightDetail.passportYear) {
