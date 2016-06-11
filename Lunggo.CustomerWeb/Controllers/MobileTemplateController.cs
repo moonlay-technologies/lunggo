@@ -4,6 +4,7 @@ namespace Lunggo.CustomerWeb.Controllers
 {
     public class MobileTemplateController : Controller
     {
+        /*
         // GET: Template
         public ActionResult HomePage()
         {
@@ -69,5 +70,6 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+         */
     }
 }
