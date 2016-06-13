@@ -316,7 +316,7 @@ namespace Lunggo.ApCommon.Flight.Service
             try
             {
                 var redisService = RedisService.GetInstance();
-                var redisKey = "flightItinerary:" + itinCacheId;
+                var redisKey = "flightItineraries:" + itinCacheId;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
                 var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
                 var expiryTime = DateTime.UtcNow + timeToLive;

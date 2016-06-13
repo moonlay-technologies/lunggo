@@ -66,9 +66,18 @@ app.controller('checkoutController', [
                 $scope.book.booking = true;
                 $scope.book.isPriceChanged = false;
                 $scope.book.checked = false;
+                $scope.contactData = '{' + ' "title":"' + $scope.buyerInfo.title + '",  "name" :"' + $scope.buyerInfo.fullname + '","countryCallCd":"' + $scope.buyerInfo.countryCode + '","phone":"' + $scope.buyerInfo.phone + '","email":"' + $scope.buyerInfo.email + '"' + '}';
+                $scope.paxData = ' "pax" : [';
+                /*$scope.contactData = {
+                    title: $scope.buyerInfo.title,
+                    name: $scope.buyerInfo.fullname,
+                    countryCallCd:$scope.buyerInfo.countryCode,
+                    phone:$scope.buyerInfo.phone,
+                    email: $scope.buyerInfo.email
+                }*/
 
                 // generate data
-                $scope.book.postData =' "token":"' + $scope.token + '",  "contact.title" :"' + $scope.buyerInfo.title + '","contact.first":"' + $scope.buyerInfo.fullname + '", "contact.countryCallCd":"' + $scope.buyerInfo.countryCode + '", "contact.phone":"' + $scope.buyerInfo.phone + '","contact.email":"' + $scope.buyerInfo.email + '","lang":"' + $scope.language + '"';
+                $scope.book.postData =' "token":"' + $scope.token + '",  "contact" :' + $scope.contactData + ',"lang":"' + $scope.language + '"';
                 for (var i = 0; i < $scope.passengers.length; i++) {
 
                     // check nationality
@@ -85,14 +94,25 @@ app.controller('checkoutController', [
                     if (!$scope.idRequired) {
                         $scope.passengers[i].idNumber = '';
                     }
+                    
                     // birthdate
                     $scope.passengers[i].birth.full = $scope.passengers[i].birth.year + '/' + ('0' + (parseInt($scope.passengers[i].birth.month) + 1)).slice(-2) + '/' + ('0' + $scope.passengers[i].birth.date).slice(-2);
                     // passport expiry date
                     $scope.passengers[i].passport.expire.full = $scope.passengers[i].passport.expire.year + '/' + ('0' + (parseInt($scope.passengers[i].passport.expire.month) + 1)).slice(-2) + '/' + ('0' + $scope.passengers[i].passport.expire.date).slice(-2);
-
-                    $scope.book.postData = $scope.book.postData + (',"Passengers[' + i + '].type": "' + $scope.passengers[i].type + '", "Passengers[' + i + '].title": "' + $scope.passengers[i].title + '", "Passengers[' + i + '].first":"' + $scope.passengers[i].firstname + '", "Passengers[' + i + '].last": "' + $scope.passengers[i].lastname + '", "Passengers[' + i + '].dob":"' + $scope.passengers[i].birth.full + '", "Passengers[' + i + '].passportNo":"' + $scope.passengers[i].passport.number + '", "Passengers[' + i + '].passportExp":"' + $scope.passengers[i].passport.expire.full + '", "Passengers[' + i + '].nationality":"' + $scope.passengers[i].passport.country + '", "Passengers[' + i + '].passportCountry":"' + $scope.passengers[i].passport.country + '"');
+                    if($scope.passengers[i].type)
+                    if (i != $scope.passengers.length - 1)
+                    {
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstname + '" , "last":"' + $scope.passengers[i].lastname + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
+                    }
+                    else
+                    {
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstname + '" , "last":"' + $scope.passengers[i].lastname + '" , "dob":"' + $scope.passengers[i].birth.full + '"  , "nationality":"' + $scope.passengers[i].passport.country + '" }';
+                    }
+                    
                 }
-                $scope.book.postData = '{' + $scope.book.postData + '}';
+                $scope.paxData = $scope.paxData + ']';
+                $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + '}';
+                console.log("Sebelum di Parse : "+ $scope.book.postData);
                 $scope.book.postData = JSON.parse($scope.book.postData);
 
                 console.log($scope.book.postData);
@@ -105,9 +125,8 @@ app.controller('checkoutController', [
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 }).then(function (returnData) {
                     console.log(returnData);
-                    
                     if (returnData.data.IsSuccess) {
-                        if (returnData.data.NewPrice != null) {
+                        if (returnData.data.NewPrice != null) { // Remove this
                             $scope.book.isPriceChanged = true;
                             $scope.book.isSuccess = true;
                             $scope.book.newPrice = returnData.data.NewPrice;
@@ -132,15 +151,8 @@ app.controller('checkoutController', [
                         }
                         else {
                             $scope.book.isSuccess = false;
-                            //$scope.book.rsvNo = returnData.data.RsvNo;
-
-                            //$('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
-                            //$('form#rsvno').submit();
                             $scope.book.checked = true;
                         }
-
-                        //$scope.book.checked = true;
-                        //$scope.book.isSuccess = false;
                     }
 
                 }, function (returnData) {

@@ -154,31 +154,31 @@ var TransferConfig = {
 };
 
 var LoginMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/login'
+    Url: 'http://m.local.travorama.com/login'
 };
 
 var RegisterMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/id/ApiAccount/Register'
+    Url: 'http://m.local.travorama.com/id/ApiAccount/Register'
 };
 
 var ResetPasswordMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/id/ApiAccount/ResetPassword'
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ResetPassword'
 };
 
 var ForgotPasswordMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/id/ApiAccount/ForgotPassword'
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ForgotPassword'
 };
 
 var ChangePasswordMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/id/ApiAccount/ChangePassword'
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ChangePassword'
 };
 
 var ChangeProfileMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/id/ApiAccount/ChangeProfile'
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ChangeProfile'
 };
 
 var ResendConfirmationEmailMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/id/ApiAccount/ResendConfirmationEmail'
+    Url: 'http://m.local.travorama.com/id/ApiAccount/ResendConfirmationEmail'
 };
 
 function setCookie(cname, cvalue, expTime) {
@@ -200,12 +200,57 @@ function isValid()
 {
     var token = getCookie('accesstoken');
     var refreshToken = getCookie('refreshtoken');
+    return true;
     if (token) {
         return true;
     }
     else
     {
+        console.log('Test');
+
         if (refreshToken != null) {
-            //jQuery.get(GetProfileConfig.Url, function (response) {
-              //  console.log('Response : '+response);
-            //});
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", LoginConfig.Url, true);
+            //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("refreshtoken:"+getCookie('refreshtoken'));
+            if (xhttp.status == "200") {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            //return true;
+            
+            
+        }
+        else
+        {
+            return true;
+        }
+    }
+}
+
+//Get Value from Cookie
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+
+//Delete Specific value from Cookie
+function eraseCookie(name) {
+    setCookie(name, "", -1);
+}
+
+function deleteCookie(name, path) {
+    // If the cookie exists
+    if (getCookie(name))
+        setCookie(name, "", -1, path);
+}

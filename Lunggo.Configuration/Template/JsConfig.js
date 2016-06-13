@@ -200,65 +200,33 @@ function isValid()
 {
     var token = getCookie('accesstoken');
     var refreshToken = getCookie('refreshtoken');
+    return true;
     if (token) {
         return true;
     }
     else
     {
+        console.log('Test');
+
         if (refreshToken != null) {
-            //jQuery.get(GetProfileConfig.Url, function (response) {
-              //  console.log('Response : '+response);
-            //});
-            $http.post(LoginConfig.Url, {
-                refreshToken: getCookie('refreshtoken'),
-                clientId: 'Jajal',
-                clientSecret: 'Standar'
-            }).success(function (returnData) {
-                if (returnData.status == "200") {
-                    setCookie('accesstoken', returnData.accessToken, returnData.expTime);
-                    setRefreshCookie('refreshtoken', returnData.refreshToken);
-                    return true;
-                }
-                else {
-                    if (returnData.error == 'ERALOG01') { $scope.errorMessage = 'RefreshNeeded'; }
-                    else if (returnData.error == 'ERALOG02') { $scope.errorMessage = 'InvalidInputData'; }
-                    else if (returnData.error == 'ERALOG03') { $scope.errorMessage = 'AlreadyRegisteredButUnconfirmed'; }
-                    else if (returnData.error == 'ERALOG04') { $scope.errorMessage = 'Failed'; }
-                    else if (returnData.error == 'ERALOG05') { $scope.errorMessage = 'NotRegistered'; }
-                    else { $scope.errorMessage = 'Failed'; }
-                    return false;
-                    console.log('Error : ' + returnData.error);
-                }
-            }, function (returnData) {
-                console.log('Failed to Refresh Token');
-                console.log(returnData);
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", LoginConfig.Url, true);
+            //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("refreshtoken:"+getCookie('refreshtoken'));
+            if (xhttp.status == "200") {
+                return true;
+            }
+            else
+            {
                 return false;
-            });
+            }
+            //return true;
+            
+            
         }
         else
         {
             return true;
-        }
-    }
-}
-
-
-function isAuthenticated() {
-    var token = getCookie('accesstoken');
-    var refreshToken = getCookie('refreshtoken');
-    if (token) {
-        return true;
-    }
-    else {
-        if (refreshToken != null) {
-            jQuery.get(GetProfileConfig.Url, function (response) {
-                console.log('Response : ' + response);
-            });
-            return true;
-
-        }
-        else {
-            return false;
         }
     }
 }
@@ -286,41 +254,3 @@ function deleteCookie(name, path) {
     if (getCookie(name))
         setCookie(name, "", -1, path);
 }
-
-$scope.getLogin = {
-    url: LoginConfig.Url,
-    isSuccess: false,
-    isChecked: false,
-    postData: '',
-
-    login: function () {
-        $scope.getLogin.checked = false;
-
-        // generate data
-        $scope.book.postData = '{' + $scope.book.postData + '}';
-        $scope.book.postData = JSON.parse($scope.book.postData);
-
-        console.log($scope.book.postData);
-
-        // send form
-        $http({
-            method: 'POST',
-            url: $scope.getLogin.url,
-            data: $.param($scope.book.postData),
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        }).then(function (returnData) {
-            console.log(returnData);
-
-            if (returnData.data.IsSuccess) {
-            } else {
-                
-            }
-
-        }, function (returnData) {
-            console.log(returnData);
-            $scope.book.checked = true;
-        });
-
-    }
-
-};

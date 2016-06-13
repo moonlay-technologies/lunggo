@@ -41,6 +41,7 @@
             <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
             <script src="/Assets/js/js.cookie.js"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
         }
         
         @section PageJS{
@@ -84,53 +85,57 @@
     @Html.Partial("/Views/Shared/_googleTag.cshtml")
 
     <!--********************-->
-    @Html.Partial("/Views/Shared/travorama20/_SiteHeader.cshtml")
-    
-    <!--********************-->
-    <section class="site-content">
         
-        @RenderBody()
+   <!-- <section ng-app="travorama" ng-controller="siteHeaderController">-->
+        @Html.Partial("/Views/Shared/travorama20/_SiteHeader.cshtml")
+    <!--</section>-->
+        <!--********************-->
 
-    </section><!-- .site-content -->
-    
-    <!--********************-->
-    <!-- footer group start -->
-    @Html.Partial("/Views/Shared/travorama20/_SiteFooterMenu.cshtml")
-    @Html.Partial("/Views/Shared/travorama20/_SiteFooter.cshtml")
-   
-    <!--********************-->
-    <!-- Javascripts -->
-    <script src="/Assets/js/jquery.min.js"></script>
-    <script src="/Assets/travorama20/js/bootstrap.min.js"></script>
-    <script src="/Assets/js/jquery-ui.min.js"></script>
-    <script src="/Config/JsConfig.js"></script>
 
-    @if (IsSectionDefined("AdditionalJS"))
-    {
-        @RenderSection("AdditionalJS");
-    }
-    
-    <script src="/Assets/travorama20/js/travorama20.js"></script>
+        <section class="site-content">
 
-    @if (IsSectionDefined("PageJS"))
-    {
-        @RenderSection("PageJS");
-    }
-    
-    <script type="text/javascript">
-    $(function () {
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
-            var ww = ($(window).width() < window.screen.width) ? $(window).width() : window.screen.width;
-            var mw = 1000;
-            var ratio = ww / mw;
-            if (ww < mw) {
-                $('#viewport').attr('content', 'initial-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww);
-            } else {
-                $('#viewport').attr('content', 'initial-scale=1, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
-            }
+            @RenderBody()
+
+        </section><!-- .site-content -->
+        <!--********************-->
+        <!-- footer group start -->
+        @Html.Partial("/Views/Shared/travorama20/_SiteFooterMenu.cshtml")
+        @Html.Partial("/Views/Shared/travorama20/_SiteFooter.cshtml")
+
+        <!--********************-->
+        <!-- Javascripts -->
+        <script src="/Assets/js/jquery.min.js"></script>
+        <script src="/Assets/travorama20/js/bootstrap.min.js"></script>
+        <script src="/Assets/js/jquery-ui.min.js"></script>
+        <script src="/Config/JsConfig.js"></script>
+
+        @if (IsSectionDefined("AdditionalJS"))
+        {
+            @RenderSection("AdditionalJS");
         }
-    });
-    </script>
+
+        <script src="/Assets/travorama20/js/travorama20.js"></script>
+        <!--<script src="/Assets/travorama20/js/accountController.js"></script>-->
+
+        @if (IsSectionDefined("PageJS"))
+        {
+            @RenderSection("PageJS");
+        }
+
+        <script type="text/javascript">
+            $(function () {
+                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+                    var ww = ($(window).width() < window.screen.width) ? $(window).width() : window.screen.width;
+                    var mw = 1000;
+                    var ratio = ww / mw;
+                    if (ww < mw) {
+                        $('#viewport').attr('content', 'initial-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww);
+                    } else {
+                        $('#viewport').attr('content', 'initial-scale=1, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
+                    }
+                }
+            });
+        </script>
 
 </body>
 </html>

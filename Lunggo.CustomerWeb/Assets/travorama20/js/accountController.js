@@ -1,14 +1,56 @@
 ﻿// Travorama Account controller
+app.controller('siteHeaderController', [
+    '$http', '$scope', function ($http, $scope) {
+        $scope.qwe = "qweqweqweqweqwe";
+        $scope.pageLoaded = true;
+        $scope.email = '';
+        var token = getCookie('accesstoken');
+        var refreshtoken = getCookie('accesstoken');
+        $scope.ProfileConfig = {
+            getProfile : function () {
+                $scope.firstName = '';
+                $scope.lastnName = '';
+                $http.get(GetProfileConfig.Url, {
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).success(function (returnData) {
+                    if (returnData.status == "200") {
+                        console.log('Success getting Profile');
+                        $scope.isLogin = true;
+                        $scope.email = returnData.email;
+                        console.log(returnData);
+                    }
+                    else {
+                        console.log('There is an error');
+                        console.log('Error : ' + returnData.error);
+                        console.log(returnData);
+                    }
+                }, function (returnData) {
+                    console.log('Failed to Login');
+                    console.log(returnData);
+                });
+            }
+        }
+        if (token) {
+            $scope.ProfileConfig.getProfile();
+        }
+        else if (refreshtoken) {
+            //Call A function for refresh token
+            $scope.isLogin = false;
+        }
+        else
+        {
+            $scope.isLogin = false;
+        }
+
+    }]);
+
 app.controller('accountController', [
     '$http', '$scope', function ($http, $scope) {
-
-        //$scope.returnUrl = document.referrer == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;
 
         var hash = (location.hash);
 
         // variables
         $scope.pageLoaded = true;
-        $scope.isLogin = isAuthenticated();
         $scope.email = 'Test';
         $scope.currentSection = '';
         $scope.profileForm = {

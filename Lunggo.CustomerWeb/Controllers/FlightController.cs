@@ -76,7 +76,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     ViewBag.Message = "BookFailed";
                     return View();
-                } 
+                }
 
                 if (token == null)
                 {
@@ -88,7 +88,6 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     var flight = FlightService.GetInstance();
                     var payment = PaymentService.GetInstance();
-                    var itinerary = flight.GetItineraryForDisplay(token);
                     var expiryTime = flight.GetItineraryExpiry(token);
                     var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
                     var savedCreditCards = User.Identity.IsAuthenticated
@@ -97,7 +96,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     return View(new FlightCheckoutData
                     {
                         Token = token,
-                        Itinerary = itinerary,
+                        Itinerary = itin,
                         ExpiryTime = expiryTime.GetValueOrDefault(),
                         SavedPassengers = savedPassengers,
                         SavedCreditCards = savedCreditCards

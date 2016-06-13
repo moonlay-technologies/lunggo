@@ -26,6 +26,11 @@
         <div class="row">
             <div class="col-xs-4 col-xs-offset-7">
                 <form class="form register-form form-horizontal" name="loginForm" novalidate ng-submit="form.submit()">
+                    @Html.AntiForgeryToken()
+                    <hgroup>
+                        <h1>@Html.I18NString("CW00129")</h1>
+                        <h4>@Html.I18NString("CW00122")</h4>
+                    </hgroup>
                     <div class="form-group">
                         <input type="email" name="Email" value="" placeholder="@Html.I18NString("CW00123")" ng-model="form.email" class="form-control" required />
                     </div>
@@ -46,12 +51,12 @@
                         <a href="@Url.Action("ForgotPassword", "Account")">@Html.I18NString("CW00126")</a> | <a href="@Url.Action("Register", "Account")">@Html.I18NString("CW00127")</a>
                     </div>
                 </form>
-                    
+
             </div>
         </div>
 
     </div>
-    
+
     <div class="page-overlay" ng-show="overlay">
         <div class="overlay-content">
             <header>
