@@ -452,7 +452,6 @@
     <Compile Include="Payment\Model\Data\MandiriClickPay.cs" />
     <Compile Include="Payment\Model\Data\MandiriEcash.cs" />
     <Compile Include="Payment\Model\Data\TelkomselTcash.cs" />
-    <Compile Include="Payment\Model\Data\BankTransfer.cs" />
     <Compile Include="Payment\Model\Data\VirtualAccount.cs" />
     <Compile Include="Payment\Model\UsedDiscount.cs" />
     <Compile Include="Payment\Model\Discount.cs" />

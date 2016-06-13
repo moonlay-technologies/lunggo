@@ -29,6 +29,7 @@ namespace Lunggo.ApCommon.Payment.Service
         public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentData paymentData, string discountCode)
         {
             var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
+            paymentDetails.Data = paymentData;
             paymentDetails.Method = method;
             paymentDetails.Medium = GetPaymentMedium(method);
             var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
