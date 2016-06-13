@@ -747,7 +747,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                         var depHrJoin = String.Join("|", listDepHr.ToArray());
                         var flightNoJoin = String.Join("|", listFlightNo.ToArray());
-                        
+                        var isInternational = CheckInternationality(newSegments);
+
                         itin = new FlightItinerary
                         {
                             AdultCount = adultCount,
@@ -755,10 +756,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             InfantCount = infantCount,
                             CanHold = true,
                             FareType = FareType.Published,
-                            RequireBirthDate = true,
-                            RequirePassport = RequirePassport(newSegments),
+                            RequireBirthDate = isInternational,
+                            RequirePassport = isInternational,
                             RequireSameCheckIn = false,
-                            RequireNationality = true,
+                            RequireNationality = isInternational,
                             RequestedCabinClass = CabinClass.Economy,
                             TripType = TripType.OneWay,
                             Supplier = Supplier.LionAir,
@@ -802,23 +803,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         }
 
                         var harga2 = decimal.Parse(agentprice);
-                        var orderedPassengers = bookInfo.Passengers.OrderBy(x => x.Type);
+                        var orderedPassengers = bookInfo.Passengers.OrderBy(x => x.Type).ToList();
                         var dataPassenger = "";
                         
                         if (destinationCountry == "ID")
                         {
                             var infpax = 1;
-                            for (var i = 0; i < orderedPassengers.Count(); i++)
+                            for (var i = 0; i < orderedPassengers.Count; i++)
                             {
                                 var title = "";
                                 string mealrequest;
-                                switch (orderedPassengers.ElementAt(i).Title)
+                                switch (orderedPassengers[i].Title)
                                 {
                                     case Title.Miss:
                                         title = "Miss";
                                         break;
                                     case Title.Mister:
-                                        title = orderedPassengers.ElementAt(i).Type == PassengerType.Adult ? "Mr" : "Mstr";
+                                        title = orderedPassengers[i].Type == PassengerType.Adult ? "Mr" : "Mstr";
                                         break;
                                     case Title.Mistress:
                                         title = "Mrs";
@@ -826,16 +827,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 }
 
                                 
-                                switch (orderedPassengers.ElementAt(i).Type)
+                                switch (orderedPassengers[i].Type)
                                 {
                                     case PassengerType.Adult:
                                         mealrequest = "No+Preference";
                                         dataPassenger +=
                                             "&NameBlock" + (i + 1) + "%24ddlTitle=" + title +
                                             "&NameBlock" + (i + 1) + "%24txtFirstName=" +
-                                            String.Join("+", orderedPassengers.ElementAt(i).FirstName.Split(' ')) +
+                                            String.Join("+", orderedPassengers[i].FirstName.Split(' ')) +
                                             "&NameBlock" + (i + 1) + "%24txtLastName=" +
-                                            orderedPassengers.ElementAt(i).LastName +
+                                            orderedPassengers[i].LastName +
                                             "&NameBlock" + (i + 1) + "%24ddlAirline=JT" + //codeFlight + //NOT YET
                                             "&NameBlock" + (i + 1) + "%24ddlSpecRequest=NA" +
                                             "&NameBlock" + (i + 1) + "%24txtFFNo=" +
@@ -846,18 +847,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                         dataPassenger +=
                                             "&NameBlock" + (i + 1) + "%24ddlTitle=" + title +
                                             "&NameBlock" + (i + 1) + "%24txtFirstName=" +
-                                            String.Join("+", orderedPassengers.ElementAt(i).FirstName.Split(' ')) +
+                                            String.Join("+", orderedPassengers[i].FirstName.Split(' ')) +
                                             "&NameBlock" + (i + 1) + "%24txtLastName=" +
-                                            orderedPassengers.ElementAt(i).LastName +
+                                            orderedPassengers[i].LastName +
                                             "&NameBlock" + (i + 1) + "%24ddlAirline=JT" +// codeFlight + //NOT YET
                                             "&NameBlock" + (i + 1) + "%24ddlSpecRequest=NA" +
                                             "&NameBlock" + (i + 1) + "%24txtFFNo=" +
                                             "&NameBlock" + (i + 1) + "%24ddlDOBDay=" +
-                                            orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd") +
+                                            orderedPassengers[i].DateOfBirth.GetValueOrDefault().ToString("dd") +
                                             "&NameBlock" + (i + 1) + "%24ddlDOBMonth=" +
-                                            orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("MMM") +
+                                            orderedPassengers[i].DateOfBirth.GetValueOrDefault().ToString("MMM") +
                                             "&NameBlock" + (i + 1) + "%24ddlDOBYear=" +
-                                            orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year +
+                                            orderedPassengers[i].DateOfBirth.GetValueOrDefault().Year +
                                             "&NameBlock" + (i + 1) + "%24ddlMealRequest=" + mealrequest;
                                         break;
                                     case PassengerType.Infant:
@@ -865,18 +866,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                         dataPassenger +=
                                             "&NameBlock" + (i + 1) + "%24ddlTitle=" + title +
                                             "&NameBlock" + (i + 1) + "%24txtFirstName=" +
-                                            String.Join("+", orderedPassengers.ElementAt(i).FirstName.Split(' ')) +
+                                            String.Join("+", orderedPassengers[i].FirstName.Split(' ')) +
                                             "&NameBlock" + (i + 1) + "%24txtLastName=" +
-                                            orderedPassengers.ElementAt(i).LastName +
+                                            orderedPassengers[i].LastName +
                                             "&NameBlock" + (i + 1) + "%24ddlINFPaxAssoc=" + infpax +
                                             "&NameBlock" + (i + 1) + "%24ddlSpecRequest=NA" +
                                             "&NameBlock" + (i + 1) + "%24txtFFNo=" +
                                             "&NameBlock" + (i + 1) + "%24ddlDOBDay=" +
-                                            orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd") +
+                                            orderedPassengers[i].DateOfBirth.GetValueOrDefault().ToString("dd") +
                                             "&NameBlock" + (i + 1) + "%24ddlDOBMonth=" +
-                                            orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("MMM") +
+                                            orderedPassengers[i].DateOfBirth.GetValueOrDefault().ToString("MMM") +
                                             "&NameBlock" + (i + 1) + "%24ddlDOBYear=" +
-                                            orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year +
+                                            orderedPassengers[i].DateOfBirth.GetValueOrDefault().Year +
                                             "&NameBlock" + (i + 1) + "$ddlMealRequest=" + mealrequest;
                                         infpax += 1;
                                         break;
@@ -886,12 +887,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         else
                         {
                             var infpax = 1;
-                            for (var i = 0; i < orderedPassengers.Count(); i++)
+                            for (var i = 0; i < orderedPassengers.Count; i++)
                             {
                                 var gender = "";
                                 var title = "";
                                 string mealrequest;
-                                switch (orderedPassengers.ElementAt(i).Gender)
+                                switch (orderedPassengers[i].Gender)
                                 {
                                     case Gender.Male:
                                         gender = "M";
@@ -901,50 +902,50 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                         break;
                                 }
 
-                                switch (orderedPassengers.ElementAt(i).Title)
+                                switch (orderedPassengers[i].Title)
                                 {
                                     case Title.Miss:
                                         title = "Miss";
                                         break;
                                     case Title.Mister:
-                                        title = orderedPassengers.ElementAt(i).Type == PassengerType.Adult ? "Mr" : "Mstr";
+                                        title = orderedPassengers[i].Type == PassengerType.Adult ? "Mr" : "Mstr";
                                         break;
                                     case Title.Mistress:
                                         title = "Mrs";
                                         break;
                                 }
 
-                                if (orderedPassengers.ElementAt(i).Type == PassengerType.Infant)
+                                if (orderedPassengers[i].Type == PassengerType.Infant)
                                 {
                                     mealrequest = "BBML";
                                     dataPassenger +=
                                         "&NameBlock" + (i + 1) + "%24ddlTitle=" + title +
                                         "&NameBlock" + (i + 1) + "%24txtFirstName=" +
-                                        String.Join("+", orderedPassengers.ElementAt(i).FirstName.Split(' ')) +
+                                        String.Join("+", orderedPassengers[i].FirstName.Split(' ')) +
                                         "&NameBlock" + (i + 1) + "%24txtLastName=" +
-                                        orderedPassengers.ElementAt(i).LastName +
+                                        orderedPassengers[i].LastName +
                                         "&NameBlock" + (i + 1) + "%24ddlGender=" + gender +
                                         "&NameBlock" + (i + 1) + "%24ddlINFPaxAssoc=" + infpax +
                                         "&NameBlock" + (i + 1) + "%24ddlSpecRequest=NA" +
                                         "&NameBlock" + (i + 1) + "%24ddlDOBDay=" +
-                                        orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd") +
+                                        orderedPassengers[i].DateOfBirth.GetValueOrDefault().ToString("dd") +
                                         "&NameBlock" + (i + 1) + "%24ddlDOBMonth=" +
-                                        orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("MMM") +
+                                        orderedPassengers[i].DateOfBirth.GetValueOrDefault().ToString("MMM") +
                                         "&NameBlock" + (i + 1) + "%24ddlDOBYear=" +
-                                        orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year +
+                                        orderedPassengers[i].DateOfBirth.GetValueOrDefault().Year +
                                         "&NameBlock" + (i + 1) + "%24ddlMealRequest=" + mealrequest +
                                         "&NameBlock" + (i + 1) + "%24txtPassportNumber=" +
-                                        orderedPassengers.ElementAt(i).PassportNumber +
+                                        orderedPassengers[i].PassportNumber +
                                         "&NameBlock" + (i + 1) + "%24ddlPassportExpDay=" +
-                                        orderedPassengers.ElementAt(i).PassportExpiryDate.GetValueOrDefault().ToString("dd") +
+                                        orderedPassengers[i].PassportExpiryDate.GetValueOrDefault().ToString("dd") +
                                         "&NameBlock" + (i + 1) + "%24ddlPassportExpMon=" +
-                                        orderedPassengers.ElementAt(i).PassportExpiryDate.GetValueOrDefault().ToString("MMM") +
+                                        orderedPassengers[i].PassportExpiryDate.GetValueOrDefault().ToString("MMM") +
                                         "&NameBlock" + (i + 1) + "%24ddlPassportExpYear=" +
-                                        orderedPassengers.ElementAt(i).PassportExpiryDate.GetValueOrDefault().Year +
+                                        orderedPassengers[i].PassportExpiryDate.GetValueOrDefault().Year +
                                         "&NameBlock" + (i + 1) + "%24ddlDocCountry=" +
-                                        orderedPassengers.ElementAt(i).PassportCountry +
+                                        orderedPassengers[i].PassportCountry +
                                         "&NameBlock" + (i + 1) + "%24ddlPaxCountry=" +
-                                        orderedPassengers.ElementAt(i).PassportCountry;
+                                        orderedPassengers[i].PassportCountry;
                                     infpax += 1;
                                 }
                                 else
@@ -953,38 +954,38 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     dataPassenger +=
                                         "&NameBlock" + (i + 1) + "%24ddlTitle=" + title +
                                         "&NameBlock" + (i + 1) + "%24txtFirstName=" +
-                                        String.Join("+", orderedPassengers.ElementAt(i).FirstName) +
+                                        String.Join("+", orderedPassengers[i].FirstName) +
                                         "&NameBlock" + (i + 1) + "%24txtLastName=" +
-                                        orderedPassengers.ElementAt(i).LastName +
+                                        orderedPassengers[i].LastName +
                                         "&NameBlock" + (i + 1) + "%24ddlGender=" + gender +
                                         "&NameBlock" + (i + 1) + "%24ddlAirline=JT" + //codeFlight +
                                         "&NameBlock" + (i + 1) + "%24ddlSpecRequest=NA" +
                                         "&NameBlock" + (i + 1) + "%24txtFFNo=" +
                                         "&NameBlock" + (i + 1) + "%24ddlDOBDay=" +
-                                        orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd") +
+                                        orderedPassengers[i].DateOfBirth.GetValueOrDefault().ToString("dd") +
                                         "&NameBlock" + (i + 1) + "%24ddlDOBMonth=" +
-                                        orderedPassengers.ElementAt(i)
+                                        orderedPassengers[i]
                                             .DateOfBirth.GetValueOrDefault()
                                             .ToString("MMM") +
                                         "&NameBlock" + (i + 1) + "%24ddlDOBYear=" +
-                                        orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year +
+                                        orderedPassengers[i].DateOfBirth.GetValueOrDefault().Year +
                                         "&NameBlock" + (i + 1) + "%24ddlMealRequest=" + mealrequest +
                                         "&NameBlock" + (i + 1) + "%24txtPassportNumber=" +
-                                        orderedPassengers.ElementAt(i).PassportNumber +
+                                        orderedPassengers[i].PassportNumber +
                                         "&NameBlock" + (i + 1) + "%24ddlPassportExpDay=" +
-                                        orderedPassengers.ElementAt(i)
+                                        orderedPassengers[i]
                                             .PassportExpiryDate.GetValueOrDefault()
                                             .ToString("dd") +
                                         "&NameBlock" + (i + 1) + "%24ddlPassportExpMon=" +
-                                        orderedPassengers.ElementAt(i)
+                                        orderedPassengers[i]
                                             .PassportExpiryDate.GetValueOrDefault()
                                             .ToString("MMM") +
                                         "&NameBlock" + (i + 1) + "%24ddlPassportExpYear=" +
-                                        orderedPassengers.ElementAt(i).PassportExpiryDate.GetValueOrDefault().Year +
+                                        orderedPassengers[i].PassportExpiryDate.GetValueOrDefault().Year +
                                         "&NameBlock" + (i + 1) + "%24ddlDocCountry=" +
-                                        orderedPassengers.ElementAt(i).PassportCountry +
+                                        orderedPassengers[i].PassportCountry +
                                         "&NameBlock" + (i + 1) + "%24ddlPaxCountry=" +
-                                        orderedPassengers.ElementAt(i).PassportCountry;
+                                        orderedPassengers[i].PassportCountry;
                                 }
                             }
                         }
@@ -1151,7 +1152,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     IsSuccess = false,
                                     Errors = new List<FlightError> { FlightError.TechnicalError },
                                     Status = null,
-                                    ErrorMessages = new List<string> { "Price is changed!" },
+                                    ErrorMessages = new List<string> { "Price is changed!2" },
                                     NewPrice = harga2,
                                     IsValid = true,
                                     IsPriceChanged = true,
@@ -1305,7 +1306,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                      {
                          IsSuccess = false,
                          Errors = new List<FlightError> {FlightError.TechnicalError},
-                         ErrorMessages = new List<string> {"Web Layout Changed!"},
+                         ErrorMessages = new List<string> {"Web Layout Changed!2"},
                          Status = new BookingStatusInfo
                          {
                              BookingStatus = BookingStatus.Failed

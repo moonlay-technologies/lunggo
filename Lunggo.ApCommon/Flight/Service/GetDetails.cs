@@ -13,8 +13,6 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                if (input.BookingIds == null)
-                    input.BookingIds = GetBookingIdQuery.GetInstance().Execute(conn, new { input.RsvNo }).ToList();
                 var tripInfoRecords = GetTripInfoQuery.GetInstance().Execute(conn, new { BookingId = input.BookingIds });
                 var tripInfos = tripInfoRecords.Select(record => new FlightTrip
                 {

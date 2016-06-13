@@ -128,7 +128,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 case "capture":
                     switch (notif.fraud_status.ToLower())
                     {
-                        case "capture":
+                        case "accept":
                             return PaymentStatus.Settled;
                         case "challenge":
                         case "deny":

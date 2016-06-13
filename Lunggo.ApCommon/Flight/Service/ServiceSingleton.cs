@@ -130,10 +130,10 @@ namespace Lunggo.ApCommon.Flight.Service
             var supplierName = IdUtil.GetSupplier(bookingId);
             bookingId = IdUtil.GetCoreId(bookingId);
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
-            OrderTicketResult result = supplier.OrderTicket(bookingId, canHold);
+            var result = supplier.OrderTicket(bookingId, canHold);
             if (result.BookingId != null)
                 result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, supplierName, fareType);
-            result.SupplierName = supplier.SupplierName.ToString(); // this is getting suppliername, but as a number
+            result.Supplier = supplier.SupplierName;
             return result;
         }
 

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
@@ -25,9 +26,9 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public IssueTicketOutput CommenceIssueTicket(IssueTicketInput input)
         {
-            List<string> supplier = new List<string>();
-            List<decimal> balance = new List<decimal>();
-            List<decimal> localPrice = new List<decimal>();
+            var supplier = new List<Supplier>();
+            var balance = new List<decimal>();
+            var localPrice = new List<decimal>();
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var reservation = GetReservation(input.RsvNo);
@@ -38,7 +39,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     var canHold = itin.CanHold;
                     var response = OrderTicketInternal(bookingId, canHold);
                     balance.Add(response.CurrentBalance);
-                    supplier.Add(response.SupplierName);
+                    supplier.Add(response.Supplier);
                     localPrice.Add(itin.SupplierPrice);
                     var orderResult = new OrderResult();
                     if (response.IsSuccess)
@@ -73,31 +74,35 @@ namespace Lunggo.ApCommon.Flight.Service
                     });
                     output.OrderResults.Add(orderResult);
                 });
+
+                var detailsInput = new GetDetailsInput
+                {
+                    BookingIds =
+                        output.OrderResults.Where(res => res.IsSuccess && res.IsInstantIssuance)
+                            .Select(res => res.BookingId)
+                            .ToList()
+                };
+                GetAndUpdateNewDetails(detailsInput);
+
                 if (output.OrderResults.TrueForAll(result => result.IsSuccess))
                 {
                     output.IsSuccess = true;
                     if (output.OrderResults.TrueForAll(result => result.IsInstantIssuance))
                     {
-                        var detailsInput = new GetDetailsInput { RsvNo = input.RsvNo };
-                        GetAndUpdateNewDetails(detailsInput);
                         SendEticketToCustomer(input.RsvNo);
-                        //Send Eticket Slight Delay if Choosing Mystifly
-                        if (supplier.Contains("Mystifly")) 
-                        {
-                            SendEticketSlightDelayNotifToCustomer(input.RsvNo);
-                        }
-                        if (reservation.Payment.Method != PaymentMethod.BankTransfer)
-                            SendInstantPaymentConfirmedNotifToCustomer(input.RsvNo);
-                        InsertDb.SavedPassengers(reservation.Contact.Email, reservation.Passengers);
+                    }
+                    else
+                    {
+                        SendEticketSlightDelayNotifToCustomer(input.RsvNo);
                     }
                 }
                 else
                 {
                     int casetype = GetCaseType();
-                    var supplierInfoItin = ConcatenateMessage(supplier,balance,localPrice);
+                    var supplierInfoItin = ConcatenateMessage(supplier, balance, localPrice);
                     if (casetype != 0)
                     {
-                        SendIssueSlightDelayNotifToCustomer(reservation.RsvNo + "+" + casetype.ToString());
+                        SendIssueSlightDelayNotifToCustomer(reservation.RsvNo + "+" + casetype);
                         //Testing
                         /*if (supplier.Contains("Mystifly"))
                         {
@@ -107,13 +112,13 @@ namespace Lunggo.ApCommon.Flight.Service
                         SendEticketSlightDelayNotifToCustomer(input.RsvNo); 
                         SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);*/
                     }
-                    else 
+                    else
                     {
                         SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);
                     }
 
                     SendIssueFailedNotifToDeveloper(reservation.RsvNo + "+" + supplierInfoItin);
-                    
+
                     //Jika berhasil cuma berhasil satu doang
                     if (output.OrderResults.Any(set => set.IsSuccess))
                     {
@@ -143,29 +148,26 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private string ConcatenateMessage(List<string>supplierName, List<decimal>balance,List<decimal>localPrice)
+        private static string ConcatenateMessage(List<Supplier> supplierName, List<decimal> balance, List<decimal> localPrice)
         {
-       
-            string balanceAndItinPrice = "";
-            for(int i=0;i<supplierName.Count;i++)
+
+            var balanceAndItinPrice = "";
+            for (var i = 0; i < supplierName.Count; i++)
             {
-                if (i != supplierName.Count - 1 && i>1)
+                if (i != supplierName.Count - 1 && i > 1)
                 {
                     balanceAndItinPrice = supplierName[i] + ";" + localPrice[i] + ";" + balance[i] + "+";
                 }
-                else 
+                else
                 {
                     balanceAndItinPrice = supplierName[i] + ";" + localPrice[i] + ";" + balance[i];
                 }
-                
+
             }
-
-
             return balanceAndItinPrice;
-
         }
 
-        private static int GetCaseType() 
+        private static int GetCaseType()
         {
             var datenow = DateTime.UtcNow.AddHours(+7);
             int casetype;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
@@ -47,8 +48,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 request.Passengers.TrueForAll(p => p.LastName != null) &&
                 request.Passengers.TrueForAll(p => p.Title != Title.Undefined) &&
                 request.Passengers.TrueForAll(p => p.Type != PassengerType.Undefined);
-                //request.Payment != null &&
-                //request.Payment.Method != PaymentMethod.Undefined;
+            //request.Payment != null &&
+            //request.Payment.Method != PaymentMethod.Undefined;
         }
 
         private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse, FlightBookApiRequest request)
@@ -77,6 +78,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     {
                         IsSuccess = false,
                         Error = bookServiceResponse.Errors[0],
+                        ErrorMessage = bookServiceResponse.ErrorMessages != null ? String.Join(" | ", bookServiceResponse.ErrorMessages) : null,
                         OriginalRequest = request
                     };
                 }
@@ -106,7 +108,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 DateOfBirth = passenger.BirthDate,
                 PassportNumber = passenger.PassportNumber,
                 PassportExpiryDate = passenger.PassportExpiryDate,
-                PassportCountry = passenger.Country
+                PassportCountry = passenger.Country,
+                Nationality = passenger.Nationality
             }).ToList();
         }
     }
