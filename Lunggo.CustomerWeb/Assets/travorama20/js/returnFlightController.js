@@ -5,13 +5,12 @@ app.controller('returnFlightController', [
 
         // ******************************
         // on document ready
-        angular.element(document).ready(function() {
-            // $scope.getDepartureFlight();
-            // $scope.getReturnFlight();
-            $scope.getFlight('return');
-
-            //$scope.ProgressAnimation('departure');
-            //$scope.ProgressAnimation('return');
+        angular.element(document).ready(function () {
+            if (isValid())
+            {
+                $scope.getFlight('return');
+            }
+            
         });
 
         $scope.ProgressAnimation = function (targetScope) {
