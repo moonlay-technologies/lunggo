@@ -446,115 +446,115 @@ app.controller('singleFlightController', [
         // get flight function
         $scope.getFlight = function() {
             $scope.busy = true;
-                $scope.loading = true;
-                $scope.loadingFlight = true;
+            $scope.loading = true;
+            $scope.loadingFlight = true;
 
-                console.log('request : ' + $scope.flightRequest.Requests);
+            console.log('request : ' + $scope.flightRequest.Requests);
 
 
-                if ($scope.Progress < 100) {
-                    // **********
-                    // ajax
-                    console.log("Request : " + FlightSearchConfig.Url + $scope.flightFixRequest + '/' + $scope.Progress);
-                    $http.get(FlightSearchConfig.Url + '/' + $scope.flightFixRequest + '/' + $scope.Progress, {
-                        //params: {
-                        //  request: $scope.flightRequest
-                        //}
-                    }).success(function (returnData) {
+            if ($scope.Progress < 100) {
+                // **********
+                // ajax
+                console.log("Request : " + FlightSearchConfig.Url + $scope.flightFixRequest + '/' + $scope.Progress);
+                $http.get(FlightSearchConfig.Url + '/' + $scope.flightFixRequest + '/' + $scope.Progress, {
+                    //params: {
+                    //  request: $scope.flightRequest
+                    //}
+                }).success(function (returnData) {
 
-                        // set searchID
-                        SelectConfig.SearchId = $scope.flightFixRequest;
-                        $scope.flightRequest.SearchId = $scope.flightFixRequest;
-                        console.log($scope.flightFixRequest);
+                    // set searchID
+                    SelectConfig.SearchId = $scope.flightFixRequest;
+                    $scope.flightRequest.SearchId = $scope.flightFixRequest;
+                    console.log($scope.flightFixRequest);
 
-                        // set flight request if pristine
-                        /*if ($scope.pristine == true) {
-                            $scope.pristine = false;
-                            for (var i = 0; i < returnData.MaxRequest; i++) {
-                                $scope.flightRequest.Requests.push(i + 1);
-                            }
-                            $scope.flightRequest.MaxProgress = 100 / (returnData.MaxRequest);
-                        }*/
-
-                        // if granted request is not null
-
-                        $scope.Progress = returnData.progress;
-                        if ($scope.Progress == 100) {
-                            $scope.expiry.time = returnData.expTime;
-                            $scope.flightRequest.FinalProgress = $scope.Progress;
-                        } else {
-                            $scope.flightRequest.FinalProgress = $scope.Progress;
+                    // set flight request if pristine
+                    /*if ($scope.pristine == true) {
+                        $scope.pristine = false;
+                        for (var i = 0; i < returnData.MaxRequest; i++) {
+                            $scope.flightRequest.Requests.push(i + 1);
                         }
-                        if (returnData.flights.length) {
-                            $scope.generateFlightList(returnData.flights[0].options);
-                        }
+                        $scope.flightRequest.MaxProgress = 100 / (returnData.MaxRequest);
+                    }*/
+
+                    // if granted request is not null
+
+                    $scope.Progress = returnData.progress;
+                    if ($scope.Progress == 100) {
+                        $scope.expiry.time = returnData.expTime;
+                        $scope.flightRequest.FinalProgress = $scope.Progress;
+                    } else {
+                        $scope.flightRequest.FinalProgress = $scope.Progress;
+                    }
+                    if (returnData.flights.length) {
+                        $scope.generateFlightList(returnData.flights[0].options);
+                    }
 
 
-                        console.log('Progress : ' + $scope.Progress + ' %');
-                        console.log(returnData);
+                    console.log('Progress : ' + $scope.Progress + ' %');
+                    console.log(returnData);
 
-                        /*if (returnData.GrantedRequests.length) {
-                            console.log('Granted request  : '+returnData.GrantedRequests);
-                            for (var i = 0; i < returnData.GrantedRequests.length; i++) {
-                                // add to completed
-                                if ( $scope.flightRequest.Completed.indexOf( returnData.GrantedRequests[i] < 0 ) ) {
-                                    $scope.flightRequest.Completed.push( returnData.GrantedRequests[i] );
-                                }
-                                // check current request. Remove if completed
-                                if ($scope.flightRequest.Requests.indexOf(returnData.GrantedRequests[i] < 0)) {
-                                    $scope.flightRequest.Requests.splice( $scope.flightRequest.Requests.indexOf(returnData.GrantedRequests[i]) , 1 );
-                                }
-    
-                            }
-    
-                            // update total progress
-                            $scope.flightRequest.Progress = returnData.progress//((returnData.MaxRequest - $scope.flightRequest.Requests.length) / returnData.MaxRequest) * 100;
-                            //$scope.flightRequest.MaxProgress = (100 / returnData.MaxRequest) * ($scope.flightRequest.Completed.length + 1);
-                            
-                            // set expiry if progress == 100
-                            if ($scope.flightRequest.Progress == 100) {
-                                $scope.expiry.time = returnData.expTime;
-                            } else {
-                                $scope.flightRequest.FinalProgress = $scope.flightRequest.Progress;
-                            }
-    
-                            // generate flight
-                            $scope.generateFlightList(returnData.flights);
-                            
-    
-                            console.log('Progress : '+ $scope.flightRequest.Progress +' %');
-                            console.log(returnData);
-                        }*/
-
-                        //console.log(returnData);
-                        // loop the function
-                        setTimeout(function () {
-                            $scope.getFlight();
-                        }, 1000);
-
-                    }).error(function (returnData) {
-                        console.log('Failed to get flight list');
-                        console.log(returnData);
-                        for (var i = 0; i < $scope.flightRequest.Requests.length; i++) {
+                    /*if (returnData.GrantedRequests.length) {
+                        console.log('Granted request  : '+returnData.GrantedRequests);
+                        for (var i = 0; i < returnData.GrantedRequests.length; i++) {
                             // add to completed
-                            if ($scope.flightRequest.Completed.indexOf($scope.flightRequest.Requests[i] < 0)) {
-                                $scope.flightRequest.Completed.push($scope.flightRequest.Requests[i]);
+                            if ( $scope.flightRequest.Completed.indexOf( returnData.GrantedRequests[i] < 0 ) ) {
+                                $scope.flightRequest.Completed.push( returnData.GrantedRequests[i] );
                             }
                             // check current request. Remove if completed
-                            if ($scope.flightRequest.Requests.indexOf($scope.flightRequest.Requests[i] < 0)) {
-                                $scope.flightRequest.Requests.splice($scope.flightRequest.Requests.indexOf($scope.flightRequest.Requests[i]), 1);
+                            if ($scope.flightRequest.Requests.indexOf(returnData.GrantedRequests[i] < 0)) {
+                                $scope.flightRequest.Requests.splice( $scope.flightRequest.Requests.indexOf(returnData.GrantedRequests[i]) , 1 );
                             }
+    
                         }
-                        $scope.flightRequest.Progress = 100;
-                        $scope.flightRequest.FinalProgress = 100;
-                    });
+    
+                        // update total progress
+                        $scope.flightRequest.Progress = returnData.progress//((returnData.MaxRequest - $scope.flightRequest.Requests.length) / returnData.MaxRequest) * 100;
+                        //$scope.flightRequest.MaxProgress = (100 / returnData.MaxRequest) * ($scope.flightRequest.Completed.length + 1);
+                            
+                        // set expiry if progress == 100
+                        if ($scope.flightRequest.Progress == 100) {
+                            $scope.expiry.time = returnData.expTime;
+                        } else {
+                            $scope.flightRequest.FinalProgress = $scope.flightRequest.Progress;
+                        }
+    
+                        // generate flight
+                        $scope.generateFlightList(returnData.flights);
+                            
+    
+                        console.log('Progress : '+ $scope.flightRequest.Progress +' %');
+                        console.log(returnData);
+                    }*/
 
-                } else {
-                    console.log('Finished getting flight list !');
-                    $scope.busy = false;
-                    $scope.loading = false;
-                    $scope.loadingFlight = false;
-                }
+                    //console.log(returnData);
+                    // loop the function
+                    setTimeout(function () {
+                        $scope.getFlight();
+                    }, 1000);
+
+                }).error(function (returnData) {
+                    console.log('Failed to get flight list');
+                    console.log(returnData);
+                    for (var i = 0; i < $scope.flightRequest.Requests.length; i++) {
+                        // add to completed
+                        if ($scope.flightRequest.Completed.indexOf($scope.flightRequest.Requests[i] < 0)) {
+                            $scope.flightRequest.Completed.push($scope.flightRequest.Requests[i]);
+                        }
+                        // check current request. Remove if completed
+                        if ($scope.flightRequest.Requests.indexOf($scope.flightRequest.Requests[i] < 0)) {
+                            $scope.flightRequest.Requests.splice($scope.flightRequest.Requests.indexOf($scope.flightRequest.Requests[i]), 1);
+                        }
+                    }
+                    $scope.flightRequest.Progress = 100;
+                    $scope.flightRequest.FinalProgress = 100;
+                });
+
+            } else {
+                console.log('Finished getting flight list !');
+                $scope.busy = false;
+                $scope.loading = false;
+                $scope.loadingFlight = false;
+            }
         }
 
         // **********
