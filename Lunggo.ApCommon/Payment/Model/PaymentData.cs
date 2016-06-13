@@ -10,6 +10,8 @@ namespace Lunggo.ApCommon.Payment.Model
 {
     public class PaymentData
     {
+        [JsonProperty("bankTransfer", NullValueHandling = NullValueHandling.Ignore)]
+        public BankTransfer BankTransfer { get; set; }
         [JsonProperty("bcaKlikPay", NullValueHandling = NullValueHandling.Ignore)]
         public BcaKlikPay BcaKlikPay { get; set; }
         [JsonProperty("cimbClicks", NullValueHandling = NullValueHandling.Ignore)]

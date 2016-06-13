@@ -7,6 +7,5 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Model
     {
         [JsonProperty("fee", NullValueHandling = NullValueHandling.Ignore)]
         public decimal TransferFee { get; set; }
-
     }
 }
