@@ -59,7 +59,7 @@ namespace Lunggo.BackendWeb
                 Itinerary = itin
             });*/
             //FlightService.GetInstance().CommenceSearchFlight("BTJAMQ060816-321y".Base64Encode(), 6);
-            FlightService.GetInstance().OrderTicketInternal("GARUPUB7U52LJ", true);
+            FlightService.GetInstance().OrderTicketInternal("GARUPUB73FASX", true);
             
         }
     }

@@ -61,41 +61,49 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var counter = 0;
                 var returnPath = "";
 
-                successLogin = Login(clientx, "SA3ALEU1", "Standar123", out returnPath);
-                //while (!successLogin && counter < 31 && returnPath != "/web/dashboard/welcome")
-                //{
-                //    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && (userName.Length == 0))
-                //    //|| returnpath != "/web/dashboard/welcome")
-                //    {
-                        
-                //        var accRs = (RestResponse)clienty.Execute(accReq);
-                //        userName = accRs.Content.Trim('"');
-                //    }
+                //successLogin = Login(clientx, "SA3ALEU1", "Standar123", out returnPath);
+                while (!successLogin && counter < 31)
+                {
+                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0) 
+                    {
 
-                //    if (userName.Length == 0)
-                //    {
-                //        return new OrderTicketResult
-                //        {
-                //            Errors = new List<FlightError> { FlightError.TechnicalError },
-                //            ErrorMessages = new List<string> { "All usernames are used" }
-                //        };
-                //    }
+                        var accRs = (RestResponse)clienty.Execute(accReq);
+                        userName = accRs.Content.Trim('"');
+                    }
 
-                //    var password = userName == "SA3ALEU1" ? "Standar123" : "Travorama1234";
-                //    counter++;
-                //    successLogin = Login(clientx, userName, password, out returnPath);
-                //}
+                    if (returnPath != "/web/dashboard/welcome" && counter != 0)
+                    {
+                        var lastUserName = userName;
+                        var accRs = (RestResponse)clienty.Execute(accReq);
+                        userName = accRs.Content.Trim('"');
+                        TurnInUsername(clientx, lastUserName);
+                    }
 
-                //if (counter >= 31)
-                //{
-                //    TurnInUsername(clientx, userName);
-                //    return new OrderTicketResult
-                //    {
+                    if (userName.Length == 0)
+                    {
+                        return new OrderTicketResult
+                        {
+                            Errors = new List<FlightError> { FlightError.TechnicalError },
+                            ErrorMessages = new List<string> { "All usernames are used" }
+                        };
+                    }
 
-                //        Errors = new List<FlightError> { FlightError.InvalidInputData },
-                //        ErrorMessages = new List<string> { "Can't get id" }
-                //    };
-                //}
+                    var password = userName == "SA3ALEU1" ? "Standar123" : "Travorama1234";
+                    counter++;
+                    successLogin = Login(clientx, userName, password, out returnPath);
+                }
+
+                TurnInUsername(clientx, userName);
+                if (counter >= 31)
+                {
+                    TurnInUsername(clientx, userName);
+                    return new OrderTicketResult
+                    {
+
+                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        ErrorMessages = new List<string> { "Can't get id" }
+                    };
+                }
 
                 urlweb = @"web/order/ticket";
                 searchReqAgent0 = new RestRequest(urlweb, Method.GET);
@@ -213,7 +221,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     var refPage = (CQ) searchResAgent0.Content;
 
                     var refr = refPage[".wrapper-input"];
-                    var refcode = refr[0].ChildElements.ToList()[2].InnerText.Replace("\n","").Replace("\t","");
+                    var refcode = refr[0].ChildElements.ToList()[3].InnerText.Replace("\n","").Replace("\t","").Trim(' ');
 
                     if (refcode.SubstringBetween(0, 4) == "Maaf")
                     {

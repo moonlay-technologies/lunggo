@@ -46,6 +46,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
                 var searchResAgent0 = clientx.Execute(searchReqAgent0);
 
+                //successLogin = Login(clientx, "SA3ALEU", "Travorama1234", out returnPath);
+
                 while (!successLogin && counter < 31 && returnPath != "/web/dashboard/welcome")
                 {
                     while (DateTime.UtcNow <= reqTime.AddMinutes(10) && (userName.Length == 0))
@@ -70,7 +72,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     TurnInUsername(clientx, userName);
                     return IssueEnum.CheckingError;
                 }
-                
+
                 //if (userId == null)
                 //{
                 //    return IssueEnum.CheckingError;
