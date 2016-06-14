@@ -50,13 +50,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             new List<string> { "There must be at least one adult passenger" }
                     };
                 }
-                if (conditions.AdultCount + conditions.ChildCount > 7)
+                if (conditions.AdultCount + conditions.ChildCount > 9)
                 {
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
                         ErrorMessages =
-                            new List<string> { "Total adult and children passenger must be not more than seven" }
+                            new List<string> { "Total adult and children passenger must be not more than nine" }
                     };
                 }
                 if (conditions.AdultCount < conditions.InfantCount)
