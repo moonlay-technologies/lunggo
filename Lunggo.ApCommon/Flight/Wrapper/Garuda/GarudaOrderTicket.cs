@@ -16,15 +16,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
         internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            //if (env == "production")
+            if (env == "production")
                 return Client.OrderTicket(bookingId);
-            //else
-            //    return new OrderTicketResult
-            //    {
-            //        IsSuccess = true,
-            //        BookingId = bookingId,
-            //        IsInstantIssuance = true
-            //    };
+            else
+                return new OrderTicketResult
+                {
+                    IsSuccess = true,
+                    BookingId = bookingId,
+                    IsInstantIssuance = true
+                };
         }
 
         private partial class GarudaClientHandler
