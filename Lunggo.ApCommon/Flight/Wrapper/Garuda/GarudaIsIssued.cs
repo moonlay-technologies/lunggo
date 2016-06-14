@@ -48,13 +48,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                 //successLogin = Login(clientx, "SA3ALEU", "Travorama1234", out returnPath);
 
-                while (!successLogin && counter < 31 && returnPath != "/web/dashboard/welcome")
+                while (!successLogin && counter < 31)
                 {
-                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && (userName.Length == 0))
-                    //|| returnpath != "/web/dashboard/welcome")
+                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnPath != "/web/dashboard/welcome")
                     {
+
                         var accRs = (RestResponse)clienty.Execute(accReq);
+                        var lastUserId = userName;
                         userName = accRs.Content.Trim('"');
+                        if (returnPath != "/web/dashboard/welcome")
+                        {
+                            TurnInUsername(clienty, lastUserId);
+                        }
+                        if (userName.Length != 0)
+                        {
+                            returnPath = "/web/dashboard/welcome";
+                        }
                     }
 
                     if (userName.Length == 0)

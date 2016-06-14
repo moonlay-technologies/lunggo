@@ -116,14 +116,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         IsSuccess = false
                     };
                 }
-                if (adultCount + childCount > 7)
+                if (adultCount + childCount > 9)
                 {
                     //throw new Exception("haloooo 4");
                     return new BookFlightResult
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
                         ErrorMessages =
-                            new List<string> {"Total adult and children passenger must be not more than seven"},
+                            new List<string> {"Total adult and children passenger must be not more than nine"},
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
@@ -226,17 +226,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var counter = 0;
                 var returnpath = "";
                 //successLogin = Login(client, "SA3ALEU1", "Standar123");
-                while (!successLogin && counter < 31 && returnpath != "/web/dashboard/welcome")
+                while (!successLogin && counter < 31)
                 {
-                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && (userName.Length == 0 ))
-                    //|| returnpath != "/web/dashboard/welcome")
+                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnpath != "/web/dashboard/welcome")
                     {
-                        //if (returnpath != "/web/dashboard/welcome")
-                        //{
-                        //    TurnInUsername(clientx, userName);
-                        //}
+
                         var accRs = (RestResponse)clientx.Execute(accReq);
+                        var lastUserId = userName;
                         userName = accRs.Content.Trim('"');
+                        if (returnpath != "/web/dashboard/welcome")
+                        {
+                            TurnInUsername(clientx, lastUserId);
+                        }
+                        if (userName.Length != 0)
+                        {
+                            returnpath = "/web/dashboard/welcome";
+                        }
                     }
 
                     if (userName.Length == 0)

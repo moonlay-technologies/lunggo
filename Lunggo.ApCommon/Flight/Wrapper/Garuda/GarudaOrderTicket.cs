@@ -64,21 +64,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 //successLogin = Login(clientx, "SA3ALEU1", "Standar123", out returnPath);
                 while (!successLogin && counter < 31)
                 {
-                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0) 
+                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnPath != "/web/dashboard/welcome")
                     {
 
                         var accRs = (RestResponse)clienty.Execute(accReq);
+                        var lastUserId = userName;
                         userName = accRs.Content.Trim('"');
+                        if (returnPath != "/web/dashboard/welcome")
+                        {
+                            TurnInUsername(clienty, lastUserId);
+                        }
+                        if (userName.Length != 0)
+                        {
+                            returnPath = "/web/dashboard/welcome";
+                        }
                     }
 
-                    if (returnPath != "/web/dashboard/welcome" && counter != 0)
-                    {
-                        var lastUserName = userName;
-                        var accRs = (RestResponse)clienty.Execute(accReq);
-                        userName = accRs.Content.Trim('"');
-                        TurnInUsername(clientx, lastUserName);
-                    }
-
+                    
                     if (userName.Length == 0)
                     {
                         return new OrderTicketResult
@@ -93,7 +95,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     successLogin = Login(clientx, userName, password, out returnPath);
                 }
 
-                TurnInUsername(clientx, userName);
+                
                 if (counter >= 31)
                 {
                     TurnInUsername(clientx, userName);
