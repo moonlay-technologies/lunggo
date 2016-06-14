@@ -3,7 +3,8 @@
     // **********
     // on document ready
     angular.element(document).ready(function () {
-        $scope.FlightFunctions.GetFlight('departure');
+        var a = $scope.flightFixRequest();
+        //$scope.FlightFunctions.GetFlight('departure');
         $scope.FlightFunctions.GetFlight('return');
     });
     //$.datepicker.setDefaults(
@@ -45,6 +46,7 @@
             FlightList: [],
             ActiveFlight: -1,
             DetailFlight: -1,
+            //flightSearchParams: $scope.flightFixRequest(),
             FlightRequest: {
                 CabinClass: FlightSearchConfig.flightForm.cabin,
                 AdultCount: FlightSearchConfig.flightForm.passenger.adult,
@@ -102,6 +104,7 @@
         },
         {
             Name: 'return',
+            //flightSearchParams: $scope.flightFixRequest(),
             FlightList: [],
             ActiveFlight: -1,
             DetailFlight: -1,
@@ -239,50 +242,139 @@
         return hours + "j " + minutes + "m";
     }
 
+    $scope.flightFixRequest = function () {
+        var cabin = FlightSearchConfig.flightForm.cabin;
+        if (cabin != 'y' || cabin != 'c' || cabin != 'f') {
+            switch (cabin) {
+                case 'Economy':
+                    cabin = 'y';
+                    break;
+                case 'Business':
+                    cabin = 'c';
+                    break;
+                case 'First':
+                    cabin = 'f';
+                    break;
+            }
+        }
+        var departureTemp = FlightSearchConfig.flightForm;
+        var depDate = new Date(departureTemp.trips[0][0].DepartureDate) || '';
+        var departureDate = (('0' + depDate.getDate()).slice(-2) + ('0' + (depDate.getMonth() + 1)).slice(-2) + depDate.getFullYear().toString().substr(2, 2));
+        var departureRequest = departureTemp.trips[0][0].OriginAirport + departureTemp.trips[0][0].DestinationAirport + departureDate;
+        var returnTemp = departureTemp ;
+        var retDate = new Date(returnTemp.trips[1][0].DepartureDate) || '';
+        var returnDate = (('0' + retDate.getDate()).slice(-2) + ('0' + (retDate.getMonth() + 1)).slice(-2) + retDate.getFullYear().toString().substr(2, 2));
+        var returnRequest = returnTemp.trips[1][0].OriginAirport + returnTemp.trips[1][0].DestinationAirport + returnDate;
+        
+        var passenger = FlightSearchConfig.flightForm.passenger.adult + '' + FlightSearchConfig.flightForm.passenger.child + '' + FlightSearchConfig.flightForm.passenger.infant + cabin;
+        return departureRequest + '~' + returnRequest + '-' + passenger;
+    }
+
 
     // **********
+    $scope.arrangeFlightData = function (targetScope, data) {
+        if (targetScope == "departure" || targetScope == "Departure") {
+            targetScope = $scope.FlightConfig[0];
+        } else {
+            targetScope = $scope.FlightConfig[1];
+        }
+
+        var startNumber = targetScope.FlightList.length;
+
+        for (var i = 0; i < data.length; i++) {
+            data[i].Available = true;
+            data[i].IndexNo = (startNumber + i);
+            targetScope.FlightList.push(data[i]);
+        }
+
+        if (targetScope.FlightRequest.Progress == 100) {
+
+            // start expiry date
+            $scope.PageConfig.ExpiryDate.Start();
+
+            // loop the result
+            for (var i = 0; i < targetScope.FlightList.length; i++) {
+                targetScope.FlightList[i].Available = true;
+                // fare rule
+                targetScope.FlightList[i].FareRules = {
+                    Loaded: false,
+                    Content: ''
+                };
+
+                // populate prices
+                targetScope.flightFilter.price.prices.push(targetScope.FlightList[i].totalFare);
+
+                // populate airline code
+                targetScope.FlightList[i].AirlinesTag = [];
+                for (var x = 0; x < targetScope.FlightList[i].trips[0].airlines.length; x++) {
+                    targetScope.flightFilter.airline.airlines.push(targetScope.FlightList[i].trips[0].airlines[x]);
+                    targetScope.FlightList[i].AirlinesTag.push(targetScope.FlightList[i].trips[0].airlines[x].code);
+                }
+
+            }
+
+            // activate flight filter
+            if (targetScope.name == 'departure') {
+                $scope.initiateFlightFiltering('departure');
+            } else {
+                $scope.initiateFlightFiltering('return');
+            }
+        }
+
+    }
     // get  flight
     $scope.FlightFunctions.GetFlight = function(targetScope) {
         $scope.PageConfig.Busy = true;
-        var anotherScope = targetScope == 'departure' ? $scope.FlightConfig[1] : $scope.FlightConfig[0];
-        targetScope = targetScope == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1];
+        var a = $scope.flightFixRequest();
+        targetScope = $scope.FlightConfig[1];
         console.log('Getting flight for : ' + targetScope.Name + ' . Request : '+targetScope.FlightRequest.Requests);
         if (targetScope.FlightRequest.Progress < 100) {
 
             // **********
             // ajax
-            $http.get(FlightSearchConfig.Url, {
-                params: {
-                    request: targetScope.FlightRequest
-                }
+            $http.get(FlightSearchConfig.Url + '/' + a + '/' + targetScope.FlightRequest.FinalProgress, {
+                
             }).success(function (returnData) {
                 
                 // set searchID
-                RevalidateConfig.SearchId = returnData.SearchId;
-                targetScope.FlightRequest.SearchId = returnData.SearchId;
+                RevalidateConfig.SearchId = $scope.flightFixRequest();
+                //targetScope.FlightRequest.SearchId = $scope.flightFixRequest();
 
                 // set flight request if pristine
-                if (targetScope.FlightRequest.Pristine == true) {
-                    targetScope.FlightRequest.Pristine = false;
-                    for (var i = 0; i < returnData.MaxRequest; i++) {
-                        targetScope.FlightRequest.Requests.push(i + 1);
-                    }
+                //if (targetScope.FlightRequest.Pristine == true) {
+                //    targetScope.FlightRequest.Pristine = false;
+                //    for (var i = 0; i < returnData.MaxRequest; i++) {
+                //        targetScope.FlightRequest.Requests.push(i + 1);
+                //    }
+                //}FI
+
+                if (!$scope.PageConfig.ExpiryDate) {
+                    $scope.PageConfig.ExpiryDate.Time = returnData.expTime;
+                    $scope.FlightConfig[0].FlightRequest.FinalProgress = targetScope.progress;
                 }
 
+                if (targetScope.FlightRequest.Progress < 100) {
+                    targetScope.FlightRequest.FinalProgress = targetScope.FlightRequest.Progress; // change this
+                    $scope.FlightConfig[0].FlightRequest.FinalProgress = targetScope.FlightRequest.Progress;
+                }
+
+                targetScope.FlightRequest.Progress = returnData.progress;
+                $scope.FlightConfig[0].FlightRequest.Progress = returnData.progress;
+
                 // if granted request is not null
-                if (returnData.GrantedRequests.length) {
-                    console.log('Granted request  : ' + returnData.GrantedRequests);
+                if (returnData.flights) {
+                    //console.log('Granted request  : ' + returnData.GrantedRequests);
                     targetScope.FlightRequest.SecureCode = returnData.OriginalRequest.SecureCode;
                     targetScope.SecureCode = returnData.OriginalRequest.SecureCode;
 
-                    for (var i = 0; i < returnData.GrantedRequests.length; i++) {
+                    for (var i = 0; i < returnData.flights.length; i++) {
                         // add to completed
-                        if (targetScope.FlightRequest.Completed.indexOf(returnData.GrantedRequests[i] < 0)) {
-                            targetScope.FlightRequest.Completed.push(returnData.GrantedRequests[i]);
+                        if (targetScope.FlightRequest.Completed.indexOf(returnData.flights[i] < 0)) {
+                            targetScope.FlightRequest.Completed.push(returnData.flights[i]);
                         }
                         // check current request. Remove if completed
-                        if (targetScope.FlightRequest.Requests.indexOf(returnData.GrantedRequests[i] < 0)) {
-                            targetScope.FlightRequest.Requests.splice(targetScope.FlightRequest.Requests.indexOf(returnData.GrantedRequests[i]), 1);
+                        if (targetScope.FlightRequest.Requests.indexOf(returnData.flights[i] < 0)) {
+                            targetScope.FlightRequest.Requests.splice(targetScope.FlightRequest.Requests.indexOf(returnData.flights[i]), 1);
                         }
 
                     }
@@ -780,5 +872,7 @@
             }
         }
     }
+
+    
 
 }]);

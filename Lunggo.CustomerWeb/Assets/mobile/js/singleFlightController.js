@@ -3,15 +3,12 @@
     // **********
     // on document ready
     angular.element(document).ready(function () {
-        var x = $scope.tambah(6, 3);
+        
         $scope.GetFlight('get request');
     });
 
     // ********************
 
-    $scope.tambah = function(a, v) {
-        return a + v;
-    }
     $scope.Progress = 0;
     $scope.FlightConfig = [
         {
@@ -103,7 +100,7 @@
 
                 $scope.Progress = returnData.progress;
                 if ($scope.Progress == 100) {
-                    $scope.expiry.time = returnData.expTime;
+                    $scope.PageConfig.ExpiryDate.Time = returnData.expTime;
                     $scope.FlightConfig[0].FlightRequest.Progress = $scope.Progress;
                 } else {
                     $scope.FlightConfig[0].FlightRequest.Progress = $scope.Progress;

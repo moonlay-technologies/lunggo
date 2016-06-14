@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@using Lunggo.ApCommon.Dictionary
+
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Flight.Service
@@ -32,9 +32,9 @@
         trips = tripPart.Split('.').Select(info => new FlightTrip
         {
             OriginAirport = info.Substring(0, 3),
-            OriginCity = DictionaryService.GetInstance().GetAirportCity(info.Substring(0, 3)),
+            OriginCity = FlightService.GetInstance().GetAirportCity(info.Substring(0, 3)),
             DestinationAirport = info.Substring(3, 3),
-            DestinationCity = DictionaryService.GetInstance().GetAirportCity(info.Substring(3, 3)),
+            DestinationCity = FlightService.GetInstance().GetAirportCity(info.Substring(3, 3)),
             DepartureDate = new DateTime(
                 2000 + int.Parse(info.Substring(10, 2)),
                 int.Parse(info.Substring(8, 2)),
@@ -43,12 +43,12 @@
 
         foreach (var trip in trips)
         {
-            originAirportNames.Add(DictionaryService.GetInstance().GetAirportName(trip.OriginAirport));
-            destinationAirportNames.Add(DictionaryService.GetInstance().GetAirportName(trip.DestinationAirport));
-            originCityNames.Add(DictionaryService.GetInstance().GetAirportCity(trip.OriginAirport));
-            destinationCityNames.Add(DictionaryService.GetInstance().GetAirportCity(trip.DestinationAirport));
-            originCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(trip.OriginAirport));
-            destinationCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(trip.DestinationAirport));
+            originAirportNames.Add(FlightService.GetInstance().GetAirportName(trip.OriginAirport));
+            destinationAirportNames.Add(FlightService.GetInstance().GetAirportName(trip.DestinationAirport));
+            originCityNames.Add(FlightService.GetInstance().GetAirportCity(trip.OriginAirport));
+            destinationCityNames.Add(FlightService.GetInstance().GetAirportCity(trip.DestinationAirport));
+            originCountryNames.Add(FlightService.GetInstance().GetAirportCountry(trip.OriginAirport));
+            destinationCountryNames.Add(FlightService.GetInstance().GetAirportCountry(trip.DestinationAirport));
         }
 
         data = new FlightSearchData.Complete
@@ -56,9 +56,9 @@
             AdultCount = int.Parse(infoPart.Substring(0, 1)),
             ChildCount = int.Parse(infoPart.Substring(1, 1)),
             InfantCount = int.Parse(infoPart.Substring(2, 1)),
-            CabinClass = FlightService.ParseCabinClass(infoPart.Substring(3, 1)),
+            CabinClass = FlightService.GetInstance().ParseCabinClass(infoPart.Substring(3, 1)),
             Trips = trips,
-            TripType = FlightService.ParseTripType(trips)
+            TripType = FlightService.GetInstance().ParseTripType(trips)
         };
 
         tripType = data.TripType == TripType.OneWay ? "single" : "return";
