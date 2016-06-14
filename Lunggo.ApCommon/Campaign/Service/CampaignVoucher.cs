@@ -16,14 +16,18 @@ namespace Lunggo.ApCommon.Campaign.Service
         {
             return GetDb.GetCampaignVoucher(voucherCode);
         }
-        public VoucherResponse ValidateVoucherRequest(ValidateVoucherRequest request)
+        public VoucherResponse ValidateVoucherRequest(string rsvNo, string voucherCode)
         {
             var response = new VoucherResponse();
             var user = HttpContext.Current.User;
 
-            var voucher = GetDb.GetCampaignVoucher(request.VoucherCode);
+            var voucher = GetDb.GetCampaignVoucher(voucherCode);
+
+            if (voucher == null)
+                return null;
+
             response.Email = HttpContext.Current.User.Identity.GetEmail();
-            response.VoucherCode = request.VoucherCode;
+            response.VoucherCode = voucherCode;
             response.Discount = new UsedDiscount
             {
                 Name = voucher.CampaignName,
@@ -35,9 +39,9 @@ namespace Lunggo.ApCommon.Campaign.Service
                 IsFlat = false
             };
 
-            var price = GetFlightPrice(request.Token);
+            var price = PaymentDetails.GetFromDb(rsvNo).LocalFinalPrice;
 
-            var validationStatus = ValidateVoucher(voucher, price, user.Identity.GetEmail(), request.VoucherCode);
+            var validationStatus = ValidateVoucher(voucher, price, user.Identity.GetEmail(), voucherCode);
 
             if (validationStatus == VoucherStatus.Success)
             {
@@ -46,38 +50,35 @@ namespace Lunggo.ApCommon.Campaign.Service
             response.VoucherStatus = validationStatus;
             return response;
         }
-        public VoucherResponse UseVoucherRequest(UseVoucherRequest request)
+        public VoucherResponse UseVoucherRequest(string rsvNo, string voucherCode)
         {
             var response = new VoucherResponse();
 
-            var voucher = GetDb.GetCampaignVoucher(request.VoucherCode);
+            var voucher = GetDb.GetCampaignVoucher(voucherCode);
 
-            if (request.RsvNo.IsFlightRsvNo())
+            var reservation = FlightService.GetInstance().GetReservation(rsvNo);
+            response.Email = reservation.Contact.Email;
+            response.VoucherCode = voucherCode;
+
+            var validationStatus = ValidateVoucher(voucher, reservation.Payment.FinalPriceIdr, reservation.Contact.Email, voucherCode);
+
+            if (validationStatus == VoucherStatus.Success)
             {
-                var reservation = FlightService.GetInstance().GetReservation(request.RsvNo);
-                response.Email = reservation.Contact.Email;
-                response.VoucherCode = request.VoucherCode;
-
-                var validationStatus = ValidateVoucher(voucher, reservation.Payment.FinalPriceIdr, reservation.Contact.Email, request.VoucherCode);
-
-                if (validationStatus == VoucherStatus.Success)
+                CalculateVoucherDiscount(voucher, reservation.Payment.FinalPriceIdr, response);
+                validationStatus = VoucherDecrement(voucherCode);
+                response.Discount = new UsedDiscount
                 {
-                    CalculateVoucherDiscount(voucher, reservation.Payment.FinalPriceIdr, response);
-                    validationStatus = VoucherDecrement(request.VoucherCode);
-                    response.Discount = new UsedDiscount
-                    {
-                        Name = voucher.CampaignName,
-                        Description = voucher.CampaignDescription,
-                        DisplayName = voucher.DisplayName,
-                        Percentage = voucher.ValuePercentage.GetValueOrDefault(),
-                        Constant = voucher.ValueConstant.GetValueOrDefault(),
-                        Currency = new Currency("IDR"),
-                        IsFlat = false,
-                    };
-                }
-
-                response.VoucherStatus = validationStatus;
+                    Name = voucher.CampaignName,
+                    Description = voucher.CampaignDescription,
+                    DisplayName = voucher.DisplayName,
+                    Percentage = voucher.ValuePercentage.GetValueOrDefault(),
+                    Constant = voucher.ValueConstant.GetValueOrDefault(),
+                    Currency = new Currency("IDR"),
+                    IsFlat = false,
+                };
             }
+
+            response.VoucherStatus = validationStatus;
             return response;
         }
         private VoucherStatus ValidateVoucher(CampaignVoucher voucher, decimal price, string email, string voucherCode)
@@ -105,19 +106,12 @@ namespace Lunggo.ApCommon.Campaign.Service
             }
             if (voucher.CampaignStatus == false)
                 return VoucherStatus.CampaignInactive;
-            if (voucher.IsSingleUsage!=null && voucher.IsSingleUsage == true)
+            if (voucher.IsSingleUsage != null && voucher.IsSingleUsage == true)
             {
                 if (GetDb.CheckVoucherUsage(voucherCode, email) > 0)
                     return VoucherStatus.VoucherAlreadyUsed;
             }
             return VoucherStatus.Success;
-        }
-
-        private decimal GetFlightPrice(string token)
-        {
-            var flight = FlightService.GetInstance();
-            var itin = flight.GetItineraryForDisplay(token);
-            return itin.TotalFare;
         }
 
         private void CalculateVoucherDiscount(CampaignVoucher voucher, decimal price, VoucherResponse response)

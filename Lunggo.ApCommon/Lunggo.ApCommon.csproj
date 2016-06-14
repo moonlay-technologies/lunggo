@@ -195,8 +195,6 @@
     <Compile Include="Campaign\Database\Query\VoucherDecrementQuery.cs" />
     <Compile Include="Campaign\Database\Query\VoucherIncrementQuery.cs" />
     <Compile Include="Campaign\Model\CampaignVoucher.cs" />
-    <Compile Include="Campaign\Model\UseVoucherRequest .cs" />
-    <Compile Include="Campaign\Model\ValidateVoucherRequest.cs" />
     <Compile Include="Campaign\Model\VoucherResponse.cs" />
     <Compile Include="Campaign\Service\CampaignVoucher.cs" />
     <Compile Include="Campaign\Service\ServiceSingleton.cs" />

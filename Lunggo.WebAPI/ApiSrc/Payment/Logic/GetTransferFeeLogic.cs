@@ -17,7 +17,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                         ErrorCode = "ERPTRF01"
                     };
 
-                var transferFee = PaymentService.GetInstance().GetTransferFee(request.RsvNo);
+                var transferFee = PaymentService.GetInstance().GetTransferFee(request.RsvNo, request.DiscountCode);
 
                 if (transferFee == -1)
                     return new TransferFeeApiResponse

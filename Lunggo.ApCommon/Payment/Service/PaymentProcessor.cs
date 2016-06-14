@@ -29,13 +29,10 @@ namespace Lunggo.ApCommon.Payment.Service
         public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentData paymentData, string discountCode)
         {
             var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
+            paymentDetails.Data = paymentData;
             paymentDetails.Method = method;
             paymentDetails.Medium = GetPaymentMedium(method);
-            var campaign = CampaignService.GetInstance().UseVoucherRequest(new UseVoucherRequest
-            {
-                RsvNo = rsvNo,
-                VoucherCode = discountCode
-            });
+            var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
             if (campaign.Discount != null)
             {
                 paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
@@ -47,16 +44,12 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             if (paymentDetails.Method == PaymentMethod.BankTransfer)
             {
-                paymentDetails.TransferFee = -GetTransferFeeByTokenInCache(rsvNo);
+                paymentDetails.TransferFee = -GetTransferFeeFromCache(paymentDetails.FinalPriceIdr, rsvNo);
                 paymentDetails.FinalPriceIdr += paymentDetails.TransferFee;
             }
             else
             {
-                //Penambahan disini buat menghapus Transfer Code dan Token Transfer Code jika tidak milih Bank Transfer
-                var dummyTransferFee = GetTransferFeeByTokenInCache(rsvNo);
-                var dummyPrice = paymentDetails.OriginalPriceIdr - dummyTransferFee;
-                DeleteUniquePriceFromCache(dummyPrice.ToString(CultureInfo.InvariantCulture));
-                DeleteTokenTransferFeeFromCache(rsvNo);
+                DeleteTransferFeeFromCache(paymentDetails.FinalPriceIdr);
             }
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
             var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
@@ -227,19 +220,16 @@ namespace Lunggo.ApCommon.Payment.Service
             };
         }
 
-        public decimal GetTransferFee(string rsvNo)
+        public decimal GetTransferFee(string rsvNo, string discountCode)
         {
-            decimal uniqueId;
-            var payment = PaymentDetails.GetFromDb(rsvNo);
-
-            if (payment == null)
-                return -1;
-
-            var price = payment.LocalFinalPrice;
-            //Generate Unique Id
-            if (price <= 999)
+            decimal transferFee;
+            var voucher = CampaignService.GetInstance().ValidateVoucherRequest(rsvNo, discountCode);
+            var finalPrice = voucher == null 
+                ? PaymentDetails.GetFromDb(rsvNo).OriginalPriceIdr 
+                : voucher.DiscountedPrice;
+            if (finalPrice <= 999)
             {
-                uniqueId = Decimal.ToInt32(price);
+                transferFee = Decimal.ToInt32(finalPrice);
             }
             else
             {
@@ -248,16 +238,14 @@ namespace Lunggo.ApCommon.Payment.Service
                 var rnd = new Random();
                 do
                 {
-                    uniqueId = rnd.Next(1, 999);
-                    candidatePrice = price - uniqueId;
+                    transferFee = rnd.Next(1, 999);
+                    candidatePrice = finalPrice - transferFee;
                     isExist = IsTransferValueExist(candidatePrice.ToString());
                 } while (isExist);
-                var dict = new Dictionary<string, decimal> {{rsvNo, uniqueId}};
-                SaveUniquePriceinCache(candidatePrice.ToString(CultureInfo.InvariantCulture), dict);
-                SaveTokenTransferFeeinCache(rsvNo, uniqueId.ToString(CultureInfo.InvariantCulture));
+                SaveTransferFeeinCache(candidatePrice, rsvNo, transferFee);
             }
 
-            return uniqueId;
+            return transferFee;
         }
     }
 }

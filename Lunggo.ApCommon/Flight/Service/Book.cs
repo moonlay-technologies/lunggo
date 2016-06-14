@@ -49,6 +49,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 var reservation = CreateReservation(itins, input, bookResults);
                 InsertReservationToDb(reservation);
                 output.RsvNo = reservation.RsvNo;
+                output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
+                output.PaymentUrl = reservation.Payment.RedirectionUrl;
                 
                 DeleteItinerariesFromCache(input.Token);
             }

@@ -27,92 +27,32 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private static void SaveTokenTransferFeeinCache(string rsvNo, string transferFee)
+        private static void SaveTransferFeeinCache(decimal finalPrice, string rsvNo, decimal transferFee)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "transferCodeToken:" + rsvNo;
+            var redisKey = "transferFee:" + finalPrice;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            redisDb.StringSet(redisKey, transferFee, TimeSpan.FromMinutes(150));
-        }
-
-        private static decimal GetTransferFeeByTokenInCache(string token)
-        {
-            var redisService = RedisService.GetInstance();
-            var redisKey = "transferCodeToken:" + token;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var priceString = redisDb.StringGet(redisKey);
-            var price = priceString.IsNullOrEmpty ? 0 : Decimal.Parse(priceString);
-            return price;
-        }
-
-        //Penambahan Method ini buat menghapus token Transfer Code jika tidak dipakai
-        private static void DeleteTokenTransferFeeFromCache(string token)
-        {
-            var redisService = RedisService.GetInstance();
-            var redisKey = "transferCodeToken:" + token;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            redisDb.KeyDelete(redisKey);
-        }
-
-        private static void SaveUniquePriceinCache(string price, Dictionary<string, decimal> dict)
-        {
-            var redisService = RedisService.GetInstance();
-            var redisKey = "transferUniquePrice:" + price;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            foreach (var pair in dict)
-            {
-                redisDb.HashSet(redisKey, pair.Key, (RedisValue) pair.Value);
-                redisDb.KeyExpire(redisKey, TimeSpan.FromMinutes(150));
-            }
+            redisDb.HashSet(redisKey, rsvNo, (RedisValue)transferFee);
+            redisDb.KeyExpire(redisKey, TimeSpan.FromMinutes(150));
 
         }
 
-        private static Dictionary<string, int> GetUniquePriceFromCache(string price)
+        private static decimal GetTransferFeeFromCache(decimal finalPrice, string rsvNo)
         {
-            try
-            {
-                var redisService = RedisService.GetInstance();
-                var redisKey = "transferUniquePrice:" + price;
-                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                var temp = redisDb.HashGetAll(redisKey).ToList();
-                if (temp.Count != 0)
-                {
-                    return temp.ToDictionary(hashEntry => (string)hashEntry.Name, hashEntry => (int)hashEntry.Value);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch
-            {
-                return null;
-            }
+            var redisService = RedisService.GetInstance();
+            var redisKey = "transferFee:" + finalPrice;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var transferFee = redisDb.HashGet(redisKey, rsvNo);
+            return (decimal) transferFee;
         }
 
         // Penambahan Buat Delete TransferCode jika tidak digunakan
-        private static void DeleteUniquePriceFromCache(string price)
+        private static void DeleteTransferFeeFromCache(decimal finalPrice)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "transferUniquePrice:" + price;
+            var redisKey = "transferFee:" + finalPrice;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.KeyDelete(redisKey);
-        }
-
-        private static TimeSpan GetUniqueIdExpiry(string key)
-        {
-            try
-            {
-                var redisService = RedisService.GetInstance();
-                var redisKey = "transferUniquePrice:" + key;
-                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
-                return timeToLive;
-            }
-            catch
-            {
-                return TimeSpan.Zero;
-            }
         }
     }
 }

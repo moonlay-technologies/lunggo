@@ -13,7 +13,7 @@ namespace Lunggo.BackendWeb.Controllers
     {
 
         public HotelReservationsTableRepo hotelBookTable = HotelReservationsTableRepo.GetInstance();
-        public FlightReservationTableRepo flightBookTable = FlightReservationTableRepo.GetInstance();
+        public ReservationTableRepo flightBookTable = ReservationTableRepo.GetInstance();
 
         public IDbConnection connOpen = DbService.GetInstance().GetOpenConnection();
 
