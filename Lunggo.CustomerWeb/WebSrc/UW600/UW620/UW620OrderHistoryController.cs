@@ -14,12 +14,13 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
     public class Uw620OrderHistoryController : Controller
     {
         // GET: UW620OrderHistory
-        public ActionResult OrderHistory(Uw620OrderHistoryRespone request)
+        public ActionResult OrderHistory()
         {
-            var flight = FlightService.GetInstance();
-            var email = User.Identity.GetEmail();
-            var reservations = flight.GetOverviewReservationsByContactEmail(email);
-            return View(reservations ?? new List<FlightReservationForDisplay>());
+            //var flight = FlightService.GetInstance();
+            //var email = User.Identity.GetEmail();
+            //var reservations = flight.GetOverviewReservationsByContactEmail(email);
+            //return View(reservations ?? new List<FlightReservationForDisplay>());
+            return View();
         }
 
         [AllowAnonymous]

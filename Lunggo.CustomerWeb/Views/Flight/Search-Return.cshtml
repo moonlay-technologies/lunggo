@@ -169,7 +169,7 @@
         @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
     </div>
 </section><!-- .search-result-form -->
-<section class="search-result return page-loading" ng-app="travorama" ng-controller="returnFlightController" ng-class="{'page-loaded': pageLoaded}">
+<section class="search-result return page-loading" ng-controller="returnFlightController" ng-class="{'page-loaded': pageLoaded}">
     
     <!-- 
         <p>Departure Flight completeness : {{departureFlightConfig.flightSearchParams.Completeness}}</p>
@@ -1072,7 +1072,7 @@
                                     <div class="segment-left">
                                         <img ng-src="{{segment.airlineLogoUrl}}" alt="{{segment.airlineName}}" class="segment-airline-logo" />
                                         <h5 class="segment-airline-name">{{segment.airlineName}}</h5>
-                                        <h5 class="segment-airline-number">{{segment.airlineCode}}-{{segment.flightNo}}</h5>
+                                        <h5 class="segment-airline-number">{{segment.airlineCd}}-{{segment.flightNo}}</h5>
                                         <div class="flight-facilities hidden">
                                             <span class="flight-baggage">15</span>
                                             <span class="flight-tax"></span>

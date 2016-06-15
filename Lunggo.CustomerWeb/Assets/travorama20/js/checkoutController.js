@@ -34,6 +34,18 @@ app.controller('checkoutController', [
             { name: 'Nn.', value: 'Miss' }
         ];
 
+        $scope.msToTime = function (duration) {
+
+            var milliseconds = parseInt((duration % 1000) / 100),
+                 seconds = parseInt((duration / 1000) % 60),
+                 minutes = parseInt((duration / (1000 * 60)) % 60),
+                 hours = parseInt((duration / (1000 * 60 * 60)));
+            hours = hours;
+            minutes = minutes;
+            seconds = seconds;
+            return hours + "j " + minutes + "m";
+        }
+
         
         $scope.language = langCode;
         $scope.token = token;
@@ -61,20 +73,13 @@ app.controller('checkoutController', [
             rsvNo: '',
             isSuccess: false,
             isPriceChanged: false,
-            
+
             send: function () {
                 $scope.book.booking = true;
                 $scope.book.isPriceChanged = false;
                 $scope.book.checked = false;
                 $scope.contactData = '{' + ' "title":"' + $scope.buyerInfo.title + '",  "name" :"' + $scope.buyerInfo.fullname + '","countryCallCd":"' + $scope.buyerInfo.countryCode + '","phone":"' + $scope.buyerInfo.phone + '","email":"' + $scope.buyerInfo.email + '"' + '}';
                 $scope.paxData = ' "pax" : [';
-                /*$scope.contactData = {
-                    title: $scope.buyerInfo.title,
-                    name: $scope.buyerInfo.fullname,
-                    countryCallCd:$scope.buyerInfo.countryCode,
-                    phone:$scope.buyerInfo.phone,
-                    email: $scope.buyerInfo.email
-                }*/
 
                 // generate data
                 $scope.book.postData =' "token":"' + $scope.token + '",  "contact" :' + $scope.contactData + ',"lang":"' + $scope.language + '"';
@@ -99,59 +104,78 @@ app.controller('checkoutController', [
                     $scope.passengers[i].birth.full = $scope.passengers[i].birth.year + '/' + ('0' + (parseInt($scope.passengers[i].birth.month) + 1)).slice(-2) + '/' + ('0' + $scope.passengers[i].birth.date).slice(-2);
                     // passport expiry date
                     $scope.passengers[i].passport.expire.full = $scope.passengers[i].passport.expire.year + '/' + ('0' + (parseInt($scope.passengers[i].passport.expire.month) + 1)).slice(-2) + '/' + ('0' + $scope.passengers[i].passport.expire.date).slice(-2);
-                    if($scope.passengers[i].type)
-                    if (i != $scope.passengers.length - 1)
-                    {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstname + '" , "last":"' + $scope.passengers[i].lastname + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
+                    if (!$scope.passportRequired) {
+                        if (i != $scope.passengers.length - 1) {
+                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstname + '" , "last":"' + $scope.passengers[i].lastname + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
+                        }
+                        else {
+                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstname + '" , "last":"' + $scope.passengers[i].lastname + '" , "dob":"' + $scope.passengers[i].birth.full + '"  , "nationality":"' + $scope.passengers[i].passport.country + '" }';
+                        }
                     }
                     else
                     {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstname + '" , "last":"' + $scope.passengers[i].lastname + '" , "dob":"' + $scope.passengers[i].birth.full + '"  , "nationality":"' + $scope.passengers[i].passport.country + '" }';
+                        if (i != $scope.passengers.length - 1) {
+                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstname + '" , "last":"' + $scope.passengers[i].lastname + '" , "dob":"' + $scope.passengers[i].birth.full + '", "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
+                        }
+                        else {
+                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstname + '" , "last":"' + $scope.passengers[i].lastname + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" }';
+                        }
                     }
+                    
                     
                 }
                 $scope.paxData = $scope.paxData + ']';
                 $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + '}';
-                console.log("Sebelum di Parse : "+ $scope.book.postData);
                 $scope.book.postData = JSON.parse($scope.book.postData);
 
                 console.log($scope.book.postData);
+
+                //Check Authorization
+                if (isLogin()) {
+                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                }
+                else {
+                    $scope.getFlightHeader = null;
+                }
 
                 // send form
                 $http({
                     method: 'POST',
                     url: $scope.book.url,
-                    data: $.param($scope.book.postData),
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                    data: $scope.book.postData,
+                    headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
                     console.log(returnData);
-                    if (returnData.data.IsSuccess) {
-                        if (returnData.data.NewPrice != null) { // Remove this
-                            $scope.book.isPriceChanged = true;
+                    if (returnData.data.rsvNo != '' || returnData.data.rsvNo != null) {
+                        if (returnData.data.price != null) { 
+                            $scope.book.priceChanged = true;
                             $scope.book.isSuccess = true;
-                            $scope.book.newPrice = returnData.data.NewPrice;
+                            $scope.book.newPrice = returnData.data.price;
                             $scope.book.checked = false;
                         }
                         else {
                             $scope.book.isSuccess = true;
-                            $scope.book.rsvNo = returnData.data.RsvNo;
+                            $scope.book.rsvNo = returnData.data.rsvNo;
 
-                            $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                            $('form#rsvno input#rsvno-input').val(returnData.data.rsvNo);
                             $('form#rsvno').submit();
                             $scope.book.checked = true;
                         }
                         
                         
+                        
                     } else {
-                        if (returnData.data.NewPrice != null) {
+                        if (returnData.data.price != null) {
                             $scope.book.isPriceChanged = true;
                             $scope.book.isSuccess = false;
-                            $scope.book.newPrice = returnData.data.NewPrice;
+                            $scope.book.newPrice = returnData.data.price;
                             $scope.book.checked = true;
                         }
                         else {
                             $scope.book.isSuccess = false;
                             $scope.book.checked = true;
+                            console.log(returnData);
+                            $scope.errorMessage = returnData.data.error; 
                         }
                     }
 
@@ -298,18 +322,21 @@ app.controller('checkoutController', [
                     month: $scope.flightDetail.departureMonth,
                     year: ($scope.flightDetail.departureYear - 12)
                 };
+                passenger.type = 'adult';
             } else if (passenger.type == 'infant') {
                 passenger.birth = {
                     date: $scope.flightDetail.departureDate,
                     month: $scope.flightDetail.departureMonth,
                     year: $scope.bookingDate.getFullYear()
                 };
+                passenger.type = 'infant';
             } else if (passenger.type == 'child') {
                 passenger.birth = {
                     date: $scope.flightDetail.departureDate,
                     month: $scope.flightDetail.departureMonth,
                     year: ($scope.flightDetail.departureYear - 2)
                 };
+                passenger.type = 'child';
             }
             if (nationalityRequired == true) {
                 passenger.nationality = 'Indonesia';
@@ -556,6 +583,17 @@ app.controller('confirmationController', [
     '$http', '$scope', function ($http, $scope) {
 
         $scope.pageLoaded = true;
+        $scope.msToTime = function (duration) {
+
+            var milliseconds = parseInt((duration % 1000) / 100),
+                 seconds = parseInt((duration / 1000) % 60),
+                 minutes = parseInt((duration / (1000 * 60)) % 60),
+                 hours = parseInt((duration / (1000 * 60 * 60)));
+            hours = hours;
+            minutes = minutes;
+            seconds = seconds;
+            return hours + "j " + minutes + "m";
+        }
 
     }
 ]);// confirmation controller

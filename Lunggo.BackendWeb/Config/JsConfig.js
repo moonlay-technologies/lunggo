@@ -83,7 +83,7 @@ var FlightBookConfig = {
 };
 
 var FlightPayConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/flights/pay',
+    Url: 'https://travorama-dv2-api.azurewebsites.net/payment/pay',
     working: false
 };
 
@@ -105,7 +105,7 @@ var AirlineAutocompleteConfig = {
 };
 
 var CheckVoucherConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/voucher/check'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/payment/checkvoucher'
 };
 
 var SubscribeConfig = {
@@ -121,27 +121,27 @@ var GetProfileConfig = {
 };
 
 var RegisterConfig = {
-    Url: 'http://www.dv2.travorama.com/id/ApiAccount/Register'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/register'
 };
 
 var ResetPasswordConfig = {
-    Url: 'http://www.dv2.travorama.com/id/ApiAccount/ResetPassword'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/id/ApiAccount/ResetPassword'
 };
 
 var ForgotPasswordConfig = {
-    Url: 'http://www.dv2.travorama.com/id/ApiAccount/ForgotPassword'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/forgot'
 };
 
 var ChangePasswordConfig = {
-    Url: 'http://www.dv2.travorama.com/id/ApiAccount/ChangePassword'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/id/ApiAccount/ChangePassword'
 };
 
 var ChangeProfileConfig = {
-    Url: 'http://www.dv2.travorama.com/id/ApiAccount/ChangeProfile'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/id/ApiAccount/ChangeProfile'
 };
 
 var ResendConfirmationEmailConfig = {
-    Url: 'http://www.dv2.travorama.com/id/ApiAccount/ResendConfirmationEmail'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/id/ApiAccount/ResendConfirmationEmail'
 };
 
 var VeritransTokenConfig = {
@@ -150,7 +150,7 @@ var VeritransTokenConfig = {
 };
 
 var TransferConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/transferidentifier'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/payment/transferfee'
 };
 
 var LoginMobileConfig = {
@@ -158,7 +158,7 @@ var LoginMobileConfig = {
 };
 
 var RegisterMobileConfig = {
-    Url: 'http://m.local.travorama.com/id/ApiAccount/Register'
+    Url: 'http://m.local.travorama.com/register'
 };
 
 var ResetPasswordMobileConfig = {
@@ -166,7 +166,7 @@ var ResetPasswordMobileConfig = {
 };
 
 var ForgotPasswordMobileConfig = {
-    Url: 'http://m.local.travorama.com/id/ApiAccount/ForgotPassword'
+    Url: 'http://m.local.travorama.com/forgot'
 };
 
 var ChangePasswordMobileConfig = {
@@ -207,11 +207,10 @@ function isValid()
     else
     {
         console.log('Test');
-
+        //Here to get Token
         if (refreshToken != null) {
             var xhttp = new XMLHttpRequest();
             xhttp.open("POST", LoginConfig.Url, true);
-            //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send("refreshtoken:"+getCookie('refreshtoken'));
             if (xhttp.status == "200") {
                 return true;
@@ -219,10 +218,7 @@ function isValid()
             else
             {
                 return false;
-            }
-            //return true;
-            
-            
+            } 
         }
         else
         {
@@ -230,6 +226,21 @@ function isValid()
         }
     }
 }
+
+function isLogin()
+{
+    var token = getCookie('accesstoken');
+    var refreshToken = getCookie('refreshtoken');
+    if (token != null || token != '') {
+        return true;
+    }
+    else
+    {
+        //do some logic here if refresh token is not null
+        return false;
+    }
+}
+
 
 //Get Value from Cookie
 function getCookie(name) {

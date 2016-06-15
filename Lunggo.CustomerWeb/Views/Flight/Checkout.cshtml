@@ -391,7 +391,7 @@
                                     <section class="detail-content">
                                         <div ng-repeat="segment in trips[0].segments track by $index">
                                             <div class="transit" ng-if="$index > 0">
-                                                <p>Transit di {{segment.departureCity}} ({{segment.departure}}) selama {{trips[0].transits[ $index - 1 ].duration}}</p>
+                                                <p>Transit di {{segment.departureCity}} ({{segment.departure}}) selama {{msToTime(trips[0].transits[ $index - 1 ].duration)}}</p>
                                             </div>
                                             <div class="segment">
                                                 <h5 class="segment-airline-name">{{segment.airlineName}} {{segment.airlineCd}}-{{segment.flightNo}} <span class="pull-right"></span></h5>
@@ -412,7 +412,7 @@
                                                         <h5>{{segment.departureName}}</h5>
                                                     </div>
                                                     <div class="segment-duration">
-                                                        <h5><span>Durasi :</span> {{segment.duration}}</h5>
+                                                        <h5><span>Durasi :</span> {{msToTime(segment.duration)}}</h5>
                                                     </div>
                                                     <div class="segment-arrival">
                                                         <h5>{{segment.arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
@@ -439,7 +439,7 @@
                                     <section class="detail-content">
                                         <div ng-repeat="segment in trips[1].segments track by $index">
                                             <div class="transit" ng-if="$index > 0">
-                                                <p>Transit di {{segment.departureCity}} selama {{trips[1].transits[ $index - 1 ].duration}}</p>
+                                                <p>Transit di {{segment.departureCity}} selama {{msToTime(trips[1].transits[ $index - 1 ].duration)}}</p>
                                             </div>
                                             <div class="segment">
                                                 <h5 class="segment-airline-name">{{segment.airlineName}} {{segment.airlineCd}}-{{segment.flightNo}} <span class="pull-right"></span></h5>
@@ -460,7 +460,7 @@
                                                         <h5>{{segment.departureName}}</h5>
                                                         </div>
                                                     <div class="segment-duration">
-                                                        <h5><span>Durasi:</span> {{segment.duration}}</h5>
+                                                        <h5><span>Durasi:</span> {{msToTime(segment.duration)}}</h5>
                                                         </div>
                                                     <div class="segment-arrival">
                                                         <h5>{{segment.arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>

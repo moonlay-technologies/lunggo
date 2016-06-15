@@ -157,7 +157,7 @@
             @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
         </div>
     </section><!-- .search-result-form -->
-    <section class="search-result one-way page-loading" ng-app="travorama" ng-controller="singleFlightController" ng-class="{'page-loaded': pageLoaded}">
+    <section class="search-result one-way page-loading" ng-controller="singleFlightController" ng-class="{'page-loaded': pageLoaded}">
     
         <div class="page-progress" ng-show="loading && loadingFlight && flightRequest.FinalProgress < 100">
             <div class="container">
@@ -383,7 +383,7 @@
                                             </div>
                                         </div>
                                         <div class="summary-top-right-bottom flight-button">
-                                            <a ng-click="setFlightActive(flight.IndexNo)" class="flight-detail-trigger">Detail Penerbangan {{flight.IndexNo}} <span class="caret"></span></a>
+                                            <a ng-click="setFlightActive(flight.IndexNo)" class="flight-detail-trigger">Detail Penerbangan <span class="caret"></span></a>
                                             <!-- <a class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a> -->
                                         </div><!-- .flight-button -->
                                     </div><!-- .flight-date -->

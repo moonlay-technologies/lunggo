@@ -390,9 +390,23 @@ app.controller('returnFlightController', [
                 //console.log('Dep Req : ' + $scope.departureFlightConfig.flightList[departureFlightIndexNo].reg + ':::: Ret Req :' + $scope.returnFlightConfig.flightList[returnFlightIndexNo].reg);
                 $scope.departureFlightConfig.validating = true;
                 $scope.returnFlightConfig.validating = true;
-                $http.post(SelectConfig.Url, {
-                    searchId: $scope.returnFlightConfig.searchId,
-                    regs: [$scope.departureFlightConfig.flightList[departureFlightIndexNo].reg, $scope.returnFlightConfig.flightList[returnFlightIndexNo].reg],
+
+                //Check Authorization
+                if (isLogin()) {
+                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                }
+                else {
+                    $scope.getFlightHeader = null;
+                }
+
+                $http({
+                    method: 'POST',
+                    url: SelectConfig.Url,
+                    data: {
+                        searchId: $scope.returnFlightConfig.searchId,
+                        regs: [$scope.departureFlightConfig.flightList[departureFlightIndexNo].reg, $scope.returnFlightConfig.flightList[returnFlightIndexNo].reg],
+                    },
+                    headers: { 'Authorization': $scope.getFlightHeader }
                 }).success(function (returnData) {
                     $scope.departureFlightConfig.validating = false;
                     $scope.returnFlightConfig.validating = false;
@@ -605,11 +619,18 @@ app.controller('returnFlightController', [
             targetScope.loading = true;
             targetScope.loadingFlight = true;
 
+            if (isLogin()) {
+                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+            }
+            else {
+                $scope.getFlightHeader = null;
+            }
+
             // get flight
             console.log('Getting flight for : ' + '/' + targetScope.flightSearchParams + '/' + targetScope.progress);
             if (targetScope.progress < 100) {
                 $http.get(FlightSearchConfig.Url + '/' + targetScope.flightSearchParams + '/' + targetScope.progress, {
-
+                    headers: { 'Authorization': $scope.getFlightHeader }
                 }).success(function (returnData) {
 
                     // set search ID
