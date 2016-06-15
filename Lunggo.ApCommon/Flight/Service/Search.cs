@@ -8,8 +8,10 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
+using Lunggo.Framework.Extension;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 
@@ -65,8 +67,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     searchedItinLists.Skip(ParseTripType(input.SearchId) != TripType.OneWay ? 1 : 0).Select(lists => lists.Select(ConvertToItineraryForDisplay).ToList()).ToArray();
 
                 var combos = searchedSuppliers.SelectMany(sup => GetCombosFromCache(input.SearchId, sup)).ToList();
-
-                SetComboFare(seachedItinListsForDisplay, searchedItinLists[0], combos);
+                SetComboFare(seachedItinListsForDisplay, searchedItinLists[0], combos, localCurrency);
 
                 var expiry = searchedSuppliers.Select(supplier => GetSearchedItinerariesExpiry(input.SearchId, supplier)).Min();
                 output.IsSuccess = true;
@@ -147,19 +148,29 @@ namespace Lunggo.ApCommon.Flight.Service
             InvalidateSearchingStatusInCache(searchId, supplierIndex);
         }
 
-        private void SetComboFare(List<FlightItineraryForDisplay>[] itinLists, List<FlightItinerary> bundledItins, List<Combo> combos)
+        private void SetComboFare(List<FlightItineraryForDisplay>[] itinLists, List<FlightItinerary> bundledItins, List<Combo> combos, Currency localCurrency)
         {
             foreach (var combo in combos)
             {
-                combo.Fare = bundledItins.Single(itin => itin.RegisterNumber == combo.BundledRegister).Price.Local;
-                var comboFare = combo.Fare / combo.Registers.Length;
+                var comboOriPrice = bundledItins.Single(itin => itin.RegisterNumber == combo.BundledRegister).Price;
+                var comboPrice = comboOriPrice.Serialize().Deserialize<Price>();
+                comboPrice.CalculateFinalAndLocal(localCurrency);
+                var comboFare = comboPrice.Local / combo.Registers.Length;
                 for (var i = 0; i < combo.Registers.Length; i++)
                 {
                     var reg = combo.Registers[i];
-                    var identicalItin = itinLists[i].Single(itin => itin.RegisterNumber == reg);
-                    if (identicalItin.ComboFare == null ||
-                        (identicalItin.ComboFare != null && identicalItin.ComboFare > comboFare))
-                        identicalItin.ComboFare = comboFare;
+                    FlightItineraryForDisplay identicalItin;
+                    try
+                    {
+                        identicalItin = itinLists[i].Single(itin => itin.RegisterNumber == reg);
+                        if (identicalItin.ComboFare == null ||
+                            (identicalItin.ComboFare != null && identicalItin.ComboFare > comboFare))
+                            identicalItin.ComboFare = comboFare;
+                    }
+                    catch
+                    {
+                        
+                    }
                 }
             }
         }
@@ -198,7 +209,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (combo.Registers.Contains(-1))
                     continue;
                 combo.BundledRegister = bundledItin.RegisterNumber;
-                combo.Fare = bundledItin.Price.Local;
+                combo.Fare = bundledItin.Price.FinalIdr;
                 combos.Add(combo);
             }
             return combos;

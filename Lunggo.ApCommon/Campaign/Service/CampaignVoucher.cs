@@ -39,7 +39,8 @@ namespace Lunggo.ApCommon.Campaign.Service
                 IsFlat = false
             };
 
-            var price = PaymentDetails.GetFromDb(rsvNo).LocalFinalPrice;
+            var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
+            var price = paymentDetails.OriginalPriceIdr*paymentDetails.LocalCurrency.Rate;
 
             var validationStatus = ValidateVoucher(voucher, price, user.Identity.GetEmail(), voucherCode);
 
@@ -60,11 +61,14 @@ namespace Lunggo.ApCommon.Campaign.Service
             response.Email = reservation.Contact.Email;
             response.VoucherCode = voucherCode;
 
+            var paymentDetails = reservation.Payment;
+            var price = paymentDetails.OriginalPriceIdr * paymentDetails.LocalCurrency.Rate;
+
             var validationStatus = ValidateVoucher(voucher, reservation.Payment.FinalPriceIdr, reservation.Contact.Email, voucherCode);
 
             if (validationStatus == VoucherStatus.Success)
             {
-                CalculateVoucherDiscount(voucher, reservation.Payment.FinalPriceIdr, response);
+                CalculateVoucherDiscount(voucher, price, response);
                 validationStatus = VoucherDecrement(voucherCode);
                 response.Discount = new UsedDiscount
                 {

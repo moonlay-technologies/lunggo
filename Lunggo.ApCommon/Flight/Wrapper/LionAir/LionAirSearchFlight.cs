@@ -31,6 +31,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
         {
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
+                if (conditions.Trips.Count > 1)
+                    return new SearchFlightResult
+                    {
+                        IsSuccess = true,
+                        Itineraries = new List<FlightItinerary>()
+                    };
+
                 var client = CreateCustomerClient();
 
                 if (conditions.AdultCount == 0)

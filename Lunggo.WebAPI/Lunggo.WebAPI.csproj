@@ -188,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiSrc\Account\AccountController.cs" />
+    <Compile Include="ApiSrc\Account\Logic\ChangePasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetProfileLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ForgotPasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangeProfileLogic.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="ApiSrc\Account\Logic\GetReservationLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\RegisterLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\LoginLogic.cs" />
+    <Compile Include="ApiSrc\Account\Model\ChangePasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangeProfileApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ForgotPasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\GetProfileApiResponse.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="ApiSrc\Common\Model\ApiResponseBase.cs" />
     <Compile Include="ApiSrc\Flight\FlightController.cs" />
     <Compile Include="ApiSrc\Flight\Logic\CheckFlightIssuanceLogic.cs" />
+    <Compile Include="ApiSrc\Flight\Logic\GetItineraryLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\IssueFlightLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\BookFlightLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\ExpireReservationsLogic.cs" />
@@ -236,6 +239,7 @@
     <Compile Include="ApiSrc\Flight\Model\FlightBookApiResponse.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightCancelApiRequest.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightCancelApiResponse.cs" />
+    <Compile Include="ApiSrc\Flight\Model\FlightItineraryApiResponse.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightSelectApiResponse.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightSelectApiRequest.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightRulesApiResponse.cs" />
