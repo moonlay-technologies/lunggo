@@ -26,9 +26,14 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentData paymentData, string discountCode)
+        public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentData paymentData, string discountCode, out bool isUpdated)
         {
+            isUpdated = false;
             var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
+
+            if (paymentDetails.Method != PaymentMethod.Undefined)
+                return paymentDetails;
+
             paymentDetails.Data = paymentData;
             paymentDetails.Method = method;
             paymentDetails.Medium = GetPaymentMedium(method);
@@ -37,6 +42,8 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
                 paymentDetails.Discount = campaign.Discount;
+                paymentDetails.DiscountCode = campaign.VoucherCode;
+                paymentDetails.DiscountNominal = campaign.TotalDiscount;
             }
             else
             {
@@ -44,17 +51,23 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             if (paymentDetails.Method == PaymentMethod.BankTransfer)
             {
-                paymentDetails.TransferFee = -GetTransferFeeFromCache(paymentDetails.FinalPriceIdr, rsvNo);
+                var transferFee = GetTransferFeeFromCache(rsvNo);
+                if (transferFee == 0M)
+                    return paymentDetails;
+
+                paymentDetails.TransferFee = -transferFee;
                 paymentDetails.FinalPriceIdr += paymentDetails.TransferFee;
             }
             else
             {
-                DeleteTransferFeeFromCache(paymentDetails.FinalPriceIdr);
+                DeleteTransferFeeFromCache(rsvNo);
             }
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
             var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
             var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
             ProcessPayment(paymentDetails, transactionDetails, itemDetails, method);
+            UpdatePaymentToDb(rsvNo, paymentDetails);
+            isUpdated = true;
             return paymentDetails;
         }
 
@@ -65,7 +78,7 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 var service = FlightService.GetService(ProductTypeCd.Parse(rsvNo));
                 var serviceInstance = service.GetMethod("GetInstance").Invoke(null, null);
-                service.GetMethod("Issue").Invoke(serviceInstance, new object[] {rsvNo});
+                service.GetMethod("Issue").Invoke(serviceInstance, new object[] { rsvNo });
             }
         }
 
@@ -120,6 +133,9 @@ namespace Lunggo.ApCommon.Payment.Service
                 paymentDetails.RedirectionUrl = GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
                 paymentDetails.Status = paymentDetails.RedirectionUrl != null ? PaymentStatus.Pending : PaymentStatus.Failed;
             }
+            paymentDetails.PaidAmountIdr = paymentDetails.FinalPriceIdr;
+            paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr;
+            paymentDetails.LocalPaidAmount = paymentDetails.FinalPriceIdr;
         }
 
         public List<SavedCreditCard> GetSavedCreditCards(string email)
@@ -224,12 +240,12 @@ namespace Lunggo.ApCommon.Payment.Service
         {
             decimal transferFee;
             var voucher = CampaignService.GetInstance().ValidateVoucherRequest(rsvNo, discountCode);
-            var finalPrice = voucher == null 
-                ? PaymentDetails.GetFromDb(rsvNo).OriginalPriceIdr 
+            var finalPrice = voucher == null
+                ? PaymentDetails.GetFromDb(rsvNo).OriginalPriceIdr
                 : voucher.DiscountedPrice;
-            if (finalPrice <= 999)
+            if (finalPrice <= 999 && finalPrice >= 0)
             {
-                transferFee = Decimal.ToInt32(finalPrice);
+                transferFee = finalPrice;
             }
             else
             {
@@ -240,9 +256,10 @@ namespace Lunggo.ApCommon.Payment.Service
                 {
                     transferFee = rnd.Next(1, 999);
                     candidatePrice = finalPrice - transferFee;
-                    isExist = IsTransferValueExist(candidatePrice.ToString());
+                    isExist = IsTransferValueExist(candidatePrice);
                 } while (isExist);
-                SaveTransferFeeinCache(candidatePrice, rsvNo, transferFee);
+                SaveTransferValue(candidatePrice);
+                SaveTransferFeeinCache(rsvNo, transferFee);
             }
 
             return transferFee;

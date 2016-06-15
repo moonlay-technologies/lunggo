@@ -34,16 +34,36 @@ namespace Lunggo.ApCommon.Payment.Query
                 clauseBuilder.Append(@"MethodCd = @MethodCd, ");
             if (condition.Time != null)
                 clauseBuilder.Append(@"Time = @Time, ");
-            if (condition.TimeLimit != null)
-                clauseBuilder.Append(@"TimeLimit = @TimeLimit, ");
             if (condition.TransferAccount != null)
                 clauseBuilder.Append(@"TransferAccount = @TransferAccount, ");
+            if (condition.TimeLimit != null)
+                clauseBuilder.Append(@"TimeLimit = @TimeLimit, ");
             if (condition.RedirectionUrl != null)
                 clauseBuilder.Append(@"RedirectionUrl = @RedirectionUrl, ");
             if (condition.PaidAmountIdr != null && condition.PaidAmountIdr != 0M)
                 clauseBuilder.Append(@"PaidAmountIdr = @PaidAmountIdr, ");
-            if (condition.LocalPaidAmount != null && condition.PaidAmount != 0M)
+            if (condition.LocalPaidAmount != null && condition.LocalPaidAmount != 0M)
                 clauseBuilder.Append(@"LocalPaidAmount = @LocalPaidAmount, ");
+            if (condition.ExternalId != null && condition.ExternalId != 0M)
+                clauseBuilder.Append(@"ExternalId = @ExternalId, ");
+            if (condition.OriginalPriceIdr != null)
+                clauseBuilder.Append(@"OriginalPriceIdr = @OriginalPriceIdr, ");
+            if (condition.DiscountCode != null)
+                clauseBuilder.Append(@"DiscountCode = @DiscountCode, ");
+            if (condition.DiscountNominal != null)
+                clauseBuilder.Append(@"DiscountNominal = @DiscountNominal, ");
+            if (condition.TransferFee != null)
+                clauseBuilder.Append(@"TransferFee = @TransferFee, ");
+            if (condition.FinalPriceIdr != null)
+                clauseBuilder.Append(@"FinalPriceIdr = @FinalPriceIdr, ");
+            if (condition.LocalCurrencyCd != null)
+                clauseBuilder.Append(@"LocalCurrencyCd = @LocalCurrencyCd, ");
+            if (condition.LocalRate != null)
+                clauseBuilder.Append(@"LocalRate = @LocalRate, ");
+            if (condition.LocalFinalPrice != null)
+                clauseBuilder.Append(@"LocalFinalPrice = @LocalFinalPrice, ");
+            if (condition.InvoiceNo != null)
+                clauseBuilder.Append(@"InvoiceNo = @InvoiceNo, ");
             if (condition.StatusCd != null)
             {
                 clauseBuilder.Append(

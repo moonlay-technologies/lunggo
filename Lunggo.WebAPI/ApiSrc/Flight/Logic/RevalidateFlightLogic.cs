@@ -14,12 +14,12 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             {
                 if (IsValid(request))
                 {
-            var service = FlightService.GetInstance();
-            var revalidateServiceRequest = PreprocessServiceRequest(request);
-            var revalidateServiceResponse = service.RevalidateFlight(revalidateServiceRequest);
+                    var service = FlightService.GetInstance();
+                    var revalidateServiceRequest = PreprocessServiceRequest(request);
+                    var revalidateServiceResponse = service.RevalidateFlight(revalidateServiceRequest);
                     var apiResponse = AssembleApiResponse(revalidateServiceResponse);
-            return apiResponse;
-        }
+                    return apiResponse;
+                }
                 else
                 {
                     return new FlightRevalidateApiResponse
@@ -37,8 +37,8 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
 
         private static bool IsValid(FlightRevalidateApiRequest request)
         {
-            return 
-                request != null && 
+            return
+                request != null &&
                 request.Token != null;
         }
 

@@ -93,6 +93,17 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             return apiResponse;
         }
 
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("changepassword")]
+        public ApiResponseBase ChangePassword()
+        {
+            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangePasswordApiRequest>();
+            var apiResponse = AccountLogic.ChangePassword(request, UserManager);
+            return apiResponse;
+        }
+
         [HttpGet]
         [LunggoCorsPolicy]
         [Authorize]
