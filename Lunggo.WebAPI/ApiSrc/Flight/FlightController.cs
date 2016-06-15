@@ -35,7 +35,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
             }
             catch
             {
-                return ApiResponseBase.ReturnInvalidJson();
+                return ApiResponseBase.ErrorInvalidJson();
             }
             var apiResponse = FlightLogic.SelectFlight(request);
             return apiResponse;
@@ -66,7 +66,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
             }
             catch
             {
-                return ApiResponseBase.ReturnInvalidJson();
+                return ApiResponseBase.ErrorInvalidJson();
             }
             var apiResponse = FlightLogic.BookFlight(request);
             //var apiResponse = new FlightBookApiResponse
@@ -90,7 +90,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
             }
             catch
             {
-                return ApiResponseBase.ReturnInvalidJson();
+                return ApiResponseBase.ErrorInvalidJson();
             }
             var apiResponse = FlightLogic.IssueFlight(request);
             return apiResponse;

@@ -43,9 +43,17 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [AllowAnonymous]
         [LunggoCorsPolicy]
         [Route("login")]
-        public LoginApiResponse Login()
+        public ApiResponseBase Login()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<LoginApiRequest>();
+            LoginApiRequest request;
+            try
+            {
+                request = Request.Content.ReadAsStringAsync().Result.Deserialize<LoginApiRequest>();
+            }
+            catch
+            {
+                return ApiResponseBase.ErrorInvalidJson();
+            }
             var apiResponse = AccountLogic.Login(request);
             return apiResponse;
         }
@@ -56,7 +64,15 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("register")]
         public ApiResponseBase Register()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<RegisterApiRequest>();
+            RegisterApiRequest request;
+            try
+            {
+                request = Request.Content.ReadAsStringAsync().Result.Deserialize<RegisterApiRequest>();
+            }
+            catch
+            {
+                return ApiResponseBase.ErrorInvalidJson();
+            }
             var apiResponse = AccountLogic.Register(request, UserManager);
             return apiResponse;
         }
@@ -67,7 +83,15 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("forgot")]
         public ApiResponseBase ForgotPassword()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ForgotPasswordApiRequest>();
+            ForgotPasswordApiRequest request;
+            try
+            {
+                request = Request.Content.ReadAsStringAsync().Result.Deserialize<ForgotPasswordApiRequest>();
+            }
+            catch
+            {
+                return ApiResponseBase.ErrorInvalidJson();
+            }
             var apiResponse = AccountLogic.ForgotPassword(request, UserManager);
             return apiResponse;
         }
@@ -78,7 +102,15 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("profile")]
         public ApiResponseBase ChangeProfile()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangeProfileApiRequest>();
+            ChangeProfileApiRequest request;
+            try
+            {
+                request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangeProfileApiRequest>();
+            }
+            catch
+            {
+                return ApiResponseBase.ErrorInvalidJson();
+            }
             var apiResponse = AccountLogic.ChangeProfile(request, UserManager);
             return apiResponse;
         }
@@ -99,7 +131,15 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("changepassword")]
         public ApiResponseBase ChangePassword()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangePasswordApiRequest>();
+            ChangePasswordApiRequest request;
+            try
+            {
+                request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangePasswordApiRequest>();
+            }
+            catch
+            {
+                return ApiResponseBase.ErrorInvalidJson();
+            }
             var apiResponse = AccountLogic.ChangePassword(request, UserManager);
             return apiResponse;
         }

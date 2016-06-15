@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using Lunggo.Framework.Cors;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
@@ -12,11 +13,19 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("payment/pay")]
-        public PaymentApiResponse Pay()
+        public ApiResponseBase Pay()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<PayApiRequest>();
-            var apiResponse = PaymentLogic.Pay(request);
-            return apiResponse;
+            try
+            {
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<PayApiRequest>();
+                var apiResponse = PaymentLogic.Pay(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+            
         }
 
         [HttpGet]
@@ -40,9 +49,17 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("payment/transferfee")]
-        public TransferFeeApiResponse GetTransferIdentifier()
+        public ApiResponseBase GetTransferIdentifier()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<TransferFeeApiRequest>();
+            TransferFeeApiRequest request;
+            try
+            {
+                request = Request.Content.ReadAsStringAsync().Result.Deserialize<TransferFeeApiRequest>();
+            }
+            catch
+            {
+                return ApiResponseBase.ErrorInvalidJson();
+            }
             var apiResponse = PaymentLogic.GetTransferFee(request);
             return apiResponse;
         }
@@ -50,9 +67,17 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("payment/checkvoucher")]
-        public CheckVoucherApiResponse CheckVoucher()
+        public ApiResponseBase CheckVoucher()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<CheckVoucherApiRequest>();
+            CheckVoucherApiRequest request;
+            try
+            {
+                request = Request.Content.ReadAsStringAsync().Result.Deserialize<CheckVoucherApiRequest>();
+            }
+            catch
+            {
+                return ApiResponseBase.ErrorInvalidJson();
+            }
             var apiResponse = VoucherLogic.CheckVoucher(request);
             return apiResponse;
         }

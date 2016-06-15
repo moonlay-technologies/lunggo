@@ -2,38 +2,28 @@
 using Lunggo.ApCommon.Campaign.Constant;
 using Lunggo.ApCommon.Campaign.Model;
 using Lunggo.ApCommon.Campaign.Service;
+using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Payment.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 {
     public partial class VoucherLogic
     {
-        public static CheckVoucherApiResponse CheckVoucher(CheckVoucherApiRequest request)
+        public static ApiResponseBase CheckVoucher(CheckVoucherApiRequest request)
         {
-            try
+            if (IsValid(request))
             {
-                if (IsValid(request))
-                {
-                    var service = CampaignService.GetInstance();
-                    var response = service.ValidateVoucherRequest(request.RsvNo, request.DiscountCode);
-                    var apiResponse = AssembleApiResponse(response);
-                    return apiResponse;
-                }
-                else
-                {
-                    return new CheckVoucherApiResponse
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERVCHE01"
-                    };
-                }
+                var service = CampaignService.GetInstance();
+                var response = service.ValidateVoucherRequest(request.RsvNo, request.DiscountCode);
+                var apiResponse = AssembleApiResponse(response);
+                return apiResponse;
             }
-            catch
+            else
             {
                 return new CheckVoucherApiResponse
                 {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERRGEN99"
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERVCHE01"
                 };
             }
         }
@@ -46,7 +36,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 request.RsvNo != null;
         }
 
-        private static CheckVoucherApiResponse AssembleApiResponse(VoucherResponse response)
+        private static ApiResponseBase AssembleApiResponse(VoucherResponse response)
         {
             switch (response.VoucherStatus)
             {
@@ -91,11 +81,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                         ErrorCode = "ERVCHE06"
                     };
                 default:
-                    return new CheckVoucherApiResponse
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERRGEN99"
-                    };
+                    return ApiResponseBase.Error500();
             }
         }
     }

@@ -32,7 +32,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             }
             catch
             {
-                return ApiResponseBase.Return500();
+                return ApiResponseBase.Error500();
             }
         }
 

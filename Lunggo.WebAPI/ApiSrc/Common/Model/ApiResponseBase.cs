@@ -26,7 +26,14 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
             Version = "1.0";
         }
 
-        public static ApiResponseBase Return500()
+        public static ApiResponseBase ExceptionHandling(Exception e)
+        {
+            return e.GetType() == typeof (JsonReaderException)
+                ? ErrorInvalidJson()
+                : Error500();
+        }
+
+        public static ApiResponseBase Error500()
         {
             return new ApiResponseBase
             {
@@ -35,7 +42,7 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
             };
         }
 
-        public static ApiResponseBase ReturnInvalidJson()
+        public static ApiResponseBase ErrorInvalidJson()
         {
             return new ApiResponseBase
             {

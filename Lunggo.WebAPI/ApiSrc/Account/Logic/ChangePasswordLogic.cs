@@ -13,13 +13,6 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
         {
             try
             {
-                if (request.NewPassword != request.ConfirmPassword)
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERACHP01"
-                    };
-
                 var user = HttpContext.Current.User;
                 var result = userManager.ChangePassword(user.Identity.GetUserId(), request.OldPassword, request.NewPassword);
                 if (result.Succeeded)
@@ -29,19 +22,12 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                         StatusCode = HttpStatusCode.OK
                     };
                 }
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERRGEN99"
-                };
+
+                return ApiResponseBase.Error500();
             }
             catch
             {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERRGEN99"
-                };
+                return ApiResponseBase.Error500();
             }
         }
     }
