@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Http;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Account.Logic;
@@ -45,17 +46,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("login")]
         public ApiResponseBase Login()
         {
-            LoginApiRequest request;
             try
             {
-                request = Request.Content.ReadAsStringAsync().Result.Deserialize<LoginApiRequest>();
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<LoginApiRequest>();
+                var apiResponse = AccountLogic.Login(request);
+                return apiResponse;
             }
-            catch
+            catch (Exception e)
             {
-                return ApiResponseBase.ErrorInvalidJson();
+                return ApiResponseBase.ExceptionHandling(e);
             }
-            var apiResponse = AccountLogic.Login(request);
-            return apiResponse;
         }
 
         [HttpPost]
@@ -64,17 +64,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("register")]
         public ApiResponseBase Register()
         {
-            RegisterApiRequest request;
             try
             {
-                request = Request.Content.ReadAsStringAsync().Result.Deserialize<RegisterApiRequest>();
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<RegisterApiRequest>();
+                var apiResponse = AccountLogic.Register(request, UserManager);
+                return apiResponse;
             }
-            catch
+            catch (Exception e)
             {
-                return ApiResponseBase.ErrorInvalidJson();
+                return ApiResponseBase.ExceptionHandling(e);
             }
-            var apiResponse = AccountLogic.Register(request, UserManager);
-            return apiResponse;
         }
 
         [HttpPost]
@@ -83,17 +82,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("forgot")]
         public ApiResponseBase ForgotPassword()
         {
-            ForgotPasswordApiRequest request;
             try
             {
-                request = Request.Content.ReadAsStringAsync().Result.Deserialize<ForgotPasswordApiRequest>();
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ForgotPasswordApiRequest>();
+                var apiResponse = AccountLogic.ForgotPassword(request, UserManager);
+                return apiResponse;
             }
-            catch
+            catch (Exception e)
             {
-                return ApiResponseBase.ErrorInvalidJson();
+                return ApiResponseBase.ExceptionHandling(e);
             }
-            var apiResponse = AccountLogic.ForgotPassword(request, UserManager);
-            return apiResponse;
         }
 
         [HttpPatch]
@@ -102,27 +100,33 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("profile")]
         public ApiResponseBase ChangeProfile()
         {
-            ChangeProfileApiRequest request;
             try
             {
-                request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangeProfileApiRequest>();
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangeProfileApiRequest>();
+                var apiResponse = AccountLogic.ChangeProfile(request, UserManager);
+                return apiResponse;
             }
-            catch
+            catch (Exception e)
             {
-                return ApiResponseBase.ErrorInvalidJson();
+                return ApiResponseBase.ExceptionHandling(e);
             }
-            var apiResponse = AccountLogic.ChangeProfile(request, UserManager);
-            return apiResponse;
         }
 
         [HttpGet]
         [LunggoCorsPolicy]
         [Authorize]
         [Route("profile")]
-        public GetProfileApiResponse GetProfile()
+        public ApiResponseBase GetProfile()
         {
-            var apiResponse = AccountLogic.GetProfile();
-            return apiResponse;
+            try
+            {
+                var apiResponse = AccountLogic.GetProfile();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
         }
 
         [HttpPost]
@@ -131,37 +135,50 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("changepassword")]
         public ApiResponseBase ChangePassword()
         {
-            ChangePasswordApiRequest request;
             try
             {
-                request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangePasswordApiRequest>();
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangePasswordApiRequest>();
+                var apiResponse = AccountLogic.ChangePassword(request, UserManager);
+                return apiResponse;
             }
-            catch
+            catch (Exception e)
             {
-                return ApiResponseBase.ErrorInvalidJson();
+                return ApiResponseBase.ExceptionHandling(e);
             }
-            var apiResponse = AccountLogic.ChangePassword(request, UserManager);
-            return apiResponse;
         }
 
         [HttpGet]
         [LunggoCorsPolicy]
         [Authorize]
         [Route("trxhistory")]
-        public TransactionHistoryApiResponse GetTransactionHistory()
+        public ApiResponseBase GetTransactionHistory()
         {
-            var apiResponse = AccountLogic.GetTransactionHistory();
-            return apiResponse;
+            try
+            {
+                var apiResponse = AccountLogic.GetTransactionHistory();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
         }
 
         [HttpGet]
         [LunggoCorsPolicy]
         [Authorize]
         [Route("rsv/{rsvNo}")]
-        public GetReservationApiResponse GetOrderDetail(string rsvNo)
+        public ApiResponseBase GetOrderDetail(string rsvNo)
         {
-            var apiResponse = AccountLogic.GetReservation(rsvNo);
-            return apiResponse;
+            try
+            {
+                var apiResponse = AccountLogic.GetReservation(rsvNo);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
         }
     }
 }

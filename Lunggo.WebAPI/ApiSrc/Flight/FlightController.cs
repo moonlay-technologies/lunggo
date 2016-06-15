@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using Lunggo.Framework.Cors;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
@@ -14,13 +15,20 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [Route("flight/{searchId}/{progress}")]
         public ApiResponseBase SearchFlights(string searchId, int progress)
         {
-            var request = new FlightSearchApiRequest
+            try
             {
-                SearchId = searchId,
-                Progress = progress
-            };
-            var apiResponse = FlightLogic.SearchFlights(request);
-            return apiResponse;
+                var request = new FlightSearchApiRequest
+                {
+                    SearchId = searchId,
+                    Progress = progress
+                };
+                var apiResponse = FlightLogic.SearchFlights(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
         }
 
         [HttpPost]
@@ -28,17 +36,16 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [Route("flight/select")]
         public ApiResponseBase SelectFlight()
         {
-            FlightSelectApiRequest request = null;
             try
             {
-                request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightSelectApiRequest>();
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightSelectApiRequest>();
+                var apiResponse = FlightLogic.SelectFlight(request);
+                return apiResponse;
             }
-            catch
+            catch (Exception e)
             {
-                return ApiResponseBase.ErrorInvalidJson();
+                return ApiResponseBase.ExceptionHandling(e);
             }
-            var apiResponse = FlightLogic.SelectFlight(request);
-            return apiResponse;
         }
 
         [HttpGet]
@@ -46,12 +53,19 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [Route("flight/revalidate/{token}")]
         public ApiResponseBase RevalidateFlight(string token)
         {
-            var request = new FlightRevalidateApiRequest
+            try
             {
-                Token = token
-            };
-            var apiResponse = FlightLogic.RevalidateFlight(request);
-            return apiResponse;
+                var request = new FlightRevalidateApiRequest
+                {
+                    Token = token
+                };
+                var apiResponse = FlightLogic.RevalidateFlight(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
         }
 
         [HttpPost]
@@ -59,23 +73,16 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [Route("flight/book")]
         public ApiResponseBase BookFlight()
         {
-            FlightBookApiRequest request = null;
             try
             {
-                request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightBookApiRequest>();
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightBookApiRequest>();
+                var apiResponse = FlightLogic.BookFlight(request);
+                return apiResponse;
             }
-            catch
+            catch (Exception e)
             {
-                return ApiResponseBase.ErrorInvalidJson();
+                return ApiResponseBase.ExceptionHandling(e);
             }
-            var apiResponse = FlightLogic.BookFlight(request);
-            //var apiResponse = new FlightBookApiResponse
-            //{
-            //    IsSuccess = true,
-            //    NewPrice = Convert.ToDecimal(200000000),
-
-            //};
-            return apiResponse;
         }
 
         [HttpPost]
@@ -83,17 +90,16 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [Route("flight/issue")]
         public ApiResponseBase IssueFlight()
         {
-            FlightIssueApiRequest request = null;
             try
             {
-                request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightIssueApiRequest>();
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightIssueApiRequest>();
+                var apiResponse = FlightLogic.IssueFlight(request);
+                return apiResponse;
             }
-            catch
+            catch (Exception e)
             {
-                return ApiResponseBase.ErrorInvalidJson();
+                return ApiResponseBase.ExceptionHandling(e);
             }
-            var apiResponse = FlightLogic.IssueFlight(request);
-            return apiResponse;
         }
 
         [HttpGet]
@@ -101,9 +107,16 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [Route("flight/check/{rsvNo}")]
         public ApiResponseBase CheckFlightIssuance(string rsvNo)
         {
-            var request = new FlightIssuanceApiRequest {RsvNo = rsvNo};
-            var apiResponse = FlightLogic.CheckFlightIssuance(request);
-            return apiResponse;
+            try
+            {
+                var request = new FlightIssuanceApiRequest { RsvNo = rsvNo };
+                var apiResponse = FlightLogic.CheckFlightIssuance(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
         }
 
         //[HttpGet]
@@ -136,8 +149,15 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [Route("flight/top")]
         public ApiResponseBase TopDestinations()
         {
-            var apiResponse = FlightLogic.TopDestinations();
-            return apiResponse;
+            try
+            {
+                var apiResponse = FlightLogic.TopDestinations();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
         }
     }
 }

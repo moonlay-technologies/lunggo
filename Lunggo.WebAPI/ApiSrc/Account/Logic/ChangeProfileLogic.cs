@@ -12,35 +12,24 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
         public static ApiResponseBase ChangeProfile(ChangeProfileApiRequest request, ApplicationUserManager userManager)
         {
             var user = HttpContext.Current.User;
-            try
-            {
-                var updatedUser = user.Identity.GetUser();
-                updatedUser.FirstName = request.FirstName ?? updatedUser.FirstName;
-                updatedUser.LastName = request.LastName ?? updatedUser.LastName;
-                updatedUser.CountryCd = request.CountryCallingCd ?? updatedUser.CountryCd;
-                updatedUser.PhoneNumber = request.PhoneNumber ?? updatedUser.PhoneNumber;
-                var result = userManager.Update(updatedUser);
-                if (result.Succeeded)
-                {
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.OK
-                    };
-                }
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERRGEN99"
-                };
-            }
-            catch
+            var updatedUser = user.Identity.GetUser();
+            updatedUser.FirstName = request.FirstName ?? updatedUser.FirstName;
+            updatedUser.LastName = request.LastName ?? updatedUser.LastName;
+            updatedUser.CountryCd = request.CountryCallingCd ?? updatedUser.CountryCd;
+            updatedUser.PhoneNumber = request.PhoneNumber ?? updatedUser.PhoneNumber;
+            var result = userManager.Update(updatedUser);
+            if (result.Succeeded)
             {
                 return new ApiResponseBase
                 {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERRGEN99"
+                    StatusCode = HttpStatusCode.OK
                 };
             }
+            return new ApiResponseBase
+            {
+                StatusCode = HttpStatusCode.InternalServerError,
+                ErrorCode = "ERRGEN99"
+            };
         }
     }
 }

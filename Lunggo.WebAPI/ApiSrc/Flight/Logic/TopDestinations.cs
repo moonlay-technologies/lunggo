@@ -9,19 +9,12 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
     {
         public static ApiResponseBase TopDestinations()
         {
-            try
+            var flight = FlightService.GetInstance();
+            return new TopDestinationsApiResponse
             {
-                var flight = FlightService.GetInstance();
-                return new TopDestinationsApiResponse
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    TopDestinationList = flight.GetTopDestination()
-                };
-            }
-            catch
-            {
-                return ApiResponseBase.Error500();
-            }
+                StatusCode = HttpStatusCode.OK,
+                TopDestinationList = flight.GetTopDestination()
+            };
         }
     }
 }
