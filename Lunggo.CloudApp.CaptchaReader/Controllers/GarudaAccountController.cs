@@ -20,7 +20,7 @@ namespace Lunggo.CloudApp.CaptchaReader.Controllers
         [HttpGet]
         public bool LogOut(string userId)
         {
-            return Account.LogOutAck(userId);
+            return AccountGaruda.LogOutAck(userId);
         }
     }
 }

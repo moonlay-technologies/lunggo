@@ -184,7 +184,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
                         ErrorMessages =
-                            new List<string> {"Age of chil when traveling must be between 2 and 12 years old"},
+                            new List<string> {"Age of child when traveling must be between 2 and 12 years old"},
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
@@ -225,7 +225,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var successLogin = false;
                 var counter = 0;
                 var returnpath = "";
-                //successLogin = Login(client, "SA3ALEU1", "Standar123");
+
+                //successLogin = Login(client, "SA3ALEU1", "Standar123", out returnpath);
                 while (!successLogin && counter < 31)
                 {
                     while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnpath != "/web/dashboard/welcome")
@@ -242,6 +243,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         {
                             returnpath = "/web/dashboard/welcome";
                         }
+
                     }
 
                     if (userName.Length == 0)
@@ -299,11 +301,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var startIndex = airportScript.IndexOf("var airports");
                 var endIndex = airportScript.IndexOf("var airportsdest");
                 var scr = airportScript.SubstringBetween(startIndex + 15, endIndex - 3).Replace("\n", "").Replace("\t", "");
-                var depAirport = GetGarudaAirportBooking(scr, origin).Replace("+", "%20");
-                var arrAirport = GetGarudaAirportBooking(scr, dest).Replace("+", "%20");
+                var depAirport = GetGarudaAirportBooking(scr, origin);
+                var arrAirport = GetGarudaAirportBooking(scr, dest);
 
                 if (depAirport.Length == 0 || arrAirport.Length == 0)
                 {
+                    LogOut(returnPath, client);
+                    TurnInUsername(clientx, userName);
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -327,9 +331,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 }
 
                 var postdata =
-                    "Inputs%5BoriginDetail%5D=" + depAirport +
+                    "Inputs%5BoriginDetail%5D=" + HttpUtility.UrlEncode(depAirport) +
                     "&Inputs%5Borigin%5D=" + origin +
-                    "&Inputs%5BdestDetail%5D=" + arrAirport +
+                    "&Inputs%5BdestDetail%5D=" + HttpUtility.UrlEncode(arrAirport) +
                     "&Inputs%5Bdest%5D=" + dest +
                     "&Inputs%5BtripType%5D=o" +
                     "&Inputs%5BoutDate%5D=" + splittedFareId[4] + "-" + splittedFareId[3] + "-" + splittedFareId[2] +  //2016-06-06

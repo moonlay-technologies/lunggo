@@ -94,13 +94,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 // [GET] Search Flight
                 var dict = DictionaryService.GetInstance();
                 var originCountry = dict.GetAirportCountryCode(trip0.OriginAirport);
-                CQ availableFares;
-                CQ departureDate;
-                //string scr;
-                var depDateText = "";
-
-                
+               
                 // Calling The Zeroth Page
+                client.Proxy = new WebProxy("103.9.163.59", 31280);
+                client.Proxy.Credentials = new NetworkCredential("developer","Standar1234");
                 client.BaseUrl = new Uri("https://www.garuda-indonesia.com");
                 string url0 = @"";
                 var searchRequest0 = new RestRequest(url0, Method.GET);
@@ -114,7 +111,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 searchRequest0 = new RestRequest(url0, Method.GET);
                 searchResponse0 = client.Execute(searchRequest0);
                 var html0 = searchResponse0.Content;
-                    
+                    Console.WriteLine(html0);
                 if (searchResponse0.ResponseUri.AbsolutePath != "/id/id/index.page" &&
                     (searchResponse0.StatusCode == HttpStatusCode.OK ||
                         searchResponse0.StatusCode == HttpStatusCode.Redirect))
@@ -395,8 +392,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                         var price = listPrice.Min();
 
-                        fareId = trip0.OriginAirport + "+" + trip0.DestinationAirport + "+" +
-                            trip0.DepartureDate.Day + "+" + trip0.DepartureDate.Month + "+" +
+                        fareId = segments.ElementAt(0).DepartureAirport + "+" + segments.ElementAt(segments.Count - 1).ArrivalAirport
+                            + "+" + trip0.DepartureDate.Day + "+" + trip0.DepartureDate.Month + "+" +
                             trip0.DepartureDate.Year + "+" +  segments.ElementAt(0).DepartureTime.Hour + "+" +
                             segments.ElementAt(0).DepartureTime.Minute + "+" + 
                             conditions.AdultCount + "+" +
@@ -425,8 +422,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             {
                                 new FlightTrip
                                 {
-                                    OriginAirport = trip0.OriginAirport,
-                                    DestinationAirport = trip0.DestinationAirport,
+                                    OriginAirport = segments.ElementAt(0).DepartureAirport,
+                                    DestinationAirport = segments.ElementAt(segments.Count - 1).ArrivalAirport,
                                     DepartureDate = DateTime.SpecifyKind(trip0.DepartureDate, DateTimeKind.Utc),
                                     Segments = segments
                                 }
