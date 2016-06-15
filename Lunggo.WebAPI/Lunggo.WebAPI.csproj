@@ -253,8 +253,10 @@
     <Compile Include="ApiSrc\Newsletter\Model\NewsletterSubscribeInput.cs" />
     <Compile Include="ApiSrc\Newsletter\Query\CheckEmailQuery.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckPaymentLogic.cs" />
+    <Compile Include="ApiSrc\Payment\Logic\GetPaymentMethodsLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\PayLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetTransferFeeLogic.cs" />
+    <Compile Include="ApiSrc\Payment\Model\GetMethodsApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\PaymentApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\PayApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\TransferFeeApiRequest.cs" />

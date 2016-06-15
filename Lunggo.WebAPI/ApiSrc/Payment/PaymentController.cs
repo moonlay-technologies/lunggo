@@ -21,6 +21,15 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
         [HttpGet]
         [LunggoCorsPolicy]
+        [Route("payment/methods")]
+        public ApiResponseBase GetMethods()
+        {
+            var apiResponse = PaymentLogic.GetMethods();
+            return apiResponse;
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
         [Route("payment/check/{rsvNo}")]
         public ApiResponseBase CheckPayment(string rsvNo)
         {
