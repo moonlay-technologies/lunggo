@@ -590,12 +590,10 @@
             targetFlight.FlightValidating = true;
             targetFlight.FlightValidated = false;
 
-            $http.get(RevalidateConfig.Url, {
-                params: {
-                    SearchId: targetFlight.FlightRequest.SearchId,
-                    ItinIndex: targetFlight.FlightList[indexNo].RegisterNumber,
-                    SecureCode: secureCode
-                }
+            $http.get(SelectConfig.Url, {
+                searchId: $scope.flightFixRequest(),
+                regs: [$scope.FlightConfig[0].FlightList[departureIndexNo].reg, $scope.FlightConfig[1].FlightList[returnIndexNo].reg],
+
             }).success(function (returnData) {
 
                 targetFlight.FlightValidating = false;
