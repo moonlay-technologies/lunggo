@@ -7,8 +7,8 @@
     <ProjectGuid>{8D4AE916-6073-4E8F-A3C2-B4E509E38011}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lunggo.WebJob_FlightSearch.FlightCrawler5</RootNamespace>
-    <AssemblyName>Lunggo.WebJob-FlightSearch.FlightCrawler5</AssemblyName>
+    <RootNamespace>Lunggo.WebJob_FlightSearch.FlightCrawler6</RootNamespace>
+    <AssemblyName>Lunggo.WebJob-FlightSearch.FlightCrawler6</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -119,6 +119,8 @@
     <Content Include="HotelLocation.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="App.Debug.config" />
+    <None Include="App.Release.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\prod-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjobflightsearch.pubxml" />

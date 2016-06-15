@@ -270,6 +270,21 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler4\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\airAsia.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\Airline.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\Airport.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\azureStorage.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\citilink.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\Country.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\db.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\flight.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\Garuda.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\general.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\HotelLocation.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\lionAir.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\mystifly.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\redis.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\sriwijaya.properties" />
     <None Include="Config\WebJob.BankTransferChecking\airAsia.properties" />
     <None Include="Config\WebJob.BankTransferChecking\Airline.csv" />
     <None Include="Config\WebJob.BankTransferChecking\Airport.csv" />
