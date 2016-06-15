@@ -86,9 +86,8 @@
 
     <!--********************-->
         
-   <!-- <section ng-app="travorama" ng-controller="siteHeaderController">-->
+    <section ng-app="travorama">
         @Html.Partial("/Views/Shared/travorama20/_SiteHeader.cshtml")
-    <!--</section>-->
         <!--********************-->
 
 
@@ -101,6 +100,7 @@
         <!-- footer group start -->
         @Html.Partial("/Views/Shared/travorama20/_SiteFooterMenu.cshtml")
         @Html.Partial("/Views/Shared/travorama20/_SiteFooter.cshtml")
+    </section>
 
         <!--********************-->
         <!-- Javascripts -->
@@ -115,7 +115,7 @@
         }
 
         <script src="/Assets/travorama20/js/travorama20.js"></script>
-        <!--<script src="/Assets/travorama20/js/accountController.js"></script>-->
+        <script src="/Assets/travorama20/js/accountController.js"></script>
 
         @if (IsSectionDefined("PageJS"))
         {

@@ -332,22 +332,22 @@ namespace Lunggo.Configuration
             const string flightSelectPath = @"/flight/select";
             const string flightRevalidatePath = @"/api/v1/flights/revalidate";
             const string flightBookPath = @"/flight/book";
-            const string flightPayPath = @"/api/v1/flights/pay";
+            const string flightPayPath = @"/payment/pay";
             const string flightRulesPath = @"/api/v1/flights/rules";
             const string autocompleteHotelLocationPath = @"/api/v1/autocomplete/hotellocation/";
             const string autocompleteAirportPath = @"/api/v1/autocomplete/airport/";
             const string autocompleteAirlinePath = @"/api/v1/autocomplete/airline/";
-            const string checkVoucherPath = @"/api/v1/voucher/check";
+            const string checkVoucherPath = @"/payment/checkvoucher";
             const string subscribePath = @"/api/v1/newsletter/subscribe";
             const string loginPath = @"/login";
             const string getProfilePath = @"/profile";
-            const string registerPath = @"/id/ApiAccount/Register";
+            const string registerPath = @"/register";
             const string resetPasswordPath = @"/id/ApiAccount/ResetPassword";
-            const string forgotPasswordPath = @"/id/ApiAccount/ForgotPassword";
+            const string forgotPasswordPath = @"/forgot";
             const string changePasswordPath = @"/id/ApiAccount/ChangePassword";
             const string changeProfilePath = @"/id/ApiAccount/ChangeProfile";
             const string resendConfirmationEmailPath = @"/id/ApiAccount/ResendConfirmationEmail";
-            const string transferPaymentPath = @"/api/v1/transferidentifier" ;
+            const string transferPaymentPath = @"/payment/transferfee";
             var veritransTokenPath = _configDictionary["@@.*.veritrans.tokenEndPoint@@"];
             var veritransClientKey = _configDictionary["@@.*.veritrans.clientKey@@"];
 
