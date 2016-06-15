@@ -651,7 +651,7 @@ app.controller('returnFlightController', [
                     $scope.departureFlightConfig.progress = returnData.progress;
 
                     // generate flight
-                    if (returnData.flights.length)
+                    if (returnData.flights.length == 0)
                     {
                         if (returnData.flights[0].options.length)
                         {

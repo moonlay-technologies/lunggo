@@ -66,37 +66,93 @@ namespace Lunggo.ApCommon.Payment.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var prevStatus = GetStatusFromDb(rsvNo);
-                if (payment.Status != prevStatus)
+                string mediumCd = null;
+                string methodCd = null;
+                string statusCd = null;
+                DateTime? time = null;
+                string transferAccount = null;
+                DateTime? timeLimit = null;
+                string redirectionUrl = null;
+                string externalId = null;
+                decimal? originalPriceIdr = null;
+                string discountCode = null;
+                decimal? discountNominal = null;
+                decimal? transferFee = null;
+                decimal? finalPriceIdr = null;
+                decimal? paidAmountIdr = null;
+                Currency localCurrency = null;
+                decimal? localFinalPrice = null;
+                decimal? localPaidAmount = null;
+                string invoiceNo = null;
+
+                if (payment.Medium != PaymentMedium.Undefined)
+                    mediumCd = PaymentMediumCd.Mnemonic(payment.Medium);
+                if (payment.Method != PaymentMethod.Undefined)
+                    methodCd = PaymentMethodCd.Mnemonic(payment.Method);
+                if (payment.Status != PaymentStatus.Undefined)
+                    statusCd = PaymentStatusCd.Mnemonic(payment.Status);
+                if (payment.Time.HasValue)
+                    time = payment.Time.Value.ToUniversalTime();
+                if (payment.TransferAccount != null)
+                    transferAccount = payment.TransferAccount;
+                if (payment.TimeLimit != DateTime.MinValue)
+                    timeLimit = payment.TimeLimit.ToUniversalTime();
+                if (payment.RedirectionUrl != null)
+                    redirectionUrl = payment.RedirectionUrl;
+                if (payment.PaidAmountIdr != 0)
+                    paidAmountIdr = payment.PaidAmountIdr;
+                if (payment.LocalPaidAmount != 0)
+                    localPaidAmount = payment.LocalPaidAmount;
+                if (payment.ExternalId != null)
+                    externalId = payment.ExternalId;
+                if (payment.OriginalPriceIdr != 0)
+                    originalPriceIdr = payment.OriginalPriceIdr;
+                if (payment.DiscountCode != null)
+                    discountCode = payment.DiscountCode;
+                if (payment.DiscountNominal != 0)
+                    discountNominal = payment.DiscountNominal;
+                if (payment.TransferFee != 0)
+                    transferFee = payment.TransferFee;
+                if (payment.FinalPriceIdr != 0)
+                    finalPriceIdr = payment.FinalPriceIdr;
+                if (payment.PaidAmountIdr != 0)
+                    paidAmountIdr = payment.PaidAmountIdr;
+                if (payment.LocalCurrency != null)
+                    localCurrency = payment.LocalCurrency;
+                if (payment.LocalFinalPrice != 0)
+                    localFinalPrice = payment.LocalFinalPrice;
+                if (payment.InvoiceNo != null)
+                    invoiceNo = payment.InvoiceNo;
+
+                var queryParam = new
                 {
-                    dynamic queryParam = new ExpandoObject();
-                    if (rsvNo != null)
-                        queryParam.RsvNo = rsvNo;
-                    if (payment.Medium != PaymentMedium.Undefined)
-                        queryParam.MediumCd = PaymentMediumCd.Mnemonic(payment.Medium);
-                    if (payment.Method != PaymentMethod.Undefined)
-                        queryParam.MethodCd = PaymentMethodCd.Mnemonic(payment.Method);
-                    if (payment.Status != PaymentStatus.Undefined)
-                        queryParam.StatusCd = PaymentStatusCd.Mnemonic(payment.Status);
-                    if (payment.Time.HasValue)
-                        queryParam.Time = payment.Time.Value.ToUniversalTime();
-                    if (payment.TransferAccount != null)
-                        queryParam.TransferAccount = payment.TransferAccount;
-                    if (payment.TimeLimit != null)
-                        queryParam.TimeLimit = payment.TimeLimit.ToUniversalTime();
-                    if (payment.RedirectionUrl != null)
-                        queryParam.RedirectionUrl = payment.RedirectionUrl;
-                    if (payment.PaidAmountIdr != 0)
-                        queryParam.PaidAmountIdr = payment.PaidAmountIdr;
-                    if (payment.LocalPaidAmount != 0)
-                        queryParam.LocalPaidAmount = payment.LocalPaidAmount;
-                    UpdatePaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                    RsvNo = rsvNo,
+                    MediumCd = mediumCd,
+                    MethodCd = methodCd,
+                    StatusCd = statusCd,
+                    Time = time,
+                    TransferAccount = transferAccount,
+                    TimeLimit = timeLimit,
+                    RedirectionUrl = redirectionUrl,
+                    PaidAmountIdr = paidAmountIdr,
+                    LocalPaidAmount = localPaidAmount,
+                    ExternalId = externalId,
+                    OriginalPriceIdr = originalPriceIdr,
+                    DiscountCode = discountCode,
+                    DiscountNominal = discountNominal,
+                    TransferFee = transferFee,
+                    FinalPriceIdr = finalPriceIdr,
+                    LocalCurrencyCd = localCurrency.Symbol,
+                    LocalRate = localCurrency.Rate,
+                    LocalFinalPrice = localFinalPrice,
+                    InvoiceNo = invoiceNo
+                };
+                UpdatePaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);
+                if (payment.Discount != null)
+                    payment.Discount.InsertToDb(rsvNo);
+                if (payment.Refund != null)
+                    payment.Refund.InsertToDb(rsvNo);
+                return true;
             }
         }
 

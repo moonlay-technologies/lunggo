@@ -156,9 +156,7 @@
                 <h3>Penerbangan tidak ditemukan.</h3>
             </div>
         </div>
-        @*| filter:FlightFiltering.AirlineFilter('departure') | filter: FlightFiltering.TransitFilter('departure') | filter: FlightFiltering.PriceFilter() 
-            |filter:FlightFiltering.DepartureTimeFilter('departure') | filter:FlightFiltering.ArrivalTimeFilter('arrival') | 
-            orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert)"  id="flight-{{flight.IndexNo}}*@
+        
         <div class="flight" ng-repeat="flight in departureFlight =
             FlightConfig[0].FlightList | filter:FlightFiltering.AirlineFilter('departure') | filter: FlightFiltering.TransitFilter('departure')
              | filter: FlightFiltering.PriceFilter() | filter:FlightFiltering.DepartureTimeFilter('departure') |
@@ -166,8 +164,8 @@
              id="flight-{{flight.IndexNo}}" ng-click="FlightFunctions.SetActiveFlight(flight.IndexNo)">
             <div class="flight-header">
                 <h4 class="flight-airline">
-                    <img ng-src="{{flight.trips[0].segments[0].airlineLogoUrl}}" alt="{{flight.trips[0].segments[0].airlineName}}" class="flight-airline-image" />
-                    <span>{{flight.trips[0].segments[0].airlineName}}</span>
+                    <img ng-src="{{flight.trips[0].airlines[0].logoUrl}}" alt="{{flight.trips[0].airlines[0].name}}" class="flight-airline-image" />
+                    <span>{{flight.trips[0].airlines[0].name}}</span>
                 </h4>
             </div>
             <div class="flight-content">
@@ -189,7 +187,7 @@
                 </div>
                 <div class="content-right">
                     <label>Harga Total :</label>
-                    <h5 class="flight-price-was" ng-show="Flight.OriginalFare">Rp {{flight.originalFare | number}}</h5>
+                    <h5 class="flight-price-was" ng-show="flight.originalFare">Rp {{flight.originalFare | number}}</h5>
                     <h4 class="flight-price">Rp {{flight.totalFare | number}}</h4>
                 </div>
             </div>
@@ -227,7 +225,7 @@
 
             <div class="flight-wrapper" ng-repeat="segment in FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].trips[0].segments track by $index">
                 <div class="transit" ng-if="$index > 0">
-                    <span>Transit di {{segment.departureCity}} ({{segment.departure}}) selama <b>{{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].trips[0].transits[$index-1].duration | date : 'HH:mm'}}</b></span>
+                    <span>Transit di {{segment.departureCity}} ({{segment.departure}}) selama <b>{{msToTime(FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].trips[0].transits[$index-1].duration) | date : 'HH:mm'}}</b></span>
                 </div>
                 <div class="flight">
                     <div class="flight__number">
@@ -389,7 +387,7 @@
                 <div class="filter-group__content">
                     <label ng-repeat="Airline in FlightConfig[0].FlightFilter.Airline" ng-class="{'active' : !Airline.Checked}">
                         <div class="switch"></div>
-                        <span><img ng-src="{{Airline.LogoUrl}}" alt="{{Airline.Name}}" /> {{Airline.Name}}</span>
+                        <span><img ng-src="{{Airline.logoUrl}}" alt="{{Airline.name}}" /> {{Airline.name}}</span>
                         <input type="checkbox" value="false" ng-model="Airline.Checked" ng-change="FlightFiltering.AirlineCheck('departure')" />
                     </label>
                 </div>

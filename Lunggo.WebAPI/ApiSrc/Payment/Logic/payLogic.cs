@@ -20,7 +20,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERPPAY01"
-                    };                
+                    };
 
                 if (NotEligibleForPaymentMethod(request, user))
                     return new PaymentApiResponse
@@ -28,8 +28,9 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERPPAY02"
                     };
-                var paymentDetails = PaymentService.GetInstance().SubmitPayment(request.RsvNo, request.Method, request.Data, request.DiscountCode);
-                var apiResponse = AssembleApiResponse(paymentDetails);
+                bool isUpdated;
+                var paymentDetails = PaymentService.GetInstance().SubmitPayment(request.RsvNo, request.Method, request.Data, request.DiscountCode, out isUpdated);
+                var apiResponse = AssembleApiResponse(paymentDetails, isUpdated);
                 return apiResponse;
             }
             catch
@@ -42,8 +43,24 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             }
         }
 
-        private static PaymentApiResponse AssembleApiResponse(PaymentDetails paymentDetails)
+        private static PaymentApiResponse AssembleApiResponse(PaymentDetails paymentDetails, bool isUpdated)
         {
+            if (!isUpdated)
+            {
+                if (paymentDetails.Method == PaymentMethod.BankTransfer)
+                    return new PaymentApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        ErrorCode = "ERPPAY04"
+                    };
+
+                return new PaymentApiResponse
+                {
+                    StatusCode = HttpStatusCode.Accepted,
+                    ErrorCode = "ERPPAY03"
+                };
+            }
+
             return new PaymentApiResponse
             {
                 PaymentStatus = paymentDetails.Status,
