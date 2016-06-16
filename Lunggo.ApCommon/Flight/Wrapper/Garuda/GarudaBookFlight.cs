@@ -549,10 +549,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         InfantCount = infantCount,
                         CanHold = true,
                         FareType = FareType.Published,
-                        RequireBirthDate = true,
+                        RequireBirthDate = false,
                         RequirePassport = RequirePassport(segments),
                         RequireSameCheckIn = false,
-                        RequireNationality = true,
+                        RequireNationality = false,
                         RequestedCabinClass = cabinClass,
                         TripType = TripType.OneWay,
                         Supplier = Supplier.Garuda,
@@ -592,6 +592,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             IsItineraryChanged = isItinChanged
 
                         };
+                    }
+
+                    var oldSegments = bookInfo.Itinerary.Trips.SelectMany(trip => trip.Segments).ToList();
+                    var newSegments = newitin.Trips.SelectMany(trip => trip.Segments).ToList();
+                    for (var i = 0; i < newSegments.Count; i++)
+                    {
+                        newSegments[i].DepartureTerminal = oldSegments[i].DepartureTerminal;
+                        newSegments[i].ArrivalTerminal = oldSegments[i].ArrivalTerminal;
+                        newSegments[i].AircraftCode = oldSegments[i].AircraftCode;
+                        newSegments[i].OperatingAirlineCode = oldSegments[i].OperatingAirlineCode;
+                        newSegments[i].StopQuantity = oldSegments[i].StopQuantity;
                     }
 
                     if (newprice != Convert.ToDecimal(price))
