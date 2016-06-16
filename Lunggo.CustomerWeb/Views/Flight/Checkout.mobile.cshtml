@@ -339,7 +339,7 @@ default:
                                 <dt>Jenis Tiket</dt>
                                 <dd>{{Passenger.typeName}}</dd>
                             </dl>
-                            <dl>
+                            <dl ng-if="CheckoutConfig.BirthDateRequired">
                                 <dt>Tanggal Lahir</dt>
                                 <dd>{{Passenger.birth.date}} {{months[Passenger.birth.month].name}} {{Passenger.birth.year}}</dd>
                             </dl>
