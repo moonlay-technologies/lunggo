@@ -14,32 +14,25 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
     {
         public static ApiResponseBase CheckFlightIssuance(FlightIssuanceApiRequest request)
         {
-            try
+            if (IsValid(request))
             {
-                if (IsValid(request))
-                {
-                    var bookingStatus = FlightService.GetInstance().GetAllBookingStatus(request.RsvNo);
-                    var apiResponse = AssembleApiResponse(bookingStatus);
-                    return apiResponse;
-                }
-                else
-                {
-                    return new FlightIssuanceApiResponse
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERFCHI01"
-                    };
-                }
+                var bookingStatus = FlightService.GetInstance().GetAllBookingStatus(request.RsvNo);
+                var apiResponse = AssembleApiResponse(bookingStatus);
+                return apiResponse;
             }
-            catch
+            else
             {
-                return ApiResponseBase.Error500();
+                return new FlightIssuanceApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERFCHI01"
+                };
             }
         }
 
         private static bool IsValid(FlightIssuanceApiRequest request)
         {
-            return 
+            return
                 request != null &&
                 request.RsvNo != null;
         }

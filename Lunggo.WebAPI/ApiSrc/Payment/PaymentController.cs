@@ -25,7 +25,6 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
             {
                 return ApiResponseBase.ExceptionHandling(e);
             }
-            
         }
 
         [HttpGet]
@@ -33,8 +32,15 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [Route("payment/methods")]
         public ApiResponseBase GetMethods()
         {
-            var apiResponse = PaymentLogic.GetMethods();
-            return apiResponse;
+            try
+            {
+                var apiResponse = PaymentLogic.GetMethods();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
         }
 
         [HttpGet]
@@ -42,8 +48,15 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [Route("payment/check/{rsvNo}")]
         public ApiResponseBase CheckPayment(string rsvNo)
         {
-            var apiResponse = PaymentLogic.CheckPayment(rsvNo, User);
-            return apiResponse;
+            try
+            {
+                var apiResponse = PaymentLogic.CheckPayment(rsvNo, User);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
         }
 
         [HttpPost]
@@ -51,17 +64,16 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [Route("payment/transferfee")]
         public ApiResponseBase GetTransferIdentifier()
         {
-            TransferFeeApiRequest request;
             try
             {
-                request = Request.Content.ReadAsStringAsync().Result.Deserialize<TransferFeeApiRequest>();
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<TransferFeeApiRequest>();
+                var apiResponse = PaymentLogic.GetTransferFee(request);
+                return apiResponse;
             }
-            catch
+            catch (Exception e)
             {
-                return ApiResponseBase.ErrorInvalidJson();
+                return ApiResponseBase.ExceptionHandling(e);
             }
-            var apiResponse = PaymentLogic.GetTransferFee(request);
-            return apiResponse;
         }
 
         [HttpPost]
@@ -69,17 +81,16 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [Route("payment/checkvoucher")]
         public ApiResponseBase CheckVoucher()
         {
-            CheckVoucherApiRequest request;
             try
             {
-                request = Request.Content.ReadAsStringAsync().Result.Deserialize<CheckVoucherApiRequest>();
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<CheckVoucherApiRequest>();
+                var apiResponse = VoucherLogic.CheckVoucher(request);
+                return apiResponse;
             }
-            catch
+            catch (Exception e)
             {
-                return ApiResponseBase.ErrorInvalidJson();
+                return ApiResponseBase.ExceptionHandling(e);
             }
-            var apiResponse = VoucherLogic.CheckVoucher(request);
-            return apiResponse;
         }
     }
 }

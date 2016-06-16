@@ -13,18 +13,11 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
     {
         public static ApiResponseBase GetItinerary(string token)
         {
-            try
-            {
-                var service = FlightService.GetInstance();
-                var itinerary = service.GetItineraryForDisplay(token);
-                var expiryTime = service.GetItineraryExpiry(token);
-                var apiResponse = AssembleApiResponse(itinerary, expiryTime);
-                return apiResponse;
-            }
-            catch
-            {
-                return ApiResponseBase.Error500();
-            }
+            var service = FlightService.GetInstance();
+            var itinerary = service.GetItineraryForDisplay(token);
+            var expiryTime = service.GetItineraryExpiry(token);
+            var apiResponse = AssembleApiResponse(itinerary, expiryTime);
+            return apiResponse;
         }
 
         private static ApiResponseBase AssembleApiResponse(FlightItineraryForDisplay itinerary, DateTime? expiryTime)

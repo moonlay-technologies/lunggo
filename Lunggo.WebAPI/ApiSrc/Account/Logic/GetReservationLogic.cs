@@ -13,48 +13,37 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
         public static GetReservationApiResponse GetReservation(string rsvNo)
         {
             var user = HttpContext.Current.User;
-            try
+            if (rsvNo.IsFlightRsvNo())
             {
-                if (rsvNo.IsFlightRsvNo())
-                {
-                    var flight = FlightService.GetInstance();
-                    var rsv = flight.GetReservationForDisplay(rsvNo);
-                    if (user.IsInRole("Admin") || user.Identity.GetEmail() == rsv.Contact.Email)
-                        return new GetReservationApiResponse
-                        {
-                            ProductType = ProductType.Flight,
-                            FlightReservation = rsv,
-                            StatusCode = HttpStatusCode.OK
-                        };
-                    else
-                        return new GetReservationApiResponse
-                        {
-                            StatusCode = HttpStatusCode.Unauthorized,
-                            ErrorCode = "ERARSV02"
-                        };
-                }
-                if (rsvNo.IsHotelRsvNo())
-                {
-                    
-                }
-                if (rsvNo.IsActivityRsvNo())
-                {
-                    
-                }
-                return new GetReservationApiResponse
-                {
-                    StatusCode = HttpStatusCode.Accepted,
-                    ErrorCode = "ERARSV01"
-                };
+                var flight = FlightService.GetInstance();
+                var rsv = flight.GetReservationForDisplay(rsvNo);
+                if (user.IsInRole("Admin") || user.Identity.GetEmail() == rsv.Contact.Email)
+                    return new GetReservationApiResponse
+                    {
+                        ProductType = ProductType.Flight,
+                        FlightReservation = rsv,
+                        StatusCode = HttpStatusCode.OK
+                    };
+                else
+                    return new GetReservationApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        ErrorCode = "ERARSV02"
+                    };
             }
-            catch
+            if (rsvNo.IsHotelRsvNo())
             {
-                return new GetReservationApiResponse
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERRGEN99"
-                };
+
             }
+            if (rsvNo.IsActivityRsvNo())
+            {
+
+            }
+            return new GetReservationApiResponse
+            {
+                StatusCode = HttpStatusCode.Accepted,
+                ErrorCode = "ERARSV01"
+            };
         }
     }
 }

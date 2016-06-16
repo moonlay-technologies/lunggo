@@ -17,28 +17,21 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
     {
         public static ApiResponseBase BookFlight(FlightBookApiRequest request)
         {
-            try
+            if (IsValid(request))
             {
-                if (IsValid(request))
-                {
-                    OnlineContext.SetActiveLanguageCode(request.LanguageCode);
-                    var bookServiceRequest = PreprocessServiceRequest(request);
-                    var bookServiceResponse = FlightService.GetInstance().BookFlight(bookServiceRequest);
-                    var apiResponse = AssembleApiResponse(bookServiceResponse);
-                    return apiResponse;
-                }
-                else
-                {
-                    return new FlightBookApiResponse
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERFBOO01"
-                    };
-                }
+                OnlineContext.SetActiveLanguageCode(request.LanguageCode);
+                var bookServiceRequest = PreprocessServiceRequest(request);
+                var bookServiceResponse = FlightService.GetInstance().BookFlight(bookServiceRequest);
+                var apiResponse = AssembleApiResponse(bookServiceResponse);
+                return apiResponse;
             }
-            catch
+            else
             {
-                return ApiResponseBase.Error500();
+                return new FlightBookApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERFBOO01"
+                };
             }
         }
 

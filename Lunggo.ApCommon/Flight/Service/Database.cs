@@ -151,7 +151,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             passengerLookup.Add(passengerRecord.Id.GetValueOrDefault(), passenger);
                         }
                         return reservation;
-                    }).Distinct().Single();
+                    }).Distinct().SingleOrDefault();
                 return reservation;
             }
         }
@@ -285,7 +285,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             passengerLookup.Add(passengerRecord.Id.GetValueOrDefault(), passenger);
                         }
                         return reservation;
-                    }).Distinct().Single();
+                    }).Distinct().SingleOrDefault();
                 return reservation;
             }
         }

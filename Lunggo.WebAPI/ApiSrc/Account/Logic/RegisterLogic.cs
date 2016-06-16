@@ -11,57 +11,46 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static ApiResponseBase Register(RegisterApiRequest request, ApplicationUserManager userManager)
         {
-            try
+            if (!IsValid(request))
             {
-                if (!IsValid(request))
+                return new ApiResponseBase
                 {
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERAREG01"
-                    };
-                }
-
-                var foundUser = userManager.FindByEmail(request.Email);
-                if (foundUser != null)
-                {
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = foundUser.EmailConfirmed
-                            ? "ERAREG02"
-                            : "ERAREG03"
-                    };
-                }
-
-                var user = new User
-                {
-                    UserName = request.Email,
-                    Email = request.Email
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERAREG01"
                 };
-                var result = userManager.Create(user);
-                if (result.Succeeded)
-                {
-                    var code = userManager.GenerateEmailConfirmationToken(user.Id);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
-                    //    protocol: Request.Url.Scheme);
-                    //await UserManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl);
-
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.OK
-                    };
-                }
-                else
-                {
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.InternalServerError,
-                        ErrorCode = "ERRGEN99"
-                    };
-                }
             }
-            catch
+
+            var foundUser = userManager.FindByEmail(request.Email);
+            if (foundUser != null)
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Accepted,
+                    ErrorCode = foundUser.EmailConfirmed
+                        ? "ERAREG02"
+                        : "ERAREG03"
+                };
+            }
+
+            var user = new User
+            {
+                UserName = request.Email,
+                Email = request.Email
+            };
+            var result = userManager.Create(user);
+            if (result.Succeeded)
+            {
+                var code = userManager.GenerateEmailConfirmationToken(user.Id);
+                //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
+                //    protocol: Request.Url.Scheme);
+                //await UserManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl);
+
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+            else
             {
                 return new ApiResponseBase
                 {
