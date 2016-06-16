@@ -80,6 +80,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     };
                 }
 
+                var returnPath = "";
                 var infants = bookInfo.Passengers.Where(pax => pax.Type == PassengerType.Infant);
                 var children = bookInfo.Passengers.Where(pax => pax.Type == PassengerType.Child);
                 bool isInfantValid = true;
@@ -192,29 +193,34 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         IsSuccess = false
                     };
                 }
-
-                // [GET] Search Flight
                 var client = CreateAgentClient();
+                var successLogin = false;
+                IRestResponse searchResAgent0 = null;
+                try
+                {
+                // [GET] Search Flight
+                
                 client.BaseUrl = new Uri("https://gosga.garuda-indonesia.com");
                 string urlweb = @"";
-                var searchReqAgent = new RestRequest(urlweb, Method.GET);
-                searchReqAgent.AddHeader("Accept",
+                var searchReqAgent0 = new RestRequest(urlweb, Method.GET);
+                searchReqAgent0.AddHeader("Accept",
                     "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                searchReqAgent.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
-                searchReqAgent.AddHeader("Host", "gosga.garuda-indonesia.com");
-                var searchResAgent = client.Execute(searchReqAgent);
+                searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                searchResAgent0 = client.Execute(searchReqAgent0);
+                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
                 urlweb = @"web/user/login/id";
-                var searchReqAgent0 = new RestRequest(urlweb, Method.GET);
+                searchReqAgent0 = new RestRequest(urlweb, Method.GET);
                 searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/");
                 searchReqAgent0.AddHeader("Accept",
                     "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
                 searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
                 searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
-                var searchResAgent0 = client.Execute(searchReqAgent0);
-                
+                searchResAgent0 = client.Execute(searchReqAgent0);
+                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+
                 var dict = DictionaryService.GetInstance();
-                var destinationCountry = dict.GetAirportCountryCode(dest);
 
                 var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
                 var clientx = new RestClient(cloudAppUrl);
@@ -222,26 +228,26 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var userName = "";
                 var reqTime = DateTime.UtcNow;
                 var newitin = new FlightItinerary();
-                var successLogin = false;
+                
                 var counter = 0;
-                var returnpath = "";
+                
 
-                //successLogin = Login(client, "SA3ALEU1", "Standar123", out returnpath);
+                //successLogin = Login(client, "SA3ALEU1", "Standar123", out returnPath);
                 while (!successLogin && counter < 31)
                 {
-                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnpath != "/web/dashboard/welcome")
+                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnPath != "/web/dashboard/welcome")
                     {
 
                         var accRs = (RestResponse)clientx.Execute(accReq);
                         var lastUserId = userName;
                         userName = accRs.Content.Trim('"');
-                        if (returnpath != "/web/dashboard/welcome")
+                        if (returnPath != "/web/dashboard/welcome")
                         {
                             TurnInUsername(clientx, lastUserId);
                         }
                         if (userName.Length != 0)
                         {
-                            returnpath = "/web/dashboard/welcome";
+                            returnPath = "/web/dashboard/welcome";
                         }
 
                     }
@@ -251,13 +257,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         return new BookFlightResult
                         {
                             Errors = new List<FlightError> { FlightError.TechnicalError },
-                            ErrorMessages = new List<string> { "All usernames are used" }
+                            ErrorMessages = new List<string> { "All usernames are used " + returnPath }
                         };
                     }
 
                     var password = userName == "SA3ALEU1" ? "Standar123" : "Travorama1234";
                     counter++;
-                    successLogin = Login(client, userName, password, out returnpath);
+                    successLogin = Login(client, userName, password, out returnPath);
                 }
 
                 if (counter >= 31)
@@ -272,7 +278,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             BookingStatus = BookingStatus.Failed
                         },
                         IsSuccess = false,
-                        ErrorMessages = new List<string> { "Can't get id" }
+                        ErrorMessages = new List<string> { "Can't get id " + returnPath + userName }
                     };
                 }
 
@@ -285,7 +291,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
                 searchResAgent0 = client.Execute(searchReqAgent0);
                 var htmlX = searchResAgent0.Content;
-                string returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
                 //POST 
 
@@ -312,7 +318,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages = new List<string> { "Airports are not available in agent site"}
+                        ErrorMessages = new List<string> { "Airports are not available in agent site " + returnPath}
                     };
                 }
                 string cabinstring;
@@ -349,8 +355,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var htmlFlight = searchResAgent0.Content;
                 returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
-                try
-                {
+                
                     var htmlFlightList = (CQ) htmlFlight;
                     var tableFlight = htmlFlightList[".gtable"];
                     var rows = tableFlight[0].ChildElements.ToList()[1].ChildElements.ToList();
@@ -579,7 +584,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             IsSuccess = false,
                             Errors = new List<FlightError> { FlightError.TechnicalError },
                             Status = null,
-                            ErrorMessages = new List<string> { "Itinerary is Changed!" },
+                            ErrorMessages = new List<string> { "Itinerary is Changed! " + returnPath },
                             NewPrice = newprice,
                             IsValid = true,
                             IsPriceChanged = newprice != bookInfo.Itinerary.SupplierPrice,
@@ -599,7 +604,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             IsSuccess = false,
                             Errors = new List<FlightError> { FlightError.TechnicalError },
                             Status = null,
-                            ErrorMessages = new List<string> { "Price is Changed!" },
+                            ErrorMessages = new List<string> { "Price is Changed! " + returnPath },
                             NewPrice = newprice,
                             IsValid = true,
                             IsPriceChanged = newprice != bookInfo.Itinerary.SupplierPrice,
@@ -737,7 +742,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             {
                                 BookingStatus = BookingStatus.Failed
                             },
-                            ErrorMessages = new List<string> { "Total characters of infant+adult name may exceed 32" }
+                            ErrorMessages = new List<string> { "Total characters of infant+adult name may exceed 32 " + returnPath }
                         };
                     }
 
@@ -805,13 +810,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 catch //(Exception e)
                 {
                     LogOut(returnPath, client);
-                    TurnInUsername(clientx, userName);
+                    //TurnInUsername(clientx, userName);
 
                     return new BookFlightResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> {FlightError.TechnicalError},
-                        ErrorMessages = new List<string> {"Web Layout Changed!"},
+                        ErrorMessages = new List<string> {"Web Layout Changed! " + returnPath + successLogin + searchResAgent0.Content},
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
