@@ -366,7 +366,7 @@
                                         <div class="passenger-list-item">
                                             <h3 class="passenger-list-heading"><b>{{$index+1}}. {{changeTitle(passenger.title)}} {{passenger.firstname}} {{passenger.lastname}}</b><medium> ({{passenger.typeName}})</medium></h3>
                                             <div class="passenger-list-content">
-                                                <p>
+                                                <p ng-if="birthDateRequired">
                                                     <span class="passenger-label">Tgl. Lahir</span>
                                                     <span class="passenger-data">{{passenger.birth.date}} {{months[passenger.birth.month].name}} {{passenger.birth.year}}</span>
                                                 </p>
