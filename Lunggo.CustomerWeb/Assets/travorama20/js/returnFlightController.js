@@ -630,8 +630,8 @@ app.controller('returnFlightController', [
                     $scope.departureFlightConfig.progress = returnData.progress;
 
                     // generate flight
-                    if (returnData.flights.length == 0)
-                    {
+                    //if (returnData.flights.length == 0)
+                    //{
                         if (returnData.flights[0].options.length)
                         {
                             $scope.arrangeFlightData('departure', returnData.flights[0].options); // For Departure Flight
@@ -640,7 +640,7 @@ app.controller('returnFlightController', [
                         {
                             $scope.arrangeFlightData('return', returnData.flights[1].options); // For Return Flight
                         }
-                    }
+                    //}
                     
 
                     console.log(returnData);
