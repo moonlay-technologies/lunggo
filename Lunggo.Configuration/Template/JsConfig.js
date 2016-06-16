@@ -140,6 +140,14 @@ var ChangeProfileConfig = {
     Url: '$apiUrl$$changeProfilePath$'
 };
 
+var TrxHistoryConfig = {
+    Url: '$apiUrl$$trxHistoryPath$'
+};
+
+var GetReservationConfig = {
+    Url: '$apiUrl$$getReservationPath$'
+};
+
 var ResendConfirmationEmailConfig = {
     Url: '$apiUrl$$resendConfirmationEmailPath$'
 };
@@ -200,7 +208,6 @@ function isValid()
 {
     var token = getCookie('accesstoken');
     var refreshToken = getCookie('refreshtoken');
-    return true;
     if (token) {
         return true;
     }
@@ -236,6 +243,10 @@ function isLogin()
     }
     else
     {
+        if (refreshToken != null || refreshToken != '')
+        {
+            
+        }
         //do some logic here if refresh token is not null
         return false;
     }
@@ -265,3 +276,5 @@ function deleteCookie(name, path) {
     if (getCookie(name))
         setCookie(name, "", -1, path);
 }
+
+

@@ -133,11 +133,19 @@ var ForgotPasswordConfig = {
 };
 
 var ChangePasswordConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/id/ApiAccount/ChangePassword'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/changepassword'
 };
 
 var ChangeProfileConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/id/ApiAccount/ChangeProfile'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/profile'
+};
+
+var TrxHistoryConfig = {
+    Url: 'https://travorama-dv2-api.azurewebsites.net/trxhistory'
+};
+
+var GetReservationConfig = {
+    Url: 'https://travorama-dv2-api.azurewebsites.net/rsv/'
 };
 
 var ResendConfirmationEmailConfig = {
@@ -170,11 +178,11 @@ var ForgotPasswordMobileConfig = {
 };
 
 var ChangePasswordMobileConfig = {
-    Url: 'http://m.local.travorama.com/id/ApiAccount/ChangePassword'
+    Url: 'http://m.local.travorama.com/changepassword'
 };
 
 var ChangeProfileMobileConfig = {
-    Url: 'http://m.local.travorama.com/id/ApiAccount/ChangeProfile'
+    Url: 'http://m.local.travorama.com/profile'
 };
 
 var ResendConfirmationEmailMobileConfig = {
@@ -200,7 +208,6 @@ function isValid()
 {
     var token = getCookie('accesstoken');
     var refreshToken = getCookie('refreshtoken');
-    return true;
     if (token) {
         return true;
     }
@@ -236,6 +243,10 @@ function isLogin()
     }
     else
     {
+        if (refreshToken != null || refreshToken != '')
+        {
+            
+        }
         //do some logic here if refresh token is not null
         return false;
     }
@@ -265,3 +276,5 @@ function deleteCookie(name, path) {
     if (getCookie(name))
         setCookie(name, "", -1, path);
 }
+
+

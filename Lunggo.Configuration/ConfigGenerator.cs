@@ -339,13 +339,15 @@ namespace Lunggo.Configuration
             const string autocompleteAirlinePath = @"/api/v1/autocomplete/airline/";
             const string checkVoucherPath = @"/payment/checkvoucher";
             const string subscribePath = @"/api/v1/newsletter/subscribe";
-            const string loginPath = @"/login";
+            const string loginPath = @"/login"; //getReservationPath
             const string getProfilePath = @"/profile";
             const string registerPath = @"/register";
             const string resetPasswordPath = @"/id/ApiAccount/ResetPassword";
             const string forgotPasswordPath = @"/forgot";
-            const string changePasswordPath = @"/id/ApiAccount/ChangePassword";
-            const string changeProfilePath = @"/id/ApiAccount/ChangeProfile";
+            const string changePasswordPath = @"/changepassword";
+            const string changeProfilePath = @"/profile";
+            const string trxHistoryPath = @"/trxhistory";
+            const string getReservationPath = @"/rsv/";
             const string resendConfirmationEmailPath = @"/id/ApiAccount/ResendConfirmationEmail";
             const string transferPaymentPath = @"/payment/transferfee";
             var veritransTokenPath = _configDictionary["@@.*.veritrans.tokenEndPoint@@"];
@@ -370,6 +372,8 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("autocompleteAirlinePath", autocompleteAirlinePath);
             fileTemplate.SetAttribute("checkVoucherPath", checkVoucherPath);
             fileTemplate.SetAttribute("subscribePath", subscribePath);
+            fileTemplate.SetAttribute("trxHistoryPath", trxHistoryPath);
+            fileTemplate.SetAttribute("getReservationPath", getReservationPath);
             fileTemplate.SetAttribute("loginPath", loginPath);
             fileTemplate.SetAttribute("getProfilePath", getProfilePath);
             fileTemplate.SetAttribute("registerPath", registerPath);

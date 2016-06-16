@@ -1,11 +1,10 @@
 ﻿// Travorama Account controller
 app.controller('siteHeaderController', [
     '$http', '$scope', function ($http, $scope) {
-        $scope.qwe = "qweqweqweqweqwe";
+        $scope.profileloaded = false;
         $scope.pageLoaded = true;
         $scope.email = '';
-        var token = getCookie('accesstoken');
-        var refreshtoken = getCookie('accesstoken');
+        $scope.authProfile = {}
         $scope.ProfileConfig = {
             getProfile : function () {
                 $scope.firstName = '';
@@ -17,25 +16,28 @@ app.controller('siteHeaderController', [
                         console.log('Success getting Profile');
                         $scope.isLogin = true;
                         $scope.email = returnData.email;
+                        $scope.profileloaded = true;
                         console.log(returnData);
                     }
                     else {
                         console.log('There is an error');
                         console.log('Error : ' + returnData.error);
+                        $scope.isLogin = false;
+                        $scope.profileloaded = true;
                         console.log(returnData);
                     }
                 }, function (returnData) {
                     console.log('Failed to Login');
+                    $scope.isLogin = false;
+                    $scope.profileloaded = true;
                     console.log(returnData);
                 });
             }
         }
-        if (token) {
+        //Set Authorization to get Profile
+        $scope.authAccess = getAuthAccess();
+        if ($scope.authAccess == 1) {
             $scope.ProfileConfig.getProfile();
-        }
-        else if (refreshtoken) {
-            //Call A function for refresh token
-            $scope.isLogin = false;
         }
         else
         {
@@ -75,16 +77,16 @@ app.controller('accountController', [
             console.log($scope);
         }
 
+        $scope.userProfile = {
+            email: '',
+            firstname: '',
+            lastname: '',
+            countryCallCd: '',
+            phone: ''
+        }
+
         $scope.userProfile.edit = false;
         $scope.userProfile.updating = false;
-
-        $scope.editProfile = {
-            address: userProfile.address,
-            firstname: userProfile.firstname,
-            lastname: userProfile.lastname,
-            phone: parseInt(userProfile.phone),
-            country: userProfile.country
-        };
 
         $scope.password = {}
         $scope.password.edit = false;
@@ -106,16 +108,73 @@ app.controller('accountController', [
             $scope.currentSection = name;
         }
 
-        $scope.getProfile = function (name)
-        {
-            $scope.firstName = '';
-            $scope.lastnName = '';
-            $http.post(GetProfileConfig.Url, {
-                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+        //Get Profile
+        $scope.TakeProfileConfig = {
+            TakeProfile: function () {
+                //Check Authorization
+                var authAccess = getAuthAccess();
+                if (authAccess == 1) {
+                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                }
+                else {
+                    $scope.getFlightHeader = null;
+                }
+                $http.get(GetProfileConfig.Url, {
+                    headers: { 'Authorization': $scope.getFlightHeader }
+                }).success(function (returnData) {
+                    if (returnData.status == "200") {
+                        console.log('Success getting Profile');
+                        console.log(returnData);
+                        $scope.userProfile = {
+                            email: returnData.email,
+                            firstname: returnData.first,
+                            lastname: returnData.last,
+                            countryCallCd: returnData.countryCallCd,
+                            phone: returnData.phone
+                        };
+                    }
+                    else {
+                        console.log('There is an error');
+                        console.log('Error : ' + returnData.error);
+                        console.log(returnData);
+                    }
+                }, function (returnData) {
+                    console.log('Failed to Get Profile');
+                    console.log(returnData);
+                });
+            }
+        }
+
+        $scope.TakeProfileConfig.TakeProfile();
+        
+        $scope.editProfile = {
+            email: $scope.userProfile.email,
+            firstname: $scope.userProfile.firstname,
+            lastname: $scope.userProfile.lastname,
+            phone: parseInt($scope.userProfile.phone),
+            countryCallCd: $scope.userProfile.countryCallCd
+        };
+
+        //Get Transaction History
+
+        $scope.trxHistory = {
+            getTrxHistory: function () {
+              //Check Authorization
+                var authAccess = getAuthAccess();
+                if (authAccess == 1) {
+                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                }
+                else {
+                    $scope.getFlightHeader = null;
+                }
+              $http.get(TrxHistoryConfig.Url, {
+                headers: { 'Authorization': $scope.getFlightHeader }
             }).success(function (returnData) {
                 if (returnData.status == "200") {
-                    console.log('Success getting Profile');
+                    console.log('Success getting Transaction');
                     console.log(returnData);
+                    $scope.flightlist = returnData.flights;
+                    console.log($scope.flightlist)
                 }
                 else {
                     console.log('There is an error');
@@ -123,17 +182,13 @@ app.controller('accountController', [
                     console.log(returnData);
                 }
             }, function (returnData) {
-                console.log('Failed to Login');
+                console.log('Failed to Get Transaction History');
                 console.log(returnData);
-            });
+                });
+            }
         }
 
-        //use this for logout(delete access and refreshToken in cookie)
-        $scope.logout = function ()
-        {
-            eraseCookie('accesstoken');
-            eraseCookie('refreshtoken');
-        }
+        $scope.trxHistory.getTrxHistory();
 
         $scope.editForm = function (name) {
 
@@ -146,31 +201,40 @@ app.controller('accountController', [
                 console.log('submitting form');
                 $scope.userProfile.updating = true;
                 // submit form to URL
+                console.log(ChangeProfileConfig.Url)
+                //Check Authorization
+                var authAccess = getAuthAccess();
+                if (authAccess == 1) {
+                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                }
+                else {
+                    $scope.getFlightHeader = null;
+                }
+
                 $http({
                     url: ChangeProfileConfig.Url,
-                    method: 'POST',
+                    method: 'PATCH',
                     data: {
-                        Address: $scope.editProfile.address,
-                        FirstName: $scope.editProfile.firstname,
-                        LastName: $scope.editProfile.lastname,
-                        PhoneNumber: $scope.editProfile.phone,
-                        CountryCd: $scope.editProfile.country
-                    }
+                        first: $scope.editProfile.firstname,
+                        last: $scope.editProfile.lastname,
+                        phone: $scope.editProfile.phone,
+                        countryCallCd: $scope.editProfile.countryCallCd
+                    },
+                    headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
                     console.log(returnData);
-                    if (returnData.data.Status == 'Success') {
+                    if (returnData.data.status == '200') {
                         console.log('Success requesting change profile');
-                        $scope.userProfile.address = $scope.editProfile.address;
                         $scope.userProfile.firstname = $scope.editProfile.firstname;
                         $scope.userProfile.lastname = $scope.editProfile.lastname;
                         $scope.userProfile.phone = $scope.editProfile.phone;
-                        $scope.userProfile.country = $scope.editProfile.country;
+                        $scope.userProfile.country = $scope.editProfile.countryCallCd;
                         $scope.userProfile.edit = false;
                         $scope.userProfile.updating = false;
                         $scope.userProfile.updated = true;
                     }
                     else {
-                        console.log(returnData.data.Description);
+                        console.log(returnData.data.error);
                         $scope.userProfile.edit = true;
                         $scope.userProfile.updating = false;
                     }
@@ -192,49 +256,77 @@ app.controller('accountController', [
 
                 console.log('submitting form');
                 // submit form to URL
-                $http({
-                    url: ChangePasswordConfig.Url,
-                    method: 'POST',
-                    data: {
-                        NewPassword: $scope.passwordForm.newPassword,
-                        OldPassword: $scope.passwordForm.currentPassword,
-                        ConfirmPassword: $scope.passwordForm.confirmationPassword
-                    }
-                }).then(function (returnData) {
-                    $scope.passwordForm.newPassword = '';
-                    $scope.passwordForm.currentPassword = '';
-                    $scope.passwordForm.confirmationPassword = '';
-                    if (returnData.data.Status == 'Success') {
-                        console.log('Success requesting reset password');
-                        console.log(returnData);
-                        $scope.password.edit = false;
-                        $scope.password.updating = false;
+                if ($scope.passwordForm.newPassword != $scope.passwordForm.confirmationPassword)
+                {
+                    $scope.passwordValid = false;
+                    $scope.password.failed = true;
+                    $scope.password.updating = false;
+                }
+                else
+                {
+                    $scope.passwordValid = true;
+                    $scope.password.failed = false;
+                    //Check Authorization
+                    var authAccess = getAuthAccess();
+                    if (authAccess == 1) {
+                        $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
                     }
                     else {
-                        console.log(returnData.data.Description);
-                        console.log(returnData);
-                        $scope.password.updating = false;
-                        $scope.password.failed = true;
+                        $scope.getFlightHeader = null;
                     }
-                }, function (returnData) {
-                    console.log('Failed requesting reset password');
-                    console.log(returnData);
-                    $scope.password.edit = true;
-                    $scope.password.updating = false;
-                });
-            }
+                    $http({
+                        url: ChangePasswordConfig.Url,
+                        method: 'POST',
+                        data: {
+                            newPassword: $scope.passwordForm.newPassword,
+                            oldPassword: $scope.passwordForm.currentPassword,
+                        },
+                        headers: { 'Authorization': $scope.getFlightHeader }
+                    }).then(function (returnData) {
+                        $scope.passwordForm.newPassword = '';
+                        $scope.passwordForm.currentPassword = '';
+                        $scope.passwordForm.confirmationPassword = '';
+                        if (returnData.data.status == '200') {
+                            console.log('Success requesting reset password');
+                            console.log(returnData);
+                            $scope.password.edit = false;
+                            $scope.password.updating = false;
+                        }
+                        else {
+                            console.log(returnData.data.error);
+                            console.log(returnData);
+                            $scope.password.updating = false;
+                            $scope.password.failed = true;
+                        }
+                    }, function (returnData) {
+                        console.log('Failed requesting reset password');
+                        console.log(returnData);
+                        $scope.password.edit = true;
+                        $scope.password.updating = false;
+                    });
+                }
+                }
         }
 
         $scope.passwordForm.submit = function () {
             $scope.passwordForm.submitting = true;
             console.log('submitting form');
+            //Check Authorization
+            var authAccess = getAuthAccess();
+            if (authAccess == 1) {
+                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+            }
+            else {
+                $scope.getFlightHeader = null;
+            }
             // submit form to URL
             $http({
                 url: ChangePasswordConfig.Url,
                 method: 'POST',
                 data: {
                     password: $scope.passwordForm.newPassword
-                }
+                },
+                headers: { 'Authorization': $scope.getFlightHeader }
             }).then(function (returnData) {
                 if (returnData.data.Status == 'Success') {
                     console.log('Success requesting reset password');
@@ -284,34 +376,49 @@ app.controller('forgotController', [
         $scope.form.submit = function () {
             $scope.form.submitting = true;
             console.log('submitting form');
+            //Check Authorization
+            var authAccess = getAuthAccess();
+            if (authAccess == 1) {
+                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+            }
+            else {
+                $scope.getFlightHeader = null;
+            }
             // submit form to URL
             $http({
                 url: ForgotPasswordConfig.Url,
                 method: 'POST',
                 data: {
                     email : $scope.form.email
-                }
+                },
+                headers: { 'Authorization': $scope.getFlightHeader }
             }).then(function (returnData) {
                 $scope.form.submitting = false;
                 $scope.form.submitted = true;
                 console.log(returnData);
-
-                switch (returnData.data.Status) {
-                    case "Success":
-                        $scope.form.found = true;
-                        $scope.form.emailConfirmed = true;
-                        break;
-                    case "NotRegistered":
-                        $scope.form.found = false;
-                        break;
-                    case "AlreadyRegisteredButUnconfirmed":
-                        $scope.form.found = true;
-                        $scope.form.emailConfirmed = false;
-                        break;
-                    case "InvalidInputData":
-                        $scope.form.found = false;
-                        break;
+                if (returnData.data.status == '200') {
+                    $scope.form.found = true;
+                    $scope.form.emailConfirmed = true;
                 }
+                else
+                {
+                    switch (returnData.data.error) {
+                        case "ERAFPW01":
+                            $scope.form.found = false;
+                            break;
+                        case "ERAFPW02":
+                            $scope.form.found = false;
+                            break;
+                        case "ERAFPW03":
+                            $scope.form.found = true;
+                            $scope.form.emailConfirmed = false;
+                            break;
+                        case "ERRGEN99":
+                            $scope.form.found = false;
+                            break;
+                    }
+                }
+                
             }, function (returnData) {
                 console.log('Failed requesting reset password');
                 console.log(returnData);
@@ -350,7 +457,14 @@ app.controller('resetController', [
         };
         $scope.form.submit = function() {
             $scope.form.submitting = true;
-
+            //Check Authorization
+            var authAccess = getAuthAccess();
+            if (authAccess == 1) {
+                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+            }
+            else {
+                $scope.getFlightHeader = null;
+            }
             $http({
                 url: ResetPasswordConfig.Url,
                 method: 'POST',
@@ -359,7 +473,8 @@ app.controller('resetController', [
                     ConfirmPassword: $scope.form.password,
                     Email: $scope.form.userEmail,
                     Code: $scope.form.code
-                }
+                },
+                headers: { 'Authorization': $scope.getFlightHeader }
             }).then(function (returnData) {
                 if (returnData.data.Status == 'Success') {
                     console.log('Success requesting reset password');
@@ -377,7 +492,6 @@ app.controller('resetController', [
                 console.log(returnData);
                 $scope.form.submitting = false;
             });
-
         }
 
     }
@@ -433,7 +547,7 @@ app.controller('authController', [
             }).success(function (returnData) {
                 $scope.form.submitting = false;
                 $scope.form.submitted = true;
-                if (returnData.status == "200") {
+                if (returnData.status == '200') {
                     setCookie('accesstoken', returnData.accessToken, returnData.expTime);
                     setRefreshCookie('refreshtoken', returnData.refreshToken);
 
