@@ -12,13 +12,18 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
         public static ApiResponseBase ChangePassword(ChangePasswordApiRequest request, ApplicationUserManager userManager)
         {
             var user = HttpContext.Current.User;
-            var result = userManager.ChangePassword(user.Identity.GetUserId(), request.OldPassword, request.NewPassword);
+            var userId = user.Identity.GetUser().Id;
+            var result = userManager.ChangePassword(userId, request.OldPassword, request.NewPassword);
             return result.Succeeded
                 ? new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.OK
                 }
-                : ApiResponseBase.Error500();
+                : new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERACHP01"
+                };
         }
     }
 }
