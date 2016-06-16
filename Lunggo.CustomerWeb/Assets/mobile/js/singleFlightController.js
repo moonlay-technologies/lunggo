@@ -367,7 +367,7 @@
 
             $http.post(SelectConfig.Url, {
                 searchId: SelectConfig.SearchId,
-                regs: [$scope.FlightConfig[0].FlightList[indexNo].RegisterNumber],
+                regs: [$scope.FlightConfig[0].FlightList[indexNo].reg],
             }).success(function (returnData) {
                 RevalidateConfig.Validated = true;
                 //$scope.selectFlightParam.validated = true;
@@ -375,8 +375,8 @@
                 console.log("Response Select Flight : " + returnData);
                 if (returnData.token != "" || returnData.token != null) {
                     console.log('departure flight available');
-                    RevalidateConfig.Available = true;
-                    RevalidateConfig.Token = returnData.Token;
+                    //RevalidateConfig.Available = true;
+                    //RevalidateConfig.Token = returnData.Token;
 
                     $('.push-token input').val(RevalidateConfig.Token);
                     $('.push-token').submit();
