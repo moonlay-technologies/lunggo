@@ -10,28 +10,21 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
     {
         public static ApiResponseBase RevalidateFlight(FlightRevalidateApiRequest request)
         {
-            try
+            if (IsValid(request))
             {
-                if (IsValid(request))
-                {
-                    var service = FlightService.GetInstance();
-                    var revalidateServiceRequest = PreprocessServiceRequest(request);
-                    var revalidateServiceResponse = service.RevalidateFlight(revalidateServiceRequest);
-                    var apiResponse = AssembleApiResponse(revalidateServiceResponse);
-                    return apiResponse;
-                }
-                else
-                {
-                    return new FlightRevalidateApiResponse
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERFREV01"
-                    };
-                }
+                var service = FlightService.GetInstance();
+                var revalidateServiceRequest = PreprocessServiceRequest(request);
+                var revalidateServiceResponse = service.RevalidateFlight(revalidateServiceRequest);
+                var apiResponse = AssembleApiResponse(revalidateServiceResponse);
+                return apiResponse;
             }
-            catch
+            else
             {
-                return ApiResponseBase.Return500();
+                return new FlightRevalidateApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERFREV01"
+                };
             }
         }
 

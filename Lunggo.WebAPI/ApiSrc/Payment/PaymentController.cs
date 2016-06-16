@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using Lunggo.Framework.Cors;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
@@ -12,11 +13,34 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("payment/pay")]
-        public PaymentApiResponse Pay()
+        public ApiResponseBase Pay()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<PayApiRequest>();
-            var apiResponse = PaymentLogic.Pay(request);
-            return apiResponse;
+            try
+            {
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<PayApiRequest>();
+                var apiResponse = PaymentLogic.Pay(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Route("payment/methods")]
+        public ApiResponseBase GetMethods()
+        {
+            try
+            {
+                var apiResponse = PaymentLogic.GetMethods();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
         }
 
         [HttpGet]
@@ -24,28 +48,49 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [Route("payment/check/{rsvNo}")]
         public ApiResponseBase CheckPayment(string rsvNo)
         {
-            var apiResponse = PaymentLogic.CheckPayment(rsvNo, User);
-            return apiResponse;
+            try
+            {
+                var apiResponse = PaymentLogic.CheckPayment(rsvNo, User);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
         }
 
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("payment/transferfee")]
-        public TransferFeeApiResponse GetTransferIdentifier()
+        public ApiResponseBase GetTransferIdentifier()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<TransferFeeApiRequest>();
-            var apiResponse = PaymentLogic.GetTransferFee(request);
-            return apiResponse;
+            try
+            {
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<TransferFeeApiRequest>();
+                var apiResponse = PaymentLogic.GetTransferFee(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
         }
 
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("payment/checkvoucher")]
-        public CheckVoucherApiResponse CheckVoucher()
+        public ApiResponseBase CheckVoucher()
         {
-            var request = Request.Content.ReadAsStringAsync().Result.Deserialize<CheckVoucherApiRequest>();
-            var apiResponse = VoucherLogic.CheckVoucher(request);
-            return apiResponse;
+            try
+            {
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<CheckVoucherApiRequest>();
+                var apiResponse = VoucherLogic.CheckVoucher(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
         }
     }
 }

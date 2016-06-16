@@ -10,52 +10,41 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static ApiResponseBase ForgotPassword(ForgotPasswordApiRequest request, ApplicationUserManager userManager)
         {
-            try
-            {
-                if (!IsValid(request))
-                {
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERAFPW01"
-                    };
-                }
-
-                var foundUser = userManager.FindByName(request.Email);
-                if (foundUser == null)
-                {
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERAFPW02"
-                    };
-                }
-                if (!userManager.IsEmailConfirmed(foundUser.Id))
-                {
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERAFPW03"
-                    };
-                }
-
-                var code = userManager.GeneratePasswordResetToken(foundUser.Id);
-                //var callbackUrl = Url.Action("ResetPassword", "Account", new { code = code, email = request.Email },
-                //    protocol: Request.Url.Scheme);
-                //await UserManager.SendEmailAsync(foundUser.Id, "ForgotPasswordEmail", callbackUrl);
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.OK
-                };
-            }
-            catch
+            if (!IsValid(request))
             {
                 return new ApiResponseBase
                 {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERRGEN99"
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERAFPW01"
                 };
             }
+
+            var foundUser = userManager.FindByName(request.Email);
+            if (foundUser == null)
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Accepted,
+                    ErrorCode = "ERAFPW02"
+                };
+            }
+            if (!userManager.IsEmailConfirmed(foundUser.Id))
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Accepted,
+                    ErrorCode = "ERAFPW03"
+                };
+            }
+
+            var code = userManager.GeneratePasswordResetToken(foundUser.Id);
+            //var callbackUrl = Url.Action("ResetPassword", "Account", new { code = code, email = request.Email },
+            //    protocol: Request.Url.Scheme);
+            //await UserManager.SendEmailAsync(foundUser.Id, "ForgotPasswordEmail", callbackUrl);
+            return new ApiResponseBase
+            {
+                StatusCode = HttpStatusCode.OK
+            };
         }
 
         private static bool IsValid(ForgotPasswordApiRequest request)

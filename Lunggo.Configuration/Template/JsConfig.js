@@ -121,27 +121,27 @@ var GetProfileConfig = {
 };
 
 var RegisterConfig = {
-    Url: '$rootUrl$$registerPath$'
+    Url: '$apiUrl$$registerPath$'
 };
 
 var ResetPasswordConfig = {
-    Url: '$rootUrl$$resetPasswordPath$'
+    Url: '$apiUrl$$resetPasswordPath$'
 };
 
 var ForgotPasswordConfig = {
-    Url: '$rootUrl$$forgotPasswordPath$'
+    Url: '$apiUrl$$forgotPasswordPath$'
 };
 
 var ChangePasswordConfig = {
-    Url: '$rootUrl$$changePasswordPath$'
+    Url: '$apiUrl$$changePasswordPath$'
 };
 
 var ChangeProfileConfig = {
-    Url: '$rootUrl$$changeProfilePath$'
+    Url: '$apiUrl$$changeProfilePath$'
 };
 
 var ResendConfirmationEmailConfig = {
-    Url: '$rootUrl$$resendConfirmationEmailPath$'
+    Url: '$apiUrl$$resendConfirmationEmailPath$'
 };
 
 var VeritransTokenConfig = {
@@ -207,11 +207,10 @@ function isValid()
     else
     {
         console.log('Test');
-
+        //Here to get Token
         if (refreshToken != null) {
             var xhttp = new XMLHttpRequest();
             xhttp.open("POST", LoginConfig.Url, true);
-            //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send("refreshtoken:"+getCookie('refreshtoken'));
             if (xhttp.status == "200") {
                 return true;
@@ -219,10 +218,7 @@ function isValid()
             else
             {
                 return false;
-            }
-            //return true;
-            
-            
+            } 
         }
         else
         {
@@ -230,6 +226,21 @@ function isValid()
         }
     }
 }
+
+function isLogin()
+{
+    var token = getCookie('accesstoken');
+    var refreshToken = getCookie('refreshtoken');
+    if (token != null || token != '') {
+        return true;
+    }
+    else
+    {
+        //do some logic here if refresh token is not null
+        return false;
+    }
+}
+
 
 //Get Value from Cookie
 function getCookie(name) {

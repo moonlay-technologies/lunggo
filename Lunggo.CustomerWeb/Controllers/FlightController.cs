@@ -181,13 +181,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult PaymentPost(string rsvNo)
         {
             var flight = FlightService.GetInstance();
-            var paymentUrl = flight.GetBookingRedirectionUrl(rsvNo);
             var reservation = flight.GetReservationForDisplay(rsvNo);
-            if (paymentUrl == null)
-            {
-                TempData["FlightCheckoutOrBookingError"] = true;
-                return RedirectToAction("Payment");
-            }
             if (reservation.Payment.Method == PaymentMethod.BankTransfer || reservation.Payment.Method == PaymentMethod.VirtualAccount)
                 return RedirectToAction("Confirmation", "Flight", new {rsvNo});
             else
@@ -199,17 +193,10 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Thankyou(string rsvNo)
         {
-            //if (TempData["AllowThisThankyouPage"] as string == rsvNo)
-            //{
                 var service = FlightService.GetInstance();
                 var summary = service.GetReservationForDisplay(rsvNo);
                 return View(summary);
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Index", "UW000TopPage");
-            //}
-            }
+        }
 
         [HttpPost]
         [ActionName("Thankyou")]
@@ -224,6 +211,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var reservation = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
             if ((reservation.Payment.Method == PaymentMethod.BankTransfer || reservation.Payment.Method == PaymentMethod.VirtualAccount) && reservation.Payment.Status == PaymentStatus.Pending)
             {
+                //if want to use form payment Confirmation
                 /*return View(new FlightPaymentConfirmationData
                 {
                     RsvNo = rsvNo,

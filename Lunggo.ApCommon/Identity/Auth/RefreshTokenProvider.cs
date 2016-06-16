@@ -68,7 +68,7 @@ namespace Lunggo.ApCommon.Identity.Auth
             var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
-            string hashedTokenId = context.Token;
+            string hashedTokenId = context.Token.Sha512Encode();
 
             var refreshToken = await new DapperAuthStore().FindRefreshToken(hashedTokenId);
 

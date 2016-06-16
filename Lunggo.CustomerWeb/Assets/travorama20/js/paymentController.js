@@ -25,36 +25,59 @@ app.controller('paymentController', [
             Number: ''
         };
 
+        $scope.msToTime = function (duration) {
+
+            var milliseconds = parseInt((duration % 1000) / 100),
+                 seconds = parseInt((duration / 1000) % 60),
+                 minutes = parseInt((duration / (1000 * 60)) % 60),
+                 hours = parseInt((duration / (1000 * 60 * 60)));
+            //hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+            //days = parseInt((duration / (1000 * 60 * 60 * 24)));
+            hours = hours;
+            minutes = minutes;
+            seconds = seconds;
+            //var hours = convertedDuration[0];
+            //var minutes = convertedDuration[1];
+            return hours + "j " + minutes + "m";
+        }
+
         //Unique Code For Bank Transfer
         $scope.TransferConfig = {
             UniqueCode: 0,
             Token: '',
-            GetUniqueCode: function (sentPrice) {
-                if (!sentPrice) {
-                    sentPrice = price;
+            GetUniqueCode: function (rsvNo, voucherCode) {
+                if (!rsvNo) {
+                    rsvNo = $scope.rsvNo;
                 }
-                // get unique payment code
+
+                //Check Authorization
+                if (isLogin()) {
+                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                }
+                else {
+                    $scope.getFlightHeader = null;
+                }
                 $http({
-                    method: 'GET',
+                    method: 'POST',
                     url: TransferConfig.Url,
-                    params: {
-                        price: sentPrice
-                    }
+                    data: {
+                        rsvNo: rsvNo,
+                        discCode: voucherCode
+                    },
+                    headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
                     console.log('Getting Unique Payment Code');
                     console.log(returnData);
-                    $scope.TransferConfig.UniqueCode = returnData.data.transfer_code;
-                    $scope.TransferConfig.Token = returnData.data.token
-
+                    $scope.TransferConfig.UniqueCode = returnData.data.fee;
                 }, function (returnData) {
                     console.log('Failed to get Unique Payment Code');
                     console.log(returnData);
                 });
             }
         };
-        $scope.TransferConfig.GetUniqueCode(price); //payment
         $scope.currency = 'IDR';
         $scope.rsvNo = rsvNo;
+        $scope.TransferConfig.GetUniqueCode($scope.rsvNo); //payment
         $scope.initialPrice = price;
         $scope.totalPrice = price;
 
@@ -67,31 +90,45 @@ app.controller('paymentController', [
             checking: false,
             checked: false,
             check: function () {
+
+                //Check Authorization
+                if (isLogin()) {
+                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                }
+                else {
+                    $scope.getFlightHeader = null;
+                }
+
                 $scope.voucher.checking = true;
                 $http({
-                    method: 'GET',
+                    method: 'POST',
                     url: CheckVoucherConfig.Url,
-                    params: {
-                        token: $scope.token,
+                    data: {
                         code: $scope.voucher.code,
-                        email: $scope.buyerInfo.email,
-                        price: $scope.initialPrice
-                    }
+                        rsvno: $scope.rsvNo
+                    },
+                    headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
                     console.log(returnData);
                     $scope.voucher.checking = false;
                     $scope.voucher.checked = true;
-                    $scope.voucher.status = returnData.data.ValidationStatus;
-                    if (returnData.data.Discount > 0) {
-                        $scope.voucher.amount = returnData.data.Discount;
+                    if (returnData.data.discount > 0) {
+                        $scope.voucher.amount = returnData.data.discount;
                         $scope.voucher.confirmedCode = $scope.voucher.code;
-                        $scope.voucher.displayName = returnData.data.DisplayName;
+                        $scope.voucher.displayName = returnData.data.name;
                         // get unique code for transfer payment
-                        $scope.TransferConfig.GetUniqueCode($scope.initialPrice - $scope.voucher.amount);
+                        $scope.voucher.status = 'Success';
+                        $scope.TransferConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
+                    }
+                    else
+                    {
+                        $scope.voucher.checked = true;
+                        $scope.voucher.status = returnData.data.error;
                     }
                 }, function (returnData) {
                     $scope.voucher.checked = true;
                     $scope.voucher.checking = false;
+                    $scope.voucher.status = returnData.data.error;
                 });
             },
             reset: function () {
@@ -100,7 +137,7 @@ app.controller('paymentController', [
                 $scope.voucher.confirmedCode = '';
                 $scope.voucher.checked = false;
                 // get unique code for transfer payment
-                $scope.TransferConfig.GetUniqueCode($scope.initialPrice);
+                $scope.TransferConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
             }
         };
 
@@ -202,29 +239,76 @@ app.controller('paymentController', [
                 $scope.pay.isSuccess = "",
                 $scope.pay.paying = true;
                 //generate data
-                $scope.pay.postData = ' "RsvNo" : "' + $scope.rsvNo + '" , "Payment.TransferToken" : "' + $scope.TransferConfig.Token + '" , "Payment.Data.Data0" : "' + $scope.CreditCard.Token + '", "Payment.Data.Data1" : "' + $scope.CreditCard.Name + '", "Payment.Data.Data20" : "' + $scope.loggedIn + '", "Payment.Data.Data9" : "' + $scope.buyerInfo.email + '", "Payment.Currency":"' + $scope.currency + '", "Payment.DiscountCode":"' + $scope.voucher.confirmedCode + '", "Payment.Method":"' + $scope.paymentMethod + '"';
+                if ($scope.paymentMethod == 'BankTransfer') {
+                    $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"' + $scope.paymentMethod + '"';
+                }
+                else
+                {
+                    switch ($scope.paymentMethod) {
+                        case "CreditCard": //NotTested
+                            $scope.PaymentData = '{' + ' "tokenId":"' + $scope.CreditCard.Token + '",  "bank" :"' + $scope.buyerInfo.fullname + '","holderName":"' + $scope.CreditCard.Name + '","holderEmail":"' + $scope.buyerInfo.email + '","installmentTerm":"' + $scope.buyerInfo.email + '","bins":"' + $scope.buyerInfo.phone + '","saveTokenId":"' + $scope.buyerInfo.phone + '"' + '}';
+                            break;
+                       case "MandiriClickPay": //NotTested
+                            $scope.PaymentData = '{' + ' "cardNo":"' + $scope.CreditCard.Token + '",  "cardLast10No" :"' + $scope.buyerInfo.fullname + '","amount":"' + $scope.CreditCard.Name + '","randomNumber":"' + $scope.buyerInfo.email + '","token":"' + $scope.buyerInfo.email + '"' + '}';
+                            break;
+                        case "CimbClicks": //NotTested
+                            $scope.PaymentData = '{' + ' "description":"' + $scope.CreditCard.Token + '"' + '}';
+                            break;
+                        case "VirtualAccount": // Done
+                            $scope.PaymentData = '{' + ' "bank":"Permata"' + '}'; 
+                            break;
+                        case "MandiriBillPayment": //NotTested
+                            $scope.PaymentData = '{' + ' "label1":"' + $scope.CreditCard.Token + '",  "value1" :"' + $scope.buyerInfo.fullname + '","label2":"' + $scope.CreditCard.Name + '","value2":"' + $scope.buyerInfo.email + '","label3":"' + $scope.buyerInfo.email + '","value3":"' + $scope.buyerInfo.phone + '","label4":"' + $scope.buyerInfo.phone + '","value4":"' + $scope.buyerInfo.phone + '"' + '}';
+                            break;
+                    }
+                    $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"' + $scope.paymentMethod + '"';
+                }
+                
                 $scope.pay.postData = '{' + $scope.pay.postData + '}';
                 $scope.pay.postData = JSON.parse($scope.pay.postData);
+
+                //Check Authorization
+                if (isLogin()) {
+                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                }
+                else {
+                    $scope.getFlightHeader = null;
+                }
 
                 //send form
                 $http({
                     method: 'POST',
                     url: $scope.pay.url,
-                    data: $.param($scope.pay.postData),
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                    data: $scope.pay.postData,
+                    headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
                     console.log(returnData);
 
-                    if (returnData.data.IsSuccess) {
+                    if (returnData.data.status == '200') {
                         $scope.pay.isSuccess = true;
-                        $scope.pay.rsvNo = returnData.data.RsvNo;
-                        $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                        $scope.pay.rsvNo = $scope.rsvNo;
+                        $('form#rsvno input#rsvno-input').val($scope.pay.rsvNo);
                         $('form#rsvno').submit();
                         $scope.pay.checked = true;
                     }
                     else {
                         $scope.pay.checked = true;
-                        $scope.pay.isSuccess= false;
+                        $scope.pay.isSuccess = false;
+                        //Error Handling right Here
+                        console.log('Status : ' + returnData.status);
+                        console.log('Error : ' + returnData.data.error);
+                        switch (returnData.data.error)
+                        {
+                            case 'ERPPAY01':
+                                $scope.errorMessage = 'Missing reservation number or method';
+                                break;
+                            case 'ERPPAY02':
+                                $scope.errorMessage = 'Not authorized to use selected payment method';
+                                break;
+                            case 'ERRGEN99':
+                                $scope.errorMessage = 'There is a problem on the server';
+                                break;
+                        }
                     }
                 })
                 $scope.pay.paying = false;

@@ -170,13 +170,9 @@ app.controller('singleFlightController', [
                  seconds = parseInt((duration / 1000) % 60),
                  minutes = parseInt((duration / (1000 * 60)) % 60),
                  hours = parseInt((duration / (1000 * 60 * 60)));
-                 //hours = parseInt((duration / (1000 * 60 * 60)) % 24);
-                 //days = parseInt((duration / (1000 * 60 * 60 * 24)));
             hours = hours;
             minutes = minutes;
             seconds = seconds;
-            //var hours = convertedDuration[0];
-            //var minutes = convertedDuration[1];
             return hours + "j " + minutes + "m";
         }
 
@@ -397,10 +393,23 @@ app.controller('singleFlightController', [
                     $scope.flightSelected = indexNo;
                     $scope.selectFlightParam.validating = true;
 
-                    // revalidate flight
-                    $http.post(SelectConfig.Url, {
-                        searchId: SelectConfig.SearchId,
-                        regs: [$scope.flightList[indexNo].reg],
+                    if (isLogin()) {
+                        $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                    }
+                    else
+                    {
+                        $scope.getFlightHeader = null;
+                    }
+
+                    // Select flight
+                    $http({
+                        method: 'POST',
+                        url: SelectConfig.Url,
+                        data: {
+                            searchId: SelectConfig.SearchId,
+                            regs: [$scope.flightList[indexNo].reg]
+                        },
+                        headers: { 'Authorization': $scope.getFlightHeader }
                     }).success(function (returnData) {
                         $scope.selectFlightParam.validated = true;
                         console.log(indexNo);
@@ -444,10 +453,19 @@ app.controller('singleFlightController', [
 
         // **********
         // get flight function
-        $scope.getFlight = function() {
+        $scope.getFlight = function () {
             $scope.busy = true;
             $scope.loading = true;
             $scope.loadingFlight = true;
+
+            //set Authorization header
+            if (isLogin()) {
+                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+            }
+            else
+            {
+                $scope.getFlightHeader = null;
+            }
 
             console.log('request : ' + $scope.flightRequest.Requests);
 
@@ -457,26 +475,13 @@ app.controller('singleFlightController', [
                 // ajax
                 console.log("Request : " + FlightSearchConfig.Url + $scope.flightFixRequest + '/' + $scope.Progress);
                 $http.get(FlightSearchConfig.Url + '/' + $scope.flightFixRequest + '/' + $scope.Progress, {
-                    //params: {
-                    //  request: $scope.flightRequest
-                    //}
+                    headers: { 'Authorization': $scope.getFlightHeader }
                 }).success(function (returnData) {
 
                     // set searchID
                     SelectConfig.SearchId = $scope.flightFixRequest;
                     $scope.flightRequest.SearchId = $scope.flightFixRequest;
                     console.log($scope.flightFixRequest);
-
-                    // set flight request if pristine
-                    /*if ($scope.pristine == true) {
-                        $scope.pristine = false;
-                        for (var i = 0; i < returnData.MaxRequest; i++) {
-                            $scope.flightRequest.Requests.push(i + 1);
-                        }
-                        $scope.flightRequest.MaxProgress = 100 / (returnData.MaxRequest);
-                    }*/
-
-                    // if granted request is not null
 
                     $scope.Progress = returnData.progress;
                     if ($scope.Progress == 100) {
@@ -493,40 +498,6 @@ app.controller('singleFlightController', [
                     console.log('Progress : ' + $scope.Progress + ' %');
                     console.log(returnData);
 
-                    /*if (returnData.GrantedRequests.length) {
-                        console.log('Granted request  : '+returnData.GrantedRequests);
-                        for (var i = 0; i < returnData.GrantedRequests.length; i++) {
-                            // add to completed
-                            if ( $scope.flightRequest.Completed.indexOf( returnData.GrantedRequests[i] < 0 ) ) {
-                                $scope.flightRequest.Completed.push( returnData.GrantedRequests[i] );
-                            }
-                            // check current request. Remove if completed
-                            if ($scope.flightRequest.Requests.indexOf(returnData.GrantedRequests[i] < 0)) {
-                                $scope.flightRequest.Requests.splice( $scope.flightRequest.Requests.indexOf(returnData.GrantedRequests[i]) , 1 );
-                            }
-    
-                        }
-    
-                        // update total progress
-                        $scope.flightRequest.Progress = returnData.progress//((returnData.MaxRequest - $scope.flightRequest.Requests.length) / returnData.MaxRequest) * 100;
-                        //$scope.flightRequest.MaxProgress = (100 / returnData.MaxRequest) * ($scope.flightRequest.Completed.length + 1);
-                            
-                        // set expiry if progress == 100
-                        if ($scope.flightRequest.Progress == 100) {
-                            $scope.expiry.time = returnData.expTime;
-                        } else {
-                            $scope.flightRequest.FinalProgress = $scope.flightRequest.Progress;
-                        }
-    
-                        // generate flight
-                        $scope.generateFlightList(returnData.flights);
-                            
-    
-                        console.log('Progress : '+ $scope.flightRequest.Progress +' %');
-                        console.log(returnData);
-                    }*/
-
-                    //console.log(returnData);
                     // loop the function
                     setTimeout(function () {
                         $scope.getFlight();

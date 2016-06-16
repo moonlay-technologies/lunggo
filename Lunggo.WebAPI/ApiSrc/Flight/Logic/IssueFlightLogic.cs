@@ -11,27 +11,20 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
     {
         public static ApiResponseBase IssueFlight(FlightIssueApiRequest request)
         {
-            try
+            if (IsValid(request))
             {
-                if (IsValid(request))
-                {
-                    var issueServiceRequest = PreprocessServiceRequest(request);
-                    var issueServiceResponse = FlightService.GetInstance().IssueTicket(issueServiceRequest);
-                    var apiResponse = AssembleApiResponse(issueServiceResponse);
-                    return apiResponse;
-                }
-                else
-                {
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERFISS01"
-                    };
-                }
+                var issueServiceRequest = PreprocessServiceRequest(request);
+                var issueServiceResponse = FlightService.GetInstance().IssueTicket(issueServiceRequest);
+                var apiResponse = AssembleApiResponse(issueServiceResponse);
+                return apiResponse;
             }
-            catch
+            else
             {
-                return ApiResponseBase.Return500();
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERFISS01"
+                };
             }
         }
 

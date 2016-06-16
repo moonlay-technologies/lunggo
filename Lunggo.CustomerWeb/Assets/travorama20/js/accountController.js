@@ -42,6 +42,17 @@ app.controller('siteHeaderController', [
             $scope.isLogin = false;
         }
 
+        $scope.logout = {
+            isLogout: false,
+            getLogout: function ()
+            {
+                eraseCookie('accesstoken');
+                eraseCookie('refreshtoken');
+                $scope.isLogin = false;
+                isLogout: true;
+            }
+        }
+
     }]);
 
 app.controller('accountController', [
@@ -64,7 +75,6 @@ app.controller('accountController', [
             console.log($scope);
         }
 
-        $scope.userProfile = userProfile;
         $scope.userProfile.edit = false;
         $scope.userProfile.updating = false;
 
@@ -479,36 +489,40 @@ app.controller('registerController', [
                 url: RegisterConfig.Url,
                 method: 'POST',
                 data: {
-                    Email: $scope.form.email,
+                    email: $scope.form.email,
                 }
             }).then(function (returnData) {
                 $scope.form.submitting = false;
                 $scope.form.submitted = true;
                 $scope.overlay = true;
-
-                switch (returnData.data.Status) {
-                    case "Success":
-                        $scope.form.registered = false;
-                        $scope.form.emailSent = false;
-                        $scope.form.emailConfirmed = false;
-                        $scope.form.email = '';
-                        break;
-                    case "AlreadyRegistered":
-                        $scope.form.registered = true;
-                        $scope.form.emailSent = true;
-                        $scope.form.emailConfirmed = true;
-                        $scope.form.email = '';
-                        break;
-                    case "AlreadyRegisteredButUnconfirmed":
-                        $scope.form.registered = true;
-                        $scope.form.emailSent = true;
-                        $scope.form.emailConfirmed = false;
-                        break;
-                    case "InvalidInputData":
-                        $scope.form.email = '';
-                        break;
+                if (returnData.data.status == '200') {
+                    $scope.form.registered = false;
+                    $scope.form.emailSent = false;
+                    $scope.form.emailConfirmed = false;
+                    $scope.form.email = '';
                 }
-
+                else
+                {
+                    switch (returnData.data.error) {
+                        case "ERAREG02":
+                            $scope.form.registered = true;
+                            $scope.form.emailSent = true;
+                            $scope.form.emailConfirmed = true;
+                            $scope.form.email = '';
+                            break;
+                        case "ERAREG03":
+                            $scope.form.registered = true;
+                            $scope.form.emailSent = true;
+                            $scope.form.emailConfirmed = false;
+                            break;
+                        case "ERRGEN99":
+                            $scope.form.email = '';
+                            break;
+                        case "ERAREG01":
+                            $scope.form.email = '';
+                            break;
+                    }
+                }
             }, function (returnData) {
                 console.log('Failed requesting reset password');
                 console.log(returnData);
