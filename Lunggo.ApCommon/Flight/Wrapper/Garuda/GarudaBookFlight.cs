@@ -194,6 +194,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     };
                 }
                 var client = CreateAgentClient();
+                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var clientx = new RestClient(cloudAppUrl);
+                var userName = "";
                 var successLogin = false;
                 IRestResponse searchResAgent0 = null;
                 try
@@ -221,17 +224,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
                 var dict = DictionaryService.GetInstance();
-
-                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
-                var clientx = new RestClient(cloudAppUrl);
+                    
                 var accReq = new RestRequest("/api/GarudaAccount/ChooseUserId", Method.GET);
-                var userName = "";
+                
                 var reqTime = DateTime.UtcNow;
                 var newitin = new FlightItinerary();
                 
                 var counter = 0;
                 
-
                 //successLogin = Login(client, "SA3ALEU1", "Standar123", out returnPath);
                 while (!successLogin && counter < 31)
                 {
@@ -810,7 +810,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 catch //(Exception e)
                 {
                     LogOut(returnPath, client);
-                    //TurnInUsername(clientx, userName);
+                    TurnInUsername(clientx, userName);
 
                     return new BookFlightResult
                     {
