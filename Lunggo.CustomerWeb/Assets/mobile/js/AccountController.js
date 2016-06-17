@@ -321,19 +321,34 @@ app.controller('LoginController', ['$http', '$scope', '$rootScope', function($ht
                 $scope.User.Message = '';
                 $scope.User.Sending = true;
                 $http({
-                    url: LoginMobileConfig.Url,
+                    url: LoginConfig.Url,
                     method: 'POST',
                     data: {
                         Email: $scope.User.Email,
                         Password: $scope.User.Password,
+                        clientId: 'Jajal',
+                        clientSecret: 'Standar'
                     }
                 }).then(function (returnData) {
                     $scope.User.Resubmitting = false;
-
-                    if (returnData.data.Status == "Success") {
+                    if (returnData.status == '200') {
+                        setCookie('accesstoken', returnData.accessToken, returnData.expTime);
+                        setRefreshCookie('refreshtoken', returnData.refreshToken);
                         $scope.User.Email = '';
                         $scope.User.Resubmitted = true;
+                        window.location.href = $scope.returnUrl;
                     }
+                    else {
+                        $scope.overlay = true;
+                        if (returnData.error == 'ERALOG01') { $scope.User.Message = 'RefreshNeeded'; }
+                        else if (returnData.error == 'ERALOG02') { $scope.User.Message = 'InvalidInputData'; } //
+                        else if (returnData.error == 'ERALOG03') { $scope.User.Message = 'AlreadyRegisteredButUnconfirmed'; } //
+                        else if (returnData.error == 'ERALOG04') { $scope.User.Message = 'Failed'; } //
+                        else if (returnData.error == 'ERALOG05') { $scope.User.Message = 'NotRegistered'; } //
+                        else { $scope.errorMessage = 'Failed'; }
+                        console.log('Error : ' + returnData.error);
+                    }
+                    
 
                 }, function (returnData) {
                     console.log('Failed requesting confirmation e-mail');

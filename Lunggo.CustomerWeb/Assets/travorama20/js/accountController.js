@@ -617,7 +617,7 @@ app.controller('authController', [
                     else if (returnData.error == 'ERALOG04') { $scope.errorMessage = 'Failed'; }
                     else if (returnData.error == 'ERALOG05') { $scope.errorMessage = 'NotRegistered'; }
                     else { $scope.errorMessage = 'Failed'; }
-                    console.log('Error : '+returnData.error);
+                    console.log('Error : '+ returnData.error);
                 }
             }, function (returnData) {
                 console.log('Failed to Login');
