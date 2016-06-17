@@ -1333,9 +1333,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail > div {
           float: left; }
         .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail .flight__departure, .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail .flight__arrival {
-          width: 45%; }
+          width: 44%; }
         .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail .flight__separator {
-          width: 10%;
+          width: 12%;
           height: 100%;
           position: absolute;
           background: url(/Assets/mobile/images/flight-separator.png) center center no-repeat;

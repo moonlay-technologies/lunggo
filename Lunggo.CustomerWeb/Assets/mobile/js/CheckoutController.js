@@ -48,6 +48,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         // buyer info
         BuyerInfo: CheckoutDetail.BuyerInfo
     };
+    $scope.language = langCode;
     $scope.changeTitle = function (title) {
         if (title == 'Mister')
             return 'Tn.';
@@ -294,13 +295,14 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         },
         send: function () {
             $scope.book.booking = true;
-
+            $scope.contactData = '{' + ' "title":"' + $scope.buyerInfo.title + '",  "name" :"' + $scope.buyerInfo.fullName + '","countryCallCd":"' + $scope.buyerInfo.countryCode + '","phone":"' + $scope.buyerInfo.phone + '","email":"' + $scope.buyerInfo.email + '"' + '}';
+            $scope.paxData = ' "pax" : [';
             // generate data
-            $scope.book.postData = ' "Token":"' + $scope.token + '",  "Contact.Title" :"' + $scope.buyerInfo.title + '","Contact.Name":"' + $scope.buyerInfo.fullName + '", "Contact.CountryCode":"' + $scope.buyerInfo.countryCode + '", "Contact.Phone":"' + $scope.buyerInfo.phone + '","Contact.Email":"' + $scope.buyerInfo.email + '","Language":"' + "ID"+ '"';
+            $scope.book.postData = ' "token":"' + $scope.token + '",  "contact" :' + $scope.contactData + ',"lang":"' + $scope.language + '"';;
             for (var i = 0; i < $scope.passengers.length; i++) {
 
                 // check nationality
-                if (!$scope.passportRequired) {
+                if (!$scope.CheckoutConfig.PassportRequired) {
                     $scope.passengers[i].passport.number = '';
                     $scope.passengers[i].passport.expire = {};
                     $scope.passengers[i].passport.expire.date = '';
@@ -311,7 +313,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                         $scope.passengers[i].passport.country = '';
                     }
                 }
-                if (!$scope.idRequired) {
+                if (!$scope.CheckoutConfig.IdRequired) {
                     $scope.passengers[i].idNumber = '';
                 }
 
@@ -325,68 +327,98 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     + '/' + ('0' + (parseInt($scope.passengers[i].birth.month) + 1)).slice(-2) + '/'
                     + ('0' + $scope.passengers[i].birth.date).slice(-2);
 
-                $scope.book.postData = $scope.book.postData
-                    + (',"Passengers[' + i + '].Type": "' + $scope.passengers[i].type
-                        + '", "Passengers[' + i + '].Title": "' + $scope.passengers[i].title + '", "Passengers[' + i + '].FirstName":"'
-                        + $scope.passengers[i].firstName + '", "Passengers[' + i + '].LastName": "'
-                        + $scope.passengers[i].lastName + '", "Passengers[' + i + '].BirthDate":"'
-                        + $scope.passengers[i].birth.full + '", "Passengers[' + i + '].PassportNumber":"'
-                        + $scope.passengers[i].passport.number
-                        + '", "Passengers[' + i + '].PassportExpiryDate":"' + $scope.passengers[i].passport.expire.full
-                        + '", "Passengers[' + i + '].idNumber":"' + $scope.passengers[i].idNumber
-                        + '", "Passengers[' + i + '].Country":"' + $scope.passengers[i].passport.country +'"');
+                if (!$scope.CheckoutConfig.PassportRequired) {
+                    if (i != $scope.passengers.length - 1) {
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstName + '" , "last":"' + $scope.passengers[i].lastName + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
+                    }
+                    else {
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstName + '" , "last":"' + $scope.passengers[i].lastName + '" , "dob":"' + $scope.passengers[i].birth.full + '"  , "nationality":"' + $scope.passengers[i].passport.country + '" }';
+                    }
+                }
+                else {
+                    if (i != $scope.passengers.length - 1) {
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstName + '" , "last":"' + $scope.passengers[i].lastName + '" , "dob":"' + $scope.passengers[i].birth.full + '", "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
+                    }
+                    else {
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstName + '" , "last":"' + $scope.passengers[i].lastName + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" }';
+                    }
+                }
+                //$scope.book.postData = $scope.book.postData
+                //    + (',"Passengers[' + i + '].Type": "' + $scope.passengers[i].type
+                //        + '", "Passengers[' + i + '].Title": "' + $scope.passengers[i].title + '", "Passengers[' + i + '].FirstName":"'
+                //        + $scope.passengers[i].firstName + '", "Passengers[' + i + '].LastName": "'
+                //        + $scope.passengers[i].lastName + '", "Passengers[' + i + '].BirthDate":"'
+                //        + $scope.passengers[i].birth.full + '", "Passengers[' + i + '].PassportNumber":"'
+                //        + $scope.passengers[i].passport.number
+                //        + '", "Passengers[' + i + '].PassportExpiryDate":"' + $scope.passengers[i].passport.expire.full
+                //        + '", "Passengers[' + i + '].idNumber":"' + $scope.passengers[i].idNumber
+                //        + '", "Passengers[' + i + '].Country":"' + $scope.passengers[i].passport.country +'"');
                 //);
             }
-            $scope.book.postData = '{' + $scope.book.postData + '}';
+            $scope.paxData = $scope.paxData + ']';
+            $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + '}';
             $scope.book.postData = JSON.parse($scope.book.postData);
 
             console.log($scope.book.postData);
+
+            //Check Authorization
+            var authAccess = getAuthAccess();
+            if (authAccess == 1) {
+                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+            }
+            else {
+                $scope.getFlightHeader = null;
+            }
 
             // send form
             $http({
                 method: 'POST',
                 url: $scope.book.url,
-                data: $.param($scope.book.postData),
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                data: ($scope.book.postData),
+                headers: { 'Authorization': $scope.getFlightHeader }
+                //headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             }).then(function (returnData) {
                 console.log(returnData);
 
                 $scope.book.checked = true;
                 $scope.book.booking = false;
-                if (returnData.data.IsSuccess) {
-                    if (returnData.data.NewPrice != null) {
+
+                if (returnData.data.rsvNo != '' || returnData.data.rsvNo != null) {
+                    if (returnData.data.price != null) {
                         $scope.book.isPriceChanged = true;
                         $scope.book.isSuccess = true;
-                        $scope.book.newPrice = returnData.data.NewPrice;
+                        $scope.book.newPrice = returnData.data.price;
                         $scope.book.checked = false;
                     }
                     else {
                         $scope.book.isSuccess = true;
-                        $scope.book.rsvNo = returnData.data.RsvNo;
+                        $scope.book.rsvNo = returnData.data.rsvNo;
 
-                        $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                        $('form#rsvno input#rsvno-input').val(returnData.data.rsvNo);
                         $('form#rsvno').submit();
                         $scope.book.checked = true;
                     }
-                    //$scope.book.isSuccess = true;
-                    //$scope.book.rsvNo = returnData.data.RsvNo;
-
-                    //$('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
-                    //$('form#rsvno').submit();
-
-                } else {
-                    $scope.book.booking = false;
-                    $scope.book.checked = true;
-                    $scope.book.isSuccess = false;
                 }
-
+                else {
+                    if (returnData.data.price != null) {
+                        $scope.book.isPriceChanged = true;
+                        $scope.book.isSuccess = false;
+                        $scope.book.newPrice = returnData.data.price;
+                        $scope.book.checked = true;
+                    }
+                    else {
+                        $scope.book.isSuccess = false;
+                        $scope.book.checked = true;
+                        console.log(returnData);
+                        $scope.errorMessage = returnData.data.error;
+                    }
+                }
             }, function (returnData) {
                 console.log(returnData);
                 $scope.book.checked = true;
                 $scope.book.isSuccess = false;
                 $scope.book.booking = false;
             });
-
         }
     }//$scope.book
 

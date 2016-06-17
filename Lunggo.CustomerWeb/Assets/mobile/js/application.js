@@ -695,6 +695,42 @@ function getParam(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+function getAuthAccess() {
+    var token = getCookie('accesstoken');
+    var refreshToken = getCookie('refreshtoken');
+    if (token) {
+        return 1;
+    }
+    else {
+        if (refreshToken) {
+            //Get Token Again
+            $.ajax({
+                url: LoginConfig.Url,
+                method: 'POST',
+                async: false,
+                data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+                contentType: 'application/json',
+            }).done(function (returnData) {
+                if (returnData.status == '200') {
+                    setCookie('accesstoken', returnData.accessToken, returnData.expTime);
+                    setRefreshCookie('refreshtoken', returnData.refreshToken);
+                }
+            });
+
+            if (getCookie('accesstoken')) {
+                return 1;
+            }
+            else {
+                return 2;
+            }
+        }
+        else {
+            return 0;
+        }
+    }
+
+}
+
 //    $rootScope.FlightSearchForm.AutoComplete.Loading = true;
 //    // if result exist in cache
 //    if (keyword in $rootScope.FlightSearchForm.AutoComplete.Cache) {

@@ -32,6 +32,16 @@
     FlightSegment prevSegment = null;
 }
 
+@functions{
+    public string msToTime(double duration)
+    {
+        var hours = Convert.ToInt32(duration) / (1000 * 60 * 60);
+        var minutes = (Convert.ToInt32(duration) / (1000 * 60)) % 60;
+
+        return hours + "j " + minutes + "m";
+    }
+}
+
 @section AdditionalJS {
     <!-- additional Angular JS-->
     <script src="/Assets/js/angular.min.js"></script>
@@ -83,22 +93,22 @@
                             
                                 <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
                                 <div class="summary__body">
-                                    <dl>
+                                    <dl>Model.Payment.DiscountNominal
                                         <dt>Total Tiket</dt>
-                                        <dd>Rp @((Model.Payment.FinalPrice + Model.Discount + Model.TransferCode).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                        <dd>Rp @((Model.Payment.FinalPrice +  + Model.Payment.TransferFee).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                     </dl>
-                                    @if (Model.Discount != 0)
+                                    @if (Model.Payment.DiscountNominal != 0)
                                     {
                                         <dl>
                                             <dt>Potongan Harga</dt>
-                                            <dd>- Rp @Model.Discount.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                            <dd>- Rp @Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                         </dl>
                                     }
-                                    @if (Model.TransferCode != 0)
+                                    @if (Model.Payment.TransferFee != 0)
                                     {
                                         <dl>
                                             <dt>Kode Unik Pembayaran</dt>
-                                            <dd>- Rp @Model.TransferCode.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                            <dd>- Rp @Model.Payment.TransferFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                         </dl>
                                     }
                                     <dl class="total-price">
@@ -194,18 +204,7 @@
                                                     </h4>
                                                     <dl>
                                                         <dt>Jenis Tiket</dt>
-                                                        @if (passenger.Type == PassengerType.Adult)
-                                                        {
-                                                            <dd>Dewasa</dd>
-                                                        }
-                                                        @if (passenger.Type == PassengerType.Child)
-                                                        {
-                                                            <dd>Anak</dd>
-                                                        }
-                                                        @if (passenger.Type == PassengerType.Infant)
-                                                        {
-                                                            <dd>Bayi</dd>
-                                                        }
+                                                        @EnumDisplay.PassengerType(passenger.Type)
                                                     </dl>
                                                 </li>
                                             }
@@ -243,7 +242,7 @@
                                                             <h5>@dep.Segments[segment].DepartureAirportName</h5>
                                                         </div>
                                                         <div class="flight__separator">
-                                                            <h5><b>Durasi: </b>@dep.Segments[segment].Duration</h5>
+                                                            <h5><b>Durasi: </b>@msToTime(dep.Segments[segment].Duration)</h5>
                                                         </div>
                                                         <div class="flight__arrival">
                                                             <h5>@dep.Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
@@ -257,7 +256,7 @@
                                             @if (dep.Transits.Count > 0 && segment < dep.TotalTransit)
                                             {
                                                 <div class="transit">
-                                                    <span>Transit di @dep.Segments[segment].ArrivalCity (@dep.Segments[segment].ArrivalAirport) selama <b>@dep.Transits.ElementAt(segment).Duration</b></span>
+                                                    <span>Transit di @dep.Segments[segment].ArrivalCity (@dep.Segments[segment].ArrivalAirport) selama <b>@msToTime(dep.Transits.ElementAt(segment).Duration)</b></span>
                                                 </div><!-- .transit -->
                                             }
                                         </div> <!-- .flight-wrapper -->
@@ -303,7 +302,7 @@
                                                                 <h5>@ret.Segments[segment].DepartureAirportName</h5>
                                                             </div>
                                                             <div class="flight__separator">
-                                                                <h5><b>Durasi: </b>@ret.Segments[segment].Duration</h5>
+                                                                <h5><b>Durasi: </b>@msToTime(ret.Segments[segment].Duration)</h5>
                                                             </div>
                                                             <div class="flight__arrival">
                                                                 <h5>@ret.Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
@@ -317,7 +316,7 @@
                                                 @if (ret.Transits.Count > 0 && segment < ret.TotalTransit)
                                                 {
                                                     <div class="transit">
-                                                        <span>Transit di @ret.Segments[segment].ArrivalCity (@ret.Segments[segment].ArrivalAirport) selama <b>@ret.Transits.ElementAt(segment).Duration</b></span>
+                                                        <span>Transit di @ret.Segments[segment].ArrivalCity (@ret.Segments[segment].ArrivalAirport) selama <b>@msToTime(ret.Transits.ElementAt(segment).Duration)</b></span>
                                                     </div><!-- .transit -->
                                                 }
                                             </div> <!-- .flight-wrapper -->
