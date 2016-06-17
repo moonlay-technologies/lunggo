@@ -33,6 +33,8 @@
     {
         ViewBag.Message = "BookExpired";
     }
+    
+   
 }
 
 @{
@@ -100,6 +102,16 @@
     <!-- angular controller -->
     <script src="/Assets/mobile/js/CheckoutController.js"></script>
 
+}
+
+@functions{
+    public string msToTime(double duration)
+    {
+        var hours = Convert.ToInt32(duration)/(1000*60*60);
+        var minutes = (Convert.ToInt32(duration)/(1000*60))%60;
+
+        return hours + "j " + minutes + "m";
+    }
 }
 
 @switch ((string)ViewBag.Message)
@@ -391,7 +403,7 @@ default:
                                                     <h5>@trips[0].Segments[segment].DepartureAirportName</h5>
                                                 </div>
                                                 <div class="flight__separator">
-                                                    <h5><b>Durasi: </b>@trips[0].Segments[segment].Duration</h5>
+                                                    <h5><b>Durasi: </b>@msToTime(trips[0].Segments[segment].Duration)</h5>
                                                 </div>
                                                 <div class="flight__arrival">
                                                     <h5>@trips[0].Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
@@ -405,7 +417,7 @@ default:
                                     @if (trips[0].Transits.Count > 0 && segment < trips[0].TotalTransit)
                                     {
                                         <div class="transit">
-                                            <span>Transit di @trips[0].Segments[segment].ArrivalCity selama <b>@trips[0].Transits.ElementAt(segment).Duration</b></span>
+                                            <span>Transit di @trips[0].Segments[segment].ArrivalCity (@trips[0].Segments[segment].ArrivalAirportName) selama <b>@msToTime(trips[0].Transits.ElementAt(segment).Duration)</b></span>
                                         </div><!-- .transit -->
                                     }   
                                 </div> <!-- .flight-wrapper -->
@@ -451,7 +463,7 @@ default:
                                                     <h5>@trips[1].Segments[segment].DepartureAirportName</h5>
                                                 </div>
                                                 <div class="flight__separator">
-                                                    <h5><b>Durasi: </b>@trips[1].Segments[segment].Duration</h5>
+                                                    <h5><b>Durasi: </b>@msToTime(trips[1].Segments[segment].Duration)</h5>
                                                 </div>
                                                 <div class="flight__arrival">
                                                     <h5>@trips[1].Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
@@ -465,7 +477,7 @@ default:
                                     @if (trips[1].Transits.Count > 0 && segment < trips[1].TotalTransit)
                                     {
                                         <div class="transit">
-                                            <span>Transit di @trips[1].Segments[segment].ArrivalCity selama <b>@trips[1].Transits.ElementAt(segment).Duration</b></span>
+                                            <span>Transit di @trips[1].Segments[segment].ArrivalCity selama <b>@msToTime(trips[1].Transits.ElementAt(segment).Duration)</b></span>
                                         </div><!-- .transit -->
                                     }
                                 </div> <!-- .flight-wrapper -->

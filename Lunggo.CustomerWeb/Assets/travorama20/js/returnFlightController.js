@@ -89,6 +89,7 @@ app.controller('returnFlightController', [
                     break;
             }
         }
+
         var passenger = FlightSearchConfig.flightForm.returnFlightParam.AdultCount + '' + FlightSearchConfig.flightForm.returnFlightParam.ChildCount + '' + FlightSearchConfig.flightForm.returnFlightParam.InfantCount + cabin;
         var flightFixRequest = departureRequest + '~' + returnRequest + '-' + passenger;
 
@@ -219,7 +220,6 @@ app.controller('returnFlightController', [
             hours = (hours < 10) ? "0" + hours : hours;
             minutes = (minutes < 10) ? "0" + minutes : minutes;
             seconds = (seconds < 10) ? "0" + seconds : seconds;
-
             return hours + "j " + minutes + "m";
         }
 
@@ -229,6 +229,7 @@ app.controller('returnFlightController', [
             dateTime = dateTime.getDate();
             return dateTime;
         }
+
         $scope.getFullDate = function (dateTime) {
             if (dateTime) {
                 dateTime = parseInt(dateTime.substr(0, 4) + '' + dateTime.substr(5, 2) + '' + dateTime.substr(8, 2));
@@ -450,11 +451,9 @@ app.controller('returnFlightController', [
                         $('.pushToken').submit();
                     }
                 }
-
             }
-
-
         }
+
         $scope.selectSubmit = function(){}
 
         // ******************************
@@ -522,8 +521,8 @@ app.controller('returnFlightController', [
                     return flight;
                 }
             }
-
         }
+
         $scope.setTransitFilter = function(targetFlight, target) {
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
             if (target == 'all') {
@@ -562,6 +561,7 @@ app.controller('returnFlightController', [
                 }
             }
         }
+
         $scope.setAirlineFilter = function (targetFlight, target) {
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
             for (var i = 0; i < targetScope.flightFilter.airline.list.length; i++) {
@@ -573,6 +573,7 @@ app.controller('returnFlightController', [
             }
             $scope.checkAirline(targetFlight);
         }
+
         $scope.airlineFilter = function (targetFlight) {
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
             return function(flight) {
@@ -593,6 +594,7 @@ app.controller('returnFlightController', [
             dateTime = dateTime.substr(11, 2);
             return parseInt(dateTime);
         }
+
         $scope.timeFilter = function (targetFlight) {
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
             return function (flight) {
@@ -686,9 +688,6 @@ app.controller('returnFlightController', [
                 $scope.departureFlightConfig.loading = false;
                 $scope.departureFlightConfig.loadingFlight = false;
             }
-
-            
-
         }
 
         // arrange flight
@@ -740,7 +739,6 @@ app.controller('returnFlightController', [
                     $scope.initiateFlightFiltering('return');
                 }
             }
-
         }// $scope.arrangeFlight()
 
         // initiate flight filtering
@@ -827,9 +825,7 @@ app.controller('returnFlightController', [
 
             console.log('Completed setting flight filtering for : ' + targetScope.name);
             console.log(targetScope);
-
         }
-
     }
 ]);// flight controller
 

@@ -378,7 +378,7 @@
                     //RevalidateConfig.Available = true;
                     //RevalidateConfig.Token = returnData.Token;
 
-                    $('.push-token input').val(RevalidateConfig.Token);
+                    $('.push-token input').val(returnData.token);
                     $('.push-token').submit();
                 }
             }).error(function (returnData) {

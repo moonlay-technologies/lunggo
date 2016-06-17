@@ -7,12 +7,6 @@
         //$scope.FlightFunctions.GetFlight('departure');
         $scope.FlightFunctions.GetFlight('return');
     });
-    //$.datepicker.setDefaults(
-    //        $.extend(
-    //        { 'dateFormat': 'dd-mm-yy' },
-    //        $.datepicker.regional['id']
-    //        )
-    //    );
 
     // **********
     // variables
@@ -166,6 +160,7 @@
             }
         }
     ];
+
     $scope.FlightFunctions = {};
 
     // **********
@@ -272,8 +267,7 @@
         var passenger = FlightSearchConfig.flightForm.passenger.adult + '' + FlightSearchConfig.flightForm.passenger.child + '' + FlightSearchConfig.flightForm.passenger.infant + cabin;
         return departureRequest + '~' + returnRequest + '-' + passenger;
     }
-
-
+    
     // **********
     $scope.arrangeFlightData = function (targetScope, data) {
         if (targetScope == "departure" || targetScope == "Departure") {
@@ -373,8 +367,8 @@
             targetScope.FlightFilter.Airline = Airlines;
             Airlines = [];
         }
-
     }
+
     // get  flight
     $scope.FlightFunctions.GetFlight = function(targetScope) {
         $scope.PageConfig.Busy = true;
@@ -451,8 +445,6 @@
             console.log('Finished getting flight list !');
             $scope.PageConfig.Busy = false;
         }
-
-
     }
 
     // arrange flight
@@ -468,7 +460,6 @@
             }
             targetScope.FlightList.push(data[i]);
         }
-
     }
 
     // run if departure and return flight search has completed
@@ -497,7 +488,6 @@
         targetScope.FlightFilter.Airline = Airlines;
         Airlines = []; // empty the variable
         console.log(targetScope);
-
     }
 
     // set active flight
@@ -516,12 +506,10 @@
                 } else if ($scope.FlightConfig[0].ActiveFlight < 0 && $scope.FlightConfig[1].ActiveFlight >= 0) {
                     $scope.SetPopup('roundtrip-departure');
                 }
-
             } else {
                 targetScope.ActiveFlight = -1;
             }
-        }
-        
+        }       
     }
 
     // swap flight
@@ -534,8 +522,7 @@
     }
 
     // show flight detail
-    $scope.FlightFunctions.ShowDetail = function (targetScope, flightNumber) {
-        
+    $scope.FlightFunctions.ShowDetail = function (targetScope, flightNumber) {      
         targetScope = targetScope == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1];
         // set detail flight
         targetScope.DetailFlight = flightNumber;
@@ -594,14 +581,12 @@
                     //$scope.PageConfig.Validated = true;
                 //}
 
-
                 console.log(targetFlight);
             }).error(function (returnData) {
                 console.log('ERROR Validating Flight');
                 console.log(returnData);
                 console.log('--------------------');
             });
-
         }
 
         // **********
@@ -638,10 +623,7 @@
                 console.log($scope.PageConfig.ValidateConfirmation);
                 $scope.PageConfig.Validating = false;
             }
-
         }
-
-
     }
 
     $scope.FlightFunctions.ResetValidation = function () {
@@ -676,8 +658,7 @@
                 if (flight.totalFare >= $scope.FlightConfig[1].FlightFilter.Price.current[0] && flight.totalFare <= $scope.FlightConfig[1].FlightFilter.Price.current[1]) {
                     return flight;
                 }
-            }
-            
+            }        
         }
     }
 
@@ -759,6 +740,7 @@
             }
         }
     }
+
     // arrival time filter		
     $scope.FlightFiltering.ArrivalTimeFilter = function (targetFlight) {
         var targetScope = (targetFlight == 'arrival' ? $scope.FlightConfig[0] : $scope.FlightConfig[1]);
@@ -790,6 +772,7 @@
             }
         }
     }
+
     // airline filter		
     $scope.FlightFiltering.AirlineCheck = function (targetFlight) {
         var targetScope = (targetFlight == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1]);
@@ -811,6 +794,7 @@
             }
         }
     }
+
     $scope.FlightFiltering.AirlineFilter = function (targetFlight) {
         var targetScope = (targetFlight == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1]);
         var touched;
@@ -831,7 +815,4 @@
             }
         }
     }
-
-    
-
 }]);
