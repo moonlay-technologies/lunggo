@@ -26,7 +26,6 @@ app.controller('checkoutController', [
         $scope.checkoutForm = {
             loading: false
         };
-        //$scope.paymentMethod = ''; //Payments
         $scope.stepClass = '';
         $scope.titles = [
             { name: 'Tn.', value: 'Mister' },
@@ -205,7 +204,7 @@ app.controller('checkoutController', [
                 $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + '}';
                 $scope.book.postData = JSON.parse($scope.book.postData);
 
-                console.log($scope.book.postData);
+                //console.log($scope.book.postData);
 
                 //Check Authorization
                 var authAccess = getAuthAccess();
@@ -223,7 +222,7 @@ app.controller('checkoutController', [
                     data: $scope.book.postData,
                     headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
-                    console.log(returnData);
+                    //console.log(returnData);
                     if (returnData.data.rsvNo != '' || returnData.data.rsvNo != null) {
                         if (returnData.data.price != null) { 
                             $scope.book.priceChanged = true;
@@ -239,8 +238,6 @@ app.controller('checkoutController', [
                             $('form#rsvno').submit();
                             $scope.book.checked = true;
                         }
-                        
-                        
                         
                     } else {
                         if (returnData.data.price != null) {
@@ -496,12 +493,7 @@ app.controller('checkoutController', [
             }
             return numbers;
         }
-        // **********
-        // if payment use credit card
-        // validate credit card
-        $scope.validateCreditCard = function () {
 
-        }
         // **********
         // generate passenger
         $scope.generatePassenger = function () {
@@ -591,88 +583,6 @@ app.controller('checkoutController', [
         console.log(parseInt($scope.transferWindow[0]));
         console.log(parseInt($scope.transferWindow[1]));
         console.log($scope.transferWindowOpen);
-
-        //********************
-        // VISA Wonderful Wednesday Promo
-        $scope.CreditCardPromo = {
-            Type: '',
-            Valid: false,
-            PromoName: '',
-            Amount: 0,
-            Check: function (creditCardNumber) {
-                if ($scope.paymentMethod == 'CreditCard') {
-                    if (creditCardNumber) {
-                        var firstNum = creditCardNumber.toString().charAt(0);
-                        var minOrder = 200000;
-                        var nowDate = new Date();
-                        var utcDate = nowDate.getTime() + (nowDate.getTimezoneOffset() * 60000);
-                        var jakartaDate = new Date(utcDate + (3600000 * 7));;
-                        var jakartaDay = jakartaDate.getDay();
-                        var endOfCampaign = new Date('31 March 2016');
-
-                        var creditCardString = creditCardNumber.toString();
-
-                        // check credit card type
-                        if (firstNum == 5) {
-                            $scope.CreditCardPromo.Type = 'mastercard';
-                        } else if (firstNum == 4) {
-                            $scope.CreditCardPromo.Type = 'visa';
-                        } else {
-                            $scope.CreditCardPromo.Type = '';
-                        }
-
-                        //**********
-                        // Danamon Sweet Valentine
-                        var valentineDate = new Date('14 February 2016');
-                        if (creditCardString.length > 5 && (jakartaDate.getDate() == valentineDate.getDate() && jakartaDate.getMonth() == valentineDate.getMonth())) {
-                            var danamonList = ['456798', '456799', '425857', '432449', '540731', '559228', '516634', '542260', '552239', '523983', '552338'];
-                            var creditCardString = creditCardString.substr(0, 6);
-
-                            // if Danamon Card
-                            if (danamonList.indexOf(creditCardString) > -1) {
-                                $scope.CreditCardPromo.PromoName = 'Danamon Sweet Valentine';
-                                $scope.CreditCardPromo.Valid = true;
-                                $scope.CreditCardPromo.Amount = Math.floor($scope.initialPrice * 14 / 100);
-                                // reset voucher
-                                $scope.voucher.amount = 0;
-                                $scope.voucher.checking = false;
-                                $scope.voucher.checked = false;
-                                $scope.voucher.confirmedCode = '';
-                            }
-                            return;
-                        }
-
-                        //**********
-                        // Wonderful Wednesday with Visa
-                        if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 3 && jakartaDate < endOfCampaign) {
-                            $scope.CreditCardPromo.PromoName = 'Wonderful Wednesday with Visa';
-                            $scope.CreditCardPromo.Type = 'visa';
-                            $scope.CreditCardPromo.Valid = true;
-                            $scope.CreditCardPromo.Amount = 50000;
-                            // reset voucher
-                            $scope.voucher.amount = 0;
-                            $scope.voucher.checking = false;
-                            $scope.voucher.checked = false;
-                            $scope.voucher.confirmedCode = '';
-                            return;
-                        }
-
-                        //**********
-                        // Reset
-                        $scope.CreditCardPromo.Valid = false;
-                        $scope.CreditCardPromo.Amount = 0;
-
-                    } else {
-                        $scope.CreditCardPromo.Valid = false;
-                        $scope.CreditCardPromo.Amount = 0;
-                    }
-                } else {
-                    $scope.CreditCardPromo.Valid = false;
-                    $scope.CreditCardPromo.Amount = 0;
-                }
-            }
-        };
-
     }
 ]);// checkout controller
 

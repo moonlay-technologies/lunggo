@@ -6,35 +6,8 @@ app.controller('returnFlightController', [
         // ******************************
         // on document ready
         angular.element(document).ready(function () {
-            if (isValid())
-            {
                 $scope.getFlight('return');
-            }
-            
         });
-
-        $scope.ProgressAnimation = function (targetScope) {
-            targetScope = 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig;
-            $interval(function () {
-                if (targetScope.flightSearchParams.FinalProgress < targetScope.flightSearchParams.MaxProgress) {
-                    targetScope.flightSearchParams.FinalProgress = targetScope.flightSearchParams.FinalProgress + 1;
-                }
-            }, $scope.ProgressDuration);
-        };
-
-        $scope.ProgressAnimation = function (targetScope, delayTime) {
-            targetScope = 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig;
-            delayTime = delayTime || 1000;
-            var randomTime = (Math.random()) * 3000;
-            $timeout(function () {
-                //console.log(delayTime);
-                if (targetScope.flightSearchParams.FinalProgress < (targetScope.flightSearchParams.MaxProgress - 1) && targetScope.flightSearchParams.FinalProgress <= 100) {
-                    targetScope.flightSearchParams.FinalProgress = targetScope.flightSearchParams.FinalProgress + 1;
-                    $scope.ProgressAnimation(targetScope.name, randomTime);
-                }
-            }, delayTime);
-        };
-
         // ******************************
         // general variables
         $scope.pageLoaded = true;

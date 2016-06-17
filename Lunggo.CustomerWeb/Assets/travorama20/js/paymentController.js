@@ -69,7 +69,7 @@ app.controller('paymentController', [
                     headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
                     console.log('Getting Unique Payment Code');
-                    console.log(returnData);
+                    //console.log(returnData);
                     $scope.TransferConfig.UniqueCode = returnData.data.fee;
                 }, function (returnData) {
                     console.log('Failed to get Unique Payment Code');
@@ -112,7 +112,7 @@ app.controller('paymentController', [
                     },
                     headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
-                    console.log(returnData);
+                    //console.log(returnData);
                     $scope.voucher.checking = false;
                     $scope.voucher.checked = true;
                     if (returnData.data.discount > 0) {
@@ -286,7 +286,7 @@ app.controller('paymentController', [
                     data: $scope.pay.postData,
                     headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
-                    console.log(returnData);
+                    //console.log(returnData);
 
                     if (returnData.data.status == '200') {
                         $scope.pay.isSuccess = true;
@@ -299,8 +299,8 @@ app.controller('paymentController', [
                         $scope.pay.checked = true;
                         $scope.pay.isSuccess = false;
                         //Error Handling right Here
-                        console.log('Status : ' + returnData.status);
-                        console.log('Error : ' + returnData.data.error);
+                        //console.log('Status : ' + returnData.status);
+                        //console.log('Error : ' + returnData.data.error);
                         switch (returnData.data.error)
                         {
                             case 'ERPPAY01':

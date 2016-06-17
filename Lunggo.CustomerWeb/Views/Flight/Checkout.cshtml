@@ -550,59 +550,15 @@
                                             <dt>Total Tiket</dt>
                                             <dd>Rp {{initialPrice | number}}</dd>
                                         </dl>
-                                        <dl ng-if="voucher.confirmedCode">
-                                            <dt>{{voucher.displayName}}</dt>
-                                            <dd>- Rp {{voucher.amount | number}}</dd>
-                                        </dl>
-                                        <dl ng-if="CreditCardPromo.Valid">
-                                            <dt>{{CreditCardPromo.PromoName}}</dt>
-                                            <dd>- Rp {{CreditCardPromo.Amount | number}}</dd>
-                                        </dl>
-                                        <dl ng-if="paymentMethod == '@PaymentMethod.BankTransfer'">
-                                            <dt>Kode Unik Pembayaran</dt>
-                                            <dd>- Rp {{TransferConfig.UniqueCode}}</dd>
-                                        </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
-                                            <dd ng-if="paymentMethod != '@PaymentMethod.BankTransfer'">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount | number}}</dd>
-                                            <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount - TransferConfig.UniqueCode | number}}</dd>
+                                            <dd>Rp {{totalPrice | number}}</dd>
                                         </dl>
                                     </div>
                                     <footer>
                                         <small>*Harga akan dikonfirmasi kembali sebelum proses pembayaran</small>
                                     </footer>
                                 </div><!-- .widget.price-detail -->
-                                <div class="widget voucher" ng-show="currentPage == 4" ng-class="{'hide' : CreditCardPromo.Valid}">
-                                    <h3 class="widget-title"><b>KODE</b> VOUCHER</h3>
-                                    <div class="widget-content">
-                                        <span><b>Punya Kupon Travorama ?</b></span>
-                                        <p>Masukkan di sini</p>
-                                        <form class="form" name="voucherForm" novalidate>
-                                            <div class="form-group">
-                                                <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherNotFound'">Kode voucher salah</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Dibawah pembelian minimum</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignNotStartedYet'">Voucher belum dapat digunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignHasEnded'">Voucher sudah tidak dapat digunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignInactive'">Voucher tidak dapat digunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'NoVoucherRemaining'">Voucher sudah habis</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'EmailNotEligible'">Voucher tidak dapat digunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'UpdateError'">Voucher tidak dapat digunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
-                                                <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-xs-6 col-xs-offset-6">
-                                                        <input type="submit" value="REDEEM" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
-                                                        <input type="submit" value="RESET" class="btn btn-yellow form-control" ng-click="voucher.reset()" ng-show="voucher.checked" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div><!-- .widget.voucher -->
                                 <div class="widget flight" @*ng-show="currentPage > 1"*@>
                                     <div class="flight-detail" id="departure-flight" ng-if="trips[0]">
                                         <h3 class="widget-title"><b>RINCIAN</b> PENERBANGAN</h3>

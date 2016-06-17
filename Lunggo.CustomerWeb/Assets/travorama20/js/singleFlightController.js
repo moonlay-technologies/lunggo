@@ -73,18 +73,6 @@ app.controller('singleFlightController', [
 
         $scope.translateMonth = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
 
-        $scope.ProgressAnimation = function (delayTime) {
-            delayTime = delayTime || 1000;
-            var randomTime = (Math.random()) * 3000;
-            $timeout(function () {
-                //console.log(delayTime);
-                if ($scope.flightRequest.FinalProgress < ($scope.flightRequest.MaxProgress - 1) && $scope.flightRequest.FinalProgress <= 100) {
-                    $scope.flightRequest.FinalProgress = $scope.flightRequest.FinalProgress + 1;
-                    $scope.ProgressAnimation(randomTime);
-                }
-            }, delayTime);
-        };
-
         // **********
         // general functions
 
@@ -376,63 +364,58 @@ app.controller('singleFlightController', [
             proceed: false
         };
         $scope.selectFlight = function (indexNo) {
+            $('body').addClass('no-scroll');
 
-            if (isValid())
-            {
-                $('body').addClass('no-scroll');
+            console.log('---------------------');
+            console.log('Selecting Flight no : ' + indexNo);
 
-                console.log('---------------------');
-                console.log('Selecting Flight no : ' + indexNo);
+            if (!$scope.selectFlightParam.validated) {
 
-                if (!$scope.selectFlightParam.validated) {
+                $scope.flightSelected = indexNo;
+                $scope.selectFlightParam.validating = true;
 
-                    $scope.flightSelected = indexNo;
-                    $scope.selectFlightParam.validating = true;
-
-                    //Check Authorization
-                    var authAccess = getAuthAccess();
-                    if (authAccess == 1) {
-                        $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
-                    }
-                    else {
-                        $scope.getFlightHeader = null;
-                    }
-
-                    // Select flight
-                    $http({
-                        method: 'POST',
-                        url: SelectConfig.Url,
-                        data: {
-                            searchId: SelectConfig.SearchId,
-                            regs: [$scope.flightList[indexNo].reg]
-                        },
-                        headers: { 'Authorization': $scope.getFlightHeader }
-                    }).success(function (returnData) {
-                        $scope.selectFlightParam.validated = true;
-                        console.log(indexNo);
-                        console.log("Response Select Flight : " + returnData);
-                        if (returnData.token != "" || returnData.token != null) {
-                            console.log('departure flight available');
-                            $scope.selectFlightParam.available = true;
-                            $scope.selectFlightParam.token = returnData.token;
-
-                            $('.push-token input').val($scope.selectFlightParam.token);
-                            //$('.push-token').submit();
-                            $scope.selectSubmit();
-                        }
-
-                    }).error(function (returnData) {
-                        $scope.selectFlightParam.validatingFlight = false;
-                        console.log('ERROR Validating Flight');
-                        console.log(returnData);
-                        console.log('--------------------');
-                    });
-                } else {
-                    $scope.selectFlightParam.proceed = true;
-                    $('.push-token').submit();
+                //Check Authorization
+                var authAccess = getAuthAccess();
+                if (authAccess == 1) {
+                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
                 }
+                else {
+                    $scope.getFlightHeader = null;
+                }
+
+                // Select flight
+                $http({
+                    method: 'POST',
+                    url: SelectConfig.Url,
+                    data: {
+                        searchId: SelectConfig.SearchId,
+                        regs: [$scope.flightList[indexNo].reg]
+                    },
+                    headers: { 'Authorization': $scope.getFlightHeader }
+                }).success(function (returnData) {
+                    $scope.selectFlightParam.validated = true;
+                    console.log(indexNo);
+                    console.log("Response Select Flight : " + returnData);
+                    if (returnData.token != "" || returnData.token != null) {
+                        console.log('departure flight available');
+                        $scope.selectFlightParam.available = true;
+                        $scope.selectFlightParam.token = returnData.token;
+
+                        $('.push-token input').val($scope.selectFlightParam.token);
+                        //$('.push-token').submit();
+                        $scope.selectSubmit();
+                    }
+
+                }).error(function (returnData) {
+                    $scope.selectFlightParam.validatingFlight = false;
+                    console.log('ERROR Validating Flight');
+                    console.log(returnData);
+                    console.log('--------------------');
+                });
+            } else {
+                $scope.selectFlightParam.proceed = true;
+                $('.push-token').submit();
             }
- 
         }
         $scope.selectSubmit = function () {
             //$('.push-token input').val($scope.revalidateFlightParam.token);
