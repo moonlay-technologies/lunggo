@@ -320,18 +320,14 @@ app.controller('LoginController', ['$http', '$scope', '$rootScope', function($ht
             Send: function() {
                 $scope.User.Message = '';
                 $scope.User.Sending = true;
-                $http({
-                    url: LoginConfig.Url,
-                    method: 'POST',
-                    data: {
-                        Email: $scope.User.Email,
-                        Password: $scope.User.Password,
-                        clientId: 'Jajal',
-                        clientSecret: 'Standar'
-                    }
+                $http.post(LoginConfig.Url, {
+                    email: $scope.User.Email,
+                    password: $scope.User.Password,
+                    clientId: 'Jajal',
+                    clientSecret: 'Standar'
                 }).then(function (returnData) {
                     $scope.User.Resubmitting = false;
-                    if (returnData.status == '200') {
+                    if (returnData.data.status == '200') {
                         setCookie('accesstoken', returnData.accessToken, returnData.expTime);
                         setRefreshCookie('refreshtoken', returnData.refreshToken);
                         $scope.User.Email = '';
@@ -340,11 +336,11 @@ app.controller('LoginController', ['$http', '$scope', '$rootScope', function($ht
                     }
                     else {
                         $scope.overlay = true;
-                        if (returnData.error == 'ERALOG01') { $scope.User.Message = 'RefreshNeeded'; }
-                        else if (returnData.error == 'ERALOG02') { $scope.User.Message = 'InvalidInputData'; } //
-                        else if (returnData.error == 'ERALOG03') { $scope.User.Message = 'AlreadyRegisteredButUnconfirmed'; } //
-                        else if (returnData.error == 'ERALOG04') { $scope.User.Message = 'Failed'; } //
-                        else if (returnData.error == 'ERALOG05') { $scope.User.Message = 'NotRegistered'; } //
+                        if (returnData.data.error == 'ERALOG01') { $scope.User.Message = 'RefreshNeeded'; }
+                        else if (returnData.data.error == 'ERALOG02') { $scope.User.Message = 'InvalidInputData'; } //
+                        else if (returnData.data.error == 'ERALOG03') { $scope.User.Message = 'AlreadyRegisteredButUnconfirmed'; } //
+                        else if (returnData.data.error == 'ERALOG04') { $scope.User.Message = 'Failed'; } //
+                        else if (returnData.data.error == 'ERALOG05') { $scope.User.Message = 'NotRegistered'; } //
                         else { $scope.errorMessage = 'Failed'; }
                         console.log('Error : ' + returnData.error);
                     }
@@ -454,6 +450,12 @@ app.controller('RegisterController', ['$http', '$scope', '$rootScope', function(
         },
         Submit: function() {
             $scope.User.Sending = true;
+             $http.post(LoginConfig.Url, {
+                email: $scope.form.email,
+                password: $scope.form.password,
+                clientId: 'Jajal',
+                clientSecret: 'Standar'
+            }).
             $http({
                 url: RegisterConfig.Url,
                 method: 'POST',

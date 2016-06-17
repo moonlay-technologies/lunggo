@@ -604,19 +604,25 @@ app.controller('authController', [
                 $scope.form.submitting = false;
                 $scope.form.submitted = true;
                 if (returnData.status == '200') {
-                    setCookie('accesstoken', returnData.accessToken, returnData.expTime);
-                    setRefreshCookie('refreshtoken', returnData.refreshToken);
+                    if (returnData.data.status == '200') {
+                        setCookie('accesstoken', returnData.accessToken, returnData.expTime);
+                        setRefreshCookie('refreshtoken', returnData.refreshToken);
 
-                    window.location.href = $scope.returnUrl;
+                        window.location.href = $scope.returnUrl;
+                    }
+                    else {
+                        $scope.overlay = true;
+                        if (returnData.error == 'ERALOG01') { $scope.errorMessage = 'RefreshNeeded'; }
+                        else if (returnData.error == 'ERALOG02') { $scope.errorMessage = 'InvalidInputData'; }
+                        else if (returnData.error == 'ERALOG03') { $scope.errorMessage = 'AlreadyRegisteredButUnconfirmed'; }
+                        else if (returnData.error == 'ERALOG04') { $scope.errorMessage = 'Failed'; }
+                        else if (returnData.error == 'ERALOG05') { $scope.errorMessage = 'NotRegistered'; }
+                        else { $scope.errorMessage = 'Failed'; }
+                        console.log('Error : ' + returnData.error);
+                    }
                 }
                 else {
-                    $scope.overlay = true;
-                    if (returnData.error == 'ERALOG01'){ $scope.errorMessage = 'RefreshNeeded'; }
-                    else if (returnData.error == 'ERALOG02') { $scope.errorMessage = 'InvalidInputData'; }
-                    else if (returnData.error == 'ERALOG03') { $scope.errorMessage = 'AlreadyRegisteredButUnconfirmed'; }
-                    else if (returnData.error == 'ERALOG04') { $scope.errorMessage = 'Failed'; }
-                    else if (returnData.error == 'ERALOG05') { $scope.errorMessage = 'NotRegistered'; }
-                    else { $scope.errorMessage = 'Failed'; }
+                     $scope.errorMessage = 'Failed'; 
                     console.log('Error : '+ returnData.error);
                 }
             }, function (returnData) {
