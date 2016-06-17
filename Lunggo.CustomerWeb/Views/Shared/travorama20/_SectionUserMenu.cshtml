@@ -2,7 +2,7 @@
 <aside class="account-menu">
 
     <header>
-        <span>@(Request.Url.AbsolutePath.Contains("OrderFlightHistoryDetail") ? User.Identity.GetFirstName() + " " + User.Identity.GetLastName() : "{{userProfile.firstname}} {{userProfile.lastname}}")</span>
+        <span>{{userProfile.firstname}} {{userProfile.lastname}}</span>
     </header>
     <ul>
         <li class="profile"><a href="@(Request.Url.AbsolutePath.Contains("OrderFlightHistoryDetail") ? Url.Action("OrderHistory", "UW620OrderHistory")+"#profile" : "#")" class="" ng-click="changeSection('profile')" ng-class="{'active': currentSection == 'profile'}">Ubah Profil</a></li>

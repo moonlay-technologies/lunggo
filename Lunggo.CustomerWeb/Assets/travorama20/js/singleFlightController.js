@@ -6,11 +6,7 @@ app.controller('singleFlightController', [
         // **********
         // on document ready
         angular.element(document).ready(function () {
-            if (isValid())
-            {
-                $scope.getFlight();
-            }
-
+            $scope.getFlight();
         });
 
         // **********
@@ -393,11 +389,12 @@ app.controller('singleFlightController', [
                     $scope.flightSelected = indexNo;
                     $scope.selectFlightParam.validating = true;
 
-                    if (isLogin()) {
+                    //Check Authorization
+                    var authAccess = getAuthAccess();
+                    if (authAccess == 1) {
                         $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
                     }
-                    else
-                    {
+                    else {
                         $scope.getFlightHeader = null;
                     }
 
@@ -459,11 +456,12 @@ app.controller('singleFlightController', [
             $scope.loadingFlight = true;
 
             //set Authorization header
-            if (isLogin()) {
+            //Check Authorization
+            var authAccess = getAuthAccess();
+            if (authAccess == 1) {
                 $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
             }
-            else
-            {
+            else {
                 $scope.getFlightHeader = null;
             }
 
@@ -473,6 +471,14 @@ app.controller('singleFlightController', [
             if ($scope.Progress < 100) {
                 // **********
                 // ajax
+                //Check Authorization
+                var authAccess = getAuthAccess();
+                if (authAccess == 1) {
+                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                }
+                else {
+                    $scope.getFlightHeader = null;
+                }
                 console.log("Request : " + FlightSearchConfig.Url + $scope.flightFixRequest + '/' + $scope.Progress);
                 $http.get(FlightSearchConfig.Url + '/' + $scope.flightFixRequest + '/' + $scope.Progress, {
                     headers: { 'Authorization': $scope.getFlightHeader }

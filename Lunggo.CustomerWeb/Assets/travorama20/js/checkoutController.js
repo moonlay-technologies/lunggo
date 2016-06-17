@@ -131,7 +131,8 @@ app.controller('checkoutController', [
                 console.log($scope.book.postData);
 
                 //Check Authorization
-                if (isLogin()) {
+                var authAccess = getAuthAccess();
+                if (authAccess == 1) {
                     $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
                 }
                 else {
