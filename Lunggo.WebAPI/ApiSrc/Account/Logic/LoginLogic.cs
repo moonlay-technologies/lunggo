@@ -58,6 +58,12 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERALOG04"
                 };
+            if (tokenData.Error == "not_registered")
+                return new LoginApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERALOG05"
+                };
             return new LoginApiResponse
             {
                 AccessToken = tokenData.AccessToken,

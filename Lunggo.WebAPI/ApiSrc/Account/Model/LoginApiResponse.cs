@@ -11,6 +11,6 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         [JsonProperty("refreshToken", NullValueHandling = NullValueHandling.Ignore)]
         public string RefreshToken { get; set; }
         [JsonProperty("expTime", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime ExpiryTime { get; set; }
+        public DateTime? ExpiryTime { get; set; }
     }
 }

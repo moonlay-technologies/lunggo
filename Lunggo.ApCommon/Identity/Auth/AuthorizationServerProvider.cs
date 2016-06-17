@@ -8,6 +8,8 @@ using Lunggo.ApCommon.Identity.AuthStore;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Identity.UserStore;
 using Lunggo.Framework.Encoder;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 
@@ -77,17 +79,23 @@ namespace Lunggo.ApCommon.Identity.Auth
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
 
-            var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
-
-            if (allowedOrigin == null) allowedOrigin = "*";
+            var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin") ?? "*";
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
-            User.User user = await new DapperUserStore<User.User>().FindByNameAsync(context.UserName);
+            var user = await new DapperUserStore<User.User>().FindByNameAsync(context.UserName);
 
             if (user == null)
             {
-                context.SetError("invalid_grant", "The user name or password is incorrect.");
+                context.SetError("not_registered", "The user is not registered.");
+                return;
+            }
+
+            var userManager = new UserManager<User.User>(new DapperUserStore<User.User>());
+            var isPasswordOk = await userManager.CheckPasswordAsync(user, context.Password);
+            if (!isPasswordOk)
+            {
+                context.SetError("invalid_grant", "Wrong username password combination.");
                 return;
             }
 
@@ -134,7 +142,7 @@ namespace Lunggo.ApCommon.Identity.Auth
 
             if (originalClient != currentClient)
             {
-                context.SetError("invalid_clientId", "Refresh token is issued to a different clientId.");
+                context.SetError("invalid_grant", "Refresh token is issued to a different clientId.");
                 return Task.FromResult<object>(null);
             }
 
