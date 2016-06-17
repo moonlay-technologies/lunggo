@@ -22,7 +22,13 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
             return View();
         }
 
-        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult OrderHistory(string rsvNo)
+        {
+            var RsvNo = rsvNo;
+            return RedirectToAction("OrderFlightHistoryDetail", "UW620OrderHistory", new { rsvNo = RsvNo });
+        }
+
         public ActionResult OrderFlightHistoryDetail(string rsvNo)
         {
                 var flight = FlightService.GetInstance();

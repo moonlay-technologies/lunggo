@@ -59,59 +59,50 @@
 }
 @section PageJS{
     <script>
-        var langCode = '@OnlineContext.GetActiveLanguageCode()';
-        var currentPage = 1;
-        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
-        //var transferWindow = [ '1100', '1124' ];
-        // messages
-        var message = '@ViewBag.Message';
-        // flight detail
-        var token = @Model.Token;
-        var paymentDetail = '';
-        var flightDetail = '';
-        var expiryDate = '@Model.ExpiryTime.ToString("o")';
-        var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
-        var price = @Model.Itinerary.TotalFare;
-        // passenger number
-        var adultPassenger = @Model.Itinerary.AdultCount;
-        var adultTypeName = 'Dewasa';
-        var childPassenger = @Model.Itinerary.ChildCount;
-        var childTypeName = 'Anak';
-        var infantPassenger = @Model.Itinerary.InfantCount;
-        var infantTypeName = 'Bayi';
-        //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
-        // passport or id requirement
-        var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
-        var idRequired = false;
-        var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
-        var departureDate;
-        @if (Model.Itinerary.Trips != null)
+    var langCode = '@OnlineContext.GetActiveLanguageCode()';
+    var currentPage = 1;
+    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
+    //var transferWindow = [ '1100', '1124' ];
+    // messages
+    var message = '@ViewBag.Message';
+    // flight detail
+    var token = @Model.Token;
+    var paymentDetail = '';
+    var flightDetail = '';
+    var expiryDate = '@Model.ExpiryTime.ToString("o")';
+    var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
+    var price = @Model.Itinerary.TotalFare;
+    // passenger number
+    var adultPassenger = @Model.Itinerary.AdultCount;
+    var adultTypeName = 'Dewasa';
+    var childPassenger = @Model.Itinerary.ChildCount;
+    var childTypeName = 'Anak';
+    var infantPassenger = @Model.Itinerary.InfantCount;
+    var infantTypeName = 'Bayi';
+    //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
+    // passport or id requirement
+    var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
+    var idRequired = false;
+    var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
+    var departureDate;
+    @if (Model.Itinerary.Trips != null)
         {
             if (Model.Itinerary.Trips.Count == 2)
             {
                 @:departureDate = '@Model.Itinerary.Trips[1].DepartureDate';
-                                    }
+                                        }
             else
             {
                 @:departureDate = '@Model.Itinerary.Trips[0].DepartureDate';
-                                    }
+                                        }
         }
 
-        // change current page
-        if (getParam('page') == 2) {
-            currentPage = getParam('page');
-        } else {
-            currentPage = 1;
-        }
-        var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
-        
-        var buyerInfo = {
-            fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
-            countryCode : '@User.Identity.GetCountryCd()',
-            phone: '@User.Identity.GetPhoneNumber()',
-            email: '@User.Identity.GetEmail()'
-        };
-
+    // change current page
+    if (getParam('page') == 2) {
+        currentPage = getParam('page');
+    } else {
+        currentPage = 1;
+    }
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
@@ -147,19 +138,16 @@
                                 <div class="travorama-login" ng-class="{'active' : loginShown}" ng-if="!loggedIn">
                                     <a class="login-toggle" ng-click="toggleLogin()"><b>Masuk</b> dengan akun <b>TRAVORAMA</b><span class="caret"></span></a>
                                     <div class="login-content">
-                                        @using (Html.BeginForm("Login", "Account", new { returnUrl = HttpContext.Current.Request.Url }, FormMethod.Post, new { @class = "form form-horizontal" }))
-                                        {
-                                            @Html.AntiForgeryToken()
+                                        <form class="form register-form form-horizontal" name="loginForm" novalidate ng-submit="form.submit()">
                                             <div class="form-group">
-                                                <input type="hidden" name="returnUrl" value="@(Context.Request.Url.PathAndQuery + "##page-2")" />
                                                 <div class="col-xs-5">
-                                                    <input type="text" class="form-control" name="Email" id="login-username" value="" placeholder="Alamat e-mail" />
+                                                    <input type="text" class="form-control" ng-model="form.email" name="Email" id="login-username" value="" placeholder="Alamat e-mail" />
                                                 </div>
                                                 <div class="col-xs-5">
-                                                    <input type="password" class="form-control" name="Password" id="login-password" value="" placeholder="Password" />
+                                                    <input type="password" class="form-control" name="Password" ng-model="form.password" id="login-password" value="" placeholder="Password" />
                                                 </div>
                                                 <div class="col-xs-2">
-                                                    <input type="submit" value="MASUK" class="btn btn-yellow form-control" />
+                                                    <input type="submit" value="MASUK" class="btn btn-yellow form-control" ng-disabled="form.submitting" />
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -167,7 +155,7 @@
                                                     <a href="@Url.Action("ForgotPassword", "Account")">Lupa Password?</a>
                                                 </div>
                                             </div>
-                                        }
+                                        </form>
                                     </div>
                                 </div><!-- .travorama-login -->
 
@@ -183,27 +171,45 @@
                                     </div>
                                     <div class="form-group" ng-class="{'has-error' : buyerForm.fullname.$touched && buyerForm.fullname.$invalid}">
                                         <label class="control-label important">Nama Lengkap :</label>
-                                        <div>
-                                            <input type="text" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetFirstName() + User.Identity.GetLastName() : "")" id="buyer-fullname" placeholder="Nama Lengkap" name="fullname" ng-model="buyerInfo.fullname" required />
+                                        <div ng-hide="loggedIn">
+                                            <input type="text" class="form-control" value="" id="buyer-fullname" placeholder="Nama Lengkap" name="fullname" ng-model="buyerInfo.fullname" required />
+                                        </div>
+                                        <div ng-hide="!loggedIn">
+                                            <!--Jika udah Login-->
+                                            <input type="text" class="form-control" value=buyerInfo.fullname id="buyer-fullname" placeholder="Nama Lengkap" name="fullname" ng-model="buyerInfo.fullname" required />
                                         </div>
                                     </div>
                                     <div class="form-group" ng-class="{'has-error' : (buyerForm.phone.$touched && buyerForm.phone.$invalid) || (buyerForm.countryCode.$touched && buyerForm.countryCode.$invalid)}">
                                         <label class="control-label important">Nomor Telepon:</label>
                                         <div class="row">
-                                            <div class="col-xs-3">
+                                            <div class="col-xs-3" ng-hide="loggedIn">
                                                 <p>Kode Negara</p>
-                                                <input type="number" name="countryCode" value="@(User.Identity.IsAuthenticated ? User.Identity.GetCountryCd() : "")" class="form-control" placeholder="ex : 62 for Indonesia" required ng-model="buyerInfo.countryCode" maxlength="5" />
+                                                <input type="number" name="countryCode" value="" class="form-control" placeholder="ex : 62 for Indonesia" required ng-model="buyerInfo.countryCode" maxlength="5" />
                                             </div>
-                                            <div class="col-xs-9">
+                                            <div class="col-xs-3" ng-hide="!loggedIn">
+                                                <!--Jika udah Login-->
+                                                <p>Kode Negara</p>
+                                                <input type="number" name="countryCode" value=buyerInfo.countryCode class="form-control" placeholder="ex : 62 for Indonesia" required ng-model="buyerInfo.countryCode" maxlength="5" />
+                                            </div>
+                                            <div class="col-xs-9" ng-hide="loggedIn">
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
-                                                <input type="number" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetPhoneNumber() : "")" id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />
+                                                <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />
+                                            </div>
+                                            <div class="col-xs-9" ng-hide="!loggedIn">
+                                                <!--Jika udah Login-->
+                                                <p>Nomor Telepon (Tanpa Kode Negara)</p>
+                                                <input type="number" class="form-control" value=buyerInfo.phone id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
                                         <label class="control-label important">Masukkan Alamat E-mail Anda:</label>
-                                        <div>
-                                            <input type="email" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetEmail() : "")" id="buyer-email" placeholder="Ex: name@domain.com" name="email" ng-model="buyerInfo.email" required />
+                                        <div ng-hide="loggedIn">
+                                            <input type="email" class="form-control" value="" id="buyer-email" placeholder="Ex: name@domain.com" name="email" ng-model="buyerInfo.email" required />
+                                        </div>
+                                        <div ng-hide="!loggedIn">
+                                            <!--Jika udah Login-->
+                                            <input type="email" class="form-control" value=buyerInfo.email id="buyer-email" placeholder="Ex: name@domain.com" name="email" ng-model="buyerInfo.email" required />
                                         </div>
                                     </div>
 

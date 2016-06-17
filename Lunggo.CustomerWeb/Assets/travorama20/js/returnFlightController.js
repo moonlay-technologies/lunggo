@@ -656,17 +656,14 @@ app.controller('returnFlightController', [
                     $scope.departureFlightConfig.progress = returnData.progress;
 
                     // generate flight
-                    //if (returnData.flights.length == 0)
-                    //{
-                        if (returnData.flights[0].options.length)
-                        {
+                    if (returnData.flights.length) {
+                        if (returnData.flights[0].options.length) {
                             $scope.arrangeFlightData('departure', returnData.flights[0].options); // For Departure Flight
                         }
-                        if (returnData.flights[1].options.length)
-                        {
+                        if (returnData.flights[1].options.length) {
                             $scope.arrangeFlightData('return', returnData.flights[1].options); // For Return Flight
                         }
-                    //}
+                    }
                     
 
                     console.log(returnData);

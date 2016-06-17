@@ -62,7 +62,84 @@ app.controller('checkoutController', [
         }, 1000);
         $scope.monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
         
-        
+        $scope.form = {
+            email: '',
+            password: '',
+            submitting: false,
+            isLogin: false,
+            submitted: false
+        };
+        //Function Login in Checkout Page
+        $scope.form.submit = function () {
+            $scope.form.submitting = true;
+            $http.post(LoginConfig.Url, {
+                email: $scope.form.email,
+                password: $scope.form.password,
+                clientId: 'Jajal',
+                clientSecret: 'Standar'
+            }).success(function (returnData) {
+                $scope.form.submitting = false;
+                $scope.form.submitted = true;
+                if (returnData.status == '200') {
+                    setCookie('accesstoken', returnData.accessToken, returnData.expTime);
+                    setRefreshCookie('refreshtoken', returnData.refreshToken);
+                    $scope.TakeProfileConfig.TakeProfile();
+                    $scope.loggedIn = getCookie('accesstoken');
+                }
+                else {
+                    window.location.href = $location.absUrl();
+                    $scope.form.submitting = false;
+                    $scope.form.submitted = false;
+                    $scope.form.isLogin = false;
+                    //Return langsung
+                }
+            }, function (returnData) {
+                console.log('Failed to Login');
+                $scope.form.submitting = false;
+                $scope.form.submitted = false;
+                $scope.form.isLogin = false;
+                window.location.href = $location.absUrl();
+                //return langsung
+            });
+        }
+
+        //Get Profile
+        $scope.TakeProfileConfig = {
+            TakeProfile: function () {
+                //Check Authorization
+                var authAccess = getAuthAccess();
+                if (authAccess == 1) {
+                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                }
+                else {
+                    $scope.getFlightHeader = null;
+                }
+                $http.get(GetProfileConfig.Url, {
+                    headers: { 'Authorization': $scope.getFlightHeader }
+                }).success(function (returnData) {
+                    if (returnData.status == "200") {
+                        $scope.buyerInfo.fullname = returnData.first + ' ' + returnData.last;
+                        $scope.buyerInfo.countryCode = parseInt(returnData.countryCallCd);
+                        $scope.buyerInfo.phone = parseInt(returnData.phone);
+                        $scope.buyerInfo.email = returnData.email;
+                        window.location.href = $location.absUrl();
+                    }
+                    else {
+                        $scope.buyerInfo = {};
+                        console.log('There is an error');
+                        console.log('Error : ' + returnData.error);
+                        console.log(returnData);
+                        window.location.href = $location.absUrl();
+                    }
+                }, function (returnData) {
+                    $scope.buyerInfo = {};
+                    console.log('Failed to Get Profile');
+                    console.log(returnData);
+                    window.location.href = $location.absUrl();
+                });
+            }
+        }
+
 
         $scope.book = {
             booking: false,
@@ -195,14 +272,34 @@ app.controller('checkoutController', [
             checked: false
         };
 
-        $scope.loggedIn = loggedIn;
+        $scope.loggedIn = getCookie('accesstoken');
 
         $scope.buyerInfo = {};
         if ($scope.loggedIn) {
-            $scope.buyerInfo.fullname = buyerInfo.fullname;
-            $scope.buyerInfo.countryCode = buyerInfo.countryCode;
-            $scope.buyerInfo.phone = buyerInfo.phone;
-            $scope.buyerInfo.email = buyerInfo.email;
+            // call API get Profile
+            var authAccess = getAuthAccess();
+            if (authAccess == 1) {
+                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+            }
+            else {
+                $scope.getFlightHeader = null;
+            }
+            $http.get(GetProfileConfig.Url, {
+                headers: { 'Authorization': $scope.getFlightHeader }
+            }).success(function (returnData) {
+                if (returnData.status == "200") {
+                    console.log('Success getting Profile');
+                    $scope.buyerInfo.fullname = returnData.first + ' ' + returnData.last;
+                    $scope.buyerInfo.countryCode = parseInt(returnData.countryCallCd);
+                    $scope.buyerInfo.phone = parseInt(returnData.phone);
+                    $scope.buyerInfo.email = returnData.email;
+                }
+                else {
+                    $scope.buyerInfo = {};
+                }
+            }, function (returnData) {
+                $scope.buyerInfo = {};
+            });
         } else {
             $scope.buyerInfo = {};
         }

@@ -2,7 +2,6 @@
 app.controller('siteHeaderController', [
     '$http', '$scope', function ($http, $scope) {
         $scope.profileloaded = false;
-        $scope.pageLoaded = true;
         $scope.email = '';
         $scope.authProfile = {}
         $scope.ProfileConfig = {
@@ -13,8 +12,9 @@ app.controller('siteHeaderController', [
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).success(function (returnData) {
                     if (returnData.status == "200") {
-                        console.log('Success getting Profile');
+                        $scope.pageLoaded = true;
                         $scope.isLogin = true;
+                        console.log('Success getting Profile');
                         $scope.email = returnData.email;
                         $scope.profileloaded = true;
                         console.log(returnData);
@@ -22,12 +22,14 @@ app.controller('siteHeaderController', [
                     else {
                         console.log('There is an error');
                         console.log('Error : ' + returnData.error);
+                        $scope.pageLoaded = true;
                         $scope.isLogin = false;
                         $scope.profileloaded = true;
                         console.log(returnData);
                     }
                 }, function (returnData) {
                     console.log('Failed to Login');
+                    $scope.pageLoaded = true;
                     $scope.isLogin = false;
                     $scope.profileloaded = true;
                     console.log(returnData);
@@ -42,6 +44,7 @@ app.controller('siteHeaderController', [
         else
         {
             $scope.isLogin = false;
+            $scope.pageLoaded = true;
         }
 
         $scope.logout = {
@@ -84,6 +87,14 @@ app.controller('accountController', [
             countryCallCd: '',
             phone: ''
         }
+
+        // Pass Data into MVC Controller
+        $scope.submitRsvNo = function (rsvNo) {
+            $('form#rsvno input#rsvno-input').val(rsvNo);
+            $('form#rsvno').submit();
+        }
+
+        
 
         $scope.userProfile.edit = false;
         $scope.userProfile.updating = false;
@@ -174,7 +185,7 @@ app.controller('accountController', [
                     console.log('Success getting Transaction');
                     console.log(returnData);
                     $scope.flightlist = returnData.flights;
-                    console.log($scope.flightlist)
+                    console.log($scope.flightlist);
                 }
                 else {
                     console.log('There is an error');
@@ -335,7 +346,6 @@ app.controller('accountController', [
                     $scope.passwordForm.submitted = true;
                 }
                 else {
-                    console.log(returnData.data.Description);
                     console.log(returnData);
                     $scope.passwordForm.submitting = false;
                 }
@@ -437,6 +447,52 @@ app.controller('orderDetailController', [
         $scope.getTime = function(dateTime) {
             return new Date(dateTime);
         }
+
+        $scope.userProfile = {
+            email: '',
+            firstname: '',
+            lastname: '',
+            countryCallCd: '',
+            phone: ''
+        }
+
+         $scope.TakeProfileConfig = {
+            TakeProfile: function () {
+                //Check Authorization
+                var authAccess = getAuthAccess();
+                if (authAccess == 1) {
+                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                }
+                else {
+                    $scope.getFlightHeader = null;
+                }
+                $http.get(GetProfileConfig.Url, {
+                    headers: { 'Authorization': $scope.getFlightHeader },
+                    async: false
+                }).success(function (returnData) {
+                    if (returnData.status == "200") {
+                        console.log('Success getting Profile');
+                        $scope.userProfile = {
+                            email: returnData.email,
+                            firstname: returnData.first,
+                            lastname: returnData.last,
+                            countryCallCd: returnData.countryCallCd,
+                            phone: returnData.phone
+                        };
+                    }
+                    else {
+                        console.log('There is an error');
+                        console.log('Error : ' + returnData.error);
+                        console.log(returnData);
+                    }
+                }, function (returnData) {
+                    console.log('Failed to Get Profile');
+                    console.log(returnData);
+                });
+            }
+        }
+
+        $scope.TakeProfileConfig.TakeProfile();
 
         $scope.currentSection = 'order';
         $scope.orderDate = new Date(orderDate);
