@@ -79,6 +79,31 @@
                         <p>Anda telah terdaftar di Travorama. Silakan masuk ke halaman akun Anda.</p>
                     </section>
                     <div class="text-center">
+                        <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = ''; User.Name = ''; User.ReconfirmSent()">TUTUP</a>
+                    </div>
+                </div>
+                <div ng-show="User.Error">
+                    <header>
+                        <h4>Mohon Maaf</h4>
+                    </header>
+                    <img src="/Assets/images/sad-image.png" alt="Error">
+                    <section>
+                        <p>Mohon maaf, permintaan Anda tidak dapat diproses.</p>
+                    </section>
+                    <div class="text-center">
+                        <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = ''; User.Name = ''; User.ReconfirmSent()">TUTUP</a>
+                    </div>
+                </div>
+                <div ng-show="User.Invalid">
+                    <header>
+                        <h4>Format Alamat E-mail Tidak Tepat</h4>
+                    </header>
+                    <img src="/Assets/images/sad-image.png" alt="Error">
+                    <section>
+                        <p>Format alamat e-mail yang Anda masukkan tidak tepat. Silakan masukkan alamat e-mail kembali 
+                        dengan format name@domain.com</p>
+                    </section>
+                    <div class="text-center">
                         <a class="btn btn-yellow" href="@Url.Action("Login", "Account")">MASUK</a>
                     </div>
                 </div>

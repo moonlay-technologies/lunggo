@@ -346,7 +346,7 @@ app.controller('LoginController', ['$http', '$scope', '$rootScope', function($ht
             Reconfirm: function () {
                 $scope.User.Resubmitting = true;
                 $http({
-                    url: ResendConfirmationEmailMobileConfig.Url,
+                    url: ResendConfirmationEmailConfig.Url,
                     method: 'POST',
                     data: {
                         Email: $scope.User.newEmail,
@@ -393,6 +393,8 @@ app.controller('RegisterController', ['$http', '$scope', '$rootScope', function(
         resubmitok: false,
         Email: '',
         Message: '',
+        Invalid : false,
+        Error: false,
         Registered: false,
         Newsletter: false,
         EmailSent: false,
@@ -402,7 +404,7 @@ app.controller('RegisterController', ['$http', '$scope', '$rootScope', function(
         Reconfirm: function () {
             $scope.User.Resubmitting = true;
             $http({
-                url: ResendConfirmationEmailMobileConfig.Url,
+                url: ResendConfirmationEmailConfig.Url,
                 method: 'POST',
                 data: {
                     Email: $scope.User.Email,
@@ -438,37 +440,42 @@ app.controller('RegisterController', ['$http', '$scope', '$rootScope', function(
         Submit: function() {
             $scope.User.Sending = true;
             $http({
-                url: RegisterMobileConfig.Url,
+                url: RegisterConfig.Url,
                 method: 'POST',
                 data: {
                     'Email': $scope.User.Email,
-                    'Name': $scope.User.Name,
                 }
             }).success(function(returnData) {
                 $scope.User.Sending = false;
                 $scope.User.Sent = true;
-                switch (returnData.Status) {
-                    case "Success":
-                        $scope.User.Registered = false;
-                        $scope.User.EmailSent = false;
-                        $scope.User.EmailConfirmed = false;
-                        $scope.User.Email = '';
-                        break;
-                    case "AlreadyRegistered":
-                        $scope.User.Registered = true;
-                        $scope.User.EmailSent = false;
-                        $scope.User.EmailConfirmed = true;
-                        $scope.User.Email = '';
-                        break;
-                    case "AlreadyRegisteredButUnconfirmed":
-                        $scope.User.Registered = true;
-                        $scope.User.EmailSent = true;
-                        $scope.User.EmailConfirmed = false;
-
-                        break;
-                    case "InvalidInputData":
-                        break;
+                if (returnData.status == '200') {
+                    $scope.User.Registered = false;
+                    $scope.User.EmailSent = false;
+                    $scope.User.EmailConfirmed = false;
+                    $scope.User.Email = '';
                 }
+                else {
+                    switch (returnData.error) {
+                        case "ERAREG02":
+                            $scope.User.Registered = true;
+                            $scope.User.EmailSent = true;
+                            $scope.User.EmailConfirmed = false;
+                            break;
+                        case "ERAREG03":
+                            $scope.User.Registered = true;
+                            $scope.User.EmailSent = false;
+                            $scope.User.EmailConfirmed = true;
+                            $scope.User.Email = '';
+                            break;
+                        case "ERRGEN99":
+                            $scope.User.Error = true;
+                            break;
+                        case "ERAREG01":
+                            $scope.User.Invalid = true;
+                            break;
+                    }
+                }
+
                 //
                 if ($scope.Subscribe) {
                     $scope.User.Newsletter = true;
@@ -535,57 +542,74 @@ app.controller('ForgotpasswordController', ['$http', '$scope', '$rootScope', fun
 
     $scope.EmailForm = {
         Email: "",
+        Email1: "",
         Resubmit: false,
         SentReconfirm: false,
         Sending: false,
         Sent: false,
         ReturnData : {
             Found: false,
-            EmailConfirmed: false
+            EmailConfirmed: false,
+            Error: false
         },
         SendForm: function () {
             $scope.EmailForm.Sending = true;
             // send form
             // submit form to URL
+            var authAccess = getAuthAccess();
+            if (authAccess == 1) {
+                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+            }
+            else {
+                $scope.getFlightHeader = null;
+            }
             $http({
-                url: ForgotPasswordMobileConfig.Url,
+                url: ForgotPasswordConfig.Url,
                 method: 'POST',
                 data: {
                     email: $scope.EmailForm.Email
-                }
+                },
+                headers: { 'Authorization': $scope.getFlightHeader }
             }).then(function (returnData) {
                 $scope.EmailForm.Sending = false;
                 $scope.EmailForm.Sent = true;
                 console.log(returnData);
-
-                switch (returnData.data.Status) {
-                    case "Success":
-                        $scope.EmailForm.ReturnData.Found = true;
-                        $scope.EmailForm.ReturnData.EmailConfirmed = true;
-                        break;
-                    case "NotRegistered":
-                        $scope.EmailForm.ReturnData.Found = false;
-                        $scope.EmailForm.ReturnData.EmailConfirmed = true;
-                        break;
-                    case "AlreadyRegisteredButUnconfirmed":
-                        $scope.EmailForm.ReturnData.Found = true;
-                        $scope.EmailForm.ReturnData.EmailConfirmed = false;
-                        break;
-                    case "InvalidInputData":
-                        $scope.EmailForm.ReturnData.Found = false;
-                        $scope.EmailForm.ReturnData.EmailConfirmed = false;
-                        break;
+                if (returnData.data.status == '200') {
+                    $scope.EmailForm.ReturnData.Found = true;
+                    $scope.EmailForm.ReturnData.EmailConfirmed = true;
                 }
+                else {
+                    switch (returnData.data.error) {
+                        case "ERAFPW01":
+                            $scope.EmailForm.ReturnData.Found = false;
+                            $scope.EmailForm.ReturnData.EmailConfirmed = false;
+                            break;
+                        case "ERAFPW02":
+                            $scope.EmailForm.ReturnData.Found = false;
+                            $scope.EmailForm.ReturnData.EmailConfirmed = true;
+                            break;
+                        case "ERAFPW03":
+                            $scope.EmailForm.ReturnData.Found = true;
+                            $scope.EmailForm.ReturnData.EmailConfirmed = false;
+                            $scope.EmailForm.Email1 = $scope.EmailForm.Email;
+                            break;
+                        case "ERRGEN99":
+                            $scope.EmailForm.ReturnData.Error = true;
+                            break;
+                    }
+                }
+                
             }, function (returnData) {
                 console.log('Failed requesting reset password');
                 console.log(returnData);
                 $scope.EmailForm.Sending = false;
+                $scope.EmailForm.ReturnData.Error = true;
             });
         },
         Reconfirm: function() {
                 $scope.EmailForm.Resubmit = true;
                 $http({
-                    url: ResendConfirmationEmailMobileConfig.Url,
+                    url: ResendConfirmationEmailConfig.Url,
                     method: 'POST',
                     data: {
                         Email: $scope.EmailForm.Email,
@@ -626,6 +650,13 @@ app.controller('ResetpasswordController', ['$http', '$scope', '$rootScope', func
         };
         $scope.submit = function () {
             $scope.form.submitting = true;
+            var authAccess = getAuthAccess();
+            if (authAccess == 1) {
+                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+            }
+            else {
+                $scope.getFlightHeader = null;
+            }
 
             $http({
                 url: ResetPasswordMobileConfig.Url,
@@ -635,7 +666,8 @@ app.controller('ResetpasswordController', ['$http', '$scope', '$rootScope', func
                     ConfirmPassword: $scope.form.password,
                     Email: $scope.form.userEmail,
                     Code: $scope.form.code
-                }
+                },
+                headers: { 'Authorization': $scope.getFlightHeader }
             }).then(function (returnData) {
                 if (returnData.data.Status == 'Success') {
                     console.log('Success requesting reset password');
