@@ -51,12 +51,14 @@ app.controller('paymentController', [
                 }
 
                 //Check Authorization
-                if (isLogin()) {
+                var authAccess = getAuthAccess();
+                if (authAccess == 1) {
                     $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
                 }
                 else {
                     $scope.getFlightHeader = null;
                 }
+
                 $http({
                     method: 'POST',
                     url: TransferConfig.Url,
@@ -92,7 +94,8 @@ app.controller('paymentController', [
             check: function () {
 
                 //Check Authorization
-                if (isLogin()) {
+                var authAccess = getAuthAccess();
+                if (authAccess == 1) {
                     $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
                 }
                 else {
@@ -268,7 +271,8 @@ app.controller('paymentController', [
                 $scope.pay.postData = JSON.parse($scope.pay.postData);
 
                 //Check Authorization
-                if (isLogin()) {
+                var authAccess = getAuthAccess();
+                if (authAccess == 1) {
                     $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
                 }
                 else {

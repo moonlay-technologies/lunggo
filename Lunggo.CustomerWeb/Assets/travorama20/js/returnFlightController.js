@@ -393,7 +393,8 @@ app.controller('returnFlightController', [
                 $scope.returnFlightConfig.validating = true;
 
                 //Check Authorization
-                if (isLogin()) {
+                var authAccess = getAuthAccess();
+                if (authAccess == 1) {
                     $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
                 }
                 else {
@@ -621,16 +622,18 @@ app.controller('returnFlightController', [
             targetScope.loading = true;
             targetScope.loadingFlight = true;
 
-            if (isLogin()) {
-                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
-            }
-            else {
-                $scope.getFlightHeader = null;
-            }
-
             // get flight
             console.log('Getting flight for : ' + '/' + targetScope.flightSearchParams + '/' + targetScope.progress);
             if (targetScope.progress < 100) {
+                //Check Authorization
+                var authAccess = getAuthAccess();
+                if (authAccess == 1) {
+                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                }
+                else {
+                    $scope.getFlightHeader = null;
+                }
+
                 $http.get(FlightSearchConfig.Url + '/' + targetScope.flightSearchParams + '/' + targetScope.progress, {
                     headers: { 'Authorization': $scope.getFlightHeader }
                 }).success(function (returnData) {

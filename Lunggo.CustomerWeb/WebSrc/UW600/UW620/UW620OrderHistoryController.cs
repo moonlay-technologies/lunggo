@@ -10,7 +10,6 @@ using Lunggo.ApCommon.Payment.Constant;
 
 namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
 {
-    [Authorize]
     public class Uw620OrderHistoryController : Controller
     {
         // GET: UW620OrderHistory
@@ -26,16 +25,9 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
         [AllowAnonymous]
         public ActionResult OrderFlightHistoryDetail(string rsvNo)
         {
-            if (TempData["AllowThisReservationCheck"] as string == rsvNo || User.Identity.IsAuthenticated)
-            {
                 var flight = FlightService.GetInstance();
                 var reservation = flight.GetReservationForDisplay(rsvNo);
                 return View(reservation);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
         }
 
         [AllowAnonymous]
