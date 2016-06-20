@@ -199,161 +199,162 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var userName = "";
                 var successLogin = false;
                 IRestResponse searchResAgent0 = null;
+
                 try
                 {
-                // [GET] Search Flight
+                    // [GET] Search Flight
                 
-                client.BaseUrl = new Uri("https://gosga.garuda-indonesia.com");
-                string urlweb = @"";
-                var searchReqAgent0 = new RestRequest(urlweb, Method.GET);
-                searchReqAgent0.AddHeader("Accept",
-                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
-                searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
-                searchResAgent0 = client.Execute(searchReqAgent0);
-                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+                    client.BaseUrl = new Uri("https://gosga.garuda-indonesia.com");
+                    string urlweb = @"";
+                    var searchReqAgent0 = new RestRequest(urlweb, Method.GET);
+                    searchReqAgent0.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                    searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                    searchResAgent0 = client.Execute(searchReqAgent0);
+                    returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
-                urlweb = @"web/user/login/id";
-                searchReqAgent0 = new RestRequest(urlweb, Method.GET);
-                searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/");
-                searchReqAgent0.AddHeader("Accept",
-                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
-                searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
-                searchResAgent0 = client.Execute(searchReqAgent0);
-                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+                    urlweb = @"web/user/login/id";
+                    searchReqAgent0 = new RestRequest(urlweb, Method.GET);
+                    searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/");
+                    searchReqAgent0.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                    searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                    searchResAgent0 = client.Execute(searchReqAgent0);
+                    returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
-                var dict = DictionaryService.GetInstance();
+                    var dict = DictionaryService.GetInstance();
                     
-                var accReq = new RestRequest("/api/GarudaAccount/ChooseUserId", Method.GET);
+                    var accReq = new RestRequest("/api/GarudaAccount/ChooseUserId", Method.GET);
                 
-                var reqTime = DateTime.UtcNow;
-                var newitin = new FlightItinerary();
+                    var reqTime = DateTime.UtcNow;
+                    var newitin = new FlightItinerary();
                 
-                var counter = 0;
+                    var counter = 0;
                 
-                //successLogin = Login(client, "SA3ALEU1", "Standar123", out returnPath);
-                while (!successLogin && counter < 31)
-                {
-                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnPath != "/web/dashboard/welcome")
+                    successLogin = Login(client, "SA3ALEU1", "Standar123", out returnPath);
+                    //while (!successLogin && counter < 31)
+                    //{
+                    //    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnPath != "/web/dashboard/welcome")
+                    //    {
+
+                    //        var accRs = (RestResponse)clientx.Execute(accReq);
+                    //        var lastUserId = userName;
+                    //        userName = accRs.Content.Trim('"');
+                    //        if (returnPath != "/web/dashboard/welcome")
+                    //        {
+                    //            TurnInUsername(clientx, lastUserId);
+                    //        }
+                    //        if (userName.Length != 0)
+                    //        {
+                    //            returnPath = "/web/dashboard/welcome";
+                    //        }
+
+                    //    }
+
+                    //    if (userName.Length == 0)
+                    //    {
+                    //        return new BookFlightResult
+                    //        {
+                    //            Errors = new List<FlightError> { FlightError.TechnicalError },
+                    //            ErrorMessages = new List<string> { "All usernames are used " + returnPath }
+                    //        };
+                    //    }
+
+                    //    var password = userName == "SA3ALEU1" ? "Standar123" : "Travorama1234";
+                    //    counter++;
+                    //    successLogin = Login(client, userName, password, out returnPath);
+                    //}
+
+                    //if (counter >= 31)
+                    //{
+                    //    TurnInUsername(clientx, userName);
+                    //    return new BookFlightResult
+                    //    {
+
+                    //        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                    //        Status = new BookingStatusInfo
+                    //        {
+                    //            BookingStatus = BookingStatus.Failed
+                    //        },
+                    //        IsSuccess = false,
+                    //        ErrorMessages = new List<string> { "Can't get id " + returnPath + userName }
+                    //    };
+                    //}
+
+                    urlweb = @"web/order/e-retail";
+                    searchReqAgent0 = new RestRequest(urlweb, Method.GET);
+                    searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/dashboard/welcome");
+                    searchReqAgent0.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                    searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                    searchResAgent0 = client.Execute(searchReqAgent0);
+                    var htmlX = searchResAgent0.Content;
+                    returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+
+                    //POST 
+
+                    searchReqAgent0 = new RestRequest(urlweb, Method.POST);
+                    searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/dashboard/welcome");
+                    searchReqAgent0.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                    searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                    searchReqAgent0.AddHeader("Origin", "https://gosga.garuda-indonesia.com");
+
+                    var airportScript = htmlX;
+                    var startIndex = airportScript.IndexOf("var airports");
+                    var endIndex = airportScript.IndexOf("var airportsdest");
+                    var scr = airportScript.SubstringBetween(startIndex + 15, endIndex - 3).Replace("\n", "").Replace("\t", "");
+                    var depAirport = GetGarudaAirportBooking(scr, origin);
+                    var arrAirport = GetGarudaAirportBooking(scr, dest);
+
+                    if (depAirport.Length == 0 || arrAirport.Length == 0)
                     {
-
-                        var accRs = (RestResponse)clientx.Execute(accReq);
-                        var lastUserId = userName;
-                        userName = accRs.Content.Trim('"');
-                        if (returnPath != "/web/dashboard/welcome")
-                        {
-                            TurnInUsername(clientx, lastUserId);
-                        }
-                        if (userName.Length != 0)
-                        {
-                            returnPath = "/web/dashboard/welcome";
-                        }
-
-                    }
-
-                    if (userName.Length == 0)
-                    {
+                        LogOut(returnPath, client);
+                        TurnInUsername(clientx, userName);
                         return new BookFlightResult
                         {
-                            Errors = new List<FlightError> { FlightError.TechnicalError },
-                            ErrorMessages = new List<string> { "All usernames are used " + returnPath }
+                            IsSuccess = false,
+                            Errors = new List<FlightError> {FlightError.InvalidInputData},
+                            ErrorMessages = new List<string> { "Airports are not available in agent site " + returnPath}
                         };
                     }
+                    string cabinstring;
 
-                    var password = userName == "SA3ALEU1" ? "Standar123" : "Travorama1234";
-                    counter++;
-                    successLogin = Login(client, userName, password, out returnPath);
-                }
-
-                if (counter >= 31)
-                {
-                    TurnInUsername(clientx, userName);
-                    return new BookFlightResult
+                    if (cabinClass == CabinClass.Economy)
                     {
-
-                        Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        IsSuccess = false,
-                        ErrorMessages = new List<string> { "Can't get id " + returnPath + userName }
-                    };
-                }
-
-                urlweb = @"web/order/e-retail";
-                searchReqAgent0 = new RestRequest(urlweb, Method.GET);
-                searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/dashboard/welcome");
-                searchReqAgent0.AddHeader("Accept",
-                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
-                searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
-                searchResAgent0 = client.Execute(searchReqAgent0);
-                var htmlX = searchResAgent0.Content;
-                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
-
-                //POST 
-
-                searchReqAgent0 = new RestRequest(urlweb, Method.POST);
-                searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/dashboard/welcome");
-                searchReqAgent0.AddHeader("Accept",
-                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
-                searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
-                searchReqAgent0.AddHeader("Origin", "https://gosga.garuda-indonesia.com");
-
-                var airportScript = htmlX;
-                var startIndex = airportScript.IndexOf("var airports");
-                var endIndex = airportScript.IndexOf("var airportsdest");
-                var scr = airportScript.SubstringBetween(startIndex + 15, endIndex - 3).Replace("\n", "").Replace("\t", "");
-                var depAirport = GetGarudaAirportBooking(scr, origin);
-                var arrAirport = GetGarudaAirportBooking(scr, dest);
-
-                if (depAirport.Length == 0 || arrAirport.Length == 0)
-                {
-                    LogOut(returnPath, client);
-                    TurnInUsername(clientx, userName);
-                    return new BookFlightResult
+                        cabinstring = "eco";
+                    }
+                    else if (cabinClass == CabinClass.Business)
                     {
-                        IsSuccess = false,
-                        Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages = new List<string> { "Airports are not available in agent site " + returnPath}
-                    };
-                }
-                string cabinstring;
+                        cabinstring = "exe";
+                    }
+                    else
+                    {
+                        cabinstring = "1st";
+                    }
 
-                if (cabinClass == CabinClass.Economy)
-                {
-                    cabinstring = "eco";
-                }
-                else if (cabinClass == CabinClass.Business)
-                {
-                    cabinstring = "exe";
-                }
-                else
-                {
-                    cabinstring = "1st";
-                }
+                    var postdata =
+                        "Inputs%5BoriginDetail%5D=" + HttpUtility.UrlEncode(depAirport) +
+                        "&Inputs%5Borigin%5D=" + origin +
+                        "&Inputs%5BdestDetail%5D=" + HttpUtility.UrlEncode(arrAirport) +
+                        "&Inputs%5Bdest%5D=" + dest +
+                        "&Inputs%5BtripType%5D=o" +
+                        "&Inputs%5BoutDate%5D=" + splittedFareId[4] + "-" + splittedFareId[3] + "-" + splittedFareId[2] +  //2016-06-06
+                        "&Inputs%5BretDate%5D=" + splittedFareId[4] + "-" + splittedFareId[3] + "-" + splittedFareId[2] + 
+                        "&Inputs%5Badults%5D=" + adultCount +
+                        "&Inputs%5Bchilds%5D=" + childCount +
+                        "&Inputs%5Binfants%5D=" + infantCount + 
+                        "&Inputs%5BserviceClass%5D=" + cabinstring +
+                        "&btnSubmit=+Cari";
 
-                var postdata =
-                    "Inputs%5BoriginDetail%5D=" + HttpUtility.UrlEncode(depAirport) +
-                    "&Inputs%5Borigin%5D=" + origin +
-                    "&Inputs%5BdestDetail%5D=" + HttpUtility.UrlEncode(arrAirport) +
-                    "&Inputs%5Bdest%5D=" + dest +
-                    "&Inputs%5BtripType%5D=o" +
-                    "&Inputs%5BoutDate%5D=" + splittedFareId[4] + "-" + splittedFareId[3] + "-" + splittedFareId[2] +  //2016-06-06
-                    "&Inputs%5BretDate%5D=" + splittedFareId[4] + "-" + splittedFareId[3] + "-" + splittedFareId[2] + 
-                    "&Inputs%5Badults%5D=" + adultCount +
-                    "&Inputs%5Bchilds%5D=" + childCount +
-                    "&Inputs%5Binfants%5D=" + infantCount + 
-                    "&Inputs%5BserviceClass%5D=" + cabinstring +
-                    "&btnSubmit=+Cari";
-
-                searchReqAgent0.AddParameter("application/x-www-form-urlencoded", postdata, ParameterType.RequestBody);
-                searchResAgent0 = client.Execute(searchReqAgent0);
-                var htmlFlight = searchResAgent0.Content;
-                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+                    searchReqAgent0.AddParameter("application/x-www-form-urlencoded", postdata, ParameterType.RequestBody);
+                    searchResAgent0 = client.Execute(searchReqAgent0);
+                    var htmlFlight = searchResAgent0.Content;
+                    returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
                 
                     var htmlFlightList = (CQ) htmlFlight;
@@ -365,6 +366,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     var v = 2;
                     while (v < rows.Count())
                     {
+                        if (selectedRows.Count == listflight.Count)
+                        {
+                            break;
+                        }
                         var currentRow = rows.ElementAt(v);
                         var currentPlane = currentRow.ChildElements.ToList()[1].InnerText;
                         var w = 0;
@@ -408,8 +413,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         {
                             ct = 0;
                         }
+                        
                         var airlineCode = selectedRows[ind].ChildElements.ToList()[ct].InnerText.SubstringBetween(0, 2);
-                        var flightNumber = selectedRows[ind].ChildElements.ToList()[ct].InnerText.SubstringBetween(2, 5);
+                        var flightNumber = selectedRows[ind].ChildElements.ToList()[ct].InnerText.Substring(2);
                         flightstring += airlineCode + "-" + flightNumber + "|";
                         var depdata = selectedRows[ind].ChildElements.ToList()[ct + 1].InnerText;
                         var oriAirport = depdata.SubstringBetween(0, 3);
@@ -462,6 +468,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             ArrivalTime = arrHr,
                             Duration = duration,
                             CabinClass = cabinClass,
+                            OperatingAirlineCode = airlineCode,
                         });
 
                         var run = ct + 3;
@@ -578,6 +585,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     {
                         LogOut(returnPath, client);
                         TurnInUsername(clientx, userName);
+                        newitin.FareId = newFareId;
 
                         return new BookFlightResult
                         {
@@ -596,6 +604,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                     if (newprice != Convert.ToDecimal(price))
                     {
+
+                        //depdate = new DateTime(Convert.ToInt32(splittedFareId[4]), Convert.ToInt32(splittedFareId[3]),
+                        //Convert.ToInt32(splittedFareId[2]), Convert.ToInt32(splittedFareId[5]), Convert.ToInt32(splittedFareId[6]), 0);
+                        newFareId = segments.ElementAt(0).DepartureAirport + "+" +
+                                         segments.ElementAt(segments.Count - 1).ArrivalAirport
+                                         + "+" + segments.ElementAt(0).DepartureTime.Day + "+" +
+                                         segments.ElementAt(0).DepartureTime.Month + "+" +
+                                         segments.ElementAt(0).DepartureTime.Year + "+" +
+                                         segments.ElementAt(0).DepartureTime.Hour + "+" +
+                                         segments.ElementAt(0).DepartureTime.Minute + "+" +
+                                         adultCount + "+" + childCount + "+" + infantCount + "+" +
+                                         FlightService.ParseCabinClass(cabinClass) + "+" +
+                                         newprice + "+" + splittedFareId[12];
+
+                        newitin.FareId = newFareId;
                         LogOut(returnPath, client);
                         TurnInUsername(clientx, userName);
 
