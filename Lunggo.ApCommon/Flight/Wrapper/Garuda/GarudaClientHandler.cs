@@ -54,8 +54,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
                 client.UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36";
                 client.CookieContainer = new CookieContainer();
-                //client.Proxy = new WebProxy("103.9.163.59", 31280);
-                //client.Proxy.Credentials = new NetworkCredential("developer", "Standar1234");
+                client.Proxy = new WebProxy("103.9.163.59", 31280);
+                client.Proxy.Credentials = new NetworkCredential("developer", "Standar1234");
                 //client.FollowRedirects = false;
                 return client;
             }
