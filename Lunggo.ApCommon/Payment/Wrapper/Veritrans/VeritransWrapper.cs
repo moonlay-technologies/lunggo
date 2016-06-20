@@ -66,7 +66,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     content = GetResponseContent(response);
                     if (content != null)
                     {
-                        ProcessSavedCreditCardToken(payment.Data, content);
+                        //ProcessSavedCreditCardToken(payment.Data, content);
                         payment.Status = PaymentResult(content);
                     }
                     else
