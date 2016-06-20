@@ -87,7 +87,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 bool isChildValid = true;
                 foreach (var inft in infants)
                 {
-                    if (inft.DateOfBirth.Value.AddYears(2) < depdate)
+                    if (inft.DateOfBirth.Value.AddYears(2) <= depdate)
                     {
                         isInfantValid = false;
                     }
@@ -95,9 +95,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                 foreach (var child in children)
                 {
-                    if (
-                        !(child.DateOfBirth.Value.AddYears(2) < depdate &&
-                          child.DateOfBirth.Value.AddYears(12) > depdate))
+                    if (child.DateOfBirth.Value.AddYears(2) > depdate || child.DateOfBirth.Value.AddYears(12) <= depdate)
                     {
                         isChildValid = false;
                     }
@@ -556,10 +554,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         InfantCount = infantCount,
                         CanHold = true,
                         FareType = FareType.Published,
-                        RequireBirthDate = true,
+                        RequireBirthDate = false,
                         RequirePassport = RequirePassport(segments),
                         RequireSameCheckIn = false,
-                        RequireNationality = true,
+                        RequireNationality = false,
                         RequestedCabinClass = cabinClass,
                         TripType = TripType.OneWay,
                         Supplier = Supplier.Garuda,
@@ -600,6 +598,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             IsItineraryChanged = isItinChanged
 
                         };
+                    }
+
+                    var oldSegments = bookInfo.Itinerary.Trips.SelectMany(trip => trip.Segments).ToList();
+                    var newSegments = newitin.Trips.SelectMany(trip => trip.Segments).ToList();
+                    for (var i = 0; i < newSegments.Count; i++)
+                    {
+                        newSegments[i].DepartureTerminal = oldSegments[i].DepartureTerminal;
+                        newSegments[i].ArrivalTerminal = oldSegments[i].ArrivalTerminal;
+                        newSegments[i].AircraftCode = oldSegments[i].AircraftCode;
+                        newSegments[i].OperatingAirlineCode = oldSegments[i].OperatingAirlineCode;
+                        newSegments[i].StopQuantity = oldSegments[i].StopQuantity;
                     }
 
                     if (newprice != Convert.ToDecimal(price))

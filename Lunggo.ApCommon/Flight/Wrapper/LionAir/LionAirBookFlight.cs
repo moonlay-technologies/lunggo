@@ -88,7 +88,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 bool isChildValid = true;
                 foreach (var inft in infants)
                 {
-                    if (inft.DateOfBirth.Value.AddYears(2) < depdate)
+                    if (inft.DateOfBirth.Value.AddYears(2) <= depdate)
                     {
                         isInfantValid = false;
                     }
@@ -96,7 +96,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 foreach (var child in children)
                 {
-                    if (!(child.DateOfBirth.Value.AddYears(2) < depdate && child.DateOfBirth.Value.AddYears(12) > depdate))
+                    if (child.DateOfBirth.Value.AddYears(2) > depdate || child.DateOfBirth.Value.AddYears(12) <= depdate)
                     {
                         isChildValid = false;
                     }
