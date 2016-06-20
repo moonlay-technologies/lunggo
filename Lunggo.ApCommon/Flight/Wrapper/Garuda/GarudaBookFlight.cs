@@ -233,55 +233,55 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 
                     var counter = 0;
                 
-                    successLogin = Login(client, "SA3ALEU1", "Standar123", out returnPath);
-                    //while (!successLogin && counter < 31)
-                    //{
-                    //    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnPath != "/web/dashboard/welcome")
-                    //    {
+                    //successLogin = Login(client, "SA3ALEU1", "Standar123", out returnPath);
+                    while (!successLogin && counter < 31)
+                    {
+                        while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnPath != "/web/dashboard/welcome")
+                        {
 
-                    //        var accRs = (RestResponse)clientx.Execute(accReq);
-                    //        var lastUserId = userName;
-                    //        userName = accRs.Content.Trim('"');
-                    //        if (returnPath != "/web/dashboard/welcome")
-                    //        {
-                    //            TurnInUsername(clientx, lastUserId);
-                    //        }
-                    //        if (userName.Length != 0)
-                    //        {
-                    //            returnPath = "/web/dashboard/welcome";
-                    //        }
+                            var accRs = (RestResponse)clientx.Execute(accReq);
+                            var lastUserId = userName;
+                            userName = accRs.Content.Trim('"');
+                            if (returnPath != "/web/dashboard/welcome")
+                            {
+                                TurnInUsername(clientx, lastUserId);
+                            }
+                            if (userName.Length != 0)
+                            {
+                                returnPath = "/web/dashboard/welcome";
+                            }
 
-                    //    }
+                        }
 
-                    //    if (userName.Length == 0)
-                    //    {
-                    //        return new BookFlightResult
-                    //        {
-                    //            Errors = new List<FlightError> { FlightError.TechnicalError },
-                    //            ErrorMessages = new List<string> { "All usernames are used " + returnPath }
-                    //        };
-                    //    }
+                        if (userName.Length == 0)
+                        {
+                            return new BookFlightResult
+                            {
+                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                ErrorMessages = new List<string> { "All usernames are used " + returnPath }
+                            };
+                        }
 
-                    //    var password = userName == "SA3ALEU1" ? "Standar123" : "Travorama1234";
-                    //    counter++;
-                    //    successLogin = Login(client, userName, password, out returnPath);
-                    //}
+                        var password = userName == "SA3ALEU1" ? "Standar123" : "Travorama1234";
+                        counter++;
+                        successLogin = Login(client, userName, password, out returnPath);
+                    }
 
-                    //if (counter >= 31)
-                    //{
-                    //    TurnInUsername(clientx, userName);
-                    //    return new BookFlightResult
-                    //    {
+                    if (counter >= 31)
+                    {
+                        TurnInUsername(clientx, userName);
+                        return new BookFlightResult
+                        {
 
-                    //        Errors = new List<FlightError> { FlightError.InvalidInputData },
-                    //        Status = new BookingStatusInfo
-                    //        {
-                    //            BookingStatus = BookingStatus.Failed
-                    //        },
-                    //        IsSuccess = false,
-                    //        ErrorMessages = new List<string> { "Can't get id " + returnPath + userName }
-                    //    };
-                    //}
+                            Errors = new List<FlightError> { FlightError.InvalidInputData },
+                            Status = new BookingStatusInfo
+                            {
+                                BookingStatus = BookingStatus.Failed
+                            },
+                            IsSuccess = false,
+                            ErrorMessages = new List<string> { "Can't get id " + returnPath + userName }
+                        };
+                    }
 
                     urlweb = @"web/order/e-retail";
                     searchReqAgent0 = new RestRequest(urlweb, Method.GET);
