@@ -45,7 +45,14 @@ app.controller('checkoutController', [
             return hours + "j " + minutes + "m";
         }
 
-        
+        //silubab
+        $scope.adultCount = adultPassenger;
+        $scope.adultFare = adultFare;
+        $scope.childCount = childPassenger;
+        $scope.childFare = childFare;
+        $scope.infantCount = infantPassenger;
+        $scope.infantFare = infantFare;
+
         $scope.language = langCode;
         $scope.token = token;
         $scope.trips = trips;
