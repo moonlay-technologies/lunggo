@@ -187,7 +187,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                         //Getting price formula script
                         var pageScript = html2;
-                        var startIndex = pageScript.IndexOf("[{value");
+                        var startIndex = pageScript.IndexOf("{'fares'");
                         var endIndex = pageScript.IndexOf("})");
                         scr = pageScript.Substring(startIndex, endIndex + 1 - startIndex);
 

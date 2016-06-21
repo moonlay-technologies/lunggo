@@ -19,6 +19,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         internal override SearchFlightResult SearchFlight(SearchFlightConditions conditions)
         {
+            // Disable Mystifly for domestic
+            if (
+                conditions.Trips.TrueForAll(
+                    trip =>
+                        DictionaryService.GetInstance().GetAirportCountryCode(trip.OriginAirport) == "ID" &&
+                        DictionaryService.GetInstance().GetAirportCountryCode(trip.DestinationAirport) == "ID"))
+            {
+                return new SearchFlightResult
+                {
+                    IsSuccess = true,
+                    Itineraries = new List<FlightItinerary>()
+                };
+            }
+
             var request = new AirLowFareSearchRQ
             {
                 OriginDestinationInformations = MapOriginDestinationInformations(conditions),
@@ -125,17 +139,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         private static TravelPreferences MapTravelPreferences(SearchFlightConditions conditions)
         {
-            // Disable GA for domestic
-            var airlinesExclude = AirlinesExclude.ToList();
-            if (
-                conditions.Trips.TrueForAll(
-                    trip =>
-                        DictionaryService.GetInstance().GetAirportCountryCode(trip.OriginAirport) == "ID" &&
-                        DictionaryService.GetInstance().GetAirportCountryCode(trip.DestinationAirport) == "ID"))
-            {
-                airlinesExclude.Add("GA");
-            }
-
             var airTripType = SetAirTripType(conditions);
             var cabinType = SetCabinType(conditions);
             return new TravelPreferences
@@ -143,7 +146,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 AirTripType = airTripType,
                 CabinPreference = cabinType,
                 MaxStopsQuantity = MaxStopsQuantity.All,
-                VendorExcludeCodes = conditions.AirlineExcludes != null ? conditions.AirlineExcludes.ToArray() : airlinesExclude.ToArray(),
+                VendorExcludeCodes = conditions.AirlineExcludes != null ? conditions.AirlineExcludes.ToArray() : AirlinesExclude,
                 VendorPreferenceCodes = conditions.AirlinePreferences != null ? conditions.AirlinePreferences.ToArray() : null,
                 ExtensionData = null
             };
