@@ -468,7 +468,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             Duration = duration,
                             CabinClass = cabinClass,
                             Meal = true
-                            OperatingAirlineCode = airlineCode,
                         });
 
                         var run = ct + 3;
