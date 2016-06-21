@@ -197,6 +197,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var userName = "";
                 var successLogin = false;
                 IRestResponse searchResAgent0 = null;
+
                 try
                 {
                 // [GET] Search Flight
@@ -363,6 +364,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     var v = 2;
                     while (v < rows.Count())
                     {
+                        if (selectedRows.Count == listflight.Count)
+                        {
+                            break;
+                        }
                         var currentRow = rows.ElementAt(v);
                         var currentPlane = currentRow.ChildElements.ToList()[1].InnerText;
                         var w = 0;
@@ -406,8 +411,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         {
                             ct = 0;
                         }
+                        
                         var airlineCode = selectedRows[ind].ChildElements.ToList()[ct].InnerText.SubstringBetween(0, 2);
-                        var flightNumber = selectedRows[ind].ChildElements.ToList()[ct].InnerText.SubstringBetween(2, 5);
+                        var flightNumber = selectedRows[ind].ChildElements.ToList()[ct].InnerText.Substring(2);
                         flightstring += airlineCode + "-" + flightNumber + "|";
                         var depdata = selectedRows[ind].ChildElements.ToList()[ct + 1].InnerText;
                         var oriAirport = depdata.SubstringBetween(0, 3);
@@ -462,6 +468,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             Duration = duration,
                             CabinClass = cabinClass,
                             Meal = true
+                            OperatingAirlineCode = airlineCode,
                         });
 
                         var run = ct + 3;
@@ -587,6 +594,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     {
                         LogOut(returnPath, client);
                         TurnInUsername(clientx, userName);
+                        newitin.FareId = newFareId;
 
                         return new BookFlightResult
                         {
@@ -605,6 +613,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                     if (newprice != Convert.ToDecimal(price))
                     {
+
+                        //depdate = new DateTime(Convert.ToInt32(splittedFareId[4]), Convert.ToInt32(splittedFareId[3]),
+                        //Convert.ToInt32(splittedFareId[2]), Convert.ToInt32(splittedFareId[5]), Convert.ToInt32(splittedFareId[6]), 0);
+                        newFareId = segments.ElementAt(0).DepartureAirport + "+" +
+                                         segments.ElementAt(segments.Count - 1).ArrivalAirport
+                                         + "+" + segments.ElementAt(0).DepartureTime.Day + "+" +
+                                         segments.ElementAt(0).DepartureTime.Month + "+" +
+                                         segments.ElementAt(0).DepartureTime.Year + "+" +
+                                         segments.ElementAt(0).DepartureTime.Hour + "+" +
+                                         segments.ElementAt(0).DepartureTime.Minute + "+" +
+                                         adultCount + "+" + childCount + "+" + infantCount + "+" +
+                                         FlightService.ParseCabinClass(cabinClass) + "+" +
+                                         newprice + "+" + splittedFareId[12];
+
+                        newitin.FareId = newFareId;
                         LogOut(returnPath, client);
                         TurnInUsername(clientx, userName);
 
