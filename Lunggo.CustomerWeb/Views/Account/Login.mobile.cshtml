@@ -115,7 +115,7 @@
             </header><!-- .form-wrapper__header -->
 
             <div class="form-wrapper__body">
-                @using (Html.BeginForm("Login", "Account", new {returnUrl = ViewBag.ReturnUrl},
+                @*@using (Html.BeginForm("Login", "Account", new {returnUrl = ViewBag.ReturnUrl},
                     FormMethod.Post, new
                     {
                         @class = "login-form form form-horizontal",
@@ -124,7 +124,7 @@
                         ng_submit = "User.Send()"
                     }))
                 {
-                    @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()*@
                     <div class="form-group">
                         <label class="control-label">Alamat E-mail Anda :</label>
                         <input type="email" value="" name="Email" class="form-control" ng-model="User.Email" required />
@@ -134,12 +134,12 @@
                         <input type="password" value="" name="Password" class="form-control" ng-model="User.Password" required />
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-yellow btn-block" ng-disabled="LoginForm.$invalid || User.Sending">MASUK</button>
+                        <button type="submit" class="btn btn-yellow btn-block" ng-click ="User.Send()" ng-disabled="LoginForm.$invalid || User.Sending">MASUK</button>
                     </div>
                     <div class="form-group">
                         <a href="@Url.Action("ForgotPassword", "Account")">Lupa Password</a> | <a href="@Url.Action("Register", "Account")">Belum Memiliki Akun?</a>
                     </div>
-                }
+                @*}*@
             </div><!-- .form-wrapper__body -->
 
         </div><!-- .form-wrapper -->

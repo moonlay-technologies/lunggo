@@ -1,14 +1,13 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
-@using Lunggo.ApCommon.Identity.User
 @using Lunggo.ApCommon.Payment.Constant
-@using Lunggo.Framework.Extension
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-account page-account-profile";
     ViewBag.Title = "Detail Pemesanan";
     ViewBag.PageActiveSection = "order";
+    ViewBag.AngularController = "OrderDetailController";
 }
 
 @section AdditionalJS{
@@ -20,7 +19,8 @@
 
 @section PageJS{
     <script>
-    var langCode = 'en';
+        var langCode = 'en';
+        var rsvNo = @Model.RsvNo;
     var orderDate = '@Model.RsvTime.ToString("u")';
     var refundDate = '@(Model.Payment.Refund != null ? Model.Payment.Refund.Time.ToString("u") : "")';
     </script>

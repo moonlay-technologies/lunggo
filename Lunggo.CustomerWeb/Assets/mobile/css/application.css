@@ -751,7 +751,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     font-size: 14px;
     position: absolute;
     color: #fff;
-    font-weight: bold; }
+    font-weight: bold;
+    margin-left: 15px;
+  }
 
 .container_new {
   /*width: 80%;
