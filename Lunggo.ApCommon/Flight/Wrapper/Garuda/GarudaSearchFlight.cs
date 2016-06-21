@@ -39,7 +39,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
         {
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
-                
+
 
                 if (conditions.AdultCount == 0)
                 {
@@ -94,10 +94,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 // [GET] Search Flight
                 var dict = DictionaryService.GetInstance();
                 var originCountry = dict.GetAirportCountryCode(trip0.OriginAirport);
-               
+
                 // Calling The Zeroth Page
                 client.Proxy = new WebProxy("103.9.163.59", 31280);
-                client.Proxy.Credentials = new NetworkCredential("developer","Standar1234");
+                client.Proxy.Credentials = new NetworkCredential("developer", "Standar1234");
                 client.BaseUrl = new Uri("https://www.garuda-indonesia.com");
                 string url0 = @"";
                 var searchRequest0 = new RestRequest(url0, Method.GET);
@@ -106,21 +106,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 searchRequest0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
                 searchRequest0.AddHeader("Upgrade-Insecure-Requests", "1");
                 var searchResponse0 = client.Execute(searchRequest0);
-                
+
                 url0 = @"id/id/index.page";
                 searchRequest0 = new RestRequest(url0, Method.GET);
                 searchResponse0 = client.Execute(searchRequest0);
                 var html0 = searchResponse0.Content;
-                    Console.WriteLine(html0);
+                Console.WriteLine(html0);
                 if (searchResponse0.ResponseUri.AbsolutePath != "/id/id/index.page" &&
                     (searchResponse0.StatusCode == HttpStatusCode.OK ||
                         searchResponse0.StatusCode == HttpStatusCode.Redirect))
-                    return new SearchFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
+                    return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
 
 
                 var startIndex = html0.IndexOf("var citylist =");
                 var endIndex = html0.LastIndexOf("var cities");
-                var scr = html0.SubstringBetween(startIndex + 15, endIndex-2).Replace("\n", "").Replace("\t", "");
+                var scr = html0.SubstringBetween(startIndex + 15, endIndex - 2).Replace("\n", "").Replace("\t", "");
 
                 var depAirport = GetGarudaAirport(scr, originAirport).Replace("+", "%20");
                 var arrAirport = GetGarudaAirport(scr, destinationAirport).Replace("+", "%20");
@@ -129,10 +129,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 {
                     return new SearchFlightResult
                     {
-                        
+
                         IsSuccess = true,
                         Itineraries = new List<FlightItinerary>()
-                        
+
                     };
                 }
                 var adParam = (CQ)html0;
@@ -169,22 +169,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         @"&originairportcode=" + depAirport +
                         @"&destairportcode=" + arrAirport +
                         @"&BOOKING_DATE_TIME_1=" + trip0.DepartureDate.ToString("dd") + "%2F" + trip0.DepartureDate.ToString("MM") + "%2F"
-                        + trip0.DepartureDate.ToString("yyyy") + 
+                        + trip0.DepartureDate.ToString("yyyy") +
                         @"&BOOKING_DATE_TIME_2=" +
                         @"&originairportcode2=" +
-                        @"&destairportcode2="+
-                        @"&BOOKING_DATE_TIME_2="+
+                        @"&destairportcode2=" +
+                        @"&BOOKING_DATE_TIME_2=" +
                         @"&originairportcode3=" +
-                        @"&destairportcode3="+
-                        @"&BOOKING_DATE_TIME_3="+
-                        @"&originairportcode4="+
-                        @"&destairportcode4="+
-                        @"&BOOKING_DATE_TIME_4="+
-                        @"&originairportcode5="+
-                        @"&destairportcode5="+
-                        @"&BOOKING_DATE_TIME_5="+
-                        @"&originairportcode6="+
-                        @"&destairportcode6="+
+                        @"&destairportcode3=" +
+                        @"&BOOKING_DATE_TIME_3=" +
+                        @"&originairportcode4=" +
+                        @"&destairportcode4=" +
+                        @"&BOOKING_DATE_TIME_4=" +
+                        @"&originairportcode5=" +
+                        @"&destairportcode5=" +
+                        @"&BOOKING_DATE_TIME_5=" +
+                        @"&originairportcode6=" +
+                        @"&destairportcode6=" +
                         @"&BOOKING_DATE_TIME_6=" +
                         @"&guestTypes%5B0%5D.amount=" + conditions.AdultCount.ToString(CultureInfo.InvariantCulture) +
                         @"&=ADT" +
@@ -193,14 +193,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         @"&guestTypes%5B2%5D.amount=" + conditions.InfantCount.ToString(CultureInfo.InvariantCulture) +
                         @"&=INF" +
                         @"&CABIN=" + cabincode +
-                        @"&promoCode="+
-                        @"&lang=ID"+
-                        @"&bookingType=IBE"+
-                        @"&external_id4="+
-                        @"&BOOKING_DATE_TIME=&"+
-                        @"adsParam="+ idParam +
-                        @"&function=book"+
-                        @"&fromCaptcha=undefined" ;
+                        @"&promoCode=" +
+                        @"&lang=ID" +
+                        @"&bookingType=IBE" +
+                        @"&external_id4=" +
+                        @"&BOOKING_DATE_TIME=&" +
+                        @"adsParam=" + idParam +
+                        @"&function=book" +
+                        @"&fromCaptcha=undefined";
                     searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                     var searchResponse = client.Execute(searchRequest);
                     var html2 = searchResponse.Content;
@@ -215,7 +215,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         priceAvailabilityEndIndex - 5);
                     //POST DATA 2
                     client.BaseUrl = new Uri("https://booking.garuda-indonesia.com");
-                        
+
                     url = @"plnext/garudaindonesiaDX/Override.action";
                     url += "?__utma=46826104.185345349.1464840325.1464852689.1464858170.3";
                     url += "&__utmb=46826104.13.10.1464858170";
@@ -231,7 +231,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         @"&EMBEDDED_TRANSACTION=" + priceAvailability +
                         @"&ENCT=1" +
                         @"&ENC=" + enc;
-                        
+
                     search.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
 
                     search.AddHeader("Accept-Encoding", "gzip, deflate, br");
@@ -240,7 +240,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     search.AddHeader("Origin", "https://www.garuda-indonesia.com");
                     search.AddHeader("Cache-Control", "max-age=0");
                     search.AddHeader("Upgrade-Insecure-Requests", "1");
-                       
+
                     var searchResult = client.Execute(search);
                     flightResultPage = searchResult.Content;
                 }
@@ -307,8 +307,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 AircraftCode = segment.Equipment.Name.Split(' ').Last(),
                                 DepartureTerminal = segment.BeginTerminal,
                                 ArrivalTerminal = segment.EndTerminal,
-                                Duration = arrTime.AddHours(-(dict.GetAirportTimeZone(segment.EndLocation.LocationCode))) - 
-                                    deptTime.AddHours(-(dict.GetAirportTimeZone(segment.BeginLocation.LocationCode)))
+                                Duration = arrTime.AddHours(-(dict.GetAirportTimeZone(segment.EndLocation.LocationCode))) -
+                                    deptTime.AddHours(-(dict.GetAirportTimeZone(segment.BeginLocation.LocationCode))),
+                                Meal = true
                             });
 
                             if (segment.ListLegs != null)
@@ -335,14 +336,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                                 DateTimeKind.Utc) - DateTime.SpecifyKind(
                                                 DateTime.ParseExact(segment.ListLegs[x - 1].ArrivalDate, format,
                                                     CultureInfo.InvariantCulture),
-                                                DateTimeKind.Utc)                                  
+                                                DateTimeKind.Utc)
                                     });
                                 }
                                 segments.Last().Stops = stops;
                             }
                         }
 
-                        
+
 
                         var flightid = itin.ProposedBoundId;
                         var listPrice = new List<Int32>();
@@ -369,7 +370,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 infantPriceEach =
                                 priceclass.PnrPrices[0].TravellerPrices[2].TravellersPrice[0].RecoAmount.TotalAmount;
                             }
-                           
+
                             else if (priceclass.PnrPrices[0].TravellerPrices.Count() == 2)
                             {
                                 childPriceEach =
@@ -381,15 +382,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 childPriceEach = "0";
                                 infantPriceEach = "0";
                             }
-                            
+
                         }
 
                         var price = listPrice.Min();
 
                         fareId = segments.ElementAt(0).DepartureAirport + "+" + segments.ElementAt(segments.Count - 1).ArrivalAirport
                             + "+" + trip0.DepartureDate.Day + "+" + trip0.DepartureDate.Month + "+" +
-                            trip0.DepartureDate.Year + "+" +  segments.ElementAt(0).DepartureTime.Hour + "+" +
-                            segments.ElementAt(0).DepartureTime.Minute + "+" + 
+                            trip0.DepartureDate.Year + "+" + segments.ElementAt(0).DepartureTime.Hour + "+" +
+                            segments.ElementAt(0).DepartureTime.Minute + "+" +
                             conditions.AdultCount + "+" +
                             conditions.ChildCount + "+" + conditions.InfantCount + "+" +
                             FlightService.ParseCabinClass(conditions.CabinClass) + "+" +
@@ -411,6 +412,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             Supplier = Supplier.Garuda,
                             SupplierCurrency = "IDR",
                             SupplierPrice = price,
+                            SupplierRate = 1,
                             FareId = fareId,
                             Trips = new List<FlightTrip>
                             {
@@ -436,11 +438,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 {
                     return new SearchFlightResult
                     {
-                        Errors = new List<FlightError> {FlightError.TechnicalError},
-                        ErrorMessages = new List<string> {"Web Layout Changed!"}
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "Web Layout Changed!" }
                     };
                 }
-                
+
             }
 
             private bool RequirePassport(List<FlightSegment> segments)
@@ -461,16 +463,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 {
                     if (arp.Desc.Contains(code))
                     {
-                        arpt = HttpUtility.UrlEncode(arp.Label + ", " + arp.Desc); 
+                        arpt = HttpUtility.UrlEncode(arp.Label + ", " + arp.Desc);
                     }
                 }
                 return arpt;
             }
 
-            private  List<Itin> GetItins(string itinScr)
+            private List<Itin> GetItins(string itinScr)
             {
                 return itinScr.Deserialize<List<Itin>>();
-                
+
             }
 
             private List<PriceClass> GetPrices(string priceScr)
@@ -521,7 +523,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 public Equipment Equipment { get; set; }
                 public string NbrOfStops { get; set; }
                 public List<Legs> ListLegs { get; set; }
-                
+
             }
 
             private class Legs
@@ -541,10 +543,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
             {
                 public string TotalAmount { get; set; }
             }
-            
+
             private class RecoAmounts
             {
-                public RecoAmt RecoAmount { get; set; } 
+                public RecoAmt RecoAmount { get; set; }
             }
 
             private class PnrPrices
@@ -555,7 +557,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
             private class TravellerType
             {
-                public List<TravellersPrice> TravellersPrice { get; set; } 
+                public List<TravellersPrice> TravellersPrice { get; set; }
             }
 
             private class TravellersPrice
@@ -580,7 +582,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 public string RecoId { get; set; }
             }
 
-            
+
         }
 
     }
