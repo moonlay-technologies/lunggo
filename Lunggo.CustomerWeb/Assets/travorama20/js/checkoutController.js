@@ -45,7 +45,14 @@ app.controller('checkoutController', [
             return hours + "j " + minutes + "m";
         }
 
-        
+        //silubab
+        $scope.adultCount = adultPassenger;
+        $scope.adultFare = adultFare;
+        $scope.childCount = childPassenger;
+        $scope.childFare = childFare;
+        $scope.infantCount = infantPassenger;
+        $scope.infantFare = infantFare;
+
         $scope.language = langCode;
         $scope.token = token;
         $scope.trips = trips;
@@ -223,7 +230,7 @@ app.controller('checkoutController', [
                     headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
                     //console.log(returnData);
-                    if (returnData.data.rsvNo != '' || returnData.data.rsvNo != null) {
+                    if (returnData.data.status == '200' && (returnData.data.rsvNo != '' || returnData.data.rsvNo != null)) {
                         if (returnData.data.price != null) { 
                             $scope.book.priceChanged = true;
                             $scope.book.isSuccess = true;
@@ -250,13 +257,14 @@ app.controller('checkoutController', [
                             $scope.book.isSuccess = false;
                             $scope.book.checked = true;
                             console.log(returnData);
-                            $scope.errorMessage = returnData.data.error; 
+                            $scope.errorMessage = returnData.data.error;
                         }
                     }
 
                 }, function (returnData) {
                     console.log(returnData);
                     $scope.book.checked = true;
+                    $scope.book.isSuccess = false;
                 });
 
             }
