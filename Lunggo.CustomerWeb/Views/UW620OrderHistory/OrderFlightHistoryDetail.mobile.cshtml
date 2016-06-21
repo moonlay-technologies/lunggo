@@ -6,7 +6,7 @@
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 @{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
-    ViewBag.Title = "Order Detail";
+    ViewBag.Title = "Detail Reservasi";
     ViewBag.BodyClass = "page page-orderdetail";
     ViewBag.AngularController = "OrderDetailController";
 }
@@ -128,12 +128,12 @@
                                 <h4><b>@Html.I18NString("CW00199")</b></h4>
                             </header>
                             <section>
-                                <div ng-repeat =" trip in flight.itin.trips">
-                                    <div class="flight departure">
+                                <div ng-repeat = "trip in flight.itin.trips">
+                                    <div class="flight departure" ng-if ="$index = 0">
                                         <div class="row">
-                                            @*<div class="col-xs-3">
-                                                <img src="@trip.Segments[0].AirlineLogoUrl" alt="trip.airlines[0].name" class="flight__airline__image" />
-                                            </div>*@
+                                            <div class="col-xs-3">
+                                                <img ng-src="{{trip.airlines[0].logoUrl}}" alt="trip.airlines[0].name" class="flight__airline__image" />
+                                            </div>
                                             <div class="col-xs-9">
                                                 <p class="flight__airline__name"><span>{{trip.airlines[0].name}}</span> </p>
                                             </div>
@@ -141,7 +141,24 @@
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <p>{{trip.originCity}} - {{trip.destinationCity}}</p>
-                                                <p>{{trip.date | date : 'dd MMMM yyyy , HH:mm' :'UTC'}}</p>
+                                                <p>{{trip.date | date : 'dd MMMM yyyy'}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flight return" ng-if="$index = 1">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <img ng-src="{{trip.airlines[0].logoUrl}}" alt="trip.airlines[0].name" class="flight__airline__image" />
+                                            </div>
+                                            <div class="col-xs-9">
+                                                <p class="flight__airline__name"><span>{{trip.airlines[0].name}}</span> </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <p>{{trip.originCity}} - {{trip.destinationCity}}</p>
+                                                <p>{{trip.date | date : 'dd MMMM yyyy'}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -171,7 +188,7 @@
                                         <label class="control-label col-xs-3">Tgl Pengajuan</label>
                                         <div class="col-xs-9">
                                             <p class="form-control-static">
-                                                <span>{{refundDate | date : 'dd - MMMM - yyyy , HH:mm' : 'UTC'}}</span>
+                                                <span>{{refundDate | date : 'dd MMMM yyyy , HH:mm' : 'UTC'}}</span>
                                             </p>
                                         </div>
                                     </div>
