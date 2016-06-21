@@ -48,14 +48,15 @@ app.controller('siteHeaderController', [
             $scope.isLogin = false;
             $scope.pageLoaded = true;
         }
-
+        $scope.returnUrl = document.referrer;
         $scope.logout = {
             isLogout: false,
             getLogout: function () {
                 eraseCookie('accesstoken');
                 eraseCookie('refreshtoken');
                 $scope.isLogin = false;
-                isLogout: true;
+                $scope.logout.isLogout =  true;
+                window.location.href = $scope.returnUrl;
             }
         }
 
@@ -423,7 +424,15 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
     }
 
     $scope.trxHistory.getTrxHistory();
-
+    $scope.logout = {
+        isLogout: false,
+        getLogout: function () {
+            eraseCookie('accesstoken');
+            eraseCookie('refreshtoken');
+            $scope.isLogin = false;
+            $scope.isLogout = true;
+        }
+    }
 
 }]);// User Account Controller
 
