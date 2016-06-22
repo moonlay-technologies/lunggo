@@ -184,7 +184,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                                 StopQuantity = 0,
                                                 Duration = arrtime - deptime,
                                                 IsMealIncluded = false,
-                                                IsPscIncluded = true
+                                                IsPscIncluded = true,
+                                                Baggage = GetBaggage()
                                             });
                                             Airport = Airport + 8;
                                         }

@@ -50,6 +50,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 Logout(client);
                 return balance;
             }
+
         }
     }
 }

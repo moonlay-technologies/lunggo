@@ -67,6 +67,7 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler3", 
                 "WebJob-FlightSearch.FlightCrawler4", 
                 "WebJob-FlightSearch.FlightCrawler5",
+                "WebJob-FlightSearch.FlightCrawler6",
                 "CloudApp.EticketHandler",
                 "WebJob.BankTransferChecking",
                 "CloudApp.CaptchaReader"
@@ -438,6 +439,7 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler3", 
                 "WebJob-FlightSearch.FlightCrawler4",
                 "WebJob-FlightSearch.FlightCrawler5",
+                "WebJob-FlightSearch.FlightCrawler6"
             };
             SaveRootFile("App.Debug.config", fileContent, projectList);
         }
@@ -461,7 +463,8 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler2",
                 "WebJob-FlightSearch.FlightCrawler3",
                 "WebJob-FlightSearch.FlightCrawler4",
-                "WebJob-FlightSearch.FlightCrawler5"
+                "WebJob-FlightSearch.FlightCrawler5",
+                "WebJob-FlightSearch.FlightCrawler6"
             };
             SaveRootFile("App.Release.config", fileContent, projectList);
         }
