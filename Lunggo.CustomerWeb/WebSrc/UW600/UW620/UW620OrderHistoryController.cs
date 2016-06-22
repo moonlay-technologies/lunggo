@@ -31,9 +31,12 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
 
         public ActionResult OrderFlightHistoryDetail(string rsvNo)
         {
-                var flight = FlightService.GetInstance();
-                var reservation = flight.GetReservationForDisplay(rsvNo);
-                return View(reservation);
+                //var flight = FlightService.GetInstance();
+                //var reservation = flight.GetReservationForDisplay(rsvNo);
+            return View(new FlightReservationForDisplay
+            {
+                RsvNo = rsvNo
+            });
         }
 
         [AllowAnonymous]

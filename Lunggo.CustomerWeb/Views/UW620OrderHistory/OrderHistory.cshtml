@@ -184,15 +184,7 @@
                                                         <p>@Html.I18NString("CW00197") : <b>{{flight.itin.trips[0].origin}}</b> to <b>{{flight.itin.trips[0].destination}}</b></p>
                                                         <p ng-if="flight.itin.trips.length > 1">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}} | @Html.I18NString("CW00058"): {{flight.itin.trips[1].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
                                                         <p ng-if="flight.itin.trips.length < 2">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
-                                                        <p ng-if ="flight.payment.status==0">Status : <span class="success">Undefined</span></p>
-                                                        <p ng-if="flight.payment.status==1">Status : <span class="success">Cancelled</span></p>
-                                                        <p ng-if="flight.payment.status==2">Status : <span class="success">Pending</span></p>
-                                                        <p ng-if="flight.payment.status==3">Status : <span class="success">Settled</span></p>
-                                                        <p ng-if="flight.payment.status==4">Status : <span class="success">Denied</span></p>
-                                                        <p ng-if="flight.payment.status==5">Status : <span class="success">Expired</span></p>
-                                                        <p ng-if="flight.payment.status==6">Status : <span class="success">Verifying</span></p>
-                                                        <p ng-if="flight.payment.status==7">Status : <span class="success">Challenged</span></p>
-                                                        <p ng-if ="flight.payment.status==8">Status : <span class="success">Failed</span></p>
+                                                        <p>Status : <span class="success">{{paymentstatus(flight.payment.status)}}</span></p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-2">
