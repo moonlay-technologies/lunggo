@@ -257,7 +257,7 @@
 
     // ********************
     // get flight
-    
+
 
     // generate flight list
     $scope.FlightFunctions.GenerateFlightList = function (data) {
@@ -271,11 +271,11 @@
             // init airlines
             for (var x = 0; x < data[i].trips[0].airlines.length; x++) {
                 data[i].trips[0].airlines[x].Checked = true;
-            }
+                }
             targetScope.FlightList.push(data[i]);
-        }
+                        }
 
-        if ($scope.FlightConfig[0].FlightRequest.Progress == 100) {
+                    if ($scope.FlightConfig[0].FlightRequest.Progress == 100) {
             for (var x = 0; x < $scope.FlightConfig[0].FlightList.length; x++) {
                 $scope.priceFilterParam.prices.push($scope.FlightConfig[0].FlightList[x].totalFare);
             }
@@ -285,7 +285,7 @@
             $scope.priceFilterParam.prices.sort(sortNumber);
             $scope.priceFilterParam.initial[0] = ($scope.priceFilterParam.prices[0]);
             $scope.priceFilterParam.initial[1] = ($scope.priceFilterParam.prices[$scope.priceFilterParam.prices.length - 1]);
-
+                        
             $('.price-slider').slider({
                 range: true,
                 min: $scope.priceFilterParam.initial[0],
@@ -305,7 +305,7 @@
                     $('.price-slider-max').trigger('input');
                 }
             });
-        }
+                    }
 
         // generate airline for flight filtering		
         for (var i = 0; i < targetScope.FlightList.length; i++) {
@@ -313,8 +313,8 @@
             for (var x = 0; x < targetScope.FlightList[i].trips[0].airlines.length; x++) {
                 targetScope.FlightList[i].AirlinesTag.push(targetScope.FlightList[i].trips[0].airlines[x].code);
                 targetScope.FlightFilter.Airline.push(targetScope.FlightList[i].trips[0].airlines[x]);
-            }
-        }
+                }
+                    }
         // remove duplicate from airline filter		
         var dupes = {};
         var Airlines = [];
@@ -322,11 +322,11 @@
             if (!dupes[el.code]) {
                 dupes[el.code] = true;
                 Airlines.push(el);
-            }
-        });
+                    }
+            });
         targetScope.FlightFilter.Airline = Airlines;
         Airlines = [];
-        
+
     }// generate flight list end
 
     // after flight request complete		

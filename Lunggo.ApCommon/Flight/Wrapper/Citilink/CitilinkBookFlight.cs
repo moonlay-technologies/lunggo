@@ -38,8 +38,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     return new BookFlightResult
                     {
                         IsValid = revalidateResult.IsValid,
-                        ErrorMessages = revalidateResult.ErrorMessages,
                         Errors = revalidateResult.Errors,
+                        ErrorMessages = revalidateResult.ErrorMessages,
                         IsItineraryChanged = revalidateResult.IsItineraryChanged,
                         IsPriceChanged = revalidateResult.IsPriceChanged,
                         IsSuccess = false,
@@ -331,7 +331,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var html = paymentGetresponse.Content;
                 CQ detailFlight = (CQ)html;
                 var getPrice = detailFlight["#priceDisplayBody>table:last"].Children().Children().Last().Last().Text().Trim().Split('\n');
-                var harga = getPrice[1].Trim().Replace("Rp.","").Replace(",","");
+                var harga = getPrice[1].Trim().Replace("Rp.", "").Replace(",", "");
                 var fixPrice = decimal.Parse(harga);
 
                 //Cek Harga di Final
@@ -347,6 +347,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         IsItineraryChanged = false,
                         IsPriceChanged = bookInfo.Itinerary.Price.Supplier != fixPrice,
                         IsSuccess = false,
+                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
                         ErrorMessages = new List<string> { "Price is changed!" },
                         NewItinerary = fixItin,
                         NewPrice = fixPrice,

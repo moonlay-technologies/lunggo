@@ -1135,8 +1135,8 @@
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\travorama20\js\accountController.js" />
-    <Content Include="Assets\travorama20\js\checkoutController.js" />
     <Content Include="Assets\travorama20\js\countries.js" />
+    <Content Include="Assets\travorama20\js\checkoutController.js" />
     <Content Include="Assets\travorama20\js\homeController.js" />
     <Content Include="Assets\travorama20\js\paymentController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
@@ -1337,6 +1337,12 @@
     <Content Include="Assets\mobile\css\_page_home.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
+    <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
+    <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
+    <None Include="Properties\PublishProfiles\prod-cw__staging.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw__staging.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

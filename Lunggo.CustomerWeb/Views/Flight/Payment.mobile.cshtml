@@ -126,7 +126,7 @@
                         <dt>Total Tiket</dt>
                         <dd><sup>Rp</sup> {{initialPrice | number}}</dd>
                     </dl>
-                    <dl ng-show="CheckoutConfig.Voucher.Validated && CheckoutConfig.Voucher.Valid">
+                    <dl ng-show="voucher.confirmedCode">
                         <dt>Potongan Harga</dt>
                         <dd><sup>Rp</sup>- {{voucher.amount| number}}</dd>
                     </dl>

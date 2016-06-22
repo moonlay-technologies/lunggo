@@ -13,23 +13,23 @@ namespace Lunggo.ApCommon.Flight.Service
             if (reservation == null)
                 return null;
 
-            return new FlightReservationForDisplay
-            {
-                RsvNo = reservation.RsvNo,
-                RsvTime = reservation.RsvTime,
+                return new FlightReservationForDisplay
+                {
+                    RsvNo = reservation.RsvNo,
+                    RsvTime = reservation.RsvTime,
                 RsvStatus = reservation.RsvStatus,
                 CancellationType = reservation.CancellationType,
                 CancellationTime = reservation.CancellationTime,
                 Itinerary = ConvertToItineraryForDisplay(reservation.Itineraries),
-                Contact = reservation.Contact,
+                    Contact = reservation.Contact,
                 Passengers = reservation.Pax,
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
                 User = reservation.User
-            };
-        }
+                };
+            }
 
         internal FlightItineraryForDisplay ConvertToItineraryForDisplay(List<FlightItinerary> itins)
-        {
+            {
             if (itins == null || itins.Count == 0)
                 return null;
 
@@ -59,7 +59,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 RegisterNumber = 0,
                 OriginalFare = GenerateDummyOriginalFare(totalFare)
             };
-        }
+            }
 
         internal FlightItineraryForDisplay ConvertToItineraryForDisplay(FlightItinerary itinerary)
         {
@@ -70,31 +70,31 @@ namespace Lunggo.ApCommon.Flight.Service
             var childFare = itinerary.ChildPricePortion * itinerary.Price.Local;
             var infantFare = itinerary.InfantPricePortion * itinerary.Price.Local;
 
-            return new FlightItineraryForDisplay
-            {
-                AdultCount = itinerary.AdultCount,
-                ChildCount = itinerary.ChildCount,
-                InfantCount = itinerary.InfantCount,
-                RequireBirthDate = itinerary.RequireBirthDate,
-                RequirePassport = itinerary.RequirePassport,
-                RequireSameCheckIn = itinerary.RequireSameCheckIn,
-                RequireNationality = itinerary.RequireNationality,
+                return new FlightItineraryForDisplay
+                {
+                    AdultCount = itinerary.AdultCount,
+                    ChildCount = itinerary.ChildCount,
+                    InfantCount = itinerary.InfantCount,
+                    RequireBirthDate = itinerary.RequireBirthDate,
+                    RequirePassport = itinerary.RequirePassport,
+                    RequireSameCheckIn = itinerary.RequireSameCheckIn,
+                    RequireNationality = itinerary.RequireNationality,
                 RequestedCabinClass = itinerary.RequestedCabinClass,
-                CanHold = itinerary.CanHold,
+                    CanHold = itinerary.CanHold,
                 Currency = itinerary.Price.LocalCurrency,
-                TripType = itinerary.TripType,
+                    TripType = itinerary.TripType,
                 TotalFare = itinerary.Price.Local,
                 AdultFare = adultFare,
                 ChildFare = childFare,
                 InfantFare = infantFare,
                 Trips = itinerary.Trips.Select(ConvertToTripForDisplay).ToList(),
-                RegisterNumber = itinerary.RegisterNumber,
+                    RegisterNumber = itinerary.RegisterNumber,
                 OriginalFare = GenerateDummyOriginalFare(itinerary.Price.Local)
-            };
-        }
+                };
+            }
 
         private static ComboForDisplay ConvertToComboForDisplay(Combo combo)
-        {
+            {
             if (combo == null)
                 return null;
             return new ComboForDisplay
@@ -205,17 +205,6 @@ namespace Lunggo.ApCommon.Flight.Service
             var result = new List<Transit>();
             for (var i = 0; i < segments.Count; i++)
             {
-                if (segments[i].Stops != null && segments[i].Stops.Any())
-                {
-                    result.AddRange(segments[i].Stops.Select(stop => new Transit
-                    {
-                        IsStop = true,
-                        Airport = stop.Airport,
-                        ArrivalTime = stop.ArrivalTime,
-                        DepartureTime = stop.DepartureTime,
-                        Duration = (stop.DepartureTime - stop.ArrivalTime).TotalMilliseconds
-                    }));
-                }
                 if (i != 0)
                 {
                     result.Add(new Transit
