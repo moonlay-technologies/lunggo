@@ -231,7 +231,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 
                 var counter = 0;
                 
-                //successLogin = Login(client, "SA3ALEU1", "Standar123", out returnPath);
                 while (!successLogin && counter < 31)
                 {
                     while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnPath != "/web/dashboard/welcome")
@@ -260,7 +259,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         };
                     }
 
-                    var password = userName == "SA3ALEU1" ? "Standar123" : "Travorama1234";
+                    const string password = "Standar123";
                     counter++;
                     successLogin = Login(client, userName, password, out returnPath);
                 }
