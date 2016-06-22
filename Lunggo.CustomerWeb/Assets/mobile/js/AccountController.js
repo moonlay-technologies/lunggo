@@ -59,8 +59,8 @@ app.controller('siteHeaderController', [
                 window.location.href = "/";
             }
         }
-
-    }]);
+    }]
+);
 
 
 app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$location',function ($http, $scope, $rootScope, $location) {
@@ -161,15 +161,10 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
         $location.hash('menu');
     });
 
-
     $scope.$watch('PageConfig.ActivePage', function() {
         $scope.NotifBox = false;
-
-        //if ($scope.PageConfig.ActivePage == 'menu') {
-        //}
     });
     
-
     $scope.$watch(function () {
         return location.hash;
     }, function (value) {
@@ -294,8 +289,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                     console.log('Success requesting reset password');
                     console.log(returnData);
                     $scope.password.edit = false;
-                    $scope.password.updating = false;
-                    
+                    $scope.password.updating = false;                 
                 }
                 else {
                     console.log(returnData.data.error);
@@ -359,7 +353,6 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                     $scope.NotifBox = true;
                 }
                 else {
-                    //console.log(returnData.data.Description);
                     console.log(returnData);
                     $scope.UserPassword.Updating = false;
                     $scope.UserPassword.Editing = false;
@@ -436,7 +429,6 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
             window.location.href = "/";
         }
     }
-
 }]);// User Account Controller
 
 // Contact Controller
@@ -525,7 +517,12 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
             return 'Gagal';
     }
 
-    $scope.getRsv = function() {
+    $scope.closeOverlay = function() {
+        window.location.href = "/";
+    }
+
+    $scope.getRsv = function () {
+        $scope.errormsg = '';
         $http.get(GetReservationConfig.Url + $scope.rsvNo, {
             headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
             rsvNo: $scope.rsvNo
@@ -537,6 +534,16 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
             else {
                 console.log('There is an error');
                 console.log('Error : ' + returnData.error);
+                if (returnData.error == "ERARSV01") {
+                    $scope.errormsg = 'No Reservation Matched';
+                }
+                else if (returnData.error == "ERARSV02") {
+                    $scope.errormsg = 'Not Authorised';
+                }
+                else if (returnData.error == "ERRGEN99") {
+                    $scope.errormsg = 'Problem on Server';
+                }
+
                 $scope.datafailed = true;
                 console.log(returnData);
                 window.location.href = "/";
@@ -561,27 +568,24 @@ app.controller('CheckOrderController', ['$http', '$scope', '$rootScope', functio
         Number: '',
         Name : ''
     };
-
-
-
 }]);// Check Order Controller
 
 // Login Controller
 app.controller('LoginController', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope) {
 
-        $scope.PageConfig = $rootScope.PageConfig;
-        $scope.pageLoaded = true;
+    $scope.PageConfig = $rootScope.PageConfig;
+    $scope.pageLoaded = true;
+    $scope.overlay = false;
+    $scope.returnUrl = document.referrer;
+    //if ($scope.User.Message) {
+    //    $scope.overlay = true;
+    //} else {
+    //    $scope.overlay = false;
+    //}
+    $scope.closeOverlay = function() {
         $scope.overlay = false;
-        $scope.returnUrl = document.referrer;
-        //if ($scope.User.Message) {
-        //    $scope.overlay = true;
-        //} else {
-        //    $scope.overlay = false;
-        //}
-        $scope.closeOverlay = function() {
-            $scope.overlay = false;
-            $scope.User.Message = '';
-        }
+        $scope.User.Message = '';
+    }
 
     $scope.User = {
         Email: '',
@@ -653,9 +657,6 @@ app.controller('LoginController', ['$http', '$scope', '$rootScope', function($ht
                 });
             }
     }
-
-
-
 }]);// Login Controller
 
 // Register Controller
@@ -809,7 +810,6 @@ app.controller('RegisterController', ['$http', '$scope', '$rootScope', function(
 
         return temp;
     }
-
 }]);// Register Controller
 
 // Forgot Password Controller
@@ -915,12 +915,9 @@ app.controller('ForgotpasswordController', ['$http', '$scope', '$rootScope', fun
             
         }
     };
-
 }]);// ForgotPasswordController
 
 app.controller('ResetpasswordController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
-
-        //$scope.userEmail = '';
 
         $scope.PageConfig = $rootScope.PageConfig;
         $scope.pageLoaded = true;
@@ -973,6 +970,5 @@ app.controller('ResetpasswordController', ['$http', '$scope', '$rootScope', func
             });
 
         }
-
     }
 ]);
