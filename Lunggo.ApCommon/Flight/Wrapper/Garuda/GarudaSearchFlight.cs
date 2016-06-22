@@ -19,7 +19,6 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Newtonsoft.Json.Linq;
 using RestSharp;
-//using RestSharp.Deserializers;
 using RestSharp.Extensions.MonoHttp;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
@@ -40,8 +39,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
         {
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
-
-
                 if (conditions.AdultCount == 0)
                 {
                     return new SearchFlightResult
@@ -348,45 +345,59 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                         var flightid = itin.ProposedBoundId;
                         var listPrice = new List<Int32>();
-                        foreach (var priceclass in priceClass)
+                        var listIndex = new List<Int32>();
+                        string childPriceEach = "0";
+                        string infantPriceEach = "0";
+                        for (var p = 0; p < priceClass.Count; p++)
                         {
-                            foreach (var f in priceclass.Bounds[0].FlightGroupList)
+                            for (var f = 0; f < priceClass.ElementAt(p).Bounds[0].FlightGroupList.Count; f++)
                             {
-                                if (f.FlightId == flightid)
+                                if (priceClass.ElementAt(p).Bounds[0].FlightGroupList.ElementAt(f).FlightId == flightid)
                                 {
-                                    listPrice.Add(Convert.ToInt32(priceclass.PnrPrices[0].RecoAmounts[0].RecoAmount.TotalAmount));
+                                    //listPrice.Add(Convert.ToInt32(priceClass.ElementAt(p).PnrPrices[0].RecoAmounts[0].RecoAmount.TotalAmount));
+                                    listIndex.Add(p);
                                 }
                             }
-
-                            string adultPriceEach;
-                            string childPriceEach;
-                            string infantPriceEach;
-
-                            adultPriceEach =
-                                priceclass.PnrPrices[0].TravellerPrices[0].TravellersPrice[0].RecoAmount.TotalAmount;
-                            if (priceclass.PnrPrices[0].TravellerPrices.Count() == 3)
-                            {
-                                childPriceEach =
-                                priceclass.PnrPrices[0].TravellerPrices[1].TravellersPrice[0].RecoAmount.TotalAmount;
-                                infantPriceEach =
-                                priceclass.PnrPrices[0].TravellerPrices[2].TravellersPrice[0].RecoAmount.TotalAmount;
-                            }
-
-                            else if (priceclass.PnrPrices[0].TravellerPrices.Count() == 2)
-                            {
-                                childPriceEach =
-                                priceclass.PnrPrices[0].TravellerPrices[1].TravellersPrice[0].RecoAmount.TotalAmount;
-                                infantPriceEach = "0";
-                            }
-                            else if (priceclass.PnrPrices[0].TravellerPrices.Count() == 1)
-                            {
-                                childPriceEach = "0";
-                                infantPriceEach = "0";
-                            }
-
                         }
 
-                        var price = listPrice.Min();
+                        var Value =
+                            Convert.ToInt32(
+                                priceClass.ElementAt(listIndex.ElementAt(0)).PnrPrices[0].RecoAmounts[0].RecoAmount
+                                    .TotalAmount);
+                        var index = 0;
+                        for (var ind = 1; ind < listIndex.Count; ind++)
+                        {
+                            if (Convert.ToInt32(
+                                priceClass.ElementAt(listIndex.ElementAt(ind)).PnrPrices[0].RecoAmounts[0].RecoAmount
+                                    .TotalAmount) < Value)
+                            {
+                                index = listIndex.ElementAt(ind);
+                            }
+                        }
+
+                        var dataPrice = priceClass.ElementAt(index);
+                        var price = dataPrice.PnrPrices[0].RecoAmounts[0].RecoAmount.TotalAmount;
+
+                        string adultPriceEach = dataPrice.PnrPrices[0].TravellerPrices[0].TravellersPrice[0].RecoAmount.TotalAmount;
+                        if (dataPrice.PnrPrices[0].TravellerPrices.Count() == 3)
+                        {
+                            childPriceEach =
+                            dataPrice.PnrPrices[0].TravellerPrices[1].TravellersPrice[0].RecoAmount.TotalAmount;
+                            infantPriceEach =
+                            dataPrice.PnrPrices[0].TravellerPrices[2].TravellersPrice[0].RecoAmount.TotalAmount;
+                        }
+
+                        else if (dataPrice.PnrPrices[0].TravellerPrices.Count() == 2)
+                        {
+                            childPriceEach =
+                            dataPrice.PnrPrices[0].TravellerPrices[1].TravellersPrice[0].RecoAmount.TotalAmount;
+                            infantPriceEach = "0";
+                        }
+                        else if (dataPrice.PnrPrices[0].TravellerPrices.Count() == 1)
+                        {
+                            childPriceEach = "0";
+                            infantPriceEach = "0";
+                        }
 
                         fareId = segments.ElementAt(0).DepartureAirport + "+" + segments.ElementAt(segments.Count - 1).ArrivalAirport
                             + "+" + trip0.DepartureDate.Day + "+" + trip0.DepartureDate.Month + "+" +
@@ -413,6 +424,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             Supplier = Supplier.Garuda,
                             Price = new Price(),
                             FareId = fareId,
+                            AdultPricePortion = Convert.ToDecimal(adultPriceEach),
+                            ChildPricePortion = Convert.ToDecimal(childPriceEach),
+                            InfantPricePortion = Convert.ToDecimal(infantPriceEach),
                             Trips = new List<FlightTrip>
                             {
                                 new FlightTrip
@@ -424,7 +438,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 }
                             }
                         };
-                        itinerary.Price.SetSupplier(price, new Currency("IDR"));
+                        itinerary.Price.SetSupplier(Convert.ToDecimal(price), new Currency("IDR"));
                         itins.Add(itinerary);
                     }
 
@@ -541,6 +555,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
             private class RecoAmt
             {
                 public string TotalAmount { get; set; }
+                public string Tax { get; set; }
             }
 
             private class RecoAmounts
