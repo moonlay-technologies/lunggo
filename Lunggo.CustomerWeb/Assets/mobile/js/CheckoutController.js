@@ -103,6 +103,47 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         Cvv: '',
         Number: ''
     }//$scope.CreditCard
+    
+    $scope.getMonth = function(m) {
+        if (m == 1) {
+            return 'Januari';
+        }
+        else if (m == 2) {
+            return 'Februari';
+        }
+        else if (m == 3) {
+            return 'Maret';
+        }
+        else if (m == 4) {
+            return 'April';
+        }
+        else if (m == 5) {
+            return 'Mei';
+        }
+        else if (m == 6) {
+            return 'Juni';
+        }
+        else if (m == 7) {
+            return 'Juli';
+        }
+        else if (m == 8) {
+            return 'Agustus';
+        }
+        else if (m == 9) {
+            return 'September';
+        }
+        else if (m == 10) {
+            return 'Oktober';
+        }
+        else if (m == 11) {
+            return 'November';
+        }
+        else if (m == 12) {
+            return 'Desember';
+        }
+
+    }
+
     // transfer config
     $scope.TransferConfig = {
         UniqueCode: 0,
@@ -364,14 +405,14 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 $scope.book.checked = true;
                 $scope.book.booking = false;
 
+                if (returnData.data.status == '200') {
                 if (returnData.data.rsvNo != '' || returnData.data.rsvNo != null) {
                     if (returnData.data.price != null) {
                         $scope.book.isPriceChanged = true;
                         $scope.book.isSuccess = true;
                         $scope.book.newPrice = returnData.data.price;
                         $scope.book.checked = false;
-                    }
-                    else {
+                        } else {
                         $scope.book.isSuccess = true;
                         $scope.book.rsvNo = returnData.data.rsvNo;
 
@@ -379,19 +420,28 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                         $('form#rsvno').submit();
                         $scope.book.checked = true;
                     }
-                }
-                else {
+                    } else {
                     if (returnData.data.price != null) {
                         $scope.book.isPriceChanged = true;
                         $scope.book.isSuccess = false;
                         $scope.book.newPrice = returnData.data.price;
-                    $scope.book.checked = true;
-                    }
-                    else {
-                    $scope.book.isSuccess = false;
+                        $scope.book.checked = true;
+                        } else {
+                        $scope.book.isSuccess = false;
                         $scope.book.checked = true;
                         console.log(returnData);
                         $scope.errorMessage = returnData.data.error;
+                    }
+                }
+                } else {
+                    if (returnData.data.error == "ERFBOO03") {
+                        $scope.PageConfig.ExpiryDate.Expired = true;
+                    }
+                    else if (returnData.data.error == "ERFBOO01") {
+                        $scope.book.invalidData = true;
+                    } else {
+                        $scope.book.isSuccess = false;
+                        $scope.book.checked = true;
                     }
                 }
             }, function (returnData) {

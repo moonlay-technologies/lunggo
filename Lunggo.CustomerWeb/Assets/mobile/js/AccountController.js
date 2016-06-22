@@ -56,11 +56,11 @@ app.controller('siteHeaderController', [
                 eraseCookie('refreshtoken');
                 $scope.isLogin = false;
                 $scope.logout.isLogout =  true;
-                window.location.href = $scope.returnUrl;
+                window.location.href = "/";
             }
         }
-
-    }]);
+    }]
+);
 
 
 app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$location',function ($http, $scope, $rootScope, $location) {
@@ -161,15 +161,10 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
         $location.hash('menu');
     });
 
-
     $scope.$watch('PageConfig.ActivePage', function() {
         $scope.NotifBox = false;
-
-        //if ($scope.PageConfig.ActivePage == 'menu') {
-        //}
     });
     
-
     $scope.$watch(function () {
         return location.hash;
     }, function (value) {
@@ -283,7 +278,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                 method: 'POST',
                 data: {
                     newPassword: $scope.passwordForm.newPassword,
-                    oldPassword: $scope.passwordForm.currentPassword,
+                    oldPassword: $scope.passwordForm.currentPassword
                 },
                 headers: { 'Authorization': $scope.getFlightHeader }
             }).then(function (returnData) {
@@ -294,8 +289,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                     console.log('Success requesting reset password');
                     console.log(returnData);
                     $scope.password.edit = false;
-                    $scope.password.updating = false;
-                    
+                    $scope.password.updating = false;                 
                 }
                 else {
                     console.log(returnData.data.error);
@@ -343,7 +337,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                 method: 'POST',
                 data: {
                     newPassword: $scope.UserPassword.NewPassword,
-                    oldPassword: $scope.UserPassword.CurrentPassword,
+                    oldPassword: $scope.UserPassword.CurrentPassword
                 },
                 headers: { 'Authorization': $scope.getFlightHeader }
             }).then(function (returnData) {
@@ -359,15 +353,14 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                     $scope.NotifBox = true;
                 }
                 else {
-                    //console.log(returnData.data.Description);
                     console.log(returnData);
                     $scope.UserPassword.Updating = false;
                     $scope.UserPassword.Editing = false;
-                    if (returnData.data.Description == 'ModelInvalid') {
-                        $scope.formMessage = 'Password Baru yang Anda Masukkan Tidak Cocok dengan yang Dikonfimasi';
-                    } else {
-                        $scope.formMessage = 'Password yang Anda Masukkan Tidak Tepat';
-                    }
+                    //if (returnData.data.Description == 'ModelInvalid') {
+                    //    $scope.formMessage = 'Password Baru yang Anda Masukkan Tidak Cocok dengan yang Dikonfimasi';
+                    //} else {
+                    $scope.formMessage = 'Password Lama yang Anda Masukkan Tidak Tepat';
+                    //}
                     $scope.NotifBox = true;
 
                 }
@@ -424,16 +417,18 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
     }
 
     $scope.trxHistory.getTrxHistory();
+    
+    $scope.returnUrl = "/";
     $scope.logout = {
         isLogout: false,
         getLogout: function () {
             eraseCookie('accesstoken');
             eraseCookie('refreshtoken');
-            $scope.isLogin = false;
-            $scope.isLogout = true;
+            //$scope.isLogin = false;
+            $scope.logout.isLogout = true;
+            window.location.href = "/";
         }
     }
-
 }]);// User Account Controller
 
 // Contact Controller
@@ -446,6 +441,7 @@ app.controller('ContactController', ['$http', '$scope', '$rootScope', function (
 // Order Detail Controller
 app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
 
+    $scope.pageLoaded = true;
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.orderDate = new Date(orderDate);
     $scope.rsvNo = rsvNo;
@@ -521,7 +517,13 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
         else if (types == 8)
             return 'Gagal';
     }
-    $scope.getRsv = function() {
+
+    $scope.closeOverlay = function() {
+        window.location.href = "/";
+    }
+    $scope.datafailed = false;
+    $scope.getRsv = function () {
+        $scope.errormsg = '';
         $http.get(GetReservationConfig.Url + $scope.rsvNo, {
             headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
             rsvNo: $scope.rsvNo
@@ -529,22 +531,23 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
             if (returnData.status == "200") {
                 $scope.flight = returnData.flight;
                 $scope.datafailed = false;
-                //$scope.pageLoaded = true;
-                //$scope.isLogin = true;
-                //console.log('Success getting Profile');
-                //$scope.email = returnData.email;
-                //$scope.profileloaded = true;
-                //console.log(returnData);
-                //$scope.firstName = returnData.first;
-                //$scope.lastName = returnData.last;
             }
             else {
                 console.log('There is an error');
                 console.log('Error : ' + returnData.error);
-                //$scope.pageLoaded = true;
-                //$scope.isLogin = false;
+                if (returnData.error == "ERARSV01") {
+                    $scope.errormsg = 'No Reservation Matched';
+                }
+                else if (returnData.error == "ERARSV02") {
+                    $scope.errormsg = 'Not Authorised';
+                }
+                else if (returnData.error == "ERRGEN99") {
+                    $scope.errormsg = 'Problem on Server';
+                }
+
                 $scope.datafailed = true;
                 console.log(returnData);
+                window.location.href = "/";
             }
         }, function (returnData) {
             console.log('Failed to Get Detail');
@@ -566,27 +569,24 @@ app.controller('CheckOrderController', ['$http', '$scope', '$rootScope', functio
         Number: '',
         Name : ''
     };
-
-
-
 }]);// Check Order Controller
 
 // Login Controller
 app.controller('LoginController', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope) {
 
-        $scope.PageConfig = $rootScope.PageConfig;
-        $scope.pageLoaded = true;
+    $scope.PageConfig = $rootScope.PageConfig;
+    $scope.pageLoaded = true;
+    $scope.overlay = false;
+    $scope.returnUrl = document.referrer;
+    //if ($scope.User.Message) {
+    //    $scope.overlay = true;
+    //} else {
+    //    $scope.overlay = false;
+    //}
+    $scope.closeOverlay = function() {
         $scope.overlay = false;
-        $scope.returnUrl = document.referrer;
-        //if ($scope.User.Message) {
-        //    $scope.overlay = true;
-        //} else {
-        //    $scope.overlay = false;
-        //}
-        $scope.closeOverlay = function() {
-            $scope.overlay = false;
-            $scope.User.Message = '';
-        }
+        $scope.User.Message = '';
+    }
 
     $scope.User = {
         Email: '',
@@ -611,7 +611,7 @@ app.controller('LoginController', ['$http', '$scope', '$rootScope', function($ht
                         setRefreshCookie('refreshtoken', returnData.data.FlightConfigrefreshToken);
                         $scope.User.Email = '';
                         $scope.User.Resubmitted = true;
-                        window.location.href = $scope.returnUrl;
+                        window.location.href = "/";
                     }
                     else {
                         $scope.overlay = true;
@@ -658,9 +658,6 @@ app.controller('LoginController', ['$http', '$scope', '$rootScope', function($ht
                 });
             }
     }
-
-
-
 }]);// Login Controller
 
 // Register Controller
@@ -814,7 +811,6 @@ app.controller('RegisterController', ['$http', '$scope', '$rootScope', function(
 
         return temp;
     }
-
 }]);// Register Controller
 
 // Forgot Password Controller
@@ -920,12 +916,9 @@ app.controller('ForgotpasswordController', ['$http', '$scope', '$rootScope', fun
             
         }
     };
-
 }]);// ForgotPasswordController
 
 app.controller('ResetpasswordController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
-
-        //$scope.userEmail = '';
 
         $scope.PageConfig = $rootScope.PageConfig;
         $scope.pageLoaded = true;
@@ -978,6 +971,5 @@ app.controller('ResetpasswordController', ['$http', '$scope', '$rootScope', func
             });
 
         }
-
     }
 ]);

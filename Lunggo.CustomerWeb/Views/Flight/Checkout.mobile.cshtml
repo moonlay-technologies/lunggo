@@ -62,36 +62,36 @@
 }
 @section PageJS{
     <script>
-    var langCode = '@OnlineContext.GetActiveLanguageCode()';
-    // Checkout Detail
-    var CheckoutDetail = {
-        Token: '@Model.Token',
-        ExpiryDate: '@Model.ExpiryTime.ToString("o")',
-        Trips: @Html.Raw(Model.Itinerary.Trips.Serialize()),
-        Price: @Model.Itinerary.TotalFare,
-        // passenger
-        Passenger: [@Model.Itinerary.AdultCount, @Model.Itinerary.ChildCount, @Model.Itinerary.InfantCount],
-        PassengerName: ['Dewasa', 'Anak', 'Bayi'],
-        // identity requirement
-        PassportRequired: @Model.Itinerary.RequirePassport.ToString().ToLower(),
-        IdRequired: false,
-        NationalityRequired: @Model.Itinerary.RequireNationality.ToString().ToLower(),
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
+        // Checkout Detail
+        var CheckoutDetail = {
+            Token: '@Model.Token',
+            ExpiryDate: '@Model.ExpiryTime.ToString("o")',
+            Trips: @Html.Raw(Model.Itinerary.Trips.Serialize()),
+            Price: @Model.Itinerary.TotalFare,
+            // passenger
+            Passenger: [@Model.Itinerary.AdultCount, @Model.Itinerary.ChildCount, @Model.Itinerary.InfantCount],
+            PassengerName: ['Dewasa', 'Anak', 'Bayi'],
+            // identity requirement
+            PassportRequired: @Model.Itinerary.RequirePassport.ToString().ToLower(),
+            IdRequired: false,
+            NationalityRequired: @Model.Itinerary.RequireNationality.ToString().ToLower(),
         BirthDateRequired: @Model.Itinerary.RequireBirthDate.ToString().ToLower(),
-        // departure date
+            // departure date
         DepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate',
         BeforeDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.AddDays(-1)',
         PassportDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.AddMonths(6)',
-        // buyer info
-        BuyerInfo: {
-        LoggedIn : @User.Identity.IsAuthenticated.ToString().ToLower(),
-        FirstName: '@User.Identity.GetFirstName()',
-        LastName: '@User.Identity.GetLastName()',
-        FullName : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
-        CountryCode : '@User.Identity.GetCountryCd()',
-        Phone: '@User.Identity.GetPhoneNumber()',
-        Email: '@User.Identity.GetEmail()'
-        }
-    };
+            // buyer info
+            BuyerInfo: {
+                LoggedIn : @User.Identity.IsAuthenticated.ToString().ToLower(),
+                FirstName: '@User.Identity.GetFirstName()',
+                LastName: '@User.Identity.GetLastName()',
+                FullName : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+                CountryCode : '@User.Identity.GetCountryCd()',
+                Phone: '@User.Identity.GetPhoneNumber()',
+                Email: '@User.Identity.GetEmail()'
+            }
+        };
 
     </script>
     <!-- angular controller -->
@@ -178,9 +178,9 @@ default:
             <form novalidate name="PassengerForm">
                 <div class="passenger passenger-{{$index}}" id="passenger-{{$index}}" ng-repeat="Passenger in passengers track by $index" ng-init="initPassenger(Passenger)">
                     <header class=" passenger__header">
-                    <h4 class="passenger__title" ng-if="Passenger.type == 'adult'">Penumpang {{$index + 1}} (Dewasa)</h4>
-                    <h4 class="passenger__title" ng-if="Passenger.type == 'child'">Penumpang {{$index + 1}} (Anak)</h4>
-                    <h4 class="passenger__title" ng-if="Passenger.type == 'infant'">Penumpang {{$index + 1}} (Bayi)</h4>
+                        <h4 class="passenger__title" ng-if="Passenger.type == 'adult'">Penumpang {{$index + 1}} (Dewasa)</h4>
+                        <h4 class="passenger__title" ng-if="Passenger.type == 'child'">Penumpang {{$index + 1}} (Anak)</h4>
+                        <h4 class="passenger__title" ng-if="Passenger.type == 'infant'">Penumpang {{$index + 1}} (Bayi)</h4>
                     </header><!-- .passenger__header -->
                     <div class="passenger__body">
                         <div class="form-group">
@@ -235,7 +235,7 @@ default:
                         </div>
                         <!-- passenger birth date end-->
                         <!-- passenger passport start -->
-
+                        
                         <div class="form-group" ng-if="CheckoutConfig.PassportRequired">
                             <label class="control-label">No. Paspor</label>
                             <input type="text" value="" class="form-control" name="passenger_{{$index}}_passportNumber" ng-model="Passenger.passport.number" ng-required="CheckoutConfig.PassportRequired" />
@@ -264,7 +264,7 @@ default:
                                 </div>
                             </div>
                         </div>
-
+                    
                         <div class="form-group" ng-if="CheckoutConfig.PassportRequired">
                             <label class="control-label">Negara Penerbit Paspor</label>
                             <select class="form-control" name="passenger_{{$index}}_passportCountry" ng-model="Passenger.passport.country" ng-init="Passenger.passport.country = 'ID'" ng-required="CheckoutConfig.PassportRequired">
@@ -344,7 +344,7 @@ default:
                             </dl>
                             <dl ng-if="CheckoutConfig.BirthDateRequired">
                                 <dt>Tanggal Lahir</dt>
-                                <dd>{{Passenger.birth.date}} {{months[Passenger.birth.month].name}} {{Passenger.birth.year}}</dd>
+                                <dd>{{Passenger.birth.date}} {{getMonth(parseInt(Passenger.birth.month)+1)}} {{Passenger.birth.year}}</dd>
                             </dl>
                             <dl ng-if="CheckoutConfig.PassportRequired">
                                 <dt>No. Paspor</dt>
@@ -352,15 +352,7 @@ default:
                             </dl>
                             <dl ng-if="CheckoutConfig.PassportRequired">
                                 <dt>Tgl. Kadaluarsa Paspor</dt>
-                                <dd>{{Passenger.passport.expire.date}} {{months[Passenger.passport.expire.month].name}} {{Passenger.passport.expire.year}}</dd>
-                            </dl>
-                            <dl ng-if="CheckoutConfig.PassportRequired">
-                                <dt>Negara Penerbit Paspor</dt>
-                                <dd>{{displayCountry(Passenger.passport.country)}}</dd>
-                            </dl>
-                            <dl ng-if="CheckoutConfig.NationalityRequired">
-                                <dt>Kewarganegaraan</dt>
-                                <dd>{{displayCountry(Passenger.nationality)}}</dd>
+                                <dd>{{Passenger.passport.expire.date}} {{getMonth(parseInt(Passenger.passport.expire.month)+1)}} {{Passenger.passport.expire.year}}</dd>
                             </dl>
                             
                         </li>
@@ -595,6 +587,28 @@ default:
         </div>
     </div>
 
+    <div class="popup__wrapper" ng-class="{'active': book.invalidData == true}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Pemesanan Gagal</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <p>Mohon Maaf, pemesanan Anda gagal di proses karena data kurang tepat. Silakan pesan dan cek kembali data Anda.</p>
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container_new">
+                    <div class="row1">
+                        <div class="col12">
+                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="popup__wrapper" ng-class="{'active': book.booking == true}">
         <div class="popup">
             <header class="popup__header">
@@ -602,7 +616,6 @@ default:
             </header>
             <div class="popup__body">
                 <div class="container_new">
-                    
                     <p>Sedang memproses pemesanan Anda ke maskapai. Proses ini dapat berlangsung hingga 5 (lima) menit.</p>
                 </div>
             </div>
