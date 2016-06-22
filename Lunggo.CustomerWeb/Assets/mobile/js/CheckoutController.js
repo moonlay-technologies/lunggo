@@ -123,6 +123,46 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         Number: ''
     }//$scope.CreditCard
     
+    $scope.getMonth = function(m) {
+        if (m == 1) {
+            return 'Januari';
+        }
+        else if (m == 2) {
+            return 'Februari';
+        }
+        else if (m == 3) {
+            return 'Maret';
+        }
+        else if (m == 4) {
+            return 'April';
+        }
+        else if (m == 5) {
+            return 'Mei';
+        }
+        else if (m == 6) {
+            return 'Juni';
+        }
+        else if (m == 7) {
+            return 'Juli';
+        }
+        else if (m == 8) {
+            return 'Agustus';
+        }
+        else if (m == 9) {
+            return 'September';
+        }
+        else if (m == 10) {
+            return 'Oktober';
+        }
+        else if (m == 11) {
+            return 'November';
+        }
+        else if (m == 12) {
+            return 'Desember';
+        }
+
+    }
+
     // transfer config
     $scope.TransferConfig = {
         UniqueCode: 0,
