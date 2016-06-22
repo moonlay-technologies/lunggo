@@ -370,7 +370,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             StopQuantity = 0,
                                             Duration = arrtime - deptime,
                                             IsMealIncluded = true,
-                                            IsPscIncluded = true
+                                            IsPscIncluded = true,
+                                            Baggage = GetBaggage(bandara1,bandara2)
+
                                         });
                                     }
 

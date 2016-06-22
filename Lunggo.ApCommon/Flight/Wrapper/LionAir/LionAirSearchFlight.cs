@@ -91,6 +91,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 // [GET] Search Flight
                 var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);
+                var destinationCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.DestinationAirport);
                 CQ availableFares;
                 CQ departureDate;
                 string scr;
@@ -434,7 +435,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 AirlineName = airplaneName,
                                 OperatingAirlineName = airplaneName,
                                 IsMealIncluded = flightNo.Split(' ')[0] == "ID",
-                                IsPscIncluded = true
+                                IsPscIncluded = true,
+                                Baggage = GetBaggage(flightNo.Split(' ')[0], conditions.CabinClass,airportDeparture,airportArrival,originCountry,destinationCountry)
                             });
                             var j = ind + 1;
                             while ((j != fareIds.Count) && (subst1.SubstringBetween(0, subst1.Length - 2) ==

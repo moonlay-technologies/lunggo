@@ -193,7 +193,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 OperatingAirlineCode = splittedSegmentFareId[0],
                                 StopQuantity = 0,
                                 IsMealIncluded = false,
-                                IsPscIncluded = isPscIncluded
+                                IsPscIncluded = isPscIncluded,
+                                Baggage = GetBaggage(splittedSegmentFareId[4], splittedSegmentFareId[6])
                             });
                         }
                         var itin = new FlightItinerary
