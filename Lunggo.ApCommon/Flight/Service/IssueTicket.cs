@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -53,9 +54,9 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public IssueTicketOutput CommenceIssueTicket(IssueTicketInput input)
         {
-            List<string> supplier = new List<string>();
-            List<decimal> balance = new List<decimal>();
-            List<decimal> localPrice = new List<decimal>();
+            var supplier = new List<Supplier>();
+            var balance = new List<decimal>();
+            var localPrice = new List<decimal>();
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var reservation = GetReservation(input.RsvNo);
@@ -124,23 +125,19 @@ namespace Lunggo.ApCommon.Flight.Service
                         var detailsInput = new GetDetailsInput { RsvNo = input.RsvNo };
                         GetAndUpdateNewDetails(detailsInput);
                         SendEticketToCustomer(input.RsvNo);
-                        //Send Eticket Slight Delay if Choosing Mystifly
-                        if (supplier.Contains("Mystifly")) 
+                    }
+                    else
                         {
                             SendEticketSlightDelayNotifToCustomer(input.RsvNo);
                         }
-                        if (reservation.Payment.Method != PaymentMethod.BankTransfer)
-                            SendInstantPaymentConfirmedNotifToCustomer(input.RsvNo);
-                            InsertSavedPassengersToDb(reservation.Contact.Email, reservation.Pax);
-                    }
                 }
                 else
                 {
                     int casetype = GetCaseType();
-                    var supplierInfoItin = ConcatenateMessage(supplier,balance,localPrice);
+                    var supplierInfoItin = ConcatenateMessage(supplier, balance, localPrice);
                     if (casetype != 0)
                     {
-                        SendIssueSlightDelayNotifToCustomer(reservation.RsvNo + "+" + casetype.ToString());
+                        SendIssueSlightDelayNotifToCustomer(reservation.RsvNo + "+" + casetype);
                         //Testing
                         /*if (supplier.Contains("Mystifly"))
                         {
@@ -149,9 +146,9 @@ namespace Lunggo.ApCommon.Flight.Service
                         SendFailedVerificationCreditCardNotifToCustomer(input.RsvNo);
                         SendEticketSlightDelayNotifToCustomer(input.RsvNo); 
                         SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);*/
-                }
-                else
-                {
+                    }
+                    else 
+                    {
                         SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);
                     }
 
@@ -183,7 +180,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var supplierName = info.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
             IssueTicketResult result = supplier.OrderTicket(info.BookingId, info.CanHold);
-            result.SupplierName = supplier.SupplierName.ToString();
+            result.SupplierName = supplier.SupplierName;
             return result;
         }
 
@@ -202,13 +199,13 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private string ConcatenateMessage(List<string>supplierName, List<decimal>balance,List<decimal>localPrice)
+        private static string ConcatenateMessage(List<Supplier> supplierName, List<decimal> balance, List<decimal> localPrice)
         {
        
-            string balanceAndItinPrice = "";
-            for(int i=0;i<supplierName.Count;i++)
+            var balanceAndItinPrice = "";
+            for (var i = 0; i < supplierName.Count; i++)
             {
-                if (i != supplierName.Count - 1 && i>1)
+                if (i != supplierName.Count - 1 && i > 1)
                 {
                     balanceAndItinPrice = supplierName[i] + ";" + localPrice[i] + ";" + balance[i] + "+";
                 }
@@ -218,10 +215,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 
             }
-
-
             return balanceAndItinPrice;
-
         }
 
         private static int GetCaseType() 

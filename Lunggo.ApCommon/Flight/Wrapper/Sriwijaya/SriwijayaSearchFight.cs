@@ -370,7 +370,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             StopQuantity = 0,
                                             Duration = arrtime - deptime,
                                             IsMealIncluded = true,
-                                            IsPscIncluded = true
+                                            IsPscIncluded = true,
+                                            Baggage = GetBaggage(bandara1,bandara2)
+
                                         });
                                     }
 
@@ -394,10 +396,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         InfantCount = conditions.InfantCount,
                                         CanHold = true,
                                         FareType = FareType.Published,
-                                        RequireBirthDate = true,
+                                        RequireBirthDate = false,
                                         RequirePassport = false,
                                         RequireSameCheckIn = false,
-                                        RequireNationality = true,
+                                        RequireNationality = false,
                                         RequestedCabinClass = CabinClass.Economy,
                                         TripType = TripType.OneWay,
                                         Supplier = Supplier.Sriwijaya,

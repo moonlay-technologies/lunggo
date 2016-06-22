@@ -123,7 +123,7 @@
                             <div class="content-step" id="step-4">
                                 <h3><b>METODE</b> PEMBAYARAN</h3>
 
-                                
+
                                 <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
 
                                 <div class="payment-wrapper">
@@ -188,7 +188,7 @@
                                                 </section>
                                             </label>
                                         </div><!-- .payment -->
-                                        
+
                                         <div class="payment cimbClicks col-xs-4">
                                             <label>
                                                 <header>
@@ -202,7 +202,7 @@
                                                 </section>
                                             </label>
                                         </div><!-- .payment -->
-                                        
+
                                         <div class="payment MandiriBillPayment col-xs-4">
                                             <label>
                                                 <header>
@@ -216,19 +216,18 @@
                                                 </section>
                                             </label>
                                         </div><!-- .payment -->
-                                       
+
                                     </div>
 
                                 </div><!-- .payment-wrapper -->
-
                                 @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && true /*tambah kredit kart baru*/ ))
                                 {
-                                    
+
                                     <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
 
                                         <form name="creditCardForm" novalidate>
                                             <h3 class="no-spacing">Detail <b>Kartu Kredit</b></h3>
-                                            
+
                                             <!-- credit card selector start -->
                                             <div class="form-group">
                                                 <div class="row">
@@ -249,7 +248,6 @@
                                                 </div>
                                             </div>
                                             <!-- credit card selector end -->
-                                            
                                             <!-- new credit card start -->
                                             <div ng-if="CreditCard.TwoClickToken == 'false'">
                                                 <div class="form-group">
@@ -311,10 +309,23 @@
                                     </div>
                                     <!-- .credit-card-form -->
                                 }
+                                <form name="mandiriClickPayForm" novalidate>
+                                    <h3 class="no-spacing">Detail <b>Kartu</b></h3>
+                                    <div class="mandiri-clikpay-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
+                                        <div class="form-group">
+                                            <label class="control-label">Nomor Kartu</label>
+                                            <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">CVV Kartu</label>
+                                            <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
+                                        </div>
+                                    </div>
+                                </form>
 
                                 <div class="step-button">
 
-                                    <form name="finalForm" id="finalForm" ng-submit="pay.checkCreditCard()">
+                                    <form name="finalForm" id="finalForm" ng-submit="pay.setPaymentMethod()">
 
                                         <div class="hidden">
                                             <input type="text" name="RsvNo" value="" ng-model="rsvNo" />
@@ -339,6 +350,7 @@
 
                                     <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
                                         <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                                        <input type="text" name="PaymentUrl" value="" id="url-input" />
                                     </form>
 
                                 </div>
@@ -558,6 +570,18 @@
             </div>
             </div>
         </div>
+
+<div class="bookfailed-popup" ng-if="pay.checked && !pay.isSuccess">
+    <div class=" overlay-content">
+        <section style="padding-top:60px; padding-left:225px;">
+            <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+            <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+            <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+            <div style="padding-top:5px;"><span style="font-size:14px">Pembayaran Gagal</span></div>
+            <div style="padding-top:5px;"><span style="font-size:14px">Silahkan pilih metode pembayaran lain</span></div>
+        </section>
+    </div>
+</div>
 
         <!-- checkout end here -->
                                 break;

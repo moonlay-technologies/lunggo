@@ -21,8 +21,9 @@
 @section PageJS{
     <script>
     var langCode = 'en';
-    var orderDate = '@Model.RsvTime.ToString("u")';
-    var refundDate = '@(Model.Payment.Refund != null ? Model.Payment.Refund.Time.ToString("u") : "")';
+    var rsvNo = @Model.RsvNo;
+    @*var orderDate = '@Model.RsvTime.ToString("u")';
+    //var refundDate = '@(Model.Payment.Refund != null ? Model.Payment.Refund.Time.ToString("u") : "")';*@
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/accountController.js"></script>
@@ -42,7 +43,7 @@
 
                 <div class="order-detail">
                     <header class="content-header">
-                        <h2>ORDER ID : <b>@Model.RsvNo</b></h2>
+                        <h2>ORDER ID : <b>{{flight.rsvNo}}</b></h2>
                     </header>
                     <section class="content-body">
 
@@ -50,18 +51,9 @@
                             <header>
                                 <h4>
                                     <b>BUYER INFO</b>
-                                    @if (Model.Payment.Status != PaymentStatus.Settled)
-                                    {
-                                        <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" disabled>@Html.I18NString("CW00198")</button>
-                                    }
-                                    else
-                                    {
-                                        <a href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" target="_blank">@Html.I18NString("CW00198")</a>
-                                    }
-                                    @if (Model.Payment.Method == PaymentMethod.BankTransfer && Model.Payment.Status == PaymentStatus.Pending)
-                                    {
-                                        <a style="margin-right: 6px;" href="@Url.Action("Confirmation", "Flight", new {rsvNo = Model.RsvNo})" target="_blank" class="pull-right btn btn-yellow">Confirm</a>
-                                    }
+                                        <button  ng-hide="flight.payment.status == 3" href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" disabled>@Html.I18NString("CW00198")</button>
+                                    <a ng-hide="flight.payment.status != 3" href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" target="_blank">@Html.I18NString("CW00198")</a>
+                                    <a ng-if="flight.payment.method == 2 && flight.payment.status == 2" style="margin-right: 6px;" href="@Url.Action("Confirmation", "Flight", new {rsvNo = Model.RsvNo})" target="_blank" class="pull-right btn btn-yellow">Confirm</a>
                                 </h4>
                             </header>
                             <section>
@@ -69,19 +61,19 @@
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">User ID</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">@Model.Contact.Email</p>
+                                            <p class="form-control-static">{{flight.contact.email}}</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Order Name</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">@Model.Contact.Name</p>
+                                            <p class="form-control-static">{{flight.contact.name}}</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Order Date</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">{{orderDate | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
+                                            <p class="form-control-static">{{flight.rsvTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -93,38 +85,35 @@
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Order Final Price</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                            <p class="form-control-static">Rp {{flight.payment.finalPrice | number}}</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Payment Method</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">@EnumDisplay.PaymentMethod(Model.Payment.Method)</p>
+                                            <p class="form-control-static">{{methodpayment(flight.payment.method)}}</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Payment Status</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">@EnumDisplay.PaymentStatus(Model.Payment.Status)</p>
+                                            <p class="form-control-static">{{paymentstatus(flight.payment.status)}}</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">@Html.I18NString("CW00017")</label>
                                         <div class="col-xs-9">
                                             <ol class="passenger-list">
-                                                @foreach (var passenger in Model.Passengers)
-                                                {
-                                                    <li>
-                                                        <div class="row">
-                                                            <div class="col-xs-9">
-                                                                <p>@EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p>
-                                                            </div>
-                                                            <div class="col-xs-3">
-                                                                <span>@EnumDisplay.PassengerType(passenger.Type)</span>
-                                                            </div>
+                                                <li ng-repeat="passenger in flight.pax track by $index">
+                                                    <div class="row">
+                                                        <div class="col-xs-9">
+                                                            <p>{{title(passenger.tit)}} {{passenger.fst}} {{passenger.lst}}</p>
                                                         </div>
-                                                    </li>
-                                                }
+                                                        <div class="col-xs-3">
+                                                            <span>{{paxtype(passenger.typ)}}</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
                                             </ol>
                                         </div>
                                     </div>
@@ -137,21 +126,34 @@
                                 <h4><b>@Html.I18NString("CW00199")</b></h4>
                             </header>
                             <section>
-                                @foreach (var trip in Model.Itinerary.Trips)
-                                {
-                                    <div class="flight @(Model.Itinerary.Trips.IndexOf(trip) == 0 ? "departure" : "return")">
-                                        <p><img src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" /> <span>@trip.Segments[0].AirlineName</span> </p>
+                                <div ng-repeat="trip in flight.itin.trips">
+                                    <div class="flight departure" ng-if="$index = 0">
+                                        <p><!--<img src="{{trip.segments[0].airlineLogoUrl}}" alt="trip.segments[0].airlineName" /> <span>{{trip.segments[0].airlineName}}</span>--> </p>
                                         <div class="row">
                                             <div class="col-xs-2">
-                                                <p>@(Model.Itinerary.Trips.IndexOf(trip) == 0 ? "Berangkat : " : "Pulang : ")</p>
+                                                <p>Berangkat :</p>
                                             </div>
                                             <div class="col-xs-9">
-                                                <p>@trip.OriginCity - @trip.DestinationCity</p>
-                                                <p>@trip.DepartureDate.ToString("dd - MMM -yyyy")</p>
+                                                <p>{{trip.originCity}} - {{trip.destinationCity}}</p>
+                                                <p>{{trip.date | date : 'dd MMMM yyyy'}}</p>
                                             </div>
                                         </div>
                                     </div>
-                                }
+
+                                    <div class="flight departure" ng-if="$index = 1">
+                                        <p><!--<img src="{{trip.segments[0].airlineLogoUrl}}" alt="trip.segments[0].airlineNamme" />--> <span>{{trip.segments[0].airlineName}}</span> </p>
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <p>Berangkat :</p>
+                                            </div>
+                                            <div class="col-xs-9">
+                                                <p>{{trip.originCity}} - {{trip.destinationCity}}</p>
+                                                <p>{{trip.date | date : 'dd MMMM yyyy'}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    
 
                             </section>
 
@@ -167,10 +169,8 @@
                                         <label class="control-label col-xs-3">No Refund</label>
                                         <div class="col-xs-9">
                                             <p class="form-control-static">
-                                                <span>
-                                                    @(Model.Payment.Refund != null ?
-                                                      Model.Payment.Refund.Amount.ToString() : "-")
-                                                </span>
+                                                <span ng-show="flight.payment.refund != null">{{flight.payment.refund.amount}}</span>
+                                                <span ng-show="flight.payment.refund != null">-</span>
                                             </p>
                                         </div>
                                     </div>
@@ -178,7 +178,7 @@
                                         <label class="control-label col-xs-3">Tgl Pengajuan</label>
                                         <div class="col-xs-9">
                                             <p class="form-control-static">
-                                                <span>{{refundDate | date : 'dd - MMMM - yyyy , HH:mm' : 'UTC'}}</span>
+                                                <span>{{flight.payment.refund.Time | date : 'dd - MMMM - yyyy , HH:mm' : 'UTC'}}</span>
                                             </p>
                                         </div>
                                     </div>

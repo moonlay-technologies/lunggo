@@ -6,6 +6,7 @@ using System.Net;
 using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Config;
@@ -38,7 +39,7 @@ namespace Lunggo.ApCommon.Flight.Service
             try
             {
                 return GetReservationFromDb(rsvNo);
-            }
+        }
             catch
             {
                 return null;
@@ -50,8 +51,8 @@ namespace Lunggo.ApCommon.Flight.Service
             try
             {
                 var rsv = GetOverviewReservationFromDb(rsvNo);
-                return ConvertToReservationForDisplay(rsv);
-            }
+            return ConvertToReservationForDisplay(rsv);
+        }
             catch
             {
                 return null;
@@ -106,6 +107,30 @@ namespace Lunggo.ApCommon.Flight.Service
         //    UpdateIssueProgressToDb(rsvNo, progressMessage);
         //}
 
+        public void GetAndUpdateBookingStatus(out List<string> ticketedRsvNos, out List<string> scheduleChangedRsvNos)
+        {
+            var statusData = MystiflyWrapper.GetBookingStatus();
+            if (statusData.Any())
+                UpdateBookingStatusToDb(statusData);
+            var ticketedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.Ticketed).Select(data => data.BookingId).ToList();
+            var scheduleChangedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.ScheduleChanged).Select(data => data.BookingId).ToList();
+            var rsvNosWithTicketedBooking = ticketedBookingIds.Any()
+                ? GetRsvNoByBookingIdFromDb(ticketedBookingIds).Distinct()
+                : new List<string>();
+            var rsvsWithTicketedBooking = rsvNosWithTicketedBooking.Select(GetReservation);
+            ticketedRsvNos =
+                rsvsWithTicketedBooking.Where(
+                    rsv =>
+                        rsv.Itineraries.TrueForAll(
+                            itin =>
+                                itin.BookingStatus == BookingStatus.Ticketed ||
+                                itin.BookingStatus == BookingStatus.ScheduleChanged))
+                    .Select(rsv => rsv.RsvNo).ToList();
+            scheduleChangedRsvNos = scheduleChangedBookingIds.Any()
+                ? GetRsvNoByBookingIdFromDb(scheduleChangedBookingIds).Distinct().ToList()
+                : new List<string>();
+        }
+
         public List<Tuple<FlightTripForDisplay, BookingStatus>> GetAllBookingStatus(string rsvNo)
         {
             var rsv = GetReservation(rsvNo);
@@ -113,7 +138,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 return null;
             return
                 rsv.Itineraries.SelectMany(
-                    itin =>
+                            itin =>
                         itin.Trips.Select(
                             trip =>
                                 new Tuple<FlightTripForDisplay, BookingStatus>(ConvertToTripForDisplay(trip),

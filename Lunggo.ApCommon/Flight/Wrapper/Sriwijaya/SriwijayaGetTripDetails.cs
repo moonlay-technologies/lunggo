@@ -9,10 +9,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
     {
         internal override GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions)
         {
-            var bookingId = "SRIWPUB" + conditions.BookingId;
-            var rsvNo = FlightService.GetRsvNoByBookingIdFromDb(new List<string> { bookingId }).Single();
+            var rsvNo = FlightService.GetRsvNoByBookingIdFromDb(new List<string> { conditions.BookingId }).Single();
             var reservation = FlightService.GetInstance().GetReservationFromDb(rsvNo);
-            var itinerary = reservation.Itineraries.Single(itin => itin.BookingId == bookingId);
+            var itinerary = reservation.Itineraries.Single(itin => itin.BookingId == conditions.BookingId);
             var segments = itinerary.Trips.SelectMany(trip => trip.Segments).ToList();
             segments.ForEach(segment => segment.Pnr = conditions.BookingId);
             return new GetTripDetailsResult

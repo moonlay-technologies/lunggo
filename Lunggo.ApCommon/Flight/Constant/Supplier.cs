@@ -7,7 +7,8 @@ namespace Lunggo.ApCommon.Flight.Constant
         Sriwijaya = 2,
         Citilink = 3,
         AirAsia = 4,
-        LionAir = 5
+        LionAir = 5,
+        Garuda = 6
     }
 
     internal class SupplierCd
@@ -26,6 +27,8 @@ namespace Lunggo.ApCommon.Flight.Constant
                     return "AIRA";
                 case Supplier.LionAir:
                     return "LION";
+                case Supplier.Garuda:
+                    return "GARU";
                 default:
                     return null;
             }
@@ -45,6 +48,8 @@ namespace Lunggo.ApCommon.Flight.Constant
                     return Supplier.AirAsia;
                 case "LION":
                     return Supplier.LionAir;
+                case "GARU":
+                    return Supplier.Garuda;
                 default:
                     return Supplier.Undefined;
             }

@@ -141,6 +141,7 @@
     <None Include="App.Release.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-webjob.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>
   <ItemGroup>

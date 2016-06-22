@@ -13,6 +13,7 @@ namespace Lunggo.CustomerWeb.Controllers
     //[Authorize(Roles = "Admin")]
     public class UsersAdminController : Controller
     {
+        /*
         public UsersAdminController()
         {
         }
@@ -231,5 +232,6 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             return View();
         }
+         * */
     }
 }

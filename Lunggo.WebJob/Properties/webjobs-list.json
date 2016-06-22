@@ -9,6 +9,9 @@
     },
     {
       "filePath": "../Lunggo.WebJob.FlightProcessor/Lunggo.WebJob.FlightProcessor.csproj"
+    },
+    {
+      "filePath": "../Lunggo.Webjob.BankTransferChecking/Lunggo.WebJob.BankTransferChecking.csproj"
     }
   ]
 }

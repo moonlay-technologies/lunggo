@@ -169,7 +169,7 @@
                 </div>
                 <a ng-click="FlightFunction.SetActiveFlight('return',-1); SetSection('return');" class="change-departure"><span>Ganti</span></a>
             </div><!-- .flight-selection -->
-            @*filter: priceFilter('departure') |*@
+    @*filter: priceFilter('departure') |*@
     @*|  filter:FlightFiltering.AirlineFilter('departure') | filter:FlightFiltering.TransitFilter('departure') | filter: priceFilter('departure') | filter:FlightFiltering.DepartureTimeFilter('departure') | filter:FlightFiltering.ArrivalTimeFilter('departure') | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert)"
     id="flight-{{Flight.IndexNo}}" ng-click="FlightFunctions.ShowDetail('departure',Flight.IndexNo*@
             <div class="flight" ng-repeat="Flight in departureFlight = (FlightConfig[0].FlightList | filter:FlightFiltering.AirlineFilter('departure') 
@@ -223,7 +223,7 @@
                 </div>
                 <a ng-click="FlightFunction.SetActiveFlight('departure',-1); SetSection('departure');" class="change-departure"><span>Ganti</span></a>
             </div><!-- .flight-selection -->
-            @* filter: priceFilter('return') |*@
+    @* filter: priceFilter('return') |*@
     @*| filter:FlightFiltering.AirlineFilter('return') | filter:FlightFiltering.TransitFilter('return') | filter: priceFilter('return') | filter:FlightFiltering.DepartureTimeFilter('return') | filter:FlightFiltering.ArrivalTimeFilter('return') | orderBy:FlightConfig[1].FlightSort.Value:FlightConfig[1].FlightSort.Invert*@
             <div class="flight" ng-repeat="Flight in returnFlight = (FlightConfig[1].FlightList | filter:FlightFiltering.AirlineFilter('return') | filter:FlightFiltering.TransitFilter('return') | filter: priceFilter('return') | filter:FlightFiltering.DepartureTimeFilter('return') | filter:FlightFiltering.ArrivalTimeFilter('return') | orderBy:FlightConfig[1].FlightSort.Value:FlightConfig[1].FlightSort.Invert)"
                  id="flight-{{Flight.IndexNo}}" ng-click="FlightFunctions.ShowDetail('return',Flight.IndexNo);">

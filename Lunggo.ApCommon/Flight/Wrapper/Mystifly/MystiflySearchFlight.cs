@@ -20,6 +20,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         internal override SearchFlightResult SearchFlight(SearchFlightConditions conditions)
         {
+            // Disable Mystifly for domestic
+            if (
+                conditions.Trips.TrueForAll(
+                    trip =>
+                        FlightService.GetInstance().GetAirportCountryCode(trip.OriginAirport) == "ID" &&
+                        FlightService.GetInstance().GetAirportCountryCode(trip.DestinationAirport) == "ID"))
+            {
+                return new SearchFlightResult
+                {
+                    IsSuccess = true,
+                    Itineraries = new List<FlightItinerary>()
+                };
+            }
+
             var request = new AirLowFareSearchRQ
             {
                 OriginDestinationInformations = MapOriginDestinationInformations(conditions),

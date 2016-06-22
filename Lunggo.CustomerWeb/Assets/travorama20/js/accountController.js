@@ -3,6 +3,7 @@ app.controller('siteHeaderController', [
     '$http', '$scope', function ($http, $scope) {
         $scope.profileloaded = false;
         $scope.email = '';
+        $scope.returnUrl = document.referrer;
         $scope.authProfile = {}
         $scope.ProfileConfig = {
             getProfile : function () {
@@ -55,6 +56,7 @@ app.controller('siteHeaderController', [
                 eraseCookie('refreshtoken');
                 $scope.isLogin = false;
                 isLogout: true;
+                window.location.href = $scope.returnUrl;
             }
         }
 
@@ -92,6 +94,25 @@ app.controller('accountController', [
         $scope.submitRsvNo = function (rsvNo) {
             $('form#rsvno input#rsvno-input').val(rsvNo);
             $('form#rsvno').submit();
+        }
+
+        $scope.paymentstatus = function (types) {
+            if (types == 3)
+                return 'Lunas';
+            else if (types == 1)
+                return 'Dibatalkan';
+            else if (types == 2)
+                return 'Menunggu Pembayaran';
+            else if (types == 4)
+                return 'Ditolak';
+            else if (types == 5)
+                return 'Kadaluarsa';
+            else if (types == 6)
+                return 'Memverifikasi Pembayaran';
+            else if (types == 7)
+                return 'Butuh Verifikasi Ulang';
+            else if (types == 8)
+                return 'Gagal';
         }
 
         
@@ -444,9 +465,11 @@ app.controller('forgotController', [
 app.controller('orderDetailController', [
     '$http', '$scope', function ($http, $scope) {
 
+        $scope.pageLoaded = true;
         $scope.getTime = function(dateTime) {
             return new Date(dateTime);
         }
+        $scope.rsvNo = rsvNo;
 
         $scope.userProfile = {
             email: '',
@@ -490,13 +513,126 @@ app.controller('orderDetailController', [
                     console.log(returnData);
                 });
             }
-        }
+         }
 
-        $scope.TakeProfileConfig.TakeProfile();
+         $scope.flight = [];
+         $scope.title = function (title) {
+             if (title == '1')
+                 return 'Tn.';
+             else if (title == '2')
+                 return 'Ny.';
+             else if (title == '3')
+                 return 'Nn.';
+         }
+         $scope.paxtype = function (types) {
+             if (types == 1)
+                 return 'Dewasa';
+             else if (types == 2)
+                 return 'Anak';
+             else if (types == 3)
+                 return 'Bayi';
+         }
+
+         $scope.methodpayment = function (types) {
+             if (types == 1)
+                 return 'Kartu Kredit';
+             else if (types == 2)
+                 return 'Transfer Antar Bank';
+             else if (types == 3)
+                 return 'Mandiri Clickpay';
+             else if (types == 4)
+                 return 'Cimb Clicks';
+             else if (types == 5)
+                 return 'Virtual Account';
+             else if (types == 6)
+                 return 'BCA Klikpay';
+             else if (types == 7)
+                 return 'Epay BRI ';
+             else if (types == 8)
+                 return 'Telkomsel T-Cash';
+             else if (types == 9)
+                 return 'XL Tunai';
+             else if (types == 10)
+                 return 'BBM Money';
+             else if (types == 11)
+                 return 'Indosat Dompetku';
+             else if (types == 12)
+                 return 'Mandiri E-Cash';
+             else if (types == 13)
+                 return 'Mandiri Bill Payment';
+             else if (types == 14)
+                 return 'Indomaret';
+             else if (types == 15)
+                 return 'Credit';
+             else if (types == 16)
+                 return 'Deposit';
+         }
+
+         $scope.paymentstatus = function (types) {
+             if (types == 3)
+                 return 'Lunas';
+             else if (types == 1)
+                 return 'Dibatalkan';
+             else if (types == 2)
+                 return 'Menunggu Pembayaran';
+             else if (types == 4)
+                 return 'Ditolak';
+             else if (types == 5)
+                 return 'Kadaluarsa';
+             else if (types == 6)
+                 return 'Memverifikasi Pembayaran';
+             else if (types == 7)
+                 return 'Butuh Verifikasi Ulang';
+             else if (types == 8)
+                 return 'Gagal';
+         }
+
+         $scope.GetReservation = function () {
+             $scope.errormsg = '';
+             var authAccess = getAuthAccess();
+             if (authAccess == 1) {
+                 $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+             }
+             else {
+                 $scope.getFlightHeader = null;
+             }
+             $http.get(GetReservationConfig.Url + $scope.rsvNo, {
+                 headers: { 'Authorization': $scope.getFlightHeader },
+                 rsvNo: $scope.rsvNo
+             }).success(function (returnData) {
+                 if (returnData.status == "200") {
+                     $scope.flight = returnData.flight;
+                     $scope.datafailed = false;
+                 }
+                 else {
+                     console.log('There is an error');
+                     console.log('Error : ' + returnData.error);
+                     if (returnData.error == "ERARSV01") {
+                         $scope.errormsg = 'No Reservation Matched';
+                     }
+                     else if (returnData.error == "ERARSV02") {
+                         $scope.errormsg = 'Not Authorised';
+                     }
+                     else if (returnData.error == "ERRGEN99") {
+                         $scope.errormsg = 'Problem on Server';
+                     }
+
+                     $scope.datafailed = true;
+                     console.log(returnData);
+                 }
+             }, function (returnData) {
+                 console.log('Failed to Get Detail');
+                 $scope.datafailed = true;
+                 console.log(returnData);
+             });
+         }
+
+         $scope.TakeProfileConfig.TakeProfile();
+         $scope.GetReservation();
 
         $scope.currentSection = 'order';
-        $scope.orderDate = new Date(orderDate);
-        $scope.refundDate = refundDate ? (new Date(refundDate)) : '-';
+        //$scope.orderDate = new Date(orderDate);
+        //$scope.refundDate = refundDate ? (new Date(refundDate)) : '-';
     }
 ]);
 
@@ -604,28 +740,24 @@ app.controller('authController', [
                 $scope.form.submitting = false;
                 $scope.form.submitted = true;
                 if (returnData.status == '200') {
-                    if (returnData.data.status == '200') {
-                        setCookie('accesstoken', returnData.accessToken, returnData.expTime);
-                        setRefreshCookie('refreshtoken', returnData.refreshToken);
+                    setCookie('accesstoken', returnData.accessToken, returnData.expTime);
+                    setRefreshCookie('refreshtoken', returnData.refreshToken);
 
-                        window.location.href = $scope.returnUrl;
-                    }
-                    else {
-                        $scope.overlay = true;
-                        if (returnData.error == 'ERALOG01') { $scope.errorMessage = 'RefreshNeeded'; }
-                        else if (returnData.error == 'ERALOG02') { $scope.errorMessage = 'InvalidInputData'; }
-                        else if (returnData.error == 'ERALOG03') { $scope.errorMessage = 'AlreadyRegisteredButUnconfirmed'; }
-                        else if (returnData.error == 'ERALOG04') { $scope.errorMessage = 'Failed'; }
-                        else if (returnData.error == 'ERALOG05') { $scope.errorMessage = 'NotRegistered'; }
-                        else { $scope.errorMessage = 'Failed'; }
-                        console.log('Error : ' + returnData.error);
-                    }
+                    window.location.href = $scope.returnUrl;
                 }
                 else {
-                     $scope.errorMessage = 'Failed'; 
+                    $scope.overlay = true;
+                    if (returnData.error == 'ERALOG01') { $scope.errorMessage = 'RefreshNeeded'; }
+                    else if (returnData.error == 'ERALOG02') { $scope.errorMessage = 'InvalidInputData'; }
+                    else if (returnData.error == 'ERALOG03') { $scope.errorMessage = 'AlreadyRegisteredButUnconfirmed'; }
+                    else if (returnData.error == 'ERALOG04') { $scope.errorMessage = 'Failed'; }
+                    else if (returnData.error == 'ERALOG05') { $scope.errorMessage = 'NotRegistered'; }
+                    else { $scope.errorMessage = 'Failed'; }
                     console.log('Error : '+ returnData.error);
                 }
             }, function (returnData) {
+                $scope.overlay = true;
+                $scope.errorMessage = 'Failed';
                 console.log('Failed to Login');
                 console.log(returnData);
                 $scope.form.submitting = false;

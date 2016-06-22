@@ -1,4 +1,14 @@
-﻿using System.Globalization;
+﻿using RestSharp;
+using RestSharp.Authenticators;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
@@ -11,8 +21,6 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Web;
 using RestSharp;
 using Lunggo.ApCommon.Constant;
-using System.Collections.Generic;
-using System;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
@@ -47,6 +55,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
                 return balance;
             }
+
         }
         
     }

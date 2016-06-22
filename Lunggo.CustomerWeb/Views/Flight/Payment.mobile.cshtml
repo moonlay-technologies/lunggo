@@ -126,7 +126,7 @@
                         <dt>Total Tiket</dt>
                         <dd><sup>Rp</sup> {{initialPrice | number}}</dd>
                     </dl>
-                    <dl ng-show="CheckoutConfig.Voucher.Validated && CheckoutConfig.Voucher.Valid">
+                    <dl ng-show="voucher.confirmedCode">
                         <dt>Potongan Harga</dt>
                         <dd><sup>Rp</sup>- {{voucher.amount| number}}</dd>
                     </dl>
@@ -370,7 +370,7 @@
 
             <div class="step-button">
 
-                <form name="finalForm" id="finalForm" ng-submit="pay.checkCreditCard()">
+                <form name="finalForm" id="finalForm" ng-submit="pay.send()">
 
                     <div class="hidden">
                         <input type="text" name="RsvNo" value="" ng-model="rsvNo" />
@@ -424,7 +424,7 @@
             </div>
         </div><!-- .page-overlay -->
 
-    <div class="page-overlay booking-flight"  ng-hide ="!pay.paying">
+    <div class="page-overlay booking-flight"  ng-show ="pay.paying">
         <div class="overlay-content">
             <header>
                 <h4>Mohon Tunggu</h4>
@@ -439,7 +439,6 @@
         </div>
     </div>
     *@
-    
 </div><!-- checkout end here -->
                                 break;
     case "BookExpired":

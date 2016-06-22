@@ -666,6 +666,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         accRs = (RestResponse)clientx.Execute(accReq);
                     }
 
+                    var isInternational = CheckInternationality(segments);
+
                     var itin = new FlightItinerary
                     {
                         AdultCount = adultCount,
@@ -673,10 +675,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         InfantCount = infantCount,
                         CanHold = true,
                         FareType = FareType.Published,
-                        RequireBirthDate = true,
-                        RequirePassport = RequirePassport(segments),
+                        RequireBirthDate = isInternational,
+                        RequirePassport = isInternational,
                         RequireSameCheckIn = false,
-                        RequireNationality = true,
+                        RequireNationality = isInternational,
                         RequestedCabinClass = CabinClass.Economy,
                         TripType = TripType.OneWay,
                         Supplier = Supplier.LionAir,

@@ -4,6 +4,7 @@ namespace Lunggo.CustomerWeb.Controllers
 {
     public class Travorama20Controller : Controller
     {
+        /*
         // GET: Travorama20
         public ActionResult Index()
         {
@@ -113,5 +114,6 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+         * */
     }
 }

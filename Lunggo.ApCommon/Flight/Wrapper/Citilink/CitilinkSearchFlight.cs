@@ -184,7 +184,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                                 StopQuantity = 0,
                                                 Duration = arrtime - deptime,
                                                 IsMealIncluded = false,
-                                                IsPscIncluded = true
+                                                IsPscIncluded = true,
+                                                Baggage = GetBaggage()
                                             });
                                             Airport = Airport + 8;
                                         }
@@ -211,10 +212,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                         InfantCount = conditions.InfantCount,
                                         CanHold = true,
                                         FareType = FareType.Published,
-                                        RequireBirthDate = true,
+                                        RequireBirthDate = false,
                                         RequirePassport = false,
                                         RequireSameCheckIn = false,
-                                        RequireNationality = true,
+                                        RequireNationality = false,
                                         RequestedCabinClass = CabinClass.Economy,
                                         TripType = TripType.OneWay,
                                         Supplier = Supplier.Citilink,

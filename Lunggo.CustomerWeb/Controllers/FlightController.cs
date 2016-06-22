@@ -178,12 +178,18 @@ namespace Lunggo.CustomerWeb.Controllers
         [RequireHttps]
         [HttpPost]
         [ActionName("Payment")]
-        public ActionResult PaymentPost(string rsvNo)
+        public ActionResult PaymentPost(string rsvNo, string paymentUrl)
         {
             var flight = FlightService.GetInstance();
             var reservation = flight.GetReservationForDisplay(rsvNo);
             if (reservation.Payment.Method == PaymentMethod.BankTransfer || reservation.Payment.Method == PaymentMethod.VirtualAccount)
-                return RedirectToAction("Confirmation", "Flight", new {rsvNo});
+            {
+                return RedirectToAction("Confirmation", "Flight", new { rsvNo });
+            }
+            else if (paymentUrl != null || paymentUrl != "")
+            {
+                return Redirect(paymentUrl);
+            }
             else
             {
                 TempData["AllowThisThankyouPage"] = rsvNo;

@@ -162,31 +162,31 @@ var TransferConfig = {
 };
 
 var LoginMobileConfig = {
-    Url: 'http://m.local.travorama.com/login'
+    Url: 'http://m.dv2.travorama.com/login'
 };
 
 var RegisterMobileConfig = {
-    Url: 'http://m.local.travorama.com/register'
+    Url: 'http://m.dv2.travorama.com/register'
 };
 
 var ResetPasswordMobileConfig = {
-    Url: 'http://m.local.travorama.com/id/ApiAccount/ResetPassword'
+    Url: 'http://m.dv2.travorama.com/id/ApiAccount/ResetPassword'
 };
 
 var ForgotPasswordMobileConfig = {
-    Url: 'http://m.local.travorama.com/forgot'
+    Url: 'http://m.dv2.travorama.com/forgot'
 };
 
 var ChangePasswordMobileConfig = {
-    Url: 'http://m.local.travorama.com/changepassword'
+    Url: 'http://m.dv2.travorama.com/changepassword'
 };
 
 var ChangeProfileMobileConfig = {
-    Url: 'http://m.local.travorama.com/profile'
+    Url: 'http://m.dv2.travorama.com/profile'
 };
 
 var ResendConfirmationEmailMobileConfig = {
-    Url: 'http://m.local.travorama.com/id/ApiAccount/ResendConfirmationEmail'
+    Url: 'http://m.dv2.travorama.com/id/ApiAccount/ResendConfirmationEmail'
 };
 
 function setCookie(cname, cvalue, expTime) {

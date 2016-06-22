@@ -1,6 +1,5 @@
 ﻿@using Lunggo.ApCommon.Identity.User
-@using Lunggo.Framework.Extension
-@model List<Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay>
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 @{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
@@ -8,7 +7,7 @@
     ViewBag.BodyClass = "page page-useraccount";
     ViewBag.AngularController = "UserAccountController";
     
-    var rsvs = Model.OrderByDescending(rsv => rsv.RsvTime).ToList();
+    //var rsvs = Model.OrderByDescending(rsv => rsv.RsvTime).ToList();
 }
 
 @section AdditionalJS{
@@ -38,7 +37,7 @@
         if (userProfile.phone === NaN) {
             userProfile.phone = 0;
         }
-    var order = '@Html.Raw(rsvs.Serialize())';
+    @*//var order = '@Html.Raw(rsvs.Serialize())';*@
     </script>
     <!-- angular controller -->
     <script src="/Assets/mobile/js/AccountController.js"></script>
@@ -54,9 +53,10 @@
 
     <section class="user-menu" ng-show="PageConfig.ActivePage == 'menu'">
         <div class="menu-user">
-            <span ng-if="UserProfile.firstname.length != 0 || UserProfile.lastname != 0">{{UserProfile.firstname}} {{UserProfile.lastname}}</span>
-            <span ng-if="UserProfile.firstname.length == 0 && UserProfile.lastname == 0">Hello, New User!</span>
+            <span ng-if="firstName.length != 0 || lastName != 0">{{UserProfile.firstname}} {{UserProfile.lastname}}</span>
+            <span ng-if="firstName.length == 0 && lastName == 0">Hello, New User!</span>
         </div>
+       
         <div class="menu-wrapper">
             <ul>
                 <li class="menu-profile">
@@ -66,7 +66,8 @@
                     <a ng-click="PageConfig.ChangePage('history')">Pemesanan Saya</a>
                 </li>
                 <li class="menu-logout">
-                    <a href="@Url.Action("Logout", "Account")">Keluar</a>
+                    <a ng-click="logout.getLogout()">Keluar</a>
+                    @*<a href="@Url.Action("Logout", "Account")">Keluar</a>*@
                 </li>
             </ul>
         </div>
@@ -105,10 +106,10 @@
                         <div class="form-group" ng-show="UserProfile.Editing">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <button class="btn btn-gray btn-block" ng-click="UserProfile.Edit()">CANCEL</button>
+                                    <button class="btn btn-gray btn-block" ng-click="UserProfile.Edit()">BATAL</button>
                                 </div>
                                 <div class="col-xs-6">
-                                    <button class="btn btn-yellow btn-block" ng-disabled="profileForm.$invalid" ng-click="EditProfile.Submit('profileSave'); UserProfile.Edit(); NotifBox = True">SIMPAN</button>
+                                    <button class="btn btn-yellow btn-block" @*ng-disabled="profileForm.$invalid"*@ ng-click="EditProfile.Submit('profileSave'); UserProfile.Edit(); NotifBox = True">SIMPAN</button>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +126,7 @@
                     <span>Password</span>
                 </header>
                 <div>
-                    <form name="passwordForm" ng-submit="UserPassword.Submit()" novalidate class="form">
+                    <form name="passwordForm" novalidate class="form">
                         <div class="form-group" ng-hide="UserPassword.Editing">
                             <label class="control-label">Password:</label>
                             <p class="form-control-static">*****</p>
@@ -139,15 +140,15 @@
                                 <label class="control-label">Password Baru:</label>
                                 <input type="password" value="" class="form-control" ng-model="UserPassword.NewPassword" required />
                             </div>
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <label class="control-label">Konfirmasi Password Baru:</label>
                                 <input type="password" value="" class="form-control" ng-model="UserPassword.ConfirmPassword" required />
-                            </div>
+                            </div>*@
                         </div>
                         <div class="form-group" ng-show="UserPassword.Editing">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <button class="btn btn-gray btn-block" ng-click="UserPassword.Edit()">CANCEL</button>
+                                    <button class="btn btn-gray btn-block" ng-click="UserPassword.Edit()">BATAL</button>
                                 </div>
                                 <div class="col-xs-6">
                                     <button class="btn btn-yellow btn-block" ng-disabled="passwordForm.$invalid" ng-click="UserPassword.Submit()">SIMPAN</button>
@@ -170,13 +171,13 @@
         </header>
 
         <ul class="history-list">
-            <li class="" ng-repeat="rsvs in Order" ng-class="{'done' : rsvs.Payment.Status == 3, 'pending' : rsvs.Payment.Status == 2 , 'canceled' : rsvs.Payment.Status == 1 || rsvs.Payment.Status == 5 }">
+            <li class="" ng-repeat="flight in flightlist track by $index" ng-class="{'done' : flight.payment.status == 3, 'pending' : flight.payment.status == 2 ||  flight.payment.status == 6, 'canceled' : flight.payment.status == 1 || flight.payment.status == 4 || flight.payment.status == 5 || flight.payment.status == 8}">
                 <div class="row">
                     <div class="col-xs-4">
                         <span class="blue">Nomor Pemesanan</span>
                     </div>
                     <div class="col-xs-8">
-                        <span class="blue">: <b>{{rsvs.RsvNo}}</b></span>
+                        <span class="blue">: <b>{{flight.rsvNo}}</b></span>
                     </div>
                 </div>
                 <div class="row">
@@ -184,7 +185,7 @@
                         <span>Maskapai</span>
                     </div>
                     <div class="col-xs-8">
-                        <span class="blue">: <b>{{rsvs.Itinerary.Trips[0].Segments[0].AirlineName}}</b></span>
+                        <span class="blue">: <b>{{flight.itin.trips[0].segments[0].airlineName}}</b></span>
                     </div>
                 </div>
                 <div class="row">
@@ -192,7 +193,7 @@
                         <span>Tujuan</span>
                     </div>
                     <div class="col-xs-8">
-                        <span>: <b>{{rsvs.Itinerary.Trips[0].OriginAirport}}</b> to <b>{{rsvs.Itinerary.Trips[0].DestinationAirport}}</b> ({{FlightType(rsvs.TripType)}})</span>
+                        <span>: <b>{{flight.itin.trips[0].origin}}</b> ke <b>{{flight.itin.trips[0].destination}}</b> ({{FlightType(flight.itin.type)}})</span>
                     </div>
                 </div>
                 <div class="row">
@@ -200,15 +201,15 @@
                         <span>Berangkat</span>
                     </div>
                     <div class="col-xs-8">
-                        <span>: <b>{{rsvs.Itinerary.Trips[0].DepartureDate | date}}</b></span>
+                        <span>: <b>{{flight.itin.trips[0].date | date}}</b></span>
                     </div>
                 </div>
-                <div class="row" ng-show="rsvs.Itinerary.Trips[1].DepartureDate">
+                <div class="row" ng-show="flight.itin.trips[1].date">
                     <div class="col-xs-4">
                         <span>Kembali</span>
                     </div>
                     <div class="col-xs-8">
-                        <span>: <b>{{rsvs.Itinerary.Trips[1].DepartureDate | date}}</b></span>
+                        <span>: <b>{{flight.itin.trips[1].date | date}}</b></span>
                     </div>
                 </div>
                 <div class="row">
@@ -216,12 +217,12 @@
                         <span>Status</span>
                     </div>
                     <div class="col-xs-8">
-                        <span>: <b>{{OrderStatus(rsvs.Payment.Status)}}</b></span>
+                        <span>: <b>{{OrderStatus(flight.payment.status)}}</b></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <a ng-href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory")?rsvNo={{rsvs.RsvNo}}" class="btn btn-yellow">Detail</a>
+                        <a ng-href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory")?rsvNo={{flight.rsvNo}}" class="btn btn-yellow">Detail</a>
                     </div>
                 </div>
             </li>

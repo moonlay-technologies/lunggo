@@ -25,6 +25,12 @@ app.controller('paymentController', [
             Number: ''
         };
 
+        //Mandiri CLick Pay
+        $scope.MandiriClickPay = {
+            Token: '',
+            CardNo: ''
+        };
+
         $scope.msToTime = function (duration) {
 
             var milliseconds = parseInt((duration % 1000) / 100),
@@ -153,7 +159,7 @@ app.controller('paymentController', [
             checked:false,
             isSuccess: '',
             ccChecked: false,
-            checkCreditCard: function () { //payment
+            setPaymentMethod: function () { //payment
                 if ($scope.paymentMethod == 'CreditCard') {
 
                     Veritrans.url = VeritransTokenConfig.Url;
@@ -241,30 +247,32 @@ app.controller('paymentController', [
             send: function () {
                 $scope.pay.isSuccess = "",
                 $scope.pay.paying = true;
-                //generate data
-                if ($scope.paymentMethod == 'BankTransfer') {
+                $scope.pay.checked = false;
+                //generate payment data
+                if ($scope.paymentMethod == 'BankTransfer' || $scope.paymentMethod == 'MandiriBillPayment' || $scope.paymentMethod == 'CimbClicks') {
                     $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"' + $scope.paymentMethod + '"';
                 }
                 else
                 {
                     switch ($scope.paymentMethod) {
                         case "CreditCard": //NotTested
-                            $scope.PaymentData = '{' + ' "tokenId":"' + $scope.CreditCard.Token + '",  "bank" :"' + $scope.buyerInfo.fullname + '","holderName":"' + $scope.CreditCard.Name + '","holderEmail":"' + $scope.buyerInfo.email + '","installmentTerm":"' + $scope.buyerInfo.email + '","bins":"' + $scope.buyerInfo.phone + '","saveTokenId":"' + $scope.buyerInfo.phone + '"' + '}';
+                            //$scope.PaymentData = '{' + ' "tokenId":"' + $scope.CreditCard.Token + '",  "bank" :"' + $scope.buyerInfo.fullname + '","holderName":"' + $scope.CreditCard.Name + '","holderEmail":"' + $scope.buyerInfo.email + '","installmentTerm":"' + $scope.buyerInfo.email + '","bins":"' + $scope.buyerInfo.phone + '","saveTokenId":"' + $scope.buyerInfo.phone + '"' + '}';
+                            $scope.PaymentData = '{' + ' "creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name + '"' + '}'+ '}';//'{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name + '"' + '}';
                             break;
-                       case "MandiriClickPay": //NotTested
-                            $scope.PaymentData = '{' + ' "cardNo":"' + $scope.CreditCard.Token + '",  "cardLast10No" :"' + $scope.buyerInfo.fullname + '","amount":"' + $scope.CreditCard.Name + '","randomNumber":"' + $scope.buyerInfo.email + '","token":"' + $scope.buyerInfo.email + '"' + '}';
+                       case "MandiriClickPay": //Data belum benar, card number dan token
+                           $scope.PaymentData = '{' + ' "mandiriClickPay":' + '{' + ' "cardNo":"' + $scope.MandiriClickPay.CardNo + '","token":"' + $scope.MandiriClickPay.Token + '"' + '}' + '}';
                             break;
-                        case "CimbClicks": //NotTested
-                            $scope.PaymentData = '{' + ' "description":"' + $scope.CreditCard.Token + '"' + '}';
-                            break;
+                        //case "CimbClicks": //gk ada data
+                        //    $scope.PaymentData = '{' + ' "description":"' + $scope.CreditCard.Token + '"' + '}';
+                        //    break;
                         case "VirtualAccount": // Done
                             $scope.PaymentData = '{' + ' "bank":"Permata"' + '}'; 
                             break;
-                        case "MandiriBillPayment": //NotTested
-                            $scope.PaymentData = '{' + ' "label1":"' + $scope.CreditCard.Token + '",  "value1" :"' + $scope.buyerInfo.fullname + '","label2":"' + $scope.CreditCard.Name + '","value2":"' + $scope.buyerInfo.email + '","label3":"' + $scope.buyerInfo.email + '","value3":"' + $scope.buyerInfo.phone + '","label4":"' + $scope.buyerInfo.phone + '","value4":"' + $scope.buyerInfo.phone + '"' + '}';
-                            break;
+                        //case "MandiriBillPayment": //Data belum benar
+                        //    $scope.PaymentData = '{' + ' "label1":"' + $scope.CreditCard.Token + '",  "value1" :"' + $scope.buyerInfo.fullname + '","label2":"' + $scope.CreditCard.Name + '","value2":"' + $scope.buyerInfo.email + '","label3":"' + $scope.buyerInfo.email + '","value3":"' + $scope.buyerInfo.phone + '","label4":"' + $scope.buyerInfo.phone + '","value4":"' + $scope.buyerInfo.phone + '"' + '}';
+                        //    break;
                     }
-                    $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"' + $scope.paymentMethod + '"';
+                    $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "data":' + $scope.PaymentData + ', "method":"' + $scope.paymentMethod + '"';
                 }
                 
                 $scope.pay.postData = '{' + $scope.pay.postData + '}';
@@ -292,6 +300,7 @@ app.controller('paymentController', [
                         $scope.pay.isSuccess = true;
                         $scope.pay.rsvNo = $scope.rsvNo;
                         $('form#rsvno input#rsvno-input').val($scope.pay.rsvNo);
+                        $('form#rsvno input#url-input').val(returnData.data.redirectionUrl);//url-input
                         $('form#rsvno').submit();
                         $scope.pay.checked = true;
                     }
@@ -301,20 +310,27 @@ app.controller('paymentController', [
                         //Error Handling right Here
                         //console.log('Status : ' + returnData.status);
                         //console.log('Error : ' + returnData.data.error);
-                        switch (returnData.data.error)
-                        {
+                        switch (returnData.data.error) {
                             case 'ERPPAY01':
                                 $scope.errorMessage = 'Missing reservation number or method';
                                 break;
                             case 'ERPPAY02':
                                 $scope.errorMessage = 'Not authorized to use selected payment method';
                                 break;
+                            case 'ERPPAY03':
+                                $scope.errorMessage = 'You have already choose one method before';
+                                break;
                             case 'ERRGEN99':
                                 $scope.errorMessage = 'There is a problem on the server';
                                 break;
                         }
+                        console.log($scope.errorMessage);
                     }
-                })
+                }, function (returnData) {
+                        console.log(returnData);
+                        $scope.pay.checked = true;
+                        $scope.pay.isSuccess = false;
+                    });
                 $scope.pay.paying = false;
             }
         }
