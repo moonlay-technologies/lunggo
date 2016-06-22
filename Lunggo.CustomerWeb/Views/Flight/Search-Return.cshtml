@@ -524,6 +524,9 @@
                                 </div><!-- .summar-bottom -->
                             </div>
                             <div class="flight-summary-right">
+
+                                <span class="original-price"> Rp {{flight.originalFare | number}} </span>
+
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.totalFare | number}}</h4>
                                 <small>*Termasuk Pajak &amp; Service Charge</small>
                                 <a class="btn btn-yellow" ng-click="setChosenFlight('departure',flight.IndexNo)">PESAN</a>
@@ -852,6 +855,8 @@
                                 </div><!-- .summar-bottom -->
                             </div>
                             <div class="flight-summary-right">
+
+                                <span class="original-price"> Rp {{flight.originalFare | number}} </span>
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.totalFare | number}}</h4>
                                 <small>*Termasuk Pajak &amp; Service Charge</small>
                                 <a class="btn btn-yellow" ng-click="setChosenFlight('return',flight.IndexNo)">PESAN</a>
