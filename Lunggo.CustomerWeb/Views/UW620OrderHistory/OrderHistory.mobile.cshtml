@@ -126,7 +126,7 @@
                     <span>Password</span>
                 </header>
                 <div>
-                    <form name="passwordForm" ng-submit="UserPassword.Submit()" novalidate class="form">
+                    <form name="passwordForm" novalidate class="form">
                         <div class="form-group" ng-hide="UserPassword.Editing">
                             <label class="control-label">Password:</label>
                             <p class="form-control-static">*****</p>
@@ -140,10 +140,10 @@
                                 <label class="control-label">Password Baru:</label>
                                 <input type="password" value="" class="form-control" ng-model="UserPassword.NewPassword" required />
                             </div>
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <label class="control-label">Konfirmasi Password Baru:</label>
                                 <input type="password" value="" class="form-control" ng-model="UserPassword.ConfirmPassword" required />
-                            </div>
+                            </div>*@
                         </div>
                         <div class="form-group" ng-show="UserPassword.Editing">
                             <div class="row">
