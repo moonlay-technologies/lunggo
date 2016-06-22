@@ -174,6 +174,7 @@
     <None Include="Config\Common\Airport.csv" />
     <None Include="Config\Common\Country.csv" />
     <None Include="Config\Common\HotelLocation.csv" />
+    <None Include="Config\CloudApp.EticketHandler\Garuda.properties" />
     <None Include="Config\CustomerWeb\airAsia.properties" />
     <None Include="Config\CustomerWeb\api.properties" />
     <None Include="Config\CustomerWeb\azureStorage.properties" />
@@ -190,7 +191,9 @@
     <None Include="Config\CustomerWeb\lionAir.properties" />
     <None Include="Config\CustomerWeb\mandrill.properties" />
     <None Include="Config\CustomerWeb\mystifly.properties" />
-    <None Include="Config\CustomerWeb\redis.properties" />
+    <None Include="Config\CustomerWeb\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\sriwijaya.properties" />
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\zendesk.properties" />
@@ -259,6 +262,21 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler4\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\airAsia.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\Airline.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\Airport.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\azureStorage.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\citilink.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\Country.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\db.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\flight.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\Garuda.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\general.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\HotelLocation.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\lionAir.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\mystifly.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\redis.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\sriwijaya.properties" />
     <None Include="Config\WebJob.BankTransferChecking\airAsia.properties" />
     <None Include="Config\WebJob.BankTransferChecking\api.properties" />
     <None Include="Config\WebJob.BankTransferChecking\azureStorage.properties" />
@@ -276,7 +294,9 @@
     <None Include="Config\WebJob.BankTransferChecking\mandiri.properties" />
     <None Include="Config\WebJob.BankTransferChecking\mandrill.properties" />
     <None Include="Config\WebJob.BankTransferChecking\mystifly.properties" />
-    <None Include="Config\WebJob.BankTransferChecking\redis.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.BankTransferChecking\sriwijaya.properties" />
     <None Include="Config\WebJob.BankTransferChecking\veritrans.properties" />
     <None Include="Config\WebJob.BankTransferChecking\zendesk.properties" />
@@ -299,6 +319,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.EmailQueueHandler\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.EmailQueueHandler\redis.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.EmailQueueHandler\sriwijaya.properties">
@@ -603,6 +626,9 @@
     <None Include="Config\Driver\veritrans.properties" />
     <None Include="Config\Driver\zendesk.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\mandrill.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.TicketQueueHandler\redis.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.TicketQueueHandler\zendesk.properties" />

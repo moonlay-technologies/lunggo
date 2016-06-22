@@ -52,11 +52,17 @@ namespace Lunggo.CloudApp.CaptchaReader
                 Account.AccountList.Add("trv.agent.duatujuh");
                 Account.AccountList.Add("trv.agent.duadelapan");
                 Account.AccountList.Add("trv.agent.duasembilan");
+
+                AccountGaruda.AccountList.Add("SA3ALEU1");
+                AccountGaruda.AccountList.Add("SA3ALEU");
             }
             else
             {
                 Account.AccountList.Add("trv.agent.satu");
                 Account.AccountList.Add("trv.agent.dua");
+
+                AccountGaruda.AccountList.Add("SA3ALEU1");
+                AccountGaruda.AccountList.Add("SA3ALEU");
             }
         }
 

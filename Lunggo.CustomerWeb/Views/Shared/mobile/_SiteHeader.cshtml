@@ -1,4 +1,5 @@
 ﻿@using Lunggo.ApCommon.Identity.User
+
 @section PageJS{
     <!-- angular controller -->
     <script>
@@ -8,14 +9,14 @@
     </script>
 
 }
-<header class="site-header">
-    
+<header class="site-header" ng-controller="siteHeaderController">
+
     <div class="header-display">
         <a ng-click="PageConfig.ToggleBurger()" class="site-menu"></a>
-        <a href ="/">
+        <a href="/">
             <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" class="site-logo" />
         </a>
-        
+
         @*<a href="#" @*class="user-menu hidden"></a>*@
         @if (ViewBag.CurrentPage == "home")
         {
@@ -26,11 +27,11 @@
             <a class="flight-swap" ng-click="FlightFunctions.SwapFlight()"></a>
         }
         @*@if (ViewBag.FlightDetail == "true")
-        {
-            <a class="flight-detail" ng-click="PageConfig.SetOverlay('flight-detail')">Detail</a>
-        }*@
+            {
+                <a class="flight-detail" ng-click="PageConfig.SetOverlay('flight-detail')">Detail</a>
+            }*@
     </div>
-    
+
     <div class="burger-content" ng-class="{'active' : PageConfig.BurgerShown}">
         <div class="burger-content__header">
             <ul>
@@ -47,34 +48,37 @@
         </div><!-- .border-content-header -->
         <div class="burger-content__body">
             <ul>
-                @if (User.Identity.IsAuthenticated)
-                {
-                   if (@User.Identity.GetFirstName() == null || @User.Identity.GetLastName() == null)
-                    {
-                        <li class="account" ng-if="!(firstName != null && lastName != null)">
-                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">@User.Identity.Name</a>
+                <section ng-if="isLogin == true">
+                    
+                    <div ng-if ="firstname != null || lastname != null">
+                        <li class="account" >
+                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{firstName + ' ' + lastName}}</a>
                         </li>
-                    }
-                    else if (@User.Identity.GetFirstName().Length != 0 && @User.Identity.GetLastName().Length != 0)
-                    {
+                    </div>
+                    
+                    <div ng-if="firstname.length != 0 || lastname.length != 0">
                         <li class="account">
-                            <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">@User.Identity.GetFirstName() @User.Identity.GetLastName()</a>
+                            <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{firstName + ' ' + lastName}}</a>
                         </li>
-                    }
-
+                        <li class="account" ng-if="!(firstName != null && lastName != null)">
+                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{firstName + ' ' + lastName}}</a>
+                        </li>
+                    </div>
+                    
                     <li class="logout hidden @(ViewBag.CurrentPage == "Log Out" ? "active" : "") ">
                         <a href="@Url.Action("Logout","Account")">Keluar</a>
                     </li>
-                }
-                else
-                {
+                   
+                </section>
+
+                <section ng-if ="!isLogin">
                     <li class="login">
                         <a href="@Url.Action("Login","Account")">Masuk</a>
                     </li>
                     <li class="register">
                         <a href="@Url.Action("Register","Account")">Daftar</a>
                     </li>
-                }
+                </section>
                 <li class="home @(ViewBag.CurrentPage == "home" ? "active" : "") ">
                     <a href="/">Home</a>
                 </li>
@@ -87,7 +91,7 @@
                 <li class="contact @(ViewBag.CurrentPage == "contact" ? "active" : "")">
                     <a href="@Url.Action("Contact","StaticPage")">Hubungi Kami</a>
                 </li>
-                <li class="newsletter @(ViewBag.CurrentPage == "newsletter" ? "active" : "")" >
+                <li class="newsletter @(ViewBag.CurrentPage == "newsletter" ? "active" : "")">
                     <a href="@Url.Action("Newsletter", "StaticPage")">Newsletter</a>
                 </li>
                 <li class="faq @(ViewBag.CurrentPage == "question" ? "active" : "")">
@@ -100,16 +104,16 @@
                     <a href="@Url.Action("HowToPay","StaticPage")">Cara Bayar</a>
                 </li>
                 @*<li class="newsletter">
-                    <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br/> <br />
-                </li>*@
-                
+                        <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br/> <br />
+                    </li>*@
+
                 @*<li class="about">
-                    <a href="#">Tentang Kami</a>
-                </li>*@
+                        <a href="#">Tentang Kami</a>
+                    </li>*@
             </ul>
         </div><!-- .border-content-body -->
     </div><!-- .burger-content -->
-    
+
     <div class="burger-overlay" ng-class="{'active' : PageConfig.BurgerShown}"></div><!-- .burger-overlay -->
 
 </header><!-- .site-header -->

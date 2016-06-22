@@ -45,6 +45,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         PassportRequired: CheckoutDetail.PassportRequired,
         IdRequired: CheckoutDetail.IdRequired,
         NationalityRequired: CheckoutDetail.NationalityRequired,
+        BirthDateRequired: CheckoutDetail.BirthDateRequired,
         // buyer info
         BuyerInfo: CheckoutDetail.BuyerInfo
     };
@@ -80,31 +81,11 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     // flight detail
     $scope.flightDetail = {};
 
-    $scope.flightDetail.departureFullDate = CheckoutDetail.DepartureDate; // development only. Please change the value to actual date on production
-    $scope.flightDetail.departureDate = -1;
-    $scope.flightDetail.departureMonth = -1;
-    $scope.flightDetail.departureYear = -1;
-    $scope.flightDetail.minYearChild = -1;
-    $scope.flightDetail.minYearInfant = -1;
-    $scope.flightDetail.passportFullDate = -1;
-    $scope.flightDetail.passportDate = -1;
-    $scope.flightDetail.passportMonth = -1;
-    $scope.flightDetail.passportYear = -1;
-    $scope.flightDetail.generateDepartureDate = function (fullDate) {
-        fullDate = new Date(fullDate);
-        $scope.flightDetail.departureDate = fullDate.getDate();
-        $scope.flightDetail.departureMonth = fullDate.getMonth();
-        $scope.flightDetail.departureYear = fullDate.getFullYear();
-        $scope.flightDetail.minYearChild = fullDate.getFullYear() - 12;
-        $scope.flightDetail.minYearInfant = fullDate.getFullYear() - 2;
-        // generate passport min expiry date
-        $scope.flightDetail.passportFullDate = new Date(fullDate);
-        $scope.flightDetail.passportFullDate.setMonth($scope.flightDetail.passportFullDate.getMonth() + 6);
-        $scope.flightDetail.passportDate = $scope.flightDetail.passportFullDate.getDate();
-        $scope.flightDetail.passportMonth = $scope.flightDetail.passportFullDate.getMonth();
-        $scope.flightDetail.passportYear = $scope.flightDetail.passportFullDate.getFullYear();
-    }
-    $scope.flightDetail.generateDepartureDate($scope.flightDetail.departureFullDate);
+    $scope.flightDetail.departureFullDate = new Date(CheckoutDetail.DepartureDate);
+    $scope.flightDetail.beforeDepartureFullDate = new Date(CheckoutDetail.BeforeDepartureDate);
+    $scope.flightDetail.passportDepartureFullDate = new Date(CheckoutDetail.PassportDepartureDate);
+
+    $scope.bookingDate = new Date();
 
     // payment detail
     $scope.paymentDetail = {
@@ -123,6 +104,46 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         Number: ''
     }//$scope.CreditCard
     
+    $scope.getMonth = function(m) {
+        if (m == 1) {
+            return 'Januari';
+        }
+        else if (m == 2) {
+            return 'Februari';
+        }
+        else if (m == 3) {
+            return 'Maret';
+        }
+        else if (m == 4) {
+            return 'April';
+        }
+        else if (m == 5) {
+            return 'Mei';
+        }
+        else if (m == 6) {
+            return 'Juni';
+        }
+        else if (m == 7) {
+            return 'Juli';
+        }
+        else if (m == 8) {
+            return 'Agustus';
+        }
+        else if (m == 9) {
+            return 'September';
+        }
+        else if (m == 10) {
+            return 'Oktober';
+        }
+        else if (m == 11) {
+            return 'November';
+        }
+        else if (m == 12) {
+            return 'Desember';
+        }
+
+    }
+
     // transfer config
     $scope.TransferConfig = {
         UniqueCode: 0,
@@ -309,8 +330,9 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     $scope.passengers[i].passport.expire.month = '';
                     $scope.passengers[i].passport.expire.year = '';
                     $scope.passengers[i].passport.expire.full = '';
+                    //$scope.passengers[i].passport.country = '';
                     if (!$scope.CheckoutConfig.NationalityRequired) {
-                        $scope.passengers[i].passport.country = '';
+                        $scope.passengers[i].nationality = '';
                     }
                 }
                 if (!$scope.CheckoutConfig.IdRequired) {
@@ -383,14 +405,14 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 $scope.book.checked = true;
                 $scope.book.booking = false;
 
+                if (returnData.data.status == '200') {
                 if (returnData.data.rsvNo != '' || returnData.data.rsvNo != null) {
                     if (returnData.data.price != null) {
                         $scope.book.isPriceChanged = true;
                         $scope.book.isSuccess = true;
                         $scope.book.newPrice = returnData.data.price;
                         $scope.book.checked = false;
-                    }
-                    else {
+                        } else {
                         $scope.book.isSuccess = true;
                         $scope.book.rsvNo = returnData.data.rsvNo;
 
@@ -398,19 +420,28 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                         $('form#rsvno').submit();
                         $scope.book.checked = true;
                     }
-                }
-                else {
+                    } else {
                     if (returnData.data.price != null) {
                         $scope.book.isPriceChanged = true;
                         $scope.book.isSuccess = false;
                         $scope.book.newPrice = returnData.data.price;
                         $scope.book.checked = true;
-                    }
-                    else {
+                        } else {
                         $scope.book.isSuccess = false;
                         $scope.book.checked = true;
                         console.log(returnData);
                         $scope.errorMessage = returnData.data.error;
+                    }
+                }
+                } else {
+                    if (returnData.data.error == "ERFBOO03") {
+                        $scope.PageConfig.ExpiryDate.Expired = true;
+                    }
+                    else if (returnData.data.error == "ERFBOO01") {
+                        $scope.book.invalidData = true;
+                    } else {
+                        $scope.book.isSuccess = false;
+                        $scope.book.checked = true;
                     }
                 }
             }, function (returnData) {
@@ -428,14 +459,14 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     }
 
     $scope.getPassportMonth = function () {
-        if ($scope.flightDetail.departureMonth + 6 > $scope.months.length) {
-            return $scope.flightDetail.departureMonth - 6;
-        } else return $scope.flightDetail.departureMonth + 6;
+        if ($scope.flightDetail.departureFullDate.getMonth() + 6 > $scope.months.length) {
+            return $scope.flightDetail.departureFullDate.getMonth() - 6;
+        } else return $scope.flightDetail.departureFullDate.getMonth() + 6;
     }
 
     $scope.getPassportYear = function () {
         
-        if ($scope.getPassportMonth() > $scope.flightDetail.departureMonth) {
+        if ($scope.getPassportMonth() > $scope.flightDetail.departureFullDate.getMonth()) {
             return $scope.flightDetail.departureYear;
         } else {
             return ($scope.flightDetail.departureYear + 1);
@@ -545,6 +576,13 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     $scope.CheckoutConfig.GeneratePassenger();
     // countries
     $scope.Countries = Countries;
+    $scope.displayCountry = function (code) {
+        for (var i = 0; i < $scope.Countries.length; i++) {
+            if ($scope.Countries[i].code === code) {
+                return $scope.Countries[i].name;
+            }
+        }
+    }
     //titles
     $scope.titles = [
             { name: 'Tn.', value: 'Mister' },
@@ -613,19 +651,19 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
         switch (type) {
             case 'adult':
-                listYear((departureDate.getFullYear() - 120), (departureDate.getFullYear() - 12));
+                listYear(($scope.flightDetail.departureFullDate.getFullYear() - 120), ($scope.flightDetail.departureFullDate.getFullYear() - 12));
                 return years.reverse();
                 break;
             case 'child':
-                listYear((departureDate.getFullYear() - 12), (departureDate.getFullYear() - 2));
+                listYear(($scope.flightDetail.beforeDepartureFullDate.getFullYear() - 12), ($scope.flightDetail.beforeDepartureFullDate.getFullYear() - 2));
                 return years.reverse();
                 break;
             case 'infant':
-                listYear((departureDate.getFullYear() - 2), departureDate.getFullYear());
+                listYear(($scope.flightDetail.beforeDepartureFullDate.getFullYear() - 2), $scope.flightDetail.beforeDepartureFullDate.getFullYear());
                 return years.reverse();
                 break;
             case 'passport':
-                listYear($scope.flightDetail.passportFullDate.getFullYear(), ($scope.flightDetail.passportFullDate.getFullYear() + 10));
+                listYear($scope.flightDetail.passportDepartureFullDate.getFullYear(), ($scope.flightDetail.passportDepartureFullDate.getFullYear() + 10));
                 return years;
                 break;
         }
@@ -642,31 +680,31 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     $scope.initPassenger = function (passenger) {
         if (passenger.type == 'adult') {
             passenger.birth = {
-                date: $scope.flightDetail.departureDate,
-                month: $scope.flightDetail.departureMonth,
-                year: ($scope.flightDetail.departureYear - 12)
+                date: $scope.flightDetail.departureFullDate.getDate(),
+                month: $scope.flightDetail.departureFullDate.getMonth(),
+                year: ($scope.flightDetail.departureFullDate.getFullYear() -12)
             };
         } else if (passenger.type == 'infant') {
             passenger.birth = {
-                date: $scope.flightDetail.departureDate,
-                month: $scope.flightDetail.departureMonth,
-                year: $scope.bookingDate.getFullYear()
+                date: $scope.flightDetail.beforeDepartureFullDate.getDate(),
+                month: $scope.flightDetail.beforeDepartureFullDate.getMonth(),
+                year: $scope.flightDetail.beforeDepartureFullDate.getFullYear(),
             };
         } else if (passenger.type == 'child') {
             passenger.birth = {
-                date: $scope.flightDetail.departureDate,
-                month: $scope.flightDetail.departureMonth,
-                year: ($scope.flightDetail.departureYear - 2)
+                date: $scope.flightDetail.beforeDepartureFullDate.getDate(),
+                month: $scope.flightDetail.beforeDepartureFullDate.getMonth(),
+                year: ($scope.flightDetail.beforeDepartureFullDate.getFullYear() -2)
             };
         }
-        if (nationalityRequired == true) {
+        if ($scope.CheckoutConfig.NationalityRequired == true) {
             passenger.nationality = 'Indonesia';
         }
         passenger.passport = {
             expire: {
-                date: $scope.flightDetail.passportDate,
-                month: $scope.flightDetail.passportMonth,
-                year: $scope.flightDetail.passportYear
+                date: $scope.flightDetail.passportDepartureFullDate.getDate(),
+                month: $scope.flightDetail.passportDepartureFullDate.getMonth(),
+                year: $scope.flightDetail.passportDepartureFullDate.getFullYear(),
             }
         }
     }
@@ -679,35 +717,37 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             var minYear = -1;
             var currentDate = new Date();
             if (passenger.type == 'child') {
-                minYear = $scope.flightDetail.minYearChild;
+                minYear = $scope.flightDetail.departureFullDate.getFullYear() - 12;
             } else if (passenger.type == 'infant') {
-                minYear = $scope.flightDetail.minYearInfant;
+                minYear = $scope.flightDetail.departureFullDate.getFullYear() - 2;
             }
 
             if (passenger.birth.year == minYear) {
-                if (passenger.birth.month <= $scope.flightDetail.departureMonth) {
-                    passenger.birth.month = $scope.flightDetail.departureMonth;
-                    if (passenger.birth.date < $scope.flightDetail.departureDate) {
-                        passenger.birth.date = $scope.flightDetail.departureDate;
+                if (passenger.birth.month <= $scope.flightDetail.departureFullDate.getMonth()) {
+                    passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth();
+                    if (passenger.birth.date < $scope.flightDetail.departureFullDate.getDate()) {
+                        passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
                     }
                 }
             } else if (passenger.birth.year == $scope.bookingDate.getFullYear()) {
-                if (passenger.birth.month >= $scope.flightDetail.departureMonth) {
-                    passenger.birth.month = $scope.flightDetail.departureMonth;
-                    if (passenger.birth.date > $scope.flightDetail.departureDate) {
-                        passenger.birth.date = $scope.flightDetail.departureDate;
+                if (passenger.birth.month >= $scope.flightDetail.departureFullDate.getMonth()) {
+                    passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth();
+                    if (passenger.birth.date > $scope.flightDetail.departureFullDate.getDate()) {
+                        passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
                     }
                 }
             }
         }
     }
+
+    
     // validate passport expiry date
     $scope.validatePassport = function (passenger) {
-        if (passenger.passport.expire.year == $scope.flightDetail.passportYear) {
-            if (passenger.passport.expire.month < $scope.flightDetail.passportMonth) {
-                passenger.passport.expire.month = $scope.flightDetail.passportMonth;
-                if (passenger.passport.expire.date < $scope.flightDetail.passportDate) {
-                    passenger.passport.expire.date = $scope.flightDetail.passportDate;
+        if (passenger.passport.expire.year == $scope.flightDetail.passportDepartureFullDate.getFullYear()) {
+            if (passenger.passport.expire.month < $scope.flightDetail.passportDepartureFullDate.getMonth()) {
+                passenger.passport.expire.month = $scope.flightDetail.passportDepartureFullDate.getMonth();
+                if (passenger.passport.expire.date < $scope.flightDetail.passportDepartureFullDate.getDate()) {
+                    passenger.passport.expire.date = $scope.flightDetail.passportDepartureFullDate.getDate();
                 }
             }
         }

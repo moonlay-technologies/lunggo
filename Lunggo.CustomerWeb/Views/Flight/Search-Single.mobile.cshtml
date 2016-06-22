@@ -156,7 +156,7 @@
                 <h3>Penerbangan tidak ditemukan.</h3>
             </div>
         </div>
-        
+
         <div class="flight" ng-repeat="flight in departureFlight =
             FlightConfig[0].FlightList | filter:FlightFiltering.AirlineFilter('departure') | filter: FlightFiltering.TransitFilter('departure')
              | filter: FlightFiltering.PriceFilter() | filter:FlightFiltering.DepartureTimeFilter('departure') |

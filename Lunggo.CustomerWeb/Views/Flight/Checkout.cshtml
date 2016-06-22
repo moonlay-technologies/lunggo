@@ -59,21 +59,21 @@
 }
 @section PageJS{
     <script>
-    var langCode = '@OnlineContext.GetActiveLanguageCode()';
-    var currentPage = 1;
-    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
-    //var transferWindow = [ '1100', '1124' ];
-    // messages
-    var message = '@ViewBag.Message';
-    // flight detail
-    var token = @Model.Token;
-    var paymentDetail = '';
-    var flightDetail = '';
-    var expiryDate = '@Model.ExpiryTime.ToString("o")';
-    var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
+        var currentPage = 1;
+        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
+        //var transferWindow = [ '1100', '1124' ];
+        // messages
+        var message = '@ViewBag.Message';
+        // flight detail
+        var token = @Model.Token;
+        var paymentDetail = '';
+        var flightDetail = '';
+        var expiryDate = '@Model.ExpiryTime.ToString("o")';
+        var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
         var price = @Model.Itinerary.TotalFare;
 
-    // passenger number
+        // passenger number
         var adultPassenger = @Model.Itinerary.AdultCount;
         var adultFare = @Model.Itinerary.AdultFare;
         var adultTypeName = 'Dewasa';
@@ -85,30 +85,23 @@
         var infantPassenger = @Model.Itinerary.InfantCount;
         var infantFare = @Model.Itinerary.InfantFare;
         var infantTypeName = 'Bayi';
-    //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
-    // passport or id requirement
-    var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
-    var idRequired = false;
-    var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
-    var departureDate;
-    @if (Model.Itinerary.Trips != null)
-        {
-            if (Model.Itinerary.Trips.Count == 2)
-            {
-                @:departureDate = '@Model.Itinerary.Trips[1].DepartureDate';
-                                        }
-            else
-            {
-                @:departureDate = '@Model.Itinerary.Trips[0].DepartureDate';
-                                        }
-        }
+        //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
+        // passport or id requirement
+        var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
+        var idRequired = false;
+        var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
+        var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
+        var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
+        var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.AddDays(-1)';
+        var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.AddMonths(6)';
 
-    // change current page
-    if (getParam('page') == 2) {
-        currentPage = getParam('page');
-    } else {
-        currentPage = 1;
-    }
+
+        // change current page
+        if (getParam('page') == 2) {
+            currentPage = getParam('page');
+        } else {
+            currentPage = 1;
+        }
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
@@ -182,7 +175,7 @@
                                         <div ng-hide="!loggedIn">
                                             <!--Jika udah Login-->
                                             <input type="text" class="form-control" value=buyerInfo.fullname id="buyer-fullname" placeholder="Nama Lengkap" name="fullname" ng-model="buyerInfo.fullname" required />
-                                        </div>
+                                    </div>
                                     </div>
                                     <div class="form-group" ng-class="{'has-error' : (buyerForm.phone.$touched && buyerForm.phone.$invalid) || (buyerForm.countryCode.$touched && buyerForm.countryCode.$invalid)}">
                                         <label class="control-label important">Nomor Telepon:</label>
@@ -204,8 +197,8 @@
                                                 <!--Jika udah Login-->
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
                                                 <input type="number" class="form-control" value=buyerInfo.phone id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />
-                                            </div>
                                         </div>
+                                    </div>
                                     </div>
                                     <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
                                         <label class="control-label important">Masukkan Alamat E-mail Anda:</label>
@@ -215,7 +208,7 @@
                                         <div ng-hide="!loggedIn">
                                             <!--Jika udah Login-->
                                             <input type="email" class="form-control" value=buyerInfo.email id="buyer-email" placeholder="Ex: name@domain.com" name="email" ng-model="buyerInfo.email" required />
-                                        </div>
+                                    </div>
                                     </div>
 
                                 </form><!-- #buyer-form -->
@@ -255,25 +248,25 @@
                                                     <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
                                                     <input type="text" value="" name="passenger_{{$index}}_lastname" class="form-control" placeholder="Nama Belakang" ng-model="passenger.lastname" required />
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" ng-if="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
                                                     <label class="control-label important">Tanggal Lahir :</label>
                                                     <div class="row">
                                                         <div class="col-xs-4">
-                                                            <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="passenger.birth.date" required ng-change="validateBirthday(passenger)">
+                                                            <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="passenger.birth.date" ng-change="validateBirthday(passenger)" ng-required="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
                                                                 <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'adult'">{{date}}</option>
-                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'child' && !( passenger.birth.year == flightDetail.minYearChild && passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate )">{{date}}</option>
-                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'infant' && !( (passenger.birth.year == flightDetail.minYearInfant && passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate))">{{date}}</option>
+                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'child'">{{date}}</option>
+                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'infant'">{{date}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xs-4">
-                                                            <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="passenger.birth.month" required ng-change="validateBirthday(passenger)">
+                                                            <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="passenger.birth.month" ng-change="validateBirthday(passenger)" ng-required="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
                                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'adult'">{{month.name}}</option>
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'child' && (!(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth))">{{month.name}}</option>
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'infant' && (!(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth))">{{month.name}}</option>
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'child'">{{month.name}}</option>
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'infant'">{{month.name}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xs-4">
-                                                            <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="passenger.birth.year" required ng-change="validateBirthday(passenger)">
+                                                            <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="passenger.birth.year" ng-change="validateBirthday(passenger)" ng-required="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
                                                                 <option value="{{year}}" ng-repeat="year in generateYear(passenger.type)" ng-selected="year == passenger.birth.year">{{year}}</option>
                                                             </select>
                                                         </div>
@@ -300,12 +293,12 @@
                                                             <div class="row">
                                                                 <div class="col-xs-4">
                                                                     <select class="form-control" name="passenger_{{$index}}_expiryDate" ng-model="passenger.passport.expire.date" ng-required="passportRequired" ng-change="validatePassport(passenger)">
-                                                                        <option value="{{date}}" ng-repeat="date in dates(passenger.passport.expire.month, passenger.passport.expire.year)" ng-selected="date == passenger.passport.expire.date" ng-if="!(passenger.passport.expire.year == flightDetail.passportYear && passenger.passport.expire.month == flightDetail.passportMonth && date < flightDetail.passportDate)">{{date}}</option>
+                                                                        <option value="{{date}}" ng-repeat="date in dates(passenger.passport.expire.month, passenger.passport.expire.year)">{{date}}</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-xs-4">
                                                                     <select class="form-control" name="passenger_{{$index}}_expiryMonth" ng-model="passenger.passport.expire.month" ng-required="passportRequired" ng-change="validatePassport(passenger)">
-                                                                        <option value="{{month.value}}" ng-repeat="month in months" ng-if="!(passenger.passport.expire.year == flightDetail.passportYear && month.value < flightDetail.passportMonth)">{{month.name}}</option>
+                                                                        <option value="{{month.value}}" ng-repeat="month in months">{{month.name}}</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-xs-4">
@@ -323,7 +316,7 @@
                                                 </div>
                                                 <div class="form-group" ng-if="nationalityRequired">
                                                     <label class="control-label">Kewarganegaraan</label>
-                                                    <select class="form-control" name="passenger_{{$index}}_passportCountry" ng-model="passenger.passport.country" ng-init="passenger.passport.country = 'ID'" ng-required="nationalityRequired">
+                                                    <select class="form-control" name="passenger_{{$index}}_nationality" ng-model="passenger.nationality" ng-init="passenger.nationality= 'ID'" ng-required="nationalityRequired">
                                                         <option ng-repeat="country in countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
                                                     </select>
                                                 </div>
@@ -387,7 +380,7 @@
                                             </div>
                                             
                                             <div class="passenger-list-content">
-                                                <p>
+                                                <p ng-if="birthDateRequired">
                                                     <span class="passenger-label">Tgl. Lahir</span>
                                                     <span class="passenger-data">{{passenger.birth.date}} {{months[passenger.birth.month].name}} {{passenger.birth.year}}</span>
                                                 </p>
@@ -396,11 +389,16 @@
                                                     <span class="passenger-data">{{passenger.passport.number}}</span>
                                                 </p>
                                                 <p ng-if="passportRequired">
-                                                    <span class="passenger-label">Masa Berlaku Paspor</span>
+                                                    <span class="passenger-label">Tgl. Kadaluarsa Paspor</span>
                                                     <span class="passenger-data">{{passenger.passport.expire.date}} {{months[passenger.passport.expire.month].name}} {{passenger.passport.expire.year}}</span>
                                                 </p>
-                                              
-                                                
+                                                <p ng-if="passportRequired">
+                                                    <span class="passenger-label">Negara Penerbit Paspor</span>
+                                                    <span class="passenger-data">{{displayCountry(passenger.passport.country)}}</span>
+                                                <p ng-if="nationalityRequired">
+                                                    <span class="passenger-label">Kewarganegaraan</span>
+                                                    <span class="passenger-data">{{displayCountry(passenger.nationality)}}</span>
+                                                </p>
                                             </div>
                                         </div>
                                                 </section>
@@ -530,6 +528,7 @@
                                                 <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Year" value="" ng-model="passenger.passport.expire.year" />
                                                 <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Month" value="" ng-model="passenger.passport.expire.month" />
                                                 <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Date" value="" ng-model="passenger.passport.expire.date" />
+                                                <input type="text" name="Passengers[{{$index}}].PassportCountry" value="" ng-model="passenger.passport.country" />
                                                 <input type="text" name="Passengers[{{$index}}].idNumber" value="" ng-model="passenger.idNumber" />
                                                 <input type="text" name="Passengers[{{$index}}].Country" value="" ng-model="passenger.nationality" />
 
