@@ -320,6 +320,7 @@
     <Compile Include="Flight\Wrapper\FlightSupplierWrapperBase.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaClientHandler.cs" />
+    <Compile Include="Flight\Wrapper\Garuda\GarudaGetBaggage.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaGetBookingStatus.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaGetCurrentBalance.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaGetTripDetails.cs" />

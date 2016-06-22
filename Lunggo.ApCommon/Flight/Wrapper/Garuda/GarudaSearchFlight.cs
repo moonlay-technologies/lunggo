@@ -94,7 +94,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                 // [GET] Search Flight
                 var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);
-
+                var destinationCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.DestinationAirport);
                 // Calling The Zeroth Page
                 client.Proxy = new WebProxy("103.9.163.59", 31280);
                 client.Proxy.Credentials = new NetworkCredential("developer", "Standar1234");
@@ -310,7 +310,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 Duration = arrTime.AddHours(-(FlightService.GetInstance().GetAirportTimeZone(segment.EndLocation.LocationCode))) -
                                     deptTime.AddHours(-(FlightService.GetInstance().GetAirportTimeZone(segment.BeginLocation.LocationCode))),
                                 IsMealIncluded = true,
-                                IsPscIncluded = true
+                                IsPscIncluded = true,
+                                Baggage = GetBaggage(conditions.CabinClass,segment.BeginLocation.LocationCode,segment.EndLocation.LocationCode,originCountry,destinationCountry)
                             });
 
                             if (segment.ListLegs != null)
