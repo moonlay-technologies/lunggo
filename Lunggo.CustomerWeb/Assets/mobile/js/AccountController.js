@@ -441,6 +441,7 @@ app.controller('ContactController', ['$http', '$scope', '$rootScope', function (
 // Order Detail Controller
 app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
 
+    $scope.pageLoaded = true;
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.orderDate = new Date(orderDate);
     $scope.rsvNo = rsvNo;
@@ -520,7 +521,7 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
     $scope.closeOverlay = function() {
         window.location.href = "/";
     }
-
+    $scope.datafailed = false;
     $scope.getRsv = function () {
         $scope.errormsg = '';
         $http.get(GetReservationConfig.Url + $scope.rsvNo, {

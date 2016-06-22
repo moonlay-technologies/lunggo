@@ -592,6 +592,28 @@ default:
             </div>
         </div>
     </div>
+    
+    <div class="popup__wrapper" ng-class="{'active': book.invalidData == true}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Pemesanan Gagal</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <p>Mohon Maaf, pemesanan Anda gagal di proses karena data kurang tepat. Silakan pesan dan cek kembali data Anda.</p>
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container_new">
+                    <div class="row1">
+                        <div class="col12">
+                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="popup__wrapper" ng-class="{'active': book.booking == true}">
         <div class="popup">
@@ -600,7 +622,6 @@ default:
             </header>
             <div class="popup__body">
                 <div class="container_new">
-                    
                     <p>Sedang memproses pemesanan Anda ke maskapai. Proses ini dapat berlangsung hingga 5 (lima) menit.</p>
                 </div>
             </div>

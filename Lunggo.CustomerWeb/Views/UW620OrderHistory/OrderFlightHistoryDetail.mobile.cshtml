@@ -29,8 +29,7 @@
     <script src="/Assets/mobile/js/AccountController.js"></script>
 }
 
-
-<section class="account-content">
+<section class="account-content page-loading" ng-class="{'page-loaded' : pageLoaded}">
 
     <div class="page-overlay" ng-show="datafailed">
         <div class="overlay-content">
@@ -95,176 +94,176 @@
 
 
 
-            <div class="order-detail">
-                <header class="content-header">
-                    <h3>NOMOR PEMESANAN: <b>@Model.RsvNo</b></h3>
+    <div class="order-detail">
+        <header class="content-header">
+            <h3>NOMOR PEMESANAN: <b>@Model.RsvNo</b></h3>
+        </header>
+        <section class="content-body">
+
+            <div class="info-buyer">
+                <header>
+                    <h4>
+                        <b>INFO PEMESANAN</b>
+                        <span ng-if="flight.payment.status == 3">
+                            <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow">@Html.I18NString("CW00198")</button>
+                        </span>
+                        <span ng-if="flight.payment.status == 2">
+                            <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" disabled>@Html.I18NString("CW00198")</button>
+                        </span>
+
+                        <span ng-if="flight.payment.status != 2 && flight.payment.status != 3">
+                            <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow hidden">@Html.I18NString("CW00198")</button>
+                        </span>
+                    </h4>
                 </header>
-                <section class="content-body">
 
-                    <div class="info-buyer">
-                        <header>
-                            <h4>
-                                <b>INFO PEMESANAN</b>
-                                <span ng-if="flight.payment.status == 3">
-                                    <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow">@Html.I18NString("CW00198")</button>
-                                </span>
-                                <span ng-if="flight.payment.status == 2">
-                                    <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" disabled>@Html.I18NString("CW00198")</button>
-                                </span>
-
-                                <span ng-if="flight.payment.status != 2 && flight.payment.status != 3">
-                                    <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow hidden">@Html.I18NString("CW00198")</button>
-                                </span>
-                            </h4>
-                        </header>
-
-                        <section>
-                            <div class="form form-horizontal">
-                                <div class="form-group">
-                                    <label class="control-label col-xs-4">User ID</label>
-                                    <div class="col-xs-8">
-                                        <p class="form-control-static">{{flight.contact.email}}</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-4">Nama Pemesan</label>
-                                    <div class="col-xs-8">
-                                        <p class="form-control-static">{{flight.contact.name}}</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-4">Tanggal Pemesanan</label>
-                                    <div class="col-xs-8">
-                                        <p class="form-control-static">{{flight.rsvTime | date : 'dd MMMM yyyy , HH:mm' :'UTC'}}</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-4">Tipe</label>
-                                    <div class="col-xs-8">
-                                        <p class="form-control-static">Penerbangan</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-4">Harga Pemesanan</label>
-                                    <div class="col-xs-8">
-                                        <p class="form-control-static">{{flight.payment.originalPrice | currency}}</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-4">Metode Pembayaran</label>
-                                    <div class="col-xs-8">
-                                        <p class="form-control-static">{{methodpayment(flight.payment.method)}}</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-4">Status Pembayaran</label>
-                                    <div class="col-xs-8">
-                                        <p class="form-control-static">{{paymentstatus(flight.payment.status)}}</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-4">@Html.I18NString("CW00017")</label>
-                                    <div class="col-xs-8">
-                                        <ol class="passenger-list">
-                                            <div ng-repeat="pax in flight.pax">
-                                                <li>
-                                                    <div>
-                                                        <p>{{title(pax.tit)}} {{pax.fst}} {{pax.lst}}</p>
-                                                    </div>
-                                                    <div>
-                                                        <span>{{paxtype(pax.typ)}}</span>
-                                                    </div>
-                                                </li>
-
+                <section>
+                    <div class="form form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">User ID</label>
+                            <div class="col-xs-8">
+                                <p class="form-control-static">{{flight.contact.email}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">Nama Pemesan</label>
+                            <div class="col-xs-8">
+                                <p class="form-control-static">{{flight.contact.name}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">Tanggal Pemesanan</label>
+                            <div class="col-xs-8">
+                                <p class="form-control-static">{{flight.rsvTime | date : 'dd MMMM yyyy , HH:mm' :'UTC'}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">Tipe</label>
+                            <div class="col-xs-8">
+                                <p class="form-control-static">Penerbangan</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">Harga Pemesanan</label>
+                            <div class="col-xs-8">
+                                <p class="form-control-static">{{flight.payment.originalPrice | currency}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">Metode Pembayaran</label>
+                            <div class="col-xs-8">
+                                <p class="form-control-static">{{methodpayment(flight.payment.method)}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">Status Pembayaran</label>
+                            <div class="col-xs-8">
+                                <p class="form-control-static">{{paymentstatus(flight.payment.status)}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">@Html.I18NString("CW00017")</label>
+                            <div class="col-xs-8">
+                                <ol class="passenger-list">
+                                    <div ng-repeat="pax in flight.pax">
+                                        <li>
+                                            <div>
+                                                <p>{{title(pax.tit)}} {{pax.fst}} {{pax.lst}}</p>
                                             </div>
+                                            <div>
+                                                <span>{{paxtype(pax.typ)}}</span>
+                                            </div>
+                                        </li>
 
-                                        </ol>
                                     </div>
-                                </div>
+
+                                </ol>
                             </div>
-                        </section>
-                    </div><!-- .info-buyer -->
-
-                    <div class="info-flight">
-                        <header>
-                            <h4><b>@Html.I18NString("CW00199")</b></h4>
-                        </header>
-                        <section>
-                            <div ng-repeat="trip in flight.itin.trips">
-                                <div class="flight departure" ng-if="$index = 0">
-                                    <div class="row">
-                                        <div class="col-xs-3">
-                                            <img ng-src="{{trip.airlines[0].logoUrl}}" alt="trip.airlines[0].name" class="flight__airline__image" />
-                                        </div>
-                                        <div class="col-xs-9">
-                                            <p class="flight__airline__name"><span>{{trip.airlines[0].name}}</span> </p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <p>{{trip.originCity}} - {{trip.destinationCity}}</p>
-                                            <p>{{trip.date | date : 'dd MMMM yyyy'}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flight return" ng-if="$index = 1">
-                                    <div class="row">
-                                        <div class="col-xs-3">
-                                            <img ng-src="{{trip.airlines[0].logoUrl}}" alt="trip.airlines[0].name" class="flight__airline__image" />
-                                        </div>
-                                        <div class="col-xs-9">
-                                            <p class="flight__airline__name"><span>{{trip.airlines[0].name}}</span> </p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <p>{{trip.originCity}} - {{trip.destinationCity}}</p>
-                                            <p>{{trip.date | date : 'dd MMMM yyyy'}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                    </div><!-- .info-flight -->
-
-                    <div class="refund-detail hidden">
-                        <header>
-                            <h4><b>@Html.I18NString("CW00199")</b></h4>
-                        </header>
-                        <section>
-                            <div class="form form-horizontal">
-                                <div class="form-group">
-                                    <label class="control-label col-xs-3">No Refund</label>
-                                    <div class="col-xs-9">
-                                        <p class="form-control-static">
-                                            <span>
-                                                @(Model.Payment.Refund != null ?
-                                            Model.Payment.Refund.Amount.ToString() : "-")
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-3">Tgl Pengajuan</label>
-                                    <div class="col-xs-9">
-                                        <p class="form-control-static">
-                                            <span>{{refundDate | date : 'dd MMMM yyyy , HH:mm' : 'UTC'}}</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-3">Status Refund</label>
-                                    <div class="col-xs-9">
-                                        <p class="form-control-static">-</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div><!-- .refund-detail -->
-
+                        </div>
+                    </div>
                 </section>
-            </div><!-- .history-content -->
+            </div><!-- .info-buyer -->
+
+            <div class="info-flight">
+                <header>
+                    <h4><b>@Html.I18NString("CW00199")</b></h4>
+                </header>
+                <section>
+                    <div ng-repeat="trip in flight.itin.trips">
+                        <div class="flight departure" ng-if="$index = 0">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <img ng-src="{{trip.airlines[0].logoUrl}}" alt="trip.airlines[0].name" class="flight__airline__image" />
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="flight__airline__name"><span>{{trip.airlines[0].name}}</span> </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <p>{{trip.originCity}} - {{trip.destinationCity}}</p>
+                                    <p>{{trip.date | date : 'dd MMMM yyyy'}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flight return" ng-if="$index = 1">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <img ng-src="{{trip.airlines[0].logoUrl}}" alt="trip.airlines[0].name" class="flight__airline__image" />
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="flight__airline__name"><span>{{trip.airlines[0].name}}</span> </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <p>{{trip.originCity}} - {{trip.destinationCity}}</p>
+                                    <p>{{trip.date | date : 'dd MMMM yyyy'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div><!-- .info-flight -->
+
+            <div class="refund-detail hidden">
+                <header>
+                    <h4><b>@Html.I18NString("CW00199")</b></h4>
+                </header>
+                <section>
+                    <div class="form form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-xs-3">No Refund</label>
+                            <div class="col-xs-9">
+                                <p class="form-control-static">
+                                    <span>
+                                        @(Model.Payment.Refund != null ?
+                                            Model.Payment.Refund.Amount.ToString() : "-")
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-3">Tgl Pengajuan</label>
+                            <div class="col-xs-9">
+                                <p class="form-control-static">
+                                    <span>{{refundDate | date : 'dd MMMM yyyy , HH:mm' : 'UTC'}}</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-3">Status Refund</label>
+                            <div class="col-xs-9">
+                                <p class="form-control-static">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div><!-- .refund-detail -->
+
+        </section>
+    </div><!-- .history-content -->
 
 </section><!-- .account-content -->

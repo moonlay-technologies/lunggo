@@ -383,34 +383,43 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 $scope.book.checked = true;
                 $scope.book.booking = false;
 
-                if (returnData.data.rsvNo != '' || returnData.data.rsvNo != null) {
-                    if (returnData.data.price != null) {
-                        $scope.book.isPriceChanged = true;
-                        $scope.book.isSuccess = true;
-                        $scope.book.newPrice = returnData.data.price;
-                        $scope.book.checked = false;
-                    }
-                    else {
-                        $scope.book.isSuccess = true;
-                        $scope.book.rsvNo = returnData.data.rsvNo;
+                if (returnData.data.status == '200') {
+                    if (returnData.data.rsvNo != '' || returnData.data.rsvNo != null) {
+                        if (returnData.data.price != null) {
+                            $scope.book.isPriceChanged = true;
+                            $scope.book.isSuccess = true;
+                            $scope.book.newPrice = returnData.data.price;
+                            $scope.book.checked = false;
+                        } else {
+                            $scope.book.isSuccess = true;
+                            $scope.book.rsvNo = returnData.data.rsvNo;
 
-                        $('form#rsvno input#rsvno-input').val(returnData.data.rsvNo);
-                        $('form#rsvno').submit();
-                        $scope.book.checked = true;
+                            $('form#rsvno input#rsvno-input').val(returnData.data.rsvNo);
+                            $('form#rsvno').submit();
+                            $scope.book.checked = true;
+                        }
+                    } else {
+                        if (returnData.data.price != null) {
+                            $scope.book.isPriceChanged = true;
+                            $scope.book.isSuccess = false;
+                            $scope.book.newPrice = returnData.data.price;
+                            $scope.book.checked = true;
+                        } else {
+                            $scope.book.isSuccess = false;
+                            $scope.book.checked = true;
+                            console.log(returnData);
+                            $scope.errorMessage = returnData.data.error;
+                        }
                     }
-                }
-                else {
-                    if (returnData.data.price != null) {
-                        $scope.book.isPriceChanged = true;
-                        $scope.book.isSuccess = false;
-                        $scope.book.newPrice = returnData.data.price;
-                        $scope.book.checked = true;
+                } else {
+                    if (returnData.data.error == "ERFBOO03") {
+                        $scope.PageConfig.ExpiryDate.Expired = true;
                     }
-                    else {
+                    else if (returnData.data.error == "ERFBOO01") {
+                        $scope.book.invalidData = true;
+                    } else {
                         $scope.book.isSuccess = false;
                         $scope.book.checked = true;
-                        console.log(returnData);
-                        $scope.errorMessage = returnData.data.error;
                     }
                 }
             }, function (returnData) {
