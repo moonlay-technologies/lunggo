@@ -139,7 +139,8 @@
                 <div class="col-sm-9">
                     <div class="result-form-left">
                         <h3><b>@originCityNames[0]</b> (@data.Trips[0].OriginAirport) ke <b>@destinationCityNames[0]</b> (@data.Trips[0].DestinationAirport) </h3>
-                        <h4><b>@data.Trips[0].DepartureDate.ToString("dd MMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>
+                        <h4><b>@data.Trips[0].DepartureDate.ToString("ddd, dd MMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>
+                        @*<h4><b>@data.Trips[0].DepartureDate.ToString("dd MMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>*@
                     </div>
                 </div>
                 <div class="col-sm-3">
