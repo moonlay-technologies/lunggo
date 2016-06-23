@@ -539,6 +539,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                     var classprice = htmlPrice["#sidebarTotal"].Text().Replace(",","");
                     var newprice = Convert.ToDecimal(classprice);
+                    var tableBreakdown = htmlPrice[".farebreakdown"];
+
+                    var adultPriceEach = tableBreakdown[0].ChildElements.ToList()[5].ChildElements.ToList()[1].InnerText;
+                    var childPriceEach = "0";
+                    var infantPriceEach = "0";
+                    if (childCount != 0)
+                    {
+                        childPriceEach = tableBreakdown[0].ChildElements.ToList()[13].ChildElements.ToList()[1].InnerText;
+                    }
+
+                    if (infantCount != 0)
+                    {
+                        infantPriceEach = tableBreakdown[0].ChildElements.ToList()[20].ChildElements.ToList()[1].InnerText;
+                    }
 
                     var newFareId = origin + "+" + dest + "+" + segments.ElementAt(0).DepartureTime.Day + "+" +
                             segments.ElementAt(0).DepartureTime.Month + "+" +
