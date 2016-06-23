@@ -54,8 +54,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
                 client.UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36";
                 client.CookieContainer = new CookieContainer();
-                //client.Proxy = new WebProxy("185.77.167.128", 60000);
-                //client.Proxy.Credentials = new NetworkCredential("travelmadezy", "9T8XCty9MT");
+                client.Proxy = new WebProxy("185.77.167.128", 60000);
+                client.Proxy.Credentials = new NetworkCredential("travelmadezy", "9T8XCty9MT");
                 //client.FollowRedirects = false;
                 return client;
             }
@@ -81,18 +81,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 returnpath = response.ResponseUri.AbsolutePath;
 
                 return response.ResponseUri.AbsolutePath == "/web/dashboard/welcome";             
-            }
-
-            private void TurnInId(RestClient client, string username)
-            {
-                var accReq = new RestRequest("/api/GarudaAccount/LogOut?userId=" + username, Method.GET);
-                var accRs = (RestResponse)client.Execute(accReq);
-            }
-           
-            //Get Deposit for Lion Air
-            private static decimal getDeposit() 
-            {
-                return currentDeposit;
             }
         }
     }

@@ -541,17 +541,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     var newprice = Convert.ToDecimal(classprice);
                     var tableBreakdown = htmlPrice[".farebreakdown"];
 
-                    var adultPriceEach = tableBreakdown[0].ChildElements.ToList()[5].ChildElements.ToList()[1].InnerText;
+                    var currency = tableBreakdown[0].ChildElements.ToList()[0].
+                        ChildElements.ToList()[5].ChildElements.ToList()[1].InnerText.Replace("&nbsp;", " ").Split(' ')[1];
+                    var adultPriceEach = tableBreakdown[0].ChildElements.ToList()[0].
+                        ChildElements.ToList()[5].ChildElements.ToList()[1].InnerText.Replace("&nbsp;", " ").Split(' ')[0].
+                        Replace(",", "");
                     var childPriceEach = "0";
                     var infantPriceEach = "0";
                     if (childCount != 0)
                     {
-                        childPriceEach = tableBreakdown[0].ChildElements.ToList()[13].ChildElements.ToList()[1].InnerText;
+                        childPriceEach = tableBreakdown[0].ChildElements.ToList()[0].
+                            ChildElements.ToList()[13].ChildElements.ToList()[1].InnerText.Replace("&nbsp;", " ").Split(' ')[0].
+                        Replace(",", "");
                     }
 
                     if (infantCount != 0)
                     {
-                        infantPriceEach = tableBreakdown[0].ChildElements.ToList()[20].ChildElements.ToList()[1].InnerText;
+                        infantPriceEach = tableBreakdown[0].ChildElements.ToList()[0].
+                            ChildElements.ToList()[20].ChildElements.ToList()[1].InnerText.Replace("&nbsp;", " ").Split(' ')[0].
+                        Replace(",", ""); 
                     }
 
                     var newFareId = origin + "+" + dest + "+" + segments.ElementAt(0).DepartureTime.Day + "+" +
@@ -567,6 +575,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         AdultCount = adultCount,
                         ChildCount = childCount,
                         InfantCount = infantCount,
+                        AdultPricePortion = Convert.ToDecimal(adultPriceEach),
+                        ChildPricePortion = Convert.ToDecimal(childPriceEach),
+                        InfantPricePortion = Convert.ToDecimal(infantPriceEach),
                         CanHold = true,
                         FareType = FareType.Published,
                         RequireBirthDate = false,
@@ -590,7 +601,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 }
                             }
                     };
-                    newitin.Price.SetSupplier(newprice, new Payment.Model.Currency("IDR"));
+                    newitin.Price.SetSupplier(newprice, new Payment.Model.Currency(currency));
 
                     var oldSegments = bookInfo.Itinerary.Trips.SelectMany(trip => trip.Segments).ToList();
                     var newSegments = newitin.Trips.SelectMany(trip => trip.Segments).ToList();
