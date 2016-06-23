@@ -92,8 +92,8 @@
         var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
         var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
         var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
-        var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.AddDays(-1)';
-        var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.AddMonths(6)';
+        var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
+        var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
 
 
         // change current page

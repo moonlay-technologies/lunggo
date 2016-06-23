@@ -79,12 +79,12 @@
         BirthDateRequired: @Model.Itinerary.RequireBirthDate.ToString().ToLower(),
             // departure date
         DepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate',
-        BeforeDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.AddDays(-1)',
-        PassportDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.AddMonths(6)',
+        BeforeDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)',
+        PassportDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)',
             // buyer info
             BuyerInfo: {
                 LoggedIn : @User.Identity.IsAuthenticated.ToString().ToLower(),
-                Name: '@User.Identity.GetName()',
+                Name: '@User.Identity.GetFirstName() + " " + @User.Identity.GetLastName()',
                 CountryCode : '@User.Identity.GetCountryCd()',
                 Phone: '@User.Identity.GetPhoneNumber()',
                 Email: '@User.Identity.GetEmail()'
