@@ -306,6 +306,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 RequireSameCheckIn = false,
                                 RequireNationality = false,
                                 RequestedCabinClass = CabinClass.Economy,
+                                RequestedTripType = conditions.Itinerary.RequestedTripType,
                                 TripType = TripType.OneWay,
                                 Supplier = Supplier.Sriwijaya,
                                 Price = new Price(),

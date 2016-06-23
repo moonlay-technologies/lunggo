@@ -740,6 +740,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             RequireSameCheckIn = false,
                             RequireNationality = isInternational,
                             RequestedCabinClass = CabinClass.Economy,
+                            RequestedTripType = bookInfo.Itinerary.RequestedTripType,
                             TripType = TripType.OneWay,
                             Supplier = Supplier.LionAir,
                             Price = new Price(),

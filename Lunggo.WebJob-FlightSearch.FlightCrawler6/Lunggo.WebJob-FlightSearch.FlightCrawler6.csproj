@@ -123,6 +123,7 @@
     <None Include="App.Release.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\prod-webjobflightsearch.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjobflightsearch.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />

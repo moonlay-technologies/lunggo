@@ -574,6 +574,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         RequireSameCheckIn = false,
                         RequireNationality = false,
                         RequestedCabinClass = cabinClass,
+                        RequestedTripType = bookInfo.Itinerary.RequestedTripType,
                         TripType = TripType.OneWay,
                         Supplier = Supplier.Garuda,
                         Price = new Price(),
