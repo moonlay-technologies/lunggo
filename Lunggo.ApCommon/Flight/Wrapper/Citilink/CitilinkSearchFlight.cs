@@ -168,6 +168,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                                 DateTime.Parse(ParseFID2[Airport + 1])
                                                     .AddHours(-(flight.GetAirportTimeZone(ParseFID2[Airport])));
 
+                                            var baggage = GetBaggage();
+                                            var isBaggageIncluded = false;
+                                            if (baggage != null)
+                                            {
+                                                isBaggageIncluded = true;
+                                            }
                                             segments.Add(new FlightSegment
                                             {
 
@@ -185,7 +191,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                                 Duration = arrtime - deptime,
                                                 IsMealIncluded = false,
                                                 IsPscIncluded = true,
-                                                Baggage = GetBaggage()
+                                                IsBaggageIncluded = isBaggageIncluded,
+                                                BaggageCapacity = baggage
                                             });
                                             Airport = Airport + 8;
                                         }

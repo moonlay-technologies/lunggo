@@ -116,8 +116,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         }
                         break;
                 }
-                baggage = adultBaggage + "~" + childBaggage + "~" + infantBaggage;
-                return baggage;
+                baggage = adultBaggage;// + "~" + childBaggage + "~" + infantBaggage;
+                if (baggage != "" || baggage != null)
+                {
+                    return baggage;
+                }
+                else 
+                {
+                    return null;
+                }
             }
         }
     }

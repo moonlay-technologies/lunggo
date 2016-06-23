@@ -189,8 +189,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         break;
                 }
 
-                baggage = adultBaggage + "~" + childBaggage + "~" + infantBaggage;
-                return baggage;
+                baggage = adultBaggage;// + "~" + childBaggage + "~" + infantBaggage;
+                if(baggage != null || baggage != "")
+                {
+                    return baggage;
+                }
+                else
+                {
+                    return null;
+                }
+                
             }
         }
     }
