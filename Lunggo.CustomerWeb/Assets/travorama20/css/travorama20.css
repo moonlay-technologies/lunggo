@@ -2258,12 +2258,14 @@ file: /Assets/travorama20/css/_page_flight.scss
         text-align: center;
         float: left;
         width: 25%;
-        border-right: 1px solid #ccc; }
+        border-right: 1px solid #ccc; 
+      }
         .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-left h5 {
           color: #1daee4;
           font-weight: bold; }
         .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-left img {
-          height: 55px; }
+            /*margin-top: 10px;*/
+            height: 55px; }
       .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right {
         float: left;
         width: 75%;
@@ -2378,17 +2380,28 @@ file: /Assets/travorama20/css/_page_flight.scss
       width: 100%;
       content: "";
       clear: both; }
+    
+     .page-flight .flight .flight-summary .flight-summary-right .original-price {
+      font-size: 11px;
+      color: #ffa63f;
+      line-height: 15px;
+      text-decoration:line-through;
+    }
     .page-flight .flight .flight-summary .flight-summary-right h4 {
       font-size: 25px;
       font-weight: bold;
       margin: 0;
-      margin-bottom: 3px;
-      margin-top: 5px; }
+      margin-bottom: 8px;
+      /*margin-top: 5px;*/ 
+
+    }
     .page-flight .flight .flight-summary .flight-summary-right small {
       display: block;
       font-size: 12px;
       margin-bottom: 7px;
-      font-size: 10px; }
+      font-size: 10px; 
+      line-height: 5px;
+    }
     .page-flight .flight .flight-summary .flight-summary-right .btn {
       padding-right: 30px;
       padding-left: 30px; }
@@ -2606,12 +2619,17 @@ file: /Assets/travorama20/css/_page_flight.scss
   border-bottom: 0; }
   .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-left {
     height: 113px;
+    /*height: 125px;*/
     padding: 10px; }
   .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .summary-top-right-top:before, .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .page-index .summary-top-right-top.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .summary-top-right-top.section-reason:after, .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .summary-top-right-top:after {
     display: block;
     width: 100%;
     content: "";
-    clear: both; }
+    clear: both;
+  }
+  .summary-top-right-top{
+      /*height: 63px;*/
+  }
   .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .summary-top-right-bottom {
     clear: both;
     width: 100%;
@@ -2637,6 +2655,17 @@ file: /Assets/travorama20/css/_page_flight.scss
     background-size: 200%;
     left: -17px;
     top: 7px; }
+
+  /*.page-flight.page-flight-oneway .flight .price-detail {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 17px;
+    height: 16px;
+    background: url(/Assets/images/flight-button-sprite.png) no-repeat;
+    background-size: 200%;
+    left: -17px;
+    top: 7px; }*/
 
 .page-flight.page-flight-oneway .flight .flight-rules-trigger:before, .page-flight.page-flight-oneway .flight .page-index .flight-rules-trigger.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-rules-trigger.section-reason:after {
   background-position: -20px; }
@@ -3394,10 +3423,17 @@ file: /Assets/travorama20/css/_page_flight.scss
   padding: 10px 0;
   padding-bottom: 0;
   padding-top: 12px; }
+ .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-right .original-price {
+      font-size: 10px;
+      color: #ffa63f;
+      line-height: 15px;
+      text-decoration:line-through;
+      padding-left: 10px;
+    }
   .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-right h4 {
     font-size: 18px;
     padding-left: 10px; }
-    .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-right h4 sup {
+      .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-right h4 sup {
       top: -5px; }
   .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-right small {
     font-size: 8px;

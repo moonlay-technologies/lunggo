@@ -336,8 +336,8 @@ namespace Lunggo.Configuration
             const string flightPayPath = @"/payment/pay";
             const string flightRulesPath = @"/api/v1/flights/rules";
             const string autocompleteHotelLocationPath = @"/api/v1/autocomplete/hotellocation/";
-            const string autocompleteAirportPath = @"/api/v1/autocomplete/airport/";
-            const string autocompleteAirlinePath = @"/api/v1/autocomplete/airline/";
+            const string autocompleteAirportPath = @"/autocomplete/airports/";
+            const string autocompleteAirlinePath = @"/autocomplete/airlines/";
             const string checkVoucherPath = @"/payment/checkvoucher";
             const string subscribePath = @"/api/v1/newsletter/subscribe";
             const string loginPath = @"/login"; //getReservationPath
