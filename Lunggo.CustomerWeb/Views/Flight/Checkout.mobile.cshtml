@@ -20,13 +20,13 @@
     var trips = Model.Itinerary.Trips;
     try
     {
-        adultCount = Model.Itinerary.AdultCount;
-        childCount = Model.Itinerary.ChildCount;
-        var infantCount = Model.Itinerary.InfantCount;
+        adultCount = Model.Itinerary.AdultCount.GetValueOrDefault();
+        childCount = Model.Itinerary.ChildCount.GetValueOrDefault();
+        var infantCount = Model.Itinerary.InfantCount.GetValueOrDefault();
         passengerCount = adultCount + childCount + infantCount;
-        needBirthDate = Model.Itinerary.RequireBirthDate;
-        needPassport = Model.Itinerary.RequirePassport;
-        needNationality = Model.Itinerary.RequireNationality;
+        needBirthDate = Model.Itinerary.RequireBirthDate.GetValueOrDefault();
+        needPassport = Model.Itinerary.RequirePassport.GetValueOrDefault();
+        needNationality = Model.Itinerary.RequireNationality.GetValueOrDefault();
         token = Model.Token;
     }
     catch

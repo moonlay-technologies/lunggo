@@ -687,7 +687,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             }
                         }
                     };
-                    itin.Price.SetSupplier(agentprice, new Currency("IDR"));
+                    itin.Price.SetSupplier(agentprice, new Payment.Model.Currency("IDR"));
 
                     var newPrice = agentprice;
                     var result = new RevalidateFareResult

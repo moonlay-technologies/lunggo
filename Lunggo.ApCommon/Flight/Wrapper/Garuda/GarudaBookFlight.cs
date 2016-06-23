@@ -575,7 +575,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 }
                             }
                     };
-                    newitin.Price.SetSupplier(newprice, new Currency("IDR"));
+                    newitin.Price.SetSupplier(newprice, new Payment.Model.Currency("IDR"));
 
                     var oldSegments = bookInfo.Itinerary.Trips.SelectMany(trip => trip.Segments).ToList();
                     var newSegments = newitin.Trips.SelectMany(trip => trip.Segments).ToList();
