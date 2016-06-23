@@ -44,8 +44,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 request.Contact.Email != null &&
                 request.Contact.CountryCallingCode != null &&
                 request.Passengers != null &&
-                request.Passengers.TrueForAll(p => p.FirstName != null) &&
-                request.Passengers.TrueForAll(p => p.LastName != null) &&
+                request.Passengers.TrueForAll(p => p.Name != null) &&
                 request.Passengers.TrueForAll(p => p.Title != Title.Undefined) &&
                 request.Passengers.TrueForAll(p => p.Type != PaxType.Undefined);
         }
@@ -125,26 +124,9 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             {
                 Token = request.Token,
                 Contact = request.Contact,
-                Passengers = MapPassengers(request.Passengers)
+                Passengers = FlightService.GetInstance().ConvertToPax(request.Passengers)
             };
             return bookServiceRequest;
-        }
-
-        private static List<Pax> MapPassengers(IEnumerable<Passenger> passengers)
-        {
-            return passengers.Select(passenger => new Pax
-            {
-                Type = passenger.Type,
-                Title = passenger.Title,
-                FirstName = passenger.FirstName,
-                LastName = passenger.LastName,
-                Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
-                DateOfBirth = passenger.BirthDate,
-                PassportNumber = passenger.PassportNumber,
-                PassportExpiryDate = passenger.PassportExpiryDate,
-                PassportCountry = passenger.PassportCountry,
-                Nationality = passenger.Nationality
-            }).ToList();
         }
     }
 }

@@ -86,6 +86,11 @@ namespace Lunggo.ApCommon.Product.Model
             OriginalIdr = price * currency.Rate;
         }
 
+        public void SetMargin(UsedMargin margin)
+        {
+            Margin = margin;
+        }
+
         public void SetMargin(Margin margin)
         {
             Margin = new UsedMargin

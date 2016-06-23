@@ -446,6 +446,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         RequireSameCheckIn = false,
                         RequireNationality = true,
                         RequestedCabinClass = CabinClass.Economy,
+                        RequestedTripType = bookInfo.Itinerary.RequestedTripType,
                         TripType = TripType.OneWay,
                         Supplier = Supplier.AirAsia,
                         Price = new Price(),

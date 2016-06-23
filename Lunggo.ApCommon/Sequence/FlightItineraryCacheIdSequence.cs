@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Sequence
             _properties = new SequenceProperties
             {
                 Name = "FlightItineraryCacheIdSequence",
-                InitialValue = 747
+                InitialValue = 7470
             };
             Init(_properties);
         }
