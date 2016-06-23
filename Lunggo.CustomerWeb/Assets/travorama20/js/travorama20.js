@@ -466,11 +466,11 @@ function flightPageSearchFormFunctions() {
                 $('.autocomplete-pre .text-pre').hide();
                 $('.autocomplete-pre .text-loading').hide();
                 FlightSearchConfig.autocomplete.loading = false;
-                FlightSearchConfig.autocomplete.result = returnData;
-                FlightSearchConfig.autocomplete.cache[keyword] = returnData;
+                FlightSearchConfig.autocomplete.result = returnData.airports;
+                FlightSearchConfig.autocomplete.cache[keyword] = returnData.airports;
                 console.log(returnData);
                 generateSearchResult(FlightSearchConfig.autocomplete.result);
-                if (returnData.length > 0) {
+                if (returnData.airports.length > 0) {
                     $('.autocomplete-no-result').hide();
                     $('.autocomplete-pre .text-loading').hide();
                     $('.autocomplete-result').show();
@@ -485,7 +485,7 @@ function flightPageSearchFormFunctions() {
     function generateSearchResult(list) {
         $('.autocomplete-result ul').empty();
         for (var i = 0 ; i < list.length; i++) {
-            $('.autocomplete-result ul').append('<li data-code="' + list[i].Code + '" data-city="'+ list[i].City +'">' + list[i].City + ' (' + list[i].Code + '), ' + list[i].Name + ', ' + list[i].Country + '</li>');
+            $('.autocomplete-result ul').append('<li data-code="' + list[i].code + '" data-city="'+ list[i].city +'">' + list[i].city + ' (' + list[i].code + '), ' + list[i].name + ', ' + list[i].country + '</li>');
         }
     }
     // select search result
@@ -1076,11 +1076,11 @@ function flightFormSearchFunctions() {
                 $('.autocomplete-pre .text-pre').hide();
                 $('.autocomplete-pre .text-loading').hide();
                 FlightSearchConfig.autocomplete.loading = false;
-                FlightSearchConfig.autocomplete.result = returnData;
-                FlightSearchConfig.autocomplete.cache[keyword] = returnData;
+                FlightSearchConfig.autocomplete.result = returnData.airports;
+                FlightSearchConfig.autocomplete.cache[keyword] = returnData.airports;
                 console.log(returnData);
                 generateSearchResult(FlightSearchConfig.autocomplete.result);
-                if (returnData.length > 0) {
+                if (returnData.airports.length > 0) {
                     $('.autocomplete-no-result').hide();
                     $('.autocomplete-pre .text-loading').hide();
                     $('.autocomplete-result').show();
@@ -1095,7 +1095,7 @@ function flightFormSearchFunctions() {
     function generateSearchResult(list) {
         $('.autocomplete-result ul').empty();
         for (var i = 0 ; i < list.length; i++) {
-            $('.autocomplete-result ul').append('<li data-code="'+ list[i].Code +'" data-city="'+list[i].City+'">'+list[i].City+' ('+list[i].Code+'), '+list[i].Name+', '+list[i].Country+'</li>');
+            $('.autocomplete-result ul').append('<li data-code="'+ list[i].code +'" data-city="'+list[i].city+'">'+list[i].city+' ('+list[i].code+'), '+list[i].name+', '+list[i].country+'</li>');
         }
     }
     // select search result

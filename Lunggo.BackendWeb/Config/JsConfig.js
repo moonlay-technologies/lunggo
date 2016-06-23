@@ -97,11 +97,11 @@ var HotelAutocompleteConfig = {
 };
 
 var FlightAutocompleteConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/autocomplete/airport/'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/autocomplete/airports/'
 };
 
 var AirlineAutocompleteConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/api/v1/autocomplete/airline/'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/autocomplete/airlines/'
 };
 
 var CheckVoucherConfig = {
