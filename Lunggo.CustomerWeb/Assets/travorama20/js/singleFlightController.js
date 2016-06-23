@@ -448,9 +448,6 @@ app.controller('singleFlightController', [
                 $scope.getFlightHeader = null;
             }
 
-            console.log('request : ' + $scope.flightRequest.Requests);
-
-
             if ($scope.Progress < 100) {
                 // **********
                 // ajax
@@ -462,7 +459,7 @@ app.controller('singleFlightController', [
                 else {
                     $scope.getFlightHeader = null;
                 }
-                console.log("Request : " + FlightSearchConfig.Url + $scope.flightFixRequest + '/' + $scope.Progress);
+                //console.log("Request : " + FlightSearchConfig.Url + $scope.flightFixRequest + '/' + $scope.Progress);
                 $http.get(FlightSearchConfig.Url + '/' + $scope.flightFixRequest + '/' + $scope.Progress, {
                     headers: { 'Authorization': $scope.getFlightHeader }
                 }).success(function (returnData) {
@@ -470,7 +467,7 @@ app.controller('singleFlightController', [
                     // set searchID
                     SelectConfig.SearchId = $scope.flightFixRequest;
                     $scope.flightRequest.SearchId = $scope.flightFixRequest;
-                    console.log($scope.flightFixRequest);
+                    //console.log($scope.flightFixRequest);
 
                     $scope.Progress = returnData.progress;
                     if ($scope.Progress == 100) {
@@ -484,8 +481,8 @@ app.controller('singleFlightController', [
                     }
 
 
-                    console.log('Progress : ' + $scope.Progress + ' %');
-                    console.log(returnData);
+                    //console.log('Progress : ' + $scope.Progress + ' %');
+                    //console.log(returnData);
 
                     // loop the function
                     setTimeout(function () {

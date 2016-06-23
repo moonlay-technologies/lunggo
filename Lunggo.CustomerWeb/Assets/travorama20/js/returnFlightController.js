@@ -596,7 +596,6 @@ app.controller('returnFlightController', [
             targetScope.loadingFlight = true;
 
             // get flight
-            console.log('Getting flight for : ' + '/' + targetScope.flightSearchParams + '/' + targetScope.progress);
             if (targetScope.progress < 100) {
                 //Check Authorization
                 var authAccess = getAuthAccess();

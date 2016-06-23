@@ -18,7 +18,7 @@ app.controller('siteHeaderController', [
                         console.log('Success getting Profile');
                         $scope.email = returnData.email;
                         $scope.profileloaded = true;
-                        console.log(returnData);
+                        //console.log(returnData);
                     }
                     else {
                         console.log('There is an error');
@@ -56,7 +56,8 @@ app.controller('siteHeaderController', [
                 eraseCookie('refreshtoken');
                 $scope.isLogin = false;
                 isLogout: true;
-                window.location.href = $scope.returnUrl;
+                window.location.reload();
+                
             }
         }
 
@@ -156,7 +157,6 @@ app.controller('accountController', [
                 }).success(function (returnData) {
                     if (returnData.status == "200") {
                         console.log('Success getting Profile');
-                        console.log(returnData);
                         $scope.userProfile = {
                             email: returnData.email,
                             firstname: returnData.first,
@@ -204,9 +204,7 @@ app.controller('accountController', [
             }).success(function (returnData) {
                 if (returnData.status == "200") {
                     console.log('Success getting Transaction');
-                    console.log(returnData);
                     $scope.flightlist = returnData.flights;
-                    console.log($scope.flightlist);
                 }
                 else {
                     console.log('There is an error');
@@ -233,7 +231,7 @@ app.controller('accountController', [
                 console.log('submitting form');
                 $scope.userProfile.updating = true;
                 // submit form to URL
-                console.log(ChangeProfileConfig.Url)
+                //console.log(ChangeProfileConfig.Url)
                 //Check Authorization
                 var authAccess = getAuthAccess();
                 if (authAccess == 1) {
@@ -254,7 +252,7 @@ app.controller('accountController', [
                     },
                     headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
-                    console.log(returnData);
+                    //console.log(returnData);
                     if (returnData.data.status == '200') {
                         console.log('Success requesting change profile');
                         $scope.userProfile.firstname = $scope.editProfile.firstname;
@@ -320,7 +318,7 @@ app.controller('accountController', [
                         $scope.passwordForm.confirmationPassword = '';
                         if (returnData.data.status == '200') {
                             console.log('Success requesting reset password');
-                            console.log(returnData);
+                            //console.log(returnData);
                             $scope.password.edit = false;
                             $scope.password.updating = false;
                         }
@@ -362,7 +360,7 @@ app.controller('accountController', [
             }).then(function (returnData) {
                 if (returnData.data.Status == 'Success') {
                     console.log('Success requesting reset password');
-                    console.log(returnData);
+                    //console.log(returnData);
                     $scope.passwordForm.submitting = false;
                     $scope.passwordForm.submitted = true;
                 }
@@ -426,7 +424,7 @@ app.controller('forgotController', [
             }).then(function (returnData) {
                 $scope.form.submitting = false;
                 $scope.form.submitted = true;
-                console.log(returnData);
+                //console.log(returnData);
                 if (returnData.data.status == '200') {
                     $scope.form.found = true;
                     $scope.form.emailConfirmed = true;
@@ -668,15 +666,15 @@ app.controller('resetController', [
                 },
                 headers: { 'Authorization': $scope.getFlightHeader }
             }).then(function (returnData) {
-                if (returnData.data.Status == 'Success') {
+                if (returnData.data.status == 'Success') {
                     console.log('Success requesting reset password');
-                    console.log(returnData);
+                    //console.log(returnData);
                     $scope.form.submitting = false;
                     $scope.form.submitted = true;
                 }
                 else {
                     console.log(returnData.data.Description);
-                    console.log(returnData);
+                    //console.log(returnData);
                     $scope.form.submitting = false;
                 }
             }, function (returnData) {
