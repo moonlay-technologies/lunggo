@@ -67,7 +67,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     // buyer info
     $scope.buyerInfo = {};
     if ($scope.loggedIn) {
-        $scope.buyerInfo.fullname = buyerInfo.fullname;
+        $scope.buyerInfo.name = buyerInfo.name;
         $scope.buyerInfo.countryCode = buyerInfo.countryCode;
         $scope.buyerInfo.phone = buyerInfo.phone;
         $scope.buyerInfo.email = buyerInfo.email;
@@ -316,7 +316,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         },
         send: function () {
             $scope.book.booking = true;
-            $scope.contactData = '{' + ' "title":"' + $scope.buyerInfo.title + '",  "name" :"' + $scope.buyerInfo.fullName + '","countryCallCd":"' + $scope.buyerInfo.countryCode + '","phone":"' + $scope.buyerInfo.phone + '","email":"' + $scope.buyerInfo.email + '"' + '}';
+            $scope.contactData = '{' + ' "title":"' + $scope.buyerInfo.title + '",  "name" :"' + $scope.buyerInfo.name + '","countryCallCd":"' + $scope.buyerInfo.countryCode + '","phone":"' + $scope.buyerInfo.phone + '","email":"' + $scope.buyerInfo.email + '"' + '}';
             $scope.paxData = ' "pax" : [';
             // generate data
             $scope.book.postData = ' "token":"' + $scope.token + '",  "contact" :' + $scope.contactData + ',"lang":"' + $scope.language + '"';;
@@ -351,24 +351,24 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
                 if (!$scope.CheckoutConfig.PassportRequired) {
                     if (i != $scope.passengers.length - 1) {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstName + '" , "last":"' + $scope.passengers[i].lastName + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
                     }
                     else {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstName + '" , "last":"' + $scope.passengers[i].lastName + '" , "dob":"' + $scope.passengers[i].birth.full + '"  , "nationality":"' + $scope.passengers[i].passport.country + '" }';
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '"  , "nationality":"' + $scope.passengers[i].passport.country + '" }';
                     }
                 }
                 else {
                     if (i != $scope.passengers.length - 1) {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstName + '" , "last":"' + $scope.passengers[i].lastName + '" , "dob":"' + $scope.passengers[i].birth.full + '", "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '", "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
                     }
                     else {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstName + '" , "last":"' + $scope.passengers[i].lastName + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" }';
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" }';
                     }
                 }
                 //$scope.book.postData = $scope.book.postData
                 //    + (',"Passengers[' + i + '].Type": "' + $scope.passengers[i].type
                 //        + '", "Passengers[' + i + '].Title": "' + $scope.passengers[i].title + '", "Passengers[' + i + '].FirstName":"'
-                //        + $scope.passengers[i].firstName + '", "Passengers[' + i + '].LastName": "'
+                //        + $scope.passengers[i].name + '", "Passengers[' + i + '].LastName": "'
                 //        + $scope.passengers[i].lastName + '", "Passengers[' + i + '].BirthDate":"'
                 //        + $scope.passengers[i].birth.full + '", "Passengers[' + i + '].PassportNumber":"'
                 //        + $scope.passengers[i].passport.number

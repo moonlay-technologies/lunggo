@@ -167,14 +167,14 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group" ng-class="{'has-error' : buyerForm.fullname.$touched && buyerForm.fullname.$invalid}">
+                                    <div class="form-group" ng-class="{'has-error' : buyerForm.name.$touched && buyerForm.name.$invalid}">
                                         <label class="control-label important">Nama Lengkap :</label>
                                         <div ng-hide="loggedIn">
-                                            <input type="text" class="form-control" value="" id="buyer-fullname" placeholder="Nama Lengkap" name="fullname" ng-model="buyerInfo.fullname" required />
+                                            <input type="text" class="form-control" value="" id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="buyerInfo.name" required />
                                         </div>
                                         <div ng-hide="!loggedIn">
                                             <!--Jika udah Login-->
-                                            <input type="text" class="form-control" value=buyerInfo.fullname id="buyer-fullname" placeholder="Nama Lengkap" name="fullname" ng-model="buyerInfo.fullname" required />
+                                            <input type="text" class="form-control" value=buyerInfo.name id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="buyerInfo.name" required />
                                     </div>
                                     </div>
                                     <div class="form-group" ng-class="{'has-error' : (buyerForm.phone.$touched && buyerForm.phone.$invalid) || (buyerForm.countryCode.$touched && buyerForm.countryCode.$invalid)}">
@@ -229,7 +229,7 @@
                                     <form novalidate name="passengersForm">
                                         <div class="passenger-form" id="passenger-{{$index}}" ng-repeat="passenger in passengers track by $index" ng-init="initPassenger(passenger)">
                                             <header>
-                                                <span>Penumpang {{$index + 1}} ({{passenger.typeName}}) <span ng-show="passenger.firstname || passenger.lastname"> : {{ changeTitle(passenger.title) + ' ' + passenger.firstname + ' ' + passenger.lastname}}</span></span>
+                                                <span>Penumpang {{$index + 1}} ({{passenger.typeName}}) <span ng-show="passenger.name"> : {{ changeTitle(passenger.title) + ' ' + passenger.name}}</span></span>
                                                 <span class="toggle hidden"></span>
                                             </header>
                                             <div class="passenger-content">
@@ -240,13 +240,9 @@
                                                         <option ng-repeat="title in titles" value="{{title.value}}" ng-selected="title.value == 'Mister'" ng-if="!(title.value == 'Mistress' && passenger.type != 'adult')">{{title.name}}</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.firstname.$invalid && passengerForm_{{$index}}.firstname.$touched }">
-                                                    <label class="control-label important">Nama Depan (dan Nama Tengah) :</label>
-                                                    <input type="text" value="" name="passenger_{{$index}}_firstname" class="form-control" placeholder="Nama Depan" ng-model="passenger.firstname" required />
-                                                </div>
-                                                <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.lastname.$invalid && passengerForm_{{$index}}.lastname.$touched }">
-                                                    <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
-                                                    <input type="text" value="" name="passenger_{{$index}}_lastname" class="form-control" placeholder="Nama Belakang" ng-model="passenger.lastname" required />
+                                                <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.name.$invalid && passengerForm_{{$index}}.name.$touched }">
+                                                    <label class="control-label important">Nama Lengkap :</label>
+                                                    <input type="text" value="" name="passenger_{{$index}}_name" class="form-control" placeholder="Nama Depan" ng-model="passenger.name" required />
                                                 </div>
                                                 <div class="form-group" ng-if="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
                                                     <label class="control-label important">Tanggal Lahir :</label>
@@ -346,7 +342,7 @@
                                                 </header>
                                     <section class="buyer-content">
                                         <div class="buyer-list-item">
-                                            <h3 class="buyer-list-heading"><b>{{changeTitle(buyerInfo.title)}} {{buyerInfo.fullname}}</b></h3>
+                                            <h3 class="buyer-list-heading"><b>{{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</b></h3>
                                             <div class="buyer-list-content">
                                                 <p>
                                                     <span class="buyer-label">No. Telepon</span>
@@ -370,7 +366,7 @@
                                             <div class="col-md-12">
                                                 <div class="col-md-8">
                                                     <h3 class="passenger-list-heading">
-                                                        <b> {{$index+1}}. {{changeTitle(passenger.title)}} {{passenger.firstname}} {{passenger.lastname}} </b>
+                                                        <b> {{$index+1}}. {{changeTitle(passenger.title)}} {{passenger.name}} </b>
                                                         <medium> ({{passenger.typeName}}) </medium>
                                                     </h3>
                                                 </div>
@@ -508,7 +504,7 @@
                                             <input type="text" name="Language" value="" ng-model="language" />
 
                                             <p>Buyer Info</p>
-                                            <input type="text" name="Contact.Name" value="" ng-model="buyerInfo.fullname" />
+                                            <input type="text" name="Contact.Name" value="" ng-model="buyerInfo.name" />
                                             <input type="text" name="Contact.CountryCode" value="" ng-model="buyerInfo.countryCode" />
                                             <input type="text" name="Contact.Phone" value="" ng-model="buyerInfo.phone" />
                                             <input type="text" name="Contact.Email" value="" ng-model="buyerInfo.email" />
@@ -518,8 +514,7 @@
 
                                                 <input type="text" name="Passengers[{{$index}}].Type" value="" ng-model="passenger.type" />
                                                 <input type="text" name="Passengers[{{$index}}].Title" value="" ng-model="passenger.title" />
-                                                <input type="text" name="Passengers[{{$index}}].FirstName" value="" ng-model="passenger.firstname" />
-                                                <input type="text" name="Passengers[{{$index}}].LastName" value="" ng-model="passenger.lastname" />
+                                                <input type="text" name="Passengers[{{$index}}].Name" value="" ng-model="passenger.name" />
                                                 <input type="text" name="Passengers[{{$index}}].BirthDate.Year" value="" ng-model="passenger.birth.year" />
                                                 <input type="text" name="Passengers[{{$index}}].BirthDate.Month" value="" ng-model="passenger.birth.month" />
                                                 <input type="text" name="Passengers[{{$index}}].BirthDate.Date" value="" ng-model="passenger.birth.date" />

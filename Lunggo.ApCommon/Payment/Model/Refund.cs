@@ -8,6 +8,20 @@ using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Payment.Model
 {
+    public class RefundForDisplay
+    {
+        [JsonProperty("time", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime Time { get; set; }
+        [JsonProperty("bank", NullValueHandling = NullValueHandling.Ignore)]
+        public string BeneficiaryBank { get; set; }
+        [JsonProperty("account", NullValueHandling = NullValueHandling.Ignore)]
+        public string BeneficiaryAccount { get; set; }
+        [JsonProperty("currency", NullValueHandling = NullValueHandling.Ignore)]
+        public string Currency { get; set; }
+        [JsonProperty("amount", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal Amount { get; set; }
+    }
+
     public class Refund
     {
         public DateTime Time { get; set; }

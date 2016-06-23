@@ -124,7 +124,7 @@ app.controller('checkoutController', [
                     headers: { 'Authorization': $scope.getFlightHeader }
                 }).success(function (returnData) {
                     if (returnData.status == "200") {
-                        $scope.buyerInfo.fullname = returnData.first + ' ' + returnData.last;
+                        $scope.buyerInfo.name = returnData.name;
                         $scope.buyerInfo.countryCode = parseInt(returnData.countryCallCd);
                         $scope.buyerInfo.phone = parseInt(returnData.phone);
                         $scope.buyerInfo.email = returnData.email;
@@ -161,7 +161,7 @@ app.controller('checkoutController', [
                 $scope.book.booking = true;
                 $scope.book.isPriceChanged = false;
                 $scope.book.checked = false;
-                $scope.contactData = '{' + ' "title":"' + $scope.buyerInfo.title + '",  "name" :"' + $scope.buyerInfo.fullname + '","countryCallCd":"' + $scope.buyerInfo.countryCode + '","phone":"' + $scope.buyerInfo.phone + '","email":"' + $scope.buyerInfo.email + '"' + '}';
+                $scope.contactData = '{' + ' "title":"' + $scope.buyerInfo.title + '",  "name" :"' + $scope.buyerInfo.name + '","countryCallCd":"' + $scope.buyerInfo.countryCode + '","phone":"' + $scope.buyerInfo.phone + '","email":"' + $scope.buyerInfo.email + '"' + '}';
                 $scope.paxData = ' "pax" : [';
 
                 // generate data
@@ -191,19 +191,19 @@ app.controller('checkoutController', [
                     $scope.passengers[i].passport.expire.full = $scope.passengers[i].passport.expire.year + '/' + ('0' + (parseInt($scope.passengers[i].passport.expire.month) + 1)).slice(-2) + '/' + ('0' + $scope.passengers[i].passport.expire.date).slice(-2);
                     if (!$scope.passportRequired) {
                         if (i != $scope.passengers.length - 1) {
-                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstname + '" , "last":"' + $scope.passengers[i].lastname + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
+                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
                         }
                         else {
-                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstname + '" , "last":"' + $scope.passengers[i].lastname + '" , "dob":"' + $scope.passengers[i].birth.full + '"  , "nationality":"' + $scope.passengers[i].passport.country + '" }';
+                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '"  , "nationality":"' + $scope.passengers[i].passport.country + '" }';
                         }
                     }
                     else
                     {
                         if (i != $scope.passengers.length - 1) {
-                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstname + '" , "last":"' + $scope.passengers[i].lastname + '" , "dob":"' + $scope.passengers[i].birth.full + '", "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
+                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '", "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
                         }
                         else {
-                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "first":"' + $scope.passengers[i].firstname + '" , "last":"' + $scope.passengers[i].lastname + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" }';
+                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" }';
                         }
                     }
 
@@ -296,7 +296,7 @@ app.controller('checkoutController', [
             }).success(function (returnData) {
                 if (returnData.status == "200") {
                     console.log('Success getting Profile');
-                    $scope.buyerInfo.fullname = returnData.first + ' ' + returnData.last;
+                    $scope.buyerInfo.name = returnData.name;
                     $scope.buyerInfo.countryCode = parseInt(returnData.countryCallCd);
                     $scope.buyerInfo.phone = parseInt(returnData.phone);
                     $scope.buyerInfo.email = returnData.email;

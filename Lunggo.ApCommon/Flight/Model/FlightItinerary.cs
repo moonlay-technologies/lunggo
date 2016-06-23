@@ -11,42 +11,42 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightItineraryForDisplay
     {
-        [JsonProperty("reqPassport")]
-        public bool RequirePassport { get; set; }
-        [JsonProperty("reqDob")]
-        public bool RequireBirthDate { get; set; }
-        [JsonProperty("reqSameCheckIn")]
-        public bool RequireSameCheckIn { get; set; }
-        [JsonProperty("reqNationality")]
-        public bool RequireNationality { get; set; }
-        [JsonProperty("holdable")]
-        public bool CanHold { get; set; }
-        [JsonProperty("adultCount")]
-        public int AdultCount { get; set; }
-        [JsonProperty("childCount")]
-        public int ChildCount { get; set; }
-        [JsonProperty("infantCount")]
-        public int InfantCount { get; set; }
-        [JsonProperty("adultFare")]
-        public decimal AdultFare { get; set; }
-        [JsonProperty("childFare")]
-        public decimal ChildFare { get; set; }
-        [JsonProperty("infantFare")]
-        public decimal InfantFare { get; set; }
-        [JsonProperty("type")]
-        public TripType TripType { get; set; }
-        [JsonProperty("reqCabin")]
-        public CabinClass RequestedCabinClass { get; set; }
-        [JsonProperty("reg")]
-        public int RegisterNumber { get; set; }
-        [JsonProperty("totalFare")]
-        public decimal TotalFare { get; set; }
-        [JsonProperty("currency")]
+        [JsonProperty("reqPassport", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? RequirePassport { get; set; }
+        [JsonProperty("reqDob", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? RequireBirthDate { get; set; }
+        [JsonProperty("reqSameCheckIn", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? RequireSameCheckIn { get; set; }
+        [JsonProperty("reqNationality", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? RequireNationality { get; set; }
+        [JsonProperty("holdable", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? CanHold { get; set; }
+        [JsonProperty("adultCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int? AdultCount { get; set; }
+        [JsonProperty("childCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int? ChildCount { get; set; }
+        [JsonProperty("infantCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int? InfantCount { get; set; }
+        [JsonProperty("adultFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? AdultFare { get; set; }
+        [JsonProperty("childFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? ChildFare { get; set; }
+        [JsonProperty("infantFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? InfantFare { get; set; }
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        public TripType? TripType { get; set; }
+        [JsonProperty("reqCabin", NullValueHandling = NullValueHandling.Ignore)]
+        public CabinClass? RequestedCabinClass { get; set; }
+        [JsonProperty("reg", NullValueHandling = NullValueHandling.Ignore)]
+        public int? RegisterNumber { get; set; }
+        [JsonProperty("totalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? TotalFare { get; set; }
+        [JsonProperty("currency", NullValueHandling = NullValueHandling.Ignore)]
         public string Currency { get; set; }
-        [JsonProperty("trips")]
+        [JsonProperty("trips", NullValueHandling = NullValueHandling.Ignore)]
         public List<FlightTripForDisplay> Trips { get; set; }
-        [JsonProperty("originalFare")]
-        public decimal OriginalFare { get; set; }
+        [JsonProperty("originalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? OriginalFare { get; set; }
         [JsonProperty("comboFare", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? ComboFare { get; set; }
     }
