@@ -19,13 +19,13 @@
 
     try
     {
-        adultCount = Model.Itinerary.AdultCount;
-        childCount = Model.Itinerary.ChildCount;
-        var infantCount = Model.Itinerary.InfantCount;
+        adultCount = Model.Itinerary.AdultCount.GetValueOrDefault();
+        childCount = Model.Itinerary.ChildCount.GetValueOrDefault();
+        var infantCount = Model.Itinerary.InfantCount.GetValueOrDefault();
         passengerCount = adultCount + childCount + infantCount;
-        needBirthDate = Model.Itinerary.RequireBirthDate;
-        needPassport = Model.Itinerary.RequirePassport;
-        needNationality = Model.Itinerary.RequireNationality;
+        needBirthDate = Model.Itinerary.RequireBirthDate.GetValueOrDefault();
+        needPassport = Model.Itinerary.RequirePassport.GetValueOrDefault();
+        needNationality = Model.Itinerary.RequireNationality.GetValueOrDefault();
         token = Model.Token;
     }
     catch
@@ -92,8 +92,8 @@
         var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
         var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
         var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
-        var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.AddDays(-1)';
-        var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.AddMonths(6)';
+        var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
+        var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
 
 
         // change current page
