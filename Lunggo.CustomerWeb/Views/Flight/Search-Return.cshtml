@@ -91,10 +91,10 @@
 }
 @section PageJS{
     <script>
-        var langCode = 'en';
-        flightPageFunctions();
-        FlightSearchConfig.flightForm = {
-            departureFlightParam: {
+    var langCode = 'en';
+    flightPageFunctions();
+    FlightSearchConfig.flightForm = {
+        departureFlightParam: {
                 TripType: "@TripType.OneWay",
                 trips: @Html.Raw(JsonConvert.SerializeObject(departTrip)),
                 AdultCount: @data.AdultCount,
@@ -120,18 +120,18 @@
                 FinalProgress: 0,
                 SecureCode: '@ViewBag.RequestId'
             }
-        };
-        FlightData = {
-            Cabin: '@data.CabinClass',
-            Origin: '@trips[0].OriginAirport',
-            OriginCity: '@originCityNames[0]',
-            Destination: '@trips[0].DestinationAirport',
-            DestinationCity: '@destinationCityNames[0]',
-            Type: 'Return',
-            Passenger: [@data.AdultCount, @data.ChildCount, @data.InfantCount],
-            DepartureDate: '@trips[0].DepartureDate.ToString("yyyy/MM/dd")',
-            ReturnDate: '@trips[1].DepartureDate.ToString("yyyy/MM/dd")'
-        };
+    };
+    FlightData = {
+        Cabin: '@data.CabinClass',
+        Origin: '@trips[0].OriginAirport',
+        OriginCity: '@originCityNames[0]',
+        Destination: '@trips[0].DestinationAirport',
+        DestinationCity: '@destinationCityNames[0]',
+        Type: 'Return',
+        Passenger: [@data.AdultCount, @data.ChildCount, @data.InfantCount],
+        DepartureDate: '@trips[0].DepartureDate.ToString("yyyy/MM/dd")',
+        ReturnDate: '@trips[1].DepartureDate.ToString("yyyy/MM/dd")'
+    };
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/returnFlightController.js"></script>
@@ -152,6 +152,7 @@
                 <div class="result-form-left">
                     <h3><b>@originCityNames[0]</b> (@data.Trips[0].OriginAirport) ke <b>@originCityNames[1]</b> (@data.Trips[0].DestinationAirport) </h3>
                     <h4><b>@data.Trips[0].DepartureDate.ToString("ddd, dd MMM yyyy", new CultureInfo("id-ID")) - @data.Trips[1].DepartureDate.ToString("ddd, dd MMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>
+                    @*<h4><b>@data.Trips[0].DepartureDate.ToString("dd-MMM-yyyy") - @data.Trips[1].DepartureDate.ToString("dd MMM yyyy")</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>*@
                 </div>
             </div>
             <div class="col-sm-3">
@@ -524,7 +525,9 @@
                                 </div><!-- .summar-bottom -->
                             </div>
                             <div class="flight-summary-right">
-                                <div><span style="color:#1daee4; font-weight:bolder;padding-left:10px">HARGA PROMO</span></div>
+
+                                <span class="original-price"> Rp {{flight.originalFare | number}} </span>
+
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.totalFare | number}}</h4>
                                 <small>*Termasuk Pajak &amp; Service Charge</small>
                                 <a class="btn btn-yellow" ng-click="setChosenFlight('departure',flight.IndexNo)">PESAN</a>
@@ -853,7 +856,8 @@
                                 </div><!-- .summar-bottom -->
                             </div>
                             <div class="flight-summary-right">
-                                <div><span style="color:#1daee4; font-weight:bolder;padding-left:10px">HARGA PROMO</span></div>
+
+                                <span class="original-price"> Rp {{flight.originalFare | number}} </span>
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.totalFare | number}}</h4>
                                 <small>*Termasuk Pajak &amp; Service Charge</small>
                                 <a class="btn btn-yellow" ng-click="setChosenFlight('return',flight.IndexNo)">PESAN</a>

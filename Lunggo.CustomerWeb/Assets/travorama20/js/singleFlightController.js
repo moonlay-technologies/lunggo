@@ -525,7 +525,7 @@ app.controller('singleFlightController', [
 
             for (var i = 0; i < data.length; i++) {
                 data[i].Available = true;
-                data[i].IndexNo = ( startNo + i);
+                data[i].IndexNo = (startNo + i);
                 $scope.flightList.push(data[i]);
             }
 
