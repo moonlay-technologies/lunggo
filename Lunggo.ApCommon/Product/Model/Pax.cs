@@ -5,27 +5,37 @@ using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Product.Model
 {
+    public class PaxForDisplay
+    {
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        public PaxType? Type { get; set; }
+        [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
+        public Title? Title { get; set; }
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+        public string Name { get; set; }
+        [JsonProperty("dob", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? DateOfBirth { get; set; }
+        [JsonProperty("nationality", NullValueHandling = NullValueHandling.Ignore)]
+        public string Nationality { get; set; }
+        [JsonProperty("passportNo", NullValueHandling = NullValueHandling.Ignore)]
+        public string PassportNumber { get; set; }
+        [JsonProperty("passportExp", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? PassportExpiryDate { get; set; }
+        [JsonProperty("passportCountry", NullValueHandling = NullValueHandling.Ignore)]
+        public string PassportCountry { get; set; }
+    }
+
     public class Pax
     {
-        [JsonProperty("typ")]
         public PaxType Type { get; set; }
-        [JsonProperty("tit")]
         public Title Title { get; set; }
-        [JsonProperty("fst")]
         public string FirstName { get; set; }
-        [JsonProperty("lst")]
         public string LastName { get; set; }
-        [JsonProperty("dob")]
         public DateTime? DateOfBirth { get; set; }
-        [JsonProperty("gen")]
         public Gender Gender { get; set; }
-        [JsonProperty("nat")]
         public string Nationality { get; set; }
-        [JsonProperty("passno")]
         public string PassportNumber { get; set; }
-        [JsonProperty("passexp")]
         public DateTime? PassportExpiryDate { get; set; }
-        [JsonProperty("passcty")]
         public string PassportCountry { get; set; }
     }
 }

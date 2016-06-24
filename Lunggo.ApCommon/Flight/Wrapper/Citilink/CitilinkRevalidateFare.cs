@@ -198,6 +198,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         RequireSameCheckIn = false,
                         RequireNationality = false,
                         RequestedCabinClass = CabinClass.Economy,
+                        RequestedTripType = conditions.Itinerary.RequestedTripType,
                         TripType = TripType.OneWay,
                         Supplier = Supplier.AirAsia,
                         Price = new Price(),

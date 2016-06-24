@@ -144,6 +144,13 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
+                if (response.NewItinerary != null)
+                {
+                    var newItin = response.NewItinerary;
+                    newItin.Price.SetMargin(itin.Price.Margin);
+                    newItin.Price.CalculateFinalAndLocal(itin.Price.LocalCurrency);
+                    itin = newItin;
+                }
                 bookResult.IsSuccess = false;
                 if (response.Errors != null)
                     response.Errors.ForEach(output.AddError);

@@ -20,13 +20,13 @@
     var trips = Model.Itinerary.Trips;
     try
     {
-        adultCount = Model.Itinerary.AdultCount;
-        childCount = Model.Itinerary.ChildCount;
-        var infantCount = Model.Itinerary.InfantCount;
+        adultCount = Model.Itinerary.AdultCount.GetValueOrDefault();
+        childCount = Model.Itinerary.ChildCount.GetValueOrDefault();
+        var infantCount = Model.Itinerary.InfantCount.GetValueOrDefault();
         passengerCount = adultCount + childCount + infantCount;
-        needBirthDate = Model.Itinerary.RequireBirthDate;
-        needPassport = Model.Itinerary.RequirePassport;
-        needNationality = Model.Itinerary.RequireNationality;
+        needBirthDate = Model.Itinerary.RequireBirthDate.GetValueOrDefault();
+        needPassport = Model.Itinerary.RequirePassport.GetValueOrDefault();
+        needNationality = Model.Itinerary.RequireNationality.GetValueOrDefault();
         token = Model.Token;
     }
     catch
@@ -79,14 +79,12 @@
         BirthDateRequired: @Model.Itinerary.RequireBirthDate.ToString().ToLower(),
             // departure date
         DepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate',
-        BeforeDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.AddDays(-1)',
-        PassportDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.AddMonths(6)',
+        BeforeDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)',
+        PassportDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)',
             // buyer info
             BuyerInfo: {
                 LoggedIn : @User.Identity.IsAuthenticated.ToString().ToLower(),
-                FirstName: '@User.Identity.GetFirstName()',
-                LastName: '@User.Identity.GetLastName()',
-                FullName : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+                Name: '@User.Identity.GetFirstName() + " " + @User.Identity.GetLastName()',
                 CountryCode : '@User.Identity.GetCountryCd()',
                 Phone: '@User.Identity.GetPhoneNumber()',
                 Email: '@User.Identity.GetEmail()'
@@ -141,7 +139,7 @@ default:
 
                     <div class="form-group important">
                         <label class="control-label">Nama Lengkap : </label>
-                        <input type="text" value="" ng-model="buyerInfo.fullName" name="FullName" class="form-control" placeholder="Nama Lengkap" required />
+                        <input type="text" value="" ng-model="buyerInfo.name" name="name" class="form-control" placeholder="Nama Lengkap" required />
                     </div>
 
                     <div class="form-group important">
@@ -192,13 +190,8 @@ default:
                         </div>
 
                         <div class="form-group important">
-                            <label class="control-label">Nama Depan (dan Nama Tengah) : </label>
-                            <input type="text" value="" class="form-control" required name="passenger_{{$index}}_firstName" placeholder="Ex : John" ng-model="Passenger.firstName" />
-                        </div>
-
-                        <div class="form-group important">
-                            <label class="control-label">Nama Belakang / Nama Keluarga: </label>
-                            <input type="text" value="" class="form-control" required name="passenger_{{$index}}_lastName" placeholder="Ex : Smith" ng-model="Passenger.lastName" />
+                            <label class="control-label">Nama Lengkap : </label>
+                            <input type="text" value="" class="form-control" required name="passenger_{{$index}}_name" placeholder="Ex : John" ng-model="Passenger.name" />
                         </div>
 
 
@@ -314,7 +307,7 @@ default:
                         <li>
                             <h4>
                                 <span>{{changeTitle(buyerInfo.title)}}</span>
-                                {{buyerInfo.fullName}}
+                                {{buyerInfo.name}}
                             </h4>
                             <dl>
                                 <dt>No. Telepon</dt>
@@ -336,7 +329,7 @@ default:
                         <li ng-repeat="Passenger in passengers">
                             <h4>
                                 <span>{{changeTitle(Passenger.title)}}</span>
-                                {{Passenger.firstName}} {{Passenger.lastName}}
+                                {{Passenger.name}}
                             </h4>
                             <dl>
                                 <dt>Jenis Tiket</dt>
@@ -488,7 +481,7 @@ default:
                     <input type="text" name="Language" value="" ng-model="language" />
 
                     <p>Buyer Info</p>
-                    <input type="text" name="Contact.Name" value="" ng-model="buyerInfo.fullname" />
+                    <input type="text" name="Contact.Name" value="" ng-model="buyerInfo.name" />
                     <input type="text" name="Contact.CountryCode" value="" ng-model="buyerInfo.countryCode" />
                     <input type="text" name="Contact.Phone" value="" ng-model="buyerInfo.phone" />
                     <input type="text" name="Contact.Email" value="" ng-model="buyerInfo.email" />
@@ -498,8 +491,7 @@ default:
 
                         <input type="text" name="Passengers[{{$index}}].Type" value="" ng-model="passenger.type" />
                         <input type="text" name="Passengers[{{$index}}].Title" value="" ng-model="passenger.title" />
-                        <input type="text" name="Passengers[{{$index}}].FirstName" value="" ng-model="passenger.firstname" />
-                        <input type="text" name="Passengers[{{$index}}].LastName" value="" ng-model="passenger.lastname" />
+                        <input type="text" name="Passengers[{{$index}}].Name" value="" ng-model="passenger.name" />
                         <input type="text" name="Passengers[{{$index}}].BirthDate.Year" value="" ng-model="passenger.birth.year" />
                         <input type="text" name="Passengers[{{$index}}].BirthDate.Month" value="" ng-model="passenger.birth.month" />
                         <input type="text" name="Passengers[{{$index}}].BirthDate.Date" value="" ng-model="passenger.birth.date" />

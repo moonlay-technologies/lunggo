@@ -52,7 +52,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 {
                     Origin = e.Item1.OriginAirport,
                     Destination = e.Item1.DestinationAirport,
-                    Date = e.Item1.DepartureDate,
+                    Date = e.Item1.DepartureDate.GetValueOrDefault(),
                     Status = MapBookingStatus(e.Item2)
                 }).ToList()
             };

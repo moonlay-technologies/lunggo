@@ -24,12 +24,12 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
                     CountryName = hotelLocationDict.CountryName,
                     Priority = hotelLocationDict.Priority
                 };
-            }).OrderBy(d => d.Priority);
+            }).OrderBy(d => d.Priority).ToList();
             return new AutocompleteHotelLocationsApiResponse
             {
                 StatusCode = HttpStatusCode.OK,
-                StatusMessage = "Success.",
-                HotelLocations = hotelLocations
+                HotelLocations = hotelLocations,
+                Count = hotelLocations.Count
             };
         }
     }

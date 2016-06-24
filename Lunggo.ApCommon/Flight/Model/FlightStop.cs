@@ -5,14 +5,14 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightStopForDisplay
     {
-        [JsonProperty("airport")]
+        [JsonProperty("airport", NullValueHandling = NullValueHandling.Ignore)]
         public string Airport { get; set; }
-        [JsonProperty("arrivalTime")]
-        public DateTime ArrivalTime { get; set; }
-        [JsonProperty("departureTime")]
-        public DateTime DepartureTime { get; set; }
-        [JsonProperty("duration")]
-        public int Duration { get; set; }
+        [JsonProperty("arrivalTime", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? ArrivalTime { get; set; }
+        [JsonProperty("departureTime", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? DepartureTime { get; set; }
+        [JsonProperty("duration", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Duration { get; set; }
     }
 
     public class FlightStop

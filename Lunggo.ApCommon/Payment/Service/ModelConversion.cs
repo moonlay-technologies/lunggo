@@ -29,8 +29,23 @@ namespace Lunggo.ApCommon.Payment.Service
                 TransferFee = payment.TransferFee / payment.LocalCurrency.Rate,
                 Currency = payment.LocalCurrency,
                 FinalPrice = payment.LocalFinalPrice,
-                Refund = payment.Refund,
+                Refund = ConvertToRefundForDisplay(payment.Refund),
                 InvoiceNo = payment.InvoiceNo
+            };
+        }
+
+        private RefundForDisplay ConvertToRefundForDisplay(Refund refund)
+        {
+            if (refund == null)
+                return null;
+
+            return new RefundForDisplay
+            {
+                Time = refund.Time,
+                BeneficiaryBank = refund.BeneficiaryBank,
+                BeneficiaryAccount = refund.BeneficiaryAccount,
+                Currency = refund.Currency,
+                Amount = refund.Amount
             };
         }
     }

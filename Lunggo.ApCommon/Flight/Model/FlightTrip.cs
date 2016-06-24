@@ -7,29 +7,29 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightTripForDisplay
     {
-        [JsonProperty("transitCount")]
-        public int TotalTransit { get; set; }
-        [JsonProperty("transits")]
+        [JsonProperty("transitCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int? TotalTransit { get; set; }
+        [JsonProperty("transits", NullValueHandling = NullValueHandling.Ignore)]
         public List<Transit> Transits { get; set; }
-        [JsonProperty("airlines")]
+        [JsonProperty("airlines", NullValueHandling = NullValueHandling.Ignore)]
         public List<Airline> Airlines { get; set; }
-        [JsonProperty("totalDuration")]
-        public double TotalDuration { get; set; }
-        [JsonProperty("origin")]
+        [JsonProperty("totalDuration", NullValueHandling = NullValueHandling.Ignore)]
+        public double? TotalDuration { get; set; }
+        [JsonProperty("origin", NullValueHandling = NullValueHandling.Ignore)]
         public string OriginAirport { get; set; }
-        [JsonProperty("originName")]
+        [JsonProperty("originName", NullValueHandling = NullValueHandling.Ignore)]
         public string OriginAirportName { get; set; }
-        [JsonProperty("originCity")]
+        [JsonProperty("originCity", NullValueHandling = NullValueHandling.Ignore)]
         public string OriginCity { get; set; }
-        [JsonProperty("destination")]
+        [JsonProperty("destination", NullValueHandling = NullValueHandling.Ignore)]
         public string DestinationAirport { get; set; }
-        [JsonProperty("destinationName")]
+        [JsonProperty("destinationName", NullValueHandling = NullValueHandling.Ignore)]
         public string DestinationAirportName { get; set; }
-        [JsonProperty("destinationCity")]
+        [JsonProperty("destinationCity", NullValueHandling = NullValueHandling.Ignore)]
         public string DestinationCity { get; set; }
-        [JsonProperty("date")]
-        public DateTime DepartureDate { get; set; }
-        [JsonProperty("segments")]
+        [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? DepartureDate { get; set; }
+        [JsonProperty("segments", NullValueHandling = NullValueHandling.Ignore)]
         public List<FlightSegmentForDisplay> Segments { get; set; }
     }
 
@@ -56,25 +56,23 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class Airline
     {
-        [JsonProperty("code")]
+        [JsonProperty("code", NullValueHandling = NullValueHandling.Ignore)]
         public string Code { get; set; }
-        [JsonProperty("name")]
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
-        [JsonProperty("logoUrl")]
+        [JsonProperty("logoUrl", NullValueHandling = NullValueHandling.Ignore)]
         public string LogoUrl { get; set; }
     }
 
     public class Transit
     {
-        [JsonProperty("stop")]
-        public bool IsStop { get; set; }
-        [JsonProperty("airport")]
+        [JsonProperty("airport", NullValueHandling = NullValueHandling.Ignore)]
         public string Airport { get; set; }
-        [JsonProperty("arrivalTime")]
-        public DateTime ArrivalTime { get; set; }
-        [JsonProperty("departureTime")]
-        public DateTime DepartureTime { get; set; }
-        [JsonProperty("duration")]
+        [JsonProperty("arrivalTime", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? ArrivalTime { get; set; }
+        [JsonProperty("departureTime", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? DepartureTime { get; set; }
+        [JsonProperty("duration", NullValueHandling = NullValueHandling.Ignore)]
         public double Duration { get; set; }
     }
 

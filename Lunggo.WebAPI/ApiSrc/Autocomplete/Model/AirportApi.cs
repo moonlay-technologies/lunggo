@@ -4,13 +4,13 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Model
 {
     public class AirportApi
     {
-        [JsonProperty("code")]
+        [JsonProperty("code", NullValueHandling = NullValueHandling.Ignore)]
         public string Code { get; set; }
-        [JsonProperty("name")]
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
-        [JsonProperty("city")]
+        [JsonProperty("city", NullValueHandling = NullValueHandling.Ignore)]
         public string City { get; set; }
-        [JsonProperty("country")]
+        [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
         public string Country { get; set; }
     }
 }

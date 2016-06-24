@@ -35,11 +35,11 @@ namespace Lunggo.ApCommon.Payment.Model
         [JsonProperty("transferFee", NullValueHandling = NullValueHandling.Ignore)]
         public decimal TransferFee { get; set; }
         [JsonProperty("currency", NullValueHandling = NullValueHandling.Ignore)]
-        public Currency Currency { get; set; }
+        public string Currency { get; set; }
         [JsonProperty("finalPrice", NullValueHandling = NullValueHandling.Ignore)]
         public decimal FinalPrice { get; set; }
         [JsonProperty("refund", NullValueHandling = NullValueHandling.Ignore)]
-        public Refund Refund { get; set; }
+        public RefundForDisplay Refund { get; set; }
         [JsonProperty("invoice", NullValueHandling = NullValueHandling.Ignore)]
         public string InvoiceNo { get; set; }
     }

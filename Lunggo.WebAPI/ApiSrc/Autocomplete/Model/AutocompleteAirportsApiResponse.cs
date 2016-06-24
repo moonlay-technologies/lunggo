@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Model
 {
-    public class AutocompleteAirportsApiResponse
+    public class AutocompleteAirportsApiResponse : ApiResponseBase
     {
-        [JsonProperty("status_code")]
-        public HttpStatusCode StatusCode { get; set; }
-        [JsonProperty("status_message")]
-        public string StatusMessage { get; set; }
         [JsonProperty("airports")]
-        public IEnumerable<AirportApi> Airports { get; set; }
+        public List<AirportApi> Airports { get; set; }
+        [JsonProperty("count")]
+        public int? Count { get; set; }
     }
 }

@@ -162,6 +162,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             var deptTime = DateTime.Parse(splittedSegmentFareId[5]).AddHours(-(FlightService.GetInstance().GetAirportTimeZone(splittedSegmentFareId[4])));
                             var arrTime = DateTime.Parse(splittedSegmentFareId[7]).AddHours(-(FlightService.GetInstance().GetAirportTimeZone(splittedSegmentFareId[6])));
                             var duration = arrTime - deptTime;
+
+                            var baggage = GetBaggage(splittedSegmentFareId[4], splittedSegmentFareId[6]);
+                            var isBaggageIncluded = false;
+
+                            if (baggage != null)
+                            {
+                                isBaggageIncluded = true;
+                            }
+
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = splittedSegmentFareId[0],
@@ -177,7 +186,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 StopQuantity = 0,
                                 IsMealIncluded = false,
                                 IsPscIncluded = isPscIncluded,
-                                Baggage = GetBaggage(splittedSegmentFareId[4], splittedSegmentFareId[6])
+                                BaggageCapacity = baggage,
+                                IsBaggageIncluded = isBaggageIncluded
                             });
                         }
 

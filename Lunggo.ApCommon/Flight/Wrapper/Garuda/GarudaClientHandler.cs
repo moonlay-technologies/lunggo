@@ -82,18 +82,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                 return response.ResponseUri.AbsolutePath == "/web/dashboard/welcome";             
             }
-
-            private void TurnInId(RestClient client, string username)
-            {
-                var accReq = new RestRequest("/api/GarudaAccount/LogOut?userId=" + username, Method.GET);
-                var accRs = (RestResponse)client.Execute(accReq);
-            }
-           
-            //Get Deposit for Lion Air
-            private static decimal getDeposit() 
-            {
-                return currentDeposit;
-            }
         }
     }
 }

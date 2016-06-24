@@ -227,6 +227,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 MapPassengerCount(pricedItinerary, flightItinerary);
                 CalculateBreakdownPortion(flightItinerary, pricedItinerary);
                 MapRequiredFields(pricedItinerary, flightItinerary);
+                if (conditions is RevalidateConditions)
+                    flightItinerary.RequestedTripType = (conditions as RevalidateConditions).Itinerary.RequestedTripType;
                 flightItinerary.Supplier = Supplier.Mystifly;
                 flightItinerary.FareType = MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType);
                 flightItinerary.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;

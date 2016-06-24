@@ -19,11 +19,17 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
             var foundUser = user.Identity.GetUser();
+            string name;
+            var first = foundUser.FirstName ?? "";
+            var last = foundUser.LastName ?? "";
+            if (first == last)
+                name = last;
+            else
+                name = first + " " + last;
             return new GetProfileApiResponse
             {
                 Email = foundUser.Email ?? "",
-                FirstName = foundUser.FirstName ?? "",
-                LastName = foundUser.LastName ?? "",
+                Name = name,
                 CountryCallingCd = foundUser.CountryCd ?? "",
                 PhoneNumber = foundUser.PhoneNumber ?? "",
                 StatusCode = HttpStatusCode.OK

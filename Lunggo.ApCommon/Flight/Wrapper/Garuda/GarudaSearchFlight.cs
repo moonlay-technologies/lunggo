@@ -290,6 +290,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                     DateTime.ParseExact(segment.EndDate, format, CultureInfo.InvariantCulture),
                                     DateTimeKind.Utc);
                             fareId = fareId + segment.Airline.Code + "-" + segment.FlightNumber + "|";
+                            var baggage = GetBaggage(conditions.CabinClass, segment.BeginLocation.LocationCode, segment.EndLocation.LocationCode, originCountry, destinationCountry);
+                            bool isBaggageIncluded = false;
+                            if (baggage != null)
+                            {
+                                isBaggageIncluded = true;
+                            }
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = segment.Airline.Code,
@@ -308,7 +314,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                     deptTime.AddHours(-(FlightService.GetInstance().GetAirportTimeZone(segment.BeginLocation.LocationCode))),
                                 IsMealIncluded = true,
                                 IsPscIncluded = true,
-                                Baggage = GetBaggage(conditions.CabinClass,segment.BeginLocation.LocationCode,segment.EndLocation.LocationCode,originCountry,destinationCountry)
+                                IsBaggageIncluded = isBaggageIncluded,
+                                BaggageCapacity = baggage       
                             });
 
                             if (segment.ListLegs != null)
@@ -345,7 +352,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
 
                         var flightid = itin.ProposedBoundId;
-                        var listPrice = new List<Int32>();
                         var listIndex = new List<Int32>();
                         string childPriceEach = "0";
                         string infantPriceEach = "0";
@@ -365,10 +371,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             Convert.ToInt32(
                                 priceClass.ElementAt(listIndex.ElementAt(0)).PnrPrices[0].RecoAmounts[0].RecoAmount
                                     .TotalAmount);
-                        var index = 0;
+                        var index = listIndex.ElementAt(0);
                         for (var ind = 1; ind < listIndex.Count; ind++)
                         {
-                            if (Convert.ToInt32(
+                           if (Convert.ToInt32(
                                 priceClass.ElementAt(listIndex.ElementAt(ind)).PnrPrices[0].RecoAmounts[0].RecoAmount
                                     .TotalAmount) < Value)
                             {
@@ -378,7 +384,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                         var dataPrice = priceClass.ElementAt(index);
                         var price = dataPrice.PnrPrices[0].RecoAmounts[0].RecoAmount.TotalAmount;
-
+                        var currency = dataPrice.PnrPrices[0].RecoAmounts[0].RecoAmount.Currency.Code;
                         string adultPriceEach = dataPrice.PnrPrices[0].TravellerPrices[0].TravellersPrice[0].RecoAmount.TotalAmount;
                         if (dataPrice.PnrPrices[0].TravellerPrices.Count() == 3)
                         {
@@ -439,7 +445,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 }
                             }
                         };
-                        itinerary.Price.SetSupplier(Convert.ToDecimal(price), new Currency("IDR"));
+                        itinerary.Price.SetSupplier(Convert.ToDecimal(price), new Payment.Model.Currency(currency));
                         itins.Add(itinerary);
                     }
 
@@ -556,9 +562,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
             private class RecoAmt
             {
                 public string TotalAmount { get; set; }
-                public string Tax { get; set; }
+                public Currency Currency { get; set; }
             }
 
+            private class Currency
+            {
+                public string Code { get; set; }
+            }
             private class RecoAmounts
             {
                 public RecoAmt RecoAmount { get; set; }

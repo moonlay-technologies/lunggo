@@ -11,26 +11,24 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightReservationForDisplay
     {
-        [JsonProperty("rsvNo")]
+        [JsonProperty("rsvNo", NullValueHandling = NullValueHandling.Ignore)]
         public string RsvNo { get; set; }
-        [JsonProperty("rsvTime")]
+        [JsonProperty("rsvTime", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime RsvTime { get; set; }
-        [JsonProperty("rsvStatus")]
+        [JsonProperty("rsvStatus", NullValueHandling = NullValueHandling.Ignore)]
         public RsvStatus RsvStatus { get; set; }
-        [JsonProperty("cancelType")]
+        [JsonProperty("cancelType", NullValueHandling = NullValueHandling.Ignore)]
         public CancellationType CancellationType { get; set; }
-        [JsonProperty("cancelTime")]
+        [JsonProperty("cancelTime", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? CancellationTime { get; set; }
-        [JsonProperty("payment")]
+        [JsonProperty("payment", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentDetailsForDisplay Payment { get; set; }
-        [JsonProperty("contact")]
+        [JsonProperty("contact", NullValueHandling = NullValueHandling.Ignore)]
         public Contact Contact { get; set; }
-        [JsonProperty("user")]
-        public User User { get; set; }
-        [JsonProperty("itin")]
+        [JsonProperty("itin", NullValueHandling = NullValueHandling.Ignore)]
         public FlightItineraryForDisplay Itinerary { get; set; }
-        [JsonProperty("pax")]
-        public List<Pax> Passengers { get; set; }
+        [JsonProperty("pax", NullValueHandling = NullValueHandling.Ignore)]
+        public List<PaxForDisplay> Passengers { get; set; }
     }
 
     public class FlightReservation : ReservationBase<FlightReservation>
