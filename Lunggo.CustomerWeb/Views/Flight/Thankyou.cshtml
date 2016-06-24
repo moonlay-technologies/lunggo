@@ -22,8 +22,13 @@
 }
 
 @section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/jquery.countdown.min.js"></script>
 }
+
 @section PageJS{
     <script>
         var langCode = 'en';
@@ -44,178 +49,135 @@
         });
 
     </script>
+    <!-- angular controller -->
+<script src="/Assets/travorama20/js/checkoutController.js"></script>
 }
 
-@if (ViewBag.BookingFailed || Model.Payment.Status == PaymentStatus.Expired)
-{
-    <div>
+<div ng-app="travorama" ng-controller="thankyouController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
+    @if (ViewBag.BookingFailed || Model.Payment.Status == PaymentStatus.Expired)
+    {
+        <div>
 
-        <h2 class="section-title stripe text-center">PEMESANAN <span>GAGAL</span></h2>
+            <h2 class="section-title stripe text-center">PEMESANAN <span>GAGAL</span></h2>
 
-        <div class="container">
-            <p>Mohon maaf, pemesanan dengan no. @Model.RsvNo telah dibatalkan. Silakan membuat pemesanan baru.</p>
+            <div class="container">
+                <p>Mohon maaf, pemesanan dengan no. @Model.RsvNo telah dibatalkan. Silakan membuat pemesanan baru.</p>
+            </div>
+            <div class="container text-center">
+                <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
+            </div>
+
         </div>
-        <div class="container text-center">
-            <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
+    }
+    else if (Model.Payment.Status == PaymentStatus.Denied)
+    {
+        <div>
+
+            <h2 class="section-title stripe text-center">PEMESANAN <span>GAGAL</span></h2>
+
+            <div class="container">
+                <p>Mohon maaf, pemesanan dengann no. @Model.RsvNo telah ditolak. Silakan membuat pemesanan baru.</p>
+            </div>
+            <div class="container text-center">
+                <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
+            </div>
+
         </div>
+    }
+    else
+    {
+        <div>
 
-    </div>
-}
-else if (Model.Payment.Status == PaymentStatus.Denied)
-{
-    <div>
+            <h2 class="section-title stripe text-center">TERIMA <span>KASIH</span></h2>
 
-        <h2 class="section-title stripe text-center">PEMESANAN <span>GAGAL</span></h2>
+            <div class="container">
+                <p>Terima kasih telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda: @Model.Contact.Email.</p>
 
-        <div class="container">
-            <p>Mohon maaf, pemesanan dengann no. @Model.RsvNo telah ditolak. Silakan membuat pemesanan baru.</p>
-        </div>
-        <div class="container text-center">
-            <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
-        </div>
+                <section class="countdown">
 
-    </div>
-}
-else
-{
-    <div>
-
-        <h2 class="section-title stripe text-center">TERIMA <span>KASIH</span></h2>
-
-        <div class="container">
-            <p>Terima kasih telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda: @Model.Contact.Email.</p>
-
-            <section class="countdown">
-            
-                <!--
-                    <div class="row">
-                    
-                        <div class="col-xs-5 col-xs-offset-2">
-                            <div class="timer">
-                                <div class="hour">
-                                    <h5>00</h5>
-                                    <span>Jam</span>
-                                </div>
-                                <div class="separator">:</div>
-                                <div class="minute">
-                                    <h5>00</h5>
-                                    <span>Menit</span>
-                                </div>
-                                <div class="separator">:</div>
-                                <div class="second">
-                                    <h5>00</h5>
-                                    <span>Detik</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-4">
-                            <div class="print">
-                                <a href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new { rsvNo = Model.RsvNo })" target="_blank" class="btn btn-yellow block disabled"><span>CETAK eTICKET</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    -->
-            
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4">
-                        <div class="print">
-                            @using (Html.BeginForm())
-                            {
-                                <input type="hidden" name="rsvNo" value="@Model.RsvNo" />
-                                <button class="btn btn-yellow block"><span>CEK PEMESANAN</span></button>
-                            }
-                        </div>
-                    </div>
-                </div>
-
-                <p>Anda dapat menutup halaman ini dan mengecek status penerbitan e-tiket di menu cek pemesanan setiap saat.</p>
-
-            </section><!-- .section -->
-
-            <section class="order-detail">
-                <header>
-                    <h4><b>Detail Pesanan</b> <span class="pull-right">Nomor Pesanan: <b>@Model.RsvNo</b></span></h4>
-                </header>
-                <section>
-
-                    <div class="container">
+                    <!--
                         <div class="row">
 
-                            <div class="order-detail-left col-xs-8">
-                                <div class="va-passenger col-xs-12">
-                                    <div class="passenger col-xs-8">
-                                        <h4>INFO PENUMPANG</h4>
-
-                                        <ol>
-                                            @foreach (var passenger in Model.Passengers)
-                                            {
-                                                <li><p>@EnumDisplay.PassengerType(passenger.Type) : @EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p></li>
-                                            }
-                                        </ol>
+                            <div class="col-xs-5 col-xs-offset-2">
+                                <div class="timer">
+                                    <div class="hour">
+                                        <h5>00</h5>
+                                        <span>Jam</span>
                                     </div>
-                                    @if (Model.Payment.Method == PaymentMethod.VirtualAccount)
-                                    {
-                                        <div class="virtual-account col-xs-4">
-                                            <h4 class="va-text" style="font-size:11px;padding-bottom:2px;margin-bottom:8px;"><b>NO VIRTUAL ACCOUNT</b></h4>
-                                            <h4 class="va-number" style="font-size : 18px; color: #ff6900; padding:0;"><b>@Model.Payment.TransferAccount</b></h4>
-                                        </div>
-                                    }
+                                    <div class="separator">:</div>
+                                    <div class="minute">
+                                        <h5>00</h5>
+                                        <span>Menit</span>
+                                    </div>
+                                    <div class="separator">:</div>
+                                    <div class="second">
+                                        <h5>00</h5>
+                                        <span>Detik</span>
+                                    </div>
                                 </div>
-                                <div class="order">
-                                    <h4>DETAIL PENERBANGAN</h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="print">
+                                    <a href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new { rsvNo = Model.RsvNo })" target="_blank" class="btn btn-yellow block disabled"><span>CETAK eTICKET</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        -->
 
-                                    <div class="flight departure">
-                                        <p>Berangkat : </p>
-                                        <div class="row">
-                                            @foreach (var segment in Model.Itinerary.Trips[0].Segments)
-                                            {
-                                                if (segment != Model.Itinerary.Trips[0].Segments.First())
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <div class="print">
+                                @using (Html.BeginForm())
+                                {
+                                    <input type="hidden" name="rsvNo" value="@Model.RsvNo" />
+                                    <button class="btn btn-yellow block"><span>CEK PEMESANAN</span></button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>Anda dapat menutup halaman ini dan mengecek status penerbitan e-tiket di menu cek pemesanan setiap saat.</p>
+
+                </section><!-- .section -->
+
+                <section class="order-detail">
+                    <header>
+                        <h4><b>Detail Pesanan</b> <span class="pull-right">Nomor Pesanan: <b>@Model.RsvNo</b></span></h4>
+                    </header>
+                    <section>
+
+                        <div class="container">
+                            <div class="row">
+
+                                <div class="order-detail-left col-xs-8">
+                                    <div class="va-passenger col-xs-12">
+                                        <div class="passenger col-xs-8">
+                                            <h4>INFO PENUMPANG</h4>
+
+                                            <ol>
+                                                @foreach (var passenger in Model.Passengers)
                                                 {
-                                                    var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
-                                                    <div class="col-xs-12" style="padding-top:5px;">
-                                                        <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;">
-                                                            <span style="background:#f4f4f4;padding:0 10px;color:#15b1e4;">Transit di @segment.DepartureCity (@segment.DepartureAirport) selama @transitDuration.ToString()</span>
-                                                        </p>
-                                                    </div>
-                                                     <!-- .transit -->
+                                                    <li><p>@EnumDisplay.PassengerType(passenger.Type.GetValueOrDefault()) : @EnumDisplay.Title(passenger.Title.GetValueOrDefault()) @passenger.Name</p></li>
                                                 }
-                                                <div class="col-xs-2">
-                                                    <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
-                                                    <p><span>@segment.AirlineName</span></p>
-                                                </div>
-                                                <div class="col-xs-10">
-                                                    <div class="col-xs-12">
-                                                        <div class="col-xs-4">
-                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureTime.ToString("HH:mm")</b></p>
-                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
-                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureAirportName</p>
-                                                        </div>
-                                                        <div class="col-xs-4" style="align-content:center;">
-                                                            <p></p>
-                                                            <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Durasi:</b> @segment.Duration</p>
-                                                            <p></p>
-                                                        </div>
-                                                        <div class="col-xs-4">
-                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalTime.ToString("HH:mm")</b></p>
-                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
-                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalAirportName</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                prevSegment = segment;
-                                            }
+                                            </ol>
                                         </div>
+                                        @if (Model.Payment.Method == PaymentMethod.VirtualAccount)
+                                        {
+                                            <div class="virtual-account col-xs-4">
+                                                <h4 class="va-text" style="font-size:11px;padding-bottom:2px;margin-bottom:8px;"><b>NO VIRTUAL ACCOUNT</b></h4>
+                                                <h4 class="va-number" style="font-size : 18px; color: #ff6900; padding:0;"><b>@Model.Payment.TransferAccount</b></h4>
+                                            </div>
+                                        }
                                     </div>
-                                    @if (Model.Itinerary.Trips.Count > 1)
-                                    {
-                                        <div class="flight return">
-                                            <p>Kembali : </p>
+                                    <div class="order">
+                                        <h4>DETAIL PENERBANGAN</h4>
+
+                                        <div class="flight departure">
+                                            <p>Berangkat : </p>
                                             <div class="row">
-                                                @foreach (var segment in Model.Itinerary.Trips[1].Segments)
+                                                @foreach (var segment in Model.Itinerary.Trips[0].Segments)
                                                 {
-                                                    if (segment != Model.Itinerary.Trips[1].Segments.First())
+                                                    if (segment != Model.Itinerary.Trips[0].Segments.First())
                                                     {
                                                         var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
                                                         <div class="col-xs-12" style="padding-top:5px;">
@@ -223,8 +185,7 @@ else
                                                                 <span style="background:#f4f4f4;padding:0 10px;color:#15b1e4;">Transit di @segment.DepartureCity (@segment.DepartureAirport) selama @transitDuration.ToString()</span>
                                                             </p>
                                                         </div>
-
-                                                        <!-- .transit -->
+                                                     <!-- .transit -->
                                                     }
                                                     <div class="col-xs-2">
                                                         <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
@@ -233,20 +194,20 @@ else
                                                     <div class="col-xs-10">
                                                         <div class="col-xs-12">
                                                             <div class="col-xs-4">
-                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureTime.ToString("HH:mm")</b></p>
-                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
+                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureTime.GetValueOrDefault().ToString("HH:mm")</b></p>
+                                                                <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
                                                                 <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureAirportName</p>
                                                             </div>
                                                             <div class="col-xs-4" style="align-content:center;">
                                                                 <p></p>
-                                                                <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Durasi:</b> @segment.Duration</p>
+                                                                <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Durasi:</b> {{msToTime(@segment.Duration)}}</p>
                                                                 <p></p>
                                                             </div>
                                                             <div class="col-xs-4">
-                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalTime.ToString("HH:mm")</b></p>
-                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
+                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalTime.GetValueOrDefault().ToString("HH:mm")</b></p>
+                                                                <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
                                                                 <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalAirportName</p>
                                                             </div>
                                                         </div>
@@ -255,65 +216,113 @@ else
                                                 }
                                             </div>
                                         </div>
-                                    }
-                                </div>
+                                        @if (Model.Itinerary.Trips.Count > 1)
+                                        {
+                                            <div class="flight return">
+                                                <p>Kembali : </p>
+                                                <div class="row">
+                                                    @foreach (var segment in Model.Itinerary.Trips[1].Segments)
+                                                    {
+                                                        if (segment != Model.Itinerary.Trips[1].Segments.First())
+                                                        {
+                                                            var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
+                                                            <div class="col-xs-12" style="padding-top:5px;">
+                                                                <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;">
+                                                                    <span style="background:#f4f4f4;padding:0 10px;color:#15b1e4;">Transit di @segment.DepartureCity (@segment.DepartureAirport) selama @transitDuration.ToString()</span>
+                                                                </p>
+                                                            </div>
 
-                            </div>
-                            <div class="order-detail-right col-xs-4">
-                                <div class="price-detail">
-                                    <h4>RINCIAN HARGA</h4>
-                                    <dl>
-                                        <dt>Tiket Pesawat <span>(@Model.Passengers.Count Penumpang)</span></dt>
-                                        <dd>Rp @((Model.Payment.FinalPrice + Model.Payment.DiscountNominal).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
-                                    </dl>
-                                    @if (Model.Payment.DiscountNominal > 0)
-                                    {
+                                                        <!-- .transit -->
+                                                        }
+                                                        <div class="col-xs-2">
+                                                            <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                            <p><span>@segment.AirlineName</span></p>
+                                                        </div>
+                                                        <div class="col-xs-10">
+                                                            <div class="col-xs-12">
+                                                                <div class="col-xs-4">
+                                                                    <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                    <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureTime.GetValueOrDefault().ToString("HH:mm")</b></p>
+                                                                    <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
+                                                                    <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureAirportName</p>
+                                                                </div>
+                                                                <div class="col-xs-4" style="align-content:center;">
+                                                                    <p></p>
+                                                                    <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Durasi:</b> {{msToTime(@segment.Duration)}}</p>
+                                                                    <p></p>
+                                                                </div>
+                                                                <div class="col-xs-4">
+                                                                    <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                    <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalTime.GetValueOrDefault().ToString("HH:mm")</b></p>
+                                                                    <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
+                                                                    <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalAirportName</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        prevSegment = segment;
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+                                </div>
+                                <div class="order-detail-right col-xs-4">
+                                    <div class="price-detail">
+                                        <h4>RINCIAN HARGA</h4>
                                         <dl>
-                                            <dt>@Model.Payment.DiscountName</dt>
-                                            <dd>- Rp @Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                            <dt>Tiket Pesawat <span>(@Model.Passengers.Count Penumpang)</span></dt>
+                                            <dd>Rp @((Model.Payment.FinalPrice + Model.Payment.DiscountNominal).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                         </dl>
-                                    }
-                                    <dl class="total-price">
-                                        <dt>Total</dt>
-                                        <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
-                                    </dl>
-                                </div>
+                                        @if (Model.Payment.DiscountNominal > 0)
+                                        {
+                                            <dl>
+                                                <dt>@Model.Payment.DiscountName</dt>
+                                                <dd>- Rp @Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                            </dl>
+                                        }
+                                        <dl class="total-price">
+                                            <dt>Total</dt>
+                                            <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                        </dl>
+                                    </div>
 
-                                <div class="payment-detail">
-                                    <h4>METODE PEMBAYARAN</h4>
-                                    @switch (Model.Payment.Method)
-                                    {
-                                        case PaymentMethod.CreditCard:
-                                            <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
-                                            <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
-                                            break;
-                                        case PaymentMethod.VirtualAccount:
+                                    <div class="payment-detail">
+                                        <h4>METODE PEMBAYARAN</h4>
+                                        @switch (Model.Payment.Method)
+                                        {
+                                            case PaymentMethod.CreditCard:
+                                                <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
+                                                <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
+                                                break;
+                                            case PaymentMethod.VirtualAccount:
                                             <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
                                             <img src="/Assets/images/atm-bersama.jpg" alt="Virtual Account" />
-                                            break;
-                                        case PaymentMethod.BankTransfer:
+                                                break;
+                                            case PaymentMethod.BankTransfer:
                                             <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
                                             <img src="/Assets/images/atm-bersama.jpg" alt="Bank Transfer" />
-                                            break;
-                                        case PaymentMethod.CimbClicks:
-                                        <img src="/Assets/images/cimb-clicks-transparan.png" alt="CIMB Clicks" />
-                                            break;
-                                        case PaymentMethod.MandiriClickPay:
-                                        <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
-                                        <img src="/Assets/images/payment-mandiri.png" alt="Mandiri Click Pay" />
-                                            break;
-                                    }
+                                                break;
+                                            case PaymentMethod.CimbClicks:
+                                            <img src="/Assets/images/cimb-clicks-transparan.png" alt="CIMB Clicks" />
+                                                break;
+                                            case PaymentMethod.MandiriClickPay:
+                                            <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
+                                            <img src="/Assets/images/payment-mandiri.png" alt="Mandiri Click Pay" />
+                                                break;
+                                        }
+                                    </div>
+
                                 </div>
 
                             </div>
-
                         </div>
-                    </div>
 
-                </section>
-            </section><!-- .order-detail -->
+                    </section>
+                </section><!-- .order-detail -->
+
+            </div>
 
         </div>
-
-    </div>
-}
+    }
+</div>
