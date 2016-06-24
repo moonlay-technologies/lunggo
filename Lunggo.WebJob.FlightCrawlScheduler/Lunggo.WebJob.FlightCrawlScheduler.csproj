@@ -92,6 +92,9 @@
     <Content Include="Config\application.properties">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="App.Debug.config" />
+    <None Include="App.Release.config" />
+    <None Include="application.properties" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

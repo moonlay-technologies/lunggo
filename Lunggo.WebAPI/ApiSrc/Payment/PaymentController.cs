@@ -12,7 +12,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
     {
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("payment/pay")]
+        [Route("v1/payment/pay")]
         public ApiResponseBase Pay()
         {
             try
@@ -29,7 +29,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("payment/methods")]
+        [Route("v1/payment/methods")]
         public ApiResponseBase GetMethods()
         {
             try
@@ -45,7 +45,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("payment/check/{rsvNo}")]
+        [Route("v1/payment/check/{rsvNo}")]
         public ApiResponseBase CheckPayment(string rsvNo)
         {
             try
@@ -61,7 +61,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("payment/transferfee")]
+        [Route("v1/payment/transferfee")]
         public ApiResponseBase GetTransferIdentifier()
         {
             try
@@ -78,7 +78,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("payment/checkvoucher")]
+        [Route("v1/payment/checkvoucher")]
         public ApiResponseBase CheckVoucher()
         {
             try

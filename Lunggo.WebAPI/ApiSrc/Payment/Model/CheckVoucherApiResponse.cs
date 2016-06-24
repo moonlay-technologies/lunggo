@@ -5,9 +5,9 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Model
 {
     public class CheckVoucherApiResponse : ApiResponseBase
     {
-        [JsonProperty("discount")]
-        public decimal Discount { get; set; }
-        [JsonProperty("name")]
+        [JsonProperty("discount", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? Discount { get; set; }
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string DisplayName { get; set; }
     }
 }

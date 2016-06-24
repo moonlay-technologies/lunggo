@@ -4,9 +4,9 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Model
 {
     public class AirlineApi
     {
-        [JsonProperty("code")]
+        [JsonProperty("code", NullValueHandling = NullValueHandling.Ignore)]
         public string Code { get; set; }
-        [JsonProperty("name")]
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
     }
 }

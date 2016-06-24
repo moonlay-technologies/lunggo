@@ -23,12 +23,12 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
                     City = airportDict.City,
                     Country = airportDict.Country
                 };
-            });
+            }).ToList();
             return new AutocompleteAirportsApiResponse
             {
                 StatusCode = HttpStatusCode.OK,
-                StatusMessage = "Success.",
-                Airports = airports
+                Airports = airports,
+                Count = airports.Count
             };
         }
     }

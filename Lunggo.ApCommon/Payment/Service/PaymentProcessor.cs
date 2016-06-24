@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Lunggo.ApCommon.Campaign.Constant;
 using Lunggo.ApCommon.Campaign.Model;
 using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.ApCommon.Constant;
@@ -55,7 +56,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (transferFee == 0M)
                     return paymentDetails;
 
-                paymentDetails.TransferFee = -transferFee;
+                paymentDetails.TransferFee = transferFee;
                 paymentDetails.FinalPriceIdr += paymentDetails.TransferFee;
             }
             else
@@ -238,14 +239,24 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public decimal GetTransferFee(string rsvNo, string discountCode)
         {
-            decimal transferFee;
+            decimal transferFee, finalPrice;
             var voucher = CampaignService.GetInstance().ValidateVoucherRequest(rsvNo, discountCode);
-            var finalPrice = voucher == null
-                ? PaymentDetails.GetFromDb(rsvNo).OriginalPriceIdr
-                : voucher.DiscountedPrice;
+            if (voucher.VoucherStatus != VoucherStatus.Success)
+            {
+                var payment = PaymentDetails.GetFromDb(rsvNo);
+
+                if (payment == null)
+                    return 404404404.404404404M;
+
+                finalPrice = payment.OriginalPriceIdr;
+            }
+            else
+            {
+                finalPrice = voucher.DiscountedPrice;
+            }
             if (finalPrice <= 999 && finalPrice >= 0)
             {
-                transferFee = finalPrice;
+                transferFee = -finalPrice;
             }
             else
             {
@@ -254,8 +265,8 @@ namespace Lunggo.ApCommon.Payment.Service
                 var rnd = new Random();
                 do
                 {
-                    transferFee = rnd.Next(1, 999);
-                    candidatePrice = finalPrice - transferFee;
+                    transferFee = -rnd.Next(1, 999);
+                    candidatePrice = finalPrice + transferFee;
                     isExist = IsTransferValueExist(candidatePrice);
                 } while (isExist);
                 SaveTransferValue(candidatePrice);

@@ -43,7 +43,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [HttpPost]
         [AllowAnonymous]
         [LunggoCorsPolicy]
-        [Route("login")]
+        [Route("v1/login")]
         public ApiResponseBase Login()
         {
             try
@@ -61,7 +61,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [HttpPost]
         [LunggoCorsPolicy]
         [AllowAnonymous]
-        [Route("register")]
+        [Route("v1/register")]
         public ApiResponseBase Register()
         {
             try
@@ -79,7 +79,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [HttpPost]
         [LunggoCorsPolicy]
         [AllowAnonymous]
-        [Route("forgot")]
+        [Route("v1/forgot")]
         public ApiResponseBase ForgotPassword()
         {
             try
@@ -97,7 +97,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [HttpPatch]
         [LunggoCorsPolicy]
         [Authorize]
-        [Route("profile")]
+        [Route("v1/profile")]
         public ApiResponseBase ChangeProfile()
         {
             try
@@ -115,7 +115,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [HttpGet]
         [LunggoCorsPolicy]
         [Authorize]
-        [Route("profile")]
+        [Route("v1/profile")]
         public ApiResponseBase GetProfile()
         {
             try
@@ -132,7 +132,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [HttpPost]
         [LunggoCorsPolicy]
         [Authorize]
-        [Route("changepassword")]
+        [Route("v1/changepassword")]
         public ApiResponseBase ChangePassword()
         {
             try
@@ -150,7 +150,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [HttpGet]
         [LunggoCorsPolicy]
         [Authorize]
-        [Route("trxhistory")]
+        [Route("v1/trxhistory")]
         public ApiResponseBase GetTransactionHistory()
         {
             try
@@ -167,7 +167,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [HttpGet]
         [LunggoCorsPolicy]
         [Authorize]
-        [Route("rsv/{rsvNo}")]
+        [Route("v1/rsv/{rsvNo}")]
         public ApiResponseBase GetOrderDetail(string rsvNo)
         {
             try

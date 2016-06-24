@@ -21,12 +21,12 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
                     Code = airlineDict.Code,
                     Name = airlineDict.Name
                 };
-            });
+            }).ToList();
             return new AutocompleteAirlinesApiResponse
             {
                 StatusCode = HttpStatusCode.OK,
-                StatusMessage = "Success.",
-                Airlines = airlines
+                Airlines = airlines,
+                Count = airlines.Count
             };
         }
     }
