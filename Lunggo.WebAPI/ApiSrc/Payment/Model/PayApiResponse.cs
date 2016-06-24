@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Payment.Model
 {
-    public class PaymentApiResponse : ApiResponseBase
+    public class PayApiResponse : ApiResponseBase
     {
         [JsonProperty("paymentStatus", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentStatus? PaymentStatus { get; set; }

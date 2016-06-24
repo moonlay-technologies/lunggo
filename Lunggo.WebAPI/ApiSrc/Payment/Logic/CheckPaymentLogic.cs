@@ -16,9 +16,9 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             return apiResponse;
         }
 
-        private static PaymentApiResponse AssembleApiResponse(FlightReservationForDisplay rsv)
+        private static PayApiResponse AssembleApiResponse(FlightReservationForDisplay rsv)
         {
-            return new PaymentApiResponse
+            return new PayApiResponse
             {
                 PaymentStatus = rsv.Payment.Status,
                 Method = rsv.Payment.Method,

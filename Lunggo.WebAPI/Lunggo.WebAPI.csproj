@@ -258,7 +258,7 @@
     <Compile Include="ApiSrc\Payment\Logic\PayLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetTransferFeeLogic.cs" />
     <Compile Include="ApiSrc\Payment\Model\GetMethodsApiResponse.cs" />
-    <Compile Include="ApiSrc\Payment\Model\PaymentApiResponse.cs" />
+    <Compile Include="ApiSrc\Payment\Model\PayApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\PayApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\TransferFeeApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\TransferFeeApiResponse.cs" />
