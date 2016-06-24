@@ -290,6 +290,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                     DateTime.ParseExact(segment.EndDate, format, CultureInfo.InvariantCulture),
                                     DateTimeKind.Utc);
                             fareId = fareId + segment.Airline.Code + "-" + segment.FlightNumber + "|";
+                            var baggage = GetBaggage(conditions.CabinClass, segment.BeginLocation.LocationCode, segment.EndLocation.LocationCode, originCountry, destinationCountry);
+                            bool isBaggageIncluded = false;
+                            if (baggage != null)
+                            {
+                                isBaggageIncluded = true;
+                            }
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = segment.Airline.Code,
@@ -308,7 +314,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                     deptTime.AddHours(-(FlightService.GetInstance().GetAirportTimeZone(segment.BeginLocation.LocationCode))),
                                 IsMealIncluded = true,
                                 IsPscIncluded = true,
-                                Baggage = GetBaggage(conditions.CabinClass,segment.BeginLocation.LocationCode,segment.EndLocation.LocationCode,originCountry,destinationCountry)
+                                IsBaggageIncluded = isBaggageIncluded,
+                                BaggageCapacity = baggage       
                             });
 
                             if (segment.ListLegs != null)

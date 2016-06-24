@@ -355,6 +355,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                                         tampungPesawat.Add(codeParse1[0] +"."+ codeParse1[1]);
                                         tampungPesawatString = string.Join(".", tampungPesawat.ToArray());
+
+                                        var baggage = GetBaggage(bandara1, bandara2);
+                                        var isBaggageIncluded = false;
+                                        if (baggage != null || baggage != "")
+                                        {
+                                            isBaggageIncluded = true;
+                                        }
+                                        
                                         segments.Add(new FlightSegment
                                         {
                                             AirlineCode = codeParse1[0],
@@ -371,8 +379,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             Duration = arrtime - deptime,
                                             IsMealIncluded = true,
                                             IsPscIncluded = true,
-                                            Baggage = GetBaggage(bandara1,bandara2)
-
+                                            IsBaggageIncluded = isBaggageIncluded,
+                                            BaggageCapacity = baggage
                                         });
                                     }
 

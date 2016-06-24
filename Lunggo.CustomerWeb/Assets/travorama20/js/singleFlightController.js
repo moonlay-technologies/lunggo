@@ -482,7 +482,7 @@ app.controller('singleFlightController', [
 
 
                     //console.log('Progress : ' + $scope.Progress + ' %');
-                    //console.log(returnData);
+                    console.log(returnData);
 
                     // loop the function
                     setTimeout(function () {

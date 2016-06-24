@@ -23,7 +23,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
             public string GetBaggage(string origin, string destination)
             {
                 string baggage = ""; 
-                string baggages = "";
                 if (origin == "CGK" || origin == "HLP" || destination == "TNJ") 
                 {
                     baggage = "15";
@@ -32,8 +31,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 {
                     baggage = "20";
                 }
-                baggages = baggage + "~" + baggage + "0";
-                return baggages;
+                return baggage;
             }
         }
     }
