@@ -228,7 +228,7 @@
                                         <form name="creditCardForm" novalidate>
                                             <h3 class="no-spacing">Detail <b>Kartu Kredit</b></h3>
 
-                                            <!-- credit card selector start -->
+                                            @*<!-- credit card selector start -->
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-sm-8">
@@ -247,7 +247,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- credit card selector end -->
+                                            <!-- credit card selector end -->*@
                                             <!-- new credit card start -->
                                             <div ng-if="CreditCard.TwoClickToken == 'false'">
                                                 <div class="form-group">
@@ -310,8 +310,8 @@
                                     <!-- .credit-card-form -->
                                 }
                                 <form name="mandiriClickPayForm" novalidate>
-                                    <h3 class="no-spacing">Detail <b>Kartu</b></h3>
                                     <div class="mandiri-clikpay-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
+                                        <h3 class="no-spacing">Detail <b>Kartu</b></h3>
                                         <div class="form-group">
                                             <label class="control-label">Nomor Kartu</label>
                                             <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
@@ -322,8 +322,8 @@
                                         </div>
                                     </div>
                                 </form>
-                                <!--CIMB Clicks-->
-                                <div ng-show="paymentMethod == '@PaymentMethod.CimbClicks'">
+                                <!-- start CIMB Clicks Instruction -->
+                                @*<div ng-show="paymentMethod == '@PaymentMethod.CimbClicks'">
                                     <h3 class="no-spacing">Instruksi <b>Pembayaran Cimb Clicks</b></h3>
                                     <div class="mandiri-clikpay-form">
                                         <div class="form-group">
@@ -335,11 +335,12 @@
                                             <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
                                         </div>
                                     </div>
-                                </div>
+                                </div>*@
+                                <!--end CIMB Clicks Instruction -->
                                 
-                                <!--CIMB Clicks-->
-                                <div ng-show="paymentMethod == '@PaymentMethod.CimbClicks'">
-                                    <h3 class="no-spacing">Instruksi <b>Pembayaran Cimb Clicks</b></h3>
+                                <!--start Mandiri Bill Payment-->
+                                @*<div ng-show="paymentMethod == '@PaymentMethod.MandiriBillPayment'">
+                                    <h3 class="no-spacing">Instruksi <b>Pembayaran Mandiri Bill Payment</b></h3>
                                     <div class="mandiri-clikpay-form">
                                         <div class="form-group">
                                             <label class="control-label">Nomor Kartu</label>
@@ -350,7 +351,8 @@
                                             <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
                                         </div>
                                     </div>
-                                </div>
+                                </div>*@
+                                <!--end Mandiri Bill Payment-->
                                 
 
                                 <div class="step-button">

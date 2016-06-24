@@ -97,13 +97,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 }
                                 else 
                                 {
-                                    if (origin == "SIN" || origin == "CGK")
+                                    if (origin == "SIN" || destination == "SIN")
                                     {
                                         adultBaggage = "20";
                                         childBaggage = "20";
                                         infantBaggage = "0";
                                     }
-                                    if (origin == "RGN") 
+                                    if (origin == "CGK" || destination == "CGK")
+                                    {
+                                        adultBaggage = "20";
+                                        childBaggage = "20";
+                                        infantBaggage = "0";
+                                    }
+                                    if (origin == "RGN" || destination == "RGN")
+                                    {
+                                        adultBaggage = "20";
+                                        childBaggage = "20";
+                                        infantBaggage = "0";
+                                    } 
                                     {
                                         adultBaggage = "30";
                                         childBaggage = "30";
@@ -114,13 +125,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             case CabinClass.Business:
                                 if (originCountry != "ID" || destCountry != "ID")
                                 {
-                                    if (origin == "SIN" || origin == "CGK")
+                                    if (origin == "SIN" || destination == "SIN")
                                     {
                                         adultBaggage = "20";
                                         childBaggage = "20";
                                         infantBaggage = "0";
                                     }
-                                    if (origin == "RGN")
+                                    if (origin == "CGK" || destination == "CGK")
+                                    {
+                                        adultBaggage = "20";
+                                        childBaggage = "20";
+                                        infantBaggage = "0";
+                                    }
+                                    if (origin == "RGN" || destination == "RGN")
                                     {
                                         adultBaggage = "30";
                                         childBaggage = "30";
@@ -144,13 +161,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 }
                                 else 
                                 {
-                                    if (malindoBusinessList.Contains(origin)) 
+                                    if (malindoBusinessList.Contains(origin) || malindoBusinessList.Contains(destination)) 
                                     {
                                         adultBaggage = "40";
                                         childBaggage = "40";
                                         infantBaggage = "10";
                                     }
-                                    if (origin == "BTH" || origin == "PKU") 
+                                    if (origin == "PKU" || destination == "PKU") 
+                                    {
+                                        infantBaggage = "10";
+                                    }
+                                    if (origin == "BTH" || destination == "BTH")
                                     {
                                         infantBaggage = "10";
                                     }
@@ -165,19 +186,32 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 }
                                 else
                                 {
-                                    if (malindoBusinessList.Contains(origin))
+                                    if (malindoBusinessList.Contains(origin) || malindoBusinessList.Contains(destination))
                                     {
                                         adultBaggage = "30";
                                         childBaggage = "30";
                                         infantBaggage = "10";
                                     }
-                                    if (origin == "BTH" || origin == "PKU")
+                                    if (origin == "BTH" || destination == "BTH")
                                     {
                                         adultBaggage = "15";
                                         childBaggage = "15";
                                         infantBaggage = "10";
                                     }
-                                    if (origin == "ATQ" || origin == "DEL") 
+                                    if (origin == "PKU" || destination == "PKU")
+                                    {
+                                        adultBaggage = "15";
+                                        childBaggage = "15";
+                                        infantBaggage = "10";
+                                    }
+
+                                    if (origin == "ATQ" || destination == "ATQ") 
+                                    {
+                                        adultBaggage = "20";
+                                        childBaggage = "20";
+                                        infantBaggage = "10";
+                                    }
+                                    if (origin == "DEL" || destination == "DEL")
                                     {
                                         adultBaggage = "20";
                                         childBaggage = "20";

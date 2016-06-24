@@ -55,6 +55,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 childBaggage = "46";
                                 infantBaggage = "10";
                             }
+                            else if (destination == "JED")
+                            {
+                                adultBaggage = "40";
+                                childBaggage = "40";
+                                infantBaggage = "10";
+                            }
                             else
                             {
                                 adultBaggage = "30";
@@ -90,6 +96,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 childBaggage = "64";
                                 infantBaggage = "10";
                             }
+
                             else
                             {
                                 adultBaggage = "40";
