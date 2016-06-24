@@ -298,7 +298,9 @@
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-api - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-api - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api__staging.pubxml" />
