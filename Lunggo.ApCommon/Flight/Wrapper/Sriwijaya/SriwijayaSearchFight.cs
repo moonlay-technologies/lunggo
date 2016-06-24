@@ -358,7 +358,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                                         var baggage = GetBaggage(bandara1, bandara2);
                                         var isBaggageIncluded = false;
-                                        if (baggage != null)
+                                        if (baggage != null || baggage != "")
                                         {
                                             isBaggageIncluded = true;
                                         }

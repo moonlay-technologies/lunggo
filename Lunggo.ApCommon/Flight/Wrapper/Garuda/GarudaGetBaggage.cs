@@ -49,6 +49,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 childBaggage = "46";
                                 infantBaggage = "10";
                             }
+                            else if (originCountry == "US" || destCountry == "US")
+                            {
+                                adultBaggage = "46";
+                                childBaggage = "46";
+                                infantBaggage = "10";
+                            }
                             else
                             {
                                 adultBaggage = "30";
@@ -73,6 +79,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 infantBaggage = "10";
                             }
                             else if (originCountry == "JP" || destCountry == "JP")
+                            {
+                                adultBaggage = "64";
+                                childBaggage = "64";
+                                infantBaggage = "10";
+                            }
+                            else if (originCountry == "US" || destCountry == "US")
                             {
                                 adultBaggage = "64";
                                 childBaggage = "64";

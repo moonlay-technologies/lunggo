@@ -130,7 +130,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 ArrivalTerminal = segmentRecord.ArrivalTerminal,
                                 ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault(),
                                 CabinClass = CabinClassCd.Mnemonic(segmentRecord.CabinClassCd),
-                                Baggage = segmentRecord.Baggage
+                                BaggageCapacity = segmentRecord.Baggage
                             };
                             segmentLookup.Add(segmentRecord.Id.GetValueOrDefault(), segment);
                             trip.Segments.Add(segment);
@@ -245,7 +245,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault(),
                                 Duration = segmentRecord.Duration.GetValueOrDefault(),
                                 CabinClass = CabinClassCd.Mnemonic(segmentRecord.CabinClassCd),
-                                Baggage = segmentRecord.Baggage,
+                                BaggageCapacity = segmentRecord.Baggage,
                                 Pnr = segmentRecord.Pnr
                             };
                             segmentLookup.Add(segmentRecord.Id.GetValueOrDefault(), segment);
@@ -721,7 +721,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         segment.Pnr,
                         segment.DepartureTerminal,
                         segment.ArrivalTerminal,
-                        segment.Baggage
+                        segment.BaggageCapacity
                     });
                 }
             }

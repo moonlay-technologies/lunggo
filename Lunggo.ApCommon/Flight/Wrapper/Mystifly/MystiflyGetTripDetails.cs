@@ -166,7 +166,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 AircraftCode = item.AirEquipmentType,
                 Rbd = item.ResBookDesigCode,
                 StopQuantity = item.StopQuantity,
-                Baggage = item.Baggage,
+                BaggageCapacity = item.Baggage,
                 Pnr = item.AirlinePNR
             };
         }
