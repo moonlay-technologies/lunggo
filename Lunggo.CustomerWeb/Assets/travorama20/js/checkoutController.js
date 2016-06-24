@@ -190,43 +190,43 @@ app.controller('checkoutController', [
                     // passport expiry date
                     $scope.passengers[i].passport.expire.full = $scope.passengers[i].passport.expire.year + '/' + ('0' + (parseInt($scope.passengers[i].passport.expire.month) + 1)).slice(-2) + '/' + ('0' + $scope.passengers[i].passport.expire.date).slice(-2);
 
-                    //$scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" ';
+                    $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" ';
 
-                    //if ($scope.birthDateRequired) {
-                    //    $scope.paxData = $scope.paxData + ', "dob":"' + $scope.passengers[i].birth.full + '" ,';
-                    //}
-
-                    //if ($scope.nationalityRequired) {
-                    //    $scope.paxData = $scope.paxData + ', "nationality":"' + $scope.passengers[i].nationality+ '" ,';
-                    //}
-
-                    //if ($scope.passportRequired) {
-                    //    $scope.paxData = $scope.paxData + ', "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country ;
-                    //}
-
-                    //if (i != $scope.passengers.length - 1) {
-                    //    $scope.paxData = $scope.paxData + '}' + ',';
-                    //} else {
-                    //    $scope.paxData = $scope.paxData + '}';
-                    //}
-
-                    if (!$scope.passportRequired) {
-                        if (i != $scope.passengers.length - 1) {
-                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "nationality":"' + $scope.passengers[i].nationality+ '" },';
-                        }
-                        else {
-                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '"  , "nationality":"' + $scope.passengers[i].nationality + '" }';
-                        }
+                    if ($scope.birthDateRequired) {
+                        $scope.paxData = $scope.paxData + ', "dob":"' + $scope.passengers[i].birth.full + '"';
                     }
-                    else
-                    {
-                        if (i != $scope.passengers.length - 1) {
-                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '", "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
-                        }
-                        else {
-                            $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" }';
-                        }
-                    }                 
+
+                    if ($scope.nationalityRequired) {
+                        $scope.paxData = $scope.paxData + ', "nationality":"' + $scope.passengers[i].nationality+ '"';
+                    }
+
+                    if ($scope.passportRequired) {
+                        $scope.paxData = $scope.paxData + ', "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" ';
+                    }
+
+                    if (i != $scope.passengers.length - 1) {
+                        $scope.paxData = $scope.paxData + '}' + ',';
+                    } else {
+                        $scope.paxData = $scope.paxData + '}';
+                    }
+
+                    //if (!$scope.passportRequired) {
+                    //    if (i != $scope.passengers.length - 1) {
+                    //        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "nationality":"' + $scope.passengers[i].nationality+ '" },';
+                    //    }
+                    //    else {
+                    //        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '"  , "nationality":"' + $scope.passengers[i].nationality + '" }';
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    if (i != $scope.passengers.length - 1) {
+                    //        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '", "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
+                    //    }
+                    //    else {
+                    //        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" }';
+                    //    }
+                    //}                 
                 }
                 
                 $scope.paxData = $scope.paxData + ']';
