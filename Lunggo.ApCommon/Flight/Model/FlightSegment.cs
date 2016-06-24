@@ -57,8 +57,10 @@ namespace Lunggo.ApCommon.Flight.Model
         public bool? IsMealIncluded { get; set; }
         [JsonProperty("includingPsc", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsPscIncluded { get; set; }
-        [JsonProperty("baggage", NullValueHandling = NullValueHandling.Ignore)]
-        public string Baggage { get; set; }
+        [JsonProperty("baggageCapacity", NullValueHandling = NullValueHandling.Ignore)]
+        public string BaggageCapacity { get; set; }
+        [JsonProperty("isBaggageIncluded", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsBaggageIncluded { get; set; }
         [JsonProperty("pnr", NullValueHandling = NullValueHandling.Ignore)]
         public string Pnr { get; set; }
         [JsonProperty("remainingSeats", NullValueHandling = NullValueHandling.Ignore)]
@@ -93,7 +95,8 @@ namespace Lunggo.ApCommon.Flight.Model
         public CabinClass CabinClass { get; set; }
         public bool IsMealIncluded { get; set; }
         public bool IsPscIncluded { get; set; }
-        public string Baggage { get; set; }
+        public string BaggageCapacity { get; set; }
+        public bool IsBaggageIncluded { get; set; }
         public string Pnr { get; set; }   
         public int RemainingSeats { get; set; }
         

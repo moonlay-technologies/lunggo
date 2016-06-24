@@ -22,7 +22,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
         {
             public string GetBaggage()
             {
-                var baggage = "20~20~0";
+                var baggage = "20";
                 return baggage;
             }
         }

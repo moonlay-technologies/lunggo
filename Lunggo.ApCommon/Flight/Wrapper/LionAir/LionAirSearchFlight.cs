@@ -416,6 +416,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             var infantPrice = pricefunc.GetInfantPrice(conditions.InfantCount);
                             var price = adultPrice + childPrice + infantPrice;
 
+                            var baggage = GetBaggage(flightNo.Split(' ')[0], conditions.CabinClass, airportDeparture, airportArrival, originCountry, destinationCountry);
+                            var isBaggageIncluded = false;
+
+                            if (baggage != null)
+                            {
+                                isBaggageIncluded = true;
+                            }
+
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = flightNo.Split(' ')[0],
@@ -436,7 +444,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 OperatingAirlineName = airplaneName,
                                 IsMealIncluded = flightNo.Split(' ')[0] == "ID",
                                 IsPscIncluded = true,
-                                Baggage = GetBaggage(flightNo.Split(' ')[0], conditions.CabinClass,airportDeparture,airportArrival,originCountry,destinationCountry)
+                                IsBaggageIncluded = isBaggageIncluded,
+                                BaggageCapacity = baggage
+                                
                             });
                             var j = ind + 1;
                             while ((j != fareIds.Count) && (subst1.SubstringBetween(0, subst1.Length - 2) ==

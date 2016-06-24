@@ -152,7 +152,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 Rbd = segment.Rbd,
                 IsMealIncluded = segment.IsMealIncluded,
                 IsPscIncluded = segment.IsPscIncluded,
-                Baggage = segment.Baggage,
+                BaggageCapacity = segment.BaggageCapacity,
+                IsBaggageIncluded = segment.IsBaggageIncluded,
                 RemainingSeats = segment.RemainingSeats != 0 ? (int?)segment.RemainingSeats : null,
             }).ToList();
         }
