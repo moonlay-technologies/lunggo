@@ -53,9 +53,9 @@ namespace Lunggo.ApCommon.Flight.Model
         public List<FlightStopForDisplay> Stops { get; set; }
         [JsonProperty("cabin", NullValueHandling = NullValueHandling.Ignore)]
         public CabinClass? CabinClass { get; set; }
-        [JsonProperty("meal", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("hasMeal", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsMealIncluded { get; set; }
-        [JsonProperty("psc", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("includingPsc", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsPscIncluded { get; set; }
         [JsonProperty("baggage", NullValueHandling = NullValueHandling.Ignore)]
         public string Baggage { get; set; }

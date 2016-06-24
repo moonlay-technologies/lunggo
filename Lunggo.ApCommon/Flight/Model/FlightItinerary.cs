@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public bool? RequireSameCheckIn { get; set; }
         [JsonProperty("reqNationality", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RequireNationality { get; set; }
-        [JsonProperty("holdable", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("canBeHeld", NullValueHandling = NullValueHandling.Ignore)]
         public bool? CanHold { get; set; }
         [JsonProperty("adultCount", NullValueHandling = NullValueHandling.Ignore)]
         public int? AdultCount { get; set; }

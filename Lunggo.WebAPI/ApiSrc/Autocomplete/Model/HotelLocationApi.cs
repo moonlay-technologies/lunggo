@@ -4,15 +4,15 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Model
 {
     public class HotelLocationApi
     {
-        [JsonProperty("location_id")]
+        [JsonProperty("locationId", NullValueHandling = NullValueHandling.Ignore)]
         public long LocationId { get; set; }
-        [JsonProperty("location_name")]
+        [JsonProperty("locationName", NullValueHandling = NullValueHandling.Ignore)]
         public string LocationName { get; set; }
-        [JsonProperty("region_name")]
+        [JsonProperty("regionName", NullValueHandling = NullValueHandling.Ignore)]
         public string RegionName { get; set; }
-        [JsonProperty("country_name")]
+        [JsonProperty("countryName", NullValueHandling = NullValueHandling.Ignore)]
         public string CountryName { get; set; }
-        [JsonProperty("priority")]
+        [JsonProperty("priority", NullValueHandling = NullValueHandling.Ignore)]
         public int? Priority { get; set; }
     }
 }
