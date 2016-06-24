@@ -20,18 +20,18 @@ app.controller('singleFlightController', [
         $scope.Progress = 0;
         var cabin = FlightSearchConfig.flightForm.cabin;
         if (cabin != 'y' || cabin != 'c' || cabin != 'f') {
-                switch (cabin) {
-                    case 'Economy':
-                        cabin = 'y';
-                        break;
-                    case 'Business':
-                        cabin = 'c';
-                        break;
-                    case 'First':
-                        cabin = 'f';
-                        break;
-                }
+            switch (cabin) {
+                case 'Economy':
+                    cabin = 'y';
+                    break;
+                case 'Business':
+                    cabin = 'c';
+                    break;
+                case 'First':
+                    cabin = 'f';
+                    break;
             }
+        }
         var departureDate = new Date(FlightSearchConfig.flightForm.departureDate) || '';
         var origin = FlightSearchConfig.flightForm.origin;
         var destination = FlightSearchConfig.flightForm.destination;
@@ -53,7 +53,7 @@ app.controller('singleFlightController', [
             ProgressDuration: 1000,
             MaxProgress: 0,
             SecureCode: FlightSearchConfig.flightForm.SecureCode
-    };
+        };
         $scope.expiry = {
             expired: false,
             time: '',
@@ -62,7 +62,7 @@ app.controller('singleFlightController', [
                 if ($scope.expiry.expired) return;
                 $interval(function () {
                     var nowTime = new Date();
-                    if ( nowTime > expiryTime ) {
+                    if (nowTime > expiryTime) {
                         $scope.expiry.expired = true;
                     }
                 }, 1000);
@@ -71,13 +71,13 @@ app.controller('singleFlightController', [
         $scope.flightSelected = -1;
         $scope.overviewDetailShown = false;
 
-        $scope.translateMonth = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+        $scope.translateMonth = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 
         // **********
         // general functions
 
         // toggle detail
-        $scope.toggleOverviewDetail = function() {
+        $scope.toggleOverviewDetail = function () {
             if ($scope.overviewDetailShown == true) {
                 $scope.overviewDetailShown = false;
             } else {
@@ -86,7 +86,7 @@ app.controller('singleFlightController', [
         }
 
         // close overview
-        $scope.closeOverview = function() {
+        $scope.closeOverview = function () {
             $scope.flightSelected = -1;
 
             $scope.selectFlightParam = {
@@ -143,12 +143,12 @@ app.controller('singleFlightController', [
         }
 
         // close notice
-        $scope.closeNotice = function() {
+        $scope.closeNotice = function () {
             $scope.notice = false;
         }
 
         // milisecond to hour
-        $scope.msToTime = function(duration) {
+        $scope.msToTime = function (duration) {
 
             var milliseconds = parseInt((duration % 1000) / 100),
                  seconds = parseInt((duration / 1000) % 60),
@@ -188,12 +188,32 @@ app.controller('singleFlightController', [
 
         // **********
         // flight detail function
+        $scope.priceDetailSelected = false;
+        $scope.flightDetailSelected = false;
+        $scope.priceActiveIndex = -1;
         $scope.flightActive = -1;
+
         $scope.setFlightActive = function (flightNo) {
-            if ($scope.flightActive == flightNo) {
-                $scope.flightActive = -1;
-            } else {
+            $scope.flightDetailSelected = true;
+            $scope.priceDetailSelected = false;
+            if ($scope.flightActive != flightNo) {
                 $scope.flightActive = flightNo;
+                $scope.priceActiveIndex = -1;
+            }
+            else {
+                $scope.flightActive = -1;
+            }
+        }
+
+        $scope.showPriceDetail = function (index) {
+            $scope.flightDetailSelected = false;
+            $scope.priceDetailSelected = true;
+            if ($scope.priceActiveIndex != index) {
+                $scope.priceActiveIndex = index;
+                $scope.flightActive = -1;
+            }
+            else {
+                $scope.priceActiveIndex = -1;
             }
         }
 
@@ -238,7 +258,7 @@ app.controller('singleFlightController', [
 
         // **********
         // flight filter function
-        
+
         // available filter
         $scope.availableFilter = function (flight) {
             if (!$scope.loading && !$scope.loadingFlight) {
@@ -256,7 +276,7 @@ app.controller('singleFlightController', [
             one: true,
             two: true
         };
-        $scope.stopFilter = function(flight) {
+        $scope.stopFilter = function (flight) {
             if ($scope.stopFilterParam.direct) {
                 if (flight.trips[0].transitCount == 0) {
                     return flight;
@@ -276,7 +296,7 @@ app.controller('singleFlightController', [
 
         // price filter
         $scope.priceFilterParam = {
-            initial : [-1,-1],
+            initial: [-1, -1],
             current: [-1, -1],
             prices: []
         };
@@ -292,12 +312,12 @@ app.controller('singleFlightController', [
 
         // airline filter
         $scope.airlineFilterParam = {
-            airlinesList : [],
+            airlinesList: [],
             airlines: [],
-            selected : [],
+            selected: [],
             pure: true
         };
-        $scope.checkAirline = function() {
+        $scope.checkAirline = function () {
             $scope.airlineFilterParam.pure = false;
             $scope.airlineFilterParam.selected = [];
             for (var i = 0; i < $scope.airlineFilterParam.airlines.length; i++) {
@@ -306,7 +326,7 @@ app.controller('singleFlightController', [
                 }
             }
         }
-        $scope.setAirlineFilter = function(target) {
+        $scope.setAirlineFilter = function (target) {
             for (var i = 0; i < $scope.airlineFilterParam.airlines.length; i++) {
                 if (target == 'all') {
                     $scope.airlineFilterParam.airlines[i].checked = true;
@@ -334,15 +354,15 @@ app.controller('singleFlightController', [
         }
 
         // time filter
-        $scope.getHour = function(dateTime) {
+        $scope.getHour = function (dateTime) {
             dateTime = dateTime.substr(11, 2);
             return parseInt(dateTime);
         }
         $scope.timeFilterParam = {
             departure: [0, 24],
-            arrival : [0,24]
+            arrival: [0, 24]
         };
-        $scope.timeFilter = function(flight) {
+        $scope.timeFilter = function (flight) {
             if ($scope.getHour(flight.trips[0].segments[0].departureTime) >= parseInt($scope.timeFilterParam.departure[0])
                 && $scope.getHour(flight.trips[0].segments[0].departureTime) <= parseInt($scope.timeFilterParam.departure[1])
                 && $scope.getHour(flight.trips[0].segments[flight.trips[0].segments.length - 1].arrivalTime) >= parseInt($scope.timeFilterParam.arrival[0])
@@ -519,7 +539,7 @@ app.controller('singleFlightController', [
 
         // **********
         // generate flight list
-        $scope.generateFlightList = function(data) {
+        $scope.generateFlightList = function (data) {
 
             var startNo = $scope.flightList.length;
 
