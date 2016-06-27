@@ -17,8 +17,6 @@ namespace Lunggo.ApCommon.Payment.Model.Data
         public int? InstallmentTerm { get; set; }
         [JsonProperty("bins")]
         public List<string> AllowedBins { get; set; }
-        //[JsonProperty("type")]
-        //public string Type { get; set; }
         [JsonProperty("saveTokenId")]
         public bool TokenIdSaveEnabled { get; set; }
     }

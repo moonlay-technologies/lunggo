@@ -24,7 +24,10 @@ namespace Lunggo.ApCommon.Campaign.Service
             var voucher = GetDb.GetCampaignVoucher(voucherCode);
 
             if (voucher == null)
-                return null;
+            {
+                response.VoucherStatus = VoucherStatus.VoucherNotFound;
+                return response;
+            }
 
             response.Email = HttpContext.Current.User.Identity.GetEmail();
             response.VoucherCode = voucherCode;

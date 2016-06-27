@@ -12,7 +12,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
     {
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("flight/{searchId}/{progress}")]
+        [Route("v1/flight/{searchId}/{progress}")]
         public ApiResponseBase SearchFlights(string searchId, int progress)
         {
             try
@@ -33,7 +33,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("flight/select")]
+        [Route("v1/flight/select")]
         public ApiResponseBase SelectFlight()
         {
             try
@@ -50,7 +50,23 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("flight/revalidate/{token}")]
+        [Route("v1/flight/itin/{token}")]
+        public ApiResponseBase GetItinerary(string token)
+        {
+            try
+            {
+                var apiResponse = FlightLogic.GetItinerary(token);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Route("v1/flight/revalidate/{token}")]
         public ApiResponseBase RevalidateFlight(string token)
         {
             try
@@ -70,7 +86,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("flight/book")]
+        [Route("v1/flight/book")]
         public ApiResponseBase BookFlight()
         {
             try
@@ -87,7 +103,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("flight/issue")]
+        [Route("v1/flight/issue")]
         public ApiResponseBase IssueFlight()
         {
             try
@@ -104,7 +120,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("flight/check/{rsvNo}")]
+        [Route("v1/flight/check/{rsvNo}")]
         public ApiResponseBase CheckFlightIssuance(string rsvNo)
         {
             try
@@ -146,7 +162,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("flight/top")]
+        [Route("v1/flight/top")]
         public ApiResponseBase TopDestinations()
         {
             try

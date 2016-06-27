@@ -22,8 +22,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
         {
             public string GetBaggage(string origin, string destination)
             {
-                string baggage = ""; 
-                if (origin == "CGK" || origin == "HLP" || destination == "TNJ") 
+                string baggage = "";
+                if ((origin == "CGK" || origin == "HLP") && destination == "TNJ") 
+                {
+                    baggage = "15";
+                }
+                else if (origin == "TNJ" && (destination == "HLP" || destination == "CGK")) 
                 {
                     baggage = "15";
                 }

@@ -18,7 +18,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 
             var transferFee = PaymentService.GetInstance().GetTransferFee(request.RsvNo, request.DiscountCode);
 
-            if (transferFee == -1)
+            if (transferFee == 404404404.404404404M)
                 return new TransferFeeApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,

@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Model
 {
-    public class AutocompleteHotelLocationsApiResponse
+    public class AutocompleteHotelLocationsApiResponse : ApiResponseBase
     {
-        [JsonProperty("status_code")]
-        public HttpStatusCode StatusCode { get; set; }
-        [JsonProperty("status_message")]
-        public string StatusMessage { get; set; }
-        [JsonProperty("hotel_locations")]
-        public IEnumerable<HotelLocationApi> HotelLocations { get; set; }
+        [JsonProperty("hotelLocations", NullValueHandling = NullValueHandling.Ignore)]
+        public List<HotelLocationApi> HotelLocations { get; set; }
+        [JsonProperty("count", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Count { get; set; }
     }
 }

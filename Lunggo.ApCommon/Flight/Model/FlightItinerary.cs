@@ -19,34 +19,48 @@ namespace Lunggo.ApCommon.Flight.Model
         public bool? RequireSameCheckIn { get; set; }
         [JsonProperty("reqNationality", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RequireNationality { get; set; }
-        [JsonProperty("holdable", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("canBeHeld", NullValueHandling = NullValueHandling.Ignore)]
         public bool? CanHold { get; set; }
+        
+        
         [JsonProperty("adultCount", NullValueHandling = NullValueHandling.Ignore)]
         public int? AdultCount { get; set; }
         [JsonProperty("childCount", NullValueHandling = NullValueHandling.Ignore)]
         public int? ChildCount { get; set; }
         [JsonProperty("infantCount", NullValueHandling = NullValueHandling.Ignore)]
         public int? InfantCount { get; set; }
-        [JsonProperty("adultFare", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal? AdultFare { get; set; }
-        [JsonProperty("childFare", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal? ChildFare { get; set; }
-        [JsonProperty("infantFare", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal? InfantFare { get; set; }
+        
+        [JsonProperty("originalAdultFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? OriginalAdultFare { get; set; }
+        [JsonProperty("originalChildFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? OriginalChildFare { get; set; }
+        [JsonProperty("originalInfantFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? OriginalInfantFare { get; set; }
+
+        [JsonProperty("netAdultFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? NetAdultFare { get; set; }
+        [JsonProperty("netChildFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? NetChildFare { get; set; }
+        [JsonProperty("netInfantFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? NetInfantFare { get; set; }
+
+        [JsonProperty("originalTotalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? OriginalTotalFare { get; set; }
+        [JsonProperty("netTotalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? NetTotalFare { get; set; }
+        
+        
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public TripType? TripType { get; set; }
         [JsonProperty("reqCabin", NullValueHandling = NullValueHandling.Ignore)]
         public CabinClass? RequestedCabinClass { get; set; }
         [JsonProperty("reg", NullValueHandling = NullValueHandling.Ignore)]
         public int? RegisterNumber { get; set; }
-        [JsonProperty("totalFare", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal? TotalFare { get; set; }
         [JsonProperty("currency", NullValueHandling = NullValueHandling.Ignore)]
         public string Currency { get; set; }
         [JsonProperty("trips", NullValueHandling = NullValueHandling.Ignore)]
         public List<FlightTripForDisplay> Trips { get; set; }
-        [JsonProperty("originalFare", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal? OriginalFare { get; set; }
+        
         [JsonProperty("comboFare", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? ComboFare { get; set; }
     }

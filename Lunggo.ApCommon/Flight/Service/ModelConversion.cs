@@ -50,13 +50,13 @@ namespace Lunggo.ApCommon.Flight.Service
                 CanHold = itins.TrueForAll(itin => itin.CanHold),
                 Currency = itins[0].Price.LocalCurrency,
                 TripType = itins[0].RequestedTripType,
-                TotalFare = totalFare,
-                AdultFare = adultFare,
-                ChildFare = childFare,
-                InfantFare = infantFare,
+                NetTotalFare = totalFare,
+                OriginalAdultFare = adultFare,
+                OriginalChildFare = childFare,
+                OriginalInfantFare = infantFare,
                 Trips = itins[0].Trips.Select(ConvertToTripForDisplay).ToList(),
                 RegisterNumber = 0,
-                OriginalFare = GenerateDummyOriginalFare(totalFare)
+                OriginalTotalFare = GenerateDummyOriginalFare(totalFare)
             };
         }
 
@@ -82,13 +82,13 @@ namespace Lunggo.ApCommon.Flight.Service
                 CanHold = itinerary.CanHold,
                 Currency = itinerary.Price.LocalCurrency,
                 TripType = itinerary.TripType,
-                TotalFare = itinerary.Price.Local,
-                AdultFare = adultFare,
-                ChildFare = childFare,
-                InfantFare = infantFare,
+                NetTotalFare = itinerary.Price.Local,
+                OriginalAdultFare = adultFare,
+                OriginalChildFare = childFare,
+                OriginalInfantFare = infantFare,
                 Trips = itinerary.Trips.Select(ConvertToTripForDisplay).ToList(),
                 RegisterNumber = itinerary.RegisterNumber,
-                OriginalFare = GenerateDummyOriginalFare(itinerary.Price.Local)
+                OriginalTotalFare = GenerateDummyOriginalFare(itinerary.Price.Local)
             };
         }
 

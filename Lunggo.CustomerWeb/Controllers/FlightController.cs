@@ -90,16 +90,16 @@ namespace Lunggo.CustomerWeb.Controllers
                     var payment = PaymentService.GetInstance();
                     var expiryTime = flight.GetItineraryExpiry(token);
                     var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
-                    var savedCreditCards = User.Identity.IsAuthenticated
-                        ? payment.GetSavedCreditCards(User.Identity.GetEmail())
-                        : new List<SavedCreditCard>();
+                    //var savedCreditCards = User.Identity.IsAuthenticated
+                    //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
+                    //    : new List<SavedCreditCard>();
                     return View(new FlightCheckoutData
                     {
                         Token = token,
                         Itinerary = itin,
                         ExpiryTime = expiryTime.GetValueOrDefault(),
                         SavedPassengers = savedPassengers,
-                        SavedCreditCards = savedCreditCards
+                        //SavedCreditCards = savedCreditCards
                     });
                 }
                 catch
@@ -186,7 +186,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Confirmation", "Flight", new { rsvNo });
             }
-            else if (paymentUrl != null || paymentUrl != "")
+            else if (!string.IsNullOrEmpty(paymentUrl))
             {
                 return Redirect(paymentUrl);
             }
