@@ -1,0 +1,9 @@
+﻿{
+  "$schema": "http://schemastore.org/schemas/json/webjob-publish-settings.json",
+  "webJobName": "CurrencyRate",
+  "startTime": "2016-06-21T00:00:00+07:00",
+  "endTime": null,
+  "jobRecurrenceFrequency": "Minute",
+  "interval": 3,
+  "runMode": "Scheduled"
+}

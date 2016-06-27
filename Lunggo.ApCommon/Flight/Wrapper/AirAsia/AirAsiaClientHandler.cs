@@ -63,6 +63,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
             private static bool Login(RestClient client)
             {
+                _userName = "IDTDEZYCGK_ADMIN";
+                _password = "Travorama123";
                 var url = "LoginAgent.aspx";
                 var request = new RestRequest(url, Method.POST);
                 var postData =
