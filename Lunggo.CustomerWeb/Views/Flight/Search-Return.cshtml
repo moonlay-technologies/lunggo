@@ -327,8 +327,8 @@
                     </div>
                 </div>
                 <div class="flight-price">
-                    <label>Harga Total:</label>
-                    <h3><sup>Rp</sup>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].netTotalFare | number}}</h3>
+                    <label>Harga per orang:</label>
+                    <h3><sup>Rp</sup>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].netAdultFare | number}}</h3>
                     <p>Termasuk Pajak &amp; Service Charge</p>
                     <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block" ng-click="setChosenFlight('departure',-1)" />
                 </div>
@@ -474,7 +474,7 @@
                         <span ng-click="setSort('departure','arrival')" ng-class="{'active' : departureFlightConfig.flightSort.label == 'arrival'}">Tiba</span>
                     </div>
                     <div class="sort-price">
-                        <span ng-click="setSort('departure','price')" ng-class="{'active' : departureFlightConfig.flightSort.label == 'price'}">Harga Total</span>
+                        <span ng-click="setSort('departure','price')" ng-class="{'active' : departureFlightConfig.flightSort.label == 'price'}">Harga per orang</span>
                     </div>
                 </div>
             </div><!-- .search-result-sort -->
@@ -663,8 +663,8 @@
                     </div>
                 </div>
                 <div class="flight-price">
-                    <label>Harga Total:</label>
-                    <h3><sup>Rp</sup>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].netTotalFare | number}}</h3>
+                    <label>Harga per orang:</label>
+                    <h3><sup>Rp</sup>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].netAdultFare | number}}</h3>
                     <p>Termasuk Pajak &amp; Service Charge</p>
                     <input type="submit" value="GANTI PENERBANGAN PULANG" class="btn btn-grey block" ng-click="setChosenFlight('return',-1)" />
                 </div>
@@ -810,7 +810,7 @@
                         <span ng-click="setSort('return','arrival')" ng-class="{'active' : returnFlightConfig.flightSort.label == 'arrival'}">Tiba</span>
                     </div>
                     <div class="sort-price">
-                        <span ng-click="setSort('return','price')" ng-class="{'active' : returnFlightConfig.flightSort.label == 'price'}">Harga Total</span>
+                        <span ng-click="setSort('return','price')" ng-class="{'active' : returnFlightConfig.flightSort.label == 'price'}">Harga per orang</span>
                     </div>
                 </div>
             </div><!-- .search-result-sort -->
@@ -1011,7 +1011,7 @@
 
                     </div>
                     <div class="summary-right">
-                        <label>Harga Total:</label>
+                        <label>Harga per orang:</label>
                         <h3><sup>Rp</sup> {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].netTotalFare + returnFlightConfig.flightList[returnFlightConfig.chosenFlight].netTotalFare | number}}</h3>
                         <p>*Harga termasuk Pajak &amp; Service Charge</p>
                         <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="selectFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" @*ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" ng-click="pageConfig.redirectingPage"*@ />

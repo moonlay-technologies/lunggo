@@ -353,7 +353,7 @@
                         <span ng-click="setSort('arrival')" ng-class="{'active' : sort.label == 'arrival'}">Tiba</span>
                     </div>
                     <div class="sort-price">
-                        <span ng-click="setSort('price')" ng-class="{'active' : sort.label == 'price'}">Harga Total</span>
+                        <span ng-click="setSort('price')" ng-class="{'active' : sort.label == 'price'}">Harga per orang</span>
                     </div>
                 </div>
             </div><!-- .flight-result-sort -->
@@ -511,7 +511,7 @@
 
                         </div>
                         <div class="summary-right">
-                            <label>Harga Total:</label>
+                            <label>Harga per orang:</label>
                             @* perubahan nama totalFare menjadi netTotalFare *@
 
                             <h3><sup>Rp</sup> {{flightList[flightSelected].netTotalFare | number:0}}</h3>
