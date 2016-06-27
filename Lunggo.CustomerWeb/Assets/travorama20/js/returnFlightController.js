@@ -238,12 +238,14 @@ app.controller('returnFlightController', [
                     $scope.departureFlightConfig.activeFlight = -1;
                 } else {
                     $scope.departureFlightConfig.activeFlight = flightSequence;
+                    $scope.departureFlightConfig.activePrice = -1;
                 }
             } else if (target == 'return') {
                 if ($scope.returnFlightConfig.activeFlight == flightSequence) {
                     $scope.returnFlightConfig.activeFlight = -1;
                 } else {
                     $scope.returnFlightConfig.activeFlight = flightSequence;
+                    $scope.returnFlightConfig.activePrice = -1;
                 }
             }
         }

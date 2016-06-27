@@ -484,7 +484,7 @@
             <div class="search-result-list" ng-hide="!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length">
                 <div class="container">
 
-                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (departureFlightConfig.activeFlight == flight.IndexNo) }" ng-repeat="flight in departureFlight = (departureFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('departure') | filter:airlineFilter('departure') | filter:priceFilter('departure') | filter:timeFilter('departure') | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse)" id="flight-{{flight.IndexNo}}">
+                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (departureFlightConfig.activeFlight == flight.IndexNo || departureFlightConfig.activePrice == flight.IndexNo) }" ng-repeat="flight in departureFlight = (departureFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('departure') | filter:airlineFilter('departure') | filter:priceFilter('departure') | filter:timeFilter('departure') | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse)" id="flight-{{flight.IndexNo}}">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">
@@ -536,7 +536,7 @@
                                 <a class="btn btn-yellow" ng-click="setChosenFlight('departure',flight.IndexNo)">PESAN</a>
                             </div>
                         </div><!-- .flight-summary -->
-                        <div class="flight-detail">
+                        <div class="flight-detail" ng-show="departureFlightConfig.activeFlight == flight.IndexNo">
                             <h3>Detail Penerbangan <span class="close-flight-detail pull-right" ng-click="setActiveFlight('departure',-1)">X</span></h3>
                             <div ng-repeat="segment in flight.trips[0].segments track by $index">
                                 <div class="transit" ng-if="$index > 0">
@@ -577,11 +577,9 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div><!-- .flight-detail -->
-                    @* terakhir dimari *@
-                        <div class="price-detail" ng-show=" activePrice == flight.IndexNo">
+
+                        <div class="price-detail" ng-show="departureFlightConfig.activePrice == flight.IndexNo">
                             <h3>Rincian Harga <span class="close-price-detail pull-right" ng-click="showPriceDetail(-1)">X</span></h3>
                             <price-detail-directive flight="flight"></price-detail-directive>
                         </div><!-- .price-detail -->
@@ -822,7 +820,7 @@
             <div class="search-result-list" ng-hide="!returnFlightConfig.loading && !returnFlightConfig.loadingFlight && !returnFlightConfig.flightList.length">
                 <div class="container">
 
-                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (returnFlightConfig.activeFlight == flight.IndexNo) }" ng-repeat="flight in returnFlight = (returnFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('return') | filter:airlineFilter('return') | filter:priceFilter('return') | filter:timeFilter('return') | orderBy:returnFlightConfig.flightSort.value:returnFlightConfig.flightSort.reverse)" id="flight-{{flight.IndexNo}}">
+                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (returnFlightConfig.activeFlight == flight.IndexNo || returnFlightConfig.activePrice == flight.IndexNo) }" ng-repeat="flight in returnFlight = (returnFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('return') | filter:airlineFilter('return') | filter:priceFilter('return') | filter:timeFilter('return') | orderBy:returnFlightConfig.flightSort.value:returnFlightConfig.flightSort.reverse)" id="flight-{{flight.IndexNo}}">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">
@@ -854,6 +852,7 @@
                                     </div><!-- .flight-facilities -->
                                     <div class="summary-bottom-right flight-button">
                                         <a class="flight-detail-trigger" ng-click="setActiveFlight('return',flight.IndexNo)">Detail Penerbangan <span class="caret"></span></a>
+                                        <span ng-click="showPriceDetail('return', flight.IndexNo)" class="price-detail-trigger">Rincian Harga <span class="caret"></span></span>
                                         <!-- <a class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a> -->
                                     </div><!-- .flight-button -->
                                     <div class="summary-bottom-right flight-duration">
@@ -865,6 +864,7 @@
                                     </div>
                                 </div><!-- .summar-bottom -->
                             </div>
+
                             <div class="flight-summary-right">
 
                                 <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
@@ -873,7 +873,7 @@
                                 <a class="btn btn-yellow" ng-click="setChosenFlight('return',flight.IndexNo)">PESAN</a>
                             </div>
                         </div><!-- .flight-summary -->
-                        <div class="flight-detail">
+                        <div class="flight-detail" ng-show="returnFlightConfig.activeFlight == flight.IndexNo">
                             <h3>Detail Penerbangan <span class="close-flight-detail pull-right" ng-click="setActiveFlight('return',-1)">X</span></h3>
                             <div ng-repeat="segment in flight.trips[0].segments track by $index">
                                 <div class="transit" ng-if="$index > 0">
@@ -915,6 +915,11 @@
                                 </div>
                             </div>
                         </div><!-- .flight-detail -->
+
+                        <div class="price-detail" ng-show="returnFlightConfig.activePrice == flight.IndexNo">
+                            <h3>Rincian Harga <span class="close-price-detail pull-right" ng-click="showPriceDetail(-1)">X</span></h3>
+                            <price-detail-directive flight="flight"></price-detail-directive>
+                        </div><!-- .price-detail -->
                     </div><!-- .flight-->
 
                 </div>
