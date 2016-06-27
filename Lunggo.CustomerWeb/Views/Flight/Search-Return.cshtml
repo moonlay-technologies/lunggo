@@ -866,7 +866,6 @@
                             </div>
 
                             <div class="flight-summary-right">
-
                                 <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}</h4>
                                 <small>*Termasuk Pajak &amp; Service Charge</small>
@@ -928,11 +927,11 @@
     </div><!-- .search-result-container -->
     
     <!-- FLIGHT RETURN CONTAINER -->
-    <div class="flight-review-wrapper" ng-show="departureFlightConfig.chosenFlight > -1 && returnFlightConfig.chosenFlight > -1" ng-class="{'active': pageConfig.overviewDetailShown}">
+    <div class="flight-review-wrapper" ng-show="departureFlightConfig.chosenFlight > -1 && returnFlightConfig.chosenFlight > -1" ng-class="{'active': (pageConfig.overviewFlightDetailShowing || pageConfig.overviewPriceDetailShowing)}">
         <div class="container">
             <div class="flight-review">
                 <header class="flight-review-header">
-                    <h3>Rincian Penerbangan Pergi dan Pulang <span class="pull-right close-review" ng-click="closeOverview()" >X</span></h3>
+                    <h3>Rincian Penerbangan Pergi dan Pulang <span class="pull-right close-review" ng-click="closeOverview()">X</span></h3>
                 </header>
                 <section class="flight-review-summary">
                     <div class="summary-left">
@@ -1005,7 +1004,9 @@
                         </section>
 
                         <section class="flight-button">
-                            <a class="flight-detail-trigger" ng-click="toggleOverviewDetail()">Detail Penerbangan <span class="caret"></span></a>
+                            <a class="flight-detail-trigger" ng-click="toggleOverviewFlightDetail()">Detail Penerbangan <span class="caret"></span></a>
+
+                            <span ng-click="toggleOverviewPriceDetail()" class="price-detail-trigger">Rincian Harga <span class="caret"></span></span>
                             <!-- <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a> -->
                         </section>
 
@@ -1023,106 +1024,114 @@
                     </div>
                 </section>
                 <footer class="flight-review-detail">
-                    <h3>Detail Penerbangan <span class="pull-right close close-review-detail" ng-click="toggleOverviewDetail()">X</span></h3>
-                    <section class="detail-flight flight-departure">
-                        <header class="flight-header">
-                            <h3>Penerbangan Pergi</h3>
-                        </header>
+                    <section name="flight detail" ng-show="pageConfig.overviewFlightDetailShowing">
+                        <h3>Detail Penerbangan <span class="pull-right close close-review-detail" ng-click="toggleOverviewFlightDetail()">X</span></h3>
+                        <section class="detail-flight flight-departure">
+                            <header class="flight-header">
+                                <h3>Penerbangan Pergi</h3>
+                            </header>
 
-                        <section class="flight-detail">
-                            <div ng-repeat="segment in departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments track by $index">
-                                <div class="transit" ng-if="$index > 0">
-                                    <p>Transit di {{segment.departureCity}} ({{segment.departure}}) selama {{msToTime(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].transits[ $index - 1 ].duration)}}</p>
+                            <section class="flight-detail">
+                                <div ng-repeat="segment in departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments track by $index">
+                                    <div class="transit" ng-if="$index > 0">
+                                        <p>Transit di {{segment.departureCity}} ({{segment.departure}}) selama {{msToTime(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].transits[ $index - 1 ].duration)}}</p>
+                                    </div>
+                                    <div class="segment">
+                                        <div class="segment-number">
+                                            <span ng-if="$index == 0">1<sup>st</sup></span>
+                                            <span ng-if="$index == 1">2<sup>nd</sup></span>
+                                            <span ng-if="$index == 2">3<sup>rd</sup></span>
+                                            <span ng-if="$index > 2">{{$index}}<sup>th</sup></span>
+                                        </div>
+                                        <div class="segment-left">
+                                            <img ng-src="{{segment.airlineLogoUrl}}" alt="{{segment.airlineName}}" class="segment-airline-logo" />
+                                            <h5 class="segment-airline-name">{{segment.airlineName}}</h5>
+                                            <h5 class="segment-airline-number">{{segment.airlineCd}}-{{segment.flightNo}}</h5>
+                                            <div class="flight-facilities hidden">
+                                                <span class="flight-baggage">15</span>
+                                                <span class="flight-tax"></span>
+                                                <span class="flight-meal"></span>
+                                            </div>
+                                        </div>
+                                        <div class="segment-right">
+                                            <div class="segment-departure">
+                                                <h5>{{segment.departureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                                <h3>{{segment.departureTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                                <h4>{{segment.departureCity}} ({{segment.departure}})</h4>
+                                                <h5>{{segment.departureName}}</h5>
+                                            </div>
+                                            <div class="segment-duration">
+                                                <h5><span>Durasi :</span> {{msToTime(segment.duration)}}</h5>
+                                            </div>
+                                            <div class="segment-arrival">
+                                                <h5>{{segment.arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                                <h3>{{segment.arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                                <h4>{{segment.arrivalCity}} ({{segment.arrival}})</h4>
+                                                <h5>{{segment.arrivalName}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="segment">
-                                    <div class="segment-number">
-                                        <span ng-if="$index == 0">1<sup>st</sup></span>
-                                        <span ng-if="$index == 1">2<sup>nd</sup></span>
-                                        <span ng-if="$index == 2">3<sup>rd</sup></span>
-                                        <span ng-if="$index > 2">{{$index}}<sup>th</sup></span>
-                                    </div>
-                                    <div class="segment-left">
-                                        <img ng-src="{{segment.airlineLogoUrl}}" alt="{{segment.airlineName}}" class="segment-airline-logo" />
-                                        <h5 class="segment-airline-name">{{segment.airlineName}}</h5>
-                                        <h5 class="segment-airline-number">{{segment.airlineCd}}-{{segment.flightNo}}</h5>
-                                        <div class="flight-facilities hidden">
-                                            <span class="flight-baggage">15</span>
-                                            <span class="flight-tax"></span>
-                                            <span class="flight-meal"></span>
-                                        </div>
-                                    </div>
-                                    <div class="segment-right">
-                                        <div class="segment-departure">
-                                            <h5>{{segment.departureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
-                                            <h3>{{segment.departureTime | date: 'HH:mm' : 'UTC'}}</h3>
-                                            <h4>{{segment.departureCity}} ({{segment.departure}})</h4>
-                                            <h5>{{segment.departureName}}</h5>
-                                        </div>
-                                        <div class="segment-duration">
-                                            <h5><span>Durasi :</span> {{msToTime(segment.duration)}}</h5>
-                                        </div>
-                                        <div class="segment-arrival">
-                                            <h5>{{segment.arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
-                                            <h3>{{segment.arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
-                                            <h4>{{segment.arrivalCity}} ({{segment.arrival}})</h4>
-                                            <h5>{{segment.arrivalName}}</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </section>
+
                         </section>
+                        <section class="detail-flight flight-return">
+                            <header class="flight-header">
+                                <h3>Penerbangan Pulang</h3>
+                            </header>
 
-                    </section>
-                    <section class="detail-flight flight-return">
-                        <header class="flight-header">
-                            <h3>Penerbangan Pulangasdasdasd</h3>
-                        </header>
+                            <section class="flight-detail">
+                                <div ng-repeat="segment in returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments">
+                                    <div class="transit" ng-if="$index > 0">
+                                        <p>Transit di {{segment.departureCity}} ({{segment.departure}}) selama {{msToTime(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].transits[ $index - 1 ].duration)}}</p>
+                                    </div>
+                                    <div class="segment">
+                                        <div class="segment-number">
+                                            <span ng-if="$index == 0">1<sup>st</sup></span>
+                                            <span ng-if="$index == 1">2<sup>nd</sup></span>
+                                            <span ng-if="$index == 2">3<sup>rd</sup></span>
+                                            <span ng-if="$index > 2">{{$index}}<sup>th</sup></span>
+                                        </div>
+                                        <div class="segment-left">
+                                            <img ng-src="{{segment.airlineLogoUrl}}" alt="{{segment.airlineName}}" class="segment-airline-logo" />
+                                            <h5 class="segment-airline-name">{{segment.airlineName}}</h5>
+                                            <h5 class="segment-airline-number">{{segment.airlineCd}}-{{segment.flightNo}}</h5>
+                                            <div class="flight-facilities hidden">
+                                                <span class="flight-baggage">15</span>
+                                                <span class="flight-tax"></span>
+                                                <span class="flight-meal"></span>
+                                            </div>
+                                        </div>
+                                        <div class="segment-right">
+                                            <div class="segment-departure">
+                                                <h5>{{segment.departureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                                <h3>{{segment.departureTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                                <h4>{{segment.departureCity}} ({{segment.departure}})</h4>
+                                                <h5>{{segment.departureName}}</h5>
+                                            </div>
+                                            <div class="segment-duration">
+                                                <h5><span>Durasi :</span> {{msToTime(segment.duration)}}</h5>
+                                            </div>
+                                            <div class="segment-arrival">
+                                                <h5>{{segment.arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                                <h3>{{segment.arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                                <h4>{{segment.arrivalCity}} ({{segment.arrival}})</h4>
+                                                <h5>{{segment.arrivalName}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
 
-                        <section class="flight-detail">
-                            <div ng-repeat="segment in returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments">
-                                <div class="transit" ng-if="$index > 0">
-                                    <p>Transit di {{segment.departureCity}} ({{segment.departure}}) selama {{msToTime(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].transits[ $index - 1 ].duration)}}</p>
-                                </div>
-                                <div class="segment">
-                                    <div class="segment-number">
-                                        <span ng-if="$index == 0">1<sup>st</sup></span>
-                                        <span ng-if="$index == 1">2<sup>nd</sup></span>
-                                        <span ng-if="$index == 2">3<sup>rd</sup></span>
-                                        <span ng-if="$index > 2">{{$index}}<sup>th</sup></span>
-                                    </div>
-                                    <div class="segment-left">
-                                        <img ng-src="{{segment.airlineLogoUrl}}" alt="{{segment.airlineName}}" class="segment-airline-logo" />
-                                        <h5 class="segment-airline-name">{{segment.airlineName}}</h5>
-                                        <h5 class="segment-airline-number">{{segment.airlineCd}}-{{segment.flightNo}}</h5>
-                                        <div class="flight-facilities hidden">
-                                            <span class="flight-baggage">15</span>
-                                            <span class="flight-tax"></span>
-                                            <span class="flight-meal"></span>
-                                        </div>
-                                    </div>
-                                    <div class="segment-right">
-                                        <div class="segment-departure">
-                                            <h5>{{segment.departureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
-                                            <h3>{{segment.departureTime | date: 'HH:mm' : 'UTC'}}</h3>
-                                            <h4>{{segment.departureCity}} ({{segment.departure}})</h4>
-                                            <h5>{{segment.departureName}}</h5>
-                                        </div>
-                                        <div class="segment-duration">
-                                            <h5><span>Durasi :</span> {{msToTime(segment.duration)}}</h5>
-                                        </div>
-                                        <div class="segment-arrival">
-                                            <h5>{{segment.arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
-                                            <h3>{{segment.arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
-                                            <h4>{{segment.arrivalCity}} ({{segment.arrival}})</h4>
-                                            <h5>{{segment.arrivalName}}</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </section>
-
                     </section>
+                   
                 </footer>
+                <div class="price-detail" ng-show="pageConfig.overviewPriceDetailShowing">
+                    <h3>Rincian Harga <span class="close-price-detail pull-right" ng-click="toggleOverviewPriceDetail()">X</span></h3>
+                    <price-detail-directive flight="departureFlightConfig.flightList[departureFlightConfig.chosenFlight]"></price-detail-directive>
+                    <!-- .price-detail -->
+                </div>
             </div><!-- .flight-review -->
         </div>
     </div><!-- .flight-review-wrapper -->

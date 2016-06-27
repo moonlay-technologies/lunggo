@@ -383,14 +383,36 @@ app.controller('returnFlightController', [
             }
         }
 
+
+        $scope.pageConfig.overviewFlightDetailShowing = false;
+        $scope.pageConfig.overviewPriceDetailShowing = false;
         // toggle overview detail
-        $scope.toggleOverviewDetail = function () {
-            if ($scope.pageConfig.overviewDetailShown == true) {
-                $scope.pageConfig.overviewDetailShown = false;
+        $scope.toggleOverviewFlightDetail = function () {
+            if ($scope.pageConfig.overviewFlightDetailShowing == false) {
+                $scope.pageConfig.overviewFlightDetailShowing = true;
+                $scope.pageConfig.overviewPriceDetailShowing = false;
             } else {
-                $scope.pageConfig.overviewDetailShown = true;
+                $scope.pageConfig.overviewFlightDetailShowing = false;
             }
-        }
+        };
+
+        $scope.toggleOverviewPriceDetail = function (param) {
+            if ($scope.pageConfig.overviewPriceDetailShowing == false) {
+                $scope.pageConfig.overviewPriceDetailShowing = true;
+                $scope.pageConfig.overviewFlightDetailShowing = false;
+            } else {
+                $scope.pageConfig.overviewPriceDetailShowing = false;
+            }
+        };
+
+
+
+
+
+
+
+
+
 
         // ******************************
         // revalidate flights
