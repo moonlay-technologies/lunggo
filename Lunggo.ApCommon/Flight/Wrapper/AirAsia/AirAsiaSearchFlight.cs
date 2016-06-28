@@ -152,6 +152,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         foreach (var segmentFareId in segmentFareIds)
                         {
                             var splittedSegmentFareId = segmentFareId.Split('~').ToArray();
+                            var duration =
+                                DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]), DateTimeKind.Utc) -
+                                DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[5]), DateTimeKind.Utc);
+                        
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = splittedSegmentFareId[0],
@@ -163,6 +167,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 ArrivalAirport = splittedSegmentFareId[6],
                                 ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]), DateTimeKind.Utc),
                                 OperatingAirlineCode = splittedSegmentFareId[0],
+                                Duration = duration,
                                 StopQuantity = 0
                             });
                         }
