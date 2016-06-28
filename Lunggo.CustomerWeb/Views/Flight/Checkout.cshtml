@@ -71,19 +71,19 @@
         var flightDetail = '';
         var expiryDate = '@Model.ExpiryTime.ToString("o")';
         var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
-        var price = @Model.Itinerary.TotalFare;
+        var price = @Model.Itinerary.OriginalTotalFare;
 
         // passenger number
         var adultPassenger = @Model.Itinerary.AdultCount;
-        var adultFare = @Model.Itinerary.AdultFare;
+        var adultFare = @Model.Itinerary.NetAdultFare;
         var adultTypeName = 'Dewasa';
 
         var childPassenger = @Model.Itinerary.ChildCount;
-        var childFare = @Model.Itinerary.ChildFare;
+        var childFare = @Model.Itinerary.NetChildFare;
         var childTypeName = 'Anak';
 
         var infantPassenger = @Model.Itinerary.InfantCount;
-        var infantFare = @Model.Itinerary.InfantFare;
+        var infantFare = @Model.Itinerary.NetInfantFare;
         var infantTypeName = 'Bayi';
         //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
         // passport or id requirement
@@ -156,7 +156,7 @@
                                         </form>
                                     </div>
                                 </div><!-- .travorama-login -->
-
+                            
                                 <form class="form" id="buyer-form" name="buyerForm" novalidate>
 
                                     <div class="form-group">

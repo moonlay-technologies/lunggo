@@ -54,6 +54,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 OriginalAdultFare = adultFare,
                 OriginalChildFare = childFare,
                 OriginalInfantFare = infantFare,
+                NetAdultFare = 1234567,
+                NetChildFare = 1234567,
+                NetInfantFare = 1234567,
                 Trips = itins[0].Trips.Select(ConvertToTripForDisplay).ToList(),
                 RegisterNumber = 0,
                 OriginalTotalFare = GenerateDummyOriginalFare(totalFare)
@@ -86,6 +89,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 OriginalAdultFare = adultFare,
                 OriginalChildFare = childFare,
                 OriginalInfantFare = infantFare,
+                NetAdultFare = 1234567,
+                NetChildFare = 1234567,
+                NetInfantFare = 1234567,
                 Trips = itinerary.Trips.Select(ConvertToTripForDisplay).ToList(),
                 RegisterNumber = itinerary.RegisterNumber,
                 OriginalTotalFare = GenerateDummyOriginalFare(itinerary.Price.Local)

@@ -85,6 +85,14 @@ app.controller('paymentController', [
         };
         $scope.currency = 'IDR';
         $scope.rsvNo = rsvNo;
+        //var test =$scope.rsvNo.toString;
+        $scope.input3 = function (rsvNo)
+        {
+            var getString = rsvNo + "";
+            var lastFive = getString.substr(getString.length - 5);
+            return lastFive;
+        };
+
         $scope.TransferConfig.GetUniqueCode($scope.rsvNo); //payment
         $scope.initialPrice = price;
         $scope.totalPrice = price;
@@ -249,28 +257,33 @@ app.controller('paymentController', [
                 $scope.pay.paying = true;
                 $scope.pay.checked = false;
                 //generate payment data
-                if ($scope.paymentMethod == 'BankTransfer' || $scope.paymentMethod == 'MandiriBillPayment' || $scope.paymentMethod == 'CimbClicks') {
+                if ($scope.paymentMethod == 'BankTransfer') {
                     $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"' + $scope.paymentMethod + '"';
                 }
                 else
                 {
                     switch ($scope.paymentMethod) {
-                        case "CreditCard": //NotTested
-                            //$scope.PaymentData = '{' + ' "tokenId":"' + $scope.CreditCard.Token + '",  "bank" :"' + $scope.buyerInfo.fullname + '","holderName":"' + $scope.CreditCard.Name + '","holderEmail":"' + $scope.buyerInfo.email + '","installmentTerm":"' + $scope.buyerInfo.email + '","bins":"' + $scope.buyerInfo.phone + '","saveTokenId":"' + $scope.buyerInfo.phone + '"' + '}';
-                            $scope.PaymentData = '{' + ' "creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name + '"' + '}'+ '}';//'{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name + '"' + '}';
+                        case "CreditCard": 
+                            $scope.PaymentData = '{' + ' "creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name + '"' + '}'+ '}';
                             break;
-                       case "MandiriClickPay": //Data belum benar, card number dan token
-                           $scope.PaymentData = '{' + ' "mandiriClickPay":' + '{' + ' "cardNo":"' + $scope.MandiriClickPay.CardNo + '","token":"' + $scope.MandiriClickPay.Token + '"' + '}' + '}';
+                        case "MandiriClickPay": 
+                            var cardLast10No = $scope.MandiriClickPay.CardNo + "";
+                            cardLast10No = cardLast10No.substr(cardLast10No.length - 10);
+                            var randomNumber = $scope.rsvNo + "";
+                            randomNumber = randomNumber.substr(randomNumber.length - 5);
+                            $scope.PaymentData = '{' + ' "mandiriClickPay":' + '{' + ' "cardNo":"' + $scope.MandiriClickPay.CardNo + '","token":"' + $scope.MandiriClickPay.Token + '","cardLast10No":"' + cardLast10No + '","amount":"' + $scope.totalPrice + '","randomNumber":"' + randomNumber + '"' + '}' + '}';
                             break;
-                        //case "CimbClicks": //gk ada data
-                        //    $scope.PaymentData = '{' + ' "description":"' + $scope.CreditCard.Token + '"' + '}';
-                        //    break;
-                        case "VirtualAccount": // Done
-                            $scope.PaymentData = '{' + ' "bank":"Permata"' + '}'; 
+                        case "CimbClicks": 
+                            $scope.PaymentData = '{' + ' "cimbClicks":' + '{' + ' "description":"Pembayaran melalui CimbClicks"' + '}' + '}';
                             break;
-                        //case "MandiriBillPayment": //Data belum benar
-                        //    $scope.PaymentData = '{' + ' "label1":"' + $scope.CreditCard.Token + '",  "value1" :"' + $scope.buyerInfo.fullname + '","label2":"' + $scope.CreditCard.Name + '","value2":"' + $scope.buyerInfo.email + '","label3":"' + $scope.buyerInfo.email + '","value3":"' + $scope.buyerInfo.phone + '","label4":"' + $scope.buyerInfo.phone + '","value4":"' + $scope.buyerInfo.phone + '"' + '}';
-                        //    break;
+                        case "VirtualAccount": 
+                            $scope.PaymentData = '{' + ' "virtualAccount":' + '{' + ' "bank":"permata"' + '}' + '}';
+                            break;
+                        case "MandiriBillPayment": 
+                            var label1 = "Payment for booking a flight";
+                            var value1 = "debt";
+                            $scope.PaymentData = '{' + ' "mandiriBillPayment":' + '{' + ' "label1":"' + label1 + '","value1":"' + value1 + '"' + '}' + '}';
+                            break;
                     }
                     $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "data":' + $scope.PaymentData + ', "method":"' + $scope.paymentMethod + '"';
                 }
@@ -300,7 +313,7 @@ app.controller('paymentController', [
                         $scope.pay.isSuccess = true;
                         $scope.pay.rsvNo = $scope.rsvNo;
                         $('form#rsvno input#rsvno-input').val($scope.pay.rsvNo);
-                        $('form#rsvno input#url-input').val(returnData.data.redirectionUrl);//url-input
+                        $('form#rsvno input#url-input').val(returnData.data.redirectionUrl);
                         $('form#rsvno').submit();
                         $scope.pay.checked = true;
                     }

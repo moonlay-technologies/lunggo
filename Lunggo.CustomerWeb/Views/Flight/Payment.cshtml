@@ -72,7 +72,7 @@
         var paymentDetail = '';
         var flightDetail = '';
         var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
-        var price = @Model.Reservation.Itinerary.TotalFare;
+        var price = @Model.Reservation.Itinerary.OriginalTotalFare;
 
         var departureDate;
         @if (Model.Reservation.Itinerary.Trips != null)
@@ -317,6 +317,19 @@
                                             <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
                                         </div>
                                         <div class="form-group">
+                                            <label class="control-label">Input 1    : </label>
+                                            <label class="control-label" ng-show="MandiriClickPay.CardNo">{{MandiriClickPay.CardNo | limitTo:-10}}</label>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label">Input 2    : </label>
+                                            <label class="control-label">{{totalPrice - voucher.amount}}</label> <!-- Harga Final -->
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Input 3    : </label>
+                                            <label class="control-label">{{rsvNo | limitTo:-5}}</label>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="control-label">CVV Kartu</label>
                                             <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
                                         </div>
@@ -364,17 +377,17 @@
                                             <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
                                             <input type="text" name="Language" value="" ng-model="language" />
 
-                                            <input type="text" name="Payment.Data0" id="vt-token" value="" ng-model="CreditCard.Token" />
+                                            <p>Payment Method</p>
+                                            <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
 
                                             <p>Voucher Code</p>
                                             <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
-
-                                            <p>Payment Method</p>
-                                            <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
+                                            
+                                            <input type="text" name="Payment.Data0" id="vt-token" value="" ng-model="CreditCard.Token" />
+                                            
                                         </div>
 
                                         <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a></p>
-                                        <!--<a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>-->
 
                                         <input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">
 
