@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading;
 using System.Web;
 using CsQuery;
+using CsQuery.StringScanner.ExtensionMethods;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
@@ -28,28 +29,28 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
-                RevalidateConditions conditions = new RevalidateConditions
-                {
-                    Itinerary = bookInfo.Itinerary
-                };
+                //RevalidateConditions conditions = new RevalidateConditions
+                //{
+                //    Itinerary = bookInfo.Itinerary
+                //};
                 //conditions.Itinerary = bookInfo.Itinerary;
-                RevalidateFareResult revalidateResult = RevalidateFare(conditions);
-                if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
-                {
-                    return new BookFlightResult
-                    {
-                        IsValid = revalidateResult.IsValid,
-                        ErrorMessages = revalidateResult.ErrorMessages,
-                        Errors = revalidateResult.Errors,
-                        IsItineraryChanged = revalidateResult.IsItineraryChanged,
-                        IsPriceChanged = revalidateResult.IsPriceChanged,
-                        IsSuccess = false,
-                        NewItinerary = revalidateResult.NewItinerary,
-                        NewPrice = revalidateResult.NewPrice,
-                        Status = null
-                    };
-                }
-                bookInfo.Itinerary = revalidateResult.NewItinerary;
+                //RevalidateFareResult revalidateResult = RevalidateFare(conditions);
+                //if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
+                //{
+                //    return new BookFlightResult
+                //    {
+                //        IsValid = revalidateResult.IsValid,
+                //        ErrorMessages = revalidateResult.ErrorMessages,
+                //        Errors = revalidateResult.Errors,
+                //        IsItineraryChanged = revalidateResult.IsItineraryChanged,
+                //        IsPriceChanged = revalidateResult.IsPriceChanged,
+                //        IsSuccess = false,
+                //        NewItinerary = revalidateResult.NewItinerary,
+                //        NewPrice = revalidateResult.NewPrice,
+                //        Status = null
+                //    };
+                //}
+                //bookInfo.Itinerary = revalidateResult.NewItinerary;
                 var client = CreateAgentClient();
                 string origin, dest, coreFareId;
                 DateTime date;
@@ -107,17 +108,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var data = "";
                 for (var m = 0; m < rep; m++)
                 {
-                    data += splitted[8*m].Trim(' ').Trim('^') + "+" 
-                        + splitted[1 + 8*m].Trim(' ') + "+"
+                    data += splitted[8*m].Trim(' ').Trim('^') + " " 
+                        + splitted[1 + 8*m].Trim(' ') + " "
                         + splitted[4 + 8*m] + splitted[6 + 8*m];
                     if (m != rep - 1)
                     {
-                        data += HttpUtility.UrlEncode("/ "); ;
+                        data +="/ "; ;
                     }
                 }
 
-                hidden = string.Join("+", date.ToString("yyyyMMdd"), data);
-                hidden = string.Join("", hidden, "IDR");
+                hidden = String.Join(" ", hidden, data);
+                //hidden = string.Join("", hidden, "IDR");
 
                 // [POST] Search Flight
 
@@ -177,46 +178,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 searchResponse = client.Execute(searchRequest);
                 var html1 = (CQ)searchResponse.Content;
 
-                var dataflight = html1[".row1"].ToList();
-                var dataCity = html1[".row2.mtop-row"].ToList();
-                var listflightno = new List<string>();
-                var listcities = new List<string>();
-                foreach (var row in dataflight)
-                {
-                    if (row.ChildElements.ToList()[0].GetAttribute("class") == "right-text bold grey1")
-                    {
-                        listflightno.Add(row.ChildElements.ToList()[0].InnerText);
-                    }
-                }
-
-                foreach (var segment in dataCity)
-                {
-                    var children = segment.ChildElements.ToList();
-                    var cities = "";
-                    foreach (var child in children)
-                    {
-                        if (child.GetAttribute("class") == "left text")
-                        {
-                            cities += child.InnerText;
-
-                        }
-                    }
-                    listcities.Add(cities);
-                }
-                // [POST] Select Flight
+                //// [POST] Select Flight
                 var currencies = html1[".black1.total-currency"].ToList()[0].InnerText;
+                hidden = String.Join("", hidden, currencies);
 
-                for (var x = 0; x < listcities.Count; x++)
-                {
-                    if (x != listcities.Count - 1)
-                    {
-                        hidden += listflightno.ElementAt(x) + listcities.ElementAt(x) + "/";
-                    }
-                    else
-                    {
-                        hidden += listflightno.ElementAt(x) + listcities.ElementAt(x) + currencies;
-                    }
-                }
                 postData =
                     @"__EVENTTARGET=" +
                     @"&__EVENTARGUMENT=" +
@@ -397,7 +362,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24HiddenEquipmentConfiguration_0_PassengerNumber_0=" +
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24EquipmentConfiguration_0_PassengerNumber_0=" +
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24EquipmentConfiguration_0_PassengerNumber_0_HiddenFee=NaN" +
-                    @"&HiddenFieldPageBookingData=" + hidden +
+                    @"&HiddenFieldPageBookingData=" + HttpUtility.UrlEncode(hidden) +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 var unitMapRequest = new RestRequest("UnitMap.aspx", Method.POST);
                 unitMapRequest.AddHeader("Referer", "https://booking2.airasia.com/UnitMap.aspx");
@@ -466,6 +431,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var arrTime = DateTime.ParseExact(splitArr[1].Trim() + " " + splitArr[0].Trim(), format, provider);
                         var departureTime = deptTime.AddHours(-(flight.GetAirportTimeZone(airport[index * 3].InnerHTML.Trim())));
                         var arrivalTime = arrTime.AddHours(-(flight.GetAirportTimeZone(airport[(index * 3) + 2].InnerHTML.Trim())));
+                        var duration = arrivalTime - departureTime;
 
                         segments.Add(new FlightSegment
                         {
