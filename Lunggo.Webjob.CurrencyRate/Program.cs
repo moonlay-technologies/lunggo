@@ -14,7 +14,7 @@ namespace Lunggo.Webjob.CurrencyRate
         static void Main(string[] args)
         {
             Init();
-            var a = FlightService.GetInstance().CurrencyGetterInternal("SGD", Supplier.AirAsia); 
+            var a = FlightService.GetInstance().CurrencyGetterInternal("SGD", Supplier.LionAir); 
             FlightService flight = FlightService.GetInstance();
             flight.Init("");
             MandiriClientHandler mandiriClient = MandiriClientHandler.GetClientInstance();

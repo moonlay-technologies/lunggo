@@ -96,8 +96,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 CQ departureDate;
                 string scr;
                 var depDateText = "";
-
-
+                
                 {
                     // Calling The Zeroth Page
                     client.BaseUrl = new Uri("http://www.lionair.co.id");
