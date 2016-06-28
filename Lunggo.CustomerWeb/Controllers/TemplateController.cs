@@ -7,6 +7,7 @@ namespace Lunggo.CustomerWeb.Controllers
     public class TemplateController : Controller
     {
         // GET: Template
+        /*
         public ActionResult HotelSearchList()
         {
             return View();
@@ -168,15 +169,26 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult SlightDelayEmail() 
+        {
+            return View();
+        }
+
+        public ActionResult EmailSubscribeVoucher()
+        {
+            return View();
+        }
+
+        public ActionResult EmailSubscribe()
+        {
+            return View();
+        }
+
         public ActionResult ConfirmationRaw() 
         {
             return View();
         }
 
-        public ActionResult PendingConfirmed()
-        {
-            return View();
-        }
 
-    }
+         * */}
 }

@@ -86,9 +86,9 @@ namespace Lunggo.ApCommon.Flight.Service
                             queryParam.PaymentTimeLimit =payment.TimeLimit.Value.ToUniversalTime();
                         if(payment.Url !=null)
                             queryParam.PaymentUrl = payment.Url;
-                        if(payment.PaidAmount!=null)
+                        if(payment.PaidAmount!=0)
                             queryParam.PaidAmount = payment.PaidAmount;
-                        if (payment.FinalPrice != null)
+                        if (payment.FinalPrice != 0)
                             queryParam.FinalPrice = payment.FinalPrice;
                         UpdatePaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);
                         return true;

@@ -14,5 +14,6 @@ namespace Lunggo.ApCommon.Flight.Model
         public Gender Gender { get; set; }
         public DateTime? PassportExpiryDate { get; set; }
         public string PassportCountry { get; set; }
+        public string Nationality { get; set; }
     }
 }

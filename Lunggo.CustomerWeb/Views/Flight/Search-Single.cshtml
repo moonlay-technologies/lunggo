@@ -1,4 +1,5 @@
-﻿@using Lunggo.ApCommon.Dictionary
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Dictionary
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Flight.Service
@@ -81,6 +82,7 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
+
 }
 
 @section PageJS{
@@ -115,6 +117,7 @@
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/singleFlightController.js"></script>
+    <script src="https://github.com/angular/angular.js/blob/master/src/ngLocale/angular-locale_id-id.js"></script>
 }
 
 @if (isValid)
@@ -135,7 +138,7 @@
                 <div class="col-sm-9">
                     <div class="result-form-left">
                         <h3><b>@originCityNames[0]</b> (@data.Trips[0].OriginAirport) ke <b>@destinationCityNames[0]</b> (@data.Trips[0].DestinationAirport) </h3>
-                        <h4><b>@data.Trips[0].DepartureDate.ToString("dd-MMM-yyyy")</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>
+                        <h4><b>@data.Trips[0].DepartureDate.ToString("ddd, dd MMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>
                     </div>
                 </div>
                 <div class="col-sm-3">
@@ -170,7 +173,7 @@
             </div>
         </div>
 
-        <div class="page-overlay" ng-show="expiry.expired">
+        <!--<div class="page-overlay" ng-show="expiry.expired">
             <div class="overlay-content validating-flight">
                 <header>
                     <h4>Pencarian Kadaluarsa</h4>
@@ -183,7 +186,7 @@
                             </div>
                             <div class="col-sm-8">
                                 <h3>Halaman Pencarian Anda <b>Sudah Kadaluarsa</b></h3>
-                                <p>Silahkan klik tombol di bawah ini untuk memparbaharui halaman pencarian Anda.</p>
+                                <p>Silakan klik tombol di bawah ini untuk memparbaharui halaman pencarian Anda.</p>
                             </div>
                         </div>
                     </div>
@@ -200,7 +203,21 @@
                     </div>
                 </footer>
             </div>
-        </div><!-- .page-overlay -->
+        </div>--> <!-- .page-overlay -->
+
+        <div class="bookfailed-popup" ng-show="expiry.expired">
+            <div class="overlay-content">
+                <section style="padding-top:60px; padding-left:225px;">
+                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                    <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:22px"><b>Pencarian Kadaluarsa</b></span></div>
+                    <div style="padding-top:5px;"><span style="font-size:13px">Halaman pencarian Anda <span style="color: #15b1e4;font-size:13px"><b> sudah kadaluarsa</b></span>.</span></div>
+                    <div><span style="font-size:13px">Silakan klik tombol di bawah ini untuk memparbaharui halaman pencarian Anda.</span></div>
+                </section>
+                <div align="right" style="padding-right:30px;padding-top:20px;">
+                    <a class="btn popup-btn-yellow book-failed" onclick="location.reload();"><b>CARI LAGI</b></a>
+                </div>
+            </div>
+        </div>
 
 
         <form action="@Url.Action("Select", "Flight")" method="POST" class="hidden push-token">
@@ -210,7 +227,7 @@
         <!-- ****************************** -->
     
         <div class="no-flight" ng-show="!loading && !loadingFlight && !flightList.length">
-            <h3 class="text-center">Penerbangan tidak ditemukan.<br/> Silahkan mencari mengganti tanggal penerbangan atau rute Anda.</h3>
+            <h3 class="text-center">Penerbangan tidak ditemukan.<br/> Silakan mencari mengganti tanggal penerbangan atau rute Anda.</h3>
         </div>
 
         <div ng-hide="!loading && !loadingFlight && !flightList.length">
@@ -224,16 +241,15 @@
                         <span>FILTER:</span>
                     </div>
                     <div class="filter-right">
-
                         <div class="filter-trigger">
-                            <div class="filter-stop"><span class="switch-filter" data-target="filter-transit">Pemberhentian</span></div>
+                            <div class="filter-stop"><span class="switch-filter" data-toggle="collapse" data-target="filter-transit">Pemberhentian</span></div>
                             <div class="filter-price"><span class="switch-filter" data-target="filter-price">Harga</span></div>
-                            <div class="filter-airline"><span class="switch-filter" data-target="filter-airline">Maskapai</span></div>
+                            <div class="filter-airline"><span class="switch-filter" data-toggle="collapse" data-target="filter-airline">Maskapai</span></div>
                             <div class="filter-time"><span class="switch-filter" data-target="filter-time">Waktu Penerbangan</span></div>
                         </div>
-                        <div class="filter-content">
-                            <div id="filter-transit" class="filter-transit">
-                                <div class="close-filter">X</div>
+                        <div class="filter-content" >
+                            <div id="filter-transit" class="filter-transit collapse">
+                                <div class= "close-filter">X</div>
                                 <h3>Saring Berdasarkan Pemberhentian 
                                     <span class="pull-right">
                                         <label class="select-all" ng-click="stopFilterParam.direct = true; stopFilterParam.one = true; stopFilterParam.two = true">Pilih Semua</label>
@@ -382,7 +398,7 @@
                                         <div class="summary-top-right-top">
                                             <div class="flight-date-departure">
                                                 <h4>{{flight.Trips[0].Segments[0].DepartureAirport}} <span>{{flight.Trips[0].Segments[0].DepartureTime | date :'HH:mm' : 'UTC'}}</span></h4>
-                                                <h5>{{flight.Trips[0].Segments[0].DepartureTime | date : 'dd - MMM - yyyy' : 'UTC'}}</h5>
+                                                <h5>{{flight.Trips[0].Segments[0].DepartureTime | date : 'dd MMM yyyy' : 'UTC'}}</h5>
                                             </div>
                                             <div class="flight-date-duration">
                                                 <h5 class="time"><span>{{msToTime(flight.Trips[0].TotalDuration)}}</span></h5>
@@ -393,7 +409,7 @@
                                             </div>
                                             <div class="flight-date-arrival">
                                                 <h4>{{flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalAirport}} <span>{{flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime | date : 'HH:mm' : 'UTC'}}</span><span class="overday" ng-if="getFullDate(flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime) != getFullDate(flight.Trips[0].Segments[0].DepartureTime)">{{getOverdayDate((flight.Trips[0].Segments[0].DepartureTime),(flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime))}}</span></h4>
-                                                <h5>{{flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime | date : 'dd - MMM - yyyy' : 'UTC'}}</h5>
+                                                <h5>{{flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime | date : 'dd MMM yyyy' : 'UTC'}}</h5>
                                             </div>
                                         </div>
                                         <div class="summary-top-right-bottom flight-button">
@@ -404,16 +420,17 @@
                                 </div><!-- .summary-top -->
                             </div>
                             <div class="flight-summary-right">
+                                <div><span style="color:#1daee4; font-weight:bolder;">HARGA PROMO</span></div>
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.TotalFare | number}}</h4>
                                 <small>Sudah Termasuk Pajak &amp; Service Charge</small>
-                                <a class="btn btn-yellow" ng-click="revalidateFlight(flight.IndexNo)">PESAN</a>
+                                <a class="btn btn-yellow" ng-click="revalidateFlight(flight.IndexNo);">PESAN</a>
                             </div>
                         </div><!-- .flight-summary -->
                         <div class="flight-detail">
                             <h3>Detail Penerbangan <span class="close-flight-detail pull-right" ng-click="setFlightActive(-1)">X</span></h3>
                             <div ng-repeat="segment in flight.Trips[0].Segments track by $index">
                                 <div class="transit" ng-if="$index > 0">
-                                    <p>Transit di {{segment.DepartureCity}} selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                                    <p>Transit di {{segment.DepartureCity}} ({{segment.DepartureAirport}}) selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-number">
@@ -424,7 +441,7 @@
                                     </div>
                                     <div class="segment-left">
                                         <img ng-src="{{segment.AirlineLogoUrl}}" alt="{{segment.AirlineName}}" class="segment-airline-logo" />
-                                        <h5 class="segment-airline-name">{{segment.AirlineName}}</h5>
+                                            <h5 class="segment-airline-name">{{segment.AirlineName}}</h5>
                                         <h5 class="segment-airline-number">{{segment.AirlineCode}}-{{segment.FlightNumber}}</h5>
                                         <div class="segment-detail flight-facility" ng-show="{{segment.Meal || segment.Baggage || segment.Tax}}">
                                             <span ng-show="segment.Meal" class="flight-meal"></span>
@@ -463,7 +480,7 @@
         </div>
     
         <!-- flight review -->
-        <div class="flight-review-wrapper" ng-show="flightSelected >= 0" ng-class="{'active': overviewDetailShown}">
+        <div class="flight-review-wrapper" ng-show="overviewDetailShown" ng-class="{'active': overviewDetailShown}">
             <div class="container">
                 <div class="flight-review">
                     <header class="flight-review-header">
@@ -488,7 +505,7 @@
                                     <div class="flight-date">
                                         <div class="flight-date-departure">
                                             <h4>{{flightList[flightSelected].Trips[0].OriginAirport}} <span>{{flightList[flightSelected].Trips[0].Segments[0].DepartureTime | date :'HH:mm' : 'UTC'}}</span></h4>
-                                            <h5>{{flightList[flightSelected].Trips[0].Segments[0].DepartureTime | date :'dd - MMM - yyyy' : 'UTC'}}</h5>
+                                            <h5>{{flightList[flightSelected].Trips[0].Segments[0].DepartureTime | date :'dd MMM yyyy' : 'UTC'}}</h5>
                                         </div>
                                         <div class="flight-date-duration">
                                             <h5 class="time"><span>{{msToTime(flightList[flightSelected].Trips[0].TotalDuration)}}</span></h5>

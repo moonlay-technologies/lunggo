@@ -98,7 +98,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       left: 10px; }
     .site-header .header-display .site-logo {
       height: 30px;
-      margin-top: 15px; }
+      margin-top: 15px; 
+    }
     .site-header .header-display .user-menu {
       background-position: 0 0;
       left: auto;
@@ -326,7 +327,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background-color: #111;
   color: #fefefe;
   width: 100%;
-  /*position: relative; height: 100px; bottom: 0; left:0;*/ }
+  height:110px }
   .site-footer .site-footer-menu {
     background-color: #303030; }
     .site-footer .site-footer-menu nav {
@@ -450,7 +451,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     top: 60px;
     /*padding-bottom:$header-height;*/ }
   .overlay .overlay__footer {
-    position: fixed;
+      position: fixed;
     width: 100%;
     bottom: 0;
     left: 0;
@@ -561,7 +562,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       height: 100%;
       left: 0;
       top: 0;
-      z-index: 2; }
+      z-index: 0; }
     .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__code {
       display: inline-block;
       vertical-align: middle;
@@ -910,7 +911,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         background-position: -44px 0; }
 
 .page.page-flight .flight-loading {
-  background: #ffae93;
+  background: whitesmoke;
   display: block;
   width: 100%;
   height: 5px;
@@ -1088,10 +1089,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-size: 16px; }
   .page.page-flight .flight-list .flight .flight-footer .flight-detail-button {
     display: inline-block;
-    padding: 3px 0; }
+    padding: 3px 0;
+      z-index: 0;
+  }
   .page.page-flight .flight-list .flight .flight-footer .flight-order {
     padding-top: 3px;
-    padding-bottom: 3px; }
+    padding-bottom: 3px; z-index: 0;}
 
 .overlay--flight-form .overlay__content {
   background: #1daee4; }
@@ -1127,6 +1130,25 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           -webkit-border-radius: 2px;
           -moz-border-radius: 2px;
           border-radius: 2px; }
+
+        .slider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: #666; }
+  .slider .ui-slider-range {
+    background: #fed446; }
+  .slider .ui-slider-handle {
+    background: #dedede;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    width: 15px;
+    height: 15px;
+    color: #fff; }
+    .slider .ui-slider-handle:focus {
+      border: 0; }
+    .slider-minmax {
+        color: #fed446; }
 
 .overlay--flight-filter .overlay__content .filter-group {
   padding: 12px; }
@@ -1317,7 +1339,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           height: 100%;
           position: absolute;
           background: url(/Assets/mobile/images/flight-separator.png) center center no-repeat;
-          left: 45%; }
+          left: 35%;
+            top: 20px;
+        }
+        .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail .flight__separator h5{
+            text-align: center;
+        }
         .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail .flight__arrival {
           margin-left: 10%; }
   .overlay--flight-detail .overlay__content .flight-wrapper .transit {
@@ -1340,7 +1367,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       position: relative;
       margin-left: auto;
       margin-right: auto;
-      font-weight: 600; }
+      font-weight: 600; 
+
+    }
 
 .overlay--flight-detail .overlay__footer h5 {
   margin-top: 0;
@@ -1499,17 +1528,22 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       clear: both; }
     .page.page-checkout .summary.summary--passenger dl dt {
       float: left;
-      width: 30%;
+      width: 50%;
       font-weight: normal;
-      position: relative; }
+      position: relative;
+        word-wrap: break-word;
+
+    }
       .page.page-checkout .summary.summary--passenger dl dt:after {
         position: absolute;
         content: ':';
         right: 10px; }
     .page.page-checkout .summary.summary--passenger dl dd {
       float: left;
-      width: 70%;
-      font-weight: bold; }
+      width: 50%;
+      font-weight: bold;
+        word-wrap: break-word;
+    }
 
 .page.page-checkout .summary.summary--voucher {
   background: #eaeaea;
@@ -2327,4 +2361,25 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin-right: 0;
     margin-top: 10px;
     padding: 0;
+}
+
+.upper-top {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+.scroll {
+    width: 100%;
+    z-index: 0;
+    position: relative;
+    top: 105px;
+    left: 0;
+    margin-bottom: 110px;
+}
+
+.has-error .form-control{
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
 }

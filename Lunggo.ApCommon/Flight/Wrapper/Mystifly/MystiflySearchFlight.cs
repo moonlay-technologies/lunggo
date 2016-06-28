@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using FareType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareType;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
@@ -18,6 +19,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         internal override SearchFlightResult SearchFlight(SearchFlightConditions conditions)
         {
+            // Disable Mystifly for domestic
+            if (
+                conditions.Trips.TrueForAll(
+                    trip =>
+                        DictionaryService.GetInstance().GetAirportCountryCode(trip.OriginAirport) == "ID" &&
+                        DictionaryService.GetInstance().GetAirportCountryCode(trip.DestinationAirport) == "ID"))
+            {
+                return new SearchFlightResult
+                {
+                    IsSuccess = true,
+                    Itineraries = new List<FlightItinerary>()
+                };
+            }
+
             var request = new AirLowFareSearchRQ
             {
                 OriginDestinationInformations = MapOriginDestinationInformations(conditions),

@@ -123,6 +123,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var clientx = new RestClient(cloudAppUrl);
                 var accReq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
                 var userName = "";
+                var currentDeposit = "";
                 RestResponse accRs;
                 var reqTime = DateTime.UtcNow;
                 while (msgLogin == "Your login name is inuse" || msgLogin == "There was an error logging you in")
@@ -173,7 +174,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Thread.Sleep(1000);
 
                         successLogin = Login(client, searchResponse1.RawBytes, viewstate, eventval, out userId, userName,
-                            out msgLogin); // out currentDeposit);
+                            out msgLogin, out currentDeposit);
                         Thread.Sleep(1000);
                         counter++;
                     } while (!successLogin && counter < 21 && (msgLogin != "Your login name is inuse"
@@ -659,6 +660,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         accRs = (RestResponse)clientx.Execute(accReq);
                     }
 
+                    var isInternational = CheckInternationality(segments);
+
                     var itin = new FlightItinerary
                     {
                         AdultCount = adultCount,
@@ -666,10 +669,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         InfantCount = infantCount,
                         CanHold = true,
                         FareType = FareType.Published,
-                        RequireBirthDate = true,
-                        RequirePassport = RequirePassport(segments),
+                        RequireBirthDate = isInternational,
+                        RequirePassport = isInternational,
                         RequireSameCheckIn = false,
-                        RequireNationality = true,
+                        RequireNationality = isInternational,
                         RequestedCabinClass = CabinClass.Economy,
                         TripType = TripType.OneWay,
                         Supplier = Supplier.LionAir,

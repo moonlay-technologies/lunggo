@@ -186,6 +186,7 @@
     <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Newsletter\Model\NewsletterSubscribeInput.cs" />
+    <Compile Include="ApiSrc\v1\Newsletter\Model\NewsletterSubscribeOutput.cs" />
     <Compile Include="ApiSrc\v1\Newsletter\Query\CheckEmailQuery.cs" />
     <Compile Include="ApiSrc\v1\TransferIdentifier\Model\SavePriceApiResponse.cs" />
     <Compile Include="ApiSrc\v1\TransferIdentifier\Model\TransferIdentifierApiResponse.cs" />
@@ -221,7 +222,10 @@
     <None Include="Properties\PublishProfiles\dv1-api.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />
+    <None Include="Properties\PublishProfiles\prod-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-apidev.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-api__staging %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

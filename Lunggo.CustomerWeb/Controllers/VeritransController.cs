@@ -49,10 +49,14 @@ namespace Lunggo.CustomerWeb.Controllers
                     FinalPrice = notif.gross_amount
                 };
 
+                var flight = FlightService.GetInstance();
                 if (notif.order_id.IsFlightRsvNo())
                 {
-                    var flight = FlightService.GetInstance();
                     flight.UpdateFlightPayment(notif.order_id, paymentInfo);
+                }
+                if (paymentInfo.Method == PaymentMethod.CreditCard && paymentInfo.Status == PaymentStatus.Denied) 
+                {
+                    flight.SendFailedVerificationCreditCardNotifToCustomer(notif.order_id);
                 }
             }
             return new EmptyResult();
@@ -124,13 +128,13 @@ namespace Lunggo.CustomerWeb.Controllers
                 case "capture":
                     switch (notif.fraud_status.ToLower())
                     {
-                        case "capture":
+                        case "accept":
                             return PaymentStatus.Settled;
                         case "challenge":
                         case "deny":
                             return PaymentStatus.Denied;
                         default:
-                            return PaymentStatus.Settled;
+                            return PaymentStatus.Denied;
                     }
                 case "settlement":
                     return PaymentStatus.Settled;
@@ -143,7 +147,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 case "deny":
                     return PaymentStatus.Denied;
                 default:
-                    return PaymentStatus.Undefined;
+                    return PaymentStatus.Denied;
             }
         }
     }

@@ -84,7 +84,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .site-header {position:fixed; top:0; left:0; width:100%; height:$header-height; z-index:999; @include box-shadow(0px -2px 15px #555);
     .header-display {background:#fff; text-align:center; height:$header-height;
         .site-menu {width:30px; height:30px; background:url(/Assets/mobile/images/mobile-header-sprite.png) no-repeat; background-position:-30px 0; display:block; position:absolute; top:15px; left:10px;}
-        .site-logo {height:30px; margin-top:15px;}
+        .site-logo {height:30px; margin-top:15px; }
         .user-menu {@extend & .site-menu; background-position:0 0; left:auto; right:10px;}
         .promo {@extend & .site-menu; background:url(/Assets/mobile/images/promo-logo.png); left:auto; right:20px;}
         .flight-swap {@extend & .site-menu; background:url(/Assets/mobile/images/flight-swap.png); left:auto; right:10px;}

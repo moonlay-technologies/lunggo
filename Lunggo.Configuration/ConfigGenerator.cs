@@ -12,10 +12,10 @@ namespace Lunggo.Configuration
     public enum DeploymentEnvironment
     {
         Local = 5,
-        Development1 = 6,
-        QA = 7,
-        Production = 8,
-        Development2 = 9
+        DV1 = 6,
+        DV2 = 7,
+        QA = 8,
+        Production = 9
     }
 
     public class ConfigGenerator
@@ -67,6 +67,7 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler3", 
                 "WebJob-FlightSearch.FlightCrawler4", 
                 "WebJob-FlightSearch.FlightCrawler5",
+                "WebJob-FlightSearch.FlightCrawler6",
                 "CloudApp.EticketHandler",
                 "WebJob.BankTransferChecking",
                 "CloudApp.CaptchaReader"
@@ -430,6 +431,7 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler3", 
                 "WebJob-FlightSearch.FlightCrawler4",
                 "WebJob-FlightSearch.FlightCrawler5",
+                "WebJob-FlightSearch.FlightCrawler6",
             };
             SaveRootFile("App.Debug.config", fileContent, projectList);
         }
@@ -453,7 +455,8 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler2",
                 "WebJob-FlightSearch.FlightCrawler3",
                 "WebJob-FlightSearch.FlightCrawler4",
-                "WebJob-FlightSearch.FlightCrawler5"
+                "WebJob-FlightSearch.FlightCrawler5",
+                "WebJob-FlightSearch.FlightCrawler6"
             };
             SaveRootFile("App.Release.config", fileContent, projectList);
         }

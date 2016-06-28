@@ -4,6 +4,7 @@ namespace Lunggo.CustomerWeb.Controllers
 {
     public class TermController : Controller
     {
+        /*
         public ActionResult PrivacyPolicy()
         {
             return View();
@@ -13,5 +14,6 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+         * */
     }
 }
