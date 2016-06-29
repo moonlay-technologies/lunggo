@@ -107,10 +107,10 @@
                                                 <li ng-repeat="passenger in flight.pax track by $index">
                                                     <div class="row">
                                                         <div class="col-xs-9">
-                                                            <p>{{title(passenger.tit)}} {{passenger.fst}} {{passenger.lst}}</p>
+                                                            <p>{{title(passenger.title)}} {{passenger.name}}</p>
                                                         </div>
                                                         <div class="col-xs-3">
-                                                            <span>{{paxtype(passenger.typ)}}</span>
+                                                            <span>{{paxtype(passenger.type)}}</span>
                                                         </div>
                                                     </div>
                                                 </li>

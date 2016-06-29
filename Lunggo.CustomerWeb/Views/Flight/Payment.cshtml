@@ -616,7 +616,7 @@
             </div>
         </div>
 
-@*<div class="bookfailed-popup" ng-if="pay.checked && !pay.isSuccess">
+<div class="bookfailed-popup" ng-if="pay.checked && !pay.isSuccess">
     <div class=" overlay-content">
         <section style="padding-top:60px; padding-left:225px;">
             <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
@@ -625,8 +625,11 @@
             <div style="padding-top:5px;"><span style="font-size:14px">Pembayaran Gagal</span></div>
             <div style="padding-top:5px;"><span style="font-size:14px">Silahkan pilih metode pembayaran lain</span></div>
         </section>
+        <div align="right" style="padding-right:30px;padding-top:30px;">
+            <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
+        </div>
     </div>
-</div>*@
+</div>
 
         <!-- checkout end here -->
                                 break;

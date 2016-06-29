@@ -165,7 +165,7 @@ app.controller('paymentController', [
             paying: false,
             ccdata: false,
             checked:false,
-            isSuccess: '',
+            isSuccess: false,
             ccChecked: false,
             setPaymentMethod: function () { //payment
                 if ($scope.paymentMethod == 'CreditCard') {
@@ -253,7 +253,7 @@ app.controller('paymentController', [
                 }
             },
             send: function () {
-                $scope.pay.isSuccess = "",
+                $scope.pay.isSuccess = false,
                 $scope.pay.paying = true;
                 $scope.pay.checked = false;
                 //generate payment data
@@ -318,8 +318,6 @@ app.controller('paymentController', [
                         $scope.pay.checked = true;
                     }
                     else {
-                        $scope.pay.checked = true;
-                        $scope.pay.isSuccess = false;
                         //Error Handling right Here
                         //console.log('Status : ' + returnData.status);
                         //console.log('Error : ' + returnData.data.error);
@@ -337,6 +335,8 @@ app.controller('paymentController', [
                                 $scope.errorMessage = 'There is a problem on the server';
                                 break;
                         }
+                        $scope.pay.checked = true;
+                        $scope.pay.isSuccess = false;
                         console.log($scope.errorMessage);
                     }
                 }, function (returnData) {
@@ -344,6 +344,11 @@ app.controller('paymentController', [
                         $scope.pay.checked = true;
                         $scope.pay.isSuccess = false;
                     });
+                $scope.pay.paying = false;
+            },
+            close : function(){
+                $scope.pay.checked = false;
+                $scope.pay.isSuccess = false;
                 $scope.pay.paying = false;
             }
         }
