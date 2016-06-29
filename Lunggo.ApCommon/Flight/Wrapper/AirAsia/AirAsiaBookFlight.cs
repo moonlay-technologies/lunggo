@@ -478,7 +478,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 }
                             }
                     };
-                    itin.Price.SetSupplier(decimal.Parse(newPrice), new Currency(currency));
+                    itin.Price.SetSupplier(decimal.Parse(newPrice), new Currency(currency, Payment.Constant.Supplier.AirAsia));
 
                     var isItinChanged = !itin.Identical(bookInfo.Itinerary);
                     if (isItinChanged)

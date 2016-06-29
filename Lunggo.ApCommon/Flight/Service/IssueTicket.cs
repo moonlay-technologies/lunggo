@@ -7,11 +7,13 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Query;
+//using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 using System;
+using Supplier = Lunggo.ApCommon.Flight.Constant.Supplier;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

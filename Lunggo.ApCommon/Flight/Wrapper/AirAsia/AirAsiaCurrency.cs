@@ -4,11 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using CsQuery;
-using CsQuery.Engine.PseudoClassSelectors;
-using CsQuery.StringScanner.ExtensionMethods;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Identity.Auth;
-using Lunggo.Framework.Config;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Extension;
 using RestSharp;
 using HttpUtility = RestSharp.Extensions.MonoHttp.HttpUtility;
@@ -28,12 +25,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             internal decimal CurrencyGetter(string currencyName)
             {
 
-                DateTime depdate = DateTime.Now.AddMonths(6);
+                var depdate = DateTime.Now.AddMonths(6);
                 var client = CreateAgentClient();
-                string origin = "KUL";
-                string dest = "CGK";
-                Decimal exchangeRate = 0;
+                var origin = "KUL";
+                const string dest = "CGK";
 
+                var classCurrency = new Currency(currencyName, Payment.Constant.Supplier.AirAsia);
                 if (!Login(client))
                     return 0;
                 try
@@ -193,9 +190,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var isitoken = token[0].GetAttribute("value");
                     Thread.Sleep(1000);
 
-                    //var getTravelerRequest = new RestRequest("Traveler.aspx", Method.GET);
-                    //getTravelerRequest.AddHeader("Referer", "https://booking2.airasia.com/Select.aspx");
-                    //var getTravelerResponse = client.Execute(getTravelerRequest);
                     var getVS = selectResponse.Content;
                     var vs = (CQ) getVS;
                     var dataaneh = HttpUtility.UrlEncode(vs["[name='HiFlyerFare']"].Attr("value"));
@@ -270,44 +264,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         "=" + "1992" +
                         @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24PassengerInputTravelerView%24TextBoxCustomerNumber_0" +
                         "=";
-
-                    //postData +=
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24BaggageLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_journey_1_flightReference_20161227-AK-583-MNLKUL=SsrQuantity_passengerNumber_0_ssrCode_PBAB_ssrNum_1_flightReference_20161227-AK-583-MNLKUL"+
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_MXAK_flightReference_20161227-AK-583-MNLKUL_group_AAmealCat2_previousSsr_MXAK_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_SHCB_flightReference_20161227-AK-583-MNLKUL_group_AAmealCat1_previousSsr_SHCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_MMCB_flightReference_20161227-AK-583-MNLKUL_group_AAmealCat1_previousSsr_MMCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_NLCB_flightReference_20161227-AK-583-MNLKUL_group_AAmealCat1_previousSsr_NLCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_CRCB_flightReference_20161227-AK-583-MNLKUL_group_AAmealCat1_previousSsr_CRCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_BRCB_flightReference_20161227-AK-583-MNLKUL_group_AAmealCat1_previousSsr_BRCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_RSCB_flightReference_20161227-AK-583-MNLKUL_group_AAmealCat1_previousSsr_RSCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_VOCB_flightReference_20161227-AK-583-MNLKUL_group_AAmealCat2_previousSsr_VOCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_VRCB_flightReference_20161227-AK-583-MNLKUL_group_AAmealCat2_previousSsr_VRCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_NCCB_flightReference_20161227-AK-583-MNLKUL_group_AAmealCat2_previousSsr_NCCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_SDAK_flightReference_20161227-AK-583-MNLKUL_group_AAmealCat2_previousSsr_SDAK_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_SWCB_flightReference_20161227-AK-583-MNLKUL_group_AAmealCat3_previousSsr_SWCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_VCCB_flightReference_20161227-AK-583-MNLKUL_group_AAmealCat4_previousSsr_VCCB_dropDown=0" +
-                    //    @"&ctl00%24BodyContent%24ucTravelerForm1_form%24addOnsPanel1%24mealPanel2%24SelectedMeal_0=" +
-                    //    @"&ctl00%24BodyContent%24ucTravelerForm1_form%24addOnsPanel1%24mealPanel2%24SelectedMeal_1=" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24SportEquipInputTravelerView%24SsrQuantity_passengerNumber_0_journey_1_flightReference_20161227-AK-583-MNLKUL=" + 
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ComfortKitInputTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_PCMK_flightReference_20161227-AK-583-MNLKUL_group_AAcomfortKit1_previousSsr_PCMK_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24BaggageLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_journey_1_flightReference_20161228-AK-388-KULCGK=SsrQuantity_passengerNumber_0_ssrCode_PBAB_ssrNum_1_flightReference_20161228-AK-388-KULCGK" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_MXAK_flightReference_20161228-AK-388-KULCGK_group_AAmealCat2_previousSsr_MXAK_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_SHCB_flightReference_20161228-AK-388-KULCGK_group_AAmealCat1_previousSsr_SHCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_MMCB_flightReference_20161228-AK-388-KULCGK_group_AAmealCat1_previousSsr_MMCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_NLCB_flightReference_20161228-AK-388-KULCGK_group_AAmealCat1_previousSsr_NLCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_CRCB_flightReference_20161228-AK-388-KULCGK_group_AAmealCat1_previousSsr_CRCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_BRCB_flightReference_20161228-AK-388-KULCGK_group_AAmealCat1_previousSsr_BRCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_RSCB_flightReference_20161228-AK-388-KULCGK_group_AAmealCat1_previousSsr_RSCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_VOCB_flightReference_20161228-AK-388-KULCGK_group_AAmealCat2_previousSsr_VOCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_VRCB_flightReference_20161228-AK-388-KULCGK_group_AAmealCat2_previousSsr_VRCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_NCCB_flightReference_20161228-AK-388-KULCGK_group_AAmealCat2_previousSsr_NCCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_SDAK_flightReference_20161228-AK-388-KULCGK_group_AAmealCat2_previousSsr_SDAK_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_SWCB_flightReference_20161228-AK-388-KULCGK_group_AAmealCat3_previousSsr_SWCB_dropDown=0" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24MealLegInputViewTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_VCCB_flightReference_20161228-AK-388-KULCGK_group_AAmealCat4_previousSsr_VCCB_dropDown=0" +
-                    //    @"&ctl00%24BodyContent%24ucTravelerForm1_form%24addOnsPanel1%24mealPanel2%24SelectedMeal_0=" +
-                    //    @"&ctl00%24BodyContent%24ucTravelerForm1_form%24addOnsPanel1%24mealPanel2%24SelectedMeal_1=" +
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24SportEquipInputTravelerView%24SsrQuantity_passengerNumber_0_journey_1_flightReference_20161228-AK-388-KULCGK="+
-                    //    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ComfortKitInputTravelerView%24SsrQuantity_passengerNumber_0_ssrCode_PCMK_flightReference_20161228-AK-388-KULCGK_group_AAcomfortKit1_previousSsr_PCMK_dropDown=0";
 
                     postData +=
                         @"&checkBoxInsuranceName=InsuranceInputControlAddOnsViewAjax%24CheckBoxInsuranceAccept" +
@@ -415,64 +371,31 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             Replace("&nbsp;", " ").Split(' ');
                     var creditAvailableinIdr = rowsExcRate[1].ChildElements.ToList()[1].InnerText.
                         Replace(" ", "").Replace("\n", "").Replace("&nbsp;", " ").Split(' ');
-                   
-                    var excRate1 = Convert.ToDecimal(creditAvailableinIdr[1])/
-                                   Convert.ToDecimal(creditAvailableinCurr[1]);
 
-                    return excRate1;
+                    decimal credinIdr;
+                    decimal credinCurr;
+
+                    var b = decimal.TryParse(creditAvailableinIdr[1], out credinIdr);
+                    var c = decimal.TryParse(creditAvailableinCurr[1], out credinCurr);
+
+                    Decimal exchangeRate;
+                    if (b && c)
+                    {
+                        exchangeRate = credinIdr/credinCurr;
+                    }
+                    else
+                    {
+                        exchangeRate = 0;
+                    }
+
+                    return exchangeRate;
                 }
                 catch //(Exception e)
                 {
-                    //LogOut(returnPath, client);
-                    //TurnInUsername(clientx, userName);
                     return 0;
-
-
-                    //return new BookFlightResult
-                    //{
-                    //    IsSuccess = false,
-                    //    Errors = new List<FlightError> {FlightError.TechnicalError},
-                    //    ErrorMessages = new List<string> {"Web Layout Changed! " + returnPath + successLogin + searchResAgent0.Content},
-                    //    Status = new BookingStatusInfo
-                    //    {
-                    //        BookingStatus = BookingStatus.Failed
-                    //    }
-                    //};
                 }
             }
-        }
-
-        private static void LogOut(string lasturlweb, RestClient clientAgent)
-        {
-            var urlweb = @"web/user/logout";
-            var logoutReq = new RestRequest(urlweb, Method.GET);
-            logoutReq.AddHeader("Referer", "https://gosga.garuda-indonesia.com" + lasturlweb); //tergantung terakhirnya di mana
-            logoutReq.AddHeader("Accept",
-                "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-            logoutReq.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
-            logoutReq.AddHeader("Host", "gosga.garuda-indonesia.com");
-            var logoutResAgent0 = clientAgent.Execute(logoutReq);
-        }
-
-        private static void TurnInUsername(RestClient client, string username)
-        {
-            var accReq = new RestRequest("/api/GarudaAccount/LogOut?userId=" + username, Method.GET);
-            var accRs = (RestResponse)client.Execute(accReq);
-        }
-
-        private static string GetGarudaAirportBooking(string scr, string code)
-        {
-            var airportScr = scr.Deserialize<List<List<string>>>();
-            var arpt = "";
-            foreach (var arp in airportScr.Where(arp => arp.ElementAt(0) == code))
-            {
-                arpt =
-                    HttpUtility.UrlEncode(arp.ElementAt(3) + " (" + arp.ElementAt(2) + "), " + arp.ElementAt(1)
-                                            + " (" + arp.ElementAt(0) + "), " + arp.ElementAt(5));
-            }
-            return arpt;
-        }
-        
+        }       
      }
  }
 

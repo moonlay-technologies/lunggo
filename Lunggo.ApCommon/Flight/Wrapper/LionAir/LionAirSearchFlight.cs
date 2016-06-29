@@ -607,7 +607,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     }
                                 }
                             };
-                            itin.Price.SetSupplier(price, new Currency(pricefunc.GetCurrency()));
+                            itin.Price.SetSupplier(price, new Currency(pricefunc.GetCurrency(), Payment.Constant.Supplier.LionAir));
                             itins.Add(itin);
                         }
                     }

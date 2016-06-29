@@ -445,7 +445,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 }
                             }
                         };
-                        itinerary.Price.SetSupplier(Convert.ToDecimal(price), new Payment.Model.Currency(currency));
+                        itinerary.Price.SetSupplier(Convert.ToDecimal(price), new Payment.Model.Currency(currency, Payment.Constant.Supplier.Garuda
+                            ));
                         itins.Add(itinerary);
                     }
 

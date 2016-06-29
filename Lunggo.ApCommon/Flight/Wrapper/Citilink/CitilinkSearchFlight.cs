@@ -242,7 +242,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                         }
                                     }
                                     };
-                                    itin.Price.SetSupplier(harga, new Currency("IDR"));
+                                    itin.Price.SetSupplier(harga, new Currency("IDR", Payment.Constant.Supplier.Citilink));
                                     //if (itin.Trips[0].Segments.Count < 2)
                                     itins.Add(itin);
                                 }

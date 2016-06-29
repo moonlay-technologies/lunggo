@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var clientx = new RestClient(cloudAppUrl);
                 var userName = "";
                 var successLogin = false;
-                string origin = "SIN";
+                string origin = "LHR";
                 string dest = "CGK";
                 Decimal exchangeRate = 0;
 
@@ -59,40 +59,40 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     var reqTime = DateTime.UtcNow;
                     var counter = 0;
 
-                    successLogin = Login(client, "SA3ALEU4", "Standar123", out returnPath);
-                    //while (!successLogin && counter < 31)
-                    //{
-                    //    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnPath != "/web/dashboard/welcome")
-                    //    {
+                    //successLogin = Login(client, "SA3ALEU4", "Standar123", out returnPath);
+                    while (!successLogin && counter < 31)
+                    {
+                        while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnPath != "/web/dashboard/welcome")
+                        {
 
-                    //        var accRs = (RestResponse)clientx.Execute(accReq);
-                    //        var lastUserId = userName;
-                    //        userName = accRs.Content.Trim('"');
-                    //        if (returnPath != "/web/dashboard/welcome")
-                    //        {
-                    //            TurnInUsername(clientx, lastUserId);
-                    //        }
-                    //        if (userName.Length != 0)
-                    //        {
-                    //            returnPath = "/web/dashboard/welcome";
-                    //        }
-                    //    }
+                            var accRs = (RestResponse)clientx.Execute(accReq);
+                            var lastUserId = userName;
+                            userName = accRs.Content.Trim('"');
+                            if (returnPath != "/web/dashboard/welcome")
+                            {
+                                TurnInUsername(clientx, lastUserId);
+                            }
+                            if (userName.Length != 0)
+                            {
+                                returnPath = "/web/dashboard/welcome";
+                            }
+                        }
 
-                    //    if (userName.Length == 0)
-                    //    {
-                    //        return 0;
-                    //    }
+                        if (userName.Length == 0)
+                        {
+                            return 0;
+                        }
 
-                    //    const string password = "Standar123";
-                    //    counter++;
-                    //    successLogin = Login(client, userName, password, out returnPath);
-                    //}
+                        const string password = "Standar123";
+                        counter++;
+                        successLogin = Login(client, userName, password, out returnPath);
+                    }
 
-                    //if (counter >= 31)
-                    //{
-                    //    TurnInUsername(clientx, userName);
-                    //    return 0;
-                    //}
+                    if (counter >= 31)
+                    {
+                        TurnInUsername(clientx, userName);
+                        return 0;
+                    }
 
                     urlweb = @"web/order/e-retail";
                     searchReqAgent0 = new RestRequest(urlweb, Method.GET);
@@ -156,6 +156,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     var currencyGot = false;
                     
                     var v = 2;
+                    
                     while (!currencyGot)
                     {
                         selectedRows.Clear();
@@ -251,9 +252,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         var tableBreakdown = htmlPrice[".farebreakdown"];
                         var er= tableBreakdown[0].ChildElements.ToList()[0].
                             ChildElements.ToList()[0].ChildElements.ToList()[1].InnerText.Split(' ');
-                        exchangeRate = Convert.ToDecimal(er[er.Length - 1]);
 
-                        if (exchangeRate != null)
+                        var b = decimal.TryParse(er[er.Length - 1], out exchangeRate);
+                        if (b)
                         {
                             currencyGot = true;
                         }
@@ -268,53 +269,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     LogOut(returnPath, client);
                     TurnInUsername(clientx, userName);
                     return 0;
-                    
-
-                    //return new BookFlightResult
-                    //{
-                    //    IsSuccess = false,
-                    //    Errors = new List<FlightError> {FlightError.TechnicalError},
-                    //    ErrorMessages = new List<string> {"Web Layout Changed! " + returnPath + successLogin + searchResAgent0.Content},
-                    //    Status = new BookingStatusInfo
-                    //    {
-                    //        BookingStatus = BookingStatus.Failed
-                    //    }
-                    //};
                 }
             }
         }
-
-       // private static void LogOut(string lasturlweb, RestClient clientAgent)
-       // {
-       //     var urlweb = @"web/user/logout";
-       //     var logoutReq = new RestRequest(urlweb, Method.GET);
-       //     logoutReq.AddHeader("Referer", "https://gosga.garuda-indonesia.com" + lasturlweb); //tergantung terakhirnya di mana
-       //     logoutReq.AddHeader("Accept",
-       //         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-       //     logoutReq.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
-       //     logoutReq.AddHeader("Host", "gosga.garuda-indonesia.com");
-       //     var logoutResAgent0 = clientAgent.Execute(logoutReq);
-       // }
-
-       // private static void TurnInUsername(RestClient client, string username)
-       // {
-       //     var accReq = new RestRequest("/api/GarudaAccount/LogOut?userId=" + username, Method.GET);
-       //     var accRs = (RestResponse)client.Execute(accReq);
-       // }
-
-       //private static string GetGarudaAirportBooking(string scr, string code)
-       // {
-       //     var airportScr = scr.Deserialize<List<List<string>>>();
-       //     var arpt = "";
-       //     foreach (var arp in airportScr.Where(arp => arp.ElementAt(0) == code))
-       //     {
-       //         arpt =
-       //             HttpUtility.UrlEncode(arp.ElementAt(3) + " (" + arp.ElementAt(2) + "), " + arp.ElementAt(1)
-       //                                     + " (" + arp.ElementAt(0) + "), " + arp.ElementAt(5));
-       //     }
-       //     return arpt;
-       // }
-        
      }
  }
 
