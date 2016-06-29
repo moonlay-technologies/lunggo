@@ -295,6 +295,7 @@
     <Content Include="Config\eng.traineddata" />
     <None Include="Properties\PublishProfiles\prod-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv1-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api - FTP %282%29.pubxml" />

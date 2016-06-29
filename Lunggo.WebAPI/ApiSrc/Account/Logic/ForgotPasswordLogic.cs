@@ -19,7 +19,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
-            var foundUser = userManager.FindByName(request.Email);
+            var foundUser = userManager.FindByName(request.UserName);
             if (foundUser == null)
             {
                 return new ApiResponseBase
