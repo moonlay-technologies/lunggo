@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Constant;
 using System;
-using Lunggo.ApCommon.Identity.User;
+
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;

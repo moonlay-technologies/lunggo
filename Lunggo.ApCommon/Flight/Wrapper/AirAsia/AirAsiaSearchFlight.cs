@@ -183,6 +183,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 ArrivalAirport = splittedSegmentFareId[6],
                                 ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]), DateTimeKind.Utc),
                                 OperatingAirlineCode = splittedSegmentFareId[0],
+                                Duration =  duration,
                                 StopQuantity = 0,
                                 IsMealIncluded = false,
                                 IsPscIncluded = isPscIncluded,

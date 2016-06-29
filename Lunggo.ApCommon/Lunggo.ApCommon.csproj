@@ -275,6 +275,7 @@
     <Compile Include="Flight\Query\UpdateBookingIdQuery.cs" />
     <Compile Include="Flight\Query\UpdateBookingStatusQuery.cs" />
     <Compile Include="Flight\Query\UpdateDetailsQuery.cs" />
+    <Compile Include="Flight\Service\ExchangeRate.cs" />
     <Compile Include="Flight\Service\Caching.cs" />
     <Compile Include="Flight\Service\Database.cs" />
     <Compile Include="Flight\Service\Dictionary.cs" />
@@ -306,6 +307,7 @@
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaSearchFlight.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaWrapperSingleton.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaClientHandler.cs" />
+    <Compile Include="Flight\Wrapper\AirAsia\AirAsiaCurrency.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkClientHandler.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkGetBaggage.cs" />
@@ -317,7 +319,9 @@
     <Compile Include="Flight\Wrapper\Citilink\CitilinkRevalidateFare.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkSearchFlight.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkWrapperSingleton.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkAirCurrency.cs" />
     <Compile Include="Flight\Wrapper\FlightSupplierWrapperBase.cs" />
+    <Compile Include="Flight\Wrapper\Garuda\GarudaCurrency.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaClientHandler.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaGetBaggage.cs" />
@@ -329,6 +333,7 @@
     <Compile Include="Flight\Wrapper\Garuda\GarudaRevalidateFare.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaSearchFlight.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaWrapperSingleton.cs" />
+    <Compile Include="Flight\Wrapper\LionAir\LionAirCurrency.cs" />
     <Compile Include="Flight\Wrapper\LionAir\LionAirBookFlight.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -358,6 +363,7 @@
     <Compile Include="Flight\Wrapper\LionAir\LionAirWrapperSingleton.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyCurrency.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyCancelBooking.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyClientHandler.cs" />
@@ -369,6 +375,7 @@
     <Compile Include="Flight\Wrapper\Mystifly\MystiflySearchFlight.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflySpecificSearchFlight.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyWrapperSingleton.cs" />
+    <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaCurrency.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaClientHandler.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaGetBaggage.cs" />
@@ -386,6 +393,7 @@
     <Compile Include="Identity\Auth\Client.cs" />
     <Compile Include="Identity\Auth\RefreshToken.cs" />
     <Compile Include="Identity\Auth\RefreshTokenProvider.cs" />
+    <Compile Include="Identity\Auth\UserAuthorizeAttribute.cs" />
     <Compile Include="Identity\Query\GetAllUserQuery.cs" />
     <Compile Include="Identity\Query\GetClientByIdQuery.cs" />
     <Compile Include="Identity\Query\GetListClaimByUserIdQuery.cs" />
@@ -404,8 +412,8 @@
     <Compile Include="Identity\Query\Record\GetUserByAnyQueryRecord.cs" />
     <Compile Include="Identity\Query\Record\GetUserLoginInfoByAnyQueryRecord.cs" />
     <Compile Include="Identity\Query\Record\GetUserRolesByAnyQueryRecord.cs" />
-    <Compile Include="Identity\User\User.cs" />
-    <Compile Include="Identity\User\UserExtension.cs" />
+    <Compile Include="Identity\Users\User.cs" />
+    <Compile Include="Identity\Users\UserExtension.cs" />
     <Compile Include="Model\BookingFormViewModel.cs" />
     <Compile Include="Model\HotelDetailViewModel.cs" />
     <Compile Include="Model\I18nText.cs" />
@@ -438,18 +446,16 @@
     <Compile Include="Hotel\Object\HotelsSearchServiceRequest.cs" />
     <Compile Include="Hotel\Model\RoomOccupant.cs" />
     <Compile Include="Hotel\Object\HotelsSearchServiceResponse.cs" />
-    <Compile Include="Identity\Claim\IdentityUserClaim.cs" />
-    <Compile Include="Identity\Claim\UserClaim.cs" />
     <Compile Include="Identity\ExternalLogin\IdentityUserExternalLogin.cs" />
     <Compile Include="Identity\ExternalLogin\UserExternalLogin.cs" />
     <Compile Include="Identity\RoleStore\DapperRoleStore.cs" />
-    <Compile Include="Identity\Role\IdentityRole.cs" />
-    <Compile Include="Identity\Role\IdentityUserRole.cs" />
-    <Compile Include="Identity\Role\Role.cs" />
-    <Compile Include="Identity\Role\UserRole.cs" />
+    <Compile Include="Identity\Roles\IdentityRole.cs" />
+    <Compile Include="Identity\Roles\IdentityUserRole.cs" />
+    <Compile Include="Identity\Roles\Role.cs" />
+    <Compile Include="Identity\Roles\UserRole.cs" />
     <Compile Include="Identity\UserStore\DapperUserStore.cs" />
-    <Compile Include="Identity\User\IdentityUserBase.cs" />
-    <Compile Include="Identity\User\UserBase.cs" />
+    <Compile Include="Identity\Users\IdentityUserBase.cs" />
+    <Compile Include="Identity\Users\UserBase.cs" />
     <Compile Include="Payment\Constant\TransferConfirmationReportStatus.cs" />
     <Compile Include="Payment\Constant\PaymentMedium.cs" />
     <Compile Include="Payment\Constant\PaymentMethod.cs" />
@@ -787,9 +793,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Identity\Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

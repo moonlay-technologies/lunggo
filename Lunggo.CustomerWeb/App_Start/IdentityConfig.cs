@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Lunggo.ApCommon.Identity.Role;
+
+using Lunggo.ApCommon.Identity.Roles;
 using Lunggo.ApCommon.Identity.RoleStore;
-using Lunggo.ApCommon.Identity.User;
+
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Identity.UserStore;
 using Lunggo.Framework.Queue;
 using Microsoft.AspNet.Identity;

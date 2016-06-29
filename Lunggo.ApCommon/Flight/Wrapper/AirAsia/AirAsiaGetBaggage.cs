@@ -45,16 +45,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 //Debug.Print(data);
                 var temp = data.Split(new string[] { "to" }, StringSplitOptions.None);
-                baggage = temp[1].Trim().Replace("kg)", "").Trim();
+                if (temp.Length > 1)
+                {
+                    baggage = temp[1].Trim().Replace("kg)", "").Trim();
+                    return baggage;
+                }
+                else
+                {
+                    return null;
+                }
+                
 
                 if (baggage != null || baggage != "")
                 {
                     return baggage;
                 }
-                else 
-                {
-                    return null;
-                }
+                
                 
                 //Console.WriteLine(content);
                 

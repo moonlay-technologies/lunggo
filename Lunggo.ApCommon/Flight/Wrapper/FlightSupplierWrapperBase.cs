@@ -15,6 +15,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper
         internal abstract BookFlightResult BookFlight(FlightBookingInfo bookInfo);
         internal abstract IssueTicketResult OrderTicket(string bookingId, bool canHold);
         internal abstract GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions);
+        internal abstract decimal CurrencyGetter(string currencyName);
         internal abstract List<BookingStatusInfo> GetBookingStatus();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Web.Http.Cors;
-using Lunggo.ApCommon.Identity.User;
+
+using Lunggo.ApCommon.Identity.Users;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;

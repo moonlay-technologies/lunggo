@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Lunggo.ApCommon.Identity.Users;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Lunggo.CustomerWeb.Models;
-using Lunggo.ApCommon.Identity.User;
+
 namespace Lunggo.CustomerWeb.Controllers
 {
     [Authorize]

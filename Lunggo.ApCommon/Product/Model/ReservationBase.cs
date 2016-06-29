@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Lunggo.ApCommon.Identity.User;
+
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 

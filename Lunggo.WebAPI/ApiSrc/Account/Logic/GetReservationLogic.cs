@@ -2,7 +2,8 @@
 using System.Web;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Identity.User;
+
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 

@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Identity.AuthStore;
-using Lunggo.ApCommon.Identity.User;
+
 using Lunggo.ApCommon.Identity.UserStore;
 using Lunggo.Framework.Encoder;
 using Microsoft.Owin.Security;
@@ -28,9 +28,9 @@ namespace Lunggo.ApCommon.Identity.Auth
 
         public async Task CreateAsync(AuthenticationTokenCreateContext context)
         {
-            var clientid = context.Ticket.Properties.Dictionary["as:client_id"];
+            var clientId = context.Ticket.Properties.Dictionary["as:client_id"];
 
-            if (string.IsNullOrEmpty(clientid))
+            if (string.IsNullOrEmpty(clientId))
             {
                 return;
             }
@@ -39,10 +39,10 @@ namespace Lunggo.ApCommon.Identity.Auth
 
             var refreshTokenLifeTime = context.OwinContext.Get<string>("as:clientRefreshTokenLifeTime");
 
-            var token = new RefreshToken()
+            var token = new RefreshToken
             {
                 Id = refreshTokenId.Sha512Encode(),
-                ClientId = clientid,
+                ClientId = clientId,
                 Subject = context.Ticket.Identity.Name,
                 IssueTime = DateTime.UtcNow,
                 ExpireTime = DateTime.UtcNow.AddMinutes(Convert.ToDouble(refreshTokenLifeTime))
