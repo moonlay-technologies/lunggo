@@ -4,19 +4,17 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Web;
 using CsQuery;
+using CsQuery.StringScanner.ExtensionMethods;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.Framework.Web;
 using RestSharp;
-using Lunggo.ApCommon.Constant;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
@@ -31,28 +29,28 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
-                RevalidateConditions conditions = new RevalidateConditions
-                {
-                    Itinerary = bookInfo.Itinerary
-                };
+                //RevalidateConditions conditions = new RevalidateConditions
+                //{
+                //    Itinerary = bookInfo.Itinerary
+                //};
                 //conditions.Itinerary = bookInfo.Itinerary;
-                RevalidateFareResult revalidateResult = RevalidateFare(conditions);
-                if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
-                {
-                    return new BookFlightResult
-                    {
-                        IsValid = revalidateResult.IsValid,
-                        ErrorMessages = revalidateResult.ErrorMessages,
-                        Errors = revalidateResult.Errors,
-                        IsItineraryChanged = revalidateResult.IsItineraryChanged,
-                        IsPriceChanged = revalidateResult.IsPriceChanged,
-                        IsSuccess = false,
-                        NewItinerary = revalidateResult.NewItinerary,
-                        NewPrice = revalidateResult.NewPrice,
-                        Status = null
-                    };
-                }
-                bookInfo.Itinerary = revalidateResult.NewItinerary;
+                //RevalidateFareResult revalidateResult = RevalidateFare(conditions);
+                //if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
+                //{
+                //    return new BookFlightResult
+                //    {
+                //        IsValid = revalidateResult.IsValid,
+                //        ErrorMessages = revalidateResult.ErrorMessages,
+                //        Errors = revalidateResult.Errors,
+                //        IsItineraryChanged = revalidateResult.IsItineraryChanged,
+                //        IsPriceChanged = revalidateResult.IsPriceChanged,
+                //        IsSuccess = false,
+                //        NewItinerary = revalidateResult.NewItinerary,
+                //        NewPrice = revalidateResult.NewPrice,
+                //        Status = null
+                //    };
+                //}
+                //bookInfo.Itinerary = revalidateResult.NewItinerary;
                 var client = CreateAgentClient();
                 string origin, dest, coreFareId;
                 DateTime date;
@@ -103,23 +101,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var splitted = flightPart.Split('~');
                 var airlineCode = splitted[0];
                 var flightNumber = splitted[1].Trim(' ');
-                var hidden = string.Join("+", date.ToString("yyyyMMdd"), airlineCode, flightNumber,
-                    origin + dest + "IDR");
+                var hidden = date.ToString("yyyyMMdd");
+                //var hidden = string.Join("+", date.ToString("yyyyMMdd"), airlineCode, flightNumber,
+                //    origin + dest + "IDR");
                 var rep = (splitted.Length - 1)/8;
                 var data = "";
                 for (var m = 0; m < rep; m++)
                 {
-                    data += splitted[8*m].Trim(' ').Trim('^') + "+" 
-                        + splitted[1 + 8*m].Trim(' ') + "+"
+                    data += splitted[8*m].Trim(' ').Trim('^') + " " 
+                        + splitted[1 + 8*m].Trim(' ') + " "
                         + splitted[4 + 8*m] + splitted[6 + 8*m];
                     if (m != rep - 1)
                     {
-                        data += HttpUtility.UrlEncode("/ "); ;
+                        data +="/ "; ;
                     }
                 }
 
-                hidden = string.Join("+", date.ToString("yyyyMMdd"), data);
-                hidden = string.Join("", hidden, "IDR");
+                hidden = String.Join(" ", hidden, data);
+                //hidden = string.Join("", hidden, "IDR");
 
                 // [POST] Search Flight
 
@@ -169,7 +168,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 Thread.Sleep(1000);
 
-                // [POST] Select Flight
+                var usedFareId = (coreFareId.Split('@')[0]).Replace(":", "%3A");
+                searchRequest =
+                    new RestRequest("TaxAndFeeInclusiveDisplayAjax-resource.aspx?flightKeys=" + usedFareId
+                                    + "&numberOfMarkets=1&keyDelimeter=%2C", Method.GET);
+                searchRequest.AddHeader("Referer", "https://booking2.airasia.com/Select.aspx");
+                searchRequest.AddHeader("Accept", "*/*");
+                searchRequest.AddHeader("X-Requested-With", "XMLHttpRequest");
+                searchResponse = client.Execute(searchRequest);
+                var html1 = (CQ)searchResponse.Content;
+
+                //// [POST] Select Flight
+                var currencies = html1[".black1.total-currency"].ToList()[0].InnerText;
+                hidden = String.Join("", hidden, currencies);
 
                 postData =
                     @"__EVENTTARGET=" +
@@ -219,13 +230,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 Thread.Sleep(1000);
 
-                var getTravelerRequest = new RestRequest("Traveler.aspx", Method.GET);
-                getTravelerRequest.AddHeader("Referer", "https://booking2.airasia.com/Select.aspx");
-                var getTravelerResponse = client.Execute(getTravelerRequest);
-                var getVS = getTravelerResponse.Content;
+                var getVS = selectResponse.Content;
                 var vs = (CQ)getVS;
                 var dataaneh = HttpUtility.UrlEncode(vs["[name='HiFlyerFare']"].Attr("value"));
                 var vs4 = HttpUtility.UrlEncode(vs["#viewState"].Attr("value"));
+                var token =
+                        vs[
+                            "#CONTROLGROUP_OUTERTRAVELER_CONTROLGROUPTRAVELER_ContactInputTravelerView_CONTROLGROUP_OUTERTRAVELER_CONTROLGROUPTRAVELER_ContactInputTravelerViewHtmlInputHiddenAntiForgeryTokenField"
+                            ];
+                var isitoken = token[0].GetAttribute("value");
                 // [POST] Input Data
 
                 Thread.Sleep(1000);
@@ -235,12 +248,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&__EVENTARGUMENT=" +
                     @"&__VIEWSTATE=" + vs4 +
                     @"&pageToken=" +
-                    @"&MemberLoginTravelerView2%24TextBoxUserID=" +
-                    @"&hdRememberMeEmail=" +
+                    @"&MemberLoginTravelerView2%24TextBoxUserID=IDTDEZYCGK_ADMIN" +
+                    @"&hdRememberMeEmail=IDTDEZYCGK_ADMIN" +
                     @"&MemberLoginTravelerView2%24PasswordFieldPassword=" +
                     @"&memberLogin_chk_RememberMe=on" +
                     @"&HiFlyerFare=" + dataaneh +
                     @"&isAutoSeats=false" +
+                    @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24CONTROLGROUP_OUTERTRAVELER_CONTROLGROUPTRAVELER_ContactInputTravelerViewHtmlInputHiddenAntiForgeryTokenField=" +
+                        isitoken +
                     @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24HiddenSelectedCurrencyCode=IDR" +
                     @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24DropDownListTitle=MS" +
                     @"&CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24ContactInputTravelerView%24TextBoxFirstName=DWI" +
@@ -310,7 +325,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&radioButtonNoInsuranceId=InsuranceInputControlAddOnsViewAjax_RadioButtonNoInsurance" +
                     @"&radioButtonYesInsuranceId=InsuranceInputControlAddOnsViewAjax_RadioButtonYesInsurance" +
                     @"&radioButton=on" +
-                    @"&HiddenFieldPageBookingData=" + hidden +
+                    @"&HiddenFieldPageBookingData=" + HttpUtility.UrlEncode(hidden) +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
 
                 var travelerRequest = new RestRequest("Traveler.aspx", Method.POST);
@@ -347,7 +362,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24HiddenEquipmentConfiguration_0_PassengerNumber_0=" +
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24EquipmentConfiguration_0_PassengerNumber_0=" +
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24EquipmentConfiguration_0_PassengerNumber_0_HiddenFee=NaN" +
-                    @"&HiddenFieldPageBookingData=" + hidden +
+                    @"&HiddenFieldPageBookingData=" + HttpUtility.UrlEncode(hidden) +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 var unitMapRequest = new RestRequest("UnitMap.aspx", Method.POST);
                 unitMapRequest.AddHeader("Referer", "https://booking2.airasia.com/UnitMap.aspx");
@@ -416,6 +431,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var arrTime = DateTime.ParseExact(splitArr[1].Trim() + " " + splitArr[0].Trim(), format, provider);
                         var departureTime = deptTime.AddHours(-(flight.GetAirportTimeZone(airport[index * 3].InnerHTML.Trim())));
                         var arrivalTime = arrTime.AddHours(-(flight.GetAirportTimeZone(airport[(index * 3) + 2].InnerHTML.Trim())));
+                        var duration = arrivalTime - departureTime;
 
                         segments.Add(new FlightSegment
                         {
