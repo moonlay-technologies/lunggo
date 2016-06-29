@@ -12,7 +12,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static LoginApiResponse Login(LoginApiRequest request)
         {
-            if (request.RefreshToken != null && (request.Email != null || request.Password != null))
+            if (request.RefreshToken != null && (request.UserName != null || request.Password != null))
                 return new LoginApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
@@ -30,12 +30,17 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     "&grant_type=refresh_token" +
                     "&refresh_token=" + request.RefreshToken;
             }
-            else
+            else if (request.UserName != null || request.Password != null)
             {
                 postData +=
                     "&grant_type=password" +
-                    "&username=" + request.Email +
+                    "&username=" + request.UserName +
                     "&password=" + request.Password;
+            }
+            else
+            {
+                postData +=
+                    "&grant_type=client_credentials";
             }
             tokenRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
             var tokenResponse = tokenClient.Execute(tokenRequest);

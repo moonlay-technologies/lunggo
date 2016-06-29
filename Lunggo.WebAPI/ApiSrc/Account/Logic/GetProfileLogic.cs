@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Web;
-using Lunggo.ApCommon.Identity.User;
+
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic

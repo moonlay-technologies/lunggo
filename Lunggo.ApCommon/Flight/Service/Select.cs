@@ -45,6 +45,20 @@ namespace Lunggo.ApCommon.Flight.Service
                 };
             }
 
+            if (!input.EnableCombo)
+            {
+                var tokens =
+                    input.RegisterNumbers.Select(
+                        reg => QuarantineItinerary(input.SearchId, reg, input.RegisterNumbers.IndexOf(reg) + 1))
+                        .ToList();
+                var bundledToken = BundleFlight(tokens);
+                return new SelectFlightOutput
+                {
+                    IsSuccess = true,
+                    Token = bundledToken
+                };
+            }
+
             var combos = GetCombosFromCache(input.SearchId, supplierIndices[0]);
             var matchedCombo = combos.SingleOrDefault(combo =>
             {

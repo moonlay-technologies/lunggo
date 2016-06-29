@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
-using Lunggo.ApCommon.Identity.User;
+
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.CustomerWeb.Models;
 using System.Threading.Tasks;
 using Lunggo.Repository.TableRepository;

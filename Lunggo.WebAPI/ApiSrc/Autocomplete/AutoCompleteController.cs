@@ -13,6 +13,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete
     {
         [HttpGet]
         [LunggoCorsPolicy]
+        [Authorize]
         [Route("v1/autocomplete/airlines/{prefix}")]
         public ApiResponseBase Airlines(string prefix)
         {
@@ -28,6 +29,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete
 
         [HttpGet]
         [LunggoCorsPolicy]
+        [Authorize]
         [Route("v1/autocomplete/airports/{prefix}")]
         public ApiResponseBase Airports(string prefix)
         {
@@ -43,6 +45,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete
 
         [HttpGet]
         [LunggoCorsPolicy]
+        [Authorize]
         [Route("v1/autocomplete/hotellocations/{prefix}")]
         public ApiResponseBase HotelLocations(string prefix)
         {

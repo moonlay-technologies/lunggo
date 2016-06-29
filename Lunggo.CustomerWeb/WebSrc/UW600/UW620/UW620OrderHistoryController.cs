@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Identity.User;
+
 using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Object;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.HtmlTemplate;

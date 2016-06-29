@@ -386,6 +386,7 @@
     <Compile Include="Identity\Auth\Client.cs" />
     <Compile Include="Identity\Auth\RefreshToken.cs" />
     <Compile Include="Identity\Auth\RefreshTokenProvider.cs" />
+    <Compile Include="Identity\Auth\UserAuthorizeAttribute.cs" />
     <Compile Include="Identity\Query\GetAllUserQuery.cs" />
     <Compile Include="Identity\Query\GetClientByIdQuery.cs" />
     <Compile Include="Identity\Query\GetListClaimByUserIdQuery.cs" />
@@ -404,8 +405,8 @@
     <Compile Include="Identity\Query\Record\GetUserByAnyQueryRecord.cs" />
     <Compile Include="Identity\Query\Record\GetUserLoginInfoByAnyQueryRecord.cs" />
     <Compile Include="Identity\Query\Record\GetUserRolesByAnyQueryRecord.cs" />
-    <Compile Include="Identity\User\User.cs" />
-    <Compile Include="Identity\User\UserExtension.cs" />
+    <Compile Include="Identity\Users\User.cs" />
+    <Compile Include="Identity\Users\UserExtension.cs" />
     <Compile Include="Model\BookingFormViewModel.cs" />
     <Compile Include="Model\HotelDetailViewModel.cs" />
     <Compile Include="Model\I18nText.cs" />
@@ -438,18 +439,16 @@
     <Compile Include="Hotel\Object\HotelsSearchServiceRequest.cs" />
     <Compile Include="Hotel\Model\RoomOccupant.cs" />
     <Compile Include="Hotel\Object\HotelsSearchServiceResponse.cs" />
-    <Compile Include="Identity\Claim\IdentityUserClaim.cs" />
-    <Compile Include="Identity\Claim\UserClaim.cs" />
     <Compile Include="Identity\ExternalLogin\IdentityUserExternalLogin.cs" />
     <Compile Include="Identity\ExternalLogin\UserExternalLogin.cs" />
     <Compile Include="Identity\RoleStore\DapperRoleStore.cs" />
-    <Compile Include="Identity\Role\IdentityRole.cs" />
-    <Compile Include="Identity\Role\IdentityUserRole.cs" />
-    <Compile Include="Identity\Role\Role.cs" />
-    <Compile Include="Identity\Role\UserRole.cs" />
+    <Compile Include="Identity\Roles\IdentityRole.cs" />
+    <Compile Include="Identity\Roles\IdentityUserRole.cs" />
+    <Compile Include="Identity\Roles\Role.cs" />
+    <Compile Include="Identity\Roles\UserRole.cs" />
     <Compile Include="Identity\UserStore\DapperUserStore.cs" />
-    <Compile Include="Identity\User\IdentityUserBase.cs" />
-    <Compile Include="Identity\User\UserBase.cs" />
+    <Compile Include="Identity\Users\IdentityUserBase.cs" />
+    <Compile Include="Identity\Users\UserBase.cs" />
     <Compile Include="Payment\Constant\TransferConfirmationReportStatus.cs" />
     <Compile Include="Payment\Constant\PaymentMedium.cs" />
     <Compile Include="Payment\Constant\PaymentMethod.cs" />
@@ -787,9 +786,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Identity\Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

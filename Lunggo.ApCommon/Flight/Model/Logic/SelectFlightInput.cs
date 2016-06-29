@@ -6,5 +6,6 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
     {
         public string SearchId { get; set; }
         public List<int> RegisterNumbers { get; set; }
+        public bool EnableCombo { get; set; }
     }
 }
