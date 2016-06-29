@@ -71,7 +71,7 @@
         var flightDetail = '';
         var expiryDate = '@Model.ExpiryTime.ToString("o")';
         var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
-        var price = @Model.Itinerary.NetTotalFare;
+        var price = @Model.Itinerary.OriginalTotalFare;
 
         // passenger number
         var adultPassenger = @Model.Itinerary.AdultCount;
@@ -156,7 +156,7 @@
                                         </form>
                                     </div>
                                 </div><!-- .travorama-login -->
-
+                            
                                 <form class="form" id="buyer-form" name="buyerForm" novalidate>
 
                                     <div class="form-group">

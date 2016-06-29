@@ -144,8 +144,8 @@ namespace Lunggo.CustomerWeb.Controllers
             var flight = FlightService.GetInstance();
             var payment = PaymentService.GetInstance();
             var reservation = flight.GetReservationForDisplay(rsvNo);
-            if (reservation.Payment.Status == PaymentStatus.Pending)
-            {
+            //if (reservation.Payment.Status == PaymentStatus.Pending)
+            //{
                 try
                 {
                     var savedCreditCards = User.Identity.IsAuthenticated
@@ -168,11 +168,11 @@ namespace Lunggo.CustomerWeb.Controllers
                         RsvNo = rsvNo
                     });
                 }
-            }
-            else
-            {
-                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
-            }
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Thankyou", "Flight", new { rsvNo });
+            //}
             
         }
 
