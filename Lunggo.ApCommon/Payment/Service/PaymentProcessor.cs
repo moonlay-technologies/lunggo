@@ -108,20 +108,22 @@ namespace Lunggo.ApCommon.Payment.Service
 
         private static void ProcessPayment(PaymentDetails paymentDetails, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
-            if (method == PaymentMethod.BankTransfer || method == PaymentMethod.Credit || method == PaymentMethod.Deposit)
+            if (method == PaymentMethod.BankTransfer)
             {
                 paymentDetails.Status = PaymentStatus.Pending;
             }
-            else if (method == PaymentMethod.CreditCard || method == PaymentMethod.VirtualAccount)
+            else if (method == PaymentMethod.CreditCard || method == PaymentMethod.VirtualAccount || method == PaymentMethod.MandiriClickPay || method == PaymentMethod.CimbClicks || method == PaymentMethod.MandiriBillPayment)
             {
                 var paymentResponse = SubmitPayment(paymentDetails, transactionDetails, itemDetails, method);
-                if (method == PaymentMethod.MandiriBillPayment || method == PaymentMethod.VirtualAccount)
-                {
-                    paymentDetails.Status = PaymentStatus.Pending;
-                }
+                paymentDetails.Status = PaymentStatus.Pending;
+                paymentDetails.ExternalId = paymentResponse.ExternalId;
                 if (method == PaymentMethod.VirtualAccount)
                 {
                     paymentDetails.TransferAccount = paymentResponse.TransferAccount;
+                }
+                if (method == PaymentMethod.CimbClicks) 
+                {
+                    paymentDetails.RedirectionUrl = paymentResponse.RedirectionUrl;
                 }
                 else
                 {

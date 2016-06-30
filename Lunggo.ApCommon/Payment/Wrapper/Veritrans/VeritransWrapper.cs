@@ -68,6 +68,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     {
                         //ProcessSavedCreditCardToken(payment.Data, content);
                         payment.Status = PaymentResult(content);
+                        payment.ExternalId = content.TransactionId;
                     }
                     else
                     {
@@ -82,12 +83,61 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     {
                         payment.TransferAccount= content.PermataVANumber;
                         payment.Status = PaymentResult(content);
+                        payment.ExternalId = content.TransactionId;
                     }
                     else
                     {
                         payment.Status = PaymentStatus.Denied;
                     }
-                    return payment; 
+                    return payment;
+
+                case PaymentMethod.MandiriClickPay:
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
+                    response = SubmitRequest(request);
+                    content = GetResponseContent(response);
+                    if (content != null)
+                    {
+                        payment.Status = PaymentResult(content);
+                        payment.ExternalId = content.TransactionId;
+                    }
+                    else
+                    {
+                        payment.Status = PaymentStatus.Denied;
+                    }
+                    return payment;
+
+                case PaymentMethod.CimbClicks:
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
+                    response = SubmitRequest(request);
+                    content = GetResponseContent(response);
+                    if (content != null)
+                    {
+                        payment.RedirectionUrl = content.RedirectUrl;
+                        payment.ExternalId = content.TransactionId;
+                        payment.Status = PaymentResult(content);
+                    }
+                    else
+                    {
+                        payment.Status = PaymentStatus.Denied;
+                    }
+                    return payment;
+
+                case PaymentMethod.MandiriBillPayment:
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
+                    response = SubmitRequest(request);
+                    content = GetResponseContent(response);
+                    if (content != null)
+                    {
+                        payment.RedirectionUrl = content.RedirectUrl;
+                        payment.ExternalId = content.TransactionId;
+                        payment.Status = PaymentResult(content);
+                    }
+                    else
+                    {
+                        payment.Status = PaymentStatus.Denied;
+                    }
+                    return payment;
+
                 default:
                     payment.Status = PaymentStatus.Failed;
                     return payment;
@@ -171,14 +221,48 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     TokenIdSaveEnabled = data.CreditCard.TokenIdSaveEnabled
                 };
             }
-            //Add Here for Payment Method Virtual Account
+           
             else if (method == PaymentMethod.VirtualAccount) 
             {
                 requestParams.BankTransfer = new BankTransfer
                 {
-                    Bank = "permata"
+                    Bank = data.VirtualAccount.Bank
                 };
             }
+            //Mandiri CLick Pay
+            else if (method == PaymentMethod.MandiriClickPay)
+            {
+                requestParams.MandiriClickPay = new MandiriClickPay
+                {
+                   CardNumber = data.MandiriClickPay.CardNumber,
+                   CardNumberLast10 = data.MandiriClickPay.CardNumberLast10,
+                   GivenRandomNumber = data.MandiriClickPay.GivenRandomNumber,
+                   Amount = data.MandiriClickPay.Amount,
+                   Token = data.MandiriClickPay.Token
+                };
+            }
+            
+            //CimbClicks
+            else if (method == PaymentMethod.CimbClicks)
+            {
+                requestParams.CimbClicks = new CimbClicks
+                {
+                    Description = data.CimbClicks.Description,
+                    
+                };
+
+            }
+
+            //Mandiri Bill Payment
+            else if (method == PaymentMethod.MandiriBillPayment) 
+            {
+                requestParams.MandiriBillPayment = new MandiriBillPayment
+                {
+                    Label1 = data.MandiriBillPayment.Label1,
+                    Value1 = data.MandiriBillPayment.Value1
+                };
+            }
+
             var jsonRequestParams = JsonConvert.SerializeObject(requestParams);
             var dataStream = request.GetRequestStream();
             using (var streamWriter = new StreamWriter(dataStream))

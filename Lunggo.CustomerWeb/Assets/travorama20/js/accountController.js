@@ -7,8 +7,6 @@ app.controller('siteHeaderController', [
         $scope.authProfile = {}
         $scope.ProfileConfig = {
             getProfile : function () {
-                $scope.firstName = '';
-                $scope.lastnName = '';
                 $http.get(GetProfileConfig.Url, {
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).success(function (returnData) {
@@ -85,8 +83,7 @@ app.controller('accountController', [
 
         $scope.userProfile = {
             email: '',
-            firstname: '',
-            lastname: '',
+            name:'',
             countryCallCd: '',
             phone: ''
         }
@@ -159,8 +156,7 @@ app.controller('accountController', [
                         console.log('Success getting Profile');
                         $scope.userProfile = {
                             email: returnData.email,
-                            firstname: returnData.first,
-                            lastname: returnData.last,
+                            name: returnData.name,
                             countryCallCd: returnData.countryCallCd,
                             phone: returnData.phone
                         };
@@ -181,8 +177,7 @@ app.controller('accountController', [
         
         $scope.editProfile = {
             email: $scope.userProfile.email,
-            firstname: $scope.userProfile.firstname,
-            lastname: $scope.userProfile.lastname,
+            name: $scope.userProfile.name,
             phone: parseInt($scope.userProfile.phone),
             countryCallCd: $scope.userProfile.countryCallCd
         };
@@ -245,8 +240,7 @@ app.controller('accountController', [
                     url: ChangeProfileConfig.Url,
                     method: 'PATCH',
                     data: {
-                        first: $scope.editProfile.firstname,
-                        last: $scope.editProfile.lastname,
+                        name: $scope.editProfile.name,
                         phone: $scope.editProfile.phone,
                         countryCallCd: $scope.editProfile.countryCallCd
                     },
@@ -255,8 +249,7 @@ app.controller('accountController', [
                     //console.log(returnData);
                     if (returnData.data.status == '200') {
                         console.log('Success requesting change profile');
-                        $scope.userProfile.firstname = $scope.editProfile.firstname;
-                        $scope.userProfile.lastname = $scope.editProfile.lastname;
+                        $scope.userProfile.name = $scope.editProfile.name;
                         $scope.userProfile.phone = $scope.editProfile.phone;
                         $scope.userProfile.country = $scope.editProfile.countryCallCd;
                         $scope.userProfile.edit = false;
@@ -471,8 +464,7 @@ app.controller('orderDetailController', [
 
         $scope.userProfile = {
             email: '',
-            firstname: '',
-            lastname: '',
+            name:'',
             countryCallCd: '',
             phone: ''
         }
@@ -495,8 +487,7 @@ app.controller('orderDetailController', [
                         console.log('Success getting Profile');
                         $scope.userProfile = {
                             email: returnData.email,
-                            firstname: returnData.first,
-                            lastname: returnData.last,
+                            name: returnData.name,
                             countryCallCd: returnData.countryCallCd,
                             phone: returnData.phone
                         };

@@ -1,4 +1,4 @@
-﻿using Lunggo.ApCommon.Identity.User;
+﻿
 using Lunggo.CustomerWeb.Models;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;

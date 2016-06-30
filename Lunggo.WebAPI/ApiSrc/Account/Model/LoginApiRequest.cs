@@ -4,8 +4,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
 {
     public class LoginApiRequest
     {
-        [JsonProperty("email")]
-        public string Email { get; set; }
+        [JsonProperty("userName")]
+        public string UserName { get; set; }
         [JsonProperty("password")]
         public string Password { get; set; }
         [JsonProperty("refreshToken")]

@@ -16,9 +16,10 @@ namespace Lunggo.WebAPI.ApiSrc.Newsletter
 {
     public class NewsletterController : ApiController
     {
-        [LunggoCorsPolicy]
-        [Route("v1/newsletter/subscribe")]
         [HttpPost]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/newsletter/subscribe")]
         public ApiResponseBase NewsletterSubscribe()
         {
             try

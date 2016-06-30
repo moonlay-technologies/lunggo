@@ -43,7 +43,8 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             return new SelectFlightInput
             {
                 SearchId = request.SearchId,
-                RegisterNumbers = request.RegisterNumbers
+                RegisterNumbers = request.RegisterNumbers,
+                EnableCombo = request.EnableCombo
             };
         }
 

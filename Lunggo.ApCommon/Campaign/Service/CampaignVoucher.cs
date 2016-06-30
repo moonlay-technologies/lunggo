@@ -5,7 +5,8 @@ using Lunggo.ApCommon.Campaign.Model;
 using System;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Identity.User;
+
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
 
 namespace Lunggo.ApCommon.Campaign.Service

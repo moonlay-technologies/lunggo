@@ -59,7 +59,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                     TimeLimit = bookServiceResponse.TimeLimit,
                     StatusCode = HttpStatusCode.OK
                 };
-            else if (!bookServiceResponse.Errors.Any())
+            else if (bookServiceResponse.Errors == null || !bookServiceResponse.Errors.Any())
             {
                 return new FlightBookApiResponse
                 {
