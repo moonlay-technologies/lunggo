@@ -42,6 +42,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 client.AddDefaultHeader("Accept-Language", "en-US,en;q=0.8");
                 client.UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
                 client.CookieContainer = new CookieContainer();
+                client.Proxy = new WebProxy("185.77.167.128", 60000);
+                client.Proxy.Credentials = new NetworkCredential("travelmadezy", "9T8XCty9MT");
                 client.FollowRedirects = false;
                 return client;
             }

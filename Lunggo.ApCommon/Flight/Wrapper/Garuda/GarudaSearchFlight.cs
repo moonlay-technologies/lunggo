@@ -96,10 +96,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var originCountry = dict.GetAirportCountryCode(trip0.OriginAirport);
 
                 // Calling The Zeroth Page
-                client.Proxy = new WebProxy("185.77.167.128", 60000);
-                client.Proxy.Credentials = new NetworkCredential("travelmadezy", "9T8XCty9MT");
-                //client.Proxy = new WebProxy("103.9.163.59", 31280);
-                //client.Proxy.Credentials = new NetworkCredential("developer", "Standar1234");
                 client.BaseUrl = new Uri("https://www.garuda-indonesia.com");
                 string url0 = @"";
                 var searchRequest0 = new RestRequest(url0, Method.GET);
