@@ -1,13 +1,10 @@
 ﻿using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lunggo.Webjob.CurrencyRate
 {
@@ -19,8 +16,19 @@ namespace Lunggo.Webjob.CurrencyRate
             InitRedisService();
             InitDatabaseService();
             InitQueueService();
+            InitPayment();
+            InitFlightService();
         }
 
+        private static void InitFlightService()
+        {
+            var flight = FlightService.GetInstance();
+            flight.Init("");
+        }
+        private static void InitPayment()
+        {
+            PaymentService.GetInstance().Init();
+        }
         private static void InitRedisService()
         {
             var redisService = RedisService.GetInstance();

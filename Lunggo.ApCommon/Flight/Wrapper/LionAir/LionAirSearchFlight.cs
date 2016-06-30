@@ -607,6 +607,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     }
                                 }
                             };
+
+                            Currency currclass;
+                            var currencyList = Currency.GetAllCurrencies(Payment.Constant.Supplier.LionAir);
+                            if (!currencyList.TryGetValue(pricefunc.GetCurrency(), out currclass))
+                            {
+                                return new SearchFlightResult
+                                {
+                                    IsSuccess = true,
+                                    Itineraries = new List<FlightItinerary>()
+                                };
+                            }
+
                             itin.Price.SetSupplier(price, new Currency(pricefunc.GetCurrency(), Payment.Constant.Supplier.LionAir));
                             itins.Add(itin);
                         }

@@ -75,15 +75,7 @@ namespace Lunggo.Repository.TableRecord
 		    }
 		}
 
-        public String SupplierCd
-        {
-            get { return _SupplierCd; }
-            set
-            {
-                _UpdateBy = value;
-                IncrementLog("SupplierCd");
-            }
-        }
+        
 		public DateTime? UpdateDate
 		{
 		    get { return _UpdateDate; }
@@ -103,7 +95,15 @@ namespace Lunggo.Repository.TableRecord
 		    }
 		}
 
-		
+        public String SupplierCd
+        {
+            get { return _SupplierCd; }
+            set
+            {
+                _SupplierCd = value;
+                IncrementLog("SupplierCd");
+            }
+        }
 		private String _Symbol;
 		private Decimal? _Rate;
 		private Decimal? _RoundingOrder;
@@ -153,7 +153,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("UpdateBy", false),
 				new ColumnMetadata("UpdateDate", false),
 				new ColumnMetadata("UpdatePgId", false),
-                new ColumnMetadata("SupplierCd", false),
+                new ColumnMetadata("SupplierCd", true)
             };
         }
 

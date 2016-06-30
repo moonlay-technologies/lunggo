@@ -3,27 +3,17 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Security.Policy;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Lunggo.ApCommon.Model;
-using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Extension;
-using Newtonsoft.Json;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
-using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Extensions.MonoHttp;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
-using Lunggo.Framework.Config;
 using Price = Lunggo.ApCommon.Product.Model.Price;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
@@ -445,6 +435,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 }
                             }
                         };
+                        Payment.Model.Currency currclass;
+                        var currencyList = Payment.Model.Currency.GetAllCurrencies(Payment.Constant.Supplier.Garuda);
+                        if (!currencyList.TryGetValue(currency, out currclass))
+                        {
+                            return new SearchFlightResult
+                            {
+                                IsSuccess = true,
+                                Itineraries = new List<FlightItinerary>()
+                            };
+                        }
                         itinerary.Price.SetSupplier(Convert.ToDecimal(price), new Payment.Model.Currency(currency, Payment.Constant.Supplier.Garuda
                             ));
                         itins.Add(itinerary);

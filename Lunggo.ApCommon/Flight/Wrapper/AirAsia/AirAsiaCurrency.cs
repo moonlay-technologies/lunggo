@@ -5,8 +5,8 @@ using System.Net;
 using System.Threading;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.Framework.Extension;
 using RestSharp;
 using HttpUtility = RestSharp.Extensions.MonoHttp.HttpUtility;
 
@@ -15,24 +15,64 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
     internal partial class AirAsiaWrapper
     {
-        internal override decimal CurrencyGetter(string currency)
+        internal override Currency CurrencyGetter(string currency)
         {
             return Client.CurrencyGetter(currency);
         }
 
         private partial class AirAsiaClientHandler
         {
-            internal decimal CurrencyGetter(string currencyName)
+            internal Currency CurrencyGetter(string currencyName)
             {
 
                 var depdate = DateTime.Now.AddMonths(6);
                 var client = CreateAgentClient();
-                var origin = "KUL";
+                string origin;
                 const string dest = "CGK";
+                Currency curr;
+                
+                var currencyList = Currency.GetAllCurrencies(Supplier.AirAsia);
+                if (!currencyList.TryGetValue(currencyName, out curr))
+                {
+                    return new Currency(currencyName, Supplier.AirAsia);
+                }
 
-                var classCurrency = new Currency(currencyName, Payment.Constant.Supplier.AirAsia);
+                switch (currencyName)
+                {
+                    case "SGD":
+                        origin = "SIN";
+                        break;
+                    case "MYR":
+                        origin = "KUL";
+                        break;
+                    case "AUD":
+                        origin = "SYD";
+                        break;
+                    case "CNY":
+                        origin = "PVG";
+                        break;
+                   case "HKD":
+                        origin = "HKG";
+                        break;
+                    case "JPY":
+                        origin = "HND";
+                        break;
+                    case "NZD":
+                        origin = "AKL";
+                        break;
+                    case "THB":
+                        origin = "DMK";
+                        break;
+                    case "PHP":
+                        origin = "MNL";
+                        break;
+                    default:
+                        origin = "CGK";
+                        break;
+                }
+                
                 if (!Login(client))
-                    return 0;
+                    return new Currency(currencyName, Supplier.AirAsia);
                 try
                 {
                     var postData =
@@ -79,7 +119,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     if (searchResponse.ResponseUri.AbsolutePath != "/Select.aspx" ||
                         (searchResponse.StatusCode != HttpStatusCode.OK &&
                          searchResponse.StatusCode != HttpStatusCode.Redirect))
-                        return 0;
+                        return new Currency(currencyName, Supplier.AirAsia);
+
                     Thread.Sleep(1000);
 
                     var gettable = html0["#fareTable1_4"];
@@ -180,7 +221,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     if (selectResponse.ResponseUri.AbsolutePath != "/Traveler.aspx" ||
                         (selectResponse.StatusCode != HttpStatusCode.OK &&
                          selectResponse.StatusCode != HttpStatusCode.Redirect))
-                        return 0;
+                        return new Currency(currencyName, Supplier.AirAsia);
+
                     html1 = (CQ) selectResponse.Content;
 
                     var token =
@@ -289,7 +331,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     if (travelerResponse.ResponseUri.AbsolutePath != "/UnitMap.aspx" ||
                         (travelerResponse.StatusCode != HttpStatusCode.OK &&
                          travelerResponse.StatusCode != HttpStatusCode.Redirect))
-                        return 0;
+                        return new Currency(currencyName)
+                        {
+                            IsAvailable = false
+                        };
 
                     Thread.Sleep(1000);
 
@@ -317,7 +362,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     if (unitMapResponse.ResponseUri.AbsolutePath != "/Payment.aspx" ||
                         (unitMapResponse.StatusCode != HttpStatusCode.OK &&
                          unitMapResponse.StatusCode != HttpStatusCode.Redirect))
-                        return 0;
+                        return new Currency(currencyName, Supplier.AirAsia);
 
                     Thread.Sleep(1000);
 
@@ -344,11 +389,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     postData =
                         @"__EVENTTARGET=CONTROLGROUPPAYMENTBOTTOM%24PaymentInputViewPaymentView" +
                         @"&__EVENTARGUMENT=AgencyAccount" +
-                        @"&__VIEWSTATE=" + vs4 +
+                        @"&__VIEWSTATE=" + HttpUtility.UrlEncode(vs4) +
                         @"&pageToken=" +
                         @"&eventTarget=" +
                         @"&eventArgument=" +
-                        @"&viewState=" +
+                        @"&viewState=" + HttpUtility.UrlEncode(vs4) +
                         @"&pageToken=" +
                         @"&PriceDisplayPaymentView%24CheckBoxTermAndConditionConfirm=on" +
                         @"&CONTROLGROUPPAYMENTBOTTOM%24MultiCurrencyConversionViewPaymentView%24DropDownListCurrency=default" +
@@ -378,6 +423,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var b = decimal.TryParse(creditAvailableinIdr[1], out credinIdr);
                     var c = decimal.TryParse(creditAvailableinCurr[1], out credinCurr);
 
+                    
                     Decimal exchangeRate;
                     if (b && c)
                     {
@@ -388,11 +434,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         exchangeRate = 0;
                     }
 
-                    return exchangeRate;
+                    Currency.SetRate(currencyName, exchangeRate, Supplier.AirAsia);
+                    var currs = new Currency(currencyName, exchangeRate) {Supplier = Supplier.AirAsia};
+                    return currs;
                 }
                 catch //(Exception e)
                 {
-                    return 0;
+                    return new Currency(currencyName, Supplier.AirAsia);
+
                 }
             }
         }       

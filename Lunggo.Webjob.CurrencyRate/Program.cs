@@ -14,7 +14,13 @@ namespace Lunggo.Webjob.CurrencyRate
         static void Main(string[] args)
         {
             Init();
-            var a = FlightService.GetInstance().CurrencyGetterInternal("SGD", Supplier.Garuda); 
+            FlightService.GetInstance().CurrencyGetterInternal("MYR", Supplier.LionAir); //dapatlah objek currency
+            //masukin ke databse
+
+            //alternatif ke2
+            //1 . dalam crawlingan, sekalian masukin ke databse
+            //2. udah
+
         }
         
 

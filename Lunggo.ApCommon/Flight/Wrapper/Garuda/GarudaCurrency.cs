@@ -4,6 +4,8 @@ using System.Linq;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
 using Lunggo.Framework.Config;
+using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Payment.Constant;
 using RestSharp;
 using HttpUtility = RestSharp.Extensions.MonoHttp.HttpUtility;
 
@@ -11,15 +13,52 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 {
     internal partial class GarudaWrapper
     {
-        internal override decimal CurrencyGetter(string currency)
+        internal override Currency CurrencyGetter(string currency)
         {
             return Client.CurrencyGetter(currency);
         }
 
         private partial class GarudaClientHandler
         {
-            internal decimal CurrencyGetter(string currencyName)
+            internal Payment.Model.Currency CurrencyGetter(string currencyName)
             {
+               
+                string origin;
+                var dest= "CGK";
+                Payment.Model.Currency currclass;
+                var currencyList = Payment.Model.Currency.GetAllCurrencies(Supplier.Garuda);
+                if (!currencyList.TryGetValue(currencyName, out currclass))
+                {
+                    return new Payment.Model.Currency(currencyName, Supplier.Garuda);
+                }
+
+                switch (currencyName)
+                {
+                    case "SGD":
+                        origin = "SIN";
+                        break;
+                    case "MYR":
+                        origin = "KUL";
+                        break;
+                    case "KRW":
+                        origin = "ICN";
+                        break;
+                    case "JPY":
+                        origin = "HND";
+                        break;
+                    case "THB":
+                        origin = "BKK";
+                        break;
+                    case "PHP":
+                        origin = "MNL";
+                        break;
+                    case "VND":
+                        origin = "SGN";
+                        break;
+                    default:
+                        origin = "CGK";
+                        break;
+                }
 
                 DateTime depdate = DateTime.Now.AddDays(1);
                 var returnPath = "";
@@ -28,8 +67,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var clientx = new RestClient(cloudAppUrl);
                 var userName = "";
                 var successLogin = false;
-                string origin = "LHR";
-                string dest = "CGK";
+                
                 Decimal exchangeRate = 0;
 
                 try
@@ -80,7 +118,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                         if (userName.Length == 0)
                         {
-                            return 0;
+                            return new Payment.Model.Currency(currencyName, Supplier.Garuda);
                         }
 
                         const string password = "Standar123";
@@ -91,7 +129,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     if (counter >= 31)
                     {
                         TurnInUsername(clientx, userName);
-                        return 0;
+                        return new Payment.Model.Currency(currencyName, Supplier.Garuda);
                     }
 
                     urlweb = @"web/order/e-retail";
@@ -126,7 +164,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     {
                         LogOut(returnPath, client);
                         TurnInUsername(clientx, userName);
-                        return 0;
+                        return new Payment.Model.Currency(currencyName, Supplier.Garuda);
                     }
 
                     var postdata =
@@ -262,13 +300,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                     LogOut(returnPath, client);
                     TurnInUsername(clientx, userName);
-                    return exchangeRate;
+                    //var exchangeRate = agentprice / rateInCurr;
+                    Payment.Model.Currency.SetRate(currencyName, exchangeRate, Supplier.Garuda);
+                    var currs = new Payment.Model.Currency(currencyName, exchangeRate) { Supplier = Supplier.Garuda };
+                    return currs;  
+                    
                 }
                 catch //(Exception e)
                 {
                     LogOut(returnPath, client);
                     TurnInUsername(clientx, userName);
-                    return 0;
+                    return new Payment.Model.Currency(currencyName, Supplier.Garuda);
                 }
             }
         }
