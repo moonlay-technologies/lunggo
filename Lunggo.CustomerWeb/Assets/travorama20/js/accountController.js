@@ -148,6 +148,7 @@ app.controller('accountController', [
                     $http({
                         method: 'GET',
                         url: GetProfileConfig.Url,
+                        async: false,
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                     }).success(function (returnData) {
                         if (returnData.status == "200") {
@@ -155,9 +156,10 @@ app.controller('accountController', [
                             $scope.userProfile = {
                                 email: returnData.email,
                                 name: returnData.name,
-                                countryCallCd: returnData.countryCallCd,
-                                phone: returnData.phone
+                                countryCallCd: parseInt(returnData.countryCallCd),
+                                phone: parseInt(returnData.phone)
                             };
+                            $scope.editProfile = $scope.userProfile;
                         }
                         else {
                             console.log('There is an error');
@@ -175,13 +177,6 @@ app.controller('accountController', [
                 }
             }
         }
-
-        $scope.editProfile = {
-            email: $scope.userProfile.email,
-            name: $scope.userProfile.name,
-            phone: parseInt($scope.userProfile.phone),
-            countryCallCd: $scope.userProfile.countryCallCd
-        };
 
         //Get Transaction History
 
@@ -218,6 +213,13 @@ app.controller('accountController', [
         //Get Profile and Transaction History
         $scope.TakeProfileConfig.TakeProfile();
         $scope.trxHistory.getTrxHistory();
+
+        //$scope.editProfile = {
+        //    email: $scope.userProfile.email,
+        //    name: $scope.userProfile.name,
+        //    phone: parseInt($scope.userProfile.phone),
+        //    countryCallCd: $scope.userProfile.countryCallCd
+        //};
 
         $scope.editForm = function (name) {
 
