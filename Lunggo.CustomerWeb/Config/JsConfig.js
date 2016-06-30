@@ -5,16 +5,16 @@ var SystemConfig = {
 };
 
 var SearchHotelConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/hotels',
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/hotels',
     ResultCount: 24
 };
 
 var SearchRoomConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/rooms'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/rooms'
 };
 
 var FlightSearchConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/flight',
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/flight/',
     // generate search URL
     GenerateSearchParam: function (params) {
         if (typeof (params) == 'object') {
@@ -68,88 +68,88 @@ var FlightSearchConfig = {
 };
 
 var SelectConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/flight/select',
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/flight/select',
     working: false
 };
 
 var RevalidateConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/flight/revalidate',
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/flight/revalidate',
     working: false
 };
 
 var FlightBookConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/flight/book',
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/flight/book',
     working: false
 };
 
 var FlightPayConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/payment/pay',
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/payment/pay',
     working: false
 };
 
 var GetRulesConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/flight/rules',
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/flight/rules',
     working: false
 };
 
 var HotelAutocompleteConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/autocomplete/hotellocation/'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/autocomplete/hotellocation/'
 };
 
 var FlightAutocompleteConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/autocomplete/airports/'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/autocomplete/airports/'
 };
 
 var AirlineAutocompleteConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/autocomplete/airlines/'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/autocomplete/airlines/'
 };
 
 var CheckVoucherConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/payment/checkvoucher'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/payment/checkvoucher'
 };
 
 var SubscribeConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/newsletter/subscribe'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/newsletter/subscribe'
 };
 
 var LoginConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/login'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/login'
 };
 
 var GetProfileConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/profile'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/profile'
 };
 
 var RegisterConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/register'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/register'
 };
 
 var ResetPasswordConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/account/resetpassword'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/account/resetpassword'
 };
 
 var ForgotPasswordConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/forgot'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/forgot'
 };
 
 var ChangePasswordConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/changepassword'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/changepassword'
 };
 
 var ChangeProfileConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/profile'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/profile'
 };
 
 var TrxHistoryConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/trxhistory'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/trxhistory'
 };
 
 var GetReservationConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/rsv/'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/rsv/'
 };
 
 var ResendConfirmationEmailConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/account/resendconfirmationemail'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/account/resendconfirmationemail'
 };
 
 var VeritransTokenConfig = {
@@ -158,100 +158,64 @@ var VeritransTokenConfig = {
 };
 
 var TransferConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/payment/transferfee'
+    Url: 'https://travorama-dv1-api.azurewebsites.net/v1/payment/transferfee'
 };
 
 var LoginMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/v1/login'
+    Url: 'http://m.dv1.travorama.com/v1/login'
 };
 
 var RegisterMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/v1/register'
+    Url: 'http://m.dv1.travorama.com/v1/register'
 };
 
 var ResetPasswordMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/v1/account/resetpassword'
+    Url: 'http://m.dv1.travorama.com/v1/account/resetpassword'
 };
 
 var ForgotPasswordMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/v1/forgot'
+    Url: 'http://m.dv1.travorama.com/v1/forgot'
 };
 
 var ChangePasswordMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/v1/changepassword'
+    Url: 'http://m.dv1.travorama.com/v1/changepassword'
 };
 
 var ChangeProfileMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/v1/profile'
+    Url: 'http://m.dv1.travorama.com/v1/profile'
 };
 
 var ResendConfirmationEmailMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/v1/account/resendconfirmationemail'
+    Url: 'http://m.dv1.travorama.com/v1/account/resendconfirmationemail'
 };
 
 function setCookie(cname, cvalue, expTime) {
-    var d = new Date(expTime);
-    //d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires+ "; path=/";
-}
 
-function setRefreshCookie(cname, cvalue)
-{
-    var d = new Date();
-    d.setTime(d.getTime() + (9999 * 24 * 60 * 60 * 1000));
+    if (cname != "accesstoken") {
+        var d = new Date();
+        d.setTime(d.getTime() + (9999 * 24 * 60 * 60 * 1000));
+    }
+    else {
+        var d = new Date(expTime);
+    }
     var expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
 }
 
-function isValid()
-{
-    var token = getCookie('accesstoken');
-    var refreshToken = getCookie('refreshtoken');
-    if (token) {
-        return true;
-    }
-    else
-    {
-        console.log('Test');
-        //Here to get Token
-        if (refreshToken != null) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", LoginConfig.Url, true);
-            xhttp.send("refreshtoken:"+getCookie('refreshtoken'));
-            if (xhttp.status == "200") {
-                return true;
-            }
-            else
-            {
-                return false;
-            } 
-        }
-        else
-        {
-            return true;
-        }
-    }
-}
+//function setRefreshCookie(cvalue)
+//{
+//    var d = new Date();
+//    d.setTime(d.getTime() + (9999 * 24 * 60 * 60 * 1000));
+//    var expires = "expires=" + d.toUTCString();
+//    document.cookie = "refreshtoken" + "=" + cvalue + "; " + expires + "; path=/";
+//}
 
-function isLogin()
-{
-    var token = getCookie('accesstoken');
-    var refreshToken = getCookie('refreshtoken');
-    if (token != null || token != '') {
-        return true;
-    }
-    else
-    {
-        if (refreshToken != null || refreshToken != '')
-        {
-            
-        }
-        //do some logic here if refresh token is not null
-        return false;
-    }
-}
-
+//function setAuthCookie(cvalue) {
+//    var dAuth = new Date();
+//    dAuth.setTime(dAuth.getTime() + (9999 * 24 * 60 * 60 * 1000));
+//    var expiresAuth = "expires=" + dAuth.toUTCString();
+//    document.cookie = "authKey" + "=" + cvalue + "; " + expiresAuth + "; path=/";
+//}
 
 //Get Value from Cookie
 function getCookie(name) {
@@ -265,16 +229,7 @@ function getCookie(name) {
     return null;
 }
 
-
 //Delete Specific value from Cookie
 function eraseCookie(name) {
     setCookie(name, "", -1);
 }
-
-function deleteCookie(name, path) {
-    // If the cookie exists
-    if (getCookie(name))
-        setCookie(name, "", -1, path);
-}
-
-

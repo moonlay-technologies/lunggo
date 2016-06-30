@@ -11,7 +11,7 @@ using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
-using Lunggo.ApCommon.Identity.User;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
