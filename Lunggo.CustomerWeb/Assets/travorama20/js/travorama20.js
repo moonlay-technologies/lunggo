@@ -138,7 +138,8 @@ function subscribeFormFunctions() {
         $.ajax({
             url: SubscribeConfig.Url,
             method: 'POST',
-            data: { address : SubscribeConfig.email, name : SubscribeConfig.name }
+            data: { address : SubscribeConfig.email, name : SubscribeConfig.name },
+            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
         }).done(function (returnData) {
 
             $('.subscribe-before').hide();
@@ -199,7 +200,8 @@ $(document).ready(function () {
         $.ajax({
             url: SubscribeConfig.Url,
             method: 'POST',
-            data: { address: email, name: subscriberName }
+            data: { address: email, name: subscriberName },
+            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
         }).done(function (returnData) {
             console.log('done');
             console.log(returnData);
@@ -515,7 +517,8 @@ function flightPageSearchFormFunctions() {
             }
         } else {
             $.ajax({
-                url: FlightAutocompleteConfig.Url + keyword
+                url: FlightAutocompleteConfig.Url + keyword,
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
             }).done(function (returnData) {
                 $('.autocomplete-pre .text-pre').hide();
                 $('.autocomplete-pre .text-loading').hide();
@@ -1125,7 +1128,8 @@ function flightFormSearchFunctions() {
             }
         } else {
             $.ajax({
-                url: FlightAutocompleteConfig.Url + keyword
+                url: FlightAutocompleteConfig.Url + keyword,
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
             }).done(function (returnData) {
                 $('.autocomplete-pre .text-pre').hide();
                 $('.autocomplete-pre .text-loading').hide();

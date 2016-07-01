@@ -231,5 +231,8 @@ function getCookie(name) {
 
 //Delete Specific value from Cookie
 function eraseCookie(name) {
-    setCookie(name, "", -1);
+    var d = new Date(-1);
+    var expires = "expires=" + d.toUTCString();
+    var cvalue = "";
+    document.cookie = name + "=" + cvalue + "; " + expires + "; path=/";
 }

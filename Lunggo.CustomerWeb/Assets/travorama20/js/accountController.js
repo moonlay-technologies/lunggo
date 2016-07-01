@@ -67,7 +67,6 @@ app.controller('accountController', [
     '$http', '$scope', function ($http, $scope) {
 
         var hash = (location.hash);
-
         // variables
         $scope.pageLoaded = true;
         $scope.email = 'Test';
@@ -213,13 +212,6 @@ app.controller('accountController', [
         //Get Profile and Transaction History
         $scope.TakeProfileConfig.TakeProfile();
         $scope.trxHistory.getTrxHistory();
-
-        //$scope.editProfile = {
-        //    email: $scope.userProfile.email,
-        //    name: $scope.userProfile.name,
-        //    phone: parseInt($scope.userProfile.phone),
-        //    countryCallCd: $scope.userProfile.countryCallCd
-        //};
 
         $scope.editForm = function (name) {
 
@@ -748,7 +740,7 @@ app.controller('authController', [
                         setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
                         setCookie("authkey",returnData.accessToken, returnData.expTime);
 
-                        window.location.href = $scope.returnUrl;
+                        window.location.href= $scope.returnUrl;
                     }
                     else {
                         $scope.overlay = true;
