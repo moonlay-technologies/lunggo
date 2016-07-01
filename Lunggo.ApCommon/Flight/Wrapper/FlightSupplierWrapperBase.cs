@@ -2,6 +2,7 @@
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Payment.Model;
 
 namespace Lunggo.ApCommon.Flight.Wrapper
 {
@@ -15,6 +16,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper
         internal abstract BookFlightResult BookFlight(FlightBookingInfo bookInfo);
         internal abstract IssueTicketResult OrderTicket(string bookingId, bool canHold);
         internal abstract GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions);
+        internal abstract Currency CurrencyGetter(string currencyName);
         internal abstract List<BookingStatusInfo> GetBookingStatus();
     }
 }

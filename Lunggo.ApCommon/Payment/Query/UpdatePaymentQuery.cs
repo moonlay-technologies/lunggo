@@ -44,7 +44,7 @@ namespace Lunggo.ApCommon.Payment.Query
                 clauseBuilder.Append(@"PaidAmountIdr = @PaidAmountIdr, ");
             if (condition.LocalPaidAmount != null && condition.LocalPaidAmount != 0M)
                 clauseBuilder.Append(@"LocalPaidAmount = @LocalPaidAmount, ");
-            if (condition.ExternalId != null && condition.ExternalId != 0M)
+            if (condition.ExternalId != null)
                 clauseBuilder.Append(@"ExternalId = @ExternalId, ");
             if (condition.OriginalPriceIdr != null)
                 clauseBuilder.Append(@"OriginalPriceIdr = @OriginalPriceIdr, ");

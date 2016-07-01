@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Identity.Query;
 using Lunggo.ApCommon.Identity.Query.Record;
-using Lunggo.ApCommon.Identity.Role;
+
+using Lunggo.ApCommon.Identity.Roles;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;

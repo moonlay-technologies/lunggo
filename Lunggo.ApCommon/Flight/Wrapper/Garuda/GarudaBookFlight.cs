@@ -4,11 +4,9 @@ using System.Globalization;
 using System.Linq;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
-using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Config;
@@ -601,7 +599,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 }
                             }
                     };
-                    newitin.Price.SetSupplier(newprice, new Payment.Model.Currency(currency));
+                    Payment.Model.Currency currclass;
+                    var currencyList = Payment.Model.Currency.GetAllCurrencies(Payment.Constant.Supplier.Garuda);
+                    if (!currencyList.TryGetValue(currency, out currclass))
+                    {
+                        return new BookFlightResult
+                        {
+                            IsSuccess = false,
+                            Errors = new List<FlightError> { FlightError.TechnicalError },
+                            Status = null,
+                            ErrorMessages = new List<string> { "currency is not available"},
+                            NewPrice = newprice,
+                            IsValid = true,
+                            IsPriceChanged = newprice != bookInfo.Itinerary.Price.Supplier,
+                            NewItinerary = newitin,
+                        };
+                    }
+                    newitin.Price.SetSupplier(newprice, new Payment.Model.Currency(currency, Payment.Constant.Supplier.Garuda));
 
                     var oldSegments = bookInfo.Itinerary.Trips.SelectMany(trip => trip.Segments).ToList();
                     var newSegments = newitin.Trips.SelectMany(trip => trip.Segments).ToList();

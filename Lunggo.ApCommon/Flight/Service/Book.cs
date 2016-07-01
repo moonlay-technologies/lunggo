@@ -11,7 +11,8 @@ using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
-using Lunggo.ApCommon.Identity.User;
+
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
@@ -96,7 +97,7 @@ namespace Lunggo.ApCommon.Flight.Service
             reservation.Itineraries = itins;
             reservation.Contact = input.Contact;
             reservation.Pax = input.Passengers;
-            reservation.User = HttpContext.Current.User.Identity.IsAuthenticated
+            reservation.User = HttpContext.Current.User.Identity.IsUserAuthorized()
                 ? HttpContext.Current.User.Identity.GetUser()
                 : null;
             reservation.Payment = new PaymentDetails

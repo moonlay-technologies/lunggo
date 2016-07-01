@@ -183,6 +183,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 ArrivalAirport = splittedSegmentFareId[6],
                                 ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]), DateTimeKind.Utc),
                                 OperatingAirlineCode = splittedSegmentFareId[0],
+                                Duration =  duration,
                                 StopQuantity = 0,
                                 IsMealIncluded = false,
                                 IsPscIncluded = isPscIncluded,
@@ -222,7 +223,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             }
                         };
 
-                        itin.Price.SetSupplier(price, new Currency(currency));
+                        Currency curr;
+
+                        var currencyList = Currency.GetAllCurrencies(Payment.Constant.Supplier.AirAsia);
+                        if (!currencyList.TryGetValue(currency, out curr))
+                        {
+                            return new SearchFlightResult
+                            {
+                                IsSuccess = true,
+                                Itineraries = new List<FlightItinerary>()
+                            };
+                        }
+                        itin.Price.SetSupplier(price, new Currency(currency, Payment.Constant.Supplier.AirAsia));
                         itins.Add(itin);
 
                         //ambil row2nya (.fare-light-row)

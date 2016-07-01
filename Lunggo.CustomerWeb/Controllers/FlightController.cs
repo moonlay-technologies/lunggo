@@ -8,7 +8,8 @@ using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Identity.User;
+
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
@@ -90,16 +91,16 @@ namespace Lunggo.CustomerWeb.Controllers
                     var payment = PaymentService.GetInstance();
                     var expiryTime = flight.GetItineraryExpiry(token);
                     var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
-                    var savedCreditCards = User.Identity.IsAuthenticated
-                        ? payment.GetSavedCreditCards(User.Identity.GetEmail())
-                        : new List<SavedCreditCard>();
+                    //var savedCreditCards = User.Identity.IsAuthenticated
+                    //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
+                    //    : new List<SavedCreditCard>();
                     return View(new FlightCheckoutData
                     {
                         Token = token,
                         Itinerary = itin,
                         ExpiryTime = expiryTime.GetValueOrDefault(),
                         SavedPassengers = savedPassengers,
-                        SavedCreditCards = savedCreditCards
+                        //SavedCreditCards = savedCreditCards
                     });
                 }
                 catch
@@ -143,8 +144,8 @@ namespace Lunggo.CustomerWeb.Controllers
             var flight = FlightService.GetInstance();
             var payment = PaymentService.GetInstance();
             var reservation = flight.GetReservationForDisplay(rsvNo);
-            if (reservation.Payment.Status == PaymentStatus.Pending)
-            {
+            //if (reservation.Payment.Status == PaymentStatus.Pending)
+            //{
                 try
                 {
                     var savedCreditCards = User.Identity.IsAuthenticated
@@ -167,11 +168,11 @@ namespace Lunggo.CustomerWeb.Controllers
                         RsvNo = rsvNo
                     });
                 }
-            }
-            else
-            {
-                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
-            }
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Thankyou", "Flight", new { rsvNo });
+            //}
             
         }
 
@@ -186,7 +187,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Confirmation", "Flight", new { rsvNo });
             }
-            else if (paymentUrl != null || paymentUrl != "")
+            else if (!string.IsNullOrEmpty(paymentUrl))
             {
                 return Redirect(paymentUrl);
             }

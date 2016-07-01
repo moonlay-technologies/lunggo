@@ -63,20 +63,11 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-3">
-                                    <p class="control-label">@Html.I18NString("CW00100")</p>
+                                    <p class="control-label">Nama</p>
                                 </div>
                                 <div class="col-xs-9">
-                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.firstname}}</p>
-                                    <input type="text" name="firstname" ng-model="editProfile.firstname" class="form-control" placeholder="Nama Depan" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-3">
-                                    <p class="control-label">@Html.I18NString("CW00101")</p>
-                                </div>
-                                <div class="col-xs-9">
-                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.lastname}}</p>
-                                    <input type="text" name="lastname" ng-model="editProfile.lastname" class="form-control" placeholder="Nama Belakang" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.name}}</p>
+                                    <input type="text" name="name" ng-model="editProfile.name" class="form-control" placeholder="Nama" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
 

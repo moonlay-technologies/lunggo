@@ -5,7 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Identity.Query;
 using Lunggo.ApCommon.Identity.Query.Record;
-using Lunggo.ApCommon.Identity.User;
+
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
@@ -207,11 +208,11 @@ namespace Lunggo.ApCommon.Identity.UserStore
 
         public virtual Task<TUser> FindByNameAsync(string userName)
         {
-            if (string.IsNullOrWhiteSpace(userName))
-                throw new ArgumentNullException("userName");
-
             return Task.Factory.StartNew(() =>
             {
+                if (string.IsNullOrWhiteSpace(userName))
+                    return null;
+
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
                     var query = GetUserByNameQuery.GetInstance();

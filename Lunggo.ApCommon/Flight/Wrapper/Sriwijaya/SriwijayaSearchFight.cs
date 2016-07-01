@@ -427,7 +427,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                        }
                                     }
                                     };
-                                    itin.Price.SetSupplier(harga, new Currency("IDR"));
+                                    itin.Price.SetSupplier(harga, new Currency("IDR", Payment.Constant.Supplier.Sriwijaya));
                                     itins.Add(itin);
                                     hasil.IsSuccess = true;
                                     hasil.Itineraries = itins;
@@ -663,7 +663,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     }
 
                                     var prefix =
-                                         "" + tampungPesawatString + "" +
+                                        "" + tampungPesawatString + "" +
                                         "." + trip0.OriginAirport + "" +
                                         "." + trip0.DestinationAirport + "" +
                                         "?" + trip0.DepartureDate.Year + "" +
@@ -682,13 +682,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         InfantCount = conditions.InfantCount,
                                         CanHold = true,
                                         FareType = FareType.Published,
-                                        RequireBirthDate = true,
+                                        RequireBirthDate = false,
                                         RequirePassport = false,
                                         RequireSameCheckIn = false,
-                                        RequireNationality = true,
+                                        RequireNationality = false,
                                         RequestedCabinClass = CabinClass.Business,
                                         TripType = TripType.OneWay,
-                                        Supplier = Supplier.Citilink,
+                                        Supplier = Supplier.Sriwijaya,
                                         Price = new Price(),
                                         AdultPricePortion = hargaAdult/harga,
                                         ChildPricePortion = hargaChild/harga,
@@ -705,7 +705,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                            }
                                         }
                                     };
-                                    itin.Price.SetSupplier(harga, new Currency("IDR"));
+                                    itin.Price.SetSupplier(harga, new Currency("IDR", Payment.Constant.Supplier.Sriwijaya));
                                     itins.Add(itin);
                                     hasil.IsSuccess = true;
                                     hasil.Itineraries = itins;

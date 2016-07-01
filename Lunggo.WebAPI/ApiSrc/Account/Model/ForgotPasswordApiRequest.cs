@@ -6,8 +6,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
     public class ForgotPasswordApiRequest
     {
         [Required]
-        [EmailAddress]
-        [JsonProperty("email")]
-        public string Email { get; set; }
+        [JsonProperty("userName")]
+        public string UserName { get; set; }
     }
 }

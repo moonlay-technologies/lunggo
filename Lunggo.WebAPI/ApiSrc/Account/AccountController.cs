@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.Http;
+using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Account.Logic;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
@@ -48,7 +49,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         {
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<LoginApiRequest>();
+                var a = Request.Content.ReadAsStringAsync().Result;
+                var request = a.Deserialize<LoginApiRequest>();
                 var apiResponse = AccountLogic.Login(request);
                 return apiResponse;
             }
@@ -60,7 +62,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [AllowAnonymous]
+        [Authorize]
         [Route("v1/register")]
         public ApiResponseBase Register()
         {
@@ -78,7 +80,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [AllowAnonymous]
+        [Authorize]
         [Route("v1/forgot")]
         public ApiResponseBase ForgotPassword()
         {
@@ -96,7 +98,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPatch]
         [LunggoCorsPolicy]
-        [Authorize]
+        [UserAuthorize]
         [Route("v1/profile")]
         public ApiResponseBase ChangeProfile()
         {
@@ -114,7 +116,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [UserAuthorize]
         [Route("v1/profile")]
         public ApiResponseBase GetProfile()
         {
@@ -131,7 +133,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [UserAuthorize]
         [Route("v1/changepassword")]
         public ApiResponseBase ChangePassword()
         {
@@ -149,7 +151,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [UserAuthorize]
         [Route("v1/trxhistory")]
         public ApiResponseBase GetTransactionHistory()
         {
@@ -166,7 +168,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [UserAuthorize]
         [Route("v1/rsv/{rsvNo}")]
         public ApiResponseBase GetOrderDetail(string rsvNo)
         {

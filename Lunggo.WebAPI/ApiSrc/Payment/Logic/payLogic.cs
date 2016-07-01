@@ -15,43 +15,43 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
         {
             var user = HttpContext.Current.User;
             if (!IsValid(request))
-                return new PaymentApiResponse
+                return new PayApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERPPAY01"
                 };
 
             if (NotEligibleForPaymentMethod(request, user))
-                return new PaymentApiResponse
+                return new PayApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERPPAY02"
                 };
             bool isUpdated;
-            var paymentDetails = PaymentService.GetInstance().SubmitPayment(request.RsvNo, request.Method, request.Data, request.DiscountCode, out isUpdated);
+            var paymentDetails = PaymentService.GetInstance().SubmitPayment(request.RsvNo, request.Method, request, request.DiscountCode, out isUpdated);
             var apiResponse = AssembleApiResponse(paymentDetails, isUpdated);
             return apiResponse;
         }
 
-        private static PaymentApiResponse AssembleApiResponse(PaymentDetails paymentDetails, bool isUpdated)
+        private static PayApiResponse AssembleApiResponse(PaymentDetails paymentDetails, bool isUpdated)
         {
             if (!isUpdated)
             {
                 if (paymentDetails.Method == PaymentMethod.BankTransfer)
-                    return new PaymentApiResponse
+                    return new PayApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
                         ErrorCode = "ERPPAY04"
                     };
 
-                return new PaymentApiResponse
+                return new PayApiResponse
                 {
                     StatusCode = HttpStatusCode.Accepted,
                     ErrorCode = "ERPPAY03"
                 };
             }
 
-            return new PaymentApiResponse
+            return new PayApiResponse
             {
                 PaymentStatus = paymentDetails.Status,
                 Method = paymentDetails.Method,

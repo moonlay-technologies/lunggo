@@ -7,7 +7,8 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Query;
-using Lunggo.ApCommon.Identity.User;
+
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
@@ -195,7 +196,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 BookingId = itineraryRecord.BookingId,
                                 BookingStatus = BookingStatusCd.Mnemonic(itineraryRecord.BookingStatusCd),
                                 TripType = TripTypeCd.Mnemonic(itineraryRecord.TripTypeCd),
-                                Supplier = SupplierCd.Mnemonic(itineraryRecord.SupplierCd),
+                                Supplier = Flight.Constant.SupplierCd.Mnemonic(itineraryRecord.SupplierCd),
                                 TimeLimit = itineraryRecord.TicketTimeLimit,
                                 Trips = new List<FlightTrip>(),
                                 Price = Price.GetFromDb(itineraryRecord.PriceId.GetValueOrDefault()),
@@ -417,7 +418,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         RequestedTripTypeCd = TripTypeCd.Mnemonic(itin.RequestedTripType),
                         RequestedCabinClassCd = CabinClassCd.Mnemonic(itin.RequestedCabinClass),
                         FareTypeCd = FareTypeCd.Mnemonic(itin.FareType),
-                        SupplierCd = SupplierCd.Mnemonic(itin.Supplier),
+                        SupplierCd = Flight.Constant.SupplierCd.Mnemonic(itin.Supplier),
                         InsertBy = "LunggoSystem",
                         InsertDate = DateTime.UtcNow,
                         InsertPgId = "0",

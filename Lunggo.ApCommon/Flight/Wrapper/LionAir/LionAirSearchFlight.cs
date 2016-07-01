@@ -96,8 +96,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 CQ departureDate;
                 string scr;
                 var depDateText = "";
-
-
+                
                 {
                     // Calling The Zeroth Page
                     client.BaseUrl = new Uri("http://www.lionair.co.id");
@@ -608,7 +607,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     }
                                 }
                             };
-                            itin.Price.SetSupplier(price, new Currency(pricefunc.GetCurrency()));
+
+                            Currency currclass;
+                            var currencyList = Currency.GetAllCurrencies(Payment.Constant.Supplier.LionAir);
+                            if (!currencyList.TryGetValue(pricefunc.GetCurrency(), out currclass))
+                            {
+                                return new SearchFlightResult
+                                {
+                                    IsSuccess = true,
+                                    Itineraries = new List<FlightItinerary>()
+                                };
+                            }
+
+                            itin.Price.SetSupplier(price, new Currency(pricefunc.GetCurrency(), Payment.Constant.Supplier.LionAir));
                             itins.Add(itin);
                         }
                     }

@@ -3,7 +3,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Identity.User;
+
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;

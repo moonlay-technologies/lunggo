@@ -111,7 +111,7 @@ namespace Lunggo.Framework.SnowMaker
 
                 if (_optimisticDataStore.TryOptimisticWrite(scopeName, firstIdInNextBatch.ToString(CultureInfo.InvariantCulture)))
                     return;
-
+                    
                 writesAttempted++;
             }
 
