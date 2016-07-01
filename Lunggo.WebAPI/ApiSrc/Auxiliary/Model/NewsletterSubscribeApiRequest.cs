@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Lunggo.WebAPI.ApiSrc.Newsletter.Model
+namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Model
 {
     public class NewsletterSubscribeApiRequest
     {

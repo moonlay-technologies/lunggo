@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Flight.Service;
 
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.Framework.Http;
 
 namespace Lunggo.ApCommon.Campaign.Service
 {
@@ -30,7 +31,8 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return response;
             }
 
-            response.Email = HttpContext.Current.User.Identity.GetEmail();
+            if (HttpContext.Current.User.Identity.IsAuthenticated && HttpContext.Current.User.Identity.IsUserAuthorized())
+                response.Email = HttpContext.Current.User.Identity.GetEmail();
             response.VoucherCode = voucherCode;
             response.Discount = new UsedDiscount
             {
@@ -44,6 +46,12 @@ namespace Lunggo.ApCommon.Campaign.Service
             };
 
             var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
+            if (paymentDetails == null)
+            {
+                response.VoucherStatus = VoucherStatus.ReservationNotFound;
+                return response;
+            }
+
             var price = paymentDetails.OriginalPriceIdr*paymentDetails.LocalCurrency.Rate;
 
             var validationStatus = ValidateVoucher(voucher, price, user.Identity.GetEmail(), voucherCode);
