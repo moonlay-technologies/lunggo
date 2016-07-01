@@ -454,8 +454,9 @@
     <Compile Include="Identity\Roles\Role.cs" />
     <Compile Include="Identity\Roles\UserRole.cs" />
     <Compile Include="Identity\UserStore\DapperUserStore.cs" />
-    <Compile Include="Identity\Users\IdentityUserBase.cs" />
-    <Compile Include="Identity\Users\UserBase.cs" />
+    <Compile Include="Identity\User\IdentityUserBase.cs" />
+    <Compile Include="Identity\User\UserBase.cs" />
+    <Compile Include="Payment\Constant\Supplier.cs" />
     <Compile Include="Payment\Constant\TransferConfirmationReportStatus.cs" />
     <Compile Include="Payment\Constant\PaymentMedium.cs" />
     <Compile Include="Payment\Constant\PaymentMethod.cs" />

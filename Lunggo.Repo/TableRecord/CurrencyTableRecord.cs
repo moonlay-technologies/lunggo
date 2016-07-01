@@ -74,6 +74,8 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UpdateBy");
 		    }
 		}
+
+        
 		public DateTime? UpdateDate
 		{
 		    get { return _UpdateDate; }
@@ -93,7 +95,15 @@ namespace Lunggo.Repository.TableRecord
 		    }
 		}
 
-		
+        public String SupplierCd
+        {
+            get { return _SupplierCd; }
+            set
+            {
+                _SupplierCd = value;
+                IncrementLog("SupplierCd");
+            }
+        }
 		private String _Symbol;
 		private Decimal? _Rate;
 		private Decimal? _RoundingOrder;
@@ -103,7 +113,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _UpdateBy;
 		private DateTime? _UpdateDate;
 		private String _UpdatePgId;
-
+        private String _SupplierCd;
 
 		public static CurrencyTableRecord CreateNewInstance()
         {
@@ -143,7 +153,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("UpdateBy", false),
 				new ColumnMetadata("UpdateDate", false),
 				new ColumnMetadata("UpdatePgId", false),
-
+                new ColumnMetadata("SupplierCd", true)
             };
         }
 
