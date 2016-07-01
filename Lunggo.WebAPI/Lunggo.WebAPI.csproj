@@ -220,6 +220,9 @@
     <Compile Include="ApiSrc\Autocomplete\Model\AirportApi.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\HotelLocationApi.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\UpdateSet.cs" />
+    <Compile Include="ApiSrc\Auxiliary\AuxiliaryController.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Logic\GetCalendarLogic.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Model\GetCalendarApiResponse.cs" />
     <Compile Include="ApiSrc\Common\Model\ApiResponseBase.cs" />
     <Compile Include="ApiSrc\Flight\FlightController.cs" />
     <Compile Include="ApiSrc\Flight\Logic\CheckFlightIssuanceLogic.cs" />
@@ -292,7 +295,6 @@
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\Country.csv" />
-    <Content Include="Config\eng.traineddata" />
     <None Include="Properties\PublishProfiles\prod-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv1-api.pubxml" />

@@ -7,7 +7,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
 {
     public static partial class FlightLogic
     {
-        public static ApiResponseBase TopDestinations()
+        public static TopDestinationsApiResponse TopDestinations()
         {
             var flight = FlightService.GetInstance();
             return new TopDestinationsApiResponse
