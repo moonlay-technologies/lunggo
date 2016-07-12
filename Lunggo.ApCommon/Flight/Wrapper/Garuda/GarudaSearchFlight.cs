@@ -284,11 +284,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                     DateTimeKind.Utc);
                             fareId = fareId + segment.Airline.Code + "-" + segment.FlightNumber + "|";
                             var baggage = GetBaggage(conditions.CabinClass, segment.BeginLocation.LocationCode, segment.EndLocation.LocationCode, originCountry, destinationCountry);
-                            bool isBaggageIncluded = false;
-                            if (baggage != null)
-                            {
-                                isBaggageIncluded = true;
-                            }
+                            bool isBaggageIncluded = baggage != null;
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = segment.Airline.Code,
@@ -341,9 +337,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 segments.Last().Stops = stops;
                             }
                         }
-
-
-
+                        
                         var flightid = itin.ProposedBoundId;
                         var listIndex = new List<Int32>();
                         string childPriceEach = "0";
