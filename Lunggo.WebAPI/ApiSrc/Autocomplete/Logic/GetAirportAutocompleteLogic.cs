@@ -15,7 +15,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
             var airportIds = autocomplete.GetAirportIdsAutocomplete(prefix);
             var airports = airportIds.Select(id =>
             {
-                var airportDict = flight.AirportDict[id];
+                var airportDict = flight.AirportDict[id]; 
                 return new AirportApi
                 {
                     Code = airportDict.Code,

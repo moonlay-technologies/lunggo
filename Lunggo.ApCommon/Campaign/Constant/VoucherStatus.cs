@@ -12,7 +12,8 @@
         EmailNotEligible = 7,
         UpdateError = 8,
         VoucherNotFound = 9,
-        VoucherAlreadyUsed = 10
+        VoucherAlreadyUsed = 10,
+        ReservationNotFound = 11
     }
 
     internal class VoucherStatusCd

@@ -30,6 +30,12 @@ namespace Lunggo.ApCommon.Autocomplete
 
         public IEnumerable<long> GetAirportIdsAutocomplete(string prefix)
         {
+            if (string.IsNullOrWhiteSpace(prefix))
+                return FlightService.GetInstance().AirportDict.Keys;
+
+            if (prefix.ToLower() == "popular")
+                return PopularAirports();
+
             var airportIndex = TrieIndexService.GetInstance().AirportIndex;
             var splittedString = prefix.Split(' ');
             var airportIds = new List<long>();
@@ -74,6 +80,21 @@ namespace Lunggo.ApCommon.Autocomplete
             }
             var distincthotelLocationIds = hotelLocationIds.Distinct();
             return distincthotelLocationIds;
+        }
+
+        private static IEnumerable<long> PopularAirports()
+        {
+            return new List<long>
+            {
+                3474, //JKT
+                7168, //SUB
+                1890, //DPS
+                3508, //JOG
+                3855, //KNO
+                6882, //SIN
+                4001, //KUL
+                784, //BKK
+            };
         }
     }
 }

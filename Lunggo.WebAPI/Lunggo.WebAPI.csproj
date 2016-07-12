@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lunggo.WebAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Bin\Lunggo.WebAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -220,6 +224,9 @@
     <Compile Include="ApiSrc\Autocomplete\Model\AirportApi.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\HotelLocationApi.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\UpdateSet.cs" />
+    <Compile Include="ApiSrc\Auxiliary\AuxiliaryController.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Logic\GetCalendarLogic.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Model\GetCalendarApiResponse.cs" />
     <Compile Include="ApiSrc\Common\Model\ApiResponseBase.cs" />
     <Compile Include="ApiSrc\Flight\FlightController.cs" />
     <Compile Include="ApiSrc\Flight\Logic\CheckFlightIssuanceLogic.cs" />
@@ -250,9 +257,8 @@
     <Compile Include="ApiSrc\Flight\Model\FlightSearchApiResponse.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightIssuanceApiResponse.cs" />
     <Compile Include="ApiSrc\Flight\Model\TopDestinationsApiResponse.cs" />
-    <Compile Include="ApiSrc\Newsletter\Logic\NewsletterSubscribeLogic.cs" />
-    <Compile Include="ApiSrc\Newsletter\Model\NewsletterSubscribeApiRequest.cs" />
-    <Compile Include="ApiSrc\Newsletter\Query\CheckEmailQuery.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Logic\NewsletterSubscribeLogic.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Model\NewsletterSubscribeApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckPaymentLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetPaymentMethodsLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\PayLogic.cs" />
@@ -267,7 +273,6 @@
     <Compile Include="ApiSrc\Rooms\Object\RoomSearchApiRequest.cs" />
     <Compile Include="ApiSrc\Rooms\Object\RoomSearchApiResponse.cs" />
     <Compile Include="ApiSrc\Rooms\RoomsController.cs" />
-    <Compile Include="ApiSrc\Newsletter\NewsletterController.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckVoucherLogic.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckVoucherApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckVoucherApiResponse.cs" />
@@ -292,7 +297,6 @@
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\Country.csv" />
-    <Content Include="Config\eng.traineddata" />
     <None Include="Properties\PublishProfiles\prod-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv1-api.pubxml" />
