@@ -83,7 +83,7 @@ namespace Lunggo.ApCommon.Payment.Model
             return currencyList.ToDictionary(c => c, c => new Currency(c));
         }
 
-        public static void SyncCurrencyData(Supplier supplier = Supplier.Travorama)
+        public static void SyncCurrencyData()
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -92,15 +92,15 @@ namespace Lunggo.ApCommon.Payment.Model
                 var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
                 foreach (var record in records)
                 {
-                    var rateKey = "currencyRate:" + record.Symbol + ":" + supplier;
-                    var roundingOrderKey = "currencyRoundingOrder:" + record.Symbol + ":" + supplier;
+                    var rateKey = "currencyRate:" + record.Symbol + ":" + SupplierCd.Mnemonic(record.SupplierCd);
+                    var roundingOrderKey = "currencyRoundingOrder:" + record.Symbol + ":" + SupplierCd.Mnemonic(record.SupplierCd);
                     redisDb.StringSet(rateKey, (RedisValue)record.Rate.GetValueOrDefault());
                     redisDb.StringSet(roundingOrderKey, (RedisValue)record.RoundingOrder.GetValueOrDefault());
                 }
                 var suppliers = records.Select(r => SupplierCd.Mnemonic(r.SupplierCd)).Distinct().ToList();
                 foreach (var supp in suppliers)
                 {
-                    var currencyListKey = "currencies:" + supplier;
+                    var currencyListKey = "currencies:" + supp;
                     var currencyList = records.Where(r => SupplierCd.Mnemonic(r.SupplierCd) == supp).Select(r => r.Symbol);
                     redisDb.StringSet(currencyListKey, currencyList.Serialize());
                 }
