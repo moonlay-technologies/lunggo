@@ -59,7 +59,7 @@
 
         tripType = data.TripType == TripType.OneWay ? "single" : "return";
     }
-    catch
+    catch (Exception ex) 
     {
         isValid = false;
     }

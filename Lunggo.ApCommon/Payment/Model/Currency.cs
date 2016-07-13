@@ -24,15 +24,23 @@ namespace Lunggo.ApCommon.Payment.Model
         [JsonConstructor]
         public Currency(string symbol)
         {
-            if (!ValidateSymbol(symbol))
+            try
             {
-                IsAvailable = false;
-                return;
+                if (!ValidateSymbol(symbol))
+                {
+                    IsAvailable = false;
+                    return;
+                }
+
+                Symbol = symbol.ToUpper();
+                Rate = GetLatestRate();
+                RoundingOrder = GetRoundingOrder();
             }
-                
-            Symbol = symbol.ToUpper();
-            Rate = GetLatestRate();
-            RoundingOrder = GetRoundingOrder();
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           
         }
 
         public Currency(string symbol, Supplier supplier)
