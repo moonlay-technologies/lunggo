@@ -89,7 +89,7 @@ namespace Lunggo.ApCommon.Payment.Model
             return currencyList.ToDictionary(c => c, c => new Currency(c));
         }
 
-        public static void SyncCurrencyData(Supplier supplier = Supplier.Travorama)
+        public static void SyncCurrencyData()
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {

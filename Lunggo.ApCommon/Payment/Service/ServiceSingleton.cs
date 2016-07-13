@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public void Init()
         {
-            Currency.SyncCurrencyData(Supplier.LionAir);
+            Currency.SyncCurrencyData();
             VeritransWrapper.Init();
         }
     }

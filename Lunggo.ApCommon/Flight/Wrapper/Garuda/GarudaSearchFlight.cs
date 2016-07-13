@@ -83,8 +83,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);
                 var destinationCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.DestinationAirport);
                 // Calling The Zeroth Page
-                client.Proxy = new WebProxy("103.9.163.59", 31280);
-                client.Proxy.Credentials = new NetworkCredential("developer", "Standar1234");
+
+                client.Proxy = new WebProxy("185.77.167.128", 60000);
+                client.Proxy.Credentials = new NetworkCredential("travelmadezy", "9T8XCty9MT");
+                //client.Proxy = new WebProxy("103.9.163.59", 31280);
+                //client.Proxy.Credentials = new NetworkCredential("developer", "Standar1234");
                 client.BaseUrl = new Uri("https://www.garuda-indonesia.com");
                 string url0 = @"";
                 var searchRequest0 = new RestRequest(url0, Method.GET);
@@ -281,11 +284,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                     DateTimeKind.Utc);
                             fareId = fareId + segment.Airline.Code + "-" + segment.FlightNumber + "|";
                             var baggage = GetBaggage(conditions.CabinClass, segment.BeginLocation.LocationCode, segment.EndLocation.LocationCode, originCountry, destinationCountry);
-                            bool isBaggageIncluded = false;
-                            if (baggage != null)
-                            {
-                                isBaggageIncluded = true;
-                            }
+                            bool isBaggageIncluded = baggage != null;
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = segment.Airline.Code,
@@ -338,9 +337,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 segments.Last().Stops = stops;
                             }
                         }
-
-
-
+                        
                         var flightid = itin.ProposedBoundId;
                         var listIndex = new List<Int32>();
                         string childPriceEach = "0";
