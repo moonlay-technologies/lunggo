@@ -331,10 +331,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     if (travelerResponse.ResponseUri.AbsolutePath != "/UnitMap.aspx" ||
                         (travelerResponse.StatusCode != HttpStatusCode.OK &&
                          travelerResponse.StatusCode != HttpStatusCode.Redirect))
-                        return new Currency(currencyName)
-                        {
-                            IsAvailable = false
-                        };
+                        return new Currency(currencyName);
 
                     Thread.Sleep(1000);
 

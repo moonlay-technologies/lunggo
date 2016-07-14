@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Http.ModelBinding;
-using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.Framework.Config;
+using Lunggo.WebAPI.ApiSrc.Auxiliary.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
-using Lunggo.WebAPI.ApiSrc.Newsletter.Model;
-using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Authenticators;
-using ModelState = System.Web.Mvc.ModelState;
 
-namespace Lunggo.WebAPI.ApiSrc.Newsletter.Logic
+namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
 {
-    public static partial class NewsletterLogic
+    public static partial class AuxiliaryLogic
     {
         public static ApiResponseBase NewsletterSubscribe(NewsletterSubscribeApiRequest request)
         {
