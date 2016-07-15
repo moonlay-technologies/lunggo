@@ -7,14 +7,11 @@ using System.Text.RegularExpressions;
 using System.Web;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
-using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.Framework.Web;
 using RestSharp;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
@@ -57,9 +54,74 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 // [GET] Search Flight
                 var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);
-                var destinationCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.DestinationAirport);
                 CQ availableFares;
                 CQ flightTable;
+                string mataUang;
+
+                switch (originCountry)
+                {
+                    case "ID":
+                        mataUang = "IDR";
+                        break;
+                    case "MY":
+                        mataUang = "MYR";
+                        break;
+                    case "SG":
+                        mataUang = "SGD";
+                        break;
+                    case "TH":
+                        mataUang = "THB";
+                        break;
+                    case "SA":
+                        mataUang = "SAR";
+                        break;
+                    case "AU":
+                        mataUang = "AUD";
+                        break;
+                    case "BN":
+                        mataUang = "BWD";
+                        break;
+                    case "CN":
+                        mataUang = "CNY";
+                        break;
+                    case "PH":
+                        mataUang = "PHP";
+                        break;
+                    case "HK":
+                        mataUang = "HKD";
+                        break;
+                    case "IN":
+                        mataUang = "INR";
+                        break;
+                    case "JP":
+                        mataUang = "JPY";
+                        break;
+                    case "KR":
+                        mataUang = "KRW";
+                        break;
+                    case "MO":
+                        mataUang = "MOP";
+                        break;
+                    case "NP":
+                        mataUang = "NPR";
+                        break;
+                    case "OM":
+                        mataUang = "OMR";
+                        break;
+                    case "NZ":
+                        mataUang = "NZD";
+                        break;
+                    case "TW":
+                        mataUang = "TWD";
+                        break;
+                    case "LK":
+                        mataUang = "LKR";
+                        break;
+                    default:
+                        mataUang = "USD";
+                        break;
+                }
+
                 if (originCountry == "ID")
                 {
                     const string url = @"Flight/Select";
@@ -74,7 +136,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     searchRequest.AddQueryParameter("s", "true");
                     searchRequest.AddQueryParameter("mon", "true");
                     searchRequest.AddQueryParameter("culture", "id-ID");
-                    searchRequest.AddQueryParameter("cc", "IDR");
+                    searchRequest.AddQueryParameter("cc", mataUang);
                     var searchResponse = client.Execute(searchRequest);
 
                     var html = searchResponse.Content;
