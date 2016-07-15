@@ -19,41 +19,47 @@ namespace Lunggo.ApCommon.Payment.Model
         public decimal Rate { get; set; }
         public decimal RoundingOrder { get; private set; }
         public Supplier Supplier { get; set; }
-        public bool IsAvailable { get; set; }
 
         [JsonConstructor]
-        public Currency(string symbol, Supplier supplier = Supplier.Travorama)
+        public Currency(string symbol)
         {
             if (!ValidateSymbol(symbol))
-            {
-                IsAvailable = false;
-                Supplier = supplier;
                 return;
-            }
 
+            Supplier = Supplier.Travorama;
             Symbol = symbol.ToUpper();
             Rate = GetLatestRate();
             RoundingOrder = GetRoundingOrder();
         }
-        public Currency(string symbol, decimal rate)
+
+        public Currency(string symbol, Supplier supplier = Supplier.Travorama)
         {
             if (!ValidateSymbol(symbol))
-            {
-                IsAvailable = false;
                 return;
-            }
+
+            Supplier = supplier;
+            Symbol = symbol.ToUpper();
+            Rate = GetLatestRate();
+            RoundingOrder = GetRoundingOrder();
+        }
+
+        public Currency(string symbol, decimal rate, Supplier supplier = Supplier.Travorama)
+        {
+            if (!ValidateSymbol(symbol))
+                return;
+
+            Supplier = supplier;
             Symbol = symbol.ToUpper();
             Rate = rate;
             RoundingOrder = GetRoundingOrder();
         }
 
-        public Currency(string symbol, decimal rate, decimal roundingOrder)
+        public Currency(string symbol, decimal rate, decimal roundingOrder, Supplier supplier = Supplier.Travorama)
         {
             if (!ValidateSymbol(symbol))
-            {
-                IsAvailable = false;
                 return;
-            }
+
+            Supplier = supplier;
             Symbol = symbol.ToUpper();
             Rate = rate;
             RoundingOrder = roundingOrder;
