@@ -26,6 +26,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             {
 
                 var depdate = DateTime.Now.AddMonths(6);
+                //var depdate = new DateTime(2016, 12, 16);
                 var client = CreateAgentClient();
                 string origin;
                 const string dest = "CGK";
@@ -51,7 +52,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     case "CNY":
                         origin = "PVG";
                         break;
-                   case "HKD":
+                    case "HKD":
                         origin = "HKG";
                         break;
                     case "JPY":
@@ -65,6 +66,33 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         break;
                     case "PHP":
                         origin = "MNL";
+                        break;
+                    case "USD":
+                        origin = "PNH";
+                        break;
+                    case "BND":
+                        origin = "BWN";
+                        break;
+                    case "SAR":
+                        origin = "JED";
+                        break;
+                    case "INR":
+                        origin = "MAA";
+                        break;
+                    case "KRW":
+                        origin = "ICN";
+                        break;
+                    case "MOP":
+                        origin = "MFM";
+                        break;
+                    case "NPR":
+                        origin = "KTM";
+                        break;
+                    case "LKR":
+                        origin = "CMB";
+                        break;
+                    case "TWD":
+                        origin = "TPE";
                         break;
                     default:
                         origin = "CGK";
