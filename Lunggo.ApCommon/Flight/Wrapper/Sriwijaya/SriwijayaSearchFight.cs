@@ -427,7 +427,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                        }
                                     }
                                     };
-                                    itin.Price.SetSupplier(harga, new Currency("IDR"));
+                                    itin.Price.SetSupplier(harga, new Currency("IDR", Payment.Constant.Supplier.Sriwijaya));
                                     itins.Add(itin);
                                     hasil.IsSuccess = true;
                                     hasil.Itineraries = itins;
@@ -705,7 +705,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                            }
                                         }
                                     };
-                                    itin.Price.SetSupplier(harga, new Currency("IDR"));
+                                    itin.Price.SetSupplier(harga, new Currency("IDR", Payment.Constant.Supplier.Sriwijaya));
                                     itins.Add(itin);
                                     hasil.IsSuccess = true;
                                     hasil.Itineraries = itins;

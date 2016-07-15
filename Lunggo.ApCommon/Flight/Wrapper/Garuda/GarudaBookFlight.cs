@@ -599,7 +599,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 }
                             }
                     };
-                    newitin.Price.SetSupplier(newprice, new Payment.Model.Currency(currency));
+                    Payment.Model.Currency currclass;
+                    var currencyList = Payment.Model.Currency.GetAllCurrencies(Payment.Constant.Supplier.Garuda);
+                    if (!currencyList.TryGetValue(currency, out currclass))
+                    {
+                        return new BookFlightResult
+                        {
+                            IsSuccess = false,
+                            Errors = new List<FlightError> { FlightError.TechnicalError },
+                            Status = null,
+                            ErrorMessages = new List<string> { "currency is not available"},
+                            NewPrice = newprice,
+                            IsValid = true,
+                            IsPriceChanged = newprice != bookInfo.Itinerary.Price.Supplier,
+                            NewItinerary = newitin,
+                        };
+                    }
+                    newitin.Price.SetSupplier(newprice, new Payment.Model.Currency(currency, Payment.Constant.Supplier.Garuda));
 
                     var oldSegments = bookInfo.Itinerary.Trips.SelectMany(trip => trip.Segments).ToList();
                     var newSegments = newitin.Trips.SelectMany(trip => trip.Segments).ToList();

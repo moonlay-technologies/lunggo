@@ -756,7 +756,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 }
                             }
                         };
-                        itin.Price.SetSupplier(agentprice, new Currency(agentcurr));
+
+                        Currency currclass;
+                        var currencyList = Currency.GetAllCurrencies(Payment.Constant.Supplier.LionAir);
+                        if (!currencyList.TryGetValue(agentcurr, out currclass))
+                        {
+                            return new BookFlightResult
+                            {
+                                IsSuccess = false,
+                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                Status = null,
+                                ErrorMessages = new List<string> { "Currency is not available" },
+                                IsValid = true,
+                                NewItinerary = itin,
+
+                            };
+                        }
+                        itin.Price.SetSupplier(agentprice, new Currency(agentcurr, Payment.Constant.Supplier.LionAir));
 
                         var isItinChanged = !itin.Identical(bookInfo.Itinerary);
 
@@ -1060,7 +1076,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                                     flightId + "+" + newSegments.Count + "+" + flightNoJoin + "+" +
                                                     depHrJoin;
 
-                                    itin.Price.SetSupplier(decimal.Parse(newPrice), new Currency("IDR"));
+                                    itin.Price.SetSupplier(decimal.Parse(newPrice), new Currency("IDR"
+                                        , Payment.Constant.Supplier.LionAir));
                                     itin.FareId = newFareId;
 
                                     return new BookFlightResult
@@ -1106,7 +1123,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     + "+" + childCount + "+" + infantCount + "+" + splittedFareId[6] + "+" + harga2 
                                     + "+" + flightId + "+" + newSegments.Count + "+" + flightNoJoin + "+" + depHrJoin;
 
-                                itin.Price.SetSupplier(harga2, new Currency("IDR"));
+                                itin.Price.SetSupplier(harga2, new Currency("IDR",
+                                    Payment.Constant.Supplier.LionAir));
                                 itin.FareId = newFareId;
 
                                 LogOut(cid, client);
@@ -1154,7 +1172,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                                    "+" + harga2 + "+" + flightId + "+" + newSegments.Count +
                                                    "+" + flightNoJoin + "+" + depHrJoin;
 
-                            itin.Price.SetSupplier(harga2, new Currency("IDR"));
+                            itin.Price.SetSupplier(harga2, new Currency("IDR",
+                                Payment.Constant.Supplier.LionAir));
                             itin.FareId = newFareId;
 
                             const string url9 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
@@ -1192,7 +1211,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                                    "+" + childCount + "+" + infantCount + "+" + splittedFareId[6] + 
                                                    "+" + newPrice + "+" + flightId + "+" + newSegments.Count + 
                                                    "+" + flightNoJoin + "+" + depHrJoin;
-                            itin.Price.SetSupplier(decimal.Parse(newPrice), new Currency("IDR"));
+                            itin.Price.SetSupplier(decimal.Parse(newPrice), new Currency("IDR",
+                                Payment.Constant.Supplier.LionAir));
                             itin.FareId = newFareId;
 
                             // kalau ini booking ke 2 (setelah booking 1, yang harga naik di ujung)

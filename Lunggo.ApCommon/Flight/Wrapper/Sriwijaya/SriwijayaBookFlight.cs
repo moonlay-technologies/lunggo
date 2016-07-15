@@ -344,7 +344,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 }
                             }
                         };
-                        itin.Price.SetSupplier(hargaBaru, new Currency("IDR"));
+                        itin.Price.SetSupplier(hargaBaru, new Currency("IDR", Payment.Constant.Supplier.Sriwijaya));
 
                         var fixFlight = new BookFlightResult();
                         fixFlight.IsSuccess = true;

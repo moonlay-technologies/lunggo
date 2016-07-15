@@ -107,8 +107,7 @@
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\dv1-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\qa-webjobflightsearch.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv1-webjobflightsearch - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv1-webjobflightsearch - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-webjobflightsearch.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>
   <ItemGroup>

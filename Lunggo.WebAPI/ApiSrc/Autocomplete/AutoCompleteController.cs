@@ -30,8 +30,9 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete
         [HttpGet]
         [LunggoCorsPolicy]
         [Authorize]
+        [Route("v1/autocomplete/airports")]
         [Route("v1/autocomplete/airports/{prefix}")]
-        public ApiResponseBase Airports(string prefix)
+        public ApiResponseBase Airports(string prefix = null)
         {
             try
             {

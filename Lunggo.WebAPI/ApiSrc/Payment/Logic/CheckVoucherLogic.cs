@@ -80,6 +80,12 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                         StatusCode = HttpStatusCode.Accepted,
                         ErrorCode = "ERVCHE06"
                     };
+                case VoucherStatus.ReservationNotFound:
+                    return new CheckVoucherApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERVCHE07"
+                    };
                 default:
                     return ApiResponseBase.Error500();
             }

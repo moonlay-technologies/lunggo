@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
@@ -14,33 +15,51 @@ namespace Lunggo.ApCommon.Payment.Model
 {
     public class Currency
     {
-        public string Symbol { get; private set; }
-        public decimal Rate { get; private set; }
+        public string Symbol { get; set; }
+        public decimal Rate { get; set; }
         public decimal RoundingOrder { get; private set; }
+        public Supplier Supplier { get; set; }
 
         [JsonConstructor]
         public Currency(string symbol)
         {
             if (!ValidateSymbol(symbol))
                 return;
+
+            Supplier = Supplier.Travorama;
             Symbol = symbol.ToUpper();
             Rate = GetLatestRate();
             RoundingOrder = GetRoundingOrder();
         }
 
-        public Currency(string symbol, decimal rate)
+        public Currency(string symbol, Supplier supplier = Supplier.Travorama)
         {
             if (!ValidateSymbol(symbol))
                 return;
+
+            Supplier = supplier;
+            Symbol = symbol.ToUpper();
+            Rate = GetLatestRate();
+            RoundingOrder = GetRoundingOrder();
+        }
+
+        public Currency(string symbol, decimal rate, Supplier supplier = Supplier.Travorama)
+        {
+            if (!ValidateSymbol(symbol))
+                return;
+
+            Supplier = supplier;
             Symbol = symbol.ToUpper();
             Rate = rate;
             RoundingOrder = GetRoundingOrder();
         }
 
-        public Currency(string symbol, decimal rate, decimal roundingOrder)
+        public Currency(string symbol, decimal rate, decimal roundingOrder, Supplier supplier = Supplier.Travorama)
         {
             if (!ValidateSymbol(symbol))
                 return;
+
+            Supplier = supplier;
             Symbol = symbol.ToUpper();
             Rate = rate;
             RoundingOrder = roundingOrder;
@@ -50,7 +69,7 @@ namespace Lunggo.ApCommon.Payment.Model
         {
             var redis = RedisService.GetInstance();
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-            var redisKey = "currencyRoundingOrder:" + Symbol;
+            var redisKey = "currencyRoundingOrder:" + Symbol + ":" + Supplier;
             var roundingOrder = (decimal)redisDb.StringGet(redisKey);
             return roundingOrder;
         }
@@ -59,14 +78,14 @@ namespace Lunggo.ApCommon.Payment.Model
         {
             var redis = RedisService.GetInstance();
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-            var redisKey = "currencyRate:" + Symbol;
+            var redisKey = "currencyRate:" + Symbol + ":" + Supplier;
             var rate = (decimal)redisDb.StringGet(redisKey);
             return rate;
         }
 
-        public static Dictionary<string, Currency> GetAllCurrencies()
+        public static Dictionary<string, Currency> GetAllCurrencies(Supplier supplier = Supplier.Travorama)
         {
-            var currencyList = GetCurrencyList();
+            var currencyList = GetCurrencyList(supplier);
             return currencyList.ToDictionary(c => c, c => new Currency(c));
         }
 
@@ -79,54 +98,53 @@ namespace Lunggo.ApCommon.Payment.Model
                 var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
                 foreach (var record in records)
                 {
-                    var rateKey = "currencyRate:" + record.Symbol;
-                    var roundingOrderKey = "currencyRoundingOrder:" + record.Symbol;
+                    var rateKey = "currencyRate:" + record.Symbol + ":" + SupplierCd.Mnemonic(record.SupplierCd);
+                    var roundingOrderKey = "currencyRoundingOrder:" + record.Symbol + ":" + SupplierCd.Mnemonic(record.SupplierCd);
                     redisDb.StringSet(rateKey, (RedisValue)record.Rate.GetValueOrDefault());
                     redisDb.StringSet(roundingOrderKey, (RedisValue)record.RoundingOrder.GetValueOrDefault());
                 }
-                var currencyListKey = "currencies";
-                var currencyList = records.Select(r => r.Symbol);
-                redisDb.StringSet(currencyListKey, currencyList.Serialize());
+                var suppliers = records.Select(r => SupplierCd.Mnemonic(r.SupplierCd)).Distinct().ToList();
+                foreach (var supp in suppliers)
+                {
+                    var currencyListKey = "currencies:" + supp;
+                    var currencyList = records.Where(r => SupplierCd.Mnemonic(r.SupplierCd) == supp).Select(r => r.Symbol);
+                    redisDb.StringSet(currencyListKey, currencyList.Serialize());
+                }
             }
         }
 
-        public static decimal GetLatestRate(string symbol)
-        {
-            return !ValidateSymbol(symbol) ? 0M : new Currency(symbol).Rate;
-        }
-
-        public static void SetRate(string symbol, decimal rate)
+        public static void SetRate(string symbol, decimal rate, Supplier supplier = Supplier.Travorama)
         {
             if (!ValidateSymbol(symbol))
                 return;
             symbol = symbol.ToUpper();
             using (var conn = DbService.GetInstance().GetOpenConnection())
-                CurrencyTableRepo.GetInstance().Update(conn, new CurrencyTableRecord { Symbol = symbol, Rate = rate });
+                CurrencyTableRepo.GetInstance().Update(conn, new CurrencyTableRecord { Symbol = symbol, Rate = rate, SupplierCd = SupplierCd.Mnemonic(supplier) });
             var redis = RedisService.GetInstance();
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-            var rateKey = "currencyRate:" + symbol;
+            var rateKey = "currencyRate:" + symbol + ":" + supplier;
             redisDb.StringSet(rateKey, (RedisValue)rate);
         }
 
-        public static void SetRoundingOrder(string symbol, decimal roundingOrder)
+        public static void SetRoundingOrder(string symbol, decimal roundingOrder, Supplier supplier = Supplier.Travorama)
         {
             if (!ValidateSymbol(symbol))
                 return;
             symbol = symbol.ToUpper();
             using (var conn = DbService.GetInstance().GetOpenConnection())
-                CurrencyTableRepo.GetInstance().Update(conn, new CurrencyTableRecord { Symbol = symbol, RoundingOrder = roundingOrder });
+                CurrencyTableRepo.GetInstance().Update(conn, new CurrencyTableRecord { Symbol = symbol, RoundingOrder = roundingOrder, SupplierCd = SupplierCd.Mnemonic(supplier) });
             var redis = RedisService.GetInstance();
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
             var roundingOrderKey = "currencyRoundingOrder:" + symbol;
             redisDb.StringSet(roundingOrderKey, (RedisValue)roundingOrder);
         }
 
-        private static IEnumerable<string> GetCurrencyList()
+        private static IEnumerable<string> GetCurrencyList(Supplier supplier = Supplier.Travorama)
         {
             var redis = RedisService.GetInstance();
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-            var currencyListKey = "currencies";
-            var currencyList = ((string) redisDb.StringGet(currencyListKey)).Deserialize<IEnumerable<string>>();
+            var currencyListKey = "currencies:" + supplier;
+            var currencyList = ((string)redisDb.StringGet(currencyListKey)).Deserialize<IEnumerable<string>>();
             return currencyList;
         }
 
@@ -149,7 +167,7 @@ namespace Lunggo.ApCommon.Payment.Model
         {
             protected override string GetQuery(dynamic condition = null)
             {
-                return "SELECT Symbol, Rate, RoundingOrder " +
+                return "SELECT Symbol, Rate, RoundingOrder, SupplierCd " +
                        "FROM Currency";
             }
         }

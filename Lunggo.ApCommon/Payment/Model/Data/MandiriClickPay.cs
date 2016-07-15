@@ -9,7 +9,7 @@ namespace Lunggo.ApCommon.Payment.Model.Data
         [JsonProperty("cardNoLast10")]
         public string CardNumberLast10 { get; set; }
         [JsonProperty("amount")]
-        public decimal Amount { get; set; }
+        public long Amount { get; set; }
         [JsonProperty("rsvNoLast5")]
         public string GivenRandomNumber { get; set; }
         [JsonProperty("token")]

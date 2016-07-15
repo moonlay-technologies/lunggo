@@ -6,6 +6,8 @@ using System.Threading;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Config;
 using RestSharp;
 using HttpUtility = RestSharp.Extensions.MonoHttp.HttpUtility;
@@ -15,16 +17,39 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 {
     internal partial class LionAirWrapper
     {
-        internal override decimal CurrencyGetter(string currency)
+        internal override Currency CurrencyGetter(string currency)
         {
             return Client.CurrencyGetter(currency);
         }
 
         private partial class LionAirClientHandler
         {
-            internal decimal CurrencyGetter(string currencyName)
+            internal Currency CurrencyGetter(string currencyName)
             {
+                
+                string originAirport;
+                var destinationAirport = "CGK";
 
+                Currency currclass;
+                var currencyList = Currency.GetAllCurrencies(Payment.Constant.Supplier.LionAir);
+                if (!currencyList.TryGetValue(currencyName, out currclass))
+                {
+                    return new Currency(currencyName, Payment.Constant.Supplier.LionAir);
+                }
+
+                switch (currencyName)
+                {
+                    case "SGD":
+                        originAirport = "SIN";
+                        break;
+                    case "MYR":
+                        originAirport = "KUL";
+                        break;
+                    default:
+                        originAirport = "CGK";
+                        break;
+                }
+                
                 DateTime depdate = DateTime.Now.AddMonths(6);
                 var client = CreateCustomerClient();
                 
@@ -39,10 +64,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 if (searchResponse0.ResponseUri.AbsolutePath != "/Default.aspx" &&
                     (searchResponse0.StatusCode == HttpStatusCode.OK ||
                         searchResponse0.StatusCode == HttpStatusCode.Redirect))
-                    return 0;
-
-                var originAirport = "DMK";
-                var destinationAirport = "CGK";
+                    return new Currency(currencyName, Payment.Constant.Supplier.LionAir);
 
                 // Calling The First Page
                 client.BaseUrl = new Uri("https://secure2.lionair.co.id");
@@ -69,7 +91,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 if (searchResponse.ResponseUri.AbsolutePath != "/lionairibe2/OnlineBooking.aspx" &&
                     (searchResponse.StatusCode == HttpStatusCode.OK ||
                      searchResponse.StatusCode == HttpStatusCode.Redirect))
-                    return 0;
+                    new Currency(currencyName, Payment.Constant.Supplier.LionAir);
                 
                 //Calling The Second Page
                 const string url2 = @"lionairibe2/OnlineBooking.aspx";
@@ -85,7 +107,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 if (searchResponse2.ResponseUri.AbsolutePath != "/lionairibe2/OnlineBooking.aspx" &&
                     (searchResponse2.StatusCode == HttpStatusCode.OK ||
                         searchResponse2.StatusCode == HttpStatusCode.Redirect))
-                    return 0;
+                    new Currency(currencyName, Payment.Constant.Supplier.LionAir);
 
                 var html2 = (CQ)searchResponse2.Content;
                 var table = html2[".flight-matrix"];
@@ -182,7 +204,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 }
                 catch
                 {
-                    return 0;
+                    new Currency(currencyName, Payment.Constant.Supplier.LionAir);
                 }
                 
 
@@ -193,7 +215,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var clienty = new RestClient(cloudAppUrl);
                 var accReq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
                 var userName = "";
-                var currentDeposit = "";
+                string currentDeposit;
                 var reqTime = DateTime.UtcNow;
                 var msgLogin = "Your login name is inuse";
                 var counter = 0;
@@ -208,7 +230,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                     if (userName.Length == 0)
                     {
-                        return 0;
+                        new Currency(currencyName, Payment.Constant.Supplier.LionAir);
                     }
                     bool successLogin;
                     
@@ -227,7 +249,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                              searchResponseA.StatusCode == HttpStatusCode.Redirect))
                         {
                             TurnInUsername(clienty, userName);
-                            return 0;
+                            new Currency(currencyName, Payment.Constant.Supplier.LionAir);
                         }
 
                         Thread.Sleep(1000);
@@ -247,7 +269,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 {
                     //throw new Exception("haloooo 23");
                     TurnInUsername(clienty, userName);
-                    return 0;
+                    new Currency(currencyName, Payment.Constant.Supplier.LionAir);
                 }
 
                 //GET PAGE CONST ID
@@ -563,29 +585,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var agentcurr = pagePrice["#tdCurrTotal"].Text();
                     }
 
-                    TurnInUsername(clienty, userName);
-                    LogOut(cid, clientx);
-                    return agentprice/rateInCurr;
                 }
                 catch
                 {
                     TurnInUsername(clienty, userName);
                     LogOut(cid, clientx);
-                    return 0;
+                    return new Currency(currencyName, Payment.Constant.Supplier.LionAir);
                 }
 
-
-
                 TurnInUsername(clienty, userName);
-                LogOut(cid,clientx);
-
-                return rateInCurr;
-
+                LogOut(cid, clientx);
+                var exchangeRate = agentprice / rateInCurr;
+                Currency.SetRate(currencyName, exchangeRate, Payment.Constant.Supplier.LionAir);
+                var currs = new Currency(currencyName, exchangeRate) { Supplier = Payment.Constant.Supplier.LionAir };
+                return currs;                
             }
         }
-
-        
-        
-     }
+    }
  }
 

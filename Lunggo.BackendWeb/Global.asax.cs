@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Lunggo.ApCommon.Flight.Service;
 
 namespace Lunggo.BackendWeb
 {
@@ -16,6 +17,7 @@ namespace Lunggo.BackendWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AppInitializer.Init();
+            //FlightService.GetInstance().SearchFlight()
         }
     }
 }

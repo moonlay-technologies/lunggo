@@ -3,27 +3,17 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Security.Policy;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Lunggo.ApCommon.Model;
-using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Extension;
-using Newtonsoft.Json;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
-using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Extensions.MonoHttp;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
-using Lunggo.Framework.Config;
 using Price = Lunggo.ApCommon.Product.Model.Price;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
@@ -93,8 +83,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);
                 var destinationCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.DestinationAirport);
                 // Calling The Zeroth Page
-                client.Proxy = new WebProxy("103.9.163.59", 31280);
-                client.Proxy.Credentials = new NetworkCredential("developer", "Standar1234");
+
+                client.Proxy = new WebProxy("185.77.167.128", 60000);
+                client.Proxy.Credentials = new NetworkCredential("travelmadezy", "9T8XCty9MT");
+                //client.Proxy = new WebProxy("103.9.163.59", 31280);
+                //client.Proxy.Credentials = new NetworkCredential("developer", "Standar1234");
                 client.BaseUrl = new Uri("https://www.garuda-indonesia.com");
                 string url0 = @"";
                 var searchRequest0 = new RestRequest(url0, Method.GET);
@@ -291,11 +284,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                     DateTimeKind.Utc);
                             fareId = fareId + segment.Airline.Code + "-" + segment.FlightNumber + "|";
                             var baggage = GetBaggage(conditions.CabinClass, segment.BeginLocation.LocationCode, segment.EndLocation.LocationCode, originCountry, destinationCountry);
-                            bool isBaggageIncluded = false;
-                            if (baggage != null)
-                            {
-                                isBaggageIncluded = true;
-                            }
+                            bool isBaggageIncluded = baggage != null;
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = segment.Airline.Code,
@@ -348,9 +337,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 segments.Last().Stops = stops;
                             }
                         }
-
-
-
+                        
                         var flightid = itin.ProposedBoundId;
                         var listIndex = new List<Int32>();
                         string childPriceEach = "0";
@@ -445,7 +432,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 }
                             }
                         };
-                        itinerary.Price.SetSupplier(Convert.ToDecimal(price), new Payment.Model.Currency(currency));
+                        Payment.Model.Currency currclass;
+                        var currencyList = Payment.Model.Currency.GetAllCurrencies(Payment.Constant.Supplier.Garuda);
+                        if (!currencyList.TryGetValue(currency, out currclass))
+                        {
+                            return new SearchFlightResult
+                            {
+                                IsSuccess = true,
+                                Itineraries = new List<FlightItinerary>()
+                            };
+                        }
+                        itinerary.Price.SetSupplier(Convert.ToDecimal(price), new Payment.Model.Currency(currency, Payment.Constant.Supplier.Garuda
+                            ));
                         itins.Add(itinerary);
                     }
 

@@ -412,7 +412,9 @@
     <Compile Include="Identity\Query\Record\GetUserByAnyQueryRecord.cs" />
     <Compile Include="Identity\Query\Record\GetUserLoginInfoByAnyQueryRecord.cs" />
     <Compile Include="Identity\Query\Record\GetUserRolesByAnyQueryRecord.cs" />
+    <Compile Include="Identity\Users\IdentityUserBase.cs" />
     <Compile Include="Identity\Users\User.cs" />
+    <Compile Include="Identity\Users\UserBase.cs" />
     <Compile Include="Identity\Users\UserExtension.cs" />
     <Compile Include="Model\BookingFormViewModel.cs" />
     <Compile Include="Model\HotelDetailViewModel.cs" />
@@ -454,8 +456,7 @@
     <Compile Include="Identity\Roles\Role.cs" />
     <Compile Include="Identity\Roles\UserRole.cs" />
     <Compile Include="Identity\UserStore\DapperUserStore.cs" />
-    <Compile Include="Identity\Users\IdentityUserBase.cs" />
-    <Compile Include="Identity\Users\UserBase.cs" />
+    <Compile Include="Payment\Constant\Supplier.cs" />
     <Compile Include="Payment\Constant\TransferConfirmationReportStatus.cs" />
     <Compile Include="Payment\Constant\PaymentMedium.cs" />
     <Compile Include="Payment\Constant\PaymentMethod.cs" />
