@@ -237,7 +237,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                    CardNumber = data.MandiriClickPay.CardNumber,
                    CardNumberLast10 = data.MandiriClickPay.CardNumberLast10,
                    GivenRandomNumber = data.MandiriClickPay.GivenRandomNumber,
-                   Amount = data.MandiriClickPay.Amount,
+                   Amount = (long)data.MandiriClickPay.Amount,
                    Token = data.MandiriClickPay.Token
                 };
             }

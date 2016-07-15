@@ -19,41 +19,47 @@ namespace Lunggo.ApCommon.Payment.Model
         public decimal Rate { get; set; }
         public decimal RoundingOrder { get; private set; }
         public Supplier Supplier { get; set; }
-        public bool IsAvailable { get; set; }
 
         [JsonConstructor]
-        public Currency(string symbol, Supplier supplier = Supplier.Travorama)
+        public Currency(string symbol)
         {
             if (!ValidateSymbol(symbol))
-            {
-                IsAvailable = false;
-                Supplier = supplier;
                 return;
-            }
 
+            Supplier = Supplier.Travorama;
             Symbol = symbol.ToUpper();
             Rate = GetLatestRate();
             RoundingOrder = GetRoundingOrder();
         }
-        public Currency(string symbol, decimal rate)
+
+        public Currency(string symbol, Supplier supplier = Supplier.Travorama)
         {
             if (!ValidateSymbol(symbol))
-            {
-                IsAvailable = false;
                 return;
-            }
+
+            Supplier = supplier;
+            Symbol = symbol.ToUpper();
+            Rate = GetLatestRate();
+            RoundingOrder = GetRoundingOrder();
+        }
+
+        public Currency(string symbol, decimal rate, Supplier supplier = Supplier.Travorama)
+        {
+            if (!ValidateSymbol(symbol))
+                return;
+
+            Supplier = supplier;
             Symbol = symbol.ToUpper();
             Rate = rate;
             RoundingOrder = GetRoundingOrder();
         }
 
-        public Currency(string symbol, decimal rate, decimal roundingOrder)
+        public Currency(string symbol, decimal rate, decimal roundingOrder, Supplier supplier = Supplier.Travorama)
         {
             if (!ValidateSymbol(symbol))
-            {
-                IsAvailable = false;
                 return;
-            }
+
+            Supplier = supplier;
             Symbol = symbol.ToUpper();
             Rate = rate;
             RoundingOrder = roundingOrder;
@@ -83,7 +89,7 @@ namespace Lunggo.ApCommon.Payment.Model
             return currencyList.ToDictionary(c => c, c => new Currency(c));
         }
 
-        public static void SyncCurrencyData(Supplier supplier = Supplier.Travorama)
+        public static void SyncCurrencyData()
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -92,15 +98,15 @@ namespace Lunggo.ApCommon.Payment.Model
                 var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
                 foreach (var record in records)
                 {
-                    var rateKey = "currencyRate:" + record.Symbol + ":" + supplier;
-                    var roundingOrderKey = "currencyRoundingOrder:" + record.Symbol + ":" + supplier;
+                    var rateKey = "currencyRate:" + record.Symbol + ":" + SupplierCd.Mnemonic(record.SupplierCd);
+                    var roundingOrderKey = "currencyRoundingOrder:" + record.Symbol + ":" + SupplierCd.Mnemonic(record.SupplierCd);
                     redisDb.StringSet(rateKey, (RedisValue)record.Rate.GetValueOrDefault());
                     redisDb.StringSet(roundingOrderKey, (RedisValue)record.RoundingOrder.GetValueOrDefault());
                 }
                 var suppliers = records.Select(r => SupplierCd.Mnemonic(r.SupplierCd)).Distinct().ToList();
                 foreach (var supp in suppliers)
                 {
-                    var currencyListKey = "currencies:" + supplier;
+                    var currencyListKey = "currencies:" + supp;
                     var currencyList = records.Where(r => SupplierCd.Mnemonic(r.SupplierCd) == supp).Select(r => r.Symbol);
                     redisDb.StringSet(currencyListKey, currencyList.Serialize());
                 }

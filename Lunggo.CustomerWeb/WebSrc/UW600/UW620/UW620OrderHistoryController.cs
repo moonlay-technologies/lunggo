@@ -19,7 +19,15 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
             //var email = User.Identity.GetEmail();
             //var reservations = flight.GetOverviewReservationsByContactEmail(email);
             //return View(reservations ?? new List<FlightReservationForDisplay>());
-            return View();
+            if (Request.Cookies["authkey"] != null)
+            {
+                return View();
+            }
+            else 
+            {
+                return RedirectToAction("Index", "UW000TopPage");
+            }
+            
         }
 
         [HttpPost]
@@ -31,12 +39,21 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
 
         public ActionResult OrderFlightHistoryDetail(string rsvNo)
         {
-                //var flight = FlightService.GetInstance();
-                //var reservation = flight.GetReservationForDisplay(rsvNo);
-            return View(new FlightReservationForDisplay
+            //var flight = FlightService.GetInstance();
+            //var reservation = flight.GetReservationForDisplay(rsvNo);
+            if (Request.Cookies["authkey"] != null)
             {
-                RsvNo = rsvNo
-            });
+                return View(new FlightReservationForDisplay
+                {
+                    RsvNo = rsvNo
+                });
+            }
+            else
+            {
+                return RedirectToAction("Index", "UW000TopPage");
+            }
+
+            
         }
 
         [AllowAnonymous]

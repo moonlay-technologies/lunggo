@@ -598,6 +598,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var exchangeRate = agentprice / rateInCurr;
                 Currency.SetRate(currencyName, exchangeRate, Payment.Constant.Supplier.LionAir);
                 var currs = new Currency(currencyName, exchangeRate) { Supplier = Payment.Constant.Supplier.LionAir };
+                Console.WriteLine("The Rate for " + currencyName + " is: " + exchangeRate);
                 return currs;                
             }
         }

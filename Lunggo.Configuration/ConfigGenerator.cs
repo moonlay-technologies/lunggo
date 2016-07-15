@@ -329,7 +329,7 @@ namespace Lunggo.Configuration
             var mobileUrl = "http://" + _configDictionary["@@.*.general.mobileUrl@@"];
             const string hotelPath = @"/v1/hotels";
             const string roomPath = @"/v1/rooms";
-            const string flightPath = @"/v1/flight";
+            const string flightPath = @"/v1/flight/";
             const string flightSelectPath = @"/v1/flight/select";
             const string flightRevalidatePath = @"/v1/flight/revalidate";
             const string flightBookPath = @"/v1/flight/book";

@@ -138,7 +138,8 @@ function subscribeFormFunctions() {
         $.ajax({
             url: SubscribeConfig.Url,
             method: 'POST',
-            data: { address : SubscribeConfig.email, name : SubscribeConfig.name }
+            data: { address : SubscribeConfig.email, name : SubscribeConfig.name },
+            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
         }).done(function (returnData) {
 
             $('.subscribe-before').hide();
@@ -199,7 +200,8 @@ $(document).ready(function () {
         $.ajax({
             url: SubscribeConfig.Url,
             method: 'POST',
-            data: { address: email, name: subscriberName }
+            data: { address: email, name: subscriberName },
+            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
         }).done(function (returnData) {
             console.log('done');
             console.log(returnData);
@@ -243,39 +245,93 @@ function getAuthAccess()
 {
     var token = getCookie('accesstoken');
     var refreshToken = getCookie('refreshtoken');
-    if (token) {
-        return 1;
+    var authKey = getCookie('authkey');
+
+    if (authKey) {
+        if (token) {
+            return 2;
+        }
+        else {
+            if (refreshToken) {
+                $.ajax({
+                    url: LoginConfig.Url,
+                    method: 'POST',
+                    async: false,
+                    data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+                    contentType: 'application/json',
+                }).done(function (returnData) {
+                    if (returnData.status == '200') {
+                        setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+                        setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+                        setCookie("authkey", returnData.accessToken, returnData.expTime);
+                    }
+                });
+
+                if (getCookie('accesstoken')) {
+                    return 2;
+                }
+                else {
+                    return 0;
+                }
+            }
+            else {
+                return 0; //harusnya gak pernah masuk sini
+            }
+        }
     }
     else
     {
-        if (refreshToken) {
-            //Get Token Again
-            $.ajax({
-                url: LoginConfig.Url,
-                method: 'POST',
-                async: false,
-                data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
-                contentType: 'application/json',
-            }).done(function (returnData) {
-                if (returnData.status == '200') {
-                    setCookie('accesstoken', returnData.accessToken, returnData.expTime);
-                    setRefreshCookie('refreshtoken', returnData.refreshToken);
+        if (token) {
+            return 1;
+        }
+        else {
+            //Get Token By Refresh Token
+            if (refreshToken) {
+
+                $.ajax({
+                    url: LoginConfig.Url,
+                    method: 'POST',
+                    async: false,
+                    data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+                    contentType: 'application/json',
+                }).done(function (returnData) {
+                    if (returnData.status == '200') {
+                        setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+                        setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+                    }
+                });
+
+                if (getCookie('accesstoken')) {
+                    return 1;
                 }
-            });
-            
-            if (getCookie('accesstoken')) {
-                return 1;
+                else {
+                    return 0;
+                }
             }
             else {
-                return 2;
+                //For Anynomius at first
+                $.ajax({
+                    url: LoginConfig.Url,
+                    method: 'POST',
+                    async: false,
+                    data: JSON.stringify({ "clientId": "Jajal", "clientSecret": "Standar" }),
+                    contentType: 'application/json',
+                }).done(function (returnData) {
+                    if (returnData.status == '200') {
+                        setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+                        setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+                    }
+                });
+
+                if (getCookie('accesstoken')) {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
             }
         }
-        else
-        {
-            return 0;
-        }
-    }
-    
+    }   
 }
 
 
@@ -461,7 +517,8 @@ function flightPageSearchFormFunctions() {
             }
         } else {
             $.ajax({
-                url: FlightAutocompleteConfig.Url + keyword
+                url: FlightAutocompleteConfig.Url + keyword,
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
             }).done(function (returnData) {
                 $('.autocomplete-pre .text-pre').hide();
                 $('.autocomplete-pre .text-loading').hide();
@@ -765,7 +822,7 @@ function flightPageSearchFormFunctions() {
         }
         if (flightPageSearchFormParam.origin && flightPageSearchFormParam.destination) {
             // setCookie();
-            generateFlightSearchParam();
+            generateFlightSearchParam();get
         } else {
             if (!flightPageSearchFormParam.origin) {
                 alert('Please select your origin airport');
@@ -1071,7 +1128,8 @@ function flightFormSearchFunctions() {
             }
         } else {
             $.ajax({
-                url: FlightAutocompleteConfig.Url + keyword
+                url: FlightAutocompleteConfig.Url + keyword,
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
             }).done(function (returnData) {
                 $('.autocomplete-pre .text-pre').hide();
                 $('.autocomplete-pre .text-loading').hide();
