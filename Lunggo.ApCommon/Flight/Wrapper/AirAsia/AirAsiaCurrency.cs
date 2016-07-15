@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             {
 
                 var depdate = DateTime.Now.AddMonths(6);
-                //var depdate = new DateTime(2016, 12, 16);
+                //var depdate = new DateTime(2016, 12, 21);
                 var client = CreateAgentClient();
                 string origin;
                 const string dest = "CGK";
@@ -68,7 +68,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         origin = "MNL";
                         break;
                     case "USD":
-                        origin = "PNH";
+                        origin = "HAN";
                         break;
                     case "BND":
                         origin = "BWN";
@@ -103,7 +103,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     return new Currency(currencyName, Supplier.AirAsia);
                 try
                 {
-                    var postData =
+                    var scheduledNotFound = true;
+                    var loopday = 0;
+                    var gettable = new CQ();
+                    RestRequest searchRequest;
+                    IRestResponse searchResponse;
+                    string postData;
+
+                    while (scheduledNotFound && loopday < 7)
+                    {
+                        postData =
                         @"__EVENTTARGET=" +
                         @"&__EVENTARGUMENT=" +
                         @"&__VIEWSTATE=%2FwEPDwUBMGRktapVDbdzjtpmxtfJuRZPDMU9XYk%3D" +
@@ -138,20 +147,37 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         @"&ControlGroupSearchView%24ButtonSubmit=Search" +
                         @"&__VIEWSTATEGENERATOR=05F9A2B0";
 
-                    var searchRequest = new RestRequest("Search.aspx", Method.POST);
-                    searchRequest.AddHeader("Referer", "https://booking2.airasia.com/Search.aspx");
-                    searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
-                    var searchResponse = client.Execute(searchRequest);
-                    var html0 = (CQ) searchResponse.Content;
+                        searchRequest = new RestRequest("Search.aspx", Method.POST);
+                        searchRequest.AddHeader("Referer", "https://booking2.airasia.com/Search.aspx");
+                        searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                        searchResponse = client.Execute(searchRequest);
+                        var html0 = (CQ)searchResponse.Content;
 
-                    if (searchResponse.ResponseUri.AbsolutePath != "/Select.aspx" ||
-                        (searchResponse.StatusCode != HttpStatusCode.OK &&
-                         searchResponse.StatusCode != HttpStatusCode.Redirect))
+                        if (searchResponse.ResponseUri.AbsolutePath != "/Select.aspx" ||
+                            (searchResponse.StatusCode != HttpStatusCode.OK &&
+                             searchResponse.StatusCode != HttpStatusCode.Redirect))
+                            return new Currency(currencyName, Supplier.AirAsia);
+
+                        Thread.Sleep(1000);
+
+                        gettable = html0["#fareTable1_4"];
+                        if (gettable.ToString().Length == 0)
+                        {
+                            depdate = depdate.AddDays(8);
+                            loopday++;
+                        }
+                        else
+                        {
+                            scheduledNotFound = false;
+                        }
+                        
+                    }
+
+                    if (loopday == 7)
+                    {
                         return new Currency(currencyName, Supplier.AirAsia);
+                    }
 
-                    Thread.Sleep(1000);
-
-                    var gettable = html0["#fareTable1_4"];
                     var table = gettable[0].ChildElements.ToList()[0];
                     var firstrow = table.ChildElements.ToList()[1];
                     var childcountofrow = firstrow.ChildElements.ToList().Count;
@@ -251,7 +277,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                          selectResponse.StatusCode != HttpStatusCode.Redirect))
                         return new Currency(currencyName, Supplier.AirAsia);
 
-                    html1 = (CQ) selectResponse.Content;
+                    html1 = selectResponse.Content;
 
                     var token =
                         html1[
@@ -392,12 +418,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     Thread.Sleep(1000);
 
                     //Get Payment
-                    var url = @"/Payment.aspx";
+                    const string url = @"/Payment.aspx";
                     var getItinRequest = new RestRequest(url, Method.GET);
                     searchRequest.AddHeader("Referer", "https://booking2.airasia.com/UnitMap.aspx");
                     var getItinResponse = client.Execute(getItinRequest);
                     var html = getItinResponse.Content;
-                    CQ searchedHtml = (CQ) html;
+                    CQ searchedHtml = html;
                     vs = searchedHtml["#viewState"];
                     vs4 = vs[0].GetAttribute("value");
                     // EZPay
@@ -460,6 +486,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     }
 
                     Currency.SetRate(currencyName, exchangeRate, Supplier.AirAsia);
+                    Console.WriteLine("The Rate for " + currencyName + " is: " + exchangeRate);
                     var currs = new Currency(currencyName, exchangeRate) {Supplier = Supplier.AirAsia};
                     return currs;
                 }

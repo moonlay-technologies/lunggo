@@ -420,6 +420,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     }
                     Payment.Model.Currency.SetRate(currencyName, exchangeRate, Supplier.Garuda);
                     var currs = new Payment.Model.Currency(currencyName, exchangeRate) { Supplier = Supplier.Garuda };
+                    Console.WriteLine("The Rate for " + currencyName + " is: " + exchangeRate);
                     return currs;  
                     
                 }
