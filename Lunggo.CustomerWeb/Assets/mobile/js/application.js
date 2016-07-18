@@ -484,7 +484,8 @@ if (typeof (angular) == 'object') {
                             }
                         } else {
                             $.ajax({
-                                url: FlightAutocompleteConfig.Url + keyword
+                                url: FlightAutocompleteConfig.Url + keyword,
+                                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                             }).done(function(returnData) {
                                 $('.autocomplete-loading .text-loading').hide();
                                 $rootScope.FlightSearchForm.AutoComplete.Loading = false;
@@ -698,37 +699,92 @@ function getParam(name) {
 function getAuthAccess() {
     var token = getCookie('accesstoken');
     var refreshToken = getCookie('refreshtoken');
-    if (token) {
-        return 1;
-    }
-    else {
-        if (refreshToken) {
-            //Get Token Again
-            $.ajax({
-                url: LoginConfig.Url,
-                method: 'POST',
-                async: false,
-                data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
-                contentType: 'application/json',
-            }).done(function (returnData) {
-                if (returnData.status == '200') {
-                    setCookie('accesstoken', returnData.accessToken, returnData.expTime);
-                    setRefreshCookie('refreshtoken', returnData.refreshToken);
-                }
-            });
+    var authKey = getCookie('authkey');
 
-            if (getCookie('accesstoken')) {
-                return 1;
-            }
-            else {
-                return 2;
-            }
+    if (authKey) {
+        if (token) {
+            return 2;
         }
         else {
-            return 0;
+            if (refreshToken) {
+                $.ajax({
+                    url: LoginConfig.Url,
+                    method: 'POST',
+                    async: false,
+                    data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+                    contentType: 'application/json',
+                }).done(function (returnData) {
+                    if (returnData.status == '200') {
+                        setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+                        setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+                        setCookie("authkey", returnData.accessToken, returnData.expTime);
+                    }
+                });
+
+                if (getCookie('accesstoken')) {
+                    return 2;
+                }
+                else {
+                    return 0;
+                }
+            }
+            else {
+                return 0; //harusnya gak pernah masuk sini
+            }
         }
     }
+    else {
+        if (token) {
+            return 1;
+        }
+        else {
+            //Get Token By Refresh Token
+            if (refreshToken) {
 
+                $.ajax({
+                    url: LoginConfig.Url,
+                    method: 'POST',
+                    async: false,
+                    data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+                    contentType: 'application/json',
+                }).done(function (returnData) {
+                    if (returnData.status == '200') {
+                        setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+                        setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+                    }
+                });
+
+                if (getCookie('accesstoken')) {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            }
+            else {
+                //For Anynomius at first
+                $.ajax({
+                    url: LoginConfig.Url,
+                    method: 'POST',
+                    async: false,
+                    data: JSON.stringify({ "clientId": "Jajal", "clientSecret": "Standar" }),
+                    contentType: 'application/json',
+                }).done(function (returnData) {
+                    if (returnData.status == '200') {
+                        setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+                        setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+                    }
+                });
+
+                if (getCookie('accesstoken')) {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            }
+        }
+    }
 }
 
 //    $rootScope.FlightSearchForm.AutoComplete.Loading = true;

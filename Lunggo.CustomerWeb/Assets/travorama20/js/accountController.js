@@ -861,7 +861,8 @@ app.controller('registerController', [
                     method: 'POST',
                     data: {
                         Email: $scope.form.email,
-                    }
+                    },
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).then(function (returnData) {
                     $scope.form.resubmitting = false;
                     $scope.form.resubmitted = true;
