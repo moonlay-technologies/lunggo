@@ -6,6 +6,7 @@ using System.Net;
 using System.Web.UI;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Extension;
 using Newtonsoft.Json;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
@@ -111,7 +112,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                          searchResponse0.StatusCode == HttpStatusCode.Redirect))
                         return new SearchFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
 
-                    if (originCountry == "ID")
+                    //if (originCountry == "ID")
                     {
                     // Calling The First Page
                     client.BaseUrl = new Uri("https://secure2.lionair.co.id");
@@ -148,14 +149,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 Errors = new List<FlightError> {FlightError.InvalidInputData}
                             };
                     }
-                    else
-                    {
-                        return new SearchFlightResult
-                        {
-                            IsSuccess = true,
-                            Itineraries = new List<FlightItinerary>()
-                        };
-                    }
+                    //else
+                    //{
+                    //    return new SearchFlightResult
+                    //    {
+                    //        IsSuccess = true,
+                    //        Itineraries = new List<FlightItinerary>()
+                    //    };
+                    //}
                     try
                     {
                     //Calling The Second Page
@@ -682,7 +683,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 public GetLionAirPrice(string scr)
                 {
-                    _priceScript = JsonConvert.DeserializeObject(scr, typeof (object));
+                   _priceScript = JsonConvert.DeserializeObject(scr, typeof (object));
                 }
 
                 private object WorkOutTripTotals()
@@ -774,7 +775,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 public string GetCurrency()
                 {
-                    return _priceScript.Curr;
+                    var a = _priceScript.curr;
+                    return _priceScript.curr;
                 }
 
                 public decimal GetAdultPrice(int adult)
