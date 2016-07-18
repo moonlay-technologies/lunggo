@@ -17,15 +17,15 @@ namespace Lunggo.Webjob.CurrencyCrawler
             }
             Console.WriteLine();
             Console.WriteLine("Retrieving Exchange Rate from Air Asia...");
-            FlightService.GetInstance().CurrencyGetterInternal(args[0], Supplier.AirAsia);
+           // FlightService.GetInstance().CurrencyGetterInternal(args[0], Supplier.AirAsia);
             Console.WriteLine("Done Retrieving from Air Asia.");
             Console.WriteLine();
             Console.WriteLine("Retrieving Exchange Rate from Garuda...");
-            FlightService.GetInstance().CurrencyGetterInternal(args[0], Supplier.Garuda);
+            //FlightService.GetInstance().CurrencyGetterInternal(args[0], Supplier.Garuda);
             Console.WriteLine("Done Retrieving from Garuda.");
             Console.WriteLine();
             Console.WriteLine("Retrieving Exchange Rate from Lion Air...");
-            FlightService.GetInstance().CurrencyGetterInternal(args[0], Supplier.LionAir);
+            FlightService.GetInstance().CurrencyGetterInternal("SGD", Supplier.LionAir);
             Console.WriteLine("Done Retrieving from Lion Air.");
             Console.WriteLine();
             Console.WriteLine("Process is Done.");
