@@ -372,7 +372,7 @@
     // get  flight
     $scope.FlightFunctions.GetFlight = function(targetScope) {
         $scope.PageConfig.Busy = true;
-        var a = $scope.flightFixRequest();
+        var requestReturnParams = $scope.flightFixRequest();
         targetScope = $scope.FlightConfig[1];
         console.log('Getting flight for : ' + targetScope.Name + ' . Request : '+targetScope.FlightRequest.Requests);
         if (targetScope.FlightRequest.Progress < 100) {
@@ -384,7 +384,7 @@
                 {
                     $http({
                         method: 'GET',
-                        url: FlightSearchConfig.Url + targetScope.flightSearchParams + '/' + targetScope.progress,
+                        url: FlightSearchConfig.Url + requestReturnParams + '/' + targetScope.FlightRequest.Progress,
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
 
                     }).success(function (returnData) {
