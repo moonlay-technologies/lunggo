@@ -121,7 +121,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
         .burger-content__close {color:#fff; position:absolute; right:15px; top:12px; font-size:24px; font-weight:600;}
     }
-    .burger-content__body {padding-top:$header-height; background:#fff; height: 100%; overflow-y: hidden; 
+    .burger-content__body {padding-top:$header-height; background:#fff; min-height: 100%;
         ul {list-style:none; margin:0; padding:0; 
             li {
                 a {color:$color-main-blue; padding:15px 0px; padding-left:70px; display:block; font-weight:600; position:relative;
@@ -129,7 +129,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 }
                 //active
                 &.active {background:#9ee5ff; position:relative;
-                    &:after {content:''; position:absolute; width:20px; height:100%; left:100%; top:0; background:url(/assets/mobile/images/burger-menu-active.png) left center no-repeat;}
+                    /*&:after {content:''; position:absolute; width:20px; height:100%; left:100%; top:0; background:url(/assets/mobile/images/burger-menu-active.png) left center no-repeat;}*/
                 }
                 // specific class
                 &.login, &.register, &.account {background:$color-main-blue; color:#fff;
@@ -201,7 +201,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 
 // form-wrapper
-.form-wrapper {margin: 20px; background:#fff; border:$border-default; @include border-radius($border-radius-default);
+.form-wrapper {margin: 20px; padding: 15px; background:#fff; border:$border-default; @include border-radius($border-radius-default);
     .form-wrapper__header {padding-left:35px; position:relative; margin-bottom:25px;
         &:before {width:25px; height:50px; content:""; display:block; background-repeat:no-repeat; position:absolute; left:0; top:0;}
         .form-wrapper__title {font-weight:bold; margin-top:5px; margin-bottom:2px; font-size:18px;}

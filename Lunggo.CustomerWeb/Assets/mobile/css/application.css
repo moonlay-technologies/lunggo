@@ -192,8 +192,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .burger-content .burger-content__body {
     padding-top: 60px;
     background: #fff;
-    height: 100%;
-    overflow-y: hidden; }
+    min-height: 100%; }
     .burger-content .burger-content__body ul {
       list-style: none;
       margin: 0;
@@ -217,15 +216,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           background-image: url(/Assets/mobile/images/burger-sprite.png); }
       .burger-content .burger-content__body ul li.active {
         background: #9ee5ff;
-        position: relative; }
-        .burger-content .burger-content__body ul li.active:after {
-          content: '';
-          position: absolute;
-          width: 20px;
-          height: 100%;
-          left: 100%;
-          top: 0;
-          background: url(/assets/mobile/images/burger-menu-active.png) left center no-repeat; }
+        position: relative;
+        /*&:after {content:''; position:absolute; width:20px; height:100%; left:100%; top:0; background:url(/assets/mobile/images/burger-menu-active.png) left center no-repeat;}*/ }
       .burger-content .burger-content__body ul li.login, .burger-content .burger-content__body ul li.register, .burger-content .burger-content__body ul li.account {
         background: #1daee4;
         color: #fff; }
@@ -294,6 +286,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .form-wrapper {
   margin: 20px;
+  padding: 15px;
   background: #fff;
   border: 1px solid #ccc;
   -webkit-border-radius: 2px;
@@ -842,6 +835,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-home .form-container {
     height: 100%; }
     .page.page-home .form-container .form-wrapper {
+      padding: 0;
       min-height: 100%;
       margin: 20px;
       background: none;
