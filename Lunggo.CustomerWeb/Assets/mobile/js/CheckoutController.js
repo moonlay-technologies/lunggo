@@ -148,9 +148,9 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     $scope.TransferConfig = {
         UniqueCode: 0,
         Token: '',
-        GetUniqueCode: function (sentPrice) {
-            if (!sentPrice) {
-                sentPrice = price;
+        GetUniqueCode: function (rsvNo, voucherCode) {
+            if (!rsvNo) {
+                rsvNo = price;
             }
             //Check Authorization
             var authAccess = getAuthAccess();
@@ -158,10 +158,11 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             {
                 // get unique payment code
                 $http({
-                    method: 'GET',
+                    method: 'POST',
                     url: TransferConfig.Url,
-                    params: {
-                        price: sentPrice
+                    data: {
+                        rsvNo: rsvNo,
+                        discCode: $scope.voucher.code
                     }
                 }).then(function (returnData) {
                     console.log('Getting Unique Payment Code');
@@ -197,9 +198,9 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             if (authAccess == 1 || authAccess == 2)
             {
                 $http({
-                    method: 'GET',
+                    method: 'POST',
                     url: CheckVoucherConfig.Url,
-                    params: {
+                    data: {
                         token: $scope.token,
                         code: $scope.voucher.code,
                         email: $scope.buyerInfo.email,
