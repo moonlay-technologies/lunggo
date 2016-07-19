@@ -148,27 +148,37 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     $scope.TransferConfig = {
         UniqueCode: 0,
         Token: '',
-        GetUniqueCode: function (sentPrice) {
-            if (!sentPrice) {
-                sentPrice = price;
+        GetUniqueCode: function (rsvNo, voucherCode) {
+            if (!rsvNo) {
+                rsvNo = price;
             }
-            // get unique payment code
-            $http({
-                method: 'GET',
-                url: TransferConfig.Url,
-                params: {
-                    price: sentPrice
-                }
-            }).then(function (returnData) {
-                console.log('Getting Unique Payment Code');
-                console.log(returnData);
-                $scope.TransferConfig.UniqueCode = returnData.data.transfer_code;
-                $scope.TransferConfig.Token = returnData.data.token
+            //Check Authorization
+            var authAccess = getAuthAccess();
+            if (authAccess == 1 || authAccess == 2)
+            {
+                // get unique payment code
+                $http({
+                    method: 'POST',
+                    url: TransferConfig.Url,
+                    data: {
+                        rsvNo: rsvNo,
+                        discCode: $scope.voucher.code
+                    }
+                }).then(function (returnData) {
+                    console.log('Getting Unique Payment Code');
+                    console.log(returnData);
+                    $scope.TransferConfig.UniqueCode = returnData.data.transfer_code;
+                    $scope.TransferConfig.Token = returnData.data.token
 
-            }, function (returnData) {
-                console.log('Failed to get Unique Payment Code');
-                console.log(returnData);
-            });
+                }, function (returnData) {
+                    console.log('Failed to get Unique Payment Code');
+                    console.log(returnData);
+                });
+            }
+            else {
+                console.log('Not Authorized');
+            }
+            
         }
     };
     $scope.TransferConfig.GetUniqueCode($scope.CheckoutConfig.Price);
@@ -182,32 +192,43 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         checking: false,
         checked: false,
         check: function () {
+            //Check Authorization
+            var authAccess = getAuthAccess();
             $scope.voucher.checking = true;
-            $http({
-                method: 'GET',
-                url: CheckVoucherConfig.Url,
-                params: {
-                    token: $scope.token,
-                    code: $scope.voucher.code,
-                    email: $scope.buyerInfo.email,
-                    price: $scope.initialPrice
-                }
-            }).then(function (returnData) {
-                console.log(returnData);
-                $scope.voucher.checking = false;
+            if (authAccess == 1 || authAccess == 2)
+            {
+                $http({
+                    method: 'POST',
+                    url: CheckVoucherConfig.Url,
+                    data: {
+                        token: $scope.token,
+                        code: $scope.voucher.code,
+                        email: $scope.buyerInfo.email,
+                        price: $scope.initialPrice
+                    }
+                }).then(function (returnData) {
+                    console.log(returnData);
+                    $scope.voucher.checking = false;
+                    $scope.voucher.checked = true;
+                    $scope.voucher.status = returnData.data.ValidationStatus;
+                    if (returnData.data.Discount > 0) {
+                        $scope.voucher.amount = returnData.data.Discount;
+                        $scope.voucher.confirmedCode = $scope.voucher.code;
+                        $scope.voucher.displayName = returnData.data.DisplayName;
+                        // get unique code for transfer payment
+                        $scope.TransferConfig.GetUniqueCode($scope.initialPrice - $scope.voucher.amount);
+                    }
+                }, function (returnData) {
+                    $scope.voucher.checked = true;
+                    $scope.voucher.checking = false;
+                });
+            }
+            else {
+                console.log('Not Authorized');
                 $scope.voucher.checked = true;
-                $scope.voucher.status = returnData.data.ValidationStatus;
-                if (returnData.data.Discount > 0) {
-                    $scope.voucher.amount = returnData.data.Discount;
-                    $scope.voucher.confirmedCode = $scope.voucher.code;
-                    $scope.voucher.displayName = returnData.data.DisplayName;
-                    // get unique code for transfer payment
-                    $scope.TransferConfig.GetUniqueCode($scope.initialPrice - $scope.voucher.amount);
-                }
-            }, function (returnData) {
-                $scope.voucher.checked = true;
                 $scope.voucher.checking = false;
-            });
+            }
+            
         },
         reset: function () {
             $scope.voucher.code = '';
@@ -385,71 +406,75 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
             //Check Authorization
             var authAccess = getAuthAccess();
-            if (authAccess == 1) {
-                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+            if (authAccess == 1 || authAccess == 2) {
+                // send form
+                $http({
+                    method: 'POST',
+                    url: $scope.book.url,
+                    data: ($scope.book.postData),
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                    //headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                }).then(function (returnData) {
+                    console.log(returnData);
+
+                    $scope.book.checked = true;
+                    $scope.book.booking = false;
+
+                    if (returnData.data.status == '200') {
+                        if (returnData.data.rsvNo != '' || returnData.data.rsvNo != null) {
+                            if (returnData.data.price != null) {
+                                $scope.book.isPriceChanged = true;
+                                $scope.book.isSuccess = true;
+                                $scope.book.newPrice = returnData.data.price;
+                                $scope.book.checked = false;
+                            } else {
+                                $scope.book.isSuccess = true;
+                                $scope.book.rsvNo = returnData.data.rsvNo;
+
+                                $('form#rsvno input#rsvno-input').val(returnData.data.rsvNo);
+                                $('form#rsvno').submit();
+                                $scope.book.checked = true;
+                            }
+                        } else {
+                            if (returnData.data.price != null) {
+                                $scope.book.isPriceChanged = true;
+                                $scope.book.isSuccess = false;
+                                $scope.book.newPrice = returnData.data.price;
+                                $scope.book.checked = true;
+                            } else {
+                                $scope.book.isSuccess = false;
+                                $scope.book.checked = true;
+                                console.log(returnData);
+                                $scope.errorMessage = returnData.data.error;
+                            }
+                        }
+                    } else {
+                        if (returnData.data.error == "ERFBOO03") {
+                            $scope.PageConfig.ExpiryDate.Expired = true;
+                        }
+                        else if (returnData.data.error == "ERFBOO01") {
+                            $scope.book.invalidData = true;
+                        } else {
+                            $scope.book.isSuccess = false;
+                            $scope.book.checked = true;
+                        }
+                    }
+                }, function (returnData) {
+                    console.log(returnData);
+                    $scope.book.checked = true;
+                    $scope.book.isSuccess = false;
+                    $scope.book.booking = false;
+                });
             }
             else {
-                $scope.getFlightHeader = null;
-            }
-
-            // send form
-            $http({
-                method: 'POST',
-                url: $scope.book.url,
-                data: ($scope.book.postData),
-                headers: { 'Authorization': $scope.getFlightHeader }
-                //headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-            }).then(function (returnData) {
-                console.log(returnData);
-
-                $scope.book.checked = true;
-                $scope.book.booking = false;
-
-                if (returnData.data.status == '200') {
-                if (returnData.data.rsvNo != '' || returnData.data.rsvNo != null) {
-                    if (returnData.data.price != null) {
-                        $scope.book.isPriceChanged = true;
-                        $scope.book.isSuccess = true;
-                        $scope.book.newPrice = returnData.data.price;
-                        $scope.book.checked = false;
-                        } else {
-                        $scope.book.isSuccess = true;
-                        $scope.book.rsvNo = returnData.data.rsvNo;
-
-                        $('form#rsvno input#rsvno-input').val(returnData.data.rsvNo);
-                        $('form#rsvno').submit();
-                        $scope.book.checked = true;
-                    }
-                    } else {
-                    if (returnData.data.price != null) {
-                        $scope.book.isPriceChanged = true;
-                        $scope.book.isSuccess = false;
-                        $scope.book.newPrice = returnData.data.price;
-                        $scope.book.checked = true;
-                        } else {
-                        $scope.book.isSuccess = false;
-                        $scope.book.checked = true;
-                        console.log(returnData);
-                        $scope.errorMessage = returnData.data.error;
-                    }
-                }
-                } else {
-                    if (returnData.data.error == "ERFBOO03") {
-                        $scope.PageConfig.ExpiryDate.Expired = true;
-                    }
-                    else if (returnData.data.error == "ERFBOO01") {
-                        $scope.book.invalidData = true;
-                    } else {
-                        $scope.book.isSuccess = false;
-                        $scope.book.checked = true;
-                    }
-                }
-            }, function (returnData) {
-                console.log(returnData);
+                console.log('Not Authorized');
                 $scope.book.checked = true;
                 $scope.book.isSuccess = false;
                 $scope.book.booking = false;
-            });
+            }
+
+
+            
         }
     }//$scope.book
 
@@ -814,36 +839,48 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         // validate voucher
         Check: function () {
             console.log('Validating Voucher');
+            //Check Authorization
+            var authAccess = getAuthAccess();
             $scope.CheckoutConfig.Voucher.Validating = true;
-            $http({
-                method: 'GET',
-                url: CheckVoucherConfig.Url,
-                params: {
-                    token: $scope.CheckoutConfig.Token,
-                    code: $scope.CheckoutConfig.Voucher.Code,
-                    email: $scope.CheckoutConfig.BuyerInfo.Email,
-                    price: $scope.CheckoutConfig.Price
-                }
-            }).then(function (returnData) {
-                console.log('Voucher code validated :');
-                console.log(returnData);
-                $scope.CheckoutConfig.Voucher.Validating = false;
-                $scope.CheckoutConfig.Voucher.Validated = true;
-                $scope.CheckoutConfig.Voucher.Status = returnData.data.ValidationStatus;
-                if (returnData.data.Discount > 0) {
-                    $scope.CheckoutConfig.Voucher.Valid = true;
-                    $scope.CheckoutConfig.Voucher.Amount = returnData.data.Discount;
-                } else {
-                    $scope.CheckoutConfig.Voucher.Valid = false;
+            if (authAccess == 1 || authAccess == 2)
+            {
+                $http({
+                    method: 'GET',
+                    url: CheckVoucherConfig.Url,
+                    params: {
+                        token: $scope.CheckoutConfig.Token,
+                        code: $scope.CheckoutConfig.Voucher.Code,
+                        email: $scope.CheckoutConfig.BuyerInfo.Email,
+                        price: $scope.CheckoutConfig.Price
+                    }
+                }).then(function (returnData) {
+                    console.log('Voucher code validated :');
+                    console.log(returnData);
+                    $scope.CheckoutConfig.Voucher.Validating = false;
+                    $scope.CheckoutConfig.Voucher.Validated = true;
                     $scope.CheckoutConfig.Voucher.Status = returnData.data.ValidationStatus;
-                }
-            }, function (returnData) {
+                    if (returnData.data.Discount > 0) {
+                        $scope.CheckoutConfig.Voucher.Valid = true;
+                        $scope.CheckoutConfig.Voucher.Amount = returnData.data.Discount;
+                    } else {
+                        $scope.CheckoutConfig.Voucher.Valid = false;
+                        $scope.CheckoutConfig.Voucher.Status = returnData.data.ValidationStatus;
+                    }
+                }, function (returnData) {
+                    $scope.CheckoutConfig.Voucher.Validated = true;
+                    $scope.CheckoutConfig.Voucher.Validating = false;
+                    $scope.CheckoutConfig.Voucher.Valid = false;
+                    console.log('Error validating voucher. Reason : ');
+                    console.log(returnData);
+                });
+            }
+            else
+            {
                 $scope.CheckoutConfig.Voucher.Validated = true;
                 $scope.CheckoutConfig.Voucher.Validating = false;
                 $scope.CheckoutConfig.Voucher.Valid = false;
-                console.log('Error validating voucher. Reason : ');
-                console.log(returnData);
-            });
+            }
+            
         },
         // reset voucher
         Reset: function() {
