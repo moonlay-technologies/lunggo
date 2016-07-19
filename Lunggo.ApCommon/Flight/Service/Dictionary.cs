@@ -32,8 +32,8 @@ namespace Lunggo.ApCommon.Flight.Service
         private const string CountryFileName = @"Country.csv";
         private const string AirlineLogoFileExtension = @".png";
 
-        private const string AirlineLogoPath = @"/Assets/Images/Airlines/";
-        private const string CountryFlagPath = @"/Assets/Images/Countries/";
+        private const string AirlineLogoPath = @"https://www.travorama.com/Assets/Images/Airlines/";
+        private const string CountryFlagPath = @"https://www.travorama.com/Assets/Images/Countries/";
         private static string _configPath;
         private static string _airlineFilePath;
         private static string _airportFilePath;
