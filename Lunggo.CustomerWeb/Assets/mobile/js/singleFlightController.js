@@ -40,14 +40,14 @@
             },
             FlightSort: {
                 Label: 'price',
-                Value: 'totalFare',
+                Value: 'originalAdultFare',
                 Invert: false,
                 Set: function (sortBy, invert) {
                     $scope.FlightConfig[0].FlightSort.Label = sortBy;
                     $scope.FlightConfig[0].FlightSort.Invert = invert;
                     switch (sortBy) {
                         case 'price':
-                            $scope.FlightConfig[0].FlightSort.Value = 'totalFare';
+                            $scope.FlightConfig[0].FlightSort.Value = 'originalAdultFare';
                             break;
                         case 'duration':
                             $scope.FlightConfig[0].FlightSort.Value = 'trips[0].totalDuration';
@@ -288,7 +288,7 @@
 
                     if ($scope.FlightConfig[0].FlightRequest.Progress == 100) {
             for (var x = 0; x < $scope.FlightConfig[0].FlightList.length; x++) {
-                $scope.priceFilterParam.prices.push($scope.FlightConfig[0].FlightList[x].totalFare);
+                $scope.priceFilterParam.prices.push($scope.FlightConfig[0].FlightList[x].originalAdultFare);
             }
             function sortNumber(a, b) {
                 return a - b;
@@ -448,7 +448,7 @@
             //            RevalidateConfig.NewFare = true;
             //            RevalidateConfig.Token = returnData.Token;
             //            // update price
-            //            $scope.FlightConfig[0].FlightList[indexNo].TotalFare = returnData.NewFare;
+            //            $scope.FlightConfig[0].FlightList[indexNo].originalAdultFare = returnData.NewFare;
             //            $('.push-token input').val(RevalidateConfig.Token);
             //        } else if (returnData.IsOtherFareAvailable == false) {
             //            console.log('departure flight is gone');
@@ -500,7 +500,7 @@
     $scope.FlightFiltering.PriceFilter = function () {
         
         return function(flight) {
-            if (flight.totalFare >= $scope.priceFilterParam.current[0] && flight.totalFare <= $scope.priceFilterParam.current[1]) {
+            if (flight.originalAdultFare >= $scope.priceFilterParam.current[0] && flight.originalAdultFare <= $scope.priceFilterParam.current[1]) {
                 return flight;
                 } 
         }

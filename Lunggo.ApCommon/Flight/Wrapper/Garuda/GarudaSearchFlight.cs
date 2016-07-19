@@ -101,7 +101,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 searchRequest0 = new RestRequest(url0, Method.GET);
                 searchResponse0 = client.Execute(searchRequest0);
                 var html0 = searchResponse0.Content;
-                Console.WriteLine(html0);
+                //Console.WriteLine(html0);
                 if (searchResponse0.ResponseUri.AbsolutePath != "/id/id/index.page" &&
                     (searchResponse0.StatusCode == HttpStatusCode.OK ||
                         searchResponse0.StatusCode == HttpStatusCode.Redirect))
@@ -198,6 +198,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     var dataAnehStartIndex = html2.IndexOf("ENC=");
                     var dataAnehEndIndex = html2.IndexOf("</PA>");
                     var enc = html2.SubstringBetween(dataAnehStartIndex + 4, dataAnehEndIndex);
+
+                    var capturedIPStartIndex = html2.IndexOf("[x-real-ip]");
+                    var capturedIPEndIndex = html2.IndexOf("[akamai-origin-hop]");
+                    var capturedIp = html2.SubstringBetween(capturedIPStartIndex,
+                            capturedIPEndIndex);
+                    Console.WriteLine("IP yang digunakan : " +capturedIp);
 
                     var priceAvailabilityStartIndex = html2.IndexOf("EMBEDDED_TRANSACTION");
                     var priceAvailabilityEndIndex = html2.LastIndexOf("ENCT");
@@ -446,7 +452,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             ));
                         itins.Add(itinerary);
                     }
-
+                    Console.WriteLine("List FLight : "+itins.Count);
                     return new SearchFlightResult
                     {
                         IsSuccess = true,
