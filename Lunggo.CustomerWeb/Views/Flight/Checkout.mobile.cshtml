@@ -68,7 +68,7 @@
             Token: '@Model.Token',
             ExpiryDate: '@Model.ExpiryTime.ToString("o")',
             Trips: @Html.Raw(Model.Itinerary.Trips.Serialize()),
-            Price: @Model.Itinerary.TotalFare,
+            Price: @Model.Itinerary.OriginalAdultFare,
             // passenger
             Passenger: [@Model.Itinerary.AdultCount, @Model.Itinerary.ChildCount, @Model.Itinerary.InfantCount],
             PassengerName: ['Dewasa', 'Anak', 'Bayi'],
@@ -361,8 +361,8 @@ default:
                         <div ng-if="CheckoutConfig.Trips[0]">
                             <div class="flight-title flight-title--departure">
                                 <div class="flight-info">
-                                    <h4><b>@trips[0].OriginCity</b> ke <b>@trips[0].DestinationCity</b></h4>
-                                    <h5>@trips[0].DepartureDate.ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                    <h4><b>{{trips[0].origin}}</b> ke <b>{{trips[0].destination}}</b></h4>
+                                    <h5>{{trips[0].segments[0].departureTime | date: 'dd-MM-yyyy' : 'UTC'}}</h5>
                                 </div><!-- .flight-info -->
                             </div><!-- .flight-title -->
                             @for (var segment = 0; segment < trips[0].Segments.Count; segment++)
@@ -383,19 +383,19 @@ default:
                                             </div><!-- .flight__summary -->
                                             <div class="flight__detail">
                                                 <div class="flight__departure">
-                                                    <h5>@trips[0].Segments[segment].DepartureTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                    <h4><b>@trips[0].Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
-                                                    <h5><b>@trips[0].Segments[segment].DepartureCity (@trips[0].Segments[segment].DepartureAirport)</b></h5>
-                                                    <h5>@trips[0].Segments[segment].DepartureAirportName</h5>
+                                                    <h5>{{trips[0].segments[segment].departureTime | date: 'dd-MM-yyyy' : 'UTC'}}</h5>
+                                                    <h4><b>{{trips[0].segments[segment].departureTime | date: 'HH:mm' : 'UTC'}}</b></h4>
+                                                    <h5><b>{{trips[0].segments[segment].departureCity (trips[0].segments[segment].departure)}}</b></h5>
+                                                    <h5>{{trips[0].segments[segment].departureName}}</h5>
                                                 </div>
                                                 <div class="flight__separator">
-                                                    <h5><b>Durasi: </b>@msToTime(trips[0].Segments[segment].Duration)</h5>
+                                                    <h5><b>Durasi: </b>{{msToTime(trips[0].segments[segment].duration)}}</h5>
                                                 </div>
                                                 <div class="flight__arrival">
-                                                    <h5>@trips[0].Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                    <h4><b>@trips[0].Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
-                                                    <h5><b>@trips[0].Segments[segment].ArrivalCity (@trips[0].Segments[segment].ArrivalAirport)</b></h5>
-                                                    <h5>@trips[0].Segments[segment].ArrivalAirportName</h5>
+                                                    <h5>{{trips[0].segments[segment].arrivalTime | date: 'dd-MM-yyyy' : 'UTC'}}</h5>
+                                                    <h4><b>{{trips[0].segments[segment].arrivalTime | date: 'HH:mm' : 'UTC'}}</b></h4>
+                                                    <h5><b>{{trips[0].segments[segment].arrivalCity (trips[0].segments[segment].arrival)}}</b></h5>
+                                                    <h5>{{trips[0].segments[segment].arrivalName}}</h5>
                                                 </div><!-- .flight__arrival -->
                                             </div><!-- .flight__detail -->
                                         </div><!-- .flight__content -->
@@ -422,7 +422,7 @@ default:
                             <div class="flight-title flight-title--departure">
                                 <div class="flight-info">
                                     <h4><b>@trips[1].OriginCity</b> ke <b>@trips[1].DestinationCity</b></h4>
-                                    <h5>@trips[1].DepartureDate.ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                    <h5>{{trips[0].DepartureDate | date: 'dd-MM-yyyy' : 'UTC'}}</h5>
                                 </div><!-- .flight-info -->
                             </div><!-- .flight-title -->
                             @for (var segment = 0; segment < trips[1].Segments.Count; segment++)
@@ -443,19 +443,19 @@ default:
                                             </div><!-- .flight__summary -->
                                             <div class="flight__detail">
                                                 <div class="flight__departure">
-                                                    <h5>@trips[1].Segments[segment].DepartureTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                    <h4><b>@trips[1].Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
-                                                    <h5><b>@trips[1].Segments[segment].DepartureCity (@trips[1].Segments[segment].DepartureAirport)</b></h5>
+                                                    <h5>{{trips[1].segments[segment].departureTime | date: 'dd-MM-yyyy' : 'UTC'}}</h5>
+                                                    <h4><b>{{trips[1].segments[segment].departureTime | date: 'HH:mm' : 'UTC'}}</b></h4>
+                                                    <h5><b>{{trips[1].segments[segment].departureCity (trips[1].segments[segment].departure)}}</b></h5>
                                                     <h5>@trips[1].Segments[segment].DepartureAirportName</h5>
                                                 </div>
                                                 <div class="flight__separator">
-                                                    <h5><b>Durasi: </b>@msToTime(trips[1].Segments[segment].Duration)</h5>
+                                                    <h5><b>Durasi: </b>{{msToTime(trips[1].segments[segment].duration)}}</h5>
                                                 </div>
                                                 <div class="flight__arrival">
-                                                    <h5>@trips[1].Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                    <h4><b>@trips[1].Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
-                                                    <h5><b>@trips[1].Segments[segment].ArrivalCity (@trips[1].Segments[segment].ArrivalAirport)</b></h5>
-                                                    <h5>@trips[1].Segments[segment].ArrivalAirportName</h5>
+                                                    <h5>{{trips[1].segments[segment].arrivalTime | date: 'dd-MM-yyyy' : 'UTC'}}</h5>
+                                                    <h4><b>{{trips[1].segments[segment].arrivalTime | date: 'HH:mm' : 'UTC'}}</b></h4>
+                                                    <h5><b>{{trips[1].segments[segment].arrivalCity (trips[1].segments[segment].arrival)}}</b></h5>
+                                                    <h5>{{trips[1].segments[segment].arrivalName}}</h5>
                                                 </div><!-- .flight__arrival -->
                                             </div><!-- .flight__detail -->
                                         </div><!-- .flight__content -->

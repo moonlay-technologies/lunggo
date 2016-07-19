@@ -49,10 +49,10 @@
                 ChildCount: FlightSearchConfig.flightForm.passenger.child,
                 InfantCount: FlightSearchConfig.flightForm.passenger.infant,
                 TripType: FlightSearchConfig.flightForm.type,
-                Trips: FlightSearchConfig.flightForm.trips[0],
+                trips: FlightSearchConfig.flightForm.trips[0],
                 Requests: [],
                 Completed: [],
-                SecureCode: FlightSearchConfig.flightForm.SecureCode,
+                Securecode: FlightSearchConfig.flightForm.SecureCode,
                 Progress: 0,
                 FinalProgress: 0,
                 Pristine: true
@@ -71,26 +71,26 @@
             },
             FlightSort: {
                 Label: 'price',
-                Value: 'TotalFare',
+                Value: 'originalAdultFare',
                 Invert: false,
                 Set: function(sortBy, invert) {
                     $scope.FlightConfig[0].FlightSort.Label = sortBy;
                     $scope.FlightConfig[0].FlightSort.Invert = invert;
                     switch (sortBy) {
                         case 'price':
-                            $scope.FlightConfig[0].FlightSort.Value = 'TotalFare';
+                            $scope.FlightConfig[0].FlightSort.Value = 'originalAdultFare';
                             break;
                         case 'duration':
-                            $scope.FlightConfig[0].FlightSort.Value = 'Trips[0].TotalDuration';
+                            $scope.FlightConfig[0].FlightSort.Value = 'trips[0].totalDuration';
                             break;
                         case 'airline':
-                            $scope.FlightConfig[0].FlightSort.Value = 'Trips[0].Airlines[0].Name';
+                            $scope.FlightConfig[0].FlightSort.Value = 'trips[0].airlines[0].name';
                             break;
                         case 'departure':
-                            $scope.FlightConfig[0].FlightSort.Value = 'Trips[0].Segments[0].DepartureTime';
+                            $scope.FlightConfig[0].FlightSort.Value = 'trips[0].segments[0].departureTime';
                             break;
                         case 'arrival':
-                            $scope.FlightConfig[0].FlightSort.Value = 'Trips[0].Segments[(Trips[0].Segments.length-1)].ArrivalTime';
+                            $scope.FlightConfig[0].FlightSort.Value = 'trips[0].segments[(trips[0].segments.length-1)].arrivalTime';
                             break;
 
                     }
@@ -111,7 +111,7 @@
                 ChildCount: FlightSearchConfig.flightForm.passenger.child,
                 InfantCount: FlightSearchConfig.flightForm.passenger.infant,
                 TripType: FlightSearchConfig.flightForm.type,
-                Trips: FlightSearchConfig.flightForm.trips[1],
+                trips: FlightSearchConfig.flightForm.trips[1],
                 Requests: [],
                 Completed: [],
                 SecureCode: FlightSearchConfig.flightForm.SecureCode,
@@ -133,14 +133,14 @@
             },
             FlightSort: {
                 Label: 'price',
-                Value: 'TotalFare',
+                Value: 'originalAdultFare',
                 Invert: false,
                 Set: function (sortBy, invert) {
                     $scope.FlightConfig[1].FlightSort.Label = sortBy;
                     $scope.FlightConfig[1].FlightSort.Invert = invert;
                     switch (sortBy) {
                         case 'price':
-                            $scope.FlightConfig[1].FlightSort.Value = 'totalFare';
+                            $scope.FlightConfig[1].FlightSort.Value = 'originalAdultFare';
                             break;
                         case 'duration':
                             $scope.FlightConfig[1].FlightSort.Value = 'trips[0].totalDuration';
@@ -295,7 +295,7 @@
             // loop the result
             for (var i = 0; i < targetScope.FlightList.length; i++) {
                 // populate prices
-                targetScope.FlightFilter.Price.prices.push(targetScope.FlightList[i].totalFare);
+                targetScope.FlightFilter.Price.prices.push(targetScope.FlightList[i].originalAdultFare);
 
                 // populate airline code
                 targetScope.FlightList[i].AirlinesTag = [];
@@ -485,17 +485,17 @@
         // generate airline for flight filtering		
         for (var i = 0; i < targetScope.FlightList.length; i++) {
             targetScope.FlightList[i].AirlinesTag = [];
-            for (var x = 0; x < targetScope.FlightList[i].Trips[0].Airlines.length; x++) {
-                targetScope.FlightList[i].AirlinesTag.push(targetScope.FlightList[i].Trips[0].Airlines[x].Code);
-                targetScope.FlightFilter.Airline.push(targetScope.FlightList[i].Trips[0].Airlines[x]);
+            for (var x = 0; x < targetScope.FlightList[i].trips[0].airlines.length; x++) {
+                targetScope.FlightList[i].AirlinesTag.push(targetScope.FlightList[i].trips[0].airlines[x].code);
+                targetScope.FlightFilter.Airline.push(targetScope.FlightList[i].trips[0].airlines[x]);
             }
         }
         // remove duplicate from airline filter		
         var dupes = {};
         var Airlines = [];
         $.each(targetScope.FlightFilter.Airline, function (i, el) {
-            if (!dupes[el.Code]) {
-                dupes[el.Code] = true;
+            if (!dupes[el.code]) {
+                dupes[el.code] = true;
                 Airlines.push(el);
             }
         });
@@ -554,7 +554,7 @@
         var validateFlight = function () {
             //var anotherFlight = targetFlight == 'departure' ? $scope.FlightConfig[1] : $scope.FlightConfig[0];
             //targetFlight = targetFlight == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1];
-            //var secureCode = targetFlight.SecureCode;
+            //var securecode = targetFlight.Securecode;
 
             //targetFlight.FlightValidating = true;
             //targetFlight.FlightValidated = false;
@@ -680,11 +680,11 @@
     $scope.priceFilter = function(targetFlight) {
         return function (flight) {
             if (targetFlight == 'departure') {
-                if (flight.totalFare >= $scope.FlightConfig[0].FlightFilter.Price.current[0] && flight.totalFare <= $scope.FlightConfig[0].FlightFilter.Price.current[1]) {
+                if (flight.originalAdultFare >= $scope.FlightConfig[0].FlightFilter.Price.current[0] && flight.originalAdultFare <= $scope.FlightConfig[0].FlightFilter.Price.current[1]) {
                     return flight;
                 }
             } else {
-                if (flight.totalFare >= $scope.FlightConfig[1].FlightFilter.Price.current[0] && flight.totalFare <= $scope.FlightConfig[1].FlightFilter.Price.current[1]) {
+                if (flight.originalAdultFare >= $scope.FlightConfig[1].FlightFilter.Price.current[0] && flight.originalAdultFare <= $scope.FlightConfig[1].FlightFilter.Price.current[1]) {
                     return flight;
                 }
             }        
@@ -718,17 +718,17 @@
                 }
             }
             //if (targetScope.FlightFilter.Transit[0]) {
-            //    if (flight.Trips[0].TotalTransit == 0) {
+            //    if (flight.trips[0].TotalTransit == 0) {
             //        return flight;
             //    }
             //}
             //if (targetScope.FlightFilter.Transit[1]) {
-            //    if (flight.Trips[0].TotalTransit == 1) {
+            //    if (flight.trips[0].TotalTransit == 1) {
             //        return flight;
             //    }
             //}
             //if (targetScope.FlightFilter.Transit[2]) {
-            //    if (flight.Trips[0].TotalTransit > 1) {
+            //    if (flight.trips[0].TotalTransit > 1) {
             //        return flight;
             //    }
             //}
