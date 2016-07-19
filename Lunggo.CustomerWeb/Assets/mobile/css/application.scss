@@ -528,7 +528,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
    }
 
 .loading-image{
-     margin: 40%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
 }
 
 .page-step-3 {
