@@ -124,8 +124,11 @@
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\prod-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-webjobflightsearch %282%29.pubxml" />
+<<<<<<< HEAD
+=======
     <None Include="Properties\PublishProfiles\travorama-dv2-webjobflightsearch - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-webjobflightsearch - Web Deploy.pubxml" />
+>>>>>>> bd2bdda89294ba6f9d8dcb405831ad33d6487c2d
     <None Include="Properties\PublishProfiles\travorama-dv2-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjobflightsearch.pubxml" />

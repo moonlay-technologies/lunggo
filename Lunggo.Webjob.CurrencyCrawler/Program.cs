@@ -10,26 +10,34 @@ namespace Lunggo.Webjob.CurrencyCrawler
         static void Main(string[] args)
         {
             Console.WriteLine("Initialising Currency Crawler Programme...");
+            Console.WriteLine();
             Init();
-            foreach (var arg in args)
+            var currency = new string[]
             {
-                Console.WriteLine(arg);
+                //"SAR"
+                "SGD", "MYR", "HKD", "CNY", "AUD", 
+                "USD", "JPY", "KRW", "SAR", "THB", 
+                "EUR", "GBP", "BND", "PHP", "INR", 
+                "MOP", "NPR", "NZD", "LKR", "TWD",
+                "AED"
+            };
+            foreach (var curr in currency)
+            {
+                Console.WriteLine("Retrieving Exchange Rate " + curr + " from Air Asia...");
+                FlightService.GetInstance().CurrencyGetterInternal(curr, Supplier.AirAsia);
+                Console.WriteLine("Done Retrieving from Air Asia.");
+                Console.WriteLine();
+                Console.WriteLine("Retrieving Exchange Rate " + curr + " from Garuda...");
+                FlightService.GetInstance().CurrencyGetterInternal(curr, Supplier.Garuda);
+                Console.WriteLine("Done Retrieving from Garuda.");
+                Console.WriteLine();
+                Console.WriteLine("Retrieving Exchange Rate " + curr + " from Lion Air...");
+                FlightService.GetInstance().CurrencyGetterInternal(curr, Supplier.LionAir);
+                Console.WriteLine("Done Retrieving from Lion Air.");
+                Console.WriteLine();
             }
-            Console.WriteLine();
-            Console.WriteLine("Retrieving Exchange Rate from Air Asia...");
-           // FlightService.GetInstance().CurrencyGetterInternal(args[0], Supplier.AirAsia);
-            Console.WriteLine("Done Retrieving from Air Asia.");
-            Console.WriteLine();
-            Console.WriteLine("Retrieving Exchange Rate from Garuda...");
-            //FlightService.GetInstance().CurrencyGetterInternal(args[0], Supplier.Garuda);
-            Console.WriteLine("Done Retrieving from Garuda.");
-            Console.WriteLine();
-            Console.WriteLine("Retrieving Exchange Rate from Lion Air...");
-            FlightService.GetInstance().CurrencyGetterInternal("SGD", Supplier.LionAir);
-            Console.WriteLine("Done Retrieving from Lion Air.");
-            Console.WriteLine();
+            
             Console.WriteLine("Process is Done.");
-            //Thread.Sleep(3000);
         }
     }
 }
