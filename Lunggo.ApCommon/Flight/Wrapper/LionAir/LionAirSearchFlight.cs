@@ -112,7 +112,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                          searchResponse0.StatusCode == HttpStatusCode.Redirect))
                         return new SearchFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
 
-                    //if (originCountry == "ID")
+                    if (originCountry == "ID")
                     {
                     // Calling The First Page
                     client.BaseUrl = new Uri("https://secure2.lionair.co.id");
@@ -149,14 +149,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 Errors = new List<FlightError> {FlightError.InvalidInputData}
                             };
                     }
-                    //else
-                    //{
-                    //    return new SearchFlightResult
-                    //    {
-                    //        IsSuccess = true,
-                    //        Itineraries = new List<FlightItinerary>()
-                    //    };
-                    //}
+                    else
+                    {
+                        return new SearchFlightResult
+                        {
+                            IsSuccess = true,
+                            Itineraries = new List<FlightItinerary>()
+                        };
+                    }
                     try
                     {
                     //Calling The Second Page

@@ -44,16 +44,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         origin = "ICN";
                         break;
                     case "JPY":
-                        origin = "HND";
+                        origin = "NRT";
                         break;
                     case "THB":
                         origin = "BKK";
-                        break;
-                    case "PHP":
-                        origin = "MNL";
-                        break;
-                    case "VND":
-                        origin = "SGN";
                         break;
                     case "AUD":
                         origin = "SYD";
@@ -65,7 +59,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         origin = "AMS";
                         break;
                     case "USD":
-                        origin = "LAX";
+                        origin = "PNH";
+                        break;
+                    case "CNY":
+                        origin = "PEK";
+                        break;
+                    case "HKD":
+                        origin = "HKG";
+                        break;
+                    case "SAR":
+                        origin = "JED";
+                        break;
+                    case "AED":
+                        origin = "AUH";
                         break;
                     default:
                         origin = "CGK";
@@ -267,13 +273,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             gotRows = true;
                         }
 
-                        if (v < rows.Count)
+                        if (v <= rows.Count)
                         {
                             var inputsdepoptlist = new List<string>();
                             var valuesdepoptlist = new List<string>();
                             for (var ind = 0; ind < selectedRows.Count; ind++)
                             {
-                                var totalChildren = selectedRows[ind].ChildElements.ToList().Count() - 1;
+                                var totalChildren = selectedRows[ind].ChildElements.ToList().Count();
                                 var lastChild = 0;
                                 for (var b = 0; b < totalChildren; b++)
                                 {
