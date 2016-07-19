@@ -122,8 +122,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         break;
                 }
 
-                //if (originCountry == "ID")
-                //{
+                if (originCountry == "ID")
+                {
                     string url = @"Flight/Select";
                     var searchRequest = new RestRequest(url, Method.GET);
                     searchRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
@@ -147,16 +147,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var searchedHtml = (CQ)html;
                     availableFares = searchedHtml[".radio-markets"];
                     flightTable = searchedHtml[".avail-table-detail-table"];
-                //}
-                
-                //else
-                //{
-                //    return new SearchFlightResult
-                //    {
-                //        IsSuccess = true,
-                //        Itineraries = new List<FlightItinerary>()
-                //    };
-                //}
+                }
+
+                else
+                {
+                    return new SearchFlightResult
+                    {
+                        IsSuccess = true,
+                        Itineraries = new List<FlightItinerary>()
+                    };
+                }
 
                 // [Scrape]
 
@@ -183,7 +183,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                        FlightService.GetInstance().ParseCabinClass(conditions.CabinClass) + ".";
                     foreach (var fareId in fareIds)
                     {
-                        url = @"Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
+                        var url = @"Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
                         var fareRequest = new RestRequest(url, Method.GET);
                         fareRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
                         var itinHtml = (CQ)client.Execute(fareRequest).Content;

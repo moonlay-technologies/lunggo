@@ -84,8 +84,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var destinationCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.DestinationAirport);
                 // Calling The Zeroth Page
 
-                //client.Proxy = new WebProxy("185.77.167.128", 60000);
-                //client.Proxy.Credentials = new NetworkCredential("travelmadezy", "9T8XCty9MT");
+                client.Proxy = new WebProxy("zproxy.luminati.io:22225");
+                client.Proxy.Credentials = new NetworkCredential("lum-customer-travelmadezy-zone-gen-country-id", "9f0760f20d0e");
                 //client.Proxy = new WebProxy("103.9.163.59", 31280);
                 //client.Proxy.Credentials = new NetworkCredential("developer", "Standar1234");
                 client.BaseUrl = new Uri("https://www.garuda-indonesia.com");
@@ -129,8 +129,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var idParam = adParam["#paramforads"].Attr("value");
                 var iw_component = adParam[".iw_component"].Attr("id");
 
-                //if (originCountry == "ID")
-                //{
+                if (originCountry == "ID")
+                {
 
                     //POST 0
                     string url = @"/id/id/index/1414649500712.ajax";
@@ -239,15 +239,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                     var searchResult = client.Execute(search);
                     flightResultPage = searchResult.Content;
-                //}
-                //else
-                //{
-                //    return new SearchFlightResult
-                //    {
-                //        IsSuccess = true,
-                //        Itineraries = new List<FlightItinerary>()
-                //    };
-                //}
+                }
+                else
+                {
+                    return new SearchFlightResult
+                    {
+                        IsSuccess = true,
+                        Itineraries = new List<FlightItinerary>()
+                    };
+                }
                 try
                 {
                     //Get All Itins
