@@ -24,6 +24,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var postData =
                 "client_id=" + request.ClientId +
                 "&client_secret=" + request.ClientSecret;
+            if (request.DeviceId != null)
+                postData += "&device_id=" + request.DeviceId;
             if (request.RefreshToken != null)
             {
                 postData +=

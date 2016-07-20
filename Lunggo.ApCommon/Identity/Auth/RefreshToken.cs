@@ -11,6 +11,7 @@ namespace Lunggo.ApCommon.Identity.Auth
         public string Id { get; set; }
         public string Subject { get; set; }
         public string ClientId { get; set; }
+        public string DeviceId { get; set; }
         public DateTime IssueTime { get; set; }
         public DateTime ExpireTime { get; set; }
         public string ProtectedTicket { get; set; }

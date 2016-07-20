@@ -14,5 +14,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         public string ClientId { get; set; }
         [JsonProperty("clientSecret")]
         public string ClientSecret { get; set; }
+        [JsonProperty("deviceId")]
+        public string DeviceId { get; set; }
     }
 }

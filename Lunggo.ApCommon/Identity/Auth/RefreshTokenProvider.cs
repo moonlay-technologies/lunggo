@@ -37,15 +37,18 @@ namespace Lunggo.ApCommon.Identity.Auth
 
             var refreshTokenId = Guid.NewGuid().ToString("n");
 
-            var refreshTokenLifeTime = context.OwinContext.Get<string>("as:clientRefreshTokenLifeTime");
+            var refreshTokenLifeTime = context.OwinContext.Get<double>("as:clientRefreshTokenLifeTime");
+
+            var deviceId = context.OwinContext.Get<string>("as:deviceId");
 
             var token = new RefreshToken
             {
                 Id = refreshTokenId.Sha512Encode(),
                 ClientId = clientId,
                 Subject = context.Ticket.Identity.Name,
+                DeviceId = deviceId,
                 IssueTime = DateTime.UtcNow,
-                ExpireTime = DateTime.UtcNow.AddMinutes(Convert.ToDouble(refreshTokenLifeTime))
+                ExpireTime = DateTime.UtcNow.AddMinutes(refreshTokenLifeTime)
             };
 
             context.Ticket.Properties.IssuedUtc = token.IssueTime;
@@ -53,7 +56,25 @@ namespace Lunggo.ApCommon.Identity.Auth
 
             token.ProtectedTicket = context.SerializeTicket();
 
-            var result = await new DapperAuthStore().AddRefreshToken(token);
+            bool result;
+
+            if (context.Ticket.Identity.Name != "anonymous")
+            {
+                result = await new DapperAuthStore().AddOrReplaceRefreshToken(token, ignoreDevice: true);
+            }
+            else
+            {
+                if (deviceId != null)
+                {
+                    result = await new DapperAuthStore().AddOrReplaceRefreshToken(token, ignoreDevice: false);
+                }
+                else
+                {
+                    refreshTokenId = clientId.Base64Encode().Base64Encode().Base64Encode().Base64Encode();
+                    token.Id = refreshTokenId.Sha512Encode();
+                    result = await new DapperAuthStore().AddOrReplaceRefreshToken(token, ignoreDevice: true);
+                }
+            }
 
             if (result)
             {
@@ -71,7 +92,7 @@ namespace Lunggo.ApCommon.Identity.Auth
             string hashedTokenId = context.Token.Sha512Encode();
 
             var refreshToken = await new DapperAuthStore().FindRefreshToken(hashedTokenId);
-
+                    
             if (refreshToken != null)
             {
                 //Get protectedTicket from refreshToken class
