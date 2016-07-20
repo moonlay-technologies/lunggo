@@ -639,20 +639,23 @@
                     <header class="popup__header">
                         <h4 class="popup__title">Harga Berubah</h4>
                     </header>
-                    <div class="popup__body">
+                    <div class="popup__body price-change-body">
                         <div class="container_new">
                             <p>Harga tiket ini berubah menjadi Rp {{book.newPrice}} disebabkan perubahan harga dari maskapai.</p>
                         </div>
                     </div>
                     <footer>
-                        <div class="container_new">
-                            <div class="row1">
-                                <div class="col-sm-6">
+                        <div class="container_new price-change-footer">
+                            <div class="row">
+                                <div class="col-xs-12">
                                     <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
                                 </div>
-                                <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()" class="ng-pristine ng-valid col-sm-6">
-                                    <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI">
-                                </form>
+                                <div class="col-xs-12">
+                                    <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()" class="ng-pristine ng-valid">
+                                        <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI">
+                                    </form>
+                                </div>
+
                             </div>
                         </div>
                     </footer>

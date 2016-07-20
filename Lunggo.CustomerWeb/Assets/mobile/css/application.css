@@ -45,7 +45,7 @@ img {
   background: #ffd632;
   color: #000000;
   font-weight: bold;
-  border-radius: 5px; }
+  border-radius: 2px; }
 
 .btn.btn-grey, .btn.btn-gray {
   background: #adadad;
@@ -384,6 +384,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         font-weight: bold; }
     .popup__wrapper .popup .popup__body {
       padding: 20px 0; }
+      .popup__wrapper .popup .popup__body.price-change-body {
+        padding: 5px 0; }
+    .popup__wrapper .popup .container_new.price-change-footer {
+      padding: 0 30px; }
+      .popup__wrapper .popup .container_new.price-change-footer .btn.btn-grey {
+        min-width: 100%; }
+      .popup__wrapper .popup .container_new.price-change-footer .btn.btn-yellow {
+        min-width: 100%;
+        margin-top: 8px; }
     .popup__wrapper .popup .popup__footer {
       position: absolute;
       bottom: 0;
@@ -817,8 +826,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding-bottom: 10px;
   color: red; }
 
-.icon-mobile, .page.page-home .form-container .form-wrapper form .form-group span.icon-pp, .page.page-home .form-container .form-wrapper form .form-group span.icon-return, .page.page-home .form-container .form-wrapper form .form-group span.icon-fc, .page.page-home .form-container .form-wrapper form .form-group span.icon-people {
-  background: url(/assets/mobile/images/mobile-sprite-new.png);
+.icon-mobile, .page.page-home .form-container .form-wrapper form .form-group span.icon-pp, .page.page-home .form-container .form-wrapper form .form-group span.icon-return, .page.page-home .form-container .form-wrapper form .form-group span.icon-fc, .page.page-home .form-container .form-wrapper form .form-group span.icon-people, .page.page-home .form-container .form-wrapper form .flip-container span.icon-flip {
+  background: url(/assets/mobile/images/mobile-sprite.png);
   display: inline-block;
   vertical-align: middle;
   position: absolute; }
@@ -840,7 +849,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-home .form-container .form-wrapper {
       padding: 0;
       min-height: 100%;
-      margin: 20px;
+      margin: 15px;
       background: none;
       border: 0; }
       .page.page-home .form-container .form-wrapper h1 {
@@ -852,53 +861,57 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .page.page-home .form-container .form-wrapper form .form-group p.form-control {
           height: auto; }
         .page.page-home .form-container .form-wrapper form .form-group span.icon-pp {
-          width: 19px;
-          height: 20px;
-          background-position: 0 -3px;
-          top: 13px; }
+          width: 24px;
+          height: 24px;
+          background-position: -88px -2px;
+          top: 18px; }
         .page.page-home .form-container .form-wrapper form .form-group span.icon-return {
-          width: 20px;
-          height: 21px;
-          background-position: -24px -3px;
-          top: 13px; }
+          width: 21px;
+          height: 22px;
+          background-position: -59px -3px;
+          top: 20px; }
         .page.page-home .form-container .form-wrapper form .form-group span.icon-fc {
-          width: 26px;
-          height: 25px;
-          background-position: -49px -1px;
-          top: 13px; }
+          width: 30px;
+          height: 28px;
+          background-position: -25px 0;
+          top: 16px; }
         .page.page-home .form-container .form-wrapper form .form-group span.icon-people {
-          width: 19px;
-          height: 26px;
-          background-position: -81px 0;
-          top: 13px; }
+          width: 21px;
+          height: 28px;
+          background-position: 0 0;
+          top: 16px; }
       .page.page-home .form-container .form-wrapper form .form__destination .title-destination, .page.page-home .form-container .form-wrapper form .form__origin .title-destination {
-        font-size: 13px;
+        font-size: 14px;
         text-align: center;
         margin-bottom: 10px;
         color: #000; }
       .page.page-home .form-container .form-wrapper form .form__destination p.form-control, .page.page-home .form-container .form-wrapper form .form__origin p.form-control {
         text-align: center;
-        background: #edf1f4;
-        max-width: 240px;
+        background: #ecf0f4;
+        max-width: 120px;
         margin: 0 auto;
         box-shadow: none;
-        border-radius: 5px; }
+        border-radius: 5px;
+        border: 1px solid #dde1e4; }
       .page.page-home .form-container .form-wrapper form span.code-airport, .page.page-home .form-container .form-wrapper form span.city {
         margin: 0 auto; }
       .page.page-home .form-container .form-wrapper form span.code-airport {
-        font-size: 38px;
-        line-height: 42px;
+        font-size: 40px;
+        line-height: 44px;
         color: #000; }
       .page.page-home .form-container .form-wrapper form span.city {
-        font-size: 13px;
+        font-size: 14px;
         line-height: 20px;
         color: #686868; }
       .page.page-home .form-container .form-wrapper form .middle-form {
-        margin: 10px 0 30px; }
+        margin: 10px 0 50px; }
         .page.page-home .form-container .form-wrapper form .middle-form .form-group {
           position: relative; }
+      .page.page-home .form-container .form-wrapper form .top-form {
+        max-width: 300px;
+        margin: 0px auto; }
       .page.page-home .form-container .form-wrapper form .form__departure p, .page.page-home .form-container .form-wrapper form .form__departure p.form-control, .page.page-home .form-container .form-wrapper form .form__departure select.form-control, .page.page-home .form-container .form-wrapper form .form__return p, .page.page-home .form-container .form-wrapper form .form__return p.form-control, .page.page-home .form-container .form-wrapper form .form__return select.form-control, .page.page-home .form-container .form-wrapper form .form__roundtrip p, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control, .page.page-home .form-container .form-wrapper form .form__passenger p, .page.page-home .form-container .form-wrapper form .form__passenger p.form-control, .page.page-home .form-container .form-wrapper form .form__passenger select.form-control, .page.page-home .form-container .form-wrapper form .form__flightclass p, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control {
-        font-size: 13px;
+        font-size: 14px;
         color: #000;
         padding: 0;
         height: auto;
@@ -910,23 +923,29 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .page.page-home .form-container .form-wrapper form .form__departure p span, .page.page-home .form-container .form-wrapper form .form__departure p.form-control span, .page.page-home .form-container .form-wrapper form .form__departure select.form-control span, .page.page-home .form-container .form-wrapper form .form__return p span, .page.page-home .form-container .form-wrapper form .form__return p.form-control span, .page.page-home .form-container .form-wrapper form .form__return select.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip p span, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger p span, .page.page-home .form-container .form-wrapper form .form__passenger p.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger select.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass p span, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control span {
           float: right; }
       .page.page-home .form-container .form-wrapper form .field-container {
-        margin-left: 40px;
-        border-bottom: 1px solid #c8c8c8;
-        padding: 15px 0; }
+        margin-left: 42px;
+        border-bottom: 1px solid #eeeeee;
+        padding: 20px 0; }
       .page.page-home .form-container .form-wrapper form .flip-container {
         position: relative;
         min-height: 104px; }
         .page.page-home .form-container .form-wrapper form .flip-container .flip {
           position: absolute;
-          width: 40px;
-          height: 40px;
-          background: #edf1f4;
-          border: 1px solid #c9cdd2;
+          width: 35px;
+          height: 37px;
+          background: #ecf0f4;
+          border: 1px solid #dde1e4;
           display: inline-block;
           border-radius: 5px;
           top: 60%;
           left: 50%;
           transform: translate(-50%, -50%); }
+        .page.page-home .form-container .form-wrapper form .flip-container span.icon-flip {
+          width: 22px;
+          height: 20px;
+          background-position: -118px -4px;
+          top: 8px;
+          left: 4px; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip .switch {
         float: right;
         position: relative;
@@ -967,6 +986,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border-radius: 24px; }
         .page.page-home .form-container .form-wrapper form .form__roundtrip .slider.round:before {
           border-radius: 50%; }
+      .page.page-home .form-container .form-wrapper form .btn.btn-yellow {
+        border-radius: 5px;
+        font-weight: 600; }
 
 @media handheld, only screen and (max-width: 420px) {
   .page.page-home .form-container {
