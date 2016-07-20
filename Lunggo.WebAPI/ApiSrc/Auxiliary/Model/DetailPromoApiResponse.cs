@@ -17,13 +17,9 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Model
         public string[] Tnc { get; set; }
         [JsonProperty("bannerUrl")]
         public string BannerUrl { get; set; }
-        [JsonProperty("hotelPromos")]
+        [JsonProperty("hotelPromo")]
         public Hotels Hotels { get; set; }
-        [JsonProperty("flightPromos")]
+        [JsonProperty("flightPromo")]
         public Flights Flights { get; set; }
-        [JsonProperty("bookingPeriod")]
-        public string BookingPeriod { get; set; }
-        [JsonProperty("travelPeriod")]
-        public string TravelPeriod { get; set; }
     }
 }

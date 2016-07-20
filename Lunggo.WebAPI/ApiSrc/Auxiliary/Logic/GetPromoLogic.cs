@@ -38,7 +38,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                 new DetailPromo
                 {
                     Id = "xmas-new-year",
-                    BookingPeriod = "25 Sep 2016 - 2 Okt 2016",
+                    //BookingPeriod = "25 Sep 2016 - 2 Okt 2016",
                     Flights = new Flights
                     {
                         TravelPeriod = "25 Desember 2016 - 2 Januari 2017",
@@ -48,23 +48,23 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                 new DetailPromo
                 {
                     Id = "eid-mubarak",
-                    BookingPeriod  = "9 Agustus 2016 - 13 Agustus 2016",
+                    //BookingPeriod  = "9 Agustus 2016 - 13 Agustus 2016",
                     Hotels = new Hotels
                     {
                         PromoCode = "HOTELEID",
-                        HotelList = new List<HotelList>
+                        HotelChoices= new List<HotelChoice>
                         {
-                            new HotelList
+                            new HotelChoice
                             {
                                 Place = "Bandung",
                                 Hotels = new []{"Hotel Horizon", "Hotel Amaroosa"},
-                                RoomType = "Deluxe"
+                                RoomType = new []{"Deluxe", "Suite"}
                             },
-                            new HotelList
+                            new HotelChoice
                             {
                                 Place = "Surabaya",
                                 Hotels = new []{"Hotel Horizon", "Hotel Amaroosa"},
-                                RoomType = "Deluxe"
+                                RoomType = new []{"Deluxe", "Suite"}
                             }
                         },
                     }
@@ -72,13 +72,39 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                 },
                 new DetailPromo
                 {
-                    BookingPeriod  = "23 Juni 2017 - 19 Juli 2017",
-                    Id = "Holiday",
+                    Id = "europe",
+                    Tnc = new []
+                    {
+                        "1. Flights are valid from Indonesia to All Countries in Europe",
+                        "2. Period of booking is from 23 June 2016 until 19 July 2016",
+                        "3. Available Airline are ONLY Emirate Airlines and Qatar Airways",
+                        "4. Promotion is subject to change without prior notice"
+                    },
+                    BannerUrl = "promo/details/europe-detail.jpeg",
                     Flights = new Flights
                     {
                         TravelPeriod = "23 Juni 2017 - 19 Juli 2017",
-                        PromoCode = "MYHOLIDAY"
-                    }
+                        BookingPeriod = "23 Juni 2016 - 19 Juli 2016",
+                        PromoCode = "FLYEUROPE",
+                        Description = "Biaya menjadi kendala liburan ke luar negeri? Nikmati kupon diskon s.d. Rp1.500.000 untuk penerbangan dari Indonesia ke semua negara di Eropa."
+                    },
+                    Hotels = new Hotels
+                    {
+                        PromoCode = "STAYEUROPE",
+                        Description = "Nikmati kupon diskon s.d. Rp1.500.000 untuk penginapan di beberapa kota Eropa!",
+                        HotelChoices = new List<HotelChoice>
+                        {
+                            new HotelChoice
+                            {
+                                Place = "London",
+                                Hotels = new [] {"Hotel Hilton", "Ibis Hotel"},
+                                RoomType = new []{"Premium Suite", "2 nights with breakfast"},
+                                StayDuration = "Minimum two days",
+                                StayPeriod = "23 Juni 2017 - 19 Juli 2017",
+                                BookingPeriod = "23 Juni 2016 - 19 Juli 2016",
+                            }
+                        }
+                    },
                 }
             };
 
@@ -117,9 +143,12 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                 },
                 new AllPromo
                 {
-                    BookingPeriod  = "23 Juni 2017 - 19 Juli 2017",
-                    Id = "holiday",
-                    Description = "You Go to London"
+                    BookingPeriod  = "23 Juni 2016 - 19 Juli 2016",
+                    Id = "europe",
+                    Description = "Travel to Europe with Special Price for Flights and Hotels!",
+                    TravelPeriod = "23 Juni 2016 - 19 Juli 2016",
+                    PromoType = PromoType.CouponCode,
+                    BannerUrl = "/promo/europe-all.jpeg"
                 },
             
             };
@@ -131,15 +160,18 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
             {
                 new FeaturePromo
                 {
-                    Id = "xmas-new-year"
+                    Id = "xmas-new-year",
+                    BannerUrl = "/promo/xmas.jpeg"
                 },
                 new FeaturePromo
                 {
-                    Id = "eid-mubarak"
+                    Id = "eid-mubarak",
+                    BannerUrl = "/promo/eid.jpeg"
                 },
                 new FeaturePromo
                 {
-                    Id = "holiday"
+                    Id = "europe",
+                    BannerUrl = "/promo/europe.jpeg"
                 },
             };
         }

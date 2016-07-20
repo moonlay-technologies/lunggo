@@ -32,19 +32,20 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Model
         [JsonProperty("promoCode")]
         public string PromoCode { get; set; } 
         [JsonProperty("description")]
-        public DateTime Description { get; set; }
-        [JsonProperty("hotels")]
-        public List<HotelList> HotelList{ get; set; }
+        public string Description { get; set; }
+        [JsonProperty("hotelchoices")]
+        public List<HotelChoice> HotelChoices{ get; set; }
+
     }
 
-    public class HotelList
+    public class HotelChoice
     {
         [JsonProperty("place")]
         public string Place { get; set; }
-        [JsonProperty("hotel")]
+        [JsonProperty("hotels")]
         public string[] Hotels { get; set; }
-        [JsonProperty("roomType")]
-        public string RoomType { get; set; }
+        [JsonProperty("roomTypes")]
+        public string[] RoomType { get; set; }
         [JsonProperty("stayDuration")]
         public string StayDuration { get; set; }
         [JsonProperty("stayPeriod")]

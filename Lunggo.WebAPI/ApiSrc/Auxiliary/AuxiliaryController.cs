@@ -82,13 +82,13 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary
         [HttpGet]
         [LunggoCorsPolicy]
         //[Authorize]
-        [Route("v1/promo/{name}")]
-        [Route("v1/promo/{lang}/{name}")]
-        public ApiResponseBase GetDetailPromo(string lang = "id", string name = "Holiday")
+        [Route("v1/promo/details/{id}")]
+        [Route("v1/promo/details/{id}/{lang}")]
+        public ApiResponseBase GetDetailPromo(string lang = "id", string id = "europe")
         {
             try
             {
-                return AuxiliaryLogic.GetDetailPromo(lang, name);
+                return AuxiliaryLogic.GetDetailPromo(lang, id);
             }
             catch (Exception e)
             {
