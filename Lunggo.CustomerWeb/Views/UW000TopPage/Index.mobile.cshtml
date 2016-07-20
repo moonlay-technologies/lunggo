@@ -14,56 +14,82 @@
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
     @*<script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>*@
-    }
+}
 
 @section PageJS {
     <script src="/Assets/mobile/js/HomeController.js"></script>
 }
 
-<div class="page-loading" ng-class="{'page-loaded' : PageConfig.Loaded}">
-    
+<div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">
     <div class="form-wrapper">
-
-        <h1>CARI <b>TIKET PESAWAT</b></h1>
-
         <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
-
-            <div class="form-group form__origin">
-                <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('departure'); PageConfig.SetOverlay('airport-select')">
-                    {{FlightSearchForm.AirportOrigin.City}} ({{FlightSearchForm.AirportOrigin.Code}})
-                </p>
-            </div>
-
-            <div class="form-group form__destination">
-                <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('return'); PageConfig.SetOverlay('airport-select')">
-                    {{FlightSearchForm.AirportDestination.City}} ({{FlightSearchForm.AirportDestination.Code}})
-                </p>
-            </div>
-
-            <div class="form-group form__departure">
-                <p class="form-control" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-departure')">
-                    <b>Berangkat</b> <span>{{FlightSearchForm.DepartureDate | date : 'EEE, dd MMM yyyy'}}</span>
-                </p>
-                <input type="text" value="" ng-model="FlightSearchForm.DepartureDate" class="flight-search-form-departure hidden" />
-            </div>
-
-            <div class="form-group form__roundtrip">
-                <p>Pulang Pergi ?</p>
-                <div class="switch">
-                    <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" class="hidden" />Tidak</label>
-                    <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'true'}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" class="hidden" />Ya</label>
+            <div class="top-form row">
+                <div class="col-xs-5">
+                    <div class="form-group form__origin">
+                        <div class="title-destination">Asal</div>
+                        <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('departure'); PageConfig.SetOverlay('airport-select')">
+                            <span class="code-airport">{{FlightSearchForm.AirportOrigin.Code}}</span><br/><span class="city">{{FlightSearchForm.AirportOrigin.City}}</span> 
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="flip-container">
+                        <a class="flip" href="#"><span class="icon-flip"></span></a>
+                    </div>
+                </div>
+                <div class="col-xs-5">
+                    <div class="form-group form__destination">
+                        <div class="title-destination">Tujuan</div>
+                        <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('return'); PageConfig.SetOverlay('airport-select')">
+                            <span class="code-airport">{{FlightSearchForm.AirportDestination.Code}}</span><br /><span class="city">{{FlightSearchForm.AirportDestination.City}}</span>
+                        </p>
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group form__return" ng-hide="FlightSearchForm.Trip == 'false'">
-                <p class="form-control" ng-click="DatePicker.SetOption({Target : 'return'}, ' '); PageConfig.SetOverlay('datepicker-return')">
-                    <b>Kembali</b> <span>{{FlightSearchForm.ReturnDate | date : 'EEE, dd MMM yyyy'}}</span>
-                    <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />
-                </p>
-            </div>
-
-            <div class="form-group form__passenger">
-                <div class="form__adult">
+            <div class="middle-form">
+                <div class="form-group form__departure">
+                    <span class="icon-pp"></span>
+                    <div class="field-container">
+                        <p class="form-control" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-departure')">
+                            Berangkat <span>{{FlightSearchForm.DepartureDate | date : 'EEE, dd MMM yyyy'}}</span>
+                        </p>
+                    </div>
+                    <input type="text" value="" ng-model="FlightSearchForm.DepartureDate" class="flight-search-form-departure hidden" />
+                </div>
+                <div class="form-group form__roundtrip">
+                    <span class="icon-return"></span>
+                    <div class="field-container">
+                        <p class="bold-title">Pulang Pergi ?</p>
+                        <label class="switch">
+                            <input type="checkbox" ng-model="val" ng-true-value="true" ng-false-value="false">
+                            <div class="slider round"></div>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group form__return" ng-show="val">
+                    <span class="icon-pp"></span>
+                    <div class="field-container">
+                        <p class="form-control" ng-click="DatePicker.SetOption({Target : 'return'}, ' '); PageConfig.SetOverlay('datepicker-return')">
+                            Kembali <span>{{FlightSearchForm.ReturnDate | date : 'EEE, dd MMM yyyy'}}</span>
+                            <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group form__flightclass">
+                    <span class="icon-fc"></span>
+                    <div class="field-container">
+                        <select class="form-control" name="cabinclass" ng-model="FlightSearchForm.Cabin" ng-init="FlightSearchForm.Cabin = flightclass[0].value">
+                            <option ng-repeat="cabin in flightclass" value="{{cabin.value}}">{{cabin.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group form__passenger">
+                    <span class="icon-people"></span>
+                    <div class="field-container">
+                        <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}}</p>
+                    </div>
+                </div>
+                @*<div class="form__adult">
                     <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}}</p>
                 </div>
                 <div class="form__child">
@@ -71,23 +97,14 @@
                 </div>
                 <div class="form__infant">
                     <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[2]}}</p>
-                </div>
+                </div>*@    
             </div>
-        
-            <div class="form-group form__flightclass">
-                <select class="form-control" name="cabinclass" ng-model="FlightSearchForm.Cabin" ng-init="FlightSearchForm.Cabin = flightclass[0].value">
-                    <option ng-repeat="cabin in flightclass" value="{{cabin.value}}">{{cabin.name}}</option>
-                </select>       
-            </div>
-        
             <div class="form-group form__submit">
-                <button class="btn btn-yellow btn-block btn-lg">CARI</button>
+                <button class="btn btn-yellow btn-block btn-lg">CARI PENERBANGAN</button>
             </div>
-
         </form><!-- .flight-form -->
-
     </div><!-- .form-wrapper -->
-    
+
     <!-- overlays -->
     <!-- overlay date picker -->
     <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--departure" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-departure') }">
@@ -283,6 +300,9 @@
             </div>
         </section>
     </div><!-- .overlay--passenger-selector -->
-
-
 </div><!-- .page-loading -->
+
+<!-- Footer -->
+<div class="footer-section">
+    @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
+</div>

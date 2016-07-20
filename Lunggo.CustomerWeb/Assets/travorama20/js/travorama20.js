@@ -287,7 +287,7 @@ function getAuthAccess()
         else {
             //Get Token By Refresh Token
             if (refreshToken) {
-
+                Zepto   
                 $.ajax({
                     url: LoginConfig.Url,
                     method: 'POST',

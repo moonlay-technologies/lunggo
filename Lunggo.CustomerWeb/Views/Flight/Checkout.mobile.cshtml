@@ -1,5 +1,4 @@
 ﻿@using System.Globalization
-@using Lunggo.ApCommon.Identity.User
 @using Lunggo.ApCommon.Identity.Users
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Context
@@ -34,8 +33,8 @@
     {
         ViewBag.Message = "BookExpired";
     }
-    
-   
+
+
 }
 
 @{
@@ -49,7 +48,7 @@
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
     <!-- fancybox CSS-->
     <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
-   <link rel="stylesheet" href="/Assets/mobile/css/application.css">
+    <link rel="stylesheet" href="/Assets/mobile/css/application.css">
 }
 @section AdditionalJS {
     <!-- additional Angular JS-->
@@ -69,7 +68,7 @@
             Token: '@Model.Token',
             ExpiryDate: '@Model.ExpiryTime.ToString("o")',
             Trips: @Html.Raw(Model.Itinerary.Trips.Serialize()),
-            Price: @Model.Itinerary.TotalFare,
+            Price: @Model.Itinerary.OriginalAdultFare,
             // passenger
             Passenger: [@Model.Itinerary.AdultCount, @Model.Itinerary.ChildCount, @Model.Itinerary.InfantCount],
             PassengerName: ['Dewasa', 'Anak', 'Bayi'],
@@ -77,11 +76,11 @@
             PassportRequired: @Model.Itinerary.RequirePassport.ToString().ToLower(),
             IdRequired: false,
             NationalityRequired: @Model.Itinerary.RequireNationality.ToString().ToLower(),
-        BirthDateRequired: @Model.Itinerary.RequireBirthDate.ToString().ToLower(),
+            BirthDateRequired: @Model.Itinerary.RequireBirthDate.ToString().ToLower(),
             // departure date
-        DepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate',
-        BeforeDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)',
-        PassportDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)',
+            DepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate',
+            BeforeDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)',
+            PassportDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)',
             // buyer info
             BuyerInfo: {
                 LoggedIn : @User.Identity.IsAuthenticated.ToString().ToLower(),
@@ -101,8 +100,8 @@
 @functions{
     public string msToTime(double duration)
     {
-        var hours = Convert.ToInt32(duration)/(1000*60*60);
-        var minutes = (Convert.ToInt32(duration)/(1000*60))%60;
+        var hours = Convert.ToInt32(duration) / (1000 * 60 * 60);
+        var minutes = (Convert.ToInt32(duration) / (1000 * 60)) % 60;
 
         return hours + "j " + minutes + "m";
     }
@@ -110,569 +109,570 @@
 
 @switch ((string)ViewBag.Message)
 {
-default:
-<!-- page start -->
+    default:
+        <!-- page start -->
 
-<div ng-class="{'page-loaded' : pageLoaded}">
+        <div ng-class="{'page-loaded' : pageLoaded}">
 
-    <header class="page__header">
-        <div class="step__wrapper">
-            <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01. Data Kontak</span></div>
-            <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02. Data Penumpang</span></div>
-            <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03. Review Pesanan</span></div>
-        </div>
-    </header><!-- .page-header -->
+            <header class="page__header">
+                <div class="step__wrapper">
+                    <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01. Data Kontak</span></div>
+                    <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02. Data Penumpang</span></div>
+                    <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03. Review Pesanan</span></div>
+                </div>
+            </header><!-- .page-header -->
 
-    <div class="page__body page-loading" ng-class="{'page-loaded' : pageLoaded}">
-        <div class=" page-step-1" ng-show="PageConfig.ActivePage == 1">
-            <div class="form">
+            <div class="page__body page-loading" ng-class="{'page-loaded' : pageLoaded}">
+                <div class=" page-step-1" ng-show="PageConfig.ActivePage == 1">
+                    <div class="form">
 
-                <h3><b>DATA</b> KONTAK</h3>
+                        <h3><b>DATA</b> KONTAK</h3>
 
-                <form name="BuyerForm" novalidate>
+                        <form name="BuyerForm" novalidate>
 
-                    <div class="form-group">
-                        <label class="control-label">Titel : </label>
-                        <select class="form-control" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
-                            <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group important">
-                        <label class="control-label">Nama Lengkap : </label>
-                        <input type="text" value="" ng-model="buyerInfo.name" name="name" class="form-control" placeholder="Nama Lengkap" required />
-                    </div>
-
-                    <div class="form-group important">
-                        <label class="control-label">Nomor Telepon : </label>
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <p><small>Kode Negara</small></p>
-                                <input type="number" value="" ng-model="buyerInfo.countryCode" name="PhoneCode" class="form-control" placeholder="Ex : 62 for Indonesia" required />
+                            <div class="form-group">
+                                <label class="control-label">Titel : </label>
+                                <select class="form-control" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
+                                    <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                                </select>
                             </div>
-                            <div class="col-xs-8">
-                                <p><small>Nomor Telepon (Tanpa Kode Negara)</small></p>
-                                <input type="number" value="" ng-model="buyerInfo.phone" name="Phone" class="form-control" placeholder="Ex : 821 2345 6789" required />
+
+                            <div class="form-group important">
+                                <label class="control-label">Nama Lengkap : </label>
+                                <input type="text" value="" ng-model="buyerInfo.name" name="name" class="form-control" placeholder="Nama Lengkap" required />
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="form-group important" ng-class="{'has-error' : BuyerForm.email.$touched && BuyerForm.email.$invalid}">
-                        <label class=" control-label">Masukkan alamat e-mail Anda : </label>
-                        <input type="email" value="" ng-model="buyerInfo.email" name="Email" class="form-control" placeholder="Ex: name@domain.com" required />
-                    </div>
-
-                    <div class="form-group">
-                        <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(2)" ng-disabled="BuyerForm.$invalid">LANJUT</button>
-                    </div>
-
-                </form>
-
-            </div>
-        </div><!-- .page-step-1 -->
-
-        <div class="page-step-2" ng-show="PageConfig.ActivePage == 2">
-            <h3><b>DATA</b> PENUMPANG</h3>
-
-            <form novalidate name="PassengerForm">
-                <div class="passenger passenger-{{$index}}" id="passenger-{{$index}}" ng-repeat="Passenger in passengers track by $index" ng-init="initPassenger(Passenger)">
-                    <header class=" passenger__header">
-                        <h4 class="passenger__title" ng-if="Passenger.type == 'adult'">Penumpang {{$index + 1}} (Dewasa)</h4>
-                        <h4 class="passenger__title" ng-if="Passenger.type == 'child'">Penumpang {{$index + 1}} (Anak)</h4>
-                        <h4 class="passenger__title" ng-if="Passenger.type == 'infant'">Penumpang {{$index + 1}} (Bayi)</h4>
-                    </header><!-- .passenger__header -->
-                    <div class="passenger__body">
-                        <div class="form-group">
-                            <label class="control-label">Titel : </label>
-                            <select class="form-control" required ng-model="Passenger.title" name="passenger_{{$index}}_title" ng-init="Passenger.title = titles[0].value">
-                                <option ng-repeat="title in titles" value="{{title.value}}" ng-if="Passenger.type == 'adult'">{{title.name}}</option>
-                                <option ng-repeat="title in titleKids" value="{{title.value}}" ng-if="Passenger.type != 'adult'">{{title.name}}</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group important">
-                            <label class="control-label">Nama Lengkap : </label>
-                            <input type="text" value="" class="form-control" required name="passenger_{{$index}}_name" placeholder="Ex : John" ng-model="Passenger.name" />
-                        </div>
-
-
-                        <!-- passenger birth date start -->
-                        <div class="form-group important" ng-if="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
-                            <label class="control-label">Tanggal Lahir: </label>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" ng-change="ValidateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
-                                        <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'adult'">{{date}}</option>
-                                        <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'child'">{{date}}</option>
-                                        <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'infant'">{{date}}</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-4">
-                                    <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" ng-change="ValidateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
-                                        <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
-                                        <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'child'">{{month.name}}</option>
-                                        <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'infant'">{{month.name}}</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-4">
-                                    <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'" ng-required="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'">
-                                        <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
-                                    </select>
-                                    <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="Passenger.type == 'child'">
-                                        <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
-                                    </select>
-                                    <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="Passenger.type == 'infant'">
-                                        <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
-                                    </select>
+                            <div class="form-group important">
+                                <label class="control-label">Nomor Telepon : </label>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <p><small>Kode Negara</small></p>
+                                        <input type="number" value="" ng-model="buyerInfo.countryCode" name="PhoneCode" class="form-control" placeholder="Ex : 62 for Indonesia" required />
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <p><small>Nomor Telepon (Tanpa Kode Negara)</small></p>
+                                        <input type="number" value="" ng-model="buyerInfo.phone" name="Phone" class="form-control" placeholder="Ex : 821 2345 6789" required />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- passenger birth date end-->
-                        <!-- passenger passport start -->
-                        
-                        <div class="form-group" ng-if="CheckoutConfig.PassportRequired">
-                            <label class="control-label">No. Paspor</label>
-                            <input type="text" value="" class="form-control" name="passenger_{{$index}}_passportNumber" ng-model="Passenger.passport.number" ng-required="CheckoutConfig.PassportRequired" />
-                        </div>
 
-                        <div class="form-group important" ng-if="CheckoutConfig.PassportRequired">
-                            <label class="control-label">Tanggal Kadaluarsa Paspor: </label>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <select class="form-control" name="passenger_{{$index}}_expiryDate" ng-model="Passenger.passport.expire.date"
-                                            ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
-                                        <option value="{{date}}" ng-repeat="date in dates(Passenger.passport.expire.month, Passenger.passport.expire.year)" ng-selected="date == Passenger.passport.expire.date">{{date}}</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-4">
-                                    <select class="form-control" name="passenger_{{$index}}_expiryMonth" ng-model="Passenger.passport.expire.month"
-                                            ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
-                                        <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.passport.expire.month">{{month.name}}</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-4">
-                                    <select class="form-control" name="passenger_{{$index}}_expiryYear" ng-model="Passenger.passport.expire.year"
-                                            ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
-                                        <option value="{{year}}" ng-repeat="year in generateYear('passport')" ng-selected="year == Passenger.passport.expire.year">{{year}}</option>
-                                    </select>
-                                </div>
+                            <div class="form-group important" ng-class="{'has-error' : BuyerForm.email.$touched && BuyerForm.email.$invalid}">
+                                <label class=" control-label">Masukkan alamat e-mail Anda : </label>
+                                <input type="email" value="" ng-model="buyerInfo.email" name="Email" class="form-control" placeholder="Ex: name@domain.com" required />
                             </div>
-                        </div>
-                    
-                        <div class="form-group" ng-if="CheckoutConfig.PassportRequired">
-                            <label class="control-label">Negara Penerbit Paspor</label>
-                            <select class="form-control" name="passenger_{{$index}}_passportCountry" ng-model="Passenger.passport.country" ng-init="Passenger.passport.country = 'ID'" ng-required="CheckoutConfig.PassportRequired">
-                                <option ng-repeat="country in Countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
-                            </select>
-                        </div>
-                        <!-- passenger passport end -->
-                        <!-- passenger nationality start -->
-                        <div class="form-group" ng-show="CheckoutConfig.NationalityRequired || CheckoutConfig.PassportRequired">
-                            <label class="control-label">Kewarganegaraan</label>
-                            <select class="form-control" name="passenger_{{$index}}_nationality" ng-model="Passenger.nationality" ng-init="Passenger.nationality = 'ID'" ng-required="CheckoutConfig.NationalityRequired">
-                                <option ng-repeat="country in Countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
-                            </select>
-                        </div>
-                        <!-- passenger nationality end -->
 
-                    </div><!-- .passenger__body -->
+                            <div class="form-group">
+                                <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(2)" ng-disabled="BuyerForm.$invalid">LANJUT</button>
+                            </div>
 
-                </div><!-- .passenger -->
-
-                <div class="form-group">
-                    <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
-                    <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
-                </div>
-
-            </form>
-
-        </div><!-- .page-step-2 -->
-
-        <div class="page-step-3" ng-show="PageConfig.ActivePage == 3">
-
-            <div class="summary summary--price">
-                <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
-                <div class="summary__body">
-                    <dl>
-                        <dt>Total Tiket</dt>
-                        <dd><sup>Rp</sup> {{CheckoutConfig.Price | number}}</dd>
-                    </dl>
-                </div><!-- .summary__body -->
-            </div><!-- .summar--price -->
-
-
-            <div class="summary summary--passenger">
-                <h3 class="summary__title"><b>DATA</b> KONTAK</h3>
-                <div class="summary__body">
-                    <ol>
-                        <li>
-                            <h4>
-                                <span>{{changeTitle(buyerInfo.title)}}</span>
-                                {{buyerInfo.name}}
-                            </h4>
-                            <dl>
-                                <dt>No. Telepon</dt>
-                                <dd>+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</dd>
-                            </dl>
-                            <dl>
-                                <dt>E-mail</dt>
-                                <dd>{{buyerInfo.email}}</dd>
-                            </dl>
-                        </li>
-                    </ol>
-                </div><!-- .summary__body -->
-            </div><!-- .summary--DATACONTACT -->
-
-            <div class="summary summary--passenger">
-                <h3 class="summary__title"><b>DAFTAR</b> PENUMPANG</h3>
-                <div class="summary__body">
-                    <ol>
-                        <li ng-repeat="Passenger in passengers">
-                            <h4>
-                                <span>{{changeTitle(Passenger.title)}}</span>
-                                {{Passenger.name}}
-                            </h4>
-                            <dl>
-                                <dt>Jenis Tiket</dt>
-                                <dd>{{Passenger.typeName}}</dd>
-                            </dl>
-                            <dl ng-if="CheckoutConfig.BirthDateRequired">
-                                <dt>Tanggal Lahir</dt>
-                                <dd>{{Passenger.birth.date}} {{getMonth(parseInt(Passenger.birth.month)+1)}} {{Passenger.birth.year}}</dd>
-                            </dl>
-                            <dl ng-if="CheckoutConfig.PassportRequired">
-                                <dt>No. Paspor</dt>
-                                <dd>{{Passenger.passport.number}}</dd>
-                            </dl>
-                            <dl ng-if="CheckoutConfig.PassportRequired">
-                                <dt>Tgl. Kadaluarsa Paspor</dt>
-                                <dd>{{Passenger.passport.expire.date}} {{getMonth(parseInt(Passenger.passport.expire.month)+1)}} {{Passenger.passport.expire.year}}</dd>
-                            </dl>
-                            
-                        </li>
-                    </ol>
-                </div><!-- .summary__body -->
-            </div><!-- .summary--passenger -->
-            
-            <div class="overlay--flight-detail">
-                <div class="overlay__body overlay__content">
-                    <div class=" flight-fare-wrapper">
-                        <h3><b>DETAIL</b> PENERBANGAN</h3>
-                        <h4><b>BERANGKAT</b></h4>
-                        <div ng-if="CheckoutConfig.Trips[0]">
-                            <div class="flight-title flight-title--departure">
-                                <div class="flight-info">
-                                    <h4><b>@trips[0].OriginCity</b> ke <b>@trips[0].DestinationCity</b></h4>
-                                    <h5>@trips[0].DepartureDate.ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                </div><!-- .flight-info -->
-                            </div><!-- .flight-title -->
-                            @for (var segment = 0; segment < trips[0].Segments.Count; segment++)
-                            {
-                                <div class="flight-wrapper">
-                                   
-                                    <div class="flight">
-                                        <div class="flight__number">
-                                            <span>@(segment+1)</span>
-                                        </div><!-- .flight__number -->
-                                        <div class="flight__content">
-                                            <div class="flight__summary">
-                                                <img class="flight__image" src="@trips[0].Airlines[0].LogoUrl" alt="@trips[0].Airlines[0].Name">
-                                                <div class="flight__airline">
-                                                    <h4><b>@trips[0].Airlines[0].Name</b></h4>
-                                                    <h5>@trips[0].Airlines[0].Code-@trips[0].Segments[segment].FlightNumber</h5>
-                                                </div>
-                                            </div><!-- .flight__summary -->
-                                            <div class="flight__detail">
-                                                <div class="flight__departure">
-                                                    <h5>@trips[0].Segments[segment].DepartureTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                    <h4><b>@trips[0].Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
-                                                    <h5><b>@trips[0].Segments[segment].DepartureCity (@trips[0].Segments[segment].DepartureAirport)</b></h5>
-                                                    <h5>@trips[0].Segments[segment].DepartureAirportName</h5>
-                                                </div>
-                                                <div class="flight__separator">
-                                                    <h5><b>Durasi: </b>@msToTime(trips[0].Segments[segment].Duration)</h5>
-                                                </div>
-                                                <div class="flight__arrival">
-                                                    <h5>@trips[0].Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                    <h4><b>@trips[0].Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
-                                                    <h5><b>@trips[0].Segments[segment].ArrivalCity (@trips[0].Segments[segment].ArrivalAirport)</b></h5>
-                                                    <h5>@trips[0].Segments[segment].ArrivalAirportName</h5>
-                                                </div><!-- .flight__arrival -->
-                                            </div><!-- .flight__detail -->
-                                        </div><!-- .flight__content -->
-                                    </div><!-- .flight -->
-                                    @if (trips[0].Transits.Count > 0 && segment < trips[0].TotalTransit)
-                                    {
-                                        <div class="transit">
-                                            <span>Transit di @trips[0].Segments[segment].ArrivalCity (@trips[0].Segments[segment].ArrivalAirportName) selama <b>@msToTime(trips[0].Transits.ElementAt(segment).Duration)</b></span>
-                                        </div><!-- .transit -->
-                                    }   
-                                </div> <!-- .flight-wrapper -->
-                            }
-                        </div>
-                    </div><!-- .flight-fare-wrapper -->
-                </div><!-- .overlay__body -->
-            </div><!-- .overlay--flight-detail -->
-            
-        @if (trips.Count > 1)
-        {
-            <div class="overlay--flight-detail">
-                <div class="overlay__body overlay__content">
-                    <div class=" flight-fare-wrapper">
-                        <h4><b>KEMBALI</b></h4>
-                            <div class="flight-title flight-title--departure">
-                                <div class="flight-info">
-                                    <h4><b>@trips[1].OriginCity</b> ke <b>@trips[1].DestinationCity</b></h4>
-                                    <h5>@trips[1].DepartureDate.ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                </div><!-- .flight-info -->
-                            </div><!-- .flight-title -->
-                            @for (var segment = 0; segment < trips[1].Segments.Count; segment++)
-                            {
-                                <div class="flight-wrapper">
-
-                                    <div class="flight">
-                                        <div class="flight__number">
-                                            <span>@(segment+1)</span>
-                                        </div><!-- .flight__number -->
-                                        <div class="flight__content">
-                                            <div class="flight__summary">
-                                                <img class="flight__image" src="@trips[1].Airlines[0].LogoUrl" alt="@trips[1].Airlines[0].Name">
-                                                <div class="flight__airline">
-                                                    <h4><b>@trips[1].Airlines[0].Name</b></h4>
-                                                    <h5>@trips[1].Airlines[0].Code-@trips[1].Segments[segment].FlightNumber</h5>
-                                                </div>
-                                            </div><!-- .flight__summary -->
-                                            <div class="flight__detail">
-                                                <div class="flight__departure">
-                                                    <h5>@trips[1].Segments[segment].DepartureTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                    <h4><b>@trips[1].Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
-                                                    <h5><b>@trips[1].Segments[segment].DepartureCity (@trips[1].Segments[segment].DepartureAirport)</b></h5>
-                                                    <h5>@trips[1].Segments[segment].DepartureAirportName</h5>
-                                                </div>
-                                                <div class="flight__separator">
-                                                    <h5><b>Durasi: </b>@msToTime(trips[1].Segments[segment].Duration)</h5>
-                                                </div>
-                                                <div class="flight__arrival">
-                                                    <h5>@trips[1].Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                    <h4><b>@trips[1].Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
-                                                    <h5><b>@trips[1].Segments[segment].ArrivalCity (@trips[1].Segments[segment].ArrivalAirport)</b></h5>
-                                                    <h5>@trips[1].Segments[segment].ArrivalAirportName</h5>
-                                                </div><!-- .flight__arrival -->
-                                            </div><!-- .flight__detail -->
-                                        </div><!-- .flight__content -->
-                                    </div><!-- .flight -->
-                                    @if (trips[1].Transits.Count > 0 && segment < trips[1].TotalTransit)
-                                    {
-                                        <div class="transit">
-                                            <span>Transit di @trips[1].Segments[segment].ArrivalCity selama <b>@msToTime(trips[1].Transits.ElementAt(segment).Duration)</b></span>
-                                        </div><!-- .transit -->
-                                    }
-                                </div> <!-- .flight-wrapper -->
-                            }
-                        
-                    </div><!-- .flight-fare-wrapper -->
-                </div><!-- .overlay-body.overlay-content -->
-            </div><!-- .overlay--flight-detail -->
-        }
-         
-            <form name="finalForm" ng-submit="book.send()">
-
-                <div class="hidden">
-                    <input type="text" name="Token" value="" ng-model="token" />
-                    <input type="text" name="Language" value="" ng-model="language" />
-
-                    <p>Buyer Info</p>
-                    <input type="text" name="Contact.Name" value="" ng-model="buyerInfo.name" />
-                    <input type="text" name="Contact.CountryCode" value="" ng-model="buyerInfo.countryCode" />
-                    <input type="text" name="Contact.Phone" value="" ng-model="buyerInfo.phone" />
-                    <input type="text" name="Contact.Email" value="" ng-model="buyerInfo.email" />
-
-                    <p>Passenger Info</p>
-                    <div ng-repeat="passenger in passengers track by $index">
-
-                        <input type="text" name="Passengers[{{$index}}].Type" value="" ng-model="passenger.type" />
-                        <input type="text" name="Passengers[{{$index}}].Title" value="" ng-model="passenger.title" />
-                        <input type="text" name="Passengers[{{$index}}].Name" value="" ng-model="passenger.name" />
-                        <input type="text" name="Passengers[{{$index}}].BirthDate.Year" value="" ng-model="passenger.birth.year" />
-                        <input type="text" name="Passengers[{{$index}}].BirthDate.Month" value="" ng-model="passenger.birth.month" />
-                        <input type="text" name="Passengers[{{$index}}].BirthDate.Date" value="" ng-model="passenger.birth.date" />
-
-                        <input type="text" name="Passengers[{{$index}}].PassportNumber" value="" ng-model="passenger.passport.number" />
-                        <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Year" value="" ng-model="passenger.passport.expire.year" />
-                        <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Month" value="" ng-model="passenger.passport.expire.month" />
-                        <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Date" value="" ng-model="passenger.passport.expire.date" />
-                        <input type="text" name="Passengers[{{$index}}].PassportCountry" value="" ng-model="passenger.passport.country" />
-                        <input type="text" name="Passengers[{{$index}}].idNumber" value="" ng-model="passenger.idNumber" />
-                        <input type="text" name="Passengers[{{$index}}].Country" value="" ng-model="passenger.nationality" />
-
-                    </div>
-
-                    <p>Voucher Code</p>
-                    <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
-
-                    <p>Payment Method</p>
-                    <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
-                </div>
-
-                <a class="btn btn-grey" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(2)">KEMBALI</a>
-                <input type="submit" class="btn btn-yellow" value="{{ !book.booking ? 'PESAN' : 'MEMPROSES' }}" >
-
-            </form><!-- finalForm -->
-
-            <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
-                <input type="text" name="RsvNo" value="" id="rsvno-input" />
-            </form>   
-        </div><!-- .page-step-3 -->
-    </div><!-- .page-body -->
-
-    <!-- additional overlay page start -->
-    <div class="overlay datepicker overlay--theme--blue" id="calendar-overlay">
-        <div class="overlay__header">
-            <h3 class="overlay__title">Tanggal Lahir <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span></h3>
-        </div><!-- .overlay__header -->
-        <div class="overlay__body">
-            <div class="ui-datepicker"></div>
-        </div><!-- .overlay__body -->
-    </div>
-    <!-- additional overlay page end -->
-    <!-- popup expired -->
-    <div class="popup__wrapper" ng-class="{'active':PageConfig.ExpiryDate.Expired}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Checkout Kadaluarsa</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container_new">
-                    <p>Maaf, waktu checkout Anda sudah habis. Silakan klik tombol dibawah untuk kembali ke halaman pencarian.</p>
-                </div>
-            </div>
-            <div class="popup__footer">
-                <div class="container_new">
-                    <div class="row1">
-                        <div class="col12">
-                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="popup__wrapper" ng-class="{'active': book.checked == true && book.isSuccess == false}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Pemesanan Gagal</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container_new">
-                    <p>Mohon Maaf, pemesanan Anda gagal di proses.</p>
-                </div>
-            </div>
-            <div class="popup__footer">
-                <div class="container_new">
-                    <div class="row1">
-                        <div class="col12">
-                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="popup__wrapper" ng-class="{'active': book.invalidData == true}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Pemesanan Gagal</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container_new">
-                    <p>Mohon Maaf, pemesanan Anda gagal di proses karena data kurang tepat. Silakan pesan dan cek kembali data Anda.</p>
-                </div>
-            </div>
-            <div class="popup__footer">
-                <div class="container_new">
-                    <div class="row1">
-                        <div class="col12">
-                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="popup__wrapper" ng-class="{'active': book.booking == true}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Mohon Tunggu</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container_new">
-                    <p>Sedang memproses pemesanan Anda ke maskapai. Proses ini dapat berlangsung hingga 5 (lima) menit.</p>
-                </div>
-            </div>
-            @*<div class="popup__footer">
-                <div class="container_new">
-                    <div class="row1">
-                        <div class="col12">
-                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
-        </div>
-    </div>
-
-    <div class="popup__wrapper" ng-class="{'active': book.checked == true && book.isSuccess == true}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Pemesanan Berhasil</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container_new">
-                    <p>Penerbangan Tersedia. Mengalihkan Anda ke halaman pembayaran.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="popup__wrapper" ng-class="{'active': book.isPriceChanged == true}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Harga Berubah</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container_new">
-                    <p>Harga tiket ini berubah menjadi Rp {{book.newPrice}} disebabkan perubahan harga dari maskapai.</p>
-                </div>
-            </div>
-            <footer>
-                <div class="container_new">
-                    <div class="row1">
-                        <div class="col-sm-6">
-                            <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
-                        </div>
-                        <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()" class="ng-pristine ng-valid col-sm-6">
-                            <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI">
                         </form>
+
+                    </div>
+                </div><!-- .page-step-1 -->
+
+                <div class="page-step-2" ng-show="PageConfig.ActivePage == 2">
+                    <h3><b>DATA</b> PENUMPANG</h3>
+
+                    <form novalidate name="PassengerForm">
+                        <div class="passenger passenger-{{$index}}" id="passenger-{{$index}}" ng-repeat="Passenger in passengers track by $index" ng-init="initPassenger(Passenger)">
+                            <header class=" passenger__header">
+                                <h4 class="passenger__title" ng-if="Passenger.type == 'adult'">Penumpang {{$index + 1}} (Dewasa)</h4>
+                                <h4 class="passenger__title" ng-if="Passenger.type == 'child'">Penumpang {{$index + 1}} (Anak)</h4>
+                                <h4 class="passenger__title" ng-if="Passenger.type == 'infant'">Penumpang {{$index + 1}} (Bayi)</h4>
+                            </header><!-- .passenger__header -->
+                            <div class="passenger__body">
+                                <div class="form-group">
+                                    <label class="control-label">Titel : </label>
+                                    <select class="form-control" required ng-model="Passenger.title" name="passenger_{{$index}}_title" ng-init="Passenger.title = titles[0].value">
+                                        <option ng-repeat="title in titles" value="{{title.value}}" ng-if="Passenger.type == 'adult'">{{title.name}}</option>
+                                        <option ng-repeat="title in titleKids" value="{{title.value}}" ng-if="Passenger.type != 'adult'">{{title.name}}</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group important">
+                                    <label class="control-label">Nama Lengkap : </label>
+                                    <input type="text" value="" class="form-control" required name="passenger_{{$index}}_name" placeholder="Ex : John" ng-model="Passenger.name" />
+                                </div>
+
+
+                                <!-- passenger birth date start -->
+                                <div class="form-group important" ng-if="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
+                                    <label class="control-label">Tanggal Lahir: </label>
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" ng-change="ValidateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'adult'">{{date}}</option>
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'child'">{{date}}</option>
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'infant'">{{date}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" ng-change="ValidateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'child'">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'infant'">{{month.name}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'" ng-required="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'">
+                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
+                                            </select>
+                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="Passenger.type == 'child'">
+                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
+                                            </select>
+                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="Passenger.type == 'infant'">
+                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- passenger birth date end-->
+                                <!-- passenger passport start -->
+
+                                <div class="form-group" ng-if="CheckoutConfig.PassportRequired">
+                                    <label class="control-label">No. Paspor</label>
+                                    <input type="text" value="" class="form-control" name="passenger_{{$index}}_passportNumber" ng-model="Passenger.passport.number" ng-required="CheckoutConfig.PassportRequired" />
+                                </div>
+
+                                <div class="form-group important" ng-if="CheckoutConfig.PassportRequired">
+                                    <label class="control-label">Tanggal Kadaluarsa Paspor: </label>
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <select class="form-control" name="passenger_{{$index}}_expiryDate" ng-model="Passenger.passport.expire.date"
+                                                    ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.passport.expire.month, Passenger.passport.expire.year)" ng-selected="date == Passenger.passport.expire.date">{{date}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <select class="form-control" name="passenger_{{$index}}_expiryMonth" ng-model="Passenger.passport.expire.month"
+                                                    ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.passport.expire.month">{{month.name}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <select class="form-control" name="passenger_{{$index}}_expiryYear" ng-model="Passenger.passport.expire.year"
+                                                    ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
+                                                <option value="{{year}}" ng-repeat="year in generateYear('passport')" ng-selected="year == Passenger.passport.expire.year">{{year}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" ng-if="CheckoutConfig.PassportRequired">
+                                    <label class="control-label">Negara Penerbit Paspor</label>
+                                    <select class="form-control" name="passenger_{{$index}}_passportCountry" ng-model="Passenger.passport.country" ng-init="Passenger.passport.country = 'ID'" ng-required="CheckoutConfig.PassportRequired">
+                                        <option ng-repeat="country in Countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
+                                    </select>
+                                </div>
+                                <!-- passenger passport end -->
+                                <!-- passenger nationality start -->
+                                <div class="form-group" ng-show="CheckoutConfig.NationalityRequired || CheckoutConfig.PassportRequired">
+                                    <label class="control-label">Kewarganegaraan</label>
+                                    <select class="form-control" name="passenger_{{$index}}_nationality" ng-model="Passenger.nationality" ng-init="Passenger.nationality = 'ID'" ng-required="CheckoutConfig.NationalityRequired">
+                                        <option ng-repeat="country in Countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
+                                    </select>
+                                </div>
+                                <!-- passenger nationality end -->
+
+                            </div><!-- .passenger__body -->
+
+                        </div><!-- .passenger -->
+
+                        <div class="form-group">
+                            <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
+                            <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
+                        </div>
+
+                    </form>
+
+                </div><!-- .page-step-2 -->
+
+                <div class="page-step-3" ng-show="PageConfig.ActivePage == 3">
+
+                    <div class="summary summary--price">
+                        <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
+                        <div class="summary__body">
+                            <dl>
+                                <dt>Total Tiket</dt>
+                                <dd><sup>Rp</sup> {{CheckoutConfig.Price | number}}</dd>
+                            </dl>
+                        </div><!-- .summary__body -->
+                    </div><!-- .summar--price -->
+
+
+                    <div class="summary summary--passenger">
+                        <h3 class="summary__title"><b>DATA</b> KONTAK</h3>
+                        <div class="summary__body">
+                            <ol>
+                                <li>
+                                    <h4>
+                                        <span>{{changeTitle(buyerInfo.title)}}</span>
+                                        {{buyerInfo.name}}
+                                    </h4>
+                                    <dl>
+                                        <dt>No. Telepon</dt>
+                                        <dd>+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>E-mail</dt>
+                                        <dd>{{buyerInfo.email}}</dd>
+                                    </dl>
+                                </li>
+                            </ol>
+                        </div><!-- .summary__body -->
+                    </div><!-- .summary--DATACONTACT -->
+
+                    <div class="summary summary--passenger">
+                        <h3 class="summary__title"><b>DAFTAR</b> PENUMPANG</h3>
+                        <div class="summary__body">
+                            <ol>
+                                <li ng-repeat="Passenger in passengers">
+                                    <h4>
+                                        <span>{{changeTitle(Passenger.title)}}</span>
+                                        {{Passenger.name}}
+                                    </h4>
+                                    <dl>
+                                        <dt>Jenis Tiket</dt>
+                                        <dd>{{Passenger.typeName}}</dd>
+                                    </dl>
+                                    <dl ng-if="CheckoutConfig.BirthDateRequired">
+                                        <dt>Tanggal Lahir</dt>
+                                        <dd>{{Passenger.birth.date}} {{getMonth(parseInt(Passenger.birth.month)+1)}} {{Passenger.birth.year}}</dd>
+                                    </dl>
+                                    <dl ng-if="CheckoutConfig.PassportRequired">
+                                        <dt>No. Paspor</dt>
+                                        <dd>{{Passenger.passport.number}}</dd>
+                                    </dl>
+                                    <dl ng-if="CheckoutConfig.PassportRequired">
+                                        <dt>Tgl. Kadaluarsa Paspor</dt>
+                                        <dd>{{Passenger.passport.expire.date}} {{getMonth(parseInt(Passenger.passport.expire.month)+1)}} {{Passenger.passport.expire.year}}</dd>
+                                    </dl>
+
+                                </li>
+                            </ol>
+                        </div><!-- .summary__body -->
+                    </div><!-- .summary--passenger -->
+
+                    <div class="overlay--flight-detail">
+                        <div class="overlay__body overlay__content">
+                            <div class=" flight-fare-wrapper">
+                                <h3><b>DETAIL</b> PENERBANGAN</h3>
+                                <h4><b>BERANGKAT</b></h4>
+                                <div ng-if="CheckoutConfig.Trips[0]">
+                                    <div class="flight-title flight-title--departure">
+                                        <div class="flight-info">
+                                            <h4><b>@trips[0].OriginCity</b> ke <b>@trips[0].DestinationCity</b></h4>
+                                            <h5>@trips[0].DepartureDate.GetValueOrDefault().ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                        </div><!-- .flight-info -->
+                                    </div><!-- .flight-title -->
+                                    @for (var segment = 0; segment < trips[0].Segments.Count; segment++)
+                                    {
+                                        <div class="flight-wrapper">
+
+                                            <div class="flight">
+                                                <div class="flight__number">
+                                                    <span>@(segment + 1)</span>
+                                                </div><!-- .flight__number -->
+                                                <div class="flight__content">
+                                                    <div class="flight__summary">
+                                                        <img class="flight__image" src="@trips[0].Airlines[0].LogoUrl" alt="@trips[0].Airlines[0].Name">
+                                                        <div class="flight__airline">
+                                                            <h4><b>@trips[0].Airlines[0].Name</b></h4>
+                                                            <h5>@trips[0].Airlines[0].Code-@trips[0].Segments[segment].FlightNumber</h5>
+                                                        </div>
+                                                    </div><!-- .flight__summary -->
+                                                    <div class="flight__detail">
+                                                        <div class="flight__departure">
+                                                            <h5>@trips[0].Segments[segment].DepartureTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                            <h4><b>@trips[0].Segments[segment].DepartureTime.GetValueOrDefault().ToString("HH:mm")</b></h4>
+                                                            <h5><b>@trips[0].Segments[segment].DepartureCity (@trips[0].Segments[segment].DepartureAirport)</b></h5>
+                                                            <h5>@trips[0].Segments[segment].DepartureAirportName</h5>
+                                                        </div>
+                                                        <div class="flight__separator">
+                                                            <h5><b>Durasi: </b>@msToTime(trips[0].Segments[segment].Duration.GetValueOrDefault())</h5>
+                                                        </div>
+                                                        <div class="flight__arrival">
+                                                            <h5>@trips[0].Segments[segment].ArrivalTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                            <h4><b>@trips[0].Segments[segment].ArrivalTime.GetValueOrDefault().ToString("HH:mm")</b></h4>
+                                                            <h5><b>@trips[0].Segments[segment].ArrivalCity (@trips[0].Segments[segment].ArrivalAirport)</b></h5>
+                                                            <h5>@trips[0].Segments[segment].ArrivalAirportName</h5>
+                                                        </div><!-- .flight__arrival -->
+                                                    </div><!-- .flight__detail -->
+                                                </div><!-- .flight__content -->
+                                            </div><!-- .flight -->
+                                            @if (trips[0].Transits.Count > 0 && segment < trips[0].TotalTransit)
+                                            {
+                                                <div class="transit">
+                                                    <span>Transit di @trips[0].Segments[segment].ArrivalCity (@trips[0].Segments[segment].ArrivalAirportName) selama <b>@msToTime(trips[0].Transits.ElementAt(segment).Duration)</b></span>
+                                                </div><!-- .transit -->
+                                            }
+                                        </div> <!-- .flight-wrapper -->
+                                    }
+                                </div>
+                            </div><!-- .flight-fare-wrapper -->
+                        </div><!-- .overlay__body -->
+                    </div><!-- .overlay--flight-detail -->
+                    @if (trips.Count > 1)
+                    {
+                        <div class="overlay--flight-detail">
+                            <div class="overlay__body overlay__content">
+                                <div class=" flight-fare-wrapper">
+                                    <h4><b>KEMBALI</b></h4>
+                                    <div class="flight-title flight-title--departure">
+                                        <div class="flight-info">
+                                            <h4><b>@trips[1].OriginCity</b> ke <b>@trips[1].DestinationCity</b></h4>
+                                            <h5>@trips[1].DepartureDate.GetValueOrDefault().ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                        </div><!-- .flight-info -->
+                                    </div><!-- .flight-title -->
+                                    @for (var segment = 0; segment < trips[1].Segments.Count; segment++)
+                                    {
+                                        <div class="flight-wrapper">
+
+                                            <div class="flight">
+                                                <div class="flight__number">
+                                                    <span>@(segment + 1)</span>
+                                                </div><!-- .flight__number -->
+                                                <div class="flight__content">
+                                                    <div class="flight__summary">
+                                                        <img class="flight__image" src="@trips[1].Airlines[0].LogoUrl" alt="@trips[1].Airlines[0].Name">
+                                                        <div class="flight__airline">
+                                                            <h4><b>@trips[1].Airlines[0].Name</b></h4>
+                                                            <h5>@trips[1].Airlines[0].Code-@trips[1].Segments[segment].FlightNumber</h5>
+                                                        </div>
+                                                    </div><!-- .flight__summary -->
+                                                    <div class="flight__detail">
+                                                        <div class="flight__departure">
+                                                            <h5>@trips[1].Segments[segment].DepartureTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                            <h4><b>@trips[1].Segments[segment].DepartureTime.GetValueOrDefault().ToString("HH:mm")</b></h4>
+                                                            <h5><b>@trips[1].Segments[segment].DepartureCity (@trips[1].Segments[segment].DepartureAirport)</b></h5>
+                                                            <h5>@trips[1].Segments[segment].DepartureAirportName</h5>
+                                                        </div>
+                                                        <div class="flight__separator">
+                                                            <h5><b>Durasi: </b>@msToTime(trips[1].Segments[segment].Duration.GetValueOrDefault())</h5>
+                                                        </div>
+                                                        <div class="flight__arrival">
+                                                            <h5>@trips[1].Segments[segment].ArrivalTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                            <h4><b>@trips[1].Segments[segment].ArrivalTime.GetValueOrDefault().ToString("HH:mm")</b></h4>
+                                                            <h5><b>@trips[1].Segments[segment].ArrivalCity (@trips[1].Segments[segment].ArrivalAirport)</b></h5>
+                                                            <h5>@trips[1].Segments[segment].ArrivalAirportName</h5>
+                                                        </div><!-- .flight__arrival -->
+                                                    </div><!-- .flight__detail -->
+                                                </div><!-- .flight__content -->
+                                            </div><!-- .flight -->
+                                            @if (trips[1].Transits.Count > 0 && segment < trips[1].TotalTransit)
+                                            {
+                                                <div class="transit">
+                                                    <span>Transit di @trips[1].Segments[segment].ArrivalCity selama <b>@msToTime(trips[1].Transits.ElementAt(segment).Duration)</b></span>
+                                                </div><!-- .transit -->
+                                            }
+                                        </div> <!-- .flight-wrapper -->
+                                    }
+
+                                </div><!-- .flight-fare-wrapper -->
+                            </div><!-- .overlay-body.overlay-content -->
+                        </div><!-- .overlay--flight-detail -->
+                    }
+
+                    <form name="finalForm" ng-submit="book.send()">
+
+                        <div class="hidden">
+                            <input type="text" name="Token" value="" ng-model="token" />
+                            <input type="text" name="Language" value="" ng-model="language" />
+
+                            <p>Buyer Info</p>
+                            <input type="text" name="Contact.Name" value="" ng-model="buyerInfo.name" />
+                            <input type="text" name="Contact.CountryCode" value="" ng-model="buyerInfo.countryCode" />
+                            <input type="text" name="Contact.Phone" value="" ng-model="buyerInfo.phone" />
+                            <input type="text" name="Contact.Email" value="" ng-model="buyerInfo.email" />
+
+                            <p>Passenger Info</p>
+                            <div ng-repeat="passenger in passengers track by $index">
+
+                                <input type="text" name="Passengers[{{$index}}].Type" value="" ng-model="passenger.type" />
+                                <input type="text" name="Passengers[{{$index}}].Title" value="" ng-model="passenger.title" />
+                                <input type="text" name="Passengers[{{$index}}].Name" value="" ng-model="passenger.name" />
+                                <input type="text" name="Passengers[{{$index}}].BirthDate.Year" value="" ng-model="passenger.birth.year" />
+                                <input type="text" name="Passengers[{{$index}}].BirthDate.Month" value="" ng-model="passenger.birth.month" />
+                                <input type="text" name="Passengers[{{$index}}].BirthDate.Date" value="" ng-model="passenger.birth.date" />
+
+                                <input type="text" name="Passengers[{{$index}}].PassportNumber" value="" ng-model="passenger.passport.number" />
+                                <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Year" value="" ng-model="passenger.passport.expire.year" />
+                                <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Month" value="" ng-model="passenger.passport.expire.month" />
+                                <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Date" value="" ng-model="passenger.passport.expire.date" />
+                                <input type="text" name="Passengers[{{$index}}].PassportCountry" value="" ng-model="passenger.passport.country" />
+                                <input type="text" name="Passengers[{{$index}}].idNumber" value="" ng-model="passenger.idNumber" />
+                                <input type="text" name="Passengers[{{$index}}].Country" value="" ng-model="passenger.nationality" />
+
+                            </div>
+
+                            <p>Voucher Code</p>
+                            <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
+
+                            <p>Payment Method</p>
+                            <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
+                        </div>
+
+                        <a class="btn btn-grey" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(2)">KEMBALI</a>
+                        <input type="submit" class="btn btn-yellow" value="{{ !book.booking ? 'PESAN' : 'MEMPROSES' }}">
+
+                    </form><!-- finalForm -->
+
+                    <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                        <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                    </form>
+                </div><!-- .page-step-3 -->
+            </div><!-- .page-body -->
+            <!-- additional overlay page start -->
+            <div class="overlay datepicker overlay--theme--blue" id="calendar-overlay">
+                <div class="overlay__header">
+                    <h3 class="overlay__title">Tanggal Lahir <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span></h3>
+                </div><!-- .overlay__header -->
+                <div class="overlay__body">
+                    <div class="ui-datepicker"></div>
+                </div><!-- .overlay__body -->
+            </div>
+            <!-- additional overlay page end -->
+            <!-- popup expired -->
+            <div class="popup__wrapper" ng-class="{'active':PageConfig.ExpiryDate.Expired}">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Checkout Kadaluarsa</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <p>Maaf, waktu checkout Anda sudah habis. Silakan klik tombol dibawah untuk kembali ke halaman pencarian.</p>
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <div class="row1">
+                                <div class="col12">
+                                    <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </footer>
-        </div>
-    </div>
+            </div>
 
-</div><!-- .page-loaded -->
-        
-<!-- page end -->
+            <div class="popup__wrapper" ng-class="{'active': book.checked == true && book.isSuccess == false}">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Pemesanan Gagal</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <p>Mohon Maaf, pemesanan Anda gagal di proses.</p>
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <div class="row1">
+                                <div class="col12">
+                                    <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="popup__wrapper" ng-class="{'active': book.invalidData == true}">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Pemesanan Gagal</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <p>Mohon Maaf, pemesanan Anda gagal di proses karena data kurang tepat. Silakan pesan dan cek kembali data Anda.</p>
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <div class="row1">
+                                <div class="col12">
+                                    <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="popup__wrapper" ng-class="{'active': book.booking == true}">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Mohon Tunggu</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <p>Sedang memproses pemesanan Anda ke maskapai. Proses ini dapat berlangsung hingga 5 (lima) menit.</p>
+                        </div>
+                    </div>
+                    @*<div class="popup__footer">
+                            <div class="container_new">
+                                <div class="row1">
+                                    <div class="col12">
+                                        <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+
+            <div class="popup__wrapper" ng-class="{'active': book.checked == true && book.isSuccess == true}">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Pemesanan Berhasil</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <p>Penerbangan Tersedia. Mengalihkan Anda ke halaman pembayaran.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="popup__wrapper" ng-class="{'active': book.isPriceChanged == true}">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Harga Berubah</h4>
+                    </header>
+                    <div class="popup__body price-change-body">
+                        <div class="container_new">
+                            <p>Harga tiket ini berubah menjadi Rp {{book.newPrice}} disebabkan perubahan harga dari maskapai.</p>
+                        </div>
+                    </div>
+                    <footer>
+                        <div class="container_new price-change-footer">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                                </div>
+                                <div class="col-xs-12">
+                                    <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()" class="ng-pristine ng-valid">
+                                        <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI">
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+
+        </div><!-- .page-loaded -->
+
+        <!-- page end -->
+                    break;
+    case "BookExpired":
+    @:[Ini ceritanya page booking expired]
 break;
-case "BookExpired":
-@:[Ini ceritanya page booking expired]
+    case "NoLongerAvailable":
+    @:[Ini ceritanya page kalo fare-nya uda ga available lageh]
 break;
-case "NoLongerAvailable":
-@:[Ini ceritanya page kalo fare-nya uda ga available lageh]
-break;
-case "InvalidInputData":
-@:[Ini ceritanya page kalo input datanya ga bener]
+    case "InvalidInputData":
+    @:[Ini ceritanya page kalo input datanya ga bener]
 break;
 }

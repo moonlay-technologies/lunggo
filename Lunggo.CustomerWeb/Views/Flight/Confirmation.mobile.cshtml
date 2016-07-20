@@ -199,12 +199,12 @@
                                             {
                                                 <li>
                                                     <h4>
-                                                        <span>@EnumDisplay.Title(passenger.Title) </span>
-                                                        @passenger.FirstName @passenger.LastName
+                                                        <span>@EnumDisplay.Title(passenger.Title.GetValueOrDefault()) </span>
+                                                        @passenger.Name
                                                     </h4>
                                                     <dl>
                                                         <dt>Jenis Tiket</dt>
-                                                        @EnumDisplay.PassengerType(passenger.Type)
+                                                        @EnumDisplay.PassengerType(passenger.Type.GetValueOrDefault())
                                                     </dl>
                                                 </li>
                                             }
@@ -216,7 +216,7 @@
                                 <div class="flight-title flight-title--departure">
                                     <div class="flight-info">
                                         <h4><b>@dep.OriginCity</b> ke <b>@dep.DestinationCity</b></h4>
-                                        <h5>@dep.DepartureDate.ToString("ddd, d MMM yyyy",  new CultureInfo("id-ID"))</h5>
+                                        <h5>@dep.DepartureDate.GetValueOrDefault().ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                     </div><!-- .flight-info -->
                                 </div><!-- .flight-title -->
                                     @for (var segment = 0; segment < dep.Segments.Count; segment++)
@@ -236,17 +236,17 @@
                                                     </div><!-- .flight__summary -->
                                                     <div class="flight__detail">
                                                         <div class="flight__departure">
-                                                            <h5>@dep.Segments[segment].DepartureTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                            <h4><b>@dep.Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
+                                                            <h5>@dep.Segments[segment].DepartureTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                            <h4><b>@dep.Segments[segment].DepartureTime.GetValueOrDefault().ToString("HH:mm")</b></h4>
                                                             <h5><b>@dep.Segments[segment].DepartureCity (@dep.Segments[segment].DepartureAirport)</b></h5>
                                                             <h5>@dep.Segments[segment].DepartureAirportName</h5>
                                                         </div>
                                                         <div class="flight__separator">
-                                                            <h5><b>Durasi: </b>@msToTime(dep.Segments[segment].Duration)</h5>
+                                                            <h5><b>Durasi: </b>@msToTime(dep.Segments[segment].Duration.GetValueOrDefault())</h5>
                                                         </div>
                                                         <div class="flight__arrival">
-                                                            <h5>@dep.Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                            <h4><b>@dep.Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
+                                                            <h5>@dep.Segments[segment].ArrivalTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                            <h4><b>@dep.Segments[segment].ArrivalTime.GetValueOrDefault().ToString("HH:mm")</b></h4>
                                                             <h5><b>@dep.Segments[segment].ArrivalCity (@dep.Segments[segment].ArrivalAirport)</b></h5>
                                                             <h5>@dep.Segments[segment].ArrivalAirportName</h5>
                                                         </div><!-- .flight__arrival -->
@@ -275,7 +275,7 @@
                                         <div class="flight-title flight-title--departure">
                                             <div class="flight-info">
                                                 <h4><b>@ret.OriginCity</b> ke <b>@ret.DestinationCity</b></h4>
-                                                <h5>@ret.DepartureDate.ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                <h5>@ret.DepartureDate.GetValueOrDefault().ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
                                             </div><!-- .flight-info -->
                                         </div><!-- .flight-title -->
                                         @for (var segment = 0; segment < ret.Segments.Count; segment++)
@@ -296,17 +296,17 @@
                                                         </div><!-- .flight__summary -->
                                                         <div class="flight__detail">
                                                             <div class="flight__departure">
-                                                                <h5>@ret.Segments[segment].DepartureTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                                <h4><b>@ret.Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
+                                                                <h5>@ret.Segments[segment].DepartureTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                                <h4><b>@ret.Segments[segment].DepartureTime.GetValueOrDefault().ToString("HH:mm")</b></h4>
                                                                 <h5><b>@ret.Segments[segment].DepartureCity (@ret.Segments[segment].DepartureAirport)</b></h5>
                                                                 <h5>@ret.Segments[segment].DepartureAirportName</h5>
                                                             </div>
                                                             <div class="flight__separator">
-                                                                <h5><b>Durasi: </b>@msToTime(ret.Segments[segment].Duration)</h5>
+                                                                <h5><b>Durasi: </b>@msToTime(ret.Segments[segment].Duration.GetValueOrDefault())</h5>
                                                             </div>
                                                             <div class="flight__arrival">
-                                                                <h5>@ret.Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                                <h4><b>@ret.Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
+                                                                <h5>@ret.Segments[segment].ArrivalTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                                <h4><b>@ret.Segments[segment].ArrivalTime.GetValueOrDefault().ToString("HH:mm")</b></h4>
                                                                 <h5><b>@ret.Segments[segment].ArrivalCity (@ret.Segments[segment].ArrivalAirport)</b></h5>
                                                                 <h5>@ret.Segments[segment].ArrivalAirportName</h5>
                                                             </div><!-- .flight__arrival -->
