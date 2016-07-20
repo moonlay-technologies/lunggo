@@ -73,7 +73,7 @@
         var paymentDetail = '';
         var flightDetail = '';
         var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
-        var price = @Model.Reservation.Itinerary.TotalFare;
+        var price = @Model.Reservation.Itinerary.OriginalTotalFare;
 
         var departureDate;
         @if (Model.Reservation.Itinerary.Trips != null)
@@ -263,7 +263,7 @@
                         <h3 class="no-spacing"><b>Detail </b>Kartu Kredit</h3>
 
                         <!-- credit card selector start -->
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <div class="row">
                                 <div class="col-sm-8">
                                     <label>Pilih kartu kredit :</label>
@@ -280,7 +280,7 @@
                                     <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                         <!-- credit card selector end -->
                         <!-- new credit card start -->
                         <div ng-if="CreditCard.TwoClickToken == 'false'">

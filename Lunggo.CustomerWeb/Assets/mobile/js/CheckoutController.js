@@ -144,101 +144,101 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
     }
 
-    // transfer config
-    $scope.TransferConfig = {
-        UniqueCode: 0,
-        Token: '',
-        GetUniqueCode: function (rsvNo, voucherCode) {
-            if (!rsvNo) {
-                rsvNo = price;
-            }
-            //Check Authorization
-            var authAccess = getAuthAccess();
-            if (authAccess == 1 || authAccess == 2)
-            {
-                // get unique payment code
-                $http({
-                    method: 'POST',
-                    url: TransferConfig.Url,
-                    data: {
-                        rsvNo: rsvNo,
-                        discCode: $scope.voucher.code
-                    }
-                }).then(function (returnData) {
-                    console.log('Getting Unique Payment Code');
-                    console.log(returnData);
-                    $scope.TransferConfig.UniqueCode = returnData.data.transfer_code;
-                    $scope.TransferConfig.Token = returnData.data.token
+    //// transfer config
+    //$scope.TransferConfig = {
+    //    UniqueCode: 0,
+    //    Token: '',
+    //    GetUniqueCode: function (rsvNo, voucherCode) {
+    //        if (!rsvNo) {
+    //            rsvNo = price;
+    //        }
+    //        //Check Authorization
+    //        var authAccess = getAuthAccess();
+    //        if (authAccess == 1 || authAccess == 2)
+    //        {
+    //            // get unique payment code
+    //            $http({
+    //                method: 'POST',
+    //                url: TransferConfig.Url,
+    //                data: {
+    //                    rsvNo: rsvNo,
+    //                    discCode: $scope.voucher.code
+    //                }
+    //            }).then(function (returnData) {
+    //                console.log('Getting Unique Payment Code');
+    //                console.log(returnData);
+    //                $scope.TransferConfig.UniqueCode = returnData.data.transfer_code;
+    //                $scope.TransferConfig.Token = returnData.data.token
 
-                }, function (returnData) {
-                    console.log('Failed to get Unique Payment Code');
-                    console.log(returnData);
-                });
-            }
-            else {
-                console.log('Not Authorized');
-            }
+    //            }, function (returnData) {
+    //                console.log('Failed to get Unique Payment Code');
+    //                console.log(returnData);
+    //            });
+    //        }
+    //        else {
+    //            console.log('Not Authorized');
+    //        }
             
-        }
-    };
-    $scope.TransferConfig.GetUniqueCode($scope.CheckoutConfig.Price);
+    //    }
+    //};
+    //$scope.TransferConfig.GetUniqueCode($scope.CheckoutConfig.Price);
 
     // voucher code
-    $scope.voucher = {
-        confirmedCode: '',
-        code: '',
-        amount: 0,
-        status: '',
-        checking: false,
-        checked: false,
-        check: function () {
-            //Check Authorization
-            var authAccess = getAuthAccess();
-            $scope.voucher.checking = true;
-            if (authAccess == 1 || authAccess == 2)
-            {
-                $http({
-                    method: 'POST',
-                    url: CheckVoucherConfig.Url,
-                    data: {
-                        token: $scope.token,
-                        code: $scope.voucher.code,
-                        email: $scope.buyerInfo.email,
-                        price: $scope.initialPrice
-                    }
-                }).then(function (returnData) {
-                    console.log(returnData);
-                    $scope.voucher.checking = false;
-                    $scope.voucher.checked = true;
-                    $scope.voucher.status = returnData.data.ValidationStatus;
-                    if (returnData.data.Discount > 0) {
-                        $scope.voucher.amount = returnData.data.Discount;
-                        $scope.voucher.confirmedCode = $scope.voucher.code;
-                        $scope.voucher.displayName = returnData.data.DisplayName;
-                        // get unique code for transfer payment
-                        $scope.TransferConfig.GetUniqueCode($scope.initialPrice - $scope.voucher.amount);
-                    }
-                }, function (returnData) {
-                    $scope.voucher.checked = true;
-                    $scope.voucher.checking = false;
-                });
-            }
-            else {
-                console.log('Not Authorized');
-                $scope.voucher.checked = true;
-                $scope.voucher.checking = false;
-            }
+    //$scope.voucher = {
+    //    confirmedCode: '',
+    //    code: '',
+    //    amount: 0,
+    //    status: '',
+    //    checking: false,
+    //    checked: false,
+    //    check: function () {
+    //        //Check Authorization
+    //        var authAccess = getAuthAccess();
+    //        $scope.voucher.checking = true;
+    //        if (authAccess == 1 || authAccess == 2)
+    //        {
+    //            $http({
+    //                method: 'POST',
+    //                url: CheckVoucherConfig.Url,
+    //                data: {
+    //                    token: $scope.token,
+    //                    code: $scope.voucher.code,
+    //                    email: $scope.buyerInfo.email,
+    //                    price: $scope.initialPrice
+    //                }
+    //            }).then(function (returnData) {
+    //                console.log(returnData);
+    //                $scope.voucher.checking = false;
+    //                $scope.voucher.checked = true;
+    //                $scope.voucher.status = returnData.data.ValidationStatus;
+    //                if (returnData.data.Discount > 0) {
+    //                    $scope.voucher.amount = returnData.data.Discount;
+    //                    $scope.voucher.confirmedCode = $scope.voucher.code;
+    //                    $scope.voucher.displayName = returnData.data.DisplayName;
+    //                    // get unique code for transfer payment
+    //                    $scope.TransferConfig.GetUniqueCode($scope.initialPrice - $scope.voucher.amount);
+    //                }
+    //            }, function (returnData) {
+    //                $scope.voucher.checked = true;
+    //                $scope.voucher.checking = false;
+    //            });
+    //        }
+    //        else {
+    //            console.log('Not Authorized');
+    //            $scope.voucher.checked = true;
+    //            $scope.voucher.checking = false;
+    //        }
             
-        },
-        reset: function () {
-            $scope.voucher.code = '';
-            $scope.voucher.amount = 0;
-            $scope.voucher.confirmedCode = '';
-            $scope.voucher.checked = false;
-            // get unique code for transfer payment
-            $scope.TransferConfig.GetUniqueCode($scope.initialPrice);
-        }
-    };
+    //    },
+    //    reset: function () {
+    //        $scope.voucher.code = '';
+    //        $scope.voucher.amount = 0;
+    //        $scope.voucher.confirmedCode = '';
+    //        $scope.voucher.checked = false;
+    //        // get unique code for transfer payment
+    //        $scope.TransferConfig.GetUniqueCode($scope.initialPrice);
+    //    }
+    //};
 
     // book
     $scope.book = {
@@ -370,20 +370,28 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     + '/' + ('0' + (parseInt($scope.passengers[i].birth.month) + 1)).slice(-2) + '/'
                     + ('0' + $scope.passengers[i].birth.date).slice(-2);
 
+                if ($scope.birthDateRequired) {
+                    $scope.paxData = $scope.paxData + ', "dob":"' + $scope.passengers[i].birth.full + '"';
+                }
+
+                if ($scope.nationalityRequired) {
+                    $scope.paxData = $scope.paxData + ', "nationality":"' + $scope.passengers[i].passport.country + '"';
+                }
+
                 if (!$scope.CheckoutConfig.PassportRequired) {
                     if (i != $scope.passengers.length - 1) {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" },';
                     }
                     else {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '"  , "nationality":"' + $scope.passengers[i].passport.country + '" }';
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name +  '" }';
                     }
                 }
                 else {
                     if (i != $scope.passengers.length - 1) {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '", "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" },';
                     }
                     else {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" }';
+                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" }';
                     }
                 }
                 //$scope.book.postData = $scope.book.postData
