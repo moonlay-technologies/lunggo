@@ -21,22 +21,55 @@ namespace Lunggo.ApCommon.Identity.AuthStore
             }
         }
 
-        public async Task<bool> AddRefreshToken(RefreshToken token)
+        public async Task<RefreshToken> GetExistingRefreshToken(RefreshToken token)
         {
             return await Task.Run(() =>
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
                     var existingTokenRecord =
-                        GetRefreshTokenByClientAndIdQuery.GetInstance()
-                                .Execute(conn, new { token.Subject, token.ClientId })
+                        GetRefreshTokenByClientAndSubjectAndDeviceQuery.GetInstance()
+                                .Execute(conn, new { token.Subject, token.ClientId, token.DeviceId })
+                                .SingleOrDefault();
+                    return ToRefreshToken(existingTokenRecord);
+                }
+            });
+        }
+
+        public async Task<bool> AddOrReplaceRefreshToken(RefreshToken token, bool ignoreDevice)
+        {
+            return await Task.Run(() =>
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    if (ignoreDevice)
+                    {
+                        var existingTokenRecords =
+                            GetRefreshTokenByClientAndSubjectQuery.GetInstance()
+                                .Execute(conn, new {token.Subject, token.ClientId});
+
+                        Parallel.ForEach(existingTokenRecords, existingTokenRecord =>
+                        {
+                            var existingToken = ToRefreshToken(existingTokenRecord);
+                            if (existingToken != null)
+                                RemoveRefreshToken(existingToken).Wait();
+                        });
+
+                        return RefreshTokenTableRepo.GetInstance().Insert(conn, ToRefreshTokenRecord(token)) > 0;
+                    }
+                    else
+                    {
+                        var existingTokenRecord =
+                            GetRefreshTokenByClientAndSubjectAndDeviceQuery.GetInstance()
+                                .Execute(conn, new { token.Subject, token.ClientId, token.DeviceId })
                                 .SingleOrDefault();
 
-                    var existingToken = ToRefreshToken(existingTokenRecord);
-                    if (existingToken != null)
-                        RemoveRefreshToken(existingToken).Wait();
+                        var existingToken = ToRefreshToken(existingTokenRecord);
+                        if (existingToken != null)
+                            RemoveRefreshToken(existingToken).Wait();
 
-                    return RefreshTokenTableRepo.GetInstance().Insert(conn, ToRefreshTokenRecord(token)) > 0;
+                        return RefreshTokenTableRepo.GetInstance().Insert(conn, ToRefreshTokenRecord(token)) > 0;
+                    }
                 }
             });
         }
@@ -108,7 +141,6 @@ namespace Lunggo.ApCommon.Identity.AuthStore
                 Secret = record.Secret,
                 ApplicationType = ApplicationTypeCd.Mnemonic(record.ApplicationTypeCd),
                 IsActive = record.IsActive.GetValueOrDefault(),
-                RefreshTokenLifeTime = record.RefreshTokenLifeTime.GetValueOrDefault(),
                 AllowedOrigin = record.AllowedOrigin
             };
         }
@@ -125,7 +157,6 @@ namespace Lunggo.ApCommon.Identity.AuthStore
                 Secret = client.Secret,
                 ApplicationTypeCd = ApplicationTypeCd.Mnemonic(client.ApplicationType),
                 IsActive = client.IsActive,
-                RefreshTokenLifeTime = client.RefreshTokenLifeTime,
                 AllowedOrigin = client.AllowedOrigin
             };
         }
@@ -140,6 +171,7 @@ namespace Lunggo.ApCommon.Identity.AuthStore
                 Id = record.Id,
                 Subject = record.Subject,
                 ClientId = record.ClientId,
+                DeviceId = record.DeviceId,
                 IssueTime = record.IssueTime.GetValueOrDefault(),
                 ExpireTime = record.ExpireTime.GetValueOrDefault(),
                 ProtectedTicket = record.ProtectedTicket
@@ -156,6 +188,7 @@ namespace Lunggo.ApCommon.Identity.AuthStore
                 Id = token.Id,
                 Subject = token.Subject,
                 ClientId = token.ClientId,
+                DeviceId = token.DeviceId,
                 IssueTime = token.IssueTime,
                 ExpireTime = token.ExpireTime,
                 ProtectedTicket = token.ProtectedTicket
