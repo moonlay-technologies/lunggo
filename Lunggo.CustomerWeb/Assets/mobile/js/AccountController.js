@@ -7,9 +7,10 @@ app.controller('siteHeaderController', [
         $scope.authProfile = {}
         $scope.ProfileConfig = {
             getProfile: function () {
-                $scope.firstName = '';
-                $scope.lastName = '';
-                $http.get(GetProfileConfig.Url, {
+                $scope.name = '';
+                $http({
+                    method: 'GET',
+                    url: GetProfileConfig.Url,
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).success(function (returnData) {
                     if (returnData.status == "200") {
@@ -19,8 +20,8 @@ app.controller('siteHeaderController', [
                         $scope.email = returnData.email;
                         $scope.profileloaded = true;
                         console.log(returnData);
-                        $scope.firstName = returnData.first;
-                        $scope.lastName = returnData.last;
+                        $scope.name = returnData.name;
+                        //$scope.lastName = returnData.last;
                     }
                     else {
                         console.log('There is an error');
@@ -77,7 +78,9 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
     $scope.getdata = function () {
         var authAccess = getAuthAccess();
         if (authAccess == 2) {
-            $http.get(GetProfileConfig.Url, {
+            $http({
+                method: 'GET',
+                url: GetProfileConfig.Url,
                 headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
             }).success(function (returnData) {
                 if (returnData.status == "200") {
@@ -87,8 +90,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                     $scope.email = returnData.email;
                     $scope.profileloaded = true;
                     console.log(returnData);
-                    $scope.UserProfile.firstname = returnData.first;
-                    $scope.UserProfile.lastname = returnData.last;
+                    $scope.UserProfile.name = returnData.name;
                     $scope.UserProfile.phone = returnData.phone;
                     $scope.UserProfile.country = returnData.countryCallCd;
                 }
@@ -222,8 +224,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                     url: ChangeProfileConfig.Url,
                     method: 'PATCH',
                     data: {
-                        first: editProfile.firstname,
-                        last: editProfile.lastname,
+                        name: editProfile.name,
                         phone: editProfile.phone,
                         countryCallCd: editProfile.country
                     },
@@ -233,8 +234,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                     if (returnData.data.status == '200') {
                         console.log('Success requesting change profile');
                         //$scope.UserProfile.address = editProfile.address;
-                        $scope.UserProfile.firstname = editProfile.firstname;
-                        $scope.UserProfile.lastname = editProfile.lastname;
+                        $scope.UserProfile.name = editProfile.name;
 
                         $scope.UserProfile.phone = editProfile.phone;
                         $scope.UserProfile.country = editProfile.country;
@@ -403,8 +403,10 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
             //Check Authorization
             var authAccess = getAuthAccess();
             if (authAccess == 2) {
-                $http.get(TrxHistoryConfig.Url, {
-                    headers: { 'Authorization': $scope.getFlightHeader }
+                $http({
+                    method: 'GET',
+                    url: TrxHistoryConfig.Url,
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).success(function (returnData) {
                     if (returnData.status == "200") {
                         console.log('Success getting Transaction');
@@ -445,6 +447,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
         getLogout: function () {
             eraseCookie('accesstoken');
             eraseCookie('refreshtoken');
+            eraseCookie('authkey');
             //$scope.isLogin = false;
             $scope.logout.isLogout = true;
             window.location.href = "/";
@@ -645,8 +648,9 @@ app.controller('LoginController', ['$http', '$scope', '$rootScope', function($ht
                     }).then(function (returnData) {
                         $scope.User.Resubmitting = false;
                         if (returnData.data.status == '200') {
-                            setCookie('accesstoken', returnData.data.accessToken, returnData.data.expTime);
-                            setRefreshCookie('refreshtoken', returnData.data.FlightConfigrefreshToken);
+                            setCookie("accesstoken", returnData.data.accessToken, returnData.data.expTime);
+                            setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
+                            setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
                             $scope.User.Email = '';
                             $scope.User.Resubmitted = true;
                             window.location.href = "/";

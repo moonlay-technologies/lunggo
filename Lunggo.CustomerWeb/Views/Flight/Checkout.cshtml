@@ -621,14 +621,14 @@
                                                         <h5>{{trips[1].segments[0].departureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
                                                         <h3>{{trips[1].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}</h3>
                                                         <h4>{{trips[1].segments[0].departureCity}} ({{trips[1].segments[0].departure}})</h4>
-                                                        <h5>{{trips[1].segments[0].departureAirportName}}</h5>
+                                                        <h5>{{trips[1].segments[0].departureName}}</h5>
                                                     </div>
                                                     <div class="duration"></div>
                                                     <div class="destination">
                                                         <h5>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
                                                         <h3>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
-                                                        <h4>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalCity}} ({{trips[1].segments[ trips[0].segments.length - 1 ].arrivalAirport}})</h4>
-                                                        <h5>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalAirportName}}</h5>
+                                                        <h4>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalCity}} ({{trips[1].segments[ trips[0].segments.length - 1 ].arrival}})</h4>
+                                                        <h5>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalName}}</h5>
                                                     </div>
                                                 </div>
                                             </div>
