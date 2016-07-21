@@ -478,7 +478,8 @@ app.controller('singleFlightController', [
                         }
 
 
-                        //console.log('Progress : ' + $scope.Progress + ' %');
+                        console.log('Progress : ' + $scope.Progress + ' %');
+                
                         console.log(returnData);
 
                         // loop the function

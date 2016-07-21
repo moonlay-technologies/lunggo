@@ -489,10 +489,10 @@ if (typeof (angular) == 'object') {
                             }).done(function(returnData) {
                                 $('.autocomplete-loading .text-loading').hide();
                                 $rootScope.FlightSearchForm.AutoComplete.Loading = false;
-                                $rootScope.FlightSearchForm.AutoComplete.Result = returnData;
-                                $rootScope.FlightSearchForm.AutoComplete.Cache[keyword] = returnData;
+                                $rootScope.FlightSearchForm.AutoComplete.Result = returnData.airports;
+                                $rootScope.FlightSearchForm.AutoComplete.Cache[keyword] = returnData.airports;
                                 generateSearchResult($rootScope.FlightSearchForm.AutoComplete.Result);
-                                if (returnData.length > 0) {
+                                if (returnData.airports.length > 0) {
                                     $('.autocomplete-no-result').hide();
                                     $('.autocomplete-loading .text-loading').hide();
                                     $('.autocomplete-result').show();
@@ -646,10 +646,10 @@ if (typeof (angular) == 'object') {
                     '<li class="airport">' + 
                         '<a class="airport__link">' + 
                         '</a>' +
-                        '<span class="airport__code">'+ list[i].Code +'</span>' +
+                        '<span class="airport__code">'+ list[i].code +'</span>' +
                         '<div class="airport__detail">' +
-                            '<p class="airport__location">' + list[i].City + ', ' + list[i].Country + '</p>' +
-                            '<p class="airport__name">' + list[i].Name + '</p>' +
+                            '<p class="airport__location">' + list[i].city + ', ' + list[i].country + '</p>' +
+                            '<p class="airport__name">' + list[i].name + '</p>' +
                         '</div>' +
                       '</li>'
                 );
