@@ -114,8 +114,8 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
             {
                 return new DetailPromoApiResponse
                 {
-                    StatusCode = HttpStatusCode.Accepted,
-                    ErrorCode = "ERRPRO01"
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERXPRO01"
                 };
             }
             return new DetailPromoApiResponse

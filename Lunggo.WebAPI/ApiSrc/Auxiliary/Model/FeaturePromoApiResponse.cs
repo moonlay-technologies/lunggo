@@ -6,7 +6,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Model
 {
     public class FeaturePromoApiResponse : ApiResponseBase
     {
-        [JsonProperty("promos")]
+        [JsonProperty("featurePromos")]
         public List<FeaturePromo> FeaturePromos { get; set; }
     }
 

@@ -7,7 +7,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Model
 {
     public class AllPromoApiResponse : ApiResponseBase
     {
-        [JsonProperty("promos")]
+        [JsonProperty("allPromos")]
         public List<AllPromo> AllPromos { get; set; }
     }
 
@@ -27,56 +27,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Model
         public string BannerUrl { get; set; }    
     }
 
-   public class Hotels
-    {
-        [JsonProperty("promoCode")]
-        public string PromoCode { get; set; } 
-        [JsonProperty("description")]
-        public string Description { get; set; }
-        [JsonProperty("hotelchoices")]
-        public List<HotelChoice> HotelChoices{ get; set; }
-
-    }
-
-    public class HotelChoice
-    {
-        [JsonProperty("place")]
-        public string Place { get; set; }
-        [JsonProperty("hotels")]
-        public string[] Hotels { get; set; }
-        [JsonProperty("roomTypes")]
-        public string[] RoomType { get; set; }
-        [JsonProperty("stayDuration")]
-        public string StayDuration { get; set; }
-        [JsonProperty("stayPeriod")]
-        public string StayPeriod { get; set; }
-        [JsonProperty("bookingPeriod")]
-        public string BookingPeriod { get; set; }
-    }
-
-    public class Flights
-    {
-        [JsonProperty("travelPeriod")]
-        public string TravelPeriod { get; set; }
-        [JsonProperty("bookingPeriod")]
-        public string BookingPeriod { get; set; }
-        [JsonProperty("promoCode")]
-        public string PromoCode { get; set; }
-        [JsonProperty("description")]
-        public string Description { get; set; }
-    }
-
-    //public class FlightList
-    //{
-    //    [JsonProperty("airlines")]
-    //    public string[] Airlines { get; set; }
-    //    [JsonProperty("origins")]
-    //    public string[] Origins { get; set; }
-    //    [JsonProperty("destinations")]
-    //    public string[] Destinations { get; set; }
-    //}
-
-    public enum PromoType
+   public enum PromoType
     {
         CouponCode = 0,
         Instalment = 1,
