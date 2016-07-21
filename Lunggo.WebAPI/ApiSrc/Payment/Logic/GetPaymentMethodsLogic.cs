@@ -21,6 +21,18 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     new Option
                     {
                         Method = PaymentMethod.BankTransfer,
+                        Banks = new List<BankDetails>
+                        {
+                            new BankDetails
+                            {
+                                Bank = 0,
+                                Account = "1234567890",
+                                Branch = "Ranting",
+                                Name = "PT. Travel Madezy Internasional",
+                                LogoUrl = "https://ib.bankmandiri.co.id/retail/images/mandiri_logo.gif",
+                                Available = true
+                            }
+                        },
                         Available = true
                     },
                     new Option
