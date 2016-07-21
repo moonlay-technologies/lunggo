@@ -37,6 +37,12 @@ namespace Lunggo.ApCommon.Flight.Service
             var childFare = itins.Sum(itin => itin.ChildPricePortion * itin.Price.Local);
             var infantFare = itins.Sum(itin => itin.InfantPricePortion * itin.Price.Local);
 
+            var trips = new  List<FlightTrip>();
+            foreach (var trip in itins) 
+            {
+                trips.Add(trip.Trips[0]);
+            }
+
             return new FlightItineraryForDisplay
             {
                 AdultCount = itins[0].AdultCount,
@@ -57,7 +63,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 NetAdultFare = 1234567,
                 NetChildFare = 1234567,
                 NetInfantFare = 1234567,
-                Trips = itins[0].Trips.Select(ConvertToTripForDisplay).ToList(),
+                Trips = trips.Select(ConvertToTripForDisplay).ToList(),
                 RegisterNumber = 0,
                 OriginalTotalFare = GenerateDummyOriginalFare(totalFare)
             };

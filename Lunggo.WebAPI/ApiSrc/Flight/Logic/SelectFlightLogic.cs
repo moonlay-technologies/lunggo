@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
@@ -16,7 +17,8 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 var service = FlightService.GetInstance();
                 var selectServiceRequest = PreprocessServiceRequest(request);
                 var selectServiceResponse = service.SelectFlight(selectServiceRequest);
-                var apiResponse = AssembleApiResponse(selectServiceResponse);
+                var expiryTime = FlightService.GetInstance().GetItineraryExpiry(selectServiceResponse.Token);
+                var apiResponse = AssembleApiResponse(selectServiceResponse, expiryTime);
                 return apiResponse;
             }
             else
@@ -48,7 +50,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             };
         }
 
-        private static FlightSelectApiResponse AssembleApiResponse(SelectFlightOutput selectServiceResponse)
+        private static FlightSelectApiResponse AssembleApiResponse(SelectFlightOutput selectServiceResponse, DateTime? expiryTime)
         {
             if (selectServiceResponse.IsSuccess)
             {
@@ -56,6 +58,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                     return new FlightSelectApiResponse
                     {
                         Token = selectServiceResponse.Token,
+                        ExpiryTime = expiryTime,
                         StatusCode = HttpStatusCode.OK
                     };
                 else

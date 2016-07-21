@@ -113,7 +113,7 @@ namespace Lunggo.ApCommon.Identity.Auth
                         "as:client_id", context.ClientId ?? string.Empty
                     },
                     { 
-                        "as:device_id", context.OwinContext.Get<string>("as:deviceId")
+                        "as:device_id", context.OwinContext.Get<string>("as:deviceId") ?? string.Empty
                     },
                     { 
                         "userName", context.UserName
@@ -142,7 +142,7 @@ namespace Lunggo.ApCommon.Identity.Auth
             {
                 context.Properties.ExpiresUtc = context.Properties.IssuedUtc.GetValueOrDefault().AddMonths(6);
                 context.Properties.Dictionary[".expires"] = context.Properties.ExpiresUtc.Value.ToString("r");
-                context.OwinContext.Set("as:clientRefreshTokenLifeTime", TimeSpan.FromDays(3650).TotalMinutes);
+                context.OwinContext.Set("as:clientRefreshTokenLifeTime", TimeSpan.FromDays(365).TotalMinutes);
             }
 
             context.Issue(context.Identity, context.Properties);
@@ -184,7 +184,7 @@ namespace Lunggo.ApCommon.Identity.Auth
                         "as:client_id", context.ClientId ?? string.Empty
                     },
                     { 
-                        "as:device_id", context.OwinContext.Get<string>("as:deviceId")
+                        "as:device_id", context.OwinContext.Get<string>("as:deviceId") ?? string.Empty
                     }
                 });
 
