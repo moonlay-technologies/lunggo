@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Service;
@@ -182,9 +183,28 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var firstrow = table.ChildElements.ToList()[1];
                     var childcountofrow = firstrow.ChildElements.ToList().Count;
                     var lastcolumn = firstrow.ChildElements.ToList()[childcountofrow - 1];
-                    var coreFareId =
-                        lastcolumn.ChildElements.ToList()[0].ChildElements.ToList()[0].ChildElements.ToList()[0]
-                            .GetAttribute("value");
+                    //var ind = childcountofrow - 1;
+                    for (var ind = childcountofrow - 1; ind > childcountofrow - 5; ind--)
+                    {
+                        if (firstrow.ChildElements.ToList()[ind].ChildElements.ToList()[0].ChildElements.ToList().Count != 0)
+                        {
+                            lastcolumn = firstrow.ChildElements.ToList()[ind];
+                            break;
+                        }
+                    }
+                    string coreFareId;
+                    if (lastcolumn.ChildElements.ToList()[0].ChildElements.ToList().Count == 4)
+                    {
+                        coreFareId =
+                            lastcolumn.ChildElements.ToList()[0].ChildElements.ToList()[0].ChildElements.ToList()[0]
+                                .GetAttribute("value");
+                    }
+                    else
+                    {
+                        coreFareId =
+                               lastcolumn.ChildElements.ToList()[0].ChildElements.ToList()[1].ChildElements.ToList()[0]
+                                   .GetAttribute("value");   
+                    }
 
                     var usedFareId = (coreFareId.Split('@')[0]).Replace(":", "%3A");
                     searchRequest =
@@ -305,6 +325,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         }
                     }
 
+                    const RegexOptions options = RegexOptions.None;
+                    var regex = new Regex("[ ]{2,}", options);
+                    hidden = regex.Replace(hidden, " ");
                     //var hidden = string.Join("+", depdate.ToString("yyyyMMdd"), airlineCode, flightNumber,
                     //origin + dest + "IDR");
                     Thread.Sleep(1000);
