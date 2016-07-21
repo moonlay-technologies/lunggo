@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Web.Http;
 using Lunggo.Framework.Cors;
 using Lunggo.Framework.Extension;
@@ -40,6 +38,57 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary
                 var request = Request.Content.ReadAsStringAsync().Result.Deserialize<NewsletterSubscribeApiRequest>();
                 var apiResponse = AuxiliaryLogic.NewsletterSubscribe(request);
                 return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        //[Authorize]
+        [Route("v1/promo")]
+        [Route("v1/promo/{lang}")]
+        public ApiResponseBase GetAllPromo(string lang = "id")
+        {
+            try
+            {
+                return AuxiliaryLogic.GetAllPromo("id");
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        //[Authorize]
+        [Route("v1/hotpromo")]
+        [Route("v1/hotpromo/{lang}")]
+        public ApiResponseBase GetFeaturePromo(string lang = "id")
+        {
+            try
+            {
+                return AuxiliaryLogic.GetFeaturePromo("id");
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        //[Authorize]
+        [Route("v1/promo/details/{id}")]
+        [Route("v1/promo/details/{id}/{lang}")]
+        public ApiResponseBase GetDetailPromo(string lang = "id", string id = "europe")
+        {
+            try
+            {
+                return AuxiliaryLogic.GetDetailPromo(lang, id);
             }
             catch (Exception e)
             {

@@ -38,6 +38,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ClientId");
 		    }
 		}
+        public String DeviceId
+        {
+            get { return _DeviceId; }
+            set
+            {
+                _DeviceId = value;
+                IncrementLog("DeviceId");
+            }
+        }
 		public DateTime? IssueTime
 		{
 		    get { return _IssueTime; }
@@ -70,6 +79,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _Id;
 		private String _Subject;
 		private String _ClientId;
+		private String _DeviceId;
 		private DateTime? _IssueTime;
 		private DateTime? _ExpireTime;
 		private String _ProtectedTicket;
@@ -107,6 +117,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("Id", true),
 				new ColumnMetadata("Subject", false),
 				new ColumnMetadata("ClientId", false),
+				new ColumnMetadata("DeviceId", false),
 				new ColumnMetadata("IssueTime", false),
 				new ColumnMetadata("ExpireTime", false),
 				new ColumnMetadata("ProtectedTicket", false),

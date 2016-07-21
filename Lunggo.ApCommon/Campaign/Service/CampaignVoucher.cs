@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Web;
 using Lunggo.ApCommon.Campaign.Constant;
 using Lunggo.ApCommon.Campaign.Model;
@@ -54,7 +55,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
             var price = paymentDetails.OriginalPriceIdr*paymentDetails.LocalCurrency.Rate;
 
-            var validationStatus = ValidateVoucher(voucher, price, user.Identity.GetEmail(), voucherCode);
+            var validationStatus = ValidateVoucher(voucher, price, user, voucherCode);
 
             if (validationStatus == VoucherStatus.Success)
             {
@@ -66,17 +67,20 @@ namespace Lunggo.ApCommon.Campaign.Service
         public VoucherResponse UseVoucherRequest(string rsvNo, string voucherCode)
         {
             var response = new VoucherResponse();
+            var user = HttpContext.Current.User;
 
             var voucher = GetDb.GetCampaignVoucher(voucherCode);
 
+            if (HttpContext.Current.User.Identity.IsAuthenticated && HttpContext.Current.User.Identity.IsUserAuthorized())
+                response.Email = HttpContext.Current.User.Identity.GetEmail();
+
             var reservation = FlightService.GetInstance().GetReservation(rsvNo);
-            response.Email = reservation.Contact.Email;
             response.VoucherCode = voucherCode;
 
             var paymentDetails = reservation.Payment;
             var price = paymentDetails.OriginalPriceIdr * paymentDetails.LocalCurrency.Rate;
 
-            var validationStatus = ValidateVoucher(voucher, reservation.Payment.FinalPriceIdr, reservation.Contact.Email, voucherCode);
+            var validationStatus = ValidateVoucher(voucher, reservation.Payment.FinalPriceIdr, user, voucherCode);
 
             if (validationStatus == VoucherStatus.Success)
             {
@@ -97,9 +101,10 @@ namespace Lunggo.ApCommon.Campaign.Service
             response.VoucherStatus = validationStatus;
             return response;
         }
-        private VoucherStatus ValidateVoucher(CampaignVoucher voucher, decimal price, string email, string voucherCode)
+        private VoucherStatus ValidateVoucher(CampaignVoucher voucher, decimal price, IPrincipal user, string voucherCode)
         {
             var currentTime = DateTime.Now;
+            var email = user.Identity.IsUserAuthorized() ? user.Identity.GetEmail() : null;
             if (voucher == null)
                 return VoucherStatus.VoucherNotFound;
             if (voucher.StartDate >= currentTime)

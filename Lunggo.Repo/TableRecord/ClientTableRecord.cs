@@ -56,15 +56,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("IsActive");
 		    }
 		}
-		public int? RefreshTokenLifeTime
-		{
-		    get { return _RefreshTokenLifeTime; }
-		    set
-		    {
-		        _RefreshTokenLifeTime = value;
-		        IncrementLog("RefreshTokenLifeTime");
-		    }
-		}
 		public String AllowedOrigin
 		{
 		    get { return _AllowedOrigin; }
@@ -81,7 +72,6 @@ namespace Lunggo.Repository.TableRecord
 		private String _Name;
 		private String _ApplicationTypeCd;
 		private Boolean? _IsActive;
-		private int? _RefreshTokenLifeTime;
 		private String _AllowedOrigin;
 
 
@@ -119,7 +109,6 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("Name", false),
 				new ColumnMetadata("ApplicationTypeCd", false),
 				new ColumnMetadata("IsActive", false),
-				new ColumnMetadata("RefreshTokenLifeTime", false),
 				new ColumnMetadata("AllowedOrigin", false),
 
             };
