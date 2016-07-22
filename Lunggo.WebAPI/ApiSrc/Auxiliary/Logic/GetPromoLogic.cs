@@ -19,23 +19,23 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
             return GetAllPromo("id");
         }
 
-        public static FeaturePromoApiResponse GetFeaturePromo(string lang)
+        public static FeaturedPromoApiResponse GetFeaturePromo(string lang)
         {
             if (lang == "id")
-                return new FeaturePromoApiResponse
+                return new FeaturedPromoApiResponse
                 {
                     StatusCode = HttpStatusCode.OK,
-                    FeaturePromos = GetFeaturePromos()
+                    FeaturedPromos = GetFeaturePromos()
                 };
 
             return GetFeaturePromo("id");
         }
 
-        public static DetailPromoApiResponse GetDetailPromo(string lang, string id)
+        public static PromoDetailsApiResponse GetDetailPromo(string lang, string id)
         {
-            var detailPromos = new List<DetailPromo>
+            var detailPromos = new List<PromoDetails>
             {
-                new DetailPromo
+                new PromoDetails
                 {
                     Id = "xmas-new-year",
                     //BookingPeriod = "25 Sep 2016 - 2 Okt 2016",
@@ -45,7 +45,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                         PromoCode = "CITIXMAS"
                     }
                 },
-                new DetailPromo
+                new PromoDetails
                 {
                     Id = "eid-mubarak",
                     //BookingPeriod  = "9 Agustus 2016 - 13 Agustus 2016",
@@ -70,7 +70,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                     }
                     
                 },
-                new DetailPromo
+                new PromoDetails
                 {
                     Id = "europe",
                     Tnc = new []
@@ -112,16 +112,16 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
             var detailPromo = detailPromos.SingleOrDefault(a => a.Id == id);
             if (detailPromo == null)
             {
-                return new DetailPromoApiResponse
+                return new PromoDetailsApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERXPRO01"
                 };
             }
-            return new DetailPromoApiResponse
+            return new PromoDetailsApiResponse
             {
                 StatusCode = HttpStatusCode.OK,
-                DetailPromo = detailPromo
+                PromoDetails = detailPromo
             };
         }
 
@@ -154,21 +154,21 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
             };
         }
 
-        private static List<FeaturePromo> GetFeaturePromos()
+        private static List<FeaturedPromo> GetFeaturePromos()
         {
-            return new List<FeaturePromo>
+            return new List<FeaturedPromo>
             {
-                new FeaturePromo
+                new FeaturedPromo
                 {
                     Id = "xmas-new-year",
                     BannerUrl = "/promo/xmas.jpeg"
                 },
-                new FeaturePromo
+                new FeaturedPromo
                 {
                     Id = "eid-mubarak",
                     BannerUrl = "/promo/eid.jpeg"
                 },
-                new FeaturePromo
+                new FeaturedPromo
                 {
                     Id = "europe",
                     BannerUrl = "/promo/europe.jpeg"

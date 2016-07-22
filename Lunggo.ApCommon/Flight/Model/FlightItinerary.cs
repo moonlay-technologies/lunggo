@@ -48,8 +48,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public decimal? OriginalTotalFare { get; set; }
         [JsonProperty("netTotalFare", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? NetTotalFare { get; set; }
-        
-        
+                
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public TripType? TripType { get; set; }
         [JsonProperty("reqCabin", NullValueHandling = NullValueHandling.Ignore)]
@@ -63,6 +62,8 @@ namespace Lunggo.ApCommon.Flight.Model
         
         [JsonProperty("comboFare", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? ComboFare { get; set; }
+        [JsonProperty("tripBreakdown", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? IsTripFareBrokendown { get; set; }
     }
 
     public class FlightItinerary : OrderBase
