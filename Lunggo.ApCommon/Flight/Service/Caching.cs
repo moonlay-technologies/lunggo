@@ -24,6 +24,75 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetSavedPassengersFromDb(contactEmail);
         }
 
+        private void SetLowestPriceToCache(List<FlightItinerary> itins)
+        {
+            var keyRoute = SetRoute(itins);
+            var keyDate = SetDate(itins);
+            var lowestvalue = GetLowestPrice(itins);
+            var redis = RedisService.GetInstance();
+            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.HashSet(keyRoute, keyDate, Convert.ToString(lowestvalue));
+        }
+
+        private void SetLowestPriceToCache(List<FlightItinerary> itins, string origin, string destination, DateTime date)
+        {
+            var keyRoute = SetRoute(origin, destination);
+            var keyDate = SetDate(date);
+            var lowestvalue = GetLowestPrice(itins);
+            var redis = RedisService.GetInstance();
+            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.HashSet(keyRoute, keyDate, Convert.ToString(lowestvalue));
+        }
+
+        public decimal GetLowestPriceFromCache(List<FlightItinerary> itins)
+        {
+            var keyRoute = SetRoute(itins);
+            var keyDate = SetDate(itins);
+            var redis = RedisService.GetInstance();
+            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            return (decimal)redisDb.HashGet(keyRoute, keyDate);
+        }
+
+        public decimal GetLowestPriceFromCache(string origin, string destination, DateTime date)
+        {
+            var keyRoute = SetRoute(origin, destination);
+            var keyDate = SetDate(date);
+            var redis = RedisService.GetInstance();
+            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            return (decimal)redisDb.HashGet(keyRoute, keyDate);
+        }
+
+        public List<string> GetLowestPricesForRangeOfDate(string origin, string destination, DateTime startingTime,
+            DateTime endTime)
+        {
+            var keyRoute = SetRoute(origin, destination);
+            var listofDates = new List<string>();
+            for (var date = startingTime.Date; date <= endTime; date = date.AddDays(1))
+            {
+                listofDates.Add(date.ToString("ddMMyy", CultureInfo.InvariantCulture));
+            }
+            var redis = RedisService.GetInstance();
+            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            var values = redisDb.HashGet(keyRoute, Array.ConvertAll(listofDates.ToArray(), item => (RedisValue)item)).ToList();
+            return values.Select(value => value.ToString()).ToList();
+        }
+
+        public decimal GetLowestPriceInRangeOfDate(string origin, string destination, DateTime startDate,
+            DateTime endDate)
+        {
+            var keyRoute = SetRoute(origin, destination);
+            var listofDates = new List<string>();
+            for (var date = startDate.Date; date <= endDate; date = date.AddDays(1))
+            {
+                listofDates.Add(date.ToString("ddMMyy", CultureInfo.InvariantCulture));
+            }
+            var redis = RedisService.GetInstance();
+            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            var values = redisDb.HashGet(keyRoute, Array.ConvertAll(listofDates.ToArray(), item => (RedisValue)item)).ToList();
+            var listOfPrices = values.Select(value => Convert.ToDecimal(value)).ToList();
+            return listOfPrices.Select((t, ind) => listOfPrices.ElementAt(ind)).Concat(new[] { (decimal)0 }).Min();
+        }
+
         public void SaveTransacInquiryInCache(string mandiriCacheId, List<KeyValuePair<string, string>> transaction, TimeSpan timeout)
         {
             var redisService = RedisService.GetInstance();

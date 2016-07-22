@@ -75,6 +75,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.ItineraryLists = seachedItinListsForDisplay;
                 output.Combos = combos.Any() ? combos.Select(ConvertToComboForDisplay).ToList() : null;
                 output.Progress = CalculateProgress(input.Progress, searchedSupplierIds.Count, Suppliers.Count);
+
             }
 
             return output;
@@ -84,6 +85,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var conditions = DecodeSearchConditions(searchId);
             SearchFlightInternal(conditions, supplierIndex);
+
         }
 
         private void SearchFlightInternal(SearchFlightConditions conditions, int supplierIndex)
