@@ -13,7 +13,6 @@ namespace Lunggo.Webjob.CurrencyCrawler
             Init();
             var currencyAirAsia = new []
             {
-                //"MYR"
                 "SGD", "MYR", "HKD", "CNY", "AUD", 
                 "USD", "JPY", "KRW", "SAR", "THB", 
                 "BND", "PHP", "INR", "MOP", 
@@ -24,7 +23,7 @@ namespace Lunggo.Webjob.CurrencyCrawler
             {
                 "SGD", "MYR", "HKD", "CNY", "AUD",
                 "USD", "JPY", "KRW", "SAR", "THB",
-                "GBP", "EUR", "AED"
+                "GBP", "EUR"
             };
 
             var currencyLion = new[] {"MYR", "SGD"};
@@ -42,7 +41,7 @@ namespace Lunggo.Webjob.CurrencyCrawler
                 Console.WriteLine("Retrieving Exchange Rate " + curr + " from Garuda...");
                 FlightService.GetInstance().CurrencyGetterInternal(curr, Supplier.Garuda);
                 Console.WriteLine("Done Retrieving from Garuda.");
-                Console.WriteLine();             
+                Console.WriteLine();
             }
 
             foreach (var curr in currencyAirAsia)
