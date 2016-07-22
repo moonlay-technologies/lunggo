@@ -572,12 +572,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: red;
 }
 
-.icon-mobile {
-    background:url(/assets/mobile/images/mobile-sprite.png);
+/*.icon-mobile {
+    background:url(/assets/mobile/images/mobile-sprite-big-new.png);
     display: inline-block;
     vertical-align: middle;
-    position: absolute
-}
+    position: absolute;
+    background-repeat: no-repeat;
+}*/
 
 .bold-title {
     font-weight: 700;

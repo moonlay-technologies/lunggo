@@ -826,12 +826,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding-bottom: 10px;
   color: red; }
 
-.icon-mobile, .page.page-home .form-container .form-wrapper form .form-group span.icon-pp, .page.page-home .form-container .form-wrapper form .form-group span.icon-return, .page.page-home .form-container .form-wrapper form .form-group span.icon-fc, .page.page-home .form-container .form-wrapper form .form-group span.icon-people, .page.page-home .form-container .form-wrapper form .flip-container span.icon-flip {
-  background: url(/assets/mobile/images/mobile-sprite.png);
-  display: inline-block;
-  vertical-align: middle;
-  position: absolute; }
-
+/*.icon-mobile {
+    background:url(/assets/mobile/images/mobile-sprite-big-new.png);
+    display: inline-block;
+    vertical-align: middle;
+    position: absolute;
+    background-repeat: no-repeat;
+}*/
 .bold-title {
   font-weight: 700; }
 
@@ -860,26 +861,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         margin-bottom: 0; }
         .page.page-home .form-container .form-wrapper form .form-group p.form-control {
           height: auto; }
-        .page.page-home .form-container .form-wrapper form .form-group span.icon-pp {
-          width: 24px;
-          height: 24px;
-          background-position: -88px -2px;
-          top: 18px; }
-        .page.page-home .form-container .form-wrapper form .form-group span.icon-return {
-          width: 21px;
-          height: 22px;
-          background-position: -59px -3px;
-          top: 20px; }
-        .page.page-home .form-container .form-wrapper form .form-group span.icon-fc {
-          width: 30px;
-          height: 28px;
-          background-position: -25px 0;
-          top: 16px; }
-        .page.page-home .form-container .form-wrapper form .form-group span.icon-people {
-          width: 21px;
-          height: 28px;
-          background-position: 0 0;
-          top: 16px; }
       .page.page-home .form-container .form-wrapper form .form__destination .title-destination, .page.page-home .form-container .form-wrapper form .form__origin .title-destination {
         font-size: 14px;
         text-align: center;
@@ -903,6 +884,70 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         font-size: 14px;
         line-height: 20px;
         color: #686868; }
+      .page.page-home .form-container .form-wrapper form span.icon-pp, .page.page-home .form-container .form-wrapper form span.icon-return, .page.page-home .form-container .form-wrapper form span.icon-fc, .page.page-home .form-container .form-wrapper form span.icon-people, .page.page-home .form-container .form-wrapper form span.icon-flip {
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        background-repeat: no-repeat;
+        /*background-size: 50% 50%;*/ }
+      .page.page-home .form-container .form-wrapper form span {
+        /*&.icon-pp {
+                        @extend .icon-mobile;
+                        width: 24px;
+                        height: 24px;
+                        background-position: -101px -2px;
+                        top: 18px;
+                    } &.icon-return {
+                        @extend .icon-mobile;
+                        width: 22px;
+                        height: 23px;
+                        background-position: -67px -3px;
+                        top: 20px;
+                    } &.icon-fc {
+                        @extend .icon-mobile;
+                        width: 30px;
+                        height: 29px;
+                        background-position: -27px 0;
+                        top: 16px;
+                    } &.icon-people {
+                        @extend .icon-mobile;
+                        width: 21px;
+                        height: 29px;
+                        top: 16px;
+                    } &.icon-flip {
+                        @extend .icon-mobile;
+                        width: 22px;
+                        height: 21px;
+                        background-position: -133px -4px;
+                        top: 8px;
+                        left: 4px;
+                    }*/ }
+        .page.page-home .form-container .form-wrapper form span.icon-pp {
+          background-image: url(/assets/mobile/images/calendar.png);
+          width: 47px;
+          height: 46px;
+          top: 18px; }
+        .page.page-home .form-container .form-wrapper form span.icon-return {
+          background-image: url(/assets/mobile/images/loop.png);
+          width: 43px;
+          height: 43px;
+          top: 20px; }
+        .page.page-home .form-container .form-wrapper form span.icon-fc {
+          background-image: url(/assets/mobile/images/medals.png);
+          width: 59px;
+          height: 56px;
+          top: 16px; }
+        .page.page-home .form-container .form-wrapper form span.icon-people {
+          background-image: url(/assets/mobile/images/people.png);
+          width: 41px;
+          height: 57px;
+          top: 16px; }
+        .page.page-home .form-container .form-wrapper form span.icon-flip {
+          background-image: url(/assets/mobile/images/flip.png);
+          width: 43px;
+          height: 40px;
+          top: 8px;
+          left: 4px; }
       .page.page-home .form-container .form-wrapper form .middle-form {
         margin: 10px 0 50px; }
         .page.page-home .form-container .form-wrapper form .middle-form .form-group {
@@ -940,12 +985,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           top: 60%;
           left: 50%;
           transform: translate(-50%, -50%); }
-        .page.page-home .form-container .form-wrapper form .flip-container span.icon-flip {
-          width: 22px;
-          height: 20px;
-          background-position: -118px -4px;
-          top: 8px;
-          left: 4px; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip .switch {
         float: right;
         position: relative;
