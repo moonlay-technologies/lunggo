@@ -241,11 +241,84 @@ $(document).ready(function () {
     }
 });
 
+function getAnonymousFirstAccess()
+{
+    $.ajax({
+        url: LoginConfig.Url,
+        method: 'POST',
+        async: false,
+        data: JSON.stringify({ "clientId": "Jajal", "clientSecret": "Standar" }),
+        contentType: 'application/json',
+    }).done(function (returnData) {
+        if (returnData.status == '200') {
+            setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+            setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+        }
+    });
+
+    if (getCookie('accesstoken')) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+
+function getAnonymousAccessByRefreshToken(refreshToken)
+{
+    $.ajax({
+        url: LoginConfig.Url,
+        method: 'POST',
+        async: false,
+        data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+        contentType: 'application/json',
+    }).done(function (returnData) {
+        if (returnData.status == '200') {
+            setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+            setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+        }
+    });
+
+    if (getCookie('accesstoken')) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+
+function getLoginAccessByRefreshToken(refreshToken)
+{
+    $.ajax({
+        url: LoginConfig.Url,
+        method: 'POST',
+        async: false,
+        data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+        contentType: 'application/json',
+    }).done(function (returnData) {
+        if (returnData.status == '200') {
+            setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+            setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+            setCookie("authkey", returnData.accessToken, returnData.expTime);
+        }
+    });
+
+    if (getCookie('accesstoken')) {
+        return 2;
+    }
+    else {
+        return 0;
+    }
+}
+
 function getAuthAccess()
 {
     var token = getCookie('accesstoken');
     var refreshToken = getCookie('refreshtoken');
     var authKey = getCookie('authkey');
+    var status = 0;
 
     if (authKey) {
         if (token) {
@@ -253,25 +326,10 @@ function getAuthAccess()
         }
         else {
             if (refreshToken) {
-                $.ajax({
-                    url: LoginConfig.Url,
-                    method: 'POST',
-                    async: false,
-                    data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
-                    contentType: 'application/json',
-                }).done(function (returnData) {
-                    if (returnData.status == '200') {
-                        setCookie("accesstoken", returnData.accessToken, returnData.expTime);
-                        setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
-                        setCookie("authkey", returnData.accessToken, returnData.expTime);
-                    }
-                });
-
-                if (getCookie('accesstoken')) {
-                    return 2;
-                }
-                else {
-                    return 0;
+                status = getLoginAccessByRefreshToken(refreshToken);
+                if (status == 0)
+                {
+                    status = getAnonymousFirstAccess();
                 }
             }
             else {
@@ -285,52 +343,21 @@ function getAuthAccess()
             return 1;
         }
         else {
-            //Get Token By Refresh Token
+            //Get Anonymous Token By Refresh Token
             if (refreshToken) {
-                $.ajax({
-                    url: LoginConfig.Url,
-                    method: 'POST',
-                    async: false,
-                    data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
-                    contentType: 'application/json',
-                }).done(function (returnData) {
-                    if (returnData.status == '200') {
-                        setCookie("accesstoken", returnData.accessToken, returnData.expTime);
-                        setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
-                    }
-                });
-
-                if (getCookie('accesstoken')) {
-                    return 1;
-                }
-                else {
-                    return 0;
+                status = getAnonymousAccessByRefreshToken(refreshToken);
+                if (status == 0)
+                {
+                    status = getAnonymousFirstAccess();
                 }
             }
             else {
                 //For Anynomius at first
-                $.ajax({
-                    url: LoginConfig.Url,
-                    method: 'POST',
-                    async: false,
-                    data: JSON.stringify({ "clientId": "Jajal", "clientSecret": "Standar" }),
-                    contentType: 'application/json',
-                }).done(function (returnData) {
-                    if (returnData.status == '200') {
-                        setCookie("accesstoken", returnData.accessToken, returnData.expTime);
-                        setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
-                    }
-                });
-
-                if (getCookie('accesstoken')) {
-                    return 1;
-                }
-                else {
-                    return 0;
-                }
+                status = getAnonymousFirstAccess();
             }
         }
-    }   
+    }
+    return status;
 }
 
 
