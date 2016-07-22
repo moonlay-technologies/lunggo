@@ -216,8 +216,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           background-image: url(/Assets/mobile/images/burger-sprite.png); }
       .burger-content .burger-content__body ul li.active {
         background: #9ee5ff;
-        position: relative;
-        /*&:after {content:''; position:absolute; width:20px; height:100%; left:100%; top:0; background:url(/assets/mobile/images/burger-menu-active.png) left center no-repeat;}*/ }
+        position: relative; }
+        .burger-content .burger-content__body ul li.active:after {
+          content: '';
+          position: absolute;
+          width: 20px;
+          height: 100%;
+          left: 100%;
+          top: 0;
+          background: url(/assets/mobile/images/burger-menu-active.png) left center no-repeat; }
       .burger-content .burger-content__body ul li.login, .burger-content .burger-content__body ul li.register, .burger-content .burger-content__body ul li.account {
         background: #1daee4;
         color: #fff; }
@@ -889,7 +896,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         vertical-align: middle;
         position: absolute;
         background-repeat: no-repeat;
-        /*background-size: 50% 50%;*/ }
+        background-size: 50% 50%; }
       .page.page-home .form-container .form-wrapper form span {
         /*&.icon-pp {
                         @extend .icon-mobile;

@@ -129,7 +129,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 }
                 //active
                 &.active {background:#9ee5ff; position:relative;
-                    /*&:after {content:''; position:absolute; width:20px; height:100%; left:100%; top:0; background:url(/assets/mobile/images/burger-menu-active.png) left center no-repeat;}*/
+                    &:after {content:''; position:absolute; width:20px; height:100%; left:100%; top:0; background:url(/assets/mobile/images/burger-menu-active.png) left center no-repeat;}
                 }
                 // specific class
                 &.login, &.register, &.account {background:$color-main-blue; color:#fff;
