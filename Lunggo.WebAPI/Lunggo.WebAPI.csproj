@@ -227,9 +227,9 @@
     <Compile Include="ApiSrc\Auxiliary\AuxiliaryController.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\GetCalendarLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\GetPromoLogic.cs" />
-    <Compile Include="ApiSrc\Auxiliary\Model\DetailPromoApiResponse.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Model\PromoDetailsApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\AllPromoApiResponse.cs" />
-    <Compile Include="ApiSrc\Auxiliary\Model\FeaturePromoApiResponse.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Model\FeaturedPromoApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\GetCalendarApiResponse.cs" />
     <Compile Include="ApiSrc\Common\Model\ApiResponseBase.cs" />
     <Compile Include="ApiSrc\Flight\FlightController.cs" />
