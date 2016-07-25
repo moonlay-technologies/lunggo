@@ -8,12 +8,6 @@ $icon-people: '../images/people.png';
 $icon-flip: '../images/flip.png';
 
 /*--------------------*/
-/* logo */
-$icon-fb: '../images/fb.png';
-$icon-ig: '../images/ig.png';
-$icon-twitter: '../images/twitter.png';
-
-/*--------------------*/
 /* variables */
 
 $border-default: 1px solid #ccc;
@@ -21,11 +15,9 @@ $border-radius-default: 2px;
 $border-radius-big: 5px;
 $border-grey-btn: 1px solid #d3d7da;
 $border-form: 1px solid #dddddd;
-
 $transition-default: all 0.5s;
-$header-height:60px;
-$button-background: #edf1f4;
-$button-border: #c9cdd2;
+$header-height: 60px;
+$toggle-box-shadow: 0 0 1px #2196F3;
 
 /*--------------------*/
 /* color */
@@ -35,12 +27,14 @@ $color-yellow: #ffd531;
 $color-grey-btn: #ecf0f4;
 $color-footer: #efefef;
 $color-footer-txt: #878787;
-
 $color-main-blue:#1daee4;
 $color-main-orange:#ff7200;
-$color-blue: #2ea1e8;
-$color-grey: #686868;
-$color-grey-border: #c8c8c8;
+$color-fb: #4a6ea9;
+$color-ig: #9a6656;
+$color-twitter: #28a9e0;
+
+$button-background: #edf1f4;
+$button-border: #c9cdd2;
 
 /*--------------------*/
 /* mixins */
@@ -99,17 +93,9 @@ $color-grey-border: #c8c8c8;
 
 /*--------------------*/
 /* font */
-.os-light {
-    font-weight: 300;
-}
-
-.os-regular {
-    font-weight: 400;
-}
-
-.os-bold {
-    font-weight: 700;
-}
+.os-light {font-weight: 300;}
+.os-regular {font-weight: 400;}
+.os-bold {font-weight: 700;}
 
 /*--------------------*/
 // General Styling
@@ -315,13 +301,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         nav {
             margin-bottom:10px;
             .facebook {
-                .fa-circle {color:#4a6eaa;}
+                .fa-circle {color: $color-fb;}
             }
             .twitter {
-                .fa-circle {color:#28a9e0;}
+                .fa-circle {color: $color-twitter;}
             }
             .instagram {
-                .fa-circle {color:#9a6756;}
+                .fa-circle {color: $color-ig;}
             }
         }
         // inverse
@@ -330,7 +316,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             line-height: 1.8em;
         }
         .fa-stack-2x {font-size: 1.8em}
-        .fa-inverse {color:$color-white;}
+        .fa-inverse {
+            color:$color-footer;
+            font-size: 19px;
+        }
         .footer-txt {
             font-size: 10px;
             color: $color-footer-txt;
@@ -507,18 +496,52 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // *****
 // datepicker on overlay
 .overlay.overlay--datepicker {
-    .overlay__content {background:#616161; color:#fff;
-        a {color:#fff;}
-        select {color:#000; font-size:14px; margin-left:5px;}
+    .overlay__content {
+        background: #616161; 
+        color: $color-white;
+        a {color: $color-white;}
+        select {
+            color: $color-black; 
+            font-size: 14px; 
+            margin-left: 5px;
+        }
     }
     .ui-datepicker {
-        .ui-datepicker-header {text-align:center; position:relative; padding-top:20px; height:50px; color:$color-main-blue; font-size:22px; @include clearfix();
-            .ui-datepicker-month {font-weight:bold; text-transform:uppercase;}
-            .ui-datepicker-prev {position:absolute; left:0; width:25px; height:25px; background-image:url(/Assets/mobile/images/ui-calendar-nav.png); background-repeat:no-repeat; background-position:-30px 0; background-size:200%;}
-            .ui-datepicker-next {@extend & .ui-datepicker-prev; left:auto; right:0; background-position:0 0;}
+        .ui-datepicker-header {
+            text-align:center; 
+            position:relative; 
+            padding-top:20px; 
+            height:50px;
+            color:$color-main-blue; 
+            font-size:22px; 
+            @include clearfix();
+            .ui-datepicker-month {
+                font-weight:bold; 
+                text-transform:uppercase;
+            }
+            .ui-datepicker-prev {
+                position:absolute; 
+                left:0; 
+                width:25px; 
+                height:25px; 
+                background-image:url(/Assets/mobile/images/ui-calendar-nav.png); 
+                background-repeat:no-repeat; 
+                background-position:-30px 0; 
+                background-size:200%;
+            }
+            .ui-datepicker-next {
+                @extend & .ui-datepicker-prev; 
+                left:auto; 
+                right:0; 
+                background-position:0 0;
+            }
             .ui-state-disabled {opacity:0.3;}
         }
-        .ui-datepicker-calendar {width:100%; max-width:280px; margin-left:auto; margin-right:auto;
+        .ui-datepicker-calendar {
+            width:100%; 
+            max-width:280px; 
+            margin-left:auto; 
+            margin-right:auto;
             .ui-state-disabled {opacity:0.3;}
             .ui-datepicker-week-end {
                 a, span {color:#e3ae22;}
@@ -528,61 +551,72 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             }
             thead {
                 tr {
-                    th {width:40px; height:40px; padding:5px; text-align:center;}
+                    th {
+                        width:40px; 
+                        height:40px; 
+                        padding:5px; 
+                        text-align:center;
+                    }
                 }
             }
             tbody {
                 tr {
-                    td {width:40px; height:40px; text-align:center; padding:5px;}
+                    td {
+                        width:40px; 
+                        height:40px; 
+                        text-align:center; 
+                        padding:5px;
+                    }
                 }
             }
         }
     }
 }
 
-.notifbox{width: 100%; height: 40px; background-color: #1daee4; margin-bottom: 15px;
-    h3{font-size: 14px; position: absolute; color: #fff; font-weight: bold;}
+.notifbox {
+    width: 100%; 
+    height: 40px; 
+    background-color: #1daee4; 
+    margin-bottom: 15px;
+    h3 {
+        font-size: 14px; 
+        position: absolute; 
+        color: #fff; 
+        font-weight: bold;
+    }
 }
 
-.container_new{
-    /*width: 80%;
-    margin-left: 10px;
-    margin-right: 10px;*/
-    p{
+.container_new {
+    p {
         padding: 10px 10px 10px 10px;
         margin-left: 10px;
         margin-right: 10px;
     }
-    .row1{
+    .row1 {
         padding: 10px 10px 10px 10px;
         margin-left: 10px;
         margin-right: 10px;
-        
     }
-    .col12{
-            align-self:center;
-            margin-left: 10px;
-            margin-right: 10px;
+    .col12 {
+        align-self:center;
+        margin-left: 10px;
+        margin-right: 10px;
     }
-    .col-xs-6{
-        margin-top: -10px;
-        h6{
+    .col-xs-6 {margin-top: -10px;
+        h6 {
             width: 200%;
             font-size: 8px;
         }
     }
-    .col-xs-8{
-        margin-top: -10px;
-        h5{
-            font-size: 12px;
-        }
-        }
+    .col-xs-8 {margin-top: -10px;
+        h5 {font-size: 12px;}
+    }
 }
 
 .page-overlay .overlay-content div section p {
-  display: inline-block;
- padding: 10px;
-  }
+    display: inline-block;
+    padding: 10px;
+}
 
 .form__flightclass .form-control {
     height: 35px;
@@ -595,19 +629,18 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
        .section-title.stripe {
            padding-bottom: 15px;
            padding-top: 0;
-           
        } 
-       .overlay__body.overlay__content{
+       .overlay__body.overlay__content {
            padding-bottom:20px;
        }
-       h5{
+       h5 {
            font-weight: bold;
            font-size:10px;
        }
        
    }
 
-.loading-image{
+.loading-image {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -615,15 +648,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 
 .page-step-3 {
-    .btn.btn-yellow/*, .btn.btn-grey*/ {
-    width: 49%;
-    position: relative;
-    margin-top: 10px;
-    text-align: center;
+    .btn.btn-yellow {
+        width: 49%;
+        position: relative;
+        margin-top: 10px;
+        text-align: center;
     }
 }
 
-.page-checkout.page-checkout-flight{
+.page-checkout.page-checkout-flight {
     .btn.btn-yellow{
         width: 100%;
     }
@@ -633,7 +666,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 100%;
 }
 
-.confirmation-content .container_new .row1{
+.confirmation-content .container_new .row1 {
     padding-bottom: 10px;
     color: red;
 }

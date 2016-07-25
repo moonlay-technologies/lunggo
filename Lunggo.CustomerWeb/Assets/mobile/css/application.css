@@ -2,8 +2,6 @@
 /*--------------------*/
 /* icon */
 /*--------------------*/
-/* logo */
-/*--------------------*/
 /* variables */
 /*--------------------*/
 /* color */
@@ -369,11 +367,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .site-footer .site-footer-social nav {
       margin-bottom: 10px; }
       .site-footer .site-footer-social nav .facebook .fa-circle {
-        color: #4a6eaa; }
+        color: #4a6ea9; }
       .site-footer .site-footer-social nav .twitter .fa-circle {
         color: #28a9e0; }
       .site-footer .site-footer-social nav .instagram .fa-circle {
-        color: #9a6756; }
+        color: #9a6656; }
     .site-footer .site-footer-social .fa-stack {
       width: 2.5em;
       height: 1.8em;
@@ -381,7 +379,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .site-footer .site-footer-social .fa-stack-2x {
       font-size: 1.8em; }
     .site-footer .site-footer-social .fa-inverse {
-      color: #ffffff; }
+      color: #efefef;
+      font-size: 19px; }
     .site-footer .site-footer-social .footer-txt {
       font-size: 10px;
       color: #878787;
@@ -720,11 +719,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .overlay.overlay--datepicker .overlay__content {
   background: #616161;
-  color: #fff; }
+  color: #ffffff; }
   .overlay.overlay--datepicker .overlay__content a {
-    color: #fff; }
+    color: #ffffff; }
   .overlay.overlay--datepicker .overlay__content select {
-    color: #000;
+    color: #000000;
     font-size: 14px;
     margin-left: 5px; }
 
@@ -794,31 +793,31 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #fff;
     font-weight: bold; }
 
-.container_new {
-  /*width: 80%;
-    margin-left: 10px;
-    margin-right: 10px;*/ }
-  .container_new p {
-    padding: 10px 10px 10px 10px;
-    margin-left: 10px;
-    margin-right: 10px; }
-  .container_new .row1 {
-    padding: 10px 10px 10px 10px;
-    margin-left: 10px;
-    margin-right: 10px; }
-  .container_new .col12 {
-    align-self: center;
-    margin-left: 10px;
-    margin-right: 10px; }
-  .container_new .col-xs-6 {
-    margin-top: -10px; }
-    .container_new .col-xs-6 h6 {
-      width: 200%;
-      font-size: 8px; }
-  .container_new .col-xs-8 {
-    margin-top: -10px; }
-    .container_new .col-xs-8 h5 {
-      font-size: 12px; }
+.container_new p {
+  padding: 10px 10px 10px 10px;
+  margin-left: 10px;
+  margin-right: 10px; }
+
+.container_new .row1 {
+  padding: 10px 10px 10px 10px;
+  margin-left: 10px;
+  margin-right: 10px; }
+
+.container_new .col12 {
+  align-self: center;
+  margin-left: 10px;
+  margin-right: 10px; }
+
+.container_new .col-xs-6 {
+  margin-top: -10px; }
+  .container_new .col-xs-6 h6 {
+    width: 200%;
+    font-size: 8px; }
+
+.container_new .col-xs-8 {
+  margin-top: -10px; }
+  .container_new .col-xs-8 h5 {
+    font-size: 12px; }
 
 .page-overlay .overlay-content div section p {
   display: inline-block;
@@ -951,8 +950,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         background-image: url("../images/flip.png");
         width: 43px;
         height: 40px;
-        top: 8px;
-        left: 4px;
+        top: 7px;
+        left: 5px;
         position: absolute; }
       .page.page-home .form-container .form-wrapper form .middle-form {
         margin-bottom: 24px; }
@@ -980,7 +979,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .page.page-home .form-container .form-wrapper form .field-container {
         margin-left: 42px;
         border-bottom: 1px solid #dddddd;
-        padding: 22px 0; }
+        padding: 21px 0; }
       .page.page-home .form-container .form-wrapper form .flip-container {
         position: relative;
         min-height: 104px; }
@@ -1026,8 +1025,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           left: 4px;
           bottom: 4px;
           background-color: #ffffff;
-          -webkit-transition: .4s;
-          transition: .4s; }
+          -webkit-transition: all 0.5s;
+          -moz-transition: all 0.5s;
+          -o-transition: all 0.5s;
+          transition: all 0.5s; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider {
         background-color: #2ea1e8; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider:before {
@@ -1036,6 +1037,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         -o-transform: translate(16px, 0);
         transform: translate(16px, 0); }
       .page.page-home .form-container .form-wrapper form .form__roundtrip input:focus + .slider {
+        -webkit-border-radius: 0 0 1px #2196F3;
+        -moz-border-radius: 0 0 1px #2196F3;
+        -ms-border-radius: 0 0 1px #2196F3;
         box-shadow: 0 0 1px #2196F3; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip .slider.round {
         -webkit-border-radius: 24px;
@@ -1057,7 +1061,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 @media handheld, only screen and (max-width: 420px) {
   .page.page-home .form-container {
-    min-height: 600px; } }
+    min-height: 570px; } }
 
 @media handheld, only screen and (max-width: 360px) {
   .page.page-home .form-container {

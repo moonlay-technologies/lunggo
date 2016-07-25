@@ -85,8 +85,8 @@
                         background-image: url($icon-flip);
                         @extend .display-icon;
                         @include size(43px, 40px);
-                        top: 8px;
-                        left: 4px;
+                        top: 7px;
+                        left: 5px;
                         position: absolute;
                     }
                 }
@@ -118,7 +118,7 @@
                 .field-container {
                     margin-left: 42px;
                     border-bottom: $border-form;
-                    padding: 22px 0;
+                    padding: 21px 0;
                 }
                 .flip-container {
                     position: relative;
@@ -143,9 +143,7 @@
                         display: inline-block;
                         width: 40px;
                         height: 24px;
-                        input {
-                            display:none;
-                        }
+                        input {display:none;}
                     }
                     .slider {
                         position: absolute;
@@ -164,18 +162,13 @@
                             left: 4px;
                             bottom: 4px;
                             background-color: $color-white;
-                            -webkit-transition: .4s;
-                            transition: .4s;
+                            @include transition($transition-default);
                         }
                     }
                     input {
-                        &:checked + .slider {
-                            background-color: #2ea1e8;
-                        }
-                        &:checked + .slider:before {
-                            @include translate(16px, 0);
-                        }
-                        &:focus + .slider {box-shadow: 0 0 1px #2196F3;}
+                        &:checked + .slider {background-color: #2ea1e8;}
+                        &:checked + .slider:before {@include translate(16px, 0);}
+                        &:focus + .slider {@include box-shadow($toggle-box-shadow);}
                     }
                     .slider {
                         &.round {
@@ -198,7 +191,7 @@
 @media handheld,
 only screen and (max-width: 420px) {
     .page.page-home .form-container {
-        min-height: 600px;
+        min-height: 570px;
     }
 }
 
