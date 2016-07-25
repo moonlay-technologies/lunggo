@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Net;
 using Lunggo.WebAPI.ApiSrc.Auxiliary.Model;
+using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Flight.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
 {
@@ -15,7 +17,6 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                     StatusCode = HttpStatusCode.OK,
                     AllPromos = GetAllPromos()
                 };
-            
             return GetAllPromo("id");
         }
 

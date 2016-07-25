@@ -44,14 +44,14 @@ namespace Lunggo.ApCommon.Flight.Service
             redisDb.HashSet(keyRoute, keyDate, Convert.ToString(lowestvalue));
         }
 
-        public decimal GetLowestPriceFromCache(List<FlightItinerary> itins)
-        {
-            var keyRoute = SetRoute(itins);
-            var keyDate = SetDate(itins);
-            var redis = RedisService.GetInstance();
-            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-            return (decimal)redisDb.HashGet(keyRoute, keyDate);
-        }
+        //public decimal GetLowestPriceFromCache(List<FlightItinerary> itins)
+        //{
+        //    var keyRoute = SetRoute(itins);
+        //    var keyDate = SetDate(itins);
+        //    var redis = RedisService.GetInstance();
+        //    var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+        //    return (decimal)redisDb.HashGet(keyRoute, keyDate);
+        //}
 
         public decimal GetLowestPriceFromCache(string origin, string destination, DateTime date)
         {
@@ -62,7 +62,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return (decimal)redisDb.HashGet(keyRoute, keyDate);
         }
 
-        public List<string> GetLowestPricesForRangeOfDate(string origin, string destination, DateTime startingTime,
+        public List<decimal> GetLowestPricesForRangeOfDate(string origin, string destination, DateTime startingTime,
             DateTime endTime)
         {
             var keyRoute = SetRoute(origin, destination);
@@ -74,7 +74,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redis = RedisService.GetInstance();
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
             var values = redisDb.HashGet(keyRoute, Array.ConvertAll(listofDates.ToArray(), item => (RedisValue)item)).ToList();
-            return values.Select(value => value.ToString()).ToList();
+            return values.Select(value => Convert.ToDecimal(value)).ToList();
         }
 
         public LowestPrice GetLowestPriceInRangeOfDate(string origin, string destination, DateTime startDate,
@@ -101,8 +101,8 @@ namespace Lunggo.ApCommon.Flight.Service
 
             return new LowestPrice
             {
-                date = minDate,
-                price = minPrice
+                CheapestDate = minDate,
+                CheapestPrice = minPrice
             };
         }
 
@@ -116,7 +116,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 redisDb.HashSet(redisKey, pair.Key, pair.Value);
                 redisDb.KeyExpire(redisKey, timeout);
             }
-
         }
 
         public List<KeyValuePair<string, string>> GetTransacInquiryFromCache(string mandiriCacheId)

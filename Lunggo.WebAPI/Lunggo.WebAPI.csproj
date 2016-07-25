@@ -239,11 +239,13 @@
     <Compile Include="ApiSrc\Flight\Logic\BookFlightLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\ExpireReservationsLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\GetRulesLogic.cs" />
+    <Compile Include="ApiSrc\Flight\Logic\PriceCalendarLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\SelectFlightLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\SearchFlightLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\RevalidateFlightLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\TopDestinations.cs" />
     <Compile Include="ApiSrc\Flight\Model\ArrayHelper.cs" />
+    <Compile Include="ApiSrc\Flight\Model\FlightPriceCalendarApiResponse.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightIssuanceApiRequest.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightIssueApiRequest.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightBookApiRequest.cs" />
@@ -251,6 +253,7 @@
     <Compile Include="ApiSrc\Flight\Model\FlightCancelApiRequest.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightCancelApiResponse.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightItineraryApiResponse.cs" />
+    <Compile Include="ApiSrc\Flight\Model\FlightPriceCalendarApiRequest.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightSelectApiResponse.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightSelectApiRequest.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightRulesApiResponse.cs" />
