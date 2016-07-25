@@ -43,7 +43,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetLowestPricesForRangeOfDate(origin, destination, startDate, endDate);
         }
         
-        public decimal GetLowestPriceInAMonth(string origin, string destination, string month, string year)
+        public LowestPrice GetLowestPriceInAMonth(string origin, string destination, string month, string year)
         {
             var startDate = new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), 1);
             var endDate = new DateTime(Convert.ToInt32(year), Convert.ToInt32(month),
@@ -67,6 +67,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 pairs.Add(listofDates.ElementAt(ind), listofPrices.ElementAt(ind));
             }
             return pairs;
+        }
+
+        public class LowestPrice
+        {
+            public string date { get; set; }
+            public decimal price { get; set; }
         }
     }
 }

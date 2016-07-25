@@ -77,7 +77,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return values.Select(value => value.ToString()).ToList();
         }
 
-        public decimal GetLowestPriceInRangeOfDate(string origin, string destination, DateTime startDate,
+        public LowestPrice GetLowestPriceInRangeOfDate(string origin, string destination, DateTime startDate,
             DateTime endDate)
         {
             var keyRoute = SetRoute(origin, destination);
@@ -90,7 +90,20 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
             var values = redisDb.HashGet(keyRoute, Array.ConvertAll(listofDates.ToArray(), item => (RedisValue)item)).ToList();
             var listOfPrices = values.Select(value => Convert.ToDecimal(value)).ToList();
-            return listOfPrices.Select((t, ind) => listOfPrices.ElementAt(ind)).Concat(new[] { (decimal)0 }).Min();
+            var minPrice = listOfPrices.ElementAt(0);
+            var minDate = listofDates.ElementAt(0);
+            for (var ind = 1; ind < listOfPrices.Count; ind++)
+            {
+                if (listOfPrices.ElementAt(ind) >= minPrice) continue;
+                minPrice = listOfPrices.ElementAt(ind);
+                minDate = listofDates.ElementAt(ind);
+            }
+
+            return new LowestPrice
+            {
+                date = minDate,
+                price = minPrice
+            };
         }
 
         public void SaveTransacInquiryInCache(string mandiriCacheId, List<KeyValuePair<string, string>> transaction, TimeSpan timeout)
