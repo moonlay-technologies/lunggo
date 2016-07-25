@@ -1,19 +1,19 @@
 ﻿.page.page-home {
     height: 100%;
     @include clearfix(); 
-    background:#ffffff;
-    .form-container {
-        height: 100%;
+    background: $color-white;
+    .form-container { 
+        /*height: 100%;*/
         .form-wrapper {
             padding: 0;
             min-height: 100%;
-            margin:15px; 
-            background:none; 
-            border:0;
+            margin: 20px 15px 0; 
+            background: none; 
+            border: 0;
             h1 {
                 text-align:center; 
                 margin-bottom:25px; 
-                color:#fff;
+                color: $color-white;
             }
             form {
                 .form-group {
@@ -25,10 +25,11 @@
                 
                 .form__destination, .form__origin {
                     .title-destination {
-                        font-size: 14px;
+                        @extend .os-light;
+                        font-size: 13.5px;
                         text-align: center;
                         margin-bottom: 10px;
-                        color: #000;
+                        color: $color-black;
                     }
                     p.form-control {
                         text-align:center;
@@ -36,92 +37,61 @@
                         max-width: 120px;
                         margin: 0 auto;
                         box-shadow: none;
-                        border-radius: 5px;
-                        border: 1px solid #dde1e4;
+                        @include border-radius($border-radius-big);
+                        border: $border-grey-btn;
                     }
                 }
                 span.code-airport, span.city {
                     margin: 0 auto;
                 }
                 span.code-airport {
+                    @extend .os-regular;
                     font-size: 40px; 
                     line-height: 44px;
-                    color: #000;
+                    color: $color-black;
                 }
                 span.city {
-                    font-size: 14px; 
+                    @extend .os-light;
+                    font-size: 12px; 
                     line-height: 20px;
                     color:#686868;
                 }
-                span.icon-pp, span.icon-return, span.icon-fc, span.icon-people, span.icon-flip {
-                    display: inline-block;
-                    vertical-align: middle;
-                    position: absolute;
-                    background-repeat: no-repeat;
-                    background-size: 50% 50%;
-                }
                 span {
-                    /*&.icon-pp {
-                        @extend .icon-mobile;
-                        width: 24px;
-                        height: 24px;
-                        background-position: -101px -2px;
-                        top: 18px;
-                    } &.icon-return {
-                        @extend .icon-mobile;
-                        width: 22px;
-                        height: 23px;
-                        background-position: -67px -3px;
-                        top: 20px;
-                    } &.icon-fc {
-                        @extend .icon-mobile;
-                        width: 30px;
-                        height: 29px;
-                        background-position: -27px 0;
-                        top: 16px;
-                    } &.icon-people {
-                        @extend .icon-mobile;
-                        width: 21px;
-                        height: 29px;
-                        top: 16px;
-                    } &.icon-flip {
-                        @extend .icon-mobile;
-                        width: 22px;
-                        height: 21px;
-                        background-position: -133px -4px;
-                        top: 8px;
-                        left: 4px;
-                    }*/
                     &.icon-pp {
-                        background-image:url(/assets/mobile/images/calendar.png);
-                        width: 47px;
-                        height: 46px;
+                        background-image: url($icon-calendar);
+                        @extend .display-icon;
+                        @include size(47px, 46px);
                         top: 18px;
+                        position: absolute;
                     } &.icon-return {
-                        background-image:url(/assets/mobile/images/loop.png);
-                        width: 43px;
-                        height: 43px;
+                        background-image: url($icon-loop);
+                        @extend .display-icon;
+                        @include size(43px, 43px);
                         top: 20px;
+                        position: absolute;
                     } &.icon-fc {
-                        background-image:url(/assets/mobile/images/medals.png);
-                        width: 59px;
-                        height: 56px;
+                        background-image: url($icon-medals);
+                        @extend .display-icon;
+                        @include size(59px, 56px);
                         top: 16px;
+                        position: absolute;
                     } &.icon-people {
-                        background-image:url(/assets/mobile/images/people.png);
-                        width: 41px;
-                        height: 57px;
+                        background-image: url($icon-people);
+                        @extend .display-icon;
+                        @include size(41px, 57px);
                         top: 16px;
+                        position: absolute;
                     } &.icon-flip {
-                        background-image:url(/assets/mobile/images/flip.png);
-                        width: 43px;
-                        height: 40px;
+                        background-image: url($icon-flip);
+                        @extend .display-icon;
+                        @include size(43px, 40px);
                         top: 8px;
                         left: 4px;
+                        position: absolute;
                     }
                 }
                 .middle-form {
-                    margin: 10px 0 50px;
+                    margin-bottom: 24px;
                     .form-group {
                         position: relative;
                     }
@@ -132,22 +102,23 @@
                 }
                 .form__departure, .form__return, .form__roundtrip, .form__passenger, .form__flightclass {
                     p, p.form-control, select.form-control {
-                        font-size:14px;
-                        color: #000;
+                        -webkit-appearance: none;
+                        font-size:13.5px;
+                        color: $color-black;
                         padding: 0;
                         height: auto;
                         border: none;
                         box-shadow: none;
-                        border-radius: 0;
+                        @include border-radius(0);
                         display: inline;
-                        background: #ffffff;
+                        background: $color-white;
                         span {float:right;}
                     }
                 }
                 .field-container {
-                    margin-left:42px;
-                    border-bottom: 1px solid #eeeeee;
-                    padding: 20px 0;
+                    margin-left: 42px;
+                    border-bottom: $border-form;
+                    padding: 22px 0;
                 }
                 .flip-container {
                     position: relative;
@@ -157,9 +128,9 @@
                         width: 35px;
                         height: 37px;
                         background: #ecf0f4;
-                        border: 1px solid #dde1e4;
+                        border: $border-grey-btn;
                         display: inline-block;
-                        border-radius: 5px;
+                        @include border-radius($border-radius-big);
                         top: 60%;
                         left: 50%;
                         transform: translate(-50%, -50%);
@@ -184,8 +155,7 @@
                         right: 0;
                         bottom: 0;
                         background-color: #ccc;
-                        -webkit-transition: .4s;
-                        transition: .4s;
+                        @include transition($transition-default);
                         &:before {
                             position: absolute;
                             content: "";
@@ -193,7 +163,7 @@
                             width: 16px;
                             left: 4px;
                             bottom: 4px;
-                            background-color: #ffffff;
+                            background-color: $color-white;
                             -webkit-transition: .4s;
                             transition: .4s;
                         }
@@ -203,22 +173,22 @@
                             background-color: #2ea1e8;
                         }
                         &:checked + .slider:before {
-                            -webkit-transform: translateX(16px);
-                            -ms-transform: translateX(16px);
-                            transform: translateX(16px);
+                            @include translate(16px, 0);
                         }
                         &:focus + .slider {box-shadow: 0 0 1px #2196F3;}
                     }
                     .slider {
                         &.round {
-                            border-radius: 24px;
-                            &:before {border-radius: 50%;}
+                            @include border-radius(24px);
+                            &:before {@include border-radius(50%);}
                         }
                     }
                 }
                 .btn.btn-yellow {
-                    border-radius: 5px;
-                    font-weight: 600;
+                    @extend .os-regular;
+                    @include border-radius($border-radius-big);
+                    font-size: 15px;
+                    letter-spacing: 0.5px;
                 }
             }
         }
@@ -228,23 +198,13 @@
 @media handheld,
 only screen and (max-width: 420px) {
     .page.page-home .form-container {
-        height: auto;
-        min-height: 430px;
+        min-height: 600px;
     }
 }
 
 @media handheld,
 only screen and (max-width: 360px) {
     .page.page-home .form-container {
-        height: auto;
-        min-height: 400px;
-    }
-}
-
-@media handheld,
-only screen and (max-width: 320px) {
-    .page.page-home .form-container {
-        height: auto;
-        min-height: 440px;
+        min-height: 480px;
     }
 }
