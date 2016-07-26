@@ -65,8 +65,8 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary
         [HttpGet]
         [LunggoCorsPolicy]
         //[Authorize]
-        [Route("v1/hotpromo")]
-        [Route("v1/hotpromo/{lang}")]
+        [Route("v1/featpromo")]
+        [Route("v1/featpromo/{lang}")]
         public ApiResponseBase GetFeaturePromo(string lang = "id")
         {
             try
@@ -84,7 +84,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary
         //[Authorize]
         [Route("v1/promo/details/{id}")]
         [Route("v1/promo/details/{id}/{lang}")]
-        public ApiResponseBase GetDetailPromo(string lang = "id", string id = "europe")
+        public ApiResponseBase GetDetailPromo(string id, string lang = "id")
         {
             try
             {

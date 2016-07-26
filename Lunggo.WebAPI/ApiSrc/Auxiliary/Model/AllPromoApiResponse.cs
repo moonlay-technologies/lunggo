@@ -7,23 +7,23 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Model
 {
     public class AllPromoApiResponse : ApiResponseBase
     {
-        [JsonProperty("allPromos")]
+        [JsonProperty("allPromos", NullValueHandling = NullValueHandling.Ignore)]
         public List<AllPromo> AllPromos { get; set; }
     }
 
     public class AllPromo
     {
-        [JsonProperty("bookingPeriod")]
+        [JsonProperty("bookingPeriod", NullValueHandling = NullValueHandling.Ignore)]
         public string BookingPeriod{ get; set; }
-        [JsonProperty("description")]
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
         public string Description { get; set; }
-        [JsonProperty("travelPeriod")]
+        [JsonProperty("travelPeriod", NullValueHandling = NullValueHandling.Ignore)]
         public string TravelPeriod { get; set; }
-        [JsonProperty("id")]
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public string Id { get; set; }
-        [JsonProperty("promoType")]
+        [JsonProperty("promoType", NullValueHandling = NullValueHandling.Ignore)]
         public PromoType PromoType { get; set; }
-        [JsonProperty("bannerUrl")]
+        [JsonProperty("bannerUrl", NullValueHandling = NullValueHandling.Ignore)]
         public string BannerUrl { get; set; }    
     }
 

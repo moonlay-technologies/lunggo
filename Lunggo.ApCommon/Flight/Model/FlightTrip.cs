@@ -30,7 +30,26 @@ namespace Lunggo.ApCommon.Flight.Model
         [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? DepartureDate { get; set; }
         [JsonProperty("segments", NullValueHandling = NullValueHandling.Ignore)]
-        public List<FlightSegmentForDisplay> Segments { get; set; }
+
+       public List<FlightSegmentForDisplay> Segments { get; set; }
+        [JsonProperty("originalAdultFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? OriginalAdultFare { get; set; }
+        [JsonProperty("originalChildFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? OriginalChildFare { get; set; }
+        [JsonProperty("originalInfantFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? OriginalInfantFare { get; set; }
+
+        [JsonProperty("netAdultFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? NetAdultFare { get; set; }
+        [JsonProperty("netChildFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? NetChildFare { get; set; }
+        [JsonProperty("netInfantFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? NetInfantFare { get; set; }
+
+        [JsonProperty("originalTotalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? OriginalTotalFare { get; set; }
+        [JsonProperty("netTotalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? NetTotalFare { get; set; }
     }
 
     public class FlightTrip
