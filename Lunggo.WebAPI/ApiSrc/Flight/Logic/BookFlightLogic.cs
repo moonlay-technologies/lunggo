@@ -38,7 +38,10 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
         private static bool IsValid(FlightBookApiRequest request)
         {
             return
+                request != null && 
+                request.LanguageCode != null &&
                 request.Contact != null &&
+                request.Contact.Title != Title.Undefined &&
                 request.Contact.Name != null &&
                 request.Contact.Phone != null &&
                 request.Contact.Email != null &&
