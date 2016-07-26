@@ -6,6 +6,12 @@ $icon-loop: '../images/loop.png';
 $icon-medals: '../images/medals.png';
 $icon-people: '../images/people.png';
 $icon-flip: '../images/flip.png';
+$icon-adult: '../images/dewasa.png';
+$icon-adult-bw: '../images/dewasa-bw.png';
+$icon-children: '../images/anak.png';
+$icon-children-bw: '../images/anak-bw.png';
+$icon-infant: '../images/bayi.png';
+$icon-infant-bw: '../images/bayi-bw.png';
 
 /*--------------------*/
 /* variables */
@@ -17,6 +23,7 @@ $border-grey-btn: 1px solid #d3d7da;
 $border-form: 1px solid #dddddd;
 $transition-default: all 0.5s;
 $header-height: 60px;
+$header-overlay-height: 51px;
 $toggle-box-shadow: 0 0 1px #2196F3;
 
 /*--------------------*/
@@ -24,10 +31,12 @@ $toggle-box-shadow: 0 0 1px #2196F3;
 $color-black: #000000;
 $color-white: #ffffff;
 $color-yellow: #ffd531;
+$color-brown: #4f3500;
 $color-grey-btn: #ecf0f4;
+$color-grey-tab: #ececec;
 $color-footer: #efefef;
 $color-footer-txt: #878787;
-$color-main-blue:#1daee4;
+$color-main-blue:#2fb4e6;
 $color-main-orange:#ff7200;
 $color-fb: #4a6ea9;
 $color-ig: #9a6656;
@@ -95,6 +104,7 @@ $button-border: #c9cdd2;
 /* font */
 .os-light {font-weight: 300;}
 .os-regular {font-weight: 400;}
+.os-semibold {font-weight: 600;}
 .os-bold {font-weight: 700;}
 
 /*--------------------*/
@@ -366,12 +376,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // *****
 // overlay
-.overlay {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:1000; background:#fff; padding-top:$header-height; overflow:auto; @include transition($transition-default);
-    .overlay__header {background:#878787; color:#fff; padding:18px; height:$header-height; position:fixed; z-index:1; top:0; left:0; width:100%; display:none; text-align:center;
+.overlay {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:1000; background:#fff; padding-top:$header-overlay-height; overflow:auto; @include transition($transition-default);
+    .overlay__header {background:#878787; color:#fff; padding:18px; height:$header-overlay-height; position:fixed; z-index:1; top:0; left:0; width:100%; display:none; text-align:center;
         .overlay__title {margin:0;
             small {color:#fff; font-weight:600; font-size:14px;}
         }
-        .overlay__close {float:right; font-size:19px;}
+        h3.overlay__title {
+            @extend .os-bold;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+        .overlay__close {float:right; font-size:16.5px;}
     }
     .overlay__content, .overlay__body {background:#fff; min-height:100%; padding:12px; z-index: 1; top: 60px;/*padding-bottom:$header-height;*/}
     .overlay__footer {position:fixed; width:100%; bottom:0; left:0; background:#616161; padding:12px; color:#fff; height:$header-height; display:none;}
@@ -460,34 +475,90 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 
 // overlay passenger selector
-.overlay.overlay--passenger-selector {background:#616161;
-    .overlay__content {background:#616161; color:#fff; padding:0;
+.overlay.overlay--passenger-selector {
+    background:$color-white;
+    .overlay__content {
+        background:$color-white; 
+        color:$color-black; 
+        padding:0; 
+        overflow-y: hidden;
         .passenger-selector__header {
             ul {margin:0; padding:0;
-                li {display:block; width:33.333333334%; height:50px; float:left;
-                    &+li a {border-left:$border-default;}
-                    a {position:relative; display:block; width:100%; height:100%; background:#9d9d9d;
-                        &:before {width:22px; height:30px; background:url(/assets/mobile/images/passenger-sprite-white.png); background-repeat:no-repeat; display:block; position:absolute; content:''; top:10px; left:50%; margin-left:-11px;}
-                        &.active {background:#616161;}
-                        &.adult:before {background-position:0 0;}
-                        &.children:before {background-position:-22px 0;}
-                        &.infant:before {background-position:-44px 0;} 
+                li {
+                    display:block;  
+                    @include size(33.333333334%, 50px);
+                    float:left;
+                    &+li a {border-left:1px solid #e6e6e6;}
+                    a {
+                        position:relative; 
+                        display:block; 
+                        @include size(100%, 100%);
+                        background:$color-grey-tab;
+                        &:before {
+                            top:10px; 
+                            left:50%; 
+                            margin-left:-11px;
+                        } &.active {
+                            background:$color-white;
+                            &.adult:before {
+                                @extend .display-icon;
+                                @include size(46px, 61px);
+                                background-image:url($icon-adult); 
+                            } &.children:before {
+                                @extend .display-icon;
+                                @include size(46px, 61px);
+                                background-image:url($icon-children); 
+                            } &.infant:before {
+                                @extend .display-icon;
+                                @include size(45px, 61px);
+                                background-image:url($icon-infant); 
+                            }
+                        } &.adult {
+                            &:before {
+                                @extend .display-icon;
+                                @include size(47px, 46px);
+                                width:46px; 
+                                height:61px; 
+                                background-image:url($icon-adult-bw);
+                            }
+                        } &.children {
+                            &:before {
+                                @extend .display-icon;
+                                @include size(47px, 46px);
+                                width:46px; 
+                                height:61px; 
+                                background-image:url($icon-children-bw);
+                            }
+                        } &.infant {
+                            &:before {
+                                @extend .display-icon;
+                                @include size(47px, 46px);
+                                width:45px; 
+                                height:61px; 
+                                background-image:url($icon-infant-bw);
+                            }
+                        } 
                     }
                 }
             }
         }
         .passenger-selector__body {width:200px; margin-left:auto; margin-right:auto;
-            .selected {text-align:center; border-bottom:3px solid #fff; margin-bottom:15px;
-                .number {display:inline-block; font-size:72px; font-weight:bold;}
+            .selected {text-align:center; border-bottom:2px solid $color-black; margin-bottom:15px;
+                .number {display:inline-block; font-size:72px; @extend .os-bold; line-height: 120px;}
                 .description {display:inline-block; text-align:left; padding-left:5px;
                     b {font-size:16px;}
                 }
             }
             .selector {
-                a, span {display:block; float:left; background:#ffd632; color:#616161; font-weight:bold; width:60px; height:60px; text-align:center; padding-top:10px; font-size:27px; margin-bottom:10px; margin-left:10px;
+                a, span {display:block; float:left; background:$color-yellow; color:$color-brown; @extend .os-semibold; width:60px; height:60px; text-align:center; padding-top:10px; font-size:27px; margin-bottom:10px; margin-left:10px;
                     &:nth-child(3n+1) {margin-left:0;}
                     &.disabled {opacity:0.5;}
                 }
+            }
+            .note > p {
+                @extend .os-regular;
+                font-size: 11px; 
+                font-style: italic;
             }
         }
     }
@@ -681,6 +752,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     vertical-align: middle;
     background-size: 50% 50%;
     position: absolute;
+    content:''; 
 }
 
 /*--------------------*/
