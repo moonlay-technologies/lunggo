@@ -12,6 +12,7 @@ $icon-children: '../images/anak.png';
 $icon-children-bw: '../images/anak-bw.png';
 $icon-infant: '../images/bayi.png';
 $icon-infant-bw: '../images/bayi-bw.png';
+$icon-calendar-control: '../images/ui-calendar-nav2.png';
 
 /*--------------------*/
 /* variables */
@@ -32,6 +33,7 @@ $color-black: #000000;
 $color-white: #ffffff;
 $color-yellow: #ffd531;
 $color-brown: #4f3500;
+$color-dark-grey: #616161;
 $color-grey-btn: #ecf0f4;
 $color-grey-tab: #ececec;
 $color-footer: #efefef;
@@ -568,8 +570,46 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // datepicker on overlay
 .overlay.overlay--datepicker {
     .overlay__content {
-        background: #616161; 
-        color: $color-white;
+        background: $color-white; 
+        color: $color-black;
+        padding: 0;
+        .overlay-selector {
+            .overlay-selector__header {
+               .nav-tabs {
+                    border-bottom: none;
+                    > li {
+                        width: 50%;
+                        height: 46px;
+                        text-align: center;
+                        font-size: 13px;
+                        text-transform: uppercase;
+                        @extend .os-bold;
+                        > a {
+                            margin: 0;
+                            color: #aeaeae;
+                            background: $color-grey-tab;
+                            @include border-radius(0);
+                            &:hover {border-color: transparent;}
+                        }
+                        &.active {
+                            > a {
+                                background: $color-white;
+                                border: none;
+                                color: $color-dark-grey;
+                            }
+                        }
+                    }
+                } 
+                .nav > li > a {padding: 13px 15px;}
+            }
+            .overlay-selector__body {
+                /*border-bottom: 1px solid #d4d4d4;*/
+                .ui-datepicker {
+                    max-width: 340px;
+                    margin: 15px auto;
+                }
+            }
+        }
         a {color: $color-white;}
         select {
             color: $color-black; 
@@ -579,6 +619,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
     .ui-datepicker {
         .ui-datepicker-header {
+            margin: 0 15px;
             text-align:center; 
             position:relative; 
             padding-top:20px; 
@@ -593,26 +634,24 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             .ui-datepicker-prev {
                 position:absolute; 
                 left:0; 
-                width:25px; 
-                height:25px; 
-                background-image:url(/Assets/mobile/images/ui-calendar-nav.png); 
+                bottom: 8px;
+                @include size(11px, 12px);
+                background-image: url($icon-calendar-control); 
                 background-repeat:no-repeat; 
-                background-position:-30px 0; 
-                background-size:200%;
+                background-position: 0 0; 
             }
             .ui-datepicker-next {
                 @extend & .ui-datepicker-prev; 
                 left:auto; 
                 right:0; 
-                background-position:0 0;
+                background-position: -14px 0;
             }
             .ui-state-disabled {opacity:0.3;}
         }
         .ui-datepicker-calendar {
             width:100%; 
-            max-width:280px; 
-            margin-left:auto; 
-            margin-right:auto;
+            font-size: 15px;
+            
             .ui-state-disabled {opacity:0.3;}
             .ui-datepicker-week-end {
                 a, span {color:#e3ae22;}
@@ -623,20 +662,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             thead {
                 tr {
                     th {
-                        width:40px; 
-                        height:40px; 
-                        padding:5px; 
+                        padding: 13px 0; 
                         text-align:center;
                     }
                 }
             }
             tbody {
+                a {color: #878787;}
                 tr {
                     td {
-                        width:40px; 
-                        height:40px; 
+                        padding: 13px 0; 
                         text-align:center; 
-                        padding:5px;
                     }
                 }
             }

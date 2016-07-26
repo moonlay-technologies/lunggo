@@ -105,7 +105,7 @@
         </form><!-- .flight-form -->
     </div><!-- .form-wrapper -->
 
-    <!-- overlays -->
+    @*<!-- overlays -->
     <!-- overlay date picker -->
     <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--departure" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-departure') }">
         <header class="overlay__header">
@@ -116,6 +116,30 @@
         </header><!-- .overlay__header -->
         <section class="overlay__content">
             <div class="ui-datepicker departure-date"></div>
+        </section>
+    </div><!-- .overlay--datepicker-->*@
+    
+    <!-- overlays -->
+    <!-- overlay date picker -->
+    <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--departure" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-departure') }">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                Pilih Tanggal Keberangkatan
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div class="overlay-selector">
+                <div class="overlay-selector__header" role="navigation">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a class="adult">Berangkat</a></li>
+                        <li><a class="children">Pergi</a></li>
+                    </ul>
+                </div>
+                <div class="overlay-selector__body">
+                    <div class="ui-datepicker departure-date"></div>
+                </div>
+            </div>
         </section>
     </div><!-- .overlay--datepicker-->
 
