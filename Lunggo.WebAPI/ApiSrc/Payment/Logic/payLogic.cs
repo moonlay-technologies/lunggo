@@ -35,15 +35,17 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 
         private static PayApiResponse AssembleApiResponse(PaymentDetails paymentDetails, bool isUpdated)
         {
+            if (paymentDetails == null)
+            {
+                return new PayApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERPPAY04"
+                };
+            }
+
             if (!isUpdated)
             {
-                if (paymentDetails.Method == PaymentMethod.BankTransfer)
-                    return new PayApiResponse
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPPAY04"
-                    };
-
                 return new PayApiResponse
                 {
                     StatusCode = HttpStatusCode.Accepted,
@@ -74,6 +76,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 request != null &&
                 request.Method != PaymentMethod.Undefined &&
                 request.RsvNo != null;
+
         }
     }
 }

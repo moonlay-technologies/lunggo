@@ -62,32 +62,27 @@
                         @extend .display-icon;
                         @include size(47px, 46px);
                         top: 18px;
-                        position: absolute;
                     } &.icon-return {
                         background-image: url($icon-loop);
                         @extend .display-icon;
                         @include size(43px, 43px);
                         top: 20px;
-                        position: absolute;
                     } &.icon-fc {
                         background-image: url($icon-medals);
                         @extend .display-icon;
                         @include size(59px, 56px);
                         top: 16px;
-                        position: absolute;
                     } &.icon-people {
                         background-image: url($icon-people);
                         @extend .display-icon;
                         @include size(41px, 57px);
                         top: 16px;
-                        position: absolute;
                     } &.icon-flip {
                         background-image: url($icon-flip);
                         @extend .display-icon;
                         @include size(43px, 40px);
-                        top: 8px;
-                        left: 4px;
-                        position: absolute;
+                        top: 7px;
+                        left: 5px;
                     }
                 }
                 .middle-form {
@@ -118,7 +113,7 @@
                 .field-container {
                     margin-left: 42px;
                     border-bottom: $border-form;
-                    padding: 22px 0;
+                    padding: 21px 0;
                 }
                 .flip-container {
                     position: relative;
@@ -143,9 +138,7 @@
                         display: inline-block;
                         width: 40px;
                         height: 24px;
-                        input {
-                            display:none;
-                        }
+                        input {display:none;}
                     }
                     .slider {
                         position: absolute;
@@ -164,18 +157,13 @@
                             left: 4px;
                             bottom: 4px;
                             background-color: $color-white;
-                            -webkit-transition: .4s;
-                            transition: .4s;
+                            @include transition($transition-default);
                         }
                     }
                     input {
-                        &:checked + .slider {
-                            background-color: #2ea1e8;
-                        }
-                        &:checked + .slider:before {
-                            @include translate(16px, 0);
-                        }
-                        &:focus + .slider {box-shadow: 0 0 1px #2196F3;}
+                        &:checked + .slider {background-color: #2ea1e8;}
+                        &:checked + .slider:before {@include translate(16px, 0);}
+                        &:focus + .slider {@include box-shadow($toggle-box-shadow);}
                     }
                     .slider {
                         &.round {
@@ -185,10 +173,9 @@
                     }
                 }
                 .btn.btn-yellow {
-                    @extend .os-regular;
+                    @extend .os-semibold;
                     @include border-radius($border-radius-big);
                     font-size: 15px;
-                    letter-spacing: 0.5px;
                 }
             }
         }
@@ -198,7 +185,7 @@
 @media handheld,
 only screen and (max-width: 420px) {
     .page.page-home .form-container {
-        min-height: 600px;
+        min-height: 570px;
     }
 }
 

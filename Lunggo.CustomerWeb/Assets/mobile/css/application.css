@@ -2,8 +2,6 @@
 /*--------------------*/
 /* icon */
 /*--------------------*/
-/* logo */
-/*--------------------*/
 /* variables */
 /*--------------------*/
 /* color */
@@ -14,10 +12,13 @@
 .os-light, .page.page-home .form-container .form-wrapper form .form__destination .title-destination, .page.page-home .form-container .form-wrapper form .form__origin .title-destination, .page.page-home .form-container .form-wrapper form span.city {
   font-weight: 300; }
 
-.os-regular, .page.page-home .form-container .form-wrapper form span.code-airport, .page.page-home .form-container .form-wrapper form .btn.btn-yellow {
+.os-regular, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .note > p, .page.page-home .form-container .form-wrapper form span.code-airport {
   font-weight: 400; }
 
-.os-bold {
+.os-semibold, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .page.page-home .form-container .form-wrapper form .btn.btn-yellow {
+  font-weight: 600; }
+
+.os-bold, .overlay .overlay__header h3.overlay__title, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number {
   font-weight: 700; }
 
 /*--------------------*/
@@ -144,7 +145,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background: none;
       left: auto;
       right: 15px;
-      color: #1daee4;
+      color: #2fb4e6;
       text-decoration: none;
       text-align: right;
       font-weight: 600;
@@ -201,7 +202,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .burger-content .burger-content__header ul li.language img {
           width: 22px; }
         .burger-content .burger-content__header ul li.currency {
-          border-left: 1px solid #1daee4;
+          border-left: 1px solid #2fb4e6;
           padding-left: 30px; }
     .burger-content .burger-content__header .burger-content__close {
       color: #fff;
@@ -219,7 +220,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       margin: 0;
       padding: 0; }
       .burger-content .burger-content__body ul li a {
-        color: #1daee4;
+        color: #2fb4e6;
         padding: 15px 0px;
         padding-left: 70px;
         display: block;
@@ -247,7 +248,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           top: 0;
           background: url(/assets/mobile/images/burger-menu-active.png) left center no-repeat; }
       .burger-content .burger-content__body ul li.login, .burger-content .burger-content__body ul li.register, .burger-content .burger-content__body ul li.account {
-        background: #1daee4;
+        background: #2fb4e6;
         color: #fff; }
         .burger-content .burger-content__body ul li.login a, .burger-content .burger-content__body ul li.register a, .burger-content .burger-content__body ul li.account a {
           color: #fff; }
@@ -369,11 +370,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .site-footer .site-footer-social nav {
       margin-bottom: 10px; }
       .site-footer .site-footer-social nav .facebook .fa-circle {
-        color: #4a6eaa; }
+        color: #4a6ea9; }
       .site-footer .site-footer-social nav .twitter .fa-circle {
         color: #28a9e0; }
       .site-footer .site-footer-social nav .instagram .fa-circle {
-        color: #9a6756; }
+        color: #9a6656; }
     .site-footer .site-footer-social .fa-stack {
       width: 2.5em;
       height: 1.8em;
@@ -381,7 +382,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .site-footer .site-footer-social .fa-stack-2x {
       font-size: 1.8em; }
     .site-footer .site-footer-social .fa-inverse {
-      color: #ffffff; }
+      color: #efefef;
+      font-size: 19px; }
     .site-footer .site-footer-social .footer-txt {
       font-size: 10px;
       color: #878787;
@@ -457,7 +459,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   left: 0;
   z-index: 1000;
   background: #fff;
-  padding-top: 60px;
+  padding-top: 51px;
   overflow: auto;
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
@@ -467,7 +469,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #878787;
     color: #fff;
     padding: 18px;
-    height: 60px;
+    height: 51px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -481,9 +483,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         color: #fff;
         font-weight: 600;
         font-size: 14px; }
+    .overlay .overlay__header h3.overlay__title {
+      font-size: 13px;
+      text-transform: uppercase; }
     .overlay .overlay__header .overlay__close {
       float: right;
-      font-size: 19px; }
+      font-size: 16.5px; }
   .overlay .overlay__content, .overlay .overlay__body {
     background: #fff;
     min-height: 100%;
@@ -508,7 +513,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .overlay.active .overlay__footer {
       display: block; }
   .overlay.overlay--theme--blue .overlay__header {
-    background: #1daee4; }
+    background: #2fb4e6; }
 
 .overlay.overlay--flight-form form .flight-trip {
   display: inline-block;
@@ -611,7 +616,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-size: 32px;
       padding-left: 15px;
       padding-right: 15px;
-      color: #1daee4;
+      color: #2fb4e6;
       width: 30%;
       text-align: center; }
     .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__detail {
@@ -642,58 +647,76 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       border-top: 1px solid #ccc; }
 
 .overlay.overlay--passenger-selector {
-  background: #616161; }
+  background: #ffffff; }
   .overlay.overlay--passenger-selector .overlay__content {
-    background: #616161;
-    color: #fff;
-    padding: 0; }
+    background: #ffffff;
+    color: #000000;
+    padding: 0;
+    overflow-y: hidden; }
     .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul {
       margin: 0;
       padding: 0; }
       .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li {
         display: block;
-        width: 33.333333334%;
+        width: 33.33333%;
         height: 50px;
         float: left; }
         .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li + li a {
-          border-left: 1px solid #ccc; }
+          border-left: 1px solid #e6e6e6; }
         .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a {
           position: relative;
           display: block;
           width: 100%;
           height: 100%;
-          background: #9d9d9d; }
+          background: #ececec; }
           .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a:before {
-            width: 22px;
-            height: 30px;
-            background: url(/assets/mobile/images/passenger-sprite-white.png);
-            background-repeat: no-repeat;
-            display: block;
-            position: absolute;
-            content: '';
             top: 10px;
             left: 50%;
             margin-left: -11px; }
           .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active {
-            background: #616161; }
+            background: #ffffff; }
+            .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.adult:before {
+              width: 46px;
+              height: 61px;
+              background-image: url("../images/dewasa.png"); }
+            .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.children:before {
+              width: 46px;
+              height: 61px;
+              background-image: url("../images/anak.png"); }
+            .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.infant:before {
+              width: 45px;
+              height: 61px;
+              background-image: url("../images/bayi.png"); }
           .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.adult:before {
-            background-position: 0 0; }
+            width: 47px;
+            height: 46px;
+            width: 46px;
+            height: 61px;
+            background-image: url("../images/dewasa-bw.png"); }
           .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.children:before {
-            background-position: -22px 0; }
+            width: 47px;
+            height: 46px;
+            width: 46px;
+            height: 61px;
+            background-image: url("../images/anak-bw.png"); }
           .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.infant:before {
-            background-position: -44px 0; }
+            width: 47px;
+            height: 46px;
+            width: 45px;
+            height: 61px;
+            background-image: url("../images/bayi-bw.png"); }
     .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body {
       width: 200px;
       margin-left: auto;
       margin-right: auto; }
       .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected {
         text-align: center;
-        border-bottom: 3px solid #fff;
+        border-bottom: 2px solid #000000;
         margin-bottom: 15px; }
         .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number {
           display: inline-block;
           font-size: 72px;
-          font-weight: bold; }
+          line-height: 120px; }
         .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .description {
           display: inline-block;
           text-align: left;
@@ -703,9 +726,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span {
         display: block;
         float: left;
-        background: #ffd632;
-        color: #616161;
-        font-weight: bold;
+        background: #ffd531;
+        color: #4f3500;
         width: 60px;
         height: 60px;
         text-align: center;
@@ -717,14 +739,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           margin-left: 0; }
         .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a.disabled, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span.disabled {
           opacity: 0.5; }
+      .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .note > p {
+        font-size: 11px;
+        font-style: italic; }
 
 .overlay.overlay--datepicker .overlay__content {
   background: #616161;
-  color: #fff; }
+  color: #ffffff; }
   .overlay.overlay--datepicker .overlay__content a {
-    color: #fff; }
+    color: #ffffff; }
   .overlay.overlay--datepicker .overlay__content select {
-    color: #000;
+    color: #000000;
     font-size: 14px;
     margin-left: 5px; }
 
@@ -733,7 +758,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   position: relative;
   padding-top: 20px;
   height: 50px;
-  color: #1daee4;
+  color: #2fb4e6;
   font-size: 22px; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header:after {
     display: block;
@@ -794,31 +819,31 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #fff;
     font-weight: bold; }
 
-.container_new {
-  /*width: 80%;
-    margin-left: 10px;
-    margin-right: 10px;*/ }
-  .container_new p {
-    padding: 10px 10px 10px 10px;
-    margin-left: 10px;
-    margin-right: 10px; }
-  .container_new .row1 {
-    padding: 10px 10px 10px 10px;
-    margin-left: 10px;
-    margin-right: 10px; }
-  .container_new .col12 {
-    align-self: center;
-    margin-left: 10px;
-    margin-right: 10px; }
-  .container_new .col-xs-6 {
-    margin-top: -10px; }
-    .container_new .col-xs-6 h6 {
-      width: 200%;
-      font-size: 8px; }
-  .container_new .col-xs-8 {
-    margin-top: -10px; }
-    .container_new .col-xs-8 h5 {
-      font-size: 12px; }
+.container_new p {
+  padding: 10px 10px 10px 10px;
+  margin-left: 10px;
+  margin-right: 10px; }
+
+.container_new .row1 {
+  padding: 10px 10px 10px 10px;
+  margin-left: 10px;
+  margin-right: 10px; }
+
+.container_new .col12 {
+  align-self: center;
+  margin-left: 10px;
+  margin-right: 10px; }
+
+.container_new .col-xs-6 {
+  margin-top: -10px; }
+  .container_new .col-xs-6 h6 {
+    width: 200%;
+    font-size: 8px; }
+
+.container_new .col-xs-8 {
+  margin-top: -10px; }
+  .container_new .col-xs-8 h5 {
+    font-size: 12px; }
 
 .page-overlay .overlay-content div section p {
   display: inline-block;
@@ -865,12 +890,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 #ui-datepicker-div > .ui-datepicker {
   display: none !important; }
 
-.display-icon, .page.page-home .form-container .form-wrapper form span.icon-pp, .page.page-home .form-container .form-wrapper form span.icon-return, .page.page-home .form-container .form-wrapper form span.icon-fc, .page.page-home .form-container .form-wrapper form span.icon-people, .page.page-home .form-container .form-wrapper form span.icon-flip {
+.display-icon, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.infant:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.infant:before, .page.page-home .form-container .form-wrapper form span.icon-pp, .page.page-home .form-container .form-wrapper form span.icon-return, .page.page-home .form-container .form-wrapper form span.icon-fc, .page.page-home .form-container .form-wrapper form span.icon-people, .page.page-home .form-container .form-wrapper form span.icon-flip {
   background-repeat: no-repeat;
   display: inline-block;
   vertical-align: middle;
   background-size: 50% 50%;
-  position: absolute; }
+  position: absolute;
+  content: ''; }
 
 /*--------------------*/
 .page.page-home {
@@ -927,33 +953,28 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         background-image: url("../images/calendar.png");
         width: 47px;
         height: 46px;
-        top: 18px;
-        position: absolute; }
+        top: 18px; }
       .page.page-home .form-container .form-wrapper form span.icon-return {
         background-image: url("../images/loop.png");
         width: 43px;
         height: 43px;
-        top: 20px;
-        position: absolute; }
+        top: 20px; }
       .page.page-home .form-container .form-wrapper form span.icon-fc {
         background-image: url("../images/medals.png");
         width: 59px;
         height: 56px;
-        top: 16px;
-        position: absolute; }
+        top: 16px; }
       .page.page-home .form-container .form-wrapper form span.icon-people {
         background-image: url("../images/people.png");
         width: 41px;
         height: 57px;
-        top: 16px;
-        position: absolute; }
+        top: 16px; }
       .page.page-home .form-container .form-wrapper form span.icon-flip {
         background-image: url("../images/flip.png");
         width: 43px;
         height: 40px;
-        top: 8px;
-        left: 4px;
-        position: absolute; }
+        top: 7px;
+        left: 5px; }
       .page.page-home .form-container .form-wrapper form .middle-form {
         margin-bottom: 24px; }
         .page.page-home .form-container .form-wrapper form .middle-form .form-group {
@@ -980,7 +1001,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .page.page-home .form-container .form-wrapper form .field-container {
         margin-left: 42px;
         border-bottom: 1px solid #dddddd;
-        padding: 22px 0; }
+        padding: 21px 0; }
       .page.page-home .form-container .form-wrapper form .flip-container {
         position: relative;
         min-height: 104px; }
@@ -1026,8 +1047,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           left: 4px;
           bottom: 4px;
           background-color: #ffffff;
-          -webkit-transition: .4s;
-          transition: .4s; }
+          -webkit-transition: all 0.5s;
+          -moz-transition: all 0.5s;
+          -o-transition: all 0.5s;
+          transition: all 0.5s; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider {
         background-color: #2ea1e8; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider:before {
@@ -1036,6 +1059,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         -o-transform: translate(16px, 0);
         transform: translate(16px, 0); }
       .page.page-home .form-container .form-wrapper form .form__roundtrip input:focus + .slider {
+        -webkit-border-radius: 0 0 1px #2196F3;
+        -moz-border-radius: 0 0 1px #2196F3;
+        -ms-border-radius: 0 0 1px #2196F3;
         box-shadow: 0 0 1px #2196F3; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip .slider.round {
         -webkit-border-radius: 24px;
@@ -1052,12 +1078,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         -moz-border-radius: 5px;
         -ms-border-radius: 5px;
         border-radius: 5px;
-        font-size: 15px;
-        letter-spacing: 0.5px; }
+        font-size: 15px; }
 
 @media handheld, only screen and (max-width: 420px) {
   .page.page-home .form-container {
-    min-height: 600px; } }
+    min-height: 570px; } }
 
 @media handheld, only screen and (max-width: 360px) {
   .page.page-home .form-container {
@@ -1215,7 +1240,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       display: block; }
     .page.page-flight .flight-list .flight .flight-content .content-left .flight-time .separator, .page.page-flight .flight-list .flight .flight-content .content-right .flight-time .separator {
       width: 10%;
-      border-top: 2px solid #1daee4;
+      border-top: 2px solid #2fb4e6;
       height: 10px;
       position: relative;
       top: 7px;
@@ -1248,7 +1273,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     padding-bottom: 3px; }
 
 .overlay--flight-form .overlay__content {
-  background: #1daee4; }
+  background: #2fb4e6; }
   .overlay--flight-form .overlay__content form {
     color: #fff; }
     .overlay--flight-form .overlay__content form .switch-wrapper:after {
@@ -1277,7 +1302,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         margin-bottom: 0;
         line-height: 24px; }
         .overlay--flight-form .overlay__content form .switch-wrapper .switch label.active {
-          background: #1daee4;
+          background: #2fb4e6;
           color: #fff;
           -webkit-border-radius: 2px;
           -moz-border-radius: 2px;
@@ -1437,7 +1462,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       left: 5px;
       position: absolute; }
       .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__number span {
-        background: #1daee4;
+        background: #2fb4e6;
         color: #fff;
         width: 16px;
         height: 16px;
@@ -1457,7 +1482,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         height: auto;
         float: left; }
       .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary .flight__airline {
-        color: #1daee4; }
+        color: #2fb4e6; }
       .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail {
         position: relative; }
         .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail:after {
@@ -1487,10 +1512,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       content: "";
       display: block;
       width: 100%;
-      border-bottom: 1px dashed #1daee4;
+      border-bottom: 1px dashed #2fb4e6;
       margin-top: -9px; }
     .overlay--flight-detail .overlay__content .flight-wrapper .transit span {
-      color: #1daee4;
+      color: #2fb4e6;
       font-style: italic;
       background: #fff;
       display: inline-block;
@@ -1835,7 +1860,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .page.page-useraccount .menu-user {
   display: block;
-  background: #1daee4;
+  background: #2fb4e6;
   color: #fff;
   padding: 15px; }
   .page.page-useraccount .menu-user:before {
@@ -1905,7 +1930,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-useraccount .user-profile .form-wrapper {
   padding: 0; }
   .page.page-useraccount .user-profile .form-wrapper > div > header {
-    background: #1daee4;
+    background: #2fb4e6;
     color: #fff;
     padding: 15px; }
     .page.page-useraccount .user-profile .form-wrapper > div > header span {
@@ -1915,7 +1940,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     padding: 15px; }
 
 .page.page-useraccount .user-history .page-title {
-  background: #1daee4;
+  background: #2fb4e6;
   color: #fff;
   padding: 15px; }
   .page.page-useraccount .user-history .page-title span {
@@ -1979,7 +2004,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     position: relative;
     counter-increment: number; }
     .page.page-orderdetail .passenger-list li:before {
-      background: #1daee4;
+      background: #2fb4e6;
       content: counter(number);
       position: absolute;
       color: #fff;
@@ -1995,7 +2020,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding-left: 30px;
   margin-bottom: 20px; }
   .page.page-orderdetail .info-flight .flight .flight__airline__name {
-    color: #1daee4;
+    color: #2fb4e6;
     font-weight: bold;
     padding-top: 10px; }
   .page.page-orderdetail .info-flight .flight:before {
@@ -2005,10 +2030,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #1daee4;
+    background-color: #2fb4e6;
     background-repeat: no-repeat;
     background-size: 200%;
-    border: 2px solid #1daee4;
+    border: 2px solid #2fb4e6;
     background-image: url(/assets/images/plane-updown-sprite.png); }
   .page.page-orderdetail .info-flight .flight.return:before {
     background-position: -16px; }
@@ -2236,7 +2261,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .passwordform .resetpassword {
     padding-bottom: 12px; }
     .passwordform .resetpassword header {
-      background: #1daee4;
+      background: #2fb4e6;
       color: #fff;
       padding: 12px;
       font-size: 14px;
@@ -2398,7 +2423,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         margin-bottom: 15px;
         counter-increment: howto-counter; }
         .page.page-howtoorder .howto-content .list__wrapper .list .list__header {
-          background: #1daee4; }
+          background: #2fb4e6; }
           .page.page-howtoorder .howto-content .list__wrapper .list .list__header h3 {
             color: #fff;
             padding: 15px;
@@ -2429,7 +2454,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-howtoorder .howto-content .howto-note h3 {
       font-weight: bold; }
     .page.page-howtoorder .howto-content .howto-note p span {
-      color: #1daee4; }
+      color: #2fb4e6; }
 
 .page.page-newsletter .container p {
   color: #3fabe3;

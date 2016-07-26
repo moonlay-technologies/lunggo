@@ -32,6 +32,9 @@ namespace Lunggo.ApCommon.Payment.Service
             isUpdated = false;
             var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
 
+            if (paymentDetails == null)
+                return null;
+
             if (paymentDetails.Method != PaymentMethod.Undefined)
                 return paymentDetails;
 
