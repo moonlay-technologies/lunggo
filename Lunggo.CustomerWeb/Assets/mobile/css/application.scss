@@ -1,20 +1,49 @@
 ﻿
+/*--------------------*/
+/* icon */
+$icon-calendar: '../images/calendar.png';
+$icon-loop: '../images/loop.png';
+$icon-medals: '../images/medals.png';
+$icon-people: '../images/people.png';
+$icon-flip: '../images/flip.png';
+$icon-adult: '../images/dewasa.png';
+$icon-adult-bw: '../images/dewasa-bw.png';
+$icon-children: '../images/anak.png';
+$icon-children-bw: '../images/anak-bw.png';
+$icon-infant: '../images/bayi.png';
+$icon-infant-bw: '../images/bayi-bw.png';
 
 /*--------------------*/
 /* variables */
-$color-main-blue:#1daee4;
-$color-main-orange:#ff7200;
-$border-default:1px solid #ccc;
-$border-radius-default:2px;
-$transition-default:all 0.5s;
-$header-height:60px;
 
+$border-default: 1px solid #ccc;
+$border-radius-default: 2px;
+$border-radius-big: 5px;
+$border-grey-btn: 1px solid #d3d7da;
+$border-form: 1px solid #dddddd;
+$transition-default: all 0.5s;
+$header-height: 60px;
+$header-overlay-height: 51px;
+$toggle-box-shadow: 0 0 1px #2196F3;
+
+/*--------------------*/
+/* color */
+$color-black: #000000;
 $color-white: #ffffff;
-$color-blue: #2ea1e8;
-$color-grey: #686868;
+$color-yellow: #ffd531;
+$color-brown: #4f3500;
+$color-grey-btn: #ecf0f4;
+$color-grey-tab: #ececec;
+$color-footer: #efefef;
+$color-footer-txt: #878787;
+$color-main-blue:#2fb4e6;
+$color-main-orange:#ff7200;
+$color-fb: #4a6ea9;
+$color-ig: #9a6656;
+$color-twitter: #28a9e0;
+
 $button-background: #edf1f4;
 $button-border: #c9cdd2;
-$color-grey-border: #c8c8c8;
 
 /*--------------------*/
 /* mixins */
@@ -23,25 +52,33 @@ $color-grey-border: #c8c8c8;
 }
 
 @mixin border-radius($radius){
-    -webkit-border-radius:$radius;
-    -moz-border-radius:$radius;
-    border-radius:$radius;
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
 }
 
 @mixin box-shadow($properties){
-    -webkit-box-shadow:$properties;
-    -moz-box-shadow:$properties;
-    box-shadow:$properties;
+    -webkit-border-radius: $properties;
+    -moz-border-radius: $properties;
+    -ms-border-radius: $properties;
+    box-shadow: $properties;
 }
 
 @mixin skew-x($value){
-    -ms-transform: skewX($value);
-    -webkit-transform: skewX($value);
+    -webkit-border-radius: skewX($value);
+    -moz-border-radius: skewX($value);
+    -ms-border-radius: skewX($value);
     transform: skewX($value);
 }
 
 @mixin clearfix(){
-    &:after {display:block; width:100%; content:""; clear:both;}
+    &:after {
+        display:block; 
+        width:100%; 
+        content:""; 
+        clear:both;
+    }
 }
 
 @mixin transition($value){
@@ -50,6 +87,25 @@ $color-grey-border: #c8c8c8;
     -o-transition: $value;
     transition: $value;
 }
+
+@mixin size($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin translate($x, $y) {
+    -webkit-transform: translate($x, $y);
+    -ms-transform: translate($x, $y);
+    -o-transform: translate($x, $y);
+    transform: translate($x, $y);
+}
+
+/*--------------------*/
+/* font */
+.os-light {font-weight: 300;}
+.os-regular {font-weight: 400;}
+.os-semibold {font-weight: 600;}
+.os-bold {font-weight: 700;}
 
 /*--------------------*/
 // General Styling
@@ -77,7 +133,7 @@ img {max-width:100%;}
 .display-block {display:block !important;}
 
 .btn {@include border-radius($border-radius-default);}
-.btn.btn-yellow {background:#ffd632; color:#000000; font-weight:bold; border-radius: 2px;}
+.btn.btn-yellow {background: $color-yellow; color:#000000; font-weight:bold; border-radius: 2px;}
 .btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; border:2px solid #adadad;}
 .btn.block {display:block; width:50%;}
 
@@ -129,7 +185,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 }
                 //active
                 &.active {background:#9ee5ff; position:relative;
-                    /*&:after {content:''; position:absolute; width:20px; height:100%; left:100%; top:0; background:url(/assets/mobile/images/burger-menu-active.png) left center no-repeat;}*/
+                    &:after {content:''; position:absolute; width:20px; height:100%; left:100%; top:0; background:url(/assets/mobile/images/burger-menu-active.png) left center no-repeat;}
                 }
                 // specific class
                 &.login, &.register, &.account {background:$color-main-blue; color:#fff;
@@ -225,11 +281,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .site-footer {
     bottom: 0; 
     left: 0; 
-    background: #ffffff; 
+    background: $color-footer; 
     color: #000000; 
     width: 100%;
-    padding: 20px;
-    margin-top: 20px;
+    padding: 15px 0;
+    margin-top:20px;
     .site-footer-menu {
         nav {
             padding:0 12px;
@@ -252,23 +308,31 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
     .site-footer-social {
         text-align:center;
-        padding:10px 0; 
         nav {
             margin-bottom:10px;
             .facebook {
-                .fa-circle {color:#4a6eaa;}
+                .fa-circle {color: $color-fb;}
             }
             .twitter {
-                .fa-circle {color:#28a9e0;}
+                .fa-circle {color: $color-twitter;}
             }
             .instagram {
-                .fa-circle {color:#9a6756;}
+                .fa-circle {color: $color-ig;}
             }
         }
         // inverse
-        .fa-inverse {color:#000;}
+        .fa-stack {
+            @include size(2.5em, 1.8em);
+            line-height: 1.8em;
+        }
+        .fa-stack-2x {font-size: 1.8em}
+        .fa-inverse {
+            color:$color-footer;
+            font-size: 19px;
+        }
         .footer-txt {
             font-size: 10px;
+            color: $color-footer-txt;
             margin: 0 20px;
         }
     }
@@ -312,12 +376,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // *****
 // overlay
-.overlay {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:1000; background:#fff; padding-top:$header-height; overflow:auto; @include transition($transition-default);
-    .overlay__header {background:#878787; color:#fff; padding:18px; height:$header-height; position:fixed; z-index:1; top:0; left:0; width:100%; display:none; text-align:center;
+.overlay {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:1000; background:#fff; padding-top:$header-overlay-height; overflow:auto; @include transition($transition-default);
+    .overlay__header {background:#878787; color:#fff; padding:18px; height:$header-overlay-height; position:fixed; z-index:1; top:0; left:0; width:100%; display:none; text-align:center;
         .overlay__title {margin:0;
             small {color:#fff; font-weight:600; font-size:14px;}
         }
-        .overlay__close {float:right; font-size:19px;}
+        h3.overlay__title {
+            @extend .os-bold;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+        .overlay__close {float:right; font-size:16.5px;}
     }
     .overlay__content, .overlay__body {background:#fff; min-height:100%; padding:12px; z-index: 1; top: 60px;/*padding-bottom:$header-height;*/}
     .overlay__footer {position:fixed; width:100%; bottom:0; left:0; background:#616161; padding:12px; color:#fff; height:$header-height; display:none;}
@@ -406,34 +475,90 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 
 // overlay passenger selector
-.overlay.overlay--passenger-selector {background:#616161;
-    .overlay__content {background:#616161; color:#fff; padding:0;
+.overlay.overlay--passenger-selector {
+    background:$color-white;
+    .overlay__content {
+        background:$color-white; 
+        color:$color-black; 
+        padding:0; 
+        overflow-y: hidden;
         .passenger-selector__header {
             ul {margin:0; padding:0;
-                li {display:block; width:33.333333334%; height:50px; float:left;
-                    &+li a {border-left:$border-default;}
-                    a {position:relative; display:block; width:100%; height:100%; background:#9d9d9d;
-                        &:before {width:22px; height:30px; background:url(/assets/mobile/images/passenger-sprite-white.png); background-repeat:no-repeat; display:block; position:absolute; content:''; top:10px; left:50%; margin-left:-11px;}
-                        &.active {background:#616161;}
-                        &.adult:before {background-position:0 0;}
-                        &.children:before {background-position:-22px 0;}
-                        &.infant:before {background-position:-44px 0;} 
+                li {
+                    display:block;  
+                    @include size(33.333333334%, 50px);
+                    float:left;
+                    &+li a {border-left:1px solid #e6e6e6;}
+                    a {
+                        position:relative; 
+                        display:block; 
+                        @include size(100%, 100%);
+                        background:$color-grey-tab;
+                        &:before {
+                            top:10px; 
+                            left:50%; 
+                            margin-left:-11px;
+                        } &.active {
+                            background:$color-white;
+                            &.adult:before {
+                                @extend .display-icon;
+                                @include size(46px, 61px);
+                                background-image:url($icon-adult); 
+                            } &.children:before {
+                                @extend .display-icon;
+                                @include size(46px, 61px);
+                                background-image:url($icon-children); 
+                            } &.infant:before {
+                                @extend .display-icon;
+                                @include size(45px, 61px);
+                                background-image:url($icon-infant); 
+                            }
+                        } &.adult {
+                            &:before {
+                                @extend .display-icon;
+                                @include size(47px, 46px);
+                                width:46px; 
+                                height:61px; 
+                                background-image:url($icon-adult-bw);
+                            }
+                        } &.children {
+                            &:before {
+                                @extend .display-icon;
+                                @include size(47px, 46px);
+                                width:46px; 
+                                height:61px; 
+                                background-image:url($icon-children-bw);
+                            }
+                        } &.infant {
+                            &:before {
+                                @extend .display-icon;
+                                @include size(47px, 46px);
+                                width:45px; 
+                                height:61px; 
+                                background-image:url($icon-infant-bw);
+                            }
+                        } 
                     }
                 }
             }
         }
         .passenger-selector__body {width:200px; margin-left:auto; margin-right:auto;
-            .selected {text-align:center; border-bottom:3px solid #fff; margin-bottom:15px;
-                .number {display:inline-block; font-size:72px; font-weight:bold;}
+            .selected {text-align:center; border-bottom:2px solid $color-black; margin-bottom:15px;
+                .number {display:inline-block; font-size:72px; @extend .os-bold; line-height: 120px;}
                 .description {display:inline-block; text-align:left; padding-left:5px;
                     b {font-size:16px;}
                 }
             }
             .selector {
-                a, span {display:block; float:left; background:#ffd632; color:#616161; font-weight:bold; width:60px; height:60px; text-align:center; padding-top:10px; font-size:27px; margin-bottom:10px; margin-left:10px;
+                a, span {display:block; float:left; background:$color-yellow; color:$color-brown; @extend .os-semibold; width:60px; height:60px; text-align:center; padding-top:10px; font-size:27px; margin-bottom:10px; margin-left:10px;
                     &:nth-child(3n+1) {margin-left:0;}
                     &.disabled {opacity:0.5;}
                 }
+            }
+            .note > p {
+                @extend .os-regular;
+                font-size: 11px; 
+                font-style: italic;
             }
         }
     }
@@ -442,18 +567,52 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // *****
 // datepicker on overlay
 .overlay.overlay--datepicker {
-    .overlay__content {background:#616161; color:#fff;
-        a {color:#fff;}
-        select {color:#000; font-size:14px; margin-left:5px;}
+    .overlay__content {
+        background: #616161; 
+        color: $color-white;
+        a {color: $color-white;}
+        select {
+            color: $color-black; 
+            font-size: 14px; 
+            margin-left: 5px;
+        }
     }
     .ui-datepicker {
-        .ui-datepicker-header {text-align:center; position:relative; padding-top:20px; height:50px; color:$color-main-blue; font-size:22px; @include clearfix();
-            .ui-datepicker-month {font-weight:bold; text-transform:uppercase;}
-            .ui-datepicker-prev {position:absolute; left:0; width:25px; height:25px; background-image:url(/Assets/mobile/images/ui-calendar-nav.png); background-repeat:no-repeat; background-position:-30px 0; background-size:200%;}
-            .ui-datepicker-next {@extend & .ui-datepicker-prev; left:auto; right:0; background-position:0 0;}
+        .ui-datepicker-header {
+            text-align:center; 
+            position:relative; 
+            padding-top:20px; 
+            height:50px;
+            color:$color-main-blue; 
+            font-size:22px; 
+            @include clearfix();
+            .ui-datepicker-month {
+                font-weight:bold; 
+                text-transform:uppercase;
+            }
+            .ui-datepicker-prev {
+                position:absolute; 
+                left:0; 
+                width:25px; 
+                height:25px; 
+                background-image:url(/Assets/mobile/images/ui-calendar-nav.png); 
+                background-repeat:no-repeat; 
+                background-position:-30px 0; 
+                background-size:200%;
+            }
+            .ui-datepicker-next {
+                @extend & .ui-datepicker-prev; 
+                left:auto; 
+                right:0; 
+                background-position:0 0;
+            }
             .ui-state-disabled {opacity:0.3;}
         }
-        .ui-datepicker-calendar {width:100%; max-width:280px; margin-left:auto; margin-right:auto;
+        .ui-datepicker-calendar {
+            width:100%; 
+            max-width:280px; 
+            margin-left:auto; 
+            margin-right:auto;
             .ui-state-disabled {opacity:0.3;}
             .ui-datepicker-week-end {
                 a, span {color:#e3ae22;}
@@ -463,61 +622,72 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             }
             thead {
                 tr {
-                    th {width:40px; height:40px; padding:5px; text-align:center;}
+                    th {
+                        width:40px; 
+                        height:40px; 
+                        padding:5px; 
+                        text-align:center;
+                    }
                 }
             }
             tbody {
                 tr {
-                    td {width:40px; height:40px; text-align:center; padding:5px;}
+                    td {
+                        width:40px; 
+                        height:40px; 
+                        text-align:center; 
+                        padding:5px;
+                    }
                 }
             }
         }
     }
 }
 
-.notifbox{width: 100%; height: 40px; background-color: #1daee4; margin-bottom: 15px;
-    h3{font-size: 14px; position: absolute; color: #fff; font-weight: bold;}
+.notifbox {
+    width: 100%; 
+    height: 40px; 
+    background-color: #1daee4; 
+    margin-bottom: 15px;
+    h3 {
+        font-size: 14px; 
+        position: absolute; 
+        color: #fff; 
+        font-weight: bold;
+    }
 }
 
-.container_new{
-    /*width: 80%;
-    margin-left: 10px;
-    margin-right: 10px;*/
-    p{
+.container_new {
+    p {
         padding: 10px 10px 10px 10px;
         margin-left: 10px;
         margin-right: 10px;
     }
-    .row1{
+    .row1 {
         padding: 10px 10px 10px 10px;
         margin-left: 10px;
         margin-right: 10px;
-        
     }
-    .col12{
-            align-self:center;
-            margin-left: 10px;
-            margin-right: 10px;
+    .col12 {
+        align-self:center;
+        margin-left: 10px;
+        margin-right: 10px;
     }
-    .col-xs-6{
-        margin-top: -10px;
-        h6{
+    .col-xs-6 {margin-top: -10px;
+        h6 {
             width: 200%;
             font-size: 8px;
         }
     }
-    .col-xs-8{
-        margin-top: -10px;
-        h5{
-            font-size: 12px;
-        }
-        }
+    .col-xs-8 {margin-top: -10px;
+        h5 {font-size: 12px;}
+    }
 }
 
 .page-overlay .overlay-content div section p {
-  display: inline-block;
- padding: 10px;
-  }
+    display: inline-block;
+    padding: 10px;
+}
 
 .form__flightclass .form-control {
     height: 35px;
@@ -530,19 +700,18 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
        .section-title.stripe {
            padding-bottom: 15px;
            padding-top: 0;
-           
        } 
-       .overlay__body.overlay__content{
+       .overlay__body.overlay__content {
            padding-bottom:20px;
        }
-       h5{
+       h5 {
            font-weight: bold;
            font-size:10px;
        }
        
    }
 
-.loading-image{
+.loading-image {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -550,15 +719,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 
 .page-step-3 {
-    .btn.btn-yellow/*, .btn.btn-grey*/ {
-    width: 49%;
-    position: relative;
-    margin-top: 10px;
-    text-align: center;
+    .btn.btn-yellow {
+        width: 49%;
+        position: relative;
+        margin-top: 10px;
+        text-align: center;
     }
 }
 
-.page-checkout.page-checkout-flight{
+.page-checkout.page-checkout-flight {
     .btn.btn-yellow{
         width: 100%;
     }
@@ -567,21 +736,23 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page-checkout.page-checkout-flight .btn.btn-yellow {
     width: 100%;
 }
-.confirmation-content .container_new .row1{
+
+.confirmation-content .container_new .row1 {
     padding-bottom: 10px;
     color: red;
 }
 
-/*.icon-mobile {
-    background:url(/assets/mobile/images/mobile-sprite-big-new.png);
+#ui-datepicker-div > .ui-datepicker {
+    display: none !important;
+}
+
+.display-icon {
+    background-repeat: no-repeat;
     display: inline-block;
     vertical-align: middle;
+    background-size: 50% 50%;
     position: absolute;
-    background-repeat: no-repeat;
-}*/
-
-.bold-title {
-    font-weight: 700;
+    content:''; 
 }
 
 /*--------------------*/

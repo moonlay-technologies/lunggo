@@ -33,6 +33,38 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
             }
         }
 
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Route("v1/flight/pricecalendar/{route}/{rangetime}/{currency}")]
+        public ApiResponseBase PriceCalendar(string route, string currency, string rangetime)
+        {
+            try
+            {
+                var origin = route.Substring(0, 3);
+                var destination = route.Substring(3, 3);
+                var startYear = "20" + rangetime.Substring(4, 2);
+                var endYear = "20" + rangetime.Substring(10, 2);
+                var startDate = new DateTime(Convert.ToInt32(startYear), Convert.ToInt32(rangetime.Substring(2, 2)), 
+                    Convert.ToInt32(rangetime.Substring(0, 2)));
+                var endDate = new DateTime(Convert.ToInt32(endYear), Convert.ToInt32(rangetime.Substring(8, 2)),
+                    Convert.ToInt32(rangetime.Substring(6, 2)));
+                var request = new FlightPriceCalendarApiRequest
+                {
+                    Origin = origin,
+                    Destination = destination,
+                    Currency = currency,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                };
+                var apiResponse = FlightLogic.FindLowestPrices(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
         [HttpPost]
         [LunggoCorsPolicy]
         [Authorize]
