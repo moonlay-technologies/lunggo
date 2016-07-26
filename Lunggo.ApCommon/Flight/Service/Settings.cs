@@ -34,7 +34,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             //{ 1, MystiflyWrapper},
             //{ 2, AirAsiaWrapper},
-            { 3, CitilinkWrapper},
+          { 3, CitilinkWrapper},
             //{ 4, SriwijayaWrapper},
             //{ 5, LionAirWrapper},
             //{ 6, GarudaWrapper}
