@@ -72,8 +72,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
 
                 if (reservation.Payment.Method == PaymentMethod.Credit ||
-                    (reservation.Payment.Method != PaymentMethod.Credit &&
-                     reservation.Payment.Status == PaymentStatus.Settled))
+                    (reservation.Payment.Method != PaymentMethod.Credit && 
+                    reservation.Payment.Status == PaymentStatus.Settled))
                 {
                 Parallel.ForEach(reservation.Itineraries, itin =>
                 {
@@ -140,32 +140,23 @@ namespace Lunggo.ApCommon.Flight.Service
                     if (casetype != 0)
                     {
                         SendIssueSlightDelayNotifToCustomer(reservation.RsvNo + "+" + casetype);
-                        //Testing
-                        /*if (supplier.Contains("Mystifly"))
-                        {
-                            SendEticketSlightDelayNotifToCustomer(input.RsvNo);
-                        }
-                        SendFailedVerificationCreditCardNotifToCustomer(input.RsvNo);
-                        SendEticketSlightDelayNotifToCustomer(input.RsvNo); 
-                        SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);*/
+
                     }
-                    else 
+                    else
                     {
                         SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);
                     }
 
                     SendIssueFailedNotifToDeveloper(reservation.RsvNo + "+" + supplierInfoItin);
                     
-                    //Jika berhasil cuma berhasil satu doang
                     if (output.OrderResults.Any(set => set.IsSuccess))
                     {
                         output.PartiallySucceed();
                     }//End
                     output.IsSuccess = false;
-                    //output.Errors = output.Errors.Distinct().ToList();
-                    //output.ErrorMessages = output.ErrorMessages.Distinct().ToList();
+
                 }
-                UpdateIssueStatus(input.RsvNo, output);
+                //UpdateIssueStatus(input.RsvNo, output);
                 return output;
                 }
                 else
@@ -186,20 +177,20 @@ namespace Lunggo.ApCommon.Flight.Service
             return result;
         }
 
-        private static void UpdateIssueStatus(string rsvNo, IssueTicketOutput output)
-        {
-            if (output.Errors == null)
-            {
-                //UpdateIssueProgressToDb(rsvNo, "Generating Eticket File");
-            }
-            else
-            {
-                var errorMsgs = string.Join("; ", output.ErrorMessages);
-                var errors = string.Join("; ", output.Errors);
-                var progressMessages = "Issue Failed : " + errorMsgs + "; " + errors;
-                //UpdateIssueProgressToDb(rsvNo, progressMessages);
-            }
-        }
+        //private static void UpdateIssueStatus(string rsvNo, IssueTicketOutput output)
+        //{
+        //    if (output.Errors == null)
+        //    {
+        //        //UpdateIssueProgressToDb(rsvNo, "Generating Eticket File");
+        //    }
+        //    else
+        //    {
+        //        var errorMsgs = string.Join("; ", output.ErrorMessages);
+        //        var errors = string.Join("; ", output.Errors);
+        //        var progressMessages = "Issue Failed : " + errorMsgs + "; " + errors;
+        //        //UpdateIssueProgressToDb(rsvNo, progressMessages);
+        //    }
+        //}
 
         private static string ConcatenateMessage(List<Supplier> supplierName, List<decimal> balance, List<decimal> localPrice)
         {
@@ -207,13 +198,13 @@ namespace Lunggo.ApCommon.Flight.Service
             var balanceAndItinPrice = "";
             for (var i = 0; i < supplierName.Count; i++)
             {
-                if (i != supplierName.Count - 1 && i > 1)
+                if (i != supplierName.Count - 1)
                 {
-                    balanceAndItinPrice = supplierName[i] + ";" + localPrice[i] + ";" + balance[i] + "+";
+                    balanceAndItinPrice = balanceAndItinPrice + supplierName[i] + ";" + localPrice[i] + ";" + balance[i] + "+";
                 }
                 else 
                 {
-                    balanceAndItinPrice = supplierName[i] + ";" + localPrice[i] + ";" + balance[i];
+                    balanceAndItinPrice = balanceAndItinPrice + supplierName[i] + ";" + localPrice[i] + ";" + balance[i];
                 }
                 
             }

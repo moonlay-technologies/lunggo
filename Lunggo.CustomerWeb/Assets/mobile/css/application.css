@@ -18,7 +18,7 @@
 .os-semibold, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .page.page-home .form-container .form-wrapper form .btn.btn-yellow {
   font-weight: 600; }
 
-.os-bold, .overlay .overlay__header h3.overlay__title, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number {
+.os-bold, .overlay .overlay__header h3.overlay__title, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li {
   font-weight: 700; }
 
 /*--------------------*/
@@ -744,8 +744,38 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         font-style: italic; }
 
 .overlay.overlay--datepicker .overlay__content {
-  background: #616161;
-  color: #ffffff; }
+  background: #ffffff;
+  color: #000000;
+  padding: 0; }
+  .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs {
+    border-bottom: none; }
+    .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li {
+      width: 50%;
+      height: 46px;
+      text-align: center;
+      font-size: 13px;
+      text-transform: uppercase; }
+      .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li > a {
+        margin: 0;
+        color: #aeaeae;
+        background: #ececec;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        -ms-border-radius: 0;
+        border-radius: 0; }
+        .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li > a:hover {
+          border-color: transparent; }
+      .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li.active > a {
+        background: #ffffff;
+        border: none;
+        color: #616161; }
+  .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav > li > a {
+    padding: 13px 15px; }
+  .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body {
+    /*border-bottom: 1px solid #d4d4d4;*/ }
+    .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .ui-datepicker {
+      max-width: 340px;
+      margin: 15px auto; }
   .overlay.overlay--datepicker .overlay__content a {
     color: #ffffff; }
   .overlay.overlay--datepicker .overlay__content select {
@@ -754,6 +784,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin-left: 5px; }
 
 .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header {
+  margin: 0 15px;
   text-align: center;
   position: relative;
   padding-top: 20px;
@@ -771,24 +802,22 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
     position: absolute;
     left: 0;
-    width: 25px;
-    height: 25px;
-    background-image: url(/Assets/mobile/images/ui-calendar-nav.png);
+    bottom: 8px;
+    width: 11px;
+    height: 12px;
+    background-image: url("../images/ui-calendar-nav2.png");
     background-repeat: no-repeat;
-    background-position: -30px 0;
-    background-size: 200%; }
+    background-position: 0 0; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
     left: auto;
     right: 0;
-    background-position: 0 0; }
+    background-position: -14px 0; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-state-disabled {
     opacity: 0.3; }
 
 .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar {
   width: 100%;
-  max-width: 280px;
-  margin-left: auto;
-  margin-right: auto; }
+  font-size: 15px; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-state-disabled {
     opacity: 0.3; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end a, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end span {
@@ -798,15 +827,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day a, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day span {
       color: #fff; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar thead tr th {
-    width: 40px;
-    height: 40px;
-    padding: 5px;
+    padding: 13px 0;
     text-align: center; }
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar tbody a {
+    color: #878787; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar tbody tr td {
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    padding: 5px; }
+    padding: 13px 0;
+    text-align: center; }
 
 .notifbox {
   width: 100%;

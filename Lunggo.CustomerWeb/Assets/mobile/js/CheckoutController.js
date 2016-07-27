@@ -340,7 +340,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             $scope.contactData = '{' + ' "title":"' + $scope.buyerInfo.title + '",  "name" :"' + $scope.buyerInfo.name + '","countryCallCd":"' + $scope.buyerInfo.countryCode + '","phone":"' + $scope.buyerInfo.phone + '","email":"' + $scope.buyerInfo.email + '"' + '}';
             $scope.paxData = ' "pax" : [';
             // generate data
-            $scope.book.postData = ' "token":"' + $scope.token + '",  "contact" :' + $scope.contactData + ',"lang":"' + $scope.language + '"';;
+            $scope.book.postData = ' "token":"' + $scope.token + '",  "contact" :' + $scope.contactData + ',"lang":"' + $scope.language + '"';
             for (var i = 0; i < $scope.passengers.length; i++) {
 
                 // check nationality

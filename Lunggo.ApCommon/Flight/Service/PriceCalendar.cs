@@ -70,9 +70,21 @@ namespace Lunggo.ApCommon.Flight.Service
            
             var listofPrices = GetLowestPricesForRangeOfDate(origin, destination, startDate, endDate);
             var pairs = new Dictionary<string, decimal>();
-            var minPrice = listofPrices.Where(f => f > 0).Min();
-            var index = listofPrices.IndexOf(minPrice);
-            string minDate = listofDates.ElementAt(index);
+            //var x = listofPrices.Where(f => f > 0);
+            decimal minPrice;
+            string minDate;
+            if (listofPrices.Any(f => f > 0))
+            {
+                minPrice = listofPrices.Where(f => f > 0).Min();
+                var index = listofPrices.IndexOf(minPrice);
+                minDate = listofDates.ElementAt(index);
+            }
+            else
+            {
+                minPrice = -1;
+                minDate = "";
+            }
+            
             for (var ind = 0; ind < listofDates.Count; ind++)
             {
                 pairs.Add(listofDates.ElementAt(ind), listofPrices.ElementAt(ind));
