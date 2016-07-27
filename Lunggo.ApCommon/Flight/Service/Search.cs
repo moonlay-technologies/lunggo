@@ -76,21 +76,21 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.Combos = combos.Any() ? combos.Select(ConvertToComboForDisplay).ToList() : null;
                 output.Progress = CalculateProgress(input.Progress, searchedSupplierIds.Count, Suppliers.Count);
 
-                if (output.Progress == 100)
-                {
-                    var tripType = ParseTripType(input.SearchId);
-                    if (tripType == TripType.OneWay)
-                    {
-                        SetLowestPriceToCache(searchedItinLists[0]);
-                    }
-                    else if (tripType == TripType.RoundTrip)
-                    {
-                        foreach (var itinList in searchedItinLists.Skip(1))
-                        {
-                            SetLowestPriceToCache(itinList);
-                        }
-                    }
-                }
+                //if (output.Progress == 100)
+                //{
+                //    var tripType = ParseTripType(input.SearchId);
+                //    if (tripType == TripType.OneWay)
+                //    {
+                //        SetLowestPriceToCache(searchedItinLists[0]);
+                //    }
+                //    else if (tripType == TripType.RoundTrip)
+                //    {
+                //        foreach (var itinList in searchedItinLists.Skip(1))
+                //        {
+                //            SetLowestPriceToCache(itinList);
+                //        }
+                //    }
+                //}
             }
 
             return output;
