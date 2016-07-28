@@ -501,6 +501,11 @@ if (typeof (angular) == 'object') {
                                     $('.autocomplete-result').hide();
                                     $('.autocomplete-no-result').show();
                                 }
+                            }).error(function (returnData) {
+                                if (refreshAuthAccess()) //refresh cookie
+                                {
+                                    $rootScope.FlightSearchForm.AutoComplete.GetAirport(keyword);
+                                }
                             });
                         }
                     }
@@ -696,8 +701,8 @@ function getParam(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function getAnonymousFirstAccess()
-{
+function getAnonymousFirstAccess() {
+    var status = 0;
     $.ajax({
         url: LoginConfig.Url,
         method: 'POST',
@@ -708,20 +713,23 @@ function getAnonymousFirstAccess()
         if (returnData.status == '200') {
             setCookie("accesstoken", returnData.accessToken, returnData.expTime);
             setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+            if (getCookie('accesstoken')) {
+                status = 1;
+            }
+            else {
+                status = 0;
+            }
+        }
+        else {
+            status = 0;
         }
     });
-
-    if (getCookie('accesstoken')) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
+    return status;
 }
 
 
-function getAnonymousAccessByRefreshToken(refreshToken)
-{
+function getAnonymousAccessByRefreshToken(refreshToken) {
+    var status = 0;
     $.ajax({
         url: LoginConfig.Url,
         method: 'POST',
@@ -732,20 +740,23 @@ function getAnonymousAccessByRefreshToken(refreshToken)
         if (returnData.status == '200') {
             setCookie("accesstoken", returnData.accessToken, returnData.expTime);
             setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+            if (getCookie('accesstoken')) {
+                status = 1;
+            }
+            else {
+                status = 0;
+            }
+        }
+        else {
+            status = 0;
         }
     });
-
-    if (getCookie('accesstoken')) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
+    return status;
 }
 
 
-function getLoginAccessByRefreshToken(refreshToken)
-{
+function getLoginAccessByRefreshToken(refreshToken) {
+    var status = 0;
     $.ajax({
         url: LoginConfig.Url,
         method: 'POST',
@@ -757,19 +768,21 @@ function getLoginAccessByRefreshToken(refreshToken)
             setCookie("accesstoken", returnData.accessToken, returnData.expTime);
             setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
             setCookie("authkey", returnData.accessToken, returnData.expTime);
+            if (getCookie('accesstoken')) {
+                status = 2;
+            }
+            else {
+                status = 0;
+            }
+        }
+        else {
+            status = 0;
         }
     });
-
-    if (getCookie('accesstoken')) {
-        return 2;
-    }
-    else {
-        return 0;
-    }
+    return status;
 }
 
-function getAuthAccess()
-{
+function getAuthAccess() {
     var token = getCookie('accesstoken');
     var refreshToken = getCookie('refreshtoken');
     var authKey = getCookie('authkey');
@@ -782,8 +795,7 @@ function getAuthAccess()
         else {
             if (refreshToken) {
                 status = getLoginAccessByRefreshToken(refreshToken);
-                if (status == 0)
-                {
+                if (status == 0) {
                     status = getAnonymousFirstAccess();
                 }
             }
@@ -792,8 +804,7 @@ function getAuthAccess()
             }
         }
     }
-    else
-    {
+    else {
         if (token) {
             return 1;
         }
@@ -801,8 +812,7 @@ function getAuthAccess()
             //Get Anonymous Token By Refresh Token
             if (refreshToken) {
                 status = getAnonymousAccessByRefreshToken(refreshToken);
-                if (status == 0)
-                {
+                if (status == 0) {
                     status = getAnonymousFirstAccess();
                 }
             }
@@ -813,6 +823,50 @@ function getAuthAccess()
         }
     }
     return status;
+}
+
+
+function refreshAuthAccess() {
+    /*
+    * If failed to get Authorization, but accesstoken is still exist
+    */
+    var token = getCookie('accesstoken');
+    var refreshToken = getCookie('refreshtoken');
+    var authKey = getCookie('authkey');
+    var status = 0;
+    if (refreshToken) {
+        if (authKey) {
+            status = getLoginAccessByRefreshToken(refreshToken);
+            if (status == 0) {
+                status = getAnonymousFirstAccess();
+                eraseCookie('authkey');
+            }
+
+            if (status == 2) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            status = getAnonymousAccessByRefreshToken(refreshToken);
+            if (status == 0) {
+                status = getAnonymousFirstAccess();
+            }
+
+            if (status == 1 || status == 2) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+    else {
+        getAnonymousFirstAccess();
+        return true;
+    }
 }
 
 //    $rootScope.FlightSearchForm.AutoComplete.Loading = true;

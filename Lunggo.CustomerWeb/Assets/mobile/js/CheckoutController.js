@@ -467,11 +467,17 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                             $scope.book.checked = true;
                         }
                     }
-                }, function (returnData) {
-                    console.log(returnData);
-                    $scope.book.checked = true;
-                    $scope.book.isSuccess = false;
-                    $scope.book.booking = false;
+                }).catch(function (returnData) {
+                    if (refreshAuthAccess()) //refresh cookie
+                    {
+                        $scope.book.send();
+                    }
+                    else {
+                        $scope.book.checked = true;
+                        $scope.book.isSuccess = false;
+                        $scope.book.booking = false;
+                    }
+                    
                 });
             }
             else {
@@ -874,12 +880,17 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                         $scope.CheckoutConfig.Voucher.Valid = false;
                         $scope.CheckoutConfig.Voucher.Status = returnData.data.ValidationStatus;
                     }
-                }, function (returnData) {
-                    $scope.CheckoutConfig.Voucher.Validated = true;
-                    $scope.CheckoutConfig.Voucher.Validating = false;
-                    $scope.CheckoutConfig.Voucher.Valid = false;
-                    console.log('Error validating voucher. Reason : ');
-                    console.log(returnData);
+                }).catch(function (returnData) {
+                    if (refreshAuthAccess()) //refresh cookie
+                    {
+                        $scope.CheckoutConfig.Voucher.Check();
+                    }
+                    else {
+                        $scope.CheckoutConfig.Voucher.Validated = true;
+                        $scope.CheckoutConfig.Voucher.Validating = false;
+                        $scope.CheckoutConfig.Voucher.Valid = false;
+                        console.log('Error validating voucher. Reason : ');
+                    }
                 });
             }
             else
