@@ -312,6 +312,19 @@ if (typeof (angular) == 'object') {
 
             }, // toggle burger menu end
 
+            // tab menu
+            TabShown: false,
+            TabMenu: function () {
+
+                if ($rootScope.PageConfig.TabShown == false) {
+                    $rootScope.PageConfig.TabShown = true;
+                    $rootScope.PageConfig.SetBodyNoScroll(true);
+                } else {
+                    $rootScope.PageConfig.TabShown = false;
+                    $rootScope.PageConfig.SetBodyNoScroll(false);
+                }
+
+            }, // tab menu end
 
             // page overlay
             ActiveOverlay: '',

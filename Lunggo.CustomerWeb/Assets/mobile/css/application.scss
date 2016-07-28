@@ -12,6 +12,8 @@ $icon-children: '../images/anak.png';
 $icon-children-bw: '../images/anak-bw.png';
 $icon-infant: '../images/bayi.png';
 $icon-infant-bw: '../images/bayi-bw.png';
+$icon-calendar-control: '../images/ui-calendar-nav2.png';
+$icon-arrow-down-bw: '../images/arrow-down-bw.png';
 
 /*--------------------*/
 /* variables */
@@ -21,9 +23,8 @@ $border-radius-default: 2px;
 $border-radius-big: 5px;
 $border-grey-btn: 1px solid #d3d7da;
 $border-form: 1px solid #dddddd;
-$transition-default: all 0.5s;
+$transition-default: all 0.4s;
 $header-height: 60px;
-$header-overlay-height: 51px;
 $toggle-box-shadow: 0 0 1px #2196F3;
 
 /*--------------------*/
@@ -32,6 +33,8 @@ $color-black: #000000;
 $color-white: #ffffff;
 $color-yellow: #ffd531;
 $color-brown: #4f3500;
+$color-orange: #ff9a24;
+$color-dark-grey: #616161;
 $color-grey-btn: #ecf0f4;
 $color-grey-tab: #ececec;
 $color-footer: #efefef;
@@ -148,8 +151,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // *****
 // site header
-.site-header {position:fixed; top:0; left:0; width:100%; height:$header-height; z-index:999; @include box-shadow(0px -2px 15px #555);
-    .header-display {background:#fff; text-align:center; height:$header-height;
+.site-header {position:fixed; top:0; left:0; width:100%; height:$header-height; z-index:999;
+    .header-display {background:#fff; text-align:center; height:$header-height; border-bottom: $border-form;
         .site-menu {width:30px; height:30px; background:url(/Assets/mobile/images/mobile-header-sprite.png) no-repeat; background-position:-30px 0; display:block; position:absolute; top:15px; left:10px;}
         .site-logo {height:30px; margin-top:15px; }
         .user-menu {@extend & .site-menu; background-position:0 0; left:auto; right:10px;}
@@ -376,8 +379,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // *****
 // overlay
-.overlay {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:1000; background:#fff; padding-top:$header-overlay-height; overflow:auto; @include transition($transition-default);
-    .overlay__header {background:#878787; color:#fff; padding:18px; height:$header-overlay-height; position:fixed; z-index:1; top:0; left:0; width:100%; display:none; text-align:center;
+.overlay {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:1000; background:#fff; padding-top:$header-height; overflow:auto; @include transition($transition-default);
+    .overlay__header {background:#878787; color:#fff; padding:22px 18px; height:$header-height; position:fixed; z-index:1; top:0; left:0; width:100%; display:none; text-align:center;
         .overlay__title {margin:0;
             small {color:#fff; font-weight:600; font-size:14px;}
         }
@@ -568,8 +571,57 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // datepicker on overlay
 .overlay.overlay--datepicker {
     .overlay__content {
-        background: #616161; 
-        color: $color-white;
+        background: $color-white; 
+        color: $color-black;
+        padding: 0;
+        overflow-y: hidden;
+        .overlay-selector {
+            .overlay-selector__header {
+               .nav-tabs {
+                    border-bottom: none;
+                    > li {
+                        width: 50%;
+                        height: 46px;
+                        text-align: center;
+                        font-size: 13px;
+                        text-transform: uppercase;
+                        @extend .os-bold;
+                        > a {
+                            margin: 0;
+                            color: #aeaeae;
+                            background: $color-grey-tab;
+                            @include border-radius(0);
+                            &:hover {border-color: transparent;}
+                        }
+                        &.active {
+                            > a {
+                                background: $color-white;
+                                border: none;
+                                color: $color-dark-grey;
+                            }
+                        }
+                    }
+                } 
+                .nav > li > a {padding: 13px 15px;}
+            }
+            .overlay-selector__body {
+                .calendar-container { 
+                    /*border-bottom: 1px solid #d4d4d4;*/
+                    .ui-datepicker {
+                        max-width: 340px;
+                        margin: 25px auto 15px;
+                    }
+                }
+                .event {
+                    max-width: 340px;
+                    margin: 20px auto;
+                    padding: 0 15px;
+                    font-size: 14.5px;
+                    @extend .os-semibold;
+                    span.date-event {color: $color-orange;}
+                }
+            }
+        }
         a {color: $color-white;}
         select {
             color: $color-black; 
@@ -579,6 +631,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
     .ui-datepicker {
         .ui-datepicker-header {
+            margin: 0 15px;
             text-align:center; 
             position:relative; 
             padding-top:20px; 
@@ -593,50 +646,42 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             .ui-datepicker-prev {
                 position:absolute; 
                 left:0; 
-                width:25px; 
-                height:25px; 
-                background-image:url(/Assets/mobile/images/ui-calendar-nav.png); 
+                bottom: 8px;
+                @include size(11px, 12px);
+                background-image: url($icon-calendar-control); 
                 background-repeat:no-repeat; 
-                background-position:-30px 0; 
-                background-size:200%;
+                background-position: 0 0; 
             }
             .ui-datepicker-next {
                 @extend & .ui-datepicker-prev; 
                 left:auto; 
                 right:0; 
-                background-position:0 0;
+                background-position: -14px 0;
             }
             .ui-state-disabled {opacity:0.3;}
         }
         .ui-datepicker-calendar {
             width:100%; 
-            max-width:280px; 
-            margin-left:auto; 
-            margin-right:auto;
+            font-size: 15px;
             .ui-state-disabled {opacity:0.3;}
             .ui-datepicker-week-end {
-                a, span {color:#e3ae22;}
+                a, span {color:$color-orange;}
             }
-            .ui-datepicker-current-day {background:#e3ae22;
-                a, span {color:#fff;}
-            }
+            .ui-datepicker-current-day {background: $color-yellow;}
             thead {
                 tr {
                     th {
-                        width:40px; 
-                        height:40px; 
-                        padding:5px; 
+                        padding: 13px 0; 
                         text-align:center;
                     }
                 }
             }
             tbody {
+                a {color: $color-black;}
                 tr {
                     td {
-                        width:40px; 
-                        height:40px; 
+                        padding: 13px 0; 
                         text-align:center; 
-                        padding:5px;
                     }
                 }
             }

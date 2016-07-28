@@ -83,6 +83,19 @@
                         @include size(43px, 40px);
                         top: 7px;
                         left: 5px;
+                    } &.arrow {
+                        background-image: url($icon-arrow-down-bw);
+                        @extend .display-icon;
+                        @include size(24px, 15px);
+                        z-index: 1;
+                        bottom: auto;
+                        right: 0;
+                        top: 29px;
+                        left: auto;
+                        margin: 0;
+                        display: block;
+                        cursor: pointer;
+                        background-position-x: 80%;
                     }
                 }
                 .middle-form {

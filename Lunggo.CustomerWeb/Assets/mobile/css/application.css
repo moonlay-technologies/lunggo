@@ -15,10 +15,10 @@
 .os-regular, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .note > p, .page.page-home .form-container .form-wrapper form span.code-airport {
   font-weight: 400; }
 
-.os-semibold, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .page.page-home .form-container .form-wrapper form .btn.btn-yellow {
+.os-semibold, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event, .page.page-home .form-container .form-wrapper form .btn.btn-yellow {
   font-weight: 600; }
 
-.os-bold, .overlay .overlay__header h3.overlay__title, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number {
+.os-bold, .overlay .overlay__header h3.overlay__title, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li {
   font-weight: 700; }
 
 /*--------------------*/
@@ -107,15 +107,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   left: 0;
   width: 100%;
   height: 60px;
-  z-index: 999;
-  -webkit-border-radius: 0px -2px 15px #555;
-  -moz-border-radius: 0px -2px 15px #555;
-  -ms-border-radius: 0px -2px 15px #555;
-  box-shadow: 0px -2px 15px #555; }
+  z-index: 999; }
   .site-header .header-display {
     background: #fff;
     text-align: center;
-    height: 60px; }
+    height: 60px;
+    border-bottom: 1px solid #dddddd; }
     .site-header .header-display .site-menu, .site-header .header-display .user-menu, .site-header .header-display .promo, .site-header .header-display .flight-swap, .site-header .header-display .flight-detail {
       width: 30px;
       height: 30px;
@@ -459,17 +456,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   left: 0;
   z-index: 1000;
   background: #fff;
-  padding-top: 51px;
+  padding-top: 60px;
   overflow: auto;
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  -o-transition: all 0.5s;
-  transition: all 0.5s; }
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  transition: all 0.4s; }
   .overlay .overlay__header {
     background: #878787;
     color: #fff;
-    padding: 18px;
-    height: 51px;
+    padding: 22px 18px;
+    height: 60px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -744,8 +741,46 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         font-style: italic; }
 
 .overlay.overlay--datepicker .overlay__content {
-  background: #616161;
-  color: #ffffff; }
+  background: #ffffff;
+  color: #000000;
+  padding: 0;
+  overflow-y: hidden; }
+  .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs {
+    border-bottom: none; }
+    .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li {
+      width: 50%;
+      height: 46px;
+      text-align: center;
+      font-size: 13px;
+      text-transform: uppercase; }
+      .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li > a {
+        margin: 0;
+        color: #aeaeae;
+        background: #ececec;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        -ms-border-radius: 0;
+        border-radius: 0; }
+        .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li > a:hover {
+          border-color: transparent; }
+      .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li.active > a {
+        background: #ffffff;
+        border: none;
+        color: #616161; }
+  .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav > li > a {
+    padding: 13px 15px; }
+  .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .calendar-container {
+    /*border-bottom: 1px solid #d4d4d4;*/ }
+    .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .calendar-container .ui-datepicker {
+      max-width: 340px;
+      margin: 25px auto 15px; }
+  .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event {
+    max-width: 340px;
+    margin: 20px auto;
+    padding: 0 15px;
+    font-size: 14.5px; }
+    .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event span.date-event {
+      color: #ff9a24; }
   .overlay.overlay--datepicker .overlay__content a {
     color: #ffffff; }
   .overlay.overlay--datepicker .overlay__content select {
@@ -754,6 +789,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin-left: 5px; }
 
 .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header {
+  margin: 0 15px;
   text-align: center;
   position: relative;
   padding-top: 20px;
@@ -771,42 +807,36 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
     position: absolute;
     left: 0;
-    width: 25px;
-    height: 25px;
-    background-image: url(/Assets/mobile/images/ui-calendar-nav.png);
+    bottom: 8px;
+    width: 11px;
+    height: 12px;
+    background-image: url("../images/ui-calendar-nav2.png");
     background-repeat: no-repeat;
-    background-position: -30px 0;
-    background-size: 200%; }
+    background-position: 0 0; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
     left: auto;
     right: 0;
-    background-position: 0 0; }
+    background-position: -14px 0; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-state-disabled {
     opacity: 0.3; }
 
 .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar {
   width: 100%;
-  max-width: 280px;
-  margin-left: auto;
-  margin-right: auto; }
+  font-size: 15px; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-state-disabled {
     opacity: 0.3; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end a, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end span {
-    color: #e3ae22; }
+    color: #ff9a24; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day {
-    background: #e3ae22; }
-    .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day a, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day span {
-      color: #fff; }
+    background: #ffd531; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar thead tr th {
-    width: 40px;
-    height: 40px;
-    padding: 5px;
+    padding: 13px 0;
     text-align: center; }
+  .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar tbody a {
+    color: #000000; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar tbody tr td {
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    padding: 5px; }
+    padding: 13px 0;
+    text-align: center; }
 
 .notifbox {
   width: 100%;
@@ -890,7 +920,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 #ui-datepicker-div > .ui-datepicker {
   display: none !important; }
 
-.display-icon, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.infant:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.infant:before, .page.page-home .form-container .form-wrapper form span.icon-pp, .page.page-home .form-container .form-wrapper form span.icon-return, .page.page-home .form-container .form-wrapper form span.icon-fc, .page.page-home .form-container .form-wrapper form span.icon-people, .page.page-home .form-container .form-wrapper form span.icon-flip {
+.display-icon, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.infant:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.infant:before, .page.page-home .form-container .form-wrapper form span.icon-pp, .page.page-home .form-container .form-wrapper form span.icon-return, .page.page-home .form-container .form-wrapper form span.icon-fc, .page.page-home .form-container .form-wrapper form span.icon-people, .page.page-home .form-container .form-wrapper form span.icon-flip, .page.page-home .form-container .form-wrapper form span.arrow {
   background-repeat: no-repeat;
   display: inline-block;
   vertical-align: middle;
@@ -975,6 +1005,19 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         height: 40px;
         top: 7px;
         left: 5px; }
+      .page.page-home .form-container .form-wrapper form span.arrow {
+        background-image: url("../images/arrow-down-bw.png");
+        width: 24px;
+        height: 15px;
+        z-index: 1;
+        bottom: auto;
+        right: 0;
+        top: 29px;
+        left: auto;
+        margin: 0;
+        display: block;
+        cursor: pointer;
+        background-position-x: 80%; }
       .page.page-home .form-container .form-wrapper form .middle-form {
         margin-bottom: 24px; }
         .page.page-home .form-container .form-wrapper form .middle-form .form-group {
@@ -1035,10 +1078,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         right: 0;
         bottom: 0;
         background-color: #ccc;
-        -webkit-transition: all 0.5s;
-        -moz-transition: all 0.5s;
-        -o-transition: all 0.5s;
-        transition: all 0.5s; }
+        -webkit-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        -o-transition: all 0.4s;
+        transition: all 0.4s; }
         .page.page-home .form-container .form-wrapper form .form__roundtrip .slider:before {
           position: absolute;
           content: "";
@@ -1047,10 +1090,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           left: 4px;
           bottom: 4px;
           background-color: #ffffff;
-          -webkit-transition: all 0.5s;
-          -moz-transition: all 0.5s;
-          -o-transition: all 0.5s;
-          transition: all 0.5s; }
+          -webkit-transition: all 0.4s;
+          -moz-transition: all 0.4s;
+          -o-transition: all 0.4s;
+          transition: all 0.4s; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider {
         background-color: #2ea1e8; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider:before {
