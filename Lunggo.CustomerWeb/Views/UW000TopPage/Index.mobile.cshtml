@@ -14,6 +14,8 @@
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
     @*<script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>*@
+    @*<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>*@
+
 }
 
 @section PageJS {
@@ -105,7 +107,7 @@
             </div>
         </form><!-- .flight-form -->
     </div><!-- .form-wrapper -->
-
+    
     <!-- overlays -->
     <!-- overlay date picker -->
     <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--departure" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-departure') }">
@@ -134,7 +136,7 @@
             </div>
         </section>
     </div><!-- .overlay--datepicker-->
-    
+
     <!-- overlay date picker -->
     <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--return" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-return') }">
         <header class="overlay__header">

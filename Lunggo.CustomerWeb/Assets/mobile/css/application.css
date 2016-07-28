@@ -456,7 +456,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   left: 0;
   z-index: 1000;
   background: #fff;
-  padding-top: 51px;
+  padding-top: 60px;
   overflow: auto;
   -webkit-transition: all 0.4s;
   -moz-transition: all 0.4s;
@@ -465,8 +465,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .overlay .overlay__header {
     background: #878787;
     color: #fff;
-    padding: 18px;
-    height: 51px;
+    padding: 22px 18px;
+    height: 60px;
     position: fixed;
     z-index: 1;
     top: 0;
