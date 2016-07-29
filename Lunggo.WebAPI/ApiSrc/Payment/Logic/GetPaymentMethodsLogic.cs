@@ -55,6 +55,11 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                         Method = PaymentMethod.MandiriBillPayment,
                         Available = true
                     },
+                    new Option
+                    {
+                        Method = PaymentMethod.VirtualAccount,
+                        Available = true
+                    }
                 }
             };
         }

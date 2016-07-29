@@ -265,7 +265,7 @@
                 </div>
                 <div class="flight-date">
                     <div class="flight-date-departure">
-                        <h4>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].origin}} <span>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[0].date | date :'HH:mm' : 'UTC'}}</span></h4>
+                        <h4>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].origin}} <span>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[0].departureTime | date :'HH:mm' : 'UTC'}}</span></h4>
                     </div>
                     <div class="flight-date-duration">
                         <h5 class="time"><span>{{msToTime(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].totalDuration)}}</span></h5>

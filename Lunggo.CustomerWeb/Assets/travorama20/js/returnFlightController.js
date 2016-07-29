@@ -373,17 +373,17 @@ app.controller('returnFlightController', [
                         url: SelectConfig.Url,
                         data: {
                             searchId: $scope.returnFlightConfig.searchId,
-                            regs: [$scope.departureFlightConfig.flightList[departureFlightIndexNo].reg, $scope.returnFlightConfig.flightList[returnFlightIndexNo].reg],
+                            regs: [$scope.departureFlightConfig.flightList[departureFlightIndexNo].reg, $scope.returnFlightConfig.flightList[returnFlightIndexNo].reg]
                         },
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                    }).success(function (returnData) {
+                    }).then(function (returnData) {
                         $scope.departureFlightConfig.validating = false;
                         $scope.returnFlightConfig.validating = false;
-                        if ((returnData.token != "" || returnData.token != null) && returnData.status == "200") {
+                        if ((returnData.data.token != "" || returnData.data.token != null) && returnData.data.status == "200") {
                             console.log('flight available');
-                            $scope.departureFlightConfig.validateToken = returnData.token;
+                            $scope.departureFlightConfig.validateToken = returnData.data.token;
                             $scope.departureFlightConfig.validateAvailable = true;
-                            $scope.returnFlightConfig.validateToken = returnData.token;
+                            $scope.returnFlightConfig.validateToken = returnData.data.token;
                             $scope.returnFlightConfig.validateAvailable = true;
                             if ($scope.returnFlightConfig.validating == false) {
                                 flightsValidated();
@@ -394,12 +394,18 @@ app.controller('returnFlightController', [
                             $scope.departureFlightConfig.validateAvailable = false;
                             $scope.returnFlightConfig.validateAvailable = false;
                         }
-                    }).error(function (data) {
-                        $scope.departureFlightConfig.validating = false;
-                        $scope.returnFlightConfig.validating = false;
-                        console.log('ERROR Validating Flight :');
-                        console.log(data);
-                        console.log('--------------------');
+                    }).catch(function (returnData) {
+                        if (refreshAuthAccess()) //refresh cookie
+                        {
+                            $scope.selectFlight(departureFlightIndexNo, returnFlightIndexNo);
+                        }
+                        else
+                        {
+                            $scope.departureFlightConfig.validating = false;
+                            $scope.returnFlightConfig.validating = false;
+                            console.log('ERROR Validating Flight :');
+                            console.log('--------------------');
+                        }
                     });
                 }
                 else {
@@ -603,14 +609,14 @@ app.controller('returnFlightController', [
                         method: 'GET',
                         url: FlightSearchConfig.Url + targetScope.flightSearchParams + '/' + targetScope.progress,
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                    }).success(function (returnData) {
+                    }).then(function (returnData) {
 
                         // set search ID
                         //targetScope.flightSearchParams.SearchId = targetScope.flightSearchParams;
                         targetScope.searchId = targetScope.flightSearchParams;
 
                         if (!$scope.pageConfig.expiry.time) {
-                            $scope.pageConfig.expiry.time = returnData.expTime;
+                            $scope.pageConfig.expiry.time = returnData.data.expTime;
                             $scope.departureFlightConfig.finalProgress = targetScope.progress;
                         }
 
@@ -619,16 +625,16 @@ app.controller('returnFlightController', [
                             $scope.departureFlightConfig.finalProgress = targetScope.progress;
                         }
 
-                        targetScope.progress = returnData.progress;
-                        $scope.departureFlightConfig.progress = returnData.progress;
+                        targetScope.progress = returnData.data.progress;
+                        $scope.departureFlightConfig.progress = returnData.data.progress;
 
                         // generate flight
-                        if (returnData.flights.length) {
-                            if (returnData.flights[0].options.length) {
-                                $scope.arrangeFlightData('departure', returnData.flights[0].options); // For Departure Flight
+                        if (returnData.data.flights.length) {
+                            if (returnData.data.flights[0].options.length) {
+                                $scope.arrangeFlightData('departure', returnData.data.flights[0].options); // For Departure Flight
                             }
-                            if (returnData.flights[1].options.length) {
-                                $scope.arrangeFlightData('return', returnData.flights[1].options); // For Return Flight
+                            if (returnData.data.flights[1].options.length) {
+                                $scope.arrangeFlightData('return', returnData.data.flights[1].options); // For Return Flight
                             }
                         }
 
@@ -641,12 +647,18 @@ app.controller('returnFlightController', [
                         }, 1000);
 
                         // if error     
-                    }).error(function (returnData) {
-                        console.log('Failed to get ' + targetScope.name + ' flight list');
-                        console.log('ERROR :');
-                        console.log(returnData);
-                        targetScope.progress = 100;
-                        targetScope.finalProgress = 100;
+                    }).then(function (returnData) {
+                        if (refreshAuthAccess()) //refresh cookie
+                        {
+                            $scope.getFlight('return');
+                        }
+                        else
+                        {
+                            console.log('Failed to get ' + targetScope.name + ' flight list');
+                            console.log('ERROR :');
+                            targetScope.progress = 100;
+                            targetScope.finalProgress = 100;
+                        }
                     });
                 }
                 else {

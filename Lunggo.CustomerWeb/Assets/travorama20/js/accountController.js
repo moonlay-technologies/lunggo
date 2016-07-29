@@ -10,31 +10,37 @@ app.controller('siteHeaderController', [
                 $http({
                     method: 'GET',
                     url: GetProfileConfig.Url,
-                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                }).success(function (returnData) {
-                    if (returnData.status == "200") {
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
+                    async:false
+                }).then(function (returnData) {
+                    if (returnData.data.status == "200") {
                         $scope.pageLoaded = true;
                         $scope.isLogin = true;
                         console.log('Success getting Profile');
-                        $scope.email = returnData.email;
+                        $scope.email = returnData.data.email;
                         $scope.profileloaded = true;
                         //console.log(returnData);
                     }
                     else {
                         console.log('There is an error');
-                        console.log('Error : ' + returnData.error);
+                        console.log('Error : ' + returnData.data.error);
                         $scope.pageLoaded = true;
                         $scope.isLogin = false;
                         $scope.profileloaded = true;
                         console.log(returnData);
                     }
-                }, function (returnData) {
-                    console.log('Failed to Login');
-                    $scope.pageLoaded = true;
-                    $scope.isLogin = false;
-                    $scope.profileloaded = true;
-                    console.log(returnData);
-                });
+                }).error(function (returnData) {
+                    if (refreshAuthAccess()) //refresh cookie
+                    {
+                        $scope.ProfileConfig.getProfile();
+                    }
+                    else {
+                        console.log('Failed to Login');
+                        $scope.pageLoaded = true;
+                        $scope.isLogin = false;
+                        $scope.profileloaded = true;
+                    }
+                })
             }
         }
         //Check Authorization to get Profile
@@ -149,25 +155,30 @@ app.controller('accountController', [
                         url: GetProfileConfig.Url,
                         async: false,
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                    }).success(function (returnData) {
+                    }).then(function (returnData) {
                         if (returnData.status == "200") {
                             console.log('Success getting Profile');
                             $scope.userProfile = {
-                                email: returnData.email,
-                                name: returnData.name,
-                                countryCallCd: parseInt(returnData.countryCallCd),
-                                phone: parseInt(returnData.phone)
+                                email: returnData.data.email,
+                                name: returnData.data.name,
+                                countryCallCd: parseInt(returnData.data.countryCallCd),
+                                phone: parseInt(returnData.data.phone)
                             };
                             $scope.editProfile = $scope.userProfile;
                         }
                         else {
                             console.log('There is an error');
-                            console.log('Error : ' + returnData.error);
+                            console.log('Error : ' + returnData.data.error);
                             console.log(returnData);
                         }
-                    }, function (returnData) {
-                        console.log('Failed to Get Profile');
-                        console.log(returnData);
+                    }).catch(function (returnData) {
+                        if (refreshAuthAccess()) //refresh cookie
+                        {
+                            $scope.TakeProfileConfig.TakeProfile();
+                        }
+                        else {
+                            console.log('Failed to Get Profile');
+                        }
                     });
                 }
                 else
@@ -187,19 +198,25 @@ app.controller('accountController', [
                         method: 'GET',
                         url: TrxHistoryConfig.Url,
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                    }).success(function (returnData) {
-                        if (returnData.status == "200") {
+                    }).then(function (returnData) {
+                        if (returnData.data.status == "200") {
                             console.log('Success getting Transaction');
-                            $scope.flightlist = returnData.flights;
+                            $scope.flightlist = returnData.data.flights;
                         }
                         else {
                             console.log('There is an error');
-                            console.log('Error : ' + returnData.error);
+                            console.log('Error : ' + returnData.data.error);
                             console.log(returnData);
                         }
-                    }, function (returnData) {
-                        console.log('Failed to Get Transaction History');
-                        console.log(returnData);
+                    }).catch(function (returnData) {
+                        if (refreshAuthAccess()) //refresh cookie
+                        {
+                            $scope.trxHistory.getTrxHistory();
+                        }
+                        else
+                        {
+                            console.log('Failed to Get Transaction History');
+                         }
                     });
                 }
                 else
@@ -248,14 +265,21 @@ app.controller('accountController', [
                         }
                         else {
                             console.log(returnData.data.error);
+                            console.log(returnData);
                             $scope.userProfile.edit = true;
                             $scope.userProfile.updating = false;
                         }
-                    }, function (returnData) {
-                        console.log('Failed requesting change profile');
-                        console.log(returnData);
-                        $scope.profileForm.edit = true;
-                        $scope.userProfile.updating = false;
+                    }).catch(function (returnData) {
+                        if (refreshAuthAccess()) //refresh cookie
+                        {
+                            $scope.editForm(name);
+                        }
+                        else
+                        {
+                            console.log('Failed requesting change profile');
+                            $scope.profileForm.edit = true;
+                            $scope.userProfile.updating = false;
+                        }
                     });
                 }
                 else { //if not authorized
@@ -309,11 +333,17 @@ app.controller('accountController', [
                                 $scope.password.updating = false;
                                 $scope.password.failed = true;
                             }
-                        }, function (returnData) {
-                            console.log('Failed requesting reset password');
-                            console.log(returnData);
-                            $scope.password.edit = true;
-                            $scope.password.updating = false;
+                        }).catch(function (returnData) {
+                            if (refreshAuthAccess()) //refresh cookie
+                            {
+                                $scope.editForm(name);
+                            }
+                            else {
+                                console.log('Failed requesting change profile');
+                                console.log(returnData);
+                                $scope.profileForm.edit = true;
+                                $scope.userProfile.updating = false;
+                            }
                         });
                     }
                     else { // not authorized
@@ -350,10 +380,17 @@ app.controller('accountController', [
                         console.log(returnData);
                         $scope.passwordForm.submitting = false;
                     }
-                }, function (returnData) {
-                    console.log('Failed requesting reset password');
-                    console.log(returnData);
-                    $scope.passwordForm.submitting = false;
+                }).catch(function (returnData) {
+                    if (refreshAuthAccess()) //refresh cookie
+                    {
+                        $scope.passwordForm.submit();
+                    }
+                    else
+                    {
+                        console.log('Failed requesting reset password');
+                        console.log(returnData);
+                        $scope.passwordForm.submitting = false;
+                    }
                 });
             }
             else {
@@ -429,10 +466,16 @@ app.controller('forgotController', [
                         }
                     }
 
-                }, function (returnData) {
-                    console.log('Failed requesting reset password');
-                    console.log(returnData);
-                    $scope.form.submitting = false;
+                }).catch (function (data) {
+                    if (refreshAuthAccess()) //refresh cookie
+                    {
+                        $scope.form.submit();
+                    }
+                    else
+                    {
+                        console.log('Failed requesting reset password');
+                        $scope.form.submitting = false;
+                    }
                 });
             }
             else {
@@ -472,25 +515,31 @@ app.controller('orderDetailController', [
                         url: GetProfileConfig.Url,
                         async: false,
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                    }).success(function (returnData) {
-                        if (returnData.status == "200") {
+                    }).then(function (returnData) {
+                        if (returnData.data.status == "200") {
                             console.log('Success getting Profile');
                             $scope.userProfile =
                                 {
-                                    email: returnData.email,
-                                    name: returnData.name,
-                                    countryCallCd: returnData.countryCallCd,
-                                    phone: returnData.phone
+                                    email: returnData.data.email,
+                                    name: returnData.data.name,
+                                    countryCallCd: returnData.data.countryCallCd,
+                                    phone: returnData.data.phone
                                 };
                         }
                         else {
                             console.log('There is an error');
-                            console.log('Error : ' + returnData.error);
+                            console.log('Error : ' + returnData.data.error);
                             console.log(returnData);
                         }
-                    }, function (returnData) {
-                        console.log('Failed to Get Profile');
-                        console.log(returnData);
+                    }).catch(function (returnData) {
+                        if (refreshAuthAccess()) //refresh cookie
+                        {
+                            $scope.TakeProfileConfig.TakeProfile();
+                        }
+                        else
+                        {
+                            console.log('Failed to Get Profile');
+                        }
                     });
                 }
                 else {
@@ -581,9 +630,9 @@ app.controller('orderDetailController', [
                      data:{rsvNo: $scope.rsvNo},
                      url: GetReservationConfig.Url + $scope.rsvNo,
                      headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                 }).success(function (returnData) {
-                     if (returnData.status == "200") {
-                         $scope.flight = returnData.flight;
+                 }).then(function (returnData) {
+                     if (returnData.data.status == "200") {
+                         $scope.flight = returnData.data.flight;
                          $scope.datafailed = false;
                      }
                      else {
@@ -602,10 +651,16 @@ app.controller('orderDetailController', [
                          $scope.datafailed = true;
                          console.log(returnData);
                      }
-                 }, function (returnData) {
-                     console.log('Failed to Get Detail');
-                     $scope.datafailed = true;
-                     console.log(returnData);
+                 }).catch(function (returnData) {
+                     if (refreshAuthAccess()) //refresh cookie
+                     {
+                         $scope.GetReservation();
+                     }
+                     else
+                     {
+                         console.log('Failed to Get Detail');
+                         $scope.datafailed = true;
+                     }
                  });
              }
              else {
@@ -662,10 +717,16 @@ app.controller('resetController', [
                         //console.log(returnData);
                         $scope.form.submitting = false;
                     }
-                }, function (returnData) {
-                    console.log('Failed requesting reset password');
-                    console.log(returnData);
-                    $scope.form.submitting = false;
+                }).catch(function (returnData) {
+                    if (refreshAuthAccess()) //refresh cookie
+                    {
+                        $scope.form.submit();
+                    }
+                    else
+                    {
+                        console.log('Failed requesting reset password');
+                        $scope.form.submitting = false;
+                    }
                 });
             }
             else {
@@ -732,34 +793,40 @@ app.controller('authController', [
                             clientSecret: 'Standar'
                         },
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                }).success(function (returnData) {
+                }).then(function (returnData) {
                     $scope.form.submitting = false;
                     $scope.form.submitted = true;
-                    if (returnData.status == '200') {
-                        setCookie("accesstoken",returnData.accessToken, returnData.expTime);
-                        setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
-                        setCookie("authkey",returnData.accessToken, returnData.expTime);
+                    if (returnData.data.status == '200') {
+                        setCookie("accesstoken",returnData.data.accessToken, returnData.data.expTime);
+                        setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
+                        setCookie("authkey",returnData.data.accessToken, returnData.data.expTime);
 
                         window.location.href= $scope.returnUrl;
                     }
                     else {
                         $scope.overlay = true;
-                        if (returnData.error == 'ERALOG01') { $scope.errorMessage = 'RefreshNeeded'; }
-                        else if (returnData.error == 'ERALOG02') { $scope.errorMessage = 'InvalidInputData'; }
-                        else if (returnData.error == 'ERALOG03') { $scope.errorMessage = 'AlreadyRegisteredButUnconfirmed'; }
-                        else if (returnData.error == 'ERALOG04') { $scope.errorMessage = 'Failed'; }
-                        else if (returnData.error == 'ERALOG05') { $scope.errorMessage = 'NotRegistered'; }
+                        if (returnData.data.error == 'ERALOG01') { $scope.errorMessage = 'RefreshNeeded'; }
+                        else if (returnData.data.error == 'ERALOG02') { $scope.errorMessage = 'InvalidInputData'; }
+                        else if (returnData.data.error == 'ERALOG03') { $scope.errorMessage = 'AlreadyRegisteredButUnconfirmed'; }
+                        else if (returnData.data.error == 'ERALOG04') { $scope.errorMessage = 'Failed'; }
+                        else if (returnData.data.error == 'ERALOG05') { $scope.errorMessage = 'NotRegistered'; }
                         else { $scope.errorMessage = 'Failed'; }
-                        console.log('Error : ' + returnData.error);
+                        console.log('Error : ' + returnData.data.error);
                     }
-                }, function (returnData) {
-                    $scope.overlay = true;
-                    $scope.errorMessage = 'Failed';
-                    console.log('Failed to Login');
-                    console.log(returnData);
-                    $scope.form.submitting = false;
-                    $scope.form.submitted = false;
-                    $scope.form.isLogin = false;
+                }).catch(function (returnData) {
+                    if (refreshAuthAccess()) //refresh cookie
+                    {
+                        $scope.form.submit();
+                    }
+                    else
+                    {
+                        $scope.overlay = true;
+                        $scope.errorMessage = 'Failed';
+                        console.log('Failed to Login');
+                        $scope.form.submitting = false;
+                        $scope.form.submitted = false;
+                        $scope.form.isLogin = false;
+                    }
                 });
             }
             else
@@ -837,11 +904,18 @@ app.controller('registerController', [
                                 break;
                         }
                     }
-                }, function (returnData) {
-                    console.log('Failed requesting reset password');
-                    console.log(returnData);
-                    $scope.form.submitting = false;
-                    $scope.form.submitted = false;
+                }).catch(function (returnData) {
+                    if (refreshAuthAccess()) //refresh cookie
+                    {
+                        $scope.form.submit();
+                    }
+                    else
+                    {
+                        console.log('Failed requesting reset password');
+                        $scope.form.submitting = false;
+                        $scope.form.submitted = false;
+                    }
+
                 });
             }
             else
@@ -871,11 +945,18 @@ app.controller('registerController', [
                         $scope.form.email = '';
                     }
 
-                }, function (returnData) {
-                    console.log('Failed requesting reset password');
-                    console.log(returnData);
-                    $scope.form.submitting = false;
-                    $scope.form.submitted = false;
+                }).catch( function (returnData) {
+                    if (refreshAuthAccess()) //refresh cookie
+                    {
+                        $scope.form.resubmit();
+                    }
+                    else
+                    {
+                        console.log('Failed requesting reset password');
+                        $scope.form.submitting = false;
+                        $scope.form.submitted = false;
+                    }
+
                 });
             }
             else
