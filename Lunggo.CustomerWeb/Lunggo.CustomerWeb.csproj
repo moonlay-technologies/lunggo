@@ -2764,10 +2764,6 @@
       <Project>{50b8c0c0-6b28-46fd-ba90-771d8c9f12a1}</Project>
       <Name>Lunggo.Repository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Lunggo.WebAPI\Lunggo.WebAPI.csproj">
-      <Project>{94c45b65-f662-4262-a745-0d023f9c9ff9}</Project>
-      <Name>Lunggo.WebAPI</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

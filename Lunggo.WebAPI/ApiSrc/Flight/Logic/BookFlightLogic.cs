@@ -58,7 +58,6 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 return new FlightBookApiResponse
                 {
                     RsvNo = bookServiceResponse.RsvNo,
-                    PaymentUrl = bookServiceResponse.PaymentUrl,
                     TimeLimit = bookServiceResponse.TimeLimit,
                     StatusCode = HttpStatusCode.OK
                 };
