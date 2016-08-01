@@ -15,7 +15,7 @@
 .os-regular, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .note > p, .page.page-home .form-container .form-wrapper form span.code-airport {
   font-weight: 400; }
 
-.os-semibold, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event, .page.page-home .form-container .form-wrapper form .btn.btn-yellow {
+.os-semibold, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event, .page.page-home .form-container .form-wrapper form .btn.btn-yellow, .overlay--flight-filter .overlay__content .reset .btn-reset {
   font-weight: 600; }
 
 .os-bold, .overlay .overlay__header h3.overlay__title, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li {
@@ -1421,6 +1421,21 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 33.3334%; }
   .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label {
     width: 100%; }
+
+.overlay--flight-filter .overlay__content .reset {
+  text-align: center;
+  margin: 20px 0; }
+  .overlay--flight-filter .overlay__content .reset .btn-reset {
+    width: 104px;
+    height: 42px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    border-radius: 0;
+    background: #696969;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px; }
 
 .overlay--flight-sort .overlay__content {
   padding: 0; }
