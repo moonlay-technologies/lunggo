@@ -33,6 +33,7 @@ html {
   height: 100%; }
 
 body {
+  margin: 0;
   background: #f9f9f9;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
@@ -348,8 +349,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background: #efefef;
   color: #000000;
   width: 100%;
-  padding: 15px 0;
-  margin-top: 20px; }
+  padding: 15px 0; }
   .site-footer .site-footer-menu nav {
     padding: 0 12px; }
     .site-footer .site-footer-menu nav ul {
@@ -773,7 +773,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     /*border-bottom: 1px solid #d4d4d4;*/ }
     .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .calendar-container .ui-datepicker {
       max-width: 340px;
-      margin: 25px auto 15px; }
+      margin: 0 auto 15px; }
   .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event {
     max-width: 340px;
     margin: 20px auto;
@@ -942,7 +942,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-home .form-container .form-wrapper {
       padding: 0;
       min-height: 100%;
-      margin: 20px 15px 0;
+      margin: 20px 15px;
       background: none;
       border: 0; }
       .page.page-home .form-container .form-wrapper h1 {
@@ -1123,13 +1123,25 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border-radius: 5px;
         font-size: 15px; }
 
-@media handheld, only screen and (max-width: 420px) {
+@media only screen and (min-width: 375px) and (max-height: 667px) {
   .page.page-home .form-container {
-    min-height: 570px; } }
+    min-height: 482px; } }
 
-@media handheld, only screen and (max-width: 360px) {
+@media only screen and (min-width: 414px) and (max-height: 736px) {
   .page.page-home .form-container {
-    min-height: 480px; } }
+    min-height: 550px; } }
+
+@media only screen and (min-width: 320px) and (max-height: 640px) {
+  .page.page-home .form-container {
+    min-height: 450px; } }
+
+@media only screen and (max-width: 320px) and (height: 568px) {
+  .page.page-home .form-container {
+    min-height: auto; } }
+
+@media only screen and (max-width: 320px) and (height: 480px) {
+  .page.page-home .form-container {
+    min-height: auto; } }
 
 .page.page-flight .flight-loading {
   background: #ffae93;

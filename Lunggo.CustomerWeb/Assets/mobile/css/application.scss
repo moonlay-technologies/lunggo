@@ -124,7 +124,7 @@ $button-border: #c9cdd2;
 
 html {height: 100%}
 
-body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; padding-top:$header-height; height: 100%;}
+body {margin:0; background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; padding-top:$header-height; height: 100%;}
 
 img {max-width:100%;}
 
@@ -288,7 +288,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #000000; 
     width: 100%;
     padding: 15px 0;
-    margin-top:20px;
     .site-footer-menu {
         nav {
             padding:0 12px;
@@ -609,7 +608,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                     /*border-bottom: 1px solid #d4d4d4;*/
                     .ui-datepicker {
                         max-width: 340px;
-                        margin: 25px auto 15px;
+                        margin: 0 auto 15px;
                     }
                 }
                 .event {
