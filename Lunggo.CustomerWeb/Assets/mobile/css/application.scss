@@ -147,7 +147,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea {@include border-radius($border-radius-default);}
 .form-control {@include border-radius($border-radius-default)}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"] {font-size:12px; height:auto;}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"] {box-shadow: none; font-size:12px; height:auto;}
 
 // *****
 // site header
@@ -241,41 +241,68 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // *****
 // site content
 .site-content {
-    a {color:#2fb4e6;}
-}
-.site-content {
     height:100%; 
+    a {
+        color:#2fb4e6;
+       
+    }
 }
+
 // page content
 .page__header {}
 .page__body {}
 
-.section-title {font-weight:600; padding-bottom:15px; 
+.section-title {    
+    font-size: 24px;
+    font-weight: 600;
+    padding-bottom: 14px;
+    margin: 20px 0;
     h1{
         text-align: center;
     }
     span {color:#1eafe4; text-align: center;}
     // theme
-    &.stripe {background:url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;}
+    &.stripe {background:url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat; background-size: 50%;}
 }
 
 // form-wrapper
-.form-wrapper {margin: 20px; padding: 15px; background:#fff; border:$border-default; @include border-radius($border-radius-default);
+.form-wrapper {margin: 20px 15px; padding: 20px 15px; background:#fff; border:$border-default; @include border-radius($border-radius-default);
     .form-wrapper__header {padding-left:35px; position:relative; margin-bottom:25px;
         &:before {width:25px; height:50px; content:""; display:block; background-repeat:no-repeat; position:absolute; left:0; top:0;}
         .form-wrapper__title {font-weight:bold; margin-top:5px; margin-bottom:2px; font-size:18px;}
     }
-    .form-wrapper__body {}
-
+    .form-wrapper__body {
+        .form-horizontal .form-group {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        
+    }
     // *****
     // modifier
     &.form-wrapper--login {
         .form-wrapper__header:before {background-image:url(/Assets/mobile/images/login-header-left.png);}
+    } &.form-wrapper--register {
+        .form-wrapper__header:before {background-image:url(/Assets/mobile/images/register-header-left.png);}
     }
-    &.form-wrapper--register {
-        .form-wrapper__header:before {
-            background-image:url(/Assets/mobile/images/register-header-left.png);
-        }
+}
+.form-group {
+    input[type="text"], input[type="password"], input[type="number"], input[type="email"] {height: 40px;}
+    button {
+        height: 40px;
+        font-size: 15px;
+        @extend .os-bold;
+    }
+    label.control-label {
+        @extend .os-regular;
+        font-size: 13px;
+    }
+}
+.form-wrapper.form-wrapper--register, .form-wrapper.form-wrapper--login {
+    font-size: 11px;
+    a {
+        @extend .os-bold; 
+        text-decoration: underline;
     }
 }
 
@@ -798,6 +825,18 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     position: absolute;
     content:''; 
 }
+
+.container-page {
+    padding: 0 15px;
+    margin-bottom: 20px;
+}
+
+.form-divider {
+    border-top: 1px solid #ccc;
+    margin: 15px 0;
+    padding-top: 15px;
+}
+.desc {@extend .os-bold;}
 
 /*--------------------*/
 // Include
