@@ -1341,6 +1341,7 @@
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw__staging.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
