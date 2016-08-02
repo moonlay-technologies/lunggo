@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Net;
 using Lunggo.WebAPI.ApiSrc.Auxiliary.Model;
-using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Flight.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
 {
@@ -39,17 +37,22 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                 new PromoDetails
                 {
                     Id = "xmas-new-year",
-                    //BookingPeriod = "25 Sep 2016 - 2 Okt 2016",
                     Flights = new Flights
                     {
                         TravelPeriod = "25 Desember 2016 - 2 Januari 2017",
                         PromoCode = "CITIXMAS"
-                    }
+                    },
+                    Tnc = new []
+                    {
+                        "1. Flights are valid for domestic only",
+                        "2. Period of booking is from 23 June 2016 until 19 July 2016",
+                        "3. Promotion is subject to change without prior notice"
+                    },
+                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/DanamonSweetValentine/danamonsweetvalentine-head.jpg"
                 },
                 new PromoDetails
                 {
                     Id = "eid-mubarak",
-                    //BookingPeriod  = "9 Agustus 2016 - 13 Agustus 2016",
                     Hotels = new Hotels
                     {
                         PromoCode = "HOTELEID",
@@ -68,7 +71,8 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                                 RoomType = new []{"Deluxe", "Suite"}
                             }
                         },
-                    }
+                    },
+                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/VisaWonderfulWednesday/visa-wonderful-wednesday.jpg"
                     
                 },
                 new PromoDetails
@@ -78,10 +82,10 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                     {
                         "1. Flights are valid from Indonesia to All Countries in Europe",
                         "2. Period of booking is from 23 June 2016 until 19 July 2016",
-                        "3. Available Airline are ONLY Emirate Airlines and Qatar Airways",
+                        "3. Available Airlines are ONLY Emirate Airlines and Qatar Airways",
                         "4. Promotion is subject to change without prior notice"
                     },
-                    BannerUrl = "promo/details/europe-detail.jpeg",
+                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/free2016calendar/campaign-2016_calendar.jpg",
                     Flights = new Flights
                     {
                         TravelPeriod = "23 Juni 2017 - 19 Juli 2017",
@@ -134,13 +138,19 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                 {
                     BookingPeriod  = "25 Sep 2016 - 2 Okt 2016",
                     Id = "xmas-new-year",
-                    Description = "Enjoy your holiday by staying in these hotels"
+                    Description = "Enjoy your holiday by staying in one of these hotels",
+                    TravelPeriod = "25 Des 2016 - 2 Jan 2017",
+                    PromoType = PromoType.Discount,
+                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/DanamonSweetValentine/danamonsweetvalentine-head.jpg"
                 },
                 new AllPromo
                 {
                     BookingPeriod  = "9 Agustus 2016 - 13 Agustus 2016",
                     Id = "eid-mubarak",
-                    Description = "Celebrate your Eid with your family by travelling with Citilink"
+                    Description = "Celebrate your Eid with your family by travelling with Citilink",
+                    TravelPeriod = "9 Sep 2016 - 15 Sep 2017",
+                    PromoType = PromoType.Discount,
+                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/VisaWonderfulWednesday/visa-wonderful-wednesday.jpg"
                 },
                 new AllPromo
                 {
@@ -149,7 +159,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                     Description = "Travel to Europe with Special Price for Flights and Hotels!",
                     TravelPeriod = "23 Juni 2016 - 19 Juli 2016",
                     PromoType = PromoType.CouponCode,
-                    BannerUrl = "/promo/europe-all.jpeg"
+                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/free2016calendar/campaign-2016_calendar.jpg"
                 },
             
             };
@@ -162,17 +172,17 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                 new FeaturedPromo
                 {
                     Id = "xmas-new-year",
-                    BannerUrl = "/promo/xmas.jpeg"
+                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/DanamonSweetValentine/danamonsweetvalentine-head.jpg"
                 },
                 new FeaturedPromo
                 {
                     Id = "eid-mubarak",
-                    BannerUrl = "/promo/eid.jpeg"
+                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/VisaWonderfulWednesday/visa-wonderful-wednesday.jpg"
                 },
                 new FeaturedPromo
                 {
                     Id = "europe",
-                    BannerUrl = "/promo/europe.jpeg"
+                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/free2016calendar/campaign-2016_calendar.jpg"
                 },
             };
         }
