@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Product.Model
 
         public ReservationState()
         {
-            Platform = PlatformTypeCd.FrameworkCode(OnlineContext.GetActivePlatformCode());
+            Platform = PlatformTypeCd.Mnemonic(OnlineContext.GetActivePlatformCode());
             Device = OnlineContext.GetActiveDeviceCode();
             Language = OnlineContext.GetActiveLanguageCode();
             Currency = new Currency(OnlineContext.GetActiveCurrencyCode());
@@ -32,7 +32,7 @@ namespace Lunggo.ApCommon.Product.Model
                 {
                     RsvNo = rsvNo,
                     PlatformCd = PlatformTypeCd.Mnemonic(Platform),
-                    DeviceCd = Device ?? "",
+                    DeviceCd = Device,
                     LanguageCd = Language,
                     CurrencyCd = Currency,
                     InsertBy = "LunggoSystem",
@@ -49,7 +49,7 @@ namespace Lunggo.ApCommon.Product.Model
                 var record = GetReservationStateQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single();
                 return new ReservationState
                 {
-                    Platform = PlatformTypeCd.FrameworkCode(OnlineContext.GetActivePlatformCode()),
+                    Platform = PlatformTypeCd.Mnemonic(OnlineContext.GetActivePlatformCode()),
                     Device = OnlineContext.GetActiveDeviceCode(),
                     Language = OnlineContext.GetActiveLanguageCode().ToUpper(),
                     Currency = new Currency(OnlineContext.GetActiveCurrencyCode())

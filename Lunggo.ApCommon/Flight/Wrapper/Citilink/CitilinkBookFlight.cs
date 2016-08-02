@@ -455,6 +455,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 if (timelimitMonth == "Nop")
                     timelimitMonth = "Nov";
 
+                if (timelimitMonth == "Agust")
+                    timelimitMonth = "Agustus";
+
                 var timelimit = DateTime.Parse(timelimitDate + "-" + timelimitMonth + "-" + tahun + " " + timelimitTime, CultureInfo.CreateSpecificCulture("id-ID"));
 
                 var status = new BookingStatusInfo();

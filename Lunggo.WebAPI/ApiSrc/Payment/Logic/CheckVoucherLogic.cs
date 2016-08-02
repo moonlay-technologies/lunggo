@@ -23,7 +23,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 return new CheckVoucherApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERVCHE01"
+                    ErrorCode = "ERPVCH01"
                 };
             }
         }
@@ -54,37 +54,37 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERVCHE02"
+                        ErrorCode = "ERPVCH02"
                     };
                 case VoucherStatus.NoVoucherRemaining:
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERVCHE03"
+                        ErrorCode = "ERPVCH03"
                     };
                 case VoucherStatus.BelowMinimumSpend:
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERVCHE04"
+                        ErrorCode = "ERPVCH04"
                     };
                 case VoucherStatus.EmailNotEligible:
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERVCHE05"
+                        ErrorCode = "ERPVCH05"
                     };
                 case VoucherStatus.VoucherAlreadyUsed:
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERVCHE06"
+                        ErrorCode = "ERPVCH06"
                     };
                 case VoucherStatus.ReservationNotFound:
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERVCHE07"
+                        ErrorCode = "ERPVCH07"
                     };
                 default:
                     return ApiResponseBase.Error500();

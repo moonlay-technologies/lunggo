@@ -94,10 +94,14 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public string BundleFlight(List<string> tokens)
         {
-            if (tokens.Count == 0 || tokens.Contains(null))
+            if (tokens == null || tokens.Count == 0 || tokens.Contains(null))
                 return null;
 
             var itins = tokens.Select(GetItineraryFromCache).ToList();
+
+            if (itins.Count == 0 || itins.Contains(null))
+                return null;
+
             var newToken = SaveItinerariesToCache(itins);
             return newToken;
         }

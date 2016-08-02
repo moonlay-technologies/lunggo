@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 
 namespace Lunggo.ApCommon.Flight.Service
@@ -18,7 +21,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 RsvNo = reservation.RsvNo,
                 RsvTime = reservation.RsvTime,
-                RsvStatus = reservation.RsvStatus,
+                RsvDisplayStatus = MapReservationStatus(reservation),
                 CancellationType = reservation.CancellationType,
                 CancellationTime = reservation.CancellationTime,
                 Itinerary = ConvertToItineraryForDisplay(reservation.Itineraries),
@@ -26,6 +29,37 @@ namespace Lunggo.ApCommon.Flight.Service
                 Passengers = ConvertToPaxForDisplay(reservation.Pax),
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment)
             };
+        }
+
+        private static RsvDisplayStatus MapReservationStatus(FlightReservation reservation)
+        {
+            var paymentStatus = reservation.Payment.Status;
+            var paymentMethod = reservation.Payment.Method;
+            var rsvStatus = reservation.RsvStatus;
+
+            if (rsvStatus == RsvStatus.Cancelled || paymentStatus == PaymentStatus.Cancelled)
+                return RsvDisplayStatus.Cancelled;
+            if (rsvStatus == RsvStatus.Expired || paymentStatus == PaymentStatus.Expired)
+                return RsvDisplayStatus.Expired;
+            if (paymentStatus == PaymentStatus.Denied)
+                return RsvDisplayStatus.PaymentDenied;
+            if (paymentStatus == PaymentStatus.Failed)
+                return RsvDisplayStatus.FailedUnpaid;
+            if (rsvStatus == RsvStatus.Failed)
+                return paymentStatus == PaymentStatus.Settled 
+                    ? RsvDisplayStatus.FailedPaid 
+                    : RsvDisplayStatus.FailedUnpaid;
+            if (paymentMethod == PaymentMethod.Undefined)
+                return RsvDisplayStatus.Reserved;
+            if (paymentStatus == PaymentStatus.Settled)
+                return reservation.Itineraries.All(i => i.BookingStatus == BookingStatus.Ticketed)
+                    ? RsvDisplayStatus.Issued
+                    : RsvDisplayStatus.Paid;
+            if (paymentStatus != PaymentStatus.Settled)
+                return (paymentMethod == PaymentMethod.VirtualAccount || paymentMethod == PaymentMethod.BankTransfer)
+                    ? RsvDisplayStatus.PendingPayment
+                    : RsvDisplayStatus.VerifyingPayment;
+            return RsvDisplayStatus.Undefined;
         }
 
         internal FlightItineraryForDisplay ConvertToItineraryForDisplay(List<FlightItinerary> itins)

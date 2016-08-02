@@ -2,8 +2,12 @@
 {
     public enum PlatformType
     {
-        Website = 0,
-        MobileApp = 1
+        Undefined = 0,
+        DesktopWebsite = 1,
+        MobileWebsite = 2,
+        IosApp = 3,
+        AndroidApp = 4,
+        WindowsPhoneApp = 5
     }
 
     internal class PlatformTypeCd
@@ -12,10 +16,16 @@
         {
             switch (platformType)
             {
-                case PlatformType.Website:
-                    return "WEB";
-                case PlatformType.MobileApp:
-                    return "MAP";
+                case PlatformType.DesktopWebsite:
+                    return "DWS";
+                case PlatformType.MobileWebsite:
+                    return "MWS";
+                case PlatformType.IosApp:
+                    return "IOA";
+                case PlatformType.AndroidApp:
+                    return "ANA";
+                case PlatformType.WindowsPhoneApp:
+                    return "WPA";
                 default:
                     return null;
             }
@@ -25,25 +35,18 @@
         {
             switch (platformType)
             {
-                case "WEB":
-                    return PlatformType.Website;
-                case "MAP":
-                    return PlatformType.MobileApp;
+                case "DWS":
+                    return PlatformType.DesktopWebsite;
+                case "MWS":
+                    return PlatformType.MobileWebsite;
+                case "IOA":
+                    return PlatformType.IosApp;
+                case "ANA":
+                    return PlatformType.AndroidApp;
+                case "WPA":
+                    return PlatformType.WindowsPhoneApp;
                 default:
-                    return PlatformType.Website;
-            }
-        }
-
-        internal static PlatformType FrameworkCode(string code)
-        {
-            switch (code)
-            {
-                case "web":
-                    return PlatformType.Website;
-                case "mobApp":
-                    return PlatformType.MobileApp;
-                default:
-                    return PlatformType.Website;
+                    return PlatformType.Undefined;
             }
         }
     }

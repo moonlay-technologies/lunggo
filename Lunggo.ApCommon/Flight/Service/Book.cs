@@ -51,7 +51,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 InsertReservationToDb(reservation);
                 output.RsvNo = reservation.RsvNo;
                 output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
-                output.PaymentUrl = reservation.Payment.RedirectionUrl;
                 
                 DeleteItinerariesFromCache(input.Token);
             }
@@ -93,7 +92,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var reservation = new FlightReservation();
             reservation.RsvNo = RsvNoSequence.GetInstance().GetNext(reservation.Type);
             reservation.RsvTime = DateTime.UtcNow;
-            reservation.RsvStatus = RsvStatus.Pending;
+            reservation.RsvStatus = RsvStatus.Reserved;
             reservation.Itineraries = itins;
             reservation.Contact = input.Contact;
             reservation.Pax = input.Passengers;

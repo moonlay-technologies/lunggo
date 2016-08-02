@@ -582,7 +582,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var model = new AccountViewModel();
             var flightService = FlightService.GetInstance();
             model.User = User.Identity.GetUser();
-            model.FlightReservations = flightService.GetOverviewReservationsByContactEmail(model.User.Email);
+            model.FlightReservations = flightService.GetOverviewReservationsByUserId(model.User.Email);
             return View(model);
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using Lunggo.Framework.Extension;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
