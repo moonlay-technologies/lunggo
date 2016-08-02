@@ -266,7 +266,8 @@
     <Compile Include="Flight\Query\GetPassengerPrimKeyQuery.cs" />
     <Compile Include="Flight\Query\GetReservationQuery.cs" />
     <Compile Include="Flight\Query\GetRsvNoByBookingIdQuery.cs" />
-    <Compile Include="Flight\Query\GetRsvNosByContactEmailQuery.cs" />
+    <Compile Include="Flight\Query\GetRsvNosByDeviceIdQuery.cs" />
+    <Compile Include="Flight\Query\GetRsvNosByUserIdQuery.cs" />
     <Compile Include="Flight\Query\GetSavedPassengersByContactEmailQuery.cs" />
     <Compile Include="Flight\Query\GetTotalFareQuery.cs" />
     <Compile Include="Flight\Query\GetTripInfoQuery.cs" />
