@@ -91,13 +91,13 @@ app.controller('checkoutController', [
                         clientSecret: 'Standar'
                     },
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                }).success(function (returnData) {
+                }).then(function (returnData) {
                     $scope.form.submitting = false;
                     $scope.form.submitted = true;
-                    if (returnData.status == '200') {
-                        setCookie("accesstoken", returnData.accessToken, returnData.expTime);
-                        setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
-                        setCookie("authkey", returnData.accessToken, returnData.expTime);
+                    if (returnData.data.status == '200') {
+                        setCookie("accesstoken", returnData.data.accessToken, returnData.data.expTime);
+                        setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
+                        setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
                         $scope.TakeProfileConfig.TakeProfile();
                         //$scope.loggedIn = getCookie('accesstoken');
                     }
@@ -108,13 +108,21 @@ app.controller('checkoutController', [
                         $scope.form.isLogin = false;
                         //Return langsung
                     }
-                }, function (returnData) {
-                    console.log('Failed to Login');
-                    $scope.form.submitting = false;
-                    $scope.form.submitted = false;
-                    $scope.form.isLogin = false;
-                    window.location.href = $location.absUrl();
-                    //return langsung
+                }).catch(function (returnData) {
+                    if (refreshAuthAccess()) //refresh cookie
+                    {
+                        $scope.form.submit();
+                    }
+                    else
+                    {
+                        console.log('Failed to Login');
+                        $scope.form.submitting = false;
+                        $scope.form.submitted = false;
+                        $scope.form.isLogin = false;
+                        window.location.href = $location.absUrl();
+                        //return langsung
+                    }
+
                 });
             }
             else
@@ -136,26 +144,33 @@ app.controller('checkoutController', [
                         method: 'GET',
                         url: GetProfileConfig.Url,
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                    }).success(function (returnData) {
+                    }).then(function (returnData) {
                         if (returnData.status == "200") {
-                            $scope.buyerInfo.name = returnData.name;
-                            $scope.buyerInfo.countryCode = parseInt(returnData.countryCallCd);
-                            $scope.buyerInfo.phone = parseInt(returnData.phone);
-                            $scope.buyerInfo.email = returnData.email;
+                            $scope.buyerInfo.name = returnData.data.name;
+                            $scope.buyerInfo.countryCode = parseInt(returnData.data.countryCallCd);
+                            $scope.buyerInfo.phone = parseInt(returnData.data.phone);
+                            $scope.buyerInfo.email = returnData.data.email;
                             window.location.href = $location.absUrl();
                         }
                         else {
                             $scope.buyerInfo = {};
                             console.log('There is an error');
-                            console.log('Error : ' + returnData.error);
+                            console.log('Error : ' + returnData.data.error);
                             console.log(returnData);
                             window.location.href = $location.absUrl();
                         }
-                    }, function (returnData) {
-                        $scope.buyerInfo = {};
-                        console.log('Failed to Get Profile');
-                        console.log(returnData);
-                        window.location.href = $location.absUrl();
+                    }).catch(function (returnData) {
+                        if (refreshAuthAccess()) //refresh cookie
+                        {
+                            $scope.TakeProfileConfig.TakeProfile();
+                        }
+                        else
+                        {
+                            $scope.buyerInfo = {};
+                            console.log('Failed to Get Profile');
+                            window.location.href = $location.absUrl();
+                        }
+                        
                     });
                 }
                 else {
@@ -297,10 +312,18 @@ app.controller('checkoutController', [
                             }
                         }
 
-                    }, function (returnData) {
-                        console.log(returnData);
-                        $scope.book.checked = true;
-                        $scope.book.isSuccess = false;
+                    }).catch(function (returnData) {
+                        if (refreshAuthAccess()) //refresh cookie
+                        {
+                            $scope.book.send();
+                        }
+                        else
+                        {
+                            console.log(returnData);
+                            $scope.book.checked = true;
+                            $scope.book.isSuccess = false;
+                        }
+                        
                     });
                 }
                 else {
@@ -330,18 +353,19 @@ app.controller('checkoutController', [
                     method: 'GET',
                     url: GetProfileConfig.Url,
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                }).success(function (returnData) {
-                    if (returnData.status == "200") {
+                }).then(function (returnData) {
+                    if (returnData.data.status == "200") {
                         console.log('Success getting Profile');
-                        $scope.buyerInfo.name = returnData.name;
-                        $scope.buyerInfo.countryCode = parseInt(returnData.countryCallCd);
-                        $scope.buyerInfo.phone = parseInt(returnData.phone);
-                        $scope.buyerInfo.email = returnData.email;
+                        $scope.buyerInfo.name = returnData.data.name;
+                        $scope.buyerInfo.countryCode = parseInt(returnData.data.countryCallCd);
+                        $scope.buyerInfo.phone = parseInt(returnData.data.phone);
+                        $scope.buyerInfo.email = returnData.data.email;
                     }
                     else {
                         $scope.buyerInfo = {};
                     }
-                }, function (returnData) {
+                }).error(function (returnData) {
+
                     $scope.buyerInfo = {};
                 });
             }

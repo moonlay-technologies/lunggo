@@ -72,9 +72,16 @@ app.controller('paymentController', [
                         console.log('Getting Unique Payment Code');
                         //console.log(returnData);
                         $scope.TransferConfig.UniqueCode = returnData.data.fee;
-                    }, function (returnData) {
-                        console.log('Failed to get Unique Payment Code');
-                        console.log(returnData);
+                    }).catch(function (returnData) {
+                        if (refreshAuthAccess()) //refresh cookie
+                        {
+                            $scope.TransferConfig.GetUniqueCode($scope.rsvNo, voucherCode);
+                        }
+                        else
+                        {
+                            console.log('Failed to get Unique Payment Code');
+                        }
+                        
                     });
                 }
                 else {
@@ -135,10 +142,16 @@ app.controller('paymentController', [
                             $scope.voucher.checked = true;
                             $scope.voucher.status = returnData.data.error;
                         }
-                    }, function (returnData) {
-                        $scope.voucher.checked = true;
-                        $scope.voucher.checking = false;
-                        $scope.voucher.status = returnData.data.error;
+                    }).catch( function (returnData) {
+                        if (refreshAuthAccess()) //refresh cookie
+                        {
+                            $scope.voucher.check();
+                        }
+                        else
+                        {
+                            $scope.voucher.checked = true;
+                            $scope.voucher.checking = false;
+                        }
                     });
                 }
                 else {
@@ -331,10 +344,16 @@ app.controller('paymentController', [
                             $scope.pay.isSuccess = false;
                             console.log($scope.errorMessage);
                         }
-                    }, function (returnData) {
-                        console.log(returnData);
-                        $scope.pay.checked = true;
-                        $scope.pay.isSuccess = false;
+                    }).catch( function (returnData) {
+                        if (refreshAuthAccess()) //refresh cookie
+                        {
+                            $scope.pay.send();
+                        }
+                        else
+                        {
+                            $scope.pay.checked = true;
+                            $scope.pay.isSuccess = false;
+                        }
                     });
                     $scope.pay.paying = false;
                 }
@@ -499,7 +518,5 @@ app.controller('paymentController', [
                 }
             }
         };
-
-
     }
 ]);

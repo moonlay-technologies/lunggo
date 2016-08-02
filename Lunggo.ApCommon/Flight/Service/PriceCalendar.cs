@@ -65,12 +65,11 @@ namespace Lunggo.ApCommon.Flight.Service
             var listofDates = new List<String>();
             for (var date = startDate.Date; date <= endDate; date = date.AddDays(1))
             {
-                listofDates.Add(date.ToString("ddMMyy", CultureInfo.InvariantCulture));
+                listofDates.Add(date.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture));
             }
            
             var listofPrices = GetLowestPricesForRangeOfDate(origin, destination, startDate, endDate);
             var pairs = new Dictionary<string, decimal>();
-            //var x = listofPrices.Where(f => f > 0);
             decimal minPrice;
             string minDate;
             if (listofPrices.Any(f => f > 0))

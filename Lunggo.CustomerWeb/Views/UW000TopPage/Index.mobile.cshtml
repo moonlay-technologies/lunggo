@@ -14,6 +14,8 @@
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
     @*<script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>*@
+    @*<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>*@
+
 }
 
 @section PageJS {
@@ -81,6 +83,7 @@
                         <select class="form-control" name="cabinclass" ng-model="FlightSearchForm.Cabin" ng-init="FlightSearchForm.Cabin = flightclass[0].value">
                             <option ng-repeat="cabin in flightclass" value="{{cabin.value}}">{{cabin.name}}</option>
                         </select>
+                        <span class="arrow"></span>
                     </div>
                 </div>
                 <div class="form-group form__passenger">
@@ -104,20 +107,6 @@
             </div>
         </form><!-- .flight-form -->
     </div><!-- .form-wrapper -->
-
-    @*<!-- overlays -->
-    <!-- overlay date picker -->
-    <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--departure" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-departure') }">
-        <header class="overlay__header">
-            <h3 class="overlay__title">
-                Pilih Tanggal Keberangkatan
-                <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
-            </h3>
-        </header><!-- .overlay__header -->
-        <section class="overlay__content">
-            <div class="ui-datepicker departure-date"></div>
-        </section>
-    </div><!-- .overlay--datepicker-->*@
     
     <!-- overlays -->
     <!-- overlay date picker -->
@@ -130,14 +119,19 @@
         </header><!-- .overlay__header -->
         <section class="overlay__content">
             <div class="overlay-selector">
-                <div class="overlay-selector__header" role="navigation">
+                <div class="overlay-selector__header">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a class="adult">Berangkat</a></li>
-                        <li><a class="children">Pergi</a></li>
+                        <li class="active"><a href="#">Berangkat</a></li>
+                        <li><a href="#">Pergi</a></li>
                     </ul>
                 </div>
                 <div class="overlay-selector__body">
-                    <div class="ui-datepicker departure-date"></div>
+                    <div class="calendar-container">
+                        <div class="ui-datepicker departure-date"></div>
+                    </div>
+                    @*<div class="event">
+                        <span class="date-event">24:</span> Holiday
+                    </div>*@
                 </div>
             </div>
         </section>
@@ -152,10 +146,25 @@
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
-            <div class="ui-datepicker departure-date"></div>
+            <div class="overlay-selector">
+                <div class="overlay-selector__header">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#">Berangkat</a></li>
+                        <li><a href="#">Pergi</a></li>
+                    </ul>
+                </div>
+                <div class="overlay-selector__body">
+                    <div class="calendar-container">
+                        <div class="ui-datepicker departure-date"></div>
+                    </div>
+                    @*<div class="event">
+                        <span class="date-event">24:</span> Holiday
+                    </div>*@
+                </div>
+            </div>
         </section>
     </div><!-- .overlay--datepicker-->
-    
+
     <!-- overlay airport selector -->
     <div class="overlay overlay--theme--blue overlay--airport-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'airport-select')}">
         <header class="overlay__header">
