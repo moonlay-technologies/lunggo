@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using log4net;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
@@ -15,6 +16,7 @@ using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
+using Lunggo.Framework.Redis;
 using Lunggo.Framework.TableStorage;
 
 namespace Lunggo.WebJob.EmailQueueHandler
@@ -27,6 +29,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             InitTableStorageService();
             InitDatabaseService();
             InitQueueService();
+            InitRedisService();
             InitHtmlTemplateService();
             InitI18NMessageManager();
             InitMailService();
@@ -65,6 +68,26 @@ namespace Lunggo.WebJob.EmailQueueHandler
             var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
             queue.Init(connString);
+        }
+
+        private static void InitRedisService()
+        {
+            var redisService = RedisService.GetInstance();
+            redisService.Init(new RedisConnectionProperty[]
+            {
+                new RedisConnectionProperty
+                {
+                    ConnectionName = ApConstant.SearchResultCacheName,
+                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
+                },
+                
+                new RedisConnectionProperty
+                {
+                    ConnectionName = ApConstant.MasterDataCacheName,
+                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
+                }, 
+                 
+            });
         }
 
         private static void InitMailService()

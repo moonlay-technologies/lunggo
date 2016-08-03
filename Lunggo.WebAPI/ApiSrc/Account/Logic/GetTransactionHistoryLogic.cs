@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Web;
@@ -12,7 +14,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
     public static partial class AccountLogic
     {
-        public static TransactionHistoryApiResponse GetTransactionHistory(string filter)
+        public static TransactionHistoryApiResponse GetTransactionHistory(string status)
         {
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
             var email = identity.GetEmail();
@@ -20,6 +22,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var rsvs = identity.IsUserAuthorized() 
                 ? flight.GetOverviewReservationsByUserId(email) 
                 : flight.GetOverviewReservationsByDeviceId(email);
+            if (status == "active")
+                rsvs = rsvs.Where(rsv => rsv.Itinerary.Trips[0].Segments[0].DepartureTime >= DateTime.UtcNow.AddDays(-1)).ToList();
             return new TransactionHistoryApiResponse
             {
                 FlightReservations = rsvs,

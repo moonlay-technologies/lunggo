@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
-
+using System.Threading.Tasks;
 using Lunggo.ApCommon.Identity.Users;
+using Lunggo.Framework.Config;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Microsoft.AspNet.Identity;
@@ -42,9 +43,9 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             if (result.Succeeded)
             {
                 var code = userManager.GenerateEmailConfirmationToken(user.Id);
-                //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
-                //    protocol: Request.Url.Scheme);
-                //await UserManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl);
+                var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+                var callbackUrl = host + "/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code;
+                userManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
 
                 return new ApiResponseBase
                 {
