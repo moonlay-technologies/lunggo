@@ -81,6 +81,24 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [HttpPost]
         [LunggoCorsPolicy]
         [Authorize]
+        [Route("v1/resendconfirmationemail")]
+        public ApiResponseBase ResendConfirmationEmail()
+        {
+            try
+            {
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ResendConfirmationEmailApiRequest>();
+                var apiResponse = AccountLogic.ResendConfirmationEmail(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Authorize]
         [Route("v1/forgot")]
         public ApiResponseBase ForgotPassword()
         {
@@ -149,15 +167,17 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             }
         }
 
-        [HttpGet]
+        [HttpPost]
+        [AllowAnonymous]
         [LunggoCorsPolicy]
-        [UserAuthorize]
-        [Route("v1/trxhistory")]
-        public ApiResponseBase GetTransactionHistory()
+        [Route("v1/confirmemail")]
+        public ApiResponseBase ConfirmEmail()
         {
             try
             {
-                var apiResponse = AccountLogic.GetTransactionHistory();
+                var a = Request.Content.ReadAsStringAsync().Result;
+                var request = a.Deserialize<ConfirmEmailApiRequest>();
+                var apiResponse = AccountLogic.ConfirmEmail(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)
@@ -168,7 +188,24 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [UserAuthorize]
+        [Authorize]
+        [Route("v1/trxhistory")]
+        public ApiResponseBase GetTransactionHistory(string filter = null)
+        {
+            try
+            {
+                var apiResponse = AccountLogic.GetTransactionHistory(filter);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Authorize]
         [Route("v1/rsv/{rsvNo}")]
         public ApiResponseBase GetOrderDetail(string rsvNo)
         {

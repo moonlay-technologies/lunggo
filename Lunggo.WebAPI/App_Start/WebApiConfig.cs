@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Lunggo.ApCommon.Identity.Auth;
 
 namespace Lunggo.WebAPI
 {

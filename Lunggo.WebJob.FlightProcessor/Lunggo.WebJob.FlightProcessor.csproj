@@ -97,8 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Init.cs" />
+    <Compile Include="SearchTimeout.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Functions.cs" />
+    <Compile Include="IssueTicket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +142,7 @@
     <None Include="App.Release.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>

@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Flight.Model
         [JsonProperty("rsvTime", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime RsvTime { get; set; }
         [JsonProperty("rsvStatus", NullValueHandling = NullValueHandling.Ignore)]
-        public RsvStatus RsvStatus { get; set; }
+        public RsvDisplayStatus RsvDisplayStatus { get; set; }
         [JsonProperty("cancelType", NullValueHandling = NullValueHandling.Ignore)]
         public CancellationType CancellationType { get; set; }
         [JsonProperty("cancelTime", NullValueHandling = NullValueHandling.Ignore)]

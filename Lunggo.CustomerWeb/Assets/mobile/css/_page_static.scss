@@ -3,12 +3,36 @@
     .question-wrapper {
         &>ol {padding-left:25px; list-style:none; counter-reset:main-number;
             &>li {position:relative;
-                &:before {content:counter(main-number); counter-increment:main-number; background:#ffd632; color:#4f3500; position:absolute; height:20px; width:20px; text-align:center; @include border-radius(50px); font-size:14px; font-weight:600; padding-top:0; margin-left:-25px; margin-top:-2px;}
-                &>header {color:#1daee4;
-                    h2 {font-size:16px; font-weight:bold;}
+                &:before {
+                    content: counter(main-number);
+                    counter-increment: main-number;
+                    background: #ffd632;
+                    color: #4f3500;
+                    position: absolute;
+                    height: 20px;
+                    width: 20px;
+                    text-align: center;
+                    -webkit-border-radius: 50px;
+                    -moz-border-radius: 50px;
+                    -ms-border-radius: 50px;
+                    border-radius: 50px;
+                    font-size: 14px;
+                    font-weight: 700;
+                    margin-left: -25px;
+                    margin-top: 12px;
                 }
+                .faq-title {
+                    padding: 12px 0;
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: #2eb4e7;
+                    margin-left: 5px;
+                }
+                /*&>header {color:#1daee4;
+                    h2 {font-size:16px; font-weight:bold;}
+                }*/
                 &>ol {padding-left:0; list-style:none; counter-reset:sub-number;
-                    &>li {background:#fff; margin-left:-25px; padding:10px; border:$border-default; position:relative; padding-left:30px;
+                    &>li {background:#fff; margin-left:-25px; padding:10px; border:$border-default; position:relative; padding-left:30px; margin-bottom: 5px;
                         &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:8px; left:5px; color:#1daee4; font-size:14px; font-weight:bold;}
                         &>header {color:#1daee4;
                             h3 {font-size:14px; margin-top:0; font-weight:bold;}
@@ -79,53 +103,18 @@
     }
 }// page how to order
 
- .page.page-newsletter{
-     .container{
-         p{
+ .page.page-newsletter {
+     .container-page {
+         p {
              color: #3fabe3;
              font-size: 16px;
              text-align: center;
-             margin-left: 10px;
-             margin-right: 10px;
-             padding-bottom: 10px;
          }
-         form{
-             border-top: 1px solid #ccc;
-             padding-top: 20px;
-         }
-     }
-     h1{
-         text-align: center;
-         margin-left: 10px;
-         margin-right: 10px;
      }
      .overlay-content{
-         p{
-             color: black;
+         p {
+             color: $color-black;
              font-size: 12px;
          }
      }
  }
-
- .newsletterform{
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    p{
-             color: #3fabe3;
-             font-size: 16px;
-             text-align: center;
-             width: 90%;
-             margin-left: 20px;
-             margin-right: 20px;
-             padding-bottom: 10px;
-         }
-}
-
-.page_header h1{
-    text-align: center;
-    
-    margin-top: 10px;
-    margin-bottom: 10px;
-}

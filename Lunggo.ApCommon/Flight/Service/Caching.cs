@@ -297,7 +297,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             catch
             {
-                return DateTime.UtcNow;
+                return null;
             }
         }
 

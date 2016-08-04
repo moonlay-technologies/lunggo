@@ -27,13 +27,30 @@ namespace Lunggo.ApCommon.Flight.Service
     public partial class FlightService
     {
         #region Get
-        private List<FlightReservation> GetOverviewReservationsFromDb(string contactEmail)
+        private List<FlightReservation> GetOverviewReservationsByUserIdFromDb(string userId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rsvNos =
-                    GetRsvNosByContactEmailQuery.GetInstance()
-                        .Execute(conn, new { Email = contactEmail })
+                    GetRsvNosByUserIdQuery.GetInstance()
+                        .Execute(conn, new { UserId = userId })
+                        .ToList();
+                if (!rsvNos.Any())
+                    return null;
+                else
+                {
+                    return rsvNos.Select(GetOverviewReservationFromDb).ToList();
+                }
+            }
+        }
+
+        private List<FlightReservation> GetOverviewReservationsByDeviceIdFromDb(string deviceId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rsvNos =
+                    GetRsvNosByDeviceIdQuery.GetInstance()
+                        .Execute(conn, new { DeviceId = deviceId })
                         .ToList();
                 if (!rsvNos.Any())
                     return null;

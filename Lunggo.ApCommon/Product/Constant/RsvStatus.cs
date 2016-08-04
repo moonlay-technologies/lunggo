@@ -3,11 +3,25 @@
     public enum RsvStatus
     {
         Undefined = 0,
-        Pending = 1,
-        Paid = 2,
-        Completed = 3,
-        Cancelled = 4,
-        Expired = 5
+        Reserved = 1,
+        Expired = 2,
+        Cancelled = 3,
+        Failed = 4
+    }
+
+    public enum RsvDisplayStatus
+    {
+        Undefined = 0,
+        Reserved = 1,
+        PendingPayment = 2,
+        VerifyingPayment = 3,
+        Paid = 4,
+        Issued = 5,
+        Expired = 6,
+        PaymentDenied = 7,
+        Cancelled = 8,
+        FailedPaid = 9,
+        FailedUnpaid = 10
     }
 
     internal class RsvStatusCd
@@ -16,16 +30,14 @@
         {
             switch (rsvStatus)
             {
-                case RsvStatus.Pending:
-                    return "PEND";
-                case RsvStatus.Paid:
-                    return "PAID";
-                case RsvStatus.Completed:
-                    return "COMP";
+                case RsvStatus.Reserved:
+                    return "RSVD";
+                case RsvStatus.Expired:
+                    return "EXPD";
                 case RsvStatus.Cancelled:
                     return "CANC";
-                case RsvStatus.Expired:
-                    return "EXPR";
+                case RsvStatus.Failed:
+                    return "FAIL";
                 default:
                     return null;
             }
@@ -35,16 +47,14 @@
         {
             switch (rsvStatus)
             {
-                case "PEND":
-                    return RsvStatus.Pending;
-                case "PAID":
-                    return RsvStatus.Paid;
-                case "COMP":
-                    return RsvStatus.Completed;
+                case "RSVD":
+                    return RsvStatus.Reserved;
+                case "EXPD":
+                    return RsvStatus.Expired;
                 case "CANC":
                     return RsvStatus.Cancelled;
-                case "EXPR":
-                    return RsvStatus.Expired;
+                case "FAIL":
+                    return RsvStatus.Failed;
                 default:
                     return RsvStatus.Undefined;
             }

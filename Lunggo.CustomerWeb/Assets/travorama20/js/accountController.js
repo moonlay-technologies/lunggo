@@ -694,7 +694,7 @@ app.controller('resetController', [
             $scope.form.submitting = true;
             //Check Authorization
             var authAccess = getAuthAccess();
-            if (authAccess == 2) {
+            if (authAccess == 2 || authAccess == 1) {
                 $http({
                     url: ResetPasswordConfig.Url,
                     method: 'POST',

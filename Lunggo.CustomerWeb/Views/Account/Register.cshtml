@@ -44,7 +44,11 @@
                     <div class="form-group">
                         <input type="submit" value="@Html.I18NString("CW00127")" class="btn btn-yellow form-control" ng-disabled="registerForm.$invalid || form.submitting" />
                     </div>
-
+                    
+                    <div class="link-container">
+                        <p><a href="@Url.Action("Login", "Account")">Kirim Ulang Email Aktivasi</a></p>
+                        <p><b>Sudah Memiliki Akun?</b> <a href="@Url.Action("Login", "Account")">Masuk Sekarang</a></p>
+                    </div>
                 </form>
 
             </div>
