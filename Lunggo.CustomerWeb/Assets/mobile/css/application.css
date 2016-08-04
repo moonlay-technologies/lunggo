@@ -12,13 +12,13 @@
 .os-light, .page.page-home .form-container .form-wrapper form .form__destination .title-destination, .page.page-home .form-container .form-wrapper form .form__origin .title-destination, .page.page-home .form-container .form-wrapper form span.city {
   font-weight: 300; }
 
-.os-regular, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .note > p, .page.page-home .form-container .form-wrapper form span.code-airport {
+.os-regular, .form-group label.control-label, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .note > p, .page.page-home .form-container .form-wrapper form span.code-airport {
   font-weight: 400; }
 
-.os-semibold, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event, .page.page-home .form-container .form-wrapper form .btn.btn-yellow {
+.os-semibold, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event, .overlay--flight-filter .overlay__content .reset .btn-reset {
   font-weight: 600; }
 
-.os-bold, .overlay .overlay__header h3.overlay__title, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li {
+.os-bold, .form-group button, .form-wrapper.form-wrapper--register a, .form-wrapper.form-wrapper--login a, .overlay .overlay__header h3.overlay__title, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li, .desc {
   font-weight: 700; }
 
 /*--------------------*/
@@ -33,6 +33,7 @@ html {
   height: 100%; }
 
 body {
+  margin: 0;
   background: #f9f9f9;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
@@ -98,6 +99,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   border-radius: 2px; }
 
 input[type="text"], input[type="password"], input[type="number"], input[type="email"] {
+  box-shadow: none;
   font-size: 12px;
   height: auto; }
 
@@ -293,26 +295,28 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .burger-overlay.active {
     display: block; }
 
-.site-content a {
-  color: #2fb4e6; }
-
 .site-content {
   height: 100%; }
+  .site-content a {
+    color: #2fb4e6; }
 
 .section-title {
+  font-size: 24px;
   font-weight: 600;
-  padding-bottom: 15px; }
+  padding-bottom: 14px;
+  margin: 20px 0; }
   .section-title h1 {
     text-align: center; }
   .section-title span {
     color: #1eafe4;
     text-align: center; }
   .section-title.stripe {
-    background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat; }
+    background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;
+    background-size: 50%; }
 
 .form-wrapper {
-  margin: 20px;
-  padding: 15px;
+  margin: 20px 15px;
+  padding: 20px 15px;
   background: #fff;
   border: 1px solid #ccc;
   -webkit-border-radius: 2px;
@@ -337,10 +341,28 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       margin-top: 5px;
       margin-bottom: 2px;
       font-size: 18px; }
+  .form-wrapper .form-wrapper__body .form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0; }
   .form-wrapper.form-wrapper--login .form-wrapper__header:before {
     background-image: url(/Assets/mobile/images/login-header-left.png); }
   .form-wrapper.form-wrapper--register .form-wrapper__header:before {
     background-image: url(/Assets/mobile/images/register-header-left.png); }
+
+.form-group input[type="text"], .form-group input[type="password"], .form-group input[type="number"], .form-group input[type="email"] {
+  height: 40px; }
+
+.form-group button {
+  height: 40px;
+  font-size: 15px; }
+
+.form-group label.control-label {
+  font-size: 13px; }
+
+.form-wrapper.form-wrapper--register, .form-wrapper.form-wrapper--login {
+  font-size: 11px; }
+  .form-wrapper.form-wrapper--register a, .form-wrapper.form-wrapper--login a {
+    text-decoration: underline; }
 
 .site-footer {
   bottom: 0;
@@ -348,8 +370,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background: #efefef;
   color: #000000;
   width: 100%;
-  padding: 15px 0;
-  margin-top: 20px; }
+  padding: 15px 0; }
   .site-footer .site-footer-menu nav {
     padding: 0 12px; }
     .site-footer .site-footer-menu nav ul {
@@ -773,7 +794,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     /*border-bottom: 1px solid #d4d4d4;*/ }
     .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .calendar-container .ui-datepicker {
       max-width: 340px;
-      margin: 25px auto 15px; }
+      margin: 0 auto 15px; }
   .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event {
     max-width: 340px;
     margin: 20px auto;
@@ -928,6 +949,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   position: absolute;
   content: ''; }
 
+.container-page {
+  padding: 0 15px;
+  margin-bottom: 20px; }
+
+.form-divider {
+  border-top: 1px solid #ccc;
+  margin: 15px 0;
+  padding-top: 15px; }
+
 /*--------------------*/
 .page.page-home {
   height: 100%;
@@ -942,7 +972,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-home .form-container .form-wrapper {
       padding: 0;
       min-height: 100%;
-      margin: 20px 15px 0;
       background: none;
       border: 0; }
       .page.page-home .form-container .form-wrapper h1 {
@@ -954,7 +983,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .page.page-home .form-container .form-wrapper form .form-group p.form-control {
           height: auto; }
       .page.page-home .form-container .form-wrapper form .form__destination .title-destination, .page.page-home .form-container .form-wrapper form .form__origin .title-destination {
-        font-size: 13.5px;
+        font-size: 13px;
         text-align: center;
         margin-bottom: 10px;
         color: #000000; }
@@ -1027,7 +1056,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         margin: 0px auto; }
       .page.page-home .form-container .form-wrapper form .form__departure p, .page.page-home .form-container .form-wrapper form .form__departure p.form-control, .page.page-home .form-container .form-wrapper form .form__departure select.form-control, .page.page-home .form-container .form-wrapper form .form__return p, .page.page-home .form-container .form-wrapper form .form__return p.form-control, .page.page-home .form-container .form-wrapper form .form__return select.form-control, .page.page-home .form-container .form-wrapper form .form__roundtrip p, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control, .page.page-home .form-container .form-wrapper form .form__passenger p, .page.page-home .form-container .form-wrapper form .form__passenger p.form-control, .page.page-home .form-container .form-wrapper form .form__passenger select.form-control, .page.page-home .form-container .form-wrapper form .form__flightclass p, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control {
         -webkit-appearance: none;
-        font-size: 13.5px;
+        font-size: 13px;
         color: #000000;
         padding: 0;
         height: auto;
@@ -1042,7 +1071,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .page.page-home .form-container .form-wrapper form .form__departure p span, .page.page-home .form-container .form-wrapper form .form__departure p.form-control span, .page.page-home .form-container .form-wrapper form .form__departure select.form-control span, .page.page-home .form-container .form-wrapper form .form__return p span, .page.page-home .form-container .form-wrapper form .form__return p.form-control span, .page.page-home .form-container .form-wrapper form .form__return select.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip p span, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger p span, .page.page-home .form-container .form-wrapper form .form__passenger p.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger select.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass p span, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control span {
           float: right; }
       .page.page-home .form-container .form-wrapper form .field-container {
-        margin-left: 42px;
+        margin-left: 37px;
         border-bottom: 1px solid #dddddd;
         padding: 21px 0; }
       .page.page-home .form-container .form-wrapper form .flip-container {
@@ -1116,20 +1145,26 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           -moz-border-radius: 50%;
           -ms-border-radius: 50%;
           border-radius: 50%; }
-      .page.page-home .form-container .form-wrapper form .btn.btn-yellow {
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        -ms-border-radius: 5px;
-        border-radius: 5px;
-        font-size: 15px; }
 
-@media handheld, only screen and (max-width: 420px) {
+@media only screen and (min-width: 375px) and (max-height: 667px) {
   .page.page-home .form-container {
-    min-height: 570px; } }
+    min-height: 482px; } }
 
-@media handheld, only screen and (max-width: 360px) {
+@media only screen and (min-width: 414px) and (max-height: 736px) {
   .page.page-home .form-container {
-    min-height: 480px; } }
+    min-height: 550px; } }
+
+@media only screen and (min-width: 320px) and (max-height: 640px) {
+  .page.page-home .form-container {
+    min-height: 450px; } }
+
+@media only screen and (max-width: 320px) and (height: 568px) {
+  .page.page-home .form-container {
+    min-height: auto; } }
+
+@media only screen and (max-width: 320px) and (height: 480px) {
+  .page.page-home .form-container {
+    min-height: auto; } }
 
 .page.page-flight .flight-loading {
   background: #ffae93;
@@ -1409,6 +1444,21 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 33.3334%; }
   .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label {
     width: 100%; }
+
+.overlay--flight-filter .overlay__content .reset {
+  text-align: center;
+  margin: 20px 0; }
+  .overlay--flight-filter .overlay__content .reset .btn-reset {
+    width: 104px;
+    height: 42px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    border-radius: 0;
+    background: #696969;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px; }
 
 .overlay--flight-sort .overlay__content {
   padding: 0; }
@@ -2081,15 +2131,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-orderdetail .info-flight .flight.return:before {
     background-position: -16px; }
 
-.page.page-forgotpassword form {
-  border-top: 1px solid #ccc;
-  margin-top: 15px;
-  padding-top: 15px; }
-
-.page.page-checkorder form {
-  border-top: 1px solid #ccc;
-  margin-top: 15px;
-  padding-top: 15px; }
+.page.page-forgotpassword .desc {
+  margin-bottom: 25px; }
 
 .page.page-contact .contact-map {
   background: url(/Assets/mobile/images/contact-map.jpg) center center;
@@ -2353,21 +2396,23 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       padding-right: 10px;
       width: 50%; }
 
-.forgotpasswordform {
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px; }
-
 .forgotpasswordtext p {
   text-align: justify; }
+
+.page-cekpesanan .cek-pesan-list {
+  padding: 10px 15px 0; }
+  .page-cekpesanan .cek-pesan-list li {
+    padding: 10px 0; }
 
 .page.page-faqs .question-wrapper > ol {
   padding-left: 25px;
   list-style: none;
   counter-reset: main-number; }
   .page.page-faqs .question-wrapper > ol > li {
-    position: relative; }
+    position: relative;
+    /*&>header {color:#1daee4;
+                    h2 {font-size:16px; font-weight:bold;}
+                }*/ }
     .page.page-faqs .question-wrapper > ol > li:before {
       content: counter(main-number);
       counter-increment: main-number;
@@ -2382,15 +2427,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       -ms-border-radius: 50px;
       border-radius: 50px;
       font-size: 14px;
-      font-weight: 600;
-      padding-top: 0;
+      font-weight: 700;
       margin-left: -25px;
-      margin-top: -2px; }
-    .page.page-faqs .question-wrapper > ol > li > header {
-      color: #1daee4; }
-      .page.page-faqs .question-wrapper > ol > li > header h2 {
-        font-size: 16px;
-        font-weight: bold; }
+      margin-top: 12px; }
+    .page.page-faqs .question-wrapper > ol > li .faq-title {
+      padding: 12px 0;
+      font-size: 16px;
+      font-weight: bold;
+      color: #2eb4e7;
+      margin-left: 5px; }
     .page.page-faqs .question-wrapper > ol > li > ol {
       padding-left: 0;
       list-style: none;
@@ -2401,7 +2446,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         padding: 10px;
         border: 1px solid #ccc;
         position: relative;
-        padding-left: 30px; }
+        padding-left: 30px;
+        margin-bottom: 5px; }
         .page.page-faqs .question-wrapper > ol > li > ol > li:before {
           content: counter(main-number) "." counter(sub-number);
           counter-increment: sub-number;
@@ -2499,42 +2545,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-howtoorder .howto-content .howto-note p span {
       color: #2fb4e6; }
 
-.page.page-newsletter .container p {
+.page.page-newsletter .container-page p {
   color: #3fabe3;
   font-size: 16px;
-  text-align: center;
-  margin-left: 10px;
-  margin-right: 10px;
-  padding-bottom: 10px; }
-
-.page.page-newsletter .container form {
-  border-top: 1px solid #ccc;
-  padding-top: 20px; }
-
-.page.page-newsletter h1 {
-  text-align: center;
-  margin-left: 10px;
-  margin-right: 10px; }
+  text-align: center; }
 
 .page.page-newsletter .overlay-content p {
-  color: black;
+  color: #000000;
   font-size: 12px; }
-
-.newsletterform {
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px; }
-  .newsletterform p {
-    color: #3fabe3;
-    font-size: 16px;
-    text-align: center;
-    width: 90%;
-    margin-left: 20px;
-    margin-right: 20px;
-    padding-bottom: 10px; }
-
-.page_header h1 {
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 10px; }

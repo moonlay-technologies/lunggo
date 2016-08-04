@@ -154,6 +154,19 @@
                 }
             }
         }
+        .reset {
+            text-align: center;
+            margin: 20px 0;
+            .btn-reset {
+                @include size(104px, 42px);
+                @include border-radius(0);
+                background: #696969;
+                font-size: 15px;
+                text-transform: uppercase;
+                @extend .os-semibold;
+                letter-spacing: 1px;
+            }
+        }
     }
 }
 
