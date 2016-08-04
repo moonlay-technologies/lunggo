@@ -39,10 +39,5 @@ namespace Lunggo.ApCommon.Flight.Model
         }
 
         public List<FlightItinerary> Itineraries { get; set; }
-
-        public FlightReservation()
-        {
-            State = new ReservationState();
-        }
     }
 }
