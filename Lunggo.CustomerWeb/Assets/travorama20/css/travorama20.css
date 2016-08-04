@@ -322,9 +322,9 @@ input[type=number]::-webkit-outer-spin-button {
               display: table-cell;
               vertical-align: middle;
               line-height: 120%; }
-            .search-location .location-body .location-recommend .tab-header nav ul li.active, .search-location .location-body .location-recommend .tab-header nav .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item:hover, .page-flight .search-result-filter .price-calendar .carousel-inner .search-location .location-body .location-recommend .tab-header nav ul.item li.calendar-item:hover {
+            .search-location .location-body .location-recommend .tab-header nav ul li.active {
               border-right-color: #fff; }
-              .search-location .location-body .location-recommend .tab-header nav ul li.active span, .search-location .location-body .location-recommend .tab-header nav .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item:hover span, .page-flight .search-result-filter .price-calendar .carousel-inner .search-location .location-body .location-recommend .tab-header nav ul.item li.calendar-item:hover span {
+              .search-location .location-body .location-recommend .tab-header nav ul li.active span {
                 color: #21afe5;
                 background: #fff; }
             .search-location .location-body .location-recommend .tab-header nav ul li:last-child {
@@ -808,7 +808,7 @@ file : /Assets/travorama20/css/_header.scss
             display: inline-block; }
         .site-header .menu-bottom .menu-main nav ul li + li a {
           border-left: 1px solid #ddd; }
-        .site-header .menu-bottom .menu-main nav ul li.active, .site-header .menu-bottom .menu-main nav .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item:hover, .page-flight .search-result-filter .price-calendar .carousel-inner .site-header .menu-bottom .menu-main nav ul.item li.calendar-item:hover {
+        .site-header .menu-bottom .menu-main nav ul li.active {
           background: url(/Assets/images/main-menu-arrow.png) bottom center no-repeat; }
   .site-header .menu-bottom .menu-side {
     float: right;
@@ -1030,22 +1030,22 @@ file : /Assets/travorama20/css/_page_index.scss
               background-image: url(/Assets/images/search-tab-sprite.png);
               margin-bottom: -5px;
               margin-right: 5px; }
-          .page-index .section-search .search-form .tab-header nav ul li.active, .page-index .section-search .search-form .tab-header nav .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item:hover, .page-flight .search-result-filter .price-calendar .carousel-inner .page-index .section-search .search-form .tab-header nav ul.item li.calendar-item:hover {
+          .page-index .section-search .search-form .tab-header nav ul li.active {
             border-right: 0; }
-            .page-index .section-search .search-form .tab-header nav ul li.active a, .page-index .section-search .search-form .tab-header nav .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item:hover a, .page-flight .search-result-filter .price-calendar .carousel-inner .page-index .section-search .search-form .tab-header nav ul.item li.calendar-item:hover a {
+            .page-index .section-search .search-form .tab-header nav ul li.active a {
               color: #ffe932;
               background: #4e4e4e; }
           .page-index .section-search .search-form .tab-header nav ul li.flight a:before, .page-index .section-search .search-form .tab-header nav ul li.flight a.section-reason:after {
             background-position: 0 0; }
-          .page-index .section-search .search-form .tab-header nav ul li.flight.active a:before, .page-index .section-search .search-form .tab-header nav .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.flight.calendar-item:hover a:before, .page-flight .search-result-filter .price-calendar .carousel-inner .page-index .section-search .search-form .tab-header nav ul.item li.flight.calendar-item:hover a:before, .page-index .section-search .search-form .tab-header nav ul li.flight.active a.section-reason:after, .page-index .section-search .search-form .tab-header nav .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.flight.calendar-item:hover a.section-reason:after, .page-flight .search-result-filter .price-calendar .carousel-inner .page-index .section-search .search-form .tab-header nav ul.item li.flight.calendar-item:hover a.section-reason:after {
+          .page-index .section-search .search-form .tab-header nav ul li.flight.active a:before, .page-index .section-search .search-form .tab-header nav ul li.flight.active a.section-reason:after {
             background-position: 0px 20px; }
           .page-index .section-search .search-form .tab-header nav ul li.hotel a:before, .page-index .section-search .search-form .tab-header nav ul li.hotel a.section-reason:after {
             background-position: 40px 0; }
-          .page-index .section-search .search-form .tab-header nav ul li.hotel.active a:before, .page-index .section-search .search-form .tab-header nav .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.hotel.calendar-item:hover a:before, .page-flight .search-result-filter .price-calendar .carousel-inner .page-index .section-search .search-form .tab-header nav ul.item li.hotel.calendar-item:hover a:before, .page-index .section-search .search-form .tab-header nav ul li.hotel.active a.section-reason:after, .page-index .section-search .search-form .tab-header nav .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.hotel.calendar-item:hover a.section-reason:after, .page-flight .search-result-filter .price-calendar .carousel-inner .page-index .section-search .search-form .tab-header nav ul.item li.hotel.calendar-item:hover a.section-reason:after {
+          .page-index .section-search .search-form .tab-header nav ul li.hotel.active a:before, .page-index .section-search .search-form .tab-header nav ul li.hotel.active a.section-reason:after {
             background-position: 30px 20px; }
           .page-index .section-search .search-form .tab-header nav ul li.activity a:before, .page-index .section-search .search-form .tab-header nav ul li.activity a.section-reason:after {
             background-position: 20px 0; }
-          .page-index .section-search .search-form .tab-header nav ul li.activity.active a:before, .page-index .section-search .search-form .tab-header nav .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.activity.calendar-item:hover a:before, .page-flight .search-result-filter .price-calendar .carousel-inner .page-index .section-search .search-form .tab-header nav ul.item li.activity.calendar-item:hover a:before, .page-index .section-search .search-form .tab-header nav ul li.activity.active a.section-reason:after, .page-index .section-search .search-form .tab-header nav .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.activity.calendar-item:hover a.section-reason:after, .page-flight .search-result-filter .price-calendar .carousel-inner .page-index .section-search .search-form .tab-header nav ul.item li.activity.calendar-item:hover a.section-reason:after {
+          .page-index .section-search .search-form .tab-header nav ul li.activity.active a:before, .page-index .section-search .search-form .tab-header nav ul li.activity.active a.section-reason:after {
             background-position: 20px 20px; }
           .page-index .section-search .search-form .tab-header nav ul li:last-child {
             border-right: 0; }
@@ -1981,7 +1981,81 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 .page-flight .search-result-filter {
   margin-bottom: 15px;
-  letter-spacing: 0; }
+  letter-spacing: 0;
+  /*.price-calendar { 
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+            margin: 20px 0;
+            .carousel {margin: 15px 0;}
+            .carousel-inner {
+                max-width: 780px; 
+                margin: 0 auto;
+                ul.item {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    li.calendar-item {
+                        display: inline-block;
+                        background: #ddd;
+                        color: #666;
+                        padding: 10px;
+                        margin: 5px;
+                        text-align: center;
+                        font-size: 12px;
+                        cursor: pointer;
+                        &.active {
+                            background: #37bcf2;
+                            color: #fff;
+                            span.date, span.price, span.day {
+                                color: #fff;
+                            }
+                        } &:hover {
+                            @extend .active;
+                        }
+                        span {
+                            &.date {
+                                font-weight: 600;
+                                text-transform: uppercase;
+                                letter-spacing: 3px;
+                                font-size: 12px;
+                                line-height: 40px;
+                            } &.price {
+                                font-size: 24px;
+                                font-weight: 600;
+                                line-height: 24px;
+                            } &.day {
+                                line-height: 40px;
+                                letter-spacing: 3px;
+                                font-size: 11px;
+                                text-transform: uppercase;
+                                margin: 0 auto;
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+            }
+            .carousel-control {
+                width: auto; 
+                opacity: 1;
+                color: #000;
+                &.left {
+                    background-image: none;
+                }
+                &.right {
+                    background-image: none;
+                }
+            }
+            span.title {
+                font-size: 13px;
+                font-weight: 700;
+            }
+            a.back-to-search {
+                float: right;
+                text-decoration: underline;
+                color: #525252;
+            }
+        }*/ }
   .page-flight .search-result-filter .filter-left {
     float: left;
     width: 7%;
@@ -2138,65 +2212,6 @@ file: /Assets/travorama20/css/_page_flight.scss
         padding-left: 15px; }
       .page-flight .search-result-filter .filter-right .filter-content > div .slider-minmax {
         color: #fed446; }
-  .page-flight .search-result-filter .price-calendar {
-    border-top: 1px solid #ccc;
-    padding-top: 20px;
-    margin: 20px 0; }
-    .page-flight .search-result-filter .price-calendar .carousel {
-      margin: 15px 0; }
-    .page-flight .search-result-filter .price-calendar .carousel-inner {
-      max-width: 780px;
-      margin: 0 auto; }
-      .page-flight .search-result-filter .price-calendar .carousel-inner ul.item {
-        list-style: none;
-        padding: 0;
-        margin: 0; }
-        .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item {
-          display: inline-block;
-          background: #ddd;
-          color: #666;
-          padding: 10px;
-          margin: 5px;
-          text-align: center;
-          font-size: 12px;
-          cursor: pointer; }
-          .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item.active, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item:hover {
-            background: #37bcf2;
-            color: #fff; }
-            .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item.active span.date, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item:hover span.date, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item.active span.price, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item:hover span.price, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item.active span.day, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item:hover span.day {
-              color: #fff; }
-          .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item span.date {
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 12px;
-            line-height: 40px; }
-          .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item span.price {
-            font-size: 24px;
-            font-weight: 600;
-            line-height: 24px; }
-          .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.calendar-item span.day {
-            line-height: 40px;
-            letter-spacing: 3px;
-            font-size: 11px;
-            text-transform: uppercase;
-            margin: 0 auto;
-            font-weight: 600; }
-    .page-flight .search-result-filter .price-calendar .carousel-control {
-      width: auto;
-      opacity: 1;
-      color: #000; }
-      .page-flight .search-result-filter .price-calendar .carousel-control.left {
-        background-image: none; }
-      .page-flight .search-result-filter .price-calendar .carousel-control.right {
-        background-image: none; }
-    .page-flight .search-result-filter .price-calendar span.title {
-      font-size: 13px;
-      font-weight: 700; }
-    .page-flight .search-result-filter .price-calendar a.back-to-search {
-      float: right;
-      text-decoration: underline;
-      color: #525252; }
 
 .page-flight .search-result-warning {
   margin-bottom: 10px; }
@@ -2275,16 +2290,16 @@ file: /Assets/travorama20/css/_page_flight.scss
   position: relative; }
   .page-flight .flight:last-child {
     margin-bottom: 50px; }
-  .page-flight .flight.active, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.flight.calendar-item:hover {
+  .page-flight .flight.active {
     border: 5px solid #1daee4;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px; }
-    .page-flight .flight.active .flight-detail, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.flight.calendar-item:hover .flight-detail {
+    .page-flight .flight.active .flight-detail {
       border-top: 3px solid #1daee4;
       max-height: 1000px;
       display: block; }
-    .page-flight .flight.active:after, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.flight.calendar-item:hover:after {
+    .page-flight .flight.active:after {
       background-image: url(/Assets/images/flight-detail-active.png);
       background-size: contain;
       position: absolute;
@@ -2702,10 +2717,10 @@ file: /Assets/travorama20/css/_page_flight.scss
 .page-flight.page-flight-oneway .flight .flight-rules-trigger:before, .page-flight.page-flight-oneway .flight .page-index .flight-rules-trigger.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-rules-trigger.section-reason:after {
   background-position: -20px; }
 
-.page-flight.page-flight-oneway .flight-review-wrapper.active .flight-review, .page-flight.page-flight-oneway .search-result-filter .price-calendar .carousel-inner ul.item li.flight-review-wrapper.calendar-item:hover .flight-review {
+.page-flight.page-flight-oneway .flight-review-wrapper.active .flight-review {
   height: auto; }
 
-.page-flight.page-flight-oneway .flight-review-wrapper.active .flight-review-detail, .page-flight.page-flight-oneway .search-result-filter .price-calendar .carousel-inner ul.item li.flight-review-wrapper.calendar-item:hover .flight-review-detail {
+.page-flight.page-flight-oneway .flight-review-wrapper.active .flight-review-detail {
   display: block !important; }
 
 .page-flight.page-flight-oneway .flight-review-wrapper .flight-review {
@@ -2905,9 +2920,9 @@ file: /Assets/travorama20/css/_page_flight.scss
 .page-flight.page-flight-return .search-result-container .search-result-selected {
   display: none; }
 
-.page-flight.page-flight-return .search-result-container > .active, .page-flight.page-flight-return .search-result-filter .price-calendar .carousel-inner ul.item .search-result-container > li.calendar-item:hover {
+.page-flight.page-flight-return .search-result-container > .active {
   width: 530px; }
-  .page-flight.page-flight-return .search-result-container > .active .search-result-title p span.route-date, .page-flight.page-flight-return .search-result-filter .price-calendar .carousel-inner ul.item .search-result-container > li.calendar-item:hover .search-result-title p span.route-date {
+  .page-flight.page-flight-return .search-result-container > .active .search-result-title p span.route-date {
     display: inline; }
 
 .page-flight.page-flight-return .search-result-container > .inactive {
@@ -3514,12 +3529,12 @@ file: /Assets/travorama20/css/_page_flight.scss
   z-index: 100; }
   .flight-review-wrapper .close-review {
     cursor: pointer; }
-  .flight-review-wrapper.active, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.flight-review-wrapper.calendar-item:hover {
+  .flight-review-wrapper.active {
     overflow: auto; }
-    .flight-review-wrapper.active .flight-review, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.flight-review-wrapper.calendar-item:hover .flight-review {
+    .flight-review-wrapper.active .flight-review {
       height: auto;
       position: relative; }
-      .flight-review-wrapper.active .flight-review .flight-review-detail, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.flight-review-wrapper.calendar-item:hover .flight-review .flight-review-detail {
+      .flight-review-wrapper.active .flight-review .flight-review-detail {
         display: block; }
   .flight-review-wrapper .flight-review {
     -webkit-border-radius: 2px;
@@ -3928,7 +3943,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
     /* Standard syntax */ }
     .checkout-step .step + .step {
       border-left: 2px solid #1f99c7; }
-    .checkout-step .step.active, .checkout-step .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.step.calendar-item:hover, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item .checkout-step li.step.calendar-item:hover {
+    .checkout-step .step.active {
       background: #032e55; }
     .checkout-step .step.inactive {
       background: #a6a6a6; }
@@ -4450,7 +4465,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
       margin-bottom: 0; }
     .travorama-login .login-content a {
       color: #fff; }
-  .travorama-login.active .login-content, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.travorama-login.calendar-item:hover .login-content {
+  .travorama-login.active .login-content {
     display: block; }
 
 /*.hasDatepicker {position:relative;}*/
@@ -5239,11 +5254,11 @@ file : /Assets/travorama20/css/_page_password.scss
         .page-faq .question-wrapper > ol > li > ol > li > section {
           height: 0;
           overflow: hidden; }
-        .page-faq .question-wrapper > ol > li > ol > li.active > header, .page-faq .page-flight .search-result-filter .price-calendar .carousel-inner ul.item .question-wrapper > ol > li > ol > li.calendar-item:hover > header, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item .page-faq .question-wrapper > ol > li > ol > li.calendar-item:hover > header {
+        .page-faq .question-wrapper > ol > li > ol > li.active > header {
           margin-bottom: 12px; }
-          .page-faq .question-wrapper > ol > li > ol > li.active > header > h3 span, .page-faq .page-flight .search-result-filter .price-calendar .carousel-inner ul.item .question-wrapper > ol > li > ol > li.calendar-item:hover > header > h3 span, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item .page-faq .question-wrapper > ol > li > ol > li.calendar-item:hover > header > h3 span {
+          .page-faq .question-wrapper > ol > li > ol > li.active > header > h3 span {
             background-position: 1px 0; }
-        .page-faq .question-wrapper > ol > li > ol > li.active > section, .page-faq .page-flight .search-result-filter .price-calendar .carousel-inner ul.item .question-wrapper > ol > li > ol > li.calendar-item:hover > section, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item .page-faq .question-wrapper > ol > li > ol > li.calendar-item:hover > section {
+        .page-faq .question-wrapper > ol > li > ol > li.active > section {
           display: block;
           height: auto; }
 
@@ -5379,7 +5394,7 @@ file : /Assets/travorama20/css/_page_password.scss
         position: absolute;
         right: 0;
         top: -2px; }
-    .page-howtopay .list-wrapper .list.active .list-detail, .page-howtopay .list-wrapper .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.list.calendar-item:hover .list-detail, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item .page-howtopay .list-wrapper li.list.calendar-item:hover .list-detail, .page-howtoorder .list-wrapper .list.active .list-detail, .page-howtoorder .list-wrapper .page-flight .search-result-filter .price-calendar .carousel-inner ul.item li.list.calendar-item:hover .list-detail, .page-flight .search-result-filter .price-calendar .carousel-inner ul.item .page-howtoorder .list-wrapper li.list.calendar-item:hover .list-detail {
+    .page-howtopay .list-wrapper .list.active .list-detail, .page-howtoorder .list-wrapper .list.active .list-detail {
       display: block; }
 
 .page-howtopay .howto-header, .page-howtoorder .howto-header {
