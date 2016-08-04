@@ -149,7 +149,7 @@ var GetReservationConfig = {
 };
 
 var ResendConfirmationEmailConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/account/resendconfirmationemail'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/resendconfirmationemail'
 };
 
 var VeritransTokenConfig = {
@@ -186,7 +186,7 @@ var ChangeProfileMobileConfig = {
 };
 
 var ResendConfirmationEmailMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/v1/account/resendconfirmationemail'
+    Url: 'http://m.dv2.travorama.com/v1/resendconfirmationemail'
 };
 
 function setCookie(cname, cvalue, expTime) {
