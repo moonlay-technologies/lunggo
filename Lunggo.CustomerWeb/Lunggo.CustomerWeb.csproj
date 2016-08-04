@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <NuGetPackageImportStamp>644122b3</NuGetPackageImportStamp>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -252,6 +253,7 @@
     <Compile Include="Areas\UW400\UW400AreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
+    <Compile Include="Controllers\HelpSectionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobileTemplateController.cs" />
@@ -2681,6 +2683,9 @@
     <Content Include="Views\Template\ConfirmationRaw.cshtml" />
     <Content Include="Views\Template\EmailSubscribeVoucher.cshtml" />
     <Content Include="Views\Template\EmailSubscribe.cshtml" />
+    <Content Include="Views\HelpSection\FAQs.cshtml" />
+    <Content Include="Views\HelpSection\How-To.cshtml" />
+    <Content Include="Views\HelpSection\Contact-Us.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
