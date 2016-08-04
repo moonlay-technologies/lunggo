@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -11,12 +12,13 @@ using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
-
+using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
 using System.Diagnostics;
@@ -51,7 +53,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 InsertReservationToDb(reservation);
                 output.RsvNo = reservation.RsvNo;
                 output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
-                
+
                 DeleteItinerariesFromCache(input.Token);
             }
             else
@@ -64,7 +66,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.DistinguishErrors();
             }
 
-            
+
             return output;
         }
 
@@ -106,6 +108,17 @@ namespace Lunggo.ApCommon.Flight.Service
                 OriginalPriceIdr = reservation.Itineraries.Sum(order => order.Price.FinalIdr),
                 TimeLimit = reservation.Itineraries.Min(order => order.TimeLimit.GetValueOrDefault()).AddMinutes(-30),
             };
+            var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+            var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+            var platform = Client.GetPlatformType(clientId);
+            var deviceId = identity.Claims.Single(claim => claim.Type == "Device ID").Value;
+            reservation.State = new ReservationState
+            {
+                Platform = platform,
+                DeviceId = deviceId,
+                Language = "id", //OnlineContext.GetActiveLanguageCode();
+                Currency = new Currency("IDR"), //OnlineContext.GetActiveCurrencyCode());
+            };
             return reservation;
         }
 
@@ -113,11 +126,11 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var bookResults = new List<BookResult>();
             if (itins != null)
-            Parallel.ForEach(itins, itin =>
-            {
-                var bookResult = BookItinerary(itin, input, output);
-                bookResults.Add(bookResult);
-            });
+                Parallel.ForEach(itins, itin =>
+                {
+                    var bookResult = BookItinerary(itin, input, output);
+                    bookResults.Add(bookResult);
+                });
             return bookResults;
         }
 
@@ -174,7 +187,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var supplierName = bookInfo.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
             var result = supplier.BookFlight(bookInfo);
-                
+
             var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
             if (result.Status != null)
                 result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit

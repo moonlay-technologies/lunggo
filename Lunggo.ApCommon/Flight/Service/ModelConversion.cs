@@ -67,7 +67,7 @@ namespace Lunggo.ApCommon.Flight.Service
             if (itins == null || itins.Count == 0)
                 return null;
 
-            decimal tOri, aOri, cOri, iOri, tNet, aNet, cNet, iNet;
+            decimal? tOri, aOri, cOri, iOri, tNet, aNet, cNet, iNet;
             var itinerary = itins[0];
             itinerary.Price.OriginalIdr = itins.Sum(i => i.Price.OriginalIdr);
             CalculateFare(itinerary.Price,
@@ -106,7 +106,7 @@ namespace Lunggo.ApCommon.Flight.Service
             if (itinerary == null)
                 return null;
 
-            decimal tOri, aOri, cOri, iOri, tNet, aNet, cNet, iNet;
+            decimal? tOri, aOri, cOri, iOri, tNet, aNet, cNet, iNet;
             CalculateFare(itinerary.Price,
                 itinerary.AdultCount, itinerary.ChildCount, itinerary.InfantCount,
                 itinerary.AdultPricePortion, itinerary.ChildPricePortion, itinerary.InfantPricePortion,
@@ -186,7 +186,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     var rounded = unrounded - unrounded % itin.Price.LocalCurrency.RoundingOrder;
                     price.Local = rounded;
                     cumulativeLocal += price.Local;
-                    decimal tOri, aOri, cOri, iOri, tNet, aNet, cNet, iNet;
+                    decimal? tOri, aOri, cOri, iOri, tNet, aNet, cNet, iNet;
                     CalculateFare(price,
                         itin.AdultCount, itin.ChildCount, itin.InfantCount,
                         itin.AdultPricePortion, itin.ChildPricePortion, itin.InfantPricePortion,
@@ -309,11 +309,15 @@ namespace Lunggo.ApCommon.Flight.Service
             return transit;
         }
 
-        private void CalculateFare(Price price, int adultCount, int childCount, int infantCount, decimal adultPricePortion, decimal childPricePortion, decimal infantPricePortion, out decimal tOri, out decimal aOri, out decimal cOri, out decimal iOri, out decimal tNet, out decimal aNet, out decimal cNet, out decimal iNet)
+        private void CalculateFare(Price price, int adultCount, int childCount, int infantCount, decimal adultPricePortion, decimal childPricePortion, decimal infantPricePortion, out decimal? tOri, out decimal? aOri, out decimal? cOri, out decimal? iOri, out decimal? tNet, out decimal? aNet, out decimal? cNet, out decimal? iNet)
         {
-            cOri = iOri = cNet = iNet = 0;
-            tOri = price.OriginalIdr / price.LocalCurrency.Rate;
+            aOri = cOri = iOri = aNet = cNet = iNet = null;
+            tOri = price.OriginalIdr/price.LocalCurrency.Rate;
             tNet = price.Local;
+            if (adultPricePortion == 0M)
+                return;
+
+            cOri = iOri = cNet = iNet = 0;
             var aSinglePortion = adultPricePortion / adultCount;
             aOri = aSinglePortion * tOri;
             aNet = aSinglePortion * tNet;
