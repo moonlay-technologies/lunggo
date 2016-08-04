@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Identity.Users
 
         public static string GetFirstName(this IIdentity identity)
         {
-            if (identity.IsAuthenticated)
+            if (identity.IsUserAuthorized())
             {
                 var customUser = GetUser(identity);
                 return customUser.FirstName;
@@ -41,7 +41,7 @@ namespace Lunggo.ApCommon.Identity.Users
 
         public static string GetLastName(this IIdentity identity)
         {
-            if (identity.IsAuthenticated)
+            if (identity.IsUserAuthorized())
             {
                 var customUser = GetUser(identity);
                 return customUser.LastName;
@@ -54,7 +54,7 @@ namespace Lunggo.ApCommon.Identity.Users
 
         public static string GetEmail(this IIdentity identity)
         {
-            if (identity.IsAuthenticated)
+            if (identity.IsUserAuthorized())
             {
                 var customUser = GetUser(identity);
                 return customUser.Email;
@@ -67,7 +67,7 @@ namespace Lunggo.ApCommon.Identity.Users
 
         public static string GetCountryCd(this IIdentity identity)
         {
-            if (identity.IsAuthenticated)
+            if (identity.IsUserAuthorized())
             {
                 var customUser = GetUser(identity);
                 return customUser.CountryCd;
@@ -80,7 +80,7 @@ namespace Lunggo.ApCommon.Identity.Users
 
         public static string GetPhoneNumber(this IIdentity identity)
         {
-            if (identity.IsAuthenticated)
+            if (identity.IsUserAuthorized())
             {
                 var customUser = GetUser(identity);
                 return customUser.PhoneNumber;
@@ -93,7 +93,7 @@ namespace Lunggo.ApCommon.Identity.Users
 
         public static string GetAddress(this IIdentity identity)
         {
-            if (identity.IsAuthenticated)
+            if (identity.IsUserAuthorized())
             {
                 var customUser = GetUser(identity);
                 return customUser.Address;

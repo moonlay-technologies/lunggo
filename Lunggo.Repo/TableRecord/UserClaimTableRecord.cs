@@ -78,7 +78,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "UserClaims";
+            _tableName = "UserClaim";
         }
 
         private static void InitRecordMetadata()

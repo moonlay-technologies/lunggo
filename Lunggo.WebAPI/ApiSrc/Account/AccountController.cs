@@ -81,6 +81,24 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [HttpPost]
         [LunggoCorsPolicy]
         [Authorize]
+        [Route("v1/resendconfirmationemail")]
+        public ApiResponseBase ResendConfirmationEmail()
+        {
+            try
+            {
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ResendConfirmationEmailApiRequest>();
+                var apiResponse = AccountLogic.ResendConfirmationEmail(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Authorize]
         [Route("v1/forgot")]
         public ApiResponseBase ForgotPassword()
         {
@@ -149,9 +167,28 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             }
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [LunggoCorsPolicy]
+        [Route("v1/confirmemail")]
+        public ApiResponseBase ConfirmEmail()
+        {
+            try
+            {
+                var a = Request.Content.ReadAsStringAsync().Result;
+                var request = a.Deserialize<ConfirmEmailApiRequest>();
+                var apiResponse = AccountLogic.ConfirmEmail(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
         [HttpGet]
         [LunggoCorsPolicy]
-        [UserAuthorize]
+        [Authorize]
         [Route("v1/trxhistory")]
         public ApiResponseBase GetTransactionHistory(string filter = null)
         {
@@ -168,7 +205,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [UserAuthorize]
+        [Authorize]
         [Route("v1/rsv/{rsvNo}")]
         public ApiResponseBase GetOrderDetail(string rsvNo)
         {

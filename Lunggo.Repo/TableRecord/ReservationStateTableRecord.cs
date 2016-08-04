@@ -29,13 +29,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("PlatformCd");
 		    }
 		}
-		public String DeviceCd
+		public String DeviceId
 		{
-		    get { return _DeviceCd; }
+		    get { return _DeviceId; }
 		    set
 		    {
-		        _DeviceCd = value;
-		        IncrementLog("DeviceCd");
+		        _DeviceId = value;
+		        IncrementLog("DeviceId");
 		    }
 		}
 		public String LanguageCd
@@ -114,7 +114,7 @@ namespace Lunggo.Repository.TableRecord
 		
 		private String _RsvNo;
 		private String _PlatformCd;
-		private String _DeviceCd;
+		private String _DeviceId;
 		private String _LanguageCd;
 		private String _CurrencyCd;
 		private String _InsertBy;
@@ -156,7 +156,7 @@ namespace Lunggo.Repository.TableRecord
             {
 				new ColumnMetadata("RsvNo", true),
 				new ColumnMetadata("PlatformCd", false),
-				new ColumnMetadata("DeviceCd", false),
+				new ColumnMetadata("DeviceId", false),
 				new ColumnMetadata("LanguageCd", false),
 				new ColumnMetadata("CurrencyCd", false),
 				new ColumnMetadata("InsertBy", false),

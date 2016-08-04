@@ -65,13 +65,13 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [HttpPost]
         [LunggoCorsPolicy]
         [Authorize]
-        [Route("v1/payment/transferfee")]
-        public ApiResponseBase GetTransferIdentifier()
+        [Route("v1/payment/uniquecode")]
+        public ApiResponseBase GetUniqueCode()
         {
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<TransferFeeApiRequest>();
-                var apiResponse = PaymentLogic.GetTransferFee(request);
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<UniqueCodeApiRequest>();
+                var apiResponse = PaymentLogic.GetUniqueCode(request);
                 return apiResponse;
             }
             catch (Exception e)

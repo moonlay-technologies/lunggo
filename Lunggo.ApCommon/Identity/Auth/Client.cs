@@ -14,22 +14,29 @@ namespace Lunggo.ApCommon.Identity.Auth
 
         public static PlatformType GetPlatformType(string clientId)
         {
-            var decodedClientId = clientId.Base64Decode().Base64Decode().Base64Decode();
-            var platformCode = decodedClientId.Split(':')[0];
-            switch (platformCode)
+            try
             {
-                case "mpns" :
-                    return PlatformType.WindowsPhoneApp;
-                case "gcm" :
-                    return PlatformType.AndroidApp;
-                case "apns" :
-                    return PlatformType.IosApp;
-                case "dws" :
-                    return PlatformType.DesktopWebsite;
-                case "mws" :
-                    return PlatformType.MobileWebsite;
-                default :
-                    return PlatformType.Undefined;
+                var decodedClientId = clientId.Base64Decode().Base64Decode().Base64Decode();
+                var platformCode = decodedClientId.Split(':')[0];
+                switch (platformCode)
+                {
+                    case "mpns":
+                        return PlatformType.WindowsPhoneApp;
+                    case "gcm":
+                        return PlatformType.AndroidApp;
+                    case "apns":
+                        return PlatformType.IosApp;
+                    case "dws":
+                        return PlatformType.DesktopWebsite;
+                    case "mws":
+                        return PlatformType.MobileWebsite;
+                    default:
+                        return PlatformType.Undefined;
+                }
+            }
+            catch
+            {
+                return PlatformType.Undefined;
             }
         }
     }

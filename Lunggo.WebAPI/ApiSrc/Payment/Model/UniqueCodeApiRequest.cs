@@ -2,7 +2,7 @@
 
 namespace Lunggo.WebAPI.ApiSrc.Payment.Model
 {
-    public class TransferFeeApiRequest
+    public class UniqueCodeApiRequest
     {
         [JsonProperty("rsvNo")]
         public string RsvNo { get; set; }

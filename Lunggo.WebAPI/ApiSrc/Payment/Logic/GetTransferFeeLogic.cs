@@ -7,32 +7,32 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 {
     public static partial class PaymentLogic
     {
-        public static ApiResponseBase GetTransferFee(TransferFeeApiRequest request)
+        public static ApiResponseBase GetUniqueCode(UniqueCodeApiRequest request)
         {
             if (!IsValid(request))
-                return new TransferFeeApiResponse
+                return new UniqueCodeApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPTRF01"
+                    ErrorCode = "ERPUQC01"
                 };
 
             var transferFee = PaymentService.GetInstance().GetTransferFee(request.RsvNo, request.DiscountCode);
 
             if (transferFee == 404404404.404404404M)
-                return new TransferFeeApiResponse
+                return new UniqueCodeApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPTRF02"
+                    ErrorCode = "ERPUQC02"
                 };
 
-            return new TransferFeeApiResponse
+            return new UniqueCodeApiResponse
             {
                 StatusCode = HttpStatusCode.OK,
-                TransferFee = transferFee
+                UniqueCode = transferFee
             };
         }
 
-        public static bool IsValid(TransferFeeApiRequest request)
+        public static bool IsValid(UniqueCodeApiRequest request)
         {
             return
                 request != null &&

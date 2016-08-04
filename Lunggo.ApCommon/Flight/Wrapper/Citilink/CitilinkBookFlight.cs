@@ -456,7 +456,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     timelimitMonth = "Nov";
 
                 if (timelimitMonth == "Agust")
-                    timelimitMonth = "Agustus";
+                    timelimitMonth = "Agu";
 
                 var timelimit = DateTime.Parse(timelimitDate + "-" + timelimitMonth + "-" + tahun + " " + timelimitTime, CultureInfo.CreateSpecificCulture("id-ID"));
 
