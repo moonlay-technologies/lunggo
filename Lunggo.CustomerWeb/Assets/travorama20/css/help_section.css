@@ -3,6 +3,23 @@ body {
   background: #f9f9f9;
   font-family: 'Open Sans', sans-serif; }
 
+/*FAQ*/
+.faq-header {
+  font-size: 13px;
+  color: #000;
+  padding: 15px; }
+
+.faq-footer {
+  font-size: 13px; }
+  .faq-footer .faq-top, .faq-footer .faq-bottom {
+    padding: 20px 15px; }
+    .faq-footer .faq-top span.phone, .faq-footer .faq-bottom span.phone {
+      font-size: 24px;
+      font-weight: 900; }
+  .faq-footer .faq-bottom {
+    border-top: 1px solid #9d9ea0; }
+
+/*ACCORDION*/
 .accordion-wrapper {
   border-bottom: 1px solid #9d9ea0; }
   .accordion-wrapper .accordion-title {
