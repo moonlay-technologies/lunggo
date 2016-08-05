@@ -55,6 +55,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
                 
                 //DeleteItinerariesFromCache(input.Token);
+
+                // DEVELOPMENT PURPOSE
+                output.NewPrice = bookResults.Sum(result => result.RevalidateSet.NewPrice);
             }
             else
             {

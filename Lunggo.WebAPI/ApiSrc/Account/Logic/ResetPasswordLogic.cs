@@ -22,7 +22,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERARST01"
                 };
 
-            var user = userManager.FindByNameAsync(request.Email).Result;
+            var user = userManager.FindByNameAsync(request.UserName).Result;
             if (user == null)
                 return new ApiResponseBase
                 {
@@ -38,8 +38,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 }
                 : new ApiResponseBase
                 {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERRGEN99"
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERARST03"
                 };
         }
 

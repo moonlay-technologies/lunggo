@@ -61,6 +61,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             switch (method)
             {
                 case PaymentMethod.CreditCard:
+                    payment.Data.CreditCard.Bank = "mandiri";
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
