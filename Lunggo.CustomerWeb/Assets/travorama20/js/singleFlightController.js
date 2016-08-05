@@ -445,16 +445,6 @@ app.controller('singleFlightController', [
             $scope.loading = true;
             $scope.loadingFlight = true;
 
-            //set Authorization header
-            //Check Authorization
-            var authAccess = getAuthAccess();
-            if (authAccess == 1) {
-                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
-            }
-            else {
-                $scope.getFlightHeader = null;
-            }
-
             if ($scope.Progress < 100) {
                 // **********
                 // ajax

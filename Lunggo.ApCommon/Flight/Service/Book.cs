@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -11,12 +12,13 @@ using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
-
+using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
 using System.Diagnostics;
@@ -105,6 +107,17 @@ namespace Lunggo.ApCommon.Flight.Service
                 LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
                 OriginalPriceIdr = reservation.Itineraries.Sum(order => order.Price.FinalIdr),
                 TimeLimit = reservation.Itineraries.Min(order => order.TimeLimit.GetValueOrDefault()).AddMinutes(-30),
+            };
+            var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+            var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+            var platform = Client.GetPlatformType(clientId);
+            var deviceId = identity.Claims.Single(claim => claim.Type == "Device ID").Value;
+            reservation.State = new ReservationState
+            {
+                Platform = platform,
+                DeviceId = deviceId,
+                Language = "id", //OnlineContext.GetActiveLanguageCode();
+                Currency = new Currency("IDR"), //OnlineContext.GetActiveCurrencyCode());
             };
             return reservation;
         }

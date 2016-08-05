@@ -647,7 +647,7 @@ app.controller('returnFlightController', [
                         }, 1000);
 
                         // if error     
-                    }).then(function (returnData) {
+                    }).catch(function (returnData) {
                         if (refreshAuthAccess()) //refresh cookie
                         {
                             $scope.getFlight('return');
