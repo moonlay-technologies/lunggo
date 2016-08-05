@@ -2690,9 +2690,9 @@
     <Content Include="Views\Template\ConfirmationRaw.cshtml" />
     <Content Include="Views\Template\EmailSubscribeVoucher.cshtml" />
     <Content Include="Views\Template\EmailSubscribe.cshtml" />
+    <Content Include="Views\HelpSection\Contact-Us.cshtml" />
     <Content Include="Views\HelpSection\FAQs.cshtml" />
     <Content Include="Views\HelpSection\How-To.cshtml" />
-    <Content Include="Views\HelpSection\Contact-Us.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
