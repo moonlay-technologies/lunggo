@@ -48,7 +48,7 @@ app.controller('paymentController', [
         }
 
         //Unique Code For Bank Transfer
-        $scope.TransferConfig = {
+        $scope.UniqueCodePaymentConfig = {
             UniqueCode: 0,
             Token: '',
             GetUniqueCode: function (rsvNo, voucherCode) {
@@ -61,7 +61,7 @@ app.controller('paymentController', [
                 if (authAccess == 1 || authAccess == 2) {
                     $http({
                         method: 'POST',
-                        url: TransferConfig.Url,
+                        url: uniqueCodePaymentConfig.Url,
                         data: {
                             rsvNo: rsvNo,
                             discCode: voucherCode
@@ -71,11 +71,11 @@ app.controller('paymentController', [
                     }).then(function (returnData) {
                         console.log('Getting Unique Payment Code');
                         //console.log(returnData);
-                        $scope.TransferConfig.UniqueCode = returnData.data.fee;
+                        $scope.UniqueCodePaymentConfig.UniqueCode = returnData.data.fee;
                     }).catch(function (returnData) {
                         if (refreshAuthAccess()) //refresh cookie
                         {
-                            $scope.TransferConfig.GetUniqueCode($scope.rsvNo, voucherCode);
+                            $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, voucherCode);
                         }
                         else
                         {
@@ -100,7 +100,7 @@ app.controller('paymentController', [
             return lastFive;
         };
 
-        $scope.TransferConfig.GetUniqueCode($scope.rsvNo); //payment
+        $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo); //payment
         $scope.initialPrice = price;
         $scope.totalPrice = price;
 
@@ -136,7 +136,7 @@ app.controller('paymentController', [
                             $scope.voucher.displayName = returnData.data.name;
                             // get unique code for transfer payment
                             $scope.voucher.status = 'Success';
-                            $scope.TransferConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
+                            $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
                         }
                         else {
                             $scope.voucher.checked = true;
@@ -165,7 +165,7 @@ app.controller('paymentController', [
                 $scope.voucher.confirmedCode = '';
                 $scope.voucher.checked = false;
                 // get unique code for transfer payment
-                $scope.TransferConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
+                $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
             }
         };
 

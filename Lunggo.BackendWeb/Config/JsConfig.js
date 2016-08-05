@@ -157,8 +157,8 @@ var VeritransTokenConfig = {
     ClientKey: 'VT-client-J8i9AzRyIU49D_v3'
 };
 
-var TransferConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/payment/transferfee'
+var uniqueCodePaymentConfig = {
+    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/payment/uniquecode'
 };
 
 var LoginMobileConfig = {
