@@ -168,6 +168,24 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         }
 
         [HttpPost]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/resetpassword")]
+        public ApiResponseBase ResetPassword()
+        {
+            try
+            {
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ResetPasswordApiRequest>();
+                var apiResponse = AccountLogic.ResetPassword(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPost]
         [AllowAnonymous]
         [LunggoCorsPolicy]
         [Route("v1/confirmemail")]

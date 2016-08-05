@@ -52,7 +52,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.RsvNo = reservation.RsvNo;
                 output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
                 
-                DeleteItinerariesFromCache(input.Token);
+                //DeleteItinerariesFromCache(input.Token);
             }
             else
             {
