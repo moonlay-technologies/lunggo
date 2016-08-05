@@ -131,13 +131,13 @@
                         <dd><sup>Rp</sup>- {{voucher.amount| number}}</dd>
                     </dl>
                     <dl ng-show="paymentMethod == '@PaymentMethod.BankTransfer'">
-                        <dt>Kode Unik Transfer</dt>
-                        <dd><sup>Rp</sup>- {{UniqueCodePaymentConfig.UniqueCode | number}}</dd>
+                        <dt>Kode Unik Pembayaran</dt>
+                        <dd><sup>Rp</sup> {{UniqueCodePaymentConfig.UniqueCode | number}}</dd>
                     </dl>
                     <dl class="total-price">
                         <dt>Total</dt>
                         <dd ng-if="paymentMethod != '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount | number}}</dd>
-                        <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount - UniqueCodePaymentConfig.UniqueCode | number}}</dd>
+                        <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</dd>
                     </dl>
                 </div><!-- .summary__body -->
             </div><!-- .summar--price -->

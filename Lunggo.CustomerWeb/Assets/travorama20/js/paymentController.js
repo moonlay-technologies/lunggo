@@ -71,7 +71,7 @@ app.controller('paymentController', [
                     }).then(function (returnData) {
                         console.log('Getting Unique Payment Code');
                         //console.log(returnData);
-                        $scope.UniqueCodePaymentConfig.UniqueCode = returnData.data.fee;
+                        $scope.UniqueCodePaymentConfig.UniqueCode = returnData.data.code;
                     }).catch(function (returnData) {
                         if (refreshAuthAccess()) //refresh cookie
                         {
