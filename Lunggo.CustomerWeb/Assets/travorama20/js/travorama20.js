@@ -862,13 +862,13 @@ function staticPageFunctions() {
         }
         checkQuestion();
     });
-    $('.question-wrapper ol li ol li header').on('click',function() {
+    $('.accordion-wrapper ol li ol li header').on('click',function() {
         $(this).closest('li').toggleClass('active');
         checkQuestion();
     });
     // check faqs
     var checkQuestion = function() {
-        $('.question-wrapper>ol>li').each(function() {
+        $('.accordion-wrapper>ol>li').each(function () {
             if ($(this).children('ol').find('.active').length > 0) {
                 $(this).find('.toggle-all').addClass('active').text('Hide All');
             } else {
@@ -877,7 +877,25 @@ function staticPageFunctions() {
         });
     }
 
+    $('.toggle-all').on('click', function () {
+        if ($(this).hasClass('active')) {
+            $(this).closest('li').children('ol').children('li').removeClass('active');
+        } else {
+            $(this).closest('li').children('ol').children('li').addClass('active');
+        }
+        checkQuestion();
+    });
 
+    //Accordion Help Section by W3School
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].onclick = function () {
+            this.classList.toggle("active");
+            this.nextElementSibling.classList.toggle("show");
+        }
+    }
 }
 
 //********************

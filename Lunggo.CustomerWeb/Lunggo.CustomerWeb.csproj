@@ -1128,6 +1128,12 @@
     <Content Include="Assets\script\jquery.ui.dialog.min-300004.js" />
     <Content Include="Assets\script\monitordesktop-12.js" />
     <Content Include="Assets\script\tv-common-300004.js" />
+    <Content Include="Assets\travorama20\css\help_section.css">
+      <DependentUpon>help_section.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\travorama20\css\help_section.min.css">
+      <DependentUpon>help_section.css</DependentUpon>
+    </Content>
     <Content Include="Assets\travorama20\css\travorama20.css" />
     <Content Include="Assets\travorama20\css\travorama20.min.css" />
     <Content Include="Assets\travorama20\css\travorama20.scss" />
@@ -1337,6 +1343,7 @@
     <Content Include="Assets\mobile\css\_page_account.scss" />
     <Content Include="Assets\mobile\css\_page_static.scss" />
     <Content Include="Assets\mobile\css\_page_home.scss" />
+    <Content Include="Assets\travorama20\css\help_section.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
