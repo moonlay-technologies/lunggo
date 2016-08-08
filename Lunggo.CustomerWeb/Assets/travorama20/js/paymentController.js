@@ -48,7 +48,7 @@ app.controller('paymentController', [
         }
 
         //Unique Code For Bank Transfer
-        $scope.TransferConfig = {
+        $scope.UniqueCodePaymentConfig = {
             UniqueCode: 0,
             Token: '',
             GetUniqueCode: function (rsvNo, voucherCode) {
@@ -61,7 +61,7 @@ app.controller('paymentController', [
                 if (authAccess == 1 || authAccess == 2) {
                     $http({
                         method: 'POST',
-                        url: TransferConfig.Url,
+                        url: uniqueCodePaymentConfig.Url,
                         data: {
                             rsvNo: rsvNo,
                             discCode: voucherCode
@@ -71,11 +71,11 @@ app.controller('paymentController', [
                     }).then(function (returnData) {
                         console.log('Getting Unique Payment Code');
                         //console.log(returnData);
-                        $scope.TransferConfig.UniqueCode = returnData.data.fee;
+                        $scope.UniqueCodePaymentConfig.UniqueCode = returnData.data.code;
                     }).catch(function (returnData) {
                         if (refreshAuthAccess()) //refresh cookie
                         {
-                            $scope.TransferConfig.GetUniqueCode($scope.rsvNo, voucherCode);
+                            $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, voucherCode);
                         }
                         else
                         {
@@ -100,7 +100,7 @@ app.controller('paymentController', [
             return lastFive;
         };
 
-        $scope.TransferConfig.GetUniqueCode($scope.rsvNo); //payment
+        $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo); //payment
         $scope.initialPrice = price;
         $scope.totalPrice = price;
 
@@ -136,7 +136,7 @@ app.controller('paymentController', [
                             $scope.voucher.displayName = returnData.data.name;
                             // get unique code for transfer payment
                             $scope.voucher.status = 'Success';
-                            $scope.TransferConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
+                            $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
                         }
                         else {
                             $scope.voucher.checked = true;
@@ -165,7 +165,7 @@ app.controller('paymentController', [
                 $scope.voucher.confirmedCode = '';
                 $scope.voucher.checked = false;
                 // get unique code for transfer payment
-                $scope.TransferConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
+                $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
             }
         };
 
@@ -269,34 +269,34 @@ app.controller('paymentController', [
                 $scope.pay.checked = false;
                 //generate payment data
                 if ($scope.paymentMethod == 'BankTransfer') {
-                    $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"' + $scope.paymentMethod + '"';
+                    $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2"';
                 }
                 else
                 {
                     switch ($scope.paymentMethod) {
                         case "CreditCard": 
-                            $scope.PaymentData = ' "creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name + '"' + '}';
+                            $scope.PaymentData = '"method":"1","creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name + '"' + '}';
                             break;
                         case "MandiriClickPay": 
                             var cardLast10No = $scope.MandiriClickPay.CardNo + "";
                             cardLast10No = cardLast10No.substr(cardLast10No.length - 10);
-                            var randomNumber = $scope.rsvNo + "";
-                            randomNumber = randomNumber.substr(randomNumber.length - 5);
-                            $scope.PaymentData = '"mandiriClickPay":' + '{' + ' "cardNo":"' + $scope.MandiriClickPay.CardNo + '","token":"' + $scope.MandiriClickPay.Token + '","cardLast10No":"' + cardLast10No + '","amount":"' + $scope.totalPrice + '","randomNumber":"' + randomNumber + '"' + '}';
+                            var rsvNoLast5 = $scope.rsvNo + "";
+                            rsvNoLast5 = rsvNoLast5.substr(rsvNoLast5.length - 5);
+                            $scope.PaymentData = '"method":"3","mandiriClickPay":' + '{' + ' "cardNo":"' + $scope.MandiriClickPay.CardNo + '","token":"' + $scope.MandiriClickPay.Token + '","cardLast10No":"' + cardLast10No + '","amount":"' + $scope.totalPrice + '","rsvNoLast5":"' + rsvNoLast5 + '"' + '}';
                             break;
                         case "CimbClicks": 
-                            $scope.PaymentData = '"cimbClicks":' + '{' + ' "description":"Pembayaran melalui CimbClicks"';
+                            $scope.PaymentData = '"method":"4","cimbClicks":' + '{' + ' "description":"Pembayaran melalui CimbClicks"' + '}';
                             break;
                         case "VirtualAccount": 
-                            $scope.PaymentData = '"virtualAccount":' + '{' + ' "bank":"permata"' + '}';
+                            $scope.PaymentData = '"method":"5","virtualAccount":' + '{' + ' "bank":"permata"' + '}';
                             break;
                         case "MandiriBillPayment": 
                             var label1 = "Payment for booking a flight";
                             var value1 = "debt";
-                            $scope.PaymentData ='"mandiriBillPayment":' + '{' + ' "label1":"' + label1 + '","value1":"' + value1 + '"' + '}';
+                            $scope.PaymentData = '"method":"13","mandiriBillPayment":' + '{' + ' "label1":"' + label1 + '","value1":"' + value1 + '"' + '}';
                             break;
                     }
-                    $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '", "method":"' + $scope.paymentMethod + '",'+ $scope.PaymentData;
+                    $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '",'+ $scope.PaymentData;
                 }
                 
                 $scope.pay.postData = '{' + $scope.pay.postData + '}';

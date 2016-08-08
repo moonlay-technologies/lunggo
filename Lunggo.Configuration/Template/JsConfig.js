@@ -157,8 +157,8 @@ var VeritransTokenConfig = {
     ClientKey: '$veritransClientKey$'
 };
 
-var TransferConfig = {
-    Url: '$apiUrl$$transferPaymentPath$'
+var uniqueCodePaymentConfig = {
+    Url: '$apiUrl$$uniqueCodePaymentPath$'
 };
 
 var LoginMobileConfig = {

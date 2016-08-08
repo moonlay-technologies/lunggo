@@ -125,7 +125,7 @@ var RegisterConfig = {
 };
 
 var ResetPasswordConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/account/resetpassword'
+    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/resetpassword'
 };
 
 var ForgotPasswordConfig = {
@@ -157,8 +157,8 @@ var VeritransTokenConfig = {
     ClientKey: 'VT-client-J8i9AzRyIU49D_v3'
 };
 
-var TransferConfig = {
-    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/payment/transferfee'
+var uniqueCodePaymentConfig = {
+    Url: 'https://travorama-dv2-api.azurewebsites.net/v1/payment/uniquecode'
 };
 
 var LoginMobileConfig = {
@@ -170,7 +170,7 @@ var RegisterMobileConfig = {
 };
 
 var ResetPasswordMobileConfig = {
-    Url: 'http://m.dv2.travorama.com/v1/account/resetpassword'
+    Url: 'http://m.dv2.travorama.com/v1/resetpassword'
 };
 
 var ForgotPasswordMobileConfig = {

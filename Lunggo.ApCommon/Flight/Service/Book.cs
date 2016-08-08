@@ -53,8 +53,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 InsertReservationToDb(reservation);
                 output.RsvNo = reservation.RsvNo;
                 output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
+                
+                //DeleteItinerariesFromCache(input.Token);
 
-                DeleteItinerariesFromCache(input.Token);
+                // DEVELOPMENT PURPOSE
+                output.NewPrice = bookResults.Sum(result => result.RevalidateSet.NewPrice);
             }
             else
             {
@@ -66,7 +69,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.DistinguishErrors();
             }
 
-
+            
             return output;
         }
 
@@ -126,11 +129,11 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var bookResults = new List<BookResult>();
             if (itins != null)
-                Parallel.ForEach(itins, itin =>
-                {
-                    var bookResult = BookItinerary(itin, input, output);
-                    bookResults.Add(bookResult);
-                });
+            Parallel.ForEach(itins, itin =>
+            {
+                var bookResult = BookItinerary(itin, input, output);
+                bookResults.Add(bookResult);
+            });
             return bookResults;
         }
 
@@ -187,7 +190,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var supplierName = bookInfo.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
             var result = supplier.BookFlight(bookInfo);
-
+                
             var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
             if (result.Status != null)
                 result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit

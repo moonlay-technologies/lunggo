@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Lunggo.ApCommon.Flight.Constant;
@@ -38,7 +39,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
         private static bool IsValid(FlightBookApiRequest request)
         {
             return
-                request != null && 
+                request != null &&
                 request.LanguageCode != null &&
                 request.Contact != null &&
                 request.Contact.Title != Title.Undefined &&
@@ -55,12 +56,29 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
         private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse)
         {
             if (bookServiceResponse.IsSuccess)
-                return new FlightBookApiResponse
+            {
+                var random = new Random().Next() % 2;
+                if (random == 0)
                 {
-                    RsvNo = bookServiceResponse.RsvNo,
-                    TimeLimit = bookServiceResponse.TimeLimit,
-                    StatusCode = HttpStatusCode.OK
-                };
+                    return new FlightBookApiResponse
+                    {
+                        RsvNo = bookServiceResponse.RsvNo,
+                        TimeLimit = bookServiceResponse.TimeLimit,
+                        StatusCode = HttpStatusCode.OK
+                    };
+                }
+                else
+                {
+                    return new FlightBookApiResponse
+                    {
+                        IsValid = true,
+                        IsItineraryChanged = false,
+                        IsPriceChanged = true,
+                        NewPrice = bookServiceResponse.NewPrice,
+                        StatusCode = HttpStatusCode.OK
+                    };
+                }
+            }
             else if (bookServiceResponse.Errors == null || !bookServiceResponse.Errors.Any())
             {
                 return new FlightBookApiResponse
