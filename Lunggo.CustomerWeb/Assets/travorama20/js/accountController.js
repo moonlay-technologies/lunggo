@@ -29,7 +29,7 @@ app.controller('siteHeaderController', [
                         $scope.profileloaded = true;
                         console.log(returnData);
                     }
-                }).error(function (returnData) {
+                }).catch(function (returnData) {
                     if (refreshAuthAccess()) //refresh cookie
                     {
                         $scope.ProfileConfig.getProfile();
