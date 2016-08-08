@@ -29,13 +29,18 @@
         @Html.Partial("/Views/Shared/_googleTag.cshtml")
 
         <!--********************-->
-        @Html.Partial("/Views/Shared/mobile/_SiteHeader.cshtml")
+        @if (ViewBag.SiteHeader != "header-contact-us"){
+            @Html.Partial("/Views/Shared/mobile/_SiteHeader.cshtml")
+        }
+       
         <!--********************-->
         <section class="site-content">
             @RenderBody()
         </section><!-- .site-content -->
         <!--********************-->
-        @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
+        @if (ViewBag.SiteHeader != "header-contact-us") {
+            @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
+        }
         <!--********************-->
 
         <!-- Javascripts -->

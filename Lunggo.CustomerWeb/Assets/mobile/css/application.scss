@@ -66,7 +66,7 @@ img {max-width:100%;}
 .display-block {display:block !important;}
 
 .btn {@include border-radius($border-radius-default);}
-.btn.btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; font-weight:bold;}
+.btn.btn-yellow {background:#ffd632; color:#4f3500; font-weight:bold;}
 .btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; border:2px solid #adadad;}
 .btn.block {display:block; width:50%;}
 
@@ -79,6 +79,21 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 input[type="text"], input[type="password"], input[type="number"], input[type="email"] {font-size:12px; height:auto;}
 
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea {
+    &::-webkit-input-placeholder {
+        font-style: italic;
+    } &::-moz-placeholder {
+        font-style: italic;
+    } &:-ms-input-placeholder {
+        font-style: italic;
+    } &:-moz-placeholder {
+        font-style: italic;
+    }
+}
+
+.form-group {
+    textarea {resize: none;}
+}
 // *****
 // site header
 .site-header {position:fixed; top:0; left:0; width:100%; height:$header-height; z-index:999; @include box-shadow(0px -2px 15px #555);
@@ -180,14 +195,20 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // page content
 .page__header {}
 .page__body {}
+header.page__header {
+    h1 {
+        font-size: 18px;
+        margin: 20px 0;
+    }
+}
 
-.section-title {font-weight:600; padding-bottom:15px; 
+.section-title {font-weight:700; padding-bottom:15px; 
     h1{
         text-align: center;
     }
     span {color:#1eafe4; text-align: center;}
     // theme
-    &.stripe {background:url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;}
+    &.stripe {background:url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat; background-size: 50%}
 }
 
 // form-wrapper

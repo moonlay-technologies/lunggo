@@ -1,4 +1,4 @@
-﻿.page.page-checkout {
+﻿﻿.page.page-checkout {
     // *****
     // page header
 
@@ -33,18 +33,9 @@
         .page-loaded {display:block;}
         .page-step-1 {}
         .page-step-2 {
-            .btn.btn-yellow {width: 49%;
-        position: relative;
-        margin-top: 10px;
-        text-align: center;
-            }
-        .page-step-3 {
-            .btn.btn-yellow, .btn.btn-grey {width: 49%;
-        position: relative;
-        margin-top: 10px;
-        text-align: center;
-             }
+            .btn.btn-yellow {margin-top:25px;}
         }
+        .page-step-3 {}
 
     }
 
@@ -84,10 +75,10 @@
                 li {}
             }
             dl {margin-bottom:5px; color:#333; @include clearfix();
-                dt {float:left; width:30%; font-weight:normal; position:relative;
+                dt {float:left; width:50%; font-weight:normal; position:relative;
                     &:after {position:absolute; content:':'; right:10px;}
                 }
-                dd {float:left; width:70%; font-weight:bold;}
+                dd {float:left; width:50%; font-weight:bold;}
             }
         }
         // voucher
@@ -140,7 +131,7 @@
 
 
 // page confirmation
-.page.page-confirmation, .page-checkout {
+.page.page-confirmation {
     .instruction {
         header {background:#2fb4e6; color:#fff; padding:5px 10px; margin-bottom:10px;}
         // bank detail
