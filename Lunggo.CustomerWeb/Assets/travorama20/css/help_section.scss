@@ -20,6 +20,13 @@
         border-top: 1px solid #a5a5a5;
     }
 }
+
+/*HOW TO*/
+.how-to-footer {
+    font-size: 13px;
+    padding: 20px 15px;
+}
+
 /*ACCORDION*/
 .accordion-wrapper { 
     border-bottom: 1px solid #a5a5a5;
@@ -34,14 +41,26 @@
         border-top: 1px solid #a5a5a5;
         &.active {
             border-bottom: 1px solid #a5a5a5;
-            &:after {content: "\2227";}
+            &:after {
+                content: " ";
+                display: block;
+                background:url(/Assets/images/helpSection/arrow-up.png) no-repeat;
+                width: 20px;
+                height: 26px;
+                background-size: 70%;
+                float: right;
+                margin-top: 6px;
+            }
         }
         &:after {
-            content: '\2228';
-            font-size: 13px;
-            color: #777;
+            content: " ";
+            display: block;
+            background:url(/Assets/images/helpSection/arrow-down.png) no-repeat;
+            width: 20px;
+            height: 26px;
+            background-size: 100%;
             float: right;
-            font-weight: 600;
+            margin-top: 4px;
         }
     }
     .accordion-content {
@@ -72,5 +91,9 @@
                 margin-bottom: 10px;
             }
         }
+    }
+    img {
+        max-width: 100%;
+        height: auto;
     }
 } 
