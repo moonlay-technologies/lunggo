@@ -40,9 +40,15 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var result = userManager.Update(updatedUser);
             if (result.Succeeded)
             {
-                return new ApiResponseBase
+                return new ChangeProfileApiResponse
                 {
-                    StatusCode = HttpStatusCode.OK
+                    StatusCode = HttpStatusCode.OK,
+                    Email = updatedUser.Email,
+                    Name = updatedUser.FirstName == updatedUser.LastName
+                        ? updatedUser.FirstName
+                        : updatedUser.FirstName + " " + updatedUser.LastName,
+                    CountryCallingCd = updatedUser.CountryCd,
+                    PhoneNumber = updatedUser.PhoneNumber
                 };
             }
             return new ApiResponseBase

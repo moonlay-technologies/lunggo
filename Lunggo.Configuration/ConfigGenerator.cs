@@ -343,7 +343,7 @@ namespace Lunggo.Configuration
             const string loginPath = @"/v1/login";
             const string getProfilePath = @"/v1/profile";
             const string registerPath = @"/v1/register";
-            const string resetPasswordPath = @"/v1/account/resetpassword";
+            const string resetPasswordPath = @"/v1/resetpassword";
             const string forgotPasswordPath = @"/v1/forgot";
             const string changePasswordPath = @"/v1/changepassword";
             const string changeProfilePath = @"/v1/profile";

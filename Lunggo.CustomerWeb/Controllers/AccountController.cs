@@ -329,11 +329,20 @@ namespace Lunggo.CustomerWeb.Controllers
                 ViewBag.Message = "NotRegistered";
                 return View(model);
             }
-
-            var result = model.Code == null
-                ? await UserManager.AddPasswordAsync(user.Id, model.Password)
-                : await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
+            var isSuccess = false;
+            if (model.Code == null)
+                isSuccess = (await UserManager.AddPasswordAsync(user.Id, model.Password)).Succeeded;
+            else
+            {
+                var resetClient = new RestClient(model.ApiUrl.Split(' ')[0]);
+                var resetRequest = new RestRequest("/v1/resetpassword", Method.POST);
+                resetRequest.RequestFormat = DataFormat.Json;
+                resetRequest.AddBody(new { model.Email, model.Password, model.Code });
+                var resetResponse = resetClient.Execute(resetRequest).Content.Deserialize<ConfirmResponse>();
+                isSuccess = resetResponse.Status == "200";
+            }
+            
+            if (isSuccess)
             {
                 var returnUrl = Url.Action("Index", "UW000TopPage");
                 var loginResult =

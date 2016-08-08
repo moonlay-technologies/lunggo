@@ -437,7 +437,7 @@ app.controller('forgotController', [
                     url: ForgotPasswordConfig.Url,
                     method: 'POST',
                     data: {
-                        email: $scope.form.email
+                        userName: $scope.form.email
                     },
                     headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
@@ -700,8 +700,7 @@ app.controller('resetController', [
                     method: 'POST',
                     data: {
                         Password: $scope.form.password,
-                        ConfirmPassword: $scope.form.password,
-                        Email: $scope.form.userEmail,
+                        UserName: $scope.form.userEmail,
                         Code: $scope.form.code
                     },
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
