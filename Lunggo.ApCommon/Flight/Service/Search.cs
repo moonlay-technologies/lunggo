@@ -207,7 +207,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     conditionsList.ForEach(c => emptyLists.Add(new List<FlightItinerary>()));
 
                 SaveSearchedItinerariesToCache(emptyLists, searchId, cacheTimeout, supplierIndex);
-                SaveCurrencyStatesToCache(searchId, new Dictionary<string, Currency>(), cacheTimeout);
+                SaveCurrencyStatesToCache(searchId, Currency.GetAllCurrencies(), cacheTimeout);
                 SaveSearchedSupplierIndexToCache(searchId, supplierIndex, cacheTimeout);
                 InvalidateSearchingStatusInCache(searchId, supplierIndex);
             }

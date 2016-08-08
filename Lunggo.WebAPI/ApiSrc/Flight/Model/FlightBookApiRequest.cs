@@ -17,5 +17,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Model
         public List<PaxForDisplay> Passengers { get; set; }
         [JsonProperty("lang")]
         public string LanguageCode { get; set; }
+        [JsonProperty("test")]
+        public bool Test { get; set; }
     }
 }

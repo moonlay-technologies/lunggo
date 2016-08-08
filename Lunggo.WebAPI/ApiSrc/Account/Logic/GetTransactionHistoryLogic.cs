@@ -32,6 +32,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                         rsvs.Where(
                             rsv => rsv.Itinerary.Trips[0].Segments[0].DepartureTime >= DateTime.UtcNow.AddDays(-1))
                             .ToList();
+                if (splitFilter.Contains("inactive"))
+                    rsvs =
+                        rsvs.Where(
+                            rsv => rsv.Itinerary.Trips[0].Segments[0].DepartureTime < DateTime.UtcNow.AddDays(-1))
+                            .ToList();
                 if (splitFilter.Contains("issued"))
                     rsvs = rsvs.Where(rsv => rsv.RsvDisplayStatus == RsvDisplayStatus.Issued).ToList();
             }
