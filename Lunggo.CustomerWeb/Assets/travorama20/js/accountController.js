@@ -29,7 +29,7 @@ app.controller('siteHeaderController', [
                         $scope.profileloaded = true;
                         console.log(returnData);
                     }
-                }).error(function (returnData) {
+                }).catch(function (returnData) {
                     if (refreshAuthAccess()) //refresh cookie
                     {
                         $scope.ProfileConfig.getProfile();
@@ -437,7 +437,7 @@ app.controller('forgotController', [
                     url: ForgotPasswordConfig.Url,
                     method: 'POST',
                     data: {
-                        email: $scope.form.email
+                        userName: $scope.form.email
                     },
                     headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
@@ -854,7 +854,8 @@ app.controller('registerController', [
             emailSent: false,
             emailConfirmed: false,
             resubmitted: false,
-            resubmitting: false
+            resubmitting: false,
+            formatError: false
         };
         $scope.overlay = false;
         $scope.closeOverlay = function() {
@@ -882,6 +883,7 @@ app.controller('registerController', [
                         $scope.form.emailSent = false;
                         $scope.form.emailConfirmed = false;
                         $scope.form.email = '';
+                        $scope.form.formatError = false;
                     }
                     else {
                         switch (returnData.data.error) {
@@ -890,19 +892,24 @@ app.controller('registerController', [
                                 $scope.form.emailSent = true;
                                 $scope.form.emailConfirmed = true;
                                 $scope.form.email = '';
+                                $scope.form.formatError = false;
                                 break;
                             case "ERAREG03":
                                 $scope.form.registered = true;
                                 $scope.form.emailSent = true;
                                 $scope.form.emailConfirmed = false;
+                                $scope.form.formatError = false;
                                 break;
                             case "ERRGEN99":
                                 $scope.form.email = '';
+                                $scope.form.formatError = false;
                                 break;
                             case "ERAREG01":
                                 $scope.form.email = '';
+                                $scope.form.formatError = true;
                                 break;
                         }
+                        console.log('Error : ' + returnData.data.error);
                     }
                 }).catch(function (returnData) {
                     if (refreshAuthAccess()) //refresh cookie
@@ -941,7 +948,7 @@ app.controller('registerController', [
                     $scope.form.resubmitting = false;
                     $scope.form.resubmitted = true;
 
-                    if (returnData.data.Status == "Success") {
+                    if (returnData.data.status == 200) {
                         $scope.form.email = '';
                     }
 
