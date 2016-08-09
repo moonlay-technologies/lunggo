@@ -6,6 +6,7 @@ app.controller('paymentController', [
         //********************
         // variables
         $scope.currentPage = 4;
+        $scope.trial = 0;
         $scope.pageLoaded = true;
         $scope.loginShown = false;
         $scope.checkoutForm = {
@@ -52,6 +53,11 @@ app.controller('paymentController', [
             UniqueCode: 0,
             Token: '',
             GetUniqueCode: function (rsvNo, voucherCode) {
+
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
+
                 if (!rsvNo) {
                     rsvNo = $scope.rsvNo;
                 }
@@ -73,7 +79,8 @@ app.controller('paymentController', [
                         //console.log(returnData);
                         $scope.UniqueCodePaymentConfig.UniqueCode = returnData.data.code;
                     }).catch(function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, voucherCode);
                         }
@@ -114,6 +121,10 @@ app.controller('paymentController', [
             checked: false,
             check: function () {
 
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
+
                 //Check Authorization
                 var authAccess = getAuthAccess();
                 $scope.voucher.checking = true;
@@ -142,8 +153,9 @@ app.controller('paymentController', [
                             $scope.voucher.checked = true;
                             $scope.voucher.status = returnData.data.error;
                         }
-                    }).catch( function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
+                    }).catch(function (returnData) {
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.voucher.check();
                         }
@@ -264,6 +276,9 @@ app.controller('paymentController', [
                 }
             },
             send: function () {
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
                 $scope.pay.isSuccess = false,
                 $scope.pay.paying = true;
                 $scope.pay.checked = false;
@@ -344,8 +359,9 @@ app.controller('paymentController', [
                             $scope.pay.isSuccess = false;
                             console.log($scope.errorMessage);
                         }
-                    }).catch( function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
+                    }).catch(function (returnData) {
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.pay.send();
                         }

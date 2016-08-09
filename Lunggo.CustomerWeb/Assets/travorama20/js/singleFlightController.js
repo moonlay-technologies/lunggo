@@ -13,6 +13,7 @@ app.controller('singleFlightController', [
         // general variables
         $scope.pageLoaded = true;
         $scope.notice = true;
+        $scope.trial = 0;
         $scope.busy = false;
         $scope.loading = false;
         $scope.loadingFlight = false;
@@ -364,6 +365,10 @@ app.controller('singleFlightController', [
             proceed: false
         };
         $scope.selectFlight = function (indexNo) {
+            if ($scope.trial > 3)
+            {
+                $scope.trial = 0;
+            }
             $('body').addClass('no-scroll');
 
             console.log('---------------------');
@@ -401,7 +406,8 @@ app.controller('singleFlightController', [
                         }
 
                     }).catch(function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.selectFlight($scope.flightSelected);
                         }
@@ -444,6 +450,10 @@ app.controller('singleFlightController', [
             $scope.busy = true;
             $scope.loading = true;
             $scope.loadingFlight = true;
+            if ($scope.trial > 3)
+            {
+                $scope.trial = 0;
+            }
 
             if ($scope.Progress < 100) {
                 // **********
@@ -463,14 +473,17 @@ app.controller('singleFlightController', [
                         //console.log($scope.flightFixRequest);
 
                         $scope.Progress = returnData.data.progress;
+                        if (returnData.data.flights.length) {
+                            $scope.generateFlightList(returnData.data.flights[0].options);
+                        }
+
                         if ($scope.Progress == 100) {
                             $scope.expiry.time = returnData.data.expTime;
                             $scope.flightRequest.FinalProgress = $scope.Progress;
+                            //Generate Filter Flight
+                            $scope.generateFilterFlight();
                         } else {
                             $scope.flightRequest.FinalProgress = $scope.Progress;
-                        }
-                        if (returnData.data.flights.length) {
-                            $scope.generateFlightList(returnData.data.flights[0].options);
                         }
 
 
@@ -485,7 +498,8 @@ app.controller('singleFlightController', [
 
                     }).catch(function (returnData) {
                         console.log('Failed to get flight list');
-                        if (refreshAuthAccess()) //refresh cookie
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.getFlight();
                         }
@@ -534,119 +548,118 @@ app.controller('singleFlightController', [
                 data[i].IndexNo = (startNo + i);
                 $scope.flightList.push(data[i]);
             }
+        }
 
-            if ($scope.Progress == 100) {
+        $scope.generateFilterFlight = function ()
+        {
+            console.log('Generating Filter');
 
-                console.log('Generating Filter');
+            // set expiry time
+            $scope.expiry.start();
 
-                // set expiry time
-                $scope.expiry.start();
+            // loop the data
+            for (var i = 0; i < $scope.flightList.length; i++) {
+                // *****
+                // add available state on each flight
+                $scope.flightList[i].Available = true;
 
-                // loop the data
-                for (var i = 0; i < $scope.flightList.length; i++) {
-                    // *****
-                    // add available state on each flight
-                    $scope.flightList[i].Available = true;
+                // *****
+                // set default fare rules loaded and content to false
+                $scope.flightList[i].FareRule = {
+                    Loaded: false,
+                    Content: ''
+                };
 
-                    // *****
-                    // set default fare rules loaded and content to false
-                    $scope.flightList[i].FareRule = {
-                        Loaded: false,
-                        Content: ''
-                    };
+                // *****
+                // populate prices
+                $scope.priceFilterParam.prices.push($scope.flightList[i].originalAdultFare);
 
-                    // *****
-                    // populate prices
-                    $scope.priceFilterParam.prices.push($scope.flightList[i].originalAdultFare);
-
-                    // *****
-                    // populate airline tag
-                    $scope.flightList[i].AirlinesTag = [];
-                    for (var x = 0 ; x < $scope.flightList[i].trips[0].airlines.length; x++) {
-                        $scope.airlineFilterParam.airlinesList.push($scope.flightList[i].trips[0].airlines[x]);
-                        $scope.flightList[i].AirlinesTag.push($scope.flightList[i].trips[0].airlines[x].code);
-                    }
-
+                // *****
+                // populate airline tag
+                $scope.flightList[i].AirlinesTag = [];
+                for (var x = 0 ; x < $scope.flightList[i].trips[0].airlines.length; x++) {
+                    $scope.airlineFilterParam.airlinesList.push($scope.flightList[i].trips[0].airlines[x]);
+                    $scope.flightList[i].AirlinesTag.push($scope.flightList[i].trips[0].airlines[x].code);
                 }
-                // sort prices and set initial price filter
-                function sortNumber(a, b) {
-                    return a - b;
-                }
-                $scope.priceFilterParam.prices.sort(sortNumber);
-                $scope.priceFilterParam.initial[0] = Math.floor($scope.priceFilterParam.prices[0]);
-                $scope.priceFilterParam.initial[1] = Math.round($scope.priceFilterParam.prices[$scope.priceFilterParam.prices.length - 1]);
 
-                // remove duplicate from airlines
-                var dupes = {};
-                $.each($scope.airlineFilterParam.airlinesList, function (i, el) {
-                    if (!dupes[el.code]) {
-                        dupes[el.code] = true;
-                        $scope.airlineFilterParam.airlines.push(el);
-                    }
-                });
-                $scope.airlineFilterParam.airlinesList = [];
-
-                // activate price filter
-                $('.price-slider').slider({
-                    range: true,
-                    min: $scope.priceFilterParam.initial[0],
-                    max: $scope.priceFilterParam.initial[1],
-                    step: 100,
-                    values: [$scope.priceFilterParam.initial[0], $scope.priceFilterParam.initial[1]],
-                    create: function (event, ui) {
-                        $('.price-slider-min').val($scope.priceFilterParam.initial[0]);
-                        $('.price-slider-min').trigger('input');
-                        $('.price-slider-max').val($scope.priceFilterParam.initial[1]);
-                        $('.price-slider-max').trigger('input');
-                    },
-                    slide: function (event, ui) {
-                        $('.price-slider-min').val(ui.values[0]);
-                        $('.price-slider-min').trigger('input');
-                        $('.price-slider-max').val(ui.values[1]);
-                        $('.price-slider-max').trigger('input');
-                    }
-                });
-
-                // activate time slider
-                $('.departure-slider').slider({
-                    range: true,
-                    min: 0, max: 24, step: 1, values: [0, 24],
-                    create: function (event, ui) {
-                        $('.departure-slider-min').val(0);
-                        $('.departure-slider-min').trigger('input');
-                        $('.departure-slider-max').val(24);
-                        $('.departure-slider-max').trigger('input');
-                    },
-                    slide: function (event, ui) {
-                        $('.departure-slider-min').val(ui.values[0]);
-                        $('.departure-slider-min').trigger('input');
-                        $('.departure-slider-max').val(ui.values[1]);
-                        $('.departure-slider-max').trigger('input');
-                    }
-                });
-                $('.arrival-slider').slider({
-                    range: true,
-                    min: 0, max: 24, step: 1, values: [0, 24],
-                    create: function (event, ui) {
-                        $('.arrival-slider-min').val(0);
-                        $('.arrival-slider-min').trigger('input');
-                        $('.arrival-slider-max').val(24);
-                        $('.arrival-slider-max').trigger('input');
-                    },
-                    slide: function (event, ui) {
-                        $('.arrival-slider-min').val(ui.values[0]);
-                        $('.arrival-slider-min').trigger('input');
-                        $('.arrival-slider-max').val(ui.values[1]);
-                        $('.arrival-slider-max').trigger('input');
-                    }
-                });
-
-                $scope.flightRequest.FinalProgress = 100;
-
-                console.log('Completed setting flight and filter');
-                console.log($scope);
             }
+            // sort prices and set initial price filter
+            function sortNumber(a, b) {
+                return a - b;
+            }
+            $scope.priceFilterParam.prices.sort(sortNumber);
+            $scope.priceFilterParam.initial[0] = Math.floor($scope.priceFilterParam.prices[0]);
+            $scope.priceFilterParam.initial[1] = Math.round($scope.priceFilterParam.prices[$scope.priceFilterParam.prices.length - 1]);
 
+            // remove duplicate from airlines
+            var dupes = {};
+            $.each($scope.airlineFilterParam.airlinesList, function (i, el) {
+                if (!dupes[el.code]) {
+                    dupes[el.code] = true;
+                    $scope.airlineFilterParam.airlines.push(el);
+                }
+            });
+            $scope.airlineFilterParam.airlinesList = [];
+
+            // activate price filter
+            $('.price-slider').slider({
+                range: true,
+                min: $scope.priceFilterParam.initial[0],
+                max: $scope.priceFilterParam.initial[1],
+                step: 100,
+                values: [$scope.priceFilterParam.initial[0], $scope.priceFilterParam.initial[1]],
+                create: function (event, ui) {
+                    $('.price-slider-min').val($scope.priceFilterParam.initial[0]);
+                    $('.price-slider-min').trigger('input');
+                    $('.price-slider-max').val($scope.priceFilterParam.initial[1]);
+                    $('.price-slider-max').trigger('input');
+                },
+                slide: function (event, ui) {
+                    $('.price-slider-min').val(ui.values[0]);
+                    $('.price-slider-min').trigger('input');
+                    $('.price-slider-max').val(ui.values[1]);
+                    $('.price-slider-max').trigger('input');
+                }
+            });
+
+            // activate time slider
+            $('.departure-slider').slider({
+                range: true,
+                min: 0, max: 24, step: 1, values: [0, 24],
+                create: function (event, ui) {
+                    $('.departure-slider-min').val(0);
+                    $('.departure-slider-min').trigger('input');
+                    $('.departure-slider-max').val(24);
+                    $('.departure-slider-max').trigger('input');
+                },
+                slide: function (event, ui) {
+                    $('.departure-slider-min').val(ui.values[0]);
+                    $('.departure-slider-min').trigger('input');
+                    $('.departure-slider-max').val(ui.values[1]);
+                    $('.departure-slider-max').trigger('input');
+                }
+            });
+            $('.arrival-slider').slider({
+                range: true,
+                min: 0, max: 24, step: 1, values: [0, 24],
+                create: function (event, ui) {
+                    $('.arrival-slider-min').val(0);
+                    $('.arrival-slider-min').trigger('input');
+                    $('.arrival-slider-max').val(24);
+                    $('.arrival-slider-max').trigger('input');
+                },
+                slide: function (event, ui) {
+                    $('.arrival-slider-min').val(ui.values[0]);
+                    $('.arrival-slider-min').trigger('input');
+                    $('.arrival-slider-max').val(ui.values[1]);
+                    $('.arrival-slider-max').trigger('input');
+                }
+            });
+
+            $scope.flightRequest.FinalProgress = 100;
+
+            console.log('Completed setting flight and filter');
+            console.log($scope);
         }
 
     }

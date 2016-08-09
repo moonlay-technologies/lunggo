@@ -74,7 +74,7 @@
                                     <p class="control-label">Kode Negara</p>@*@Html.I18NString("CW00193")*@
                                 </div>
                                 <div class="col-xs-9">
-                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.countryCallCd}}</p>
+                                    <p ng-if="userProfile.countryCallCd" class="form-control-static" ng-hide="userProfile.edit">{{userProfile.countryCallCd}}</p>
                                     <input type="number" name="countryCallCd" ng-model="editProfile.countryCallCd" value="editProfile.countryCallCd" class="form-control" placeholder="Kode Negara" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />
                                     <!--<select class="form-control" ng-show="userProfile.edit" ng-model="editProfile.country" ng-disabled="userProfile.updating">
                                     <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}}</option>
@@ -87,7 +87,7 @@
                                     <p class="control-label">@Html.I18NString("CW00093")</p>
                                 </div>
                                 <div class="col-xs-9">
-                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.phone}}</p>
+                                    <p ng-if="userProfile.phone" class="form-control-static" ng-hide="userProfile.edit">{{userProfile.phone}}</p>
                                     <input type="number" name="phone" ng-model="editProfile.phone" value="editProfile.phone" class="form-control" placeholder="Nomor Telepon" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />
                                 </div>
                             </div>

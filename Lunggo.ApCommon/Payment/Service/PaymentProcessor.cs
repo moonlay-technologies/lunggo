@@ -226,7 +226,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 {
                     Id = "3",
                     Name = "TransferFee",
-                    Price = (long)-payment.TransferFee,
+                    Price = (long)payment.TransferFee,
                     Quantity = 1
                 });
             return itemDetails;

@@ -77,6 +77,9 @@ app.controller('checkoutController', [
         };
         //Function Login in Checkout Page
         $scope.form.submit = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
             $scope.form.submitting = true;
             var authAccess = getAuthAccess();
             if (authAccess == 1 || authAccess == 2)
@@ -109,7 +112,8 @@ app.controller('checkoutController', [
                         //Return langsung
                     }
                 }).catch(function (returnData) {
-                    if (refreshAuthAccess()) //refresh cookie
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4 ) //refresh cookie
                     {
                         $scope.form.submit();
                     }
@@ -137,6 +141,9 @@ app.controller('checkoutController', [
         //Get Profile
         $scope.TakeProfileConfig = {
             TakeProfile: function () {
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
                 //Check Authorization
                 var authAccess = getAuthAccess();
                 if (authAccess == 2) {
@@ -160,7 +167,8 @@ app.controller('checkoutController', [
                             window.location.href = $location.absUrl();
                         }
                     }).catch(function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.TakeProfileConfig.TakeProfile();
                         }
@@ -192,6 +200,9 @@ app.controller('checkoutController', [
             isPriceChanged: false,
             
             send: function () {
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
                 $scope.book.booking = true;
                 $scope.book.isPriceChanged = false;
                 $scope.book.checked = false;
@@ -313,7 +324,8 @@ app.controller('checkoutController', [
                         }
 
                     }).catch(function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.book.send();
                         }

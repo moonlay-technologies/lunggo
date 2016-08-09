@@ -39,6 +39,7 @@
                         box-shadow: none;
                         @include border-radius($border-radius-big);
                         border: $border-grey-btn;
+                        cursor: pointer;
                     }
                 }
                 span.code-airport, span.city {
@@ -127,6 +128,11 @@
                     margin-left: 37px;
                     border-bottom: $border-form;
                     padding: 21px 0;
+                    p, select {
+                        cursor: pointer;
+                    }
+                    
+                    
                 }
                 .flip-container {
                     position: relative;

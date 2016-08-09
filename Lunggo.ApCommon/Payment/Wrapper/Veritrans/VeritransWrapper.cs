@@ -65,7 +65,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null)
+                    if (content != null && content.StatusCode == "200")
                     {
                         //ProcessSavedCreditCardToken(payment.Data, content);
                         payment.Status = PaymentResult(content);
@@ -80,7 +80,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null)
+                    if (content != null && content.StatusCode == "200")
                     {
                         payment.TransferAccount= content.PermataVANumber;
                         payment.Status = PaymentResult(content);
@@ -88,7 +88,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     }
                     else
                     {
-                        payment.Status = PaymentStatus.Denied;
+                        payment.Status = PaymentStatus.Failed;
                     }
                     return payment;
 
@@ -96,14 +96,14 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null)
+                    if (content != null && content.StatusCode == "200")
                     {
                         payment.Status = PaymentResult(content);
                         payment.ExternalId = content.TransactionId;
                     }
                     else
                     {
-                        payment.Status = PaymentStatus.Denied;
+                        payment.Status = PaymentStatus.Failed;
                     }
                     return payment;
 
@@ -111,7 +111,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null)
+                    if (content != null && content.StatusCode == "200")
                     {
                         payment.RedirectionUrl = content.RedirectUrl;
                         payment.ExternalId = content.TransactionId;
@@ -119,7 +119,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     }
                     else
                     {
-                        payment.Status = PaymentStatus.Denied;
+                        payment.Status = PaymentStatus.Failed;
                     }
                     return payment;
 
@@ -127,7 +127,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null)
+                    if (content != null && content.StatusCode == "200")
                     {
                         payment.RedirectionUrl = content.RedirectUrl;
                         payment.ExternalId = content.TransactionId;
@@ -135,7 +135,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     }
                     else
                     {
-                        payment.Status = PaymentStatus.Denied;
+                        payment.Status = PaymentStatus.Failed;
                     }
                     return payment;
 

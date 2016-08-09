@@ -3,10 +3,14 @@ app.controller('siteHeaderController', [
     '$http', '$scope', function ($http, $scope) {
         $scope.profileloaded = false;
         $scope.email = '';
+        $scope.trial = 0;
         $scope.returnUrl = document.referrer;
         $scope.authProfile = {}
         $scope.ProfileConfig = {
             getProfile: function () {
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
                 $http({
                     method: 'GET',
                     url: GetProfileConfig.Url,
@@ -30,7 +34,8 @@ app.controller('siteHeaderController', [
                         console.log(returnData);
                     }
                 }).catch(function (returnData) {
-                    if (refreshAuthAccess()) //refresh cookie
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.ProfileConfig.getProfile();
                     }
@@ -76,6 +81,7 @@ app.controller('accountController', [
         // variables
         $scope.pageLoaded = true;
         $scope.email = 'Test';
+        $scope.trial = 0;
         $scope.currentSection = '';
         $scope.profileForm = {
             active : false
@@ -148,6 +154,9 @@ app.controller('accountController', [
         //Get Profile
         $scope.TakeProfileConfig = {
             TakeProfile: function () {
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
                 var authAccess = getAuthAccess();
                 if (authAccess == 2) {
                     $http({
@@ -172,7 +181,8 @@ app.controller('accountController', [
                             console.log(returnData);
                         }
                     }).catch(function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.TakeProfileConfig.TakeProfile();
                         }
@@ -192,6 +202,9 @@ app.controller('accountController', [
 
         $scope.trxHistory = {
             getTrxHistory: function () {
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
                 var authAccess = getAuthAccess();
                 if (authAccess == 2) {
                     $http({
@@ -209,7 +222,8 @@ app.controller('accountController', [
                             console.log(returnData);
                         }
                     }).catch(function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.trxHistory.getTrxHistory();
                         }
@@ -232,6 +246,9 @@ app.controller('accountController', [
 
         $scope.editForm = function (name) {
 
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
             // edit profile form
             if (name == 'profile') {
                 $scope.userProfile.edit = !($scope.userProfile.edit);
@@ -270,7 +287,8 @@ app.controller('accountController', [
                             $scope.userProfile.updating = false;
                         }
                     }).catch(function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.editForm(name);
                         }
@@ -334,7 +352,8 @@ app.controller('accountController', [
                                 $scope.password.failed = true;
                             }
                         }).catch(function (returnData) {
-                            if (refreshAuthAccess()) //refresh cookie
+                            $scope.trial++;
+                            if (refreshAuthAccess() && $scope.trial < 4 ) //refresh cookie
                             {
                                 $scope.editForm(name);
                             }
@@ -356,6 +375,9 @@ app.controller('accountController', [
         }
 
         $scope.passwordForm.submit = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
             $scope.passwordForm.submitting = true;
             console.log('submitting form');
             //Check Authorization
@@ -381,7 +403,8 @@ app.controller('accountController', [
                         $scope.passwordForm.submitting = false;
                     }
                 }).catch(function (returnData) {
-                    if (refreshAuthAccess()) //refresh cookie
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.passwordForm.submit();
                     }
@@ -413,6 +436,7 @@ app.controller('forgotController', [
     '$http', '$scope', function ($http, $scope) {
 
         $scope.pageLoaded = true;
+        $scope.trial = 0;
         $scope.form = {
             submitted: false,
             submitting: false,
@@ -426,6 +450,9 @@ app.controller('forgotController', [
         }
 
         $scope.form.submit = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
             $scope.form.submitting = true;
             console.log('submitting form');
             //Check Authorization
@@ -466,8 +493,9 @@ app.controller('forgotController', [
                         }
                     }
 
-                }).catch (function (data) {
-                    if (refreshAuthAccess()) //refresh cookie
+                }).catch(function (data) {
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.form.submit();
                     }
@@ -493,6 +521,7 @@ app.controller('orderDetailController', [
     '$http', '$scope', function ($http, $scope) {
 
         $scope.pageLoaded = true;
+        $scope.trial = 0;
         $scope.getTime = function(dateTime) {
             return new Date(dateTime);
         }
@@ -506,7 +535,10 @@ app.controller('orderDetailController', [
         }
 
          $scope.TakeProfileConfig = {
-            TakeProfile: function () {
+             TakeProfile: function () {
+                 if ($scope.trial > 3) {
+                     $scope.trial = 0;
+                 }
                 //Check Authorization
                 var authAccess = getAuthAccess();
                 if (authAccess == 2) {
@@ -532,7 +564,8 @@ app.controller('orderDetailController', [
                             console.log(returnData);
                         }
                     }).catch(function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.TakeProfileConfig.TakeProfile();
                         }
@@ -622,6 +655,9 @@ app.controller('orderDetailController', [
          }
 
          $scope.GetReservation = function () {
+             if ($scope.trial > 3) {
+                 $scope.trial = 0;
+             }
              $scope.errormsg = '';
              var authAccess = getAuthAccess();
              if (authAccess == 2) {
@@ -652,7 +688,8 @@ app.controller('orderDetailController', [
                          console.log(returnData);
                      }
                  }).catch(function (returnData) {
-                     if (refreshAuthAccess()) //refresh cookie
+                     $scope.trial++;
+                     if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                      {
                          $scope.GetReservation();
                      }
@@ -684,13 +721,17 @@ app.controller('resetController', [
     '$http', '$scope', function ($http, $scope) {
 
         $scope.pageLoaded = true;
+        $scope.trial = 0;
         $scope.form = {
             submitted: false,
             submitting: false,
             userEmail: userEmail,
             code : code
         };
-        $scope.form.submit = function() {
+        $scope.form.submit = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
             $scope.form.submitting = true;
             //Check Authorization
             var authAccess = getAuthAccess();
@@ -717,7 +758,8 @@ app.controller('resetController', [
                         $scope.form.submitting = false;
                     }
                 }).catch(function (returnData) {
-                    if (refreshAuthAccess()) //refresh cookie
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.form.submit();
                     }
@@ -757,6 +799,7 @@ app.controller('authController', [
     '$scope', '$http', function ($scope, $http) {
 
         $scope.pageLoaded = true;
+        $scope.trial = 0;
         $scope.message = loginMessage;
         $scope.returnUrl = document.referrer;
         $scope.errorMessage = '';
@@ -780,6 +823,9 @@ app.controller('authController', [
         
         */
         $scope.form.submit = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
             $scope.form.submitting = true;
             var authAccess = getAuthAccess();
             if (authAccess == 2 || authAccess == 1) {
@@ -814,7 +860,8 @@ app.controller('authController', [
                         console.log('Error : ' + returnData.data.error);
                     }
                 }).catch(function (returnData) {
-                    if (refreshAuthAccess()) //refresh cookie
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.form.submit();
                     }
@@ -846,6 +893,7 @@ app.controller('registerController', [
     '$scope', '$http', function ($scope, $http) {
 
         $scope.pageLoaded = true;
+        $scope.trial = 0;
         $scope.form = {
             email: '',
             submitting: false,
@@ -864,6 +912,9 @@ app.controller('registerController', [
             $scope.form.submitted = false;
         }
         $scope.form.submit = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
             $scope.form.submitting = true;
             var authAccess = getAuthAccess();
             if (authAccess == 1 || authAccess == 2) {
@@ -912,7 +963,8 @@ app.controller('registerController', [
                         console.log('Error : ' + returnData.data.error);
                     }
                 }).catch(function (returnData) {
-                    if (refreshAuthAccess()) //refresh cookie
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.form.submit();
                     }
@@ -934,6 +986,9 @@ app.controller('registerController', [
             
         }
         $scope.form.resubmit = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
             $scope.form.resubmitting = true;
             var authAccess = getAuthAccess();
             if (authAccess == 1 || authAccess == 2) {
@@ -952,8 +1007,9 @@ app.controller('registerController', [
                         $scope.form.email = '';
                     }
 
-                }).catch( function (returnData) {
-                    if (refreshAuthAccess()) //refresh cookie
+                }).catch(function (returnData) {
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.form.resubmit();
                     }
