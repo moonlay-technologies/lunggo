@@ -10,6 +10,9 @@ body.contact-us {
 span.italic {
   font-style: italic; }
 
+.form-control {
+  padding: 6px 10px; }
+
 /*FAQ, HOW TO, CONTACT US*/
 .faq-header, .how-to-header {
   font-size: 13px;
@@ -34,8 +37,14 @@ span.italic {
     color: #36a1e5;
     text-decoration: underline; }
 
+/*.page.page-contact.contact-us {
+    .container {padding: 0 30px;}
+    .contact-list {@include border-radius(5px); @include box-shadow(0px -2px 15px #555); background:#0c9ed5; padding:15px; color:#fff; margin-top:15px; margin-bottom:35px; position:relative; margin-top:60px; padding-top:35px; padding-bottom:0;
+        &:before {width:154px; height:154px; background:url(/Assets/mobile/images/contact-plane.png) center center no-repeat; content:""; position:absolute; top: 0; left: 50%; transform: translate(-50%, -50%); background-size: 50%;}
+    }
+}*/
 .contactus-page .contact-form .container {
-  padding: 10px 20px 30px; }
+  padding: 30px 20px; }
 
 .contactus-page .contact-form input.form-control {
   -webkit-box-shadow: none;
@@ -60,6 +69,33 @@ span.italic {
 .contactus-page .contact-form label.control-label {
   margin-bottom: 15px;
   font-weight: 400; }
+
+.contactus-page .btn.btn-yellow {
+  border: none; }
+
+.contactus-page input[type="text"]::-webkit-input-placeholder, .contactus-page input[type="password"]::-webkit-input-placeholder, .contactus-page input[type="number"]::-webkit-input-placeholder, .contactus-page input[type="email"]::-webkit-input-placeholder, .contactus-page textarea::-webkit-input-placeholder {
+  font-style: italic; }
+
+.contactus-page input[type="text"]::-moz-placeholder, .contactus-page input[type="password"]::-moz-placeholder, .contactus-page input[type="number"]::-moz-placeholder, .contactus-page input[type="email"]::-moz-placeholder, .contactus-page textarea::-moz-placeholder {
+  font-style: italic; }
+
+.contactus-page input[type="text"]:-ms-input-placeholder, .contactus-page input[type="password"]:-ms-input-placeholder, .contactus-page input[type="number"]:-ms-input-placeholder, .contactus-page input[type="email"]:-ms-input-placeholder, .contactus-page textarea:-ms-input-placeholder {
+  font-style: italic; }
+
+.contactus-page input[type="text"]:-moz-placeholder, .contactus-page input[type="password"]:-moz-placeholder, .contactus-page input[type="number"]:-moz-placeholder, .contactus-page input[type="email"]:-moz-placeholder, .contactus-page textarea:-moz-placeholder {
+  font-style: italic; }
+
+.contactus-page .form-group textarea {
+  resize: none; }
+
+.contactus-page header.page__header h1 {
+  font-size: 18px;
+  margin: 0 0 20px; }
+
+.contactus-page .section-title {
+  font-weight: 700; }
+  .contactus-page .section-title.stripe {
+    background-size: 50%; }
 
 /*ACCORDION*/
 .accordion-wrapper {

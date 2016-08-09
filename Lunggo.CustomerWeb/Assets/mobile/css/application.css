@@ -38,6 +38,7 @@ img {
 
 .btn.btn-yellow {
   background: #ffd632;
+  border: 2px solid #ebb600;
   color: #4f3500;
   font-weight: bold; }
 
@@ -73,21 +74,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 input[type="text"], input[type="password"], input[type="number"], input[type="email"] {
   font-size: 12px;
   height: auto; }
-
-input[type="text"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, input[type="number"]::-webkit-input-placeholder, input[type="email"]::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-  font-style: italic; }
-
-input[type="text"]::-moz-placeholder, input[type="password"]::-moz-placeholder, input[type="number"]::-moz-placeholder, input[type="email"]::-moz-placeholder, textarea::-moz-placeholder {
-  font-style: italic; }
-
-input[type="text"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, input[type="number"]:-ms-input-placeholder, input[type="email"]:-ms-input-placeholder, textarea:-ms-input-placeholder {
-  font-style: italic; }
-
-input[type="text"]:-moz-placeholder, input[type="password"]:-moz-placeholder, input[type="number"]:-moz-placeholder, input[type="email"]:-moz-placeholder, textarea:-moz-placeholder {
-  font-style: italic; }
-
-.form-group textarea {
-  resize: none; }
 
 .site-header {
   position: fixed;
@@ -292,12 +278,8 @@ input[type="text"]:-moz-placeholder, input[type="password"]:-moz-placeholder, in
   .site-content a {
     color: #2fb4e6; }
 
-header.page__header h1 {
-  font-size: 18px;
-  margin: 20px 0; }
-
 .section-title {
-  font-weight: 700;
+  font-weight: 600;
   padding-bottom: 15px; }
   .section-title h1 {
     text-align: center; }
@@ -305,8 +287,7 @@ header.page__header h1 {
     color: #1eafe4;
     text-align: center; }
   .section-title.stripe {
-    background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;
-    background-size: 50%; }
+    background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat; }
 
 .form-wrapper {
   padding: 15px;
