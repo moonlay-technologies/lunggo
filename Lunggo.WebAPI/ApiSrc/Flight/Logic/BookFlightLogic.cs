@@ -23,7 +23,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 OnlineContext.SetActiveLanguageCode(request.LanguageCode);
                 var bookServiceRequest = PreprocessServiceRequest(request);
                 var bookServiceResponse = FlightService.GetInstance().BookFlight(bookServiceRequest);
-                var apiResponse = AssembleApiResponse(bookServiceResponse);
+                var apiResponse = AssembleApiResponse(bookServiceResponse, request.Test);
                 return apiResponse;
             }
             else
@@ -53,12 +53,11 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 request.Passengers.TrueForAll(p => p.Type != PaxType.Undefined);
         }
 
-        private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse)
+        private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse, bool test)
         {
             if (bookServiceResponse.IsSuccess)
             {
-                var random = new Random().Next() % 2;
-                if (random == 0)
+                if (!test)
                 {
                     return new FlightBookApiResponse
                     {
