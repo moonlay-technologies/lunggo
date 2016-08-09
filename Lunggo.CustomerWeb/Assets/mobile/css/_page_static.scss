@@ -80,7 +80,7 @@
 }// page privacy
 
 // page how to order
-.page.page-howtoorder {font-size:14px;
+.page.page-howtoorder {
     .howto-content {padding:0 10px;
         .list__wrapper {padding:0; margin:0; list-style:none; counter-reset:howto-counter;
             .list {margin-bottom:15px; counter-increment: howto-counter;
@@ -89,7 +89,7 @@
                         &:before {content:counter(howto-counter); background:#028ec3; color:#fff; font-weight:600; display:inline-block; vertical-align:middle; position:absolute; left:0; top:0; height:100%; padding:15px;}
                     }
                 }
-                .list__content {background:#fff; padding:15px; border:$border-default; border-top:0;
+                .list__content {background:#fff; padding:15px; border:$border-default; border-top:0; font-size:14px;
                     img {margin:15px 0; max-width:100%;}
                 }
             }

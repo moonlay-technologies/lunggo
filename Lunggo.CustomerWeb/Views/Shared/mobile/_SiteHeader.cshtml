@@ -85,7 +85,7 @@
                 <li class="order-check @(ViewBag.CurrentPage == "checkorder" ? "active" : "")">
                     <a href="@Url.Action("CekPemesanan","Home")">Cek Pemesanan</a>
                 </li>
-                <li class="promo">
+                <li class="promo @(ViewBag.CurrentPage == "promo" ? "active" : "")">
                     <a href="@Url.Action("Promo","StaticPage")">Promo Berlangsung</a>
                 </li>
                 <li class="contact @(ViewBag.CurrentPage == "contact" ? "active" : "")">
