@@ -463,8 +463,8 @@
                             <label><b>Pulang Pergi ?</b></label>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" class="hidden" />Tidak</label>
-                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'true'}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" class="hidden" />Ya</label>
+                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'false'}"><input type="radio" name="roundtrip" value="false" ng-model="FlightSearchForm.Trip" ng-click="DatePicker.SetDefaultReturnDate(false)" class="hidden" />Tidak</label>
+                            <label class="flight-trip" ng-class="{'active' : FlightSearchForm.Trip == 'true'}"><input type="radio" name="roundtrip" value="true" ng-model="FlightSearchForm.Trip" class="hidden" ng-click="DatePicker.SetDefaultReturnDate(true)"/>Ya</label>
                         </div>
                     </div>
                 </div>

@@ -15,7 +15,7 @@
     //        )
     //    );
 
-    $scope.Proggress = 0;
+    $scope.Progress = 0;
     $scope.FlightConfig = [
         {
             Name: 'departure',
@@ -82,7 +82,7 @@
     $scope.GetFlight = function (a) {
 
         $scope.PageConfig.Busy = true;
-        console.log(a);
+        //console.log(a);
         if ($scope.Progress < 100) {
 
             console.log('request : ' + $scope.FlightConfig[0].FlightRequest.Requests);

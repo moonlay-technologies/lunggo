@@ -581,6 +581,8 @@ if (typeof (angular) == 'object') {
                     //if ($rootScope.FlightSearchForm.DepartureDate.getDate() > $rootScope.FlightSearchForm.ReturnDate.getDate()) {
                     //    $rootScope.FlightSearchForm.ReturnDate.setDate($rootScope.FlightSearchForm.DepartureDate.getDate() + 1);
                     //}
+                } else {
+                    $rootScope.FlightSearchForm.Trip = "false";
                 }
 
             }
