@@ -649,7 +649,12 @@ app.controller('returnFlightController', [
                                 $scope.arrangeFlightData('return', returnData.data.flights[1].options); // For Return Flight
                             }
                         }
-
+                        
+                        if (targetScope.progress == 100)
+                        {
+                            $scope.generateFlightList('departure');
+                            $scope.generateFlightList('return');
+                        }
 
                         console.log(returnData);
 
@@ -706,40 +711,46 @@ app.controller('returnFlightController', [
                 targetScope.flightList.push(data[i]);
             }
 
-            if (targetScope.progress == 100) {
-
-                // start expiry date
-                $scope.pageConfig.expiry.start();
-
-                // loop the result
-                for (var i = 0; i < targetScope.flightList.length; i++) {
-                    targetScope.flightList[i].Available = true;
-                    // fare rule
-                    targetScope.flightList[i].FareRules = {
-                        Loaded: false,
-                        Content: ''
-                    };
-
-                    // populate prices
-                    targetScope.flightFilter.price.prices.push(targetScope.flightList[i].originalAdultFare);
-
-                    // populate airline code
-                    targetScope.flightList[i].AirlinesTag = [];
-                    for (var x = 0; x < targetScope.flightList[i].trips[0].airlines.length; x++) {
-                        targetScope.flightFilter.airline.airlines.push(targetScope.flightList[i].trips[0].airlines[x]);
-                        targetScope.flightList[i].AirlinesTag.push(targetScope.flightList[i].trips[0].airlines[x].code);
-                    }
-
-                }
-
-                // activate flight filter
-                if (targetScope.name == 'departure') {
-                    $scope.initiateFlightFiltering('departure');
-                } else {
-                    $scope.initiateFlightFiltering('return');
-                }
-            }
         }// $scope.arrangeFlight()
+
+        $scope.generateFlightList = function (targetScope)
+        {
+            if (targetScope == "departure" || targetScope == "Departure") {
+                targetScope = $scope.departureFlightConfig;
+            } else {
+                targetScope = $scope.returnFlightConfig;
+            }
+            // start expiry date
+            $scope.pageConfig.expiry.start();
+
+            // loop the result
+            for (var i = 0; i < targetScope.flightList.length; i++) {
+                targetScope.flightList[i].Available = true;
+                // fare rule
+                targetScope.flightList[i].FareRules = {
+                    Loaded: false,
+                    Content: ''
+                };
+
+                // populate prices
+                targetScope.flightFilter.price.prices.push(targetScope.flightList[i].originalAdultFare);
+
+                // populate airline code
+                targetScope.flightList[i].AirlinesTag = [];
+                for (var x = 0; x < targetScope.flightList[i].trips[0].airlines.length; x++) {
+                    targetScope.flightFilter.airline.airlines.push(targetScope.flightList[i].trips[0].airlines[x]);
+                    targetScope.flightList[i].AirlinesTag.push(targetScope.flightList[i].trips[0].airlines[x].code);
+                }
+
+            }
+
+            // activate flight filter
+            if (targetScope.name == 'departure') {
+                $scope.initiateFlightFiltering('departure');
+            } else {
+                $scope.initiateFlightFiltering('return');
+            }
+        }
 
         // initiate flight filtering
         $scope.initiateFlightFiltering = function(targetFlight) {
