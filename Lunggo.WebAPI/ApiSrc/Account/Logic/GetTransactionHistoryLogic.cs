@@ -22,7 +22,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var email = identity.GetEmail();
             var flight = FlightService.GetInstance();
             var rsvs = identity.IsUserAuthorized() 
-                ? flight.GetOverviewReservationsByUserId(identity.GetUserId()) 
+                ? flight.GetOverviewReservationsByUserId(identity.GetUser().Id) 
                 : flight.GetOverviewReservationsByDeviceId(identity.Claims.Single(claim => claim.Type == "Device ID").Value);
             if (filter != null)
             {
@@ -31,6 +31,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     rsvs =
                         rsvs.Where(
                             rsv => rsv.Itinerary.Trips[0].Segments[0].DepartureTime >= DateTime.UtcNow.AddDays(-1))
+                            .ToList();
+                if (splitFilter.Contains("inactive"))
+                    rsvs =
+                        rsvs.Where(
+                            rsv => rsv.Itinerary.Trips[0].Segments[0].DepartureTime < DateTime.UtcNow.AddDays(-1))
                             .ToList();
                 if (splitFilter.Contains("issued"))
                     rsvs = rsvs.Where(rsv => rsv.RsvDisplayStatus == RsvDisplayStatus.Issued).ToList();

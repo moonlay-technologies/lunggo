@@ -53,11 +53,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 InsertReservationToDb(reservation);
                 output.RsvNo = reservation.RsvNo;
                 output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
+                ExpireReservationWhenTimeout(reservation.RsvNo, reservation.Payment.TimeLimit);
                 
                 //DeleteItinerariesFromCache(input.Token);
 
                 // DEVELOPMENT PURPOSE
-                output.NewPrice = bookResults.Sum(result => result.RevalidateSet.NewPrice);
+                output.NewPrice = itins.Sum(itin => itin.Price.Local);
             }
             else
             {

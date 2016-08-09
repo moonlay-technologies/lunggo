@@ -30,7 +30,9 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERARST02"
                 };
 
-            var result = userManager.ResetPasswordAsync(user.Id, request.Code, request.Password).Result;
+            var result = string.IsNullOrEmpty(request.Code)
+                ? userManager.AddPasswordAsync(user.Id, request.Password).Result
+                : userManager.ResetPasswordAsync(user.Id, request.Code, request.Password).Result;
             return result.Succeeded
                 ? new ApiResponseBase
                 {
@@ -46,8 +48,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
         private static bool IsValid(ResetPasswordApiRequest request)
         {
             var vc = new ValidationContext(request, null, null);
-            return Validator.TryValidateObject(request, vc, null, true) &&
-                request.Code != null;
+            return Validator.TryValidateObject(request, vc, null, true);
         }
     }
 }
