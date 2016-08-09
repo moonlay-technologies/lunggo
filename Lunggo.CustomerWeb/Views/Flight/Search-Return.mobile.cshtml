@@ -86,7 +86,9 @@
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
-}
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    }
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
@@ -830,26 +832,26 @@
                     <div class="form-group">
                         <p class="form-control form-origin" ng-click="FlightSearchForm.AutoComplete.Reset('departure');SetOverlay('airport-select')"
                            ng-init="FlightSearchForm.AirportOrigin.City = '@originCityNames[0]'; FlightSearchForm.AirportOrigin.Code = '@trips[0].OriginAirport'">
-                            {{FlightSearchForm.AirportOrigin.City}} ({{FlightSearchForm.AirportOrigin.Code}})
+                            <b>Asal : </b> <span> {{FlightSearchForm.AirportOrigin.City}} ({{FlightSearchForm.AirportOrigin.Code}})</span>
                         </p>
                     </div>
                     <div class="form-group">
                         <p class="form-control form-destination" ng-click="FlightSearchForm.AutoComplete.Reset('return');SetOverlay('airport-select')"
                            ng-init="FlightSearchForm.AirportDestination.City = '@destinationCityNames[0]'; FlightSearchForm.AirportDestination.Code = '@trips[0].DestinationAirport'">
-                            {{FlightSearchForm.AirportDestination.City}} ({{FlightSearchForm.AirportDestination.Code}})
+                            <b>Tujuan : </b><span> {{FlightSearchForm.AirportDestination.City}} ({{FlightSearchForm.AirportDestination.Code}})</span>
                         </p>
                     </div>
                     <div class="form-group">
-                        <p class="form-control form-date form-departure-date" ng-click="DatePicker.SetOption({Target: 'departure'}); SetOverlay('datepicker-departure')"
+                        <p class="form-control form-date form-departure-date" ng-click="DatePicker.SetOption({Target: 'departure'}, '', 'search-return'); SetOverlay('datepicker-departure')"
                            ng-init="FlightSearchForm.DepartureDate = '@trips[0].DepartureDate.ToString("ddd, d MMM yyyy")'">
-                            <b>Berangkat : </b> {{FlightSearchForm.DepartureDate | date: 'EEE, d MMM yyyy'}}
+                            <b>Berangkat : </b><span> {{FlightSearchForm.DepartureDate | date: 'EEE, d MMM yyyy'}}</span>
                         </p>
                         <input type="text" value="" ng-model="FlightSearchForm.DepartureDate" class="flight-search-form-departure hidden" />
                     </div>
                     <div class="form-group" ng-hide="FlightSearchForm.Trip == 'false'">
-                        <p class="form-control form-date form-return-date" ng-click="DatePicker.SetOption({Target: 'return'}); SetOverlay('datepicker-departure')"
+                        <p class="form-control form-date form-return-date" ng-click="DatePicker.SetOption({Target: 'return'}, '', 'search-return'); SetOverlay('datepicker-departure')"
                            ng-init="FlightSearchForm.ReturnDate = '@trips[1].DepartureDate.ToString("ddd, d MMM yyyy")'">
-                            <b>Kembali: </b> {{FlightSearchForm.ReturnDate | date : 'EEE, d MMM yyyy'}}
+                            <b>Kembali: </b><span> {{FlightSearchForm.ReturnDate | date : 'EEE, d MMM yyyy'}}</span>
                         </p>
                         <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />
                     </div>

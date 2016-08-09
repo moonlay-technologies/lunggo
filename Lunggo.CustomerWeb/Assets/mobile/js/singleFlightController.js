@@ -8,8 +8,14 @@
     });
 
     // ********************
+    //$.datepicker.setDefaults(
+    //        $.extend(
+    //        { 'dateFormat': 'dd/mm/yy' },
+    //        $.datepicker.regional['id']
+    //        )
+    //    );
 
-    $scope.Progress = 0;
+    $scope.Proggress = 0;
     $scope.FlightConfig = [
         {
             Name: 'departure',
