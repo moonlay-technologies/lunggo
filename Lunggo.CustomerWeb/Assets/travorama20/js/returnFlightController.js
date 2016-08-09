@@ -11,6 +11,7 @@ app.controller('returnFlightController', [
         // ******************************
         // general variables
         $scope.pageLoaded = true;
+        $scope.trial = 0;
         $scope.pageConfig = {
             activeFlightSection: 'departure',
             showNotice: false,
@@ -346,6 +347,11 @@ app.controller('returnFlightController', [
         // ******************************
         // revalidate flights
         $scope.selectFlight = function (departureFlightIndexNo, returnFlightIndexNo) {
+            
+            if ($scope.trial > 3)
+            {
+                $scope.trial = 0;
+            }
 
             if ($scope.pageConfig.flightsValidated) {
 
@@ -395,7 +401,8 @@ app.controller('returnFlightController', [
                             $scope.returnFlightConfig.validateAvailable = false;
                         }
                     }).catch(function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.selectFlight(departureFlightIndexNo, returnFlightIndexNo);
                         }
@@ -594,6 +601,11 @@ app.controller('returnFlightController', [
         // get flights
         $scope.getFlight = function (targetScope) {
 
+            if ($scope.trial > 3)
+            {
+                $scope.trial = 0;
+            }
+
             targetScope = $scope.returnFlightConfig;
             $scope.departureFlightConfig.loading = true;
             $scope.departureFlightConfig.loadingFlight = true;
@@ -648,7 +660,8 @@ app.controller('returnFlightController', [
 
                         // if error     
                     }).catch(function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.getFlight('return');
                         }
