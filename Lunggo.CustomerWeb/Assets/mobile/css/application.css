@@ -489,7 +489,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     padding: 22px 18px;
     height: 60px;
     position: fixed;
-    z-index: 1;
+    z-index: 10;
     top: 0;
     left: 0;
     width: 100%;
@@ -961,7 +961,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 /*--------------------*/
 .page.page-home {
   height: 100%;
-  background: #ffffff; }
+  background: #ffffff;
+    overflow-y: auto;
+}
   .page.page-home:after {
     display: block;
     width: 100%;

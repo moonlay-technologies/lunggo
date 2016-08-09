@@ -402,6 +402,29 @@ if (typeof (angular) == 'object') {
                         $rootScope.DatePicker.Settings.SelectedDate = date;
                         $($rootScope.DatePicker.Settings.Target).val(date);
                         $($rootScope.DatePicker.Settings.Target).trigger('input');
+
+                        var depdate = new Date($rootScope.FlightSearchForm.DepartureDate);
+                        var retdate = new Date($rootScope.FlightSearchForm.ReturnDate);
+                        if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
+                            depdate = new Date(date);
+                            $rootScope.FlightSearchForm.DepartureDate = date;
+                        } else {
+                            retdate = new Date(date);
+                            $rootScope.FlightSearchForm.ReturnDate = date;
+                        }
+                        console.log(depdate > retdate);
+                        if (depdate > retdate) {
+                            $('.form__departure .field-container span').text(date);
+                            $('.form__return .field-container span').text(date);
+                            $('.ui-datepicker.departure-date').datepicker("setDate", date);
+                        } else {
+                            if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
+                                $('.form__departure .field-container span').text(date);
+                                $('.ui-datepicker.departure-date').datepicker("setDate", date);
+                            } else {
+                                $('.form__return .field-container span').text(date);
+                            }
+                        }
                     },
                     
                     //showO
@@ -452,6 +475,16 @@ if (typeof (angular) == 'object') {
                 $('.ui-datepicker.return-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
                 
                 // set on choose date function
+
+            },
+            SetDefaultReturnDate: function (val) {
+                if (val == true) {
+                    $rootScope.FlightSearchForm.Trip = "true";
+                    //if ($rootScope.FlightSearchForm.DepartureDate.getDate() > $rootScope.FlightSearchForm.ReturnDate.getDate()) {
+                    //    $rootScope.FlightSearchForm.ReturnDate.setDate($rootScope.FlightSearchForm.DepartureDate.getDate() + 1);
+                    //}
+                }
+
             }
         };// datepicker
         

@@ -663,109 +663,120 @@ app.controller('LoginController', ['$http', '$scope', '$rootScope', function($ht
     $scope.User = {
         Email: '',
         newEmail: '',
-            Resubmitting: false,
-            Resubmitted: false,
-            Password: '',
-            Message: '',
-            Sending: false,
-            Sent: false,
-            Send: function() {
-                $scope.User.Sending = true;
-                var authAccess = getAuthAccess();
-                if (authAccess == 2 || authAccess == 1)
-                {
-                    $http({
-                        method: 'POST',
-                        url: LoginConfig.Url,
-                        data:{
-                            userName: $scope.User.Email,
-                            password: $scope.User.Password,
-                            clientId: 'Jajal',
-                            clientSecret: 'Standar'
-                        },
-                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                    }).then(function (returnData) {
-                        $scope.User.Resubmitting = false;
-                        if (returnData.data.status == '200') {
-                            setCookie("accesstoken", returnData.data.accessToken, returnData.data.expTime);
-                            setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
-                            setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
-                            $scope.User.Email = '';
-                            $scope.User.Resubmitted = true;
-                            window.location.href = "/";
+        Resubmitting: false,
+        Resubmitted: false,
+        Password: '',
+        Message: '',
+        Sending: false,
+        Sent: false,
+        Send: function() {
+            $scope.User.Sending = true;
+            var authAccess = getAuthAccess();
+            if (authAccess == 2 || authAccess == 1)
+            {
+                $http({
+                    method: 'POST',
+                    url: LoginConfig.Url,
+                    data:{
+                        userName: $scope.User.Email,
+                        password: $scope.User.Password,
+                        clientId: 'Jajal',
+                        clientSecret: 'Standar'
+                    },
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).then(function (returnData) {
+                    $scope.User.Resubmitting = false;
+                    if (returnData.data.status == '200') {
+                        setCookie("accesstoken", returnData.data.accessToken, returnData.data.expTime);
+                        setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
+                        setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
+                        $scope.User.Email = '';
+                        $scope.User.Resubmitted = true;
+                        window.location.href = "/";
+                    }
+                    else {
+                        $scope.overlay = true;
+                        if (returnData.data.error == 'ERALOG01') {
+                            $scope.User.Message = 'RefreshNeeded';
                         }
+                        else if (returnData.data.error == 'ERALOG02') {
+                                $scope.User.Message = 'InvalidInputData';
+                        } //
+                        else if (returnData.data.error == 'ERALOG03') {
+                            $scope.User.Message = 'AlreadyRegisteredButUnconfirmed';
+                            $scope.User.Resubmitted = false;
+                        } //
+                        else if (returnData.data.error == 'ERALOG04') {
+                                $scope.User.Message = 'Failed';
+                        } //
+                        else if (returnData.data.error == 'ERALOG05') {
+                            $scope.User.Message = 'NotRegistered';
+                        } //
                         else {
-                            $scope.overlay = true;
-                            if (returnData.data.error == 'ERALOG01') { $scope.User.Message = 'RefreshNeeded'; }
-                            else if (returnData.data.error == 'ERALOG02') { $scope.User.Message = 'InvalidInputData'; } //
-                            else if (returnData.data.error == 'ERALOG03') {
-                                $scope.User.Message = 'AlreadyRegisteredButUnconfirmed';
-                                $scope.User.Resubmitted = false;
-                            } //
-                            else if (returnData.data.error == 'ERALOG04') { $scope.User.Message = 'Failed'; } //
-                            else if (returnData.data.error == 'ERALOG05') { $scope.User.Message = 'NotRegistered'; } //
-                            else { $scope.errorMessage = 'Failed'; }
-                            console.log('Error : ' + returnData.data.error);
-                            $scope.User.Sending = false;
+                                $scope.errorMessage = 'Failed';
                         }
-                    }).catch(function (data) {
-                        if (refreshAuthAccess()) //refresh cookie
-                        {
-                            $scope.User.Send();
-                        }
-                        else {
-                            console.log('Failed requesting confirmation e-mail');
-                            $scope.User.Message = 'Failed';
-                        }
-                    });
-                }
-                else
-                {
-                    $scope.User.Message = 'Failed';
-                }
-                
-            },
-
-            Reconfirm: function () {
-                $scope.User.Resubmitting = true;
-                var authAccess = getAuthAccess();
-                if (authAccess == 1 || authAccess == 2)
-                {
-                    $http({
-                        url: ResendConfirmationEmailConfig.Url,
-                        method: 'POST',
-                        data: {
-                            Email: $scope.User.newEmail,
-                        },
-                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                    }).then(function (returnData) {
-                        $scope.User.Resubmitting = false;
-
-                        if (returnData.data.Status == "Success") {
-                            $scope.User.Email = '';
-                            $scope.User.Resubmitted = true;
-                        }
-
-                    }).catch(function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
-                        {
-                            $scope.User.Reconfirm();
-                        }
-                        else {
-                            console.log('Failed requesting confirmation e-mail');
-                            $scope.submitting = false;
-                            $scope.submitted = false;
-                        }
-                    });
-                }
-                else
-                {
-                    console.log('Not Authorized');
-                    $scope.submitting = false;
-                    $scope.submitted = false;
-                }
-                
+                        console.log('Error : ' + returnData.data.error);
+                        $scope.User.Sending = false;
+                    }
+                }).catch(function (data) {
+                    if (refreshAuthAccess()) //refresh cookie
+                    {
+                        $scope.User.Send();
+                    }
+                    else {
+                        console.log('Failed requesting confirmation e-mail');
+                        $scope.User.Message = 'Failed';
+                    }
+                });
             }
+            else
+            {
+                $scope.User.Message = 'Failed';
+            }
+                
+        },
+
+        Reconfirm: function () {
+            $scope.User.Resubmitting = true;
+            var authAccess = getAuthAccess();
+            if (authAccess == 1 || authAccess == 2)
+            {
+                $http({
+                    url: ResendConfirmationEmailConfig.Url,
+                    method: 'POST',
+                    data: {
+                        email: $scope.User.Email,
+                    },
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).then(function (returnData) {
+                    $scope.User.Resubmitting = false;
+
+                    if (returnData.data.status == "200") {
+                        $scope.User.Email = '';
+                        $scope.User.Password = '';
+                        $scope.User.Resubmitted = true;
+                    }
+
+                }).catch(function (returnData) {
+                    if (refreshAuthAccess()) //refresh cookie
+                    {
+                        $scope.User.Reconfirm();
+                    }
+                    else {
+                        console.log('Failed requesting confirmation e-mail');
+                        $scope.submitting = false;
+                        $scope.submitted = false;
+                    }
+                });
+            }
+            else
+            {
+                console.log('Not Authorized');
+                $scope.submitting = false;
+                $scope.submitted = false;
+            }
+                
+        }
     }
 }]);// Login Controller
 
@@ -804,13 +815,14 @@ app.controller('RegisterController', ['$http', '$scope', '$rootScope', function(
                 url: ResendConfirmationEmailConfig.Url,
                 method: 'POST',
                 data: {
-                    Email: $scope.User.Email,
-                }
+                    email: $scope.User.Email,
+                },
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
             }).then(function (returnData) {
                 $scope.User.Resubmitting = false;
                 
 
-                if (returnData.data.Status == "Success") {
+                if (returnData.data.status == "200") {
                     $scope.User.Email = '';
                     $scope.User.Resubmitted = true;
                 }
@@ -865,14 +877,14 @@ app.controller('RegisterController', ['$http', '$scope', '$rootScope', function(
                         switch (returnData.data.error) {
                             case "ERAREG02":
                                 $scope.User.Registered = true;
-                                $scope.User.EmailSent = true;
-                                $scope.User.EmailConfirmed = false;
-                                break;
-                            case "ERAREG03":
-                                $scope.User.Registered = true;
                                 $scope.User.EmailSent = false;
                                 $scope.User.EmailConfirmed = true;
                                 $scope.User.Email = '';
+                                break;
+                            case "ERAREG03":
+                                $scope.User.Registered = true;
+                                $scope.User.EmailSent = true;
+                                $scope.User.EmailConfirmed = false;
                                 break;
                             case "ERRGEN99":
                                 $scope.User.Error = true;
@@ -963,7 +975,7 @@ app.controller('ForgotpasswordController', ['$http', '$scope', '$rootScope', fun
         $scope.EmailForm.Sending = false;
         $scope.EmailForm.Sent = false;
     }
-
+    $scope.emailReconfirm = "";
     $scope.EmailForm = {
         Email: "",
         Email1: "",
@@ -983,11 +995,13 @@ app.controller('ForgotpasswordController', ['$http', '$scope', '$rootScope', fun
             var authAccess = getAuthAccess();
             if (authAccess == 1 || authAccess == 2) {
                 $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                $scope.emailReconfirm = $scope.EmailForm.Email;
+                //console.log($scope.emailReconfirm);
                 $http({
                     url: ForgotPasswordConfig.Url,
                     method: 'POST',
                     data: {
-                        email: $scope.EmailForm.Email
+                        userName: $scope.EmailForm.Email
                     },
                     headers: { 'Authorization': $scope.getFlightHeader }
                 }).then(function (returnData) {
@@ -1003,15 +1017,18 @@ app.controller('ForgotpasswordController', ['$http', '$scope', '$rootScope', fun
                             case "ERAFPW01":
                                 $scope.EmailForm.ReturnData.Found = false;
                                 $scope.EmailForm.ReturnData.EmailConfirmed = false;
+                                $scope.EmailForm.Sending = false;
                                 break;
                             case "ERAFPW02":
                                 $scope.EmailForm.ReturnData.Found = false;
                                 $scope.EmailForm.ReturnData.EmailConfirmed = true;
+                                $scope.EmailForm.Sending = false;
                                 break;
                             case "ERAFPW03":
                                 $scope.EmailForm.ReturnData.Found = true;
                                 $scope.EmailForm.ReturnData.EmailConfirmed = false;
-                                $scope.EmailForm.Email1 = $scope.EmailForm.Email;
+                               
+                                $scope.EmailForm.Sending = false;
                                 break;
                             case "ERRGEN99":
                                 $scope.EmailForm.ReturnData.Error = true;
@@ -1041,19 +1058,21 @@ app.controller('ForgotpasswordController', ['$http', '$scope', '$rootScope', fun
         Reconfirm: function() {
                 $scope.EmailForm.Resubmit = true;
                 var authAccess = getAuthAccess();
+                //console.log("at reconfirm: " + $scope.emailReconfirm);
                 if (authAccess == 1 || authAccess == 2)
                 {
                     $http({
                         url: ResendConfirmationEmailConfig.Url,
                         method: 'POST',
                         data: {
-                            Email: $scope.EmailForm.Email,
-                        }
+                            email: $scope.emailReconfirm,
+                        },
+                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                     }).then(function (returnData) {
                         $scope.EmailForm.Resubmit = false;
                         $scope.EmailForm.SentReconfirm = true;
 
-                        if (returnData.data.Status == "Success") {
+                        if (returnData.data.status == "200") {
                             $scope.EmailForm.Email = '';
                         }
 
