@@ -22,7 +22,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var email = identity.GetEmail();
             var flight = FlightService.GetInstance();
             var rsvs = identity.IsUserAuthorized() 
-                ? flight.GetOverviewReservationsByUserId(identity.GetUserId()) 
+                ? flight.GetOverviewReservationsByUserId(identity.GetUser().Id) 
                 : flight.GetOverviewReservationsByDeviceId(identity.Claims.Single(claim => claim.Type == "Device ID").Value);
             if (filter != null)
             {

@@ -10,6 +10,7 @@ if (typeof(angular) == 'object') {
 //********************
 // variables
 var currentDate = new Date();
+var trial = 0;
 
 //********************
 // site header function
@@ -139,7 +140,7 @@ function subscribeFormFunctions() {
         $.ajax({
             url: SubscribeConfig.Url,
             method: 'POST',
-            data: { address : SubscribeConfig.email, name : SubscribeConfig.name },
+            data: JSON.stringify({ "email" : SubscribeConfig.email, "name" : SubscribeConfig.name}),
             headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
         }).done(function (returnData) {
 
@@ -206,7 +207,7 @@ $(document).ready(function () {
         $.ajax({
             url: SubscribeConfig.Url,
             method: 'POST',
-            data: { address: email, name: subscriberName },
+            data: JSON.stringify({ "email" : email, "name" : subscriberName}),
             headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
         }).done(function (returnData) {
             console.log('done');
