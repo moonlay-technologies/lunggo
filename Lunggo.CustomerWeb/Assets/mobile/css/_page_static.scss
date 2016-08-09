@@ -89,7 +89,7 @@
                         &:before {content:counter(howto-counter); background:#028ec3; color:#fff; font-weight:600; display:inline-block; vertical-align:middle; position:absolute; left:0; top:0; height:100%; padding:15px;}
                     }
                 }
-                .list__content {background:#fff; padding:15px; border:$border-default; border-top:0; font-size:14px;
+                .list__content {background:#fff; padding:15px; border:$border-default; border-top:0;
                     img {margin:15px 0; max-width:100%;}
                 }
             }
