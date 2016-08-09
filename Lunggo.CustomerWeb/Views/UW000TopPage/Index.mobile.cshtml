@@ -36,7 +36,8 @@
                 </div>
                 <div class="col-xs-2">
                     <div class="flip-container">
-                        <a class="flip" href="#"><span class="icon-flip"></span></a>
+                        <a class="flip" href="#"><span class="icon-flip" ng-click="temp = FlightSearchForm.AirportOrigin.Code; FlightSearchForm.AirportOrigin.Code = FlightSearchForm.AirportDestination.Code; FlightSearchForm.AirportDestination.Code = temp;
+                                                       temp = FlightSearchForm.AirportOrigin.City; FlightSearchForm.AirportOrigin.City = FlightSearchForm.AirportDestination.City; FlightSearchForm.AirportDestination.City= temp;"></span></a>
                     </div>
                 </div>
                 <div class="col-xs-5">
@@ -63,9 +64,9 @@
                     <div class="field-container">
                         <p class="os-bold">Pulang Pergi ?</p>
                         <label class="switch">
-                            <input type="checkbox" ng-model="val" ng-true-value="true" ng-false-value="false">
+                            <input type="checkbox" ng-model="val" ng-true-value="true" ng-false-value="false" ng-click="DatePicker.SetDefaultReturnDate(val)">
                             <div class="slider round"></div>
-                        </label>
+                         </label>
                     </div>
                 </div>
                 <div class="form-group form__return" ng-show="val">
@@ -89,7 +90,9 @@
                 <div class="form-group form__passenger">
                     <span class="icon-people"></span>
                     <div class="field-container">
-                        <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}}</p>
+                        <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}} Dewasa</p>
+                        <p class="form-control" ng-show="FlightSearchForm.Passenger[1] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('children'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[1]}} Anak</p>
+                        <p class="form-control" ng-show="FlightSearchForm.Passenger[2] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[2]}} Bayi</p>
                     </div>
                 </div>
                 @*<div class="form__adult">
@@ -155,7 +158,7 @@
                 </div>*@
                 <div class="overlay-selector__body">
                     <div class="calendar-container">
-                        <div class="ui-datepicker departure-date"></div>
+                        <div class="ui-datepicker return-date" id="returnDate"></div>
                     </div>
                     @*<div class="event">
                         <span class="date-event">24:</span> Holiday

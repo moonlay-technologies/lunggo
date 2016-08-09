@@ -364,7 +364,7 @@ app.controller('checkoutController', [
                     else {
                         $scope.buyerInfo = {};
                     }
-                }).error(function (returnData) {
+                }).catch(function (returnData) {
 
                     $scope.buyerInfo = {};
                 });
