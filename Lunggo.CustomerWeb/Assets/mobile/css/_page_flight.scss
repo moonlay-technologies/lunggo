@@ -220,7 +220,7 @@
                     .flight__detail {position:relative; @include clearfix();
                         &>div {float:left;}
                         .flight__departure {width:45%;}
-                        .flight__separator {width:10%; height:100%; position:absolute; background:url(/Assets/mobile/images/flight-separator.png) center center no-repeat; left:45%;}
+                        .flight__separator {width:15%; height:100%; position:absolute; background:url(/Assets/mobile/images/flight-separator.png) center center no-repeat; left:35%; text-align: center;}
                         .flight__arrival {@extend & .flight__departure; margin-left:10%;}
                     }
                 }
