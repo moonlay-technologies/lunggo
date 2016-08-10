@@ -136,18 +136,18 @@ img {max-width:100%;}
 .display-block {display:block !important;}
 
 .btn {@include border-radius($border-radius-default);}
-.btn.btn-yellow {background: $color-yellow; color:#000000; font-weight:bold; border-radius: 2px;}
-.btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; border:2px solid #adadad;}
+.btn.btn-yellow {background: $color-yellow; color:#000000; font-weight:bold; border-radius: 2px; box-shadow: none;}
+.btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; box-shadow: none;}
 .btn.block {display:block; width:50%;}
 
 .error-message {padding:5px 10px; background-color: #1daee4;}
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {-webkit-appearance:none;-moz-appearance:none; margin:0;}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea {@include border-radius($border-radius-default);}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select.form-control {@include border-radius($border-radius-default);}
 .form-control {@include border-radius($border-radius-default)}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"] {box-shadow: none; font-size:12px; height:auto;}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], select.form-control {box-shadow: none; font-size:12px; height:auto;}
 
 // *****
 // site header
@@ -287,7 +287,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
 }
 .form-group {
-    input[type="text"], input[type="password"], input[type="number"], input[type="email"] {height: 40px;}
+    input[type="text"], input[type="password"], input[type="number"], input[type="email"], select.form-control {height: 40px;}
     button {
         height: 40px;
         font-size: 15px;
