@@ -936,7 +936,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .confirmation-content .container_new .row1 {
   padding-bottom: 10px;
-  color: red; }
+  color: black; }
 
 #ui-datepicker-div > .ui-datepicker {
   display: none !important; }
@@ -957,6 +957,136 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   border-top: 1px solid #ccc;
   margin: 15px 0;
   padding-top: 15px; }
+
+.countdown .widget-content {
+  background: #ffd632;
+  padding: 15px; }
+  .countdown .widget-content .timer {
+    background: #ffefb0;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #dab939;
+    color: #4d4e4e; }
+    .countdown .widget-content .timer > div {
+      display: inline-block; }
+    .countdown .widget-content .timer h5 {
+      font-weight: bold;
+      font-size: 36px;
+      margin-bottom: 0;
+      margin-top: 0; }
+    .countdown .widget-content .timer span {
+      font-size: 12px; }
+    .countdown .widget-content .timer .separator {
+      vertical-align: top;
+      margin-left: 6px;
+      margin-right: 6px; }
+
+.summary--price dl:after {
+  display: block;
+  width: 100%;
+  content: "";
+  clear: both; }
+
+.summary--price dl dt {
+  float: left;
+  width: 50%;
+  font-weight: normal;
+  position: relative;
+  padding-left: 12px; }
+  .summary--price dl dt:before {
+    position: absolute;
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: #ff7200;
+    top: 3px;
+    left: 0; }
+
+.summary--price dl dd {
+  float: left;
+  width: 50%;
+  text-align: right;
+  font-weight: bold; }
+
+.summary--price dl.total-price {
+  border-top: 1px solid #ccc;
+  padding-top: 10px; }
+  .summary--price dl.total-price dt {
+    width: 35%; }
+    .summary--price dl.total-price dt:before {
+      display: none; }
+  .summary--price dl.total-price dd {
+    width: 65%;
+    color: #ff7200;
+    font-size: 16px; }
+
+.summary--passenger {
+  color: black; }
+  .summary--passenger h4 {
+    color: black;
+    font-weight: bold; }
+  .summary--passenger ol {
+    padding-left: 20px; }
+  .summary--passenger dl {
+    margin-bottom: 5px;
+    color: #333; }
+    .summary--passenger dl:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .summary--passenger dl dt {
+      float: left;
+      width: 50%;
+      font-weight: normal;
+      position: relative; }
+      .summary--passenger dl dt:after {
+        position: absolute;
+        content: ':';
+        right: 10px; }
+    .summary--passenger dl dd {
+      float: left;
+      width: 50%;
+      font-weight: bold; }
+
+.summary--voucher {
+  background: #eaeaea;
+  padding: 10px; }
+  .summary--voucher h4 {
+    font-weight: bold; }
+
+.summary--payment label {
+  border: 1px solid #ccc;
+  display: block;
+  width: 100%;
+  background: #fff;
+  color: #fff; }
+  .summary--payment label header {
+    background: #36b6e7;
+    position: relative; }
+    .summary--payment label header:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .summary--payment label header .input-wrapper {
+      float: left;
+      background: #028ec3;
+      width: 30px;
+      text-align: center;
+      position: absolute;
+      height: 100%;
+      padding-top: 5px; }
+    .summary--payment label header h5 {
+      padding: 10px;
+      margin: 0;
+      float: left;
+      padding-left: 40px;
+      font-weight: bold;
+      width: 100%; }
+  .summary--payment label section {
+    text-align: center;
+    padding: 5px; }
 
 /*--------------------*/
 .page.page-home {
@@ -1903,7 +2033,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     font-size: 16px; }
 
 .page.page-checkout .overlay--flight-detail .overlay__body.overlay__content {
-  padding-bottom: 30px; }
+  padding-bottom: 20px; }
   .page.page-checkout .overlay--flight-detail .overlay__body.overlay__content .flight__separator {
     left: 35%; }
 
