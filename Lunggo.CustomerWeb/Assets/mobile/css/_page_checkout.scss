@@ -115,6 +115,7 @@
     .overlay--flight-detail {
         .flight-detail-wrapper {padding:10px; padding-top:0;}
         .flight-fare-wrapper {padding:10px;
+                              margin: 0 -10px;
             .fare-note {background:#eaeaea; padding:10px;}
         }
         dl {@include clearfix();

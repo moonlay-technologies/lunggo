@@ -1982,7 +1982,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding-top: 0; }
 
 .page.page-checkout .overlay--flight-detail .flight-fare-wrapper {
-  padding: 10px; }
+  padding: 10px;
+  margin: 0 -10px; }
   .page.page-checkout .overlay--flight-detail .flight-fare-wrapper .fare-note {
     background: #eaeaea;
     padding: 10px; }
