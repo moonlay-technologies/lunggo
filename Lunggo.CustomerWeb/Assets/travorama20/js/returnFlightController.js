@@ -103,7 +103,7 @@ app.controller('returnFlightController', [
             },
             flightSort: {
                 label: 'price',
-                value: 'TotalFare',
+                value: 'originalAdultFare',
                 reverse: false
             },
             activeFlight: -1,
@@ -153,7 +153,7 @@ app.controller('returnFlightController', [
             },
             flightSort: {
                 label: 'price',
-                value: 'TotalFare',
+                value: 'originalAdultFare',
                 reverse: false
             },
             activeFlight: -1,

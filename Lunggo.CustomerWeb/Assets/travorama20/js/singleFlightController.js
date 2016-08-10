@@ -202,7 +202,7 @@ app.controller('singleFlightController', [
         // flight sort function
         $scope.sort = {
             label: 'price',
-            value: 'TotalFare',
+            value: 'originalAdultFare',
             reverse: false
         };
         $scope.setSort = function (sort) {
