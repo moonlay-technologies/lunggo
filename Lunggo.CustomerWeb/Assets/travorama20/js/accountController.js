@@ -816,7 +816,8 @@ app.controller('authController', [
             password: '',
             submitting: false,
             isLogin: false,
-            submitted:false
+            submitted: false,
+            success: false
         };
         /*
         
@@ -845,7 +846,7 @@ app.controller('authController', [
                         setCookie("accesstoken",returnData.data.accessToken, returnData.data.expTime);
                         setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
                         setCookie("authkey",returnData.data.accessToken, returnData.data.expTime);
-
+                        $scope.form.success = true;
                         window.location.href= $scope.returnUrl;
                     }
                     else {

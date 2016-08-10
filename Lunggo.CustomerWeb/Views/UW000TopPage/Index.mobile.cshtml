@@ -13,7 +13,7 @@
     <script src="/Config/JsConfig.js"></script>
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
-    @*<script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>*@
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     @*<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>*@
 
 }
@@ -95,15 +95,6 @@
                         <p class="form-control" ng-show="FlightSearchForm.Passenger[2] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[2]}} Bayi</p>
                     </div>
                 </div>
-                @*<div class="form__adult">
-                    <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}}</p>
-                </div>
-                <div class="form__child">
-                    <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('children'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[1]}}</p>
-                </div>
-                <div class="form__infant">
-                    <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[2]}}</p>
-                </div>*@    
             </div>
             <div class="form-group form__submit">
                 <button class="btn btn-yellow btn-block btn-lg">CARI PENERBANGAN</button>

@@ -116,9 +116,9 @@
 
             <header class="page__header">
                 <div class="step__wrapper">
-                    <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01. Data Kontak</span></div>
-                    <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02. Data Penumpang</span></div>
-                    <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03. Review Pesanan</span></div>
+                    <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01. Data <br />Kontak</span></div>
+                    <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02. Data <br />Penumpang</span></div>
+                    <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03. Review <br />Pesanan</span></div>
                 </div>
             </header><!-- .page-header -->
 
@@ -512,8 +512,8 @@
                             <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
                         </div>
 
-                        <a class="btn btn-grey" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(2)">KEMBALI</a>
-                        <input type="submit" class="btn btn-yellow" value="{{ !book.booking ? 'PESAN' : 'MEMPROSES' }}">
+                        <button class="btn btn-grey form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(2)">KEMBALI</button>
+                        <button type="submit" class="btn btn-yellow form-control" ng-disabled="book.booking">PESAN</button>
 
                     </form><!-- finalForm -->
 
