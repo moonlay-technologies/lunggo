@@ -28,7 +28,7 @@
     }
 }
 @{
-    DateTime timelimit = (DateTime)Model.Payment.TimeLimit;
+    var timelimit = Model.Payment.TimeLimit;
     FlightSegment prevSegment = null;
 }
 
@@ -55,8 +55,9 @@
     var paymentTimeout = '';
 
     // development only start
-    paymentTimeout = new Date('@timelimit.AddMinutes(-30).ToString("u")');
-
+    paymentTimeout = new Date('@Model.Payment.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("u")');
+        console.log("TIME OUT: " + paymentTimeout);
+    //paymentTimeout = new Date('@Model.RsvTime.AddMinutes(-30).ToString("u")');
     // countdown timer
     $('.timer').countdown(paymentTimeout, function (event) {
         $('.timer .hour').text(event.strftime('%H'));
@@ -95,20 +96,20 @@
                                 <div class="summary__body">
                                     <dl>
                                         <dt>Total Tiket</dt>
-                                        <dd>Rp @((Model.Payment.FinalPrice +  + Model.Payment.TransferFee).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                        <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                     </dl>
                                     @if (Model.Payment.DiscountNominal != 0)
                                     {
                                         <dl>
                                             <dt>Potongan Harga</dt>
-                                            <dd>- Rp @Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                            <dd>Rp @Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                         </dl>
                                     }
                                     @if (Model.Payment.TransferFee != 0)
                                     {
                                         <dl>
                                             <dt>Kode Unik Pembayaran</dt>
-                                            <dd>- Rp @Model.Payment.TransferFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                            <dd> Rp @Model.Payment.TransferFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                         </dl>
                                     }
                                     <dl class="total-price">
