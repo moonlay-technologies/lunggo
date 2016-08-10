@@ -476,8 +476,14 @@ if (typeof (angular) == 'object') {
                     onSelect: function (date) {
                         
                         var trsdate = $rootScope.DatePicker.ChangeLanguage(date);
-                        $rootScope.PageConfig.SetOverlay(overlay);
-                        $rootScope.DatePicker.Settings.SelectedDate = trsdate;
+                        if (position == 'search-return' || position == 'search-single') {
+                            $rootScope.PageConfig.SetOverlay('flight-form');
+                        } else {
+                            $rootScope.PageConfig.SetOverlay(overlay);
+                        }
+                       
+                        console.log("tes123: "+ trsdate);
+                        $rootScope.DatePicker.Settings.SelectedDate = new Date(trsdate);
                         $($rootScope.DatePicker.Settings.Target).val(trsdate);
                         $($rootScope.DatePicker.Settings.Target).trigger('input');
                         
@@ -492,34 +498,36 @@ if (typeof (angular) == 'object') {
                         }
                       
                         if (depdate > retdate) {
+                            $('.form__departure .field-container span').text(date);
+                            $('.form__return .field-container span').text(date);
                             if (position == null) {
-                                $('.form__departure .field-container span').text(date);
-                                $('.form__return .field-container span').text(date);
-                                $('.ui-datepicker.departure-date').datepicker("setDate", trsdate);
+                                $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
+                                $rootScope.FlightSearchForm.ReturnDate = new Date(trsdate);
                             } else if (position == 'search-single' || position == 'search-return') {
-                                $('.form-departure-date span').text(date);
-                                $('.form-return-date span').text(date);
-                                $('.ui-datepicker.departure-date').datepicker("setDate", trsdate);
-                                $('.ui-datepicker.return-date').datepicker("setDate", trsdate);
+                                //$('.form-departure-date span').text(date);
+                                //$('.form-return-date span').text(date);
+                                $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
+                                $('.ui-datepicker.return-date').datepicker("setDate", new Date(trsdate));
+                                $rootScope.PageConfig.SetOverlay('flight-form');
                             }
                             
                         } else {
                             if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
+                                $('.form__departure .field-container span').text(date);
                                 if (position == null) {
-                                    $('.form__departure .field-container span').text(date);
-                                    $('.ui-datepicker.departure-date').datepicker("setDate", trsdate);
+                                    //$('.form__departure .field-container span').text(date);
+                                    $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
                                 } else if (position == 'search-single' || position == 'search-return') {
-                                    $('.form-departure-date span').text(date);
-                                    $('.ui-datepicker.departure-date').datepicker("setDate", trsdate);
+                                    //$('.form-departure-date span').text(date);
+                                    $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
                                 }
                             } else {
-                                if (position == null) {
-                                    $('.form__return .field-container span').text(date);
-
-                                }
-                                else if (position == 'search-single' || position == 'search-return')
+                                //if (position == null) {
+                                $('.form__return .field-container span').text(date);
+                                //}
+                                if (position == 'search-single' || position == 'search-return')
                                 {
-                                    $('.form-return-date span').text(date);
+                                    //$('.form-return-date span').text(date);
                                     $('.ui-datepicker.return-date').datepicker("setDate", trsdate);
 
                                 }    
@@ -537,13 +545,19 @@ if (typeof (angular) == 'object') {
                 
                 if (options.Target == 'departure') {
                     //$(".ui-datepicker").datepicker("option", "showOn", "hide");
+                    
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
                     $('.ui-datepicker').datepicker('option', 'minDate', new Date());
                     if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.ReturnDate) {
-                        $('.ui-datepicker').datepicker('option', 'maxDate', new Date($rootScope.FlightSearchForm.ReturnDate));
-                    } 
+                        var mydate = $rootScope.FlightSearchForm.ReturnDate;
+                        var day = mydate.getDay();
+                        var mth = mydate.getMonth();
+                        $('.ui-datepicker').datepicker('option', 'maxDate', $rootScope.FlightSearchForm.ReturnDate);
+                    }
+                    
                     
                     else {
+                        console.log($rootScope.DatePicker.Settings.SelectedDate);
                         $('.ui-datepicker').datepicker('option', 'maxDate', null);
                     }
                     if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.DepartureDate) {
@@ -552,7 +566,7 @@ if (typeof (angular) == 'object') {
                 } else {
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-return';
                     if ($rootScope.FlightSearchForm.DepartureDate) {
-                        $('.ui-datepicker').datepicker('option', 'minDate', new Date($rootScope.FlightSearchForm.DepartureDate));
+                        $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.FlightSearchForm.DepartureDate);
                     }
                     if ($rootScope.FlightSearchForm.Trip == "true") {
                         if ($rootScope.FlightSearchForm.ReturnDate) {
