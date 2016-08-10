@@ -512,8 +512,8 @@
                             <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
                         </div>
 
-                        <a class="btn btn-grey" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(2)">KEMBALI</a>
-                        <input type="submit" class="btn btn-yellow" value="{{ !book.booking ? 'PESAN' : 'MEMPROSES' }}">
+                        <button class="btn btn-grey form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(2)">KEMBALI</button>
+                        <button type="submit" class="btn btn-yellow form-control" ng-disabled="book.booking">PESAN</button>
 
                     </form><!-- finalForm -->
 

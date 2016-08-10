@@ -1,0 +1,188 @@
+﻿.form-wrapper {
+    padding: 0;
+    min-height: 100%;
+    background: none; 
+    border: 0;
+    h1 {
+        text-align:center; 
+        margin-bottom:25px; 
+        color: $color-white;
+    }
+    form {
+        .form-group {
+            margin-bottom: 0;
+            p.form-control { 
+                height:auto;
+            }
+        }
+                
+        .form__destination, .form__origin {
+            .title-destination {
+                @extend .os-light;
+                font-size: 13px;
+                text-align: center;
+                margin-bottom: 10px;
+                color: $color-black;
+            }
+            p.form-control {
+                text-align:center;
+                background: #ecf0f4;
+                max-width: 120px;
+                margin: 0 auto;
+                box-shadow: none;
+                @include border-radius($border-radius-big);
+                border: $border-grey-btn;
+                cursor: pointer;
+            }
+        }
+        span.code-airport, span.city {
+            margin: 0 auto;
+        }
+        span.code-airport {
+            @extend .os-regular;
+            font-size: 40px; 
+            line-height: 44px;
+            color: $color-black;
+        }
+        span.city {
+            @extend .os-light;
+            font-size: 12px; 
+            line-height: 20px;
+            color:#686868;
+        }
+        span {
+            &.icon-pp {
+                background-image: url($icon-calendar);
+                @extend .display-icon;
+                @include size(47px, 46px);
+                top: 18px;
+            } &.icon-return {
+                background-image: url($icon-loop);
+                @extend .display-icon;
+                @include size(43px, 43px);
+                top: 20px;
+            } &.icon-fc {
+                background-image: url($icon-medals);
+                @extend .display-icon;
+                @include size(59px, 56px);
+                top: 16px;
+            } &.icon-people {
+                background-image: url($icon-people);
+                @extend .display-icon;
+                @include size(41px, 57px);
+                top: 16px;
+            } &.icon-flip {
+                background-image: url($icon-flip);
+                @extend .display-icon;
+                @include size(43px, 40px);
+                top: 7px;
+                left: 5px;
+            } &.arrow {
+                background-image: url($icon-arrow-down-bw);
+                @extend .display-icon;
+                @include size(24px, 15px);
+                z-index: 1;
+                bottom: auto;
+                right: 0;
+                top: 29px;
+                left: auto;
+                margin: 0;
+                display: block;
+                cursor: pointer;
+                background-position-x: 80%;
+            }
+        }
+        .middle-form {
+            margin-bottom: 24px;
+            .form-group {
+                position: relative;
+            }
+        }
+        .top-form {
+            max-width: 300px;
+            margin: 0px auto;
+        }
+        .form__departure, .form__return, .form__roundtrip, .form__passenger, .form__flightclass {
+            p, p.form-control, select.form-control {
+                -webkit-appearance: none;
+                font-size:13px;
+                color: $color-black;
+                padding: 0;
+                height: auto;
+                border: none;
+                box-shadow: none;
+                @include border-radius(0);
+                display: inline;
+                background: $color-white;
+                span {float:right;}
+            }
+        }
+        .field-container {
+            margin-left: 37px;
+            border-bottom: $border-form;
+            padding: 21px 0;
+            p, select {
+                cursor: pointer;
+            }
+                    
+                    
+        }
+        .flip-container {
+            position: relative;
+            min-height: 104px;
+            .flip {
+                position: absolute;
+                width: 35px;
+                height: 37px;
+                background: #ecf0f4;
+                border: $border-grey-btn;
+                display: inline-block;
+                @include border-radius($border-radius-big);
+                top: 60%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        } 
+        .form__roundtrip {
+            .switch {
+                float: right;
+                position: relative;
+                display: inline-block;
+                width: 40px;
+                height: 24px;
+                input {display:none;}
+            }
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                @include transition($transition-default);
+                &:before {
+                    position: absolute;
+                    content: "";
+                    height: 16px;
+                    width: 16px;
+                    left: 4px;
+                    bottom: 4px;
+                    background-color: $color-white;
+                    @include transition($transition-default);
+                }
+            }
+            input {
+                &:checked + .slider {background-color: #2ea1e8;}
+                &:checked + .slider:before {@include translate(16px, 0);}
+                &:focus + .slider {@include box-shadow($toggle-box-shadow);}
+            }
+            .slider {
+                &.round {
+                    @include border-radius(24px);
+                    &:before {@include border-radius(50%);}
+                }
+            }
+        }
+    }
+}

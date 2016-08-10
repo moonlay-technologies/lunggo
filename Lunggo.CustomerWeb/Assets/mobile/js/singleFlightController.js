@@ -8,6 +8,12 @@
     });
 
     // ********************
+    //$.datepicker.setDefaults(
+    //        $.extend(
+    //        { 'dateFormat': 'dd/mm/yy' },
+    //        $.datepicker.regional['id']
+    //        )
+    //    );
 
     $scope.Progress = 0;
     $scope.FlightConfig = [
@@ -76,7 +82,7 @@
     $scope.GetFlight = function (a) {
 
         $scope.PageConfig.Busy = true;
-        console.log(a);
+        //console.log(a);
         if ($scope.Progress < 100) {
 
             console.log('request : ' + $scope.FlightConfig[0].FlightRequest.Requests);

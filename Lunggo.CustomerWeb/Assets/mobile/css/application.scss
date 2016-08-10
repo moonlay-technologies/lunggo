@@ -162,12 +162,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
 }
 
-.burger-content {position:fixed; height:100%; width:300px; top:0; left:-320px; z-index:9999; background:#fff; @include transition(all 0.5s); overflow:hidden; width:320px; padding-right:20px; background:none;
+.burger-content {position:fixed; height:100%; width:300px; top:0; left:-320px; z-index:9999; background:#fff; overflow:hidden; width:320px; padding-right:20px; background:none;
     // if active
-    &.active {left:0; overflow:auto;
+    &.active {left:0; @include transition(all 0.5s);
         .burger-content__header {left:0;}
     }
-    .burger-content__header {background:#028ec3; color:#fff; position:fixed; width:300px; height:$header-height; top:0; left:-300px; z-index:2; @include transition(all 0.5s);
+    .burger-content__header {background:#028ec3; color:#fff; position:relative; width:300px; height:$header-height; top:0; left:-300px; z-index:2;
         ul {list-style:none; margin:0; padding:10px 20px;
             li {display:inline-block; width:70px; padding-top:10px; padding-bottom:10px; padding-left:15px;
                 a {color:#fff; font-weight:600;}
@@ -178,12 +178,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 &.currency {border-left:1px solid $color-main-blue; padding-left:30px;}
             }
         }
-        .burger-content__close {color:#fff; position:absolute; right:15px; top:12px; font-size:24px; font-weight:600;}
+        .burger-content__close {color:#fff; position:absolute; right:15px; top:12px; font-size:24px; font-weight:600; cursor: pointer;}
     }
-    .burger-content__body {padding-top:$header-height; background:#fff; min-height: 100%;
+    .burger-content__body {background:#fff; min-height: 100%;
         ul {list-style:none; margin:0; padding:0; 
             li {
-                a {color:$color-main-blue; padding:15px 0px; padding-left:70px; display:block; font-weight:600; position:relative;
+                a {color:$color-main-blue; padding:13.5px 0px; padding-left:70px; display:block; font-weight:600; position:relative;
                     &:before {content:""; width:30px; height:30px; display:block; position:absolute; margin-left:-40px; top:8px; background-repeat:no-repeat; background-image:url(/Assets/mobile/images/burger-sprite.png);}
                 }
                 //active
@@ -253,16 +253,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page__body {}
 
 .section-title {    
-    font-size: 24px;
-    font-weight: 600;
-    padding-bottom: 14px;
-    margin: 20px 0;
+    font-size: 18px;
+    font-weight: 700;
+    padding-bottom: 32px;
+    margin: 30px auto 20px;
     h1{
         text-align: center;
     }
     span {color:#1eafe4; text-align: center;}
     // theme
-    &.stripe {background:url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat; background-size: 50%;}
+    &.stripe {background:url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat; background-size: 50%; width: 280px; height: 14px;}
 }
 
 // form-wrapper
@@ -415,7 +415,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             font-size: 13px;
             text-transform: uppercase;
         }
-        .overlay__close {float:right; font-size:16.5px;}
+        .overlay__close {float:right; font-size:16.5px; cursor: pointer;}
     }
     .overlay__content, .overlay__body {background:#fff; min-height:100%; padding:12px; z-index: -1; top: 60px; position: relative;/*padding-bottom:$header-height;*/}
     .overlay__footer {position:fixed; width:100%; bottom:0; left:0; background:#616161; padding:12px; color:#fff; height:$header-height; display:none;}
@@ -828,7 +828,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .container-page {
     padding: 0 15px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .form-divider {
@@ -845,3 +845,4 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 @import 'page_checkout';
 @import 'page_account';
 @import 'page_static';
+@import 'home_page_layout';
