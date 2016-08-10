@@ -65,7 +65,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null && content.StatusCode == "200")
+                    if (content != null && content.StatusCode.StartsWith("2"))
                     {
                         //ProcessSavedCreditCardToken(payment.Data, content);
                         payment.Status = PaymentResult(content);
@@ -80,7 +80,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null && content.StatusCode == "200")
+                    if (content != null && content.StatusCode.StartsWith("2"))
                     {
                         payment.TransferAccount= content.PermataVANumber;
                         payment.Status = PaymentResult(content);
@@ -96,7 +96,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null && content.StatusCode == "200")
+                    if (content != null && content.StatusCode.StartsWith("2"))
                     {
                         payment.Status = PaymentResult(content);
                         payment.ExternalId = content.TransactionId;
@@ -111,7 +111,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null && content.StatusCode == "200")
+                    if (content != null && content.StatusCode.StartsWith("2"))
                     {
                         payment.RedirectionUrl = content.RedirectUrl;
                         payment.ExternalId = content.TransactionId;
@@ -127,7 +127,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null && content.StatusCode == "200")
+                    if (content != null && content.StatusCode.StartsWith("2"))
                     {
                         payment.RedirectionUrl = content.RedirectUrl;
                         payment.ExternalId = content.TransactionId;

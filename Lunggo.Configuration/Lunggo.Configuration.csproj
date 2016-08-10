@@ -200,6 +200,9 @@
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\zendesk.properties" />
     <None Include="Config\Driver\azureStorage.properties" />
+    <None Include="Config\WebAPI\notification.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\airAsia.properties">
       <SubType>Designer</SubType>
     </None>

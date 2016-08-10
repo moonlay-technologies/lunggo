@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.Framework.Notification;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 using Lunggo.WebAPI.ApiSrc.Notification.Model;
@@ -17,46 +19,30 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
 {
     public static partial class RegistrationLogic
     {
-        public static async Task<ApiResponseBase> UpdateRegistration(UpdateRegistrationApiRequest request, NotificationHubClient hub)
+        public static async Task<ApiResponseBase> UpdateRegistration(UpdateRegistrationApiRequest request)
         {
             if (IsValid(request))
             {
-                RegistrationDescription registration;
                 var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
-                var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+                var clientId = identity.GetClientId();
                 var platformType = Client.GetPlatformType(clientId);
-                switch (platformType)
-                {
-                    case PlatformType.WindowsPhoneApp:
-                        registration = new MpnsRegistrationDescription(request.Handle);
-                        break;
-                    case PlatformType.IosApp:
-                        registration = new AppleRegistrationDescription(request.Handle);
-                        break;
-                    case PlatformType.AndroidApp:
-                        registration = new GcmRegistrationDescription(request.Handle);
-                        break;
-                    default:
-                        return new ApiResponseBase
-                        {
-                            StatusCode = HttpStatusCode.Forbidden,
-                            ErrorCode = "ERNUPD02"
-                        };
-                }
+                Platform platform;
+                var isSupported = TryMapPlatform(platformType, out platform);
+                if (!isSupported)
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.Forbidden,
+                        ErrorCode = "ERNADT02"
+                    };
 
-                var oldRegistration = await hub.GetRegistrationAsync<RegistrationDescription>(request.RegistrationId);
-                registration.RegistrationId = oldRegistration.RegistrationId;
-                // add check if user is allowed to add these tags
-                registration.Tags = new HashSet<string>(oldRegistration.Tags.Concat(request.Tags).Distinct());
-
-                try
-                {
-                    await hub.CreateOrUpdateRegistrationAsync(registration);
-                }
-                catch (MessagingException e)
-                {
-                    return ReturnGoneIfHubResponseIsGone(e);
-                }
+                var notif = NotificationService.GetInstance();
+                var succeeded = notif.AddTags(request.RegistrationId, request.Handle, platform, request.Tags);
+                if (!succeeded)
+                    return new FlightIssuanceApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERNADT03"
+                    };
 
                 return new ApiResponseBase
                 {
@@ -68,7 +54,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
                 return new FlightIssuanceApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERNUPD01"
+                    ErrorCode = "ERNADT01"
                 };
             }
         }

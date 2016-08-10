@@ -96,7 +96,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (payment.TransferAccount != null)
                     transferAccount = payment.TransferAccount;
                 if (payment.TimeLimit != DateTime.MinValue)
-                    timeLimit = payment.TimeLimit.ToUniversalTime();
+                    timeLimit = DateTime.SpecifyKind(payment.TimeLimit, DateTimeKind.Utc);
                 if (payment.RedirectionUrl != null)
                     redirectionUrl = payment.RedirectionUrl;
                 if (payment.PaidAmountIdr != 0)
