@@ -10,15 +10,8 @@ using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Notification
 {
-    public class RegistrationController : ApiController
+    public class NotificationController : ApiController
     {
-        private readonly NotificationHubClient _hub;
-
-        public RegistrationController()
-        {
-            _hub = Model.Notification.Instance.Hub;
-        }
-
         // POST api/register
         // This creates a registration id
         [HttpPost]
@@ -29,7 +22,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
             try
             {
                 var request = Request.Content.ReadAsStringAsync().Result.Deserialize<RegisterDeviceApiRequest>();
-                var apiResponse = await RegistrationLogic.RegisterDevice(request, _hub);
+                var apiResponse = await RegistrationLogic.RegisterDevice(request);
                 return apiResponse;
             }
             catch (Exception e)
@@ -48,7 +41,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
             try
             {
                 var request = Request.Content.ReadAsStringAsync().Result.Deserialize<UpdateRegistrationApiRequest>();
-                var apiResponse = await RegistrationLogic.UpdateRegistration(request, _hub);
+                var apiResponse = await RegistrationLogic.UpdateRegistration(request);
                 return apiResponse;
             }
             catch (Exception e)
@@ -66,7 +59,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
             try
             {
                 var request = Request.Content.ReadAsStringAsync().Result.Deserialize<DeleteRegistrationApiRequest>();
-                var apiResponse = await RegistrationLogic.DeleteRegistration(request, _hub);
+                var apiResponse = await RegistrationLogic.DeleteRegistration(request);
                 return apiResponse;
             }
             catch (Exception e)

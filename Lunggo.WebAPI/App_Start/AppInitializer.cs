@@ -9,6 +9,7 @@ using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Mail;
+using Lunggo.Framework.Notification;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;
@@ -33,6 +34,15 @@ namespace Lunggo.WebAPI
             InitTableStorageService();
             InitHtmlTemplateService();
             InitAutocompleteManager();
+            InitNotificationService();
+        }
+
+        private static void InitNotificationService()
+        {
+            var notif = NotificationService.GetInstance();
+            var connString = ConfigManager.GetInstance().GetConfigValue("notification", "connectionString");
+            var hubName = ConfigManager.GetInstance().GetConfigValue("notification", "hubName");
+            notif.Init(connString, hubName);
         }
 
         private static void InitConfigurationManager()
