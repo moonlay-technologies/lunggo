@@ -104,6 +104,42 @@ namespace Lunggo.ApCommon.Identity.Users
             }
         }
 
+        public static string GetClientId(this IIdentity identity)
+        {
+            if (identity.IsAuthenticated)
+            {
+                var claimsIdentity = identity as ClaimsIdentity;
+                if (claimsIdentity == null)
+                    return null;
+                var clientIdKey = claimsIdentity.Claims.SingleOrDefault(claim => claim.Type == "Client ID");
+                if (clientIdKey == null)
+                    return null;
+                return clientIdKey.Value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static string GetDeviceId(this IIdentity identity)
+        {
+            if (identity.IsAuthenticated)
+            {
+                var claimsIdentity = identity as ClaimsIdentity;
+                if (claimsIdentity == null)
+                    return null;
+                var clientIdKey = claimsIdentity.Claims.SingleOrDefault(claim => claim.Type == "Device ID");
+                if (clientIdKey == null)
+                    return null;
+                return clientIdKey.Value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         internal static User ToCustomUser(GetUserByAnyQueryRecord userRecord)
         {
             return new User

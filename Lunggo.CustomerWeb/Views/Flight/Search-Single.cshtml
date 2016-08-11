@@ -82,6 +82,8 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
 
 }
 
@@ -331,7 +333,7 @@
             <div class="search-result-warning" ng-show="flightList.length && notice">
                 <div class="container">
                     <div class="notice">
-                        <p>Tampilan harga untuk <b>{{flightRequest.AdultCount + flightRequest.ChildCount + flightRequest.InfantCount}} orang</b> ( <span ng-show="flightRequest.AdultCount > 0">{{flightRequest.AdultCount}} dewasa</span> <span ng-show="flightRequest.ChildCount">, {{flightRequest.ChildCount}} anak</span> <span ng-show="flightRequest.InfantCount"> , {{flightRequest.InfantCount}} bayi</span> ) <span class="close-notice pull-right" ng-click="closeNotice()">X</span> </p>
+                        <p>Hasil Pencarian untuk <b>{{flightRequest.AdultCount + flightRequest.ChildCount + flightRequest.InfantCount}} Orang</b> ( <span ng-show="flightRequest.AdultCount > 0">{{flightRequest.AdultCount}} dewasa</span> <span ng-show="flightRequest.ChildCount">, {{flightRequest.ChildCount}} anak</span> <span ng-show="flightRequest.InfantCount"> , {{flightRequest.InfantCount}} bayi</span> ) <span class="close-notice pull-right" ng-click="closeNotice()">X</span> </p>
                     </div>
                 </div>
             </div><!-- .search-result-warning -->
@@ -392,7 +394,7 @@
                             </div>
                             <div class="flight-summary-right">
                                 <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
-                                <h4 class="flight-price"><sup>Rp</sup> {{flight.originalAdultFare | number}}</h4>
+                                <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}</h4>
                                 <small>Sudah Termasuk Pajak &amp; Service Charge</small>
                                 <a class="btn btn-yellow" ng-click="selectFlight(flight.IndexNo);">PESAN</a>
                             </div>
@@ -444,7 +446,7 @@
                             </div>
                         </div><!-- .flight-detail -->
 
-                        <div class="flight-detail">
+                        @*<div class="flight-detail">
                             <h3>Detail Penerbangan <span class="close-flight-detail pull-right" ng-click="setFlightActive(-1)">X</span></h3>
                             <div ng-repeat="segment in flight.trips[0].segments track by $index">
                                 <div class="transit" ng-if="$index > 0">
@@ -489,7 +491,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- .flight-detail -->
+                        </div><!-- .flight-detail -->*@
                     </div><!-- .flight-->
 
                 </div>

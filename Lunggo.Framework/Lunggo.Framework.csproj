@@ -48,6 +48,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Mandrill.2.0.3.0\lib\net45\Mandrill.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.NotificationHubs">
+      <HintPath>..\packages\Microsoft.Azure.NotificationHubs.1.0.6\lib\net45-full\Microsoft.Azure.NotificationHubs.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -95,6 +98,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
@@ -206,6 +211,12 @@
     <Compile Include="HtmlTemplate\RazorHtmlTemplateClient.cs" />
     <Compile Include="Mail\MandrillMailClient.cs" />
     <Compile Include="I18nMessage\LangToISOCodeMapper.cs" />
+    <Compile Include="Notification\AzureNotificationClient.cs" />
+    <Compile Include="Notification\NotificationClient.cs" />
+    <Compile Include="Notification\NotificationService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Notification\Platform.cs" />
     <Compile Include="Pattern\SingletonBase.cs" />
     <Compile Include="Payment\CreditCardProcessor.cs" />
     <Compile Include="Payment\Data\CIMBPaymentDataDummy.cs" />

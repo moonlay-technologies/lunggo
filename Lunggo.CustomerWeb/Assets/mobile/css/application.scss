@@ -136,18 +136,18 @@ img {max-width:100%;}
 .display-block {display:block !important;}
 
 .btn {@include border-radius($border-radius-default);}
-.btn.btn-yellow {background: $color-yellow; color:#000000; font-weight:bold; border-radius: 2px;}
-.btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; border:2px solid #adadad;}
+.btn.btn-yellow {background: $color-yellow; color:#000000; font-weight:bold; border-radius: 2px; box-shadow: none;}
+.btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; box-shadow: none;}
 .btn.block {display:block; width:50%;}
 
 .error-message {padding:5px 10px; background-color: #1daee4;}
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {-webkit-appearance:none;-moz-appearance:none; margin:0;}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea {@include border-radius($border-radius-default);}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select.form-control {@include border-radius($border-radius-default);}
 .form-control {@include border-radius($border-radius-default)}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"] {box-shadow: none; font-size:12px; height:auto;}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], select.form-control {box-shadow: none; font-size:12px; height:auto;}
 
 // *****
 // site header
@@ -256,7 +256,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     font-size: 18px;
     font-weight: 700;
     padding-bottom: 32px;
-    margin: 30px auto 20px;
+    margin: 20px auto;
     h1{
         text-align: center;
     }
@@ -287,7 +287,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
 }
 .form-group {
-    input[type="text"], input[type="password"], input[type="number"], input[type="email"] {height: 40px;}
+    input[type="text"], input[type="password"], input[type="number"], input[type="email"], select.form-control {height: 40px;}
     button {
         height: 40px;
         font-size: 15px;
@@ -810,7 +810,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .confirmation-content .container_new .row1 {
     padding-bottom: 10px;
-    color: red;
+    color: black;
 }
 
 #ui-datepicker-div > .ui-datepicker {
@@ -827,8 +827,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 
 .container-page {
-    padding: 0 15px;
-    margin-bottom: 30px;
+    padding: 0 15px 20px;
 }
 
 .form-divider {
@@ -838,6 +837,60 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 .desc {@extend .os-bold;}
 
+.countdown {
+        .widget-content {background:#ffd632; padding:15px;
+            .timer {background:#ffefb0; padding:12px; text-align:center; border-bottom: 1px solid #dab939; color: #4d4e4e;
+                &>div {display:inline-block;}
+                h5 {font-weight: bold; font-size: 36px; margin-bottom: 0; margin-top: 0;}
+                span {font-size: 12px;}
+                .separator {vertical-align: top; margin-left: 6px; margin-right: 6px;}
+            }
+        }
+    }
+
+&.summary--price {
+    dl {@include clearfix();
+        dt {float:left; width:50%; font-weight:normal; position:relative; padding-left:12px;
+            &:before {position:absolute; content:''; width:7px; height:7px; background:#ff7200; top:3px; left:0;}
+        }
+        dd {float:left; width:50%; text-align:right; font-weight:bold;}
+        // total price
+        &.total-price {border-top:$border-default; padding-top:10px;
+            dt {width:35%;
+                &:before {display:none;}
+            }
+            dd {width:65%; color:#ff7200; font-size:16px;}
+        }
+    }
+}
+// passenger
+&.summary--passenger {color:black;
+    h4 {color:black; font-weight:bold;}
+    ol {padding-left:20px;
+        li {}
+    }
+    dl {margin-bottom:5px; color:#333; @include clearfix();
+        dt {float:left; width:50%; font-weight:normal; position:relative;
+            &:after {position:absolute; content:':'; right:10px;}
+        }
+        dd {float:left; width:50%; font-weight:bold;}
+    }
+}
+// voucher
+&.summary--voucher {background:#eaeaea; padding:10px;
+    h4 {font-weight:bold;}
+    form {}
+}
+// payment
+&.summary--payment {
+    label {border:$border-default; display:block; width:100%; background:#fff; color:#fff;
+        header {background:#36b6e7; position:relative; @include clearfix();
+            .input-wrapper {float:left; background:#028ec3; width:30px; text-align:center; position:absolute; height:100%; padding-top:5px;}
+            h5 {padding:10px; margin:0; float:left; padding-left:40px; font-weight:bold; width:100%;}
+        }
+        section {text-align:center; padding:5px;}
+    }
+}
 /*--------------------*/
 // Include
 @import 'page_home';

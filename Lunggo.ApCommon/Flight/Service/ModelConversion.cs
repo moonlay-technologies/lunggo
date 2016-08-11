@@ -17,17 +17,23 @@ namespace Lunggo.ApCommon.Flight.Service
             if (reservation == null)
                 return null;
 
+            var rsvTime = reservation.RsvTime.AddMilliseconds(-reservation.RsvTime.Millisecond);
+            var cancellationTime = reservation.CancellationTime.HasValue
+                ? reservation.CancellationTime.Value.AddMilliseconds(-reservation.CancellationTime.Value.Millisecond)
+                : (DateTime?) null;
             return new FlightReservationForDisplay
             {
                 RsvNo = reservation.RsvNo,
-                RsvTime = reservation.RsvTime,
+                RsvTime = rsvTime,
                 RsvDisplayStatus = MapReservationStatus(reservation),
                 CancellationType = reservation.CancellationType,
-                CancellationTime = reservation.CancellationTime,
+                CancellationTime = cancellationTime,
                 Itinerary = ConvertToItineraryForDisplay(reservation.Itineraries),
                 Contact = reservation.Contact,
                 Passengers = ConvertToPaxForDisplay(reservation.Pax),
-                Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment)
+                Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
+                UserId = reservation.User != null ? reservation.User.Id : null,
+                DeviceId = reservation.State.DeviceId
             };
         }
 

@@ -4,8 +4,8 @@
 
     .page__header {margin:0; padding:0; @include clearfix(); overflow:hidden;
         .step__wrapper {position:relative;
-            .step {float:left; width:33.3333334%; background:#2eb4e7; color:#fff; border-right:1px solid #1c99c7; position:relative; z-index:2; @include skew-x(-30deg);
-                span {font-size:14px; font-weight:600; padding:10px 15px; display:block; position:relative; z-index:2; @include skew-x(30deg);}
+            .step {float:left; width:33.3333334%; background:#2eb4e7; color:#fff; position:relative; z-index:2; @include skew-x(-30deg);
+                span {font-size:13px; font-weight:600; padding:10px 15px; display:block; position:relative; z-index:2; @include skew-x(30deg);}
                 &:before {background:#2eb4e7;}
                 &:after {background:#2eb4e7;}
                 // if active
@@ -28,27 +28,25 @@
     }
 
     // page body
-    .page__body {padding:10px; overflow-wrap:break-word;
-                   
+    .page__body {padding:0 15px 20px; overflow-wrap:break-word;
+        /*h3 {margin: 20px 0; font-size: 14px;}*/
         .page-loading {display:none;}
         .page-loaded {display:block;}
         .page-step-1 {}
-        .page-step-2 {
-            .btn.btn-yellow {margin-top:25px;}
+        .page-step-2, .page-step-3 {
+            .btn.btn-yellow {margin-top:15px;}
         }
         .page-step-3 {
-            .btn.btn-yellow.form-control{
-                width: 100%;
-            }
+            .btn.btn-yellow.form-control {width: 100%;}
         }
 
     }
 
     // *****
     // passenger
-    .passenger {background:#fff; border:$border-default;
+    .passenger {background:#fff; border:$border-default; margin: 20px 0; border-radius: 2px;
         .passenger__header {background:#2eb4e7; color:#fff; font-weight:bold; padding:10px 15px;
-            .passenger__title {margin:0;}
+            .passenger__title {margin:0; font-weight: 600; font-size: 13px;}
         }
         .passenger__body {padding:10px;}
     }
@@ -114,7 +112,7 @@
     // overlay
     .overlay--flight-detail {
         .flight-detail-wrapper {padding:10px; padding-top:0;}
-        .flight-fare-wrapper {padding:10px;
+        .flight-fare-wrapper {
             .fare-note {background:#eaeaea; padding:10px;}
         }
         dl {@include clearfix();
@@ -131,13 +129,9 @@
             }
         }
         .overlay__body.overlay__content{
-            .flight__separator{
-                left: 35%;
-            }
+            .flight__separator {left: 35%;}
         }
-        
     }
-
 }
 
 
@@ -176,3 +170,5 @@
         }
     }
 }
+
+h3 {margin: 20px 0; font-size: 14px;}

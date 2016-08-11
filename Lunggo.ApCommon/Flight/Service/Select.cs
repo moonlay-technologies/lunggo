@@ -36,7 +36,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
             if (!isFromSameSupplier)
             {
-                var tokens = input.RegisterNumbers.Select(reg => QuarantineItinerary(input.SearchId, reg, input.RegisterNumbers.IndexOf(reg) + 1)).ToList();
+                var tokens = QuarantineItineraries(input.SearchId, input.RegisterNumbers);
                 var bundledToken = BundleFlight(tokens);
                 return new SelectFlightOutput
                 {
@@ -47,10 +47,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
             if (!input.EnableCombo)
             {
-                var tokens =
-                    input.RegisterNumbers.Select(
-                        reg => QuarantineItinerary(input.SearchId, reg, input.RegisterNumbers.IndexOf(reg) + 1))
-                        .ToList();
+                var tokens = QuarantineItineraries(input.SearchId, input.RegisterNumbers);
                 var bundledToken = BundleFlight(tokens);
                 return new SelectFlightOutput
                 {
@@ -82,7 +79,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
-                var tokens = input.RegisterNumbers.Select(reg => QuarantineItinerary(input.SearchId, reg, input.RegisterNumbers.IndexOf(reg) + 1)).ToList();
+                var tokens = QuarantineItineraries(input.SearchId, input.RegisterNumbers);
                 var bundledToken = BundleFlight(tokens);
                 return new SelectFlightOutput
                 {
@@ -120,6 +117,11 @@ namespace Lunggo.ApCommon.Flight.Service
 
             SaveItineraryToCache(itin, itinCacheId);
             return itinCacheId;
+        }
+
+        private List<string> QuarantineItineraries(string searchId, IEnumerable<int> registerNumbers)
+        {
+            return registerNumbers.Select((reg, idx) => QuarantineItinerary(searchId, reg, idx+1)).ToList();
         }
     }
 }

@@ -51,7 +51,7 @@ function translateMonth(month) {
             month = 'Apr';
             break;
         case 4:
-            month = 'May';
+            month = 'Mei';
             break;
         case 5:
             month = 'Jun';
@@ -60,19 +60,19 @@ function translateMonth(month) {
             month = 'Jul';
             break;
         case 7:
-            month = 'Aug';
+            month = 'Agu';
             break;
         case 8:
             month = 'Sep';
             break;
         case 9:
-            month = 'Oct';
+            month = 'Okt';
             break;
         case 10:
             month = 'Nov';
             break;
         case 11:
-            month = 'Dec';
+            month = 'Des';
             break;
     }
     return month;
@@ -735,7 +735,6 @@ function flightPageSearchFormFunctions() {
 
     // *****
     // date selector
-
     $('.form-flight-departure').click(function () {
         showCalendar('departure');
         $('.date-picker').datepicker('option', 'minDate', new Date());
@@ -754,6 +753,9 @@ function flightPageSearchFormFunctions() {
     $('.date-picker').datepicker({
         numberOfMonths: 2,
         onSelect: function (data) {
+            data = data.substring(3, 5) + "/" + data.substring(0, 2) + "/" + data.substring(6, 10);
+            console.log(data);
+            //console.log(trsdate);
             var target;
             var chosenDate = new Date(data);
             if ($('.search-calendar').attr('data-date') == 'departure') {
@@ -774,7 +776,8 @@ function flightPageSearchFormFunctions() {
             $(target + ' .month').html(translateMonth(chosenDate.getMonth()));
             $(target + ' .year').html(chosenDate.getFullYear());
             $('.search-calendar').hide();
-        }
+        },
+        
     });
 
 
@@ -1347,10 +1350,13 @@ function flightFormSearchFunctions() {
             showCalendar('return');
         }
     });
+  
     // embed date picker into page
     $('.date-picker').datepicker({
         numberOfMonths: 2,
         onSelect: function (data) {
+            data = data.substring(3, 5) + "/" + data.substring(0, 2) + "/" + data.substring(6, 10);
+            console.log(data);
             var target;
             var chosenDate = new Date(data);
             if ( $('.search-calendar').attr('data-date') == 'departure' ) {

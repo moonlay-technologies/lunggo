@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Payment.Model
         [JsonProperty("time", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? Time { get; set; }
         [JsonProperty("timeLimit", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime TimeLimit { get; set; }
+        public DateTime? TimeLimit { get; set; }
         [JsonProperty("transferAccount", NullValueHandling = NullValueHandling.Ignore)]
         public string TransferAccount { get; set; }
         [JsonProperty("redirectionUrl", NullValueHandling = NullValueHandling.Ignore)]
@@ -116,7 +116,7 @@ namespace Lunggo.ApCommon.Payment.Model
                     Method = PaymentMethodCd.Mnemonic(record.MethodCd),
                     Status = PaymentStatusCd.Mnemonic(record.StatusCd),
                     Time = record.Time,
-                    TimeLimit = record.TimeLimit.GetValueOrDefault(),
+                    TimeLimit = DateTime.SpecifyKind(record.TimeLimit.GetValueOrDefault(), DateTimeKind.Utc),
                     TransferAccount = record.TransferAccount,
                     RedirectionUrl = record.RedirectionUrl,
                     ExternalId = record.ExternalId,

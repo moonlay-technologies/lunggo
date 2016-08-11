@@ -278,13 +278,15 @@
     <Compile Include="ApiSrc\Auxiliary\Logic\NewsletterSubscribeLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\NewsletterSubscribeApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\Logic\DeleteRegistrationLogic.cs" />
-    <Compile Include="ApiSrc\Notification\Logic\UpdateRegistrationLogic.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\PlatformMapper.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\AddTagsLogic.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\SetTagsLogic.cs" />
     <Compile Include="ApiSrc\Notification\Logic\RegisterDeviceLogic.cs" />
     <Compile Include="ApiSrc\Notification\Model\RegisterDeviceApiResponse.cs" />
     <Compile Include="ApiSrc\Notification\Model\RegisterDeviceApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\Model\DeleteRegistrationApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\Model\UpdateRegistrationApiRequest.cs" />
-    <Compile Include="ApiSrc\Notification\RegistrationController.cs" />
+    <Compile Include="ApiSrc\Notification\NotificationController.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckPaymentLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetPaymentMethodsLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\PayLogic.cs" />
@@ -302,7 +304,6 @@
     <Compile Include="ApiSrc\Payment\Logic\CheckVoucherLogic.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckVoucherApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckVoucherApiResponse.cs" />
-    <Compile Include="ApiSrc\Notification\Model\Notification.cs" />
     <Compile Include="App_Start\AppInitializer.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
