@@ -20,7 +20,7 @@
     if (Model.Itinerary.Trips.Count > 1)
     {
         ret = Model.Itinerary.Trips[1];
-}
+    }
 }
 
 @functions{
@@ -40,81 +40,146 @@
     
     @switch (Model.Payment.Status)
     {
+        case PaymentStatus.Failed:
+        
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Pembayaran Gagal</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>
+                                Mohon maaf, pembayaran Anda gagal. Silakan membuat reservasi yang baru.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            break;
+
         case PaymentStatus.Undefined:
         case PaymentStatus.Cancelled:
-        case PaymentStatus.Expired:
-
-                <div class = "thankyou-words">
-                    <header class="page__header">
-                              <h1 class="text-center section-title stripe">Transaksi <span>Gagal</span></h1>
-                          </header>
-
-                        <p>Belum ada reservasi. Silakan buat reservasi Anda.</p>
-                            <a href="/" class="btn btn-yellow">Buat Reservasi</a>
+       
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Belum Ada Reservasi</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>
+                                Reservasi belum ada. Silakan membuat reservasi yang baru.
+                            </span>
                         </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            break;
 
-
-
+        case PaymentStatus.Expired:
+        
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Pemesanan Kadaluarsa</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>
+                                Pemesanan Anda kadaluarsa. Silakan membuat reservasi yang baru.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             break;
 
         case PaymentStatus.Denied:
-
-
-            <div class="thankyou-words">
-
-                <header class="page__header">
-                    <h1 class="text-center section-title stripe">Transaksi <span>Ditolak</span></h1>
-                </header>
-
-            <p>Mohon maaf, pesanan dengan no. @Model.RsvNo telah ditolak. Silakan membuat pesanan baru.</p>
-
-                <p>Terima kasih atas pemesanan Anda.<p>
-
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Pembayaran Ditolak</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>
+                                Mohon maaf, pembayaran Anda ditolak. Silakan membuat reservasi baru dengan metode pembayaran berbeda.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-
 
             break;
 
-        @*case PaymentStatus.Pending:
-
-    <div class="thankyou-words">
-
-        <header class="page__header">
-            <h1 class="text-center section-title stripe"><span>Pembayaran</span></h1>
-        </header>
-
-        <p>Proses pembayaran Anda belum selesai. Mohon selesaikan pembayaran Anda dalam waktu 10 menit. Bila tidak, pesanan Anda akan dibatalkan.</p>
-        @*<p>Nomor Virtual Account : @Model.Payment.TargetAccount</p>
-
-     </div>
-
-
-    break;*@
-
-        case PaymentStatus.Settled:
+        
         case PaymentStatus.Verifying:
         case PaymentStatus.Pending:
+        
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Pembayaran Sedang Diverifikasi</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>Proses pembayaran Anda belum selesai. Mohon selesaikan pembayaran Anda dalam waktu 10 menit. Bila tidak, pesanan Anda akan dibatalkan.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        
+            break;
 
+        case PaymentStatus.Settled:
+        
             <div class="thankyou-words">
                 <header class="page__header">
                     <h1 class="text-center section-title stripe">Terima <span>Kasih</span></h1>
                 </header>
                 <p>Terima kasih telah memesan penerbangan di Travorama. Anda dapat mengecek pemesanan Anda melalui tombol berikut.</p>
-            <div class="ticket-wrapper">
-                    <div class="row">
-                    <div class="col-sm-12">
-                        <div class="ticket-print">
-                                <a href="@Url.Action("CekPemesanan","Home")" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>Cek Pemesanan</a>
-                            <p>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</p>
+                <div class="ticket-wrapper">
+                        <div class="row">
+                        <div class="col-sm-12">
+                            <div class="ticket-print">
+                                    <a href="@Url.Action("CekPemesanan","Home")" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>Cek Pemesanan</a>
+                                <p>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
             break;
     }
 
-    @if (Model.Payment.Status == PaymentStatus.Settled || Model.Payment.Status == PaymentStatus.Verifying || Model.Payment.Status == PaymentStatus.Pending)
+    @if (Model.Payment.Status == PaymentStatus.Settled)
     {
         <div class = "thankyou-words">
             <h3><b>DETAIL</b> PESANAN</h3>
@@ -250,9 +315,9 @@
                                     <div class="transit">
                                         <span>Transit di @ret.Segments[segment].ArrivalCity (@ret.Segments[segment].ArrivalAirport) selama <b>@ret.Transits.ElementAt(segment).Duration</b></span>
                                     </div><!-- .transit -->
-                                    }
-                            </div> <!-- .flight-wrapper -->
                                 }
+                            </div> <!-- .flight-wrapper -->
+                            }
 
                             </div>
                             </div>
