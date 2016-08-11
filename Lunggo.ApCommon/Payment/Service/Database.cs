@@ -30,8 +30,8 @@ namespace Lunggo.ApCommon.Payment.Service
                     Medium = PaymentMediumCd.Mnemonic(paymentRecord.MediumCd),
                     Method = PaymentMethodCd.Mnemonic(paymentRecord.MethodCd),
                     Status = PaymentStatusCd.Mnemonic(paymentRecord.StatusCd),
-                    Time = paymentRecord.Time,
-                    TimeLimit = paymentRecord.TimeLimit.GetValueOrDefault(),
+                    Time = paymentRecord.Time.HasValue ? DateTime.SpecifyKind(paymentRecord.Time.Value, DateTimeKind.Utc) : (DateTime?) null,
+                    TimeLimit = DateTime.SpecifyKind(paymentRecord.TimeLimit.GetValueOrDefault(), DateTimeKind.Utc),
                     TransferAccount = paymentRecord.TransferAccount,
                     RedirectionUrl = paymentRecord.RedirectionUrl,
                     ExternalId = paymentRecord.ExternalId,
@@ -96,7 +96,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (payment.TransferAccount != null)
                     transferAccount = payment.TransferAccount;
                 if (payment.TimeLimit != DateTime.MinValue)
-                    timeLimit = payment.TimeLimit.ToUniversalTime();
+                    timeLimit = DateTime.SpecifyKind(payment.TimeLimit, DateTimeKind.Utc);
                 if (payment.RedirectionUrl != null)
                     redirectionUrl = payment.RedirectionUrl;
                 if (payment.PaidAmountIdr != 0)

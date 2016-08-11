@@ -67,7 +67,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-4 text-align">
-                                <img src="/Assets/images/sad-image.png" alt="Smile" />
+                                <img src="/Assets/images/sad-image.png" alt="Sad" />
                             </div>
                             <div class="col-sm-8">
                                 <div ng-show="errorMessage == 'NotRegistered'">
@@ -89,6 +89,39 @@
                                 <div ng-show="errorMessage == 'AlreadyConfirmed'">
                                     <h3>Akun Anda Telah Aktif</h3>
                                     <p>Silakan masuk menggunakan e-mail dan password Anda.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block" ng-click="closeOverlay()">TUTUP</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+    
+    <div class="page-overlay" ng-show="overlay && form.success">
+        <div class="overlay-content">
+            <header>
+                <h4>PROSES MASUK BERHASIL</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/smile-image.png" alt="Smile" />
+                            </div>
+                            <div class="col-sm-8">
+                                <div >
+                                    <h3>Anda akan dialihkan ke halaman utama.</h3>
                                 </div>
                             </div>
                         </div>

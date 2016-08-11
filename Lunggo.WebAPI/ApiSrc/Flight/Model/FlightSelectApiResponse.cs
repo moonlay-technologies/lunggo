@@ -1,4 +1,5 @@
-﻿using Lunggo.WebAPI.ApiSrc.Common.Model;
+﻿using System;
+using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Flight.Model
@@ -7,5 +8,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Model
     {
         [JsonProperty("token", NullValueHandling = NullValueHandling.Ignore)]
         public string Token { get; set; }
+        [JsonProperty("expTime", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? ExpiryTime { get; set; }
     }
 }

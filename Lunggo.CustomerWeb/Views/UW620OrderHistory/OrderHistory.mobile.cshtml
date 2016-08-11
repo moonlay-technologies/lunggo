@@ -1,5 +1,4 @@
-﻿@*@using Lunggo.ApCommon.Identity.User*@
-@using Lunggo.ApCommon.Identity.Users
+﻿@using Lunggo.ApCommon.Identity.Users
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 @{
@@ -83,14 +82,9 @@
                 <div>
                     <form name="profileForm" novalidate class="form">
                         <div class="form-group">
-                            <label class="control-label">Nama Depan:</label>
-                            <p class="form-control-static" ng-hide="UserProfile.Editing">{{UserProfile.firstname}}</p>
-                            <input type="text" value="" class="form-control" ng-model="EditProfile.firstname" ng-show="UserProfile.Editing" required />
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Nama Belakang:</label>
-                            <p class="form-control-static" ng-hide="UserProfile.Editing">{{UserProfile.lastname}}</p>
-                            <input type="text" value="" class="form-control" ng-model="EditProfile.lastname" ng-show="UserProfile.Editing" required />
+                            <label class="control-label">Nama Lengkap:</label>
+                            <p class="form-control-static" ng-hide="UserProfile.Editing">{{UserProfile.name}}</p>
+                            <input type="text" value="" class="form-control" ng-model="EditProfile.name" ng-show="UserProfile.Editing" required />
                         </div>
                         <div class="form-group">
                             <label class="control-label">No Telepon:</label>

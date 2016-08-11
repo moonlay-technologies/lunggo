@@ -11,6 +11,7 @@ app.controller('returnFlightController', [
         // ******************************
         // general variables
         $scope.pageLoaded = true;
+        $scope.trial = 0;
         $scope.pageConfig = {
             activeFlightSection: 'departure',
             showNotice: false,
@@ -102,7 +103,7 @@ app.controller('returnFlightController', [
             },
             flightSort: {
                 label: 'price',
-                value: 'TotalFare',
+                value: 'originalAdultFare',
                 reverse: false
             },
             activeFlight: -1,
@@ -152,7 +153,7 @@ app.controller('returnFlightController', [
             },
             flightSort: {
                 label: 'price',
-                value: 'TotalFare',
+                value: 'originalAdultFare',
                 reverse: false
             },
             activeFlight: -1,
@@ -417,6 +418,11 @@ app.controller('returnFlightController', [
         // ******************************
         // revalidate flights
         $scope.selectFlight = function (departureFlightIndexNo, returnFlightIndexNo) {
+            
+            if ($scope.trial > 3)
+            {
+                $scope.trial = 0;
+            }
 
             if ($scope.pageConfig.flightsValidated) {
 
@@ -438,47 +444,53 @@ app.controller('returnFlightController', [
 
                 //Check Authorization
                 var authAccess = getAuthAccess();
-                if (authAccess == 1) {
-                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                if (authAccess == 1 || authAccess == 2) {
+                    $http({
+                        method: 'POST',
+                        url: SelectConfig.Url,
+                        data: {
+                            searchId: $scope.returnFlightConfig.searchId,
+                            regs: [$scope.departureFlightConfig.flightList[departureFlightIndexNo].reg, $scope.returnFlightConfig.flightList[returnFlightIndexNo].reg]
+                        },
+                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                    }).then(function (returnData) {
+                        $scope.departureFlightConfig.validating = false;
+                        $scope.returnFlightConfig.validating = false;
+                        if ((returnData.data.token != "" || returnData.data.token != null) && returnData.data.status == "200") {
+                            console.log('flight available');
+                            $scope.departureFlightConfig.validateToken = returnData.data.token;
+                            $scope.departureFlightConfig.validateAvailable = true;
+                            $scope.returnFlightConfig.validateToken = returnData.data.token;
+                            $scope.returnFlightConfig.validateAvailable = true;
+                            if ($scope.returnFlightConfig.validating == false) {
+                                flightsValidated();
+                            }
+                        }
+                        else {
+                            console.log('flight unavailable');
+                            $scope.departureFlightConfig.validateAvailable = false;
+                            $scope.returnFlightConfig.validateAvailable = false;
+                        }
+                    }).catch(function (returnData) {
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                        {
+                            $scope.selectFlight(departureFlightIndexNo, returnFlightIndexNo);
+                        }
+                        else
+                        {
+                            $scope.departureFlightConfig.validating = false;
+                            $scope.returnFlightConfig.validating = false;
+                            console.log('ERROR Validating Flight :');
+                            console.log('--------------------');
+                        }
+                    });
                 }
                 else {
-                    $scope.getFlightHeader = null;
+                    $scope.departureFlightConfig.validating = false;
+                    $scope.returnFlightConfig.validating = false;
+                    console.log('Not Authorized');
                 }
-
-                $http({
-                    method: 'POST',
-                    url: SelectConfig.Url,
-                    data: {
-                        searchId: $scope.returnFlightConfig.searchId,
-                        regs: [$scope.departureFlightConfig.flightList[departureFlightIndexNo].reg, $scope.returnFlightConfig.flightList[returnFlightIndexNo].reg],
-                    },
-                    headers: { 'Authorization': $scope.getFlightHeader }
-                }).success(function (returnData) {
-                    $scope.departureFlightConfig.validating = false;
-                    $scope.returnFlightConfig.validating = false;
-                    if ((returnData.token != "" || returnData.token != null) && returnData.status == "200") {
-                        console.log('flight available');
-                        $scope.departureFlightConfig.validateToken = returnData.token;
-                        $scope.departureFlightConfig.validateAvailable = true;
-                        $scope.returnFlightConfig.validateToken = returnData.token;
-                        $scope.returnFlightConfig.validateAvailable = true;
-                        if ($scope.returnFlightConfig.validating == false) {
-                            flightsValidated();
-                        }
-                    }
-                    else
-                    {
-                        console.log('flight unavailable');
-                        $scope.departureFlightConfig.validateAvailable = false;
-                        $scope.returnFlightConfig.validateAvailable = false;
-                    }
-                }).error(function (data) {
-                    $scope.departureFlightConfig.validating = false;
-                    $scope.returnFlightConfig.validating = false;
-                    console.log('ERROR Validating Flight :');
-                    console.log(data);
-                    console.log('--------------------');
-                });
 
                 /*-----------*/
                 // run after both flight validated
@@ -524,7 +536,7 @@ app.controller('returnFlightController', [
                     targetFlight.flightSort.value = 'trips[0].totalDuration';
                     break;
                 case 'price':
-                    targetFlight.flightSort.value = 'totalFare';
+                    targetFlight.flightSort.value = 'originalAdultFare';
                     break;
             }
         }
@@ -585,7 +597,7 @@ app.controller('returnFlightController', [
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
             return function (flight) {
                 if (!targetScope.loading && !targetScope.loadingFlight) {
-                    if (flight.totalFare >= targetScope.flightFilter.price.current[0] && flight.totalFare <= targetScope.flightFilter.price.current[1]) {
+                    if (flight.originalAdultFare >= targetScope.flightFilter.price.current[0] && flight.originalAdultFare <= targetScope.flightFilter.price.current[1]) {
                         return flight;
                     }
                 } else {
@@ -660,6 +672,11 @@ app.controller('returnFlightController', [
         // get flights
         $scope.getFlight = function (targetScope) {
 
+            if ($scope.trial > 3)
+            {
+                $scope.trial = 0;
+            }
+
             targetScope = $scope.returnFlightConfig;
             $scope.departureFlightConfig.loading = true;
             $scope.departureFlightConfig.loadingFlight = true;
@@ -670,60 +687,76 @@ app.controller('returnFlightController', [
             if (targetScope.progress < 100) {
                 //Check Authorization
                 var authAccess = getAuthAccess();
-                if (authAccess == 1) {
-                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                if (authAccess == 1 || authAccess == 2) {
+                    $http({
+                        method: 'GET',
+                        url: FlightSearchConfig.Url + targetScope.flightSearchParams + '/' + targetScope.progress,
+                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                    }).then(function (returnData) {
+
+                        // set search ID
+                        //targetScope.flightSearchParams.SearchId = targetScope.flightSearchParams;
+                        targetScope.searchId = targetScope.flightSearchParams;
+
+                        if (!$scope.pageConfig.expiry.time) {
+                            $scope.pageConfig.expiry.time = returnData.data.expTime;
+                            $scope.departureFlightConfig.finalProgress = targetScope.progress;
+                        }
+
+                        if (targetScope.progress < 100) {
+                            targetScope.finalProgress = targetScope.progress; // change this
+                            $scope.departureFlightConfig.finalProgress = targetScope.progress;
+                        }
+
+                        targetScope.progress = returnData.data.progress;
+                        $scope.departureFlightConfig.progress = returnData.data.progress;
+
+                        // generate flight
+                        if (returnData.data.flights.length) {
+                            if (returnData.data.flights[0].options.length) {
+                                $scope.arrangeFlightData('departure', returnData.data.flights[0].options); // For Departure Flight
+                            }
+                            if (returnData.data.flights[1].options.length) {
+                                $scope.arrangeFlightData('return', returnData.data.flights[1].options); // For Return Flight
+                            }
+                        }
+                        
+                        if (targetScope.progress == 100)
+                        {
+                            $scope.generateFlightList('departure');
+                            $scope.generateFlightList('return');
+                        }
+
+                        console.log(returnData);
+
+                        // loop the function
+                        setTimeout(function () {
+                            $scope.getFlight('return');
+                        }, 1000);
+
+                        // if error     
+                    }).catch(function (returnData) {
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                        {
+                            $scope.getFlight('return');
+                        }
+                        else
+                        {
+                            console.log('Failed to get ' + targetScope.name + ' flight list');
+                            console.log('ERROR :');
+                            targetScope.progress = 100;
+                            targetScope.finalProgress = 100;
+                        }
+                    });
                 }
                 else {
-                    $scope.getFlightHeader = null;
-                }
-
-                $http.get(FlightSearchConfig.Url + '/' + targetScope.flightSearchParams + '/' + targetScope.progress, {
-                    headers: { 'Authorization': $scope.getFlightHeader }
-                }).success(function (returnData) {
-
-                    // set search ID
-                    //targetScope.flightSearchParams.SearchId = targetScope.flightSearchParams;
-                    targetScope.searchId = targetScope.flightSearchParams;
-
-                    if (!$scope.pageConfig.expiry.time) {
-                        $scope.pageConfig.expiry.time = returnData.expTime;
-                        $scope.departureFlightConfig.finalProgress = targetScope.progress;
-                    }
-
-                    if (targetScope.progress < 100) {
-                        targetScope.finalProgress = targetScope.progress; // change this
-                        $scope.departureFlightConfig.finalProgress = targetScope.progress;
-                    }
-                    
-                    targetScope.progress = returnData.progress;
-                    $scope.departureFlightConfig.progress = returnData.progress;
-
-                    // generate flight
-                    if (returnData.flights.length) {
-                        if (returnData.flights[0].options.length) {
-                            $scope.arrangeFlightData('departure', returnData.flights[0].options); // For Departure Flight
-                        }
-                        if (returnData.flights[1].options.length) {
-                            $scope.arrangeFlightData('return', returnData.flights[1].options); // For Return Flight
-                        }
-                    }
-                    
-
-                    console.log(returnData);
-
-                    // loop the function
-                    setTimeout(function () {
-                        $scope.getFlight('return');
-                    }, 1000);
-
-                    // if error     
-                }).error(function (returnData) {
-                    console.log('Failed to get ' + targetScope.name + ' flight list');
-                    console.log('ERROR :');
-                    console.log(returnData);
                     targetScope.progress = 100;
                     targetScope.finalProgress = 100;
-                });
+                    console.log('Not Authorized');
+                }
+
+                
             } else {
                 console.log('complete getting flight for '+targetScope.name);
                 targetScope.loading = false;
@@ -749,40 +782,46 @@ app.controller('returnFlightController', [
                 targetScope.flightList.push(data[i]);
             }
 
-            if (targetScope.progress == 100) {
-
-                // start expiry date
-                $scope.pageConfig.expiry.start();
-
-                // loop the result
-                for (var i = 0; i < targetScope.flightList.length; i++) {
-                    targetScope.flightList[i].Available = true;
-                    // fare rule
-                    targetScope.flightList[i].FareRules = {
-                        Loaded: false,
-                        Content: ''
-                    };
-
-                    // populate prices
-                    targetScope.flightFilter.price.prices.push(targetScope.flightList[i].totalFare);
-
-                    // populate airline code
-                    targetScope.flightList[i].AirlinesTag = [];
-                    for (var x = 0; x < targetScope.flightList[i].trips[0].airlines.length; x++) {
-                        targetScope.flightFilter.airline.airlines.push(targetScope.flightList[i].trips[0].airlines[x]);
-                        targetScope.flightList[i].AirlinesTag.push(targetScope.flightList[i].trips[0].airlines[x].code);
-                    }
-
-                }
-
-                // activate flight filter
-                if (targetScope.name == 'departure') {
-                    $scope.initiateFlightFiltering('departure');
-                } else {
-                    $scope.initiateFlightFiltering('return');
-                }
-            }
         }// $scope.arrangeFlight()
+
+        $scope.generateFlightList = function (targetScope)
+        {
+            if (targetScope == "departure" || targetScope == "Departure") {
+                targetScope = $scope.departureFlightConfig;
+            } else {
+                targetScope = $scope.returnFlightConfig;
+            }
+            // start expiry date
+            $scope.pageConfig.expiry.start();
+
+            // loop the result
+            for (var i = 0; i < targetScope.flightList.length; i++) {
+                targetScope.flightList[i].Available = true;
+                // fare rule
+                targetScope.flightList[i].FareRules = {
+                    Loaded: false,
+                    Content: ''
+                };
+
+                // populate prices
+                targetScope.flightFilter.price.prices.push(targetScope.flightList[i].originalAdultFare);
+
+                // populate airline code
+                targetScope.flightList[i].AirlinesTag = [];
+                for (var x = 0; x < targetScope.flightList[i].trips[0].airlines.length; x++) {
+                    targetScope.flightFilter.airline.airlines.push(targetScope.flightList[i].trips[0].airlines[x]);
+                    targetScope.flightList[i].AirlinesTag.push(targetScope.flightList[i].trips[0].airlines[x].code);
+                }
+
+            }
+
+            // activate flight filter
+            if (targetScope.name == 'departure') {
+                $scope.initiateFlightFiltering('departure');
+            } else {
+                $scope.initiateFlightFiltering('return');
+            }
+        }
 
         // initiate flight filtering
         $scope.initiateFlightFiltering = function(targetFlight) {
@@ -870,5 +909,5 @@ app.controller('returnFlightController', [
             console.log(targetScope);
         }
     }
-]);// flight controller
 
+]);// flight controller

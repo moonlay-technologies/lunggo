@@ -32,6 +32,9 @@ namespace Lunggo.ApCommon.Payment.Service
             isUpdated = false;
             var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
 
+            if (paymentDetails == null)
+                return null;
+
             if (paymentDetails.Method != PaymentMethod.Undefined)
                 return paymentDetails;
 
@@ -50,19 +53,19 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
             }
-            if (paymentDetails.Method == PaymentMethod.BankTransfer)
-            {
-                var transferFee = GetTransferFeeFromCache(rsvNo);
-                if (transferFee == 0M)
-                    return paymentDetails;
+            //if (paymentDetails.Method == PaymentMethod.BankTransfer)
+            //{
+            var transferFee = GetTransferFeeFromCache(rsvNo);
+            if (transferFee == 0M)
+                return paymentDetails;
 
-                paymentDetails.TransferFee = transferFee;
-                paymentDetails.FinalPriceIdr += paymentDetails.TransferFee;
-            }
-            else
-            {
-                DeleteTransferFeeFromCache(rsvNo);
-            }
+            paymentDetails.TransferFee = transferFee;
+            paymentDetails.FinalPriceIdr += paymentDetails.TransferFee;
+            //}
+            //else
+            //{
+            //    DeleteTransferFeeFromCache(rsvNo);
+            //}
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
             var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
             var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
@@ -121,7 +124,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 {
                     paymentDetails.TransferAccount = paymentResponse.TransferAccount;
                 }
-                if (method == PaymentMethod.CimbClicks) 
+                if (method == PaymentMethod.CimbClicks)
                 {
                     paymentDetails.RedirectionUrl = paymentResponse.RedirectionUrl;
                 }
@@ -223,7 +226,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 {
                     Id = "3",
                     Name = "TransferFee",
-                    Price = (long)-payment.TransferFee,
+                    Price = (long)payment.TransferFee,
                     Quantity = 1
                 });
             return itemDetails;

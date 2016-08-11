@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -13,18 +17,55 @@ namespace Lunggo.ApCommon.Flight.Service
             if (reservation == null)
                 return null;
 
+            var rsvTime = reservation.RsvTime.AddMilliseconds(-reservation.RsvTime.Millisecond);
+            var cancellationTime = reservation.CancellationTime.HasValue
+                ? reservation.CancellationTime.Value.AddMilliseconds(-reservation.CancellationTime.Value.Millisecond)
+                : (DateTime?) null;
             return new FlightReservationForDisplay
             {
                 RsvNo = reservation.RsvNo,
-                RsvTime = reservation.RsvTime,
-                RsvStatus = reservation.RsvStatus,
+                RsvTime = rsvTime,
+                RsvDisplayStatus = MapReservationStatus(reservation),
                 CancellationType = reservation.CancellationType,
-                CancellationTime = reservation.CancellationTime,
+                CancellationTime = cancellationTime,
                 Itinerary = ConvertToItineraryForDisplay(reservation.Itineraries),
                 Contact = reservation.Contact,
                 Passengers = ConvertToPaxForDisplay(reservation.Pax),
-                Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment)
+                Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
+                UserId = reservation.User != null ? reservation.User.Id : null,
+                DeviceId = reservation.State.DeviceId
             };
+        }
+
+        private static RsvDisplayStatus MapReservationStatus(FlightReservation reservation)
+        {
+            var paymentStatus = reservation.Payment.Status;
+            var paymentMethod = reservation.Payment.Method;
+            var rsvStatus = reservation.RsvStatus;
+
+            if (rsvStatus == RsvStatus.Cancelled || paymentStatus == PaymentStatus.Cancelled)
+                return RsvDisplayStatus.Cancelled;
+            if (rsvStatus == RsvStatus.Expired || paymentStatus == PaymentStatus.Expired)
+                return RsvDisplayStatus.Expired;
+            if (paymentStatus == PaymentStatus.Denied)
+                return RsvDisplayStatus.PaymentDenied;
+            if (paymentStatus == PaymentStatus.Failed)
+                return RsvDisplayStatus.FailedUnpaid;
+            if (rsvStatus == RsvStatus.Failed)
+                return paymentStatus == PaymentStatus.Settled 
+                    ? RsvDisplayStatus.FailedPaid 
+                    : RsvDisplayStatus.FailedUnpaid;
+            if (paymentMethod == PaymentMethod.Undefined)
+                return RsvDisplayStatus.Reserved;
+            if (paymentStatus == PaymentStatus.Settled)
+                return reservation.Itineraries.All(i => i.BookingStatus == BookingStatus.Ticketed)
+                    ? RsvDisplayStatus.Issued
+                    : RsvDisplayStatus.Paid;
+            if (paymentStatus != PaymentStatus.Settled)
+                return (paymentMethod == PaymentMethod.VirtualAccount || paymentMethod == PaymentMethod.BankTransfer)
+                    ? RsvDisplayStatus.PendingPayment
+                    : RsvDisplayStatus.VerifyingPayment;
+            return RsvDisplayStatus.Undefined;
         }
 
         internal FlightItineraryForDisplay ConvertToItineraryForDisplay(List<FlightItinerary> itins)
@@ -32,10 +73,13 @@ namespace Lunggo.ApCommon.Flight.Service
             if (itins == null || itins.Count == 0)
                 return null;
 
-            var totalFare = itins.Sum(itin => itin.Price.Local);
-            var adultFare = itins.Sum(itin => itin.AdultPricePortion * itin.Price.Local);
-            var childFare = itins.Sum(itin => itin.ChildPricePortion * itin.Price.Local);
-            var infantFare = itins.Sum(itin => itin.InfantPricePortion * itin.Price.Local);
+            decimal? tOri, aOri, cOri, iOri, tNet, aNet, cNet, iNet;
+            var itinerary = itins[0];
+            itinerary.Price.OriginalIdr = itins.Sum(i => i.Price.OriginalIdr);
+            CalculateFare(itinerary.Price,
+                itinerary.AdultCount, itinerary.ChildCount, itinerary.InfantCount,
+                itinerary.AdultPricePortion, itinerary.ChildPricePortion, itinerary.InfantPricePortion,
+                out tOri, out aOri, out cOri, out iOri, out tNet, out aNet, out cNet, out iNet);
 
             return new FlightItineraryForDisplay
             {
@@ -50,16 +94,16 @@ namespace Lunggo.ApCommon.Flight.Service
                 CanHold = itins.TrueForAll(itin => itin.CanHold),
                 Currency = itins[0].Price.LocalCurrency,
                 TripType = itins[0].RequestedTripType,
-                NetTotalFare = totalFare,
-                OriginalAdultFare = adultFare,
-                OriginalChildFare = childFare,
-                OriginalInfantFare = infantFare,
-                NetAdultFare = 1234567,
-                NetChildFare = 1234567,
-                NetInfantFare = 1234567,
-                Trips = itins[0].Trips.Select(ConvertToTripForDisplay).ToList(),
-                RegisterNumber = 0,
-                OriginalTotalFare = GenerateDummyOriginalFare(totalFare)
+                OriginalTotalFare = tOri,
+                OriginalAdultFare = aOri,
+                OriginalChildFare = cOri,
+                OriginalInfantFare = iOri,
+                NetTotalFare = tNet,
+                NetAdultFare = aNet,
+                NetChildFare = cNet,
+                NetInfantFare = iNet,
+                Trips = ExtractTripsForDisplay(itins),
+                RegisterNumber = 0
             };
         }
 
@@ -68,9 +112,11 @@ namespace Lunggo.ApCommon.Flight.Service
             if (itinerary == null)
                 return null;
 
-            var adultFare = itinerary.AdultPricePortion * itinerary.Price.Local;
-            var childFare = itinerary.ChildPricePortion * itinerary.Price.Local;
-            var infantFare = itinerary.InfantPricePortion * itinerary.Price.Local;
+            decimal? tOri, aOri, cOri, iOri, tNet, aNet, cNet, iNet;
+            CalculateFare(itinerary.Price,
+                itinerary.AdultCount, itinerary.ChildCount, itinerary.InfantCount,
+                itinerary.AdultPricePortion, itinerary.ChildPricePortion, itinerary.InfantPricePortion,
+                out tOri, out aOri, out cOri, out iOri, out tNet, out aNet, out cNet, out iNet);
 
             return new FlightItineraryForDisplay
             {
@@ -85,16 +131,16 @@ namespace Lunggo.ApCommon.Flight.Service
                 CanHold = itinerary.CanHold,
                 Currency = itinerary.Price.LocalCurrency,
                 TripType = itinerary.TripType,
-                NetTotalFare = itinerary.Price.Local,
-                OriginalAdultFare = adultFare,
-                OriginalChildFare = childFare,
-                OriginalInfantFare = infantFare,
-                NetAdultFare = 1234567,
-                NetChildFare = 1234567,
-                NetInfantFare = 1234567,
+                OriginalTotalFare = tOri,
+                OriginalAdultFare = aOri,
+                OriginalChildFare = cOri,
+                OriginalInfantFare = iOri,
+                NetTotalFare = tNet,
+                NetAdultFare = aNet,
+                NetChildFare = cNet,
+                NetInfantFare = iNet,
                 Trips = itinerary.Trips.Select(ConvertToTripForDisplay).ToList(),
-                RegisterNumber = itinerary.RegisterNumber,
-                OriginalTotalFare = GenerateDummyOriginalFare(itinerary.Price.Local)
+                RegisterNumber = itinerary.RegisterNumber
             };
         }
 
@@ -126,6 +172,43 @@ namespace Lunggo.ApCommon.Flight.Service
                 TotalTransit = CalculateTotalTransit(trip),
                 Transits = MapTransitDetails(trip)
             };
+        }
+
+        private List<FlightTripForDisplay> ExtractTripsForDisplay(List<FlightItinerary> itins)
+        {
+            var allTrips = new List<FlightTripForDisplay>();
+            foreach (var itin in itins)
+            {
+                var trips = itin.Trips.Select(ConvertToTripForDisplay).ToList();
+                var cumulativeOri = 0M;
+                var cumulativeLocal = 0M;
+                for (var i = trips.Count; i > 0; i--)
+                {
+                    var trip = trips[i - 1];
+                    var price = itin.Price;
+                    price.OriginalIdr = (itin.Price.OriginalIdr - cumulativeOri) / i;
+                    cumulativeOri += price.OriginalIdr;
+                    var unrounded = (itin.Price.Local - cumulativeLocal) / i;
+                    var rounded = unrounded - unrounded % itin.Price.LocalCurrency.RoundingOrder;
+                    price.Local = rounded;
+                    cumulativeLocal += price.Local;
+                    decimal? tOri, aOri, cOri, iOri, tNet, aNet, cNet, iNet;
+                    CalculateFare(price,
+                        itin.AdultCount, itin.ChildCount, itin.InfantCount,
+                        itin.AdultPricePortion, itin.ChildPricePortion, itin.InfantPricePortion,
+                        out tOri, out aOri, out cOri, out iOri, out tNet, out aNet, out cNet, out iNet);
+                    trip.OriginalTotalFare = tOri;
+                    trip.OriginalAdultFare = aOri;
+                    trip.OriginalChildFare = cOri;
+                    trip.OriginalInfantFare = iOri;
+                    trip.NetTotalFare = tNet;
+                    trip.NetAdultFare = aNet;
+                    trip.NetChildFare = cNet;
+                    trip.NetInfantFare = iNet;
+                }
+                allTrips.AddRange(trips);
+            }
+            return allTrips.OrderBy(trip => trip.Segments[0].DepartureTime).ToList();
         }
 
         private List<FlightSegmentForDisplay> MapSegments(IEnumerable<FlightSegment> segments)
@@ -232,11 +315,38 @@ namespace Lunggo.ApCommon.Flight.Service
             return transit;
         }
 
-        private static decimal GenerateDummyOriginalFare(decimal fare)
+        private void CalculateFare(Price price, int adultCount, int childCount, int infantCount, decimal adultPricePortion, decimal childPricePortion, decimal infantPricePortion, out decimal? tOri, out decimal? aOri, out decimal? cOri, out decimal? iOri, out decimal? tNet, out decimal? aNet, out decimal? cNet, out decimal? iNet)
         {
-            var markup = (((fare / 100M) % 200M) + 50M) / 10000M; // 0.5% ~ 2.5%
-            var unroundedFare = fare * (1M + markup);
-            return unroundedFare - (unroundedFare % 100M);
+            aOri = cOri = iOri = aNet = cNet = iNet = null;
+            tOri = price.OriginalIdr/price.LocalCurrency.Rate;
+            tNet = price.Local;
+            if (adultPricePortion == 0M)
+                return;
+
+            cOri = iOri = cNet = iNet = 0;
+            var aSinglePortion = adultPricePortion / adultCount;
+            aOri = aSinglePortion * tOri;
+            aNet = aSinglePortion * tNet;
+            if (childCount > 0)
+            {
+                if (infantCount > 0)
+                {
+                    var cSinglePortion = childPricePortion / childCount;
+                    cOri = cSinglePortion * tOri;
+                    cNet = cSinglePortion * tNet;
+                }
+                else
+                {
+                    cOri = (tOri - aOri * adultCount) / childCount;
+                    cNet = (tNet - aNet * adultCount) / childCount;
+                }
+            }
+            if (infantCount > 0)
+            {
+                iOri = (tOri - aOri * adultCount - cOri * childCount) / infantCount;
+                iNet = (tNet - aNet * adultCount - cOri * childCount) / infantCount;
+            }
         }
+
     }
 }

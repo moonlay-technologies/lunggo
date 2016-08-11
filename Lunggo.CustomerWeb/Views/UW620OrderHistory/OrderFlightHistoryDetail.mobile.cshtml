@@ -1,6 +1,5 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
-@using Lunggo.ApCommon.Identity.Users
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Extension
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
@@ -22,7 +21,7 @@
     <script>
         var langCode = 'en';
         var orderDate = '@Model.RsvTime.ToString("u")';
-        var refundDate = '@(Model.Payment.Refund != null ? Model.Payment.Refund.Time.ToString("u") : "")';
+        @*var refundDate = '@(Model.Payment.Refund != null ? Model.Payment.Refund.Time.ToString("u") : "")';*@
         var rsvNo = @Model.RsvNo;
     </script>
     <!-- angular controller -->
@@ -234,7 +233,7 @@
                 </header>
                 <section>
                     <div class="form form-horizontal">
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <label class="control-label col-xs-3">No Refund</label>
                             <div class="col-xs-9">
                                 <p class="form-control-static">
@@ -244,7 +243,7 @@
                                     </span>
                                 </p>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="form-group">
                             <label class="control-label col-xs-3">Tgl Pengajuan</label>
                             <div class="col-xs-9">

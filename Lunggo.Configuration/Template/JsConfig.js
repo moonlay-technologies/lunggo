@@ -157,8 +157,8 @@ var VeritransTokenConfig = {
     ClientKey: '$veritransClientKey$'
 };
 
-var TransferConfig = {
-    Url: '$apiUrl$$transferPaymentPath$'
+var uniqueCodePaymentConfig = {
+    Url: '$apiUrl$$uniqueCodePaymentPath$'
 };
 
 var LoginMobileConfig = {
@@ -190,68 +190,32 @@ var ResendConfirmationEmailMobileConfig = {
 };
 
 function setCookie(cname, cvalue, expTime) {
-    var d = new Date(expTime);
-    //d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires+ "; path=/";
-}
 
-function setRefreshCookie(cname, cvalue)
-{
-    var d = new Date();
-    d.setTime(d.getTime() + (9999 * 24 * 60 * 60 * 1000));
+    if (cname != "accesstoken") {
+        var d = new Date();
+        d.setTime(d.getTime() + (9999 * 24 * 60 * 60 * 1000));
+    }
+    else {
+        var d = new Date(expTime);
+    }
     var expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
 }
 
-function isValid()
-{
-    var token = getCookie('accesstoken');
-    var refreshToken = getCookie('refreshtoken');
-    if (token) {
-        return true;
-    }
-    else
-    {
-        console.log('Test');
-        //Here to get Token
-        if (refreshToken != null) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", LoginConfig.Url, true);
-            xhttp.send("refreshtoken:"+getCookie('refreshtoken'));
-            if (xhttp.status == "200") {
-                return true;
-            }
-            else
-            {
-                return false;
-            } 
-        }
-        else
-        {
-            return true;
-        }
-    }
-}
+//function setRefreshCookie(cvalue)
+//{
+//    var d = new Date();
+//    d.setTime(d.getTime() + (9999 * 24 * 60 * 60 * 1000));
+//    var expires = "expires=" + d.toUTCString();
+//    document.cookie = "refreshtoken" + "=" + cvalue + "; " + expires + "; path=/";
+//}
 
-function isLogin()
-{
-    var token = getCookie('accesstoken');
-    var refreshToken = getCookie('refreshtoken');
-    if (token != null || token != '') {
-        return true;
-    }
-    else
-    {
-        if (refreshToken != null || refreshToken != '')
-        {
-            
-        }
-        //do some logic here if refresh token is not null
-        return false;
-    }
-}
-
+//function setAuthCookie(cvalue) {
+//    var dAuth = new Date();
+//    dAuth.setTime(dAuth.getTime() + (9999 * 24 * 60 * 60 * 1000));
+//    var expiresAuth = "expires=" + dAuth.toUTCString();
+//    document.cookie = "authKey" + "=" + cvalue + "; " + expiresAuth + "; path=/";
+//}
 
 //Get Value from Cookie
 function getCookie(name) {
@@ -265,16 +229,10 @@ function getCookie(name) {
     return null;
 }
 
-
 //Delete Specific value from Cookie
 function eraseCookie(name) {
-    setCookie(name, "", -1);
+    var d = new Date(-1);
+    var expires = "expires=" + d.toUTCString();
+    var cvalue = "";
+    document.cookie = name + "=" + cvalue + "; " + expires + "; path=/";
 }
-
-function deleteCookie(name, path) {
-    // If the cookie exists
-    if (getCookie(name))
-        setCookie(name, "", -1, path);
-}
-
-

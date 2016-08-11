@@ -322,11 +322,6 @@
     <Content Include="Assets\bootstrap\bootstrap.min.css">
       <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
-    <Content Include="Assets\css\application.css" />
-    <Content Include="Assets\css\application.css.map" />
-    <Content Include="Assets\css\application.min.css">
-      <DependentUpon>application.css</DependentUpon>
-    </Content>
     <Content Include="Assets\css\application.scss" />
     <Content Include="Assets\css\bootstrap.min.css" />
     <Content Include="Assets\css\eticket.css">
@@ -1340,12 +1335,15 @@
     <Content Include="Assets\mobile\css\_page_account.scss" />
     <Content Include="Assets\mobile\css\_page_static.scss" />
     <Content Include="Assets\mobile\css\_page_home.scss" />
+    <Content Include="Assets\mobile\css\_home_page_layout.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw__staging.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -2768,10 +2766,6 @@
     <ProjectReference Include="..\Lunggo.Repo\Lunggo.Repository.csproj">
       <Project>{50b8c0c0-6b28-46fd-ba90-771d8c9f12a1}</Project>
       <Name>Lunggo.Repository</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lunggo.WebAPI\Lunggo.WebAPI.csproj">
-      <Project>{94c45b65-f662-4262-a745-0d023f9c9ff9}</Project>
-      <Name>Lunggo.WebAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Flight.Model
         [JsonProperty("rsvTime", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime RsvTime { get; set; }
         [JsonProperty("rsvStatus", NullValueHandling = NullValueHandling.Ignore)]
-        public RsvStatus RsvStatus { get; set; }
+        public RsvDisplayStatus RsvDisplayStatus { get; set; }
         [JsonProperty("cancelType", NullValueHandling = NullValueHandling.Ignore)]
         public CancellationType CancellationType { get; set; }
         [JsonProperty("cancelTime", NullValueHandling = NullValueHandling.Ignore)]
@@ -29,6 +29,10 @@ namespace Lunggo.ApCommon.Flight.Model
         public FlightItineraryForDisplay Itinerary { get; set; }
         [JsonProperty("pax", NullValueHandling = NullValueHandling.Ignore)]
         public List<PaxForDisplay> Passengers { get; set; }
+        [JsonIgnore]
+        public string UserId { get; set; }
+        [JsonIgnore]
+        public string DeviceId { get; set; }
     }
 
     public class FlightReservation : ReservationBase<FlightReservation>
@@ -39,10 +43,5 @@ namespace Lunggo.ApCommon.Flight.Model
         }
 
         public List<FlightItinerary> Itineraries { get; set; }
-
-        public FlightReservation()
-        {
-            State = new ReservationState();
-        }
     }
 }

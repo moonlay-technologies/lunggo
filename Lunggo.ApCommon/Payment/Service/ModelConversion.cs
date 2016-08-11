@@ -14,12 +14,17 @@ namespace Lunggo.ApCommon.Payment.Service
             if (payment == null)
                 return null;
 
+            var time = payment.Time.HasValue
+                ? payment.Time.Value.AddMilliseconds(-payment.Time.Value.Millisecond)
+                : (DateTime?) null;
+            var timeLimit = payment.TimeLimit.AddMilliseconds(-payment.TimeLimit.Millisecond);
+
             return new PaymentDetailsForDisplay
             {
                 Method = payment.Method,
                 Status = payment.Status,
-                Time = payment.Time,
-                TimeLimit = payment.TimeLimit,
+                Time = time,
+                TimeLimit = timeLimit,
                 TransferAccount = payment.TransferAccount,
                 RedirectionUrl = payment.RedirectionUrl,
                 OriginalPrice = payment.OriginalPriceIdr / payment.LocalCurrency.Rate,

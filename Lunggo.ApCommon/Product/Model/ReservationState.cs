@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Claims;
+using System.Web;
+using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Context;
@@ -12,16 +15,20 @@ namespace Lunggo.ApCommon.Product.Model
     public class ReservationState
     {
         public PlatformType Platform { get; set; }
-        public string Device { get; set; }
+        public string DeviceId { get; set; }
         public string Language { get; set; }
         public Currency Currency { get; set; }
 
-        public ReservationState()
+        internal void GenerateNew()
         {
-            Platform = PlatformTypeCd.FrameworkCode(OnlineContext.GetActivePlatformCode());
-            Device = OnlineContext.GetActiveDeviceCode();
-            Language = OnlineContext.GetActiveLanguageCode();
-            Currency = new Currency(OnlineContext.GetActiveCurrencyCode());
+            var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+            var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+            var platform = Client.GetPlatformType(clientId);
+            var deviceId = identity.Claims.Single(claim => claim.Type == "Device ID").Value;
+            Platform = platform;
+            DeviceId = deviceId;
+            Language = "id"; //OnlineContext.GetActiveLanguageCode();
+            Currency = new Currency("IDR"); //OnlineContext.GetActiveCurrencyCode());
         }
 
         internal void InsertToDb(string rsvNo)
@@ -32,7 +39,7 @@ namespace Lunggo.ApCommon.Product.Model
                 {
                     RsvNo = rsvNo,
                     PlatformCd = PlatformTypeCd.Mnemonic(Platform),
-                    DeviceCd = Device ?? "",
+                    DeviceId = DeviceId,
                     LanguageCd = Language,
                     CurrencyCd = Currency,
                     InsertBy = "LunggoSystem",
@@ -49,10 +56,10 @@ namespace Lunggo.ApCommon.Product.Model
                 var record = GetReservationStateQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single();
                 return new ReservationState
                 {
-                    Platform = PlatformTypeCd.FrameworkCode(OnlineContext.GetActivePlatformCode()),
-                    Device = OnlineContext.GetActiveDeviceCode(),
-                    Language = OnlineContext.GetActiveLanguageCode().ToUpper(),
-                    Currency = new Currency(OnlineContext.GetActiveCurrencyCode())
+                    Platform = PlatformTypeCd.Mnemonic(record.PlatformCd),
+                    DeviceId = record.DeviceId,
+                    Language = record.LanguageCd,
+                    Currency = new Currency(record.CurrencyCd)
                 };
             }
         }
@@ -61,7 +68,7 @@ namespace Lunggo.ApCommon.Product.Model
         {
             protected override string GetQuery(dynamic condition = null)
             {
-                return "SELECT PlatformCd, DeviceCd, LanguageCd, CurrencyCd " +
+                return "SELECT PlatformCd, DeviceId, LanguageCd, CurrencyCd " +
                        "FROM ReservationState " +
                        "WHERE RsvNo = @RsvNo";
             }

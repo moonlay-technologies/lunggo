@@ -3,6 +3,7 @@
     ViewBag.Title = "Newsletter";
     ViewBag.BodyClass = "page page-newsletter";
     ViewBag.AngularController = "NewsletterController";
+    ViewBag.CurrentPage = "newsletter";
 }
 @section AdditionalJS {
     <!-- additional Angular JS-->
@@ -64,10 +65,10 @@
         </div>
     </div>
 
-    <div class = "newsletterform" @*ng-show = "!User.showBox"*@>
+    <div class="container-page newsletterform" @*ng-show = "!User.showBox"*@>
         <p><b>Daftar dan Dapatkan</b> Info Promo dan Travel Terkini dari <b>Travorama!</b></p>
 
-        <form name="NewsletterForm" novalidate>
+        <form class="form-divider" name="NewsletterForm" novalidate>
             <div class="form-group">
                 <label class="control-label">Masukkan Alamat E-mail Anda:</label>
                 <input class="form-control" type="email" value="" name="userEmail" ng-model="form.userEmail" required />

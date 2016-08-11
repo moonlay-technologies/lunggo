@@ -1,5 +1,4 @@
-﻿@*@using Lunggo.ApCommon.Identity.User*@
-@using Lunggo.ApCommon.Identity.Users
+﻿@using Lunggo.ApCommon.Identity.Users
 
 @section PageJS{
     <!-- angular controller -->
@@ -51,18 +50,18 @@
             <ul>
                 <section ng-if="isLogin == true">
                     
-                    <div ng-if ="firstname != null || lastname != null">
+                    @*<div ng-if ="name != null">
                         <li class="account" >
-                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{firstName + ' ' + lastName}}</a>
+                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{name}}</a>
                         </li>
-                    </div>
+                    </div>*@
                     
-                    <div ng-if="firstname.length != 0 || lastname.length != 0">
+                    <div ng-if="name.length != 0">
                         <li class="account">
-                            <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{firstName + ' ' + lastName}}</a>
+                            <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{name}}</a>
                         </li>
-                        <li class="account" ng-if="!(firstName != null && lastName != null)">
-                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{firstName + ' ' + lastName}}</a>
+                        <li class="account" ng-if="!(name != null)">
+                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{name}}</a>
                         </li>
                     </div>
                     
@@ -86,7 +85,7 @@
                 <li class="order-check @(ViewBag.CurrentPage == "checkorder" ? "active" : "")">
                     <a href="@Url.Action("CekPemesanan","Home")">Cek Pemesanan</a>
                 </li>
-                <li class="promo">
+                <li class="promo @(ViewBag.CurrentPage == "promo" ? "active" : "")">
                     <a href="@Url.Action("Promo","StaticPage")">Promo Berlangsung</a>
                 </li>
                 <li class="contact @(ViewBag.CurrentPage == "contact" ? "active" : "")">

@@ -74,16 +74,16 @@
     <Reference Include="Microsoft.Owin.Host.SystemWeb">
       <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Security.Cookies">
       <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin.Security.OAuth, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -266,7 +266,8 @@
     <Compile Include="Flight\Query\GetPassengerPrimKeyQuery.cs" />
     <Compile Include="Flight\Query\GetReservationQuery.cs" />
     <Compile Include="Flight\Query\GetRsvNoByBookingIdQuery.cs" />
-    <Compile Include="Flight\Query\GetRsvNosByContactEmailQuery.cs" />
+    <Compile Include="Flight\Query\GetRsvNosByDeviceIdQuery.cs" />
+    <Compile Include="Flight\Query\GetRsvNosByUserIdQuery.cs" />
     <Compile Include="Flight\Query\GetSavedPassengersByContactEmailQuery.cs" />
     <Compile Include="Flight\Query\GetTotalFareQuery.cs" />
     <Compile Include="Flight\Query\GetTripInfoQuery.cs" />
@@ -275,6 +276,7 @@
     <Compile Include="Flight\Query\UpdateBookingIdQuery.cs" />
     <Compile Include="Flight\Query\UpdateBookingStatusQuery.cs" />
     <Compile Include="Flight\Query\UpdateDetailsQuery.cs" />
+    <Compile Include="Flight\Service\PriceCalendar.cs" />
     <Compile Include="Flight\Service\ExchangeRate.cs" />
     <Compile Include="Flight\Service\Caching.cs" />
     <Compile Include="Flight\Service\Database.cs" />
@@ -399,7 +401,8 @@
     <Compile Include="Identity\Query\GetListClaimByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetListRoleByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetLoginInfoByUserIdQuery.cs" />
-    <Compile Include="Identity\Query\GetRefreshTokenByClientAndIdQuery.cs" />
+    <Compile Include="Identity\Query\GetRefreshTokenByClientAndSubjectQuery.cs" />
+    <Compile Include="Identity\Query\GetRefreshTokenByClientAndSubjectAndDeviceQuery.cs" />
     <Compile Include="Identity\Query\GetRefreshTokenByIdQuery.cs" />
     <Compile Include="Identity\Query\GetRoleByIdQuery.cs" />
     <Compile Include="Identity\Query\GetRoleByNameQuery.cs" />

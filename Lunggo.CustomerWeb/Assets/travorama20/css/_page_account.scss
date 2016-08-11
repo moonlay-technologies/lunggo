@@ -8,12 +8,20 @@ file : /Assets/travorama20/css/_page_password.scss
 // page account
 .page-account {
     .form-section {padding:50px 0; background-position:center top; background-repeat:no-repeat;}
-    form {text-align:center; color:#525252;
+    form {
+        background: rgba(255,255,255,0.3);
+        padding: 20px 15px;
+        color:#525252;
         hgroup {margin-bottom:24px;
             h1,h4 {font-weight:bold; color:#525252;}
         }
         input {text-align:center; padding:12px 0; height:auto;}
         a {font-weight:bold; color:inherit;}
+        .link-container p > a {color: #37bcf2; text-decoration: underline;}
+    }
+    .form-horizontal .form-group {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 

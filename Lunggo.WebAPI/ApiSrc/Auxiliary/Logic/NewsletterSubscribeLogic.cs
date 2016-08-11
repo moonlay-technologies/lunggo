@@ -16,7 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERNSUB01"
+                    ErrorCode = "ERXSUB01"
                 };
 
             var client = CreateApiClient();

@@ -1,5 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Web;
+using Lunggo.Framework.Config;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Microsoft.AspNet.Identity;
@@ -37,10 +40,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
-            var code = userManager.GeneratePasswordResetToken(foundUser.Id);
-            //var callbackUrl = Url.Action("ResetPassword", "Account", new { code = code, email = request.Email },
-            //    protocol: Request.Url.Scheme);
-            //await UserManager.SendEmailAsync(foundUser.Id, "ForgotPasswordEmail", callbackUrl);
+            var code = HttpUtility.UrlEncode(userManager.GeneratePasswordResetToken(foundUser.Id));
+            var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+            var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+            var callbackUrl = host + "/id/Account/ResetPassword?code=" + code + "&email=" + request.UserName + "&apiUrl=" + apiUrl;
+            userManager.SendEmailAsync(foundUser.Id, "ForgotPasswordEmail", callbackUrl).Wait();
             return new ApiResponseBase
             {
                 StatusCode = HttpStatusCode.OK

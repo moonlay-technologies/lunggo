@@ -68,7 +68,7 @@ namespace Lunggo.ApCommon.Identity.Auth
             }
 
             context.OwinContext.Set("as:clientAllowedOrigin", client.AllowedOrigin);
-            context.OwinContext.Set("as:clientRefreshTokenLifeTime", client.RefreshTokenLifeTime.ToString());
+            context.OwinContext.Set("as:deviceId", context.Parameters.Get("device_id") ?? "");
 
             context.Validated();
             return Task.FromResult<object>(null);
@@ -91,26 +91,31 @@ namespace Lunggo.ApCommon.Identity.Auth
 
             var userManager = new UserManager<User>(new DapperUserStore<User>());
             var isPasswordOk = await userManager.CheckPasswordAsync(user, context.Password);
-            if (!isPasswordOk)
-            {
-                context.SetError("invalid_grant", "Wrong username and password combination.");
-                return;
-            }
-
             if (!user.EmailConfirmed)
             {
                 context.SetError("not_active", "User is not yet activated.");
                 return;
             }
 
+            if (!isPasswordOk)
+            {
+                context.SetError("invalid_grant", "Wrong username and password combination.");
+                return;
+            }
+            
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Authentication, "password"));
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+            identity.AddClaim(new Claim("Client ID", context.ClientId ?? ""));
+            identity.AddClaim(new Claim("Device ID", context.OwinContext.Get<string>("as:deviceId") ?? ""));
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
                 {
                     { 
-                        "as:client_id", context.ClientId ?? string.Empty
+                        "as:client_id", context.ClientId ?? ""
+                    },
+                    { 
+                        "as:device_id", context.OwinContext.Get<string>("as:deviceId") ?? ""
                     },
                     { 
                         "userName", context.UserName
@@ -129,17 +134,34 @@ namespace Lunggo.ApCommon.Identity.Auth
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }
 
+            if (context.Identity.Name != "anonymous")
+            {
+                context.Properties.ExpiresUtc = context.Properties.IssuedUtc.GetValueOrDefault().AddHours(4);
+                context.Properties.Dictionary[".expires"] = context.Properties.ExpiresUtc.Value.ToString("r");
+                context.OwinContext.Set("as:clientRefreshTokenLifeTime", TimeSpan.FromDays(180).TotalMinutes);
+            }
+            else
+            {
+                context.Properties.ExpiresUtc = context.Properties.IssuedUtc.GetValueOrDefault().AddMonths(6);
+                context.Properties.Dictionary[".expires"] = context.Properties.ExpiresUtc.Value.ToString("r");
+                context.OwinContext.Set("as:clientRefreshTokenLifeTime", TimeSpan.FromDays(365).TotalMinutes);
+            }
+
+            context.Issue(context.Identity, context.Properties);
             return Task.FromResult<object>(null);
         }
 
         public override Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
         {
-            var originalClient = context.Ticket.Properties.Dictionary["as:client_id"];
-            var currentClient = context.ClientId;
+            var originalClient = context.Ticket.Properties.Dictionary["as:client_id"] ?? "";
+            var currentClient = context.ClientId ?? "";
 
-            if (originalClient != currentClient)
+            var originalDevice = context.Ticket.Properties.Dictionary["as:device_id"] ?? "";
+            var currentDevice = context.OwinContext.Get<string>("as:deviceId") ?? "";
+
+            if (originalClient != currentClient || originalDevice != currentDevice)
             {
-                context.SetError("invalid_grant", "Refresh token is issued to a different clientId.");
+                context.SetError("invalid_grant", "Refresh token is issued to a different client.");
                 return Task.FromResult<object>(null);
             }
 
@@ -154,15 +176,19 @@ namespace Lunggo.ApCommon.Identity.Auth
 
         public override Task GrantClientCredentials(OAuthGrantClientCredentialsContext context)
         {
-            var client = new DapperAuthStore().FindClient(context.ClientId);
             var oAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
             oAuthIdentity.AddClaim(new Claim(ClaimTypes.Authentication, "client_credentials"));
-            oAuthIdentity.AddClaim(new Claim(ClaimTypes.Name, "anonymous_user"));
+            oAuthIdentity.AddClaim(new Claim(ClaimTypes.Name, "anonymous"));
+            oAuthIdentity.AddClaim(new Claim("Client ID", context.ClientId ?? ""));
+            oAuthIdentity.AddClaim(new Claim("Device ID", context.OwinContext.Get<string>("as:deviceId") ?? ""));
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
                 {
                     { 
-                        "as:client_id", context.ClientId ?? string.Empty
+                        "as:client_id", context.ClientId ?? ""
+                    },
+                    { 
+                        "as:device_id", context.OwinContext.Get<string>("as:deviceId") ?? ""
                     }
                 });
 

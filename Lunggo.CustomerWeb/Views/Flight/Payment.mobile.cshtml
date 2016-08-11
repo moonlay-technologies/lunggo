@@ -1,5 +1,4 @@
-﻿@*@using Lunggo.ApCommon.Identity.User*@
-@using Lunggo.ApCommon.Identity.Users
+﻿@using Lunggo.ApCommon.Identity.Users
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
@@ -51,7 +50,7 @@
         var paymentTimeout = '';
         // development only start
         paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("u")');
-        console.log("TIME OUT"+paymentTimeout);
+        console.log("TIME OUT: "+paymentTimeout);
         // countdown timer
         $('.timer').countdown(paymentTimeout, function(event) {
             $('.timer .hour').text(event.strftime('%H'));
@@ -74,7 +73,7 @@
         var paymentDetail = '';
         var flightDetail = '';
         var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
-        var price = @Model.Reservation.Itinerary.TotalFare;
+        var price = @Model.Reservation.Itinerary.OriginalTotalFare;
 
         var departureDate;
         @if (Model.Reservation.Itinerary.Trips != null)
@@ -131,14 +130,13 @@
                         <dt>Potongan Harga</dt>
                         <dd><sup>Rp</sup>- {{voucher.amount| number}}</dd>
                     </dl>
-                    <dl ng-show="paymentMethod == '@PaymentMethod.BankTransfer'">
-                        <dt>Kode Unik Transfer</dt>
-                        <dd><sup>Rp</sup>- {{TransferConfig.UniqueCode | number}}</dd>
+                    <dl>
+                        <dt>Kode Unik Pembayaran</dt>
+                        <dd><sup>Rp</sup> {{UniqueCodePaymentConfig.UniqueCode | number}}</dd>
                     </dl>
                     <dl class="total-price">
                         <dt>Total</dt>
-                        <dd ng-if="paymentMethod != '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount | number}}</dd>
-                        <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount - TransferConfig.UniqueCode | number}}</dd>
+                        <dd><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</dd>
                     </dl>
                 </div><!-- .summary__body -->
             </div><!-- .summar--price -->
@@ -264,7 +262,7 @@
                         <h3 class="no-spacing"><b>Detail </b>Kartu Kredit</h3>
 
                         <!-- credit card selector start -->
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <div class="row">
                                 <div class="col-sm-8">
                                     <label>Pilih kartu kredit :</label>
@@ -281,7 +279,7 @@
                                     <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                         <!-- credit card selector end -->
                         <!-- new credit card start -->
                         <div ng-if="CreditCard.TwoClickToken == 'false'">
@@ -389,8 +387,9 @@
 
                     <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","staticpage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","staticpage")" target="_blank">kebijakan privasi</a></p>
                     @*<a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>*@
+                    <button type="submit" class="btn btn-yellow form-control" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">BAYAR</button>
 
-                    <input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">
+                    @*<input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">*@
 
                 </form>
 
@@ -402,6 +401,65 @@
         </div>
     </section><!-- .checkout-content -->
     
+    <!-- Syarat & Ketentuan -->
+    <div class="popup__wrapper" ng-class="{'active' == true}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Syarat dan Ketentuan <br />Bank Transfer</h4>
+            </header>
+            <div class="popup__body tnc-body">
+                <div class="container_new">
+                    <ol>
+                        <li>Transfer keseluruhan jumlah harga hingga 3 angka terakhir untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
+                        <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran Virtual Account.</li>
+                        <li>Tidak disarankan melakukan transfer dengan LLG/Kliring/SKNBI karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
+                    </ol>
+                </div>
+            </div>
+            <footer class="tnc-footer">
+                <div class="container_new tnc">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <input type="submit" class="btn btn-yellow" value="SETUJU">
+                        </div>
+                        <div class="col-xs-6">
+                            <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <div class="popup__wrapper" ng-class="{'active' == true}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Syarat dan Ketentuan <br />Virtual Account</h4>
+            </header>
+            <div class="popup__body tnc-body">
+                <div class="container_new">
+                    <ol>
+                        <li>Hanya untuk transfer via mesin ATM yang tergabung dalam jaringan ATM Bersama, Prima, dan Alto.</li>
+                        <li>Bukan untuk Internet Banking/Mobile Banking/Transfer melalui Non-ATM.</li>
+                        <li>Ada biaya Rp 6.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu.</li>
+                        <li>Lakukan pembayaran sebelum batas akhir waktu pembayaran.</li>
+                    </ol>
+                </div>
+            </div>
+            <footer class="tnc-footer">
+                <div class="container_new tnc">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <input type="submit" class="btn btn-yellow" value="SETUJU">
+                        </div>
+                        <div class="col-xs-6">
+                            <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
     @*<div class="page-overlay flight-expired" ng-show="expired">
             <div class="overlay-content">
                 <header>

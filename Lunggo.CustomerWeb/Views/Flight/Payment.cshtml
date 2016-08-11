@@ -1,5 +1,4 @@
-﻿@*@using Lunggo.ApCommon.Identity.User*@
-@using Lunggo.ApCommon.Identity.Users
+﻿@using Lunggo.ApCommon.Identity.Users
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
@@ -73,7 +72,7 @@
         var paymentDetail = '';
         var flightDetail = '';
         var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
-        var price = @Model.Reservation.Itinerary.OriginalTotalFare;
+        var price = @Model.Reservation.Itinerary.NetTotalFare;
 
         var departureDate;
         @if (Model.Reservation.Itinerary.Trips != null)
@@ -412,7 +411,7 @@
                                     <h3 class="widget-title"><b>RINCIAN</b> HARGA</h3>
                                     <div class="widget-content">
                                         <dl>
-                                            <dt>Total Tiket</dt>
+                                            <dt>Harga Tiket</dt>
                                             <dd>Rp {{initialPrice | number}}</dd>
                                         </dl>
                                         <dl ng-if="voucher.confirmedCode">
@@ -423,14 +422,13 @@
                                             <dt>{{CreditCardPromo.PromoName}}</dt>
                                             <dd>- Rp {{CreditCardPromo.Amount | number}}</dd>
                                         </dl>
-                                        <dl ng-if="paymentMethod == '@PaymentMethod.BankTransfer'">
+                                        <dl>
                                             <dt>Kode Unik Pembayaran</dt>
-                                            <dd>- Rp {{TransferConfig.UniqueCode}}</dd>
+                                            <dd>Rp {{UniqueCodePaymentConfig.UniqueCode}}</dd>
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
-                                            <dd ng-if="paymentMethod != '@PaymentMethod.BankTransfer'">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount | number}}</dd>
-                                            <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount - TransferConfig.UniqueCode | number}}</dd>
+                                            <dd>Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</dd>
                                         </dl>
                                     </div>
                                     <!--<footer>
@@ -617,7 +615,7 @@
             </div>
         </div>
 
-<div class="bookfailed-popup" ng-if="pay.checked && !pay.isSuccess">
+@*<div class="bookfailed-popup" ng-if="pay.checked && !pay.isSuccess">
     <div class=" overlay-content">
         <section style="padding-top:60px; padding-left:225px;">
             <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
@@ -630,7 +628,7 @@
             <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
         </div>
     </div>
-</div>
+</div>*@
 
         <!-- checkout end here -->
                                 break;

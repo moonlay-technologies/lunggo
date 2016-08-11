@@ -14,11 +14,12 @@ html {
   height: 100%; }
 
 body {
+  overflow-x: hidden;
+  margin: 0;
   font-family: 'Open Sans', sans-serif;
   letter-spacing: 0.5px;
   -webkit-font-smoothing: subpixel-antialiased;
   position: relative;
-  padding-bottom: 415px;
   min-height: 100%;
   background: #f9f9f9; }
 
@@ -885,7 +886,6 @@ including in this file :
   background: #303030;
   color: #fff;
   padding: 0 0 30px;
-  position: absolute;
   width: 100%;
   bottom: 157px; }
   .site-footer-menu a {
@@ -964,7 +964,6 @@ including in this file :
   background: #111;
   color: #fff;
   padding: 15px 0;
-  position: absolute;
   bottom: 0;
   width: 100%; }
   .site-footer .social-link {
@@ -1981,7 +1980,81 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 .page-flight .search-result-filter {
   margin-bottom: 15px;
-  letter-spacing: 0; }
+  letter-spacing: 0;
+  /*.price-calendar { 
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+            margin: 20px 0;
+            .carousel {margin: 15px 0;}
+            .carousel-inner {
+                max-width: 780px; 
+                margin: 0 auto;
+                ul.item {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    li.calendar-item {
+                        display: inline-block;
+                        background: #ddd;
+                        color: #666;
+                        padding: 10px;
+                        margin: 5px;
+                        text-align: center;
+                        font-size: 12px;
+                        cursor: pointer;
+                        &.active {
+                            background: #37bcf2;
+                            color: #fff;
+                            span.date, span.price, span.day {
+                                color: #fff;
+                            }
+                        } &:hover {
+                            @extend .active;
+                        }
+                        span {
+                            &.date {
+                                font-weight: 600;
+                                text-transform: uppercase;
+                                letter-spacing: 3px;
+                                font-size: 12px;
+                                line-height: 40px;
+                            } &.price {
+                                font-size: 24px;
+                                font-weight: 600;
+                                line-height: 24px;
+                            } &.day {
+                                line-height: 40px;
+                                letter-spacing: 3px;
+                                font-size: 11px;
+                                text-transform: uppercase;
+                                margin: 0 auto;
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+            }
+            .carousel-control {
+                width: auto; 
+                opacity: 1;
+                color: #000;
+                &.left {
+                    background-image: none;
+                }
+                &.right {
+                    background-image: none;
+                }
+            }
+            span.title {
+                font-size: 13px;
+                font-weight: 700;
+            }
+            a.back-to-search {
+                float: right;
+                text-decoration: underline;
+                color: #525252;
+            }
+        }*/ }
   .page-flight .search-result-filter .filter-left {
     float: left;
     width: 7%;
@@ -2199,6 +2272,8 @@ file: /Assets/travorama20/css/_page_flight.scss
       padding-left: 15px; }
 
 .page-flight .search-result {
+  width: 860px;
+  margin: 0 auto;
   min-height: 500px;
   padding-top: 20px;
   letter-spacing: 0; }
@@ -2223,314 +2298,6 @@ file: /Assets/travorama20/css/_page_flight.scss
       border-top: 3px solid #1daee4;
       max-height: 1000px;
       display: block; }
-
-    /*silubab*/
-    .active .price-detail {
-      border-top: 3px solid #1daee4;
-      max-height: 1000px;
-      display: block; 
-        padding-left: 5%;
-    }
-
-     .price-detail > h3 {
-      padding-top: 10px;
-      padding-bottom: 10px;
-      padding-right: 10px;
-      font-weight: 600;
-      color: #1daee4;
-      margin-top: 10px;
-      font-size: 13px; }
-
-   .price-detail > h3 .close-price-detail {
-        color: #bbb;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 13px;
-        margin-right: 4px; }
-
-
-
-
-     .price-detail .segment:before, 
-     .price-detail .page-index .segment.section-reason:after, 
-     .price-detail .segment.section-reason:after, 
-     .price-detail .segment:after {
-      content: "";
-      clear: both;
-      display: block;
-      width: 100%; }
-    /*.page-flight .flight .price-detail .segment .segment-number {
-      float: left;
-      width: 5%; }
-      .page-flight .flight .price-detail .segment .segment-number span {
-        background: #1daee4;
-        color: #fff;
-        font-weight: 600;
-        padding: 3px 10px;
-        padding-right: 7px; }*/
-
-.clearer {
-    clear:both ;
-}
-       .price-detail .segment .segment-airline-logo, .page-flight .flight .price-detail .segment .segment-right .segment-airline-logo, 
-       .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right .segment-airline-logo, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right .segment-airline-logo, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right .segment-airline-logo, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .price-detail .segment .segment-right .segment-airline-logo, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .price-detail .segment .segment-right .segment-airline-logo {
-          width: 50px;
-        border: 1px solid #ccc;
-        float: left;
-        margin-right: 15px; 
-      }
-
-       .price-detail .segment .segment-price, .page-flight .flight .price-detail .segment .segment-right, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .price-detail .segment .segment-right, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .price-detail .segment .segment-right {
-      float: left;
-      width: 80%;
-      position: relative;
-      margin-bottom: 10px;
-        }
-
-     .price-detail .segment .segment-price .segment-price-row{
-      margin-bottom:0px
-        }
-
-        .price-detail .segment .segment-price .segment-price-q{
-      content: "";
-      position: absolute;
-      width: 7px;
-      height: 7px;
-      background: #fd8524;
-      left: 0px;
-      top: 3px; 
-
-        }
-
-         .price-detail .segment .segment-price .segment-price-left{
-          float: left;
-          width: 25%;
-          position: relative; 
-          font-weight:500;
-          font-size:14px;
-          padding-left: 14px;
-         }
-           .price-detail .segment .segment-price .segment-price-middle{
-          float: left;
-          width: 5%;
-          position: relative; 
-          font-weight:700;
-          font-size:14px;
-
-         }
-      
-
-           .price-detail .segment .segment-price .segment-price-right{
-          float: left;
-          width: 70%;
-          position: relative; 
-          text-align: right;
-          font-weight:700;
-          font-size:15px;
-
-         }
-
-/*============================================================*/
-            .price-detail .segment .segment-price .segment-price-total{
-     border-top: 1px dotted #fd8524;
-     /*padding-top: 13px;*/
-     margin-top: 30px;
-        }
-
-           .price-detail .segment .segment-price .segment-price-total .segment-price-left{
-          float: left;
-          width: 50%;
-          position: relative; 
-          font-weight:700;
-          font-size:15px;
-          padding-left: 14px;
-         }
-     .price-detail .segment .segment-price .segment-price-total .segment-price-right{
-        float: left;
-          width: 50%;
-          position: relative; 
-          text-align: right;
-          font-weight:700;
-          font-size:15px;
-         }
-     .discount{
-         color:#1daee4;
-     }
-/*============================================================*/
-    .price-detail .segment .segment-price .segment-netprice-total{
-     border-top: 1px solid #fd8524;
-     padding-top: 13px;
-     margin-top: 54px;
-        }
-    .price-detail .segment .segment-price .segment-netprice-total .segment-price-left{
-          float: left;
-          width: 50%;
-          position: relative; 
-          font-weight:700;
-          font-size:15px;
-          padding-left: 14px;
-          margin-top: 0px;
-         }
-    .price-detail .segment .segment-price .segment-netprice-total .segment-price-right{
-        float: left;
-          width: 50%;
-          position: relative; 
-          text-align: right;
-          font-weight:600;
-          font-size:15px;
-         }
-    .price-detail .segment .segment-price .segment-netprice-total  h6.segment-price-left {
-     /*padding-top: 10px;*/
-        float: left;
-     top:-12px;
-     color:#ff7200;
-     font-size:10px;
-     font-weight:500;
-     
-        }
-/*============================================================*/
-
-
-        .orange-total-price {
-                  color: #ff7200 !important;
-      font-size: 25px !important;
-      font-weight: bold !important;
-      margin: 0 !important;
-      margin-bottom: 8px !important;
-      /*margin-top: 5px;*/ 
-      
-    }
-
-
-
-
-     .price-detail .segment .segment-price:after, .page-flight .flight .price-detail .segment .segment-right:after, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right:after, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right:after, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .price-detail .segment .segment-right:after, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .price-detail .segment .segment-right:after {
-        content: "";
-        background-image: url(/Assets/images/flight-segment-separator.png);
-        background-repeat: no-repeat;
-        background-size: contain;
-        width: 10px;
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        width: 0;
-        height: 20px; }
-      
-     .price-detail .segment .segment-price .segment-price-name, .page-flight .flight .price-detail .segment .segment-right .segment-price-name, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right .segment-price-name, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right .segment-price-name, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right .segment-price-name, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .price-detail .segment .segment-right .segment-price-name, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .price-detail .segment .segment-right .segment-price-name {
-        font-weight: bold;
-        color: #1daee4;
-        font-size: 12px;
-        padding-right: 30px; }
-     .price-detail .segment .segment-price .segment-price-number, .page-flight .flight .price-detail .segment .segment-right .segment-price-number, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right .segment-price-number, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right .segment-price-number, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right .segment-price-number, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .price-detail .segment .segment-right .segment-price-number, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .price-detail .segment .segment-right .segment-price-number {
-        font-weight: 600;
-        color: #1daee4;
-        font-size: 12px; }
-     .price-detail .segment .segment-price .flight-facility, .page-flight .flight .price-detail .segment .segment-right .flight-facility, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right .flight-facility, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right .flight-facility, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right .flight-facility, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .price-detail .segment .segment-right .flight-facility, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .price-detail .segment .segment-right .flight-facility {
-        display: block;
-        padding-top: 12px; }
-    .price-detail .segment .segment-price .flight-facility span, .page-flight .flight .price-detail .segment .segment-right .flight-facility span, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right .flight-facility span, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right .flight-facility span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right .flight-facility span, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .price-detail .segment .segment-right .flight-facility span, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .price-detail .segment .segment-right .flight-facility span {
-          background: url(/Assets/images/flight-facilities-sprite.png) no-repeat;
-          display: inline-block;
-          margin: 0 5px; }
-     .price-detail .segment .segment-price .flight-facility span.flight-baggage, .page-flight .flight .price-detail .segment .segment-right .flight-facility span.flight-baggage, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right .flight-facility span.flight-baggage, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right .flight-facility span.flight-baggage, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right .flight-facility span.flight-baggage {
-            width: 35px;
-            background-position: -64px;
-            text-align: center;
-            color: #fff;
-            position: relative;
-            padding-top: 5px;
-            margin-top: -10px;
-            top: -7px; }
-     .price-detail .segment .segment-price .flight-facility span.flight-tax, .page-flight .flight .price-detail .segment .segment-right .flight-facility span.flight-tax, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right .flight-facility span.flight-tax, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right .flight-facility span.flight-tax, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right .flight-facility span.flight-tax {
-            width: 35px;
-            background-position: -30px;
-            padding-bottom: 30px; }
-    .price-detail .segment .segment-price .flight-facility span.flight-meal, .page-flight .flight .price-detail .segment .segment-right .flight-facility span.flight-meal, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right .flight-facility span.flight-meal, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right .flight-facility span.flight-meal, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right .flight-facility span.flight-meal {
-            width: 30px;
-            padding-bottom: 30px; }
-    .page-flight .flight .price-detail .segment .segment-right {
-      width: 72%; }
-      .page-flight .flight .price-detail .segment .segment-right:before, .page-flight .flight .price-detail .segment .page-index .segment-right.section-reason:after, .page-index .page-flight .flight .price-detail .segment .segment-right.section-reason:after, .page-flight .flight .price-detail .segment .segment-right:after {
-        content: "";
-        clear: both;
-        display: block;
-        width: 100%; }
-      .page-flight .flight .price-detail .segment .segment-right > div {
-        float: left; }
-      .page-flight .flight .price-detail .segment .segment-right .segment-departure, .page-flight .flight .price-detail .segment .segment-right .segment-arrival, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right .segment-arrival, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right .segment-arrival, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right .segment-arrival, .page-flight.page-flight-return .search-result-container .flight .price-detail .segment .segment-right .segment-arrival, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .price-detail .segment .segment-right .segment-arrival, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .price-detail .segment .segment-right .segment-arrival {
-        width: 33.33333334%;
-        padding-top: 7.5px;
-        padding-left: 15px; }
-        .page-flight .flight .price-detail .segment .segment-right .segment-departure h5, .page-flight .flight .price-detail .segment .segment-right .segment-arrival h5, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right .segment-arrival h5, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right .segment-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right .segment-arrival h5, .page-flight.page-flight-return .search-result-container .flight .price-detail .segment .segment-right .segment-arrival h5, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .price-detail .segment .segment-right .segment-arrival h5, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .price-detail .segment .segment-right .segment-arrival h5 {
-          margin: 0;
-          margin-bottom: 5px;
-          font-size: 11px; }
-        .page-flight .flight .price-detail .segment .segment-right .segment-departure h3, .page-flight .flight .price-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container .flight .price-detail .segment .segment-right .segment-arrival h3, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .price-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .price-detail .segment .segment-right .segment-arrival h3 {
-          font-weight: bold;
-          margin: 0;
-          margin-bottom: 5px;
-          font-size: 18px; }
-        .page-flight .flight .price-detail .segment .segment-right .segment-departure h4, .page-flight .flight .price-detail .segment .segment-right .segment-arrival h4, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .price-detail .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .price-detail .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .price-detail .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .search-result-container .flight .price-detail .segment .segment-right .segment-arrival h4, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .price-detail .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .price-detail .segment .segment-right .segment-arrival h4 {
-          font-weight: 600;
-          margin: 0;
-          margin-bottom: 5px;
-          font-size: 13px; }
-      .page-flight .flight .price-detail .segment .segment-right .segment-duration {
-        width: 33.33333334%;
-        padding-right: 40px;
-        padding-top: 20px; }
-        .page-flight .flight .price-detail .segment .segment-right .segment-duration h5 {
-          border-bottom: 3px solid #1daee4;
-          text-align: center;
-          padding-bottom: 5px; }
-          .page-flight .flight .price-detail .segment .segment-right .segment-duration h5 span {
-            font-weight: bold; }
-      .page-flight .flight .price-detail .segment .segment-right .segment-arrival {
-        padding-left: 0; }
-    .page-flight .flight .price-detail .segment .segment-operator {
-      display: block;
-      clear: both;
-      padding-left: 60px;
-      padding-right: 60px;
-      padding-top: 5px; }
-      .page-flight .flight .price-detail .segment .segment-operator p {
-        border-top: 1px solid #ccc;
-        margin-top: 10px;
-        padding-top: 10px;
-        margin-bottom: 0;
-        font-style: italic; }
-        .page-flight .flight .price-detail .segment .segment-operator p img {
-          height: 20px; }
-        .page-flight .flight .price-detail .segment .segment-operator p span {
-          font-weight: 600; }
-    .page-flight .flight .price-detail .transit {
-      text-align: center;
-      padding: 15px 0; }
-      .page-flight .flight .price-detail .transit:after {
-        border-top: 1px dashed #1daee4;
-        content: "";
-        display: block;
-        width: 100%;
-        position: relative;
-        top: -10px; }
-      .page-flight .flight .price-detail .transit p {
-        background: #fff;
-        display: inline;
-        font-style: italic;
-        font-weight: 600;
-        color: #1daee4;
-        background: #fff;
-        position: relative;
-        z-index: 2;
-        padding: 0 10px; }
-
-
-    /*silubab  END*/
-
-
-
-
-
     .page-flight .flight.active:after {
       background-image: url(/Assets/images/flight-detail-active.png);
       background-size: contain;
@@ -2566,14 +2333,12 @@ file: /Assets/travorama20/css/_page_flight.scss
         text-align: center;
         float: left;
         width: 25%;
-        border-right: 1px solid #ccc; 
-      }
+        border-right: 1px solid #ccc; }
         .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-left h5 {
           color: #1daee4;
           font-weight: bold; }
         .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-left img {
-            /*margin-top: 10px;*/
-            height: 55px; }
+          height: 55px; }
       .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right {
         float: left;
         width: 75%;
@@ -2675,8 +2440,6 @@ file: /Assets/travorama20/css/_page_flight.scss
           background-size: 200%;
           left: -13px;
           top: 7px; }
-
-
       .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger:before, .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .page-index .flight-rules-trigger.section-reason:after, .page-index .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger.section-reason:after {
         background-position: -20px; }
   .page-flight .flight .flight-summary .flight-summary-right {
@@ -2690,28 +2453,17 @@ file: /Assets/travorama20/css/_page_flight.scss
       width: 100%;
       content: "";
       clear: both; }
-    
-     .page-flight .flight .flight-summary .flight-summary-right .original-price {
-      font-size: 11px;
-      color: #ffa63f;
-      line-height: 15px;
-      text-decoration:line-through;
-    }
     .page-flight .flight .flight-summary .flight-summary-right h4 {
       font-size: 25px;
       font-weight: bold;
       margin: 0;
-      margin-bottom: 8px;
-      /*margin-top: 5px;*/ 
-
-    }
+      margin-bottom: 3px;
+      margin-top: 5px; }
     .page-flight .flight .flight-summary .flight-summary-right small {
       display: block;
       font-size: 12px;
       margin-bottom: 7px;
-      font-size: 10px; 
-      line-height: 5px;
-    }
+      font-size: 10px; }
     .page-flight .flight .flight-summary .flight-summary-right .btn {
       padding-right: 30px;
       padding-left: 30px; }
@@ -2929,17 +2681,12 @@ file: /Assets/travorama20/css/_page_flight.scss
   border-bottom: 0; }
   .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-left {
     height: 113px;
-    /*height: 125px;*/
     padding: 10px; }
   .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .summary-top-right-top:before, .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .page-index .summary-top-right-top.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .summary-top-right-top.section-reason:after, .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .summary-top-right-top:after {
     display: block;
     width: 100%;
     content: "";
-    clear: both;
-  }
-  .summary-top-right-top{
-      /*height: 63px;*/
-  }
+    clear: both; }
   .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .summary-top-right-bottom {
     clear: both;
     width: 100%;
@@ -2965,52 +2712,6 @@ file: /Assets/travorama20/css/_page_flight.scss
     background-size: 200%;
     left: -17px;
     top: 7px; }
-
-/*silubab price detail START*/
- .price-detail-trigger, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger, .page-flight.page-flight-oneway .flight .flight-rules-trigger, .page-flight.page-flight-oneway .flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-flight.page-flight-oneway .flight .flight-rules-trigger, .page-flight.page-flight-oneway .flight .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-flight.page-flight-oneway .flight .flight-rules-trigger {
-  margin-left: 30px;
-  padding: 7px;
-  display: inline-block;
-  position: relative;
-  color: #1daee4;
-  text-decoration: none;
-  cursor: pointer; }
-  .price-detail-trigger:before, .price-detail-trigger.section-reason:after, .price-detail-trigger.section-reason:after, 
-  .page-index .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .section-reason.flight-rules-trigger:after, 
-  .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .page-index .section-reason.flight-rules-trigger:after, .page-index .page-flight.page-flight-oneway .flight .section-reason.flight-rules-trigger:after, .page-flight.page-flight-oneway .flight .page-index .section-reason.flight-rules-trigger:after, .page-flight.page-flight-oneway .flight .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .section-reason.flight-rules-trigger:after, .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-flight.page-flight-oneway .flight .section-reason.flight-rules-trigger:after, .page-flight.page-flight-oneway .flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-index .section-reason.flight-rules-trigger:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-index .page-flight.page-flight-oneway .flight .section-reason.flight-rules-trigger:after, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger:before, .page-flight.page-flight-oneway .flight .flight-rules-trigger:before, .page-flight.page-flight-oneway .flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger:before, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-flight.page-flight-oneway .flight .flight-rules-trigger:before, .page-flight.page-flight-oneway .flight .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger:before, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-flight.page-flight-oneway .flight .flight-rules-trigger:before {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 17px;
-    height: 16px;
-   background: url(/Assets/images/idr-sprite.png) no-repeat;
-    background-size: 100%;
-    left: -17px;
-    top: 7px; }
-
-
-  /*.page-flight.page-flight-return .flight .price-detail-trigger, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger, .page-flight.page-flight-oneway .flight .flight-rules-trigger, .page-flight.page-flight-oneway .flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-flight.page-flight-oneway .flight .flight-rules-trigger, .page-flight.page-flight-oneway .flight .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-flight.page-flight-oneway .flight .flight-rules-trigger {
-  margin-left: 30px;
-  padding: 7px;
-  display: inline-block;
-  position: relative;
-  color: #1daee4;
-  text-decoration: none;
-  cursor: pointer; }
-  .page-flight.page-flight-return .flight .price-detail-trigger:before, .page-flight.page-flight-oneway .flight .page-index .price-detail-trigger.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .price-detail-trigger.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .section-reason.flight-rules-trigger:after, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .page-index .section-reason.flight-rules-trigger:after, .page-index .page-flight.page-flight-oneway .flight .section-reason.flight-rules-trigger:after, .page-flight.page-flight-oneway .flight .page-index .section-reason.flight-rules-trigger:after, .page-flight.page-flight-oneway .flight .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .section-reason.flight-rules-trigger:after, .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-flight.page-flight-oneway .flight .section-reason.flight-rules-trigger:after, .page-flight.page-flight-oneway .flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-index .section-reason.flight-rules-trigger:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-index .page-flight.page-flight-oneway .flight .section-reason.flight-rules-trigger:after, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger:before, .page-flight.page-flight-oneway .flight .flight-rules-trigger:before, .page-flight.page-flight-oneway .flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger:before, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-flight.page-flight-oneway .flight .flight-rules-trigger:before, .page-flight.page-flight-oneway .flight .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger:before, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-flight.page-flight-oneway .flight .flight-rules-trigger:before {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 17px;
-    height: 16px;
-   background: url(/Assets/images/idr-sprite.png) no-repeat;
-    background-size: 100%;
-    left: -17px;
-    top: 7px; }*/
-
-/*silubab price detail END*/
-
-
 
 .page-flight.page-flight-oneway .flight .flight-rules-trigger:before, .page-flight.page-flight-oneway .flight .page-index .flight-rules-trigger.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-rules-trigger.section-reason:after {
   background-position: -20px; }
@@ -3768,17 +3469,10 @@ file: /Assets/travorama20/css/_page_flight.scss
   padding: 10px 0;
   padding-bottom: 0;
   padding-top: 12px; }
- .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-right .original-price {
-      font-size: 10px;
-      color: #ffa63f;
-      line-height: 15px;
-      text-decoration:line-through;
-      padding-left: 10px;
-    }
   .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-right h4 {
     font-size: 18px;
     padding-left: 10px; }
-      .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-right h4 sup {
+    .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-right h4 sup {
       top: -5px; }
   .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-right small {
     font-size: 8px;
@@ -4002,40 +3696,7 @@ file: /Assets/travorama20/css/_page_flight.scss
             width: 24px;
             height: 24px;
             background: url(/Assets/images/flight-button-sprite.png);
-            left: -24px;
-             top: 4px; 
-          }
-
-         /*price details silubab*/
-          .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .price-detail-trigger{
-          margin-left: 30px;
-          padding: 7px;
-          display: inline-block;
-          position: relative;
-          color: #1daee4;
-          text-decoration: none;
-          cursor: pointer; }
-          .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .price-detail-trigger:before, 
-          .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-index .price-detail-trigger.section-reason:after, 
-          .page-index .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .price-detail-trigger.section-reason:after, 
-          .flight-review-wrapper .flight-review .flight-review-summary .summary-left .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .section-reason.flight-rules-trigger:after, 
-          .page-index .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .section-reason.flight-rules-trigger:after, 
-          .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-index .section-reason.flight-rules-trigger:after, 
-          .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger:before, .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger:before, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger:before, 
-          .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger:before, 
-          .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger:before {
-            content: "";
-            display: block;
-            position: absolute;
-            width: 24px;
-            height: 24px;
-              background: url(/Assets/images/idr-sprite.png) no-repeat;
-    background-size: 100%;
-    left: -24px;
-    top: 4px; }
-
-         /*price details silubab END*/
-
+            left: -24px; }
         .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger {
           cursor: pointer; }
           .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger:before, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-index .flight-rules-trigger.section-reason:after, .page-index .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger.section-reason:after {
@@ -5214,7 +4875,8 @@ file : /Assets/travorama20/css/_page_password.scss
   background-repeat: no-repeat; }
 
 .page-account form {
-  text-align: center;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 20px 15px;
   color: #525252; }
   .page-account form hgroup {
     margin-bottom: 24px; }
@@ -5228,6 +4890,13 @@ file : /Assets/travorama20/css/_page_password.scss
   .page-account form a {
     font-weight: bold;
     color: inherit; }
+  .page-account form .link-container p > a {
+    color: #37bcf2;
+    text-decoration: underline; }
+
+.page-account .form-horizontal .form-group {
+  margin-left: 0;
+  margin-right: 0; }
 
 .page-account-login .form-section {
   background-image: url(/Assets/images/login-bg.jpg); }

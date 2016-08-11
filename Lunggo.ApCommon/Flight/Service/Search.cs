@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CsQuery.ExtensionMethods.Internal;
 using Lunggo.ApCommon.Flight.Constant;
@@ -31,8 +31,13 @@ namespace Lunggo.ApCommon.Flight.Service
                 var isSearching = GetSearchingStatusInCache(input.SearchId, unsearchedSupplierId);
                 if (!isSearching)
                 {
+                    var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "searchTimeout"));
+
                     var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl" + unsearchedSupplierId);
-                    queue.AddMessage(new CloudQueueMessage(input.SearchId));
+                    queue.AddMessage(new CloudQueueMessage(input.SearchId), timeToLive: new TimeSpan(0, 0, searchTimeout));
+
+                    var timeoutQueue = QueueService.GetInstance().GetQueueByReference("FlightCrawlTimeout" + unsearchedSupplierId);
+                    timeoutQueue.AddMessage(new CloudQueueMessage(input.SearchId), initialVisibilityDelay: new TimeSpan(0, 0, searchTimeout));
                 }
             }
 
@@ -76,6 +81,22 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.ItineraryLists = seachedItinListsForDisplay;
                 output.Combos = combos.Any() ? combos.Select(ConvertToComboForDisplay).ToList() : null;
                 output.Progress = CalculateProgress(input.Progress, searchedSupplierIds.Count, Suppliers.Count);
+
+                //if (output.Progress == 100)
+                //{
+                //    var tripType = ParseTripType(input.SearchId);
+                //    if (tripType == TripType.OneWay)
+                //    {
+                //        SetLowestPriceToCache(searchedItinLists[0]);
+                //    }
+                //    else if (tripType == TripType.RoundTrip)
+                //    {
+                //        foreach (var itinList in searchedItinLists.Skip(1))
+                //        {
+                //            SetLowestPriceToCache(itinList);
+                //        }
+                //    }
+                //}
             }
 
             return output;
@@ -107,17 +128,41 @@ namespace Lunggo.ApCommon.Flight.Service
             var searchId = EncodeSearchConditions(conditions);
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
 
-            Parallel.ForEach(conditionsList, partialConditions =>
+            var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "searchTimeout"));
+            var searchCancellationSource = new CancellationTokenSource();
+            var searchCancellation = searchCancellationSource.Token;
+
+            var searchTask = Task.Run(() =>
             {
-                var result = supplier.SearchFlight(partialConditions);
-                result.Itineraries = result.Itineraries ?? new List<FlightItinerary>();
-                if (result.IsSuccess)
-                    foreach (var itin in result.Itineraries)
-                    {
-                        itin.SearchId = searchId;
-                    }
-                SaveSearchedPartialItinerariesToBufferCache(result.Itineraries, searchId, timeout, supplierIndex, conditionsList.IndexOf(partialConditions));
-            });
+                Parallel.ForEach(conditionsList, partialConditions =>
+                {
+                    var result = supplier.SearchFlight(partialConditions);
+                    result.Itineraries = result.Itineraries ?? new List<FlightItinerary>();
+                    if (result.IsSuccess)
+                        foreach (var itin in result.Itineraries)
+                        {
+                            itin.SearchId = searchId;
+                        }
+
+                    if (searchCancellation.IsCancellationRequested)
+                        return;
+
+                    SaveSearchedPartialItinerariesToBufferCache(result.Itineraries, searchId, timeout, supplierIndex,
+                        conditionsList.IndexOf(partialConditions));
+                });
+            }, searchCancellation);
+
+            if (Task.WhenAny(searchTask, Task.Delay(new TimeSpan(0, 0, searchTimeout), searchCancellation)).Result == searchTask)
+            {
+                searchTask.Wait(searchCancellation);
+            }
+            else
+            {
+                searchCancellationSource.Cancel();
+                Parallel.ForEach(conditionsList,
+                    partialConditions =>
+                        SaveSearchedPartialItinerariesToBufferCache(new List<FlightItinerary>(), searchId, timeout, supplierIndex, conditionsList.IndexOf(partialConditions)));
+            }
 
             var itinLists = GetSearchedPartialItinerariesFromBufferCache(searchId, supplierIndex);
             var tripType = ParseTripType(searchId);
@@ -146,6 +191,26 @@ namespace Lunggo.ApCommon.Flight.Service
             SaveCurrencyStatesToCache(searchId, Currency.GetAllCurrencies(), timeout);
             SaveSearchedSupplierIndexToCache(searchId, supplierIndex, timeout);
             InvalidateSearchingStatusInCache(searchId, supplierIndex);
+        }
+
+        public void SetSearchAsEmptyIfNotSet(string searchId, int supplierIndex)
+        {
+            var searchExpiry = GetSearchedItinerariesExpiry(searchId, supplierIndex);
+            if (searchExpiry == null)
+            {
+                var cacheTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
+                var emptyLists = new List<List<FlightItinerary>> {new List<FlightItinerary>()};
+
+                var conditions = DecodeSearchConditions(searchId);
+                var conditionsList = new List<SearchFlightConditions> {conditions};
+                if (conditions.Trips.Count > 1)
+                    conditionsList.ForEach(c => emptyLists.Add(new List<FlightItinerary>()));
+
+                SaveSearchedItinerariesToCache(emptyLists, searchId, cacheTimeout, supplierIndex);
+                SaveCurrencyStatesToCache(searchId, Currency.GetAllCurrencies(), cacheTimeout);
+                SaveSearchedSupplierIndexToCache(searchId, supplierIndex, cacheTimeout);
+                InvalidateSearchingStatusInCache(searchId, supplierIndex);
+            }
         }
 
         private void SetComboFare(List<FlightItineraryForDisplay>[] itinLists, List<FlightItinerary> bundledItins, List<Combo> combos, Currency localCurrency)

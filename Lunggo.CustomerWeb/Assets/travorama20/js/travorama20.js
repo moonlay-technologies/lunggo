@@ -1,4 +1,5 @@
-﻿$(function() {
+﻿
+$(function() {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
@@ -9,6 +10,7 @@ if (typeof(angular) == 'object') {
 //********************
 // variables
 var currentDate = new Date();
+var trial = 0;
 
 //********************
 // site header function
@@ -49,7 +51,7 @@ function translateMonth(month) {
             month = 'Apr';
             break;
         case 4:
-            month = 'May';
+            month = 'Mei';
             break;
         case 5:
             month = 'Jun';
@@ -58,19 +60,19 @@ function translateMonth(month) {
             month = 'Jul';
             break;
         case 7:
-            month = 'Aug';
+            month = 'Agu';
             break;
         case 8:
             month = 'Sep';
             break;
         case 9:
-            month = 'Oct';
+            month = 'Okt';
             break;
         case 10:
             month = 'Nov';
             break;
         case 11:
-            month = 'Dec';
+            month = 'Des';
             break;
     }
     return month;
@@ -134,16 +136,26 @@ function subscribeFormFunctions() {
     }
 
     function submitForm() {
+        if (trial > 3) {
+            trial = 0;
+        }
         $('form.subscribe-form .subscribe-email, form.subscribe-form .subscribe-name').prop('disabled',true);
         $.ajax({
             url: SubscribeConfig.Url,
             method: 'POST',
-            data: { address : SubscribeConfig.email, name : SubscribeConfig.name }
+            data: JSON.stringify({ "email" : SubscribeConfig.email, "name" : SubscribeConfig.name}),
+            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
         }).done(function (returnData) {
 
             $('.subscribe-before').hide();
             $('.subscribe-after').show();
 
+        }).error(function (returnData) {
+            trial++;
+            if (refreshAuthAccess() && trial < 4) //refresh cookie
+            {
+                submitForm();
+            }
         });
     }
 
@@ -189,6 +201,9 @@ $(document).ready(function () {
     }
 
     function submitNewsletterForm() {
+        if (trial > 3) {
+            trial = 0;
+        }
         $('form.form-newsletter .input-type').prop('disabled', true);
         email = $('form.form-newsletter input.input-type').val();
         var div = document.getElementById("thankyou");
@@ -199,7 +214,8 @@ $(document).ready(function () {
         $.ajax({
             url: SubscribeConfig.Url,
             method: 'POST',
-            data: { address: email, name: subscriberName }
+            data: JSON.stringify({ "email" : email, "name" : subscriberName}),
+            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
         }).done(function (returnData) {
             console.log('done');
             console.log(returnData);
@@ -235,47 +251,195 @@ $(document).ready(function () {
                 }
             }
             
+        }).error(function (returnData) {
+            trial++;
+            if (refreshAuthAccess() && trial < 4) //refresh cookie
+            {
+                submitNewsletterForm();
+            }
         });
     }
 });
+
+function getAnonymousFirstAccess()
+{
+    var status = 0;
+    $.ajax({
+        url: LoginConfig.Url,
+        method: 'POST',
+        async: false,
+        data: JSON.stringify({ "clientId": "Jajal", "clientSecret": "Standar" }),
+        contentType: 'application/json',
+    }).done(function (returnData) {
+        if (returnData.status == '200') {
+            setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+            setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+            if (getCookie('accesstoken')) {
+                status =  1;
+            }
+            else {
+                status = 0;
+            }
+        }
+        else
+        {
+            status = 0;
+        }
+    });
+    return status;
+}
+
+
+function getAnonymousAccessByRefreshToken(refreshToken)
+{
+    var status = 0;
+    $.ajax({
+        url: LoginConfig.Url,
+        method: 'POST',
+        async: false,
+        data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+        contentType: 'application/json',
+    }).done(function (returnData) {
+        if (returnData.status == '200') {
+            setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+            setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+            if (getCookie('accesstoken')) {
+                status = 1;
+            }
+            else {
+                status = 0;
+            }
+        }
+        else
+        {
+            status = 0;
+        }
+    });
+    return status;
+}
+
+
+function getLoginAccessByRefreshToken(refreshToken)
+{
+    var status = 0;
+    $.ajax({
+        url: LoginConfig.Url,
+        method: 'POST',
+        async: false,
+        data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+        contentType: 'application/json',
+    }).done(function (returnData) {
+        if (returnData.status == '200') {
+            setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+            setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+            setCookie("authkey", returnData.accessToken, returnData.expTime);
+            if (getCookie('accesstoken')) {
+                status =  2;
+            }
+            else {
+                status = 0;
+            }
+        }
+        else
+        {
+            status = 0;
+        }
+    });
+    return status;
+}
 
 function getAuthAccess()
 {
     var token = getCookie('accesstoken');
     var refreshToken = getCookie('refreshtoken');
-    if (token) {
-        return 1;
+    var authKey = getCookie('authkey');
+    var status = 0;
+
+    if (authKey) {
+        if (token) {
+            return 2;
+        }
+        else {
+            if (refreshToken) {
+                status = getLoginAccessByRefreshToken(refreshToken);
+                if (status == 0)
+                {
+                    status = getAnonymousFirstAccess();
+                }
+            }
+            else {
+                return 0; //harusnya gak pernah masuk sini
+            }
+        }
     }
     else
     {
-        if (refreshToken) {
-            //Get Token Again
-            $.ajax({
-                url: LoginConfig.Url,
-                method: 'POST',
-                async: false,
-                data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
-                contentType: 'application/json',
-            }).done(function (returnData) {
-                if (returnData.status == '200') {
-                    setCookie('accesstoken', returnData.accessToken, returnData.expTime);
-                    setRefreshCookie('refreshtoken', returnData.refreshToken);
+        if (token) {
+            return 1;
+        }
+        else {
+            //Get Anonymous Token By Refresh Token
+            if (refreshToken) {
+                status = getAnonymousAccessByRefreshToken(refreshToken);
+                if (status == 0)
+                {
+                    status = getAnonymousFirstAccess();
                 }
-            });
-            
-            if (getCookie('accesstoken')) {
-                return 1;
             }
             else {
-                return 2;
+                //For Anynomius at first
+                status = getAnonymousFirstAccess();
+            }
+        }
+    }
+    return status;
+}
+
+
+function refreshAuthAccess()
+{
+    /*
+    * If failed to get Authorization, but accesstoken is still exist
+    */
+    var token = getCookie('accesstoken');
+    var refreshToken = getCookie('refreshtoken');
+    var authKey = getCookie('authkey');
+    var status = 0;
+    if (refreshToken) {
+        if (authKey) {
+            status = getLoginAccessByRefreshToken(refreshToken);
+            if (status == 0) {
+                status = getAnonymousFirstAccess();
+                eraseCookie('authkey');
+            }
+
+            if (status == 2) {
+                return true;
+            }
+            else {
+                return false;
             }
         }
         else
         {
-            return 0;
+            status = getAnonymousAccessByRefreshToken(refreshToken);
+            if (status == 0) {
+                status = getAnonymousFirstAccess();
+            }
+
+            if (status == 1 || status == 2) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
     }
-    
+    else
+    {
+        getAnonymousFirstAccess();
+        return true;
+    }
 }
 
 
@@ -442,6 +606,10 @@ function flightPageSearchFormFunctions() {
 
     // autocomplete function
     function getLocation(keyword) {
+        if (trial > 3)
+        {
+            trial = 0;
+        }
         FlightSearchConfig.autocomplete.loading = true;
         $('autocomplete-pre .text-pre').hide();
         $('autocomplete-pre .text-loading').show();
@@ -461,7 +629,8 @@ function flightPageSearchFormFunctions() {
             }
         } else {
             $.ajax({
-                url: FlightAutocompleteConfig.Url + keyword
+                url: FlightAutocompleteConfig.Url + keyword,
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
             }).done(function (returnData) {
                 $('.autocomplete-pre .text-pre').hide();
                 $('.autocomplete-pre .text-loading').hide();
@@ -478,6 +647,12 @@ function flightPageSearchFormFunctions() {
                     $('.autocomplete-pre .text-loading').hide();
                     $('.autocomplete-result').hide();
                     $('.autocomplete-no-result').show();
+                }
+            }).error(function (returnData) {
+                trial++;
+                if (refreshAuthAccess()  && trial < 4) //refresh cookie
+                {
+                    getLocation(keyword);
                 }
             });
         }
@@ -560,7 +735,6 @@ function flightPageSearchFormFunctions() {
 
     // *****
     // date selector
-
     $('.form-flight-departure').click(function () {
         showCalendar('departure');
         $('.date-picker').datepicker('option', 'minDate', new Date());
@@ -579,6 +753,9 @@ function flightPageSearchFormFunctions() {
     $('.date-picker').datepicker({
         numberOfMonths: 2,
         onSelect: function (data) {
+            data = data.substring(3, 5) + "/" + data.substring(0, 2) + "/" + data.substring(6, 10);
+            console.log(data);
+            //console.log(trsdate);
             var target;
             var chosenDate = new Date(data);
             if ($('.search-calendar').attr('data-date') == 'departure') {
@@ -599,7 +776,8 @@ function flightPageSearchFormFunctions() {
             $(target + ' .month').html(translateMonth(chosenDate.getMonth()));
             $(target + ' .year').html(chosenDate.getFullYear());
             $('.search-calendar').hide();
-        }
+        },
+        
     });
 
 
@@ -1052,6 +1230,9 @@ function flightFormSearchFunctions() {
     //*****
     // autocomplete function
     function getLocation(keyword) {
+        if (trial > 3) {
+            trial = 0;
+        }
         FlightSearchConfig.autocomplete.loading = true;
         $('autocomplete-pre .text-pre').hide();
         $('autocomplete-pre .text-loading').show();
@@ -1071,7 +1252,8 @@ function flightFormSearchFunctions() {
             }
         } else {
             $.ajax({
-                url: FlightAutocompleteConfig.Url + keyword
+                url: FlightAutocompleteConfig.Url + keyword,
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
             }).done(function (returnData) {
                 $('.autocomplete-pre .text-pre').hide();
                 $('.autocomplete-pre .text-loading').hide();
@@ -1088,6 +1270,12 @@ function flightFormSearchFunctions() {
                     $('.autocomplete-pre .text-loading').hide();
                     $('.autocomplete-result').hide();
                     $('.autocomplete-no-result').show();
+                }
+            }).error(function (returnData) {
+                trial++;
+                if (refreshAuthAccess() && trial < 4) //refresh cookie
+                {
+                    getLocation(keyword);
                 }
             });
         }
@@ -1162,10 +1350,13 @@ function flightFormSearchFunctions() {
             showCalendar('return');
         }
     });
+  
     // embed date picker into page
     $('.date-picker').datepicker({
         numberOfMonths: 2,
         onSelect: function (data) {
+            data = data.substring(3, 5) + "/" + data.substring(0, 2) + "/" + data.substring(6, 10);
+            console.log(data);
             var target;
             var chosenDate = new Date(data);
             if ( $('.search-calendar').attr('data-date') == 'departure' ) {
@@ -1250,9 +1441,9 @@ function flightFormSearchFunctions() {
             FlightSearchConfig.flightForm.destination = Cookies.get('destination');
             FlightSearchConfig.flightForm.destinationCity = Cookies.get('destinationCity');
         } else {
-            $('.form-flight-destination').val('Denpasar, Bali (DPS)');
+            $('.form-flight-destination').val('Denpasar (DPS)');
             FlightSearchConfig.flightForm.destination = 'DPS';
-            FlightSearchConfig.flightForm.destinationCity = 'Denpasar, Bali';
+            FlightSearchConfig.flightForm.destinationCity = 'Denpasar';
         }
 
         // flight passenger

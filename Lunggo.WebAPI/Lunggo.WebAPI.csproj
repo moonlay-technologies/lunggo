@@ -50,6 +50,9 @@
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.NotificationHubs">
+      <HintPath>..\packages\Microsoft.Azure.NotificationHubs.1.0.6\lib\net45-full\Microsoft.Azure.NotificationHubs.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm">
       <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -118,6 +121,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
@@ -198,17 +202,24 @@
     <Compile Include="ApiSrc\Account\Logic\ChangeProfileLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetTransactionHistoryLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetReservationLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\ConfirmEmailLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\ResetPasswordLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\ResendConfirmationEmailLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\RegisterLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\LoginLogic.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangePasswordApiRequest.cs" />
+    <Compile Include="ApiSrc\Account\Model\ChangeProfileApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangeProfileApiRequest.cs" />
+    <Compile Include="ApiSrc\Account\Model\ConfirmEmailApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ForgotPasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\GetProfileApiResponse.cs" />
+    <Compile Include="ApiSrc\Account\Model\ConfirmEmailApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\LoginApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\GetReservationApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\LoginApiRequest.cs" />
+    <Compile Include="ApiSrc\Account\Model\ResendConfirmationEmailApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\RegisterApiRequest.cs" />
-    <Compile Include="ApiSrc\Account\Model\ResetPasswordViewModel.cs" />
+    <Compile Include="ApiSrc\Account\Model\ResetPasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\TokenData.cs" />
     <Compile Include="ApiSrc\Account\Model\TokenRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />
@@ -226,6 +237,10 @@
     <Compile Include="ApiSrc\Autocomplete\Model\UpdateSet.cs" />
     <Compile Include="ApiSrc\Auxiliary\AuxiliaryController.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\GetCalendarLogic.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Logic\GetPromoLogic.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Model\PromoDetailsApiResponse.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Model\AllPromoApiResponse.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Model\FeaturedPromoApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\GetCalendarApiResponse.cs" />
     <Compile Include="ApiSrc\Common\Model\ApiResponseBase.cs" />
     <Compile Include="ApiSrc\Flight\FlightController.cs" />
@@ -235,11 +250,13 @@
     <Compile Include="ApiSrc\Flight\Logic\BookFlightLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\ExpireReservationsLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\GetRulesLogic.cs" />
+    <Compile Include="ApiSrc\Flight\Logic\PriceCalendarLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\SelectFlightLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\SearchFlightLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\RevalidateFlightLogic.cs" />
     <Compile Include="ApiSrc\Flight\Logic\TopDestinations.cs" />
     <Compile Include="ApiSrc\Flight\Model\ArrayHelper.cs" />
+    <Compile Include="ApiSrc\Flight\Model\FlightPriceCalendarApiResponse.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightIssuanceApiRequest.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightIssueApiRequest.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightBookApiRequest.cs" />
@@ -247,6 +264,7 @@
     <Compile Include="ApiSrc\Flight\Model\FlightCancelApiRequest.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightCancelApiResponse.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightItineraryApiResponse.cs" />
+    <Compile Include="ApiSrc\Flight\Model\FlightPriceCalendarApiRequest.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightSelectApiResponse.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightSelectApiRequest.cs" />
     <Compile Include="ApiSrc\Flight\Model\FlightRulesApiResponse.cs" />
@@ -259,6 +277,16 @@
     <Compile Include="ApiSrc\Flight\Model\TopDestinationsApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\NewsletterSubscribeLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\NewsletterSubscribeApiRequest.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\DeleteRegistrationLogic.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\PlatformMapper.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\AddTagsLogic.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\SetTagsLogic.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\RegisterDeviceLogic.cs" />
+    <Compile Include="ApiSrc\Notification\Model\RegisterDeviceApiResponse.cs" />
+    <Compile Include="ApiSrc\Notification\Model\RegisterDeviceApiRequest.cs" />
+    <Compile Include="ApiSrc\Notification\Model\DeleteRegistrationApiRequest.cs" />
+    <Compile Include="ApiSrc\Notification\Model\UpdateRegistrationApiRequest.cs" />
+    <Compile Include="ApiSrc\Notification\NotificationController.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckPaymentLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetPaymentMethodsLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\PayLogic.cs" />
@@ -266,8 +294,8 @@
     <Compile Include="ApiSrc\Payment\Model\GetMethodsApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\PayApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\PayApiRequest.cs" />
-    <Compile Include="ApiSrc\Payment\Model\TransferFeeApiRequest.cs" />
-    <Compile Include="ApiSrc\Payment\Model\TransferFeeApiResponse.cs" />
+    <Compile Include="ApiSrc\Payment\Model\UniqueCodeApiRequest.cs" />
+    <Compile Include="ApiSrc\Payment\Model\UniqueCodeApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\PaymentController.cs" />
     <Compile Include="ApiSrc\Rooms\Logic\GetRoomsLogic.cs" />
     <Compile Include="ApiSrc\Rooms\Object\RoomSearchApiRequest.cs" />
@@ -299,9 +327,12 @@
     <Content Include="Config\Country.csv" />
     <None Include="Properties\PublishProfiles\prod-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv1-api %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv1-api %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv1-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-api %287%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api - FTP %284%29.pubxml" />
@@ -317,7 +348,22 @@
     <None Include="Properties\PublishProfiles\travorama-dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-apidev.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api %2810%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api %2811%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api %2812%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api %285%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api %286%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api %287%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api %288%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api %289%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dvapp-api.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api__staging %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api__staging %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api__staging %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api.pubxml" />
@@ -332,8 +378,6 @@
     <Folder Include="ApiSrc\Hotel\Model\" />
     <Folder Include="ApiSrc\Rooms\Model\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
-    <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">

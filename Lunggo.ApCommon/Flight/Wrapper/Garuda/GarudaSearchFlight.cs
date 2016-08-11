@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using Lunggo.Framework.Extension;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
@@ -84,8 +85,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 var destinationCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.DestinationAirport);
                 // Calling The Zeroth Page
 
-                client.Proxy = new WebProxy("185.77.167.128", 60000);
-                client.Proxy.Credentials = new NetworkCredential("travelmadezy", "9T8XCty9MT");
+                client.Proxy = new WebProxy("zproxy.luminati.io:22225");
+                client.Proxy.Credentials = new NetworkCredential("lum-customer-travelmadezy-zone-gen-country-id", "9f0760f20d0e");
                 //client.Proxy = new WebProxy("103.9.163.59", 31280);
                 //client.Proxy.Credentials = new NetworkCredential("developer", "Standar1234");
                 client.BaseUrl = new Uri("https://www.garuda-indonesia.com");
@@ -101,7 +102,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 searchRequest0 = new RestRequest(url0, Method.GET);
                 searchResponse0 = client.Execute(searchRequest0);
                 var html0 = searchResponse0.Content;
-                Console.WriteLine(html0);
+                //Console.WriteLine(html0);
                 if (searchResponse0.ResponseUri.AbsolutePath != "/id/id/index.page" &&
                     (searchResponse0.StatusCode == HttpStatusCode.OK ||
                         searchResponse0.StatusCode == HttpStatusCode.Redirect))
@@ -198,6 +199,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     var dataAnehStartIndex = html2.IndexOf("ENC=");
                     var dataAnehEndIndex = html2.IndexOf("</PA>");
                     var enc = html2.SubstringBetween(dataAnehStartIndex + 4, dataAnehEndIndex);
+
+                    var capturedIPStartIndex = html2.IndexOf("[x-real-ip]");
+                    var capturedIPEndIndex = html2.IndexOf("[akamai-origin-hop]");
+                    var capturedIp = html2.SubstringBetween(capturedIPStartIndex,
+                            capturedIPEndIndex);
+                    Console.WriteLine("IP yang digunakan : " +capturedIp);
 
                     var priceAvailabilityStartIndex = html2.IndexOf("EMBEDDED_TRANSACTION");
                     var priceAvailabilityEndIndex = html2.LastIndexOf("ENCT");
@@ -355,13 +362,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         }
 
                         var Value =
-                            Convert.ToInt32(
+                            Convert.ToDecimal(
                                 priceClass.ElementAt(listIndex.ElementAt(0)).PnrPrices[0].RecoAmounts[0].RecoAmount
                                     .TotalAmount);
                         var index = listIndex.ElementAt(0);
                         for (var ind = 1; ind < listIndex.Count; ind++)
                         {
-                           if (Convert.ToInt32(
+                           if (Convert.ToDecimal(
                                 priceClass.ElementAt(listIndex.ElementAt(ind)).PnrPrices[0].RecoAmounts[0].RecoAmount
                                     .TotalAmount) < Value)
                             {
@@ -446,7 +453,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             ));
                         itins.Add(itinerary);
                     }
-
+                    Console.WriteLine("List FLight : "+itins.Count);
                     return new SearchFlightResult
                     {
                         IsSuccess = true,

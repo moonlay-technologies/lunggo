@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Lunggo.ApCommon.Flight.Constant;
@@ -22,7 +23,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 OnlineContext.SetActiveLanguageCode(request.LanguageCode);
                 var bookServiceRequest = PreprocessServiceRequest(request);
                 var bookServiceResponse = FlightService.GetInstance().BookFlight(bookServiceRequest);
-                var apiResponse = AssembleApiResponse(bookServiceResponse);
+                var apiResponse = AssembleApiResponse(bookServiceResponse, request.Test);
                 return apiResponse;
             }
             else
@@ -38,7 +39,10 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
         private static bool IsValid(FlightBookApiRequest request)
         {
             return
+                request != null &&
+                request.LanguageCode != null &&
                 request.Contact != null &&
+                request.Contact.Title != Title.Undefined &&
                 request.Contact.Name != null &&
                 request.Contact.Phone != null &&
                 request.Contact.Email != null &&
@@ -49,16 +53,31 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 request.Passengers.TrueForAll(p => p.Type != PaxType.Undefined);
         }
 
-        private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse)
+        private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse, bool test)
         {
             if (bookServiceResponse.IsSuccess)
-                return new FlightBookApiResponse
+            {
+                if (!test)
                 {
-                    RsvNo = bookServiceResponse.RsvNo,
-                    PaymentUrl = bookServiceResponse.PaymentUrl,
-                    TimeLimit = bookServiceResponse.TimeLimit,
-                    StatusCode = HttpStatusCode.OK
-                };
+                    return new FlightBookApiResponse
+                    {
+                        RsvNo = bookServiceResponse.RsvNo,
+                        TimeLimit = bookServiceResponse.TimeLimit,
+                        StatusCode = HttpStatusCode.OK
+                    };
+                }
+                else
+                {
+                    return new FlightBookApiResponse
+                    {
+                        IsValid = true,
+                        IsItineraryChanged = false,
+                        IsPriceChanged = true,
+                        NewPrice = bookServiceResponse.NewPrice,
+                        StatusCode = HttpStatusCode.OK
+                    };
+                }
+            }
             else if (bookServiceResponse.Errors == null || !bookServiceResponse.Errors.Any())
             {
                 return new FlightBookApiResponse

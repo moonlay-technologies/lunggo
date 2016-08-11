@@ -18,7 +18,15 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 var flight = FlightService.GetInstance();
                 var rsv = flight.GetReservationForDisplay(rsvNo);
-                if (user.IsInRole("Admin") || user.Identity.GetEmail() == rsv.Contact.Email)
+
+                if (rsv == null)
+                    return new GetReservationApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        ErrorCode = "ERARSV01"
+                    };
+
+                if (user.IsInRole("Admin") || user.Identity.GetUser().Id == rsv.UserId || user.Identity.GetDeviceId() == rsv.DeviceId)
                     return new GetReservationApiResponse
                     {
                         ProductType = ProductType.Flight,

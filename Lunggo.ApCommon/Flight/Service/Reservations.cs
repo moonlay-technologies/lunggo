@@ -7,9 +7,13 @@ using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Queue;
+using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -59,9 +63,15 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public List<FlightReservationForDisplay> GetOverviewReservationsByContactEmail(string contactEmail)
+        public List<FlightReservationForDisplay> GetOverviewReservationsByUserId(string userId)
         {
-            var rsvs = GetOverviewReservationsFromDb(contactEmail) ?? new List<FlightReservation>();
+            var rsvs = GetOverviewReservationsByUserIdFromDb(userId) ?? new List<FlightReservation>();
+            return rsvs.Select(ConvertToReservationForDisplay).ToList();
+        }
+
+        public List<FlightReservationForDisplay> GetOverviewReservationsByDeviceId(string deviceId)
+        {
+            var rsvs = GetOverviewReservationsByDeviceIdFromDb(deviceId) ?? new List<FlightReservation>();
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 
@@ -69,6 +79,24 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var rsvs = GetSearchReservationsFromDb(search);
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
+        }
+
+        public void ExpireReservationWhenTimeout(string rsvNo, DateTime timeLimit)
+        {
+            var queue = QueueService.GetInstance().GetQueueByReference("FlightExpireReservation");
+            var timeOut = timeLimit - DateTime.UtcNow;
+            queue.AddMessage(new CloudQueueMessage(rsvNo), initialVisibilityDelay: timeOut);
+        }
+
+        public void ExpireReservation(string rsvNo)
+        {
+            var payment = PaymentDetails.GetFromDb(rsvNo);
+            if (payment.Status == PaymentStatus.Pending || payment.Status == PaymentStatus.Verifying ||
+                payment.Status == PaymentStatus.Challenged || payment.Status == PaymentStatus.Undefined)
+            {
+                payment.Status = PaymentStatus.Expired;
+                PaymentService.GetInstance().UpdatePayment(rsvNo, payment);
+            }
         }
 
         public void ExpireReservations()

@@ -77,72 +77,114 @@ app.controller('checkoutController', [
         };
         //Function Login in Checkout Page
         $scope.form.submit = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
             $scope.form.submitting = true;
-            $http.post(LoginConfig.Url, {
-                email: $scope.form.email,
-                password: $scope.form.password,
-                clientId: 'Jajal',
-                clientSecret: 'Standar'
-            }).success(function (returnData) {
-                $scope.form.submitting = false;
-                $scope.form.submitted = true;
-                if (returnData.status == '200') {
-                    setCookie('accesstoken', returnData.accessToken, returnData.expTime);
-                    setRefreshCookie('refreshtoken', returnData.refreshToken);
-                    $scope.TakeProfileConfig.TakeProfile();
-                    $scope.loggedIn = getCookie('accesstoken');
-                }
-                else {
-                    window.location.href = $location.absUrl();
+            var authAccess = getAuthAccess();
+            if (authAccess == 1 || authAccess == 2)
+            {
+                $http({
+                    method: 'POST',
+                    url: LoginConfig.Url,
+                    data: {
+                        userName: $scope.form.email,
+                        password: $scope.form.password,
+                        clientId: 'Jajal',
+                        clientSecret: 'Standar'
+                    },
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).then(function (returnData) {
                     $scope.form.submitting = false;
-                    $scope.form.submitted = false;
-                    $scope.form.isLogin = false;
-                    //Return langsung
-                }
-            }, function (returnData) {
-                console.log('Failed to Login');
+                    $scope.form.submitted = true;
+                    if (returnData.data.status == '200') {
+                        setCookie("accesstoken", returnData.data.accessToken, returnData.data.expTime);
+                        setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
+                        setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
+                        $scope.TakeProfileConfig.TakeProfile();
+                        //$scope.loggedIn = getCookie('accesstoken');
+                    }
+                    else {
+                        window.location.href = $location.absUrl();
+                        $scope.form.submitting = false;
+                        $scope.form.submitted = false;
+                        $scope.form.isLogin = false;
+                        //Return langsung
+                    }
+                }).catch(function (returnData) {
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4 ) //refresh cookie
+                    {
+                        $scope.form.submit();
+                    }
+                    else
+                    {
+                        console.log('Failed to Login');
+                        $scope.form.submitting = false;
+                        $scope.form.submitted = false;
+                        $scope.form.isLogin = false;
+                        window.location.href = $location.absUrl();
+                        //return langsung
+                    }
+
+                });
+            }
+            else
+            {
                 $scope.form.submitting = false;
                 $scope.form.submitted = false;
                 $scope.form.isLogin = false;
-                window.location.href = $location.absUrl();
-                //return langsung
-            });
+            }
+            
         }
         
         //Get Profile
         $scope.TakeProfileConfig = {
             TakeProfile: function () {
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
                 //Check Authorization
                 var authAccess = getAuthAccess();
-                if (authAccess == 1) {
-                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                if (authAccess == 2) {
+                    $http({
+                        method: 'GET',
+                        url: GetProfileConfig.Url,
+                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                    }).then(function (returnData) {
+                        if (returnData.status == "200") {
+                            $scope.buyerInfo.name = returnData.data.name;
+                            $scope.buyerInfo.countryCode = parseInt(returnData.data.countryCallCd);
+                            $scope.buyerInfo.phone = parseInt(returnData.data.phone);
+                            $scope.buyerInfo.email = returnData.data.email;
+                            window.location.href = $location.absUrl();
+                        }
+                        else {
+                            $scope.buyerInfo = {};
+                            console.log('There is an error');
+                            console.log('Error : ' + returnData.data.error);
+                            console.log(returnData);
+                            window.location.href = $location.absUrl();
+                        }
+                    }).catch(function (returnData) {
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                        {
+                            $scope.TakeProfileConfig.TakeProfile();
+                        }
+                        else
+                        {
+                            $scope.buyerInfo = {};
+                            console.log('Failed to Get Profile');
+                            window.location.href = $location.absUrl();
+                        }
+                        
+                    });
                 }
                 else {
-                    $scope.getFlightHeader = null;
+                    console.log('Not Authorized');
                 }
-                $http.get(GetProfileConfig.Url, {
-                    headers: { 'Authorization': $scope.getFlightHeader }
-                }).success(function (returnData) {
-                    if (returnData.status == "200") {
-                        $scope.buyerInfo.name = returnData.name;
-                        $scope.buyerInfo.countryCode = parseInt(returnData.countryCallCd);
-                        $scope.buyerInfo.phone = parseInt(returnData.phone);
-                        $scope.buyerInfo.email = returnData.email;
-                        window.location.href = $location.absUrl();
-                    }
-                    else {
-                        $scope.buyerInfo = {};
-                        console.log('There is an error');
-                        console.log('Error : ' + returnData.error);
-                        console.log(returnData);
-                        window.location.href = $location.absUrl();
-                    }
-                }, function (returnData) {
-                    $scope.buyerInfo = {};
-                    console.log('Failed to Get Profile');
-                    console.log(returnData);
-                    window.location.href = $location.absUrl();
-                });
+                
             }
         }
 
@@ -158,6 +200,9 @@ app.controller('checkoutController', [
             isPriceChanged: false,
             
             send: function () {
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
                 $scope.book.booking = true;
                 $scope.book.isPriceChanged = false;
                 $scope.book.checked = false;
@@ -238,57 +283,66 @@ app.controller('checkoutController', [
 
                 //Check Authorization
                 var authAccess = getAuthAccess();
-                if (authAccess == 1) {
-                    $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
-                }
-                else {
-                    $scope.getFlightHeader = null;
-                }
+                if (authAccess == 1 || authAccess == 2) {
+                    // send form
+                    $http({
+                        method: 'POST',
+                        url: $scope.book.url,
+                        data: $scope.book.postData,
+                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                    }).then(function (returnData) {
+                        //console.log(returnData);
+                        if (returnData.data.status == '200' && (returnData.data.rsvNo != '' || returnData.data.rsvNo != null)) {
+                            if (returnData.data.price != null) {
+                                $scope.book.priceChanged = true;
+                                $scope.book.isSuccess = true;
+                                $scope.book.newPrice = returnData.data.price;
+                                $scope.book.checked = false;
+                            }
+                            else {
+                                $scope.book.isSuccess = true;
+                                $scope.book.rsvNo = returnData.data.rsvNo;
 
-                // send form
-                $http({
-                    method: 'POST',
-                    url: $scope.book.url,
-                    data: $scope.book.postData,
-                    headers: { 'Authorization': $scope.getFlightHeader }
-                }).then(function (returnData) {
-                    //console.log(returnData);
-                    if (returnData.data.status == '200' && (returnData.data.rsvNo != '' || returnData.data.rsvNo != null)) {
-                        if (returnData.data.price != null) { 
-                            $scope.book.priceChanged = true;
-                            $scope.book.isSuccess = true;
-                            $scope.book.newPrice = returnData.data.price;
-                            $scope.book.checked = false;
+                                $('form#rsvno input#rsvno-input').val(returnData.data.rsvNo);
+                                $('form#rsvno').submit();
+                                $scope.book.checked = true;
+                            }
+
+                        } else {
+                            if (returnData.data.price != null) {
+                                $scope.book.isPriceChanged = true;
+                                $scope.book.isSuccess = false;
+                                $scope.book.newPrice = returnData.data.price;
+                                $scope.book.checked = true;
+                            }
+                            else {
+                                $scope.book.isSuccess = false;
+                                $scope.book.checked = true;
+                                console.log(returnData);
+                                $scope.errorMessage = returnData.data.error;
+                            }
                         }
-                        else {
-                            $scope.book.isSuccess = true;
-                            $scope.book.rsvNo = returnData.data.rsvNo;
 
-                            $('form#rsvno input#rsvno-input').val(returnData.data.rsvNo);
-                            $('form#rsvno').submit();
+                    }).catch(function (returnData) {
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                        {
+                            $scope.book.send();
+                        }
+                        else
+                        {
+                            console.log(returnData);
                             $scope.book.checked = true;
+                            $scope.book.isSuccess = false;
                         }
                         
-                    } else {
-                        if (returnData.data.price != null) {
-                            $scope.book.isPriceChanged = true;
-                            $scope.book.isSuccess = false;
-                            $scope.book.newPrice = returnData.data.price;
-                            $scope.book.checked = true;
-                        }
-                        else {
-                            $scope.book.isSuccess = false;
-                            $scope.book.checked = true;
-                            console.log(returnData);
-                            $scope.errorMessage = returnData.data.error;
-                        }
-                    }
-
-                }, function (returnData) {
-                    console.log(returnData);
+                    });
+                }
+                else {
+                    console.log('Not Authorized');
                     $scope.book.checked = true;
                     $scope.book.isSuccess = false;
-                });
+                }
 
             }
         };
@@ -300,34 +354,38 @@ app.controller('checkoutController', [
             checked: false
         };
 
-        $scope.loggedIn = getCookie('accesstoken');
+        $scope.loggedIn = getAuthAccess();
 
         $scope.buyerInfo = {};
-        if ($scope.loggedIn) {
+        if ($scope.loggedIn == 2) {
             // call API get Profile
             var authAccess = getAuthAccess();
-            if (authAccess == 1) {
-                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+            if (authAccess == 2) {
+                $http({
+                    method: 'GET',
+                    url: GetProfileConfig.Url,
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).then(function (returnData) {
+                    if (returnData.data.status == "200") {
+                        console.log('Success getting Profile');
+                        $scope.buyerInfo.name = returnData.data.name;
+                        $scope.buyerInfo.countryCode = parseInt(returnData.data.countryCallCd);
+                        $scope.buyerInfo.phone = parseInt(returnData.data.phone);
+                        $scope.buyerInfo.email = returnData.data.email;
+                    }
+                    else {
+                        $scope.buyerInfo = {};
+                    }
+                }).catch(function (returnData) {
+
+                    $scope.buyerInfo = {};
+                });
             }
             else {
-                $scope.getFlightHeader = null;
-            }
-            $http.get(GetProfileConfig.Url, {
-                headers: { 'Authorization': $scope.getFlightHeader }
-            }).success(function (returnData) {
-                if (returnData.status == "200") {
-                    console.log('Success getting Profile');
-                    $scope.buyerInfo.name = returnData.name;
-                    $scope.buyerInfo.countryCode = parseInt(returnData.countryCallCd);
-                    $scope.buyerInfo.phone = parseInt(returnData.phone);
-                    $scope.buyerInfo.email = returnData.email;
-                }
-                else {
-                    $scope.buyerInfo = {};
-                }
-            }, function (returnData) {
                 $scope.buyerInfo = {};
-            });
+                console.log('Not Authorized');
+            }
+            
         } else {
             $scope.buyerInfo = {};
         }

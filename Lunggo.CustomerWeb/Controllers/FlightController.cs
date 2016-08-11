@@ -112,11 +112,11 @@ namespace Lunggo.CustomerWeb.Controllers
                     });
                 }
             }
-            else 
+            else
             {
                 return RedirectToAction("Index", "UW000TopPage");
             }
-            
+
         }
 
         //Buat ngelempar ke halaman payment
@@ -125,17 +125,7 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
-            var flight = FlightService.GetInstance();
-            var reservation = flight.GetReservationForDisplay(rsvNo);
-            if (reservation.RsvTime != null)
-            {
-                return RedirectToAction("Payment", "Flight", new { rsvNo });
-            }
-            else 
-            {
-                TempData["FlightCheckoutOrBookingError"] = true;
-                return RedirectToAction("Checkout");
-            }
+            return RedirectToAction("Payment", "Flight", new { rsvNo });
         }
 
         [RequireHttps]
@@ -146,34 +136,35 @@ namespace Lunggo.CustomerWeb.Controllers
             var reservation = flight.GetReservationForDisplay(rsvNo);
             //if (reservation.Payment.Status == PaymentStatus.Pending)
             //{
-                try
+            try
+            {
+                var savedCreditCards = User.Identity.IsAuthenticated
+                    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
+                    : new List<SavedCreditCard>();
+                var x = reservation.Itinerary.Trips;
+                return View(new FlightPaymentData
                 {
-                    var savedCreditCards = User.Identity.IsAuthenticated
-                        ? payment.GetSavedCreditCards(User.Identity.GetEmail())
-                        : new List<SavedCreditCard>();
-                    return View(new FlightPaymentData
-                    {
-                        RsvNo = rsvNo,
-                        Reservation = reservation,
-                        TimeLimit = reservation.Payment.TimeLimit,
-                        SavedCreditCards = savedCreditCards
-                    });
+                    RsvNo = rsvNo,
+                    Reservation = reservation,
+                    TimeLimit = reservation.Payment.TimeLimit,
+                    SavedCreditCards = savedCreditCards
+                });
 
-                }
-                catch
+            }
+            catch
+            {
+                ViewBag.Message = "Failed";
+                return View(new FlightPaymentData
                 {
-                    ViewBag.Message = "Failed";
-                    return View(new FlightPaymentData
-                    {
-                        RsvNo = rsvNo
-                    });
-                }
+                    RsvNo = rsvNo
+                });
+            }
             //}
             //else
             //{
             //    return RedirectToAction("Thankyou", "Flight", new { rsvNo });
             //}
-            
+
         }
 
         [RequireHttps]
@@ -194,15 +185,15 @@ namespace Lunggo.CustomerWeb.Controllers
             else
             {
                 TempData["AllowThisThankyouPage"] = rsvNo;
-                return RedirectToAction("Thankyou", "Flight", new {rsvNo});
+                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
             }
         }
 
         public ActionResult Thankyou(string rsvNo)
         {
-                var service = FlightService.GetInstance();
-                var summary = service.GetReservationForDisplay(rsvNo);
-                return View(summary);
+            var service = FlightService.GetInstance();
+            var summary = service.GetReservationForDisplay(rsvNo);
+            return View(summary);
         }
 
         [HttpPost]
@@ -231,7 +222,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             else
                 TempData["AllowThisThankyouPage"] = rsvNo;
-                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
+            return RedirectToAction("Thankyou", "Flight", new { rsvNo });
         }
 
         /*[HttpPost]

@@ -4,14 +4,15 @@ if (typeof (angular) == 'object') {
     var app = angular.module('Travorama', ['ngRoute']);
     // root scope
     app.run(function($rootScope) {
-        //$.datepicker.setDefaults(
-        //    $.extend(
-        //    { 'dateFormat': 'dd/mm/yy' },
-        //    $.datepicker.regional['id']
-        //    )
-        //);
+        $.datepicker.setDefaults(
+            $.extend(
+            { 'dateFormat': 'dd/mm/yy' },
+            $.datepicker.regional['id']
+            )
+        );
         //$.datepicker($.datepicker.regional["id-ID"]);
-        $('.ui-datepicker').addClass('notranslate');
+        //('.ui-datepicker').addClass('notranslate');
+
         // general page config and function
         $rootScope.PageConfig = {
             
@@ -312,6 +313,19 @@ if (typeof (angular) == 'object') {
 
             }, // toggle burger menu end
 
+            // tab menu
+            TabShown: false,
+            TabMenu: function () {
+
+                if ($rootScope.PageConfig.TabShown == false) {
+                    $rootScope.PageConfig.TabShown = true;
+                    $rootScope.PageConfig.SetBodyNoScroll(true);
+                } else {
+                    $rootScope.PageConfig.TabShown = false;
+                    $rootScope.PageConfig.SetBodyNoScroll(false);
+                }
+
+            }, // tab menu end
 
             // page overlay
             ActiveOverlay: '',
@@ -380,20 +394,148 @@ if (typeof (angular) == 'object') {
                 ChangeYear: false,
                 SelectedDate : ''
             },
-            SetOption: function (options, overlay) {
-                overlay = overlay || 'flight-form' ;
+            ChangeLanguage: function(date) {
+                var newdate = "";
+                var day = date.substring(0, 3);
+                var mth = date.substring(8, 11);
+                switch(day) {
+                    case 'Sen':
+                        newdate += 'Mon, ' + date.substring(5, 7);
+                        break;
+                    case 'Sel':
+                        newdate += 'Tue, ' + date.substring(5, 7);
+                        break;
+                    case 'Rab':
+                        newdate += 'Wed, ' + date.substring(5, 7);
+                        break;
+                    case 'Kam':
+                        newdate += 'Thu, ' + date.substring(5, 7);
+                        break;
+                    case 'Jum':
+                        newdate += 'Fri, ' + date.substring(5, 7);
+                        break;
+                    case 'Sab':
+                        newdate += 'Sat, ' + date.substring(5, 7);
+                        break;
+                    case 'Min':
+                        newdate += 'Sun, ' + date.substring(5, 7);
+                        break;
+                }
+
+                switch (mth) {
+                    case 'Jan':
+                        newdate += ' Jan ' + date.substring(12, 16);
+                        break;
+                    case 'Feb':
+                        newdate += ' Feb ' + date.substring(12, 16);
+                        break;
+                    case 'Mar':
+                        newdate += ' Mar ' + date.substring(12, 16);
+                        break;
+                    case 'Apr':
+                        newdate += ' Apr ' + date.substring(12, 16);
+                        break;
+                    case 'Mei':
+                        newdate += ' May ' + date.substring(12, 16);
+                        break;
+                    case 'Jun':
+                        newdate += ' Jun ' + date.substring(12, 16);
+                        break;
+                    case 'Jul':
+                        newdate += ' Jul ' + date.substring(12, 16);
+                        break;
+                    case 'Agu':
+                        newdate += ' Aug ' + date.substring(12, 16);
+                        break;
+                    case 'Sep':
+                        newdate += ' Sep ' + date.substring(12, 16);
+                        break;
+                    case 'Okt':
+                        newdate += ' Oct ' + date.substring(12, 16);
+                        break;
+                    case 'Nov':
+                        newdate += ' Nov ' + date.substring(12, 16);
+                        break;
+                    case 'Des':
+                        newdate += ' Dec ' + date.substring(12, 16);
+                        break;
+                }
+
+                return newdate;
+            },
+            SetOption: function (options, overlay, position) {
+                overlay = overlay || 'flight-form';
+                if (position == 'search-single' || position == 'search-return') {
+                    $rootScope.FlightSearchForm.DepartureDate = new Date($rootScope.FlightSearchForm.DepartureDate);
+                    $rootScope.FlightSearchForm.ReturnDate = new Date($rootScope.FlightSearchForm.ReturnDate);
+                }
+                console.log($rootScope.FlightSearchForm.DepartureDate);
+                console.log($rootScope.FlightSearchForm.ReturnDate);
                 $('.ui-datepicker').datepicker({
                     
-                    onSelect: function(date) {
-                        $rootScope.PageConfig.SetOverlay(overlay);
-                        $rootScope.DatePicker.Settings.SelectedDate = date;
-                        $($rootScope.DatePicker.Settings.Target).val(date);
+                    onSelect: function (date) {
+                        
+                        var trsdate = $rootScope.DatePicker.ChangeLanguage(date);
+                        if (position == 'search-return' || position == 'search-single') {
+                            $rootScope.PageConfig.SetOverlay('flight-form');
+                        } else {
+                            $rootScope.PageConfig.SetOverlay(overlay);
+                        }
+                       
+                        console.log("tes123: "+ trsdate);
+                        $rootScope.DatePicker.Settings.SelectedDate = new Date(trsdate);
+                        $($rootScope.DatePicker.Settings.Target).val(trsdate);
                         $($rootScope.DatePicker.Settings.Target).trigger('input');
+                        
+                        var depdate = new Date($rootScope.FlightSearchForm.DepartureDate);
+                        var retdate = new Date($rootScope.FlightSearchForm.ReturnDate);
+                        if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
+                            depdate = new Date(trsdate);
+                            $rootScope.FlightSearchForm.DepartureDate = depdate;
+                        } else {
+                            retdate = new Date(trsdate);
+                            $rootScope.FlightSearchForm.ReturnDate = retdate;
+                        }
+                      
+                        if (depdate > retdate) {
+                            $('.form__departure .field-container span').text(date);
+                            $('.form__return .field-container span').text(date);
+                            if (position == null) {
+                                $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
+                                $rootScope.FlightSearchForm.ReturnDate = new Date(trsdate);
+                            } else if (position == 'search-single' || position == 'search-return') {
+                                //$('.form-departure-date span').text(date);
+                                //$('.form-return-date span').text(date);
+                                $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
+                                $('.ui-datepicker.return-date').datepicker("setDate", new Date(trsdate));
+                                $rootScope.PageConfig.SetOverlay('flight-form');
+                            }
+                            
+                        } else {
+                            if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
+                                $('.form__departure .field-container span').text(date);
+                                if (position == null) {
+                                    //$('.form__departure .field-container span').text(date);
+                                    $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
+                                } else if (position == 'search-single' || position == 'search-return') {
+                                    //$('.form-departure-date span').text(date);
+                                    $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
+                                }
+                            } else {
+                                //if (position == null) {
+                                $('.form__return .field-container span').text(date);
+                                //}
+                                if (position == 'search-single' || position == 'search-return')
+                                {
+                                    //$('.form-return-date span').text(date);
+                                    $('.ui-datepicker.return-date').datepicker("setDate", new Date(trsdate));
+
+                                }    
+                            }
+                        }
                     },
                     
-                    //showO
-                    //minDate: 0
-            });
+                });
                 // set default value for datepicker
                 //if (options.MinDate) {
                 //    $rootScope.DatePicker.Settings.MinDate = options.MinDate;
@@ -403,13 +545,19 @@ if (typeof (angular) == 'object') {
                 
                 if (options.Target == 'departure') {
                     //$(".ui-datepicker").datepicker("option", "showOn", "hide");
+                    
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
                     $('.ui-datepicker').datepicker('option', 'minDate', new Date());
                     if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.ReturnDate) {
-                        $('.ui-datepicker').datepicker('option', 'maxDate', new Date($rootScope.FlightSearchForm.ReturnDate));
-                    } 
+                        var mydate = $rootScope.FlightSearchForm.ReturnDate;
+                        var day = mydate.getDay();
+                        var mth = mydate.getMonth();
+                        $('.ui-datepicker').datepicker('option', 'maxDate', $rootScope.FlightSearchForm.ReturnDate);
+                    }
+                    
                     
                     else {
+                        console.log($rootScope.DatePicker.Settings.SelectedDate);
                         $('.ui-datepicker').datepicker('option', 'maxDate', null);
                     }
                     if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.DepartureDate) {
@@ -418,7 +566,7 @@ if (typeof (angular) == 'object') {
                 } else {
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-return';
                     if ($rootScope.FlightSearchForm.DepartureDate) {
-                        $('.ui-datepicker').datepicker('option', 'minDate', new Date($rootScope.FlightSearchForm.DepartureDate));
+                        $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.FlightSearchForm.DepartureDate);
                     }
                     if ($rootScope.FlightSearchForm.Trip == "true") {
                         if ($rootScope.FlightSearchForm.ReturnDate) {
@@ -439,6 +587,18 @@ if (typeof (angular) == 'object') {
                 $('.ui-datepicker.return-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
                 
                 // set on choose date function
+
+            },
+            SetDefaultReturnDate: function (val) {
+                if (val == true) {
+                    $rootScope.FlightSearchForm.Trip = "true";
+                    //if ($rootScope.FlightSearchForm.DepartureDate.getDate() > $rootScope.FlightSearchForm.ReturnDate.getDate()) {
+                    //    $rootScope.FlightSearchForm.ReturnDate.setDate($rootScope.FlightSearchForm.DepartureDate.getDate() + 1);
+                    //}
+                } else {
+                    $rootScope.FlightSearchForm.Trip = "false";
+                }
+
             }
         };// datepicker
         
@@ -484,14 +644,15 @@ if (typeof (angular) == 'object') {
                             }
                         } else {
                             $.ajax({
-                                url: FlightAutocompleteConfig.Url + keyword
+                                url: FlightAutocompleteConfig.Url + keyword,
+                                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                             }).done(function(returnData) {
                                 $('.autocomplete-loading .text-loading').hide();
                                 $rootScope.FlightSearchForm.AutoComplete.Loading = false;
-                                $rootScope.FlightSearchForm.AutoComplete.Result = returnData;
-                                $rootScope.FlightSearchForm.AutoComplete.Cache[keyword] = returnData;
+                                $rootScope.FlightSearchForm.AutoComplete.Result = returnData.airports;
+                                $rootScope.FlightSearchForm.AutoComplete.Cache[keyword] = returnData.airports;
                                 generateSearchResult($rootScope.FlightSearchForm.AutoComplete.Result);
-                                if (returnData.length > 0) {
+                                if (returnData.airports.length > 0) {
                                     $('.autocomplete-no-result').hide();
                                     $('.autocomplete-loading .text-loading').hide();
                                     $('.autocomplete-result').show();
@@ -499,6 +660,11 @@ if (typeof (angular) == 'object') {
                                     $('.autocomplete-loading .text-loading').hide();
                                     $('.autocomplete-result').hide();
                                     $('.autocomplete-no-result').show();
+                                }
+                            }).error(function (returnData) {
+                                if (refreshAuthAccess()) //refresh cookie
+                                {
+                                    $rootScope.FlightSearchForm.AutoComplete.GetAirport(keyword);
                                 }
                             });
                         }
@@ -645,10 +811,10 @@ if (typeof (angular) == 'object') {
                     '<li class="airport">' + 
                         '<a class="airport__link">' + 
                         '</a>' +
-                        '<span class="airport__code">'+ list[i].Code +'</span>' +
+                        '<span class="airport__code">'+ list[i].code +'</span>' +
                         '<div class="airport__detail">' +
-                            '<p class="airport__location">' + list[i].City + ', ' + list[i].Country + '</p>' +
-                            '<p class="airport__name">' + list[i].Name + '</p>' +
+                            '<p class="airport__location">' + list[i].city + ', ' + list[i].country + '</p>' +
+                            '<p class="airport__name">' + list[i].name + '</p>' +
                         '</div>' +
                       '</li>'
                 );
@@ -695,40 +861,172 @@ function getParam(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function getAuthAccess() {
-    var token = getCookie('accesstoken');
-    var refreshToken = getCookie('refreshtoken');
-    if (token) {
-        return 1;
-    }
-    else {
-        if (refreshToken) {
-            //Get Token Again
-            $.ajax({
-                url: LoginConfig.Url,
-                method: 'POST',
-                async: false,
-                data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
-                contentType: 'application/json',
-            }).done(function (returnData) {
-                if (returnData.status == '200') {
-                    setCookie('accesstoken', returnData.accessToken, returnData.expTime);
-                    setRefreshCookie('refreshtoken', returnData.refreshToken);
-                }
-            });
-
+function getAnonymousFirstAccess() {
+    var status = 0;
+    $.ajax({
+        url: LoginConfig.Url,
+        method: 'POST',
+        async: false,
+        data: JSON.stringify({ "clientId": "Jajal", "clientSecret": "Standar" }),
+        contentType: 'application/json',
+    }).done(function (returnData) {
+        if (returnData.status == '200') {
+            setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+            setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
             if (getCookie('accesstoken')) {
-                return 1;
+                status = 1;
             }
             else {
-                return 2;
+                status = 0;
             }
         }
         else {
-            return 0;
+            status = 0;
+        }
+    });
+    return status;
+}
+
+
+function getAnonymousAccessByRefreshToken(refreshToken) {
+    var status = 0;
+    $.ajax({
+        url: LoginConfig.Url,
+        method: 'POST',
+        async: false,
+        data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+        contentType: 'application/json',
+    }).done(function (returnData) {
+        if (returnData.status == '200') {
+            setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+            setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+            if (getCookie('accesstoken')) {
+                status = 1;
+            }
+            else {
+                status = 0;
+            }
+        }
+        else {
+            status = 0;
+        }
+    });
+    return status;
+}
+
+
+function getLoginAccessByRefreshToken(refreshToken) {
+    var status = 0;
+    $.ajax({
+        url: LoginConfig.Url,
+        method: 'POST',
+        async: false,
+        data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+        contentType: 'application/json',
+    }).done(function (returnData) {
+        if (returnData.status == '200') {
+            setCookie("accesstoken", returnData.accessToken, returnData.expTime);
+            setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
+            setCookie("authkey", returnData.accessToken, returnData.expTime);
+            if (getCookie('accesstoken')) {
+                status = 2;
+            }
+            else {
+                status = 0;
+            }
+        }
+        else {
+            status = 0;
+        }
+    });
+    return status;
+}
+
+function getAuthAccess() {
+    var token = getCookie('accesstoken');
+    var refreshToken = getCookie('refreshtoken');
+    var authKey = getCookie('authkey');
+    var status = 0;
+
+    if (authKey) {
+        if (token) {
+            return 2;
+        }
+        else {
+            if (refreshToken) {
+                status = getLoginAccessByRefreshToken(refreshToken);
+                if (status == 0) {
+                    status = getAnonymousFirstAccess();
+                }
+            }
+            else {
+                return 0; //harusnya gak pernah masuk sini
+            }
         }
     }
+    else {
+        if (token) {
+            return 1;
+        }
+        else {
+            //Get Anonymous Token By Refresh Token
+            if (refreshToken) {
+                status = getAnonymousAccessByRefreshToken(refreshToken);
+                if (status == 0) {
+                    status = getAnonymousFirstAccess();
+                }
+            }
+            else {
+                //For Anynomius at first
+                status = getAnonymousFirstAccess();
+            }
+        }
+    }
+    return status;
+}
 
+
+function refreshAuthAccess() {
+    /*
+    * If failed to get Authorization, but accesstoken is still exist
+    */
+    var token = getCookie('accesstoken');
+    var refreshToken = getCookie('refreshtoken');
+    var authKey = getCookie('authkey');
+    var status = 0;
+    if (refreshToken) {
+        if (authKey) {
+            status = getLoginAccessByRefreshToken(refreshToken);
+            if (status == 0) {
+                status = getAnonymousFirstAccess();
+                eraseCookie('authkey');
+            }
+
+            if (status == 2) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            status = getAnonymousAccessByRefreshToken(refreshToken);
+            if (status == 0) {
+                status = getAnonymousFirstAccess();
+            }
+
+            if (status == 1 || status == 2) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+    else {
+        getAnonymousFirstAccess();
+        return true;
+    }
 }
 
 //    $rootScope.FlightSearchForm.AutoComplete.Loading = true;

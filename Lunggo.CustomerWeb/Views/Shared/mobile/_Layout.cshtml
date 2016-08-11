@@ -35,7 +35,11 @@
             @RenderBody()
         </section><!-- .site-content -->
         <!--********************-->
-        @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
+        @if(ViewBag.SiteHeader == "mobile-home-page")
+        {
+            @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
+
+        }
         <!--********************-->
 
         <!-- Javascripts -->

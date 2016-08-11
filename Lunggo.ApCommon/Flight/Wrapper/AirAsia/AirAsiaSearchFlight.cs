@@ -7,14 +7,11 @@ using System.Text.RegularExpressions;
 using System.Web;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
-using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.Framework.Web;
 using RestSharp;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
@@ -57,12 +54,77 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 // [GET] Search Flight
                 var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);
-                var destinationCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.DestinationAirport);
                 CQ availableFares;
                 CQ flightTable;
+                string mataUang;
+
+                switch (originCountry)
+                {
+                    case "ID":
+                        mataUang = "IDR";
+                        break;
+                    case "MY":
+                        mataUang = "MYR";
+                        break;
+                    case "SG":
+                        mataUang = "SGD";
+                        break;
+                    case "TH":
+                        mataUang = "THB";
+                        break;
+                    case "SA":
+                        mataUang = "SAR";
+                        break;
+                    case "AU":
+                        mataUang = "AUD";
+                        break;
+                    case "BN":
+                        mataUang = "BWD";
+                        break;
+                    case "CN":
+                        mataUang = "CNY";
+                        break;
+                    case "PH":
+                        mataUang = "PHP";
+                        break;
+                    case "HK":
+                        mataUang = "HKD";
+                        break;
+                    case "IN":
+                        mataUang = "INR";
+                        break;
+                    case "JP":
+                        mataUang = "JPY";
+                        break;
+                    case "KR":
+                        mataUang = "KRW";
+                        break;
+                    case "MO":
+                        mataUang = "MOP";
+                        break;
+                    case "NP":
+                        mataUang = "NPR";
+                        break;
+                    case "OM":
+                        mataUang = "OMR";
+                        break;
+                    case "NZ":
+                        mataUang = "NZD";
+                        break;
+                    case "TW":
+                        mataUang = "TWD";
+                        break;
+                    case "LK":
+                        mataUang = "LKR";
+                        break;
+                    default:
+                        mataUang = "USD";
+                        break;
+                }
+
                 if (originCountry == "ID")
                 {
-                    const string url = @"Flight/Select";
+                    string url = @"Flight/Select";
                     var searchRequest = new RestRequest(url, Method.GET);
                     searchRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
                     searchRequest.AddQueryParameter("o1", trip0.OriginAirport);
@@ -74,7 +136,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     searchRequest.AddQueryParameter("s", "true");
                     searchRequest.AddQueryParameter("mon", "true");
                     searchRequest.AddQueryParameter("culture", "id-ID");
-                    searchRequest.AddQueryParameter("cc", "IDR");
+                    searchRequest.AddQueryParameter("cc", mataUang);
                     var searchResponse = client.Execute(searchRequest);
 
                     var html = searchResponse.Content;
@@ -86,7 +148,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     availableFares = searchedHtml[".radio-markets"];
                     flightTable = searchedHtml[".avail-table-detail-table"];
                 }
-                
+
                 else
                 {
                     return new SearchFlightResult
@@ -141,7 +203,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             infantPrice = decimal.Parse(breakdownPrice[2].LastElementChild.InnerText.Trim().Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
                         }
                         catch { }
-                        var currency = itinHtml[".section-total-display-currency>span>strong"].Text();
+                        var currency = itinHtml[".section-total-display-currency>span>strong"].Text().Substring(0,3);
                         var itinHtmlText = itinHtml.Text();
                         var isPscIncluded = itinHtmlText.Contains("Pajak Bandara") ||
                                             itinHtmlText.Contains("Biaya Layanan Penumpang") ||
@@ -309,21 +371,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                     var durationAtStop = depTimeStop - arrTimeStop;
 
                                     var segmentStops = new List<FlightStop>
+                                    {
+                                        new FlightStop
                                         {
-                                            new FlightStop
-                                            {
-                                                Airport = arrvArpt,
-                                                ArrivalTime = arrTimeStop,
-                                                Duration = durationAtStop,
-                                                DepartureTime = depTimeStop                        
-                    }
-                                        };
+                                            Airport = arrvArpt,
+                                            ArrivalTime = arrTimeStop,
+                                            Duration = durationAtStop,
+                                            DepartureTime = depTimeStop                        
+                                        }
+                                    };
                                     itin.Trips[0].Segments.ElementAt(1).Stops = segmentStops;
 
                                 }
 
                                 if (arrvArpt == segments.ElementAt(0).ArrivalAirport)
-                    {
+                                        {
                                     //STOP ADA DI SEGMEN 1
                                     var arrvHrAtStop = rows[x - 1].ChildElements.ToList()[3].
                                              ChildElements.ToList()[0].
@@ -342,9 +404,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                         arrTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
                                             Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
                                             Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
-                    }
+                                    }
                                     else
-                    {
+                                    {
                                         var w = segments.ElementAt(0).DepartureTime;
                                         arrTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
                                             Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
@@ -373,17 +435,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                     var durationAtStop = depTimeStop - arrTimeStop;
 
                                     var segmentStops = new List<FlightStop>
+                                    {
+                                        new FlightStop
                                         {
-                                            new FlightStop
-                                            {
-                                                Airport = deptArpt,
-                                                ArrivalTime = arrTimeStop,
-                                                Duration = durationAtStop,
-                                                DepartureTime = depTimeStop
-                                            }
-                    };
+                                            Airport = deptArpt,
+                                            ArrivalTime = arrTimeStop,
+                                            Duration = durationAtStop,
+                                            DepartureTime = depTimeStop
+                                        }
+                                    };
                                     itin.Trips[0].Segments.ElementAt(0).Stops = segmentStops;
-
                                 }
                             }
                         }

@@ -9,6 +9,7 @@
 
     var adultCount = 0;
     var childCount = 0;
+    var infantCount = 0;
     var passengerCount = 0;
     var needBirthDate = false;
     var needPassport = false;
@@ -16,22 +17,26 @@
     var token = "";
     var savedPassengers = Model.SavedPassengers;
     var savedCreditCards = Model.SavedCreditCards;
+   
 
     try
     {
         adultCount = Model.Itinerary.AdultCount.GetValueOrDefault();
         childCount = Model.Itinerary.ChildCount.GetValueOrDefault();
-        var infantCount = Model.Itinerary.InfantCount.GetValueOrDefault();
+        infantCount = Model.Itinerary.InfantCount.GetValueOrDefault();
         passengerCount = adultCount + childCount + infantCount;
         needBirthDate = Model.Itinerary.RequireBirthDate.GetValueOrDefault();
         needPassport = Model.Itinerary.RequirePassport.GetValueOrDefault();
         needNationality = Model.Itinerary.RequireNationality.GetValueOrDefault();
         token = Model.Token;
+        
     }
     catch
     {
         ViewBag.Message = "BookExpired";
     }
+
+    
 
 }
 
@@ -71,7 +76,6 @@
         var flightDetail = '';
         var expiryDate = '@Model.ExpiryTime.ToString("o")';
         var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
-        var price = @Model.Itinerary.OriginalTotalFare;
 
         // passenger number
         var adultPassenger = @Model.Itinerary.AdultCount;
@@ -94,8 +98,8 @@
         var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
         var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
         var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
-
-
+        var price = '@Model.Itinerary.NetTotalFare';
+        //var trips = '@Model.Itinerary.Trips';
         // change current page
         if (getParam('page') == 2) {
             currentPage = getParam('page');
@@ -111,7 +115,7 @@
 {
     default:
         <!-- checkout start here -->
-
+        
         <div ng-app="travorama" ng-controller="checkoutController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
             <section class="checkout-step {{stepClass}}">
                 <div class="container">
@@ -358,9 +362,10 @@
                                 </div><!--Info Pemesan-->
                                 <!--Info Penumpang-->
                                 <div class="passenger-review">
-                                                <header>
+                                    <header>
                                         <span>Daftar Penumpang</span>
-                                                </header>
+                                    </header>
+                                    
                                     <section class="review-content" ng-repeat="passenger in passengers track by $index">
                                         <div class="passenger-list-item">
                                             <div class="col-md-12">
@@ -370,8 +375,14 @@
                                                         <medium> ({{passenger.typeName}}) </medium>
                                                     </h3>
                                                 </div>
-                                                <div class="col-md-4 total-price text-right">
+                                                <div ng-if ="passenger.typeName == 'Dewasa'"class="col-md-4 total-price text-right">
                                                     <medium> Rp {{adultFare | number:0}}</medium>
+                                                </div>
+                                                <div ng-if="passenger.typeName == 'Anak'" class="col-md-4 total-price text-right">
+                                                    <medium> Rp {{childFare | number:0}}</medium>
+                                                </div>
+                                                <div ng-if="passenger.typeName == 'Bayi'" class="col-md-4 total-price text-right">
+                                                    <medium> Rp {{infantFare | number:0}}</medium>
                                                 </div>
                                             </div>
                                             
@@ -621,14 +632,14 @@
                                                         <h5>{{trips[1].segments[0].departureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
                                                         <h3>{{trips[1].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}</h3>
                                                         <h4>{{trips[1].segments[0].departureCity}} ({{trips[1].segments[0].departure}})</h4>
-                                                        <h5>{{trips[1].segments[0].departureAirportName}}</h5>
+                                                        <h5>{{trips[1].segments[0].departureName}}</h5>
                                                     </div>
                                                     <div class="duration"></div>
                                                     <div class="destination">
                                                         <h5>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
                                                         <h3>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
-                                                        <h4>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalCity}} ({{trips[1].segments[ trips[0].segments.length - 1 ].arrivalAirport}})</h4>
-                                                        <h5>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalAirportName}}</h5>
+                                                        <h4>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalCity}} ({{trips[1].segments[ trips[0].segments.length - 1 ].arrival}})</h4>
+                                                        <h5>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalName}}</h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -814,7 +825,7 @@
                 </div>
             </div> -->
 
-            <div class="priceChaged-popup" ng-show="book.isPriceChanged">
+            <div class="priceChaged-popup" ng-show="book.priceChanged">
                 <div class="overlay-content">
                     <section style="padding-top:45px; padding-left:200px;padding-bottom:0px;margin-bottom:0px;">
                         <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>

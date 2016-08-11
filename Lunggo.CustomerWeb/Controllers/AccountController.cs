@@ -9,6 +9,7 @@ using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Cors;
+using Lunggo.Framework.Extension;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -22,7 +23,9 @@ using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRepository;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using RestSharp;
 using RestSharp.Authenticators;
 
@@ -216,57 +219,34 @@ namespace Lunggo.CustomerWeb.Controllers
 
         }
 
+        public class ConfirmResponse
+        {
+            [JsonProperty("status")]
+            public string Status { get; set; }
+            [JsonProperty("error")]
+            public string ErrorCode { get; set; }
+            [JsonProperty("url")]
+            public string Url { get; set; }
+        }
+
         //
         // GET: /Account/ConfirmEmail
         [System.Web.Mvc.AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        public async Task<ActionResult> ConfirmEmail(string apiUrl, string userId, string code)
         {
             if (userId == null || code == null)
             {
                 return RedirectToAction("Index", "UW000TopPage");
             }
 
-            var isConfirmed = await UserManager.IsEmailConfirmedAsync(userId);
-            //var queueService = QueueService.GetInstance();
-            //var queue = queueService.GetQueueByReference("GetCalendar");
-            //queue.AddMessage(new CloudQueueMessage(userId));
-
-            if (isConfirmed)
-            {
-                ViewBag.Message = "AlreadyConfirmed";
-                return RedirectToAction("Login", "Account");
-            }
-
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
-            var email = await UserManager.GetEmailAsync(userId);
-            if (result.Succeeded)
-            {
-                UserManager.AddToRole(userId, "Customer");
-                var model = new ResetPasswordViewModel
-                {
-                    Email = await UserManager.GetEmailAsync(userId)
-                };
-
-                DateTime Date = DateTime.Now; 
-                DateTime endDate = new DateTime(2016,2,18);
-                using (var con = DbService.GetInstance().GetOpenConnection())
-                {
-
-                    var EmailList = CalendarRecipientTableRepo.GetInstance().FindAll(con).ToList();
-                    if (EmailList.Count <500 && Date.Date <= endDate.Date)
-                    {
-                        var queueService = QueueService.GetInstance();
-                        var queue = queueService.GetQueueByReference("GetCalendar");
-                        queue.AddMessage(new CloudQueueMessage(email));
-                    }
-
-                }
-                return RedirectToAction("ResetPassword", "Account", model);
-            }
-            else
-            {
-                return RedirectToAction("Index", "UW000TopPage");
-            }
+            var confirmClient = new RestClient(apiUrl.Split(' ')[0]);
+            var confirmRequest = new RestRequest("/v1/confirmemail", Method.POST);
+            confirmRequest.RequestFormat = DataFormat.Json;
+            confirmRequest.AddBody(new {userId, code});
+            var confirmResponse = confirmClient.Execute(confirmRequest).Content.Deserialize<ConfirmResponse>();
+            if (confirmResponse.Status == "200")
+                return Redirect(confirmResponse.Url);
+            return RedirectToAction("Index", "UW000TopPage");
         }
 
         //
@@ -349,11 +329,20 @@ namespace Lunggo.CustomerWeb.Controllers
                 ViewBag.Message = "NotRegistered";
                 return View(model);
             }
-
-            var result = model.Code == null
-                ? await UserManager.AddPasswordAsync(user.Id, model.Password)
-                : await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
+            var isSuccess = false;
+            if (model.Code == null)
+                isSuccess = (await UserManager.AddPasswordAsync(user.Id, model.Password)).Succeeded;
+            else
+            {
+                var resetClient = new RestClient(model.ApiUrl.Split(' ')[0]);
+                var resetRequest = new RestRequest("/v1/resetpassword", Method.POST);
+                resetRequest.RequestFormat = DataFormat.Json;
+                resetRequest.AddBody(new { model.Email, model.Password, model.Code });
+                var resetResponse = resetClient.Execute(resetRequest).Content.Deserialize<ConfirmResponse>();
+                isSuccess = resetResponse.Status == "200";
+            }
+            
+            if (isSuccess)
             {
                 var returnUrl = Url.Action("Index", "UW000TopPage");
                 var loginResult =
@@ -582,7 +571,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var model = new AccountViewModel();
             var flightService = FlightService.GetInstance();
             model.User = User.Identity.GetUser();
-            model.FlightReservations = flightService.GetOverviewReservationsByContactEmail(model.User.Email);
+            model.FlightReservations = flightService.GetOverviewReservationsByUserId(model.User.Email);
             return View(model);
         }
 

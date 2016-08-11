@@ -61,10 +61,11 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             switch (method)
             {
                 case PaymentMethod.CreditCard:
+                    payment.Data.CreditCard.Bank = "mandiri";
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null)
+                    if (content != null && content.StatusCode.StartsWith("2"))
                     {
                         //ProcessSavedCreditCardToken(payment.Data, content);
                         payment.Status = PaymentResult(content);
@@ -79,7 +80,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null)
+                    if (content != null && content.StatusCode.StartsWith("2"))
                     {
                         payment.TransferAccount= content.PermataVANumber;
                         payment.Status = PaymentResult(content);
@@ -87,7 +88,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     }
                     else
                     {
-                        payment.Status = PaymentStatus.Denied;
+                        payment.Status = PaymentStatus.Failed;
                     }
                     return payment;
 
@@ -95,14 +96,14 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null)
+                    if (content != null && content.StatusCode.StartsWith("2"))
                     {
                         payment.Status = PaymentResult(content);
                         payment.ExternalId = content.TransactionId;
                     }
                     else
                     {
-                        payment.Status = PaymentStatus.Denied;
+                        payment.Status = PaymentStatus.Failed;
                     }
                     return payment;
 
@@ -110,7 +111,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null)
+                    if (content != null && content.StatusCode.StartsWith("2"))
                     {
                         payment.RedirectionUrl = content.RedirectUrl;
                         payment.ExternalId = content.TransactionId;
@@ -118,7 +119,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     }
                     else
                     {
-                        payment.Status = PaymentStatus.Denied;
+                        payment.Status = PaymentStatus.Failed;
                     }
                     return payment;
 
@@ -126,7 +127,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
-                    if (content != null)
+                    if (content != null && content.StatusCode.StartsWith("2"))
                     {
                         payment.RedirectionUrl = content.RedirectUrl;
                         payment.ExternalId = content.TransactionId;
@@ -134,7 +135,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     }
                     else
                     {
-                        payment.Status = PaymentStatus.Denied;
+                        payment.Status = PaymentStatus.Failed;
                     }
                     return payment;
 
@@ -237,7 +238,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                    CardNumber = data.MandiriClickPay.CardNumber,
                    CardNumberLast10 = data.MandiriClickPay.CardNumberLast10,
                    GivenRandomNumber = data.MandiriClickPay.GivenRandomNumber,
-                   Amount = data.MandiriClickPay.Amount,
+                   Amount = (long)data.MandiriClickPay.Amount,
                    Token = data.MandiriClickPay.Token
                 };
             }

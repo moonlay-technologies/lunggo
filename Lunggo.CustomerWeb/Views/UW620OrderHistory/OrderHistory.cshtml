@@ -1,5 +1,4 @@
-﻿@using Lunggo.ApCommon.Identity.Users
-@model List<Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay>
+﻿@model List<Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay>
 
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
@@ -19,14 +18,13 @@
 
 @section PageJS{
     <script>
-    var langCode = 'en';
+        var langCode = 'en';
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/accountController.js"></script>
 }
 
-
-<div class="container page-loading" ng-controller="accountController"ng-class="{'page-loaded' : pageLoaded}">
+<div class="container page-loading" ng-controller="accountController" ng-class="{'page-loaded' : pageLoaded}">
     <div class="row">
 
         <div class="col-xs-3">
@@ -67,137 +65,137 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.name}}</p>
-                                    <input type="text" name="name" ng-model="editProfile.name" class="form-control" placeholder="Nama" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
+                                    <input type="text" name="name" ng-model="editProfile.name" value="editProfile.name" class="form-control" placeholder="Nama" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-xs-3">
                                     <p class="control-label">Kode Negara</p>@*@Html.I18NString("CW00193")*@
-                                    </div>
-                                    <div class="col-xs-9">
-                                        <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.countryCallCd}}</p>
-                                        <input type="number" name="countryCallCd" ng-model="editProfile.countryCallCd" class="form-control" placeholder="Kode Negara" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />
-                                        <!--<select class="form-control" ng-show="userProfile.edit" ng-model="editProfile.country" ng-disabled="userProfile.updating">
-                                        <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}}</option>
-                                        </select> -->
-                                    </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <div class="col-xs-3">
-                                        <p class="control-label">@Html.I18NString("CW00093")</p>
-                                    </div>
-                                    <div class="col-xs-9">
-                                        <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.phone}}</p>
-                                        <input type="number" name="phone" ng-model="editProfile.phone" class="form-control" placeholder="Nomor Telepon" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />
-                                    </div>
-                                </div>
-                                <!--<div class="form-group">
-                        <div class="col-xs-3">
-                            <p class="control-label">Alamat</p>
-                        </div>
-                        <div class="col-xs-9">
-                            <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.address}}</p>
-                            <input type="text" name="address" ng-model="editProfile.address" class="form-control" placeholder="Alamat" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
-                        </div>
-                    </div> -->
-
-                            </form>
-
-                            <form name="passwordForm" class="form form-horizontal" novalidate>
-                                <header>
-                                    <h4>
-                                        <b>@Html.I18NString("CW00164")</b>
-                                        <span class="pull-right" ng-hide="password.edit">
-                                            <a class="btn btn-yellow" ng-click="editForm('password')">UBAH PASSWORD</a>
-                                        </span>
-                                        <span class="pull-right" ng-show="password.edit">
-                                            <a class="btn btn-grey" ng-click="editForm('password')" ng-hide="password.updating">CANCEL</a>
-                                            <a class="btn btn-yellow" ng-click="editForm('passwordSave')">{{password.updating? 'MENYIMPAN' : 'SIMPAN'}}</a>
-                                        </span>
-                                    </h4>
-                                </header>
-                                <div class="form-group has-error" ng-show="password.failed">
-                                    <div class="col-xs-12">
-                                        <label>Gagal menyimpan password baru Anda. Silahkan cek kembali password lama, password baru dan konfirmasi password Anda.</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-xs-3">
-                                        <p class="control-label">@Html.I18NString("CW00165")</p>
-                                    </div>
-                                    <div class="col-xs-9">
-                                        <p class="form-control-static" ng-hide="password.edit">**********</p>
-                                        <input type="password" name="passwordCurrent" ng-model="passwordForm.currentPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password Anda saat ini" ng-disabled="password.updating" />
-                                    </div>
-                                </div>
-                                <div class="form-group" ng-show="password.edit">
-                                    <div class="col-xs-3">
-                                        <p class="control-label">@Html.I18NString("CW00166")</p>
-                                    </div>
-                                    <div class="col-xs-9">
-                                        <p class="form-control-static" ng-hide="password.edit">**********</p>
-                                        <input type="password" name="passwordNew" ng-model="passwordForm.newPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password baru Anda" ng-disabled="password.updating" />
-                                    </div>
-                                </div>
-                                <div class="form-group" ng-show="password.edit">
-                                    <div class="col-xs-3">
-                                        <p class="control-label">@Html.I18NString("CW00167")</p>
-                                    </div>
-                                    <div class="col-xs-9">
-                                        <p class="form-control-static" ng-hide="password.edit">**********</p>
-                                        <input type="password" name="passwordConfirmation" ng-model="passwordForm.confirmationPassword" value="" class="form-control" ng-show="password.edit" placeholder="Konfirmasi password baru Anda" ng-disabled="password.updating" />
-                                    </div>
-                                </div>
-                            </form>
-
-                        </section>
-                    </div><!-- .profile-content -->
-                    <!-- ***** -->
-
-                    <div class="history-content" ng-show="currentSection == 'order'">
-                        <header class="content-header">
-                            <h2><b>@Html.I18NString("CW00195")</b> @Html.I18NString("CW00196")</h2>
-                        </header>
-                        <section class="content-body">
-                            <h3 ng-if="flightlist.length == 0">Belum ada pemesanan.</h3>
-                            <div ng-if="flightlist.length > 0" ng-repeat="flight in flightlist track by $index">
-                                <div class="order-wrapper">
-                                    <div class="order flight">
-                                        <header>
-                                            <span>Order ID : {{flight.rsvNo}}</span>
-                                        </header>
-                                        <section class="container">
-                                            <div class="row">
-                                                <div class="col-xs-10">
-                                                    <div class="detail">
-                                                        <p>@Html.I18NString("CW00197") : <b>{{flight.itin.trips[0].origin}}</b> to <b>{{flight.itin.trips[0].destination}}</b></p>
-                                                        <p ng-if="flight.itin.trips.length > 1">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}} | @Html.I18NString("CW00058"): {{flight.itin.trips[1].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
-                                                        <p ng-if="flight.itin.trips.length < 2">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
-                                                        <p>Status : <span class="success">{{paymentstatus(flight.payment.status)}}</span></p>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-2">
-                                                    <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
-                                                        <input type="text" name="RsvNo" value="" id="rsvno-input" />
-                                                    </form>
-                                                    <div class="action">
-                                                        <button class="btn btn-yellow" ng-click="submitRsvNo(flight.rsvNo)">@Html.I18NString("CW00175")</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                    </div>
+                                <div class="col-xs-9">
+                                    <p ng-if="userProfile.countryCallCd" class="form-control-static" ng-hide="userProfile.edit">{{userProfile.countryCallCd}}</p>
+                                    <input type="number" name="countryCallCd" ng-model="editProfile.countryCallCd" value="editProfile.countryCallCd" class="form-control" placeholder="Kode Negara" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />
+                                    <!--<select class="form-control" ng-show="userProfile.edit" ng-model="editProfile.country" ng-disabled="userProfile.updating">
+                                    <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}}</option>
+                                    </select> -->
                                 </div>
                             </div>
 
-                        </section>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00093")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p ng-if="userProfile.phone" class="form-control-static" ng-hide="userProfile.edit">{{userProfile.phone}}</p>
+                                    <input type="number" name="phone" ng-model="editProfile.phone" value="editProfile.phone" class="form-control" placeholder="Nomor Telepon" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />
+                                </div>
+                            </div>
+                            <!--<div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">Alamat</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.address}}</p>
+                                    <input type="text" name="address" ng-model="editProfile.address" class="form-control" placeholder="Alamat" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
+                                </div>
+                            </div> -->
 
-                    </div><!-- .history-content -->
+                        </form>
 
-                </section><!-- .account-content -->
-            </div>
+                        <form name="passwordForm" class="form form-horizontal" novalidate>
+                            <header>
+                                <h4>
+                                    <b>@Html.I18NString("CW00164")</b>
+                                    <span class="pull-right" ng-hide="password.edit">
+                                        <a class="btn btn-yellow" ng-click="editForm('password')">UBAH PASSWORD</a>
+                                    </span>
+                                    <span class="pull-right" ng-show="password.edit">
+                                        <a class="btn btn-grey" ng-click="editForm('password')" ng-hide="password.updating">CANCEL</a>
+                                        <a class="btn btn-yellow" ng-click="editForm('passwordSave')">{{password.updating? 'MENYIMPAN' : 'SIMPAN'}}</a>
+                                    </span>
+                                </h4>
+                            </header>
+                            <div class="form-group has-error" ng-show="password.failed">
+                                <div class="col-xs-12">
+                                    <label>Gagal menyimpan password baru Anda. Silahkan cek kembali password lama, password baru dan konfirmasi password Anda.</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00165")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="password.edit">**********</p>
+                                    <input type="password" name="passwordCurrent" ng-model="passwordForm.currentPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password Anda saat ini" ng-disabled="password.updating" />
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="password.edit">
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00166")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="password.edit">**********</p>
+                                    <input type="password" name="passwordNew" ng-model="passwordForm.newPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password baru Anda" ng-disabled="password.updating" />
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="password.edit">
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00167")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="password.edit">**********</p>
+                                    <input type="password" name="passwordConfirmation" ng-model="passwordForm.confirmationPassword" value="" class="form-control" ng-show="password.edit" placeholder="Konfirmasi password baru Anda" ng-disabled="password.updating" />
+                                </div>
+                            </div>
+                        </form>
 
+                    </section>
+                </div><!-- .profile-content -->
+                <!-- ***** -->
+
+                <div class="history-content" ng-show="currentSection == 'order'">
+                    <header class="content-header">
+                        <h2><b>@Html.I18NString("CW00195")</b> @Html.I18NString("CW00196")</h2>
+                    </header>
+                    <section class="content-body">
+                        <h3 ng-if="flightlist.length == 0">Belum ada pemesanan.</h3>
+                        <div ng-if="flightlist.length > 0" ng-repeat="flight in flightlist track by $index">
+                            <div class="order-wrapper">
+                                <div class="order flight">
+                                    <header>
+                                        <span>Order ID : {{flight.rsvNo}}</span>
+                                    </header>
+                                    <section class="container">
+                                        <div class="row">
+                                            <div class="col-xs-10">
+                                                <div class="detail">
+                                                    <p>@Html.I18NString("CW00197") : <b>{{flight.itin.trips[0].origin}}</b> to <b>{{flight.itin.trips[0].destination}}</b></p>
+                                                    <p ng-if="flight.itin.trips.length > 1">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}} | @Html.I18NString("CW00058"): {{flight.itin.trips[1].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
+                                                    <p ng-if="flight.itin.trips.length < 2">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
+                                                    <p>Status : <span class="success">{{paymentstatus(flight.payment.status)}}</span></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                                                    <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                                                </form>
+                                                <div class="action">
+                                                    <button class="btn btn-yellow" ng-click="submitRsvNo(flight.rsvNo)">@Html.I18NString("CW00175")</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+
+                </div><!-- .history-content -->
+
+            </section><!-- .account-content -->
         </div>
+
     </div>
+</div>
