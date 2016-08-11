@@ -528,7 +528,7 @@ if (typeof (angular) == 'object') {
                                 if (position == 'search-single' || position == 'search-return')
                                 {
                                     //$('.form-return-date span').text(date);
-                                    $('.ui-datepicker.return-date').datepicker("setDate", trsdate);
+                                    $('.ui-datepicker.return-date').datepicker("setDate", new Date(trsdate));
 
                                 }    
                             }
