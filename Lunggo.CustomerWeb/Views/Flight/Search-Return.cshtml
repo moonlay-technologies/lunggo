@@ -327,7 +327,7 @@
                 </div>
                 <div class="flight-price">
                     <label>Harga Total:</label>
-                    <h3><sup>Rp</sup>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].originalAdultFare | number}}</h3>
+                    <h3><sup>Rp</sup>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].netTotalFare | number}}</h3>
                     <p>Termasuk Pajak &amp; Service Charge</p>
                     <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block" ng-click="setChosenFlight('departure',-1)" />
                 </div>
@@ -455,7 +455,7 @@
             </div><!-- .search-result-filter -->
             <div class="search-result-warning" ng-show="departureFlightConfig.flightList.length && departureFlightConfig.notice">
                 <div class="notice">
-                    <p>Tampilan harga untuk <b>{{departureFlightConfig.adultCount + departureFlightConfig.childCount + departureFlightConfig.infantCount}} orang</b> ( <span ng-show="departureFlightConfig.adultCount > 0">{{departureFlightConfig.adultCount}} dewasa</span> <span ng-show="departureFlightConfig.childCount">, {{departureFlightConfig.childCount}} anak</span> <span ng-show="departureFlightConfig.infantCount"> , {{departureFlightConfig.infantCount}} bayi</span> ) <span class="close-notice pull-right" ng-click="closeNotice('departure')">X</span> </p>
+                    <p>Hasil Pencarian untuk <b>{{departureFlightConfig.adultCount + departureFlightConfig.childCount + departureFlightConfig.infantCount}} Orang</b> ( <span ng-show="departureFlightConfig.adultCount > 0">{{departureFlightConfig.adultCount}} dewasa</span> <span ng-show="departureFlightConfig.childCount">, {{departureFlightConfig.childCount}} anak</span> <span ng-show="departureFlightConfig.infantCount"> , {{departureFlightConfig.infantCount}} bayi</span> ) <span class="close-notice pull-right" ng-click="closeNotice('departure')">X</span> </p>
                 </div>
             </div><!-- .search-result-warning -->
             <div class="search-result-sort" ng-hide="!departureFlightConfig.flightList.length">
@@ -528,9 +528,9 @@
                             </div>
                             <div class="flight-summary-right">
 
-                                <span class="original-price"> Rp {{flight.originalFare | number}} </span>
+                                <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
 
-                                <h4 class="flight-price"><sup>Rp</sup> {{flight.originalAdultFare | number}}</h4>
+                                <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}</h4>
                                 <small>*Termasuk Pajak &amp; Service Charge</small>
                                 <a class="btn btn-yellow" ng-click="setChosenFlight('departure',flight.IndexNo)">PESAN</a>
                             </div>
@@ -658,7 +658,7 @@
                 </div>
                 <div class="flight-price">
                     <label>Harga Total:</label>
-                    <h3><sup>Rp</sup>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].originalAdultFare | number}}</h3>
+                    <h3><sup>Rp</sup>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].netTotalFare | number}}</h3>
                     <p>Termasuk Pajak &amp; Service Charge</p>
                     <input type="submit" value="GANTI PENERBANGAN PULANG" class="btn btn-grey block" ng-click="setChosenFlight('return',-1)" />
                 </div>
@@ -859,8 +859,8 @@
                             </div>
                             <div class="flight-summary-right">
 
-                                <span class="original-price"> Rp {{flight.originalFare | number}} </span>
-                                <h4 class="flight-price"><sup>Rp</sup> {{flight.originalAdultFare | number}}</h4>
+                                <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
+                                <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}</h4>
                                 <small>*Termasuk Pajak &amp; Service Charge</small>
                                 <a class="btn btn-yellow" ng-click="setChosenFlight('return',flight.IndexNo)">PESAN</a>
                             </div>
@@ -928,7 +928,7 @@
                             <header class="flight-header">
                                 <h3>
                                     Penerbangan Pergi
-                                    <span class="warning" ng-if="pageConfig.flightsValidated && departureFlightConfig.validateNewfare && !departureFlightConfig.validateAvailable">Harga Pergi Berubah - Harga Baru Rp. {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].originalAdultFare | number}}</span>
+                                    <span class="warning" ng-if="pageConfig.flightsValidated && departureFlightConfig.validateNewfare && !departureFlightConfig.validateAvailable">Harga Pergi Berubah - Harga Baru Rp. {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].netTotalFare | number}}</span>
                                     <span class="warning" ng-if="pageConfig.flightsValidated && !departureFlightConfig.validateNewfare && !departureFlightConfig.validateAvailable">Penerbangan Pergi Tidak Tersedia</span>
                                 </h3>
                             </header>
@@ -962,7 +962,7 @@
                                 <h3>
                                     Penerbangan Pulang
                                     <span class="warning" ng-if="!pageConfig.flightsValidated && overlapDate(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime,returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[0].departureTime)">Penerbangan pulang lebih awal daripada penerbangan pergi. </span>
-                                    <span class="warning" ng-if="pageConfig.flightsValidated && returnFlightConfig.validateNewfare && !returnFlightConfig.validateAvailable">Harga Pulang Berubah - Harga Baru Rp. {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].originalAdultFare | number}}</span>
+                                    <span class="warning" ng-if="pageConfig.flightsValidated && returnFlightConfig.validateNewfare && !returnFlightConfig.validateAvailable">Harga Pulang Berubah - Harga Baru Rp. {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].netTotalFare | number}}</span>
                                     <span class="warning" ng-if="pageConfig.flightsValidated && !returnFlightConfig.validateNewfare && !returnFlightConfig.validateAvailable">Penerbangan Pulang Tidak Tersedia</span>
                                 </h3>
                             </header>
@@ -999,7 +999,7 @@
                     </div>
                     <div class="summary-right">
                         <label>Harga Total:</label>
-                        <h3><sup>Rp</sup> {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].originalAdultFare + returnFlightConfig.flightList[returnFlightConfig.chosenFlight].originalAdultFare | number}}</h3>
+                        <h3><sup>Rp</sup> {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].netTotalFare + returnFlightConfig.flightList[returnFlightConfig.chosenFlight].netTotalFare | number}}</h3>
                         <p>*Harga termasuk Pajak &amp; Service Charge</p>
                         <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="selectFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" @*ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" ng-click="pageConfig.redirectingPage"*@ />
                         @*<input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="revalidateSubmit()" />*@
