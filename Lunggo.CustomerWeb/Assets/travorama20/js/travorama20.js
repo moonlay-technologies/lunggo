@@ -136,6 +136,9 @@ function subscribeFormFunctions() {
     }
 
     function submitForm() {
+        if (trial > 3) {
+            trial = 0;
+        }
         $('form.subscribe-form .subscribe-email, form.subscribe-form .subscribe-name').prop('disabled',true);
         $.ajax({
             url: SubscribeConfig.Url,
@@ -148,7 +151,8 @@ function subscribeFormFunctions() {
             $('.subscribe-after').show();
 
         }).error(function (returnData) {
-            if (refreshAuthAccess()) //refresh cookie
+            trial++;
+            if (refreshAuthAccess() && trial < 4) //refresh cookie
             {
                 submitForm();
             }
@@ -197,6 +201,9 @@ $(document).ready(function () {
     }
 
     function submitNewsletterForm() {
+        if (trial > 3) {
+            trial = 0;
+        }
         $('form.form-newsletter .input-type').prop('disabled', true);
         email = $('form.form-newsletter input.input-type').val();
         var div = document.getElementById("thankyou");
@@ -245,7 +252,8 @@ $(document).ready(function () {
             }
             
         }).error(function (returnData) {
-            if (refreshAuthAccess()) //refresh cookie
+            trial++;
+            if (refreshAuthAccess() && trial < 4) //refresh cookie
             {
                 submitNewsletterForm();
             }
@@ -598,6 +606,10 @@ function flightPageSearchFormFunctions() {
 
     // autocomplete function
     function getLocation(keyword) {
+        if (trial > 3)
+        {
+            trial = 0;
+        }
         FlightSearchConfig.autocomplete.loading = true;
         $('autocomplete-pre .text-pre').hide();
         $('autocomplete-pre .text-loading').show();
@@ -637,7 +649,8 @@ function flightPageSearchFormFunctions() {
                     $('.autocomplete-no-result').show();
                 }
             }).error(function (returnData) {
-                if (refreshAuthAccess()) //refresh cookie
+                trial++;
+                if (refreshAuthAccess()  && trial < 4) //refresh cookie
                 {
                     getLocation(keyword);
                 }
@@ -927,7 +940,7 @@ function flightPageSearchFormFunctions() {
         }
         if (flightPageSearchFormParam.origin && flightPageSearchFormParam.destination) {
             // setCookie();
-            generateFlightSearchParam();get
+            generateFlightSearchParam();
         } else {
             if (!flightPageSearchFormParam.origin) {
                 alert('Please select your origin airport');
@@ -1214,6 +1227,9 @@ function flightFormSearchFunctions() {
     //*****
     // autocomplete function
     function getLocation(keyword) {
+        if (trial > 3) {
+            trial = 0;
+        }
         FlightSearchConfig.autocomplete.loading = true;
         $('autocomplete-pre .text-pre').hide();
         $('autocomplete-pre .text-loading').show();
@@ -1253,7 +1269,8 @@ function flightFormSearchFunctions() {
                     $('.autocomplete-no-result').show();
                 }
             }).error(function (returnData) {
-                if (refreshAuthAccess()) //refresh cookie
+                trial++;
+                if (refreshAuthAccess() && trial < 4) //refresh cookie
                 {
                     getLocation(keyword);
                 }
@@ -1418,9 +1435,9 @@ function flightFormSearchFunctions() {
             FlightSearchConfig.flightForm.destination = Cookies.get('destination');
             FlightSearchConfig.flightForm.destinationCity = Cookies.get('destinationCity');
         } else {
-            $('.form-flight-destination').val('Denpasar, Bali (DPS)');
+            $('.form-flight-destination').val('Denpasar (DPS)');
             FlightSearchConfig.flightForm.destination = 'DPS';
-            FlightSearchConfig.flightForm.destinationCity = 'Denpasar, Bali';
+            FlightSearchConfig.flightForm.destinationCity = 'Denpasar';
         }
 
         // flight passenger

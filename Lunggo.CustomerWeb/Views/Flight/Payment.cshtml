@@ -422,14 +422,13 @@
                                             <dt>{{CreditCardPromo.PromoName}}</dt>
                                             <dd>- Rp {{CreditCardPromo.Amount | number}}</dd>
                                         </dl>
-                                        <dl ng-if="paymentMethod == '@PaymentMethod.BankTransfer'">
+                                        <dl>
                                             <dt>Kode Unik Pembayaran</dt>
                                             <dd>Rp {{UniqueCodePaymentConfig.UniqueCode}}</dd>
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
-                                            <dd ng-if="paymentMethod != '@PaymentMethod.BankTransfer'">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount | number}}</dd>
-                                            <dd ng-if="paymentMethod == '@PaymentMethod.BankTransfer'">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</dd>
+                                            <dd>Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</dd>
                                         </dl>
                                     </div>
                                     <!--<footer>
