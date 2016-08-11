@@ -116,22 +116,12 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                             ErrorCode = "ERFBOO03"
                         };
                     case FlightError.FailedOnSupplier:
-                        return new FlightBookApiResponse
-                        {
-                            StatusCode = HttpStatusCode.InternalServerError,
-                            ErrorCode = "ERFBOO04"
-                        };
                     case FlightError.TechnicalError:
-                        return new FlightBookApiResponse
-                        {
-                            StatusCode = HttpStatusCode.InternalServerError,
-                            ErrorCode = "ERRGEN99"
-                        };
                     default:
                         return new FlightBookApiResponse
                         {
                             StatusCode = HttpStatusCode.InternalServerError,
-                            ErrorCode = "ERRGEN99"
+                            ErrorCode = "ERFBOO04"
                         };
                 }
             }
