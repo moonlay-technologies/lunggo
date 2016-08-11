@@ -29,17 +29,15 @@
 
     // page body
     .page__body {padding:0 15px 20px; overflow-wrap:break-word;
-        h3 {margin: 20px 0; font-size: 14px;}
+        /*h3 {margin: 20px 0; font-size: 14px;}*/
         .page-loading {display:none;}
         .page-loaded {display:block;}
         .page-step-1 {}
-        .page-step-2 {
+        .page-step-2, .page-step-3 {
             .btn.btn-yellow {margin-top:15px;}
         }
         .page-step-3 {
-            .btn.btn-yellow.form-control{
-                width: 100%;
-            }
+            .btn.btn-yellow.form-control {width: 100%;}
         }
 
     }
@@ -131,12 +129,8 @@
             }
         }
         .overlay__body.overlay__content{
-            padding-bottom: 20px;
-            .flight__separator{
-                left: 35%;
-            }
+            .flight__separator {left: 35%;}
         }
-        
     }
 }
 
@@ -176,3 +170,5 @@
         }
     }
 }
+
+h3 {margin: 20px 0; font-size: 14px;}

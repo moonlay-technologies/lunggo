@@ -300,7 +300,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   font-size: 18px;
   font-weight: 700;
   padding-bottom: 32px;
-  margin: 30px auto 20px; }
+  margin: 20px auto; }
   .section-title h1 {
     text-align: center; }
   .section-title span {
@@ -950,8 +950,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   content: ''; }
 
 .container-page {
-  padding: 0 15px;
-  margin-bottom: 30px; }
+  padding: 0 15px 20px; }
 
 .form-divider {
   border-top: 1px solid #ccc;
@@ -1835,15 +1834,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .page.page-checkout .page__body {
   padding: 0 15px 20px;
-  overflow-wrap: break-word; }
-  .page.page-checkout .page__body h3 {
-    margin: 20px 0;
-    font-size: 14px; }
+  overflow-wrap: break-word;
+  /*h3 {margin: 20px 0; font-size: 14px;}*/ }
   .page.page-checkout .page__body .page-loading {
     display: none; }
   .page.page-checkout .page__body .page-loaded {
     display: block; }
-  .page.page-checkout .page__body .page-step-2 .btn.btn-yellow {
+  .page.page-checkout .page__body .page-step-2 .btn.btn-yellow, .page.page-checkout .page__body .page-step-3 .btn.btn-yellow {
     margin-top: 15px; }
   .page.page-checkout .page__body .page-step-3 .btn.btn-yellow.form-control {
     width: 100%; }
@@ -2032,10 +2029,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #ff7200;
     font-size: 16px; }
 
-.page.page-checkout .overlay--flight-detail .overlay__body.overlay__content {
-  padding-bottom: 20px; }
-  .page.page-checkout .overlay--flight-detail .overlay__body.overlay__content .flight__separator {
-    left: 35%; }
+.page.page-checkout .overlay--flight-detail .overlay__body.overlay__content .flight__separator {
+  left: 35%; }
 
 .page.page-confirmation .instruction header {
   background: #2fb4e6;
@@ -2097,6 +2092,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-confirmation .confirmation-form .control-label.important:after {
   content: '*';
   color: red; }
+
+h3 {
+  margin: 20px 0;
+  font-size: 14px; }
 
 .page.page-useraccount .menu-user {
   display: block;
