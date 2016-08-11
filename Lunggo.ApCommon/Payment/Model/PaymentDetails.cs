@@ -116,7 +116,7 @@ namespace Lunggo.ApCommon.Payment.Model
                     Method = PaymentMethodCd.Mnemonic(record.MethodCd),
                     Status = PaymentStatusCd.Mnemonic(record.StatusCd),
                     Time = record.Time,
-                    TimeLimit = record.TimeLimit.GetValueOrDefault(),
+                    TimeLimit = DateTime.SpecifyKind(record.TimeLimit.GetValueOrDefault(), DateTimeKind.Utc),
                     TransferAccount = record.TransferAccount,
                     RedirectionUrl = record.RedirectionUrl,
                     ExternalId = record.ExternalId,

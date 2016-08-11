@@ -370,7 +370,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // *****
 // popup
 .popup__wrapper {background:rgba(0,0,0,0.7); position:fixed; top:0; left:0; width:100%; height:100%; z-index:1000; display:none;
-    .popup {position:absolute; top:0; right:0; bottom:0; left:0; margin:auto; width:300px; height:200px; background:#fff; @include border-radius($border-radius-default);
+    .popup {position:absolute; left: 50%; top: 50%; @include translate(-50%, -50%); width:300px; background:$color-white; @include border-radius($border-radius-default);
         .popup__header {background:#1daee5; color:#fff; padding:12px;
             .popup__title {text-align:center; margin:0; font-weight:bold;}
         }
@@ -380,16 +380,21 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 padding: 5px 0;
             }
         }
+        .tnc-body.container_new {
+            &>ol {padding: 0 30px;}
+        }
         .container_new.price-change-footer {
             padding: 0 30px;
-            .btn.btn-grey {
-                min-width: 100%;
-            }
+            .btn.btn-grey {min-width: 100%;}
             .btn.btn-yellow {
                 min-width: 100%;
                 margin-top: 8px;
             }
         }
+        .container_new.tnc {
+            .btn.btn-grey, .btn.btn-yellow {min-width: 100%;}
+        }
+        footer.tnc-footer {padding: 0 15px 20px;}
         .popup__footer {position:absolute; bottom:0; left:0; width:100%; padding-bottom:12px;}
     }
     // if active
@@ -787,15 +792,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
-}
-
-.page-step-3 {
-    .btn.btn-yellow {
-        width: 49%;
-        position: relative;
-        margin-top: 10px;
-        text-align: center;
-    }
 }
 
 .page-checkout.page-checkout-flight {
