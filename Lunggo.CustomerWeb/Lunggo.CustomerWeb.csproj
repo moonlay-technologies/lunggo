@@ -321,11 +321,6 @@
     <Content Include="Assets\bootstrap\bootstrap.min.css">
       <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
-    <Content Include="Assets\css\application.css" />
-    <Content Include="Assets\css\application.css.map" />
-    <Content Include="Assets\css\application.min.css">
-      <DependentUpon>application.css</DependentUpon>
-    </Content>
     <Content Include="Assets\css\application.scss" />
     <Content Include="Assets\css\bootstrap.min.css" />
     <Content Include="Assets\css\eticket.css">
