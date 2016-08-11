@@ -22,6 +22,16 @@
         ret = Model.Itinerary.Trips[1];
 }
 }
+
+@functions{
+    public string msToTime(double duration)
+    {
+        var hours = Convert.ToInt32(duration) / (1000 * 60 * 60);
+        var minutes = (Convert.ToInt32(duration) / (1000 * 60)) % 60;
+
+        return hours + "j " + minutes + "m";
+    }
+}
 @section AdditionalCSS {
 
     <link rel="stylesheet" href="/Assets/mobile/css/application.css">
@@ -65,24 +75,25 @@
 
             break;
 
-        case PaymentStatus.Pending:
+        @*case PaymentStatus.Pending:
 
-            <div class="thankyou-words">
+    <div class="thankyou-words">
 
-                <header class="page__header">
-                    <h1 class="text-center section-title stripe"><span>Pembayaran</span></h1>
-                </header>
+        <header class="page__header">
+            <h1 class="text-center section-title stripe"><span>Pembayaran</span></h1>
+        </header>
 
-                <p>Proses pembayaran Anda belum selesai. Mohon selesaikan pembayaran Anda dalam waktu 10 menit. Bila tidak, pesanan Anda akan dibatalkan.</p>
-                @*<p>Nomor Virtual Account : @Model.Payment.TargetAccount</p>*@
+        <p>Proses pembayaran Anda belum selesai. Mohon selesaikan pembayaran Anda dalam waktu 10 menit. Bila tidak, pesanan Anda akan dibatalkan.</p>
+        @*<p>Nomor Virtual Account : @Model.Payment.TargetAccount</p>
 
-        </div>
+     </div>
 
 
-            break;
+    break;*@
 
         case PaymentStatus.Settled:
-            case PaymentStatus.Verifying:
+        case PaymentStatus.Verifying:
+        case PaymentStatus.Pending:
 
             <div class="thankyou-words">
                 <header class="page__header">
@@ -101,12 +112,9 @@
             </div>
         </div>
             break;
-
-
     }
 
-
-    @if (Model.Payment.Status == PaymentStatus.Settled || Model.Payment.Status == PaymentStatus.Verifying)
+    @if (Model.Payment.Status == PaymentStatus.Settled || Model.Payment.Status == PaymentStatus.Verifying || Model.Payment.Status == PaymentStatus.Pending)
     {
         <div class = "thankyou-words">
             <h3><b>DETAIL</b> PESANAN</h3>
@@ -114,33 +122,22 @@
             <div class="summary summary--passenger">
                 <h3 class="summary__title"><b>DAFTAR</b> PENUMPANG</h3>
                 <div class="summary__body">
-                                    <ol>
-                                        @foreach (var passenger in Model.Passengers)
-                                        {
+                      <ol>
+                        @foreach (var passenger in Model.Passengers)
+                        {
                             <li>
                                 <h4>
-                                    <span>@(passenger.Title) </span>
+                                    <span>@EnumDisplay.Title(passenger.Title.GetValueOrDefault())</span>
                                     @passenger.Name
                                 </h4>
                                 <dl>
                                     <dt>Jenis Tiket</dt>
-                                    @if (passenger.Type == PaxType.Adult)
-                                    {
-                                        <dd>Dewasa</dd>
-                                        }
-                                    @if (passenger.Type == PaxType.Child)
-                                    {
-                                        <dd>Anak</dd>
-                                    }
-                                    @if (passenger.Type == PaxType.Infant)
-                                    {
-                                        <dd>Bayi</dd>
-                                    }
+                                    @EnumDisplay.PassengerType(passenger.Type.GetValueOrDefault())
                                 </dl>
 
                             </li>
                         }
-                                    </ol>
+                    </ol>
                 </div><!-- .summary__body -->
             </div><!-- .summary--passenger -->
             <div class="overlay--flight-detail">
@@ -151,7 +148,7 @@
                         <div class="flight-title flight-title--departure">
                             <div class="flight-info">
                                 <h4><b>@dep.OriginCity</b> ke <b>@dep.DestinationCity</b></h4>
-                                <h5>@dep.DepartureDate.ToString()</h5>
+                                <h5>@dep.DepartureDate.GetValueOrDefault().ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
                             </div><!-- .flight-info -->
                         </div><!-- .flight-title -->
                         @for (var segment = 0; segment < dep.Segments.Count; segment++)
@@ -171,17 +168,17 @@
                                         </div><!-- .flight__summary -->
                                         <div class="flight__detail">
                                             <div class="flight__departure">
-                                                <h5>@dep.Segments[segment].DepartureTime.ToString()</h5>
-                                                <h4><b>@dep.Segments[segment].DepartureTime.ToString</b></h4>
+                                                <h5>@dep.Segments[segment].DepartureTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                <h4><b>@dep.Segments[segment].DepartureTime.GetValueOrDefault().ToString("HH:mm", new CultureInfo("id-ID"))</b></h4>
                                                 <h5><b>@dep.Segments[segment].DepartureCity (@dep.Segments[segment].DepartureAirport)</b></h5>
                                                 <h5>@dep.Segments[segment].DepartureAirportName</h5>
-                                </div>
+                                            </div>
                                             <div class="flight__separator">
-                                                <h5><b>Durasi: </b>@dep.Segments[segment].Duration</h5>
-                            </div>
+                                                <h5><b>Durasi:</b><br>@msToTime(dep.Segments[segment].Duration.GetValueOrDefault())</h5>
+                                            </div>
                                             <div class="flight__arrival">
-                                                <h5>@dep.Segments[segment].ArrivalTime.ToString()</h5>
-                                                <h4><b>@dep.Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
+                                                <h5>@dep.Segments[segment].ArrivalTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                <h4><b>@dep.Segments[segment].ArrivalTime.GetValueOrDefault().ToString("HH:mm", new CultureInfo("id-ID"))</b></h4>
                                                 <h5><b>@dep.Segments[segment].ArrivalCity (@dep.Segments[segment].ArrivalAirport)</b></h5>
                                                 <h5>@dep.Segments[segment].ArrivalAirportName</h5>
                                             </div><!-- .flight__arrival -->
@@ -210,7 +207,7 @@
                         <div class="flight-title flight-title--departure">
                             <div class="flight-info">
                                 <h4><b>@ret.OriginCity</b> ke <b>@ret.DestinationCity</b></h4>
-                                <h5>@ret.DepartureDate.ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                <h5>@ret.DepartureDate.GetValueOrDefault().ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
                             </div><!-- .flight-info -->
                         </div><!-- .flight-title -->
                         @for (var segment = 0; segment < ret.Segments.Count; segment++)
@@ -231,17 +228,17 @@
                                         </div><!-- .flight__summary -->
                                         <div class="flight__detail">
                                             <div class="flight__departure">
-                                                <h5>@ret.Segments[segment].DepartureTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                <h4><b>@ret.Segments[segment].DepartureTime.ToString("HH:mm")</b></h4>
+                                                <h5>@ret.Segments[segment].DepartureTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                <h4><b>@ret.Segments[segment].DepartureTime.GetValueOrDefault().ToString("HH:mm", new CultureInfo("id-ID"))</b></h4>
                                                 <h5><b>@ret.Segments[segment].DepartureCity (@ret.Segments[segment].DepartureAirport)</b></h5>
                                                 <h5>@ret.Segments[segment].DepartureAirportName</h5>
                                             </div>
                                             <div class="flight__separator">
-                                                <h5><b>Durasi: </b>@ret.Segments[segment].Duration</h5>
+                                                <h5><b>Durasi:</b><br/>@ret.Segments[segment].Duration</h5>
                                         </div>
                                             <div class="flight__arrival">
-                                                <h5>@ret.Segments[segment].ArrivalTime.ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
-                                                <h4><b>@ret.Segments[segment].ArrivalTime.ToString("HH:mm")</b></h4>
+                                                <h5>@ret.Segments[segment].ArrivalTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                <h4><b>@ret.Segments[segment].ArrivalTime.GetValueOrDefault().ToString("HH:mm", new CultureInfo("id-ID"))</b></h4>
                                                 <h5><b>@ret.Segments[segment].ArrivalCity (@ret.Segments[segment].ArrivalAirport)</b></h5>
                                                 <h5>@ret.Segments[segment].ArrivalAirportName</h5>
                                             </div><!-- .flight__arrival -->
@@ -266,7 +263,7 @@
                 <div class="summary__body">
                     <dl>
                         <dt>Tiket Pesawat @Model.Passengers.Count Penumpang</dt>
-                        <dd>Rp @((Model.Payment.FinalPrice + Model.Payment.DiscountNominal + Model.Payment.TransferFee).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                        <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                     </dl>
                     @if (Model.Payment.DiscountNominal != 0)
                     {
@@ -279,7 +276,7 @@
                     {
                         <dl>
                             <dt>Kode Unik Pembayaran</dt>
-                            <dd>- Rp @Model.Payment.TransferFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                            <dd>- Rp @Math.Abs(Model.Payment.TransferFee).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                         </dl>
                     }
                     <dl class="total-price">
@@ -315,11 +312,11 @@
                         break;
                 }
 
-                    </div>
-
-                <div class="container">
-                    <small><i>Travorama selalu mementingkan keamanan transaksi Anda. Semua transaksi melalui Travorama.com dijamin 100% aman.</i></small>
-                </div>
             </div>
+
+            <div class="container">
+                <small><i>Travorama selalu mementingkan keamanan transaksi Anda. Semua transaksi melalui Travorama.com dijamin 100% aman.</i></small>
+            </div>
+        </div>
     }
 </section><!-- .checkout-page -->
