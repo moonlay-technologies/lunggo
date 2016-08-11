@@ -1,0 +1,43 @@
+﻿
+
+<!--<div ng-repeat="segment in flight.trips[0].segments track by $index">-->
+    <div>
+        <!--<div class="transit" ng-if="$index > 0">
+            <p>Transit di {{flight.trips[0].segments[0].departureCity}} ({{flight.trips[0].segments[0].departureName}}) selama {{msToTime(flight.trips[0].transits[ $index - 1 ].duration)}}</p>
+        </div>-->
+        <div class="segment">
+            <img class="segment-airline-logo" ng-src="{{flight.trips[0].segments[0].airlineLogoUrl}}" alt="{{flight.trips[0].segments[0].airlineName}}" />
+            <div class="segment-price" style="border-top:thin">
+                <div><h5 class="segment-price-name">{{flight.trips[0].segments[0].airlineName}}</h5></div>
+                <div class="clearer" ng-if="flight.adultCount > 0">
+                    <h5 class="segment-price-left"><span class="segment-price-q"></span>Harga Dewasa</h5>
+                    <h5 class="segment-price-middle">X{{flight.adultCount}}:</h5>
+                    <h5 class="segment-price-right">Rp {{flight.originalAdultFare * flight.adultCount | number:0}}</h5>
+                </div>
+                <div class="clearer" ng-if="flight.childCount > 0">
+                    <h6 class="segment-price-left"><span class="segment-price-q"></span>Harga Anak</h6>
+                    <h6 class="segment-price-middle">X{{flight.childCount}}:</h6>
+                    <h6 class="segment-price-right">Rp {{flight.originalChildFare * flight.childCount | number:0}}</h6>
+                </div>
+                <div class="clearer" ng-if="flight.infantCount > 0">
+                    <h6 class="segment-price-left"><span class="segment-price-q"></span>Harga Bayi</h6>
+                    <h6 class="segment-price-middle">X{{flight.infantCount}}:</h6>
+                    <h6 class="segment-price-right">Rp {{flight.originalInfantFare * flight.infantCount | number:0}}</h6>
+                </div>
+                <br />
+                <div class="segment-price-total clearer">
+                    <h5 class="segment-price-left">Harga Total</h5>
+                    <h5 class="segment-price-right">Rp {{flight.originalTotalFare | number:0}}</h5>
+                    <h5 class="segment-price-left discount">Diskon Travorama</h5>
+                    <h5 class="segment-price-right discount">Rp {{flight.netTotalFare - flight.originalTotalFare | number:0}}</h5>
+                </div>
+
+                <div class="segment-netprice-total clearer">
+                    <h5 class="segment-price-left">Harga Total</h5>
+                    <h5 class="orange-total-price segment-price-right ">Rp {{flight.netTotalFare | number:0}}</h5>
+                    <h6 class="segment-price-left">*Sudah Termasuk Pajak & Service Charge</h6>
+                </div>
+
+            </div>
+        </div>
+    </div>
