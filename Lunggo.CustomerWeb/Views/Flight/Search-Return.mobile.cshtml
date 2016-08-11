@@ -849,7 +849,7 @@
                             <div class="form-group form__departure">
                                 <span class="icon-pp"></span>
                                 <div class="field-container">
-                                    <p class="form-control" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-departure')">
+                                    <p class="form-control" ng-click="DatePicker.SetOption({Target : 'departure'}, ' ', 'search-return'); PageConfig.SetOverlay('datepicker-departure')">
                                         Berangkat <span>{{FlightSearchForm.DepartureDate | date : 'EEE, dd MMM yyyy'}}</span>
                                     </p>
                                 </div>
@@ -868,7 +868,7 @@
                             <div class="form-group form__return" ng-show="val">
                                 <span class="icon-pp"></span>
                                 <div class="field-container">
-                                    <p class="form-control" ng-click="DatePicker.SetOption({Target : 'return'}, ' '); PageConfig.SetOverlay('datepicker-return')">
+                                    <p class="form-control" ng-click="DatePicker.SetOption({Target : 'return'}, ' ', 'search-return'); PageConfig.SetOverlay('datepicker-return')">
                                         Kembali <span>{{FlightSearchForm.ReturnDate | date : 'EEE, dd MMM yyyy'}}</span>
                                         <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />
                                     </p>
