@@ -321,7 +321,7 @@
     <Compile Include="Flight\Wrapper\Citilink\CitilinkRevalidateFare.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkSearchFlight.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkWrapperSingleton.cs" />
-    <Compile Include="Flight\Wrapper\Citilink\CitilinkAirCurrency.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkCurrency.cs" />
     <Compile Include="Flight\Wrapper\FlightSupplierWrapperBase.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaCurrency.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaBookFlight.cs" />

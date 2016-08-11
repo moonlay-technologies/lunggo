@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
@@ -12,13 +13,17 @@ namespace Lunggo.ApCommon.Product.Service
     {
         internal abstract void Issue(string rsvNo);
 
-        private static Dictionary<ProductType, Type> _serviceList =  
-            (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-             from assemblyType in domainAssembly.GetTypes()
-             where typeof(ProductServiceBase<T>).IsAssignableFrom(assemblyType)
-             select assemblyType).ToDictionary(
-                type => (ProductType) type.GetProperty("Type").GetConstantValue(),
-                type => type);
+        private static Dictionary<ProductType, Type> _serviceList;
+
+        //protected ProductServiceBase()
+        //{
+        //    _serviceList =
+        //        Assembly.GetAssembly(typeof(ProductServiceBase<>)).GetTypes()
+        //            .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof (ProductServiceBase<T>)))
+        //            .ToDictionary(
+        //                type => (ProductType) type.GetProperty("Type").GetConstantValue(),
+        //                type => type);
+        //}
 
         internal static Type GetService(ProductType type)
         {

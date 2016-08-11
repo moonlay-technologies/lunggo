@@ -490,7 +490,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     
                     status.BookingId = kodeBook;
                     status.BookingStatus = BookingStatus.Booked;
-                    status.TimeLimit = timeLimitFinal.ToUniversalTime();
+                    status.TimeLimit = DateTime.SpecifyKind(timeLimitFinal, DateTimeKind.Utc);
                 
                     hasil.Status = status;
                     hasil.IsSuccess = true;

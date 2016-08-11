@@ -80,9 +80,10 @@ namespace Lunggo.ApCommon.Payment.Service
             var isUpdated = UpdatePaymentToDb(rsvNo, payment);
             if (isUpdated && payment.Status == PaymentStatus.Settled)
             {
-                var service = FlightService.GetService(ProductTypeCd.Parse(rsvNo));
-                var serviceInstance = service.GetMethod("GetInstance").Invoke(null, null);
-                service.GetMethod("Issue").Invoke(serviceInstance, new object[] { rsvNo });
+                //var service = typeof(FlightService);
+                //var serviceInstance = service.GetMethod("GetInstance").Invoke(null, null);
+                //service.GetMethod("Issue").Invoke(serviceInstance, new object[] { rsvNo });
+                FlightService.GetInstance().Issue(rsvNo);
             }
         }
 

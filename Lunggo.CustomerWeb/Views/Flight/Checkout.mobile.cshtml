@@ -540,16 +540,12 @@
                     </header>
                     <div class="popup__body">
                         <div class="container_new">
-                            <p>Maaf, waktu checkout Anda sudah habis. Silakan klik tombol dibawah untuk kembali ke halaman pencarian.</p>
+                            <span>Maaf, waktu checkout Anda sudah habis. Silakan klik tombol dibawah untuk kembali ke halaman pencarian.</span>
                         </div>
                     </div>
                     <div class="popup__footer">
                         <div class="container_new">
-                            <div class="row1">
-                                <div class="col12">
-                                    <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
-                                </div>
-                            </div>
+                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
                         </div>
                     </div>
                 </div>
@@ -562,16 +558,12 @@
                     </header>
                     <div class="popup__body">
                         <div class="container_new">
-                            <p>Mohon Maaf, pemesanan Anda gagal di proses.</p>
+                            <span>Mohon Maaf, pemesanan Anda gagal di proses.</span>
                         </div>
                     </div>
                     <div class="popup__footer">
                         <div class="container_new">
-                            <div class="row1">
-                                <div class="col12">
-                                    <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
-                                </div>
-                            </div>
+                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
                         </div>
                     </div>
                 </div>
@@ -584,16 +576,12 @@
                     </header>
                     <div class="popup__body">
                         <div class="container_new">
-                            <p>Mohon Maaf, pemesanan Anda gagal di proses karena data kurang tepat. Silakan pesan dan cek kembali data Anda.</p>
+                            <span>Mohon Maaf, pemesanan Anda gagal di proses karena data kurang tepat. Silakan pesan dan cek kembali data Anda.</span>
                         </div>
                     </div>
                     <div class="popup__footer">
                         <div class="container_new">
-                            <div class="row1">
-                                <div class="col12">
-                                    <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
-                                </div>
-                            </div>
+                            <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
                         </div>
                     </div>
                 </div>
@@ -606,18 +594,9 @@
                     </header>
                     <div class="popup__body">
                         <div class="container_new">
-                            <p>Sedang memproses pemesanan Anda ke maskapai. Proses ini dapat berlangsung hingga 5 (lima) menit.</p>
+                            <span>Sedang memproses pemesanan Anda ke maskapai. Proses ini dapat berlangsung hingga 5 (lima) menit.</span>
                         </div>
                     </div>
-                    @*<div class="popup__footer">
-                            <div class="container_new">
-                                <div class="row1">
-                                    <div class="col12">
-                                        <a class="btn btn-block btn-yellow" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>*@
                 </div>
             </div>
 
@@ -628,7 +607,7 @@
                     </header>
                     <div class="popup__body">
                         <div class="container_new">
-                            <p>Penerbangan Tersedia. Mengalihkan Anda ke halaman pembayaran.</p>
+                            <span>Penerbangan Tersedia. Mengalihkan Anda ke halaman pembayaran.</span>
                         </div>
                     </div>
                 </div>
@@ -641,10 +620,10 @@
                     </header>
                     <div class="popup__body price-change-body">
                         <div class="container_new">
-                            <p>Harga tiket ini berubah menjadi Rp {{book.newPrice}} disebabkan perubahan harga dari maskapai.</p>
+                            <span>Harga tiket ini berubah menjadi Rp {{book.newPrice}} disebabkan perubahan harga dari maskapai.</span>
                         </div>
                     </div>
-                    <footer>
+                    <div class="popup__footer">
                         <div class="container_new price-change-footer">
                             <div class="row">
                                 <div class="col-xs-12">
@@ -657,7 +636,7 @@
                                 </div>
                             </div>
                         </div>
-                    </footer>
+                    </div>
                 </div>
             </div>
 
