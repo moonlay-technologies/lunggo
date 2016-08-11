@@ -84,7 +84,7 @@
                                 <h4 class="text-right">No. Pesanan: <b>@Model.RsvNo</b></h4>
                             </header>
                             <section class="text">
-                                <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, eTicket akan dikirimkan ke Email Anda dalam waktu max <b>60 menit</b></p>
+                                <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></p>
                                 <p>Mohon selesaikan pembayaran melalui <b>ATM</b></p>
                             </section>
                             <section class="bank-detail">
@@ -334,11 +334,7 @@
                                 {
                                     <dl>
                                         <dt>Kode Unik Pembayaran</dt>
-<<<<<<< HEAD
                                         <dd>- Rp @(Math.Abs(Model.Payment.TransferFee).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
-=======
-                                        <dd>Rp @Model.Payment.TransferFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
->>>>>>> 0e4d1b00ce80b6e62f601f642cef901f41030196
                                     </dl>
                                 }
                                 <dl class="total-price">
