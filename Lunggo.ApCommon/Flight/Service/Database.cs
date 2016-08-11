@@ -92,7 +92,9 @@ namespace Lunggo.ApCommon.Flight.Service
                                 Contact = Contact.GetFromDb(rsvNo),
                                 Payment = PaymentDetails.GetFromDb(rsvNo),
                                 Itineraries = new List<FlightItinerary>(),
-                                Pax = new List<Pax>()
+                                Pax = new List<Pax>(),
+                                State = ReservationState.GetFromDb(rsvNo),
+                                User = User.GetFromDb(reservationRecord.UserId)
                             };
                         }
                         FlightItinerary itinerary;
@@ -119,7 +121,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 DestinationAirport = tripRecord.DestinationAirportCd,
                                 DestinationAirportName = GetAirportName(tripRecord.DestinationAirportCd),
                                 DestinationCity = GetAirportCity(tripRecord.DestinationAirportCd),
-                                DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
+                                DepartureDate = DateTime.SpecifyKind(tripRecord.DepartureDate.GetValueOrDefault(), DateTimeKind.Utc),
                                 Segments = new List<FlightSegment>()
                             };
                             tripLookup.Add(tripRecord.Id.GetValueOrDefault(), trip);
@@ -233,7 +235,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 DestinationAirport = tripRecord.DestinationAirportCd,
                                 DestinationAirportName = GetAirportName(tripRecord.DestinationAirportCd),
                                 DestinationCity = GetAirportCity(tripRecord.DestinationAirportCd),
-                                DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
+                                DepartureDate = DateTime.SpecifyKind(tripRecord.DepartureDate.GetValueOrDefault(), DateTimeKind.Utc),
                                 Segments = new List<FlightSegment>()
                             };
                             tripLookup.Add(tripRecord.Id.GetValueOrDefault(), trip);

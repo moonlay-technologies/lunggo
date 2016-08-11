@@ -29,6 +29,10 @@ namespace Lunggo.ApCommon.Flight.Model
         public FlightItineraryForDisplay Itinerary { get; set; }
         [JsonProperty("pax", NullValueHandling = NullValueHandling.Ignore)]
         public List<PaxForDisplay> Passengers { get; set; }
+        [JsonIgnore]
+        public string UserId { get; set; }
+        [JsonIgnore]
+        public string DeviceId { get; set; }
     }
 
     public class FlightReservation : ReservationBase<FlightReservation>
