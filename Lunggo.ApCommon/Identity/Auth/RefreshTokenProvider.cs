@@ -64,7 +64,7 @@ namespace Lunggo.ApCommon.Identity.Auth
             }
             else
             {
-                if (deviceId != null)
+                if (!string.IsNullOrEmpty(deviceId))
                 {
                     result = await new DapperAuthStore().AddOrReplaceRefreshToken(token, ignoreDevice: false);
                 }
