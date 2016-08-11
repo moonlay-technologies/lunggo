@@ -20,6 +20,7 @@ app.controller('checkoutController', [
 
         //********************
         // variables
+        $scope.trial = 0;
         $scope.currentPage = 1;
         $scope.pageLoaded = true;
         $scope.loginShown = false;

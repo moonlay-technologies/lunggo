@@ -10,6 +10,7 @@
 
     // **********
     // variables
+    $scope.trial = 0;
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.PageConfig.Validated = false;
     $scope.PageConfig.ValidateConfirmation = false;
@@ -370,7 +371,10 @@
     }
 
     // get  flight
-    $scope.FlightFunctions.GetFlight = function(targetScope) {
+    $scope.FlightFunctions.GetFlight = function (targetScope) {
+        if ($scope.trial > 3) {
+            $scope.trial = 0;
+        }
         $scope.PageConfig.Busy = true;
         var requestReturnParams = $scope.flightFixRequest();
         targetScope = $scope.FlightConfig[1];
@@ -430,7 +434,8 @@
                         }, 1000);
 
                     }).catch(function (returnData) {
-                        if (refreshAuthAccess()) //refresh cookie
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
                             $scope.FlightFunctions.GetFlight(targetScope.Name);
                         }
@@ -558,6 +563,9 @@
         // **********
         // validate flight function
         var validateFlight = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
             //var anotherFlight = targetFlight == 'departure' ? $scope.FlightConfig[1] : $scope.FlightConfig[0];
             //targetFlight = targetFlight == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1];
             //var securecode = targetFlight.Securecode;
@@ -610,7 +618,8 @@
 
                     console.log(targetFlight);
                 }).catch(function (returnData) {
-                    if (refreshAuthAccess()) //refresh cookie
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.FlightFunctions.Revalidate(departureIndexNo, returnIndexNo);
                     }
