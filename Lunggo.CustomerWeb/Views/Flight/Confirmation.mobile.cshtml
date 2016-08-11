@@ -55,7 +55,7 @@
     var paymentTimeout = '';
 
     // development only start
-    paymentTimeout = new Date('@Model.Payment.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("u")');
+    paymentTimeout = new Doverlay__contentate('@Model.Payment.TimeLimit.AddMinutes(-30).ToString("u")');
         console.log("TIME OUT: " + paymentTimeout);
     //paymentTimeout = new Date('@Model.RsvTime.AddMinutes(-30).ToString("u")');
     // countdown timer
@@ -75,13 +75,8 @@
     <script src="/Assets/mobile/js/CheckoutController.js"></script>
 }
 
-<div>
     <div class="confirmation-content">
-
-        <div class="container_new">
-            <div class="row1">
-                <div class="col12">
-
+    <div class="container-page">
                     <div class="instruction">
                         <div class="page__header">
                             <h1 class="text-center section-title stripe">Panduan <span>Transfer</span></h1>
@@ -109,7 +104,7 @@
                                     {
                                         <dl>
                                             <dt>Kode Unik Pembayaran</dt>
-                                            <dd> Rp @Model.Payment.TransferFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                            <dd>Rp @Model.Payment.TransferFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                         </dl>
                                     }
                                     <dl class="total-price">
@@ -328,10 +323,7 @@
                         </div>
                     }
                 </div>
-            </div><!-- .row -->
-        </div><!-- .container -->
     </div><!-- .confirmation-content -->
-</div>
 
 @*<div class="overlay datepicker" ng-class="{'active' : PageConfig.Overlay == 'datepicker'}">
     <header class="overlay__header">

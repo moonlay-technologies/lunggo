@@ -232,7 +232,7 @@
                                                     <!-- .transit -->
                                                 }
                                                 <div class="col-xs-2">
-                                                    <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                    <p><img src="@segment.AirlineLogoUrl" alt="@segment.AirlineName" class="flight-airline" /></p>
                                                     <p><span>@segment.AirlineName</span></p>
                                                 </div>
                                                 <div class="col-xs-10">
@@ -279,7 +279,7 @@
                                                         <!-- .transit -->
                                                     }
                                                     <div class="col-xs-2">
-                                                        <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                        <p><img src="@segment.AirlineLogoUrl" alt="@segment.AirlineName" class="flight-airline" /></p>
                                                         <p><span>@segment.AirlineName</span></p>
                                                     </div>
                                                     <div class="col-xs-10">
@@ -334,7 +334,11 @@
                                 {
                                     <dl>
                                         <dt>Kode Unik Pembayaran</dt>
+<<<<<<< HEAD
                                         <dd>- Rp @(Math.Abs(Model.Payment.TransferFee).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+=======
+                                        <dd>Rp @Model.Payment.TransferFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+>>>>>>> 0e4d1b00ce80b6e62f601f642cef901f41030196
                                     </dl>
                                 }
                                 <dl class="total-price">
