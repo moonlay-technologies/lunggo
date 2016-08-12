@@ -4,6 +4,7 @@ using System.Net;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 
@@ -15,7 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
         {
             var service = FlightService.GetInstance();
             var itinerary = service.GetItineraryForDisplay(token);
-            var expiryTime = service.GetItineraryExpiry(token);
+            var expiryTime = service.GetItineraryExpiry(token).TruncateMilliseconds();
             var apiResponse = AssembleApiResponse(itinerary, expiryTime);
             return apiResponse;
         }
@@ -33,7 +34,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             {
                 StatusCode = HttpStatusCode.OK,
                 Itinerary = itinerary,
-                ExpiryTime = expiryTime
+                ExpiryTime = expiryTime.TruncateMilliseconds()
             };
         }
     }

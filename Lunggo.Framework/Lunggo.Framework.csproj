@@ -172,6 +172,7 @@
     <Compile Include="Database\TableRecord.cs" />
     <Compile Include="Encoder\Encoder.cs" />
     <Compile Include="Error\Error.cs" />
+    <Compile Include="Extension\DateTimeExtension.cs" />
     <Compile Include="Extension\JsonExtension.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Filter\BasicAuthenticationFilterAttribute.cs" />
