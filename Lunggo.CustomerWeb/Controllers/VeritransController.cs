@@ -47,7 +47,8 @@ namespace Lunggo.CustomerWeb.Controllers
                     Time = time,
                     ExternalId = notif.approval_code,
                     TransferAccount = notif.permata_va_number,
-                    FinalPriceIdr = notif.gross_amount
+                    FinalPriceIdr = notif.gross_amount,
+                    LocalCurrency = new Currency("IDR")
                 };
 
                 var flight = FlightService.GetInstance();

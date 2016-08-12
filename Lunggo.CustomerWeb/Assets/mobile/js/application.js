@@ -1038,6 +1038,21 @@ function refreshAuthAccess() {
     }
 }
 
+//********************
+// static page functions
+function staticPageFunctions() {
+    //Accordion Help Section by W3School
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].onclick = function () {
+            this.classList.toggle("active");
+            this.nextElementSibling.classList.toggle("show");
+        }
+    }
+}
+
 //    $rootScope.FlightSearchForm.AutoComplete.Loading = true;
 //    // if result exist in cache
 //    if (keyword in $rootScope.FlightSearchForm.AutoComplete.Cache) {

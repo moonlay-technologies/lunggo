@@ -33,13 +33,14 @@
         .page-loading {display:none;}
         .page-loaded {display:block;}
         .page-step-1 {}
-        .page-step-2, .page-step-3 {
+        .page-step-2 {
             .btn.btn-yellow {margin-top:15px;}
         }
         .page-step-3 {
-            .btn.btn-yellow.form-control {width: 100%;}
+            .btn.btn-yellow.form-control,.btn.btn-grey.form-control {width: 48%;}
+            .btn.btn-grey.form-control {float: right;}
+            .flight-fare-wrapper {margin-bottom: 15px;}
         }
-
     }
 
     // *****
