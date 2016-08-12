@@ -43,18 +43,14 @@
     <script src="/Assets/mobile/js/ThankyouController.js"></script>
 }
 
-@section PageJS{
-    <script>
-        var aaa = '';
-    </script>
-}
 <div ng-app="myApp" ng-controller="ThankyouController">
     <section class="page group-checkout group-flight-checkout ticket-page">
 
     @switch (Model.Payment.Status)
     {
         case PaymentStatus.Failed:
-        
+        case PaymentStatus.Denied:
+            
             <div class="popup__wrapper active">
                 <div class="popup">
                     <header class="popup__header">
@@ -63,13 +59,13 @@
                     <div class="popup__body">
                         <div class="container_new">
                             <span>
-                                Mohon maaf, pembayaran Anda gagal. Silakan membuat reservasi yang baru.
+                                Mohon maaf, pembayaran Anda gagal. Silakan membuat pemesanan baru dengan metode pembayaran berbeda.
                             </span>
                         </div>
                     </div>
                     <div class="popup__footer">
                         <div class="container_new">
-                            <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                            <a class="btn btn-block btn-yellow" href="{{returnUrl}}">CARI ULANG</a>
                         </div>
                     </div>
                 </div>
@@ -87,13 +83,13 @@
                         <div class="popup__body">
                             <div class="container_new">
                                 <span>
-                                    Reservasi belum ada. Silakan membuat reservasi yang baru.
+                                    Reservasi tidak ditemukan. Silakan klik tombol di bawah untuk membuat reservasi.
                                 </span>
                             </div>
                         </div>
                         <div class="popup__footer">
                             <div class="container_new">
-                                <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                                <a class="btn btn-block btn-yellow" href="{{returnUrl}}">CARI PENERBANGAN</a>
                             </div>
                         </div>
                     </div>
@@ -110,53 +106,44 @@
                 <div class="popup__body">
                     <div class="container_new">
                         <span>
-                            Pemesanan Anda kadaluarsa. Silakan membuat reservasi yang baru.
+                            Pemesanan Anda kadaluarsa. Silakan klik tombol di bawah untuk membuat pemesanan baru.
                         </span>
                     </div>
                 </div>
                 <div class="popup__footer">
                     <div class="container_new">
-                        <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                        <a class="btn btn-block btn-yellow" href="{{returnUrl}}">CARI ULANG</a>
                     </div>
                 </div>
             </div>
         </div>
         break;
 
-        case PaymentStatus.Denied:
-        <div class="popup__wrapper active">
-                    <div class="popup">
-                        <header class="popup__header">
-                            <h4 class="popup__title">Pembayaran Ditolak</h4>
-                        </header>
-                        <div class="popup__body">
-                            <div class="container_new">
-                                <span>
-                                    Mohon maaf, pembayaran Anda ditolak. Silakan membuat reservasi baru dengan metode pembayaran berbeda.
-                                </span>
-                            </div>
-                        </div>
-                        <div class="popup__footer">
-                            <div class="container_new">
-                                <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
-                            </div>
+        case PaymentStatus.Verifying:
+        case PaymentStatus.Pending:
+        case PaymentStatus.Challenged:
+
+        <div ng-init="refresh()">
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Sedang Memverifikasi</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>
+                                Pembayaran Anda sedang diverifikasi oleh sistem kami.
+                            </span>
                         </div>
                     </div>
                 </div>
+            </div>
 
-            break;
-
-
-        case PaymentStatus.Verifying:
-        case PaymentStatus.Pending:
-
-        <div ng-init="refresh()">
-            masih pending
         </div>
 
-            break;
+       break;
 
-        case PaymentStatus.Settled:
+       case PaymentStatus.Settled:
 
         <div class="thankyou-words">
             <header class="page__header">
