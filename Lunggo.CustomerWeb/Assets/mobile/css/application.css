@@ -37,8 +37,7 @@ body {
   background: #f9f9f9;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  padding-top: 60px;
-  height: 100%; }
+  padding-top: 60px; }
 
 img {
   max-width: 100%; }
@@ -291,10 +290,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .burger-overlay.active {
     display: block; }
 
-.site-content {
-  height: 100%; }
-  .site-content a {
-    color: #2fb4e6; }
+.site-content a {
+  color: #2fb4e6; }
 
 .section-title {
   font-size: 18px;
@@ -423,6 +420,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     width: 300px;
+    min-height: 200px;
     background: #ffffff;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -437,28 +435,19 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         margin: 0;
         font-weight: bold; }
     .popup__wrapper .popup .popup__body {
-      padding: 20px 0; }
-      .popup__wrapper .popup .popup__body.price-change-body {
-        padding: 5px 0; }
-    .popup__wrapper .popup .tnc-body.container_new > ol {
-      padding: 0 30px; }
-    .popup__wrapper .popup .container_new.price-change-footer {
-      padding: 0 30px; }
-      .popup__wrapper .popup .container_new.price-change-footer .btn.btn-grey {
-        min-width: 100%; }
-      .popup__wrapper .popup .container_new.price-change-footer .btn.btn-yellow {
-        min-width: 100%;
-        margin-top: 8px; }
+      padding: 20px; }
+    .popup__wrapper .popup .popup__footer {
+      width: 100%;
+      padding: 20px; }
+    .popup__wrapper .popup .container_new ol {
+      padding-left: 20px; }
+    .popup__wrapper .popup .container_new.price-change-footer .btn.btn-grey {
+      min-width: 100%; }
+    .popup__wrapper .popup .container_new.price-change-footer .btn.btn-yellow {
+      min-width: 100%;
+      margin-bottom: 8px; }
     .popup__wrapper .popup .container_new.tnc .btn.btn-grey, .popup__wrapper .popup .container_new.tnc .btn.btn-yellow {
       min-width: 100%; }
-    .popup__wrapper .popup footer.tnc-footer {
-      padding: 0 15px 20px; }
-    .popup__wrapper .popup .popup__footer {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      padding-bottom: 12px; }
   .popup__wrapper.active {
     display: block; }
 
@@ -1087,9 +1076,68 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     text-align: center;
     padding: 5px; }
 
+.instruction-accordion {
+  margin: 15px 0; }
+
+/*ACCORDION*/
+.accordion-wrapper {
+  border-bottom: 1px solid #c9c9c9; }
+  .accordion-wrapper .accordion-title {
+    background-color: #f0f0f4;
+    color: #000;
+    cursor: pointer;
+    padding: 15px;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 600;
+    border-top: 1px solid #c9c9c9; }
+    .accordion-wrapper .accordion-title.active {
+      border-bottom: 1px solid #c9c9c9; }
+      .accordion-wrapper .accordion-title.active:after {
+        /*content: " ";
+                display: block;
+                background:url(/Assets/images/helpSection/arrow-up.png) no-repeat;
+                width: 20px;
+                height: 8px;
+                background-size: 70%;
+                float: right;
+                margin-top: 6px;*/
+        content: "\2796"; }
+    .accordion-wrapper .accordion-title:after {
+      /*content: " ";
+            display: block;
+            background:url(/Assets/images/helpSection/arrow-down.png) no-repeat;
+            width: 20px;
+            height: 8px;
+            background-size: 70%;
+            float: right;
+            margin-top: 6px;*/
+      content: '\02795';
+      /* Unicode character for "plus" sign (+) */
+      font-size: 13px;
+      color: #777;
+      float: right;
+      margin-left: 5px; }
+  .accordion-wrapper .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 16px; }
+    .accordion-wrapper .accordion-content.show {
+      max-height: 100%;
+      padding: 15px 20px; }
+      .accordion-wrapper .accordion-content.show > ul {
+        list-style-type: none;
+        padding: 0; }
+        .accordion-wrapper .accordion-content.show > ul > li {
+          margin-bottom: 15px; }
+      .accordion-wrapper .accordion-content.show > ol {
+        padding: 0 15px; }
+        .accordion-wrapper .accordion-content.show > ol > li {
+          margin-bottom: 10px; }
+
 /*--------------------*/
 .page.page-home {
-  height: 100%;
   overflow-y: auto;
   background: #ffffff; }
   .page.page-home:after {
