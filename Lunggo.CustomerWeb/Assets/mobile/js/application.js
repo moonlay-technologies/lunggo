@@ -1030,8 +1030,8 @@ function refreshAuthAccess() {
 }
 
 //********************
-// static page functions
-function staticPageFunctions() {
+// accordion functions
+function accordionFunctions() {
     //Accordion Help Section by W3School
     var acc = document.getElementsByClassName("accordion");
     var i;
