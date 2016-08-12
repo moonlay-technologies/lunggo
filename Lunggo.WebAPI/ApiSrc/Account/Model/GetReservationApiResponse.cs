@@ -8,7 +8,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
     public class GetReservationApiResponse : ApiResponseBase
     {
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
-        public ProductType ProductType { get; set; }
+        public ProductType? ProductType { get; set; }
         [JsonProperty("flight", NullValueHandling = NullValueHandling.Ignore)]
         public FlightReservationForDisplay FlightReservation { get; set; }
     }
