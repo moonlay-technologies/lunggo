@@ -1,5 +1,5 @@
 ﻿// checkout controller
-var app = angular.module('myApp', ['ngRoute']);
+//var app = angular.module('myApp', ['ngRoute']);
 app.controller('ThankyouController', ['$http', '$scope', '$location', function ($http, $scope) {
 
     
