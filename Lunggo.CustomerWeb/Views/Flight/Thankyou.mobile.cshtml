@@ -103,25 +103,25 @@
         case PaymentStatus.Expired:
 
         <div class="popup__wrapper active">
-                    <div class="popup">
-                        <header class="popup__header">
-                            <h4 class="popup__title">Pemesanan Kadaluarsa</h4>
-                        </header>
-                        <div class="popup__body">
-                            <div class="container_new">
-                                <span>
-                                    Pemesanan Anda kadaluarsa. Silakan membuat reservasi yang baru.
-                                </span>
-                            </div>
-                        </div>
-                        <div class="popup__footer">
-                            <div class="container_new">
-                                <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
-                            </div>
-                        </div>
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">Pemesanan Kadaluarsa</h4>
+                </header>
+                <div class="popup__body">
+                    <div class="container_new">
+                        <span>
+                            Pemesanan Anda kadaluarsa. Silakan membuat reservasi yang baru.
+                        </span>
                     </div>
                 </div>
-            break;
+                <div class="popup__footer">
+                    <div class="container_new">
+                        <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        break;
 
         case PaymentStatus.Denied:
         <div class="popup__wrapper active">
@@ -159,22 +159,22 @@
         case PaymentStatus.Settled:
 
         <div class="thankyou-words">
-                    <header class="page__header">
-                        <h1 class="text-center section-title stripe">Terima <span>Kasih</span></h1>
-                    </header>
-                    <p>Terima kasih telah memesan penerbangan di Travorama. Anda dapat mengecek pemesanan Anda melalui tombol berikut.</p>
-                    <div class="ticket-wrapper">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="ticket-print">
-                                    <a href="@Url.Action("CekPemesanan","Home")" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>Cek Pemesanan</a>
-                                    <p>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</p>
-                                </div>
-                            </div>
+            <header class="page__header">
+                <h1 class="text-center section-title stripe">Terima <span>Kasih</span></h1>
+            </header>
+            <p>Terima kasih telah memesan penerbangan di Travorama. Anda dapat mengecek pemesanan Anda melalui tombol berikut.</p>
+            <div class="ticket-wrapper">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="ticket-print">
+                            <a href="@Url.Action("CekPemesanan","Home")" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>Cek Pemesanan</a>
+                            <p>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</p>
                         </div>
                     </div>
                 </div>
-            break;
+            </div>
+        </div>
+        break;
     }
 
         @if (Model.Payment.Status == PaymentStatus.Settled)

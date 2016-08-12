@@ -24,17 +24,20 @@ app.controller('ThankyouController', ['$http', '$scope', '$location', function (
                     then(function (returnData) {
                         //console.log(returnData);
                     if (returnData.data.status != "500") {
-                        if (returnData.data.flight.payment.status == '2') {
+                        if (returnData.data.flight.payment.status != '2') {
                             window.location.reload(1);
+                            //window.location.replace("https://m.local.travorama.com/id/Flight/Thankyou?rsvNo=160226537584#/%23page-3");
                             console.log(returnData.data.flight.payment.status);
-                        } 
+                        } else {
+                            $scope.refresh();
+                        }
                     }
                     else {
                         $scope.refresh();
                     }
                     
                 }).catch(function () {
-                    console.log('error');
+                    $scope.refresh();
                 });
             }
             else {
