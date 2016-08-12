@@ -1,14 +1,10 @@
-﻿@using System.Globalization
-@using Lunggo.ApCommon.Constant
-@using Lunggo.ApCommon.Payment.Constant
-@using Lunggo.ApCommon.Product.Constant
-@using Lunggo.Framework.Config
-@using Lunggo.ApCommon.Flight.Model
+﻿@using Lunggo.ApCommon.Product.Constant
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 @{
     ViewBag.Title = "Cetak E-tiket";
     Layout = "~/Views/Shared/travorama20/_Layout20150929.cshtml";
+    ViewBag.Angular = "EticketController";
 }
 
 @section AdditionalCSS {
@@ -21,26 +17,16 @@
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
-    <script src="/Assets/travorama20/js/EticketController.js"></script>
 }
 
 @section PageJS {
-    <script>
-        $(document).ready(function() {
-            
-            // refresh every 5 second
-            setTimeout(function () {
-                window.location.reload();
-            }, 60000);
-
-        });
-    </script>
+    <script src="/Assets/travorama20/js/EticketController.js"></script>
 }
 
-<div ng-app="myApp" ng-controller="EticketController">
+<div ng-app="Travorama" ng-controller="EticketController">
     @if (Model.RsvDisplayStatus == RsvDisplayStatus.Paid)
     {
-        <section class="section-eticket">
+        <section class="section-eticket" ng-init ="refresh()">
 
             <h1 class="text-center section-title stripe">CETAK <span>E-TIKET</span></h1>
 
@@ -71,17 +57,13 @@
             </div>
         </div>
     }
-    else if (Model.RsvDisplayStatus == RsvDisplayStatus.Paid)
-    {
-
-    }
     else
     {
         <div class="bookfailed-popup">
             <div class="overlay-content">
                 <section style="padding-top:60px; padding-left:225px;">
                     <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                    <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                    <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:22px"><b>Mohon maaf...</b></span></div>
                     <div style="padding-top:5px;"><span style="font-size:13px">Pembayaran untuk no. reservasi @Model.RsvNo belum dilakukan.</span></div>
                     <div><span style="font-size:13px">Silakan melakukan pembayaran untuk reservasi tersebut.</span></div>
                 </section>
