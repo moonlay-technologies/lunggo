@@ -150,7 +150,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 ArrivalTerminal = segmentRecord.ArrivalTerminal,
                                 ArrivalTime = DateTime.SpecifyKind(segmentRecord.ArrivalTime.GetValueOrDefault(), DateTimeKind.Utc),
                                 CabinClass = CabinClassCd.Mnemonic(segmentRecord.CabinClassCd),
-                         
+
                             };
                             segmentLookup.Add(segmentRecord.Id.GetValueOrDefault(), segment);
                             trip.Segments.Add(segment);
@@ -216,10 +216,18 @@ namespace Lunggo.ApCommon.Flight.Service
                                 BookingStatus = BookingStatusCd.Mnemonic(itineraryRecord.BookingStatusCd),
                                 TripType = TripTypeCd.Mnemonic(itineraryRecord.TripTypeCd),
                                 Supplier = Constant.SupplierCd.Mnemonic(itineraryRecord.SupplierCd),
-                                TimeLimit = itineraryRecord.TicketTimeLimit.HasValue ? DateTime.SpecifyKind(itineraryRecord.TicketTimeLimit.Value, DateTimeKind.Utc) : (DateTime?) null,
+                                TimeLimit = itineraryRecord.TicketTimeLimit.HasValue ? DateTime.SpecifyKind(itineraryRecord.TicketTimeLimit.Value, DateTimeKind.Utc) : (DateTime?)null,
                                 Trips = new List<FlightTrip>(),
                                 Price = Price.GetFromDb(itineraryRecord.PriceId.GetValueOrDefault()),
                                 FareType = FareTypeCd.Mnemonic(itineraryRecord.FareTypeCd),
+                                AdultCount = itineraryRecord.AdultCount.GetValueOrDefault(),
+                                ChildCount = itineraryRecord.ChildCount.GetValueOrDefault(),
+                                InfantCount = itineraryRecord.InfantCount.GetValueOrDefault(),
+                                AdultPricePortion = itineraryRecord.AdultPricePortion.GetValueOrDefault(),
+                                ChildPricePortion = itineraryRecord.ChildPricePortion.GetValueOrDefault(),
+                                InfantPricePortion = itineraryRecord.InfantPricePortion.GetValueOrDefault(),
+                                RequestedCabinClass = CabinClassCd.Mnemonic(itineraryRecord.RequestedCabinClassCd),
+                                RequestedTripType = TripTypeCd.Mnemonic(itineraryRecord.RequestedTripTypeCd),
                             };
                             itineraryLookup.Add(itineraryRecord.Id.GetValueOrDefault(), itinerary);
                             reservation.Itineraries.Add(itinerary);
@@ -441,7 +449,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         InsertBy = "LunggoSystem",
                         InsertDate = DateTime.UtcNow,
                         InsertPgId = "0",
-                        
+
                     };
                     FlightItineraryTableRepo.GetInstance().Insert(conn, itineraryRecord);
 

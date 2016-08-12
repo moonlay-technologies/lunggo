@@ -60,7 +60,7 @@ namespace Lunggo.ApCommon.Identity.Auth
 
             if (context.Ticket.Identity.Name != "anonymous")
             {
-                result = await new DapperAuthStore().AddOrReplaceRefreshToken(token, ignoreDevice: true);
+                result = await new DapperAuthStore().AddOrReplaceRefreshToken(token, ignoreDevice: false);
             }
             else
             {

@@ -5,6 +5,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     // general variables
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.pageLoaded = true;
+    $scope.trial = 0;
     $scope.CheckoutConfig = {
         Token: CheckoutDetail.Token,
         ExpiryDate: CheckoutDetail.ExpiryDate,
@@ -336,6 +337,9 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             }
         },
         send: function () {
+            if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
             $scope.book.booking = true;
             $scope.contactData = '{' + ' "title":"' + $scope.buyerInfo.title + '",  "name" :"' + $scope.buyerInfo.name + '","countryCallCd":"' + $scope.buyerInfo.countryCode + '","phone":"' + $scope.buyerInfo.phone + '","email":"' + $scope.buyerInfo.email + '"' + '}';
             $scope.paxData = ' "pax" : [';
@@ -468,7 +472,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                         }
                     }
                 }).catch(function (returnData) {
-                    if (refreshAuthAccess()) //refresh cookie
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.book.send();
                     }
@@ -852,6 +857,9 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         Status: '',
         // validate voucher
         Check: function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
             console.log('Validating Voucher');
             //Check Authorization
             var authAccess = getAuthAccess();
@@ -881,7 +889,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                         $scope.CheckoutConfig.Voucher.Status = returnData.data.ValidationStatus;
                     }
                 }).catch(function (returnData) {
-                    if (refreshAuthAccess()) //refresh cookie
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.CheckoutConfig.Voucher.Check();
                     }

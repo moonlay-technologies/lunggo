@@ -26,7 +26,9 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                         ErrorCode = "ERARSV01"
                     };
 
-                if (user.IsInRole("Admin") || user.Identity.GetUser().Id == rsv.UserId || user.Identity.GetDeviceId() == rsv.DeviceId)
+                if (user.IsInRole("Admin") ||
+                    (user.Identity.IsUserAuthorized() && user.Identity.GetUser().Id == rsv.UserId) ||
+                    user.Identity.GetDeviceId() == rsv.DeviceId)
                     return new GetReservationApiResponse
                     {
                         ProductType = ProductType.Flight,

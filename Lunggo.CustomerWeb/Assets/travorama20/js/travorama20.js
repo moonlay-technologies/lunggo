@@ -670,11 +670,11 @@ function flightPageSearchFormFunctions() {
         if ($('.search-location').attr('data-place') == 'origin') {
             flightPageSearchFormParam.origin = locationCode;
             flightPageSearchFormParam.originCity = locationCity;
-            $('.form-flight-origin').val($(this).text());
+            $('.form-flight-origin').val(locationCity + ' (' + locationCode + ')');
         } else {
             flightPageSearchFormParam.destination = locationCode;
             flightPageSearchFormParam.destinationCity = locationCity;
-            $('.form-flight-destination').val($(this).text());
+            $('.form-flight-destination').val(locationCity + ' (' + locationCode + ')');
         }
         hideLocation();
     });
@@ -1021,34 +1021,42 @@ function indexPageFunctions() {
             switch (location) {
                 case "jakarta":
                     backgroundImage = '/Assets/images/campaign/jakarta.jpg';
+                    location = 'Jakarta';
                     locationCode = 'CGK';
                     break;
                 case "bandung":
                     backgroundImage = '/Assets/images/campaign/bandung.jpg';
+                    location = 'Bandung';
                     locationCode = 'BDO';
                     break;
                 case "surabaya":
                     backgroundImage = '/Assets/images/campaign/surabaya.jpg';
+                    location = 'Surabaya';
                     locationCode = 'SUB';
                     break;
                 case "yogyakarta":
                     backgroundImage = '/Assets/images/campaign/yogyakarta.jpg';
+                    location = 'Yogyakarta';
                     locationCode = 'JOG';
                     break;
                 case "bali":
                     backgroundImage = '/Assets/images/campaign/bali.jpg';
+                    location = 'Denpasar';
                     locationCode = 'DPS';
                     break;
                 case "singapore":
                     backgroundImage = '/Assets/images/campaign/singapore.jpg';
+                    location = 'Singapore';
                     locationCode = 'SIN';
                     break;
                 case "malaysia":
                     backgroundImage = '/Assets/images/campaign/malaysia.jpg';
+                    location = 'Malaysia';
                     locationCode = 'KUL';
                     break;
-                case "hongkong":
+                case "hong kong":
                     backgroundImage = '/Assets/images/campaign/hongkong.jpg';
+                    location = 'Hong Kong';
                     locationCode = 'HKG';
                     break;
             }
@@ -1293,11 +1301,11 @@ function flightFormSearchFunctions() {
         if ( $('.search-location').attr('data-place') == 'origin') {
             FlightSearchConfig.flightForm.origin = locationCode;
             FlightSearchConfig.flightForm.originCity = locationCity;
-            $('.form-flight-origin').val( $(this).text() );
+            $('.form-flight-origin').val(locationCity + ' (' + locationCode + ')');
         } else {
             FlightSearchConfig.flightForm.destination = locationCode;
             FlightSearchConfig.flightForm.destinationCity = locationCity;
-            $('.form-flight-destination').val($(this).text());
+            $('.form-flight-destination').val(locationCity + ' (' + locationCode + ')');
         }
         hideLocation();
         console.log("BERHASIL");
@@ -1428,7 +1436,7 @@ function flightFormSearchFunctions() {
 
         // set default flight and return flight
         if (Cookies.get('origin')) {
-            $('.form-flight-origin').val(Cookies.get('originCity') +'('+Cookies.get('origin')+')');
+            $('.form-flight-origin').val(Cookies.get('originCity') +' ('+Cookies.get('origin')+')');
             FlightSearchConfig.flightForm.origin = Cookies.get('origin');
             FlightSearchConfig.flightForm.originCity = Cookies.get('originCity');
         } else {
@@ -1437,7 +1445,7 @@ function flightFormSearchFunctions() {
             FlightSearchConfig.flightForm.originCity = 'Jakarta';
         }
         if (Cookies.get('destination')) {
-            $('.form-flight-destination').val(Cookies.get('destinationCity') + '(' + Cookies.get('destination') + ')');
+            $('.form-flight-destination').val(Cookies.get('destinationCity') + ' (' + Cookies.get('destination') + ')');
             FlightSearchConfig.flightForm.destination = Cookies.get('destination');
             FlightSearchConfig.flightForm.destinationCity = Cookies.get('destinationCity');
         } else {
