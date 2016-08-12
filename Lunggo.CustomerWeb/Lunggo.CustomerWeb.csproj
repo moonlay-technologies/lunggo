@@ -1103,6 +1103,7 @@
     <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
     <Content Include="Assets\mobile\images\user-account-bg.png" />
     <Content Include="Assets\mobile\images\yellow-stripe.png" />
+    <Content Include="Assets\mobile\js\ThankyouController.js" />
     <Content Include="Assets\mobile\js\HomeController.js" />
     <Content Include="Assets\mobile\js\StaticController.js" />
     <Content Include="Assets\mobile\js\AccountController.js" />

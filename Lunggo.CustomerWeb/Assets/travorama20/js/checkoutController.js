@@ -684,6 +684,7 @@ app.controller('confirmationController', [
 app.controller('thankyouController', [
     '$http', '$scope', function ($http, $scope) {
 
+        $scope.returnUrl = window.location.origin;
         $scope.pageLoaded = true;
         $scope.msToTime = function (duration) {
 

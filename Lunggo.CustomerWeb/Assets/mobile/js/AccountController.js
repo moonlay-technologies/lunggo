@@ -1163,3 +1163,4 @@ app.controller('ResetpasswordController', ['$http', '$scope', '$rootScope', func
         }
     }
 ]);
+
