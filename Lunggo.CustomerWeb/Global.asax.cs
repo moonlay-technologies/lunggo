@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -21,16 +22,19 @@ namespace Lunggo.CustomerWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
-        
+
         void Application_BeginRequest(object sender, EventArgs e)
         {
             // Redirect mobile users to the mobile home page
-            
+
             var httpRequest = Request;
             if (httpRequest.Browser.IsMobileDevice)
             {
                 var configManager = ConfigManager.GetInstance();
-                var mobileUrl = configManager.GetConfigValue("general", "mobileUrl");
+                var serverName = HttpContext.Current.Server.MachineName;
+                var mobileUrl = serverName.ToLower() == "travelmadezymac"
+                    ? "travelmadezymac"
+                    : configManager.GetConfigValue("general", "mobileUrl");
                 var host = httpRequest.Url.Host;
                 var path = httpRequest.Url.PathAndQuery;
                 var userAgent = httpRequest.UserAgent;
@@ -50,8 +54,8 @@ namespace Lunggo.CustomerWeb
                     Response.Redirect(redirectTo);
                 }
             }
-            
+
         }
-        
+
     }
 }

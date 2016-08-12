@@ -1076,65 +1076,66 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     text-align: center;
     padding: 5px; }
 
-.instruction-accordion {
-  margin: 15px 0; }
-
 /*ACCORDION*/
-.accordion-wrapper {
-  border-bottom: 1px solid #c9c9c9; }
-  .accordion-wrapper .accordion-title {
-    background-color: #f0f0f4;
-    color: #000;
-    cursor: pointer;
-    padding: 15px;
-    width: 100%;
+.accordion-wrapper .accordion-title {
+  background-color: #35b6e7;
+  color: #fff;
+  cursor: pointer;
+  padding: 11px 15px;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 600; }
+  .accordion-wrapper .accordion-title.active:after {
+    content: "\2796"; }
+  .accordion-wrapper .accordion-title:after {
+    content: '\02795';
     font-size: 13px;
-    font-weight: 600;
-    border-top: 1px solid #c9c9c9; }
-    .accordion-wrapper .accordion-title.active {
-      border-bottom: 1px solid #c9c9c9; }
-      .accordion-wrapper .accordion-title.active:after {
-        /*content: " ";
-                display: block;
-                background:url(/Assets/images/helpSection/arrow-up.png) no-repeat;
-                width: 20px;
-                height: 8px;
-                background-size: 70%;
-                float: right;
-                margin-top: 6px;*/
-        content: "\2796"; }
-    .accordion-wrapper .accordion-title:after {
-      /*content: " ";
-            display: block;
-            background:url(/Assets/images/helpSection/arrow-down.png) no-repeat;
-            width: 20px;
-            height: 8px;
-            background-size: 70%;
-            float: right;
-            margin-top: 6px;*/
-      content: '\02795';
-      /* Unicode character for "plus" sign (+) */
-      font-size: 13px;
-      color: #777;
-      float: right;
-      margin-left: 5px; }
-  .accordion-wrapper .accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    font-size: 12px;
-    line-height: 16px; }
-    .accordion-wrapper .accordion-content.show {
-      max-height: 100%;
-      padding: 15px 20px; }
-      .accordion-wrapper .accordion-content.show > ul {
-        list-style-type: none;
-        padding: 0; }
-        .accordion-wrapper .accordion-content.show > ul > li {
-          margin-bottom: 15px; }
-      .accordion-wrapper .accordion-content.show > ol {
-        padding: 0 15px; }
-        .accordion-wrapper .accordion-content.show > ol > li {
-          margin-bottom: 10px; }
+    color: #fff;
+    float: right;
+    margin-left: 5px; }
+
+.accordion-wrapper .accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 16px;
+  margin-bottom: 10px; }
+  .accordion-wrapper .accordion-content.show {
+    max-height: 100%;
+    padding: 15px 20px;
+    border: 1px solid #e3e3e3;
+    background: #ffffff; }
+    .accordion-wrapper .accordion-content.show > ul {
+      list-style-type: none;
+      padding: 0; }
+      .accordion-wrapper .accordion-content.show > ul > li {
+        margin-bottom: 15px; }
+    .accordion-wrapper .accordion-content.show > ol {
+      padding: 0 15px; }
+      .accordion-wrapper .accordion-content.show > ol > li {
+        margin-bottom: 10px; }
+
+.thankyou-words {
+  margin-left: 10px;
+  margin-right: 10px; }
+
+.thankyou-words .section-title.stripe {
+  padding-bottom: 30px;
+  padding-top: 0; }
+
+.thankyou-words .overlay__body.overlay__content {
+  padding-bottom: 0px; }
+
+.thankyou-words h5 {
+  font-size: 10px;
+  font-weight: normal; }
+
+.thankyou-words .print-ticket-button {
+  margin-bottom: 10px; }
+
+.thankyou-words h3 {
+  margin-top: 25px;
+  margin-bottom: 10px; }
 
 /*--------------------*/
 .page.page-home {
@@ -1804,6 +1805,30 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .overlay--flight-detail .overlay__footer h4 {
   margin-top: 0; }
+
+.page.page-confirmation .no-pemesanan {
+  background-color: #35b6e7;
+  color: #fff;
+  padding: 11px 15px;
+  margin-bottom: 15px;
+  font-size: 14px; }
+
+.page.page-confirmation .instruction {
+  margin-bottom: 30px; }
+
+.page.page-confirmation .instruction-accordion {
+  margin-bottom: 15px; }
+
+.page.page-confirmation .dash-border {
+  border: 1px solid #6cd7ff;
+  margin: 10px 0;
+  border-style: dashed; }
+
+.page.page-confirmation .bank-detail {
+  margin: 15px 0; }
+
+.page.page-confirmation .flight-fare-wrapper {
+  margin-bottom: 15px; }
 
 .page.page-checkout .page__header {
   margin: 0;
