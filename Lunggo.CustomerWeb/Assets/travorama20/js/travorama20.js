@@ -942,7 +942,7 @@ function flightPageSearchFormFunctions() {
             flightPageSearchFormParam.returnDate = new Date();
         }
         if (flightPageSearchFormParam.origin && flightPageSearchFormParam.destination) {
-            // setCookie();
+             setCookie();
             generateFlightSearchParam();
         } else {
             if (!flightPageSearchFormParam.origin) {
@@ -957,22 +957,22 @@ function flightPageSearchFormFunctions() {
     }
 
     function setCookie() {
-        Cookies.set('origin', FlightSearchConfig.flightForm.origin, { expires: 9999 });
-        Cookies.set('originCity', FlightSearchConfig.flightForm.originCity, { expires: 9999 });
-        Cookies.set('destination', FlightSearchConfig.flightForm.destination, { expires: 9999 });
-        Cookies.set('destinationCity', FlightSearchConfig.flightForm.destinationCity, { expires: 9999 });
-        Cookies.set('departure', FlightSearchConfig.flightForm.departureDate, { expires: 9999 });
-        Cookies.set('return', FlightSearchConfig.flightForm.returnDate, { expires: 9999 });
+        Cookies.set('origin', flightPageSearchFormParam.origin, { expires: 9999 });
+        Cookies.set('originCity', flightPageSearchFormParam.originCity, { expires: 9999 });
+        Cookies.set('destination', flightPageSearchFormParam.destination, { expires: 9999 });
+        Cookies.set('destinationCity', flightPageSearchFormParam.destinationCity, { expires: 9999 });
+        Cookies.set('departure', flightPageSearchFormParam.departureDate, { expires: 9999 });
+        Cookies.set('return', flightPageSearchFormParam.returnDate, { expires: 9999 });
         Cookies.set('type', FlightSearchConfig.flightForm.type, { expires: 9999 });
-        Cookies.set('cabin', FlightSearchConfig.flightForm.cabin, { expires: 9999 });
+        Cookies.set('cabin', flightPageSearchFormParam.cabin, { expires: 9999 });
         if (typeof FlightSearchConfig.flightForm.departureFlightParam == 'object') {
-            Cookies.set('adult', FlightSearchConfig.flightForm.departureFlightParam.AdultCount, { expires: 9999 });
-            Cookies.set('child', FlightSearchConfig.flightForm.departureFlightParam.ChildCount, { expires: 9999 });
-            Cookies.set('infant', FlightSearchConfig.flightForm.departureFlightParam.InfantCount, { expires: 9999 });
+            Cookies.set('adult', flightPageSearchFormParam.passenger.adult, { expires: 9999 });
+            Cookies.set('child', flightPageSearchFormParam.passenger.child, { expires: 9999 });
+            Cookies.set('infant', flightPageSearchFormParam.passenger.infant, { expires: 9999 });
         } else {
-            Cookies.set('adult', FlightSearchConfig.flightForm.passenger[0], { expires: 9999 });
-            Cookies.set('child', FlightSearchConfig.flightForm.passenger[1], { expires: 9999 });
-            Cookies.set('infant', FlightSearchConfig.flightForm.passenger[2], { expires: 9999 });
+            Cookies.set('adult', flightPageSearchFormParam.passenger.adult, { expires: 9999 });
+            Cookies.set('child', flightPageSearchFormParam.passenger.child, { expires: 9999 });
+            Cookies.set('infant', flightPageSearchFormParam.passenger.infant, { expires: 9999 });
         }
     }
 
@@ -1218,13 +1218,17 @@ function flightFormSearchFunctions() {
     $('.switch-destination').click(function() {
         var prevOrigin = $('.form-flight-origin').val();
         var prevOriginCode = FlightSearchConfig.flightForm.origin;
+        var prevOriginCity = FlightSearchConfig.flightForm.originCity;
         var prevDestination = $('.form-flight-destination').val();
         var prevDestinationCode = FlightSearchConfig.flightForm.destination;
+        var prevDestinationCity = FlightSearchConfig.flightForm.destinationCity;
 
         $('.form-flight-origin').val(prevDestination);
         $('.form-flight-destination').val(prevOrigin);
         FlightSearchConfig.flightForm.origin = prevDestinationCode;
         FlightSearchConfig.flightForm.destination = prevOriginCode;
+        FlightSearchConfig.flightForm.originCity = prevDestinationCity;
+        FlightSearchConfig.flightForm.destinationCity =prevOriginCity;
     });
 
     $('.form-flight').on('keyup keypress', function (e) {
@@ -1436,7 +1440,7 @@ function flightFormSearchFunctions() {
 
         // set default flight and return flight
         if (Cookies.get('origin')) {
-            $('.form-flight-origin').val(Cookies.get('originCity') +' ('+Cookies.get('origin')+')');
+            $('.form-flight-origin').val(Cookies.get('originCity') +' ('+ Cookies.get('origin')+')');
             FlightSearchConfig.flightForm.origin = Cookies.get('origin');
             FlightSearchConfig.flightForm.originCity = Cookies.get('originCity');
         } else {

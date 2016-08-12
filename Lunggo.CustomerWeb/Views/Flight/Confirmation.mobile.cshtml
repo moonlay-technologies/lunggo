@@ -12,7 +12,7 @@
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Konfirmasi Pembayaran";
     ViewBag.BodyClass = "page page-confirmation";
-    ViewBag.SiteHeader = "checkout";
+    ViewBag.AngularController = "ConfirmationController";
 
     var reservation = FlightService.GetInstance().GetReservationForDisplay(Model.RsvNo);
 
@@ -74,9 +74,9 @@
 
     <!-- angular controller -->
     <script src="/Assets/mobile/js/CheckoutController.js"></script>
-    
+   
     <script>
-        staticPageFunctions();
+        accordionFunctions();
     </script>
 }
 
@@ -85,13 +85,16 @@
         <div class="instruction">
             @if (Model.Payment.Method == PaymentMethod.VirtualAccount)
             {
-                <h3>PANDUAN <b>ATM</b></h3>
-                <header>
-                    <h4>No. Pesanan: <b>@Model.RsvNo</b></h4>
-                </header>
+                <div class="page__header">
+                    <h1 class="text-center section-title stripe">Panduan <span>ATM</span></h1>
+                </div>
+                
+                <div class="no-pemesanan">No. Pesanan: <b>@Model.RsvNo</b></div>
+                
                 <section class="text">
-                    <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></p>
-                    <p>Mohon selesaikan pembayaran melalui <b>ATM</b></p>
+                    <div>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></div>
+                    <div class="dash-border"></div>
+                    <div>Mohon selesaikan pembayaran melalui <b>ATM</b></div>
                 </section>
                 <section class="bank-detail">
                     <div class="bank">
@@ -108,7 +111,7 @@
                             <div class="accordion-content">
                                 <ol>
                                     <li><p>Masukkan PIN Anda.</p></li>
-                                    <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya </b>.</p></li>
+                                    <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya.</b></p></li>
                                     <li><p>Pilih <b>Transfer</b>.</p></li>
                                     <li><p>Pilih <b>Antar Bank Online</b>.</p></li>
                                     <li><p>Masukkan nomor <b>013 @Model.Payment.TransferAccount</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).</p></li>
@@ -149,68 +152,14 @@
                         </div>
                     </div>
                 </div>
-                @*<table>
-                    <tr>
-                        <td>
-                            <p style="margin-left: 4px;">Cara Pembayaran Lewat <b>ATM Mandiri/Jaringan ATM Bersama</b>:</p>
-                            <ol>
-                                <li><p>Masukkan PIN Anda.</p></li>
-                                <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya </b>.</p></li>
-                                <li><p>Pilih <b>Transfer</b>.</p></li>
-                                <li><p>Pilih <b>Antar Bank Online</b>.</p></li>
-                                <li><p>Masukkan nomor <b>013 @Model.Payment.TransferAccount</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).</p></li>
-                                <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
-                                <li><p>No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.</p></li>
-                                <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
-                                <li><p>Transaksi berhasil.</p></li>
-                            </ol>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>Cara Pembayaran Lewat <b>ATM BCA/Jaringan ATM PRIMA</b>:</p>
-                            <ol>
-                                <li><p>Masukkan PIN Anda.</p></li>
-                                <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
-                                <li><p>Pilih <b>Transfer</b>.</p></li>
-                                <li><p>Pilih <b>Ke Rekening Bank Lain</b>.</p></li>
-                                <li><p>Masukkan kode <b>013</b> (Kode Bank Permata) lalu tekan <b>Benar</b>.</p></li>
-                                <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
-                                <li><p>Masukkan <b>@Model.Payment.TransferAccount</b> (16 digit nomor akun virtual pembayaran) lalu tekan <b>Benar</b>.</p></li>
-                                <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
-                                <li><p>Transaksi berhasil.</p></li>
-                            </ol>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>Cara Pembayaran Lewat <b>ATM Bank Permata/Jaringan ATM Alto</b>:</p>
-                            <ol>
-                                <li><p>Masukkan PIN Anda.</p></li>
-                                <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
-                                <li><p>Pilih <b>Transaksi Pembayaran</b>.</p></li>
-                                <li><p>Pilih <b>Pembayaran Virtual Account</b>.</p></li>
-                                <li><p>Masukkan 16 digit nomor akun virtual pembayaran <b>@Model.Payment.TransferAccount</b>.</p></li>
-                                <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
-                                <li><p>Transaksi berhasil.</p></li>
-                            </ol>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p style="margin-bottom: 10px">Setelah itu, mohon tunggu hingga e-tiket/voucher diterbitkan dan dikirim ke e-mail Anda maks. 60 menit</p>
-                        </td>
-                    </tr>
-                </table>*@
             }
             else
             {
                 <div class="page__header">
                     <h1 class="text-center section-title stripe">Panduan <span>Transfer</span></h1>
                 </div>
-                <header>
-                    <h4>Nomor Pesanan: <b>@Model.RsvNo</b></h4>
-                </header>
+                
+                <div class="no-pemesanan">No. Pesanan: <b>@Model.RsvNo</b></div>
 
                 <div class="summary summary--price">
 
@@ -238,17 +187,15 @@
                             <dt>Total</dt>
                             <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                         </dl>
-                        @*<footer>
-                                <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
-                            </footer>*@
                     </div><!-- .widget.price-detail -->
                 </div><!-- .widget-container -->
 
                 <section class="text">
-                    <p>Pemesanan dan harga sudah dikonfirmasi oleh maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maksimum <b>60 menit</b>.</p>
-                    <p>Mohon selesaikan pembayaran melalui <b>ATM / Internet Banking / M-Banking</b></p>
+                    <div>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></div>
+                    <div class="dash-border"></div>
+                    <div>Mohon selesaikan pembayaran melalui <b>ATM / Internet Banking / M-Banking</b></div>
                 </section>
-
+                
                 <section class="bank-detail">
                     <div class="bank">
                         <div class="image-wrapper">
@@ -273,18 +220,17 @@
                     </div><!-- .bank -->
                 </section><!-- .bank-detail -->
             }
+            <div class="transfer-instruction">
+                <!--<section> -->
+                <ol style="margin-left:5px;padding-left:5px;margin-top:5px;">
+                    <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Pastikan Anda melakukan transfer ke rekening <b>Travel Madezy Internasional</b></li>
+                    <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
+                    <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">E-tiket akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
+                </ol>
+                <!--Bagian Form Konfirmasi yang dihilangin-->
+            </div>
         </div>
                         
-        <div class="transfer-instruction">
-            <!--<section> -->
-            <ol style="margin-left:5px;padding-left:5px;margin-top:5px;">
-                <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Pastikan Anda melakukan transfer ke rekening <b>Travel Madezy Internasional</b></li>
-                <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
-                <li class="order-list" style="margin-bottom:5px; margin-left:5px;padding-left:0px;">E-tiket akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
-            </ol>
-            <!--Bagian Form Konfirmasi yang dihilangin-->
-        </div>
-                    
         <div class="widget countdown">
             <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
             <div class="widget-content">
@@ -312,20 +258,20 @@
         <div class="overlay--flight-detail">
             <div class="overlay__body overlay__content">
                 <div class=" flight-fare-wrapper">
-                    <h2><b>RINCIAN</b> PENERBANGAN</h2>
+                    <h3><b>RINCIAN</b> PENERBANGAN</h3>
                     <h3><b>DETAIL</b> PESANAN</h3>
-                    <h4>Nomor Reservasi: <b>@Model.RsvNo</b></h4>
+                    <span>Nomor Reservasi: <b>@Model.RsvNo</b></span>
                     <div class="summary summary--passenger">
-                        <h3 class="summary__title"><b>DAFTAR</b> PENUMPANG</h3>
+                        <h3><b>DAFTAR</b> PENUMPANG</h3>
                         <div class="summary__body">
                             <ol>
                                 @foreach (var passenger in Model.Passengers)
                                 {
                                     <li>
-                                        <h4>
+                                        <b>
                                             <span>@EnumDisplay.Title(passenger.Title.GetValueOrDefault()) </span>
                                             @passenger.Name
-                                        </h4>
+                                        </b>
                                         <dl>
                                             <dt>Jenis Tiket</dt>
                                             @EnumDisplay.PassengerType(passenger.Type.GetValueOrDefault())
@@ -336,7 +282,7 @@
                         </div><!-- .summary__body -->
                     </div><!-- .summary--passenger -->
 
-                    <h4><b>BERANGKAT</b></h4>
+                    <h3><b>BERANGKAT</b></h3>
                     <div class="flight-title flight-title--departure">
                         <div class="flight-info">
                             <h4><b>@dep.OriginCity</b> ke <b>@dep.DestinationCity</b></h4>

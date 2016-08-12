@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -17,17 +18,13 @@ namespace Lunggo.ApCommon.Flight.Service
             if (reservation == null)
                 return null;
 
-            var rsvTime = reservation.RsvTime.AddMilliseconds(-reservation.RsvTime.Millisecond);
-            var cancellationTime = reservation.CancellationTime.HasValue
-                ? reservation.CancellationTime.Value.AddMilliseconds(-reservation.CancellationTime.Value.Millisecond)
-                : (DateTime?) null;
             return new FlightReservationForDisplay
             {
                 RsvNo = reservation.RsvNo,
-                RsvTime = rsvTime,
+                RsvTime = reservation.RsvTime.TruncateMilliseconds(),
                 RsvDisplayStatus = MapReservationStatus(reservation),
                 CancellationType = reservation.CancellationType,
-                CancellationTime = cancellationTime,
+                CancellationTime = reservation.CancellationTime.TruncateMilliseconds(),
                 Itinerary = ConvertToItineraryForDisplay(reservation.Itineraries),
                 Contact = reservation.Contact,
                 Passengers = ConvertToPaxForDisplay(reservation.Pax),

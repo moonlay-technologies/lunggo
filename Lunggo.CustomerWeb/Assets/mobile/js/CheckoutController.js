@@ -944,3 +944,22 @@ app.controller('FlightConfirmationController', ['$http', '$scope', '$rootScope',
     };
 
 }]);
+
+// confirmation payment
+app.controller('ConfirmationController', ['$http', '$scope', '$rootScope', '$interval', '$location', function ($http, $scope, $rootScope, $interval, $location) {
+
+    $scope.PageConfig = $rootScope.PageConfig;
+    $scope.DatePicker = $rootScope.DatePicker;
+
+    $scope.UserForm = {
+        Confirmation: {
+            Name: '',
+            Bank: {
+                Name: '',
+                Number: ''
+            },
+            Amount: 0
+        }
+    };
+
+}]);
