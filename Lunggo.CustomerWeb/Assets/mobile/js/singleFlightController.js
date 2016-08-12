@@ -16,6 +16,7 @@
     //    );
 
     $scope.Progress = 0;
+    $scope.trial = 0;
     $scope.FlightConfig = [
         {
             Name: 'departure',
@@ -80,7 +81,9 @@
     ];
 
     $scope.GetFlight = function (a) {
-
+        if ($scope.trial > 3) {
+            $scope.trial = 0;
+        }
         $scope.PageConfig.Busy = true;
         //console.log(a);
         if ($scope.Progress < 100) {
@@ -127,7 +130,8 @@
                     }, 1000);
 
                 }).catch(function (returnData) {
-                    if (refreshAuthAccess()) //refresh cookie
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.GetFlight('1');
                     }
@@ -381,7 +385,9 @@
 
     // revalidate flight
     $scope.FlightFunctions.Revalidate = function(indexNo) {
-
+        if ($scope.trial > 3) {
+            $scope.trial = 0;
+        }
         $scope.PageConfig.Validating = true;
         console.log('Validating flight no : '+indexNo);
 
@@ -414,7 +420,8 @@
                         $('.push-token').submit();
                     }
                 }).catch(function (returnData) {
-                    if (refreshAuthAccess()) //refresh cookie
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.FlightFunctions.Revalidate(indexNo);
                     }
@@ -428,7 +435,7 @@
             }
             else
             {
-
+                console('Not Authorized, Failed to Select the Flight');
             }
             
         } else {

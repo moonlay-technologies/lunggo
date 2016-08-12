@@ -820,7 +820,6 @@
     <Content Include="Assets\images\flight-pergi.jpg" />
     <Content Include="Assets\images\flight-review-title-bg.png" />
     <Content Include="Assets\images\flight-review-title-sprite.png" />
-    <Content Include="Assets\images\flight-segment-separator.png" />
     <Content Include="Assets\images\flight-sort-switch.png" />
     <Content Include="Assets\images\flight-switch-horizontal.png" />
     <Content Include="Assets\images\flight-tax-true.png" />
