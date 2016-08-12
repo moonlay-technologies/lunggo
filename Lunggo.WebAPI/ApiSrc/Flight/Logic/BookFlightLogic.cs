@@ -9,6 +9,7 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Context;
+using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 
@@ -62,7 +63,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                     return new FlightBookApiResponse
                     {
                         RsvNo = bookServiceResponse.RsvNo,
-                        TimeLimit = bookServiceResponse.TimeLimit,
+                        TimeLimit = bookServiceResponse.TimeLimit.TruncateMilliseconds(),
                         StatusCode = HttpStatusCode.OK
                     };
                 }

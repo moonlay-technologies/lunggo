@@ -2,6 +2,7 @@
 using System.Net;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 
@@ -43,7 +44,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                     Itineraries = itinList
                 }).ToList(),
                 Combos = searchServiceResponse.Combos,
-                ExpiryTime = searchServiceResponse.ExpiryTime,
+                ExpiryTime = searchServiceResponse.ExpiryTime.TruncateMilliseconds(),
                 Progress = searchServiceResponse.Progress,
                 StatusCode = HttpStatusCode.OK
             };

@@ -88,7 +88,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             reservation = new FlightReservation
                             {
                                 RsvNo = rsvNo,
-                                RsvTime = DateTime.SpecifyKind(reservationRecord.RsvTime.GetValueOrDefault(), DateTimeKind.Utc),
+                                RsvTime = reservationRecord.RsvTime.GetValueOrDefault().SpecifyUtc(),
                                 Contact = Contact.GetFromDb(rsvNo),
                                 Payment = PaymentDetails.GetFromDb(rsvNo),
                                 Itineraries = new List<FlightItinerary>(),
@@ -121,7 +121,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 DestinationAirport = tripRecord.DestinationAirportCd,
                                 DestinationAirportName = GetAirportName(tripRecord.DestinationAirportCd),
                                 DestinationCity = GetAirportCity(tripRecord.DestinationAirportCd),
-                                DepartureDate = DateTime.SpecifyKind(tripRecord.DepartureDate.GetValueOrDefault(), DateTimeKind.Utc),
+                                DepartureDate = tripRecord.DepartureDate.GetValueOrDefault().SpecifyUtc(),
                                 Segments = new List<FlightSegment>()
                             };
                             tripLookup.Add(tripRecord.Id.GetValueOrDefault(), trip);
@@ -143,14 +143,14 @@ namespace Lunggo.ApCommon.Flight.Service
                                 DepartureAirportName = GetAirportName(segmentRecord.DepartureAirportCd),
                                 DepartureCity = GetAirportCity(segmentRecord.DepartureAirportCd),
                                 DepartureTerminal = segmentRecord.DepartureTerminal,
-                                DepartureTime = DateTime.SpecifyKind(segmentRecord.DepartureTime.GetValueOrDefault(), DateTimeKind.Utc),
+                                DepartureTime = segmentRecord.DepartureTime.GetValueOrDefault().SpecifyUtc(),
                                 ArrivalAirport = segmentRecord.ArrivalAirportCd,
                                 ArrivalAirportName = GetAirportName(segmentRecord.ArrivalAirportCd),
                                 ArrivalCity = GetAirportCity(segmentRecord.ArrivalAirportCd),
                                 ArrivalTerminal = segmentRecord.ArrivalTerminal,
-                                ArrivalTime = DateTime.SpecifyKind(segmentRecord.ArrivalTime.GetValueOrDefault(), DateTimeKind.Utc),
+                                ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault().SpecifyUtc(),
                                 CabinClass = CabinClassCd.Mnemonic(segmentRecord.CabinClassCd),
-                         
+
                             };
                             segmentLookup.Add(segmentRecord.Id.GetValueOrDefault(), segment);
                             trip.Segments.Add(segment);
@@ -196,7 +196,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             reservation = new FlightReservation
                             {
                                 RsvNo = rsvNo,
-                                RsvTime = DateTime.SpecifyKind(reservationRecord.RsvTime.GetValueOrDefault(), DateTimeKind.Utc),
+                                RsvTime = reservationRecord.RsvTime.GetValueOrDefault().SpecifyUtc(),
                                 Contact = Contact.GetFromDb(rsvNo),
                                 Payment = PaymentDetails.GetFromDb(rsvNo),
                                 Itineraries = new List<FlightItinerary>(),
@@ -216,10 +216,18 @@ namespace Lunggo.ApCommon.Flight.Service
                                 BookingStatus = BookingStatusCd.Mnemonic(itineraryRecord.BookingStatusCd),
                                 TripType = TripTypeCd.Mnemonic(itineraryRecord.TripTypeCd),
                                 Supplier = Constant.SupplierCd.Mnemonic(itineraryRecord.SupplierCd),
-                                TimeLimit = itineraryRecord.TicketTimeLimit.HasValue ? DateTime.SpecifyKind(itineraryRecord.TicketTimeLimit.Value, DateTimeKind.Utc) : (DateTime?) null,
+                                TimeLimit = itineraryRecord.TicketTimeLimit.SpecifyUtc(),
                                 Trips = new List<FlightTrip>(),
                                 Price = Price.GetFromDb(itineraryRecord.PriceId.GetValueOrDefault()),
                                 FareType = FareTypeCd.Mnemonic(itineraryRecord.FareTypeCd),
+                                AdultCount = itineraryRecord.AdultCount.GetValueOrDefault(),
+                                ChildCount = itineraryRecord.ChildCount.GetValueOrDefault(),
+                                InfantCount = itineraryRecord.InfantCount.GetValueOrDefault(),
+                                AdultPricePortion = itineraryRecord.AdultPricePortion.GetValueOrDefault(),
+                                ChildPricePortion = itineraryRecord.ChildPricePortion.GetValueOrDefault(),
+                                InfantPricePortion = itineraryRecord.InfantPricePortion.GetValueOrDefault(),
+                                RequestedCabinClass = CabinClassCd.Mnemonic(itineraryRecord.RequestedCabinClassCd),
+                                RequestedTripType = TripTypeCd.Mnemonic(itineraryRecord.RequestedTripTypeCd),
                             };
                             itineraryLookup.Add(itineraryRecord.Id.GetValueOrDefault(), itinerary);
                             reservation.Itineraries.Add(itinerary);
@@ -235,7 +243,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 DestinationAirport = tripRecord.DestinationAirportCd,
                                 DestinationAirportName = GetAirportName(tripRecord.DestinationAirportCd),
                                 DestinationCity = GetAirportCity(tripRecord.DestinationAirportCd),
-                                DepartureDate = DateTime.SpecifyKind(tripRecord.DepartureDate.GetValueOrDefault(), DateTimeKind.Utc),
+                                DepartureDate = tripRecord.DepartureDate.GetValueOrDefault().SpecifyUtc(),
                                 Segments = new List<FlightSegment>()
                             };
                             tripLookup.Add(tripRecord.Id.GetValueOrDefault(), trip);
@@ -257,12 +265,12 @@ namespace Lunggo.ApCommon.Flight.Service
                                 DepartureAirportName = GetAirportName(segmentRecord.DepartureAirportCd),
                                 DepartureCity = GetAirportCity(segmentRecord.DepartureAirportCd),
                                 DepartureTerminal = segmentRecord.DepartureTerminal,
-                                DepartureTime = DateTime.SpecifyKind(segmentRecord.DepartureTime.GetValueOrDefault(), DateTimeKind.Utc),
+                                DepartureTime = segmentRecord.DepartureTime.GetValueOrDefault().SpecifyUtc(),
                                 ArrivalAirport = segmentRecord.ArrivalAirportCd,
                                 ArrivalAirportName = GetAirportName(segmentRecord.ArrivalAirportCd),
                                 ArrivalCity = GetAirportCity(segmentRecord.ArrivalAirportCd),
                                 ArrivalTerminal = segmentRecord.ArrivalTerminal,
-                                ArrivalTime = DateTime.SpecifyKind(segmentRecord.ArrivalTime.GetValueOrDefault(), DateTimeKind.Utc),
+                                ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault().SpecifyUtc(),
                                 Duration = segmentRecord.Duration.GetValueOrDefault(),
                                 CabinClass = CabinClassCd.Mnemonic(segmentRecord.CabinClassCd),
                                 Pnr = segmentRecord.Pnr
@@ -276,8 +284,8 @@ namespace Lunggo.ApCommon.Flight.Service
                             stop = new FlightStop
                             {
                                 Airport = stopRecord.AirportCd,
-                                DepartureTime = DateTime.SpecifyKind(stopRecord.DepartureTime.GetValueOrDefault(), DateTimeKind.Utc),
-                                ArrivalTime = DateTime.SpecifyKind(stopRecord.ArrivalTime.GetValueOrDefault(), DateTimeKind.Utc),
+                                DepartureTime = stopRecord.DepartureTime.GetValueOrDefault().SpecifyUtc(),
+                                ArrivalTime = stopRecord.ArrivalTime.GetValueOrDefault().SpecifyUtc(),
                                 Duration = stopRecord.Duration.GetValueOrDefault()
                             };
                             stopLookup.Add(stopRecord.Id.GetValueOrDefault(), stop);
@@ -441,7 +449,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         InsertBy = "LunggoSystem",
                         InsertDate = DateTime.UtcNow,
                         InsertPgId = "0",
-                        
+
                     };
                     FlightItineraryTableRepo.GetInstance().Insert(conn, itineraryRecord);
 

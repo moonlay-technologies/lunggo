@@ -1,6 +1,5 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
-@using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Config
 @using Lunggo.ApCommon.Flight.Model
@@ -50,80 +49,80 @@
 
     </script>
     <!-- angular controller -->
-<script src="/Assets/travorama20/js/checkoutController.js"></script>
+    <script src="/Assets/travorama20/js/checkoutController.js"></script>
 }
 
 <div ng-app="travorama" ng-controller="thankyouController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
-    @if (ViewBag.BookingFailed || Model.Payment.Status == PaymentStatus.Expired || Model.Payment.Status == PaymentStatus.Denied)
+    @if (Model.Payment.Status == PaymentStatus.Expired)
     {
-        <div>
-
-            <h2 class="section-title stripe text-center">PEMESANAN <span>GAGAL</span></h2>
-
-            <div class="container">
-                <p>Mohon maaf, pemesanan dengan no. @Model.RsvNo telah dibatalkan. Silakan membuat pemesanan baru.</p>
+        <div class="bookfailed-popup">
+            <div class="overlay-content">
+                <section style="padding-top:60px; padding-left:225px;">
+                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                    <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                    <div style="padding-top:5px;"><span style="font-size:13px">Pemesanan Anda<span style="color: #15b1e4;font-size:13px"><b> sudah kadaluarsa</b></span>.</span></div>
+                    <div><span style="font-size:13px">Silakan klik tombol di bawah untuk membuat pemesanan baru.</span></div>
+                </section>
+                <div align="right" style="padding-right:30px;padding-top:30px;">
+                    <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+                </div>
             </div>
-            <div class="container text-center">
-                <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
-            </div>
-
         </div>
     }
-    @*else if (Model.Payment.Status == PaymentStatus.Pending)
+    else if (Model.Payment.Status == PaymentStatus.Verifying || Model.Payment.Status == PaymentStatus.Pending ||
+    Model.Payment.Status == PaymentStatus.Challenged)
     {
-        <div>
-
-            <h2 class="section-title stripe text-center">PEMESANAN <span>GAGAL</span></h2>
-
-            <div class="container">
-                <p>Mohon maaf, pemesanan dengann no. @Model.RsvNo telah ditolak. Silakan membuat pemesanan baru.</p>
+        <div class="bookfailed-popup" ng-init="refresh()">
+            <div class="overlay-content">
+                <section style="padding-top:60px; padding-left:225px;">
+                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                    <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:20px"><b>Sedang Memverifikasi</b></span></div>
+                    <div style="padding-top:5px;"><span style="font-size:13px">Pembayaran Anda sedang<span style="color: #15b1e4;font-size:13px"><b> diverifikasi oleh sistem kami</b></span>.</span></div>
+                </section>
             </div>
-            <div class="container text-center">
-                <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
-            </div>
-
         </div>
-    }*@
-    else
+    }
+    else if (Model.Payment.Status == PaymentStatus.Denied || Model.Payment.Status == PaymentStatus.Failed)
+    {
+        <div class="bookfailed-popup">
+            <div class="overlay-content">
+                <section style="padding-top:60px; padding-left:225px;">
+                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                    <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                    <div style="padding-top:5px;"><span style="font-size:13px">Pembayaran Anda ditolak.</span></div>
+                    <div><span style="font-size:13px">Silakan membuat pemesanan baru dengan metode pembayaran berbeda.</span></div>
+                </section>
+                <div align="right" style="padding-right:30px;padding-top:30px;">
+                    <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.Payment.Status == PaymentStatus.Cancelled || Model.Payment.Status == PaymentStatus.Undefined)
+    {
+        <div class="bookfailed-popup">
+            <div class="overlay-content">
+                <section style="padding-top:60px; padding-left:225px;">
+                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                    <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:22px"><b>Belum Ada Reservasi</b></span></div>
+                    <div style="padding-top:5px;"><span style="font-size:13px">Reservasi tidak ditemukan.</span></div>
+                    <div><span style="font-size:13px">Silakan klik tombol di bawah untuk membuat reservasi.</span></div>
+                </section>
+                <div align="right" style="padding-right:30px;padding-top:30px;">
+                    <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI PENERBANGAN</b></a>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.Payment.Status == PaymentStatus.Settled)
     {
         <div>
-
             <h2 class="section-title stripe text-center">TERIMA <span>KASIH</span></h2>
 
             <div class="container">
                 <p>Terima kasih telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda: @Model.Contact.Email.</p>
 
                 <section class="countdown">
-
-                    <!--
-                        <div class="row">
-
-                            <div class="col-xs-5 col-xs-offset-2">
-                                <div class="timer">
-                                    <div class="hour">
-                                        <h5>00</h5>
-                                        <span>Jam</span>
-                                    </div>
-                                    <div class="separator">:</div>
-                                    <div class="minute">
-                                        <h5>00</h5>
-                                        <span>Menit</span>
-                                    </div>
-                                    <div class="separator">:</div>
-                                    <div class="second">
-                                        <h5>00</h5>
-                                        <span>Detik</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-4">
-                                <div class="print">
-                                    <a href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new { rsvNo = Model.RsvNo })" target="_blank" class="btn btn-yellow block disabled"><span>CETAK eTICKET</span></a>
-                                </div>
-                            </div>
-                        </div>
-                        -->
-
                     <div class="row">
                         <div class="col-sm-4 col-sm-offset-4">
                             <div class="print">
@@ -137,7 +136,6 @@
                     </div>
 
                     <p>Anda dapat menutup halaman ini dan mengecek status penerbitan e-tiket di menu cek pemesanan setiap saat.</p>
-
                 </section><!-- .section -->
 
                 <section class="order-detail">
@@ -148,12 +146,10 @@
 
                         <div class="container">
                             <div class="row">
-
                                 <div class="order-detail-left col-xs-8">
                                     <div class="va-passenger col-xs-12">
                                         <div class="passenger col-xs-8">
                                             <h4>INFO PENUMPANG</h4>
-
                                             <ol>
                                                 @foreach (var passenger in Model.Passengers)
                                                 {
@@ -171,7 +167,6 @@
                                     </div>
                                     <div class="order">
                                         <h4>DETAIL PENERBANGAN</h4>
-
                                         <div class="flight departure">
                                             <p>Berangkat : </p>
                                             <div class="row">
@@ -231,7 +226,6 @@
                                                                     <span style="background:#f4f4f4;padding:0 10px;color:#15b1e4;">Transit di @segment.DepartureCity (@segment.DepartureAirport) selama @transitDuration.ToString()</span>
                                                                 </p>
                                                             </div>
-
                                                         <!-- .transit -->
                                                         }
                                                         <div class="col-xs-2">
@@ -272,7 +266,7 @@
                                         <h4>RINCIAN HARGA</h4>
                                         <dl>
                                             <dt>Tiket Pesawat <span>(@Model.Passengers.Count Penumpang)</span></dt>
-                                            <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                            <dd>Rp @(Model.Payment.OriginalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                         </dl>
                                         @if (Model.Payment.DiscountNominal > 0)
                                         {
@@ -281,6 +275,10 @@
                                                 <dd>- Rp @Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                             </dl>
                                         }
+                                        <dl>
+                                            <dt>Kode Unik Pembayaran</dt>
+                                            <dd>- Rp @(Math.Abs(Model.Payment.TransferFee).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                        </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
                                             <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>

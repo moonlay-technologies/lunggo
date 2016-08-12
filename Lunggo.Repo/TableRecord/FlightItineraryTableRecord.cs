@@ -65,7 +65,7 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("TicketTimeLimit");
 		    }
 		}
-		public long? AdultCount
+		public int? AdultCount
 		{
 		    get { return _AdultCount; }
 		    set
@@ -74,7 +74,7 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("AdultCount");
 		    }
 		}
-		public long? ChildCount
+		public int? ChildCount
 		{
 		    get { return _ChildCount; }
 		    set
@@ -83,7 +83,7 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ChildCount");
 		    }
 		}
-		public long? InfantCount
+		public int? InfantCount
 		{
 		    get { return _InfantCount; }
 		    set
@@ -226,9 +226,9 @@ namespace Lunggo.Repository.TableRecord
 		private String _BookingId;
 		private String _BookingStatusCd;
 		private DateTime? _TicketTimeLimit;
-		private long? _AdultCount;
-		private long? _ChildCount;
-		private long? _InfantCount;
+		private int? _AdultCount;
+		private int? _ChildCount;
+		private int? _InfantCount;
 		private Decimal? _AdultPricePortion;
 		private Decimal? _ChildPricePortion;
 		private Decimal? _InfantPricePortion;

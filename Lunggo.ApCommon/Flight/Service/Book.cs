@@ -24,6 +24,7 @@ using Lunggo.ApCommon.Voucher;
 using System.Diagnostics;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
+using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -53,8 +54,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 InsertReservationToDb(reservation);
                 output.RsvNo = reservation.RsvNo;
                 output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
-                if (output.TimeLimit.HasValue)
-                    output.TimeLimit = output.TimeLimit.Value.AddMilliseconds(-output.TimeLimit.Value.Millisecond);
                 ExpireReservationWhenTimeout(reservation.RsvNo, reservation.Payment.TimeLimit);
                 
                 //DeleteItinerariesFromCache(input.Token);
