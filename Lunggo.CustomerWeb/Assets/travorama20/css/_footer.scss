@@ -13,7 +13,7 @@ including in this file :
 */
 
 /* site footer menu */
-.site-footer-menu {background:#303030; color:#fff; padding:0 0 30px; width:100%; bottom:157px;
+.site-footer-menu {background:#303030; color:#fff; padding:0 0 30px; width:100%; bottom:157px; position: absolute;
     a {color:#fff;}
 
     .menu-left {padding-right:50px;
@@ -56,10 +56,11 @@ including in this file :
             li {margin-bottom:2px;}
         }
     }
+    &>.container {max-width: none;}
 }
 
 /* site-footer */
-.site-footer {background:#111; color:#fff; padding:15px 0; bottom:0; width:100%;
+.site-footer {background:#111; color:#fff; padding:15px 0; bottom:0; width:100%;  position: absolute;
     .social-link {padding:15px 0;
         img {width:40px;}
         a {margin-left:3px;}
