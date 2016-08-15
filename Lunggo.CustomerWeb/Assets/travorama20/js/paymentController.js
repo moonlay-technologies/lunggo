@@ -186,6 +186,9 @@ app.controller('paymentController', [
             postData: '',
             rsvNo: '',
             paying: false,
+            transfer: false,
+            virtualAccount: false,
+            go: false,
             ccdata: false,
             checked:false,
             isSuccess: false,
@@ -285,6 +288,7 @@ app.controller('paymentController', [
                 //generate payment data
                 if ($scope.paymentMethod == 'BankTransfer') {
                     $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2"';
+                    $scope.pay.transfer = true;
                 }
                 else
                 {
@@ -304,6 +308,7 @@ app.controller('paymentController', [
                             break;
                         case "VirtualAccount": 
                             $scope.PaymentData = '"method":"5","virtualAccount":' + '{' + ' "bank":"permata"' + '}';
+                            $scope.pay.virtualAccount = true;
                             break;
                         case "MandiriBillPayment": 
                             var label1 = "Payment for booking a flight";
@@ -316,8 +321,30 @@ app.controller('paymentController', [
                 
                 $scope.pay.postData = '{' + $scope.pay.postData + '}';
                 $scope.pay.postData = JSON.parse($scope.pay.postData);
+                
+                if ($scope.paymentMethod != "BankTransfer" && $scope.paymentMethod != 'VirtualAccount') {
+                    $scope.pay.bayar();
+                }
 
-                //Check Authorization
+            },
+            close : function(){
+                $scope.pay.checked = false;
+                $scope.pay.isSuccess = false;
+                $scope.pay.paying = false;
+            },
+            middle: function(method) {
+                if (method == 'transfer') {
+                    $scope.pay.transfer = false;
+                    $scope.pay.go = true;
+                    $scope.pay.bayar();
+                }
+                else if (method == 'virtualAccount') {
+                    $scope.pay.virtualAccount = false;
+                    $scope.pay.go = true;
+                    $scope.pay.bayar();
+                }
+            },
+            bayar : function() {
                 var authAccess = getAuthAccess();
                 if (authAccess == 1 || authAccess == 2) {
                     //send form
@@ -365,8 +392,7 @@ app.controller('paymentController', [
                         {
                             $scope.pay.send();
                         }
-                        else
-                        {
+                        else {
                             $scope.pay.checked = true;
                             $scope.pay.isSuccess = false;
                         }
@@ -376,15 +402,9 @@ app.controller('paymentController', [
                 else {
                     console.log('Not Authorized');
                     $scope.pay.checked = false;
-                    $scope.pay.isSuccess = false
+                    $scope.pay.isSuccess = false;
                     $scope.pay.paying = false;
                 }
-
-            },
-            close : function(){
-                $scope.pay.checked = false;
-                $scope.pay.isSuccess = false;
-                $scope.pay.paying = false;
             }
         }
         

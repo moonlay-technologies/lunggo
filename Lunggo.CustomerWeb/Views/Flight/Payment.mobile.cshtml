@@ -403,7 +403,7 @@
     </section><!-- .checkout-content -->
     
     <!-- Syarat & Ketentuan -->
-    <div class="popup__wrapper" ng-class="{'active' == true}">
+    <div class="popup__wrapper" ng-class="{'active' : pay.transfer}">
         <div class="popup">
             <header class="popup__header">
                 <h4 class="popup__title">Syarat dan Ketentuan <br />Bank Transfer</h4>
@@ -421,7 +421,7 @@
                 <div class="container_new tnc">
                     <div class="row">
                         <div class="col-xs-6">
-                            <input type="submit" class="btn btn-yellow" value="SETUJU">
+                            <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
                         </div>
                         <div class="col-xs-6">
                             <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
@@ -432,7 +432,7 @@
         </div>
     </div>
 
-    <div class="popup__wrapper" ng-class="{'active' == true}">
+    <div class="popup__wrapper" ng-class="{'active' : pay.virtualAccount}">
         <div class="popup">
             <header class="popup__header">
                 <h4 class="popup__title">Syarat dan Ketentuan ATM</h4>
@@ -451,7 +451,7 @@
                 <div class="container_new tnc">
                     <div class="row">
                         <div class="col-xs-6">
-                            <input type="submit" class="btn btn-yellow" value="SETUJU">
+                            <input type="submit" class="btn btn-yellow" ng-click ="pay.middle('virtualAccount')" value="SETUJU">
                         </div>
                         <div class="col-xs-6">
                             <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
@@ -461,31 +461,47 @@
             </div>
         </div>
     </div>
+    
+
 
     @*<div class="page-overlay flight-expired" ng-show="expired">
-            <div class="overlay-content">
-                <header>
-                    <h4>Checkout Kadaluarsa</h4>
-                </header>
-                <section>
-                    <div class="container_new">
-                      <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
-                      <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
-                    </div>
-                </section>
-                <footer>
-                    <div class="container_new">
-                        <div class="row1">
-                            <div class="col12">
-                                <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
-                            </div>
+        <div class="overlay-content">
+            <header>
+                <h4>Checkout Kadaluarsa</h4>
+            </header>
+            <section>
+                <div class="container_new">
+                  <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
+                  <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
+                </div>
+            </section>
+            <footer>
+                <div class="container_new">
+                    <div class="row1">
+                        <div class="col12">
+                            <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
                         </div>
                     </div>
-                </footer>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+    *@
+    
+    <div class="popup__wrapper" ng-class="{'active' : pay.go}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Mohon Tunggu</h4>
+            </header>
+            <div class="popup__body tnc-body">
+                <div class="container_new">
+                    Sedang memproses pilihan Anda.
+                </div>
             </div>
-        </div><!-- .page-overlay -->
+        </div>
+    </div>
 
-    <div class="page-overlay booking-flight"  ng-show ="pay.paying">
+    @*<div class="page-overlay booking-flight" ng-class="{'active' : pay.go}">
         <div class="overlay-content">
             <header>
                 <h4>Mohon Tunggu</h4>
@@ -498,8 +514,8 @@
                 </div>
             </section>
         </div>
-    </div>
-    *@
+    </div>*@
+    
 </div><!-- checkout end here -->
                                 break;
     case "BookExpired":
