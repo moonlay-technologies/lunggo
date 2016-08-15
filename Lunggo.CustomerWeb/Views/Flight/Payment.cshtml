@@ -80,11 +80,11 @@
             if (Model.Reservation.Itinerary.Trips.Count == 2)
             {
                 @:departureDate = '@Model.Reservation.Itinerary.Trips[1].DepartureDate';
-                                            }
+                                                    }
             else
             {
                 @:departureDate = '@Model.Reservation.Itinerary.Trips[0].DepartureDate';
-                                            }
+                                                    }
         }
 
         // change current page
@@ -229,25 +229,25 @@
                                             <h3 class="no-spacing">Detail <b>Kartu Kredit</b></h3>
 
                                             @*<!-- credit card selector start -->
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-sm-8">
-                                                        <label>Pilih kartu kredit :</label>
-                                                        <select class="form-control" ng-model="CreditCard.TwoClickToken" ng-required="paymentMethod == '@PaymentMethod.CreditCard'">
-                                                            <option value="false" selected="selected">Tambah Baru</option>
-                                                            @foreach (var savedCreditCard in savedCreditCards)
-                                                            {
-                                                                <option value="@savedCreditCard.Token">@savedCreditCard.CardHolderName - @savedCreditCard.MaskedCardNumber</option>
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-4" ng-if="CreditCard.TwoClickToken != 'false'">
-                                                        <label class="control-label">CVV Kartu</label>
-                                                        <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <label>Pilih kartu kredit :</label>
+                                                            <select class="form-control" ng-model="CreditCard.TwoClickToken" ng-required="paymentMethod == '@PaymentMethod.CreditCard'">
+                                                                <option value="false" selected="selected">Tambah Baru</option>
+                                                                @foreach (var savedCreditCard in savedCreditCards)
+                                                                {
+                                                                    <option value="@savedCreditCard.Token">@savedCreditCard.CardHolderName - @savedCreditCard.MaskedCardNumber</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-4" ng-if="CreditCard.TwoClickToken != 'false'">
+                                                            <label class="control-label">CVV Kartu</label>
+                                                            <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- credit card selector end -->*@
+                                                <!-- credit card selector end -->*@
                                             <!-- new credit card start -->
                                             <div ng-if="CreditCard.TwoClickToken == 'false'">
                                                 <div class="form-group">
@@ -337,36 +337,35 @@
                                 </form>
                                 <!-- start CIMB Clicks Instruction -->
                                 @*<div ng-show="paymentMethod == '@PaymentMethod.CimbClicks'">
-                                    <h3 class="no-spacing">Instruksi <b>Pembayaran Cimb Clicks</b></h3>
-                                    <div class="mandiri-clikpay-form">
-                                        <div class="form-group">
-                                            <label class="control-label">Nomor Kartu</label>
-                                            <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                        <h3 class="no-spacing">Instruksi <b>Pembayaran Cimb Clicks</b></h3>
+                                        <div class="mandiri-clikpay-form">
+                                            <div class="form-group">
+                                                <label class="control-label">Nomor Kartu</label>
+                                                <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">CVV Kartu</label>
+                                                <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label">CVV Kartu</label>
-                                            <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
-                                        </div>
-                                    </div>
-                                </div>*@
+                                    </div>*@
                                 <!--end CIMB Clicks Instruction -->
-                                
                                 <!--start Mandiri Bill Payment-->
                                 @*<div ng-show="paymentMethod == '@PaymentMethod.MandiriBillPayment'">
-                                    <h3 class="no-spacing">Instruksi <b>Pembayaran Mandiri Bill Payment</b></h3>
-                                    <div class="mandiri-clikpay-form">
-                                        <div class="form-group">
-                                            <label class="control-label">Nomor Kartu</label>
-                                            <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                        <h3 class="no-spacing">Instruksi <b>Pembayaran Mandiri Bill Payment</b></h3>
+                                        <div class="mandiri-clikpay-form">
+                                            <div class="form-group">
+                                                <label class="control-label">Nomor Kartu</label>
+                                                <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">CVV Kartu</label>
+                                                <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label">CVV Kartu</label>
-                                            <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
-                                        </div>
-                                    </div>
-                                </div>*@
+                                    </div>*@
                                 <!--end Mandiri Bill Payment-->
-                                
+
 
                                 <div class="step-button">
 
@@ -382,9 +381,9 @@
 
                                             <p>Voucher Code</p>
                                             <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
-                                            
+
                                             <input type="text" name="Payment.Data0" id="vt-token" value="" ng-model="CreditCard.Token" />
-                                            
+
                                         </div>
 
                                         <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a></p>
@@ -582,7 +581,6 @@
                     </footer>
                 </div>
             </div><!-- .page-overlay -->
-
             <!--<div class="page-overlay booking-flight" ng-hide="!pay.paying">
                 <div class="overlay-content" >
                     <header>
@@ -603,32 +601,35 @@
                 </div>
             </div>-->
 
-            <div class="bookfailed-popup" ng-hide="!pay.paying">
+            <div class="bookfailed-popup" ng-if="pay.checked && !pay.isSuccess">
                 <div class=" overlay-content">
-                <section style="padding-top:60px; padding-left:225px;">
-                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                    <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Tunggu...</b></span></div>
-                    <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                    <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
-                </section>
+                    <section style="padding-top:60px; padding-left:225px;">
+                        <!-- Ini untuk yg gagal -->
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                        <div style="padding-top:5px;"><span style="font-size:14px">{{errorMessage}}</span></div>
+                    </section>
+                    <div align="right" style="padding-right:30px;padding-top:30px;">
+                        <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
+                    </div>
+                </div>
             </div>
+
+            <div class="bookfailed-popup" ng-if="pay.checking">
+                <div class=" overlay-content">
+                    <section style="padding-top:60px; padding-left:225px;">
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>
+                        <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Mohon tunggu...</b></span></div>
+                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                        <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
+                    </section>
+                </div>
             </div>
+
         </div>
 
-@*<div class="bookfailed-popup" ng-if="pay.checked && !pay.isSuccess">
-    <div class=" overlay-content">
-        <section style="padding-top:60px; padding-left:225px;">
-            <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-            <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
-            <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-            <div style="padding-top:5px;"><span style="font-size:14px">Pembayaran Gagal</span></div>
-            <div style="padding-top:5px;"><span style="font-size:14px">Silahkan pilih metode pembayaran lain</span></div>
-        </section>
-        <div align="right" style="padding-right:30px;padding-top:30px;">
-            <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
-        </div>
-    </div>
-</div>*@
+
 
         <!-- checkout end here -->
                                 break;
