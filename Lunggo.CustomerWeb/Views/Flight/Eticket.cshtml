@@ -41,7 +41,41 @@
         </section>
         <!-- .section-eticket -->
     }
-    else if (Model.RsvDisplayStatus == RsvDisplayStatus.FailedPaid || Model.RsvDisplayStatus == RsvDisplayStatus.FailedUnpaid)
+    else if (Model.RsvDisplayStatus == RsvDisplayStatus.VerifyingPayment)
+    {
+        <section class="section-eticket" ng-init="refresh()">
+
+            <h1 class="text-center section-title stripe">CETAK <span>E-TIKET</span></h1>
+
+            <div class="container text-center">
+                <p>
+                    Mohon menunggu. Pembayaran Anda sedang kami verifikasi.<br />
+                    Terima kasih untuk pembelian Anda.
+                </p>
+                <p>Jika terjadi masalah, silakan kirim e-mail Anda ke <a href="mailto:cs@travorama.com">cs@travorama.com</a> dan kami akan berusaha untuk membantu Anda.</p>
+            </div>
+
+        </section>
+    }
+
+    else if (Model.RsvDisplayStatus == RsvDisplayStatus.PendingPayment)
+    {
+        <div class="bookfailed-popup">
+            <div class="overlay-content">
+                <section style="padding-top:60px; padding-left:225px;">
+                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                    <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>E-Tiket Belum Tersedia</b></span></div>
+                    <div style="padding-top:5px;"><span style="font-size:13px">Pembayaran untuk no. reservasi @Model.RsvNo belum dilakukan.</span></div>
+                    <div><span style="font-size:13px">Silakan melakukan pembayaran untuk reservasi tersebut.</span></div>
+                </section>
+                <div align="right" style="padding-right:30px;padding-top:30px;">
+                    <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>KEMBALI</b></a>
+                </div>
+            </div>
+        </div>
+    }
+    
+    else 
     {
         <div class="bookfailed-popup">
             <div class="overlay-content">
@@ -57,22 +91,7 @@
             </div>
         </div>
     }
-    else
-    {
-        <div class="bookfailed-popup">
-            <div class="overlay-content">
-                <section style="padding-top:60px; padding-left:225px;">
-                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                    <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:22px"><b>Mohon maaf...</b></span></div>
-                    <div style="padding-top:5px;"><span style="font-size:13px">Pembayaran untuk no. reservasi @Model.RsvNo belum dilakukan.</span></div>
-                    <div><span style="font-size:13px">Silakan melakukan pembayaran untuk reservasi tersebut.</span></div>
-                </section>
-                <div align="right" style="padding-right:30px;padding-top:30px;">
-                    <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>KEMBALI</b></a>
-                </div>
-            </div>
-        </div>
-    }
+    
 
 </div>
 
