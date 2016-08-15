@@ -111,6 +111,10 @@ $button-border: #c9cdd2;
 .os-bold {font-weight: 700;}
 
 /*--------------------*/
+/* position */
+.center {text-align: center;}
+
+/*--------------------*/
 // General Styling
   @media only screen and (min-width:400px) {
     .page.page-flight .flight-summary{
@@ -726,7 +730,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .container_new {
     p {
-        padding: 10px 10px 10px 10px;
+        padding: 10px;
         margin-left: 10px;
         margin-right: 10px;
     }
@@ -759,24 +763,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .form__flightclass .form-control {
     height: 35px;
 }
-
-.thankyou-words {
-       margin-left: 10px;
-       margin-right: 10px;
-       margin-bottom: 10px;
-       .section-title.stripe {
-           padding-bottom: 15px;
-           padding-top: 0;
-       } 
-       .overlay__body.overlay__content {
-           padding-bottom:20px;
-       }
-       h5 {
-           font-weight: bold;
-           font-size:10px;
-       }
-       
-   }
 
 .loading-image {
     top: 50%;
@@ -922,26 +908,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
 }
 
-.thankyou-words {
-    margin-left: 10px;
-    margin-right: 10px; }
-.thankyou-words .section-title.stripe {
-    padding-bottom: 30px;
-    padding-top: 0; }
-.thankyou-words .overlay__body.overlay__content {
-    padding-bottom: 0px; }
-.thankyou-words h5 {
-    font-size: 10px; 
-    font-weight: normal;
-}
-.thankyou-words .print-ticket-button{
-    margin-bottom: 10px;
-}
-.thankyou-words h3{
-    margin-top: 25px;
-    margin-bottom: 10px;
-}
-
 /*--------------------*/
 // Include
 @import 'page_home';
@@ -949,4 +915,4 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 @import 'page_checkout';
 @import 'page_account';
 @import 'page_static';
-@import 'home_page_layout';
+@import 'page_search';

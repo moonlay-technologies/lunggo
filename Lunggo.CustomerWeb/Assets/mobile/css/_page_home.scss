@@ -3,7 +3,6 @@
     @include clearfix(); 
     background: $color-white;
     .form-container { 
-        /*height: 100%;*/
         @import 'home_page_layout';
     }
 }
