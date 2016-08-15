@@ -46,7 +46,7 @@
                     </div>
                     
                     <div class="link-container">
-                        <p><a href="@Url.Action("Login", "Account")">Kirim Ulang E-mail Aktivasi</a></p>
+                        <p><a href="#" ng-show="form.isSucceeded" ng-click="form.resubmit()">Kirim Ulang E-mail Aktivasi</a></p>
                         <p><b>Sudah Memiliki Akun?</b> <a href="@Url.Action("Login", "Account")">Masuk Sekarang</a></p>
                     </div>
                 </form>
@@ -105,6 +105,38 @@
                                 <p>Silakan cek e-mail Anda untuk mengkonfirmasi alamat e-mail Anda.<br /><a ng-click="form.resubmit()">Klik di sini</a> untuk mengirim kembali e-mail konfirmasi.</p>
                             </div>
                             <div class="col-sm-8" ng-show="form.resubmitted">
+                                <h3>E-mail verifikasi telah dikirim</h3>
+                                <p>Silakan cek e-mail Anda untuk verifikasi alamat e-mail Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block" ng-click="closeOverlay(); form.resubmitting = false; form.emailSent = false;">TUTUP</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+
+    <div class="page-overlay" ng-show="overlay && form.resubmitted">
+        <div class="overlay-content">
+            <header>
+                <h4>Terima Kasih</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/smile-image.png" alt="Smile" />
+                            </div>
+                            <div class="col-sm-8">
                                 <h3>E-mail verifikasi telah dikirim</h3>
                                 <p>Silakan cek e-mail Anda untuk verifikasi alamat e-mail Anda.</p>
                             </div>
