@@ -1137,6 +1137,7 @@
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
     <Content Include="Assets\travorama20\js\bootstrap.min.js" />
+    <Content Include="Assets\travorama20\js\EticketController.js" />
     <Content Include="Assets\travorama20\js\travorama20.js" />
     <Content Include="Assets\vendor\countrySelect\css\countrySelect.min.css" />
     <Content Include="Assets\vendor\countrySelect\img\flags.png" />
