@@ -2663,6 +2663,7 @@
     <Content Include="Views\Flight\Confirmation.mobile.cshtml" />
     <Content Include="Views\Flight\Payment.cshtml" />
     <Content Include="Views\Flight\Payment.mobile.cshtml" />
+    <Content Include="Views\Flight\Eticket.mobile.cshtml" />
     <None Include="Views\Flight\SearchResultList-Single.mobile.cshtml.bak" />
     <Content Include="Views\Template\eticket3.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.cshtml" />
