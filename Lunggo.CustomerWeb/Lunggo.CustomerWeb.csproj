@@ -1137,6 +1137,7 @@
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
     <Content Include="Assets\travorama20\js\bootstrap.min.js" />
+    <Content Include="Assets\travorama20\js\EticketController.js" />
     <Content Include="Assets\travorama20\js\travorama20.js" />
     <Content Include="Assets\vendor\countrySelect\css\countrySelect.min.css" />
     <Content Include="Assets\vendor\countrySelect\img\flags.png" />
@@ -2661,6 +2662,7 @@
     <Content Include="Views\Flight\Confirmation.mobile.cshtml" />
     <Content Include="Views\Flight\Payment.cshtml" />
     <Content Include="Views\Flight\Payment.mobile.cshtml" />
+    <Content Include="Views\Flight\Eticket.mobile.cshtml" />
     <None Include="Views\Flight\SearchResultList-Single.mobile.cshtml.bak" />
     <Content Include="Views\Template\eticket3.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.cshtml" />

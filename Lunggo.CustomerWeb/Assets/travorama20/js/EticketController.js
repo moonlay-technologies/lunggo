@@ -1,6 +1,6 @@
 ﻿// checkout controller
-//var app = angular.module('myApp', ['ngRoute']);
-app.controller('ThankyouController', ['$http', '$scope', '$location', function ($http, $scope) {
+
+app.controller('EticketController', ['$http', '$scope', '$location', function ($http, $scope) {
 
     
     angular.element(document).ready(function () {

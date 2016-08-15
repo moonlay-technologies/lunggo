@@ -71,7 +71,11 @@
             }
         }
     }
-
+    .overlay.overlay--flight-form {
+        .overlay__content { 
+            @import 'home_page_layout';
+        }
+    }
 }
 
 // --------------------
@@ -239,6 +243,7 @@
     }// overlay__footer   
 }
 
+// Confirmation Page
 .page.page-confirmation {
     .no-pemesanan {
         background-color: #35b6e7;
@@ -256,4 +261,17 @@
     }
     .bank-detail {margin: 15px 0;}
     .flight-fare-wrapper {margin-bottom: 15px;}
+}
+
+// Thankyou Page
+.page.page-thankyou {
+    .page__body {padding:0 15px 20px; overflow-wrap:break-word;}
+    .thankyou-words {
+        padding: 0 15px;
+        .ticket-print {
+            margin: 15px 0;
+            .btn.btn-yellow {width: 100%;}
+        }
+    }
+    .tnc {margin-top: 15px;}
 }

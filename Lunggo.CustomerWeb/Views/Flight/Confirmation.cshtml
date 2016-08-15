@@ -302,12 +302,15 @@
                                                                 <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalAirportName</p>
                                                             </div>
                                                         </div>
-                                                </div>
-                                                prevSegment = segment;
+                                                    </div>
+                                                    prevSegment = segment;
                                                 }
                                             </div>
                                         </div>
                                     }
+                                </div>
+                                <div class="col-sm-12">
+                                    <a href="@Url.Action("Thankyou", "Flight", new { Model.RsvNo })" class="btn btn-yellow"> SAYA SUDAH BAYAR</a>
                                 </div>
                             </div>
                         </section><!-- .order-detail -->
@@ -369,7 +372,8 @@
                 </div>
             </div>
         </div>
-
+    
+        
     </div><!-- .confirmation-content -->
 
 </div>

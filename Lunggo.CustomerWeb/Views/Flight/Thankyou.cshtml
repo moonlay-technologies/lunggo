@@ -78,6 +78,7 @@
                     <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
                     <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:20px"><b>Sedang Memverifikasi</b></span></div>
                     <div style="padding-top:5px;"><span style="font-size:13px">Pembayaran Anda sedang<span style="color: #15b1e4;font-size:13px"><b> diverifikasi oleh sistem kami</b></span>.</span></div>
+                    <div class="text-center"><img src="/Assets/images/loading-image-dark.gif" width="50%" alt="loading" /></div>
                 </section>
             </div>
         </div>
@@ -120,18 +121,20 @@
             <h2 class="section-title stripe text-center">TERIMA <span>KASIH</span></h2>
 
             <div class="container">
-                <p>Terima kasih telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda: @Model.Contact.Email.</p>
+                <p>Terima kasih telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda:<b> @Model.Contact.Email</b> .</p>
 
                 <section class="countdown">
                     <div class="row">
                         <div class="col-sm-4 col-sm-offset-4">
                             <div class="print">
-                                @using (Html.BeginForm())
-                                {
-                                    <input type="hidden" name="rsvNo" value="@Model.RsvNo" />
-                                    <button class="btn btn-yellow block"><span>CEK PEMESANAN</span></button>
-                                }
-                            </div>
+                                @*<input type="hidden" name="rsvNo" value="@Model.RsvNo" />*@
+                                <a href="@Url.Action("Eticket", "Flight", new { Model.RsvNo })" class="btn btn-yellow block">
+                                    <span>CEK E-TIKET</span>
+                                </a>
+                                    @*<button class="btn btn-yellow block" onclick="@Url.Action("Eticket", "Flight", new { Model.RsvNo })">
+                                        
+                                    </button>
+</div>                      *@</div>
                         </div>
                     </div>
 
