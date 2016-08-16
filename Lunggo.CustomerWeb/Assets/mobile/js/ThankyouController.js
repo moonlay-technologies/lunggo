@@ -7,8 +7,11 @@ app.controller('ThankyouController', ['$http', '$scope', '$location', function (
 
         $scope.rsvNo = window.location.search.toString().split('=')[1];
     });
-    
+    $scope.hide = false;
     $scope.returnUrl = window.location.origin;
+    $scope.seeDetail = function() {
+        $scope.hide = true;
+    }
     $scope.refresh = function() {
         setTimeout(function () {
             //

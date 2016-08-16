@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Notification.Model
 {
@@ -9,6 +10,6 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Model
         [JsonProperty("handle")]
         public string Handle { get; set; }
         [JsonProperty("tags")]
-        public string[] Tags { get; set; }
+        public Dictionary<string, string> Tags { get; set; }
     }
 }
