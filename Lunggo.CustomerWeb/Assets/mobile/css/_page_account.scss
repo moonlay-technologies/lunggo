@@ -95,16 +95,115 @@
     }
 }
 
+
+/*.page-overlay {
+position: fixed;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+z-index: 1000;
+background: rgba(0, 0, 0, 0.7); }
+.page-overlay .overlay-content {
+width: 92%;
+height: 220px;
+background: #fff;
+position: absolute;
+margin: auto;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;
+overflow: hidden; }
+.page-overlay .overlay-content header {
+    background: #1daee4;
+    text-align: center;
+    color: #fff;
+    padding: 15px; }
+    .page-overlay .overlay-content header h4 {
+    margin: 0;
+    font-weight: 600; }
+    .page-overlay .overlay-content header .close {
+    color: #fff;
+    opacity: 1; }
+.page-overlay .overlay-content div section {
+   
+    padding: 15px; 
+    width:70%;
+    left: 33%;
+    top: 20%;
+    position: absolute;
+}
+.page-overlay .overlay-content div section p{
+    padding: 15px; 
+}
+.page-overlay .overlay-content div img{
+    padding-left: 15px;
+    vertical-align: 20%;
+    position: absolute;
+    top: 30%;
+}
+
+.page-overlay .overlay-content div div a{
+    display: inline-block;
+    width: 30%;
+    right: 20%;
+    bottom: 15%;
+    position: absolute;
+}
+
+.page-overlay .overlay-content section a {
+cursor: pointer; }
+.page-overlay .overlay-content footer {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    width: 100%; }*/
+
 // forgot password page
 .page.page-forgotpassword {
-    .desc {
-        margin-bottom: 25px;
+    .desc {margin-bottom: 25px;} 
+}
+
+.page-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.7);
+    .overlay-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @include translate(-50%, -50%);
+        width: 300px;
+        min-height: 200px;
+    }
+    .overlay-container {
+        background: $color-white;
+        @include border-radius(2px);
+        header.overlay-header {
+            background: $color-main-blue;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: #fff;
+        }
+        .img {margin-top: 25px;}
+        .overlay-body {padding: 15px;}
+        .overlay-footer {padding: 0 0 15px;}
     }
 }
    
 // page contact
 .page.page-contact {
-    .contact-map {background:url(/Assets/mobile/images/contact-map.jpg) center center; background-size:cover;
+    .contact-map {background:url(/Assets/mobile/images/scontact-map.jpg) center center; background-size:cover;
         .container {padding:0 30px;}
         .contact-list {background:#0c9ed5; padding:15px; color:#fff; margin-top:15px; margin-bottom:35px; position:relative; margin-top:60px; padding-top:35px; padding-bottom:0; @include box-shadow(0px -2px 15px #555); @include border-radius(5px);
             &:before {width:154px; height:154px; background:url(/Assets/mobile/images/contact-plane.png) center center no-repeat; content:""; position:absolute; top: -154px; @include translate(50%, 50%); right: 50%; background-size: 50%;}
@@ -139,125 +238,7 @@
     }
 }
 
-.page-overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  background: rgba(0, 0, 0, 0.7); }
-  .page-overlay .overlay-content {
-    width: 92%;
-    height: 220px;
-    background: #fff;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    overflow: hidden; }
-    .page-overlay .overlay-content header {
-      background: #1daee4;
-      text-align: center;
-      color: #fff;
-      padding: 15px; }
-      .page-overlay .overlay-content header h4 {
-        margin: 0;
-        font-weight: 600; }
-      .page-overlay .overlay-content header .close {
-        color: #fff;
-        opacity: 1; }
-    .page-overlay .overlay-content div section {
-        /*display: inline-block;*/
-      padding: 15px; 
-      width:70%;
-      left: 33%;
-      top: 20%;
-      position: absolute;
-    }
-    .page-overlay .overlay-content div section p{
-        /*display: inline-block;*/
-      padding: 15px; 
-    }
-    .page-overlay .overlay-content div img{
-        padding-left: 15px;
-        vertical-align: 20%;
-        position: absolute;
-        top: 30%;
-    }
-
-    .page-overlay .overlay-content div div a{
-      display: inline-block;
-      width: 30%;
-      right: 20%;
-      bottom: 15%;
-      position: absolute;
-    }
-
-
-      /*.page-overlay .overlay-content section p {
-        top: 30%; 
-        position: absolute;
-        left: 40%;
-      }*/
-      .page-overlay .overlay-content section a {
-        cursor: pointer; }
-    .page-overlay .overlay-content footer {
-      position: absolute;
-      bottom: 15px;
-      left: 0;
-      width: 100%; }
  
-/*.page.page-account.page-login{
-    .form-wrapper{
-        margin-top: 30px;
-        margin-right:30px;
-    }
-}*/
-
-
-/*.page-resetpassword.page-password {
-    /*.form-wrapper {
-        padding: 0;        
-        border:1px solid #ccc;
-        .header-title{
-            //padding-left: 10px;
-            padding-top: 5px;
-            font-weight: bold;
-            background: #1daee4;
-            color: white;
-            margin-top: -15px;
-            height: 25px;
-            font-size: 12px;
-        }
-    }
-    .container{
-        p{
-            margin-bottom:30px;
-            padding-left: 10px;
-        }
-        .col-xs-offset-4{
-            margin-left: 15px;
-            float:left;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            width: 33.33%;
-            p {
-                width: 150px;
-                color: red;
-            }
-        }
-    }
-    .form-group{
-        width: 100%;
-    }
-
-}*/
 .page-password.page-check-order{
     .page__body{
         h4{
@@ -267,33 +248,7 @@
     }
 }
 
-.passwordform{
-    margin-left: 10px;
-    margin-right: 10px;
-    .resetpassword{padding-bottom:12px;
-        header {background:$color-main-blue; color:#fff; padding:12px; font-size:14px; font-weight:bold; position:relative;
-            .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
-                &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
-            }
-        }
-        .content {padding:12px; border:$border-default; border-top:none; background:#fff; 
-                  p{color: red; padding-left: 10px; margin-top:10px; margin-bottom:10px;}}
-        // if passenger form inactive
-        &.inactive {
-            header .toggle:after {content:"+";}
-            .passenger-content {display:none;}
-        }
-        h4{
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .form-reset{
-            padding-left:10px;
-            padding-right: 10px;
-            width: 50%;
-        }
-    }
-}
+
 
 .forgotpasswordtext {
     p {text-align:justify;}
@@ -303,5 +258,43 @@
     .cek-pesan-list {
         padding: 10px 15px 0;
         li {padding: 10px 0;}
+    }
+}
+
+.page-resetpassword {
+    .passwordform {
+        margin: 0 15px;
+        .resetpassword {margin: 15px 0 30px;
+            header {background:$color-main-blue; color:#fff; padding: 10px 20px; font-size:13px; font-weight:bold; position:relative;
+                .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
+                    &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
+                }
+            }
+            .content {padding:15px; border:$border-default; border-top:none; background:#fff; 
+                      p{color: red; padding-left: 10px; margin-top:10px; margin-bottom:10px;}}
+            // if passenger form inactive
+            &.inactive {
+                header .toggle:after {content:"+";}
+                .passenger-content {display:none;}
+            }
+            input.btn.btn-yellow.form-control {
+                height: 40px;
+                font-size: 15px
+            }
+            .red-text {color: red;}
+        }
+    }
+
+    .reset-success {margin: 0 30px;
+        img.lock {max-width: 30%;}
+        .success-txt {
+            font-size: 15px;
+            margin: 20px 0 15px;
+        }
+        .btn.btn-yellow {
+            font-size: 14px;
+            padding: 10px;
+            width: 100%;
+        }
     }
 }
