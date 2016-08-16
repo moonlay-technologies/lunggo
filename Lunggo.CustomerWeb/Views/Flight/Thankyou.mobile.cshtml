@@ -129,6 +129,18 @@
             case PaymentStatus.Challenged:
 
             <div ng-init="refresh()">
+                <header class="page__header">
+                    <h1 class="text-center section-title stripe">Sedang <span>Memverifikasi</span></h1>
+                </header>
+                <div class="thankyou-words">
+                    <div>Terima kasih telah memesan penerbangan di Travorama. Pembayaran Anda sedang diverifikasi oleh sistem kami.</div>
+                    @*<div class="ticket-print">
+                            <a href="@Url.Action("Eticket", "Flight", new { Model.RsvNo })" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>CEK E-TIKET</a>
+                        </div>
+                        <div>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</div>*@
+                </div>
+            </div>
+            @*<div ng-init="refresh()" ng-hide = "hide">
                 <div class="popup__wrapper active">
                     <div class="popup">
                         <header class="popup__header">
@@ -137,43 +149,43 @@
                         <div class="popup__body">
                             <div class="container_new">
                                 <span>
-                                    Pembayaran Anda sedang diverifikasi oleh sistem kami.
+                                    Mohon menunggu. Pembayaran Anda sedang diverifikasi oleh sistem kami.
                                 </span>
+                                <div class="text-center"><img src="/Assets/images/loading-image-dark.gif" width="50%" alt="loading" /></div>
+                            </div>
+                        </div>
+                        <div class="popup__footer">
+                            <div class="container_new">
+                                <a class="btn btn-block btn-yellow" ng-click ="seeDetail()">LIHAT DETAIL PEMESANAN</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-            </div>
+            </div>*@
 
                 break;
-
             case PaymentStatus.Settled:
             
+            <header class="page__header">
+                <h1 class="text-center section-title stripe">Terima <span>Kasih</span></h1>
+            </header>
             <div class="thankyou-words">
-                <header class="page__header">
-                    <h1 class="text-center section-title stripe">Terima <span>Kasih</span></h1>
-                </header>
-                <p>Terima kasih telah memesan penerbangan di Travorama. Anda dapat mengecek pemesanan Anda melalui tombol berikut.</p>
-                <div class="ticket-wrapper">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="ticket-print">
-                                <a href="@Url.Action("CekPemesanan","Home")" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>Cek Pemesanan</a>
-                                <p>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</p>
-                            </div>
-                        </div>
-                    </div>
+                <div>Terima kasih telah memesan penerbangan di Travorama. Anda dapat mengecek e-tiket Anda melalui tombol berikut.</div>
+                <div class="ticket-print">
+                    <a href="@Url.Action("Eticket", "Flight", new { Model.RsvNo })" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>CEK E-TIKET</a>
                 </div>
+                <div>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</div>
             </div>
                 break;
         }
 
-        @if (Model.Payment.Status == PaymentStatus.Settled)
+        @if (Model.Payment.Status == PaymentStatus.Settled || Model.Payment.Status == PaymentStatus.Pending ||
+            Model.Payment.Status == PaymentStatus.Challenged || Model.Payment.Status == PaymentStatus.Verifying)
         {
-            <div class="thankyou-words">
+            <div class="page__body">
                 <h3><b>DETAIL</b> PESANAN</h3>
-                <h4>Nomor Reservasi: <b>@Model.RsvNo</b></h4>
+                <span>Nomor Reservasi: <b>@Model.RsvNo</b></span>
                 <div class="summary summary--passenger">
                     <h3 class="summary__title"><b>DAFTAR</b> PENUMPANG</h3>
                     <div class="summary__body">
@@ -181,10 +193,9 @@
                             @foreach (var passenger in Model.Passengers)
                             {
                                 <li>
-                                    <h4>
-                                        <span>@EnumDisplay.Title(passenger.Title.GetValueOrDefault())</span>
-                                        @passenger.Name
-                                    </h4>
+                                    <b><span>@EnumDisplay.Title(passenger.Title.GetValueOrDefault())</span>
+                                    @passenger.Name</b>
+                                    
                                     <dl>
                                         <dt>Jenis Tiket</dt>
                                         @EnumDisplay.PassengerType(passenger.Type.GetValueOrDefault())
@@ -368,7 +379,7 @@
 
                 </div>
 
-                <div class="container">
+                <div class="tnc">
                     <small><i>Travorama selalu mementingkan keamanan transaksi Anda. Semua transaksi melalui Travorama.com dijamin 100% aman.</i></small>
                 </div>
             </div>

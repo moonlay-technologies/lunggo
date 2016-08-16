@@ -217,6 +217,7 @@ file : /Assets/travorama20/css/_page_index.scss
                 &:before {content:url(/Assets/images/reason-4-icon.png);}
             }
         }
+        &>.container {max-width: none;}
     }
     //*****
     // section popular
