@@ -1168,44 +1168,85 @@ app.controller('ResetpasswordController', ['$http', '$scope', '$rootScope', func
         $scope.form = {
             submitted: false,
             submitting: false,
-            lala: false,
+            succeed: false,
             userEmail: userEmail,
             code: code,
-            password: ''
+            password: '',
+            start: true,
         };
+        $('.text').keyup(updateCount);
+        $('.text').keydown(updateCount);
+
+        function updateCount() {
+            var cs = $(this).val().length;
+            if (cs < 6) {
+                $('#characters').text('Panjang password kurang dari 6 karakter');
+            } else {
+                $('#characters').text('');
+            }
+        }
+        $scope.errorMessage = '',
+        $scope.errorLog = '',
         $scope.submit = function () {
             if ($scope.trial > 3) {
                 $scope.trial = 0;
             }
             $scope.form.submitting = true;
             var authAccess = getAuthAccess();
-            if (authAccess == 2)
+            if (authAccess == 2 || authAccess == 1)
             {
                 $http({
-                    url: ResetPasswordMobileConfig.Url,
+                    url: ResetPasswordConfig.Url,
                     method: 'POST',
                     data: {
+                        Username: $scope.form.userEmail,
                         Password: $scope.form.password,
-                        ConfirmPassword: $scope.form.password,
-                        Email: $scope.form.userEmail,
                         Code: $scope.form.code
                     },
-                    headers: { 'Authorization': $scope.getFlightHeader }
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).then(function (returnData) {
-                    if (returnData.data.Status == 'Success') {
+                    if (returnData.data.status == '200') {
                         console.log('Success requesting reset password');
                         console.log(returnData);
                         $scope.form.submitting = false;
                         $scope.form.submitted = true;
+                        $scope.form.succeed = true;
+                        $scope.form.start = false;
                     }
                     else {
+                        switch (returnData.data.error) {
+                            case 'ERARST01':
+                                $scope.errorMessage = 'Pastikan Anda telah mendaftar di travorama untuk melakukan reset password ini';
+                                break;
+                            case 'ERARST02':
+                                $scope.errorLog = 'User Not Found';
+                                $scope.errorMessage = 'User ini tidak ditemukan';
+                                break;
+                            case 'ERARST03':
+                                $scope.errorLog = 'Failed to reset password';
+                                $scope.errorMessage = 'Password Anda tidak berhasil direset';
+                                break;
+                            case 'ERRGEN98':
+                                $scope.errorLog = 'Invalid JSON Format';
+                                $scope.errorMessage = 'Password Anda tidak berhasil direset';
+                                break;
+                            case 'ERRGEN99':
+                                $scope.errorLog = 'There is a problem on the server';
+                                $scope.errorMessage = 'Pastikan Anda telah mendaftar di travorama untuk melakukan reset password ini';
+                                break;
+                            default:
+                                $scope.errorMessage = 'Password Anda tidak berhasil direset';
+                        }
                         console.log(returnData.data.Description);
                         console.log(returnData);
-                        $scope.form.lala = true;
+                        $scope.form.succeed = false;
+                        $scope.form.start = false;
                         $scope.form.submitted = true;
+                        $scope.form.submitting = false;
                     }
                 }).catch(function (returnData) {
                     $scope.trial++;
+                    $scope.errorMessage = 'Mohon maaf. Password Anda tidak berhasil direset';
                     if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.submit();
@@ -1214,6 +1255,7 @@ app.controller('ResetpasswordController', ['$http', '$scope', '$rootScope', func
                         console.log('Failed requesting reset password');
                         $scope.form.submitting = false;
                         $scope.form.lala = true;
+                        $scope.abc = true;
                     }
                 });
             }
