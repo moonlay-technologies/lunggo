@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Lunggo.Framework.Extension;
 using Microsoft.Azure.NotificationHubs;
 
-namespace Lunggo.Framework.Notification
+namespace Lunggo.Framework.Notifications
 {
     public partial class NotificationService
     {
@@ -62,11 +60,11 @@ namespace Lunggo.Framework.Notification
                 return newRegistrationId;
             }
 
-            internal override bool SetTags(string registrationId, string notificationHandle, Platform platform, IEnumerable<string> tags)
+            internal override bool SetTags(string registrationId, string notificationHandle, Platform platform, Dictionary<string, string> tags)
             {
                 var registration = CreateRegistration(notificationHandle, platform);
                 registration.RegistrationId = registrationId;
-                registration.Tags = new HashSet<string>(tags);
+                registration.Tags = new HashSet<string>(SerializeTags(tags));
 
                 try
                 {
@@ -80,12 +78,14 @@ namespace Lunggo.Framework.Notification
                 return true;
             }
 
-            internal override bool AddTags(string registrationId, string notificationHandle, Platform platform, IEnumerable<string> tags)
+            internal override bool AddTags(string registrationId, string notificationHandle, Platform platform, Dictionary<string, string> tags)
             {
                 var registration = CreateRegistration(notificationHandle, platform);
                 registration.RegistrationId = registrationId;
                 var oldRegistration = _notificationHubClient.GetRegistrationAsync<RegistrationDescription>(registrationId).Result;
-                registration.Tags = new HashSet<string>(oldRegistration.Tags.Concat(tags).Distinct());
+                registration.Tags =
+                    new HashSet<string>(
+                        oldRegistration.Tags.Concat(SerializeTags(tags)).Distinct());
 
                 try
                 {
@@ -104,13 +104,64 @@ namespace Lunggo.Framework.Notification
                 _notificationHubClient.DeleteRegistrationAsync(registrationId).Wait();
             }
 
+            internal override void PushNotification(Dictionary<string, string> tags, Notification notification)
+            {
+                _notificationHubClient.SendAppleNativeNotificationAsync(ConstructApplePayload(notification), SerializeTags(tags));
+                _notificationHubClient.SendGcmNativeNotificationAsync(ConstructGcmPayload(notification), SerializeTags(tags));
+            }
+
+            internal override void PushSilentNotification(Dictionary<string, string> tags, object data)
+            {
+                _notificationHubClient.SendAppleNativeNotificationAsync(ConstructApplePayload(data), SerializeTags(tags));
+                _notificationHubClient.SendGcmNativeNotificationAsync(ConstructGcmPayload(data), SerializeTags(tags));
+            }
+
+            private static string ConstructGcmPayload(Notification notification)
+            {
+                var payload = new
+                {
+                    title = notification.Title,
+                    message = notification.Message,
+                    image = notification.Image,
+                    icon = notification.Icon,
+                    data = notification.CustomData
+                };
+                return payload.Serialize();
+            }
+
+            private static string ConstructGcmPayload(object data)
+            {
+                var payload = new {data};
+                return payload.Serialize();
+            }
+
+            private static string ConstructApplePayload(Notification notification)
+            {
+                var payload = new
+                {
+                    aps = new
+                    {
+                        alert = new
+                        {
+                            title = notification.Title,
+                            body = notification.Message
+                        }
+                    },
+                    data = notification.CustomData
+                };
+                return payload.Serialize();
+            }
+
+            private static string ConstructApplePayload(object data)
+            {
+                var payload = new {data};
+                return payload.Serialize();
+            }
+
             private static RegistrationDescription CreateRegistration(string notificationHandle, Platform platform)
             {
                 switch (platform)
                 {
-                    case Platform.WindowsPhone:
-                        return new MpnsRegistrationDescription(notificationHandle);
-                        break;
                     case Platform.Ios:
                         return new AppleRegistrationDescription(notificationHandle);
                         break;
@@ -120,6 +171,11 @@ namespace Lunggo.Framework.Notification
                     default:
                         return null;
                 }
+            }
+
+            private static IEnumerable<string> SerializeTags(Dictionary<string, string> tags)
+            {
+                return tags.Select(tag => tag.Key + ":" + tag.Value);
             }
         }
     }
