@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Lunggo.Framework.Notification
+namespace Lunggo.Framework.Notifications
 {
     public partial class NotificationService
     {
@@ -10,7 +10,7 @@ namespace Lunggo.Framework.Notification
 
         private NotificationService()
         {
-            
+
         }
         public void Init(string connString, string hubName)
         {
@@ -31,13 +31,13 @@ namespace Lunggo.Framework.Notification
         }
 
         public bool SetTags(string registrationId, string notificationHandle, Platform platform,
-            IEnumerable<string> tags)
+            Dictionary<string, string> tags)
         {
             return Client.SetTags(registrationId, notificationHandle, platform, tags);
         }
 
         public bool AddTags(string registrationId, string notificationHandle, Platform platform,
-            IEnumerable<string> tags)
+            Dictionary<string, string> tags)
         {
             return Client.AddTags(registrationId, notificationHandle, platform, tags);
         }
@@ -45,6 +45,16 @@ namespace Lunggo.Framework.Notification
         public void DeleteRegistration(string registrationId)
         {
             Client.DeleteRegistration(registrationId);
+        }
+
+        public void PushNotification(Dictionary<string, string> tags, Notification notification)
+        {
+            Client.PushNotification(tags, notification);
+        }
+
+        public void PushSilentNotification(Dictionary<string, string> tags, object data)
+        {
+            Client.PushSilentNotification(tags, data);
         }
     }
 }
