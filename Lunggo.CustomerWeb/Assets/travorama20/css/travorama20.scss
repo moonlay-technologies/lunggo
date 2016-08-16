@@ -50,7 +50,7 @@ $transition-default:all 0.5s;
 /*--------------------*/
 /* general class */
 html {height:100%;}
-body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9;}
+body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; padding-bottom: 415px;}
 
 hr {border-top:$border-default;}
 
