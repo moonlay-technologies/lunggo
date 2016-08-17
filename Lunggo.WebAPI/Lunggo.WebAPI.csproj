@@ -279,8 +279,7 @@
     <Compile Include="ApiSrc\Auxiliary\Model\NewsletterSubscribeApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\Logic\DeleteRegistrationLogic.cs" />
     <Compile Include="ApiSrc\Notification\Logic\PlatformMapper.cs" />
-    <Compile Include="ApiSrc\Notification\Logic\AddTagsLogic.cs" />
-    <Compile Include="ApiSrc\Notification\Logic\SetTagsLogic.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\UpdateRegistrationLogic.cs" />
     <Compile Include="ApiSrc\Notification\Logic\RegisterDeviceLogic.cs" />
     <Compile Include="ApiSrc\Notification\Model\RegisterDeviceApiResponse.cs" />
     <Compile Include="ApiSrc\Notification\Model\RegisterDeviceApiRequest.cs" />
