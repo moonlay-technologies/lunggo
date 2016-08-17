@@ -587,13 +587,17 @@ function flightPageSearchFormFunctions() {
     $('.switch-destination').click(function () {
         var prevOrigin = $('.form-flight-origin').val();
         var prevOriginCode = flightPageSearchFormParam.origin;
+        var prevOriginCity = flightPageSearchFormParam.originCity;
         var prevDestination = $('.form-flight-destination').val();
         var prevDestinationCode = flightPageSearchFormParam.destination;
+        var prevDestinationCity = flightPageSearchFormParam.destinationCity;
 
         $('.form-flight-origin').val(prevDestination);
         $('.form-flight-destination').val(prevOrigin);
         flightPageSearchFormParam.origin = prevDestinationCode;
         flightPageSearchFormParam.destination = prevOriginCode;
+        flightPageSearchFormParam.originCity = prevDestinationCity;
+        flightPageSearchFormParam.destinationCity = prevOriginCity;
     });
 
     $('.form-flight').on('keyup keypress', function (e) {

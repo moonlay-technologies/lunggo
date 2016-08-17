@@ -25,79 +25,89 @@
     <div class="page__body page-loading" ng-class="{'page-loaded' : pageLoaded}">
         <div class="page-overlay" ng-show="User.Message">
             <div class="overlay-content">
-                <div ng-show="User.Message == 'NotRegistered'">
-                    <header>
-                        <h4>Anda Belum Terdaftar di Travorama</h4>
+                <div class="overlay-container" ng-show="User.Message == 'NotRegistered'">
+                    <header class="overlay-header">
+                        <span>Anda Belum Terdaftar di Travorama</span>
                     </header>
-                    <img src="/Assets/images/sad-image.png" alt="Registered">
-                    <section>
-                        <p>
-                            Alamat e-mail Anda belum terdaftar dalam sistem kami.
-                            <a href="@Url.Action("Register", "Account")">Klik di sini</a> untuk mendaftar di Travorama.
-                        </p>
-                    </section>
-                    <div class="text-center">
-                        <a class="btn btn-yellow" ng-click="closeOverlay()">TUTUP</a>
+                    <div class="overlay-body clearfix">
+                        <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Registered"></div>
+                        <div class="col-xs-8">
+                            <span>
+                                Alamat e-mail Anda belum terdaftar dalam sistem kami.
+                                <a href="@Url.Action("Register", "Account")">Klik di sini</a> untuk mendaftar di Travorama.
+                            </span>
+                        </div>
                     </div>
-                </div>
-
-                <div ng-show="User.Message == 'InvalidInputData' || User.Message == 'Failed'">
-                    <header>
-                        <h4>Email / Password Salah</h4>
-                    </header>
-                    <img src="/Assets/images/sad-image.png" alt="Registered">
-                    <section>
-                        <p>
-                            Cek kembali alamat e-mail dan password Anda.
-                        </p>
-                    </section>
-                    <div class="text-center">
-                        <a class="btn btn-yellow" ng-click="closeOverlay()">TUTUP</a>
-                    </div>
-                </div>
-
-                <div ng-show="User.Message == 'AlreadyRegisteredButUnconfirmed' && !User.Resubmitted">
-                    <header>
-                        <h4>Akun Anda Belum Aktif</h4>
-                    </header>
-                    <img src="/Assets/images/sad-image.png" alt="Registered">
-                    <section>
-                        <p>
-                            Cek kembali alamat e-mail Anda untuk mengaktifkan akun atau
-                            <a ng-click="User.Reconfirm()">klik untuk kirim pesan konfirmasi</a>.
-                        </p>
-                    </section>
-                    <div class="text-center">
+                    <div class="overlay-footer text-center">
                         <a class="btn btn-yellow" ng-click="closeOverlay()">TUTUP</a>
                     </div>
                 </div>
                 
-                <div ng-show="User.Resubmitted">
-                    <header>
-                        <h4>E-mail Konfirmasi Berhasil Dikirim</h4>
+                <div class="overlay-container" ng-show="User.Message == 'InvalidInputData' || User.Message == 'Failed'">
+                    <header class="overlay-header">
+                        <span>Email / Password Salah</span>
                     </header>
-                    <img src="/Assets/images/smile-image.png" alt="Not Confirmed">
-                    <section>
-                        <p>
-                            Pesan untuk konfirmasi ulang telah terkirim ke e-mail Anda.
-                        </p>
-                    </section>
-                    <div class="text-center">
-                        <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = '';  User.Resubmitted = false;">TUTUP</a>
+                    <div class="overlay-body clearfix">
+                        <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Registered"></div>
+                        <div class="col-xs-8">
+                            <span>
+                                Cek kembali alamat e-mail dan password Anda.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="overlay-footer text-center">
+                        <a class="btn btn-yellow" ng-click="closeOverlay()">TUTUP</a>
                     </div>
                 </div>
 
-                <div ng-show="User.Message == 'AlreadyConfirmed'">
-                    <header>
-                        <h4>Akun Anda Telah Aktif</h4>
+                <div class="overlay-container" ng-show="User.Message == 'AlreadyRegisteredButUnconfirmed' && !User.Resubmitted">
+                    <header class="overlay-header">
+                        <span>Akun Anda Belum Aktif</span>
                     </header>
-                    <img src="/Assets/images/smile-image.png" alt="Registered">
-                    <section>
-                        <p>
-                            Silakan masuk menggunakan e-mail dan password Anda.
-                        </p>
-                    </section>
-                    <div class="text-center">
+                    <div class="overlay-body clearfix">
+                        <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Registered"></div>
+                        <div class="col-xs-8">
+                            <span>
+                                Cek kembali alamat e-mail Anda untuk mengaktifkan akun atau
+                                <a ng-click="User.Reconfirm()">klik untuk kirim pesan konfirmasi</a>.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="overlay-footer text-center">
+                        <a class="btn btn-yellow" ng-click="closeOverlay()">TUTUP</a>
+                    </div>
+                </div>
+
+                <div class="overlay-container" ng-show="User.Resubmitted">
+                    <header class="overlay-header">
+                        <span>E-mail Konfirmasi Berhasil Dikirim</span>
+                    </header>
+                    <div class="overlay-body clearfix">
+                        <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Registered"></div>
+                        <div class="col-xs-8">
+                            <span>
+                                Pesan untuk konfirmasi ulang telah terkirim ke e-mail Anda.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="overlay-footer text-center">
+                        <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = '';  User.Resubmitted = false;">TUTUP</a>
+                    </div>
+                </div>
+                
+                <div class="overlay-container" ng-show="User.Message == 'AlreadyConfirmed'">
+                    <header class="overlay-header">
+                        <span>Akun Anda Telah Aktif</span>
+                    </header>
+                    <div class="overlay-body clearfix">
+                        <div class="col-xs-4"><img src="/Assets/images/smile-image.png" alt="Registered"></div>
+                        <div class="col-xs-8">
+                            <span>
+                                Silakan masuk menggunakan e-mail dan password Anda.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="overlay-footer text-center">
                         <a class="btn btn-yellow" ng-click="closeOverlay()">TUTUP</a>
                     </div>
                 </div>

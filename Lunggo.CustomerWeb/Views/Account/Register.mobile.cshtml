@@ -26,84 +26,106 @@
     <div class="page__body page-loading" ng-class="{'page-loaded' : pageLoaded}">
         <div class="page-overlay" ng-show="User.Sent">
             <div class="overlay-content">
-                <div ng-show="!User.Registered">
-                    <header>
-                        <h4>Terima Kasih</h4>
+                <div class="overlay-container" ng-show="!User.Registered">
+                    <header class="overlay-header">
+                        <span>Terima Kasih</span>
                     </header>
-                    <img src="/Assets/images/smile-image.png" alt="Registered">
-                    <section>
-                        <p>Terima kasih sudah mendaftar di Travorama. Silakan cek e-mail Anda untuk verifikasi alamat e-mail Anda.</p>
-                    </section>
-                    <div class="text-center">
+                    <div class="overlay-body clearfix">
+                        <div class="col-xs-4"><img src="/Assets/images/smile-image.png" alt="Registered"></div>
+                        <div class="col-xs-8">
+                            <span>
+                                Terima kasih sudah mendaftar di Travorama. Silakan cek e-mail Anda untuk verifikasi alamat e-mail Anda.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="overlay-footer text-center">
                         <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = '';">TUTUP</a>
                     </div>
                 </div>
                 
-                <div ng-show="User.Registered && !User.EmailConfirmed && !User.Resubmitted">
-                    <header>
-                        <h4>E-mail Belum Terkonfirmasi</h4>
+                <div class="overlay-container" ng-show="User.Registered && !User.EmailConfirmed && !User.Resubmitted">
+                    <header class="overlay-header">
+                        <span>E-mail Belum Terkonfirmasi</span>
                     </header>
-                    <img src="/Assets/images/sad-image.png" alt="Not Confirmed">
-                    <section>
-                        <p>
-                            E-mail Anda belum terkonfirmasi. Silakan cek e-mail Anda untuk konfirmasi atau
-                            <a ng-click="User.Reconfirm()">klik untuk kirim pesan konfirmasi</a>.
-                        </p>
-                    </section>
-                    <div class="text-center">
+                    <div class="overlay-body clearfix">
+                        <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Registered"></div>
+                        <div class="col-xs-8">
+                            <span>
+                                E-mail Anda belum terkonfirmasi. Silakan cek e-mail Anda untuk konfirmasi atau
+                                <a ng-click="User.Reconfirm()">klik untuk kirim pesan konfirmasi</a>.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="overlay-footer text-center">
                         <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = ''; User.Name = ''; ">TUTUP</a>
                     </div>
                 </div>
                 
-                <div ng-show="User.Resubmitted">
-                    <header>
-                        <h4>E-mail Konfirmasi Berhasil Dikirim</h4>
+                <div class="overlay-container" ng-show="User.Resubmitted">
+                    <header class="overlay-header">
+                        <span>E-mail Konfirmasi Berhasil Dikirim</span>
                     </header>
-                    <img src="/Assets/images/smile-image.png" alt="Not Confirmed">
-                    <section>
-                        <p>
-                            Pesan untuk konfirmasi ulang telah terkirim ke e-mail Anda.
-                        </p>
-                    </section>
-                    <div class="text-center">
+                    <div class="overlay-body clearfix">
+                        <div class="col-xs-4"><img src="/Assets/images/smile-image.png" alt="Not Confirmed"></div>
+                        <div class="col-xs-8">
+                            <span>
+                                Pesan untuk konfirmasi ulang telah terkirim ke e-mail Anda.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="overlay-footer text-center">
                         <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = ''; User.Name = ''; User.ReconfirmSent()">TUTUP</a>
                     </div>
                 </div>
                 
-                <div ng-show="User.Registered && User.EmailConfirmed">
-                    <header>
-                        <h4>Terima Kasih</h4>
+                <div class="overlay-container" ng-show="User.Registered && User.EmailConfirmed">
+                    <header class="overlay-header">
+                        <span>E-mail Konfirmasi Berhasil Dikirim</span>
                     </header>
-                    <img src="/Assets/images/smile-image.png" alt="Already Registered">
-                    <section>
-                        <p>Anda telah terdaftar di Travorama. Silakan masuk ke halaman akun Anda.</p>
-                    </section>
-                    <div class="text-center">
+                    <div class="overlay-body clearfix">
+                        <div class="col-xs-4"><img src="/Assets/images/smile-image.png" alt="Already Registered"></div>
+                        <div class="col-xs-8">
+                            <span>
+                                Anda telah terdaftar di Travorama. Silakan masuk ke halaman akun Anda.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="overlay-footer text-center">
                         <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = ''; User.Name = ''; User.ReconfirmSent()">TUTUP</a>
                     </div>
                 </div>
-                <div ng-show="User.Error">
-                    <header>
-                        <h4>Mohon Maaf</h4>
+
+                <div class="overlay-container" ng-show="User.Error">
+                    <header class="overlay-header">
+                        <span>Mohon Maaf</span>
                     </header>
-                    <img src="/Assets/images/sad-image.png" alt="Error">
-                    <section>
-                        <p>Mohon maaf, permintaan Anda tidak dapat diproses.</p>
-                    </section>
-                    <div class="text-center">
+                    <div class="overlay-body clearfix">
+                        <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Error"></div>
+                        <div class="col-xs-8">
+                            <span>
+                                Mohon maaf, permintaan Anda tidak dapat diproses.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="overlay-footer text-center">
                         <a class="btn btn-yellow" ng-click="closeOverlay(); User.Email = ''; User.Name = ''; User.ReconfirmSent()">TUTUP</a>
                     </div>
                 </div>
-                <div ng-show="User.Invalid">
-                    <header>
-                        <h4>Format Alamat E-mail Tidak Tepat</h4>
+                
+                <div class="overlay-container" ng-show="User.Invalid">
+                    <header class="overlay-header">
+                        <span>Format Alamat E-mail Tidak Tepat</span>
                     </header>
-                    <img src="/Assets/images/sad-image.png" alt="Error">
-                    <section>
-                        <p>Format alamat e-mail yang Anda masukkan tidak tepat. Silakan masukkan alamat e-mail kembali 
-                        dengan format name@domain.com</p>
-                    </section>
-                    <div class="text-center">
+                    <div class="overlay-body clearfix">
+                        <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Error"></div>
+                        <div class="col-xs-8">
+                            <span>
+                                Format alamat e-mail yang Anda masukkan tidak tepat. Silakan masukkan alamat e-mail kembali
+                                dengan format name@domain.com
+                            </span>
+                        </div>
+                    </div>
+                    <div class="overlay-footer text-center">
                         <a class="btn btn-yellow" href="@Url.Action("Login", "Account")">MASUK</a>
                     </div>
                 </div>
