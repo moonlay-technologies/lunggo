@@ -364,40 +364,60 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     $scope.passengers[i].idNumber = '';
                 }
 
+                $scope.passengers[i].birth.full = $scope.passengers[i].birth.year
+                        + '/' + ('0' + (parseInt($scope.passengers[i].birth.month) + 1)).slice(-2)
+                        + '/' + ('0' + $scope.passengers[i].birth.date).slice(-2);
+
                 // passport expiry date
                 $scope.passengers[i].passport.expire.full = $scope.passengers[i].passport.expire.year + '/' + ('0'
                     + (parseInt($scope.passengers[i].passport.expire.month) + 1)).slice(-2) + '/'
                     + ('0' + $scope.passengers[i].passport.expire.date).slice(-2);
 
                 // birthdate
-                $scope.passengers[i].birth.full = $scope.passengers[i].birth.year
-                    + '/' + ('0' + (parseInt($scope.passengers[i].birth.month) + 1)).slice(-2) + '/'
-                    + ('0' + $scope.passengers[i].birth.date).slice(-2);
+                //$scope.passengers[i].birth.full = $scope.passengers[i].birth.year
+                //    + '/' + ('0' + (parseInt($scope.passengers[i].birth.month) + 1)).slice(-2) + '/'
+                //    + ('0' + $scope.passengers[i].birth.date).slice(-2);
 
-                if ($scope.birthDateRequired) {
+                $scope.paxData = 
+                    $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", ' +
+                                        '"title":"' + $scope.passengers[i].title + '" , ' +
+                                        '"name":"' + $scope.passengers[i].name + '" ';
+
+
+                if ($scope.CheckoutConfig.BirthDateRequired) {
                     $scope.paxData = $scope.paxData + ', "dob":"' + $scope.passengers[i].birth.full + '"';
                 }
 
-                if ($scope.nationalityRequired) {
-                    $scope.paxData = $scope.paxData + ', "nationality":"' + $scope.passengers[i].passport.country + '"';
+                if ($scope.CheckoutConfig.NationalityRequired) {
+                    $scope.paxData = $scope.paxData + ', "nationality":"' + $scope.passengers[i].nationality + '"';
                 }
 
-                if (!$scope.CheckoutConfig.PassportRequired) {
-                    if (i != $scope.passengers.length - 1) {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" },';
-                    }
-                    else {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name +  '" }';
-                    }
+                if ($scope.CheckoutConfig.PassportRequired) {
+                    $scope.paxData = $scope.paxData + ', "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" ';
                 }
-                else {
-                    if (i != $scope.passengers.length - 1) {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" },';
-                    }
-                    else {
-                        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" }';
-                    }
+
+                if (i != $scope.passengers.length - 1) {
+                    $scope.paxData = $scope.paxData + '}' + ',';
+                } else {
+                    $scope.paxData = $scope.paxData + '}';
                 }
+
+                //if (!$scope.CheckoutConfig.PassportRequired) {
+                //    if (i != $scope.passengers.length - 1) {
+                //        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" },';
+                //    }
+                //    else {
+                //        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name +  '" }';
+                //    }
+                //}
+                //else {
+                //    if (i != $scope.passengers.length - 1) {
+                //        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" },';
+                //    }
+                //    else {
+                //        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" }';
+                //    }
+                //}
                 //$scope.book.postData = $scope.book.postData
                 //    + (',"Passengers[' + i + '].Type": "' + $scope.passengers[i].type
                 //        + '", "Passengers[' + i + '].Title": "' + $scope.passengers[i].title + '", "Passengers[' + i + '].FirstName":"'
@@ -412,8 +432,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             }
             $scope.paxData = $scope.paxData + ']';
             $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + '}';
+            console.log($scope.book.postData);
             $scope.book.postData = JSON.parse($scope.book.postData);
-
             console.log($scope.book.postData);
 
             //Check Authorization

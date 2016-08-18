@@ -473,7 +473,7 @@
                         </div><!-- .overlay--flight-detail -->
                     }
 
-                    <form name="finalForm" ng-submit="book.send()">
+                    <form name="finalForm" >
 
                         <div class="hidden">
                             <input type="text" name="Token" value="" ng-model="token" />
@@ -512,12 +512,9 @@
                             <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
                         </div>
 
-                        <button class="btn btn-grey form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(2)">KEMBALI</button>
-                        <button type="submit" class="btn btn-yellow form-control" ng-disabled="book.booking">PESAN</button>
-                    
-                        <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
-                        <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
 
+                        <button class="btn btn-grey form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(2)">KEMBALI</button>
+                        <button type="submit" class="btn btn-yellow form-control" ng-disabled="book.booking" ng-click ="book.send()">PESAN</button>
                     </form><!-- finalForm -->
 
                     <form action="" method="post" name="submitForm" id="rsvno" class="hidden">

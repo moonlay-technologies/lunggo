@@ -45,61 +45,61 @@
 }
 @section PageJS{
     <script>
-        var langCode = 'en';
-        var paymentTimeout = '';
-        // development only start
-        paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("u")');
-        console.log("TIME OUT"+paymentTimeout);
-        // countdown timer
-        $('.timer').countdown(paymentTimeout, function(event) {
-            $('.timer .hour').text(event.strftime('%H'));
-            $('.timer .minute').text(event.strftime('%M'));
-            $('.timer .second').text(event.strftime('%S'));
-        });
+    var langCode = 'en';
+    var paymentTimeout = '';
+    // development only start
+    paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("u")');
+    console.log("TIME OUT"+paymentTimeout);
+    // countdown timer
+    $('.timer').countdown(paymentTimeout, function(event) {
+        $('.timer .hour').text(event.strftime('%H'));
+        $('.timer .minute').text(event.strftime('%M'));
+        $('.timer .second').text(event.strftime('%S'));
+    });
 
-        // date selector
-        $('.date-picker').datepicker({
-            minDate: new Date()
-        });
-        var langCode = '@OnlineContext.GetActiveLanguageCode()';
-        var currentPage = 1;
-        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
-        //var transferWindow = [ '1100', '1124' ];
-        // messages
-        var message = '@ViewBag.Message';
-        // flight detail
-        var rsvNo = @Model.RsvNo;
-        var paymentDetail = '';
-        var flightDetail = '';
-        var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
-        var price = @Model.Reservation.Itinerary.NetTotalFare;
-
+    // date selector
+    $('.date-picker').datepicker({
+        minDate: new Date()
+    });
+    var langCode = '@OnlineContext.GetActiveLanguageCode()';
+    var currentPage = 1;
+    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
+    //var transferWindow = [ '1100', '1124' ];
+    // messages
+    var message = '@ViewBag.Message';
+    // flight detail
+    var rsvNo = @Model.RsvNo;
+    var paymentDetail = '';
+    var flightDetail = '';
+    var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
+    var price = @Model.Reservation.Itinerary.NetTotalFare;
+        var redirectionUrl = @Model.Reservation.Payment.RedirectionUrl;
         var departureDate;
         @if (Model.Reservation.Itinerary.Trips != null)
         {
             if (Model.Reservation.Itinerary.Trips.Count == 2)
             {
                 @:departureDate = '@Model.Reservation.Itinerary.Trips[1].DepartureDate';
-                                                    }
+                                                        }
             else
             {
                 @:departureDate = '@Model.Reservation.Itinerary.Trips[0].DepartureDate';
-                                                    }
+                                                        }
         }
 
-        // change current page
-        if (getParam('page') == 4) {
-            currentPage = getParam('page');
-        } else {
-            currentPage = 1;
-        }
-        var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
-        var buyerInfo = {
-            fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
-            countryCode : '@User.Identity.GetCountryCd()',
-            phone: '@User.Identity.GetPhoneNumber()',
-            email: '@User.Identity.GetEmail()'
-        };
+    // change current page
+    if (getParam('page') == 4) {
+        currentPage = getParam('page');
+    } else {
+        currentPage = 1;
+    }
+    var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
+    var buyerInfo = {
+        fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+        countryCode : '@User.Identity.GetCountryCd()',
+        phone: '@User.Identity.GetPhoneNumber()',
+        email: '@User.Identity.GetEmail()'
+    };
 
     </script>
     <!-- angular controller -->
