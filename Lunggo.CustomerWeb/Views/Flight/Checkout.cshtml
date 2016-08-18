@@ -572,15 +572,15 @@
                                     <div class="widget-content">
                                         <dl>
                                             <dt>Tiket Dewasa x{{adultCount}}</dt>
-                                            <dd>Rp {{adultFare | number:0}}</dd>
+                                            <dd>Rp {{adultFare * adultCount | number:0}}</dd>
                                         </dl>
                                         <dl ng-if="childCount > 0">
                                             <dt>Tiket Anak x{{childCount}}</dt>
-                                            <dd>Rp {{childFare | number:0}}</dd>
+                                            <dd>Rp {{childFare * childCount | number:0}}</dd>
                                         </dl>
                                         <dl ng-if="infantCount > 0">
                                             <dt>Tiket Bayi x{{infantCount}}</dt>
-                                            <dd>Rp {{infantFare| number:0}}</dd>
+                                            <dd>Rp {{infantFare * infantCount | number:0}}</dd>
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>

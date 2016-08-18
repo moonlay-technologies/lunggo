@@ -189,7 +189,7 @@ file : /Assets/travorama20/css/_page_index.scss
     .section-reason {position:relative; overflow:hidden;
         &>.container>img {max-width:100%; height:auto; position:relative; z-index:2;}
         &:before {content:""; width:50%; height:100%; background:#032e55; position:absolute; top:0; left:0; z-index:1;}
-        &:after {@extend &:before; left:50%; background:#7fdafc;}
+        &:after {@extend .section-reason:before; left:50%; background:#7fdafc;}
         .reason {color:#fff; float:left; width:25%; padding:30px; height:170px;
             h3 {margin:0; position:relative; margin-bottom:15px; letter-spacing:0; line-height:120%;
                 &:before {position:absolute; left:0; top:0;}
@@ -320,10 +320,10 @@ file : /Assets/travorama20/css/_page_index.scss
         .calendar-body {position:relative;
             .home-nav {background:#999; height:25px; width:100%; display:block; position:absolute; top:0; left:0;
                 .nav-prev {width:11px; height:19px; background-image:url(/Assets/images/calendar-nav-sprite.png); background-position:0 0; background-repeat:no-repeat; background-size:200%; display:block; position:absolute; top:4px; left:15px;}
-                .nav-next {@extend &.nav-prev; right:15px; left:auto; background-position:-11px 0;}
+                .nav-next {@extend home-nav.nav-prev !optional; right:15px; left:auto; background-position:-11px 0;}
             }
             .ui-datepicker-prev {position:absolute; top:0; left:0; display:inline; width:auto; display:none;}
-            .ui-datepicker-next {@extend &.ui-datepicker-prev; left:auto; right:0;}
+            .ui-datepicker-next {@extend .calendar-body.ui-datepicker-prev !optional; left:auto; right:0;}
         }
     }
 

@@ -82,7 +82,7 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
-
+     
 }
 
 @section PageJS{
@@ -465,7 +465,7 @@
             <div class="container">
                 <div class="flight-review">
                     <header class="flight-review-header">
-                        <h3>Rincian Penerbangan <span class="pull-right close-review" ng-click="closeOverview()">X</span></h3>
+                        <h3>Rincian Penerbangan <span class="pull-right close-review close-price-detail" ng-click="closeOverview()">X</span></h3>
                     </header>
                     <section class="flight-review-summary">
                         <div class="summary-left">
@@ -547,6 +547,11 @@
                                             <img ng-src="{{segment.airlineLogoUrl}}" alt="{{segment.airlineName}}" class="segment-airline-logo" />
                                             <h5 class="segment-airline-name">{{segment.airlineName}}</h5>
                                             <h5 class="segment-airline-number">{{segment.airlineCd}}-{{segment.flightNo}}</h5>
+                                            <div class="segment-detail flight-facility" ng-show="{{segment.meal || segment.baggage || segment.tax}}">
+                                                <span ng-show="segment.meal" class="flight-meal"></span>
+                                                <span ng-show="segment.baggage" class="flight-baggage">{{segment.baggage}}</span>
+                                                <span ng-show="segment.tax" class="flight-tax"></span>
+                                            </div>
                                         </div>
                                         <div class="segment-right">
                                             <div class="segment-departure">
