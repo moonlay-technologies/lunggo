@@ -36,7 +36,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
                     };
 
                 var notif = NotificationService.GetInstance();
-                var succeeded = notif.AddTags(request.RegistrationId, request.Handle, platform, request.Tags);
+                var succeeded = notif.UpdateTags(request.RegistrationId, request.Handle, platform, request.Tags);
                 if (!succeeded)
                     return new FlightIssuanceApiResponse
                     {

@@ -33,7 +33,7 @@ namespace Lunggo.Framework.Notifications
         public bool UpdateTags(string registrationId, string notificationHandle, Platform platform,
             Dictionary<string, string> tags)
         {
-            return Client.UdpateTags(registrationId, notificationHandle, platform, tags);
+            return Client.UpdateTags(registrationId, notificationHandle, platform, tags);
         }
 
         public void DeleteRegistration(string registrationId)

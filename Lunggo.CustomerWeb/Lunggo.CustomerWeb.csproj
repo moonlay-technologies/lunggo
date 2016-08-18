@@ -231,25 +231,6 @@
     <Compile Include="Areas\Api\Models\AccountApiResponseModel.cs" />
     <Compile Include="Areas\Api\Models\AccountResponseModel.cs" />
     <Compile Include="Areas\Api\Models\ResetPasswordViewModel.cs" />
-    <Compile Include="Areas\UW100\Controllers\UW100RouterController.cs" />
-    <Compile Include="Areas\UW100\Controllers\UW100SearchController.cs" />
-    <Compile Include="Areas\UW100\Logic\UW100SearchLogic.cs" />
-    <Compile Include="Areas\UW100\Models\UW100SearchResultViewModel.cs" />
-    <Compile Include="Areas\UW100\Models\UW100SearchParamViewModel.cs" />
-    <Compile Include="Areas\UW100\UW100AreaRegistration.cs" />
-    <Compile Include="Areas\UW200\Controllers\UW200HotelDetaillalaController.cs" />
-    <Compile Include="Areas\UW200\Logic\UW200GetHotelDetail.cs" />
-    <Compile Include="Areas\UW200\Logic\UW200GetPlacesNearHotel.cs" />
-    <Compile Include="Areas\UW200\Models\UW200PlacesNearHotelViewModel.cs" />
-    <Compile Include="Areas\UW200\Models\UW200HotelDetailViewModel.cs" />
-    <Compile Include="Areas\UW200\UW200AreaRegistration.cs" />
-    <Compile Include="Areas\UW300\Controllers\UW300RoomDetailController.cs" />
-    <Compile Include="Areas\UW300\UW300AreaRegistration.cs" />
-    <Compile Include="Areas\UW400\Controllers\UW400BookingController.cs" />
-    <Compile Include="Areas\UW400\Logic\UW400BookingLogic.cs" />
-    <Compile Include="Areas\UW400\Logic\UW400SaveOrderSessionLogic.cs" />
-    <Compile Include="Areas\UW400\Models\UW400BookViewModel.cs" />
-    <Compile Include="Areas\UW400\UW400AreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -291,16 +272,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="WebSrc\Common\Constant\CustomerWebConstant.cs" />
     <Compile Include="WebSrc\UW000\UW000TopPageController.cs" />
-    <Compile Include="WebSrc\UW100\Logic\HotelSearchLogic.cs" />
-    <Compile Include="WebSrc\UW100\Object\UW100HotelSearchRequest.cs" />
-    <Compile Include="WebSrc\UW100\Object\UW100HotelSearchResponse.cs" />
-    <Compile Include="WebSrc\UW100\UW100HotelSearchController.cs" />
-    <Compile Include="WebSrc\UW200\Logic\HotelDetailLogic.cs" />
-    <Compile Include="WebSrc\UW200\Model\UW200HotelDetail.cs" />
-    <Compile Include="WebSrc\UW200\Object\UW200HotelDetailRequest.cs" />
-    <Compile Include="WebSrc\UW200\Object\UW200HotelDetailResponse.cs" />
-    <Compile Include="WebSrc\UW200\UW200HotelDetailController.cs" />
-    <Compile Include="WebSrc\UW300\UW300HotelBookingFormController.cs" />
     <Compile Include="WebSrc\UW600\UW610\Logic\ChangeProfileLogic.cs" />
     <Compile Include="WebSrc\UW600\UW610\Model\UW610ChangePofile.cs" />
     <Compile Include="WebSrc\UW600\UW610\Object\UW610ChangeProfileRespone.cs" />
@@ -870,7 +841,6 @@
     <Content Include="Assets\images\loading-new.gif" />
     <Content Include="Assets\images\loading-plane.png" />
     <Content Include="Assets\images\loading-sample.png" />
-    <Content Include="Assets\images\lock-image.jpg" />
     <Content Include="Assets\images\login-bg.jpg" />
     <Content Include="Assets\images\logo-color.png" />
     <Content Include="Assets\images\logo-promo.jpg" />
@@ -1214,22 +1184,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Areas\UW100\Views\web.config" />
-    <Content Include="Areas\UW100\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\UW100\Views\UW100Search\SearchForm.cshtml" />
-    <Content Include="Areas\UW100\Views\UW100Search\UW100Index.cshtml" />
-    <Content Include="Areas\UW200\Views\web.config" />
-    <Content Include="Areas\UW200\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\UW200\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\UW200\Views\UW200HotelDetaillala\UW200Index.cshtml" />
-    <Content Include="Areas\UW300\Views\web.config" />
-    <Content Include="Areas\UW300\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\UW300\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\UW300\Views\UW300RoomDetail\UW300Index.cshtml" />
-    <Content Include="Areas\UW400\Views\web.config" />
-    <Content Include="Areas\UW400\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\UW400\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\UW400\Views\UW400Booking\UW400Index.cshtml" />
     <Content Include="Config\application.properties" />
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\HotelLocation.csv" />
@@ -1334,6 +1288,7 @@
     <Content Include="Assets\mobile\css\_home_page_layout.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-cw %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2734,15 +2689,10 @@
   <ItemGroup>
     <Folder Include="Areas\Api\Views\Account\" />
     <Folder Include="Areas\Api\Views\Shared\" />
-    <Folder Include="Areas\UW100\Views\Shared\" />
-    <Folder Include="Areas\UW100\Views\UW100Router\" />
-    <Folder Include="Areas\UW300\Models\" />
     <Folder Include="Assets\images\NewFolder1\" />
     <Folder Include="Assets\travorama20\fonts\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />
-    <Folder Include="WebSrc\UW300\Logic\" />
-    <Folder Include="WebSrc\UW300\Object\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
