@@ -60,32 +60,17 @@ namespace Lunggo.Framework.Notifications
                 return newRegistrationId;
             }
 
-            internal override bool SetTags(string registrationId, string notificationHandle, Platform platform, Dictionary<string, string> tags)
-            {
-                var registration = CreateRegistration(notificationHandle, platform);
-                registration.RegistrationId = registrationId;
-                registration.Tags = new HashSet<string>(SerializeTags(tags));
-
-                try
-                {
-                    _notificationHubClient.CreateOrUpdateRegistrationAsync(registration).Wait();
-                }
-                catch
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            internal override bool AddTags(string registrationId, string notificationHandle, Platform platform, Dictionary<string, string> tags)
+            internal override bool UpdateTags(string registrationId, string notificationHandle, Platform platform, Dictionary<string, string> newTags)
             {
                 var registration = CreateRegistration(notificationHandle, platform);
                 registration.RegistrationId = registrationId;
                 var oldRegistration = _notificationHubClient.GetRegistrationAsync<RegistrationDescription>(registrationId).Result;
-                registration.Tags =
-                    new HashSet<string>(
-                        oldRegistration.Tags.Concat(SerializeTags(tags)).Distinct());
+                var tags = DeserializeTags(oldRegistration.Tags);
+                foreach (var newTag in newTags)
+                {
+                    tags[newTag.Key] = newTag.Value;
+                }
+                registration.Tags = new HashSet<string>(SerializeTags(tags));
 
                 try
                 {
@@ -104,13 +89,13 @@ namespace Lunggo.Framework.Notifications
                 _notificationHubClient.DeleteRegistrationAsync(registrationId).Wait();
             }
 
-            internal override void PushNotification(Dictionary<string, string> tags, Notification notification)
+            internal override void PushNotification(Notification notification, Dictionary<string, string> tags)
             {
                 _notificationHubClient.SendAppleNativeNotificationAsync(ConstructApplePayload(notification), SerializeTags(tags));
                 _notificationHubClient.SendGcmNativeNotificationAsync(ConstructGcmPayload(notification), SerializeTags(tags));
             }
 
-            internal override void PushSilentNotification(Dictionary<string, string> tags, object data)
+            internal override void PushSilentNotification(object data, Dictionary<string, string> tags)
             {
                 _notificationHubClient.SendAppleNativeNotificationAsync(ConstructApplePayload(data), SerializeTags(tags));
                 _notificationHubClient.SendGcmNativeNotificationAsync(ConstructGcmPayload(data), SerializeTags(tags));
@@ -176,6 +161,11 @@ namespace Lunggo.Framework.Notifications
             private static IEnumerable<string> SerializeTags(Dictionary<string, string> tags)
             {
                 return tags.Select(tag => tag.Key + ":" + tag.Value);
+            }
+
+            private static Dictionary<string, string> DeserializeTags(IEnumerable<string> tags)
+            {
+                return tags.Select(tag => tag.Split(':')).ToDictionary(splitTag => splitTag[0], splitTag => splitTag[1]);
             }
         }
     }

@@ -311,26 +311,47 @@
                                 }
                                 <form name="mandiriClickPayForm" novalidate>
                                     <div class="mandiri-clikpay-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
-                                        <h3 class="no-spacing">Detail <b>Kartu</b></h3>
+                                        <h3 class="no-spacing">Detail Pembayaran <b>Mandiri Click Pay</b></h3>
                                         <div class="form-group">
-                                            <label class="control-label">Nomor Kartu</label>
+                                            <label class="control-label" style="font-size:12px;">Nomor Kartu Debit</label>
                                             <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Input 1    : </label>
-                                            <label class="control-label" ng-show="MandiriClickPay.CardNo">{{MandiriClickPay.CardNo | limitTo:-10}}</label>
+                                        <h4 class="no-spacing"><b>Input Untuk Token Mandiri</b><span style="font-size:12px;"> (diisi secara berurutan)</span></h4>
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-3">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">APPLI</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">:&nbsp;&nbsp;3</p>
+                                            </div>
                                         </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label">Input 2    : </label>
-                                            <label class="control-label">{{totalPrice - voucher.amount}}</label> <!-- Harga Final -->
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-3">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">10 Digit Terakhir Kartu Debit (Input 1)</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">:&nbsp;&nbsp;{{MandiriClickPay.CardNo | limitTo:-10}}</p>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Input 3    : </label>
-                                            <label class="control-label">{{rsvNo | limitTo:-5}}</label>
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-3">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">Nominal Transaksi (Input 2)</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">:&nbsp;&nbsp;{{totalPrice - voucher.amount}}</p>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label">CVV Kartu</label>
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-3">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">5 Digit Terakhir No Reservasi (Input 3)</p>
+                                            </div>
+                                            <div class="col-sm-9" style="position:center">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">:&nbsp;&nbsp;{{rsvNo | limitTo:-5}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-12">
+                                            <br />
+                                            <label class="control-label" style="font-size:12px;">Respon Token Mandiri</label>
                                             <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
                                         </div>
                                     </div>
@@ -616,7 +637,7 @@
                 </div>
             </div>
 
-            <div class="bookfailed-popup" ng-if="pay.checking">
+            <div class="bookfailed-popup" ng-if="pay.isPaying">
                 <div class=" overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
                         <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>

@@ -19,7 +19,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
 {
     public static partial class RegistrationLogic
     {
-        public static async Task<ApiResponseBase> SetTags(UpdateRegistrationApiRequest request, NotificationHubClient hub)
+        public static async Task<ApiResponseBase> UpdateRegistration(UpdateRegistrationApiRequest request)
         {
             if (IsValid(request))
             {
@@ -32,16 +32,16 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
                     return new ApiResponseBase
                     {
                         StatusCode = HttpStatusCode.Forbidden,
-                        ErrorCode = "ERNSTT02"
+                        ErrorCode = "ERNADT02"
                     };
 
                 var notif = NotificationService.GetInstance();
-                var succeeded = notif.SetTags(request.RegistrationId, request.Handle, platform, request.Tags);
+                var succeeded = notif.UpdateTags(request.RegistrationId, request.Handle, platform, request.Tags);
                 if (!succeeded)
                     return new FlightIssuanceApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERNSTT03"
+                        ErrorCode = "ERNADT03"
                     };
 
                 return new ApiResponseBase
@@ -54,9 +54,37 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
                 return new FlightIssuanceApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERNSTT01"
+                    ErrorCode = "ERNADT01"
                 };
             }
+        }
+
+        private static bool IsValid(UpdateRegistrationApiRequest request)
+        {
+            return
+                request != null &&
+                request.RegistrationId != null &&
+                request.Handle != null;
+        }
+
+        private static ApiResponseBase ReturnGoneIfHubResponseIsGone(MessagingException e)
+        {
+            var webex = e.InnerException as WebException;
+            if (webex.Status == WebExceptionStatus.ProtocolError)
+            {
+                var response = (HttpWebResponse)webex.Response;
+                if (response.StatusCode == HttpStatusCode.Gone)
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.Gone,
+                        ErrorCode = "ERNUPD02"
+                    };
+            }
+            return new ApiResponseBase
+            {
+                StatusCode = HttpStatusCode.InternalServerError,
+                ErrorCode = "ERRGEN99"
+            };
         }
     }
 }

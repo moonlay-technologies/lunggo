@@ -30,16 +30,10 @@ namespace Lunggo.Framework.Notifications
             return Client.RegisterDevice(notificationHandle, deviceId);
         }
 
-        public bool SetTags(string registrationId, string notificationHandle, Platform platform,
+        public bool UpdateTags(string registrationId, string notificationHandle, Platform platform,
             Dictionary<string, string> tags)
         {
-            return Client.SetTags(registrationId, notificationHandle, platform, tags);
-        }
-
-        public bool AddTags(string registrationId, string notificationHandle, Platform platform,
-            Dictionary<string, string> tags)
-        {
-            return Client.AddTags(registrationId, notificationHandle, platform, tags);
+            return Client.UpdateTags(registrationId, notificationHandle, platform, tags);
         }
 
         public void DeleteRegistration(string registrationId)
@@ -47,14 +41,14 @@ namespace Lunggo.Framework.Notifications
             Client.DeleteRegistration(registrationId);
         }
 
-        public void PushNotification(Dictionary<string, string> tags, Notification notification)
+        public void PushNotification(Notification notification, Dictionary<string, string> tags)
         {
-            Client.PushNotification(tags, notification);
+            Client.PushNotification(notification, tags);
         }
 
-        public void PushSilentNotification(Dictionary<string, string> tags, object data)
+        public void PushSilentNotification(object data, Dictionary<string, string> tags)
         {
-            Client.PushSilentNotification(tags, data);
+            Client.PushSilentNotification(data, tags);
         }
     }
 }

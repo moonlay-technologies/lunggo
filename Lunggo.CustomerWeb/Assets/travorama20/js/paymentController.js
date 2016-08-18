@@ -283,8 +283,8 @@ app.controller('paymentController', [
                     $scope.trial = 0;
                 }
                 $scope.pay.isSuccess = false,
-                $scope.pay.paying = true;
                 $scope.pay.checked = false;
+                $scope.pay.isPaying = false;
                 //generate payment data
                 if ($scope.paymentMethod == 'BankTransfer') {
                     $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2"';
@@ -330,7 +330,7 @@ app.controller('paymentController', [
             close : function(){
                 $scope.pay.checked = false;
                 $scope.pay.isSuccess = false;
-                $scope.pay.paying = false;
+                $scope.pay.isPaying = false;
             },
             middle: function(method) {
                 if (method == 'transfer') {
@@ -344,7 +344,8 @@ app.controller('paymentController', [
                     $scope.pay.bayar();
                 }
             },
-            bayar : function() {
+            bayar: function () {
+                $scope.pay.isPaying = true;
                 var authAccess = getAuthAccess();
                 if (authAccess == 1 || authAccess == 2) {
                     //send form
@@ -370,21 +371,34 @@ app.controller('paymentController', [
                             //console.log('Error : ' + returnData.data.error);
                             switch (returnData.data.error) {
                                 case 'ERPPAY01':
-                                    $scope.errorMessage = 'Missing reservation number or method';
+                                    $scope.errorLog = 'Missing reservation number or method';
+                                    $scope.errorMessage = 'Silahkan pilih metode pembayaran lain';
                                     break;
                                 case 'ERPPAY02':
-                                    $scope.errorMessage = 'Not authorized to use selected payment method';
+                                    $scope.errorLog = 'Not authorized to use selected payment method';
+                                    $scope.errorMessage = 'Silahkan pilih metode pembayaran lain';
                                     break;
                                 case 'ERPPAY03':
-                                    $scope.errorMessage = 'You have already choose one method before';
+                                    $scope.errorLog = 'You have already choose one method before';
+                                    $scope.errorMessage = 'Anda telah memilih metode pembayaran sebelumnya';
+                                    break;
+                                case 'ERPPAY04':
+                                    $scope.errorLog = 'Reservation not found';
+                                    $scope.errorMessage = 'Silahkan pilih metode pembayaran lain';
+                                    break;
+                                case 'ERRGEN98':
+                                    $scope.errorLog = 'Invalid JSON Format';
+                                    $scope.errorMessage = 'Silahkan pilih metode pembayaran lain';
                                     break;
                                 case 'ERRGEN99':
-                                    $scope.errorMessage = 'There is a problem on the server';
+                                    $scope.errorLog = 'There is a problem on the server';
+                                    $scope.errorMessage = 'Silahkan pilih metode pembayaran lain';
                                     break;
                             }
                             $scope.pay.checked = true;
                             $scope.pay.isSuccess = false;
-                            console.log($scope.errorMessage);
+                            $scope.pay.isPaying = false;
+                            console.log($scope.errorLog);
                         }
                     }).catch(function (returnData) {
                         $scope.trial++;
@@ -395,15 +409,15 @@ app.controller('paymentController', [
                         else {
                             $scope.pay.checked = true;
                             $scope.pay.isSuccess = false;
+                            $scope.pay.isPaying = false;
                         }
                     });
-                    $scope.pay.paying = false;
                 }
                 else {
                     console.log('Not Authorized');
                     $scope.pay.checked = false;
                     $scope.pay.isSuccess = false;
-                    $scope.pay.paying = false;
+                    $scope.pay.isPaying = false;
                 }
             }
         }
