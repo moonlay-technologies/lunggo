@@ -172,8 +172,6 @@
                 </div>
             </div><!-- .summary--voucher-->
 
-            
-
             <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
 
             <div class="summary summary--payment">
@@ -340,66 +338,94 @@
 
                     </form>
                 </div>
-                                <!-- .credit-card-form -->
-            }
-            
-            <div class="widget countdown">
-                <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
-                <div class="widget-content">
-                    <p>Sisa waktu Anda untuk melakukan pembayaran</p>
-                    <div class="timer">
-                        <div>
-                            <h5 class="hour">00</h5>
-                            <span>jam</span>
+                <!-- .credit-card-form -->
+                <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
+                    <div class="form-group">
+                        <label class="control-label">Nomor Kartu</label>
+                        <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                        <h3>Input untuk Token Mandiri </h3> <h4>(diisi secara berurutan)</h4>
+                        <div class="col-xs-8">
+                            <dl>
+                                <dt>APPLI</dt>
+                                <dd>: 3</dd>
+                            </dl>
+                            <dl>
+                                <dt>10 Digit Terakhir Nomor Kartu Debit (Input 1)</dt>
+                                <dd>: {{MandiriClickPay.CardNo | limitTo:-10}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>Jumlah Transaksi</dt>
+                                <dd>: {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>5 Digit Terakhir Nomor Transaksi (Input 2)</dt>
+                                <dd>: @Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5 )</dd>
+                            </dl>
                         </div>
-                        <div class="separator"><h5>:</h5></div>
-                        <div>
-                            <h5 class="minute">00</h5>
-                            <span>menit</span>
-                        </div>
-                        <div class="separator"><h5>:</h5></div>
-                        <div>
-                            <h5 class="second">00</h5>
-                            <span>detik</span>
-                        </div>
+                        <label class="control-label">Respon Token Mandiri</label>
+                        <input type="text" value="" class="form-control cc-number" maxlength="16" placeholder="XXXXXX" ng-model="MandiriClickPay.Token"
+                               ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
                     </div>
                 </div>
-            </div><!-- .widget.countdown -->
-            <br /> 
+                    }
 
-            <div class="step-button">
+                    <div class="widget countdown">
+                        <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
+                        <div class="widget-content">
+                            <p>Sisa waktu Anda untuk melakukan pembayaran</p>
+                            <div class="timer">
+                                <div>
+                                    <h5 class="hour">00</h5>
+                                    <span>jam</span>
+                                </div>
+                                <div class="separator"><h5>:</h5></div>
+                                <div>
+                                    <h5 class="minute">00</h5>
+                                    <span>menit</span>
+                                </div>
+                                <div class="separator"><h5>:</h5></div>
+                                <div>
+                                    <h5 class="second">00</h5>
+                                    <span>detik</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- .widget.countdown -->
+                    <br />
 
-                <form name="finalForm" id="finalForm" ng-submit="pay.send()">
+                    <div class="step-button">
 
-                    <div class="hidden">
-                        <input type="text" name="RsvNo" value="" ng-model="rsvNo" />
-                        <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
-                        <input type="text" name="Language" value="" ng-model="language" />
+                        <form name="finalForm" id="finalForm" ng-submit="pay.send()">
 
-                        <input type="text" name="Payment.Data0" id="vt-token" value="" ng-model="CreditCard.Token" />
+                            <div class="hidden">
+                                <input type="text" name="RsvNo" value="" ng-model="rsvNo" />
+                                <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
+                                <input type="text" name="Language" value="" ng-model="language" />
 
-                        <p>Voucher Code</p>
-                        <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
+                                <input type="text" name="Payment.Data0" id="vt-token" value="" ng-model="CreditCard.Token" />
 
-                        <p>Payment Method</p>
-                        <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
+                                <p>Voucher Code</p>
+                                <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
+
+                                <p>Payment Method</p>
+                                <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
+                            </div>
+
+                            <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","staticpage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","staticpage")" target="_blank">kebijakan privasi</a></p>
+                            @*<a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>*@
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-yellow form-control" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">BAYAR</button>
+                            </div>
+                            @*<input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">*@
+
+                        </form>
+
+                        <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                            <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                        </form>
+
                     </div>
-
-                    <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","staticpage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","staticpage")" target="_blank">kebijakan privasi</a></p>
-                    @*<a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>*@
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-yellow form-control" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">BAYAR</button>
-                    </div>
-                    @*<input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">*@
-
-                </form>
-
-                <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
-                    <input type="text" name="RsvNo" value="" id="rsvno-input" />
-                </form>
-
-            </div>
-        </div>
+                </div>
     </section><!-- .checkout-content -->
     
     <!-- Syarat & Ketentuan -->
