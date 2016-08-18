@@ -73,19 +73,22 @@
     var flightDetail = '';
     var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
     var price = @Model.Reservation.Itinerary.NetTotalFare;
-        var redirectionUrl = @Model.Reservation.Payment.RedirectionUrl;
-        var departureDate;
-        @if (Model.Reservation.Itinerary.Trips != null)
+    var redirectionUrl;
+    @if (Model.Reservation.Payment.RedirectionUrl != null) {
+        @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
+    }
+    var departureDate;
+    @if (Model.Reservation.Itinerary.Trips != null)
+    {
+        if (Model.Reservation.Itinerary.Trips.Count == 2)
         {
-            if (Model.Reservation.Itinerary.Trips.Count == 2)
-            {
-                @:departureDate = '@Model.Reservation.Itinerary.Trips[1].DepartureDate';
-                                                        }
-            else
-            {
-                @:departureDate = '@Model.Reservation.Itinerary.Trips[0].DepartureDate';
-                                                        }
-        }
+            @:departureDate = '@Model.Reservation.Itinerary.Trips[1].DepartureDate';
+                                                    }
+        else
+        {
+            @:departureDate = '@Model.Reservation.Itinerary.Trips[0].DepartureDate';
+                                                    }
+    }
 
     // change current page
     if (getParam('page') == 4) {

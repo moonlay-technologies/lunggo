@@ -70,7 +70,7 @@
             </div>
         </div>
     }
-    else if (Model.Payment.Status == PaymentStatus.Verifying || Model.Payment.Status == PaymentStatus.Pending ||
+    else if (Model.Payment.Status == PaymentStatus.Verifying || Model.Payment.Status == PaymentStatus.Pending || 
     Model.Payment.Status == PaymentStatus.Challenged)
     {
         <div class="bookfailed-popup" ng-init="refresh()">
@@ -189,7 +189,7 @@
                                                      <!-- .transit -->
                                                     }
                                                     <div class="col-xs-2">
-                                                        <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                        <p><img src="@(segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
                                                         <p><span>@segment.AirlineName</span></p>
                                                     </div>
                                                     <div class="col-xs-10">
@@ -235,7 +235,7 @@
                                                         <!-- .transit -->
                                                         }
                                                         <div class="col-xs-2">
-                                                            <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                            <p><img src="@(segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
                                                             <p><span>@segment.AirlineName</span></p>
                                                         </div>
                                                         <div class="col-xs-10">
