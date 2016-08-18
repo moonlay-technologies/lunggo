@@ -806,6 +806,7 @@
     <Content Include="Assets\images\header-bg-2.jpg" />
     <Content Include="Assets\images\header-bg-gray.jpg" />
     <Content Include="Assets\images\header-bg.jpg" />
+    <Content Include="Assets\images\header.png" />
     <Content Include="Assets\images\hexagon-cover-blue.png" />
     <Content Include="Assets\images\hexagon-cover-yellow.png" />
     <Content Include="Assets\images\home-info-1.png" />
@@ -841,6 +842,7 @@
     <Content Include="Assets\images\loading-new.gif" />
     <Content Include="Assets\images\loading-plane.png" />
     <Content Include="Assets\images\loading-sample.png" />
+    <Content Include="Assets\images\lock-image.png" />
     <Content Include="Assets\images\login-bg.jpg" />
     <Content Include="Assets\images\logo-color.png" />
     <Content Include="Assets\images\logo-promo.jpg" />
@@ -851,6 +853,7 @@
     <Content Include="Assets\images\mastercard-logo.jpg" />
     <Content Include="Assets\images\menu-icon-white.png" />
     <Content Include="Assets\images\menu-icon.png" />
+    <Content Include="Assets\images\mobile-sprite.png" />
     <Content Include="Assets\images\nav-sprite.png" />
     <Content Include="Assets\images\no-image.png" />
     <Content Include="Assets\images\notif-promo.jpg" />
@@ -1043,17 +1046,26 @@
     <Content Include="Assets\mobile\css\application.min.css">
       <DependentUpon>application.css</DependentUpon>
     </Content>
+    <Content Include="Assets\mobile\images\anak-bw.png" />
+    <Content Include="Assets\mobile\images\anak.png" />
+    <Content Include="Assets\mobile\images\arrow-down-bw.png" />
     <Content Include="Assets\mobile\images\arrow-down.png" />
     <Content Include="Assets\mobile\images\arrow-up.png" />
+    <Content Include="Assets\mobile\images\bayi-bw.png" />
+    <Content Include="Assets\mobile\images\bayi.png" />
     <Content Include="Assets\mobile\images\burger-menu-active.png" />
     <Content Include="Assets\mobile\images\burger-sprite.png" />
+    <Content Include="Assets\mobile\images\calendar.png" />
     <Content Include="Assets\mobile\images\contact-list-bg.png" />
     <Content Include="Assets\mobile\images\contact-map.jpg" />
     <Content Include="Assets\mobile\images\contact-plane.png" />
     <Content Include="Assets\mobile\images\contact-social-bg.png" />
+    <Content Include="Assets\mobile\images\dewasa-bw.png" />
+    <Content Include="Assets\mobile\images\dewasa.png" />
     <Content Include="Assets\mobile\images\flight-history-status.png" />
     <Content Include="Assets\mobile\images\flight-separator.png" />
     <Content Include="Assets\mobile\images\flight-swap.png" />
+    <Content Include="Assets\mobile\images\flip.png" />
     <Content Include="Assets\mobile\images\form-sprite.png" />
     <Content Include="Assets\mobile\images\howtoorder-image-1.jpg" />
     <Content Include="Assets\mobile\images\howtoorder-image-2.jpg" />
@@ -1062,14 +1074,21 @@
     <Content Include="Assets\mobile\images\howtoorder-image-5.jpg" />
     <Content Include="Assets\mobile\images\howtoorder-image-6.jpg" />
     <Content Include="Assets\mobile\images\howtoorder-image-7.jpg" />
+    <Content Include="Assets\mobile\images\loading-new.png" />
     <Content Include="Assets\mobile\images\login-header-left.png" />
+    <Content Include="Assets\mobile\images\logo-promo.jpg" />
+    <Content Include="Assets\mobile\images\loop.png" />
+    <Content Include="Assets\mobile\images\medals.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-white.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-yellow.png" />
+    <Content Include="Assets\mobile\images\passenger-sprite.png" />
+    <Content Include="Assets\mobile\images\people.png" />
     <Content Include="Assets\mobile\images\promo-logo.png" />
     <Content Include="Assets\mobile\images\register-header-left.png" />
     <Content Include="Assets\mobile\images\revalidate-plane.png" />
     <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
+    <Content Include="Assets\mobile\images\ui-calendar-nav2.png" />
     <Content Include="Assets\mobile\images\user-account-bg.png" />
     <Content Include="Assets\mobile\images\yellow-stripe.png" />
     <Content Include="Assets\mobile\js\ThankyouController.js" />

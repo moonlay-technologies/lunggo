@@ -46,64 +46,64 @@
 }
 @section PageJS{
     <script>
-    var langCode = 'en';
-    var paymentTimeout = '';
-    // development only start
-    paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("u")');
-    console.log("TIME OUT: "+paymentTimeout);
-    // countdown timer
-    $('.timer').countdown(paymentTimeout, function(event) {
-        $('.timer .hour').text(event.strftime('%H'));
-        $('.timer .minute').text(event.strftime('%M'));
-        $('.timer .second').text(event.strftime('%S'));
-    });
+        var langCode = 'en';
+        var paymentTimeout = '';
+        // development only start
+        paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("u")');
+        console.log("TIME OUT: "+paymentTimeout);
+        // countdown timer
+        $('.timer').countdown(paymentTimeout, function(event) {
+            $('.timer .hour').text(event.strftime('%H'));
+            $('.timer .minute').text(event.strftime('%M'));
+            $('.timer .second').text(event.strftime('%S'));
+        });
 
-    // date selector
-    $('.date-picker').datepicker({
-        minDate: new Date()
-    });
-    var langCode = '@OnlineContext.GetActiveLanguageCode()';
-    var currentPage = 1;
-    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
-    //var transferWindow = [ '1100', '1124' ];
-    // messages
-    var message = '@ViewBag.Message';
-    // flight detail
-    var rsvNo = @Model.RsvNo;
-    var paymentDetail = '';
-    var flightDetail = '';
-    var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
-    var price = @Model.Reservation.Itinerary.OriginalTotalFare;
+        // date selector
+        $('.date-picker').datepicker({
+            minDate: new Date()
+        });
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
+        var currentPage = 1;
+        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
+        //var transferWindow = [ '1100', '1124' ];
+        // messages
+        var message = '@ViewBag.Message';
+        // flight detail
+        var rsvNo = @Model.RsvNo;
+        var paymentDetail = '';
+        var flightDetail = '';
+        var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
+        var price = @Model.Reservation.Itinerary.OriginalTotalFare;
     var redirectionUrl;
     @if (Model.Reservation.Payment.RedirectionUrl != null) {
        @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
     }
-    var departureDate;
-    @if (Model.Reservation.Itinerary.Trips != null)
-    {
-        if (Model.Reservation.Itinerary.Trips.Count == 2)
+        var departureDate;
+        @if (Model.Reservation.Itinerary.Trips != null)
         {
-            @:departureDate = '@Model.Reservation.Itinerary.Trips[1].DepartureDate';
-                                                }
-        else
-        {
-            @:departureDate = '@Model.Reservation.Itinerary.Trips[0].DepartureDate';
-                                                }
-    }
+            if (Model.Reservation.Itinerary.Trips.Count == 2)
+            {
+                @:departureDate = '@Model.Reservation.Itinerary.Trips[1].DepartureDate';
+                                            }
+            else
+            {
+                @:departureDate = '@Model.Reservation.Itinerary.Trips[0].DepartureDate';
+                                            }
+        }
 
-    // change current page
-    if (getParam('page') == 4) {
-        currentPage = getParam('page');
-    } else {
-        currentPage = 1;
-    }
-    var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
-    var buyerInfo = {
-        fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
-        countryCode : '@User.Identity.GetCountryCd()',
-        phone: '@User.Identity.GetPhoneNumber()',
-        email: '@User.Identity.GetEmail()'
-    };
+        // change current page
+        if (getParam('page') == 4) {
+            currentPage = getParam('page');
+        } else {
+            currentPage = 1;
+        }
+        var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
+        var buyerInfo = {
+            fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+            countryCode : '@User.Identity.GetCountryCd()',
+            phone: '@User.Identity.GetPhoneNumber()',
+            email: '@User.Identity.GetEmail()'
+        };
 
     </script>
     <!-- angular controller -->
@@ -260,7 +260,7 @@
                 <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
 
                     <form name="creditCardForm" novalidate>
-                        <h3 class="no-spacing"><b>Detail </b>Kartu Kredit</h3>
+                                <h3 class="no-spacing"><b>DETAIL </b>KARTU KREDIT</h3>
 
                         <!-- credit card selector start -->
                         @*<div class="form-group">
@@ -344,32 +344,43 @@
                 <!-- .credit-card-form -->
                 <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
                     <div class="form-group">
+                                <h3><b>DETAIL</b> MANDIRI CLICKPAY</h3>
+                                <div class="form-group">
                         <label class="control-label">Nomor Kartu</label>
                         <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="MandiriClickPay.CardNo" />
-                        <h3>Input untuk Token Mandiri </h3> <h4>(diisi secara berurutan)</h4>
-                        <div class="col-xs-8">
-                            <dl>
-                                <dt>APPLI</dt>
-                                <dd>: 3</dd>
-                            </dl>
-                            <dl>
-                                <dt>10 Digit Terakhir Nomor Kartu Debit (Input 1)</dt>
-                                <dd>: {{MandiriClickPay.CardNo | limitTo:-10}}</dd>
-                            </dl>
-                            <dl>
-                                <dt>Jumlah Transaksi</dt>
-                                <dd>: {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</dd>
-                            </dl>
-                            <dl>
-                                <dt>5 Digit Terakhir Nomor Transaksi (Input 2)</dt>
-                                <dd>: @Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5 )</dd>
-                            </dl>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></label>
+                                    <div class="form-mandiri-payment">
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left"><b>APPLI</b></li>
+                                            <li class="col-middle"><b>:</b></li>
+                                            <li class="col-right">3</li>
+                                        </ul>
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left"><b>10 Digit Terakhir Nomor Kartu Debit (Input 1)</b></li>
+                                            <li class="col-middle"><b>:</b></li>
+                                            <li class="col-right">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
+                                        </ul>
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left"><b>Jumlah Transaksi</b></li>
+                                            <li class="col-middle"><b>:</b></li>
+                                            <li class="col-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</li>
+                                        </ul>
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left"><b>5 Digit Terakhir Nomor Transaksi (Input 2)</b></li>
+                                            <li class="col-middle"><b>:</b></li>
+                                            <li class="col-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
+                                        </ul>
+                                    </div>
                         </div>
+                                <div class="form-group">
                         <label class="control-label">Respon Token Mandiri</label>
                         <input type="text" value="" class="form-control cc-number" maxlength="16" placeholder="XXXXXX" ng-model="MandiriClickPay.Token"
                                ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
                     </div>
                 </div>
+                        </div>
                     }
 
                     <div class="widget countdown">
@@ -423,7 +434,7 @@
 
                         </form>
 
-                       <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                        <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
                             <input type="text" name="RsvNo" value="" id="rsvno-input" />
                             <input type="text" name="PaymentUrl" value="" id="url-input" />
                         </form>
@@ -431,7 +442,6 @@
                     </div>
                 </div>
     </section><!-- .checkout-content -->
-    
     <!-- Syarat & Ketentuan -->
     <div class="popup__wrapper" ng-class="{'active' : pay.transfer}">
         <div class="popup">
@@ -481,7 +491,7 @@
                 <div class="container_new tnc">
                     <div class="row">
                         <div class="col-xs-6">
-                            <input type="submit" class="btn btn-yellow" ng-click ="pay.middle('virtualAccount')" value="SETUJU">
+                                    <input type="submit" class="btn btn-yellow" ng-click="pay.middle('virtualAccount')" value="SETUJU">
                         </div>
                         <div class="col-xs-6">
                             <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
@@ -528,7 +538,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="popup__wrapper" ng-class="{'active' : pay.checked && !pay.isSuccess}">
         <div class="popup">
             <header class="popup__header">
