@@ -627,13 +627,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 .nav > li > a {padding: 13px 15px;}
             }
             .overlay-selector__body {
-                .calendar-container { 
-                    /*border-bottom: 1px solid #d4d4d4;*/
-                    .ui-datepicker {
-                        max-width: 340px;
-                        margin: 0 auto 15px;
-                    }
-                }
+               
                 .event {
                     max-width: 340px;
                     margin: 20px auto;
