@@ -29,6 +29,7 @@ app.controller('checkoutController', [
         };
         $scope.stepClass = '';
         $scope.titles = [
+            {name: 'Pilih Titel', value:''},
             { name: 'Tn.', value: 'Mister' },
             { name: 'Ny.', value: 'Mistress' },
             { name: 'Nn.', value: 'Miss' }
@@ -139,6 +140,16 @@ app.controller('checkoutController', [
             
         }
         
+        $scope.CheckTitle = function(passengers) {
+            var valid = true;
+            for(var x = 0; x < passengers.length; x++)
+            {
+                if (passengers[x].title == $scope.titles[0].value) {
+                    valid = false;
+                }
+            }
+            return valid;
+        }
         //Get Profile
         $scope.TakeProfileConfig = {
             TakeProfile: function () {

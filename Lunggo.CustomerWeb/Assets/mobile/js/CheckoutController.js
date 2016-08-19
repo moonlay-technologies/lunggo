@@ -649,14 +649,26 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     }
     //titles
     $scope.titles = [
+            { name: 'Pilih Titel', value: '' },
             { name: 'Tn.', value: 'Mister' },
             { name: 'Ny.', value: 'Mistress' },
             { name: 'Nn.', value: 'Miss' }
     ];
     $scope.titleKids = [
+            { name: 'Pilih Titel', value: '' },
             { name: 'Tn.', value: 'Mister' },
             { name: 'Nn.', value: 'Miss' }
     ];
+
+    $scope.CheckTitle = function (passengers) {
+        var valid = true;
+        for (var x = 0; x < passengers.length; x++) {
+            if (passengers[x].title == $scope.titles[0].value) {
+                valid = false;
+            }
+        }
+        return valid;
+    }
     // return URL
     $scope.PageConfig.ReturnUrl = document.referrer == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;
 

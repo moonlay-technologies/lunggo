@@ -162,7 +162,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(2)" ng-disabled="BuyerForm.$invalid">LANJUT</button>
+                                <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(2)" ng-disabled="BuyerForm.$invalid || buyerInfo.title == titles[0].value">LANJUT</button>
                             </div>
 
                         </form>
@@ -280,7 +280,7 @@
 
                         <div class="form-group">
                             <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
-                            <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
+                            <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid || !CheckTitle(passengers)" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
                         </div>
 
                     </form>

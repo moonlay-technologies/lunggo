@@ -218,7 +218,7 @@
                                 </form><!-- #buyer-form -->
 
                                 <div class="step-button">
-                                    <button class="btn btn-yellow" ng-click="changePage(2)" ng-disabled="buyerForm.$invalid">LANJUTKAN</button>
+                                    <button class="btn btn-yellow" ng-click="changePage(2)" ng-disabled="buyerForm.$invalid || buyerInfo.title == titles[0].value">LANJUTKAN</button>
                                 </div>
 
                             </div><!-- .content-step#step-1 -->
@@ -241,7 +241,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label">Titel</label>
                                                     <select class="form-control" name="passenger_{{$index}}_title" ng-model="passenger.title" ng-init="passenger.title = titles[0].value" required>
-                                                        <option ng-repeat="title in titles" value="{{title.value}}" ng-selected="title.value == 'Mister'" ng-if="!(title.value == 'Mistress' && passenger.type != 'adult')">{{title.name}}</option>
+                                                        <option ng-repeat="title in titles" value="{{title.value}}" ng-selected="title.value == ''" ng-if="!(title.value == 'Mistress' && passenger.type != 'adult')">{{title.name}}</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.name.$invalid && passengerForm_{{$index}}.name.$touched }">
@@ -330,7 +330,7 @@
                                     
                                 <div class="step-button">
                                     <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                                    <button class="btn btn-yellow" ng-click="changePage(3)" ng-disabled="passengersForm.$invalid">LANJUTKAN</button>
+                                    <button class="btn btn-yellow" ng-click="changePage(3)" ng-disabled="passengersForm.$invalid || !CheckTitle(passengers)">LANJUTKAN</button>
                                 </div>
                                 <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Periksa kembali form Anda.</h4>
                                 
