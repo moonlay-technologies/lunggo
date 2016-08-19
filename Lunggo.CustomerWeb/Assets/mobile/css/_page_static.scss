@@ -81,7 +81,7 @@
 
 // page how to order
 .page.page-howtoorder {
-    .howto-content {padding:0 10px;
+    .howto-content {
         .list__wrapper {padding:0; margin:0; list-style:none; counter-reset:howto-counter;
             .list {margin-bottom:15px; counter-increment: howto-counter;
                 .list__header {background:$color-main-blue;

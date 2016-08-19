@@ -203,7 +203,7 @@ cursor: pointer; }
    
 // page contact
 .page.page-contact {
-    .contact-map {background:url(/Assets/mobile/images/scontact-map.jpg) center center; background-size:cover;
+    .contact-map {background:url(/Assets/mobile/images/contact-map.jpg) center center; background-size:cover;
         .container {padding:0 30px;}
         .contact-list {background:#0c9ed5; padding:15px; color:#fff; margin-top:15px; margin-bottom:35px; position:relative; margin-top:60px; padding-top:35px; padding-bottom:0; @include box-shadow(0px -2px 15px #555); @include border-radius(5px);
             &:before {width:154px; height:154px; background:url(/Assets/mobile/images/contact-plane.png) center center no-repeat; content:""; position:absolute; top: -154px; @include translate(50%, 50%); right: 50%; background-size: 50%;}
