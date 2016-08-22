@@ -53,7 +53,7 @@
 
     <section class="user-menu" ng-show="PageConfig.ActivePage == 'menu'">
         <div class="menu-user">
-            <span ng-if="firstName.length != 0 || lastName != 0">{{UserProfile.firstname}} {{UserProfile.lastname}}</span>
+            <span ng-if="firstName.length != 0 || lastName != 0">{{UserProfile.name}}</span>
             <span ng-if="firstName.length == 0 && lastName == 0">Hello, New User!</span>
         </div>
        
@@ -92,10 +92,10 @@
                             <input type="number" value="" class="form-control" ng-model="EditProfile.phone" ng-show="UserProfile.Editing" required />
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Kewarganegaraan:</label>
-                            <p class="form-control-static" ng-hide="UserProfile.Editing">{{Countries.GetCountry(UserProfile.country)}}</p>
+                            <label class="control-label">Kode Negara:</label>
+                            <p class="form-control-static" ng-hide="UserProfile.Editing">{{Countries.GetCountry(UserProfile.country)}} ({{UserProfile.country}})</p>
                             <select class="form-control" ng-model="EditProfile.country" ng-show="UserProfile.Editing" required>
-                                <option ng-repeat="country in Countries.List" value="{{country.dial_code}}" ng-selected="country.dial_code == UserProfile.country">{{country.name}}</option>
+                                <option ng-repeat="country in Countries.List" value="{{country.dial_code}}" ng-selected="country.dial_code == UserProfile.country">{{country.name}} ({{country.dial_code}})</option>
                             </select>
                         </div>
                         <div class="form-group" ng-show="UserProfile.Editing">

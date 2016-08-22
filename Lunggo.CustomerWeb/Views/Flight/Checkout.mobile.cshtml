@@ -145,11 +145,14 @@
                             <div class="form-group important">
                                 <label class="control-label">Nomor Telepon : </label>
                                 <div class="row">
-                                    <div class="col-xs-4">
+                                    <div class="col-xs-12 bottom-divider">
                                         <p><small>Kode Negara</small></p>
-                                        <input type="number" value="" ng-model="buyerInfo.countryCode" name="PhoneCode" class="form-control" placeholder="Ex : 62 for Indonesia" required />
+                                        <select class="form-control" name="PhoneCode" ng-model="buyerInfo.countryCode" ng-init="buyerInfo.countryCode = '62'">
+                                            <option ng-repeat="country in Countries" ng-selected="country.dial_code == buyerInfo.countryCode" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
+                                        </select>
+                                        @*<input type="number" value="" ng-model="buyerInfo.countryCode" name="PhoneCode" class="form-control" placeholder="Ex : 62 for Indonesia" required />*@
                                     </div>
-                                    <div class="col-xs-8">
+                                    <div class="col-xs-12">
                                         <p><small>Nomor Telepon (Tanpa Kode Negara)</small></p>
                                         <input type="number" value="" ng-model="buyerInfo.phone" name="Phone" class="form-control" placeholder="Ex : 821 2345 6789" required />
                                     </div>
@@ -162,7 +165,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(2)" ng-disabled="BuyerForm.$invalid">LANJUT</button>
+                                <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(2)" ng-disabled="BuyerForm.$invalid || buyerInfo.title == titles[0].value">LANJUT</button>
                             </div>
 
                         </form>
@@ -201,27 +204,27 @@
                                     <div class="row">
                                         <div class="col-xs-4">
                                             <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" ng-change="ValidateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
-                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'adult'">{{date}}</option>
-                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'child'">{{date}}</option>
-                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == Passenger.birth.date" ng-if="Passenger.type == 'infant'">{{date}}</option>
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="Passenger.type == 'adult'">{{date}}</option>
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="Passenger.type == 'child'">{{date}}</option>
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="Passenger.type == 'infant'">{{date}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
                                             <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" ng-change="ValidateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'child'">{{month.name}}</option>
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.birth.month" ng-if="Passenger.type == 'infant'">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'" ng-if="Passenger.type == 'child'">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'" ng-if="Passenger.type == 'infant'">{{month.name}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
                                             <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'" ng-required="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'">
-                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
+                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
                                             </select>
                                             <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="Passenger.type == 'child'">
-                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
+                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
                                             </select>
                                             <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="Passenger.type == 'infant'">
-                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == Passenger.birth.year">{{year}}</option>
+                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -240,19 +243,19 @@
                                         <div class="col-xs-4">
                                             <select class="form-control" name="passenger_{{$index}}_expiryDate" ng-model="Passenger.passport.expire.date"
                                                     ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
-                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.passport.expire.month, Passenger.passport.expire.year)" ng-selected="date == Passenger.passport.expire.date">{{date}}</option>
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.passport.expire.month, Passenger.passport.expire.year)" ng-selected="date == 'Tanggal'">{{date}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
                                             <select class="form-control" name="passenger_{{$index}}_expiryMonth" ng-model="Passenger.passport.expire.month"
                                                     ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == Passenger.passport.expire.month">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'">{{month.name}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
                                             <select class="form-control" name="passenger_{{$index}}_expiryYear" ng-model="Passenger.passport.expire.year"
                                                     ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
-                                                <option value="{{year}}" ng-repeat="year in generateYear('passport')" ng-selected="year == Passenger.passport.expire.year">{{year}}</option>
+                                                <option value="{{year}}" ng-repeat="year in generateYear('passport')" ng-selected="year == 'Tahun'">{{year}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -280,14 +283,17 @@
 
                         <div class="form-group">
                             <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
-                            <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(3)">LANJUT</button>
+                            <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid || !CheckTitle(passengers) || (CheckoutConfig.BirthDateRequired && !CheckDate(passengers))
+                                    || (CheckoutConfig.PassportRequired && !CheckPassportDate(passengers))" ng-click="PageConfig.ChangePage(3)">
+                                LANJUT
+                            </button>
                         </div>
 
                     </form>
 
                 </div><!-- .page-step-2 -->
 
-                <div class="page-step-3" ng-show="PageConfig.ActivePage == 3">
+                <div class="page-step-3 clearfix" ng-show="PageConfig.ActivePage == 3">
 
                     <div class="summary summary--price">
                         <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>

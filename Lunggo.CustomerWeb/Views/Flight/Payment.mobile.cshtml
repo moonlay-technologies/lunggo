@@ -238,7 +238,7 @@
                                 <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Niaga" />
                             </section>
                         </label>
-                        <label>
+                        @*<label>
                             <header>
                                 <div class="input-wrapper">
                                     <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriBillPayment" ng-model="paymentMethod" />
@@ -248,7 +248,7 @@
                             <section>
                                 <img src="/Assets/images/Bank-Mandiri.jpg" alt="Mandiri Bill Payment" />
                             </section>
-                        </label>
+                        </label>*@
 
                     </form>
 
@@ -472,7 +472,7 @@
         </div>
     </div>
 
-    <div class="popup__wrapper" ng-class="{'active' : pay.virtualAccount}">
+    <div class="popup__wrapper" ng-class="{'active' : pay.virtualAccount }">
         <div class="popup">
             <header class="popup__header">
                 <h4 class="popup__title">Syarat dan Ketentuan ATM</h4>
@@ -491,7 +491,7 @@
                 <div class="container_new tnc">
                     <div class="row">
                         <div class="col-xs-6">
-                                    <input type="submit" class="btn btn-yellow" ng-click="pay.middle('virtualAccount')" value="SETUJU">
+                            <input type="submit" class="btn btn-yellow" ng-click="pay.middle('virtualAccount')" value="SETUJU">
                         </div>
                         <div class="col-xs-6">
                             <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
@@ -526,7 +526,7 @@
     </div><!-- .page-overlay -->
     *@
     
-    <div class="popup__wrapper" ng-class="{'active' : pay.go}">
+    <div class="popup__wrapper" ng-class="{'active' : pay.go }">
         <div class="popup">
             <header class="popup__header">
                 <h4 class="popup__title">Mohon Tunggu</h4>
