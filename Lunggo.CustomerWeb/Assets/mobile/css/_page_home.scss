@@ -12,6 +12,33 @@
             margin: 0 auto 15px;
         }
     }
+    .mobile-banner {
+        border-bottom: 1px solid #dddddd;
+        padding: 0 20px;
+        .banner-txt {
+            @extend .os-semibold;
+            font-size: 12px;
+            color: $color_black;
+            max-width: 120px;
+            margin: 40px 0 20px;
+        }
+        .banner-button {
+            margin-bottom: 30px;
+            a.button{
+                &.btn-appstore {
+                    background: url($app-store);
+                    @include size(84px, 28px);
+                    display: block;
+                } 
+                &.btn-playstore {
+                    background: url($play-store);
+                    @include size(84px, 29px);
+                    display: block;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
 }
 
 @media only screen and (min-width: 375px) and (max-height: 667px) {

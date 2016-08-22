@@ -1048,6 +1048,7 @@
     </Content>
     <Content Include="Assets\mobile\images\anak-bw.png" />
     <Content Include="Assets\mobile\images\anak.png" />
+    <Content Include="Assets\mobile\images\app-store.png" />
     <Content Include="Assets\mobile\images\arrow-down-bw.png" />
     <Content Include="Assets\mobile\images\arrow-down.png" />
     <Content Include="Assets\mobile\images\arrow-up.png" />
@@ -1084,6 +1085,7 @@
     <Content Include="Assets\mobile\images\passenger-sprite-yellow.png" />
     <Content Include="Assets\mobile\images\passenger-sprite.png" />
     <Content Include="Assets\mobile\images\people.png" />
+    <Content Include="Assets\mobile\images\play-store.png" />
     <Content Include="Assets\mobile\images\promo-logo.png" />
     <Content Include="Assets\mobile\images\register-header-left.png" />
     <Content Include="Assets\mobile\images\revalidate-plane.png" />
