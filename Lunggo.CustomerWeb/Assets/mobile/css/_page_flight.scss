@@ -71,9 +71,17 @@
             }
         }
     }
-    .overlay.overlay--flight-form {
-        .overlay__content { 
+
+    .overlay {
+        &.overlay--flight-form .overlay__content { 
             @import 'home_page_layout';
+            min-height: auto;
+            padding: 0;
+        }
+        &.overlay--datepicker .overlay__content {
+            max-width: 340px;
+            margin: 0 auto 15px;
+            min-height: auto;
         }
     }
 }
