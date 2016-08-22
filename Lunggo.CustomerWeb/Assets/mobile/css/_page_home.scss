@@ -1,4 +1,10 @@
-﻿.page.page-home {
+﻿/*--------------------*/
+/* icon */
+$mobile-banner: '../images/mobile-app.png';
+$app-store: '../images/app-store.png';
+$play-store: '../images/play-store.png';
+
+.page.page-home {
     overflow-y: auto;
     @include clearfix(); 
     background: $color-white;
@@ -13,18 +19,18 @@
         }
     }
     .mobile-banner {
+        background: url($mobile-banner) no-repeat bottom right;
         border-bottom: 1px solid #dddddd;
-        padding: 0 20px;
+        padding: 20px 20px 30px;
         .banner-txt {
             @extend .os-semibold;
             font-size: 12px;
             color: $color_black;
             max-width: 120px;
-            margin: 40px 0 20px;
+            margin: 15px 0;
         }
         .banner-button {
-            margin-bottom: 30px;
-            a.button{
+            a.button {
                 &.btn-appstore {
                     background: url($app-store);
                     @include size(84px, 28px);

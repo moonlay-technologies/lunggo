@@ -57,6 +57,33 @@ including in this file :
         }
     }
     &>.container {max-width: none;}
+    .web-banner {
+        padding: 30px 0 40px;
+        border-bottom: 1px solid #fff;
+        .text-lg-banner {
+            font-size: 19px;
+            font-weight: 700;
+            line-height: 22px;
+            .top-txt {line-height: 42px;}
+        }
+        .banner-button {
+            margin: 20px 0;
+            a.button {
+                &.btn-appstore {
+                    background: url($app-store-bg) no-repeat;
+                    @include size(171px, 57px);
+                    display: inline-block;
+                } 
+                &.btn-playstore {
+                    background: url($play-store-bg) no-repeat;
+                    @include size(171px, 59px);
+                    display: inline-block;
+                    margin-right: 40px;
+                }
+            }
+        }
+    }
+    
 }
 
 /* site-footer */

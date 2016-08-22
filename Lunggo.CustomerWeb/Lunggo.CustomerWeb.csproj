@@ -646,6 +646,7 @@
     <Content Include="Assets\images\airlines\ZL.png" />
     <Content Include="Assets\images\airplane-image.jpg" />
     <Content Include="Assets\images\ajax-loader.gif" />
+    <Content Include="Assets\images\app-store-bg.png" />
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\css\neweticket.scss" />
@@ -881,6 +882,7 @@
     <Content Include="Assets\images\plane-down.png" />
     <Content Include="Assets\images\plane-up.png" />
     <Content Include="Assets\images\plane-updown-sprite.png" />
+    <Content Include="Assets\images\play-store-bg.png" />
     <Content Include="Assets\images\pop-bali.jpg" />
     <Content Include="Assets\images\pop-bandung.jpg" />
     <Content Include="Assets\images\pop-hongkong.jpg" />
@@ -964,6 +966,8 @@
     <Content Include="Assets\images\travorama-logo-color.png" />
     <Content Include="Assets\images\travorama-logo.png" />
     <Content Include="Assets\images\travorama-og.jpg" />
+    <Content Include="Assets\images\travorama20\app-store-bg.png" />
+    <Content Include="Assets\images\travorama20\play-store-bg.png" />
     <Content Include="Assets\images\travorama20\travorama-logo.png" />
     <Content Include="Assets\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Assets\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -2763,7 +2767,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>23321</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

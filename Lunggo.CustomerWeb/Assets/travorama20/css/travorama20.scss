@@ -14,6 +14,11 @@ $border-radius-default:2px;
 $transition-default:all 0.5s;
 
 /*--------------------*/
+/* icon */
+$app-store-bg: '../images/app-store-bg.png';
+$play-store-bg: '../images/play-store-bg.png';
+
+/*--------------------*/
 /* mixins */
 @mixin letter-spacing($value){
     letter-spacing:$value;
@@ -47,10 +52,16 @@ $transition-default:all 0.5s;
 @mixin clearfix(){
     display:block; width:100%; content:""; clear:both;
 }
+
+@mixin size($width, $height) {
+    width: $width;
+    height: $height;
+}
+
 /*--------------------*/
 /* general class */
 html {height:100%;}
-body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; padding-bottom: 415px;}
+body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; padding-bottom: 708px;}
 
 hr {border-top:$border-default;}
 
