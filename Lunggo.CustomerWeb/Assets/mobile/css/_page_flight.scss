@@ -71,7 +71,11 @@
             }
         }
     }
-
+    .overlay.overlay--flight-form {
+        .overlay__content { 
+            @import 'home_page_layout';
+        }
+    }
 }
 
 // --------------------
@@ -231,9 +235,43 @@
                 span {color:$color-main-blue; font-style:italic; background:#fff; display:inline-block; position:relative; margin-left:auto; margin-right:auto; font-weight:600;}
             }
         }
+        
     }// overlay__content
     .overlay__footer {
         h5 {margin-top:0; margin-bottom:0;}
         h4 {margin-top:0;}
-    }// overlay__footer
+    }// overlay__footer   
+}
+
+// Confirmation Page
+.page.page-confirmation {
+    .no-pemesanan {
+        background-color: #35b6e7;
+        color: #fff;
+        padding: 11px 15px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+    .instruction {margin-bottom: 30px;}
+    .instruction-accordion {margin-bottom: 15px;}
+    .dash-border {
+        border: 1px solid #6cd7ff;
+        margin: 10px 0;
+        border-style: dashed;
+    }
+    .bank-detail {margin: 15px 0;}
+    .flight-fare-wrapper {margin-bottom: 15px;}
+}
+
+// Thankyou Page
+.page.page-thankyou {
+    .page__body {padding:10px 15px 20px; overflow-wrap:break-word;}
+    .thankyou-words {
+        padding: 0 15px;
+        .ticket-print {
+            margin: 15px 0;
+            .btn.btn-yellow {width: 100%;}
+        }
+    }
+    .tnc {margin-top: 15px;}
 }

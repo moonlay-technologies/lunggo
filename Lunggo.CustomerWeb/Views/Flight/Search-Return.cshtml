@@ -1017,7 +1017,7 @@
                         <label>Harga per orang:</label>
                         <h3><sup>Rp</sup> {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].netTotalFare + returnFlightConfig.flightList[returnFlightConfig.chosenFlight].netTotalFare | number}}</h3>
                         <p>*Harga termasuk Pajak &amp; Service Charge</p>
-                        <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="selectFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" @*ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" ng-click="pageConfig.redirectingPage"*@ />
+                        <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="selectFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight);" @*ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" ng-click="pageConfig.redirectingPage"*@ />
                         @*<input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="revalidateSubmit()" />*@
                         @*<div ng-show="pageConfig.flightsValidated && (!departureFlightConfig.validateAvailable || !returnFlightConfig.validateAvailable )">
                             <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-show="(departureFlightConfig.validateNewfare || returnFlightConfig.validateNewfare)" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" ng-disabled="pageConfig.redirectingPage" />
@@ -1138,5 +1138,14 @@
         </div>
     </div><!-- .flight-review-wrapper -->
 
-
+    <div class="select-flight" ng-show="popup">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Tunggu...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:14px">Mengalihkan Anda ke halaman checkout.</span></div>
+            </section>
+        </div>
+    </div>
 </section><!-- .search-result.return -->

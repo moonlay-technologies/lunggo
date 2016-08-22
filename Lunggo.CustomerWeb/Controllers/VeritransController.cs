@@ -47,15 +47,13 @@ namespace Lunggo.CustomerWeb.Controllers
                     Time = time,
                     ExternalId = notif.approval_code,
                     TransferAccount = notif.permata_va_number,
-                    FinalPriceIdr = notif.gross_amount
+                    FinalPriceIdr = notif.gross_amount,
+                    LocalCurrency = new Currency("IDR")
                 };
 
                 var flight = FlightService.GetInstance();
-                if (notif.order_id.IsFlightRsvNo())
-                {
-                    PaymentService.GetInstance().UpdatePayment(notif.order_id, paymentInfo);
-                }
-                if (paymentInfo.Method == PaymentMethod.CreditCard && paymentInfo.Status == PaymentStatus.Denied) 
+                PaymentService.GetInstance().UpdatePayment(notif.order_id, paymentInfo);
+                if (paymentInfo.Method == PaymentMethod.CreditCard && paymentInfo.Status == PaymentStatus.Denied)
                 {
                     flight.SendFailedVerificationCreditCardNotifToCustomer(notif.order_id);
                 }
@@ -66,43 +64,28 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult PaymentFinish(VeritransResponse response)
         {
             var rsvNo = response.order_id;
-            if (rsvNo.IsFlightRsvNo())
-            {
-                var flight = FlightService.GetInstance();
-                PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails {Status = PaymentStatus.Verifying});
-                TempData["AllowThisThankyouPage"] = rsvNo;
-                return RedirectToAction("Thankyou", "Flight", new {RsvNo = rsvNo});
-            }
-            else
-                return Redirect("/");
+            var flight = FlightService.GetInstance();
+            PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Verifying });
+            TempData["AllowThisThankyouPage"] = rsvNo;
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
         }
 
         public ActionResult PaymentUnfinish(VeritransResponse response)
         {
             var rsvNo = response.order_id;
-            if (rsvNo.IsFlightRsvNo())
-            {
-                var flight = FlightService.GetInstance();
-                PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Expired });
-                TempData["AllowThisThankyouPage"] = rsvNo;
-                return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
-            }
-            else
-                return Redirect("/");
+            var flight = FlightService.GetInstance();
+            PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Expired });
+            TempData["AllowThisThankyouPage"] = rsvNo;
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
         }
 
         public ActionResult PaymentError(VeritransResponse response)
         {
             var rsvNo = response.order_id;
-            if (rsvNo.IsFlightRsvNo())
-            {
-                var flight = FlightService.GetInstance();
-                PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Expired });
-                TempData["AllowThisThankyouPage"] = rsvNo;
-                return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
-            }
-            else
-                return Redirect("/");
+            var flight = FlightService.GetInstance();
+            PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Expired });
+            TempData["AllowThisThankyouPage"] = rsvNo;
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
         }
 
         private static PaymentMethod MapPaymentMethod(VeritransNotification notif)

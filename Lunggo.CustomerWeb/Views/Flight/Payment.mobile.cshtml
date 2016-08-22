@@ -74,7 +74,10 @@
         var flightDetail = '';
         var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
         var price = @Model.Reservation.Itinerary.OriginalTotalFare;
-
+    var redirectionUrl;
+    @if (Model.Reservation.Payment.RedirectionUrl != null) {
+       @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
+    }
         var departureDate;
         @if (Model.Reservation.Itinerary.Trips != null)
         {
@@ -172,12 +175,10 @@
                 </div>
             </div><!-- .summary--voucher-->
 
-            
-
             <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
 
             <div class="summary summary--payment">
-                <h3 class="summary__title"><b>ALTERNATIF</b> PEMBAYARAN</h3>
+                <h3 class="summary__title"><b>METODE</b> PEMBAYARAN</h3>
                 <div class="summary__body">
 
                     <form name="paymentMethodForm">
@@ -209,7 +210,7 @@
                                 <div class="input-wrapper">
                                     <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" />
                                 </div>
-                                <h5>Virtual Account</h5>
+                                <h5>ATM</h5>
                             </header>
                             <section>
                                 <img src="/Assets/images/payment-atm.jpg" alt="Virtual Account" />
@@ -259,7 +260,7 @@
                 <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
 
                     <form name="creditCardForm" novalidate>
-                        <h3 class="no-spacing"><b>Detail </b>Kartu Kredit</h3>
+                                <h3 class="no-spacing"><b>DETAIL </b>KARTU KREDIT</h3>
 
                         <!-- credit card selector start -->
                         @*<div class="form-group">
@@ -340,69 +341,109 @@
 
                     </form>
                 </div>
-                                <!-- .credit-card-form -->
-            }
-            
-            <div class="widget countdown">
-                <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
-                <div class="widget-content">
-                    <p>Sisa waktu Anda untuk melakukan pembayaran</p>
-                    <div class="timer">
-                        <div>
-                            <h5 class="hour">00</h5>
-                            <span>jam</span>
+                <!-- .credit-card-form -->
+                <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
+                    <div class="form-group">
+                                <h3><b>DETAIL</b> MANDIRI CLICKPAY</h3>
+                                <div class="form-group">
+                        <label class="control-label">Nomor Kartu</label>
+                        <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></label>
+                                    <div class="form-mandiri-payment">
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left"><b>APPLI</b></li>
+                                            <li class="col-middle"><b>:</b></li>
+                                            <li class="col-right">3</li>
+                                        </ul>
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left"><b>10 Digit Terakhir Nomor Kartu Debit (Input 1)</b></li>
+                                            <li class="col-middle"><b>:</b></li>
+                                            <li class="col-right">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
+                                        </ul>
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left"><b>Jumlah Transaksi</b></li>
+                                            <li class="col-middle"><b>:</b></li>
+                                            <li class="col-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</li>
+                                        </ul>
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left"><b>5 Digit Terakhir Nomor Transaksi (Input 2)</b></li>
+                                            <li class="col-middle"><b>:</b></li>
+                                            <li class="col-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
+                                        </ul>
+                                    </div>
                         </div>
-                        <div class="separator"><h5>:</h5></div>
-                        <div>
-                            <h5 class="minute">00</h5>
-                            <span>menit</span>
-                        </div>
-                        <div class="separator"><h5>:</h5></div>
-                        <div>
-                            <h5 class="second">00</h5>
-                            <span>detik</span>
-                        </div>
+                                <div class="form-group">
+                        <label class="control-label">Respon Token Mandiri</label>
+                        <input type="text" value="" class="form-control cc-number" maxlength="16" placeholder="XXXXXX" ng-model="MandiriClickPay.Token"
+                               ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
                     </div>
                 </div>
-            </div><!-- .widget.countdown -->
-            <br /> 
+                        </div>
+                    }
 
-            <div class="step-button">
+                    <div class="widget countdown">
+                        <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
+                        <div class="widget-content">
+                            <p>Sisa waktu Anda untuk melakukan pembayaran</p>
+                            <div class="timer">
+                                <div>
+                                    <h5 class="hour">00</h5>
+                                    <span>jam</span>
+                                </div>
+                                <div class="separator"><h5>:</h5></div>
+                                <div>
+                                    <h5 class="minute">00</h5>
+                                    <span>menit</span>
+                                </div>
+                                <div class="separator"><h5>:</h5></div>
+                                <div>
+                                    <h5 class="second">00</h5>
+                                    <span>detik</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- .widget.countdown -->
+                    <br />
 
-                <form name="finalForm" id="finalForm" ng-submit="pay.send()">
+                    <div class="step-button">
 
-                    <div class="hidden">
-                        <input type="text" name="RsvNo" value="" ng-model="rsvNo" />
-                        <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
-                        <input type="text" name="Language" value="" ng-model="language" />
+                        <form name="finalForm" id="finalForm" ng-submit="pay.send()">
 
-                        <input type="text" name="Payment.Data0" id="vt-token" value="" ng-model="CreditCard.Token" />
+                            <div class="hidden">
+                                <input type="text" name="RsvNo" value="" ng-model="rsvNo" />
+                                <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
+                                <input type="text" name="Language" value="" ng-model="language" />
 
-                        <p>Voucher Code</p>
-                        <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
+                                <input type="text" name="Payment.Data0" id="vt-token" value="" ng-model="CreditCard.Token" />
 
-                        <p>Payment Method</p>
-                        <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
+                                <p>Voucher Code</p>
+                                <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
+
+                                <p>Payment Method</p>
+                                <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
+                            </div>
+
+                            <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","staticpage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","staticpage")" target="_blank">kebijakan privasi</a></p>
+                            @*<a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>*@
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-yellow form-control" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">BAYAR</button>
+                            </div>
+                            @*<input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">*@
+
+                        </form>
+
+                        <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                            <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                            <input type="text" name="PaymentUrl" value="" id="url-input" />
+                        </form>
+
                     </div>
-
-                    <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","staticpage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","staticpage")" target="_blank">kebijakan privasi</a></p>
-                    @*<a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>*@
-                    <button type="submit" class="btn btn-yellow form-control" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">BAYAR</button>
-
-                    @*<input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">*@
-
-                </form>
-
-                <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
-                    <input type="text" name="RsvNo" value="" id="rsvno-input" />
-                </form>
-
-            </div>
-        </div>
+                </div>
     </section><!-- .checkout-content -->
-    
     <!-- Syarat & Ketentuan -->
-    <div class="popup__wrapper" ng-class="{'active' == true}">
+    <div class="popup__wrapper" ng-class="{'active' : pay.transfer}">
         <div class="popup">
             <header class="popup__header">
                 <h4 class="popup__title">Syarat dan Ketentuan <br />Bank Transfer</h4>
@@ -411,30 +452,30 @@
                 <div class="container_new">
                     <ol>
                         <li>Transfer keseluruhan jumlah harga hingga 3 angka terakhir untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
-                        <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran Virtual Account.</li>
+                        <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran ATM.</li>
                         <li>Tidak disarankan melakukan transfer dengan LLG/Kliring/SKNBI karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
                     </ol>
                 </div>
             </div>
-            <footer class="tnc-footer">
+            <div class="popup__footer">
                 <div class="container_new tnc">
                     <div class="row">
                         <div class="col-xs-6">
-                            <input type="submit" class="btn btn-yellow" value="SETUJU">
+                            <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
                         </div>
                         <div class="col-xs-6">
-                            <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                            <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}" style="width:100%">KEMBALI</a>
                         </div>
                     </div>
                 </div>
-            </footer>
+            </div>
         </div>
     </div>
 
-    <div class="popup__wrapper" ng-class="{'active' == true}">
+    <div class="popup__wrapper" ng-class="{'active' : pay.virtualAccount}">
         <div class="popup">
             <header class="popup__header">
-                <h4 class="popup__title">Syarat dan Ketentuan <br />Virtual Account</h4>
+                <h4 class="popup__title">Syarat dan Ketentuan ATM</h4>
             </header>
             <div class="popup__body tnc-body">
                 <div class="container_new">
@@ -446,44 +487,81 @@
                     </ol>
                 </div>
             </div>
-            <footer class="tnc-footer">
+            <div class="popup__footer">
                 <div class="container_new tnc">
                     <div class="row">
                         <div class="col-xs-6">
-                            <input type="submit" class="btn btn-yellow" value="SETUJU">
+                                    <input type="submit" class="btn btn-yellow" ng-click="pay.middle('virtualAccount')" value="SETUJU">
                         </div>
                         <div class="col-xs-6">
                             <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
                         </div>
                     </div>
                 </div>
-            </footer>
+            </div>
         </div>
     </div>
+    
     @*<div class="page-overlay flight-expired" ng-show="expired">
-            <div class="overlay-content">
-                <header>
-                    <h4>Checkout Kadaluarsa</h4>
-                </header>
-                <section>
-                    <div class="container_new">
-                      <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
-                      <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
-                    </div>
-                </section>
-                <footer>
-                    <div class="container_new">
-                        <div class="row1">
-                            <div class="col12">
-                                <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
-                            </div>
+        <div class="overlay-content">
+            <header>
+                <h4>Checkout Kadaluarsa</h4>
+            </header>
+            <section>
+                <div class="container_new">
+                  <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
+                  <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
+                </div>
+            </section>
+            <footer>
+                <div class="container_new">
+                    <div class="row1">
+                        <div class="col12">
+                            <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
                         </div>
                     </div>
-                </footer>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+    *@
+    
+    <div class="popup__wrapper" ng-class="{'active' : pay.go}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Mohon Tunggu</h4>
+            </header>
+            <div class="popup__body tnc-body">
+                <div class="container_new">
+                    Sedang memproses pilihan Anda.
+                </div>
             </div>
-        </div><!-- .page-overlay -->
+        </div>
+    </div>
 
-    <div class="page-overlay booking-flight"  ng-show ="pay.paying">
+    <div class="popup__wrapper" ng-class="{'active' : pay.checked && !pay.isSuccess}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Mohon Maaf...</h4>
+            </header>
+            <div class="popup__body tnc-body">
+                <div class="container_new">
+                    {{errorMessage}}
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container_new tnc">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="page-overlay booking-flight" ng-class="{'active' : pay.go}">
         <div class="overlay-content">
             <header>
                 <h4>Mohon Tunggu</h4>
@@ -496,8 +574,8 @@
                 </div>
             </section>
         </div>
-    </div>
-    *@
+    </div>*@
+    
 </div><!-- checkout end here -->
                                 break;
     case "BookExpired":

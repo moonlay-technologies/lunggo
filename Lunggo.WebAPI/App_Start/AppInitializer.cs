@@ -9,7 +9,7 @@ using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Mail;
-using Lunggo.Framework.Notification;
+using Lunggo.Framework.Notifications;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;

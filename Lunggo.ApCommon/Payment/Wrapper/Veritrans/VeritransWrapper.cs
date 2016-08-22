@@ -387,14 +387,20 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                         switch (response.FraudStatus.ToLower())
                         {
                             case "accept":
-                                return PaymentStatus.Verifying;
+                                return PaymentStatus.Settled;
                             case "challenge":
                             case "deny":
-                            default:
                                 return PaymentStatus.Denied;
+                            default:
+                                return PaymentStatus.Failed;
                         }
+                    case "settlement":
+                        return PaymentStatus.Settled;
+                    case "expire":
+                        return PaymentStatus.Expired;
                     case "deny":
                     case "authorize":
+                        return PaymentStatus.Denied;
                     default:
                         return PaymentStatus.Failed;
                 }

@@ -107,7 +107,7 @@
         </div>
     </div><!-- .page-overlay -->
     
-    <div class="page-overlay" ng-show="overlay && form.success">
+    @*<div class="page-overlay" ng-show="form.success">
         <div class="overlay-content">
             <header>
                 <h4>PROSES MASUK BERHASIL</h4>
@@ -138,7 +138,18 @@
                 </div>
             </footer>
         </div>
-    </div><!-- .page-overlay -->
+    </div><!-- .page-overlay --> *@
+    
+    <div class="login-succeed" ng-show="form.success">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Proses Masuk Berhasil</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:14px">Mengalihkan Anda ke halaman utama.</span></div>
+            </section>
+        </div>
+    </div>
 
 </section><!-- .form-section -->
 @Html.Partial("/Views/Shared/_SectionBenefit.cshtml")

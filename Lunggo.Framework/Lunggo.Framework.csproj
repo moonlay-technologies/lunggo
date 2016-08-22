@@ -172,6 +172,7 @@
     <Compile Include="Database\TableRecord.cs" />
     <Compile Include="Encoder\Encoder.cs" />
     <Compile Include="Error\Error.cs" />
+    <Compile Include="Extension\DateTimeExtension.cs" />
     <Compile Include="Extension\JsonExtension.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Filter\BasicAuthenticationFilterAttribute.cs" />
@@ -211,12 +212,13 @@
     <Compile Include="HtmlTemplate\RazorHtmlTemplateClient.cs" />
     <Compile Include="Mail\MandrillMailClient.cs" />
     <Compile Include="I18nMessage\LangToISOCodeMapper.cs" />
-    <Compile Include="Notification\AzureNotificationClient.cs" />
-    <Compile Include="Notification\NotificationClient.cs" />
-    <Compile Include="Notification\NotificationService.cs">
+    <Compile Include="Notifications\AzureNotificationClient.cs" />
+    <Compile Include="Notifications\Notification.cs" />
+    <Compile Include="Notifications\NotificationClient.cs" />
+    <Compile Include="Notifications\NotificationService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Notification\Platform.cs" />
+    <Compile Include="Notifications\Platform.cs" />
     <Compile Include="Pattern\SingletonBase.cs" />
     <Compile Include="Payment\CreditCardProcessor.cs" />
     <Compile Include="Payment\Data\CIMBPaymentDataDummy.cs" />

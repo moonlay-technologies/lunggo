@@ -415,6 +415,7 @@ app.controller('returnFlightController', [
 
 
 
+        $scope.popup = false;
         // ******************************
         // revalidate flights
         $scope.selectFlight = function (departureFlightIndexNo, returnFlightIndexNo) {
@@ -423,7 +424,8 @@ app.controller('returnFlightController', [
             {
                 $scope.trial = 0;
             }
-
+            $scope.popup = true;
+            $scope.closeOverview();
             if ($scope.pageConfig.flightsValidated) {
 
                 console.log('flight available. Will be redirected within');

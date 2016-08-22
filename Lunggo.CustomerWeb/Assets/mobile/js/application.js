@@ -13,6 +13,8 @@ if (typeof (angular) == 'object') {
         //$.datepicker($.datepicker.regional["id-ID"]);
         //('.ui-datepicker').addClass('notranslate');
 
+        var trial = 0;
+
         // general page config and function
         $rootScope.PageConfig = {
             
@@ -366,6 +368,7 @@ if (typeof (angular) == 'object') {
 
         }; // $rootScope.PageConfig
 
+        
         // countries
         $rootScope.Countries = {
             List: Countries,
@@ -625,6 +628,10 @@ if (typeof (angular) == 'object') {
                 Keyword: '',
                 MinLength: 3,
                 GetAirport: function (keyword) {
+                    if (trial > 3)
+                    {
+                        trial = 0;
+                    }
                     keyword = keyword || $rootScope.FlightSearchForm.AutoComplete.Keyword;
                     var url = FlightAutocompleteConfig.Url + keyword;
 
@@ -662,7 +669,9 @@ if (typeof (angular) == 'object') {
                                     $('.autocomplete-no-result').show();
                                 }
                             }).error(function (returnData) {
-                                if (refreshAuthAccess()) //refresh cookie
+                                trial++;
+                                console.log(trial);
+                                if (refreshAuthAccess() && trial < 4) //refresh cookie
                                 {
                                     $rootScope.FlightSearchForm.AutoComplete.GetAirport(keyword);
                                 }
@@ -1026,6 +1035,21 @@ function refreshAuthAccess() {
     else {
         getAnonymousFirstAccess();
         return true;
+    }
+}
+
+//********************
+// accordion functions
+function accordionFunctions() {
+    //Accordion Help Section by W3School
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].onclick = function () {
+            this.classList.toggle("active");
+            this.nextElementSibling.classList.toggle("show");
+        }
     }
 }
 

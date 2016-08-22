@@ -14,45 +14,31 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
         public static GetReservationApiResponse GetReservation(string rsvNo)
         {
             var user = HttpContext.Current.User;
-            if (rsvNo.IsFlightRsvNo())
-            {
-                var flight = FlightService.GetInstance();
-                var rsv = flight.GetReservationForDisplay(rsvNo);
+            var flight = FlightService.GetInstance();
+            var rsv = flight.GetReservationForDisplay(rsvNo);
 
-                if (rsv == null)
-                    return new GetReservationApiResponse
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERARSV01"
-                    };
+            if (rsv == null)
+                return new GetReservationApiResponse
+                {
+                    StatusCode = HttpStatusCode.Accepted,
+                    ErrorCode = "ERARSV01"
+                };
 
-                if (user.IsInRole("Admin") || user.Identity.GetUser().Id == rsv.UserId || user.Identity.GetDeviceId() == rsv.DeviceId)
-                    return new GetReservationApiResponse
-                    {
-                        ProductType = ProductType.Flight,
-                        FlightReservation = rsv,
-                        StatusCode = HttpStatusCode.OK
-                    };
-                else
-                    return new GetReservationApiResponse
-                    {
-                        StatusCode = HttpStatusCode.Unauthorized,
-                        ErrorCode = "ERARSV02"
-                    };
-            }
-            if (rsvNo.IsHotelRsvNo())
-            {
-
-            }
-            if (rsvNo.IsActivityRsvNo())
-            {
-
-            }
-            return new GetReservationApiResponse
-            {
-                StatusCode = HttpStatusCode.Accepted,
-                ErrorCode = "ERARSV01"
-            };
+            if (user.IsInRole("Admin") ||
+                (user.Identity.IsUserAuthorized() && user.Identity.GetUser().Id == rsv.UserId) ||
+                user.Identity.GetDeviceId() == rsv.DeviceId)
+                return new GetReservationApiResponse
+                {
+                    ProductType = ProductType.Flight,
+                    FlightReservation = rsv,
+                    StatusCode = HttpStatusCode.OK
+                };
+            else
+                return new GetReservationApiResponse
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERARSV02"
+                };
         }
     }
 }

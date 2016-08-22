@@ -1,0 +1,141 @@
+﻿@using Lunggo.ApCommon.Product.Constant
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+
+@{
+    ViewBag.Title = "Cetak E-tiket";
+    Layout = "~/Views/Shared/travorama20/_Layout20150929.cshtml";
+    ViewBag.Angular = "EticketController";
+}
+
+@{
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    ViewBag.BodyClass = "page page-checkout";
+    ViewBag.AngularController = "EticketController";
+    ViewBag.SiteHeader = "E-Tiket";
+    ViewBag.Title = "Cetak E-Tiket";
+}
+@section AdditionalCSS {
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <!-- fancybox CSS-->
+    <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Assets/mobile/css/application.css">
+}
+
+@section PageJS {
+    <script src="/Assets/travorama20/js/EticketController.js"></script>
+}
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/jquery.countdown.min.js"></script>
+    <!-- veritrans JS -->
+    <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
+    <!-- fancybox -->
+    <script type="text/javascript" src="/Assets/vendor/fancybox/jquery.fancybox.pack.js"></script>
+}
+
+<div ng-app="Travorama" ng-controller="EticketController">
+    @if (Model.RsvDisplayStatus == RsvDisplayStatus.Paid)
+    {
+
+        <div ng-init="refresh()">
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Cetak E-Tiket</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>
+                                Mohon menunggu. E-tiket Anda sedang dalam proses dan akan kami kirimkan secara otomatis ke e-mail Anda.<br />
+                                Jika terjadi masalah, silakan kirim e-mail Anda ke <a href="mailto:cs@travorama.com">cs@travorama.com</a> dan kami akan berusaha untuk membantu Anda.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.RsvDisplayStatus == RsvDisplayStatus.VerifyingPayment)
+    {
+        <div ng-init="refresh()">
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Sedang Memverifikasi Pembayaran</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>
+                                Mohon menunggu. Pembayaran Anda sedang kami verifikasi.<br />
+                                Jika terjadi masalah, silakan kirim e-mail Anda ke <a href="mailto:cs@travorama.com">cs@travorama.com</a> dan kami akan berusaha untuk membantu Anda.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    else if (Model.RsvDisplayStatus == RsvDisplayStatus.PendingPayment)
+    {
+        <div class="popup__wrapper active">
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">E-Tiket Belum Tersedia</h4>
+                </header>
+                <div class="popup__body">
+                    <div class="container_new">
+                        <span>
+                            Pembayaran untuk no. reservasi @Model.RsvNo belum dilakukan. Silakan melakukan pembayaran untuk reservasi tersebut.
+                        </span>
+                    </div>
+                </div>
+                <div class="popup__footer">
+                    <div class="container_new">
+                        <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+    else 
+    {
+        <div class="popup__wrapper active">
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">E-Tiket Gagal</h4>
+                </header>
+                <div class="popup__body">
+                    <div class="container_new">
+                        <span>
+                            Mohon maaf, e-tiket Anda gagal diterbitkan. Silakan membuat pemesanan baru dengan metode pembayaran berbeda.
+                        </span>
+                    </div>
+                </div>
+                <div class="popup__footer">
+                    <div class="container_new">
+                        <a class="btn btn-block btn-yellow" href="{{returnUrl}}">CARI ULANG</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+</div>
+

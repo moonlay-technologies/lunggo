@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using Lunggo.Framework.Notification;
+using Lunggo.Framework.Notifications;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 using Lunggo.WebAPI.ApiSrc.Notification.Model;

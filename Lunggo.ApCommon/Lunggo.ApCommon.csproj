@@ -200,10 +200,7 @@
     <Compile Include="Campaign\Service\ServiceSingleton.cs" />
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumDisplay.cs" />
-    <Compile Include="Constant\ReservationType.cs" />
-    <Compile Include="Constant\PaymentConstant.cs" />
-    <Compile Include="Constant\CacheIdentifier.cs" />
-    <Compile Include="Constant\RsvNoIdentifier.cs" />
+    <Compile Include="Constant\TagType.cs" />
     <Compile Include="Flight\Constant\AirlineType.cs" />
     <Compile Include="Flight\Constant\BookingStatus.cs" />
     <Compile Include="Flight\Constant\CabinClass.cs" />
@@ -276,6 +273,7 @@
     <Compile Include="Flight\Query\UpdateBookingIdQuery.cs" />
     <Compile Include="Flight\Query\UpdateBookingStatusQuery.cs" />
     <Compile Include="Flight\Query\UpdateDetailsQuery.cs" />
+    <Compile Include="Flight\Service\Notification.cs" />
     <Compile Include="Flight\Service\PriceCalendar.cs" />
     <Compile Include="Flight\Service\ExchangeRate.cs" />
     <Compile Include="Flight\Service\Caching.cs" />
@@ -321,7 +319,7 @@
     <Compile Include="Flight\Wrapper\Citilink\CitilinkRevalidateFare.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkSearchFlight.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkWrapperSingleton.cs" />
-    <Compile Include="Flight\Wrapper\Citilink\CitilinkAirCurrency.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkCurrency.cs" />
     <Compile Include="Flight\Wrapper\FlightSupplierWrapperBase.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaCurrency.cs" />
     <Compile Include="Flight\Wrapper\Garuda\GarudaBookFlight.cs" />

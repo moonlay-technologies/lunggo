@@ -208,11 +208,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [LunggoCorsPolicy]
         [Authorize]
         [Route("v1/trxhistory")]
-        public ApiResponseBase GetTransactionHistory(string filter = null)
+        public ApiResponseBase GetTransactionHistory(string filter = null, string sort = null, int? page = null, int? itemsPerPage = null)
         {
             try
             {
-                var apiResponse = AccountLogic.GetTransactionHistory(filter);
+                var apiResponse = AccountLogic.GetTransactionHistory(filter, sort, page, itemsPerPage);
                 return apiResponse;
             }
             catch (Exception e)

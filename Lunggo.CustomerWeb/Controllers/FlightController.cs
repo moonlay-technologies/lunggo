@@ -14,6 +14,7 @@ using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Filter;
 using Lunggo.Framework.SharedModel;
@@ -252,14 +253,24 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Eticket(string rsvNo)
         {
+            var rsvData = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
             try
             {
-                var eticketData = FlightService.GetInstance().GetEticket(rsvNo);
-                return File(eticketData, "application/pdf");
+                
+                if (rsvData.RsvDisplayStatus == RsvDisplayStatus.Issued)
+                {
+                    var eticketData = FlightService.GetInstance().GetEticket(rsvNo);
+                    return File(eticketData, "application/pdf");
+                }
+                else
+                {
+                    return View(rsvData);
+                }
+                
             }
             catch
             {
-                return View();
+                return View(rsvData);
             }
 
         }

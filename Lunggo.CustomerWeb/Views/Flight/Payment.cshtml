@@ -45,61 +45,61 @@
 }
 @section PageJS{
     <script>
-        var langCode = 'en';
-        var paymentTimeout = '';
-        // development only start
-        paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("u")');
-        console.log("TIME OUT"+paymentTimeout);
-        // countdown timer
-        $('.timer').countdown(paymentTimeout, function(event) {
-            $('.timer .hour').text(event.strftime('%H'));
-            $('.timer .minute').text(event.strftime('%M'));
-            $('.timer .second').text(event.strftime('%S'));
-        });
+    var langCode = 'en';
+    var paymentTimeout = '';
+    // development only start
+    paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("u")');
+    console.log("TIME OUT"+paymentTimeout);
+    // countdown timer
+    $('.timer').countdown(paymentTimeout, function(event) {
+        $('.timer .hour').text(event.strftime('%H'));
+        $('.timer .minute').text(event.strftime('%M'));
+        $('.timer .second').text(event.strftime('%S'));
+    });
 
-        // date selector
-        $('.date-picker').datepicker({
-            minDate: new Date()
-        });
-        var langCode = '@OnlineContext.GetActiveLanguageCode()';
-        var currentPage = 1;
-        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
-        //var transferWindow = [ '1100', '1124' ];
-        // messages
-        var message = '@ViewBag.Message';
-        // flight detail
-        var rsvNo = @Model.RsvNo;
-        var paymentDetail = '';
-        var flightDetail = '';
-        var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
-        var price = @Model.Reservation.Itinerary.NetTotalFare;
-
+    // date selector
+    $('.date-picker').datepicker({
+        minDate: new Date()
+    });
+    var langCode = '@OnlineContext.GetActiveLanguageCode()';
+    var currentPage = 1;
+    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
+    //var transferWindow = [ '1100', '1124' ];
+    // messages
+    var message = '@ViewBag.Message';
+    // flight detail
+    var rsvNo = @Model.RsvNo;
+    var paymentDetail = '';
+    var flightDetail = '';
+    var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
+    var price = @Model.Reservation.Itinerary.NetTotalFare;
+        var redirectionUrl = @Model.Reservation.Payment.RedirectionUrl;
         var departureDate;
         @if (Model.Reservation.Itinerary.Trips != null)
         {
             if (Model.Reservation.Itinerary.Trips.Count == 2)
             {
                 @:departureDate = '@Model.Reservation.Itinerary.Trips[1].DepartureDate';
-                                            }
+                                                        }
             else
             {
                 @:departureDate = '@Model.Reservation.Itinerary.Trips[0].DepartureDate';
-                                            }
+                                                        }
         }
 
-        // change current page
-        if (getParam('page') == 4) {
-            currentPage = getParam('page');
-        } else {
-            currentPage = 1;
-        }
-        var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
-        var buyerInfo = {
-            fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
-            countryCode : '@User.Identity.GetCountryCd()',
-            phone: '@User.Identity.GetPhoneNumber()',
-            email: '@User.Identity.GetEmail()'
-        };
+    // change current page
+    if (getParam('page') == 4) {
+        currentPage = getParam('page');
+    } else {
+        currentPage = 1;
+    }
+    var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
+    var buyerInfo = {
+        fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+        countryCode : '@User.Identity.GetCountryCd()',
+        phone: '@User.Identity.GetPhoneNumber()',
+        email: '@User.Identity.GetEmail()'
+    };
 
     </script>
     <!-- angular controller -->
@@ -164,7 +164,7 @@
                                                     <div class="input-wrapper">
                                                         <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
                                                     </div>
-                                                    <h5>Virtual Account</h5>
+                                                    <h5>ATM</h5>
                                                 </header>
                                                 <section>
                                                     <img src="/Assets/images/payment-atm.jpg" alt="Virtual Account" />
@@ -229,25 +229,25 @@
                                             <h3 class="no-spacing">Detail <b>Kartu Kredit</b></h3>
 
                                             @*<!-- credit card selector start -->
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-sm-8">
-                                                        <label>Pilih kartu kredit :</label>
-                                                        <select class="form-control" ng-model="CreditCard.TwoClickToken" ng-required="paymentMethod == '@PaymentMethod.CreditCard'">
-                                                            <option value="false" selected="selected">Tambah Baru</option>
-                                                            @foreach (var savedCreditCard in savedCreditCards)
-                                                            {
-                                                                <option value="@savedCreditCard.Token">@savedCreditCard.CardHolderName - @savedCreditCard.MaskedCardNumber</option>
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-4" ng-if="CreditCard.TwoClickToken != 'false'">
-                                                        <label class="control-label">CVV Kartu</label>
-                                                        <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <label>Pilih kartu kredit :</label>
+                                                            <select class="form-control" ng-model="CreditCard.TwoClickToken" ng-required="paymentMethod == '@PaymentMethod.CreditCard'">
+                                                                <option value="false" selected="selected">Tambah Baru</option>
+                                                                @foreach (var savedCreditCard in savedCreditCards)
+                                                                {
+                                                                    <option value="@savedCreditCard.Token">@savedCreditCard.CardHolderName - @savedCreditCard.MaskedCardNumber</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-4" ng-if="CreditCard.TwoClickToken != 'false'">
+                                                            <label class="control-label">CVV Kartu</label>
+                                                            <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- credit card selector end -->*@
+                                                <!-- credit card selector end -->*@
                                             <!-- new credit card start -->
                                             <div ng-if="CreditCard.TwoClickToken == 'false'">
                                                 <div class="form-group">
@@ -311,62 +311,82 @@
                                 }
                                 <form name="mandiriClickPayForm" novalidate>
                                     <div class="mandiri-clikpay-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
-                                        <h3 class="no-spacing">Detail <b>Kartu</b></h3>
+                                        <h3 class="no-spacing">Detail Pembayaran <b>Mandiri Click Pay</b></h3>
                                         <div class="form-group">
-                                            <label class="control-label">Nomor Kartu</label>
+                                            <label class="control-label" style="font-size:12px;">Nomor Kartu Debit</label>
                                             <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Input 1    : </label>
-                                            <label class="control-label" ng-show="MandiriClickPay.CardNo">{{MandiriClickPay.CardNo | limitTo:-10}}</label>
+                                        <h4 class="no-spacing"><b>Input Untuk Token Mandiri</b><span style="font-size:12px;"> (diisi secara berurutan)</span></h4>
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-3">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">APPLI</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">:&nbsp;&nbsp;3</p>
+                                            </div>
                                         </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label">Input 2    : </label>
-                                            <label class="control-label">{{totalPrice - voucher.amount}}</label> <!-- Harga Final -->
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-3">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">10 Digit Terakhir Kartu Debit (Input 1)</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">:&nbsp;&nbsp;{{MandiriClickPay.CardNo | limitTo:-10}}</p>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Input 3    : </label>
-                                            <label class="control-label">{{rsvNo | limitTo:-5}}</label>
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-3">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">Nominal Transaksi (Input 2)</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">:&nbsp;&nbsp;{{totalPrice - voucher.amount}}</p>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label">CVV Kartu</label>
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-3">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">5 Digit Terakhir No Reservasi (Input 3)</p>
+                                            </div>
+                                            <div class="col-sm-9" style="position:center">
+                                                <p class="control-label" style="text-align:left;font-size:13px;">:&nbsp;&nbsp;{{rsvNo | limitTo:-5}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-12">
+                                            <br />
+                                            <label class="control-label" style="font-size:12px;">Respon Token Mandiri</label>
                                             <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
                                         </div>
                                     </div>
                                 </form>
                                 <!-- start CIMB Clicks Instruction -->
                                 @*<div ng-show="paymentMethod == '@PaymentMethod.CimbClicks'">
-                                    <h3 class="no-spacing">Instruksi <b>Pembayaran Cimb Clicks</b></h3>
-                                    <div class="mandiri-clikpay-form">
-                                        <div class="form-group">
-                                            <label class="control-label">Nomor Kartu</label>
-                                            <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                        <h3 class="no-spacing">Instruksi <b>Pembayaran Cimb Clicks</b></h3>
+                                        <div class="mandiri-clikpay-form">
+                                            <div class="form-group">
+                                                <label class="control-label">Nomor Kartu</label>
+                                                <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">CVV Kartu</label>
+                                                <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label">CVV Kartu</label>
-                                            <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
-                                        </div>
-                                    </div>
-                                </div>*@
+                                    </div>*@
                                 <!--end CIMB Clicks Instruction -->
-                                
                                 <!--start Mandiri Bill Payment-->
                                 @*<div ng-show="paymentMethod == '@PaymentMethod.MandiriBillPayment'">
-                                    <h3 class="no-spacing">Instruksi <b>Pembayaran Mandiri Bill Payment</b></h3>
-                                    <div class="mandiri-clikpay-form">
-                                        <div class="form-group">
-                                            <label class="control-label">Nomor Kartu</label>
-                                            <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                        <h3 class="no-spacing">Instruksi <b>Pembayaran Mandiri Bill Payment</b></h3>
+                                        <div class="mandiri-clikpay-form">
+                                            <div class="form-group">
+                                                <label class="control-label">Nomor Kartu</label>
+                                                <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">CVV Kartu</label>
+                                                <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label">CVV Kartu</label>
-                                            <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
-                                        </div>
-                                    </div>
-                                </div>*@
+                                    </div>*@
                                 <!--end Mandiri Bill Payment-->
-                                
+
 
                                 <div class="step-button">
 
@@ -382,9 +402,9 @@
 
                                             <p>Voucher Code</p>
                                             <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
-                                            
+
                                             <input type="text" name="Payment.Data0" id="vt-token" value="" ng-model="CreditCard.Token" />
-                                            
+
                                         </div>
 
                                         <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a></p>
@@ -582,7 +602,6 @@
                     </footer>
                 </div>
             </div><!-- .page-overlay -->
-
             <!--<div class="page-overlay booking-flight" ng-hide="!pay.paying">
                 <div class="overlay-content" >
                     <header>
@@ -603,32 +622,35 @@
                 </div>
             </div>-->
 
-            <div class="bookfailed-popup" ng-hide="!pay.paying">
+            <div class="payment-popup" ng-if="pay.checked && !pay.isSuccess">
                 <div class=" overlay-content">
-                <section style="padding-top:60px; padding-left:225px;">
-                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                    <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Tunggu...</b></span></div>
-                    <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                    <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
-                </section>
+                    <section style="padding-top:60px; padding-left:225px;">
+                        <!-- Ini untuk yg gagal -->
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                        <div style="padding-top:5px;"><span style="font-size:14px">{{errorMessage}}</span></div>
+                    </section>
+                    <div align="right" style="padding-right:30px;padding-top:30px;">
+                        <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
+                    </div>
+                </div>
             </div>
+
+            <div class="bookfailed-popup" ng-if="pay.isPaying">
+                <div class=" overlay-content">
+                    <section style="padding-top:60px; padding-left:225px;">
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>
+                        <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Mohon tunggu...</b></span></div>
+                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                        <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
+                    </section>
+                </div>
             </div>
+
         </div>
 
-@*<div class="bookfailed-popup" ng-if="pay.checked && !pay.isSuccess">
-    <div class=" overlay-content">
-        <section style="padding-top:60px; padding-left:225px;">
-            <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-            <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
-            <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-            <div style="padding-top:5px;"><span style="font-size:14px">Pembayaran Gagal</span></div>
-            <div style="padding-top:5px;"><span style="font-size:14px">Silahkan pilih metode pembayaran lain</span></div>
-        </section>
-        <div align="right" style="padding-right:30px;padding-top:30px;">
-            <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
-        </div>
-    </div>
-</div>*@
+
 
         <!-- checkout end here -->
                                 break;

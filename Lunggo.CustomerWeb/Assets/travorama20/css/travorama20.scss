@@ -50,7 +50,7 @@ $transition-default:all 0.5s;
 /*--------------------*/
 /* general class */
 html {height:100%;}
-body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9;}
+body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; padding-bottom: 415px;}
 
 hr {border-top:$border-default;}
 
@@ -329,15 +329,9 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
     }
 }
 
-
-
-
-
-
-
 //PopUp Loading
 .loading-popup {display:block; position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7); visibility: visible;
-    .overlay-content {width:380px; height:382px; background:url("/Assets/images/popup/pleasewait350px.png"); position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
+    .overlay-content {width:380px; height:382px; background:url("/Assets/images/popup/pleasewait350px.png"); background-repeat: no-repeat; position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
         section {
         }
     }
@@ -345,7 +339,7 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
 
 //Price Change Pop Up
 .priceChaged-popup {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7);display: block;
-    .overlay-content {width:500px; height:261px; background:url("/Assets/images/popup/pricechanged500px.png"); position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
+    .overlay-content {width:500px; height:261px; background:url("/Assets/images/popup/pricechanged500px.png"); background-repeat: no-repeat;position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
         section {
         }
     }
@@ -353,7 +347,7 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
 
 //Payment Failed
 .payment-popup {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7);display: block;
-    .overlay-content {width:500px; height:258px; background:url("/Assets/images/popup/paymentfailed500px.png"); position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
+    .overlay-content {width:500px; height:258px; background:url("/Assets/images/popup/paymentfailed500px.png");background-repeat: no-repeat; position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
         section {
         }
     }
@@ -361,13 +355,30 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
 
 //bookfailed
 .bookfailed-popup {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7);display: block;
-    .overlay-content {width:500px; height:289px; background:url("/Assets/images/popup/notavailable500px.png"); position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
+    .overlay-content {width:500px; height:289px; background:url("/Assets/images/popup/notavailable500px.png"); background-repeat: no-repeat;position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
         section {
         }
         footer {bottom:15px; left:0; width:100%;}
     }
 }
-    
+
+//after selectflight
+
+.select-flight {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7);display: block;
+    .overlay-content {width:500px; height:289px; background:url("/Assets/images/popup/pricechanged500px.png"); background-repeat: no-repeat;position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
+        section {
+        }
+        footer {bottom:15px; left:0; width:100%;}
+    }
+}  
+
+.login-succeed {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7);display: block;
+    .overlay-content {width:500px; height:289px; background:url("/Assets/images/popup/pricechanged500px.png"); background-repeat: no-repeat;position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
+        section {
+        }
+        footer {bottom:15px; left:0; width:100%;}
+    }
+}  
 
 // page campaign
 .page-campaign {

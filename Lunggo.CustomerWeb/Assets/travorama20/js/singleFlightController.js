@@ -382,7 +382,8 @@ app.controller('singleFlightController', [
             validating: false,
             available: false,
             newFare: false,
-            proceed: false
+            proceed: false,
+            popup:false
         };
         $scope.selectFlight = function (indexNo) {
             if ($scope.trial > 3)
@@ -393,7 +394,7 @@ app.controller('singleFlightController', [
 
             console.log('---------------------');
             console.log('Selecting Flight no : ' + indexNo);
-
+            $scope.selectFlightParam.popup = true;
             if (!$scope.selectFlightParam.validated) {
 
                 $scope.flightSelected = indexNo;
@@ -415,11 +416,12 @@ app.controller('singleFlightController', [
                         $scope.selectFlightParam.validated = true;
                         console.log(indexNo);
                         console.log("Response Select Flight : " + returnData);
+                     
                         if (returnData.data.token != "" || returnData.data.token != null) {
                             console.log('departure flight available');
                             $scope.selectFlightParam.available = true;
                             $scope.selectFlightParam.token = returnData.data.token;
-
+                           
                             $('.push-token input').val($scope.selectFlightParam.token);
                             //$('.push-token').submit();
                             $scope.selectSubmit();

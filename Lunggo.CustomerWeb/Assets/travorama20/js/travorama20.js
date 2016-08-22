@@ -587,13 +587,17 @@ function flightPageSearchFormFunctions() {
     $('.switch-destination').click(function () {
         var prevOrigin = $('.form-flight-origin').val();
         var prevOriginCode = flightPageSearchFormParam.origin;
+        var prevOriginCity = flightPageSearchFormParam.originCity;
         var prevDestination = $('.form-flight-destination').val();
         var prevDestinationCode = flightPageSearchFormParam.destination;
+        var prevDestinationCity = flightPageSearchFormParam.destinationCity;
 
         $('.form-flight-origin').val(prevDestination);
         $('.form-flight-destination').val(prevOrigin);
         flightPageSearchFormParam.origin = prevDestinationCode;
         flightPageSearchFormParam.destination = prevOriginCode;
+        flightPageSearchFormParam.originCity = prevDestinationCity;
+        flightPageSearchFormParam.destinationCity = prevOriginCity;
     });
 
     $('.form-flight').on('keyup keypress', function (e) {
@@ -670,11 +674,11 @@ function flightPageSearchFormFunctions() {
         if ($('.search-location').attr('data-place') == 'origin') {
             flightPageSearchFormParam.origin = locationCode;
             flightPageSearchFormParam.originCity = locationCity;
-            $('.form-flight-origin').val($(this).text());
+            $('.form-flight-origin').val(locationCity + ' (' + locationCode + ')');
         } else {
             flightPageSearchFormParam.destination = locationCode;
             flightPageSearchFormParam.destinationCity = locationCity;
-            $('.form-flight-destination').val($(this).text());
+            $('.form-flight-destination').val(locationCity + ' (' + locationCode + ')');
         }
         hideLocation();
     });
@@ -942,7 +946,7 @@ function flightPageSearchFormFunctions() {
             flightPageSearchFormParam.returnDate = new Date();
         }
         if (flightPageSearchFormParam.origin && flightPageSearchFormParam.destination) {
-            // setCookie();
+             setCookie();
             generateFlightSearchParam();
         } else {
             if (!flightPageSearchFormParam.origin) {
@@ -957,22 +961,22 @@ function flightPageSearchFormFunctions() {
     }
 
     function setCookie() {
-        Cookies.set('origin', FlightSearchConfig.flightForm.origin, { expires: 9999 });
-        Cookies.set('originCity', FlightSearchConfig.flightForm.originCity, { expires: 9999 });
-        Cookies.set('destination', FlightSearchConfig.flightForm.destination, { expires: 9999 });
-        Cookies.set('destinationCity', FlightSearchConfig.flightForm.destinationCity, { expires: 9999 });
-        Cookies.set('departure', FlightSearchConfig.flightForm.departureDate, { expires: 9999 });
-        Cookies.set('return', FlightSearchConfig.flightForm.returnDate, { expires: 9999 });
+        Cookies.set('origin', flightPageSearchFormParam.origin, { expires: 9999 });
+        Cookies.set('originCity', flightPageSearchFormParam.originCity, { expires: 9999 });
+        Cookies.set('destination', flightPageSearchFormParam.destination, { expires: 9999 });
+        Cookies.set('destinationCity', flightPageSearchFormParam.destinationCity, { expires: 9999 });
+        Cookies.set('departure', flightPageSearchFormParam.departureDate, { expires: 9999 });
+        Cookies.set('return', flightPageSearchFormParam.returnDate, { expires: 9999 });
         Cookies.set('type', FlightSearchConfig.flightForm.type, { expires: 9999 });
-        Cookies.set('cabin', FlightSearchConfig.flightForm.cabin, { expires: 9999 });
+        Cookies.set('cabin', flightPageSearchFormParam.cabin, { expires: 9999 });
         if (typeof FlightSearchConfig.flightForm.departureFlightParam == 'object') {
-            Cookies.set('adult', FlightSearchConfig.flightForm.departureFlightParam.AdultCount, { expires: 9999 });
-            Cookies.set('child', FlightSearchConfig.flightForm.departureFlightParam.ChildCount, { expires: 9999 });
-            Cookies.set('infant', FlightSearchConfig.flightForm.departureFlightParam.InfantCount, { expires: 9999 });
+            Cookies.set('adult', flightPageSearchFormParam.passenger.adult, { expires: 9999 });
+            Cookies.set('child', flightPageSearchFormParam.passenger.child, { expires: 9999 });
+            Cookies.set('infant', flightPageSearchFormParam.passenger.infant, { expires: 9999 });
         } else {
-            Cookies.set('adult', FlightSearchConfig.flightForm.passenger[0], { expires: 9999 });
-            Cookies.set('child', FlightSearchConfig.flightForm.passenger[1], { expires: 9999 });
-            Cookies.set('infant', FlightSearchConfig.flightForm.passenger[2], { expires: 9999 });
+            Cookies.set('adult', flightPageSearchFormParam.passenger.adult, { expires: 9999 });
+            Cookies.set('child', flightPageSearchFormParam.passenger.child, { expires: 9999 });
+            Cookies.set('infant', flightPageSearchFormParam.passenger.infant, { expires: 9999 });
         }
     }
 
@@ -1021,34 +1025,42 @@ function indexPageFunctions() {
             switch (location) {
                 case "jakarta":
                     backgroundImage = '/Assets/images/campaign/jakarta.jpg';
+                    location = 'Jakarta';
                     locationCode = 'CGK';
                     break;
                 case "bandung":
                     backgroundImage = '/Assets/images/campaign/bandung.jpg';
+                    location = 'Bandung';
                     locationCode = 'BDO';
                     break;
                 case "surabaya":
                     backgroundImage = '/Assets/images/campaign/surabaya.jpg';
+                    location = 'Surabaya';
                     locationCode = 'SUB';
                     break;
                 case "yogyakarta":
                     backgroundImage = '/Assets/images/campaign/yogyakarta.jpg';
+                    location = 'Yogyakarta';
                     locationCode = 'JOG';
                     break;
                 case "bali":
                     backgroundImage = '/Assets/images/campaign/bali.jpg';
+                    location = 'Denpasar';
                     locationCode = 'DPS';
                     break;
                 case "singapore":
                     backgroundImage = '/Assets/images/campaign/singapore.jpg';
+                    location = 'Singapore';
                     locationCode = 'SIN';
                     break;
                 case "malaysia":
                     backgroundImage = '/Assets/images/campaign/malaysia.jpg';
+                    location = 'Malaysia';
                     locationCode = 'KUL';
                     break;
-                case "hongkong":
+                case "hong kong":
                     backgroundImage = '/Assets/images/campaign/hongkong.jpg';
+                    location = 'Hong Kong';
                     locationCode = 'HKG';
                     break;
             }
@@ -1210,13 +1222,17 @@ function flightFormSearchFunctions() {
     $('.switch-destination').click(function() {
         var prevOrigin = $('.form-flight-origin').val();
         var prevOriginCode = FlightSearchConfig.flightForm.origin;
+        var prevOriginCity = FlightSearchConfig.flightForm.originCity;
         var prevDestination = $('.form-flight-destination').val();
         var prevDestinationCode = FlightSearchConfig.flightForm.destination;
+        var prevDestinationCity = FlightSearchConfig.flightForm.destinationCity;
 
         $('.form-flight-origin').val(prevDestination);
         $('.form-flight-destination').val(prevOrigin);
         FlightSearchConfig.flightForm.origin = prevDestinationCode;
         FlightSearchConfig.flightForm.destination = prevOriginCode;
+        FlightSearchConfig.flightForm.originCity = prevDestinationCity;
+        FlightSearchConfig.flightForm.destinationCity =prevOriginCity;
     });
 
     $('.form-flight').on('keyup keypress', function (e) {
@@ -1293,11 +1309,11 @@ function flightFormSearchFunctions() {
         if ( $('.search-location').attr('data-place') == 'origin') {
             FlightSearchConfig.flightForm.origin = locationCode;
             FlightSearchConfig.flightForm.originCity = locationCity;
-            $('.form-flight-origin').val( $(this).text() );
+            $('.form-flight-origin').val(locationCity + ' (' + locationCode + ')');
         } else {
             FlightSearchConfig.flightForm.destination = locationCode;
             FlightSearchConfig.flightForm.destinationCity = locationCity;
-            $('.form-flight-destination').val($(this).text());
+            $('.form-flight-destination').val(locationCity + ' (' + locationCode + ')');
         }
         hideLocation();
         console.log("BERHASIL");
@@ -1428,7 +1444,7 @@ function flightFormSearchFunctions() {
 
         // set default flight and return flight
         if (Cookies.get('origin')) {
-            $('.form-flight-origin').val(Cookies.get('originCity') +'('+Cookies.get('origin')+')');
+            $('.form-flight-origin').val(Cookies.get('originCity') +' ('+ Cookies.get('origin')+')');
             FlightSearchConfig.flightForm.origin = Cookies.get('origin');
             FlightSearchConfig.flightForm.originCity = Cookies.get('originCity');
         } else {
@@ -1437,7 +1453,7 @@ function flightFormSearchFunctions() {
             FlightSearchConfig.flightForm.originCity = 'Jakarta';
         }
         if (Cookies.get('destination')) {
-            $('.form-flight-destination').val(Cookies.get('destinationCity') + '(' + Cookies.get('destination') + ')');
+            $('.form-flight-destination').val(Cookies.get('destinationCity') + ' (' + Cookies.get('destination') + ')');
             FlightSearchConfig.flightForm.destination = Cookies.get('destination');
             FlightSearchConfig.flightForm.destinationCity = Cookies.get('destinationCity');
         } else {
