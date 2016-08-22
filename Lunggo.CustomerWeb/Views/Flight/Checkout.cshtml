@@ -185,13 +185,13 @@
                                     <div class="form-group" ng-class="{'has-error' : (buyerForm.phone.$touched && buyerForm.phone.$invalid) || (buyerForm.countryCode.$touched && buyerForm.countryCode.$invalid)}">
                                         <label class="control-label important">Nomor Telepon:</label>
                                         <div class="row">
-                                            <div class="col-xs-3" ng-hide="loggedIn">
+                                            <div class="col-xs-7" ng-hide="loggedIn">
                                                 <p>Kode Negara</p>
                                                 <select class="form-control" name="countryCode" ng-model="buyerInfo.countryCode" ng-init="buyerInfo.countryCode = '62'">
                                                     <option ng-repeat="country in countries" ng-selected="country.dial_code == '62'" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
                                                 </select>
                                             </div>
-                                            <div class="col-xs-3" ng-hide="!loggedIn">
+                                            <div class="col-xs-7" ng-hide="!loggedIn">
                                                 <!--Jika udah Login-->
                                                 <p>Kode Negara</p>
                                                 <select class="form-control" name="countryCode" ng-model="buyerInfo.countryCode">
@@ -200,11 +200,11 @@
 
                                                 @*<input type="number" name="countryCode" value=buyerInfo.countryCode class="form-control" placeholder="ex : 62 for Indonesia" required ng-model="buyerInfo.countryCode" maxlength="5" />*@
                                             </div>
-                                            <div class="col-xs-9" ng-hide="loggedIn">
+                                            <div class="col-xs-5" ng-hide="loggedIn">
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
                                                 <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />
                                             </div>
-                                            <div class="col-xs-9" ng-hide="!loggedIn">
+                                            <div class="col-xs-5" ng-hide="!loggedIn">
                                                 <!--Jika udah Login-->
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
                                                 <input type="number" class="form-control" value=buyerInfo.phone id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />

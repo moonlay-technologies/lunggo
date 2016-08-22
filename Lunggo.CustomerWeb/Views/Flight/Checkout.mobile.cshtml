@@ -145,14 +145,14 @@
                             <div class="form-group important">
                                 <label class="control-label">Nomor Telepon : </label>
                                 <div class="row">
-                                    <div class="col-xs-4">
+                                    <div class="col-xs-12 bottom-divider">
                                         <p><small>Kode Negara</small></p>
                                         <select class="form-control" name="PhoneCode" ng-model="buyerInfo.countryCode" ng-init="buyerInfo.countryCode = '62'">
                                             <option ng-repeat="country in Countries" ng-selected="country.dial_code == buyerInfo.countryCode" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
                                         </select>
                                         @*<input type="number" value="" ng-model="buyerInfo.countryCode" name="PhoneCode" class="form-control" placeholder="Ex : 62 for Indonesia" required />*@
                                     </div>
-                                    <div class="col-xs-8">
+                                    <div class="col-xs-12">
                                         <p><small>Nomor Telepon (Tanpa Kode Negara)</small></p>
                                         <input type="number" value="" ng-model="buyerInfo.phone" name="Phone" class="form-control" placeholder="Ex : 821 2345 6789" required />
                                     </div>
