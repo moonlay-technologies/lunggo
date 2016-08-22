@@ -287,7 +287,7 @@ app.controller('paymentController', [
                 $scope.pay.isPaying = false;
                 //generate payment data
                 if ($scope.paymentMethod == 'BankTransfer') {
-                    if ($scope.redirectionUrl.length == 0) {
+                    if ($scope.redirectionUrl == null || $scope.redirectionUrl.length == 0) {
                         $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2"';
                         $scope.pay.transfer = true;
                     } 
@@ -325,7 +325,7 @@ app.controller('paymentController', [
                 $scope.pay.postData = '{' + $scope.pay.postData + '}';
                 $scope.pay.postData = JSON.parse($scope.pay.postData);
                 
-                if ($scope.paymentMethod != "BankTransfer" && $scope.paymentMethod != 'VirtualAccount' || $scope.redirectionUrl.length != 0) {
+                if ($scope.paymentMethod != "BankTransfer" && $scope.paymentMethod != 'VirtualAccount' || ($scope.redirectionUrl != null && $scope.redirectionUrl.length != 0)) {
                     $scope.pay.go = true;
                     $scope.pay.bayar();
                 }

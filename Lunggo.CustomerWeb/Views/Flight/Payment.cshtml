@@ -605,53 +605,134 @@
                     </footer>
                 </div>
             </div><!-- .page-overlay -->
-            <!--<div class="page-overlay booking-flight" ng-hide="!pay.paying">
-                <div class="overlay-content" >
-                    <header>
-                        <h4>Mohon Tunggu</h4>
-                    </header>
-                    <section>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-4 text-align">
-                                    <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
-                                </div>
-                                <div class="col-sm-8">
-                                    <p>Sedang memproses pilihan Anda.</p>
+            
+            <div class="bookfailed-popup" ng-show=" pay.transfer">
+                <div class=" overlay-content">
+                    <section style="padding-top:60px; padding-left:225px;">
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:14px"><b>Syarat dan Ketentuan <br />Bank Transfer</b></span></div>
+                        <div style="padding-top:5px;">
+                            <ol style="font-size:8px">
+                                <li>Transfer keseluruhan jumlah harga hingga 3 angka terakhir untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
+                                <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran ATM.</li>
+                                <li>Tidak disarankan melakukan transfer dengan LLG/Kliring/SKNBI karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.
+                            </ol>
+                        </div>   
+                    </section>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
+                        </div>
+                        <div class="col-xs-6">
+                            <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}" style="width:100%">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+            <div class="bookfailed-popup" ng-show=" pay.virtualAccount">
+                <div class=" overlay-content">
+                    <section style="padding-top:60px; padding-left:225px;">
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:12px">Syarat dan Ketentuan ATM</span></div>
+                        <div style="padding-top:5px;">
+                            <ol style="font-size:8px">
+                                <li>Hanya untuk transfer via mesin ATM yang tergabung dalam jaringan ATM Bersama, Prima, dan Alto.</li>
+                                <li>Bukan untuk Internet Banking/Mobile Banking/Transfer melalui Non-ATM.</li>
+                                <li>Ada biaya Rp 6.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu.</li>
+                                <li>Lakukan pembayaran sebelum batas akhir waktu pembayaran.</li>
+                            </ol>
+                        </div>
+                    </section>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
+                        </div>
+                        <div class="col-xs-6">
+                            <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}" style="width:100%">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+               
+                <div class="popup__wrapper" ng-show="pay.virtualAccount">
+                    <div class="popup">
+                        <header class="popup__header">
+                            <h4 class="popup__title">Syarat dan Ketentuan ATM</h4>
+                        </header>
+                        <div class="popup__body tnc-body">
+                            <div class="container_new">
+                                <ol>
+                                    <li>Hanya untuk transfer via mesin ATM yang tergabung dalam jaringan ATM Bersama, Prima, dan Alto.</li>
+                                    <li>Bukan untuk Internet Banking/Mobile Banking/Transfer melalui Non-ATM.</li>
+                                    <li>Ada biaya Rp 6.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu.</li>
+                                    <li>Lakukan pembayaran sebelum batas akhir waktu pembayaran.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="popup__footer">
+                            <div class="container_new tnc">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <input type="submit" class="btn btn-yellow" ng-click="pay.middle('virtualAccount')" value="SETUJU">
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                </div>
-            </div>-->
-
-            <div class="payment-popup" ng-if="pay.checked && !pay.isSuccess">
-                <div class=" overlay-content">
-                    <section style="padding-top:60px; padding-left:225px;">
-                        <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
-                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                        <div style="padding-top:5px;"><span style="font-size:14px">{{errorMessage}}</span></div>
-                    </section>
-                    <div align="right" style="padding-right:30px;padding-top:30px;">
-                        <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
                     </div>
                 </div>
-            </div>
 
-            <div class="bookfailed-popup" ng-if="pay.isPaying">
-                <div class=" overlay-content">
-                    <section style="padding-top:60px; padding-left:225px;">
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>
-                        <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Mohon tunggu...</b></span></div>
-                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                        <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
-                    </section>
+
+                <!--<div class="page-overlay booking-flight" ng-hide="!pay.paying">
+            <div class="overlay-content" >
+                <header>
+                    <h4>Mohon Tunggu</h4>
+                </header>
+                <section>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
+                            </div>
+                            <div class="col-sm-8">
+                                <p>Sedang memproses pilihan Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>-->
+
+                <div class="payment-popup" ng-if="pay.checked && !pay.isSuccess">
+                    <div class=" overlay-content">
+                        <section style="padding-top:60px; padding-left:225px;">
+                            <!-- Ini untuk yg gagal -->
+                            <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                            <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+                            <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                            <div style="padding-top:5px;"><span style="font-size:14px">{{errorMessage}}</span></div>
+                        </section>
+                        <div align="right" style="padding-right:30px;padding-top:30px;">
+                            <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-        </div>
+                <div class="bookfailed-popup" ng-if="pay.isPaying || pay.go">
+                    <div class=" overlay-content">
+                        <section style="padding-top:60px; padding-left:225px;">
+                            <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>
+                            <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Mohon tunggu...</b></span></div>
+                            <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                            <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
 
 
 
