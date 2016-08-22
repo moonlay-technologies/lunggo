@@ -340,8 +340,10 @@
                                     
                                 <div class="step-button">
                                     <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                                    <button class="btn btn-yellow" ng-click="changePage(3)" ng-disabled="passengersForm.$invalid || !CheckTitle(passengers) || !CheckDate(passengers)
-                                             || !CheckPassportDate(passengers)">LANJUTKAN</button>
+                                    <button class="btn btn-yellow" ng-click="changePage(3)" ng-disabled="passengersForm.$invalid || !CheckTitle(passengers) || (birthDateRequired && !CheckDate(passengers))
+                                             || (passportRequired && !CheckPassportDate(passengers))">
+                                        LANJUTKAN
+                                    </button>
                                 </div>
                                 <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Periksa kembali form Anda.</h4>
                                 
