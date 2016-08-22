@@ -18,29 +18,32 @@ $play-store: '../images/play-store.png';
             margin: 0 auto 15px;
         }
     }
-    .mobile-banner {
-        background: url($mobile-banner) no-repeat bottom right;
+    .mobile-banner { 
         border-bottom: 1px solid #dddddd;
-        padding: 20px 20px 30px;
-        .banner-txt {
-            @extend .os-semibold;
-            font-size: 12px;
-            color: $color_black;
-            max-width: 120px;
-            margin: 15px 0;
-        }
-        .banner-button {
-            a.button {
-                &.btn-appstore {
-                    background: url($app-store);
-                    @include size(84px, 28px);
-                    display: block;
-                } 
-                &.btn-playstore {
-                    background: url($play-store);
-                    @include size(84px, 29px);
-                    display: block;
-                    margin-bottom: 10px;
+        .mb-container{
+            margin: 0 20px;
+            padding: 20px 0 30px;
+            background: url($mobile-banner) no-repeat bottom right;
+            .banner-txt {
+                @extend .os-semibold;
+                font-size: 12px;
+                color: $color_black;
+                max-width: 120px;
+                margin: 15px 0;
+            }
+            .banner-button {
+                a.button {
+                    &.btn-appstore {
+                        background: url($app-store);
+                        @include size(84px, 28px);
+                        display: block;
+                    } 
+                    &.btn-playstore {
+                        background: url($play-store);
+                        @include size(84px, 29px);
+                        display: block;
+                        margin-bottom: 10px;
+                    }
                 }
             }
         }

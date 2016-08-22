@@ -1084,6 +1084,7 @@
     <Content Include="Assets\mobile\images\logo-promo.jpg" />
     <Content Include="Assets\mobile\images\loop.png" />
     <Content Include="Assets\mobile\images\medals.png" />
+    <Content Include="Assets\mobile\images\mobile-app.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-white.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-yellow.png" />
@@ -1124,6 +1125,8 @@
     <Content Include="Assets\travorama20\css\_page_index.scss" />
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
+    <Content Include="Assets\travorama20\images\app-store-bg.png" />
+    <Content Include="Assets\travorama20\images\play-store-bg.png" />
     <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\countries.js" />
     <Content Include="Assets\travorama20\js\checkoutController.js" />
