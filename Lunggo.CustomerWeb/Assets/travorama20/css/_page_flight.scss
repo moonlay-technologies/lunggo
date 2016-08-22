@@ -40,7 +40,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     // *****
     // section form
     .search-result-form {background:#032e55; color:#fff; padding-top:20px; padding-bottom:20px; letter-spacing:0;
-        &>.container {position:relative;}
+        &>.container {position:relative; max-width: none;}
         .result-form-left {
             h3 {margin-top:0; font-size:16px;}
             h4 {margin-bottom:0; font-size:12px;}
@@ -77,8 +77,8 @@ file: /Assets/travorama20/css/_page_flight.scss
                 .year {font-size:11px; font-weight:600; position:absolute; left:75%; top:23px; color:#666;}
             }
             .change-flight-return, .change-flight-oneway {@extend & .change-flight-departure; margin-left:2%;
-                &.disabled {cursor:not-allowed; color:#b8b8b8;
-                    .date, .month, .year {color:#b8b8b8;}
+                &.disabled {cursor:not-allowed; color:#464545; background-color: #5f5f5f;
+                    .date, .month, .year {color:#464545;}
                 }
             }
             .change-flight-oneway {display:none; cursor:not-allowed;}
