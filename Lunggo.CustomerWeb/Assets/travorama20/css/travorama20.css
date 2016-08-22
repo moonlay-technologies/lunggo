@@ -92,7 +92,7 @@ span.close {
     padding: 0; }
     .dropdown-content ul li {
       list-style: none;
-      display: block;
+      display: block;                                         
       width: 100%;
       border: none !important; }
       .dropdown-content ul li a {

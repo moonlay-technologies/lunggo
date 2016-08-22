@@ -341,7 +341,7 @@
                                                 <p class="control-label" style="text-align:left;font-size:13px;">Nominal Transaksi (Input 2)</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <p class="control-label" style="text-align:left;font-size:13px;">:&nbsp;&nbsp;{{totalPrice - voucher.amount}}</p>
+                                                <p class="control-label" style="text-align:left;font-size:13px;">:&nbsp;&nbsp;{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}}</p>
                                             </div>
                                         </div>
                                         <div class="form-group col-sm-12">

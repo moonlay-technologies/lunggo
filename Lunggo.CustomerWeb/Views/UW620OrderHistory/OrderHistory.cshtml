@@ -75,7 +75,12 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p ng-if="userProfile.countryCallCd" class="form-control-static" ng-hide="userProfile.edit">{{userProfile.countryCallCd}}</p>
-                                    <input type="number" name="countryCallCd" ng-model="editProfile.countryCallCd" value="editProfile.countryCallCd" class="form-control" placeholder="Kode Negara" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />
+                                    <select class="form-control" name="countryCallCd" ng-model="editProfile.countryCallCd" ng-init="editProfile.countryCallCd = 'xx'"
+                                            ng-show="userProfile.edit" ng-disabled="userProfile.updating">
+                                        <option ng-repeat="country in countries" ng-selected="country.dial_code == 'xx'" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
+                                    </select>
+                                    
+                                    @*<input type="number" name="countryCallCd" ng-model="editProfile.countryCallCd" value="editProfile.countryCallCd" class="form-control" placeholder="Kode Negara" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />*@
                                     <!--<select class="form-control" ng-show="userProfile.edit" ng-model="editProfile.country" ng-disabled="userProfile.updating">
                                     <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}}</option>
                                     </select> -->
