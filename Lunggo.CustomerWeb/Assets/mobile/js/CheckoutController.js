@@ -782,35 +782,35 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
     // init passenger
     $scope.initPassenger = function (passenger) {
-        //if (passenger.type == 'adult') {
-        //    passenger.birth = {
+        if (passenger.type == 'adult') {
+            passenger.birth = {
         //        date: $scope.flightDetail.departureFullDate.getDate(),
         //        month: $scope.flightDetail.departureFullDate.getMonth(),
         //        year: ($scope.flightDetail.departureFullDate.getFullYear() -12)
-        //    };
-        //} else if (passenger.type == 'infant') {
-        //    passenger.birth = {
+            };
+        } else if (passenger.type == 'infant') {
+            passenger.birth = {
         //        date: $scope.flightDetail.beforeDepartureFullDate.getDate(),
         //        month: $scope.flightDetail.beforeDepartureFullDate.getMonth(),
         //        year: $scope.flightDetail.beforeDepartureFullDate.getFullYear(),
-        //    };
-        //} else if (passenger.type == 'child') {
-        //    passenger.birth = {
+            };
+        } else if (passenger.type == 'child') {
+            passenger.birth = {
         //        date: $scope.flightDetail.beforeDepartureFullDate.getDate(),
         //        month: $scope.flightDetail.beforeDepartureFullDate.getMonth(),
         //        year: ($scope.flightDetail.beforeDepartureFullDate.getFullYear() -2)
-        //    };
-        //}
+            };
+        }
         if ($scope.CheckoutConfig.NationalityRequired == true) {
             passenger.nationality = 'Indonesia';
         }
-        //passenger.passport = {
-        //    expire: {
+        passenger.passport = {
+            expire: {
         //        date: $scope.flightDetail.passportDepartureFullDate.getDate(),
         //        month: $scope.flightDetail.passportDepartureFullDate.getMonth(),
         //        year: $scope.flightDetail.passportDepartureFullDate.getFullYear(),
-        //    }
-        //}
+            }
+        }
     }
 
     

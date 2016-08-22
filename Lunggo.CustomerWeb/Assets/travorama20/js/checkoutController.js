@@ -529,38 +529,38 @@ app.controller('checkoutController', [
         }
         // init passenger
         $scope.initPassenger = function (passenger) {
-            //if (passenger.type == 'adult') {
-            //    passenger.birth = {
-            //        date: $scope.flightDetail.departureFullDate.getDate(),
-            //        month: $scope.flightDetail.departureFullDate.getMonth(),
-            //        year: ($scope.flightDetail.departureFullDate.getFullYear() - 12)
-            //    };
-            //    passenger.type = 'adult';
-            //} else if (passenger.type == 'infant') {
-            //    passenger.birth = {
-            //        date: $scope.flightDetail.beforeDepartureFullDate.getDate(),
-            //        month: $scope.flightDetail.beforeDepartureFullDate.getMonth(),
-            //        year: $scope.flightDetail.beforeDepartureFullDate.getFullYear()
-            //    };
-            //    passenger.type = 'infant';
-            //} else if (passenger.type == 'child') {
-            //    passenger.birth = {
-            //        date: $scope.flightDetail.beforeDepartureFullDate.getDate(),
-            //        month: $scope.flightDetail.beforeDepartureFullDate.getMonth(),
-            //        year: ($scope.flightDetail.beforeDepartureFullDate.getFullYear() - 2)
-            //    };
-            //    passenger.type = 'child';
-            //}
+            if (passenger.type == 'adult') {
+                passenger.birth = {
+                    //date: $scope.flightDetail.departureFullDate.getDate(),
+                    //month: $scope.flightDetail.departureFullDate.getMonth(),
+                    //year: ($scope.flightDetail.departureFullDate.getFullYear() - 12)
+                };
+                passenger.type = 'adult';
+            } else if (passenger.type == 'infant') {
+                passenger.birth = {
+                    //date: $scope.flightDetail.beforeDepartureFullDate.getDate(),
+                    //month: $scope.flightDetail.beforeDepartureFullDate.getMonth(),
+                    //year: $scope.flightDetail.beforeDepartureFullDate.getFullYear()
+                };
+                passenger.type = 'infant';
+            } else if (passenger.type == 'child') {
+                passenger.birth = {
+                    //date: $scope.flightDetail.beforeDepartureFullDate.getDate(),
+                    //month: $scope.flightDetail.beforeDepartureFullDate.getMonth(),
+                    //year: ($scope.flightDetail.beforeDepartureFullDate.getFullYear() - 2)
+                };
+                passenger.type = 'child';
+            }
             if (nationalityRequired == true) {
                 passenger.nationality = 'Indonesia';
             }
-            //passenger.passport = {
-            //    expire: {
-            //        date: $scope.flightDetail.passportFullDate.getDate(),
-            //        month: $scope.flightDetail.passportFullDate.getMonth(),
-            //        year: $scope.flightDetail.passportFullDate.getFullYear(),
-            //    }
-            //}
+            passenger.passport = {
+                expire: {
+                    //date: $scope.flightDetail.passportFullDate.getDate(),
+                    //month: $scope.flightDetail.passportFullDate.getMonth(),
+                    //year: $scope.flightDetail.passportFullDate.getFullYear(),
+                }
+            }
         }
         // validate passenger birthday
         $scope.validateBirthday = function (passenger) {

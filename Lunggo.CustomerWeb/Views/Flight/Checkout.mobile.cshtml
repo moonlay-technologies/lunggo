@@ -283,8 +283,8 @@
 
                         <div class="form-group">
                             <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
-                            <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid || !CheckTitle(passengers) || (birthDateRequired && !CheckDate(passengers))
-                                    || (passportRequired && !CheckPassportDate(passengers))" ng-click="PageConfig.ChangePage(3)">
+                            <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid || !CheckTitle(passengers) || (CheckoutConfig.BirthDateRequired && !CheckDate(passengers))
+                                    || (CheckoutConfig.PassportRequired && !CheckPassportDate(passengers))" ng-click="PageConfig.ChangePage(3)">
                                 LANJUT
                             </button>
                         </div>
