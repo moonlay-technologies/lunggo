@@ -287,8 +287,11 @@ app.controller('paymentController', [
                 $scope.pay.isPaying = false;
                 //generate payment data
                 if ($scope.paymentMethod == 'BankTransfer') {
-                    $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2"';
-                    $scope.pay.transfer = true;
+                    if ($scope.redirectionUrl.length == 0) {
+                        $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2"';
+                        $scope.pay.transfer = true;
+                    } 
+
                 }
                 else
                 {
@@ -306,7 +309,7 @@ app.controller('paymentController', [
                         case "CimbClicks": 
                             $scope.PaymentData = '"method":"4","cimbClicks":' + '{' + ' "description":"Pembayaran melalui CimbClicks"' + '}';
                             break;
-                        case "VirtualAccount": 
+                        case "VirtualAccount":
                             $scope.PaymentData = '"method":"5","virtualAccount":' + '{' + ' "bank":"permata"' + '}';
                             $scope.pay.virtualAccount = true;
                             break;
@@ -322,7 +325,7 @@ app.controller('paymentController', [
                 $scope.pay.postData = '{' + $scope.pay.postData + '}';
                 $scope.pay.postData = JSON.parse($scope.pay.postData);
                 
-                if ($scope.paymentMethod != "BankTransfer" && $scope.paymentMethod != 'VirtualAccount') {
+                if ($scope.paymentMethod != "BankTransfer" && $scope.paymentMethod != 'VirtualAccount' || $scope.redirectionUrl.length != 0) {
                     $scope.pay.go = true;
                     $scope.pay.bayar();
                 }
