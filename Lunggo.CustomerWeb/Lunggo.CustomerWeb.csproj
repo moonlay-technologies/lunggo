@@ -1306,6 +1306,12 @@
     <Content Include="Assets\mobile\css\_page_home.scss" />
     <Content Include="Assets\mobile\css\_home_page_layout.scss" />
     <Content Include="Assets\css\_page_home.scss" />
+    <Content Include="Assets\travorama20\css\travorama20.css.map">
+      <DependentUpon>travorama20.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\mobile\css\application.css.map">
+      <DependentUpon>application.css</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw %283%29.pubxml" />
