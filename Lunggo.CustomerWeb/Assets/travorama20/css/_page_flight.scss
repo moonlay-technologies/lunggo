@@ -188,7 +188,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                 }
             }
         }
-    }
+            }
 
     // *****
     // flight warning
@@ -227,7 +227,16 @@ file: /Assets/travorama20/css/_page_flight.scss
         // if active
         &.active {border:5px solid $color-main-blue; @include border-radius(5px);
             .flight-detail {border-top:3px solid $color-main-blue; max-height:1000px; display:block;}
+
+            //price-detail silubab START
+            .price-detail { border-top: 3px solid #1daee4; max-height: 1000px; display: block; padding-left: 5%;
+            }
+            //price-detail silubab END
+
             &:after {background-image:url(/Assets/images/flight-detail-active.png); background-size:contain; position:absolute; top:0; left:0; z-index:2; width:30px; height:30px; content:"";}
+
+
+
         }
         // if not active
         .flight-summary {
@@ -334,6 +343,53 @@ file: /Assets/travorama20/css/_page_flight.scss
                 p {background:#fff; display:inline; font-style:italic; font-weight:600; color:$color-main-blue; background:#fff; position:relative; z-index:2; padding:0 10px;}
             }
         }
+        .price-detail {border-top:$border-default; padding-bottom:20px; position:relative; height:auto; max-height:0; overflow:hidden; display:none; margin-bottom:0;
+            &>h3 {   padding-top: 10px;padding-bottom: 10px;padding-right: 10px; font-weight:600; color:$color-main-blue; margin-top:10px; font-size:13px;
+                .close-price-detail {color:#bbb; cursor:pointer; font-weight:bold; font-size:13px; margin-right:4px;}
+            }
+            .segment {
+                &:before,&:after {content:""; clear:both; display:block; width:100%;}
+                .segment-airline-logo {width:50px; border:$border-default; float:left; margin-right:15px;}//border: 1px solid #ccc;
+                .segment-price {float:left; width:80%; position:relative; margin-bottom: 10px;
+                    //&:after {content:""; background-repeat:no-repeat; background-size:contain; width:10px; position:absolute; right:15px; top:15px; width:0; height:20px;}
+                    &:after {content: ""; background-repeat: no-repeat; background-size: contain; width: 10px;position: absolute;right: 15px;top: 15px;width: 0;height: 20px;background-image: url(/Assets/images/flight-segment-separator.png);}
+                    .segment-price-row{ margin-bottom:0px }
+                    .segment-price-q{ content: "";position: absolute;width: 7px;height: 7px;background: #fd8524;left: 0px;top: 3px;}
+                    .segment-price-left{float: left;width: 25%;position: relative; font-weight:500;font-size:14px;padding-left: 14px;}
+                    .segment-price-middle{float: left;width: 5%;position: relative; font-weight:700;font-size:14px;}
+                    .segment-price-right{float: left;width: 70%;position: relative; text-align: right;font-weight:700;font-size:15px;}
+                    .segment-price-total{border-top: 1px dotted #fd8524;/*padding-top: 13px;*/margin-top: 30px;
+                        .segment-price-left{float: left;width: 50%;position: relative; font-weight:700;font-size:15px;padding-left: 14px;}
+                        .segment-price-right{float: left;width: 50%;position: relative; text-align: right;font-weight:700;font-size:15px;}
+                        .discount{color:#1daee4;}
+        }
+                    .segment-netprice-total{border-top: 1px solid #fd8524;padding-top: 13px;margin-top: 54px;
+                        .segment-price-left{float: left;width: 50%;position: relative; font-weight:700;font-size:15px;padding-left: 14px;margin-top: 0px;}
+                        .segment-price-right{float: left;width: 50%;position: relative; text-align: right;font-weight:600;font-size:15px;}
+                        h6.segment-price-left {/*padding-top: 10px;*/float: left;top:-12px;color:#ff7200;font-size:10px;font-weight:500;}
+                        .orange-total-price {color: #ff7200 !important;font-size: 25px !important;font-weight: bold !important;margin: 0 !important;margin-bottom: 8px !important;/*margin-top: 5px;*/ }
+    }
+                    .segment-price-name{ font-weight: bold;color: $color-main-blue;font-size: 12px;padding-right: 30px;}
+                    .segment-price-number{font-weight:600; color:$color-main-blue; font-size:12px;}
+
+
+                    .segment-airline-logo {width:50px; border:$border-default; float:left; margin-right:15px;}
+                    .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px; padding-right:30px;}
+                    .segment-airline-number {font-weight:600; color:$color-main-blue; font-size:12px;}
+                    .flight-facility {display:block; padding-top:12px;
+                        span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin:0 5px;
+                            &.flight-baggage {width:35px; background-position:-64px; text-align:center; color:#fff; position:relative; padding-top:5px; margin-top:-10px; top:-7px;}
+                            &.flight-tax {width:35px; background-position:-30px; padding-bottom:30px;}
+                            &.flight-meal {width:30px; padding-bottom:30px;}
+                        }
+                    }
+                }
+            }
+            .transit {text-align:center; padding:15px 0;
+                &:after {border-top:1px dashed $color-main-blue; content:""; display:block; width:100%; position:relative; top:-10px;}
+                p {background:#fff; display:inline; font-style:italic; font-weight:600; color:$color-main-blue; background:#fff; position:relative; z-index:2; padding:0 10px;}
+            }
+        }
     }
 
     // search calendar
@@ -353,6 +409,16 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 
 }
+
+//price-detail 2 silubab start
+.price-detail-trigger {margin-left: 30px;padding: 7px;display: inline-block;position: relative;color: #1daee4;text-decoration: none;cursor: pointer; 
+    &:before{ content: "";display: block;position: absolute;width: 17px;height: 16px;background: url(/Assets/images/idr-sprite.png) no-repeat;background-size: 100%;left: -17px;top: 7px; }
+}
+
+//price-detail 2 silubab start
+
+
+
 
 // *****
 // page flight oneway

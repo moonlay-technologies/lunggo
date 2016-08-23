@@ -114,6 +114,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var currencies = GetCurrencyStatesFromCache(searchId);
             var localCurrency = currencies[OnlineContext.GetActiveCurrencyCode()];
             itin.Price.CalculateFinalAndLocal(localCurrency);
+            RoundFinalAndLocalPrice(itin);
 
             SaveItineraryToCache(itin, itinCacheId);
             return itinCacheId;
