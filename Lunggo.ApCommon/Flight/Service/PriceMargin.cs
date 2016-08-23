@@ -36,6 +36,43 @@ namespace Lunggo.ApCommon.Flight.Service
             ApplyMarginRule(itin, rule);
         }
 
+        private void RoundFinalAndLocalPrice(FlightItinerary itin)
+        {
+            var initLocalPrice = itin.Price.Local;
+            var adultCount = itin.AdultCount;
+            var childCount = itin.ChildCount;
+            var infantCount = itin.InfantCount;
+            var initAdultPortion = itin.AdultPricePortion;
+            var initChildPortion = itin.ChildPricePortion;
+            var initInfantPortion = itin.InfantPricePortion;
+            var roundingOrder = itin.Price.LocalCurrency.RoundingOrder;
+
+            var adultAdjustment = adultCount != 0
+                ? (initLocalPrice*initAdultPortion/adultCount)%roundingOrder*adultCount
+                : 0M;
+            var childAdjustment = childCount != 0
+                ? roundingOrder - (initLocalPrice*initChildPortion/childCount)%roundingOrder*childCount
+                : 0M;
+            var infantAdjustment = infantCount != 0
+                ? roundingOrder - (initLocalPrice*initInfantPortion/infantCount)%roundingOrder*infantCount
+                : 0M;
+            var adjustment = -adultAdjustment + childAdjustment + infantAdjustment;
+
+            var initAdultPrice = initAdultPortion*initLocalPrice;
+            var adultPrice = initAdultPrice - adultAdjustment;
+            var initChildPrice = initChildPortion * initLocalPrice;
+            var childPrice = initChildPrice + childAdjustment;
+            var initInfantPrice = initInfantPortion * initLocalPrice;
+            var infantPrice = initInfantPrice + infantAdjustment;
+
+            itin.Price.Local += adjustment;
+            itin.Price.Rounding += adjustment;
+            itin.Price.FinalIdr = itin.Price.Local * itin.Price.LocalCurrency.Rate;
+            itin.AdultPricePortion = adultPrice/itin.Price.Local;
+            itin.ChildPricePortion = childPrice/itin.Price.Local;
+            itin.InfantPricePortion = infantPrice/itin.Price.Local;
+        }
+
         //public FlightMarginRule GetPriceMarginRule(long ruleId)
         //{
         //    var rules = GetAllActiveMarginRulesFromCache();

@@ -104,8 +104,22 @@ namespace Lunggo.ApCommon.Flight.Service
                         {
                             itinerary = new FlightItinerary
                             {
+                                BookingId = itineraryRecord.BookingId,
+                                BookingStatus = BookingStatusCd.Mnemonic(itineraryRecord.BookingStatusCd),
+                                TripType = TripTypeCd.Mnemonic(itineraryRecord.TripTypeCd),
+                                Supplier = Constant.SupplierCd.Mnemonic(itineraryRecord.SupplierCd),
+                                TimeLimit = itineraryRecord.TicketTimeLimit.SpecifyUtc(),
+                                Trips = new List<FlightTrip>(),
                                 Price = Price.GetFromDb(itineraryRecord.PriceId.GetValueOrDefault()),
-                                Trips = new List<FlightTrip>()
+                                FareType = FareTypeCd.Mnemonic(itineraryRecord.FareTypeCd),
+                                AdultCount = itineraryRecord.AdultCount.GetValueOrDefault(),
+                                ChildCount = itineraryRecord.ChildCount.GetValueOrDefault(),
+                                InfantCount = itineraryRecord.InfantCount.GetValueOrDefault(),
+                                AdultPricePortion = itineraryRecord.AdultPricePortion.GetValueOrDefault(),
+                                ChildPricePortion = itineraryRecord.ChildPricePortion.GetValueOrDefault(),
+                                InfantPricePortion = itineraryRecord.InfantPricePortion.GetValueOrDefault(),
+                                RequestedCabinClass = CabinClassCd.Mnemonic(itineraryRecord.RequestedCabinClassCd),
+                                RequestedTripType = TripTypeCd.Mnemonic(itineraryRecord.RequestedTripTypeCd),
                             };
                             itineraryLookup.Add(itineraryRecord.Id.GetValueOrDefault(), itinerary);
                             reservation.Itineraries.Add(itinerary);

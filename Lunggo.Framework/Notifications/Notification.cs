@@ -9,6 +9,7 @@ namespace Lunggo.Framework.Notifications
         public string Message { get; set; }
         public string Image { get; set; }
         public string Icon { get; set; }
+        public string Code { get; set; }
         public object CustomData { get; set; }
     }
 }

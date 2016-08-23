@@ -167,6 +167,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     var newItin = response.NewItinerary;
                     newItin.Price.SetMargin(itin.Price.Margin);
                     newItin.Price.CalculateFinalAndLocal(itin.Price.LocalCurrency);
+                    RoundFinalAndLocalPrice(newItin);
                     itin = newItin;
                 }
                 bookResult.IsSuccess = false;
