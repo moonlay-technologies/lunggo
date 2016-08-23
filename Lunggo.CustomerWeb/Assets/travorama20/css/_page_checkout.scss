@@ -6,7 +6,25 @@ file : /Assets/travorama20/css/_page_checkout.scss
 */
 
 // page checkout
-.page-checkout {}
+.page-checkout {
+    //TnC popup
+    .bookfailed-popup .popup {
+        .popup-container {padding: 20px;
+            .popup-title {
+                color: #15b1e4;
+                font-size:14px;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            .popup-list {
+                margin-bottom: 40px; 
+                &>ol {padding-left: 20px;}
+            }
+            .btn.btn-yellow, .btn.btn-grey {width: 98%;}
+            .btn.btn-grey {float: right;}
+        }
+    }
+}
 
 // checkout step
 .checkout-step {position:relative;
