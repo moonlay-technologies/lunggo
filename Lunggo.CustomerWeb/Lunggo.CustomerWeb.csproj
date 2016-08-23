@@ -831,6 +831,7 @@
     <Content Include="Assets\images\howtopay-2.jpg" />
     <Content Include="Assets\images\howtopay-3.jpg" />
     <Content Include="Assets\images\howtopay-header.jpg" />
+    <Content Include="Assets\images\idr-sprite.png" />
     <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\list-bg.png" />
