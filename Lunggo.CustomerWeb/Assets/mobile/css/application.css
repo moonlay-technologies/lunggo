@@ -885,10 +885,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 200%;
     font-size: 8px; }
 
-.container_new .col-xs-8 {
-  margin-top: -10px; }
-  .container_new .col-xs-8 h5 {
-    font-size: 12px; }
+.container_new .col-xs-8 h5 {
+  font-size: 12px; }
 
 .page-overlay .overlay-content div section p {
   display: inline-block;
@@ -2073,9 +2071,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-checkout .page__body .page-step-2 .btn.btn-yellow {
     margin-top: 15px; }
   .page.page-checkout .page__body .page-step-3 .btn.btn-yellow.form-control, .page.page-checkout .page__body .page-step-3 .btn.btn-grey.form-control {
-    width: 48%; }
-  .page.page-checkout .page__body .page-step-3 .btn.btn-grey.form-control {
+    width: 48%;
     float: right; }
+  .page.page-checkout .page__body .page-step-3 .btn.btn-grey.form-control {
+    float: left; }
   .page.page-checkout .page__body .page-step-3 .flight-fare-wrapper {
     margin-bottom: 15px; }
 
@@ -2511,11 +2510,115 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-orderdetail .info-flight .flight.return:before {
     background-position: -16px; }
 
+/*.page-overlay {
+position: fixed;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+z-index: 1000;
+background: rgba(0, 0, 0, 0.7); }
+.page-overlay .overlay-content {
+width: 92%;
+height: 220px;
+background: #fff;
+position: absolute;
+margin: auto;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;
+overflow: hidden; }
+.page-overlay .overlay-content header {
+    background: #1daee4;
+    text-align: center;
+    color: #fff;
+    padding: 15px; }
+    .page-overlay .overlay-content header h4 {
+    margin: 0;
+    font-weight: 600; }
+    .page-overlay .overlay-content header .close {
+    color: #fff;
+    opacity: 1; }
+.page-overlay .overlay-content div section {
+   
+    padding: 15px; 
+    width:70%;
+    left: 33%;
+    top: 20%;
+    position: absolute;
+}
+.page-overlay .overlay-content div section p{
+    padding: 15px; 
+}
+.page-overlay .overlay-content div img{
+    padding-left: 15px;
+    vertical-align: 20%;
+    position: absolute;
+    top: 30%;
+}
+
+.page-overlay .overlay-content div div a{
+    display: inline-block;
+    width: 30%;
+    right: 20%;
+    bottom: 15%;
+    position: absolute;
+}
+
+.page-overlay .overlay-content section a {
+cursor: pointer; }
+.page-overlay .overlay-content footer {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    width: 100%; }*/
 .page.page-forgotpassword .desc {
   margin-bottom: 25px; }
 
+.page-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7); }
+  .page-overlay .overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 300px;
+    min-height: 200px; }
+  .page-overlay .overlay-container {
+    background: #ffffff;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px; }
+    .page-overlay .overlay-container header.overlay-header {
+      background: #2fb4e6;
+      padding: 15px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: #fff; }
+    .page-overlay .overlay-container .img {
+      margin-top: 25px; }
+    .page-overlay .overlay-container .overlay-body {
+      padding: 15px; }
+    .page-overlay .overlay-container .overlay-footer {
+      padding: 0 0 15px; }
+
 .page.page-contact .contact-map {
-  background: url(/Assets/mobile/images/contact-map.jpg) center center;
+  background: url(/Assets/mobile/images/scontact-map.jpg) center center;
   background-size: cover; }
   .page.page-contact .contact-map .container {
     padding: 0 30px; }
@@ -2538,17 +2641,18 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     -ms-border-radius: 5px;
     border-radius: 5px; }
     .page.page-contact .contact-map .contact-list:before {
-      width: 90px;
-      height: 90px;
+      width: 154px;
+      height: 154px;
       background: url(/Assets/mobile/images/contact-plane.png) center center no-repeat;
       content: "";
       position: absolute;
-      top: -90px;
+      top: -154px;
       -webkit-transform: translate(50%, 50%);
       -ms-transform: translate(50%, 50%);
       -o-transform: translate(50%, 50%);
       transform: translate(50%, 50%);
-      right: 50%; }
+      right: 50%;
+      background-size: 50%; }
     .page.page-contact .contact-map .contact-list a {
       color: #fff; }
     .page.page-contact .contact-map .contact-list > div {
@@ -2607,143 +2711,34 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-contact .contact-social a.instagram:before {
       background-position: -110px 0; }
 
-.page-overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  background: rgba(0, 0, 0, 0.7); }
+.page.page-contact textarea.form-control {
+  height: 110px;
+  resize: none; }
 
-.page-overlay .overlay-content {
-  width: 92%;
-  height: 220px;
-  background: #fff;
-  position: absolute;
-  margin: auto;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  overflow: hidden; }
-
-.page-overlay .overlay-content header {
-  background: #1daee4;
-  text-align: center;
-  color: #fff;
-  padding: 15px; }
-
-.page-overlay .overlay-content header h4 {
-  margin: 0;
-  font-weight: 600; }
-
-.page-overlay .overlay-content header .close {
-  color: #fff;
-  opacity: 1; }
-
-.page-overlay .overlay-content div section {
-  /*display: inline-block;*/
-  padding: 15px;
-  width: 70%;
-  left: 33%;
-  top: 20%;
-  position: absolute; }
-
-.page-overlay .overlay-content div section p {
-  /*display: inline-block;*/
-  padding: 15px; }
-
-.page-overlay .overlay-content div img {
-  padding-left: 15px;
-  vertical-align: 20%;
-  position: absolute;
-  top: 30%; }
-
-.page-overlay .overlay-content div div a {
-  display: inline-block;
-  width: 30%;
-  right: 20%;
-  bottom: 15%;
-  position: absolute; }
-
-/*.page-overlay .overlay-content section p {
-        top: 30%; 
-        position: absolute;
-        left: 40%;
-      }*/
-.page-overlay .overlay-content section a {
-  cursor: pointer; }
-
-.page-overlay .overlay-content footer {
-  position: absolute;
-  bottom: 15px;
-  left: 0;
-  width: 100%; }
-
-/*.page.page-account.page-login{
-    .form-wrapper{
-        margin-top: 30px;
-        margin-right:30px;
-    }
-}*/
-/*.page-resetpassword.page-password {
-    /*.form-wrapper {
-        padding: 0;        
-        border:1px solid #ccc;
-        .header-title{
-            //padding-left: 10px;
-            padding-top: 5px;
-            font-weight: bold;
-            background: #1daee4;
-            color: white;
-            margin-top: -15px;
-            height: 25px;
-            font-size: 12px;
-        }
-    }
-    .container{
-        p{
-            margin-bottom:30px;
-            padding-left: 10px;
-        }
-        .col-xs-offset-4{
-            margin-left: 15px;
-            float:left;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            width: 33.33%;
-            p {
-                width: 150px;
-                color: red;
-            }
-        }
-    }
-    .form-group{
-        width: 100%;
-    }
-
-}*/
 .page-password.page-check-order .page__body h4 {
   font-size: 8px;
   color: green; }
 
-.passwordform {
-  margin-left: 10px;
-  margin-right: 10px; }
-  .passwordform .resetpassword {
-    padding-bottom: 12px; }
-    .passwordform .resetpassword header {
+.forgotpasswordtext p {
+  text-align: justify; }
+
+.page-cekpesanan .cek-pesan-list {
+  padding: 10px 15px 0; }
+  .page-cekpesanan .cek-pesan-list li {
+    padding: 10px 0; }
+
+.page-resetpassword .passwordform {
+  margin: 0 15px; }
+  .page-resetpassword .passwordform .resetpassword {
+    margin: 15px 0 30px; }
+    .page-resetpassword .passwordform .resetpassword header {
       background: #2fb4e6;
       color: #fff;
-      padding: 12px;
-      font-size: 14px;
+      padding: 10px 20px;
+      font-size: 13px;
       font-weight: bold;
       position: relative; }
-      .passwordform .resetpassword header .toggle {
+      .page-resetpassword .passwordform .resetpassword header .toggle {
         content: "";
         position: absolute;
         top: 0;
@@ -2754,7 +2749,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         display: block;
         width: 40px;
         cursor: pointer; }
-        .passwordform .resetpassword header .toggle:after {
+        .page-resetpassword .passwordform .resetpassword header .toggle:after {
           content: "-";
           position: absolute;
           font-size: 28px;
@@ -2764,35 +2759,37 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           left: 0;
           text-align: center;
           width: 100%; }
-    .passwordform .resetpassword .content {
-      padding: 12px;
+    .page-resetpassword .passwordform .resetpassword .content {
+      padding: 15px;
       border: 1px solid #ccc;
       border-top: none;
       background: #fff; }
-      .passwordform .resetpassword .content p {
+      .page-resetpassword .passwordform .resetpassword .content p {
         color: red;
         padding-left: 10px;
         margin-top: 10px;
         margin-bottom: 10px; }
-    .passwordform .resetpassword.inactive header .toggle:after {
+    .page-resetpassword .passwordform .resetpassword.inactive header .toggle:after {
       content: "+"; }
-    .passwordform .resetpassword.inactive .passenger-content {
+    .page-resetpassword .passwordform .resetpassword.inactive .passenger-content {
       display: none; }
-    .passwordform .resetpassword h4 {
-      font-size: 16px;
-      font-weight: bold; }
-    .passwordform .resetpassword .form-reset {
-      padding-left: 10px;
-      padding-right: 10px;
-      width: 50%; }
+    .page-resetpassword .passwordform .resetpassword input.btn.btn-yellow.form-control {
+      height: 40px;
+      font-size: 15px; }
+    .page-resetpassword .passwordform .resetpassword .red-text {
+      color: red; }
 
-.forgotpasswordtext p {
-  text-align: justify; }
-
-.page-cekpesanan .cek-pesan-list {
-  padding: 10px 15px 0; }
-  .page-cekpesanan .cek-pesan-list li {
-    padding: 10px 0; }
+.page-resetpassword .reset-success {
+  margin: 0 30px; }
+  .page-resetpassword .reset-success img.lock {
+    max-width: 30%; }
+  .page-resetpassword .reset-success .success-txt {
+    font-size: 15px;
+    margin: 20px 0 15px; }
+  .page-resetpassword .reset-success .btn.btn-yellow {
+    font-size: 14px;
+    padding: 10px;
+    width: 100%; }
 
 .page.page-faqs .question-wrapper > ol {
   padding-left: 25px;

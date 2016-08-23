@@ -6,7 +6,25 @@ file : /Assets/travorama20/css/_page_checkout.scss
 */
 
 // page checkout
-.page-checkout {}
+.page-checkout {
+    //TnC popup
+    .bookfailed-popup .popup {
+        .popup-container {padding: 20px;
+            .popup-title {
+                color: #15b1e4;
+                font-size:14px;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            .popup-list {
+                margin-bottom: 40px; 
+                &>ol {padding-left: 20px;}
+            }
+            .btn.btn-yellow, .btn.btn-grey {width: 98%;}
+            .btn.btn-grey {float: right;}
+        }
+    }
+}
 
 // checkout step
 .checkout-step {position:relative;
@@ -207,13 +225,13 @@ file : /Assets/travorama20/css/_page_checkout.scss
                 .airline {padding-bottom:12px;
                     .airline-image {width:50px; border:$border-default; float:left; margin-right:12px; background:#fff;}
                     .airline-name {font-weight:bold; color:$color-main-blue;}
-                    .airline-number {@extend &.airline-name;}
+                    .airline-number {@extend .airline-name;}
                 }
                 .route {
                     &:before, &:after {@include clearfix;}
                     .origin {float:left; width:45%;}
                     .duration {float:left; width:7%; margin-right:3%; content:""; border-top:3px solid $color-main-blue; margin-top:50px;}
-                    .destination {@extend &.origin;}
+                    .destination {@extend .origin;}
                     //
                     h4 {font-weight:bold;}
                     h5 {}

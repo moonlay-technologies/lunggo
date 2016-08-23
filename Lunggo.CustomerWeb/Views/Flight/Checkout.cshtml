@@ -163,8 +163,8 @@
                             
                                 <form class="form" id="buyer-form" name="buyerForm" novalidate>
 
-                                    <div class="form-group">
-                                        <label class="control-label">Titel:</label>
+                                    <div class="form-group" ng-class="{'has-error' : buyerForm.title.$touched && buyerForm.title.$invalid}">
+                                        <label class="control-label important">Titel:</label>
                                         <div>
                                             <select class="form-control" id="buyer-title" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
                                                 <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
@@ -179,29 +179,36 @@
                                         <div ng-hide="!loggedIn">
                                             <!--Jika udah Login-->
                                             <input type="text" class="form-control" value=buyerInfo.name id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="buyerInfo.name" required />
+                                        </div>
                                     </div>
-                                    </div>
+                                   
                                     <div class="form-group" ng-class="{'has-error' : (buyerForm.phone.$touched && buyerForm.phone.$invalid) || (buyerForm.countryCode.$touched && buyerForm.countryCode.$invalid)}">
                                         <label class="control-label important">Nomor Telepon:</label>
                                         <div class="row">
-                                            <div class="col-xs-3" ng-hide="loggedIn">
+                                            <div class="col-xs-7" ng-hide="loggedIn">
                                                 <p>Kode Negara</p>
-                                                <input type="number" name="countryCode" value="" class="form-control" placeholder="ex : 62 for Indonesia" required ng-model="buyerInfo.countryCode" maxlength="5" />
+                                                <select class="form-control" name="countryCode" ng-model="buyerInfo.countryCode" ng-init="buyerInfo.countryCode = '62'">
+                                                    <option ng-repeat="country in countries" ng-selected="country.dial_code == '62'" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
+                                                </select>
                                             </div>
-                                            <div class="col-xs-3" ng-hide="!loggedIn">
+                                            <div class="col-xs-7" ng-hide="!loggedIn">
                                                 <!--Jika udah Login-->
                                                 <p>Kode Negara</p>
-                                                <input type="number" name="countryCode" value=buyerInfo.countryCode class="form-control" placeholder="ex : 62 for Indonesia" required ng-model="buyerInfo.countryCode" maxlength="5" />
+                                                <select class="form-control" name="countryCode" ng-model="buyerInfo.countryCode">
+                                                    <option ng-repeat="country in countries" ng-selected="country.dial_code == buyerInfo.countryCode" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
+                                                </select>
+
+                                                @*<input type="number" name="countryCode" value=buyerInfo.countryCode class="form-control" placeholder="ex : 62 for Indonesia" required ng-model="buyerInfo.countryCode" maxlength="5" />*@
                                             </div>
-                                            <div class="col-xs-9" ng-hide="loggedIn">
+                                            <div class="col-xs-5" ng-hide="loggedIn">
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
                                                 <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />
                                             </div>
-                                            <div class="col-xs-9" ng-hide="!loggedIn">
+                                            <div class="col-xs-5" ng-hide="!loggedIn">
                                                 <!--Jika udah Login-->
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
                                                 <input type="number" class="form-control" value=buyerInfo.phone id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />
-                                        </div>
+                                            </div>
                                     </div>
                                     </div>
                                     <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
@@ -218,7 +225,7 @@
                                 </form><!-- #buyer-form -->
 
                                 <div class="step-button">
-                                    <button class="btn btn-yellow" ng-click="changePage(2)" ng-disabled="buyerForm.$invalid">LANJUTKAN</button>
+                                    <button class="btn btn-yellow" ng-click="changePage(2)" ng-disabled="buyerForm.$invalid || buyerInfo.title == titles[0].value || buyerInfo.countryCode == 'xx'">LANJUTKAN</button>
                                 </div>
 
                             </div><!-- .content-step#step-1 -->
@@ -241,7 +248,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label">Titel</label>
                                                     <select class="form-control" name="passenger_{{$index}}_title" ng-model="passenger.title" ng-init="passenger.title = titles[0].value" required>
-                                                        <option ng-repeat="title in titles" value="{{title.value}}" ng-selected="title.value == 'Mister'" ng-if="!(title.value == 'Mistress' && passenger.type != 'adult')">{{title.name}}</option>
+                                                        <option ng-repeat="title in titles" value="{{title.value}}" ng-selected="title.value == ''" ng-if="!(title.value == 'Mistress' && passenger.type != 'adult')">{{title.name}}</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.name.$invalid && passengerForm_{{$index}}.name.$touched }">
@@ -251,23 +258,25 @@
                                                 <div class="form-group" ng-if="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
                                                     <label class="control-label important">Tanggal Lahir :</label>
                                                     <div class="row">
-                                                        <div class="col-xs-4">
-                                                            <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="passenger.birth.date" ng-change="validateBirthday(passenger)" ng-required="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
-                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'adult'">{{date}}</option>
-                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'child'">{{date}}</option>
-                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'infant'">{{date}}</option>
+                                                        <div class="col-xs-4"> 
+                                                            <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="passenger.birth.date" ng-change="validateBirthday(passenger)"
+                                                                    ng-init="passenger.birth.date = 'Tanggal'" ng-required="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
+                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="passenger.type == 'adult'">{{date}}</option>
+                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="passenger.type == 'child'">{{date}}</option>
+                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="passenger.type == 'infant'">{{date}}</option>
                                                             </select>
                                                         </div>
-                                                        <div class="col-xs-4">
-                                                            <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="passenger.birth.month" ng-change="validateBirthday(passenger)" ng-required="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'adult'">{{month.name}}</option>
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'child'">{{month.name}}</option>
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'infant'">{{month.name}}</option>
+                                                        <div class="col-xs-4"> 
+                                                            <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="passenger.birth.month"
+                                                                    ng-init="passenger.birth.month = '12'" ng-change="validateBirthday(passenger)" ng-required="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'" ng-if="passenger.type == 'adult'">{{month.name}}</option>
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'" ng-if="passenger.type == 'child'">{{month.name}}</option>
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'" ng-if="passenger.type == 'infant'">{{month.name}}</option>
                                                             </select>
                                                         </div>
-                                                        <div class="col-xs-4">
+                                                        <div class="col-xs-4"> 
                                                             <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="passenger.birth.year" ng-change="validateBirthday(passenger)" ng-required="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
-                                                                <option value="{{year}}" ng-repeat="year in generateYear(passenger.type)" ng-selected="year == passenger.birth.year">{{year}}</option>
+                                                                <option value="{{year}}" ng-repeat="year in generateYear(passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -293,17 +302,18 @@
                                                             <div class="row">
                                                                 <div class="col-xs-4">
                                                                     <select class="form-control" name="passenger_{{$index}}_expiryDate" ng-model="passenger.passport.expire.date" ng-required="passportRequired" ng-change="validatePassport(passenger)">
-                                                                        <option value="{{date}}" ng-repeat="date in dates(passenger.passport.expire.month, passenger.passport.expire.year)">{{date}}</option>
+                                                                        <option value="{{date}}" ng-repeat="date in dates(passenger.passport.expire.month, passenger.passport.expire.year)"
+                                                                                ng-selected="date == 'Tanggal'">{{date}}</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-xs-4">
                                                                     <select class="form-control" name="passenger_{{$index}}_expiryMonth" ng-model="passenger.passport.expire.month" ng-required="passportRequired" ng-change="validatePassport(passenger)">
-                                                                        <option value="{{month.value}}" ng-repeat="month in months">{{month.name}}</option>
+                                                                        <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'">{{month.name}}</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-xs-4">
                                                                     <select class="form-control" name="passenger_{{$index}}_expiryYear" ng-model="passenger.passport.expire.year" ng-required="passportRequired" ng-change="validatePassport(passenger)">
-                                                                        <option value="{{year}}" ng-repeat="year in generateYear('passport')">{{year}}</option>
+                                                                        <option value="{{year}}" ng-repeat="year in generateYear('passport')" ng-selected="year == 'Tahun'">{{year}}</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -330,7 +340,10 @@
                                     
                                 <div class="step-button">
                                     <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                                    <button class="btn btn-yellow" ng-click="changePage(3)" ng-disabled="passengersForm.$invalid">LANJUTKAN</button>
+                                    <button class="btn btn-yellow" ng-click="changePage(3)" ng-disabled="passengersForm.$invalid || !CheckTitle(passengers) || (birthDateRequired && !CheckDate(passengers))
+                                             || (passportRequired && !CheckPassportDate(passengers))">
+                                        LANJUTKAN
+                                    </button>
                                 </div>
                                 <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Periksa kembali form Anda.</h4>
                                 
@@ -498,7 +511,7 @@
                                                         <h5>{{segment.arrivalName}}</h5>
                                                     </div>
                                                 </div>
-                                                <div class="segment-operator" ng-if="segment.airlineCd != segment.opAirlineCode">
+                                                <div class="segment-operator" ng-if="segment.airlineCd != segment.opAirlineCd">
                                                     <p>Penerbangan ini di operasikan oleh <img ng-src="{{segment.opAirlineLogoUrl}}" /> <span>{{segment.opAirlineName}}</span></p>
                                                 </div>
                                             </div>
@@ -572,15 +585,15 @@
                                     <div class="widget-content">
                                         <dl>
                                             <dt>Tiket Dewasa x{{adultCount}}</dt>
-                                            <dd>Rp {{adultFare | number:0}}</dd>
+                                            <dd>Rp {{adultFare * adultCount | number:0}}</dd>
                                         </dl>
                                         <dl ng-if="childCount > 0">
                                             <dt>Tiket Anak x{{childCount}}</dt>
-                                            <dd>Rp {{childFare | number:0}}</dd>
+                                            <dd>Rp {{childFare * childCount | number:0}}</dd>
                                         </dl>
                                         <dl ng-if="infantCount > 0">
                                             <dt>Tiket Bayi x{{infantCount}}</dt>
-                                            <dd>Rp {{infantFare| number:0}}</dd>
+                                            <dd>Rp {{infantFare * infantCount | number:0}}</dd>
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>

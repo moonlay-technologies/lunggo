@@ -9,6 +9,8 @@ file : /Assets/travorama20/css/travorama20.scss
 /*--------------------*/
 /* mixins */
 /*--------------------*/
+/* mixins */
+/*--------------------*/
 /* general class */
 html {
   height: 100%; }
@@ -21,7 +23,8 @@ body {
   -webkit-font-smoothing: subpixel-antialiased;
   position: relative;
   min-height: 100%;
-  background: #f9f9f9; }
+  background: #f9f9f9;
+  padding-bottom: 415px; }
 
 hr {
   border-top: 1px solid #ccc; }
@@ -143,6 +146,7 @@ input[type=number]::-webkit-outer-spin-button {
       position: absolute;
       -webkit-border-radius: 50px;
       -moz-border-radius: 50px;
+      -ms-border-radius: 50px;
       border-radius: 50px;
       font-weight: bold;
       width: 25px;
@@ -394,6 +398,7 @@ input[type=number]::-webkit-outer-spin-button {
     background: #dedede;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
     border-radius: 20px;
     width: 15px;
     height: 15px;
@@ -464,6 +469,7 @@ input[type=number]::-webkit-outer-spin-button {
     left: 0;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
     border-radius: 2px;
     overflow: hidden; }
     .page-overlay .overlay-content header {
@@ -505,6 +511,7 @@ input[type=number]::-webkit-outer-spin-button {
     left: 0;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
     border-radius: 2px;
     overflow: hidden; }
     .page-newsletter .overlay-content section .normal-flow {
@@ -547,8 +554,69 @@ input[type=number]::-webkit-outer-spin-button {
   background: url("/Assets/images/popup/thankyou2_600px.png");
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
   border-radius: 2px;
   overflow: hidden; }
+
+.popup__wrapper {
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: none; }
+  .popup__wrapper .popup {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 300px;
+    min-height: 200px;
+    background: #ffffff;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px; }
+    .popup__wrapper .popup .popup__header {
+      background: #1daee5;
+      color: #fff;
+      padding: 12px; }
+      .popup__wrapper .popup .popup__header .popup__title {
+        text-align: center;
+        margin: 0;
+        font-weight: bold; }
+    .popup__wrapper .popup .popup__body {
+      padding: 20px; }
+    .popup__wrapper .popup .popup__footer {
+      width: 100%;
+      padding: 20px; }
+    .popup__wrapper .popup .container_new ol {
+      padding-left: 20px; }
+    .popup__wrapper .popup .container_new.price-change-footer .btn.btn-grey {
+      min-width: 100%; }
+    .popup__wrapper .popup .container_new.price-change-footer .btn.btn-yellow {
+      min-width: 100%;
+      margin-bottom: 8px; }
+    .popup__wrapper .popup .container_new.tnc .btn.btn-grey, .popup__wrapper .popup .container_new.tnc .btn.btn-yellow {
+      min-width: 100%; }
+  .popup__wrapper.active {
+    display: block; }
+
+.popup__wrapper.popup--revalidate .popup {
+  text-align: center;
+  background: none;
+  padding-top: 50px; }
+  .popup__wrapper.popup--revalidate .popup .revalidate-anim {
+    padding: 10px 0; }
+  .popup__wrapper.popup--revalidate .popup p {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600; }
 
 /*.modal {
 }
@@ -601,6 +669,7 @@ input[type=number]::-webkit-outer-spin-button {
     left: 0;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
     border-radius: 2px;
     overflow: hidden; }
 
@@ -618,6 +687,7 @@ input[type=number]::-webkit-outer-spin-button {
     width: 380px;
     height: 382px;
     background: url("/Assets/images/popup/pleasewait350px.png");
+    background-repeat: no-repeat;
     position: absolute;
     margin: auto;
     top: 0;
@@ -626,6 +696,7 @@ input[type=number]::-webkit-outer-spin-button {
     left: 0;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
     border-radius: 2px;
     overflow: hidden; }
 
@@ -642,6 +713,7 @@ input[type=number]::-webkit-outer-spin-button {
     width: 500px;
     height: 261px;
     background: url("/Assets/images/popup/pricechanged500px.png");
+    background-repeat: no-repeat;
     position: absolute;
     margin: auto;
     top: 0;
@@ -650,6 +722,7 @@ input[type=number]::-webkit-outer-spin-button {
     left: 0;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
     border-radius: 2px;
     overflow: hidden; }
 
@@ -666,6 +739,7 @@ input[type=number]::-webkit-outer-spin-button {
     width: 500px;
     height: 258px;
     background: url("/Assets/images/popup/paymentfailed500px.png");
+    background-repeat: no-repeat;
     position: absolute;
     margin: auto;
     top: 0;
@@ -674,6 +748,7 @@ input[type=number]::-webkit-outer-spin-button {
     left: 0;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
     border-radius: 2px;
     overflow: hidden; }
 
@@ -690,6 +765,7 @@ input[type=number]::-webkit-outer-spin-button {
     width: 500px;
     height: 289px;
     background: url("/Assets/images/popup/notavailable500px.png");
+    background-repeat: no-repeat;
     position: absolute;
     margin: auto;
     top: 0;
@@ -698,9 +774,70 @@ input[type=number]::-webkit-outer-spin-button {
     left: 0;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
     border-radius: 2px;
     overflow: hidden; }
     .bookfailed-popup .overlay-content footer {
+      bottom: 15px;
+      left: 0;
+      width: 100%; }
+
+.select-flight {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  display: block; }
+  .select-flight .overlay-content {
+    width: 500px;
+    height: 289px;
+    background: url("/Assets/images/popup/pricechanged500px.png");
+    background-repeat: no-repeat;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px;
+    overflow: hidden; }
+    .select-flight .overlay-content footer {
+      bottom: 15px;
+      left: 0;
+      width: 100%; }
+
+.login-succeed {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  display: block; }
+  .login-succeed .overlay-content {
+    width: 500px;
+    height: 289px;
+    background: url("/Assets/images/popup/pricechanged500px.png");
+    background-repeat: no-repeat;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px;
+    overflow: hidden; }
+    .login-succeed .overlay-content footer {
       bottom: 15px;
       left: 0;
       width: 100%; }
@@ -748,8 +885,9 @@ file : /Assets/travorama20/css/_header.scss
   width: 100%;
   height: 70px;
   background: #fff;
-  -webkit-box-shadow: 0px -2px 15px #555;
-  -moz-box-shadow: 0px -2px 15px #555;
+  -webkit-border-radius: 0px -2px 15px #555;
+  -moz-border-radius: 0px -2px 15px #555;
+  -ms-border-radius: 0px -2px 15px #555;
   box-shadow: 0px -2px 15px #555;
   letter-spacing: 0.1px; }
   .site-header .site-logo {
@@ -852,6 +990,8 @@ file : /Assets/travorama20/css/_header.scss
       .site-header .menu-bottom .menu-side .dropdown-content a:hover {
         background: #fff;
         color: #1daee4 !important; }
+  .site-header > .container {
+    max-width: none; }
 
 body {
   padding-top: 70px; }
@@ -887,7 +1027,8 @@ including in this file :
   color: #fff;
   padding: 0 0 30px;
   width: 100%;
-  bottom: 157px; }
+  bottom: 157px;
+  position: absolute; }
   .site-footer-menu a {
     color: #fff; }
   .site-footer-menu .menu-left {
@@ -958,6 +1099,8 @@ including in this file :
     list-style: none; }
     .site-footer-menu .menu-right ul li {
       margin-bottom: 2px; }
+  .site-footer-menu > .container {
+    max-width: none; }
 
 /* site-footer */
 .site-footer {
@@ -965,7 +1108,8 @@ including in this file :
   color: #fff;
   padding: 15px 0;
   bottom: 0;
-  width: 100%; }
+  width: 100%;
+  position: absolute; }
   .site-footer .social-link {
     padding: 15px 0; }
     .site-footer .social-link img {
@@ -1081,6 +1225,7 @@ file : /Assets/travorama20/css/_page_index.scss
       .page-index .section-search .search-form .tab-content .tab-flight input {
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
         border-radius: 2px; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-destination {
         margin-bottom: 7px; }
@@ -1109,6 +1254,7 @@ file : /Assets/travorama20/css/_page_index.scss
         padding: 7px 10px 0px;
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
         border-radius: 2px;
         border: 1px solid #ccc;
         font-weight: 600;
@@ -1140,7 +1286,10 @@ file : /Assets/travorama20/css/_page_index.scss
           font-size: 17px; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return.disabled {
         cursor: not-allowed;
-        color: #b8b8b8; }
+        color: #b8b8b8;
+        color: #464545;
+        background-color: #5f5f5f;
+        border-color: transparent; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway {
         display: none;
         cursor: not-allowed; }
@@ -1161,6 +1310,7 @@ file : /Assets/travorama20/css/_page_index.scss
         font-size: 12px;
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
         border-radius: 2px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-flight-class:after {
           content: url(/Assets/images/select-arrow.png);
@@ -1204,6 +1354,7 @@ file : /Assets/travorama20/css/_page_index.scss
         color: #6a6a6a;
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
         border-radius: 2px;
         border: 1px solid #ccc;
         position: relative;
@@ -1254,6 +1405,7 @@ file : /Assets/travorama20/css/_page_index.scss
         padding: 10px 15px 0;
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
         border-radius: 2px;
         border: 1px solid #ccc;
         font-weight: 600; }
@@ -1291,6 +1443,7 @@ file : /Assets/travorama20/css/_page_index.scss
           color: #6a6a6a;
           -webkit-border-radius: 2px;
           -moz-border-radius: 2px;
+          -ms-border-radius: 2px;
           border-radius: 2px;
           border: 1px solid #ccc;
           position: relative;
@@ -1400,6 +1553,7 @@ file : /Assets/travorama20/css/_page_index.scss
           border: 3px solid #1daee4;
           -webkit-border-radius: 30px;
           -moz-border-radius: 30px;
+          -ms-border-radius: 30px;
           border-radius: 30px;
           outline: none; }
         .page-index .section-search .page-slider .slick-dots li.slick-active button {
@@ -1469,9 +1623,13 @@ file : /Assets/travorama20/css/_page_index.scss
       padding-left: 90px; }
       .page-index .section-reason .reason-4 h3:before, .page-index .section-reason .reason-4 h3.section-reason:after {
         content: url(/Assets/images/reason-4-icon.png); }
+  .page-index .section-reason > .container {
+    max-width: none; }
 
 .page-index .section-popular {
   padding-top: 30px; }
+  .page-index .section-popular > .container {
+    max-width: none; }
   .page-index .section-popular .popular-left {
     padding-right: 7.5px; }
   .page-index .section-popular .popular-middle {
@@ -1618,6 +1776,8 @@ file : /Assets/travorama20/css/_page_index.scss
       padding: 0;
       font-size: 22px;
       padding-top: 15px; }
+  .page-index .section-subscribe > .container {
+    max-width: none; }
 
 .page-index .section-payment {
   padding: 40px 0 50px; }
@@ -1626,6 +1786,8 @@ file : /Assets/travorama20/css/_page_index.scss
     height: 50px; }
   .page-index .section-payment img + img {
     margin-left: 30px; }
+  .page-index .section-payment > .container {
+    max-width: none; }
 
 .page-index .section-feedback {
   background: url(/Assets/images/feedback-bg.jpg) top center no-repeat;
@@ -1665,6 +1827,8 @@ file : /Assets/travorama20/css/_page_index.scss
         float: left;
         margin-top: 10px;
         margin-right: 10px; }
+  .page-index .section-feedback > .container {
+    max-width: none; }
 
 .page-index .search-calendar .calendar-header {
   height: 45px;
@@ -1790,6 +1954,8 @@ file: /Assets/travorama20/css/_page_flight.scss
     padding-top: 45px;
     background-position: left bottom;
     font-size: 25px; }
+  .page-flight .page-slider > .container {
+    max-width: none; }
 
 .page-flight .search-result-form {
   background: #032e55;
@@ -1799,12 +1965,14 @@ file: /Assets/travorama20/css/_page_flight.scss
   letter-spacing: 0; }
   .page-flight .search-result-form > .container {
     position: relative; }
-  .page-flight .search-result-form .result-form-left h3 {
-    margin-top: 0;
-    font-size: 16px; }
-  .page-flight .search-result-form .result-form-left h4 {
-    margin-bottom: 0;
-    font-size: 12px; }
+  .page-flight .search-result-form .result-form-left {
+    margin-bottom: 10px; }
+    .page-flight .search-result-form .result-form-left h3 {
+      margin-top: 0;
+      font-size: 16px; }
+    .page-flight .search-result-form .result-form-left h4 {
+      margin-bottom: 0;
+      font-size: 12px; }
   .page-flight .search-result-form .col-sm-3 {
     display: table; }
   .page-flight .search-result-form .result-form-right {
@@ -1854,11 +2022,13 @@ file: /Assets/travorama20/css/_page_flight.scss
       margin-bottom: 8px;
       -webkit-border-radius: 2px;
       -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
       border-radius: 2px; }
     .page-flight .search-result-form form.change-flight .change-flight-departure, .page-flight .search-result-form form.change-flight .change-flight-return, .page-flight .search-result-form form.change-flight .change-flight-oneway {
       background: #fff;
       -webkit-border-radius: 2px;
       -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
       border-radius: 2px;
       color: #969696;
       float: left;
@@ -1906,6 +2076,7 @@ file: /Assets/travorama20/css/_page_flight.scss
       background: #fff;
       -webkit-border-radius: 2px;
       -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
       border-radius: 2px;
       color: #666;
       padding: 6px;
@@ -1932,6 +2103,7 @@ file: /Assets/travorama20/css/_page_flight.scss
       background: #fff;
       -webkit-border-radius: 2px;
       -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
       border-radius: 2px;
       position: relative;
       cursor: pointer; }
@@ -1980,81 +2152,7 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 .page-flight .search-result-filter {
   margin-bottom: 15px;
-  letter-spacing: 0;
-  /*.price-calendar { 
-            border-top: 1px solid #ccc;
-            padding-top: 20px;
-            margin: 20px 0;
-            .carousel {margin: 15px 0;}
-            .carousel-inner {
-                max-width: 780px; 
-                margin: 0 auto;
-                ul.item {
-                    list-style: none;
-                    padding: 0;
-                    margin: 0;
-                    li.calendar-item {
-                        display: inline-block;
-                        background: #ddd;
-                        color: #666;
-                        padding: 10px;
-                        margin: 5px;
-                        text-align: center;
-                        font-size: 12px;
-                        cursor: pointer;
-                        &.active {
-                            background: #37bcf2;
-                            color: #fff;
-                            span.date, span.price, span.day {
-                                color: #fff;
-                            }
-                        } &:hover {
-                            @extend .active;
-                        }
-                        span {
-                            &.date {
-                                font-weight: 600;
-                                text-transform: uppercase;
-                                letter-spacing: 3px;
-                                font-size: 12px;
-                                line-height: 40px;
-                            } &.price {
-                                font-size: 24px;
-                                font-weight: 600;
-                                line-height: 24px;
-                            } &.day {
-                                line-height: 40px;
-                                letter-spacing: 3px;
-                                font-size: 11px;
-                                text-transform: uppercase;
-                                margin: 0 auto;
-                                font-weight: 600;
-                            }
-                        }
-                    }
-                }
-            }
-            .carousel-control {
-                width: auto; 
-                opacity: 1;
-                color: #000;
-                &.left {
-                    background-image: none;
-                }
-                &.right {
-                    background-image: none;
-                }
-            }
-            span.title {
-                font-size: 13px;
-                font-weight: 700;
-            }
-            a.back-to-search {
-                float: right;
-                text-decoration: underline;
-                color: #525252;
-            }
-        }*/ }
+  letter-spacing: 0; }
   .page-flight .search-result-filter .filter-left {
     float: left;
     width: 7%;
@@ -2221,6 +2319,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     font-size: 13px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
     border-radius: 2px;
     position: relative; }
     .page-flight .search-result-warning .notice p {
@@ -2282,6 +2381,7 @@ file: /Assets/travorama20/css/_page_flight.scss
   border: 1px solid #ccc;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
   border-radius: 2px;
   color: #525252;
   background: #fff;
@@ -2293,6 +2393,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     border: 5px solid #1daee4;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
     border-radius: 5px; }
     .page-flight .flight.active .flight-detail {
       border-top: 3px solid #1daee4;
@@ -2332,8 +2433,7 @@ file: /Assets/travorama20/css/_page_flight.scss
       .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-left {
         text-align: center;
         float: left;
-        width: 25%;
-        border-right: 1px solid #ccc; }
+        width: 25%; }
         .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-left h5 {
           color: #1daee4;
           font-weight: bold; }
@@ -2342,7 +2442,8 @@ file: /Assets/travorama20/css/_page_flight.scss
       .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right {
         float: left;
         width: 75%;
-        padding-top: 15px; }
+        padding-top: 15px;
+        border-left: 1px solid #ccc; }
         .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival {
           float: left;
           width: 35%;
@@ -2682,8 +2783,7 @@ file: /Assets/travorama20/css/_page_flight.scss
 .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top {
   border-bottom: 0; }
   .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-left {
-    height: 113px;
-    padding: 10px; }
+    padding: 25px 10px; }
   .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .summary-top-right-top:before, .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .page-index .summary-top-right-top.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .summary-top-right-top.section-reason:after, .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .summary-top-right-top:after {
     display: block;
     width: 100%;
@@ -2694,7 +2794,8 @@ file: /Assets/travorama20/css/_page_flight.scss
     width: 100%;
     border-top: 1px solid #ccc;
     text-align: right;
-    margin-top: 10px; }
+    margin-top: 10px;
+    padding: 10px; }
 
 .page-flight.page-flight-oneway .flight .flight-detail-trigger, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger, .page-flight.page-flight-oneway .flight .flight-rules-trigger, .page-flight.page-flight-oneway .flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-flight.page-flight-oneway .flight .flight-rules-trigger, .page-flight.page-flight-oneway .flight .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-flight.page-flight-oneway .flight .flight-rules-trigger {
   margin-left: 30px;
@@ -3427,13 +3528,14 @@ file: /Assets/travorama20/css/_page_flight.scss
 .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left {
   width: 72.5%; }
   .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-left {
-    width: 30%; }
+    width: 30%;
+    padding: 15px 0; }
     .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-left img {
       height: 50px; }
   .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right {
     width: 70%;
-    padding: 0;
-    padding-top: 15px; }
+    padding: 25px 0;
+    min-height: 120px; }
     .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure h4, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 {
       font-size: 16px; }
       .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure h4 span, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span {
@@ -3467,9 +3569,7 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-right {
   width: 27.5%;
-  padding: 10px 0;
-  padding-bottom: 0;
-  padding-top: 12px; }
+  padding: 10px 5px; }
   .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-right h4 {
     font-size: 18px;
     padding-left: 10px; }
@@ -3539,6 +3639,7 @@ file: /Assets/travorama20/css/_page_flight.scss
   .flight-review-wrapper .flight-review {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
     border-radius: 2px;
     border: 5px solid #1daee4;
     background: #fff;
@@ -4441,6 +4542,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
     padding: 12px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
     border-radius: 2px;
     padding-left: 30px;
     cursor: pointer; }
@@ -5154,6 +5256,7 @@ file : /Assets/travorama20/css/_page_password.scss
       font-size: 16px;
       -webkit-border-radius: 2px 2px 0 0;
       -moz-border-radius: 2px 2px 0 0;
+      -ms-border-radius: 2px 2px 0 0;
       border-radius: 2px 2px 0 0;
       padding: 12px 0; }
       .static-header .row .col-xs-4 a span:before, .static-header .row .col-xs-4 a .page-index span.section-reason:after, .page-index .static-header .row .col-xs-4 a span.section-reason:after {
@@ -5211,6 +5314,7 @@ file : /Assets/travorama20/css/_page_password.scss
       text-align: center;
       -webkit-border-radius: 50px;
       -moz-border-radius: 50px;
+      -ms-border-radius: 50px;
       border-radius: 50px;
       font-size: 14px;
       font-weight: 600;
@@ -5244,6 +5348,7 @@ file : /Assets/travorama20/css/_page_password.scss
               display: inline-block;
               -webkit-border-radius: 15px;
               -moz-border-radius: 15px;
+              -ms-border-radius: 15px;
               border-radius: 15px;
               background-image: url(/Assets/images/faq-toggle-sprite.png);
               background-position: -13px 0;
@@ -5281,6 +5386,7 @@ file : /Assets/travorama20/css/_page_password.scss
       font-weight: bold;
       -webkit-border-radius: 30px;
       -moz-border-radius: 30px;
+      -ms-border-radius: 30px;
       border-radius: 30px;
       padding-top: 6px;
       top: 0;

@@ -15,7 +15,7 @@ app.controller('paymentController', [
         $scope.paymentMethod = ''; //Payment
         $scope.trips = trips;
         $scope.stepClass = '';
-
+        $scope.redirectionUrl = redirectionUrl;
         //CreditCard
         $scope.CreditCard = {
             TwoClickToken: 'false',
@@ -180,7 +180,7 @@ app.controller('paymentController', [
                 $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
             }
         };
-
+        
         $scope.pay = {
             url: FlightPayConfig.Url,
             postData: '',
@@ -287,8 +287,11 @@ app.controller('paymentController', [
                 $scope.pay.isPaying = false;
                 //generate payment data
                 if ($scope.paymentMethod == 'BankTransfer') {
-                    $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2"';
-                    $scope.pay.transfer = true;
+                    if ($scope.redirectionUrl == null || $scope.redirectionUrl.length == 0) {
+                        $scope.pay.postData = ' "rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2"';
+                        $scope.pay.transfer = true;
+                    } 
+
                 }
                 else
                 {
@@ -306,7 +309,7 @@ app.controller('paymentController', [
                         case "CimbClicks": 
                             $scope.PaymentData = '"method":"4","cimbClicks":' + '{' + ' "description":"Pembayaran melalui CimbClicks"' + '}';
                             break;
-                        case "VirtualAccount": 
+                        case "VirtualAccount":
                             $scope.PaymentData = '"method":"5","virtualAccount":' + '{' + ' "bank":"permata"' + '}';
                             $scope.pay.virtualAccount = true;
                             break;
@@ -322,7 +325,8 @@ app.controller('paymentController', [
                 $scope.pay.postData = '{' + $scope.pay.postData + '}';
                 $scope.pay.postData = JSON.parse($scope.pay.postData);
                 
-                if ($scope.paymentMethod != "BankTransfer" && $scope.paymentMethod != 'VirtualAccount') {
+                if ($scope.paymentMethod != "BankTransfer" && $scope.paymentMethod != 'VirtualAccount' || ($scope.redirectionUrl != null && $scope.redirectionUrl.length != 0)) {
+                    $scope.pay.go = true;
                     $scope.pay.bayar();
                 }
 
@@ -342,7 +346,7 @@ app.controller('paymentController', [
                     $scope.pay.virtualAccount = false;
                     $scope.pay.go = true;
                     $scope.pay.bayar();
-                }
+                } 
             },
             bayar: function () {
                 $scope.pay.isPaying = true;
@@ -363,42 +367,73 @@ app.controller('paymentController', [
                             $('form#rsvno input#rsvno-input').val($scope.pay.rsvNo);
                             $('form#rsvno input#url-input').val(returnData.data.redirectionUrl);
                             $('form#rsvno').submit();
+                            $scope.redirectUrl = returnData.data.redirectionUrl;
                             $scope.pay.checked = true;
                         }
                         else {
                             //Error Handling right Here
                             //console.log('Status : ' + returnData.status);
                             //console.log('Error : ' + returnData.data.error);
+                            $scope.pay.go = false;
                             switch (returnData.data.error) {
                                 case 'ERPPAY01':
                                     $scope.errorLog = 'Missing reservation number or method';
-                                    $scope.errorMessage = 'Silahkan pilih metode pembayaran lain';
+                                    $scope.errorMessage = 'Nomor reservasi Anda tidak ditemukan';
+                                    $scope.PageConfig.ReturnUrl = "/";
+                                    $scope.pay.checked = true;
+                                    $scope.pay.isSuccess = false;
+                                    $scope.pay.isPaying = false;
+                                    console.log($scope.errorLog);
                                     break;
                                 case 'ERPPAY02':
-                                    $scope.errorLog = 'Not authorized to use selected payment method';
-                                    $scope.errorMessage = 'Silahkan pilih metode pembayaran lain';
+                                    $scope.errorLog = 'Not authorised to use selected payment method';
+                                    $scope.errorMessage = 'Silakan pilih metode pembayaran lain';
+                                    $scope.PageConfig.ReturnUrl = windows.location;
+                                    $scope.pay.checked = true;
+                                    $scope.pay.isSuccess = false;
+                                    $scope.pay.isPaying = false;
+                                    console.log($scope.errorLog);
                                     break;
                                 case 'ERPPAY03':
                                     $scope.errorLog = 'You have already choose one method before';
-                                    $scope.errorMessage = 'Anda telah memilih metode pembayaran sebelumnya';
+                                    $scope.errorMessage = 'Anda telah memilih metode pembayaran sebelumnya. Anda akan ' +
+                                       'dialihkan ke halaman pembayaran';
+                                    $('form#rsvno input#rsvno-input').val($scope.rsvNo);
+                                    $('form#rsvno input#url-input').val($scope.redirectionUrl);
+                                    $('form#rsvno').submit();
+                                    $scope.pay.go = true;
+                                    $scope.pay.checked = false;
+                                    $scope.pay.isSuccess = true;
+                                    
                                     break;
                                 case 'ERPPAY04':
                                     $scope.errorLog = 'Reservation not found';
-                                    $scope.errorMessage = 'Silahkan pilih metode pembayaran lain';
+                                    $scope.errorMessage = 'Reservasi Anda tidak ditemukan';
+                                    $scope.PageConfig.ReturnUrl = "/";
+                                    $scope.pay.checked = true;
+                                    $scope.pay.isSuccess = false;
+                                    $scope.pay.isPaying = false;
+                                    console.log($scope.errorLog);
                                     break;
                                 case 'ERRGEN98':
                                     $scope.errorLog = 'Invalid JSON Format';
-                                    $scope.errorMessage = 'Silahkan pilih metode pembayaran lain';
+                                    $scope.errorMessage = 'Terjadi kesalahan pada sistem';
+                                    $scope.PageConfig.ReturnUrl = "/";
+                                    $scope.pay.checked = true;
+                                    $scope.pay.isSuccess = false;
+                                    $scope.pay.isPaying = false;
+                                    console.log($scope.errorLog);
                                     break;
                                 case 'ERRGEN99':
                                     $scope.errorLog = 'There is a problem on the server';
-                                    $scope.errorMessage = 'Silahkan pilih metode pembayaran lain';
+                                    $scope.errorMessage = 'Terjadi kesalahan pada sistem';
+                                    $scope.PageConfig.ReturnUrl = "/";
+                                    $scope.pay.checked = true;
+                                    $scope.pay.isSuccess = false;
+                                    $scope.pay.isPaying = false;
+                                    console.log($scope.errorLog);
                                     break;
                             }
-                            $scope.pay.checked = true;
-                            $scope.pay.isSuccess = false;
-                            $scope.pay.isPaying = false;
-                            console.log($scope.errorLog);
                         }
                     }).catch(function (returnData) {
                         $scope.trial++;

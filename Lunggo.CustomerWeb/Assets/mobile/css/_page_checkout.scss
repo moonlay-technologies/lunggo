@@ -37,8 +37,8 @@
             .btn.btn-yellow {margin-top:15px;}
         }
         .page-step-3 {
-            .btn.btn-yellow.form-control,.btn.btn-grey.form-control {width: 48%;}
-            .btn.btn-grey.form-control {float: right;}
+            .btn.btn-yellow.form-control,.btn.btn-grey.form-control {width: 48%; float: right;}
+            .btn.btn-grey.form-control {float: left;}
             .flight-fare-wrapper {margin-bottom: 15px;}
         }
     }
@@ -133,6 +133,30 @@
             .flight__separator {left: 35%;}
         }
     }
+    .form-mandiri-payment {
+        margin: 5px 0; 
+        .form-row {
+            padding: 0;
+            list-style-type: none; 
+            li {
+                padding: 0;
+                display: inline; 
+            }
+        }
+    }
+    h3 {
+        margin: 20px 0;
+        font-size: 14px; 
+    }
+    .col-left {width: 55%;}
+    .col-middle {width: 3%;}
+    .col-right {width: 42%;}
+    .col-left, .col-middle, .col-right {
+        float: left;
+        position: relative;
+        min-height: 1px; 
+    }
+    .bottom-divider {margin-bottom: 7.5px;}
 }
 
 
