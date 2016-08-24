@@ -188,13 +188,13 @@
                                     <div class="form-group" ng-class="{'has-error' : (buyerForm.phone.$touched && buyerForm.phone.$invalid) || (buyerForm.countryCode.$touched && buyerForm.countryCode.$invalid)}">
                                         <label class="control-label important">Nomor Telepon:</label>
                                         <div class="row">
-                                            <div class="col-xs-7" ng-hide="loggedIn">
+                                            <div class="col-xs-4" ng-hide="loggedIn">
                                                 <p>Kode Negara</p>
                                                 <select class="form-control" name="countryCode" ng-model="buyerInfo.countryCode" ng-init="buyerInfo.countryCode = '62'">
                                                     <option ng-repeat="country in countries" ng-selected="country.dial_code == '62'" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
                                                 </select>
                                             </div>
-                                            <div class="col-xs-7" ng-hide="!loggedIn">
+                                            <div class="col-xs-4" ng-hide="!loggedIn">
                                                 <!--Jika udah Login-->
                                                 <p>Kode Negara</p>
                                                 <select class="form-control" name="countryCode" ng-model="buyerInfo.countryCode">
@@ -203,11 +203,11 @@
 
                                                 @*<input type="number" name="countryCode" value=buyerInfo.countryCode class="form-control" placeholder="ex : 62 for Indonesia" required ng-model="buyerInfo.countryCode" maxlength="5" />*@
                                             </div>
-                                            <div class="col-xs-5" ng-hide="loggedIn">
+                                            <div class="col-xs-8" ng-hide="loggedIn">
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
                                                 <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />
                                             </div>
-                                            <div class="col-xs-5" ng-hide="!loggedIn">
+                                            <div class="col-xs-8" ng-hide="!loggedIn">
                                                 <!--Jika udah Login-->
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
                                                 <input type="number" class="form-control" value=buyerInfo.phone id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />
@@ -272,9 +272,9 @@
                                                         <div class="col-xs-4"> 
                                                             <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="passenger.birth.month"
                                                                     ng-init="passenger.birth.month = '12'" ng-change="validateBirthday(passenger)" ng-required="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'" ng-if="passenger.type == 'adult'">{{month.name}}</option>
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'" ng-if="passenger.type == 'child'">{{month.name}}</option>
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'" ng-if="passenger.type == 'infant'">{{month.name}}</option>
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="passenger.type == 'adult'">{{month.name}}</option>
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="passenger.type == 'child'">{{month.name}}</option>
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="passenger.type == 'infant'">{{month.name}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xs-4"> 
@@ -311,7 +311,7 @@
                                                                 </div>
                                                                 <div class="col-xs-4">
                                                                     <select class="form-control" name="passenger_{{$index}}_expiryMonth" ng-model="passenger.passport.expire.month" ng-required="passportRequired" ng-change="validatePassport(passenger)">
-                                                                        <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'">{{month.name}}</option>
+                                                                        <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'">{{month.name}}</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-xs-4">
@@ -405,7 +405,7 @@
                                             <div class="passenger-list-content">
                                                 <p ng-if="birthDateRequired">
                                                     <span class="passenger-label">Tgl. Lahir</span>
-                                                    <span class="passenger-data">{{passenger.birth.date}} {{months[passenger.birth.month].name}} {{passenger.birth.year}}</span>
+                                                    {{passenger.birth.month}}<span class="passenger-data">{{passenger.birth.date}} {{months[passenger.birth.month].name}} {{passenger.birth.year}}</span>
                                                 </p>
                                                 <p ng-if="passportRequired">
                                                     <span class="passenger-label">Nomor Paspor</span>
