@@ -141,8 +141,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 input[type="text"], input[type="password"], input[type="number"], input[type="email"], select.form-control {
-    height: 32px; box-shadow: none; border: 1px solid #d6d6d6;
+    height: 32px; box-shadow: none; border: 1px solid #d6d6d6; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px;
 }
+
+.form-control {color: #000000;}
 
 // form Search Location pop up
 // and form Date Selector pop up
@@ -271,7 +273,7 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
  background-image: linear-gradient(to bottom, #FFD65E, #FEBF04);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#FFD65E, endColorstr=#FEBF04);
 }
 
-.btn.popup-btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; font-weight:bold;-webkit-border-radius: 10px; -moz-border-radius: 10px;border-radius: 10px;}
+.btn.popup-btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; font-weight:bold;}
 .btn.popup-block {display:block; width:100%;}
 .btn.book-failed{width:30%;}
 .btn.price-changed{width:40%;}
