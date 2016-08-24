@@ -70,7 +70,7 @@
             </div>
         </div>
     }
-    else if (Model.Payment.Status == PaymentStatus.Verifying || 
+    else if (Model.Payment.Status == PaymentStatus.Verifying || Model.Payment.Status == PaymentStatus.Pending ||
     Model.Payment.Status == PaymentStatus.Challenged)
     {
         <div class="bookfailed-popup" ng-init="refresh()">
@@ -118,7 +118,7 @@
             </div>
         </div>
     }
-    else if (Model.Payment.Status == PaymentStatus.Pending || Model.Payment.Status == PaymentStatus.Settled)
+    else if ( Model.Payment.Status == PaymentStatus.Settled)
     {
         <div>
             <h2 class="section-title stripe text-center">TERIMA <span>KASIH</span></h2>
