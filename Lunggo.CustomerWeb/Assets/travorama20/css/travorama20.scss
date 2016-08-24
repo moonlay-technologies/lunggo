@@ -83,7 +83,7 @@ $transition-default:all 0.5s;
 /*--------------------*/
 /* general class */
 html {height:100%;}
-body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; padding-bottom: 415px;}
+body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#ffffff; padding-bottom: 415px;}
 
 hr {border-top:$border-default;}
 
@@ -139,6 +139,12 @@ input[type=number]::-webkit-outer-spin-button {
         &:before {content:counter(list-counter); counter-increment:list-counter; background:#3ab8e7; color:#fff; position:absolute; @include border-radius(50px); font-weight:bold; width:25px; height:25px; padding-top:5px; display:block; text-align:center; left:-30px; top:0;}
     }
 }
+
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], select.form-control {
+    height: 32px; box-shadow: none; border: 1px solid #d6d6d6; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px;
+}
+
+.form-control {color: #000000;}
 
 // form Search Location pop up
 // and form Date Selector pop up
@@ -267,7 +273,7 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
  background-image: linear-gradient(to bottom, #FFD65E, #FEBF04);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#FFD65E, endColorstr=#FEBF04);
 }
 
-.btn.popup-btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; font-weight:bold;-webkit-border-radius: 10px; -moz-border-radius: 10px;border-radius: 10px;}
+.btn.popup-btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; font-weight:bold;}
 .btn.popup-block {display:block; width:100%;}
 .btn.book-failed{width:30%;}
 .btn.price-changed{width:40%;}
@@ -423,21 +429,10 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
 
 //bookfailed
 .bookfailed-popup {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7);display: block;
-    .popup {width:480px; height:270px; background:#fff; background-repeat: no-repeat;position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
-        /*.popup-container {padding: 20px;
-            .popup-title {
-                color: #15b1e4;
-                font-size:14px;
-                text-align: center;
-                margin-bottom: 15px;
-            }
-            .popup-list {
-                margin-bottom: 40px; 
-                &>ol {padding-left: 20px;}
-            }
-            .btn.btn-yellow, .btn.btn-grey {width: 98%;}
-            .btn.btn-grey {float: right;}
-        }*/
+    .overlay-content {width:500px; height:289px; background:url("/Assets/images/popup/notavailable500px.png"); background-repeat: no-repeat;position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
+        section {
+        }
+        footer {bottom:15px; left:0; width:100%;}
     }
 }
 

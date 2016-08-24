@@ -154,12 +154,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                     var hargaInfant = 0M;
                                     var adultTax = adultIns + adultPsc + adultVat;
                                     var childTax = childPsc + childIns + childVat;
+                                    
                                     var taxTable = ambilDataAjax[".itern-rgt-txt-2>p>span"];
                                     try
                                     {
                                         hargaAdult = decimal.Parse(taxTable[0].InnerText.Split('.')[1]) + adultTax;
                                         hargaChild = decimal.Parse(taxTable[1].InnerText.Split('.')[1]) + childTax;
                                         hargaInfant = decimal.Parse(taxTable[2].InnerText.Split('.')[1]);
+                                        if (conditions.InfantCount > 0)
+                                        {
+                                            var infantTax = harga - (hargaAdult + hargaChild + hargaInfant);
+                                            hargaInfant += infantTax;
+                                        }
+                                        
                                     } catch { }
 
                                     var segments = new List<FlightSegment>();

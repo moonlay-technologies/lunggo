@@ -1205,12 +1205,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background: #ffffff; }
       .page.page-home .form-container .form-wrapper form .form__departure p span, .page.page-home .form-container .form-wrapper form .form__departure p.form-control span, .page.page-home .form-container .form-wrapper form .form__departure select.form-control span, .page.page-home .form-container .form-wrapper form .form__return p span, .page.page-home .form-container .form-wrapper form .form__return p.form-control span, .page.page-home .form-container .form-wrapper form .form__return select.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip p span, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger p span, .page.page-home .form-container .form-wrapper form .form__passenger p.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger select.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass p span, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control span {
         float: right; }
+    .page.page-home .form-container .form-wrapper form .form__passenger > .row {
+      margin: 0;
+      text-align: center; }
     .page.page-home .form-container .form-wrapper form .field-container {
       margin-left: 37px;
       border-bottom: 1px solid #dddddd;
       padding: 21px 0; }
       .page.page-home .form-container .form-wrapper form .field-container p, .page.page-home .form-container .form-wrapper form .field-container select {
         cursor: pointer; }
+      .page.page-home .form-container .form-wrapper form .field-container.form-child, .page.page-home .form-container .form-wrapper form .field-container.form-infant {
+        margin-left: 15px; }
     .page.page-home .form-container .form-wrapper form .flip-container {
       position: relative;
       min-height: 104px; }
@@ -1597,12 +1602,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background: #ffffff; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass select.form-control span {
         float: right; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger > .row {
+      margin: 0;
+      text-align: center; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container {
       margin-left: 37px;
       border-bottom: 1px solid #dddddd;
       padding: 21px 0; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container select {
         cursor: pointer; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-child, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-infant {
+        margin-left: 15px; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container {
       position: relative;
       min-height: 104px; }

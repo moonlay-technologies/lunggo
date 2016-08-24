@@ -117,6 +117,10 @@
                 span {float:right;}
             }
         }
+        .form__passenger > .row {
+            margin: 0;
+            text-align: center;
+        }
         .field-container {
             margin-left: 37px;
             border-bottom: $border-form;
@@ -124,8 +128,7 @@
             p, select {
                 cursor: pointer;
             }
-                    
-                    
+            &.form-child, &.form-infant {margin-left: 15px;}           
         }
         .flip-container {
             position: relative;
