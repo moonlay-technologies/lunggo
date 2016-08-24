@@ -526,6 +526,15 @@ app.controller('orderDetailController', [
             phone: ''
         }
 
+        // Pass Data into MVC Controller
+        $scope.submitRsvNo = function (rsvNo, rsvStatus) {
+            $('form#rsvno input#rsvno-input').val(rsvNo);
+            $('form#rsvno input#message-input').val(rsvStatus);
+            $('form#rsvno').submit();
+        }
+
+        $scope.isLogin = false;
+
         $scope.TakeProfileConfig = {
             TakeProfile: function () {
                 if ($scope.trial > 3) {
@@ -549,6 +558,7 @@ app.controller('orderDetailController', [
                                     countryCallCd: returnData.data.countryCallCd,
                                     phone: returnData.data.phone
                                 };
+                            $scope.isLogin = true;
                         }
                         else {
                             console.log('There is an error');
@@ -645,13 +655,38 @@ app.controller('orderDetailController', [
                 return 'Gagal';
         }
 
+        $scope.ButtonText = function (status, method) {
+            if (status == 1) { return 'Halaman Pembayaran'; }
+
+            else if (status == 2 || status == 3) {
+                if (method == 2 || method == 5) {
+                    return 'Instruksi Pembayaran';
+                }
+                else if (method == 4) {
+                    return 'Halaman Pembayaran';
+                }
+                else {
+                    return 'Halaman Thank You';
+                }
+            }
+
+            else if (status == 4 || status == 7 || status == 9 || status == 10) {
+                return 'Halaman Thank You';
+            }
+
+            else if (status == 5) { return 'Cetak E-tiket'; }
+
+            else if (status == 6 || status == 8) { return 'Cari Penerbangan'; }
+
+        }
+
         $scope.GetReservation = function () {
             if ($scope.trial > 3) {
                 $scope.trial = 0;
             }
             $scope.errormsg = '';
             var authAccess = getAuthAccess();
-            if (authAccess == 2) {
+            if (authAccess == 2 || authAccess == 1) {
                 $http({
                     method: 'GET',
                     data: { rsvNo: $scope.rsvNo },
@@ -810,11 +845,16 @@ app.controller('checkController', [
     '$http', '$scope', function ($http, $scope) {
 
         $scope.pageLoaded = true;
+        $scope.overlay = true;
         $scope.form = {
             orderNo: '',
             lastname: '',
             submitting: false
         };
+
+        $scope.closeOverlay = function () {
+            $scope.overlay = false;
+        }
 
     }
 ]);// reset controller

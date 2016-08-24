@@ -2295,7 +2295,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   font-size: 14px; }
 
 .page.page-checkout .col-left {
-  width: 55%; }
+  width: 55%;
+  font-weight: 700; }
 
 .page.page-checkout .col-middle {
   width: 3%; }
