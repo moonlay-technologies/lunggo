@@ -4,8 +4,8 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Model
 {
     public class CheckBinDiscountApiRequest
     {
-        [JsonProperty("discountCode")]
-        public string DiscountCode { get; set; }
+        [JsonProperty("voucherCode")]
+        public string VoucherCode { get; set; }
         [JsonProperty("bin")]
         public string CardNumber { get; set; }
         [JsonProperty("rsvNo")]

@@ -245,7 +245,7 @@ namespace Lunggo.ApCommon.Payment.Service
             };
         }
 
-        public decimal GetTransferFee(string rsvNo, string discountCode)
+        public decimal GetTransferFee(string rsvNo, string bin, string discountCode)
         {
             decimal transferFee, finalPrice;
             var voucher = CampaignService.GetInstance().ValidateVoucherRequest(rsvNo, discountCode);
