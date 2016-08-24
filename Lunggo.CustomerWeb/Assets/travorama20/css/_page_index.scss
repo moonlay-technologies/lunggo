@@ -323,7 +323,7 @@ file : /Assets/travorama20/css/_page_index.scss
         .calendar-body {position:relative;
             .home-nav {background:#999; height:25px; width:100%; display:block; position:absolute; top:0; left:0;
                 .nav-prev {width:11px; height:19px; background-image:url(/Assets/images/calendar-nav-sprite.png); background-position:0 0; background-repeat:no-repeat; background-size:200%; display:block; position:absolute; top:4px; left:15px;}
-                .nav-next {@extend home-nav.nav-prev !optional; right:15px; left:auto; background-position:-11px 0;}
+                .nav-next {@extend home-nav.nav-prev !optional; right:15px; left:auto; background-position:-11px 0; }
             }
             .ui-datepicker-prev {position:absolute; top:0; left:0; display:inline; width:auto; display:none;}
             .ui-datepicker-next {@extend .calendar-body.ui-datepicker-prev !optional; left:auto; right:0;}
