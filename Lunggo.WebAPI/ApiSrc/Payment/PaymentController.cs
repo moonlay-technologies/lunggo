@@ -100,6 +100,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
         [HttpPost]
         [LunggoCorsPolicy]
+        [Authorize]
         [Route("v1/payment/checkbindiscount")]
         public ApiResponseBase CheckBinDiscount()
         {
