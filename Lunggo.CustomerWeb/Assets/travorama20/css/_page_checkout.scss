@@ -13,13 +13,10 @@ file : /Assets/travorama20/css/_page_checkout.scss
         font-weight: 400;
         margin-bottom: 10px;
     }
-    .checkout-content { 
-        h3 {margin: 15px 0;}
+    .checkout-content { margin-bottom: 45px;
+        h3 {margin: 25px 0 15px; font-size: 15px;}
         .col-left, .col-right {float: left;}
-        .col-left {
-            width: 66.66667%; 
-            margin-bottom: 30px;
-        }
+        .col-left {width: 66.66667%;}
         .col-right {
             width: 33.33333%; 
             padding-left: 25px;
@@ -57,19 +54,19 @@ file : /Assets/travorama20/css/_page_checkout.scss
                 padding: 0;
             }
         }
-        .col-left, .col-middle, .col-right {
+        .col-sm-left, .col-sm-middle, .col-sm-right {
             float: left;
             position: relative;
             min-height: 1px;
         }
-        .col-left {width: 50%; font-weight: 700;}
-        .col-middle {width: 2%;}
-        .col-right {width: 48%;}
+        .col-sm-left {width: 50%; font-weight: 700;}
+        .col-sm-middle {width: 2%;}
+        .col-sm-right {width: 48%;}
     }
 
     //Form
+    .passenger-detail .passenger-form, .content-step .flight-detail, .buyer-review, .passenger-review {margin-bottom: 25px;}
     .passenger-detail .passenger-form, .flight-detail, .buyer-review, .passenger-review {
-        margin-bottom: 20px;
         header {
             background: #1daee4;
             color: #fff;
@@ -110,11 +107,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
     &>.container {max-width: none;}
 }
 
-// checkout content
-.checkout-content {padding: 15px;}
-
 // flight detail
-.flight-detail {margin-bottom:20px; background:#fff;
+.flight-detail {background:#fff;
     // if return flight
     &#return-flight {
         header span:before {background-position:-20px;}
