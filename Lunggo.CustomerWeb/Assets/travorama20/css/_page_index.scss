@@ -15,7 +15,7 @@ file : /Assets/travorama20/css/_page_index.scss
 
         // search form
         .search-form {width:320px; height:520px; background:rgba(37,37,37,0.8); position:relative; z-index:3;
-            .tab-header {height:50px;
+            .tab-header {height:0;
                 &:before, &:after {@include clearfix();}
                 nav {
                     ul {margin:0; padding:0;
@@ -43,7 +43,7 @@ file : /Assets/travorama20/css/_page_index.scss
                     }
                 }
             }
-            .tab-content {color:#fff; padding:15px 20px 5px; letter-spacing:0.2px;
+            .tab-content {color:#fff; padding:20px 20px 5px; letter-spacing:0.2px;
                 &>div {display:none;}
                 &>div.active {display:block;}
                 &:before, &:after {@include clearfix();}
@@ -53,7 +53,7 @@ file : /Assets/travorama20/css/_page_index.scss
                 // tab flight
                 .tab-flight {
                     .form-group {margin-bottom:5px;}
-                    h3 {margin-bottom:15px; font-size:17px;}
+                    h3 {margin-bottom:30px; font-size:17px;}
                     .form-flight-type {margin-bottom:5px;}
                     label {font-weight:normal;}
                     .btn.btn-yellow {font-size:14px; letter-spacing:0.1px; padding:10px 0;}
@@ -323,10 +323,10 @@ file : /Assets/travorama20/css/_page_index.scss
         .calendar-body {position:relative;
             .home-nav {background:#999; height:25px; width:100%; display:block; position:absolute; top:0; left:0;
                 .nav-prev {width:11px; height:19px; background-image:url(/Assets/images/calendar-nav-sprite.png); background-position:0 0; background-repeat:no-repeat; background-size:200%; display:block; position:absolute; top:4px; left:15px;}
-                .nav-next {@extend home-nav.nav-prev !optional; right:15px; left:auto; background-position:-11px 0;}
+                .nav-next {@extend &.nav-prev !optional; right:15px; left:auto; background-position:-11px 0; }
             }
             .ui-datepicker-prev {position:absolute; top:0; left:0; display:inline; width:auto; display:none;}
-            .ui-datepicker-next {@extend .calendar-body.ui-datepicker-prev !optional; left:auto; right:0;}
+            .ui-datepicker-next {@extend &.ui-datepicker-prev !optional; left:auto; right:0;}
         }
     }
 

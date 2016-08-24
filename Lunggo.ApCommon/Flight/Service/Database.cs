@@ -56,7 +56,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     return null;
                 else
                 {
-                    return rsvNos.Select(GetOverviewReservationFromDb).Where(rsv => rsv != null).ToList();
+                    return rsvNos.Select(GetOverviewReservationFromDb).Where(rsv => rsv != null && rsv.User == null).ToList();
                 }
             }
         }

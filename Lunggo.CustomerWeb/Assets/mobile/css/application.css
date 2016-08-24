@@ -784,11 +784,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         color: #616161; }
   .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav > li > a {
     padding: 13px 15px; }
-  .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .calendar-container {
-    /*border-bottom: 1px solid #d4d4d4;*/ }
-    .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .calendar-container .ui-datepicker {
-      max-width: 340px;
-      margin: 0 auto 15px; }
   .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event {
     max-width: 340px;
     margin: 20px auto;
@@ -1109,7 +1104,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     content: "";
     clear: both; }
   .page.page-home .form-container .form-wrapper {
-    padding: 0;
+    margin: 0 0 15px;
     min-height: 100%;
     background: none;
     border: 0; }
@@ -1210,12 +1205,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background: #ffffff; }
       .page.page-home .form-container .form-wrapper form .form__departure p span, .page.page-home .form-container .form-wrapper form .form__departure p.form-control span, .page.page-home .form-container .form-wrapper form .form__departure select.form-control span, .page.page-home .form-container .form-wrapper form .form__return p span, .page.page-home .form-container .form-wrapper form .form__return p.form-control span, .page.page-home .form-container .form-wrapper form .form__return select.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip p span, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger p span, .page.page-home .form-container .form-wrapper form .form__passenger p.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger select.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass p span, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control span {
         float: right; }
+    .page.page-home .form-container .form-wrapper form .form__passenger > .row {
+      margin: 0;
+      text-align: center; }
     .page.page-home .form-container .form-wrapper form .field-container {
       margin-left: 37px;
       border-bottom: 1px solid #dddddd;
       padding: 21px 0; }
       .page.page-home .form-container .form-wrapper form .field-container p, .page.page-home .form-container .form-wrapper form .field-container select {
         cursor: pointer; }
+      .page.page-home .form-container .form-wrapper form .field-container.form-child, .page.page-home .form-container .form-wrapper form .field-container.form-infant {
+        margin-left: 15px; }
     .page.page-home .form-container .form-wrapper form .flip-container {
       position: relative;
       min-height: 104px; }
@@ -1289,6 +1289,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border-radius: 50%; }
   .page.page-home .overlay.overlay--datepicker {
     overflow: hidden; }
+  .page.page-home .calendar-container .ui-datepicker {
+    max-width: 340px;
+    margin: 0 auto 15px; }
 
 @media only screen and (min-width: 375px) and (max-height: 667px) {
   .page.page-home .form-container {
@@ -1494,185 +1497,198 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     padding-top: 3px;
     padding-bottom: 3px; }
 
-.page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper {
-  padding: 0;
-  min-height: 100%;
-  background: none;
-  border: 0; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper h1 {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #ffffff; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form-group {
-    margin-bottom: 0; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form-group p.form-control {
-      height: auto; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__destination .title-destination, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__origin .title-destination {
-    font-size: 13px;
-    text-align: center;
-    margin-bottom: 10px;
-    color: #000000; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__destination p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__origin p.form-control {
-    text-align: center;
-    background: #ecf0f4;
-    max-width: 120px;
-    margin: 0 auto;
-    box-shadow: none;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    border-radius: 5px;
-    border: 1px solid #d3d7da;
-    cursor: pointer; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.code-airport, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.city {
-    margin: 0 auto; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.code-airport {
-    font-size: 40px;
-    line-height: 44px;
-    color: #000000; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.city {
-    font-size: 12px;
-    line-height: 20px;
-    color: #686868; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-pp {
-    background-image: url("../images/calendar.png");
-    width: 47px;
-    height: 46px;
-    top: 18px; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-return {
-    background-image: url("../images/loop.png");
-    width: 43px;
-    height: 43px;
-    top: 20px; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-fc {
-    background-image: url("../images/medals.png");
-    width: 59px;
-    height: 56px;
-    top: 16px; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-people {
-    background-image: url("../images/people.png");
-    width: 41px;
-    height: 57px;
-    top: 16px; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-flip {
-    background-image: url("../images/flip.png");
-    width: 43px;
-    height: 40px;
-    top: 7px;
-    left: 5px; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.arrow {
-    background-image: url("../images/arrow-down-bw.png");
-    width: 24px;
-    height: 15px;
-    z-index: 1;
-    bottom: auto;
-    right: 0;
-    top: 29px;
-    left: auto;
-    margin: 0;
-    display: block;
-    cursor: pointer;
-    background-position-x: 80%; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .middle-form {
-    margin-bottom: 24px; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .middle-form .form-group {
-      position: relative; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .top-form {
-    max-width: 300px;
-    margin: 0px auto; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass select.form-control {
-    -webkit-appearance: none;
-    font-size: 13px;
-    color: #000000;
-    padding: 0;
-    height: auto;
-    border: none;
-    box-shadow: none;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    -ms-border-radius: 0;
-    border-radius: 0;
-    display: inline;
-    background: #ffffff; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass select.form-control span {
-      float: right; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container {
-    margin-left: 37px;
-    border-bottom: 1px solid #dddddd;
-    padding: 21px 0; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container select {
-      cursor: pointer; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container {
-    position: relative;
-    min-height: 104px; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container .flip {
-      position: absolute;
-      width: 35px;
-      height: 37px;
+.page.page-flight .overlay.overlay--flight-form .overlay__content {
+  min-height: auto;
+  padding: 0; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper {
+    margin: 0 0 15px;
+    min-height: 100%;
+    background: none;
+    border: 0; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #ffffff; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form-group {
+      margin-bottom: 0; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form-group p.form-control {
+        height: auto; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__destination .title-destination, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__origin .title-destination {
+      font-size: 13px;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #000000; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__destination p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__origin p.form-control {
+      text-align: center;
       background: #ecf0f4;
-      border: 1px solid #d3d7da;
-      display: inline-block;
+      max-width: 120px;
+      margin: 0 auto;
+      box-shadow: none;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
       -ms-border-radius: 5px;
       border-radius: 5px;
-      top: 60%;
-      left: 50%;
-      transform: translate(-50%, -50%); }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .switch {
-    float: right;
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 24px; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .switch input {
-      display: none; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: all 0.4s;
-    -moz-transition: all 0.4s;
-    -o-transition: all 0.4s;
-    transition: all 0.4s; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .slider:before {
+      border: 1px solid #d3d7da;
+      cursor: pointer; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.code-airport, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.city {
+      margin: 0 auto; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.code-airport {
+      font-size: 40px;
+      line-height: 44px;
+      color: #000000; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.city {
+      font-size: 12px;
+      line-height: 20px;
+      color: #686868; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-pp {
+      background-image: url("../images/calendar.png");
+      width: 47px;
+      height: 46px;
+      top: 18px; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-return {
+      background-image: url("../images/loop.png");
+      width: 43px;
+      height: 43px;
+      top: 20px; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-fc {
+      background-image: url("../images/medals.png");
+      width: 59px;
+      height: 56px;
+      top: 16px; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-people {
+      background-image: url("../images/people.png");
+      width: 41px;
+      height: 57px;
+      top: 16px; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-flip {
+      background-image: url("../images/flip.png");
+      width: 43px;
+      height: 40px;
+      top: 7px;
+      left: 5px; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.arrow {
+      background-image: url("../images/arrow-down-bw.png");
+      width: 24px;
+      height: 15px;
+      z-index: 1;
+      bottom: auto;
+      right: 0;
+      top: 29px;
+      left: auto;
+      margin: 0;
+      display: block;
+      cursor: pointer;
+      background-position-x: 80%; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .middle-form {
+      margin-bottom: 24px; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .middle-form .form-group {
+        position: relative; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .top-form {
+      max-width: 300px;
+      margin: 0px auto; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass select.form-control {
+      -webkit-appearance: none;
+      font-size: 13px;
+      color: #000000;
+      padding: 0;
+      height: auto;
+      border: none;
+      box-shadow: none;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      -ms-border-radius: 0;
+      border-radius: 0;
+      display: inline;
+      background: #ffffff; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass select.form-control span {
+        float: right; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger > .row {
+      margin: 0;
+      text-align: center; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container {
+      margin-left: 37px;
+      border-bottom: 1px solid #dddddd;
+      padding: 21px 0; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container select {
+        cursor: pointer; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-child, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-infant {
+        margin-left: 15px; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container {
+      position: relative;
+      min-height: 104px; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container .flip {
+        position: absolute;
+        width: 35px;
+        height: 37px;
+        background: #ecf0f4;
+        border: 1px solid #d3d7da;
+        display: inline-block;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        border-radius: 5px;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%); }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .switch {
+      float: right;
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 24px; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .switch input {
+        display: none; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .slider {
       position: absolute;
-      content: "";
-      height: 16px;
-      width: 16px;
-      left: 4px;
-      bottom: 4px;
-      background-color: #ffffff;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
       -webkit-transition: all 0.4s;
       -moz-transition: all 0.4s;
       -o-transition: all 0.4s;
       transition: all 0.4s; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip input:checked + .slider {
-    background-color: #2ea1e8; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip input:checked + .slider:before {
-    -webkit-transform: translate(16px, 0);
-    -ms-transform: translate(16px, 0);
-    -o-transform: translate(16px, 0);
-    transform: translate(16px, 0); }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip input:focus + .slider {
-    -webkit-border-radius: 0 0 1px #2196F3;
-    -moz-border-radius: 0 0 1px #2196F3;
-    -ms-border-radius: 0 0 1px #2196F3;
-    box-shadow: 0 0 1px #2196F3; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .slider.round {
-    -webkit-border-radius: 24px;
-    -moz-border-radius: 24px;
-    -ms-border-radius: 24px;
-    border-radius: 24px; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .slider.round:before {
-      -webkit-border-radius: 50%;
-      -moz-border-radius: 50%;
-      -ms-border-radius: 50%;
-      border-radius: 50%; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: #ffffff;
+        -webkit-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        -o-transition: all 0.4s;
+        transition: all 0.4s; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip input:checked + .slider {
+      background-color: #2ea1e8; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip input:checked + .slider:before {
+      -webkit-transform: translate(16px, 0);
+      -ms-transform: translate(16px, 0);
+      -o-transform: translate(16px, 0);
+      transform: translate(16px, 0); }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip input:focus + .slider {
+      -webkit-border-radius: 0 0 1px #2196F3;
+      -moz-border-radius: 0 0 1px #2196F3;
+      -ms-border-radius: 0 0 1px #2196F3;
+      box-shadow: 0 0 1px #2196F3; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .slider.round {
+      -webkit-border-radius: 24px;
+      -moz-border-radius: 24px;
+      -ms-border-radius: 24px;
+      border-radius: 24px; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .slider.round:before {
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        border-radius: 50%; }
+
+.page.page-flight .overlay.overlay--datepicker .overlay__content {
+  max-width: 340px;
+  margin: 0 auto 15px;
+  min-height: auto; }
 
 .overlay--flight-form .overlay__content {
   background: #ffffff; }
@@ -2265,6 +2281,37 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-checkout .overlay--flight-detail .overlay__body.overlay__content .flight__separator {
   left: 35%; }
 
+.page.page-checkout .form-mandiri-payment {
+  margin: 5px 0; }
+  .page.page-checkout .form-mandiri-payment .form-row {
+    padding: 0;
+    list-style-type: none; }
+    .page.page-checkout .form-mandiri-payment .form-row li {
+      padding: 0;
+      display: inline; }
+
+.page.page-checkout h3 {
+  margin: 20px 0;
+  font-size: 14px; }
+
+.page.page-checkout .col-left {
+  width: 55%;
+  font-weight: 700; }
+
+.page.page-checkout .col-middle {
+  width: 3%; }
+
+.page.page-checkout .col-right {
+  width: 42%; }
+
+.page.page-checkout .col-left, .page.page-checkout .col-middle, .page.page-checkout .col-right {
+  float: left;
+  position: relative;
+  min-height: 1px; }
+
+.page.page-checkout .bottom-divider {
+  margin-bottom: 7.5px; }
+
 .page.page-confirmation .instruction header {
   background: #2fb4e6;
   color: #fff;
@@ -2618,7 +2665,7 @@ cursor: pointer; }
       padding: 0 0 15px; }
 
 .page.page-contact .contact-map {
-  background: url(/Assets/mobile/images/scontact-map.jpg) center center;
+  background: url(/Assets/mobile/images/contact-map.jpg) center center;
   background-size: cover; }
   .page.page-contact .contact-map .container {
     padding: 0 30px; }
@@ -2886,49 +2933,49 @@ cursor: pointer; }
   .page.page-privacy ol.listing > li > ol, .page.page-privacy ol.listing > li > ul {
     padding-left: 20px; }
 
-.page.page-howtoorder .howto-content {
-  padding: 0 10px; }
-  .page.page-howtoorder .howto-content .list__wrapper {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    counter-reset: howto-counter; }
-    .page.page-howtoorder .howto-content .list__wrapper .list {
-      margin-bottom: 15px;
-      counter-increment: howto-counter; }
-      .page.page-howtoorder .howto-content .list__wrapper .list .list__header {
-        background: #2fb4e6; }
-        .page.page-howtoorder .howto-content .list__wrapper .list .list__header h3 {
-          color: #fff;
-          padding: 15px;
-          font-weight: 600;
-          margin: 0;
-          position: relative;
-          padding-left: 60px; }
-          .page.page-howtoorder .howto-content .list__wrapper .list .list__header h3:before {
-            content: counter(howto-counter);
-            background: #028ec3;
-            color: #fff;
-            font-weight: 600;
-            display: inline-block;
-            vertical-align: middle;
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            padding: 15px; }
-      .page.page-howtoorder .howto-content .list__wrapper .list .list__content {
-        background: #fff;
+.page.page-howtoorder .howto-content .list__wrapper {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  counter-reset: howto-counter; }
+  .page.page-howtoorder .howto-content .list__wrapper .list {
+    margin-bottom: 15px;
+    counter-increment: howto-counter; }
+    .page.page-howtoorder .howto-content .list__wrapper .list .list__header {
+      background: #2fb4e6; }
+      .page.page-howtoorder .howto-content .list__wrapper .list .list__header h3 {
+        color: #fff;
         padding: 15px;
-        border: 1px solid #ccc;
-        border-top: 0; }
-        .page.page-howtoorder .howto-content .list__wrapper .list .list__content img {
-          margin: 15px 0;
-          max-width: 100%; }
-  .page.page-howtoorder .howto-content .howto-note h3 {
-    font-weight: bold; }
-  .page.page-howtoorder .howto-content .howto-note p span {
-    color: #2fb4e6; }
+        font-weight: 600;
+        margin: 0;
+        position: relative;
+        padding-left: 60px; }
+        .page.page-howtoorder .howto-content .list__wrapper .list .list__header h3:before {
+          content: counter(howto-counter);
+          background: #028ec3;
+          color: #fff;
+          font-weight: 600;
+          display: inline-block;
+          vertical-align: middle;
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 100%;
+          padding: 15px; }
+    .page.page-howtoorder .howto-content .list__wrapper .list .list__content {
+      background: #fff;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-top: 0; }
+      .page.page-howtoorder .howto-content .list__wrapper .list .list__content img {
+        margin: 15px 0;
+        max-width: 100%; }
+
+.page.page-howtoorder .howto-content .howto-note h3 {
+  font-weight: bold; }
+
+.page.page-howtoorder .howto-content .howto-note p span {
+  color: #2fb4e6; }
 
 .page.page-newsletter .container-page p {
   color: #3fabe3;

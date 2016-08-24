@@ -11,8 +11,19 @@ file : /Assets/travorama20/css/_page_checkout.scss
     .form-group {margin-bottom: 20px;}
     label.control-label {
         font-weight: 400;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
     }
+    .checkout-content { margin-bottom: 45px;
+        h3 {margin: 25px 0 15px; font-size: 15px;}
+        .col-left, .col-right {float: left;}
+        .col-left {width: 66.66667%;}
+        .col-right {
+            width: 33.33333%; 
+            padding-left: 25px;
+        }
+        &>.container {max-width: none;}
+    }
+
     //TnC popup
     .tnc-popup {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7);display: block;
         .popup {width:480px; height:270px; background:#fff; background-repeat: no-repeat;position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
@@ -43,14 +54,36 @@ file : /Assets/travorama20/css/_page_checkout.scss
                 padding: 0;
             }
         }
-        .col-left, .col-middle, .col-right {
+        .col-sm-left, .col-sm-middle, .col-sm-right {
             float: left;
             position: relative;
             min-height: 1px;
         }
-        .col-left {width: 50%; font-weight: 700;}
-        .col-middle {width: 2%;}
-        .col-right {width: 48%;}
+        .col-sm-left {width: 50%; font-weight: 700;}
+        .col-sm-middle {width: 2%;}
+        .col-sm-right {width: 48%;}
+    }
+
+    //Form
+    .passenger-detail .passenger-form, .content-step .flight-detail, .buyer-review, .passenger-review {margin-bottom: 25px;}
+    .passenger-detail .passenger-form, .flight-detail, .buyer-review, .passenger-review {
+        header {
+            background: #1daee4;
+            color: #fff;
+            padding: 7px 15px;
+            font-size: 13px;
+            font-weight: 600;
+            position: relative;
+        }
+    }
+    
+    // step button
+    .step-button {
+        .btn {
+            font-size: 13px;
+            width: 200px;
+            &.btn-grey {margin-right: 10px;}
+        }
     }
 }
 
@@ -71,25 +104,22 @@ file : /Assets/travorama20/css/_page_checkout.scss
     &.active-1:before {background:#032e55;}
 
     &.active-3:after {background:#032e55;}
-
+    &>.container {max-width: none;}
 }
 
-// checkout content
-.checkout-content {padding-bottom:15px;}
-
 // flight detail
-.flight-detail {margin-bottom:20px; background:#fff;
+.flight-detail {background:#fff;
     // if return flight
     &#return-flight {
         header span:before {background-position:-20px;}
     }
     // *****
     // header
-    header {background:$color-main-blue; color:#fff; padding:12px; font-size:14px; position:relative;
-        span {font-weight:bold; padding-left:25px; margin-left:5px; position:relative;
+    header {
+        span {padding-left:25px; position:relative;
             &:before {content:""; width:20px; height:20px; left:0; position:absolute; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%;}
         }
-        .fare-detail {background:#028ec3; position:absolute; right:0; top:0; height:100%; padding:12px;}
+        .fare-detail {background:#028ec3; position:absolute; right:0; top:0; height:100%; padding:7px 15px;}
     }
     // detail content
     .detail-content {border:$border-default; border-top:none;
@@ -134,12 +164,12 @@ file : /Assets/travorama20/css/_page_checkout.scss
     }
 }
 
-.buyer-review{margin-bottom:12px;
-    header {background:$color-main-blue; color:#fff; padding:12px; font-size:14px; font-weight:bold; position:relative;
-            .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
-                &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
-            }
+.buyer-review{
+    header {
+        .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
+            &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
         }
+    }
     .buyer-content{padding:20px; border:$border-default; border-top:none; background:#fff;
         .buyer-list-item{
             .buyer-list-heading{margin-top:0px;padding-top:0px; font-size:14px;}
@@ -152,12 +182,12 @@ file : /Assets/travorama20/css/_page_checkout.scss
 }
 
 //passenger-review
-.passenger-review{margin-bottom:12px;
-    header {background:$color-main-blue; color:#fff; padding:12px; font-size:14px; font-weight:bold; position:relative;
-            .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
-                &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
-            }
+.passenger-review{
+    header {
+        .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
+            &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
         }
+    }
     .review-content{padding:20px; border:$border-default; border-top:none; background:#fff;
         .passenger-list-item{
             .passenger-list-heading{margin-top:0px;padding-top:0px; font-size:14px;}
@@ -170,11 +200,11 @@ file : /Assets/travorama20/css/_page_checkout.scss
 }
 
 // passenger detail
-.passenger-detail {margin-bottom:12px;
+.passenger-detail {
     
     // passenger form
-    .passenger-form {padding-bottom:12px;
-        header {background:$color-main-blue; color:#fff; padding:12px; font-size:14px; font-weight:bold; position:relative;
+    .passenger-form {
+        header {
             .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
                 &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
             }
@@ -285,11 +315,6 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
     }
 
-}
-
-// step button
-.step-button {
-    .btn {padding:8px 50px; font-size:14px;}
 }
 
 // travorama login

@@ -53,19 +53,21 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
             }
-            //if (paymentDetails.Method == PaymentMethod.BankTransfer)
-            //{
+
+            var binDiscount = CampaignService.GetInstance().CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, discountCode);
+            if (binDiscount != null)
+            {
+                paymentDetails.FinalPriceIdr -= binDiscount.Amount;
+                paymentDetails.DiscountNominal += binDiscount.Amount;
+            }
+            
             var transferFee = GetTransferFeeFromCache(rsvNo);
             if (transferFee == 0M)
                 return paymentDetails;
 
             paymentDetails.TransferFee = transferFee;
             paymentDetails.FinalPriceIdr += paymentDetails.TransferFee;
-            //}
-            //else
-            //{
-            //    DeleteTransferFeeFromCache(rsvNo);
-            //}
+            
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
             var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
             var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
@@ -243,7 +245,7 @@ namespace Lunggo.ApCommon.Payment.Service
             };
         }
 
-        public decimal GetTransferFee(string rsvNo, string discountCode)
+        public decimal GetTransferFee(string rsvNo, string bin, string discountCode)
         {
             decimal transferFee, finalPrice;
             var voucher = CampaignService.GetInstance().ValidateVoucherRequest(rsvNo, discountCode);

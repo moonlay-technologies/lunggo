@@ -18,6 +18,9 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         Passenger: CheckoutDetail.Passenger,
         Passengers: [],
         PassengerTypeName: CheckoutDetail.PassengerName,
+        TotalAdultFare: CheckoutDetail.TotalAdultFare,
+        TotalChildFare: CheckoutDetail.TotalChildFare,
+        TotalInfantFare: CheckoutDetail.TotalInfantFare,
         // generate passenger
         GeneratePassenger: function () {
             var today = new Date();
@@ -365,12 +368,12 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 }
 
                 $scope.passengers[i].birth.full = $scope.passengers[i].birth.year
-                        + '/' + ('0' + (parseInt($scope.passengers[i].birth.month) + 1)).slice(-2)
+                        + '/' + ('0' + (parseInt($scope.passengers[i].birth.month))).slice(-2)
                         + '/' + ('0' + $scope.passengers[i].birth.date).slice(-2);
 
                 // passport expiry date
                 $scope.passengers[i].passport.expire.full = $scope.passengers[i].passport.expire.year + '/' + ('0'
-                    + (parseInt($scope.passengers[i].passport.expire.month) + 1)).slice(-2) + '/'
+                    + (parseInt($scope.passengers[i].passport.expire.month))).slice(-2) + '/'
                     + ('0' + $scope.passengers[i].passport.expire.date).slice(-2);
 
                 // birthdate
@@ -726,19 +729,20 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         return dates;
     }
     $scope.months = [
-            { value: 0, name: 'Januari' },
-            { value: 1, name: 'Februari' },
-            { value: 2, name: 'Maret' },
-            { value: 3, name: 'April' },
-            { value: 4, name: 'Mei' },
-            { value: 5, name: 'Juni' },
-            { value: 6, name: 'Juli' },
-            { value: 7, name: 'Agustus' },
-            { value: 8, name: 'September' },
-            { value: 9, name: 'Oktober' },
-            { value: 10, name: 'November' },
-            { value: 11, name: 'Desember' },
-            { value: 12, name: 'Bulan'}
+            { value: 0, name: 'Bulan' },
+            { value: 1, name: 'Januari' },
+            { value: 2, name: 'Februari' },
+            { value: 3, name: 'Maret' },
+            { value: 4, name: 'April' },
+            { value: 5, name: 'Mei' },
+            { value: 6, name: 'Juni' },
+            { value: 7, name: 'Juli' },
+            { value: 8, name: 'Agustus' },
+            { value: 9, name: 'September' },
+            { value: 10, name: 'Oktober' },
+            { value: 11, name: 'November' },
+            { value: 12, name: 'Desember' }
+           
     ];
     $scope.generateYear = function (type) {
         var departureDate = new Date($scope.flightDetail.departureFullDate);

@@ -68,7 +68,10 @@
             Token: '@Model.Token',
             ExpiryDate: '@Model.ExpiryTime.ToString("o")',
             Trips: @Html.Raw(Model.Itinerary.Trips.Serialize()),
-            Price: @Model.Itinerary.OriginalAdultFare,
+            Price: @Model.Itinerary.NetTotalFare,
+            TotalAdultFare : @Model.Itinerary.NetAdultFare * @Model.Itinerary.AdultCount,
+            TotalChildFare: @Model.Itinerary.NetChildFare * @Model.Itinerary.ChildCount,
+            TotalInfantFare: @Model.Itinerary.NetInfantFare * @Model.Itinerary.InfantCount,
             // passenger
             Passenger: [@Model.Itinerary.AdultCount, @Model.Itinerary.ChildCount, @Model.Itinerary.InfantCount],
             PassengerName: ['Dewasa', 'Anak', 'Bayi'],
@@ -211,9 +214,9 @@
                                         </div>
                                         <div class="col-xs-4">
                                             <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" ng-change="ValidateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'" ng-if="Passenger.type == 'child'">{{month.name}}</option>
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'" ng-if="Passenger.type == 'infant'">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="Passenger.type == 'child'">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="Passenger.type == 'infant'">{{month.name}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
@@ -249,7 +252,7 @@
                                         <div class="col-xs-4">
                                             <select class="form-control" name="passenger_{{$index}}_expiryMonth" ng-model="Passenger.passport.expire.month"
                                                     ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '12'">{{month.name}}</option>
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'">{{month.name}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
@@ -299,7 +302,19 @@
                         <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
                         <div class="summary__body">
                             <dl>
-                                <dt>Total Tiket</dt>
+                                <dt>Tiket Dewasa x{{CheckoutConfig.Passenger[0]}}</dt>
+                                <dd><sup>Rp</sup> {{CheckoutConfig.TotalAdultFare | number}}</dd>
+                            </dl>
+                            <dl ng-if="CheckoutConfig.Passenger[1] > 0">
+                                <dt>Tiket Anak x{{CheckoutConfig.Passenger[1]}} </dt>
+                                <dd><sup>Rp</sup> {{CheckoutConfig.TotalChildFare | number}}</dd>
+                            </dl>
+                            <dl ng-if="CheckoutConfig.Passenger[2] > 0">
+                                <dt>Tiket Bayi x{{CheckoutConfig.Passenger[2]}} </dt>
+                                <dd><sup>Rp</sup> {{CheckoutConfig.TotalInfantFare | number}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>Total</dt>
                                 <dd><sup>Rp</sup> {{CheckoutConfig.Price | number}}</dd>
                             </dl>
                         </div><!-- .summary__body -->
@@ -343,7 +358,7 @@
                                     </dl>
                                     <dl ng-if="CheckoutConfig.BirthDateRequired">
                                         <dt>Tanggal Lahir</dt>
-                                        <dd>{{Passenger.birth.date}} {{getMonth(parseInt(Passenger.birth.month)+1)}} {{Passenger.birth.year}}</dd>
+                                        <dd>{{Passenger.birth.date}} {{getMonth(parseInt(Passenger.birth.month))}} {{Passenger.birth.year}}</dd>
                                     </dl>
                                     <dl ng-if="CheckoutConfig.PassportRequired">
                                         <dt>No. Paspor</dt>
@@ -351,7 +366,7 @@
                                     </dl>
                                     <dl ng-if="CheckoutConfig.PassportRequired">
                                         <dt>Tgl. Kadaluarsa Paspor</dt>
-                                        <dd>{{Passenger.passport.expire.date}} {{getMonth(parseInt(Passenger.passport.expire.month)+1)}} {{Passenger.passport.expire.year}}</dd>
+                                        <dd>{{Passenger.passport.expire.date}} {{getMonth(parseInt(Passenger.passport.expire.month))}} {{Passenger.passport.expire.year}}</dd>
                                     </dl>
 
                                 </li>
