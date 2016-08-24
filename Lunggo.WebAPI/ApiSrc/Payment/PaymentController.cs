@@ -97,5 +97,23 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/payment/checkbindiscount")]
+        public ApiResponseBase CheckBinDiscount()
+        {
+            try
+            {
+                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<CheckBinDiscountApiRequest>();
+                var apiResponse = PaymentLogic.CheckBinDiscount(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
     }
 }
