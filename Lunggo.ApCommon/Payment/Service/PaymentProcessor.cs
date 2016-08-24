@@ -54,13 +54,17 @@ namespace Lunggo.ApCommon.Payment.Service
                 paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
             }
 
-            var binDiscount = CampaignService.GetInstance().CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, discountCode);
-            if (binDiscount != null)
+            if (paymentDetails.Method == PaymentMethod.CreditCard)
             {
-                paymentDetails.FinalPriceIdr -= binDiscount.Amount;
-                paymentDetails.DiscountNominal += binDiscount.Amount;
+                var binDiscount = CampaignService.GetInstance()
+                    .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, discountCode);
+                if (binDiscount != null)
+                {
+                    paymentDetails.FinalPriceIdr -= binDiscount.Amount;
+                    paymentDetails.DiscountNominal += binDiscount.Amount;
+                }
             }
-            
+
             var transferFee = GetTransferFeeFromCache(rsvNo);
             if (transferFee == 0M)
                 return paymentDetails;
@@ -121,8 +125,6 @@ namespace Lunggo.ApCommon.Payment.Service
             else if (method == PaymentMethod.CreditCard || method == PaymentMethod.VirtualAccount || method == PaymentMethod.MandiriClickPay || method == PaymentMethod.CimbClicks || method == PaymentMethod.MandiriBillPayment)
             {
                 var paymentResponse = SubmitPayment(paymentDetails, transactionDetails, itemDetails, method);
-                paymentDetails.Status = PaymentStatus.Pending;
-                paymentDetails.ExternalId = paymentResponse.ExternalId;
                 if (method == PaymentMethod.VirtualAccount)
                 {
                     paymentDetails.TransferAccount = paymentResponse.TransferAccount;

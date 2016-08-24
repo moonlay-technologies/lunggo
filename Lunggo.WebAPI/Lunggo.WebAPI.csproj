@@ -338,6 +338,7 @@
     <None Include="Properties\PublishProfiles\travorama-dv1-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv1-api %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv1-api.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-api %2810%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api %287%29.pubxml" />
@@ -375,6 +376,7 @@
     <None Include="Properties\PublishProfiles\travorama-dvapp-api__staging %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dvapp-api__staging %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dvapp-api__staging %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dvapp-api__staging %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dvapp-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging.pubxml" />
