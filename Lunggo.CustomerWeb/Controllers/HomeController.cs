@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.WebPages;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Error;
+using Lunggo.ApCommon.Payment.Constant;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -75,14 +76,16 @@ namespace Lunggo.CustomerWeb.Controllers
 
             if (displayReservation != null)
             {
-                var passengerLastName = displayReservation.Passengers.Where(x => x.Name.ToLower() == lastName.ToLower());
+                //var passengerLastName = displayReservation.Passengers.Where(x => x.Name.ToLower() == lastName.ToLower());
+                var passengerLastName = displayReservation.Passengers.Where(x => x.Name.ToLower().Contains(lastName.ToLower()));
                 if (passengerLastName.Any())
                 {
+                    TempData["AllowThisReservationCheck"] = rsvNo;
                     var rsvNoSet = new
                     {
                         RsvNo = displayReservation.RsvNo
                     };
-                    TempData["AllowThisReservationCheck"] = rsvNo;
+
                     return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", rsvNoSet);
                 }
             }

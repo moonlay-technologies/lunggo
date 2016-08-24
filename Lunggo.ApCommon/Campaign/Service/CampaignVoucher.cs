@@ -153,6 +153,10 @@ namespace Lunggo.ApCommon.Campaign.Service
             response.TotalDiscount = Math.Floor(response.TotalDiscount);
 
             response.DiscountedPrice = response.OriginalPrice - response.TotalDiscount;
+            if (response.DiscountedPrice < 50000)
+            {
+                response.DiscountedPrice = 50000M;
+            }
         }
         private VoucherStatus VoucherDecrement(string voucherCode)
         {
