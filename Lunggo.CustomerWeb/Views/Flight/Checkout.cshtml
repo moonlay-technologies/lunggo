@@ -80,14 +80,17 @@
         // passenger number
         var adultPassenger = @Model.Itinerary.AdultCount;
         var adultFare = @Model.Itinerary.NetAdultFare;
+        var totalAdultFare = adultPassenger * adultFare;
         var adultTypeName = 'Dewasa';
 
         var childPassenger = @Model.Itinerary.ChildCount;
         var childFare = @Model.Itinerary.NetChildFare;
+        var totalChildFare = childPassenger * childFare;
         var childTypeName = 'Anak';
 
         var infantPassenger = @Model.Itinerary.InfantCount;
         var infantFare = @Model.Itinerary.NetInfantFare;
+        var totalInfantFare = infantPassenger * infantFare;
         var infantTypeName = 'Bayi';
         //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
         // passport or id requirement
@@ -585,15 +588,15 @@
                                     <div class="widget-content">
                                         <dl>
                                             <dt>Tiket Dewasa x{{adultCount}}</dt>
-                                            <dd>Rp {{adultFare * adultPassenger | number:0}}</dd>
+                                            <dd>Rp {{totalAdultFare | number:0}}</dd>
                                         </dl>
                                         <dl ng-if="childCount > 0">
                                             <dt>Tiket Anak x{{childCount}}</dt>
-                                            <dd>Rp {{childFare * childPassenger | number:0}}</dd>
+                                            <dd>Rp {{totalChildFare | number:0}}</dd>
                                         </dl>
                                         <dl ng-if="infantCount > 0">
                                             <dt>Tiket Bayi x{{infantCount}}</dt>
-                                            <dd>Rp {{infantFare * infantPassenger | number:0}}</dd>
+                                            <dd>Rp {{totalInfantFare | number:0}}</dd>
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>

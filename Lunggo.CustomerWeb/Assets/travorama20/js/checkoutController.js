@@ -54,7 +54,9 @@ app.controller('checkoutController', [
         $scope.childFare = childFare;
         $scope.infantCount = infantPassenger;
         $scope.infantFare = infantFare;
-
+        $scope.totalAdultFare = totalAdultFare;
+        $scope.totalChildFare = totalChildFare;
+        $scope.totalInfantFare = totalInfantFare;
         $scope.language = langCode;
         $scope.token = token;
         $scope.trips = trips;
