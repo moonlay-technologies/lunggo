@@ -116,12 +116,9 @@
 
         <div ng-app="travorama" ng-controller="paymentController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
             <section class="checkout-content">
-
                 <div class="container">
-
                     <div class="row">
-
-                        <div class="col-sm-8">
+                        <div class="col-left">
                             <!-- ******************** -->
                             <div class="content-step" id="step-4">
                                 <h3><b>METODE</b> PEMBAYARAN</h3>
@@ -324,24 +321,24 @@
                                                 <label class="control-label">Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></label>
                                                 <div class="form-mandiri-payment">
                                                     <ul class="form-row clearfix">
-                                                        <li class="col-left">APPLI</li>
-                                                        <li class="col-middle">:</li>
-                                                        <li class="col-right">3</li>
+                                                        <li class="col-sm-left">APPLI</li>
+                                                        <li class="col-sm-middle">:</li>
+                                                        <li class="col-sm-right">3</li>
                                                     </ul>
                                                     <ul class="form-row clearfix">
-                                                        <li class="col-left">10 Digit Terakhir Nomor Kartu Debit (Input 1)</li>
-                                                        <li class="col-middle">:</li>
-                                                        <li class="col-right">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
+                                                        <li class="col-sm-left">10 Digit Terakhir Nomor Kartu Debit (Input 1)</li>
+                                                        <li class="col-sm-middle">:</li>
+                                                        <li class="col-sm-right">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
                                                     </ul>
                                                     <ul class="form-row clearfix">
-                                                        <li class="col-left">Jumlah Transaksi</li>
-                                                        <li class="col-middle">:</li>
-                                                        <li class="col-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</li>
+                                                        <li class="col-sm-left">Jumlah Transaksi</li>
+                                                        <li class="col-sm-middle">:</li>
+                                                        <li class="col-sm-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</li>
                                                     </ul>
                                                     <ul class="form-row clearfix">
-                                                        <li class="col-left">5 Digit Terakhir Nomor Transaksi (Input 2)</li>
-                                                        <li class="col-middle">:</li>
-                                                        <li class="col-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
+                                                        <li class="col-sm-left">5 Digit Terakhir Nomor Transaksi (Input 2)</li>
+                                                        <li class="col-sm-middle">:</li>
+                                                        <li class="col-sm-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -463,7 +460,7 @@
 
 
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-right">
 
                             <div class="widget-container">
                                 <div class="widget price-detail">
@@ -603,11 +600,8 @@
                             </div><!-- .widget-container -->
 
                         </div>
-
                     </div>
-
                 </div>
-
             </section><!-- .checkout-content -->
 
             <div class="page-overlay flight-expired" ng-show="expired">
