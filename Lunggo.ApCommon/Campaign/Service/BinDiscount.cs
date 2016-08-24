@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             {
                 Amount = 100,
                 Currency = new Currency("IDR"),
-                DisplayName = pocer yey
+                DisplayName = "pocer yey"
             };
         }
     }
