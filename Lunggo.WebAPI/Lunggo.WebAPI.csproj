@@ -292,10 +292,13 @@
     <Compile Include="ApiSrc\Notification\Model\DeleteRegistrationApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\Model\UpdateRegistrationApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\NotificationController.cs" />
+    <Compile Include="ApiSrc\Payment\Logic\CheckBinDiscountLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckPaymentLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetPaymentMethodsLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\PayLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetTransferFeeLogic.cs" />
+    <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiRequest.cs" />
+    <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\GetMethodsApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\PayApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\PayApiRequest.cs" />
