@@ -1114,7 +1114,9 @@
     <Content Include="Assets\script\tv-common-300004.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDir.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
-    <Content Include="Assets\travorama20\css\travorama20.css" />
+    <Content Include="Assets\travorama20\css\travorama20.css">
+      <DependentUpon>travorama20.scss</DependentUpon>
+    </Content>
     <Content Include="Assets\travorama20\css\travorama20.min.css" />
     <Content Include="Assets\travorama20\css\travorama20.scss" />
     <Content Include="Assets\travorama20\css\_footer.scss" />
