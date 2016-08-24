@@ -72,6 +72,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Checkout(string token)
         {
             var itin = FlightService.GetInstance().GetItineraryForDisplay(token);
+            
             if (itin != null)
             {
                 if (TempData["FlightCheckoutOrBookingError"] != null)
