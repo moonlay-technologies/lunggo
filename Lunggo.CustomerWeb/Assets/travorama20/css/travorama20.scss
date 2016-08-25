@@ -468,10 +468,50 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
         }
     }
 }
-
-
 .clearer {
     clear:both ;
+}
+
+/*ACCORDION*/
+.accordion-wrapper { 
+    .accordion-title {
+        background-color: #35b6e7;
+        color: #fff;
+        cursor: pointer;
+        padding: 7px 15px;
+        width: 100%;
+        font-size: 13px;
+        font-weight: 600;
+        &.active:after {content: "\2796"}
+        &:after {
+            content: '\02795';
+            font-size: 13px;
+            color: #fff;
+            float: right;
+            margin-left: 5px;
+        }
+    }
+    .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        line-height: 16px;
+        margin-bottom: 5px;
+        &.show {
+            max-height: 100%;
+            padding: 15px 20px;
+            border: 1px solid #e3e3e3;
+            background: #fff;
+            &>ul {
+                list-style-type: none;
+                padding: 0;
+                &>li {margin-bottom: 15px;}
+            }
+            &>ol {
+                padding: 0 15px;
+                &>li {margin-bottom: 10px;}
+            }
+        }
+    }
 }
 
 /*--------------------*/

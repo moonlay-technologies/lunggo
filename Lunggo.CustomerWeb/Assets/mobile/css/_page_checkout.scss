@@ -176,6 +176,18 @@
                 }
             }
         }
+        .transfer-instruction {font-size: 12px;
+            ol {
+                margin-left:5px;
+                padding-left:5px;
+                margin-top:5px;
+                li.order-list {
+                    margin-bottom:5px; 
+                    margin-left:5px;
+                    padding-left:0;
+                }
+            }
+        }
     }
     // countdown
     .countdown {
