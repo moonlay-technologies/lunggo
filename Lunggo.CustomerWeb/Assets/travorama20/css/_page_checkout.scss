@@ -7,32 +7,35 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
 // page checkout
 .page-checkout {
-    //General
-    .form-group {margin-bottom: 20px;}
-    label.control-label {
-        font-weight: 400;
-        margin-bottom: 10px;
-    }
-    .checkout-content { margin-bottom: 45px;
-        h3 {margin: 25px 0 15px; font-size: 15px;}
-        .col-left, .col-right {float: left;}
-        .col-left {width: 66.66667%;}
-        .col-right {
-            width: 33.33333%; 
-            padding-left: 25px;
-        }
-        &>.container {max-width: none;}
-    }
-
     //TnC popup
     .tnc-popup {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7);display: block;
-        .popup {width:480px; height:270px; background:#fff; background-repeat: no-repeat;position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
-            .popup-container {padding: 20px;
-                .popup-title {
-                    color: #15b1e4;
-                    font-size:14px;
+        .popup {
+            width:480px; 
+            position:absolute; 
+            margin:auto; 
+            top:50%; 
+            left:50%; 
+            overflow:hidden;
+            @include translate(-50%, -50%);
+            .popup-container {
+                padding: 25px;
+                background: #ffffff;
+                @include border-radius(5px);
+                .popup-header {
                     text-align: center;
-                    margin-bottom: 15px;
+                    margin-bottom: 35px;
+                    span.popup-title {
+                        color: #15b1e4;
+                        font-size:16px;
+                        font-weight: 700;
+                         &.stripe {
+                            background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;
+                            width: 280px;
+                            height: 14px;
+                            padding-bottom: 15px;
+                            background-size: 70%;
+                        }
+                    }
                 }
                 .popup-list {
                     margin-bottom: 40px; 
@@ -63,19 +66,6 @@ file : /Assets/travorama20/css/_page_checkout.scss
         .col-sm-middle {width: 2%;}
         .col-sm-right {width: 48%;}
     }
-
-    //Form
-    .passenger-detail .passenger-form, .content-step .flight-detail, .buyer-review, .passenger-review {margin-bottom: 25px;}
-    .passenger-detail .passenger-form, .flight-detail, .buyer-review, .passenger-review {
-        header {
-            background: #1daee4;
-            color: #fff;
-            padding: 7px 15px;
-            font-size: 13px;
-            font-weight: 600;
-            position: relative;
-        }
-    }
     
     // step button
     .step-button {
@@ -84,6 +74,36 @@ file : /Assets/travorama20/css/_page_checkout.scss
             width: 200px;
             &.btn-grey {margin-right: 10px;}
         }
+    }
+}
+
+//General
+.form-group {margin-bottom: 20px;}
+label.control-label {
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+.checkout-content, .confirmation-content { margin-bottom: 45px;
+    h3 {margin: 25px 0 15px; font-size: 15px;}
+    .col-left, .col-right {float: left;}
+    .col-left {width: 66.66667%;}
+    .col-right {
+        width: 33.33333%; 
+        padding-left: 25px;
+    }
+    &>.container {max-width: none;}
+}
+
+//Form
+.passenger-detail .passenger-form, .content-step .flight-detail, .buyer-review, .passenger-review {margin-bottom: 25px;}
+.passenger-detail .passenger-form, .flight-detail, .buyer-review, .passenger-review, .instruction, .transfer-instruction {
+    header {
+        background: #1daee4;
+        color: #fff;
+        padding: 7px 15px;
+        font-size: 13px;
+        font-weight: 600;
+        position: relative;
     }
 }
 
@@ -371,13 +391,18 @@ file : /Assets/travorama20/css/_page_checkout.scss
 // **********
 // page confirmation
 .page-confirmation {
-    .site-content {padding:24px 0;}
     .confirmation-content {
         .instruction {
-            header {background:$color-main-blue; color:#fff; padding:6px 12px; margin-bottom:12px;}
-            .text {padding-left:100px; background:url(/Assets/images/exclamation-mark.png) top left no-repeat; min-height:80px;
-                p+p {margin-top:12px; border-top:2px dashed $color-main-blue; padding-top:12px;}
+            .pesanan-container {
+                background: url(/Assets/images/exclamation-mark.png) top left no-repeat;
+                margin: 12px;
+                .text {
+                    max-width: 440px;
+                    float: right;
+                    p+p {margin-top:12px; border-top:2px dashed $color-main-blue; padding-top:12px;}
+                }
             }
+            
             .bank-detail {background:#cdf1ff; padding:12px;
                 .bank {
                     dl {margin-bottom:4px;
@@ -388,7 +413,16 @@ file : /Assets/travorama20/css/_page_checkout.scss
                 }
             }
             .transfer-instruction{
-                .order-list{font-size:12px;}
+                ol {
+                    margin-left:5px;
+                    padding-left:5px;
+                    margin-top:5px;
+                    li.order-list {
+                        margin-bottom:5px; 
+                        margin-left:5px;
+                        padding-left:0;
+                    }
+                }
             }
             .confirmation-order {background:#f4f4f4;padding:12px;
                 .confirm-order-detail {background:#f4f4f4;margin-top:0px;padding-top:0px;
@@ -414,6 +448,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
                     }
                 }
             }
+            .btn-detail-penerbangan {margin-top: 25px;}
+            .instruction-accordion {margin: 10px 0;}
         }
     }
     //confirmation-form {border-top:$border-default; margin-top:24px;
@@ -494,45 +530,79 @@ file : /Assets/travorama20/css/_page_checkout.scss
                     }    
                 }
                 
-                .order {
-                    .flight {padding-left:36px; position:relative;
-                        .col-xs-9 {font-weight:bold;}
-                        img {height:36px; margin-right:24px;}
-                        span {font-weight:bold; color:$color-main-blue;}
-                        &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%; background-repeat:no-repeat; border:2px solid $color-main-blue;}
-                        // departure flight
-                        &.departure {}
-                        }
-                        // return flight
-                        &.return {
-                            &:before {background-position:-16px;}
-                        }
+            .order {
+                .flight {padding-left:36px; position:relative;
+                    .col-xs-9 {font-weight:bold;}
+                    img {height:36px; margin-right:24px;}
+                    span {font-weight:bold; color:$color-main-blue;}
+                    &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%; background-repeat:no-repeat; border:2px solid $color-main-blue;}
+                    // departure flight
+                    &.departure {}
+                    }
+                    // return flight
+                    &.return {
+                        &:before {background-position:-16px;}
                     }
                 }
             }
-            .order-detail-right {background:#e9e7e8; padding:12px 24px; height:100%; position:absolute; right:0;
-                .price-detail {margin-bottom:24px;
-                    dl {
-                        &:before, &:after {@include clearfix();}
-                        dt {width:55%; float:left; font-weight:normal; position:relative; padding-left:12px;
-                            &:before {content:""; width:6px; height:6px; position:absolute; top:3px; left:0; background:#ff6900;}
-                        }
-                        dd {width:45%; float:left; text-align:right; font-weight:bold;}
+        }
+        .order-detail-right {background:#e9e7e8; padding:12px 24px; height:100%; position:absolute; right:0;
+            .price-detail {margin-bottom:24px;
+                dl {
+                    &:before, &:after {@include clearfix();}
+                    dt {width:55%; float:left; font-weight:normal; position:relative; padding-left:12px;
+                        &:before {content:""; width:6px; height:6px; position:absolute; top:3px; left:0; background:#ff6900;}
                     }
-                    dl.total-price {border-top:$border-default; padding-top:12px;
-                        dt {width:40%;
-                            &:before {content:""; width:0; height:0;}
-                        }
-                        dd {width:60%; color:#ff6900; font-weight:bold; font-size:16px;}
-                    }
+                    dd {width:45%; float:left; text-align:right; font-weight:bold;}
                 }
-                .payment-detail {
-                    h5 {color:$color-main-blue; font-weight:bold;}
+                dl.total-price {border-top:$border-default; padding-top:12px;
+                    dt {width:40%;
+                        &:before {content:""; width:0; height:0;}
+                    }
+                    dd {width:60%; color:#ff6900; font-weight:bold; font-size:16px;}
                 }
             }
+            .payment-detail {
+                h5 {color:$color-main-blue; font-weight:bold;}
+            }
+        }
 
+    }
+    .bookfailed-popup .overlay-content {
+        .popup-container {
+            max-width: 280px;
+            float: right;
+            margin-top: 60px;
+            padding-right: 10px;
+            background: url("/Assets/images/travorama-logo-color.png");
+            background-repeat: no-repeat;
+            background-size: 30%;
+            .popup-header {margin: 30px 0;
+                span.popup-title {
+                    color: #15b1e4;
+                    font-size: 20px;
+                    font-weight: 700;
+                    &.stripe {
+                        background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;
+                        width: 280px;
+                        height: 14px;
+                        padding-bottom: 15px;
+                        background-size: 100%;
+                    }
+                } 
+            }
+            .popup-desc {
+                font-size:13px;
+                color: #000;
+                span.blue-txt {color: #15b1e4;}
+            }
+            .popup-btn {
+                padding: 25px;
+                float: right;
+            }
         }
     }
+}
 
 // *****
 // page overlay

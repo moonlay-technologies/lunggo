@@ -292,6 +292,9 @@
     <Content Include="Assets\bootstrap\bootstrap.min.css">
       <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
+    <Content Include="Assets\css\application.css">
+      <DependentUpon>application.scss</DependentUpon>
+    </Content>
     <Content Include="Assets\css\application.scss" />
     <Content Include="Assets\css\bootstrap.min.css" />
     <Content Include="Assets\css\eticket.css">
@@ -2723,6 +2726,7 @@
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Assets\images\NewFolder1\" />
     <Folder Include="Assets\travorama20\fonts\" />
+    <Folder Include="Assets\travorama20\images\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>
