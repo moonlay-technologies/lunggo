@@ -80,7 +80,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
 
                         if (displayReservation.Payment.Method == PaymentMethod.BankTransfer || displayReservation.Payment.Method == PaymentMethod.VirtualAccount)
                         {
-                            return RedirectToAction("Confirmation", "Flight", rsvNo); // jika bank transfer & VA
+                            return RedirectToAction("Confirmation", "Flight", new { rsvNo = rsvNo }); // jika bank transfer & VA
                         }
                         else if (displayReservation.Payment.Method == PaymentMethod.CimbClicks)
                         {
@@ -97,7 +97,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
                     case RsvDisplayStatus.VerifyingPayment:
                         if (displayReservation.Payment.Method == PaymentMethod.BankTransfer || displayReservation.Payment.Method == PaymentMethod.VirtualAccount)
                         {
-                            return RedirectToAction("Confirmation", "Flight", rsvNo); // jika bank transfer & VA
+                            return RedirectToAction("Confirmation", "Flight", new { rsvNo = rsvNo }); // jika bank transfer & VA
                         }
                         else if (displayReservation.Payment.Method == PaymentMethod.CimbClicks)
                         {
