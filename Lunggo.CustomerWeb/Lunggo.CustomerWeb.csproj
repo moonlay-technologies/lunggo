@@ -233,6 +233,7 @@
     <Compile Include="Areas\Api\Models\ResetPasswordViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
+    <Compile Include="Controllers\HelpSectionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobileTemplateController.cs" />
@@ -2673,6 +2674,9 @@
     <Content Include="Views\Template\EmailSubscribe.cshtml" />
     <Content Include="Views\Template\Confirmation.cshtml" />
     <Content Include="Views\Template\Confirmation.mobile.cshtml" />
+    <Content Include="Views\HelpSection\Contact-Us.cshtml" />
+    <Content Include="Views\HelpSection\FAQs.cshtml" />
+    <Content Include="Views\HelpSection\How-To.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

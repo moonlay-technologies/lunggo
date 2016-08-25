@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Flight.Service;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -20,6 +21,14 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Contact-Us")]
         public ActionResult ContactUs()
         {
+            return View();
+        }
+
+        [HttpPost]
+        [ActionName("Contact-Us")]
+        public ActionResult ContactUs(string name, string email, string message)
+        {
+            FlightService.GetInstance().ContactUs(name, email, message);
             return View();
         }
 

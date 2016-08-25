@@ -19,10 +19,10 @@
         var LoginMessage = '@ViewBag.Message';
     </script>
     <!-- angular controller -->
-    <script src="/Assets/mobile/js/AccountController.js"></script>
+    <script src="/Assets/travorama20/js/ContactController.js"></script>
 }
 
-<section>
+<section ng-app="travorama" ng-controller="ContactController">
     <div class="contactus-page">
         <div class="contact-map">
             <div class="container">
@@ -30,7 +30,7 @@
                 <div class="contact-list">
                     <div class="address">
                         <h4>Alamat: </h4>
-                        <p>Equity Tower 25th Floor, SCBD lot 9 Jl. Jenderal Sudirman kav.52-53 Jakarta 12190</p>
+                        <p>Equity Tower 25th Floor, SCBD lot 9 Jl. Jenderal Sudirman Kav.52-53 Jakarta 12190</p>
                     </div>
                     <div class="email">
                         <h4>E-mail: </h4>
@@ -54,28 +54,30 @@
                     <h1 class="text-center section-title stripe">Hubungi <span>Kami</span></h1>
                 </header><!-- .page__header -->
 
-                <form novalidate>
+                @using (Html.BeginForm("Contact-Us", "HelpSection", FormMethod.Post, new { @class = "form form-horizontal", role = "form", name = "checkForm" }))
+                {
+                    @Html.AntiForgeryToken()
                     <p>Kami menerima pertanyaan anda dengan senang hati. Silahkan kirim pesan melalui formulir di bawah ini.</p>
                     <div class="form-group">
                         <label class="control-label">Nama: </label>
-                        <input type="text" name="Name" value="" class="form-control"/>
+                        <input type="text" name="name" value="" class="form-control" ng-model="name"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label">E-mail: </label>
-                        <input type="email" name="Email" value="" class="form-control"/>
+                        <input type="email" name="email" value="" class="form-control" ng-model="email"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Pesan: </label>
-                        <textarea class="form-control"></textarea>
+                        <textarea class="form-control" name ="message" ng-model ="message"></textarea>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-yellow btn-block">KIRIM</button>
+                        <button class="btn btn-yellow btn-block" type="submit" ng-disabled="!send()">KIRIM</button>
                     </div>
-                </form>
+                }
                 <!-- if message sent start -->
                 @*<div>
-                    <p>Terima kasih telah menghubungi kami.</p>
-                </div>*@
+                        <p>Terima kasih telah menghubungi kami.</p>
+                    </div>*@
                 <!-- if message sent end -->
 
             </div>

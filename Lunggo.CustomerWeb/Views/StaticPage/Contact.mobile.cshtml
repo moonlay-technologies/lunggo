@@ -52,7 +52,7 @@
         @using (Html.BeginForm("Contact", "StaticPage", FormMethod.Post, new {@class = "form form-horizontal", role = "form", name = "checkForm"}))
         {
             @Html.AntiForgeryToken()
-            <p>Kami senang membantu Anda. Silakan kirimkan pesan melalui form di bawah ini.</p>
+            <p>Kami menerima pertanyaan anda dengan senang hati. Silakan kirimkan pesan melalui form di bawah ini.</p>
             <div class="form-group">
                 <label class="control-label">Nama : </label>
                 <input type="text" name="name" value="" class="form-control"  ng-model ="name"/>
@@ -70,9 +70,9 @@
             </div>
         }
         <!-- if message sent start -->
-        <div>
+        @*<div>
             <p>Terima kasih telah menghubungi kami.</p>
-        </div>
+        </div>*@
         <!-- if message sent end -->
 
     </div>
