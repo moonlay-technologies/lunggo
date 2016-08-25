@@ -129,6 +129,7 @@
     <None Include="Properties\PublishProfiles\travorama-dv2-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjobflightsearch %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjobflightsearch.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjobflightsearch.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>
