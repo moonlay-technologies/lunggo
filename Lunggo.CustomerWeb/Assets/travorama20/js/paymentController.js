@@ -300,12 +300,12 @@ app.controller('paymentController', [
                             $scope.PaymentData = '"method":"1","creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name + '"' + '}';
                             break;
                         case "MandiriClickPay": 
-                            var cardLast10No = $scope.MandiriClickPay.CardNo + "";
-                            cardLast10No = cardLast10No.substr(cardLast10No.length - 10);
+                            var cardNoLast10 = $scope.MandiriClickPay.CardNo + "";
+                            cardNoLast10 = cardNoLast10.substr(cardNoLast10.length - 10);
                             var rsvNoLast5 = $scope.rsvNo + "";
                             rsvNoLast5 = rsvNoLast5.substr(rsvNoLast5.length - 5);
                             var netprice = $scope.initialPrice - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode;
-                            $scope.PaymentData = '"method":"3","mandiriClickPay":' + '{' + ' "cardNo":"' + $scope.MandiriClickPay.CardNo + '","token":"' + $scope.MandiriClickPay.Token + '","cardLast10No":"' + cardLast10No + '","amount":"' + netprice + '","rsvNoLast5":"' + rsvNoLast5 + '"' + '}';
+                            $scope.PaymentData = '"method":"3","mandiriClickPay":' + '{' + ' "cardNo":"' + $scope.MandiriClickPay.CardNo + '","token":"' + $scope.MandiriClickPay.Token + '","cardNoLast10":"' + cardNoLast10 + '","amount":"' + netprice + '","rsvNoLast5":"' + rsvNoLast5 + '"' + '}';
                             break;
                         case "CimbClicks": 
                             $scope.PaymentData = '"method":"4","cimbClicks":' + '{' + ' "description":"Pembayaran melalui CimbClicks"' + '}';

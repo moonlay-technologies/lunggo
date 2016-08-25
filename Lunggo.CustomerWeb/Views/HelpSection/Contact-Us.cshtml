@@ -1,0 +1,86 @@
+﻿@{
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    ViewBag.Title = "Hubungi Kami";
+    ViewBag.BodyClass = "page page-contact contact-us";
+    ViewBag.SiteHeader = "header-contact-us";
+    ViewBag.AngularController = "ContactController";
+}
+@section AdditionalCSS{
+    <link rel="stylesheet" href="/Assets/travorama20/css/help_section.css">
+}
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+@section PageJS{
+    <script>
+        var LoginMessage = '@ViewBag.Message';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/ContactController.js"></script>
+}
+
+<section ng-app="travorama" ng-controller="ContactController">
+    <div class="contactus-page">
+        <div class="contact-map">
+            <div class="container">
+
+                <div class="contact-list">
+                    <div class="address">
+                        <h4>Alamat: </h4>
+                        <p>Equity Tower 25th Floor, SCBD lot 9 Jl. Jenderal Sudirman Kav.52-53 Jakarta 12190</p>
+                    </div>
+                    <div class="email">
+                        <h4>E-mail: </h4>
+                        <p><a href="mailto:cs@travorama.com">cs@travorama.com</a></p>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- .contact-map -->
+
+        <div class="contact-social">
+            <a href="https://www.facebook.com/travorama" class="facebook"></a>
+            <a href="https://twitter.com/travoramaid" class="twitter"></a>
+            <a href="https://www.instagram.com/travorama/" class="instagram"></a>
+        </div><!-- .contact-social -->
+
+        <div class="contact-form">
+            <div class="container">
+
+                <header class="page__header">
+                    <h1 class="text-center section-title stripe">Hubungi <span>Kami</span></h1>
+                </header><!-- .page__header -->
+
+                @using (Html.BeginForm("Contact-Us", "HelpSection", FormMethod.Post, new { @class = "form form-horizontal", role = "form", name = "checkForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <p>Kami menerima pertanyaan anda dengan senang hati. Silahkan kirim pesan melalui formulir di bawah ini.</p>
+                    <div class="form-group">
+                        <label class="control-label">Nama: </label>
+                        <input type="text" name="name" value="" class="form-control" ng-model="name"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">E-mail: </label>
+                        <input type="email" name="email" value="" class="form-control" ng-model="email"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Pesan: </label>
+                        <textarea class="form-control" name ="message" ng-model ="message"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-yellow btn-block" type="submit" ng-disabled="!send()">KIRIM</button>
+                    </div>
+                }
+                <!-- if message sent start -->
+                @*<div>
+                        <p>Terima kasih telah menghubungi kami.</p>
+                    </div>*@
+                <!-- if message sent end -->
+
+            </div>
+        </div><!-- .contact-form -->
+    </div>
+</section>

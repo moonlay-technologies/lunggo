@@ -120,6 +120,7 @@
     <Compile Include="Function\FlightEticketSlightDelayNotifEmail.cs" />
     <Compile Include="Function\FlightFailedVerificationCreditCardNotifEmail.cs" />
     <Compile Include="Function\FlightIssueFailedNotifEmail.cs" />
+    <Compile Include="Function\ContactUsEmail.cs" />
     <Compile Include="Function\FlightIssueSlightDelayNotifEmail.cs" />
     <Compile Include="Function\FlightSaySorryFailedIssueNotifEmail.cs" />
     <Compile Include="Function\RegisterSubscribeEmail.cs" />
