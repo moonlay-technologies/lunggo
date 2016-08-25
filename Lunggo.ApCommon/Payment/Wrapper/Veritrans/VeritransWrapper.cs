@@ -406,7 +406,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                 }
             }
             else
-                return PaymentStatus.Denied;
+                return PaymentStatus.Failed;
         }
     }
 }

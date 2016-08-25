@@ -27,11 +27,21 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 
         private static CheckBinDiscountResponse AssembleApiRspn(BinDiscount binDiscount)
         {
-            return new CheckBinDiscountResponse
+            if (binDiscount != null)
+                return new CheckBinDiscountResponse
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    DiscountAmount = binDiscount.Amount,
+                    DiscountName = binDiscount.DisplayName
+                };
+            else
             {
-               DiscountAmount = binDiscount.Amount,
-               DiscountName = binDiscount.DisplayName
-            };
+                return new CheckBinDiscountResponse
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    DiscountAmount = 0M
+                };
+            }
         }
     }
 }

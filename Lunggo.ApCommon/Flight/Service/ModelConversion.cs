@@ -73,7 +73,8 @@ namespace Lunggo.ApCommon.Flight.Service
             decimal? aOri, cOri, iOri, aNet, cNet, iNet;
             decimal tOri, tNet;
             var itinerary = itins[0];
-            itinerary.Price.OriginalIdr = itins.Sum(i => i.Price.OriginalIdr);
+            itinerary.Price.OriginalIdr = itins.Sum(itin => itin.Price.OriginalIdr);
+            itinerary.Price.Local = itins.Sum(itin => itin.Price.Local);
             CalculateFare(itinerary.Price,
                 itinerary.AdultCount, itinerary.ChildCount, itinerary.InfantCount,
                 itinerary.AdultPricePortion, itinerary.ChildPricePortion, itinerary.InfantPricePortion,
