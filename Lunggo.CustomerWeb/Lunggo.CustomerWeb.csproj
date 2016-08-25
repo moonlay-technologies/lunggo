@@ -922,7 +922,6 @@
     <Content Include="Assets\images\print-image.png" />
     <Content Include="Assets\images\quote-close.png" />
     <Content Include="Assets\images\quote-open.png" />
-    <Content Include="Assets\images\rapidSsl.jpg" />
     <Content Include="Assets\images\reason-2-icon.png" />
     <Content Include="Assets\images\reason-3-icon.png" />
     <Content Include="Assets\images\reason-4-icon.png" />
@@ -986,9 +985,6 @@
     <Content Include="Assets\images\user-icon.png" />
     <Content Include="Assets\images\user-login-bg.jpg" />
     <Content Include="Assets\images\user-register-bg.jpg" />
-    <Content Include="Assets\images\verisign-bg.jpg" />
-    <Content Include="Assets\images\verisign-pin.png" />
-    <Content Include="Assets\images\verisign.jpg" />
     <Content Include="Assets\images\verisign.png" />
     <Content Include="Assets\images\visa-logo.jpg" />
     <Content Include="Assets\images\warning-image.png" />
@@ -2728,6 +2724,7 @@
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Assets\images\NewFolder1\" />
     <Folder Include="Assets\travorama20\fonts\" />
+    <Folder Include="Assets\travorama20\images\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>
