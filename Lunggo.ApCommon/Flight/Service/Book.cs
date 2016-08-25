@@ -108,6 +108,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 : null;
             reservation.Payment = new PaymentDetails
             {
+                Status = PaymentStatus.Pending,
                 LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
                 OriginalPriceIdr = reservation.Itineraries.Sum(order => order.Price.FinalIdr),
                 TimeLimit = reservation.Itineraries.Min(order => order.TimeLimit.GetValueOrDefault()).AddMinutes(-30),
