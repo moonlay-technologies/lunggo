@@ -911,10 +911,9 @@ app.controller('authController', [
     }
 ]);// auth controller
 
-// Travorama Check Order Controller
+// Travorama Register Controller
 app.controller('registerController', [
     '$scope', '$http', function ($scope, $http) {
-
         $scope.pageLoaded = true;
         $scope.trial = 0;
         $scope.form = {
