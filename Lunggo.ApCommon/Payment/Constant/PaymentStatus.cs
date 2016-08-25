@@ -36,7 +36,7 @@
                 case PaymentStatus.Failed:
                     return "FAI";
                 default:
-                    return null;
+                    return "";
             }
         }
         internal static PaymentStatus Mnemonic(string paymentStatus)
