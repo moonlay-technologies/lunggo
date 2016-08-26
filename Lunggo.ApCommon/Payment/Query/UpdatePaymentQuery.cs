@@ -89,7 +89,7 @@ namespace Lunggo.ApCommon.Payment.Query
                 clauseBuilder.Append(
                         @"WHEN @StatusCd = 'EXP' THEN ");
                 clauseBuilder.Append(
-                            @"CASE WHEN StatusCd = 'PEN' ");
+                            @"CASE WHEN ((StatusCd = 'PEN') OR (StatusCd = 'VER') OR (StatusCd = 'CHA')) ");
                 clauseBuilder.Append(
                                 @"THEN @StatusCd ");
                 clauseBuilder.Append(

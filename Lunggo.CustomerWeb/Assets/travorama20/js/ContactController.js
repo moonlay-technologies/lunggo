@@ -11,8 +11,9 @@ app.controller('ContactController', ['$http', '$scope', '$location', function ($
     $scope.email = '';
     $scope.name = '';
     $scope.message = '';
-
     $scope.send = function() {
         return $scope.email.length != 0 && $scope.name.length != 0 && $scope.message.length != 0;
     }
+
+    
 }]);
