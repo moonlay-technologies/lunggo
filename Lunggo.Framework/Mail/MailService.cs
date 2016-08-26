@@ -29,5 +29,10 @@
         {
             Client.SendEmail(objectParam, mailModel, type);
         }
+
+        public void SendPlainEmail(MailModel mailModel, string content)
+        {
+            Client.SendPlainEmail(mailModel, content);
+        }
     }
 }
