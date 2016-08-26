@@ -401,6 +401,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     case "deny":
                     case "authorize":
                         return PaymentStatus.Denied;
+                    case "pending":
+                        return PaymentStatus.Pending;
                     default:
                         return PaymentStatus.Failed;
                 }
