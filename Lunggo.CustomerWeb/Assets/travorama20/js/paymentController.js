@@ -31,7 +31,9 @@ app.controller('paymentController', [
             Token: '',
             CardNo: ''
         };
-
+        $scope.PageConfig = {
+            ReturnUrl: "",
+        };
         $scope.msToTime = function (duration) {
 
             var milliseconds = parseInt((duration % 1000) / 100),
@@ -180,7 +182,9 @@ app.controller('paymentController', [
                 $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
             }
         };
-        
+
+        $scope.errorLog = '';
+        $scope.errorMessage = '';
         $scope.pay = {
             url: FlightPayConfig.Url,
             postData: '',
