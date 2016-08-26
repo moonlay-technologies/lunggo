@@ -29,6 +29,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult ContactUs(string name, string email, string message)
         {
             FlightService.GetInstance().ContactUs(name, email, message);
+            ViewBag.Message = "Terima kasih telah menghubungi kami. Kami akan menghubungi Anda dalam waktu yang dekat.";
             return View();
         }
 
