@@ -1,4 +1,6 @@
-﻿@{
+﻿@model string
+
+@{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Hubungi Kami";
     ViewBag.BodyClass = "page page-contact contact-us";
@@ -53,11 +55,17 @@
                 <header class="page__header">
                     <h1 class="text-center section-title stripe">Hubungi <span>Kami</span></h1>
                 </header><!-- .page__header -->
+                @if (ViewBag.Message != "")
+                {
+                    <div style="font-weight: bold">
+                        <p>@ViewBag.Message</p>
+                    </div>
+                }
 
                 @using (Html.BeginForm("Contact-Us", "HelpSection", FormMethod.Post, new { @class = "form form-horizontal", role = "form", name = "checkForm" }))
                 {
                     @Html.AntiForgeryToken()
-                    <p>Kami menerima pertanyaan anda dengan senang hati. Silahkan kirim pesan melalui formulir di bawah ini.</p>
+                    <p>Kami menerima pertanyaan Anda dengan senang hati. Silahkan kirim pesan melalui formulir di bawah ini.</p>
                     <div class="form-group">
                         <label class="control-label">Nama: </label>
                         <input type="text" name="name" value="" class="form-control" ng-model="name"/>
@@ -74,6 +82,8 @@
                         <button class="btn btn-yellow btn-block" type="submit" ng-disabled="!send()">KIRIM</button>
                     </div>
                 }
+                
+                <p>@Model</p>
                 <!-- if message sent start -->
                 @*<div>
                         <p>Terima kasih telah menghubungi kami.</p>

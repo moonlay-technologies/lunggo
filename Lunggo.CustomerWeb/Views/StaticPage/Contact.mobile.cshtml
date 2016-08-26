@@ -48,11 +48,19 @@
         <header class="page__header">
             <h1 class="text-center section-title stripe">Hubungi <span>Kami</span></h1>
         </header><!-- .page__header -->
+        
+        @if (ViewBag.Message != "")
+        {
+            <div style="font-weight: bold">
+                <p>@ViewBag.Message</p>
+            </div>
+        }
 
         @using (Html.BeginForm("Contact", "StaticPage", FormMethod.Post, new {@class = "form form-horizontal", role = "form", name = "checkForm"}))
         {
+            
             @Html.AntiForgeryToken()
-            <p>Kami menerima pertanyaan anda dengan senang hati. Silakan kirimkan pesan melalui form di bawah ini.</p>
+            <p>Kami menerima pertanyaan Anda dengan senang hati. Silakan kirimkan pesan melalui form di bawah ini.</p>
             <div class="form-group">
                 <label class="control-label">Nama : </label>
                 <input type="text" name="name" value="" class="form-control"  ng-model ="name"/>
@@ -69,11 +77,5 @@
                 <button class="btn btn-yellow btn-lg pull-right" type="submit" ng-disabled="!send()">KIRIM</button>
             </div>
         }
-        <!-- if message sent start -->
-        @*<div>
-            <p>Terima kasih telah menghubungi kami.</p>
-        </div>*@
-        <!-- if message sent end -->
-
     </div>
 </div><!-- .contact-form -->

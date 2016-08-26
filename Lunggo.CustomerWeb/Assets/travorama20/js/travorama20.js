@@ -533,6 +533,7 @@ function flightPageSearchFormFunctions() {
             //$('.form-flight-oneway').show();
             //$('.form-flight-return').hide();
             $('.form-flight-return').addClass('disabled');
+            
         }
     });
 
@@ -571,14 +572,30 @@ function flightPageSearchFormFunctions() {
     $('.search-location .location-recommend .tab-content a').click(function (evt) {
         evt.preventDefault();
         var locationCode = $(this).attr('data-code');
+        var locationCity = $(this).text();
         if ($('.search-location').attr('data-place') == 'origin') {
-            flightPageSearchFormParam.origin = locationCode;
-            flightPageSearchFormParam.originCity = $(this).text();
-            $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
-        } else {
-            flightPageSearchFormParam.destination = locationCode;
-            flightPageSearchFormParam.destinationCity = $(this).text();
-            $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+            if (locationCity != flightPageSearchFormParam.destinationCity) {
+                flightPageSearchFormParam.origin = locationCode;
+                flightPageSearchFormParam.originCity = $(this).text();
+                $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
+                $('.flight-submit-button').removeClass('disabled');
+            } else {
+                $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+                $('.flight-submit-button').addClass('disabled');
+            }
+
+        } else{
+            if (locationCity != flightPageSearchFormParam.originCity) {
+                flightPageSearchFormParam.destination = locationCode;
+                flightPageSearchFormParam.destinationCity = $(this).text();
+                $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+                $('.flight-submit-button').removeClass('disabled');
+            } else {
+                $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+                $('.flight-submit-button').addClass('disabled');
+            }
         }
         hideLocation();
     });
@@ -1224,13 +1241,29 @@ function flightFormSearchFunctions() {
         var locationCode = $(this).attr('data-code');
         var locationCity = $(this).text();
         if ($('.search-location').attr('data-place') == 'origin') {
-            FlightSearchConfig.flightForm.origin = locationCode;
-            FlightSearchConfig.flightForm.originCity = locationCity;
-            $('.form-flight-origin').val($(this).text() + ' ('+locationCode+')' );
+            if (locationCity != FlightSearchConfig.flightForm.destinationCity) {
+                FlightSearchConfig.flightForm.origin = locationCode;
+                FlightSearchConfig.flightForm.originCity = locationCity;
+                $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
+                $('.flight-submit-button').removeClass('disabled');
+            } else {
+                $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+                $('.flight-submit-button').addClass('disabled');
+            }
+            
         } else {
-            FlightSearchConfig.flightForm.destination = locationCode;
-            FlightSearchConfig.flightForm.destinationCity = locationCity;
-            $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+            if (locationCity != FlightSearchConfig.flightForm.originCity) {
+                FlightSearchConfig.flightForm.destination = locationCode;
+                FlightSearchConfig.flightForm.destinationCity = locationCity;
+                $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+                $('.flight-submit-button').removeClass('disabled');
+            } else {
+                $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+                $('.flight-submit-button').addClass('disabled');
+            }
+            
         }
         hideLocation();
     });
@@ -1324,14 +1357,28 @@ function flightFormSearchFunctions() {
     $('.autocomplete-result ul').on('click','li',function() {
         var locationCode = $(this).attr('data-code');
         var locationCity = $(this).attr('data-city');
-        if ( $('.search-location').attr('data-place') == 'origin') {
-            FlightSearchConfig.flightForm.origin = locationCode;
-            FlightSearchConfig.flightForm.originCity = locationCity;
-            $('.form-flight-origin').val(locationCity + ' (' + locationCode + ')');
+        if ($('.search-location').attr('data-place') == 'origin') {
+            if (locationCity != FlightSearchConfig.flightForm.destinationCity) {
+                FlightSearchConfig.flightForm.origin = locationCode;
+                FlightSearchConfig.flightForm.originCity = locationCity;
+                $('.form-flight-origin').val(locationCity + ' (' + locationCode + ')');
+                $('.flight-submit-button').removeClass('disabled');
+            } else {
+                $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+                $('.flight-submit-button').addClass('disabled');
+            }
         } else {
-            FlightSearchConfig.flightForm.destination = locationCode;
-            FlightSearchConfig.flightForm.destinationCity = locationCity;
-            $('.form-flight-destination').val(locationCity + ' (' + locationCode + ')');
+            if (locationCity != FlightSearchConfig.flightForm.originCity) {
+                FlightSearchConfig.flightForm.destination = locationCode;
+                FlightSearchConfig.flightForm.destinationCity = locationCity;
+                $('.form-flight-destination').val(locationCity + ' (' + locationCode + ')');
+                $('.flight-submit-button').removeClass('disabled');
+            } else {
+                $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+                $('.flight-submit-button').addClass('disabled');
+            }
         }
         hideLocation();
         console.log("BERHASIL");

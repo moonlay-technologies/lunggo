@@ -23,7 +23,7 @@ if (typeof (angular) == 'object') {
             PopularDestination : {
                 Popular: [
                     { Name: 'Soekarno Hatta Intl.', City: 'Jakarta', Country: 'Indonesia', Code: 'CGK' },
-                    { Name: 'Ngurah Rai Intl.', City: 'Denpasar, Bali', Country: 'Indonesia', Code: 'DPS' },
+                    { Name: 'Ngurah Rai Intl.', City: 'Denpasar', Country: 'Indonesia', Code: 'DPS' },
                     { Name: 'Juanda', City: 'Surabaya', Country: 'Indonesia', Code: 'SUB' },
                     { Name: 'Kuala Namu Intl.', City: 'Medan', Country: 'Indonesia', Code: 'KNO' },
                     { Name: 'Sultan Hasanudin', City: 'Makassar', Country: 'Indonesia', Code: 'UPG' },
@@ -691,8 +691,18 @@ if (typeof (angular) == 'object') {
                 },
                 SetAirport: function (target, airport) {
                     if (target == 'departure') {
+                        if ($rootScope.FlightSearchForm.AirportDestination.City == airport.City) {
+                            $('.btnSubmit').addClass('disabled');
+                        } else {
+                            $('.btnSubmit').removeClass('disabled');
+                        }
                         $rootScope.FlightSearchForm.AirportOrigin = airport;
                     } else {
+                        if ($rootScope.FlightSearchForm.AirportOrigin.City == airport.City) {
+                            $('.btnSubmit').addClass('disabled');
+                        } else {
+                            $('.btnSubmit').removeClass('disabled');
+                        }
                         $rootScope.FlightSearchForm.AirportDestination = airport;
                     }
                     console.log(airport);
@@ -805,8 +815,18 @@ if (typeof (angular) == 'object') {
             var locationName = $(this).find('.airport__name').html();
             var airport = { City: locationCity, Code: locationCode, Country: locationCountry, Name: locationName };
             if ($rootScope.FlightSearchForm.AutoComplete.Target == 'departure') {
+                if ($rootScope.FlightSearchForm.AirportDestination.City == airport.City) {
+                    $('.btnSubmit').addClass('disabled');
+                } else {
+                    $('.btnSubmit').removeClass('disabled');
+                }
                 $rootScope.FlightSearchForm.AirportOrigin = airport;
             } else {
+                if ($rootScope.FlightSearchForm.AirportOrigin.City == airport.City) {
+                    $('.btnSubmit').addClass('disabled');
+                } else {
+                    $('.btnSubmit').removeClass('disabled');
+                }
                 $rootScope.FlightSearchForm.AirportDestination = airport;
             }
             //$rootScope.PageConfig.SetOverlay();
@@ -827,6 +847,16 @@ if (typeof (angular) == 'object') {
                         '</div>' +
                       '</li>'
                 );
+            }
+        }
+
+        $rootScope.initAirport = function(target, airport, city) {
+            if (target == 'departure') {
+                $rootScope.FlightSearchForm.AirportOrigin.Code = airport;
+                $rootScope.FlightSearchForm.AirportOrigin.City = city;
+            } else {
+                $rootScope.FlightSearchForm.AirportDestination.Code = airport;
+                $rootScope.FlightSearchForm.AirportDestination.City = city;
             }
         }
 

@@ -129,7 +129,7 @@
                 <b>{{FlightConfig[0].FlightRequest.Trips[0].OriginCity}}</b> ke <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationCity}}</b> - {{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'EEE, dd MMM yyyy'}}
             </p>
         </div>
-        <a ng-click="PageConfig.SetOverlay('flight-form')" class="summary-right"><span>GANTI</span></a>
+        <a ng-click="PageConfig.SetOverlay('flight-form');" class="summary-right"><span>GANTI</span></a>
     </section><!-- .flight-summary -->
 
     <section class="flight-sort-filter" ng-show="FlightConfig[0].FlightRequest.Progress == 100">
@@ -461,8 +461,7 @@
                         <div class="col-xs-5">
                             <div class="form-group form__origin">
                                 <div class="title-destination">Asal</div>
-                                <p class="form-control" ng-init="FlightSearchForm.AirportOrigin.Code = FlightConfig[0].FlightRequest.Trips[0].OriginAirport;
-                                   FlightSearchForm.AirportOrigin.City = FlightConfig[0].FlightRequest.Trips[0].OriginCity; "
+                                <p class="form-control" ng-init="initAirport('departure', FlightConfig[0].FlightRequest.Trips[0].OriginAirport, FlightConfig[0].FlightRequest.Trips[0].OriginCity)"
                                    ng-click="FlightSearchForm.AutoComplete.Reset('departure'); PageConfig.SetOverlay('airport-select')">
                                     <span class="code-airport">{{FlightSearchForm.AirportOrigin.Code}}</span><br /><span class="city">{{FlightSearchForm.AirportOrigin.City}}</span>
                                 </p>
@@ -471,7 +470,8 @@
                         <div class="col-xs-2">
                             <div class="flip-container">
                                 <a class="flip" href="#">
-                                    <span class="icon-flip" ng-click="temp = FlightSearchForm.AirportOrigin.Code; FlightSearchForm.AirportOrigin.Code = FlightSearchForm.AirportDestination.Code; FlightSearchForm.AirportDestination.Code = temp;
+                                    <span class="icon-flip"
+                                          ng-click="temp = FlightSearchForm.AirportOrigin.Code; FlightSearchForm.AirportOrigin.Code = FlightSearchForm.AirportDestination.Code; FlightSearchForm.AirportDestination.Code = temp;
                                                        temp = FlightSearchForm.AirportOrigin.City; FlightSearchForm.AirportOrigin.City = FlightSearchForm.AirportDestination.City; FlightSearchForm.AirportDestination.City= temp;"></span>
                                 </a>
                             </div>
@@ -479,8 +479,10 @@
                         <div class="col-xs-5">
                             <div class="form-group form__destination">
                                 <div class="title-destination">Tujuan</div>
-                                <p class="form-control" ng-init="FlightSearchForm.AirportDestination.Code = FlightConfig[0].FlightRequest.Trips[0].DestinationAirport;
-                                   FlightSearchForm.AirportOrigin.City = FlightConfig[0].FlightRequest.Trips[0].DestinationCity; "
+                                <p class="form-control"
+                                   ng-init="initAirport('return', FlightConfig[0].FlightRequest.Trips[0].DestinationAirport, FlightConfig[0].FlightRequest.Trips[0].DestinationCity)"
+                                   @*ng-init="FlightSearchForm.AirportDestination.Code = FlightConfig[0].FlightRequest.Trips[0].DestinationAirport;
+                                   FlightSearchForm.AirportOrigin.City = FlightConfig[0].FlightRequest.Trips[0].DestinationCity; "*@
                                    ng-click="FlightSearchForm.AutoComplete.Reset('return'); PageConfig.SetOverlay('airport-select')">
                                     <span class="code-airport">{{FlightSearchForm.AirportDestination.Code}}</span><br /><span class="city">{{FlightSearchForm.AirportDestination.City}}</span>
                                 </p>
@@ -535,7 +537,7 @@
                         </div>
                     </div>
                     <div class="form-group form__submit">
-                        <button class="btn btn-yellow btn-block btn-lg">CARI PENERBANGAN</button>
+                        <button class="btn btn-yellow btn-block btn-lg btnSubmit"> CARI PENERBANGAN</button>
                     </div>
                 </form><!-- .flight-form -->
             </div><!-- .form-wrapper -->

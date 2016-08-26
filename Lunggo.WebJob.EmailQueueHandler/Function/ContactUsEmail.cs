@@ -24,11 +24,11 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 Email = email,
                 Message = message
             };
-         
+         // { "cs@travorama.com" },
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
             {
-                RecipientList = new[] { "cs@travorama.com" },
+                RecipientList = new[] {"intan.yutami@travelmadezy.com"},
                 Subject = envPrefix + "[Travorama] 1 Person Contacted Us" ,
                 FromMail = email,
                 FromName = name

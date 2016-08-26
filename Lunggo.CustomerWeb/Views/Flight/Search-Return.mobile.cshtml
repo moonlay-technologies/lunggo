@@ -825,8 +825,8 @@
                             <div class="col-xs-5">
                                 <div class="form-group form__origin">
                                     <div class="title-destination">Asal</div>
-                                    <p class="form-control" ng-init="FlightSearchForm.AirportOrigin.Code = FlightConfig[0].FlightRequest.trips[0].OriginAirport;
-                                   FlightSearchForm.AirportOrigin.City = FlightConfig[0].FlightRequest.trips[0].OriginCity; " ng-click="FlightSearchForm.AutoComplete.Reset('departure'); PageConfig.SetOverlay('airport-select')">
+                                    <p class="form-control" ng-init="initAirport('departure', FlightConfig[0].FlightRequest.trips[0].OriginAirport, FlightConfig[0].FlightRequest.trips[0].OriginCity)" 
+                                       ng-click="FlightSearchForm.AutoComplete.Reset('departure'); PageConfig.SetOverlay('airport-select')">
                                         <span class="code-airport">{{FlightSearchForm.AirportOrigin.Code}}</span><br /><span class="city">{{FlightSearchForm.AirportOrigin.City}}</span>
                                     </p>
                                 </div>
@@ -842,8 +842,7 @@
                             <div class="col-xs-5">
                                 <div class="form-group form__destination">
                                     <div class="title-destination">Tujuan</div>
-                                    <p class="form-control" ng-init="FlightSearchForm.AirportDestination.Code = FlightConfig[0].FlightRequest.trips[0].DestinationAirport;
-                                   FlightSearchForm.AirportDestination.City = FlightConfig[0].FlightRequest.trips[0].DestinationCity; " ng-click="FlightSearchForm.AutoComplete.Reset('return'); PageConfig.SetOverlay('airport-select')">
+                                    <p class="form-control" ng-init="initAirport('return', FlightConfig[0].FlightRequest.trips[0].DestinationAirport, FlightConfig[0].FlightRequest.trips[0].DestinationCity)" ng-click="FlightSearchForm.AutoComplete.Reset('return'); PageConfig.SetOverlay('airport-select')">
                                         <span class="code-airport">{{FlightSearchForm.AirportDestination.Code}}</span><br /><span class="city">{{FlightSearchForm.AirportDestination.City}}</span>
                                     </p>
                                 </div>
@@ -897,7 +896,7 @@
                             </div>
                         </div>
                         <div class="form-group form__submit">
-                            <button class="btn btn-yellow btn-block btn-lg">CARI PENERBANGAN</button>
+                            <button class="btn btn-yellow btn-block btn-lg btnSubmit">CARI PENERBANGAN</button>
                         </div>
                     </form><!-- .flight-form -->
                 </div><!-- .form-wrapper -->
@@ -1011,8 +1010,19 @@
                     </ul>
 
                 </div><!-- .autocomplete-preload -->
+            
+                <div class="autocomplete-loading">
+                    <h4 class="text-center text-loading">Mencari Bandara</h4>
+                </div>
 
-                <div class="autocomplete-loading" ng-show="FlightSearchForm.AutoComplete.Loading">
+                <div class="autocomplete-no-result">
+                    <h4 class="text-center">Hasil tidak ditemukan</h4>
+                </div>
+
+                <div class="autocomplete-result">
+                    <ul class="result" ng-click="PageConfig.SetOverlay('flight-form')"></ul>
+                </div>
+                @*<div class="autocomplete-loading" ng-show="FlightSearchForm.AutoComplete.Loading">
                     <h4>Mencari Bandara</h4>
                 </div><!-- .autocomplete-loading -->
 
@@ -1027,7 +1037,7 @@
                             </div>
                         </li>
                     </ul>
-                </div><!-- .autocomplete-result -->
+                </div><!-- .autocomplete-result -->*@
             </section><!-- .overlay__content -->
         </div><!-- .overlay--airport-select -->
         <!-- overlay date picker -->
