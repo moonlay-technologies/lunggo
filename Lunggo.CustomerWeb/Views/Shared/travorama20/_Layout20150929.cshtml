@@ -1,65 +1,67 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
-        
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta id="viewport" name="viewport" content="width=1200, initial-scale=1, user-scalable=yes">
-        <link rel="shortcut icon" type="image/ico" href="/Assets/images/favico.ico" />
-        
-        @{ Html.RenderPartial("_openGraph"); }
+<head>
 
-        <title>@ViewBag.Title | Travorama</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    @if (ViewBag.SiteHeader == "header-contact" || ViewBag.SiteHeader == "header-faq" || ViewBag.SiteHeader == "header-how-to")
+    {
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    }
+    else
+    {
+        <meta id="viewport" name="viewport" content="width=1200, initial-scale=1">
+    }
+    <link rel="shortcut icon" type="image/ico" href="/Assets/images/favico.ico" />
 
-        <!-- stylesheets -->
-        <!-- <link rel="stylesheet" href="/Assets/css/bootstrap.min.css"> -->
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-        <link href="/Assets/bootstrap/bootstrap.min.css" rel="stylesheet" />
-        
-        @if (IsSectionDefined("AdditionalCSS"))
-        {
-            @RenderSection("AdditionalCSS");
-        }
-        
-        @section AdditionalCSS{
-            <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
+    @{ Html.RenderPartial("_openGraph"); }
+    <title>@ViewBag.Title | Travorama</title>
+    <!-- stylesheets -->
+    <!-- <link rel="stylesheet" href="/Assets/css/bootstrap.min.css"> -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+    <link href="/Assets/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
-            @*@if (ViewBag.Campaign)
+    @if (IsSectionDefined("AdditionalCSS"))
+    {
+        @RenderSection("AdditionalCSS");
+    }
+
+    @section AdditionalCSS{
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
+        @*@if (ViewBag.Campaign)
             {
                 <!-- imlek start -->
                 <link href="/Campaign/Imlek2016/css/imlek2016.min.css" rel="stylesheet" />
                 <!-- imlek end -->
             }*@
+    }
+    @section AdditionalJS{
+        <!-- additional Angular JS-->
+        <script src="/Assets/js/angular.min.js"></script>
+        <script src="/Assets/js/angular-animate.min.js"></script>
+        <script src="/Assets/js/angular-route.min.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+        <script src="/Assets/js/js.cookie.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    }
 
-        }
-
-        @section AdditionalJS{
-            <!-- additional Angular JS-->
-            <script src="/Assets/js/angular.min.js"></script>
-            <script src="/Assets/js/angular-animate.min.js"></script>
-            <script src="/Assets/js/angular-route.min.js"></script>
-            <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
-            <script src="/Assets/js/js.cookie.js"></script>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-        }
-        
-        @section PageJS{
+    @section PageJS{
         <script>
             newsletterFormFunctions();
         </script>
-  
-        }
 
+    }
+    @if (ViewBag.SiteHeader != "header-contact" && ViewBag.SiteHeader != "header-faq" && ViewBag.SiteHeader != "header-how-to")
+    {
         <link rel="stylesheet" href="/Assets/travorama20/css/travorama20.css">
-        <!-- Start of travelmadezy Zendesk Widget script -->
+                <!-- Start of travelmadezy Zendesk Widget script -->
         <script>
-/*<![CDATA[*/window.zEmbed || function (e, t) { var n, o, d, i, s, a = [], r = document.createElement("iframe"); window.zEmbed = function () { a.push(arguments) }, window.zE = window.zE || window.zEmbed, r.src = "javascript:false", r.title = "", r.role = "presentation", (r.frameElement || r).style.cssText = "display: none", d = document.getElementsByTagName("script"), d = d[d.length - 1], d.parentNode.insertBefore(r, d), i = r.contentWindow, s = i.document; try { o = s } catch (c) { n = document.domain, r.src = 'javascript:var d=document.open();d.domain="' + n + '";void(0);', o = s } o.open()._l = function () { var o = this.createElement("script"); n && (this.domain = n), o.id = "js-iframe-async", o.src = e, this.t = +new Date, this.zendeskHost = t, this.zEQueue = a, this.body.appendChild(o) }, o.write('<body onload="document._l();">'), o.close() }("//assets.zendesk.com/embeddable_framework/main.js", "travelmadezy.zendesk.com");
+            /*<![CDATA[*/window.zEmbed || function (e, t) { var n, o, d, i, s, a = [], r = document.createElement("iframe"); window.zEmbed = function () { a.push(arguments) }, window.zE = window.zE || window.zEmbed, r.src = "javascript:false", r.title = "", r.role = "presentation", (r.frameElement || r).style.cssText = "display: none", d = document.getElementsByTagName("script"), d = d[d.length - 1], d.parentNode.insertBefore(r, d), i = r.contentWindow, s = i.document; try { o = s } catch (c) { n = document.domain, r.src = 'javascript:var d=document.open();d.domain="' + n + '";void(0);', o = s } o.open()._l = function () { var o = this.createElement("script"); n && (this.domain = n), o.id = "js-iframe-async", o.src = e, this.t = +new Date, this.zendeskHost = t, this.zEQueue = a, this.body.appendChild(o) }, o.write('<body onload="document._l();">'), o.close() }("//assets.zendesk.com/embeddable_framework/main.js", "travelmadezy.zendesk.com");
             /*]]>*/</script>
-        <!-- End of travelmadezy Zendesk Widget script -->
-        
-        
-        <!-- Facebook Pixel Code -->
+                <!-- End of travelmadezy Zendesk Widget script -->
+
+
+                <!-- Facebook Pixel Code -->
         <script>
             !function (f, b, e, v, n, t, s) {
                 if (f.fbq) return; n = f.fbq = function () {
@@ -77,67 +79,62 @@
             <img height="1" width="1" style="display:none"
                  src="https://www.facebook.com/tr?id=1500705246891176&ev=PageView&noscript=1" />
         </noscript>
-        <!-- End Facebook Pixel Code -->
-        
-
-    </head>
+                <!-- End Facebook Pixel Code -->
+    }
+</head>
 <body class="@ViewBag.BodyClass">
     @Html.Partial("/Views/Shared/_googleTag.cshtml")
 
-    <!--********************-->
-        
-    <section ng-app="travorama">
-        @Html.Partial("/Views/Shared/travorama20/_SiteHeader.cshtml")
+    @if (ViewBag.SiteHeader != "header-contact" && ViewBag.SiteHeader != "header-faq" && ViewBag.SiteHeader != "header-how-to")
+    {
         <!--********************-->
-
-
-        <section class="site-content">
-
-            @RenderBody()
-
-        </section><!-- .site-content -->
+        @Html.Partial("/Views/Shared/travorama20/_SiteHeader.cshtml")
+    }
+    <!--********************-->
+    <section class="site-content">
+        @RenderBody()
+    </section><!-- .site-content -->
+    @if (ViewBag.SiteHeader != "header-contact" && ViewBag.SiteHeader != "header-faq" && ViewBag.SiteHeader != "header-how-to")
+    {
         <!--********************-->
         <!-- footer group start -->
         @Html.Partial("/Views/Shared/travorama20/_SiteFooterMenu.cshtml")
         @Html.Partial("/Views/Shared/travorama20/_SiteFooter.cshtml")
-    </section>
+    }
 
-        <!--********************-->
-        <!-- Javascripts -->
-        <script src="/Assets/js/jquery.min.js"></script>
-        <script src="/Assets/travorama20/js/bootstrap.min.js"></script>
-        <script src="/Assets/js/jquery-ui.min.js"></script>
-        <script src="/Config/JsConfig.js"></script>
 
-        @if (IsSectionDefined("AdditionalJS"))
-        {
-            @RenderSection("AdditionalJS");
-        }
 
-        <script src="/Assets/travorama20/js/travorama20.js"></script>
-    <script src="/Assets/travorama20/js/accountController.js"></script>
+
+    <!--********************-->
+    <!-- Javascripts -->
+    <script src="/Assets/js/jquery.min.js"></script>
+    <script src="/Assets/travorama20/js/bootstrap.min.js"></script>
     <script src="/Assets/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script src="/Config/JsConfig.js"></script>
+    @if (IsSectionDefined("AdditionalJS"))
+    {
+        @RenderSection("AdditionalJS");
+    }
 
-        @if (IsSectionDefined("PageJS"))
-        {
-            @RenderSection("PageJS");
-        }
+    <script src="/Assets/travorama20/js/travorama20.js"></script>
+    @if (IsSectionDefined("PageJS"))
+    {
+        @RenderSection("PageJS");
+    }
 
-        <script type="text/javascript">
-            $(function () {
-                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
-                    var ww = ($(window).width() < window.screen.width) ? $(window).width() : window.screen.width;
-                    var mw = 1000;
-                    var ratio = ww / mw;
-                    if (ww < mw) {
-                        $('#viewport').attr('content', 'initial-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww);
-                    } else {
-                        $('#viewport').attr('content', 'initial-scale=1, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
-                    }
+    <script type="text/javascript">
+        $(function () {
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+                var ww = ($(window).width() < window.screen.width) ? $(window).width() : window.screen.width;
+                var mw = 1000;
+                var ratio = ww / mw;
+                if (ww < mw) {
+                    $('#viewport').attr('content', 'initial-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww);
+                } else {
+                    $('#viewport').attr('content', 'initial-scale=1, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
                 }
-            });
-        </script>
-
+            }
+        });
+    </script>
 </body>
 </html>
