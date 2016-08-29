@@ -407,7 +407,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var updatedUser = User.Identity.GetUser();
             updatedUser.FirstName = model.FirstName;
             updatedUser.LastName = model.LastName;
-            updatedUser.CountryCd = model.CountryCd;
+            updatedUser.CountryCallCd = model.CountryCd;
             updatedUser.PhoneNumber = model.PhoneNumber;
             updatedUser.Address = model.Address;
             var result = await UserManager.UpdateAsync(updatedUser);

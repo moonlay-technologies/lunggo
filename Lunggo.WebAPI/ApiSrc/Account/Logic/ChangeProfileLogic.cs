@@ -35,7 +35,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             }
             updatedUser.FirstName = first;
             updatedUser.LastName = last;
-            updatedUser.CountryCd = request.CountryCallingCd ?? updatedUser.CountryCd;
+            updatedUser.CountryCallCd = request.CountryCallingCd ?? updatedUser.CountryCallCd;
             updatedUser.PhoneNumber = request.PhoneNumber ?? updatedUser.PhoneNumber;
             var result = userManager.Update(updatedUser);
             if (result.Succeeded)
@@ -47,7 +47,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     Name = updatedUser.FirstName == updatedUser.LastName
                         ? updatedUser.FirstName
                         : updatedUser.FirstName + " " + updatedUser.LastName,
-                    CountryCallingCd = updatedUser.CountryCd,
+                    CountryCallingCd = updatedUser.CountryCallCd,
                     PhoneNumber = updatedUser.PhoneNumber
                 };
             }

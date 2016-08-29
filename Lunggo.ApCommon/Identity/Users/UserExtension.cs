@@ -70,7 +70,7 @@ namespace Lunggo.ApCommon.Identity.Users
             if (identity.IsUserAuthorized())
             {
                 var customUser = GetUser(identity);
-                return customUser.CountryCd;
+                return customUser.CountryCallCd;
             }
             else
             {
@@ -152,7 +152,7 @@ namespace Lunggo.ApCommon.Identity.Users
                 UserName = userRecord.UserName,
                 AccessFailedCount = userRecord.AccessFailedCount,
                 EmailConfirmed = userRecord.EmailConfirmed,
-                CountryCd = userRecord.CountryCd,
+                CountryCallCd = userRecord.CountryCd,
                 PhoneNumber = userRecord.PhoneNumber,
                 Address = userRecord.Address,
                 LockoutEnabled = userRecord.LockoutEnabled,
