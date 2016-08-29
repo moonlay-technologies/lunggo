@@ -42,12 +42,12 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                         RecipientList = new[] { "developer@travelmadezy.com" },
                         Subject = envPrefix + "Booking API Log",
                     },
-                        "<html><body>ERROR CODE : "
-                        + apiResponse.ErrorCode
-                        + "<br/><br/>REQUEST :<br/><br/>"
+                        "<html><body>REQUEST :<br/><br/>"
                         + request.Serialize()
                         + "<br/><br/>RESPONSE :<br/><br/>"
                         + apiResponse.Serialize()
+                        + "<br/><br/>LOGIC RESPONSE :<br/><br/>"
+                        + bookServiceResponse.Serialize()
                         + "<br/><br/>Platform : "
                         + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
                         + "<br/><br/>Itinerary : <br/><br/>"
