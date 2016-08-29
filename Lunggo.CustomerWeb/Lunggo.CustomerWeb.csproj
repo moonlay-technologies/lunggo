@@ -233,6 +233,7 @@
     <Compile Include="Areas\Api\Models\ResetPasswordViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
+    <Compile Include="Controllers\HelpSectionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobileTemplateController.cs" />
@@ -832,6 +833,7 @@
     <Content Include="Assets\images\howtopay-2.jpg" />
     <Content Include="Assets\images\howtopay-3.jpg" />
     <Content Include="Assets\images\howtopay-header.jpg" />
+    <Content Include="Assets\images\idr-sprite.png" />
     <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\list-bg.png" />
@@ -922,7 +924,6 @@
     <Content Include="Assets\images\print-image.png" />
     <Content Include="Assets\images\quote-close.png" />
     <Content Include="Assets\images\quote-open.png" />
-    <Content Include="Assets\images\rapidSsl.jpg" />
     <Content Include="Assets\images\reason-2-icon.png" />
     <Content Include="Assets\images\reason-3-icon.png" />
     <Content Include="Assets\images\reason-4-icon.png" />
@@ -988,9 +989,7 @@
     <Content Include="Assets\images\user-icon.png" />
     <Content Include="Assets\images\user-login-bg.jpg" />
     <Content Include="Assets\images\user-register-bg.jpg" />
-    <Content Include="Assets\images\verisign-bg.jpg" />
-    <Content Include="Assets\images\verisign-pin.png" />
-    <Content Include="Assets\images\verisign.jpg" />
+    <Content Include="Assets\images\verisign.png" />
     <Content Include="Assets\images\visa-logo.jpg" />
     <Content Include="Assets\images\warning-image.png" />
     <Content Include="Assets\images\white-bg.png" />
@@ -1117,7 +1116,11 @@
     <Content Include="Assets\script\jquery.ui.dialog.min-300004.js" />
     <Content Include="Assets\script\monitordesktop-12.js" />
     <Content Include="Assets\script\tv-common-300004.js" />
-    <Content Include="Assets\travorama20\css\travorama20.css" />
+    <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDir.js" />
+    <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
+    <Content Include="Assets\travorama20\css\travorama20.css">
+      <DependentUpon>travorama20.scss</DependentUpon>
+    </Content>
     <Content Include="Assets\travorama20\css\travorama20.min.css" />
     <Content Include="Assets\travorama20\css\travorama20.scss" />
     <Content Include="Assets\travorama20\css\_footer.scss" />
@@ -1130,6 +1133,7 @@
     <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\countries.js" />
     <Content Include="Assets\travorama20\js\checkoutController.js" />
+    <Content Include="Assets\travorama20\js\ContactController.js" />
     <Content Include="Assets\travorama20\js\homeController.js" />
     <Content Include="Assets\travorama20\js\paymentController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
@@ -1315,9 +1319,18 @@
     <Content Include="Assets\mobile\css\_page_home.scss" />
     <Content Include="Assets\mobile\css\_home_page_layout.scss" />
     <Content Include="Assets\css\_page_home.scss" />
+    <Content Include="Assets\travorama20\css\travorama20.css.map">
+      <DependentUpon>travorama20.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\mobile\css\application.css.map">
+      <DependentUpon>application.css</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-cw %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-cw %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2669,6 +2682,9 @@
     <Content Include="Views\Template\EmailSubscribe.cshtml" />
     <Content Include="Views\Template\Confirmation.cshtml" />
     <Content Include="Views\Template\Confirmation.mobile.cshtml" />
+    <Content Include="Views\HelpSection\Contact-Us.cshtml" />
+    <Content Include="Views\HelpSection\FAQs.cshtml" />
+    <Content Include="Views\HelpSection\How-To.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2720,6 +2736,7 @@
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Assets\images\NewFolder1\" />
     <Folder Include="Assets\travorama20\fonts\" />
+    <Folder Include="Assets\travorama20\images\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>

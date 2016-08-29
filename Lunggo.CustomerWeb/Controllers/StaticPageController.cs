@@ -11,7 +11,7 @@ using System.Linq;
 using System;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-
+using Lunggo.ApCommon.Flight.Service;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -40,6 +40,14 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult HowToPay()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Contact(string name, string email, string message)
+        {
+            FlightService.GetInstance().ContactUs(name, email, message);
+            ViewBag.Message = "Terima kasih telah menghubungi kami. Kami akan menghubungi Anda dalam waktu yang dekat.";
             return View();
         }
 

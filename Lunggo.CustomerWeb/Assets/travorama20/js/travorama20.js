@@ -533,6 +533,7 @@ function flightPageSearchFormFunctions() {
             //$('.form-flight-oneway').show();
             //$('.form-flight-return').hide();
             $('.form-flight-return').addClass('disabled');
+            
         }
     });
 
@@ -571,14 +572,30 @@ function flightPageSearchFormFunctions() {
     $('.search-location .location-recommend .tab-content a').click(function (evt) {
         evt.preventDefault();
         var locationCode = $(this).attr('data-code');
+        var locationCity = $(this).text();
         if ($('.search-location').attr('data-place') == 'origin') {
-            flightPageSearchFormParam.origin = locationCode;
-            flightPageSearchFormParam.originCity = $(this).text();
-            $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
-        } else {
-            flightPageSearchFormParam.destination = locationCode;
-            flightPageSearchFormParam.destinationCity = $(this).text();
-            $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+            if (locationCity != flightPageSearchFormParam.destinationCity) {
+                flightPageSearchFormParam.origin = locationCode;
+                flightPageSearchFormParam.originCity = $(this).text();
+                $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
+                $('.flight-submit-button').removeClass('disabled');
+            } else {
+                $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+                $('.flight-submit-button').addClass('disabled');
+            }
+
+        } else{
+            if (locationCity != flightPageSearchFormParam.originCity) {
+                flightPageSearchFormParam.destination = locationCode;
+                flightPageSearchFormParam.destinationCity = $(this).text();
+                $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+                $('.flight-submit-button').removeClass('disabled');
+            } else {
+                $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+                $('.flight-submit-button').addClass('disabled');
+            }
         }
         hideLocation();
     });
@@ -1091,13 +1108,13 @@ function staticPageFunctions() {
         }
         checkQuestion();
     });
-    $('.question-wrapper ol li ol li header').on('click',function() {
+    $('.accordion-wrapper ol li ol li header').on('click',function() {
         $(this).closest('li').toggleClass('active');
         checkQuestion();
     });
     // check faqs
     var checkQuestion = function() {
-        $('.question-wrapper>ol>li').each(function() {
+        $('.accordion-wrapper>ol>li').each(function () {
             if ($(this).children('ol').find('.active').length > 0) {
                 $(this).find('.toggle-all').addClass('active').text('Hide All');
             } else {
@@ -1106,7 +1123,25 @@ function staticPageFunctions() {
         });
     }
 
+    $('.toggle-all').on('click', function () {
+        if ($(this).hasClass('active')) {
+            $(this).closest('li').children('ol').children('li').removeClass('active');
+        } else {
+            $(this).closest('li').children('ol').children('li').addClass('active');
+        }
+        checkQuestion();
+    });
 
+    //Accordion Help Section by W3School
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].onclick = function () {
+            this.classList.toggle("active");
+            this.nextElementSibling.classList.toggle("show");
+        }
+    }
 }
 
 //********************
@@ -1206,13 +1241,29 @@ function flightFormSearchFunctions() {
         var locationCode = $(this).attr('data-code');
         var locationCity = $(this).text();
         if ($('.search-location').attr('data-place') == 'origin') {
-            FlightSearchConfig.flightForm.origin = locationCode;
-            FlightSearchConfig.flightForm.originCity = locationCity;
-            $('.form-flight-origin').val($(this).text() + ' ('+locationCode+')' );
+            if (locationCity != FlightSearchConfig.flightForm.destinationCity) {
+                FlightSearchConfig.flightForm.origin = locationCode;
+                FlightSearchConfig.flightForm.originCity = locationCity;
+                $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
+                $('.flight-submit-button').removeClass('disabled');
+            } else {
+                $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+                $('.flight-submit-button').addClass('disabled');
+            }
+            
         } else {
-            FlightSearchConfig.flightForm.destination = locationCode;
-            FlightSearchConfig.flightForm.destinationCity = locationCity;
-            $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+            if (locationCity != FlightSearchConfig.flightForm.originCity) {
+                FlightSearchConfig.flightForm.destination = locationCode;
+                FlightSearchConfig.flightForm.destinationCity = locationCity;
+                $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+                $('.flight-submit-button').removeClass('disabled');
+            } else {
+                $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+                $('.flight-submit-button').addClass('disabled');
+            }
+            
         }
         hideLocation();
     });
@@ -1306,14 +1357,28 @@ function flightFormSearchFunctions() {
     $('.autocomplete-result ul').on('click','li',function() {
         var locationCode = $(this).attr('data-code');
         var locationCity = $(this).attr('data-city');
-        if ( $('.search-location').attr('data-place') == 'origin') {
-            FlightSearchConfig.flightForm.origin = locationCode;
-            FlightSearchConfig.flightForm.originCity = locationCity;
-            $('.form-flight-origin').val(locationCity + ' (' + locationCode + ')');
+        if ($('.search-location').attr('data-place') == 'origin') {
+            if (locationCity != FlightSearchConfig.flightForm.destinationCity) {
+                FlightSearchConfig.flightForm.origin = locationCode;
+                FlightSearchConfig.flightForm.originCity = locationCity;
+                $('.form-flight-origin').val(locationCity + ' (' + locationCode + ')');
+                $('.flight-submit-button').removeClass('disabled');
+            } else {
+                $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+                $('.flight-submit-button').addClass('disabled');
+            }
         } else {
-            FlightSearchConfig.flightForm.destination = locationCode;
-            FlightSearchConfig.flightForm.destinationCity = locationCity;
-            $('.form-flight-destination').val(locationCity + ' (' + locationCode + ')');
+            if (locationCity != FlightSearchConfig.flightForm.originCity) {
+                FlightSearchConfig.flightForm.destination = locationCode;
+                FlightSearchConfig.flightForm.destinationCity = locationCity;
+                $('.form-flight-destination').val(locationCity + ' (' + locationCode + ')');
+                $('.flight-submit-button').removeClass('disabled');
+            } else {
+                $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+                $('.flight-submit-button').addClass('disabled');
+            }
         }
         hideLocation();
         console.log("BERHASIL");
@@ -1720,6 +1785,19 @@ function flightFormSearchFunctions() {
         //console.log(flightSearchParam);
         $('.form-flight').submit();
     }
+}
 
+//********************
+// accordion functions
+function accordionFunctions() {
+    //Accordion Help Section by W3School
+    var acc = document.getElementsByClassName("accordion");
+    var i;
 
+    for (i = 0; i < acc.length; i++) {
+        acc[i].onclick = function () {
+            this.classList.toggle("active");
+            this.nextElementSibling.classList.toggle("show");
+        }
+    }
 }

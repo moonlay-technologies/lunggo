@@ -53,19 +53,25 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
             }
-            //if (paymentDetails.Method == PaymentMethod.BankTransfer)
-            //{
+
+            if (paymentDetails.Method == PaymentMethod.CreditCard)
+            {
+                var binDiscount = CampaignService.GetInstance()
+                    .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, discountCode);
+                if (binDiscount != null)
+                {
+                    paymentDetails.FinalPriceIdr -= binDiscount.Amount;
+                    paymentDetails.DiscountNominal += binDiscount.Amount;
+                }
+            }
+
             var transferFee = GetTransferFeeFromCache(rsvNo);
             if (transferFee == 0M)
                 return paymentDetails;
 
             paymentDetails.TransferFee = transferFee;
             paymentDetails.FinalPriceIdr += paymentDetails.TransferFee;
-            //}
-            //else
-            //{
-            //    DeleteTransferFeeFromCache(rsvNo);
-            //}
+            
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
             var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
             var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
@@ -119,8 +125,6 @@ namespace Lunggo.ApCommon.Payment.Service
             else if (method == PaymentMethod.CreditCard || method == PaymentMethod.VirtualAccount || method == PaymentMethod.MandiriClickPay || method == PaymentMethod.CimbClicks || method == PaymentMethod.MandiriBillPayment)
             {
                 var paymentResponse = SubmitPayment(paymentDetails, transactionDetails, itemDetails, method);
-                paymentDetails.Status = PaymentStatus.Pending;
-                paymentDetails.ExternalId = paymentResponse.ExternalId;
                 if (method == PaymentMethod.VirtualAccount)
                 {
                     paymentDetails.TransferAccount = paymentResponse.TransferAccount;
@@ -243,7 +247,7 @@ namespace Lunggo.ApCommon.Payment.Service
             };
         }
 
-        public decimal GetTransferFee(string rsvNo, string discountCode)
+        public decimal GetTransferFee(string rsvNo, string bin, string discountCode)
         {
             decimal transferFee, finalPrice;
             var voucher = CampaignService.GetInstance().ValidateVoucherRequest(rsvNo, discountCode);

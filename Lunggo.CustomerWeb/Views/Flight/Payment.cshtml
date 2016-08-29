@@ -116,12 +116,9 @@
 
         <div ng-app="travorama" ng-controller="paymentController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
             <section class="checkout-content">
-
                 <div class="container">
-
                     <div class="row">
-
-                        <div class="col-sm-8">
+                        <div class="col-left">
                             <!-- ******************** -->
                             <div class="content-step" id="step-4">
                                 <h3><b>METODE</b> PEMBAYARAN</h3>
@@ -206,19 +203,19 @@
                                             </label>
                                         </div><!-- .payment -->
 
-                                        <div class="payment MandiriBillPayment col-xs-4">
-                                            <label>
-                                                <header>
-                                                    <div class="input-wrapper">
-                                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriBillPayment" ng-model="paymentMethod" />
-                                                    </div>
-                                                    <h5>Mandiri Bill Payment</h5>
-                                                </header>
-                                                <section>
-                                                    <img src="/Assets/images/Bank-Mandiri-small.jpg" alt="Mandiri Bill Payment" />
-                                                </section>
-                                            </label>
-                                        </div><!-- .payment -->
+                                        @*<div class="payment MandiriBillPayment col-xs-4">
+        <label>
+            <header>
+                <div class="input-wrapper">
+                    <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriBillPayment" ng-model="paymentMethod" />
+                </div>
+                <h5>Mandiri Bill Payment</h5>
+            </header>
+            <section>
+                <img src="/Assets/images/Bank-Mandiri-small.jpg" alt="Mandiri Bill Payment" />
+            </section>
+        </label>
+    </div><!-- .payment -->*@
 
                                     </div>
 
@@ -314,7 +311,43 @@
                                 }
                                 <form name="mandiriClickPayForm" novalidate>
                                     <div class="mandiri-clikpay-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
-                                        <h3 class="no-spacing">Detail Pembayaran <b>Mandiri Click Pay</b></h3>
+                                        <div class="form-group">
+                                            <h3><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
+                                            <div class="form-group">
+                                                <label class="control-label">Nomor Kartu</label>
+                                                <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></label>
+                                                <div class="form-mandiri-payment">
+                                                    <ul class="form-row clearfix">
+                                                        <li class="col-sm-left">APPLI</li>
+                                                        <li class="col-sm-middle">:</li>
+                                                        <li class="col-sm-right">3</li>
+                                                    </ul>
+                                                    <ul class="form-row clearfix">
+                                                        <li class="col-sm-left">10 Digit Terakhir Nomor Kartu Debit (Input 1)</li>
+                                                        <li class="col-sm-middle">:</li>
+                                                        <li class="col-sm-right">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
+                                                    </ul>
+                                                    <ul class="form-row clearfix">
+                                                        <li class="col-sm-left">Jumlah Transaksi</li>
+                                                        <li class="col-sm-middle">:</li>
+                                                        <li class="col-sm-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</li>
+                                                    </ul>
+                                                    <ul class="form-row clearfix">
+                                                        <li class="col-sm-left">5 Digit Terakhir Nomor Transaksi (Input 2)</li>
+                                                        <li class="col-sm-middle">:</li>
+                                                        <li class="col-sm-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">Respon Token Mandiri</label>
+                                                <input type="text" value="" class="form-control cc-number" maxlength="6" placeholder="XXXXXX" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
+                                            </div>
+                                        </div>
+                                        @*<h3 class="no-spacing">Detail Pembayaran <b>Mandiri Click Pay</b></h3>
                                         <div class="form-group">
                                             <label class="control-label" style="font-size:12px;">Nomor Kartu Debit</label>
                                             <input type="text" value="" class="form-control" maxlength="16" ng-model="MandiriClickPay.CardNo" />
@@ -341,7 +374,7 @@
                                                 <p class="control-label" style="text-align:left;font-size:13px;">Nominal Transaksi (Input 2)</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <p class="control-label" style="text-align:left;font-size:13px;">:&nbsp;&nbsp;{{totalPrice - voucher.amount}}</p>
+                                                <p class="control-label" style="text-align:left;font-size:13px;">:&nbsp;&nbsp;{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}}</p>
                                             </div>
                                         </div>
                                         <div class="form-group col-sm-12">
@@ -356,7 +389,7 @@
                                             <br />
                                             <label class="control-label" style="font-size:12px;">Respon Token Mandiri</label>
                                             <input type="password" value="" class="form-control" placeholder="XXXXXX" maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </form>
                                 <!-- start CIMB Clicks Instruction -->
@@ -427,7 +460,7 @@
 
 
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-right">
 
                             <div class="widget-container">
                                 <div class="widget price-detail">
@@ -567,11 +600,8 @@
                             </div><!-- .widget-container -->
 
                         </div>
-
                     </div>
-
                 </div>
-
             </section><!-- .checkout-content -->
 
             <div class="page-overlay flight-expired" ng-show="expired">
@@ -605,53 +635,132 @@
                     </footer>
                 </div>
             </div><!-- .page-overlay -->
-            <!--<div class="page-overlay booking-flight" ng-hide="!pay.paying">
-                <div class="overlay-content" >
-                    <header>
-                        <h4>Mohon Tunggu</h4>
-                    </header>
-                    <section>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-4 text-align">
-                                    <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
-                                </div>
-                                <div class="col-sm-8">
-                                    <p>Sedang memproses pilihan Anda.</p>
+            
+            <div class="tnc-popup" ng-show="pay.transfer">
+                <div class="popup">
+                    <div class="popup-container">
+                        <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan Bank Transfer</span></div>
+                        <div class="popup-list">
+                            <ol>
+                                <li>Transfer keseluruhan jumlah harga hingga 3 angka terakhir untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
+                                <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran ATM.</li>
+                                <li>Tidak disarankan melakukan transfer dengan LLG/Kliring/SKNBI karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}" style="width:100%">KEMBALI</a>
+                            </div>
+                            <div class="col-xs-6">
+                                <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+            <div class="tnc-popup" ng-show="pay.virtualAccount">
+                <div class="popup">
+                    <div class="popup-container">
+                        <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan ATM</span></div>
+                        <div class="popup-list">
+                            <ol>
+                                <li>Hanya untuk transfer via mesin ATM yang tergabung dalam jaringan ATM Bersama, Prima, dan Alto.</li>
+                                <li>Bukan untuk Internet Banking/Mobile Banking/Transfer melalui Non-ATM.</li>
+                                <li>Ada biaya Rp 6.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu.</li>
+                                <li>Lakukan pembayaran sebelum batas akhir waktu pembayaran.</li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}" style="width:100%">KEMBALI</a>
+                            </div>
+                            <div class="col-xs-6">
+                                <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+               
+                <div class="popup__wrapper" ng-show="pay.virtualAccount">
+                    <div class="popup">
+                        <header class="popup__header">
+                            <h4 class="popup__title">Syarat dan Ketentuan ATM</h4>
+                        </header>
+                        <div class="popup__body tnc-body">
+                            <div class="container_new">
+                                <ol>
+                                    <li>Hanya untuk transfer via mesin ATM yang tergabung dalam jaringan ATM Bersama, Prima, dan Alto.</li>
+                                    <li>Bukan untuk Internet Banking/Mobile Banking/Transfer melalui Non-ATM.</li>
+                                    <li>Ada biaya Rp 6.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu.</li>
+                                    <li>Lakukan pembayaran sebelum batas akhir waktu pembayaran.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="popup__footer">
+                            <div class="container_new tnc">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <input type="submit" class="btn btn-yellow" ng-click="pay.middle('virtualAccount')" value="SETUJU">
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                </div>
-            </div>-->
-
-            <div class="payment-popup" ng-if="pay.checked && !pay.isSuccess">
-                <div class=" overlay-content">
-                    <section style="padding-top:60px; padding-left:225px;">
-                        <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
-                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                        <div style="padding-top:5px;"><span style="font-size:14px">{{errorMessage}}</span></div>
-                    </section>
-                    <div align="right" style="padding-right:30px;padding-top:30px;">
-                        <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
                     </div>
                 </div>
-            </div>
 
-            <div class="bookfailed-popup" ng-if="pay.isPaying">
-                <div class=" overlay-content">
-                    <section style="padding-top:60px; padding-left:225px;">
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>
-                        <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Mohon tunggu...</b></span></div>
-                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                        <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
-                    </section>
+
+                <!--<div class="page-overlay booking-flight" ng-hide="!pay.paying">
+            <div class="overlay-content" >
+                <header>
+                    <h4>Mohon Tunggu</h4>
+                </header>
+                <section>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
+                            </div>
+                            <div class="col-sm-8">
+                                <p>Sedang memproses pilihan Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>-->
+
+                <div class="payment-popup" ng-if="pay.checked && !pay.isSuccess">
+                    <div class=" overlay-content">
+                        <section style="padding-top:60px; padding-left:225px;">
+                            <!-- Ini untuk yg gagal -->
+                            <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                            <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+                            <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                            <div style="padding-top:5px;"><span style="font-size:14px">{{errorMessage}}</span></div>
+                        </section>
+                        <div align="right" style="padding-right:30px;padding-top:30px;">
+                            <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-        </div>
+                <div class="bookfailed-popup" ng-if="pay.isPaying || pay.go">
+                    <div class=" overlay-content">
+                        <section style="padding-top:60px; padding-left:225px;">
+                            <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>
+                            <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Mohon tunggu...</b></span></div>
+                            <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                            <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
 
 
 

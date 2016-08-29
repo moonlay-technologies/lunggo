@@ -231,22 +231,67 @@ app.controller('returnFlightController', [
             }
         }
 
-        // set active flight
+        //terakhir dimari//
+        // set active flight BUAT DETAIL PENERBANGAN
         $scope.setActiveFlight = function (target, flightSequence) {
             if (target == 'departure') {
                 if ($scope.departureFlightConfig.activeFlight == flightSequence) {
                     $scope.departureFlightConfig.activeFlight = -1;
                 } else {
                     $scope.departureFlightConfig.activeFlight = flightSequence;
+                    $scope.departureFlightConfig.activePrice = -1;
                 }
             } else if (target == 'return') {
                 if ($scope.returnFlightConfig.activeFlight == flightSequence) {
                     $scope.returnFlightConfig.activeFlight = -1;
                 } else {
                     $scope.returnFlightConfig.activeFlight = flightSequence;
+                    $scope.returnFlightConfig.activePrice = -1;
                 }
             }
         }
+        $scope.showPriceDetail = function (target, flightSequence) {
+            $scope.flightDetailSelected = false;
+            $scope.priceDetailSelected = true;
+
+            if (target == 'departure') {
+                $scope.selectedFlight = $scope.departureFlightConfig;
+            }
+            else if (target == 'return') {
+                $scope.selectedFlight = $scope.returnFlightConfig;
+            }
+
+            if ($scope.selectedFlight.activePrice != flightSequence) {
+                $scope.selectedFlight.activePrice = flightSequence;
+                $scope.selectedFlight.activeFlight = -1;
+            }
+            else {
+                $scope.selectedFlight.activePrice = -1;
+            }
+        }
+
+        // **********
+        // flight detail function
+        $scope.priceDetailSelected = false;
+        $scope.flightDetailSelected = false;
+        $scope.activePrice = -1;
+        $scope.flightActive = -1;
+
+        $scope.setFlightActive = function (flightNo) {
+            $scope.flightDetailSelected = true;
+            $scope.priceDetailSelected = false;
+            if ($scope.flightActive != flightNo) {
+                $scope.flightActive = flightNo;
+                $scope.activePrice = -1;
+            }
+            else {
+                $scope.flightActive = -1;
+            }
+        }
+        //terakhir dimari//
+
+
+
 
         // set chosen flight
         $scope.setChosenFlight = function (target, flightSequence) {
@@ -271,12 +316,16 @@ app.controller('returnFlightController', [
         // toggle chosen flight
         $scope.toggleChosenFlightDetail = function(targetFlight) {
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+
             if (targetScope.chosenFlightDetail == true) {
                 targetScope.chosenFlightDetail = false;
             } else {
                 targetScope.chosenFlightDetail = true;
             }
         }
+
+      
+
 
         // set page active section
         $scope.setPageActiveSection = function (target) {
@@ -335,14 +384,36 @@ app.controller('returnFlightController', [
             }
         }
 
+
+        $scope.pageConfig.overviewFlightDetailShowing = false;
+        $scope.pageConfig.overviewPriceDetailShowing = false;
         // toggle overview detail
-        $scope.toggleOverviewDetail = function () {
-            if ($scope.pageConfig.overviewDetailShown == true) {
-                $scope.pageConfig.overviewDetailShown = false;
+        $scope.toggleOverviewFlightDetail = function () {
+            if ($scope.pageConfig.overviewFlightDetailShowing == false) {
+                $scope.pageConfig.overviewFlightDetailShowing = true;
+                $scope.pageConfig.overviewPriceDetailShowing = false;
             } else {
-                $scope.pageConfig.overviewDetailShown = true;
+                $scope.pageConfig.overviewFlightDetailShowing = false;
             }
-        }
+        };
+
+        $scope.toggleOverviewPriceDetail = function (param) {
+            if ($scope.pageConfig.overviewPriceDetailShowing == false) {
+                $scope.pageConfig.overviewPriceDetailShowing = true;
+                $scope.pageConfig.overviewFlightDetailShowing = false;
+            } else {
+                $scope.pageConfig.overviewPriceDetailShowing = false;
+            }
+        };
+
+
+
+
+
+
+
+
+
 
         $scope.popup = false;
         // ******************************

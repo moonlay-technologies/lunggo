@@ -14,12 +14,6 @@ $border-radius-default:2px;
 $transition-default:all 0.5s;
 
 /*--------------------*/
-/* icon */
-$app-store-bg: '../images/app-store-bg.png';
-$play-store-bg: '../images/play-store-bg.png';
-$mobile-app: '../images/mobile-app.png';
-
-/*--------------------*/
 /* mixins */
 @mixin letter-spacing($value){
     letter-spacing:$value;
@@ -54,15 +48,42 @@ $mobile-app: '../images/mobile-app.png';
     display:block; width:100%; content:""; clear:both;
 }
 
+/*--------------------*/
+/* mixins */
+@mixin letter-spacing($value){
+    letter-spacing:$value;
+}
+
+@mixin border-radius($radius){
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin box-shadow($properties){
+    -webkit-border-radius: $properties;
+    -moz-border-radius: $properties;
+    -ms-border-radius: $properties;
+    box-shadow: $properties;
+}
+
+
 @mixin size($width, $height) {
     width: $width;
     height: $height;
 }
 
+@mixin translate($x, $y) {
+    -webkit-transform: translate($x, $y);
+    -ms-transform: translate($x, $y);
+    -o-transform: translate($x, $y);
+    transform: translate($x, $y);
+}
 /*--------------------*/
 /* general class */
 html {height:100%;}
-body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; padding-bottom: 705px;}
+body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#ffffff; padding-bottom: 415px;}
 
 hr {border-top:$border-default;}
 
@@ -78,7 +99,7 @@ span.close {cursor:pointer;}
 .no-scroll {overflow:hidden;}
 
 .btn.btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; font-weight:bold;}
-.btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; border:2px solid #adadad;}
+.btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; border:2px solid #999;}
 .btn.block {display:block; width:100%;}
 
 .section-title.stripe {font-weight:600; background:url(/Assets/images/yellow-stripe.png) center bottom no-repeat; padding-bottom:30px; margin-bottom:45px;
@@ -118,6 +139,12 @@ input[type=number]::-webkit-outer-spin-button {
         &:before {content:counter(list-counter); counter-increment:list-counter; background:#3ab8e7; color:#fff; position:absolute; @include border-radius(50px); font-weight:bold; width:25px; height:25px; padding-top:5px; display:block; text-align:center; left:-30px; top:0;}
     }
 }
+
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], select.form-control {
+    height: 36px; box-shadow: none; border: 1px solid #d6d6d6; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px;
+}
+
+.form-control {color: #000000;}
 
 // form Search Location pop up
 // and form Date Selector pop up
@@ -246,7 +273,7 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
  background-image: linear-gradient(to bottom, #FFD65E, #FEBF04);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#FFD65E, endColorstr=#FEBF04);
 }
 
-.btn.popup-btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; font-weight:bold;-webkit-border-radius: 10px; -moz-border-radius: 10px;border-radius: 10px;}
+.btn.popup-btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; font-weight:bold;}
 .btn.popup-block {display:block; width:100%;}
 .btn.book-failed{width:30%;}
 .btn.price-changed{width:40%;}
@@ -302,6 +329,41 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
     }
 }
 
+.popup__wrapper {background:rgba(0,0,0,0.7); position:fixed; top:0; left:0; width:100%; height:100%; z-index:1000; display:none;
+    .popup {position:absolute; left: 50%; top: 50%; @include translate(-50%, -50%); width:300px; min-height: 200px; background:#ffffff; @include border-radius($border-radius-default);
+        .popup__header {background:#1daee5; color:#fff; padding:12px;
+            .popup__title {text-align:center; margin:0; font-weight:bold;}
+        }
+        .popup__body {
+            padding:20px;
+        }
+        .popup__footer {
+            width:100%; padding: 20px;
+        }
+        .container_new {
+            ol {padding-left: 20px;}
+            &.price-change-footer {
+                .btn.btn-grey {min-width: 100%;}
+                .btn.btn-yellow {
+                    min-width: 100%;
+                    margin-bottom: 8px;
+                }
+            }
+            &.tnc {
+                .btn.btn-grey, .btn.btn-yellow {min-width: 100%;}
+            }
+        }
+    }
+    // if active
+    &.active {display:block;}
+}
+.popup__wrapper.popup--revalidate {
+    .popup {text-align:center; background:none; padding-top:50px;
+        .revalidate-image {}
+        .revalidate-anim {padding:10px 0;}
+        p {font-size:16px; color:#fff; font-weight:600;}
+    }
+}
 /*.modal {
 }
 .vertical-alignment-helper {
@@ -403,6 +465,51 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
         .promo-image {margin-bottom:20px;}
         .promo-duration {padding:15px 0; margin-top:15px; border-top:1px dotted #3ab8e7; border-bottom:1px dotted #3ab8e7;
             p {color:#3ab8e7;}
+        }
+    }
+}
+.clearer {
+    clear:both ;
+}
+
+/*ACCORDION*/
+.accordion-wrapper { 
+    .accordion-title {
+        background-color: #35b6e7;
+        color: #fff;
+        cursor: pointer;
+        padding: 7px 15px;
+        width: 100%;
+        font-size: 13px;
+        font-weight: 600;
+        &.active:after {content: "\2796"}
+        &:after {
+            content: '\02795';
+            font-size: 13px;
+            color: #fff;
+            float: right;
+            margin-left: 5px;
+        }
+    }
+    .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        line-height: 16px;
+        margin-bottom: 5px;
+        &.show {
+            max-height: 100%;
+            padding: 15px 20px;
+            border: 1px solid #e3e3e3;
+            background: #fff;
+            &>ul {
+                list-style-type: none;
+                padding: 0;
+                &>li {margin-bottom: 15px;}
+            }
+            &>ol {
+                padding: 0 15px;
+                &>li {margin-bottom: 10px;}
+            }
         }
     }
 }

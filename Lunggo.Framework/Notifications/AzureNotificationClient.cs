@@ -65,10 +65,18 @@ namespace Lunggo.Framework.Notifications
                 var registration = CreateRegistration(notificationHandle, platform);
                 registration.RegistrationId = registrationId;
                 var oldRegistration = _notificationHubClient.GetRegistrationAsync<RegistrationDescription>(registrationId).Result;
-                var tags = DeserializeTags(oldRegistration.Tags);
-                foreach (var newTag in newTags)
+                Dictionary<string, string> tags;
+                if (oldRegistration != null)
                 {
-                    tags[newTag.Key] = newTag.Value;
+                    tags = DeserializeTags(oldRegistration.Tags);
+                    foreach (var newTag in newTags)
+                    {
+                        tags[newTag.Key] = newTag.Value;
+                    }
+                }
+                else
+                {
+                    tags = newTags;
                 }
                 registration.Tags = new HashSet<string>(SerializeTags(tags));
 
@@ -109,6 +117,7 @@ namespace Lunggo.Framework.Notifications
                     message = notification.Message,
                     image = notification.Image,
                     icon = notification.Icon,
+                    code = notification.Code,
                     data = notification.CustomData
                 };
                 return payload.Serialize();
@@ -132,6 +141,7 @@ namespace Lunggo.Framework.Notifications
                             body = notification.Message
                         }
                     },
+                    code = notification.Code,
                     data = notification.CustomData
                 };
                 return payload.Serialize();

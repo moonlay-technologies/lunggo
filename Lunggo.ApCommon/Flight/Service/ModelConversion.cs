@@ -70,13 +70,20 @@ namespace Lunggo.ApCommon.Flight.Service
             if (itins == null || itins.Count == 0)
                 return null;
 
-            decimal? tOri, aOri, cOri, iOri, tNet, aNet, cNet, iNet;
+            decimal? aOri, cOri, iOri, aNet, cNet, iNet;
+            decimal tOri, tNet;
             var itinerary = itins[0];
-            itinerary.Price.OriginalIdr = itins.Sum(i => i.Price.OriginalIdr);
-            CalculateFare(itinerary.Price,
+            var totalPrice = new Price
+            {
+                OriginalIdr = itins.Sum(itin => itin.Price.OriginalIdr),
+                Local = itins.Sum(itin => itin.Price.Local),
+                LocalCurrency = itinerary.Price.LocalCurrency
+            };
+            CalculateFare(totalPrice,
                 itinerary.AdultCount, itinerary.ChildCount, itinerary.InfantCount,
                 itinerary.AdultPricePortion, itinerary.ChildPricePortion, itinerary.InfantPricePortion,
-                out tOri, out aOri, out cOri, out iOri, out tNet, out aNet, out cNet, out iNet);
+                out tOri, out aOri, out cOri, out iOri, out tNet, out aNet, out cNet, out iNet,
+                itinerary.Price.LocalCurrency.RoundingOrder);
 
             return new FlightItineraryForDisplay
             {
@@ -109,11 +116,13 @@ namespace Lunggo.ApCommon.Flight.Service
             if (itinerary == null)
                 return null;
 
-            decimal? tOri, aOri, cOri, iOri, tNet, aNet, cNet, iNet;
+            decimal? aOri, cOri, iOri, aNet, cNet, iNet;
+            decimal tOri, tNet;
             CalculateFare(itinerary.Price,
                 itinerary.AdultCount, itinerary.ChildCount, itinerary.InfantCount,
                 itinerary.AdultPricePortion, itinerary.ChildPricePortion, itinerary.InfantPricePortion,
-                out tOri, out aOri, out cOri, out iOri, out tNet, out aNet, out cNet, out iNet);
+                out tOri, out aOri, out cOri, out iOri, out tNet, out aNet, out cNet, out iNet,
+                itinerary.Price.LocalCurrency.RoundingOrder);
 
             return new FlightItineraryForDisplay
             {
@@ -189,11 +198,13 @@ namespace Lunggo.ApCommon.Flight.Service
                     var rounded = unrounded - unrounded % itin.Price.LocalCurrency.RoundingOrder;
                     price.Local = rounded;
                     cumulativeLocal += price.Local;
-                    decimal? tOri, aOri, cOri, iOri, tNet, aNet, cNet, iNet;
+                    decimal? aOri, cOri, iOri, aNet, cNet, iNet;
+                    decimal tOri, tNet;
                     CalculateFare(price,
                         itin.AdultCount, itin.ChildCount, itin.InfantCount,
                         itin.AdultPricePortion, itin.ChildPricePortion, itin.InfantPricePortion,
-                        out tOri, out aOri, out cOri, out iOri, out tNet, out aNet, out cNet, out iNet);
+                        out tOri, out aOri, out cOri, out iOri, out tNet, out aNet, out cNet, out iNet,
+                        itin.Price.LocalCurrency.RoundingOrder);
                     trip.OriginalTotalFare = tOri;
                     trip.OriginalAdultFare = aOri;
                     trip.OriginalChildFare = cOri;
@@ -312,7 +323,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return transit;
         }
 
-        private void CalculateFare(Price price, int adultCount, int childCount, int infantCount, decimal adultPricePortion, decimal childPricePortion, decimal infantPricePortion, out decimal? tOri, out decimal? aOri, out decimal? cOri, out decimal? iOri, out decimal? tNet, out decimal? aNet, out decimal? cNet, out decimal? iNet)
+        private void CalculateFare(Price price, int adultCount, int childCount, int infantCount, decimal adultPricePortion, decimal childPricePortion, decimal infantPricePortion, out decimal tOri, out decimal? aOri, out decimal? cOri, out decimal? iOri, out decimal tNet, out decimal? aNet, out decimal? cNet, out decimal? iNet, decimal roundingOrder)
         {
             aOri = cOri = iOri = aNet = cNet = iNet = null;
             tOri = price.OriginalIdr/price.LocalCurrency.Rate;
@@ -322,26 +333,26 @@ namespace Lunggo.ApCommon.Flight.Service
 
             cOri = iOri = cNet = iNet = 0;
             var aSinglePortion = adultPricePortion / adultCount;
-            aOri = aSinglePortion * tOri;
+            aOri = decimal.Round(aSinglePortion * tOri);
             aNet = aSinglePortion * tNet;
             if (childCount > 0)
             {
                 if (infantCount > 0)
                 {
                     var cSinglePortion = childPricePortion / childCount;
-                    cOri = cSinglePortion * tOri;
+                    cOri = decimal.Round(cSinglePortion * tOri);
                     cNet = cSinglePortion * tNet;
                 }
                 else
                 {
-                    cOri = (tOri - aOri * adultCount) / childCount;
+                    cOri = decimal.Round((decimal) (tOri - aOri * adultCount) / childCount);
                     cNet = (tNet - aNet * adultCount) / childCount;
                 }
             }
             if (infantCount > 0)
             {
-                iOri = (tOri - aOri * adultCount - cOri * childCount) / infantCount;
-                iNet = (tNet - aNet * adultCount - cOri * childCount) / infantCount;
+                iOri = decimal.Round((decimal)(tOri - aOri * adultCount - cOri * childCount) / infantCount);
+                iNet = (tNet - aNet * adultCount - cNet * childCount) / infantCount;
             }
         }
 

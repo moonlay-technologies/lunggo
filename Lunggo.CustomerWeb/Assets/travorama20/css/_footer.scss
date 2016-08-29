@@ -39,10 +39,13 @@ including in this file :
         .asita {text-align:center;
             img {height:auto; vertical-align:bottom; position:relative; top:10px;}
         }
-        .verisign {background:url(/Assets/images/verisign-bg.jpg) bottom right no-repeat; text-align:center; position:absolute; width:100%; top:-25px; padding:30px 0 20px;
-            img {height:50px;}
-            img + img {margin-left:15px;}
-            &:after {content:url(/Assets/images/verisign-pin.png); position:absolute; top:-5px; left:30px;}
+        .verisign {    
+            background: url(/Assets/images/verisign.png) no-repeat;
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            top: -30px;
+            height: 119px;
         }
 
         //*****

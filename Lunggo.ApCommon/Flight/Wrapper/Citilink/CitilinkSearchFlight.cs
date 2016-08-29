@@ -124,15 +124,49 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                     var tunjukHarga = ambilDataAjax["#taxAndFeeInclusiveTotal"];
                                     var ambilharga = tunjukHarga.Select(x => x.Cq().Text()).FirstOrDefault();
                                     var harga = decimal.Parse(ambilharga.Split('.')[1]);
-                                    var breakdownHarga = ambilDataAjax[".itern-rgt-txt-2>p>span"];
+                                    var breakdownHarga = ambilDataAjax[".right.stripeMe>tbody"];
+                                    var pscRow = breakdownHarga[0].ChildElements.ToList()[1];
+                                    var adultPsc = decimal.Parse(pscRow.ChildElements.ToList()[1].InnerText.Split('.')[1]);
+                                    var childPsc = decimal.Parse("0");
+                                    if (conditions.ChildCount > 0)
+                                    {
+                                        childPsc = decimal.Parse(pscRow.ChildElements.ToList()[2].InnerText.Split('.')[1]);
+                                    }
+
+                                    var insChrg = breakdownHarga[0].ChildElements.ToList()[2];
+                                    var adultIns = decimal.Parse(insChrg.ChildElements.ToList()[1].InnerText.Split('.')[1]);
+                                    var childIns = decimal.Parse("0");
+                                    if (conditions.ChildCount > 0)
+                                    {
+                                        childIns = decimal.Parse(insChrg.ChildElements.ToList()[2].InnerText.Split('.')[1]);
+                                    }
+
+                                    var vatRow = breakdownHarga[0].ChildElements.ToList()[3];
+                                    var adultVat = decimal.Parse(vatRow.ChildElements.ToList()[1].InnerText.Split('.')[1]);
+                                    var childVat = decimal.Parse("0");
+                                    if (conditions.ChildCount > 0)
+                                    {
+                                        childVat = decimal.Parse(vatRow.ChildElements.ToList()[2].InnerText.Split('.')[1]);
+                                    }
+
                                     var hargaAdult = 0M;
                                     var hargaChild = 0M;
                                     var hargaInfant = 0M;
+                                    var adultTax = adultIns + adultPsc + adultVat;
+                                    var childTax = childPsc + childIns + childVat;
+                                    
+                                    var taxTable = ambilDataAjax[".itern-rgt-txt-2>p>span"];
                                     try
                                     {
-                                        hargaAdult = decimal.Parse(breakdownHarga[0].InnerText.Split('.')[1]);
-                                        hargaChild = decimal.Parse(breakdownHarga[1].InnerText.Split('.')[1]);
-                                        hargaInfant = decimal.Parse(breakdownHarga[2].InnerText.Split('.')[1]);
+                                        hargaAdult = decimal.Parse(taxTable[0].InnerText.Split('.')[1]) + adultTax;
+                                        hargaChild = decimal.Parse(taxTable[1].InnerText.Split('.')[1]) + childTax;
+                                        hargaInfant = decimal.Parse(taxTable[2].InnerText.Split('.')[1]);
+                                        if (conditions.InfantCount > 0)
+                                        {
+                                            var infantTax = harga - (hargaAdult + hargaChild + hargaInfant);
+                                            hargaInfant += infantTax;
+                                        }
+                                        
                                     } catch { }
 
                                     var segments = new List<FlightSegment>();

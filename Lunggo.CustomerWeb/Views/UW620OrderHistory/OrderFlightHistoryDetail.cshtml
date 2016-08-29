@@ -32,7 +32,7 @@
 <div class="container page-loading" ng-app="travorama" ng-class="{'page-loaded' : pageLoaded}" ng-controller="orderDetailController">
     <div class="row">
 
-        <div class="col-xs-3">
+        <div class="col-xs-3" ng-show="isLogin">
             @Html.Partial("/Views/Shared/travorama20/_SectionUserMenu.cshtml")
         </div>
         <!-- ******************** -->
@@ -48,11 +48,13 @@
 
                         <div class="info-buyer">
                             <header>
+                                <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                                    <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                                    <input type="text" name="Status" value="" id="message-input" />
+                                </form>
                                 <h4>
                                     <b>BUYER INFO</b>
-                                        <button  ng-hide="flight.payment.status == 3" href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" disabled>@Html.I18NString("CW00198")</button>
-                                    <a ng-hide="flight.payment.status != 3" href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" target="_blank">@Html.I18NString("CW00198")</a>
-                                    <a ng-if="flight.payment.method == 2 && flight.payment.status == 2" style="margin-right: 6px;" href="@Url.Action("Confirmation", "Flight", new {rsvNo = Model.RsvNo})" target="_blank" class="pull-right btn btn-yellow">Confirm</a>
+                                    <button class="pull-right btn btn-yellow" ng-click="submitRsvNo(flight.rsvNo, flight.rsvStatus)">{{ButtonText(flight.rsvStatus,flight.payment.method)}}</button>
                                 </h4>
                             </header>
                             <section>

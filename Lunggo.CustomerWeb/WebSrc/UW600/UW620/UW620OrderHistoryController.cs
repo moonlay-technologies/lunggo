@@ -7,6 +7,7 @@ using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Object;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Product.Constant;
 
 namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
 {
@@ -39,21 +40,81 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
 
         public ActionResult OrderFlightHistoryDetail(string rsvNo)
         {
-            //var flight = FlightService.GetInstance();
-            //var reservation = flight.GetReservationForDisplay(rsvNo);
-            if (Request.Cookies["authkey"] != null)
+            return View(new FlightReservationForDisplay
             {
-                return View(new FlightReservationForDisplay
+                RsvNo = rsvNo
+            });
+        }
+
+        [HttpPost]
+        public ActionResult OrderFlightHistoryDetail(string rsvNo, string status)
+        {
+            var flightService = ApCommon.Flight.Service.FlightService.GetInstance();
+            var displayReservation = flightService.GetReservationForDisplay(rsvNo);
+            if (displayReservation != null)
+            {
+                switch (displayReservation.RsvDisplayStatus)
                 {
-                    RsvNo = rsvNo
-                });
-            }
-            else
-            {
-                return RedirectToAction("Index", "UW000TopPage");
+                    case RsvDisplayStatus.Cancelled:
+                        return RedirectToAction("Index", "UW000TopPage"); // buat cari baru, blom fix
+
+                    case RsvDisplayStatus.Expired:
+                        return RedirectToAction("Index", "UW000TopPage"); // buat cari baru, blom fix
+
+                    case RsvDisplayStatus.FailedPaid:
+                        return RedirectToAction("Thankyou", "Flight", new { rsvNo = rsvNo });
+
+                    case RsvDisplayStatus.FailedUnpaid:
+                        return RedirectToAction("Thankyou", "Flight", new { rsvNo = rsvNo });
+
+                    case RsvDisplayStatus.Issued:
+                        return RedirectToAction("Eticket", "Flight", new { rsvNo = rsvNo });
+
+                    case RsvDisplayStatus.Paid:
+                        return RedirectToAction("Thankyou", "Flight", new { rsvNo = rsvNo });
+
+                    case RsvDisplayStatus.PaymentDenied:
+                        return RedirectToAction("Thankyou", "Flight", new { rsvNo = rsvNo });
+
+                    case RsvDisplayStatus.PendingPayment:
+
+                        if (displayReservation.Payment.Method == PaymentMethod.BankTransfer || displayReservation.Payment.Method == PaymentMethod.VirtualAccount)
+                        {
+                            return RedirectToAction("Confirmation", "Flight", new { rsvNo = rsvNo }); // jika bank transfer & VA
+                        }
+                        else if (displayReservation.Payment.Method == PaymentMethod.CimbClicks)
+                        {
+                            return Redirect(displayReservation.Payment.RedirectionUrl);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Thankyou", "Flight", new { rsvNo = rsvNo });
+                        }
+
+                    case RsvDisplayStatus.Reserved:
+                        return RedirectToAction("Payment", "Flight", new { rsvNo = rsvNo });
+
+                    case RsvDisplayStatus.VerifyingPayment:
+                        if (displayReservation.Payment.Method == PaymentMethod.BankTransfer || displayReservation.Payment.Method == PaymentMethod.VirtualAccount)
+                        {
+                            return RedirectToAction("Confirmation", "Flight", new { rsvNo = rsvNo }); // jika bank transfer & VA
+                        }
+                        else if (displayReservation.Payment.Method == PaymentMethod.CimbClicks)
+                        {
+                            return Redirect(displayReservation.Payment.RedirectionUrl);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Thankyou", "Flight", new { rsvNo = rsvNo });
+                        }
+
+                    default:
+                        return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", new { rsvNo = rsvNo });
+
+                }
             }
 
-            
+            return View();
         }
 
         [AllowAnonymous]

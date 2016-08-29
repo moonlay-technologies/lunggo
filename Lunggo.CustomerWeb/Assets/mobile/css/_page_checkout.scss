@@ -148,7 +148,7 @@
         margin: 20px 0;
         font-size: 14px; 
     }
-    .col-left {width: 55%;}
+    .col-left {width: 55%; font-weight: 700;}
     .col-middle {width: 3%;}
     .col-right {width: 42%;}
     .col-left, .col-middle, .col-right {
@@ -156,6 +156,7 @@
         position: relative;
         min-height: 1px; 
     }
+    .bottom-divider {margin-bottom: 7.5px;}
 }
 
 
@@ -172,6 +173,18 @@
                     dd {float:left; width:60%; position:relative; padding-left:12px;
                         &:before {position:absolute; content:":"; top:0; left:0;}
                     }
+                }
+            }
+        }
+        .transfer-instruction {font-size: 12px;
+            ol {
+                margin-left:5px;
+                padding-left:5px;
+                margin-top:5px;
+                li.order-list {
+                    margin-bottom:5px; 
+                    margin-left:5px;
+                    padding-left:0;
                 }
             }
         }

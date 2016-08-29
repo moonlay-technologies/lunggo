@@ -23,7 +23,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
             {
                 var request = Request.Content.ReadAsStringAsync().Result.Deserialize<RegisterDeviceApiRequest>();
                 var apiResponse = await RegistrationLogic.RegisterDevice(request);
-                return apiResponse;
+                return apiResponse; 
             }
             catch (Exception e)
             {

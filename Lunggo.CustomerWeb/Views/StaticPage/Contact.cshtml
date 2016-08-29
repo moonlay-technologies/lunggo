@@ -1,7 +1,9 @@
-﻿@{
+﻿@using System.Web.UI.WebControls
+@{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-static page-contact";
     ViewBag.Title = "Hubungi Travorama";
+    ViewBag.Angular = "ContactController";
 }
 
 @section AdditionalJS{
@@ -21,36 +23,37 @@
                 center: { lat: -6.226352, lng: 106.808520 },
                 zoom: 15,
                 styles: [
-                      {
-                          "stylers": [
+                    {
+                        "stylers": [
                             { "saturation": -100 }
-                          ]
-                      }
+                        ]
+                    }
                 ]
             });
         }
     </script>
+    <script src="/Assets/travorama20/js/ContactController.js"></script>
 }
 
 <section class="section-map">
     <div id="map"></div>
 </section>
 
-<section class="section-contact">
-    
-    <h1 class="text-center section-title stripe">GET IN <span>TOUCH</span></h1>
-    <h4 class="text-center section-subtitle">We are Here to Help You</h4>
-    
+<section class="section-contact" ng-app="travorama" ng-controller="ContactController">
+
+    <h1 class="text-center section-title stripe">Hubungi <span>Kami</span></h1>
+    @*<h4 class="text-center section-subtitle">We are Here to Help You</h4>*@
+
     <div class="container">
         <div class="row">
             <div class="col-xs-6">
                 <div class="contact-info">
-                    
+
                     <div class="contact address">
                         <h5>Alamat :</h5>
                         <p>
-                            Equity Tower 25th Floor, SCBD lot 9<br/>
-                            Jl. Jenderal Sudirman kav.52-53<br/>
+                            Equity Tower 25th Floor, SCBD lot 9<br />
+                            Jl. Jenderal Sudirman Kav.52-53<br />
                             Jakarta 12190
                         </p>
                     </div>
@@ -65,7 +68,7 @@
                         <h4>1 500 650</h4>
                     </div>
                     <div class="contact social">
-                        <h5>Social Media:</h5>
+                        <h5>Media Sosial:</h5>
                         <div class="container">
                             <div class="row">
                                 <div class="col-sm-4">Facebook</div>
@@ -85,31 +88,34 @@
                 </div>
             </div>
             <div class="col-xs-6 contact-form-wrapper">
-                <form novalidate>
-                    <p>We are happy to answer any question you have. Silakan kirimkan pesan melalui form di bawah ini.</p>
+                @if (ViewBag.Message != "")
+                {
+                    <div style="font-weight: bold">
+                        <p>@ViewBag.Message</p>
+                    </div>
+                }
+                
+                @using (Html.BeginForm("Contact", "StaticPage", FormMethod.Post, new { @class = "form form-horizontal", role = "form", name = "checkForm" }))
+                { @Html.AntiForgeryToken() 
+                    <p>Kami menerima pertanyaan Anda dengan senang hati. Silakan kirimkan pesan melalui form di bawah ini.</p>
+
                     <div class="form-group">
                         <label class="control-label">Nama : </label>
-                        <input type="text" name="Name" value="" class="form-control" />
+                        <input type="text" name="name" value="" class="form-control" ng-model="name" />
                     </div>
                     <div class="form-group">
                         <label class="control-label">E-mail : </label>
-                        <input type="email" name="Email" value="" class="form-control" />
+                        <input type="email" name="email" value="" class="form-control" ng-model="email" />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Pesan : </label>
-                        <textarea class="form-control"></textarea>
+                        <textarea class="form-control" name="message" ng-model="message"></textarea>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-yellow btn-lg pull-right">KIRIM</button>
+                        <button class="btn btn-yellow btn-lg pull-right" type="submit" ng-disabled="!send()">KIRIM</button>
                     </div>
-                </form>
-                <!-- if message sent start -->
-                <div>
-                    <p>Terima kasih telah menghubungi kami. </p>
-                </div>
-                <!-- if message sent end -->
+                }
             </div>
         </div>
     </div>
-
 </section><!-- .contact-form -->

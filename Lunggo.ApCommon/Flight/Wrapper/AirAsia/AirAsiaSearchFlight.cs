@@ -287,7 +287,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                         Currency curr;
 
-                        var currencyList = Currency.GetAllCurrencies(Payment.Constant.Supplier.AirAsia);
+                       var currencyList = Currency.GetAllCurrencies(Payment.Constant.Supplier.AirAsia);
                         if (!currencyList.TryGetValue(currency, out curr))
                         {
                             return new SearchFlightResult
