@@ -37,12 +37,14 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
                 RecipientList = new[] { "developer@travelmadezy.com" },
                 Subject = envPrefix + "Error 500 API Log",
             },
-                "<html><body>Stack Trace : <br/><br/>"
+                "<html><body>Exception : "
+                + e.Message
+                + "<br/><br/>Stack Trace : <br/><br/>"
                 + e.StackTrace
                 + "<br/><br/>Platform : "
                 + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
                 + "<br/><br/></body></html>");
-            return e.GetType() == typeof (JsonReaderException)
+            return e.GetType() == typeof(JsonReaderException)
                 ? ErrorInvalidJson()
                 : Error500();
         }
