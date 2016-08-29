@@ -32,7 +32,7 @@ namespace Lunggo.ApCommon.Identity.Users
         /// CountryCd for the user
         /// 
         /// </summary>
-        public virtual string CountryCd { get; set; }
+        public virtual string CountryCallCd { get; set; }
 
         /// <summary>
         /// PhoneNumber for the user
