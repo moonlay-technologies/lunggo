@@ -774,8 +774,8 @@ function flightPageSearchFormFunctions() {
     $('.date-picker').datepicker({
         numberOfMonths: 2,
         onSelect: function (data) {
-            data = data.substring(3, 5) + "/" + data.substring(0, 2) + "/" + data.substring(6, 10);
-            console.log(data);
+            //data = data.substring(3, 5) + "/" + data.substring(0, 2) + "/" + data.substring(6, 10);
+            //console.log(data);
             //console.log(trsdate);
             var target;
             var chosenDate = new Date(data);
@@ -1425,7 +1425,7 @@ function flightFormSearchFunctions() {
     $('.date-picker').datepicker({
         numberOfMonths: 2,
         onSelect: function (data) {
-            data = data.substring(3, 5) + "/" + data.substring(0, 2) + "/" + data.substring(6, 10);
+            //data = data.substring(3, 5) + "/" + data.substring(0, 2) + "/" + data.substring(6, 10);
             console.log(data);
             var target;
             var chosenDate = new Date(data);
