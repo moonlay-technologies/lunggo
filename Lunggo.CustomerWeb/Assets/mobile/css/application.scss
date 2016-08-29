@@ -103,6 +103,12 @@ $button-border: #c9cdd2;
     transform: translate($x, $y);
 }
 
+@mixin appearance($value) {
+    -webkit-appearence: $value;
+    -moz-appearence: $value;
+    appearance: $value;
+}
+
 /*--------------------*/
 /* font */
 .os-light {font-weight: 300;}
@@ -142,16 +148,16 @@ img {max-width:100%;}
 
 .error-message {padding:5px 10px; background-color: #1daee4;}
 
-input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {-webkit-appearance:none;-moz-appearance:none; margin:0;}
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {@include appearance(none); margin:0;}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select.form-control {@include border-radius($border-radius-default);}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select.form-control {@include border-radius($border-radius-default); @include appearance(none);}
 .form-control {@include border-radius($border-radius-default)}
 
 input[type="text"], input[type="password"], input[type="number"], input[type="email"], select.form-control {box-shadow: none; font-size:12px; height:auto;}
 
 // *****
 // site header
-.site-header {position:fixed; top:0; left:0; width:100%; height:$header-height; z-index:999;
+.site-header {position:fixed; top:0; left:0; width:100%; height:$header-height; z-index:999; margin: 0;
     .header-display {background:#fff; text-align:center; height:$header-height; border-bottom: $border-form;
         .site-menu {width:30px; height:30px; background:url(/Assets/mobile/images/mobile-header-sprite.png) no-repeat; background-position:-30px 0; display:block; position:absolute; top:15px; left:10px;}
         .site-logo {height:30px; margin-top:15px; }
@@ -357,6 +363,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             font-size: 10px;
             color: $color-footer-txt;
             margin: 0 20px;
+            z-index: -1;
+            position: relative;
         }
     }
 }
@@ -784,7 +792,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-repeat: no-repeat;
     display: inline-block;
     vertical-align: middle;
-    background-size: 50% 50%;
+    background-size: 50%;
     position: absolute;
     content:''; 
 }
