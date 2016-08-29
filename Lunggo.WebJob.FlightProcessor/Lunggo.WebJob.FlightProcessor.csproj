@@ -143,6 +143,7 @@
     <None Include="App.Release.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-webjob %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob.pubxml" />
