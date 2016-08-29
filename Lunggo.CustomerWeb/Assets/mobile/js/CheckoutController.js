@@ -831,15 +831,15 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             }
 
             if (passenger.birth.year == minYear) {
-                if (passenger.birth.month <= $scope.flightDetail.departureFullDate.getMonth()) {
-                    passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth();
+                if (passenger.birth.month - 1 <= $scope.flightDetail.departureFullDate.getMonth()) {
+                    passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
                     if (passenger.birth.date < $scope.flightDetail.departureFullDate.getDate()) {
                         passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
                     }
                 }
             } else if (passenger.birth.year == $scope.bookingDate.getFullYear()) {
-                if (passenger.birth.month >= $scope.flightDetail.departureFullDate.getMonth()) {
-                    passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth();
+                if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth()) {
+                    passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
                     if (passenger.birth.date > $scope.flightDetail.departureFullDate.getDate()) {
                         passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
                     }
@@ -852,8 +852,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     // validate passport expiry date
     $scope.validatePassport = function (passenger) {
         if (passenger.passport.expire.year == $scope.flightDetail.passportDepartureFullDate.getFullYear()) {
-            if (passenger.passport.expire.month < $scope.flightDetail.passportDepartureFullDate.getMonth()) {
-                passenger.passport.expire.month = $scope.flightDetail.passportDepartureFullDate.getMonth();
+            if (passenger.passport.expire.month -1 < $scope.flightDetail.passportDepartureFullDate.getMonth()) {
+                passenger.passport.expire.month = $scope.flightDetail.passportDepartureFullDate.getMonth() + 1;
                 if (passenger.passport.expire.date < $scope.flightDetail.passportDepartureFullDate.getDate()) {
                     passenger.passport.expire.date = $scope.flightDetail.passportDepartureFullDate.getDate();
                 }
