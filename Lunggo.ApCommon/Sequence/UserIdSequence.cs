@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Sequence
             _properties = new SequenceProperties
             {
                 Name = "UserIdSequence",
-                InitialValue = 1
+                InitialValue = 20000
             };
             Init(_properties);
         }
