@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Sequence
             _properties = new SequenceProperties
             {
                 Name = "VoucherSequence",
-                InitialValue = 7484
+                InitialValue = 20000
             };
             Init(_properties);
         }

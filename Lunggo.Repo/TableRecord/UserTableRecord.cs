@@ -56,13 +56,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("SecurityStamp");
 		    }
 		}
-		public String CountryCd
+		public String CountryCallCd
 		{
-		    get { return _CountryCd; }
+		    get { return _CountryCallCd; }
 		    set
 		    {
-		        _CountryCd = value;
-		        IncrementLog("CountryCd");
+		        _CountryCallCd = value;
+		        IncrementLog("CountryCallCd");
 		    }
 		}
 		public String PhoneNumber
@@ -162,7 +162,7 @@ namespace Lunggo.Repository.TableRecord
 		private Boolean? _EmailConfirmed;
 		private String _PasswordHash;
 		private String _SecurityStamp;
-		private String _CountryCd;
+		private String _CountryCallCd;
 		private String _PhoneNumber;
 		private Boolean? _PhoneNumberConfirmed;
 		private Boolean? _TwoFactorEnabled;
@@ -209,7 +209,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("EmailConfirmed", false),
 				new ColumnMetadata("PasswordHash", false),
 				new ColumnMetadata("SecurityStamp", false),
-				new ColumnMetadata("CountryCd", false),
+				new ColumnMetadata("CountryCallCd", false),
 				new ColumnMetadata("PhoneNumber", false),
 				new ColumnMetadata("PhoneNumberConfirmed", false),
 				new ColumnMetadata("TwoFactorEnabled", false),

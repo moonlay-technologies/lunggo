@@ -1,5 +1,6 @@
 ﻿.form-wrapper {
     margin: 0 0 15px;
+    padding: 20px 12px;
     min-height: 100%;
     background: none; 
     border: 0;
@@ -54,18 +55,18 @@
             &.icon-pp {
                 background-image: url($icon-calendar);
                 @extend .display-icon;
-                @include size(47px, 46px);
-                top: 18px;
+                @include size(37px, 26px);
+                top: 20px;
             } &.icon-return {
                 background-image: url($icon-loop);
                 @extend .display-icon;
-                @include size(43px, 43px);
+                @include size(33px, 23px);
                 top: 20px;
             } &.icon-fc {
                 background-image: url($icon-medals);
                 @extend .display-icon;
-                @include size(59px, 56px);
-                top: 16px;
+                @include size(39px, 26px);
+                top: 20px;
             } &.icon-people {
                 background-image: url($icon-people);
                 @extend .display-icon;
@@ -122,13 +123,27 @@
             text-align: center;
         }
         .field-container {
-            margin-left: 37px;
             border-bottom: $border-form;
             padding: 21px 0;
+            margin-left: 26px;
+            &.form-adult, &.form-child, &.form-infant {
+                border-bottom: none;
+                margin-left: 0;
+            }
+            &.form-adult, &.form-child {
+                padding: 0 13px 0 0;
+            }
+            &.form-infant {
+                padding: 0;
+            }
             p, select {
                 cursor: pointer;
             }
-            &.form-child, &.form-infant {margin-left: 15px;}           
+            .field-wrapper {
+                padding: 21px 0;
+                border-bottom: 1px solid #dddddd;
+                text-align: center;
+            }
         }
         .flip-container {
             position: relative;
@@ -187,5 +202,31 @@
                 }
             }
         }
+    }    
+    
+}
+.col-custom-logo {
+    width: 9%;
+        &.icon-adult:before {
+        @extend .display-icon;
+        @include size(36px, 24px);
+        background-image:url($icon-adult); 
+        top: 20px;
+    } &.icon-child:before {
+        @extend .display-icon;
+        @include size(36px, 24px);
+        background-image:url($icon-children); 
+        top: 20px;
+    } &.icon-infant:before {
+        @extend .display-icon;
+        @include size(35px, 24px);
+        background-image:url($icon-infant);
+        top: 20px; 
     }
+}
+.col-custom-field {width: 24.333333333333332%}
+.col-custom-logo, .col-custom-field {
+    float: left;
+    position: relative;
+    min-height: 1px;
 }

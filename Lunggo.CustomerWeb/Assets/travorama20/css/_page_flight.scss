@@ -48,7 +48,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         }
         .col-sm-3 {display:table;}
         .result-form-right {display:table-cell; vertical-align:middle;
-            .btn {padding:10px 0;}
+            .btn {padding:10px 15px;}
         }
         // form content
         form.change-flight {border-top:1px solid #6F879E; margin-top:15px; padding-top:15px; display:none;
@@ -92,6 +92,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                 .option {
                     span {text-align:left;}
                 }
+                span {vertical-align: middle;}
             }
             .change-flight-switch {width:24px; height:24px; padding-top:32px; background:url(/Assets/images/flight-switch-horizontal.png) center center no-repeat; background-size:contain; display:block; text-align:center; margin:0 auto; cursor:pointer;}
             .btn.btn-yellow {height:45px; vertical-align:middle; font-size:14px;}

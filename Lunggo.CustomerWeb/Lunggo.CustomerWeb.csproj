@@ -808,6 +808,15 @@
     <Content Include="Assets\images\header-bg-gray.jpg" />
     <Content Include="Assets\images\header-bg.jpg" />
     <Content Include="Assets\images\header.png" />
+    <Content Include="Assets\images\helpSection\arrow-down.png" />
+    <Content Include="Assets\images\helpSection\arrow-up.png" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-1.jpg" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-2.jpg" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-3.jpg" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-4.jpg" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-5.jpg" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-6.jpg" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-7.jpg" />
     <Content Include="Assets\images\hexagon-cover-blue.png" />
     <Content Include="Assets\images\hexagon-cover-yellow.png" />
     <Content Include="Assets\images\home-info-1.png" />
@@ -979,6 +988,7 @@
     <Content Include="Assets\images\ui-icons_454545_256x240.png" />
     <Content Include="Assets\images\ui-icons_888888_256x240.png" />
     <Content Include="Assets\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Assets\images\Untitled-2.png" />
     <Content Include="Assets\images\user-account-active-arrow.png" />
     <Content Include="Assets\images\user-account-sprite.png" />
     <Content Include="Assets\images\user-icon-white.png" />
@@ -1111,6 +1121,8 @@
     <Content Include="Assets\script\tv-common-300004.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDir.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
+    <Content Include="Assets\travorama20\css\help_section.css" />
+    <Content Include="Assets\travorama20\css\help_section.min.css" />
     <Content Include="Assets\travorama20\css\travorama20.css">
       <DependentUpon>travorama20.scss</DependentUpon>
     </Content>
@@ -1316,6 +1328,8 @@
     <Content Include="Assets\mobile\css\application.css.map">
       <DependentUpon>application.css</DependentUpon>
     </Content>
+    <Content Include="Assets\travorama20\css\help_section.scss" />
+    <Content Include="Assets\travorama20\css\help_section.css.map" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw %282%29.pubxml" />
@@ -2725,7 +2739,6 @@
   <ItemGroup>
     <Folder Include="Areas\Api\Views\Account\" />
     <Folder Include="Areas\Api\Views\Shared\" />
-    <Folder Include="Assets\images\NewFolder1\" />
     <Folder Include="Assets\travorama20\fonts\" />
     <Folder Include="Assets\travorama20\images\" />
     <Folder Include="Helper\" />

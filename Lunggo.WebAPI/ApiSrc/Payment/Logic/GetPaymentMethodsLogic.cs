@@ -31,6 +31,15 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                                 Name = "PT. Travel Madezy Internasional",
                                 LogoUrl = "https://ib.bankmandiri.co.id/retail/images/mandiri_logo.gif",
                                 Available = true
+                            },
+                            new BankDetails
+                            {
+                                Bank = 0,
+                                Account = "0987654321",
+                                Branch = "Dahan",
+                                Name = "PT. Travel Madezy Internasional",
+                                LogoUrl = "https://upload.wikimedia.org/wikipedia/en/thumb/2/27/BankNegaraIndonesia46-logo.svg/1280px-BankNegaraIndonesia46-logo.svg.png",
+                                Available = true
                             }
                         },
                         Available = true
@@ -42,17 +51,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     },
                     new Option
                     {
-                        Method = PaymentMethod.CimbClicks,
-                        Available = true
-                    },
-                    new Option
-                    {
                         Method = PaymentMethod.MandiriClickPay,
-                        Available = true
-                    },
-                    new Option
-                    {
-                        Method = PaymentMethod.MandiriBillPayment,
                         Available = true
                     },
                     new Option

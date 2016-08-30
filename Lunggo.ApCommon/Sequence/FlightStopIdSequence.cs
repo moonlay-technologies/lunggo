@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Sequence
             _properties = new SequenceProperties
             {
                 Name = "FlightStopIdSequence",
-                InitialValue = 7470
+                InitialValue = 20000
             };
             Init(_properties);
         }
