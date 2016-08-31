@@ -514,6 +514,7 @@ app.controller('orderDetailController', [
 
         $scope.pageLoaded = true;
         $scope.trial = 0;
+        $scope.isExist = false;
         $scope.getTime = function (dateTime) {
             return new Date(dateTime);
         }
@@ -696,6 +697,7 @@ app.controller('orderDetailController', [
                     if (returnData.data.status == "200") {
                         $scope.flight = returnData.data.flight;
                         $scope.datafailed = false;
+                        $scope.isExist = true;
                     }
                     else {
                         console.log('There is an error');
