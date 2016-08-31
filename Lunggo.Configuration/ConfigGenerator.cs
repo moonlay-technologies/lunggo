@@ -20,7 +20,7 @@ namespace Lunggo.Configuration
 
     public class ConfigGenerator
     {
-        private const DeploymentEnvironment Environment = DeploymentEnvironment.Local;
+        private const DeploymentEnvironment Environment = DeploymentEnvironment.DV2;
         private const bool DeployHtmlTemplate = true;
         private const string FileExtension = "*.properties";
         private const string FinalProjectConfigFile = "application.properties";
@@ -58,6 +58,7 @@ namespace Lunggo.Configuration
                 "BackendWeb", 
                 "CustomerWeb", 
                 "WebAPI", 
+                "WebJob.CurrencyCrawler",
                 "WebJob.MystiflyQueueHandler",
                 "WebJob.EmailQueueHandler", 
                 "WebJob.FlightProcessor",
@@ -431,6 +432,7 @@ namespace Lunggo.Configuration
             string[] projectList =
             {
                 "WebJob.EmailQueueHandler", 
+                "WebJob.CurrencyCrawler",
                 "WebJob.MystiflyQueueHandler",
                 "WebJob.FlightProcessor",
                 "WebJob.FlightCrawlScheduler",
@@ -456,6 +458,7 @@ namespace Lunggo.Configuration
             string[] projectList =
             {
                 "WebJob.EmailQueueHandler",
+                "WebJob.CurrencyCrawler",
                 "WebJob.MystiflyQueueHandler",
                 "WebJob.FlightProcessor",
                 "WebJob.FlightCrawlScheduler",
