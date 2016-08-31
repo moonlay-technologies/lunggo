@@ -291,9 +291,12 @@
                         </div><!-- .passenger -->
 
                         <div class="form-group">
+                            <div ng-show="hasDuplicatePaxName()" style="color:red">
+                                Nama Penumpang Tidak Boleh Ada yang Sama <br /> <br />
+                            </div>
                             <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
                             <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid || !CheckTitle(passengers) || (CheckoutConfig.BirthDateRequired && !CheckDate(passengers))
-                                    || (CheckoutConfig.PassportRequired && !CheckPassportDate(passengers))" ng-click="PageConfig.ChangePage(3)">
+                                    || (CheckoutConfig.PassportRequired && !CheckPassportDate(passengers)) || hasDuplicatePaxName()" ng-click="PageConfig.ChangePage(3)">
                                 LANJUT
                             </button>
                         </div>
