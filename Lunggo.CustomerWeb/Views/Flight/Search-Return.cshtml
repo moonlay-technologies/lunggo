@@ -929,6 +929,7 @@
     </div><!-- .search-result-container -->
     
     <!-- FLIGHT RETURN CONTAINER -->
+   
     <div class="flight-review-wrapper" ng-show="departureFlightConfig.chosenFlight > -1 && returnFlightConfig.chosenFlight > -1" ng-class="{'active': (pageConfig.overviewFlightDetailShowing || pageConfig.overviewPriceDetailShowing)}">
         <div class="container">
             <div class="flight-review">
@@ -1020,9 +1021,9 @@
                         <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="selectFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight);" @*ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" ng-click="pageConfig.redirectingPage"*@ />
                         @*<input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="revalidateSubmit()" />*@
                         @*<div ng-show="pageConfig.flightsValidated && (!departureFlightConfig.validateAvailable || !returnFlightConfig.validateAvailable )">
-                            <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-show="(departureFlightConfig.validateNewfare || returnFlightConfig.validateNewfare)" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" ng-disabled="pageConfig.redirectingPage" />
-                            <input type="submit" class="btn btn-yellow" value="PILIH KEMBALI" ng-hide="(departureFlightConfig.validateNewfare || returnFlightConfig.validateNewfare)" ng-click="closeOverview()" />
-                        </div>*@
+                                <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-show="(departureFlightConfig.validateNewfare || returnFlightConfig.validateNewfare)" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" ng-disabled="pageConfig.redirectingPage" />
+                                <input type="submit" class="btn btn-yellow" value="PILIH KEMBALI" ng-hide="(departureFlightConfig.validateNewfare || returnFlightConfig.validateNewfare)" ng-click="closeOverview()" />
+                            </div>*@
                     </div>
                 </section>
                 <footer class="flight-review-detail">
@@ -1127,15 +1128,18 @@
 
                         </section>
                     </section>
-                   
+
                 </footer>
+
                 <div class="price-detail" ng-show="pageConfig.overviewPriceDetailShowing">
                     <h3>Rincian Harga <span class="close-price-detail pull-right" ng-click="toggleOverviewPriceDetail()">X</span></h3>
                     <price-detail-directive flight="departureFlightConfig.flightList[departureFlightConfig.chosenFlight]"></price-detail-directive>
                     <!-- .price-detail -->
                 </div>
-            </div><!-- .flight-review -->
-        </div>
+            </div>
+
+        </div><!-- .flight-review -->
+    
     </div><!-- .flight-review-wrapper -->
 
     <div class="select-flight" ng-show="popup">

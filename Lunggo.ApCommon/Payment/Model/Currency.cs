@@ -119,7 +119,7 @@ namespace Lunggo.ApCommon.Payment.Model
                 return;
             symbol = symbol.ToUpper();
             using (var conn = DbService.GetInstance().GetOpenConnection())
-                CurrencyTableRepo.GetInstance().Update(conn, new CurrencyTableRecord { Symbol = symbol, Rate = rate, SupplierCd = SupplierCd.Mnemonic(supplier) });
+                CurrencyTableRepo.GetInstance().Update(conn, new CurrencyTableRecord { Symbol = symbol, Rate = rate, SupplierCd = SupplierCd.Mnemonic(supplier), UpdateDate = DateTime.UtcNow});
             var redis = RedisService.GetInstance();
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
             var rateKey = "currencyRate:" + symbol + ":" + supplier;
