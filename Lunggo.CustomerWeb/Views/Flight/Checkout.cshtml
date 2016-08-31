@@ -262,6 +262,7 @@
                                                     <div ng-show="!correctName" style="color:red">
                                                         Nama tidak boleh mengandung karakter selain alfabet dan spasi
                                                     </div>
+                                                    
                                                 </div>
                                                 <div class="form-group" ng-if="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
                                                     <label class="control-label important">Tanggal Lahir :</label>
@@ -347,13 +348,28 @@
                                 </div><!-- .passengerdetail -->
                                     
                                 <div class="step-button">
+                                    <div ng-show="hasDuplicatePaxName()" style="color:red">
+                                        Nama Penumpang Tidak Boleh Ada yang Sama <br/> <br />
+                                    </div>
+                                    @*<div ng-show="!CheckTitle(passengers)" style="color:red">
+                                        Gelar pada Penumpang Belum Ditambahkan <br /> <br />
+                                    </div>
+                                    <div ng-show="birthDateRequired && !Checkdate(passengers)" style=" color:red">
+                                        Tanggal Lahir Penumpang Belum Ditambahkan <br /> <br />
+                                    </div>
+                                    <div ng-show="(passportRequired && !CheckPassportDate(passengers))" style=" color:red">
+                                        Tanggal Kadaluarsa Paspor Penumpang Belum Ditambahkan <br /> <br />
+                                    </div>*@
+
                                     <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                                    <button class="btn btn-yellow" ng-click="changePage(3)" ng-disabled="passengersForm.$invalid || !CheckTitle(passengers) || (birthDateRequired && !CheckDate(passengers))
+                                    <button class="btn btn-yellow" ng-click="changePage(3)" ng-disabled="passengersForm.$invalid || !CheckTitle(passengers) || (birthDateRequired && !CheckDate(passengers)) || hasDuplicatePaxName()
                                              || (passportRequired && !CheckPassportDate(passengers))">
                                         LANJUTKAN
                                     </button>
                                 </div>
-                                <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Periksa kembali form Anda.</h4>
+                                <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">
+                                    Periksa kembali form Anda.
+                                </h4>
                                 
                             </div><!-- .content-step#step-2 -->
                             <!-- ******************** -->
