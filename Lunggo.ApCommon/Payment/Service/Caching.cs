@@ -33,7 +33,7 @@ namespace Lunggo.ApCommon.Payment.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "transferFee:" + rsvNo;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            redisDb.StringSet(redisKey, (RedisValue)transferFee, TimeSpan.FromMinutes(150));
+            redisDb.StringSet(redisKey, Convert.ToString(transferFee), TimeSpan.FromMinutes(150));
         }
 
         private static decimal GetTransferFeeFromCache(string rsvNo)
@@ -44,7 +44,7 @@ namespace Lunggo.ApCommon.Payment.Service
             var transferFee = redisDb.StringGet(redisKey);
             if (transferFee.IsNullOrEmpty)
                 return 0M;
-            return (decimal)transferFee;
+            return Convert.ToDecimal(transferFee);
         }
 
         // Penambahan Buat Delete TransferCode jika tidak digunakan

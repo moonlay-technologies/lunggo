@@ -58,6 +58,7 @@ namespace Lunggo.Configuration
                 "BackendWeb", 
                 "CustomerWeb", 
                 "WebAPI", 
+                "WebJob.CurrencyCrawler",
                 "WebJob.MystiflyQueueHandler",
                 "WebJob.EmailQueueHandler", 
                 "WebJob.FlightProcessor",
@@ -431,6 +432,7 @@ namespace Lunggo.Configuration
             string[] projectList =
             {
                 "WebJob.EmailQueueHandler", 
+                "WebJob.CurrencyCrawler",
                 "WebJob.MystiflyQueueHandler",
                 "WebJob.FlightProcessor",
                 "WebJob.FlightCrawlScheduler",
@@ -456,6 +458,7 @@ namespace Lunggo.Configuration
             string[] projectList =
             {
                 "WebJob.EmailQueueHandler",
+                "WebJob.CurrencyCrawler",
                 "WebJob.MystiflyQueueHandler",
                 "WebJob.FlightProcessor",
                 "WebJob.FlightCrawlScheduler",

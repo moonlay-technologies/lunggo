@@ -181,6 +181,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             request.Headers.Add("Authorization", "Basic " + authorizationKey);
             request.ContentType = "application/json";
             request.Accept = "application/json";
+            
             ProcessVtDirectRequestParams(request, data, transactionDetail, itemDetails, method);
             return request;
         }
@@ -211,6 +212,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     Duration = timeout,
                     Unit = "minute"
                 }
+                
             };
             if (method == PaymentMethod.CreditCard)
             {
@@ -249,7 +251,9 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                 requestParams.CimbClicks = new CimbClicks
                 {
                     Description = data.CimbClicks.Description,
-                    
+                    FinishRedirectUrl = FinishRedirectPath,
+                    UnfinishRedirectUrl = UnfinishRedirectPath,
+                    ErrorRedirectUrl = ErrorRedirectPath
                 };
 
             }

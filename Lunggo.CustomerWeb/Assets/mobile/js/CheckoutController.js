@@ -1,8 +1,28 @@
 ﻿// checkout controller
 app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interval', '$location', function ($http, $scope, $rootScope, $interval, $location) {
     
+    angular.element(document).ready(function () {
+        $('.nama').keydown(checkName);
+    });
+
+    function checkName(event) {
+
+        var key = window.event ? event.keyCode : event.which;
+
+        if ((event.keyCode >= 65 && event.keyCode <= 90) 
+            || (event.keyCode >= 97 && event.keyCode <= 122) || event.keyCode === 13 || event.keyCode === 20
+            || event.keyCode === 32 || event.keyCode === 8 || event.keyCode === 9 || event.keyCode === 46) {
+            $scope.correctName = true;
+        }
+        else {
+            $scope.correctName = false;
+        }
+
+    }
+    
     // *****
     // general variables
+    $scope.correctName = true;
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.pageLoaded = true;
     $scope.trial = 0;
@@ -81,6 +101,24 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
     // passengers
     $scope.passengers = [];
+    $scope.hasDuplicatePaxName = function () {
+        var namesSoFar = [];
+        for (var i = 0; i < $scope.passengers.length; ++i) {
+            var value = $scope.passengers[i].name;
+            if (value == null) {
+                return false;
+            }
+            if (value.length != 0) {
+                if (namesSoFar.indexOf(value.toLowerCase()) > -1) {
+                    return true;
+                } else {
+                    //Not in the array
+                    namesSoFar.push(value.toLowerCase());
+                }
+            }
+        }
+        return false;
+    }
 
     // flight detail
     $scope.flightDetail = {};

@@ -870,6 +870,44 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .clearer {
   clear: both; }
 
+/*ACCORDION*/
+.accordion-wrapper .accordion-title {
+  background-color: #35b6e7;
+  color: #fff;
+  cursor: pointer;
+  padding: 7px 15px;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 600; }
+  .accordion-wrapper .accordion-title.active:after {
+    content: "\2796"; }
+  .accordion-wrapper .accordion-title:after {
+    content: '\02795';
+    font-size: 13px;
+    color: #fff;
+    float: right;
+    margin-left: 5px; }
+
+.accordion-wrapper .accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  line-height: 16px;
+  margin-bottom: 5px; }
+  .accordion-wrapper .accordion-content.show {
+    max-height: 100%;
+    padding: 15px 20px;
+    border: 1px solid #e3e3e3;
+    background: #fff; }
+    .accordion-wrapper .accordion-content.show > ul {
+      list-style-type: none;
+      padding: 0; }
+      .accordion-wrapper .accordion-content.show > ul > li {
+        margin-bottom: 15px; }
+    .accordion-wrapper .accordion-content.show > ol {
+      padding: 0 15px; }
+      .accordion-wrapper .accordion-content.show > ol > li {
+        margin-bottom: 10px; }
+
 /*--------------------*/
 /* imports */
 @media (max-width: 1199px) {
@@ -4231,28 +4269,6 @@ Page Checkout Styling
 file : /Assets/travorama20/css/_page_checkout.scss
 
 */
-.page-checkout .form-group {
-  margin-bottom: 20px; }
-
-.page-checkout label.control-label {
-  font-weight: 400;
-  margin-bottom: 10px; }
-
-.page-checkout .checkout-content {
-  margin-bottom: 45px; }
-  .page-checkout .checkout-content h3 {
-    margin: 25px 0 15px;
-    font-size: 15px; }
-  .page-checkout .checkout-content .col-left, .page-checkout .checkout-content .col-right {
-    float: left; }
-  .page-checkout .checkout-content .col-left {
-    width: 66.66667%; }
-  .page-checkout .checkout-content .col-right {
-    width: 33.33333%;
-    padding-left: 25px; }
-  .page-checkout .checkout-content > .container {
-    max-width: none; }
-
 .page-checkout .tnc-popup {
   position: fixed;
   width: 100%;
@@ -4264,27 +4280,35 @@ file : /Assets/travorama20/css/_page_checkout.scss
   display: block; }
   .page-checkout .tnc-popup .popup {
     width: 480px;
-    height: 270px;
-    background: #fff;
-    background-repeat: no-repeat;
     position: absolute;
     margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    -ms-border-radius: 2px;
-    border-radius: 2px;
-    overflow: hidden; }
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); }
     .page-checkout .tnc-popup .popup .popup-container {
-      padding: 20px; }
-      .page-checkout .tnc-popup .popup .popup-container .popup-title {
-        color: #15b1e4;
-        font-size: 14px;
+      padding: 25px;
+      background: #ffffff;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+      border-radius: 5px; }
+      .page-checkout .tnc-popup .popup .popup-container .popup-header {
         text-align: center;
-        margin-bottom: 15px; }
+        margin-bottom: 35px; }
+        .page-checkout .tnc-popup .popup .popup-container .popup-header span.popup-title {
+          color: #15b1e4;
+          font-size: 16px;
+          font-weight: 700; }
+          .page-checkout .tnc-popup .popup .popup-container .popup-header span.popup-title.stripe {
+            background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;
+            width: 280px;
+            height: 14px;
+            padding-bottom: 15px;
+            background-size: 70%; }
       .page-checkout .tnc-popup .popup .popup-container .popup-list {
         margin-bottom: 40px; }
         .page-checkout .tnc-popup .popup .popup-container .popup-list > ol {
@@ -4316,22 +4340,44 @@ file : /Assets/travorama20/css/_page_checkout.scss
 .page-checkout .form-mandiri-payment .col-sm-right {
   width: 48%; }
 
-.page-checkout .passenger-detail .passenger-form, .page-checkout .content-step .flight-detail, .page-checkout .buyer-review, .page-checkout .passenger-review {
+.page-checkout .step-button .btn {
+  font-size: 13px;
+  width: 200px; }
+  .page-checkout .step-button .btn.btn-grey {
+    margin-right: 10px; }
+
+.form-group {
+  margin-bottom: 20px; }
+
+label.control-label {
+  font-weight: 400;
+  margin-bottom: 10px; }
+
+.checkout-content, .confirmation-content {
+  margin-bottom: 45px; }
+  .checkout-content h3, .confirmation-content h3 {
+    margin: 25px 0 15px;
+    font-size: 15px; }
+  .checkout-content .col-left, .checkout-content .col-right, .confirmation-content .col-left, .confirmation-content .col-right {
+    float: left; }
+  .checkout-content .col-left, .confirmation-content .col-left {
+    width: 66.66667%; }
+  .checkout-content .col-right, .confirmation-content .col-right {
+    width: 33.33333%;
+    padding-left: 25px; }
+  .checkout-content > .container, .confirmation-content > .container {
+    max-width: none; }
+
+.passenger-detail .passenger-form, .content-step .flight-detail, .buyer-review, .passenger-review {
   margin-bottom: 25px; }
 
-.page-checkout .passenger-detail .passenger-form header, .page-checkout .flight-detail header, .page-checkout .buyer-review header, .page-checkout .passenger-review header {
+.passenger-detail .passenger-form header, .flight-detail header, .buyer-review header, .passenger-review header, .instruction header, .transfer-instruction header {
   background: #1daee4;
   color: #fff;
   padding: 7px 15px;
   font-size: 13px;
   font-weight: 600;
   position: relative; }
-
-.page-checkout .step-button .btn {
-  font-size: 13px;
-  width: 200px; }
-  .page-checkout .step-button .btn.btn-grey {
-    margin-right: 10px; }
 
 .checkout-step {
   position: relative; }
@@ -4786,9 +4832,6 @@ file : /Assets/travorama20/css/_page_checkout.scss
   .widget-container .widget.flight .widget-content .route h4 {
     font-weight: bold; }
 
-.widget-container .widget.flight #return-flight {
-  margin-top: -20px; }
-
 .widget-container .widget.countdown .widget-content {
   background: #ffd632;
   padding: 12px; }
@@ -4924,23 +4967,16 @@ file : /Assets/travorama20/css/_page_checkout.scss
       right: 15px;
       font-size: 12px; }
 
-.page-confirmation .site-content {
-  padding: 24px 0; }
-
-.page-confirmation .confirmation-content .instruction header {
-  background: #1daee4;
-  color: #fff;
-  padding: 6px 12px;
-  margin-bottom: 12px; }
-
-.page-confirmation .confirmation-content .instruction .text {
-  padding-left: 100px;
+.page-confirmation .confirmation-content .instruction .pesanan-container {
   background: url(/Assets/images/exclamation-mark.png) top left no-repeat;
-  min-height: 80px; }
-  .page-confirmation .confirmation-content .instruction .text p + p {
-    margin-top: 12px;
-    border-top: 2px dashed #1daee4;
-    padding-top: 12px; }
+  margin: 12px; }
+  .page-confirmation .confirmation-content .instruction .pesanan-container .text {
+    max-width: 440px;
+    float: right; }
+    .page-confirmation .confirmation-content .instruction .pesanan-container .text p + p {
+      margin-top: 12px;
+      border-top: 2px dashed #1daee4;
+      padding-top: 12px; }
 
 .page-confirmation .confirmation-content .instruction .bank-detail {
   background: #cdf1ff;
@@ -4961,8 +4997,14 @@ file : /Assets/travorama20/css/_page_checkout.scss
       width: 50%;
       font-weight: bold; }
 
-.page-confirmation .confirmation-content .instruction .transfer-instruction .order-list {
-  font-size: 12px; }
+.page-confirmation .confirmation-content .instruction .transfer-instruction ol {
+  margin-left: 5px;
+  padding-left: 5px;
+  margin-top: 5px; }
+  .page-confirmation .confirmation-content .instruction .transfer-instruction ol li.order-list {
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding-left: 0; }
 
 .page-confirmation .confirmation-content .instruction .confirmation-order {
   background: #f4f4f4;
@@ -5012,6 +5054,12 @@ file : /Assets/travorama20/css/_page_checkout.scss
         border: 2px solid #1daee4; }
       .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight.return:before {
         background-position: -16px; }
+
+.page-confirmation .confirmation-content .instruction .btn-detail-penerbangan {
+  margin-top: 25px; }
+
+.page-confirmation .confirmation-content .instruction .instruction-accordion {
+  margin: 10px 0; }
 
 .page-confirmation .ui-datepicker {
   padding: 15px;
@@ -5210,6 +5258,35 @@ file : /Assets/travorama20/css/_page_checkout.scss
   .page-thankyou .order-detail .order-detail-right .payment-detail h5 {
     color: #1daee4;
     font-weight: bold; }
+
+.page-thankyou .bookfailed-popup .overlay-content .popup-container {
+  max-width: 280px;
+  float: right;
+  margin-top: 60px;
+  padding-right: 10px;
+  background: url("/Assets/images/travorama-logo-color.png");
+  background-repeat: no-repeat;
+  background-size: 30%; }
+  .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-header {
+    margin: 30px 0; }
+    .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-header span.popup-title {
+      color: #15b1e4;
+      font-size: 20px;
+      font-weight: 700; }
+      .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-header span.popup-title.stripe {
+        background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;
+        width: 280px;
+        height: 14px;
+        padding-bottom: 15px;
+        background-size: 100%; }
+  .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-desc {
+    font-size: 13px;
+    color: #000; }
+    .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-desc span.blue-txt {
+      color: #15b1e4; }
+  .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-btn {
+    padding: 25px;
+    float: right; }
 
 .page-overlay.flight-expired {
   z-index: 9999; }

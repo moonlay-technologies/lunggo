@@ -122,7 +122,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         break;
                 }
 
-                if (originCountry == "ID")
+                //if (originCountry == "ID")
                 {
                     string url = @"Flight/Select";
                     var searchRequest = new RestRequest(url, Method.GET);
@@ -149,14 +149,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     flightTable = searchedHtml[".avail-table-detail-table"];
                 }
 
-                else
-                {
-                    return new SearchFlightResult
-                    {
-                        IsSuccess = true,
-                        Itineraries = new List<FlightItinerary>()
-                    };
-                }
+                //else
+                //{
+                //    return new SearchFlightResult
+                //    {
+                //        IsSuccess = true,
+                //        Itineraries = new List<FlightItinerary>()
+                //    };
+                //}
 
                 // [Scrape]
 

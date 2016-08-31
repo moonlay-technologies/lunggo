@@ -11,13 +11,54 @@ app.controller('checkoutController', [
             } else {
                 $location.hash('page-1');
             }
+            
+            $('.nama').keydown(checkName);
+           
         });
+
+        
 
         $(window).on('hashchange', function () {
             if ($location.hash() != 'page-1' || $location.hash() != 'page-2') {
             }
         });
+        
+        
+        function checkName(event) {
 
+            var key = window.event ? event.keyCode : event.which;
+
+            if ((event.keyCode >= 65 && event.keyCode <= 90)
+                || (event.keyCode >= 97 && event.keyCode <= 122)  || event.keyCode === 13 || event.keyCode === 9
+                || event.keyCode === 32 || event.keyCode === 8 || event.keyCode === 46 || event.keyCode === 20) {
+                $scope.correctName = true;
+            }
+            else {
+                $scope.correctName= false;
+            }
+            
+        }
+
+        $scope.hasDuplicatePaxName = function ()
+        {
+            var namesSoFar = [];
+            for (var i = 0; i < $scope.passengers.length; ++i) {
+                var value = $scope.passengers[i].name;
+                if (value == null) {
+                    return false;
+                }
+                if (value.length != 0) {
+                    if (namesSoFar.indexOf(value.toLowerCase()) > -1) {
+                        return true;
+                    } else {
+                        //Not in the array
+                        namesSoFar.push(value.toLowerCase());
+                    }
+                } 
+            }
+            return false;
+        }
+        
         //********************
         // variables
         $scope.trial = 0;
@@ -34,7 +75,7 @@ app.controller('checkoutController', [
             { name: 'Ny.', value: 'Mistress' },
             { name: 'Nn.', value: 'Miss' }
         ];
-
+        $scope.correctName = true;
         $scope.msToTime = function (duration) {
         
             var milliseconds = parseInt((duration % 1000) / 100),
