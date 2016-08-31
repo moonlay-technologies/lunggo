@@ -1,9 +1,9 @@
 ﻿// checkout controller
 app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interval', '$location', function ($http, $scope, $rootScope, $interval, $location) {
     
-    angular.element(document).ready(function () {
-        $('.nama').keydown(checkName);
-    });
+    //angular.element(document).ready(function () {
+    //    $('.nama').keydown(checkName);
+    //});
 
     function checkName(event) {
 
