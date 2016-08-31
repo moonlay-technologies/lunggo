@@ -8,6 +8,7 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.I18nMessage;
+using Lunggo.Framework.Log;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Notifications;
 using Lunggo.Framework.Queue;
@@ -35,6 +36,7 @@ namespace Lunggo.WebAPI
             InitHtmlTemplateService();
             InitAutocompleteManager();
             InitNotificationService();
+            InitLogService();
         }
 
         private static void InitNotificationService()
@@ -140,5 +142,11 @@ namespace Lunggo.WebAPI
             table.Init(connString);
         }
 
+        public static void InitLogService()
+        {
+            var webhookUrl = ConfigManager.GetInstance().GetConfigValue("log", "slack");
+            var log = LogService.GetInstance();
+            log.Init(webhookUrl);
+        }
     }
 }

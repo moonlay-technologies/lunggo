@@ -56,7 +56,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
         {
             return
                 request != null &&
-                request.Handle != null;
+                !string.IsNullOrEmpty(request.Handle);
         }
     }
 }

@@ -83,8 +83,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RazorEngine.3.7.0\lib\net45\RazorEngine.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
+    <Reference Include="RestSharp, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\packages\ServiceStack.Text.3.9.71\lib\net35\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="Slack.Webhooks">
+      <HintPath>..\packages\Slack.Webhooks.0.1.6\lib\net40\Slack.Webhooks.dll</HintPath>
     </Reference>
     <Reference Include="StackExchange.Redis">
       <HintPath>..\packages\StackExchange.Redis.1.0.371\lib\net45\StackExchange.Redis.dll</HintPath>
@@ -205,6 +212,9 @@
     <Compile Include="BlobStorage\BlobStorageClient.cs" />
     <Compile Include="Exceptions\FileAlreadyExistException.cs" />
     <Compile Include="HtmlTemplate\HtmlTemplateClient.cs" />
+    <Compile Include="Log\LogClient.cs" />
+    <Compile Include="Log\LogService.cs" />
+    <Compile Include="Log\SlackLogClient.cs" />
     <Compile Include="Mail\MailClient.cs" />
     <Compile Include="Mail\MailModel.cs" />
     <Compile Include="Mail\MailService.cs" />

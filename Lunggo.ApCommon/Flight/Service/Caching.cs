@@ -318,6 +318,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     if (cacheObject.IsNull)
                     {
                         isSearched = false;
+                        cacheObjects.Add(new List<FlightItinerary>().ToCacheObject());
                         break;
                     }
                     cacheObjects.Add(cacheObject);
