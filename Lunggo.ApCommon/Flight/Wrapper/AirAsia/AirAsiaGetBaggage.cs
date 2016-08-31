@@ -41,29 +41,34 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 //Change to JSON Object
                 var objects = JArray.Parse(content);
-                string data = (string)objects[6]["details"][0]["feedesc"];
+                var data = objects[6]["details"];//(string)objects[6]["details"][0]["feedesc"];
+                string price = "";
+                string dummyBaggage = "";
+                int totalData = data.Count();
+                for (var i = 0; i < totalData; i++)
+                {
+                    price = (string)data[i]["value"];
+                    if (string.IsNullOrEmpty(price))
+                    {
+                        dummyBaggage = (string)data[i]["feedesc"];
+                    }
+                }
 
-                //Debug.Print(data);
-                var temp = data.Split(new string[] { "to" }, StringSplitOptions.None);
-                if (temp.Length > 1)
+                if (string.IsNullOrEmpty(dummyBaggage)) 
                 {
-                    baggage = temp[1].Trim().Replace("kg)", "").Trim();
-                    return baggage;
+                     var temp = dummyBaggage.Split(new string[] { "to" }, StringSplitOptions.None);
+                     if (temp.Length > 1)
+                     {
+                         baggage = temp[1].Trim().Replace("kg)", "").Trim();
+                         //return baggage;
+                     }
+                     else
+                     {
+                         return null;
+                     }
                 }
-                else
-                {
-                    return null;
-                }
-                
 
-                if (baggage != null || baggage != "")
-                {
-                    return baggage;
-                }
-                
-                
-                //Console.WriteLine(content);
-                
+                return string.IsNullOrEmpty(baggage) ? null : baggage;                
             }
         }
 

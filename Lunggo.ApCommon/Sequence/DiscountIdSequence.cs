@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Sequence
             _properties = new SequenceProperties
             {
                 Name = "DiscountIdSequence",
-                InitialValue = 1000
+                InitialValue = 20000
             };
             Init(_properties);
         }
