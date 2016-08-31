@@ -59,7 +59,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var keyDate = SetDate(date);
             var redis = RedisService.GetInstance();
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-            return (decimal)redisDb.HashGet(keyRoute, keyDate);
+            return Convert.ToDecimal(redisDb.HashGet(keyRoute, keyDate));
         }
 
         public List<decimal> GetLowestPricesForRangeOfDate(string origin, string destination, DateTime startingTime,
