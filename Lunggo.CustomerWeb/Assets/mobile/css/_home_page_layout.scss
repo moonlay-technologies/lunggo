@@ -105,7 +105,7 @@
         }
         .form__departure, .form__return, .form__roundtrip, .form__passenger, .form__flightclass {
             p, p.form-control, select.form-control {
-                -webkit-appearance: none;
+                @include appearance(none);
                 font-size:13px;
                 color: $color-black;
                 padding: 0;
@@ -125,7 +125,7 @@
         .field-container {
             border-bottom: $border-form;
             padding: 21px 0;
-            margin-left: 26px;
+            margin-left: 36px;
             &.form-adult, &.form-child, &.form-infant {
                 border-bottom: none;
                 margin-left: 0;
