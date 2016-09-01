@@ -160,7 +160,7 @@ namespace Lunggo.Configuration
                 CreateProjectLogDirectory(project);
                 var configFile = CreateProjectConfigurationFile(project);
                 WriteConfigurationFileToProject(configFile, project);
-                WriteConfigurationFileToLog(configFile, project);
+                //WriteConfigurationFileToLog(configFile, project);
                 var nonConfigFiles = GetAllNonConfigFilesByProjectName(project);
                 foreach (var nonConfigFile in nonConfigFiles)
                 {
