@@ -86,9 +86,24 @@
             }
         }
         // voucher
-        &.summary--voucher {background:#eaeaea; padding:10px;
+        &.summary--voucher {
+            background:#eaeaea;
+            padding:10px;
+            margin-bottom: 10px;
             h4 {font-weight:bold;}
-            form {}
+            .container_new p {
+                margin-left: 0;
+                margin-right: 0;
+                padding: 10px 0 0;
+            }
+            .form-horizontal .form-group {
+                margin-bottom: 10px;
+                .col-xs-offset-6 {
+                    margin: 0; 
+                    float: right;
+                    padding: 0;
+                }
+            }
         }
         // payment
         &.summary--payment {
@@ -157,6 +172,11 @@
         min-height: 1px; 
     }
     .bottom-divider {margin-bottom: 7.5px;}
+    
+    .form-horizontal .form-group {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
 
 
