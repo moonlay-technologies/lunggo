@@ -149,10 +149,10 @@ img {max-width:100%;}
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {@include appearance(none); margin:0;}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control, select.form-control {@include border-radius($border-radius-default); @include appearance(none);}
-.form-control {@include border-radius($border-radius-default)}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control {@include appearance(none);}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control, select.form-control {box-shadow: none; font-size:12px; height:auto;}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control, select.form-control {@include border-radius($border-radius-default); box-shadow: none; font-size:12px; height:auto;}
+.form-control {@include border-radius($border-radius-default)}
 
 // *****
 // site header
