@@ -295,7 +295,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                 sup {top:-7px;}
             }
         }
-        .flight-detail {border-top:$border-default; padding-bottom:20px; position:relative; height:auto; overflow:hidden; margin-bottom:0;
+        .flight-detail {border-top:$border-default; padding-bottom:20px; position:relative; height:auto; overflow:hidden; margin-bottom:0; display: none;
             &>h3 {padding:10px; padding-left:5%; font-weight:600; color:$color-main-blue; margin-top:10px; font-size:13px;
                 .close-flight-detail {color:#bbb; cursor:pointer; font-weight:bold; font-size:13px; margin-right:4px;}
             }
@@ -409,9 +409,6 @@ file: /Assets/travorama20/css/_page_flight.scss
             &:after {border-top:1px dashed $color-main-blue; content:""; display:block; width:100%; position:relative; top:-10px;}
             p {background:#fff; display:inline; font-style:italic; font-weight:600; color:$color-main-blue; background:#fff; position:relative; z-index:2; padding:0 10px;}
         }
-    }
-    .flight-review-wrapper.active .flight-review .price-detail > h3 {
-        
     }
 }
 
