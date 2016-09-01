@@ -208,6 +208,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     {
                         Code = splittedLine[1],
                         Name = splittedLine[2],
+                        FullName = splittedLine[3],
                         Type = AirlineTypeCd.Mnemonic(splittedLine[3])
                     });
                 }
@@ -306,6 +307,7 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public string Code { get; set; }
         public string Name { get; set; }
+        public string FullName { get; set; }
         public AirlineType Type { get; set; }
     }
 
