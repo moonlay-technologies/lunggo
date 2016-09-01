@@ -49,7 +49,7 @@
         var langCode = 'en';
         var paymentTimeout = '';
         // development only start
-        paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("u")');
+        paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("yyyy-MM-dd'T'HH:mm:ss")');
         console.log("TIME OUT: "+paymentTimeout);
         // countdown timer
         $('.timer').countdown(paymentTimeout, function(event) {
@@ -77,18 +77,18 @@
         var redirectionUrl;
         @if (Model.Reservation.Payment.RedirectionUrl != null) {
        @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-                            }
+                                    }
         var departureDate;
         @if (Model.Reservation.Itinerary.Trips != null)
         {
             if (Model.Reservation.Itinerary.Trips.Count == 2)
             {
                 @:departureDate = '@Model.Reservation.Itinerary.Trips[1].DepartureDate';
-                                                                    }
+                                                                            }
             else
             {
                 @:departureDate = '@Model.Reservation.Itinerary.Trips[0].DepartureDate';
-                                                                    }
+                                                                            }
         }
 
         // change current page
@@ -119,6 +119,7 @@
             <section class="checkout-content">
                 <div class="page__header">
                     <h1 class="text-center section-title stripe">Metode <span>Pembayaran</span></h1>
+                    
                 </div>
                 <div class="page__body" id="step-4">
                     <div class="summary summary--price">

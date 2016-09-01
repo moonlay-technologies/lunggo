@@ -25,7 +25,7 @@ app.controller('paymentController', [
             Cvv: '',
             Number: ''
         };
-
+        
         //Mandiri CLick Pay
         $scope.MandiriClickPay = {
             Token: '',
