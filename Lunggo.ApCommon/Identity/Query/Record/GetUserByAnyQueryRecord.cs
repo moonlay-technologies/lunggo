@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Identity.Query.Record
 
         public string SecurityStamp { get; set; }
 
-        public string CountryCd { get; set; }
+        public string CountryCallCd { get; set; }
         
         public string PhoneNumber { get; set; }
 
