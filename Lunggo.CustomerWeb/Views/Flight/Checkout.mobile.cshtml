@@ -605,7 +605,7 @@
                 </div>
             </div>
 
-            <div class="popup__wrapper" ng-class="{'active': book.checked == true && book.isSuccess == false}">
+            <div class="popup__wrapper" ng-class="{'active': book.checked == true && book.isSuccess == false && !book.isPriceChanged}">
                 <div class="popup">
                     <header class="popup__header">
                         <h4 class="popup__title">Pemesanan Gagal</h4>

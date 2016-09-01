@@ -48,7 +48,7 @@
     var langCode = 'en';
     var paymentTimeout = '';
     // development only start
-    paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("u")');
+    paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("yyyy-MM-dd'T'HH:mm:ss")');
     console.log("TIME OUT"+paymentTimeout);
     // countdown timer
     $('.timer').countdown(paymentTimeout, function(event) {

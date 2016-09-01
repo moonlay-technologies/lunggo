@@ -705,37 +705,6 @@
                 </div>
             </section><!-- .checkout-content -->
 
-            <!--<div class="page-overlay flight-expired" ng-show="expired">
-                <div class="overlay-content">
-                    <header>
-                        <h4>Checkout Kadaluarsa</h4>
-                    </header>
-                    <section>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-4 text-align">
-                                    <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
-                                </div>
-                                <div class="col-sm-8">
-                                    <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
-                                    <p>Silahkan klik tombol dibawah untuk kembali ke halaman pencarian.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <footer>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                </div>
-                                <div class="col-sm-6">
-                                    <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-                </div>
-            </div>--><!-- .page-overlay -->
             <div class="bookfailed-popup" ng-show="expired">
                 <div class="overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
@@ -750,25 +719,6 @@
                 </div>
             </div>
 
-            <!--<div class="page-overlay booking-flight" ng-hide="book.checked || !book.booking">
-                <div class="overlay-content">
-                    <header>
-                        <h4>Mohon Tunggu</h4>
-                    </header>
-                    <section>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-4 text-align">
-                                    <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
-                                </div>
-                                <div class="col-sm-8">
-                                    <p>Sedang memproses pemesanan Anda ke maskapai. Proses ini dapat berlangsung hingga 5 (lima) menit.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div> -->
             <div class="loading-popup" ng-hide="book.checked || !book.booking">
                 <div class="overlay-content">
                     <section style="padding-top:40px; padding-left:190px;">
@@ -787,17 +737,6 @@
                 </div>
             </div>
 
-            <!--<div class="page-overlay booking-flight" ng-show="book.checked && book.isSuccess">
-                <div class="overlay-content">
-                    <header>
-                        <h4>Pemesanan Berhasil</h4>
-                    </header>
-                    <section>
-                        <p>Penerbangan Tersedia. Mengalihkan Anda ke halaman pembayaran.</p>
-                    </section>
-                </div>
-            </div>-->
-
             <div class="bookfailed-popup" ng-show="book.checked && book.isSuccess">
                 <div class=" overlay-content">
                 <section style="padding-top:60px; padding-left:225px;">
@@ -810,29 +749,7 @@
             </div>
             </div>
 
-            <!--<div class="page-overlay booking-flight" ng-show="book.checked && !book.isSuccess">
-                <div class="overlay-content">
-                    <header>
-                        <h4>Pemesanan Gagal</h4>
-                    </header>
-                    <section>
-                        <p>Mohon Maaf, pemesanan Anda gagal di proses.</p>
-                    </section>
-                    <footer>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                </div>
-                                <div class="col-sm-6">
-                                    <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-                </div>
-            </div>-->
-
-            <div class="bookfailed-popup" ng-show="book.checked && !book.isSuccess && !book.isPriceChanged">
+           <div class="bookfailed-popup" ng-show="book.checked && !book.isSuccess && !book.isPriceChanged">
                 <div class="overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
                         <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
@@ -845,33 +762,6 @@
                     </div>
                 </div>
             </div>
-
-            <!--<div class="page-overlay booking-flight" ng-show="book.isPriceChanged">
-                <div class="overlay-content">
-                    <header>
-                        <h4>Harga Berubah</h4>
-                    </header>
-                    <section>
-                        <p>
-                            Harga tiket untuk penerbangan ini berubah menjadi Rp {{book.newPrice | number : fractionSize}} disebabkan
-                            perubahan dari sistem maskapai.
-                        </p>
-                    </section>
-                    <footer>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <a class="btn btn-grey btn-block" href="{{returnUrl}}">KEMBALI</a>
-                                </div> 
-                                <form name="finalForm" id="finalForm" ng-submit="book.send()">
-                                    <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI" ng-disabled="(checkoutForm.loading)">
-                                </form>
-                            </div>
-                        </div>
-                    </footer>
-
-                </div>
-            </div> -->
 
             <div class="priceChaged-popup" ng-show="book.priceChanged">
                 <div class="overlay-content">
@@ -895,14 +785,6 @@
                                 </div>
                             </div>
                         </footer>
-                        <!--<div style="padding-top:0px;margin-top:0px;">
-                            <span style="padding-bottom:10px;padding-top:0px;margin-top:0px;margin-bottom:0px;"><a class="btn popup-btn-yellow price-changed" href="{{returnUrl}}">CARI ULANG</a></span>
-                            <span style="padding-left:40px;padding-bottom:10px;padding-top:0px;margin-top:0px;margin-bottom:0px;">
-                                <form name="finalForm" id="finalForm" ng-submit="book.send()">
-                                    <span style="padding-left:40px;padding-bottom:10px;padding-top:0px;margin-top:0px;margin-bottom:0px;"><a class="btn popup-btn-yellow price-changed" href="#"><b>LANJUTKAN</b></a></span>
-                                </form>
-                            </span>   
-                        </div>-->
                     </section>
                 </div>
             </div>
