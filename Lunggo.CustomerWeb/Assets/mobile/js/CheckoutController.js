@@ -9,9 +9,9 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
         var key = window.event ? event.keyCode : event.which;
 
-        if ((event.keyCode >= 65 && event.keyCode <= 90) 
-            || (event.keyCode >= 97 && event.keyCode <= 122) || event.keyCode === 13 || event.keyCode === 20
-            || event.keyCode === 32 || event.keyCode === 8 || event.keyCode === 9 || event.keyCode === 46) {
+        if ((event.keyCode >= 65 && event.keyCode <= 90) || event.keyCode == 16 || (event.keyCode >= 37 && event.keyCode <= 40)
+                || (event.keyCode >= 97 && event.keyCode <= 122) || event.keyCode === 13 || event.keyCode === 9
+                || event.keyCode === 32 || event.keyCode === 8 || event.keyCode === 46 || event.keyCode === 20) {
             $scope.correctName = true;
         }
         else {
@@ -119,6 +119,15 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         }
         return false;
     }
+    $scope.CheckOnlyAdult = function() {
+            var valid = true;
+            for (var x = 0; x < $scope.passengers.length; x++) {
+                if ($scope.passengers[x].type != 'adult'){
+                    valid = false;
+                }
+            }
+            return valid;
+        }
 
     // flight detail
     $scope.flightDetail = {};
@@ -582,8 +591,18 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         var valid = true;
         for (var x = 0; x < passengers.length; x++) {
             if (passengers[x].birth.date === $scope.dates($scope.flightDetail.departureFullDate.getMonth(), $scope.flightDetail.departureFullDate.getYear)[0]
-               || passengers[x].birth.month === $scope.months[12].value.toString() || passengers[x].birth.year == $scope.generateYear(passengers[x].type)[0]) {
+               || passengers[x].birth.month === $scope.months[0].value.toString() || passengers[x].birth.year == $scope.generateYear(passengers[x].type)[0]) {
                 valid = false;
+            }
+            else if (passengers[x].type != 'adult') {
+                if (passengers[x].birth.date == null || passengers[x].birth.month == null || passengers[x].birth.year == null) {
+                    valid = false;
+                }
+            }
+            else if (passengers[x].type == 'adult') {
+                if ($scope.CheckoutConfig.BirthDateRequired && (passengers[x].birth.date == null || passengers[x].birth.month == null || passengers[x].birth.year == null)) {
+                    valid = false;
+                }
             }
         }
         return valid;
@@ -593,13 +612,141 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         var valid = true;
         for (var x = 0; x < passengers.length; x++) {
             if (passengers[x].passport.expire.date === $scope.dates($scope.flightDetail.departureFullDate.getMonth(), $scope.flightDetail.departureFullDate.getYear)[0]
-               || passengers[x].passport.expire.month === $scope.months[12].value.toString() || passengers[x].passport.expire.year == $scope.generateYear(passengers[x].type)[0]) {
+               || passengers[x].passport.expire.month === $scope.months[0].value.toString() || passengers[x].passport.expire.year == $scope.generateYear(passengers[x].type)[0]) {
+                valid = false;
+            }
+            else if (passengers[x].passport.expire.date == null || passengers[x].passport.expire.month == null || passengers[x].passport.expire.year == null) {
                 valid = false;
             }
         }
         return valid;
     }
 
+    $scope.passportNumberFilled = function (paxes) {
+        var valid = true;
+        for (var i = 0; i < paxes.length; ++i) {
+            var value = paxes[i].passport.number;
+            if (value == null) {
+                valid = false;
+            } else {
+                if (value.length == 0) {
+                    valid = false;
+                }
+            }
+        }
+        return valid;
+    }
+
+    $scope.checkNameComplete = function (passengers) {
+        var valid = true;
+        for (var x = 0; x < passengers.length; x++) {
+            if (passengers[x].name == null || passengers[x].name == "") {
+                valid = false;
+            }
+        }
+        return valid;
+    }
+
+    $scope.checkEmail = function (email) {
+        if (email == null || email == "") {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    $scope.checkPhone = function (phone) {
+        if ($scope.buyerInfo.countryCode == 'xx') {
+            return false;
+        } else if ($scope.buyerInfo.countryCode != 'xx' && (phone == null || phone == "")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    $scope.validateForm = function (page) {
+        if (page == 1) {
+            if (!$scope.CheckTitle([$scope.buyerInfo])) {
+                $scope.form.incompleteContactTitle = true;
+            } else {
+                $scope.form.incompleteContactTitle = false;
+            }
+
+            if (!$scope.checkNameComplete([$scope.buyerInfo])) {
+                $scope.form.incompleteContactName = true;
+            } else {
+                $scope.form.incompleteContactName = false;
+            }
+
+
+            if (!$scope.checkPhone($scope.buyerInfo.phone)) {
+                $scope.form.incompleteContactPhone = true;
+            } else {
+                $scope.form.incompleteContactPhone = false;
+            }
+
+            if (!$scope.checkEmail($scope.buyerInfo.email)) {
+                $scope.form.incompleteContactEmail = true;
+            } else {
+                $scope.form.incompleteContactEmail = false;
+            }
+
+            if (!$scope.form.incompleteContactTitle && !$scope.form.incompleteContactName
+                && !$scope.form.incompleteContactPhone && !$scope.form.incompleteContactEmail) {
+                $scope.PageConfig.ChangePage(2);
+            }
+
+        }
+        if (page == 2) {
+            if ($scope.hasDuplicatePaxName()) {
+                $scope.form.hasDuplicatePaxName = true;
+            } else {
+                $scope.form.hasDuplicatePaxName = false;
+            }
+
+            if (!$scope.checkNameComplete($scope.passengers)) {
+                $scope.form.checkNameIncomplete = true;
+            } else {
+                $scope.form.checkNameIncomplete = false;
+            }
+
+            if (!$scope.CheckTitle($scope.passengers)) {
+                $scope.form.incompleteTitles = true;
+            } else {
+                $scope.form.incompleteTitles = false;
+            }
+
+            if (($scope.CheckoutConfig.BirthDateRequired || (!$scope.CheckoutConfig.BirthDateRequired && !$scope.CheckOnlyAdult())) && !$scope.CheckDate($scope.passengers)) {
+                $scope.form.incompleteBirthDates = true;
+            } else {
+                $scope.form.incompleteBirthDates = false;
+            }
+
+            if ($scope.CheckoutConfig.PassportRequired && (!$scope.CheckPassportDate($scope.passengers) || !$scope.passportNumberFilled($scope.passengers))) {
+                $scope.form.incompletePassportData = true;
+            } else {
+                $scope.form.incompletePassportData = false;
+            }
+
+            if (!$scope.form.hasDuplicatePaxName && !$scope.form.incompleteTitles && !$scope.form.incompleteBirthDates
+                && !$scope.form.incompletePassportData && !$scope.form.checkNameIncomplete) {
+                $scope.PageConfig.ChangePage(3);
+            }
+        }
+    }
+
+    $scope.form = {
+        incompleteContactTitle: false,
+        incompleteContactName: false,
+        incompleteContactPhone: false,
+        incompleteContactEmail: false,
+        hasDuplicatePaxName: false,
+        incompleteTitles: false,
+        incompleteBirthDates: false,
+        incompletePassportData: false,
+        checkNameIncomplete: false
+    }
     // credit card promo checker
     $scope.CreditCardPromo = {
         Type: '',

@@ -229,8 +229,20 @@
 
                                 </form><!-- #buyer-form -->
 
-                                <div class="step-button">
-                                    <button class="btn btn-yellow" ng-click="changePage(2)" ng-disabled="buyerForm.$invalid || buyerInfo.title == titles[0].value || buyerInfo.countryCode == 'xx'">LANJUTKAN</button>
+                                <div class="step-button" >
+                                    <div style="color:red" ng-show="form.incompleteContactTitle">
+                                        Gelar pada Nama Kontak Belum Ditambahkan <br/> <br />
+                                    </div>
+                                    <div style="color:red" ng-show="form.incompleteContactName">
+                                        Nama pada Data Kontak Belum Ditambahkan <br /> <br />
+                                    </div>
+                                    <div style="color:red" ng-show="form.incompleteContactPhone">
+                                        Nomor Telepon pada Data Kontak Belum Lengkap. Silakan Pilih Kode Negara atau Lengkapi Nomor Telepon<br /> <br />
+                                    </div>
+                                    <div style="color:red" ng-show="form.incompleteContactEmail">
+                                        Alamat E-Mail pada Data Kontak Belum Ditambahkan<br /> <br />
+                                    </div>
+                                    <button class="btn btn-yellow" ng-click="validateForm(1)" @*ng-disabled="buyerForm.$invalid"*@ @*|| buyerInfo.title == titles[0].value || buyerInfo.countryCode == 'xx'*@>LANJUTKAN</button>
                                 </div>
 
                             </div><!-- .content-step#step-1 -->
@@ -348,29 +360,32 @@
                                 </div><!-- .passengerdetail -->
                                     
                                 <div class="step-button">
-                                    <div ng-show="hasDuplicatePaxName()" style="color:red">
-                                        Nama Penumpang Tidak Boleh Ada yang Sama <br/> <br />
-                                    </div>
-                                    @*<div ng-show="!CheckTitle(passengers)" style="color:red">
+                                    <div ng-show="form.incompleteTitles" style="color:red">
                                         Gelar pada Penumpang Belum Ditambahkan <br /> <br />
                                     </div>
-                                    <div ng-show="birthDateRequired && !Checkdate(passengers)" style=" color:red">
+                                    <div ng-show="form.checkNameIncomplete" style="color:red">
+                                        Nama Penumpang Belum Lengkap atau Masih Mengandung Karakter Selain Alfabet dan Spasi<br/> <br/>
+                                    </div>
+                                    <div ng-show="form.hasDuplicatePaxName" style="color:red">
+                                        Nama Penumpang Tidak Boleh Ada yang Sama <br /> <br />
+                                    </div>
+                                    
+                                    <div ng-show="form.incompleteBirthDates" style=" color:red">
                                         Tanggal Lahir Penumpang Belum Ditambahkan <br /> <br />
                                     </div>
-                                    <div ng-show="(passportRequired && !CheckPassportDate(passengers))" style=" color:red">
-                                        Tanggal Kadaluarsa Paspor Penumpang Belum Ditambahkan <br /> <br />
-                                    </div>*@
-
+                                    <div ng-show="form.incompletePassportData" style="color:red">
+                                        Data Paspor Belum Lengkap
+                                    </div>
                                     <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                                    <button class="btn btn-yellow" ng-click="changePage(3)" ng-disabled="passengersForm.$invalid || !CheckTitle(passengers) || (birthDateRequired && !CheckDate(passengers)) || hasDuplicatePaxName()
-                                             || (passportRequired && !CheckPassportDate(passengers))">
+                                    <button class="btn btn-yellow" ng-click="validateForm(2)" @*ng-disabled="passengersForm.$invalid || !CheckTitle(passengers) || (birthDateRequired && !CheckDate(passengers)) || hasDuplicatePaxName()
+                                             || (passportRequired &&  (!CheckPassportDate(passengers) || !passportNumberFilled(passengers)))"*@>
                                         LANJUTKAN
                                     </button>
                                 </div>
                                 <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">
                                     Periksa kembali form Anda.
                                 </h4>
-                                
+
                             </div><!-- .content-step#step-2 -->
                             <!-- ******************** -->
                             <div class="content-step" id="step-3" ng-show="currentPage > 2">
@@ -424,7 +439,7 @@
                                             </div>
                                             
                                             <div class="passenger-list-content">
-                                                <p ng-if="birthDateRequired">
+                                                <p ng-if="birthDateRequired || passenger.type != 'adult'">
                                                     <span class="passenger-label">Tgl. Lahir</span>
                                                     <span class="passenger-data">{{passenger.birth.date}} {{months[passenger.birth.month].name}} {{passenger.birth.year}}</span>
                                                 </p>
