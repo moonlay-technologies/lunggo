@@ -125,16 +125,16 @@
         .field-container {
             border-bottom: $border-form;
             padding: 21px 0;
-            margin-left: 36px;
+            margin-left: 28px;
             &.form-adult, &.form-child, &.form-infant {
                 border-bottom: none;
                 margin-left: 0;
             }
             &.form-adult, &.form-child {
-                padding: 0 13px 0 0;
+                padding: 0 10px 0 28px;
             }
             &.form-infant {
-                padding: 0;
+                padding: 0 0 0 28px;
             }
             p, select {
                 cursor: pointer;
@@ -206,8 +206,7 @@
     
 }
 .col-custom-logo {
-    width: 9%;
-        &.icon-adult:before {
+    &.icon-adult:before {
         @extend .display-icon;
         @include size(36px, 24px);
         background-image:url($icon-adult); 
@@ -224,7 +223,7 @@
         top: 20px; 
     }
 }
-.col-custom-field {width: 24.333333333333332%}
+.col-custom-field {width: 33.333333333333332%}
 .col-custom-logo, .col-custom-field {
     float: left;
     position: relative;
