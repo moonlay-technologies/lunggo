@@ -104,9 +104,8 @@ $button-border: #c9cdd2;
 }
 
 @mixin appearance($value) {
-    -webkit-appearence: $value;
-    -moz-appearence: $value;
-    appearance: $value;
+    -webkit-appearance: $value;
+    -moz-appearance: $value;
 }
 
 /*--------------------*/
