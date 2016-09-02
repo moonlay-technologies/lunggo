@@ -48,6 +48,13 @@
                     span {color:#2ca3e1; font-weight:bold;}
                 }
             }
+            .flight-facility {display:block; padding-top:12px;
+                    span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin:0 5px; 
+                        &.flight-baggage {width:35px; background-position:-64px; text-align:center; color:#fff; position:relative; padding-top:5px; margin-top:-10px; top:-7px;}
+                        &.flight-tax {width:35px; background-position:-30px; padding-bottom:30px;}
+                        &.flight-meal {width:30px; padding-bottom:30px;}
+                    }
+                }
             .flight-content {@include clearfix();
                 .content-left {float:left; width:50%;
                     .flight-time {@include clearfix();
@@ -225,9 +232,16 @@
                     span {background:$color-main-blue; color:#fff; width:16px; height:16px; display:block; text-align:center; line-height:16px; font-size:12px;}
                 }
                 .flight__content {padding-left:25px;
-                    .flight__summary {@include clearfix();
+                    .flight__summary {@include clearfix(); width: 50%;
                         .flight__image {width:35px; height:auto; float:left;}
                         .flight__airline {color:$color-main-blue;}
+                    }
+                    .flight-facility {display:block; padding-top:12px;
+                        span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin:0 5px; 
+                            &.flight-baggage {width:35px; background-position:-64px; text-align:center; color:#fff; position:relative; padding-top:5px; margin-top:-10px; top:-7px;}
+                            &.flight-tax {width:35px; background-position:-30px; padding-bottom:30px;}
+                            &.flight-meal {width:30px; padding-bottom:30px;}
+                        }
                     }
                     .flight__detail {position:relative; @include clearfix();
                         &>div {float:left;}
