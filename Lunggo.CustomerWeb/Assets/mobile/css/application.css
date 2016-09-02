@@ -81,30 +81,28 @@ img {
   background-color: #1daee4; }
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearence: none;
-  -moz-appearence: none;
-  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   margin: 0; }
+
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none; }
 
 input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control, select.form-control {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
   border-radius: 2px;
-  -webkit-appearence: none;
-  -moz-appearence: none;
-  appearance: none; }
+  box-shadow: none;
+  font-size: 12px;
+  height: auto; }
 
 .form-control {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
   border-radius: 2px; }
-
-input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control, select.form-control {
-  box-shadow: none;
-  font-size: 12px;
-  height: auto; }
 
 .site-header {
   position: fixed;
@@ -371,7 +369,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   color: #000000;
   width: 100%;
   padding: 15px 0;
-  z-index: -1;
+  /*z-index: -1;*/
   position: relative; }
   .site-footer .site-footer-menu nav {
     padding: 0 12px; }
@@ -395,6 +393,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         color: #28a9e0; }
       .site-footer .site-footer-social nav .instagram .fa-circle {
         color: #9a6656; }
+      .site-footer .site-footer-social nav a:hover {
+        text-decoration: none; }
     .site-footer .site-footer-social .fa-stack {
       width: 2.5em;
       height: 1.8em;
@@ -579,16 +579,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding-left: 45px;
   text-align: center;
   height: 40px;
-  font-size: 14px; }
-  .overlay.overlay--flight-form form .form-adult:before, .overlay.overlay--flight-form form .form-children:before, .overlay.overlay--flight-form form .form-infant:before {
-    content: "";
-    display: block;
-    width: 22px;
-    height: 31px;
-    background: url(/Assets/mobile/images/passenger-sprite.png);
-    top: 5px;
-    left: 10px;
-    position: absolute; }
+  font-size: 14px;
+  /*&:before {content:""; display:block; width:22px; height:31px; background:url(/Assets/mobile/images/passenger-sprite.png); top:5px; left:10px; position:absolute;}*/ }
 
 .overlay.overlay--flight-form form .form-children:before {
   background-position: -22px 0; }
@@ -1111,6 +1103,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 100%;
     content: "";
     clear: both; }
+  .page.page-home.burger-shown {
+    overflow-y: hidden; }
   .page.page-home .form-container .form-wrapper {
     margin: 0 0 15px;
     padding: 20px 12px;
@@ -1200,6 +1194,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       margin: 0px auto; }
     .page.page-home .form-container .form-wrapper form .form__departure p, .page.page-home .form-container .form-wrapper form .form__departure p.form-control, .page.page-home .form-container .form-wrapper form .form__departure select.form-control, .page.page-home .form-container .form-wrapper form .form__return p, .page.page-home .form-container .form-wrapper form .form__return p.form-control, .page.page-home .form-container .form-wrapper form .form__return select.form-control, .page.page-home .form-container .form-wrapper form .form__roundtrip p, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control, .page.page-home .form-container .form-wrapper form .form__passenger p, .page.page-home .form-container .form-wrapper form .form__passenger p.form-control, .page.page-home .form-container .form-wrapper form .form__passenger select.form-control, .page.page-home .form-container .form-wrapper form .form__flightclass p, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control {
       -webkit-appearance: none;
+      -moz-appearance: none;
       font-size: 13px;
       color: #000000;
       padding: 0;
@@ -1220,14 +1215,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-home .form-container .form-wrapper form .field-container {
       border-bottom: 1px solid #dddddd;
       padding: 21px 0;
-      margin-left: 26px; }
+      margin-left: 28px; }
       .page.page-home .form-container .form-wrapper form .field-container.form-adult, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container.form-children, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container.form-children, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container.form-infant, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container.form-infant, .page.page-home .form-container .form-wrapper form .field-container.form-child, .page.page-home .form-container .form-wrapper form .field-container.form-infant {
         border-bottom: none;
         margin-left: 0; }
       .page.page-home .form-container .form-wrapper form .field-container.form-adult, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container.form-children, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container.form-children, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container.form-infant, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container.form-infant, .page.page-home .form-container .form-wrapper form .field-container.form-child {
-        padding: 0 13px 0 0; }
+        padding: 0 10px 0 28px; }
       .page.page-home .form-container .form-wrapper form .field-container.form-infant {
-        padding: 0; }
+        padding: 0 0 0 28px; }
       .page.page-home .form-container .form-wrapper form .field-container p, .page.page-home .form-container .form-wrapper form .field-container select {
         cursor: pointer; }
       .page.page-home .form-container .form-wrapper form .field-container .field-wrapper {
@@ -1305,25 +1300,23 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         -moz-border-radius: 50%;
         -ms-border-radius: 50%;
         border-radius: 50%; }
-  .page.page-home .form-container .col-custom-logo {
-    width: 9%; }
-    .page.page-home .form-container .col-custom-logo.icon-adult:before {
-      width: 36px;
-      height: 24px;
-      background-image: url("../images/dewasa.png");
-      top: 20px; }
-    .page.page-home .form-container .col-custom-logo.icon-child:before {
-      width: 36px;
-      height: 24px;
-      background-image: url("../images/anak.png");
-      top: 20px; }
-    .page.page-home .form-container .col-custom-logo.icon-infant:before {
-      width: 35px;
-      height: 24px;
-      background-image: url("../images/bayi.png");
-      top: 20px; }
+  .page.page-home .form-container .col-custom-logo.icon-adult:before {
+    width: 36px;
+    height: 24px;
+    background-image: url("../images/dewasa.png");
+    top: 20px; }
+  .page.page-home .form-container .col-custom-logo.icon-child:before {
+    width: 36px;
+    height: 24px;
+    background-image: url("../images/anak.png");
+    top: 20px; }
+  .page.page-home .form-container .col-custom-logo.icon-infant:before {
+    width: 35px;
+    height: 24px;
+    background-image: url("../images/bayi.png");
+    top: 20px; }
   .page.page-home .form-container .col-custom-field {
-    width: 24.333333333333332%; }
+    width: 33.333333333333332%; }
   .page.page-home .form-container .col-custom-logo, .page.page-home .form-container .col-custom-field {
     float: left;
     position: relative;
@@ -1630,6 +1623,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       margin: 0px auto; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass select.form-control {
       -webkit-appearance: none;
+      -moz-appearance: none;
       font-size: 13px;
       color: #000000;
       padding: 0;
@@ -1650,14 +1644,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container {
       border-bottom: 1px solid #dddddd;
       padding: 21px 0;
-      margin-left: 26px; }
+      margin-left: 28px; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-adult, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-children, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-infant, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-child, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-infant {
         border-bottom: none;
         margin-left: 0; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-adult, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-children, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-infant, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-child {
-        padding: 0 13px 0 0; }
+        padding: 0 10px 0 28px; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-infant {
-        padding: 0; }
+        padding: 0 0 0 28px; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container select {
         cursor: pointer; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper {
@@ -1735,25 +1729,23 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         -moz-border-radius: 50%;
         -ms-border-radius: 50%;
         border-radius: 50%; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo {
-    width: 9%; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-adult:before {
-      width: 36px;
-      height: 24px;
-      background-image: url("../images/dewasa.png");
-      top: 20px; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-child:before {
-      width: 36px;
-      height: 24px;
-      background-image: url("../images/anak.png");
-      top: 20px; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-infant:before {
-      width: 35px;
-      height: 24px;
-      background-image: url("../images/bayi.png");
-      top: 20px; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-adult:before {
+    width: 36px;
+    height: 24px;
+    background-image: url("../images/dewasa.png");
+    top: 20px; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-child:before {
+    width: 36px;
+    height: 24px;
+    background-image: url("../images/anak.png");
+    top: 20px; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-infant:before {
+    width: 35px;
+    height: 24px;
+    background-image: url("../images/bayi.png");
+    top: 20px; }
   .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-field {
-    width: 24.333333333333332%; }
+    width: 33.333333333333332%; }
   .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-field {
     float: left;
     position: relative;
@@ -2258,9 +2250,20 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .page.page-checkout .summary.summary--voucher {
   background: #eaeaea;
-  padding: 10px; }
+  padding: 10px;
+  margin-bottom: 10px; }
   .page.page-checkout .summary.summary--voucher h4 {
     font-weight: bold; }
+  .page.page-checkout .summary.summary--voucher .container_new p {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 10px 0 0; }
+  .page.page-checkout .summary.summary--voucher .form-horizontal .form-group {
+    margin-bottom: 10px; }
+    .page.page-checkout .summary.summary--voucher .form-horizontal .form-group .col-xs-offset-6 {
+      margin: 0;
+      float: right;
+      padding: 0; }
 
 .page.page-checkout .summary.summary--payment label {
   border: 1px solid #ccc;
@@ -2385,6 +2388,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .page.page-checkout .bottom-divider {
   margin-bottom: 7.5px; }
+
+.page.page-checkout .form-horizontal .form-group {
+  margin-left: 0;
+  margin-right: 0; }
 
 .page.page-confirmation .instruction header {
   background: #2fb4e6;

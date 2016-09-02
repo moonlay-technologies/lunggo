@@ -297,7 +297,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             };
                         }
                         itin.Price.SetSupplier(price, new Currency(currency, Payment.Constant.Supplier.AirAsia));
-                        itins.Add(itin);
+                        //itins.Add(itin);
 
                         //ambil row2nya (.fare-light-row)
                         var m = fareIds.IndexOf(fareId);
