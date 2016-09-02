@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
@@ -6,16 +6,16 @@ using System.Data;
 
 namespace Lunggo.Repository.TableRepository
 {
-    public class PersonTableRepo : TableDao<PersonTableRecord>, IDbTableRepository<PersonTableRecord> 
+	public class PersonTableRepo : TableDao<PersonTableRecord>, IDbTableRepository<PersonTableRecord> 
     {
-        private static readonly PersonTableRepo Instance = new PersonTableRepo("Person");
+		private static readonly PersonTableRepo Instance = new PersonTableRepo("Person");
         
         private PersonTableRepo(String tableName) : base(tableName)
         {
             ;
         }
 
-        public static PersonTableRepo GetInstance()
+		public static PersonTableRepo GetInstance()
         {
             return Instance;
         }
@@ -30,9 +30,19 @@ namespace Lunggo.Repository.TableRepository
             return Delete(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-        public int Update(IDbConnection connection, PersonTableRecord record)
+		public int Update(IDbConnection connection, PersonTableRecord record)
         {
             return Update(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
+		public PersonTableRecord Find1(IDbConnection connection, PersonTableRecord record)
+        {
+            return Find1(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
+		public IEnumerable<PersonTableRecord> Find(IDbConnection connection, PersonTableRecord record)
+        {
+            return Find(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
         public IEnumerable<PersonTableRecord> FindAll(IDbConnection connection)
@@ -60,6 +70,16 @@ namespace Lunggo.Repository.TableRepository
             return UpdateInternal(connection, record, definition);
         }
 
+		public PersonTableRecord Find1(IDbConnection connection, PersonTableRecord record, CommandDefinition definition)
+        {
+			return Find1Internal(connection, record, definition);
+        }
+
+		public IEnumerable<PersonTableRecord> Find(IDbConnection connection, PersonTableRecord record, CommandDefinition definition)
+        {
+			return FindInternal(connection, record, definition);
+        }
+
         public int DeleteAll(IDbConnection connection, CommandDefinition definition)
         {
             return DeleteAllInternal(connection, definition);
@@ -69,5 +89,5 @@ namespace Lunggo.Repository.TableRepository
         {
             return FindAllInternal(connection, definition);
         }
-    }
+	}	
 }

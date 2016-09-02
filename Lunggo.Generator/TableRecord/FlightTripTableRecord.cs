@@ -5,37 +5,55 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class CurrencyTableRecord : Lunggo.Framework.Database.TableRecord
+    public class FlightTripTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public String Symbol
+		public long? Id
 		{
-		    get { return _Symbol; }
+		    get { return _Id; }
 		    set
 		    {
-		        _Symbol = value;
-		        IncrementLog("Symbol");
+		        _Id = value;
+		        IncrementLog("Id");
 		    }
 		}
-		public Decimal? Rate
+		public long? ItineraryId
 		{
-		    get { return _Rate; }
+		    get { return _ItineraryId; }
 		    set
 		    {
-		        _Rate = value;
-		        IncrementLog("Rate");
+		        _ItineraryId = value;
+		        IncrementLog("ItineraryId");
 		    }
 		}
-		public Decimal? RoundingOrder
+		public String OriginAirportCd
 		{
-		    get { return _RoundingOrder; }
+		    get { return _OriginAirportCd; }
 		    set
 		    {
-		        _RoundingOrder = value;
-		        IncrementLog("RoundingOrder");
+		        _OriginAirportCd = value;
+		        IncrementLog("OriginAirportCd");
+		    }
+		}
+		public String DestinationAirportCd
+		{
+		    get { return _DestinationAirportCd; }
+		    set
+		    {
+		        _DestinationAirportCd = value;
+		        IncrementLog("DestinationAirportCd");
+		    }
+		}
+		public DateTime? DepartureDate
+		{
+		    get { return _DepartureDate; }
+		    set
+		    {
+		        _DepartureDate = value;
+		        IncrementLog("DepartureDate");
 		    }
 		}
 		public String InsertBy
@@ -92,43 +110,35 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UpdatePgId");
 		    }
 		}
-		public String SupplierCd
-		{
-		    get { return _SupplierCd; }
-		    set
-		    {
-		        _SupplierCd = value;
-		        IncrementLog("SupplierCd");
-		    }
-		}
 
 		
-		private String _Symbol;
-		private Decimal? _Rate;
-		private Decimal? _RoundingOrder;
+		private long? _Id;
+		private long? _ItineraryId;
+		private String _OriginAirportCd;
+		private String _DestinationAirportCd;
+		private DateTime? _DepartureDate;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
 		private String _UpdateBy;
 		private DateTime? _UpdateDate;
 		private String _UpdatePgId;
-		private String _SupplierCd;
 
 
-		public static CurrencyTableRecord CreateNewInstance()
+		public static FlightTripTableRecord CreateNewInstance()
         {
-            var record = new CurrencyTableRecord();
+            var record = new FlightTripTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public CurrencyTableRecord()
+		public FlightTripTableRecord()
         {
             ;
         }
 
-        static CurrencyTableRecord()
+        static FlightTripTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -137,23 +147,24 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "Currency";
+            _tableName = "FlightTrip";
         }
 
         private static void InitRecordMetadata()
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("Symbol", true),
-				new ColumnMetadata("Rate", false),
-				new ColumnMetadata("RoundingOrder", false),
+				new ColumnMetadata("Id", true),
+				new ColumnMetadata("ItineraryId", false),
+				new ColumnMetadata("OriginAirportCd", false),
+				new ColumnMetadata("DestinationAirportCd", false),
+				new ColumnMetadata("DepartureDate", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),
 				new ColumnMetadata("UpdateBy", false),
 				new ColumnMetadata("UpdateDate", false),
 				new ColumnMetadata("UpdatePgId", false),
-				new ColumnMetadata("SupplierCd", true),
 
             };
         }

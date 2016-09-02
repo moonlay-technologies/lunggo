@@ -7,8 +7,7 @@ namespace Lunggo.Repository.TableRecord
 {
     public class UserRoleTableRecord : Lunggo.Framework.Database.TableRecord
     {
-
-        private static List<ColumnMetadata> _recordMetadata;
+		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
@@ -76,7 +75,7 @@ namespace Lunggo.Repository.TableRecord
             _primaryKeys = _recordMetadata.Where(p => p.IsPrimaryKey).ToList();
         }
 
-        public override List<ColumnMetadata> GetMetadata()
+		public override List<ColumnMetadata> GetMetadata()
         {
             return _recordMetadata;
         }
@@ -90,5 +89,8 @@ namespace Lunggo.Repository.TableRecord
         {
             return _primaryKeys;
         }
+
+
+
     }
 }

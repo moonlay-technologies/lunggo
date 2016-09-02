@@ -52,7 +52,11 @@ namespace Lunggo.ApCommon.Product.Model
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var record = GetPriceQuery.GetInstance().Execute(conn, new { Id = priceId }).Single();
+                var record = GetPriceQuery.GetInstance().Execute(conn, new { Id = priceId }).SingleOrDefault();
+
+                if (record == null)
+                    return null;
+
                 return new Price
                 {
                     Supplier = record.SupplierPrice.GetValueOrDefault(),

@@ -35,6 +35,16 @@ namespace Lunggo.Repository.TableRepository
             return Update(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
+		public RefundTableRecord Find1(IDbConnection connection, RefundTableRecord record)
+        {
+            return Find1(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
+		public IEnumerable<RefundTableRecord> Find(IDbConnection connection, RefundTableRecord record)
+        {
+            return Find(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
         public IEnumerable<RefundTableRecord> FindAll(IDbConnection connection)
         {
             return FindAll(connection, CommandDefinition.GetDefaultDefinition());
@@ -58,6 +68,16 @@ namespace Lunggo.Repository.TableRepository
         public int Update(IDbConnection connection, RefundTableRecord record, CommandDefinition definition)
         {
             return UpdateInternal(connection, record, definition);
+        }
+
+		public RefundTableRecord Find1(IDbConnection connection, RefundTableRecord record, CommandDefinition definition)
+        {
+			return Find1Internal(connection, record, definition);
+        }
+
+		public IEnumerable<RefundTableRecord> Find(IDbConnection connection, RefundTableRecord record, CommandDefinition definition)
+        {
+			return FindInternal(connection, record, definition);
         }
 
         public int DeleteAll(IDbConnection connection, CommandDefinition definition)

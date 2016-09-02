@@ -20,43 +20,42 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Email");
 		    }
 		}
-        public String MaskedCardNumber
-        {
-            get { return _MaskedCardNumber; }
-            set
-            {
-                _MaskedCardNumber = value;
-                IncrementLog("MaskedCardNumber");
-            }
-        }
-        public String Token
-        {
-            get { return _Token; }
-            set
-            {
-                _Token = value;
-                IncrementLog("Token");
-            }
-        }
-        public String CardHolderName
-        {
-            get { return _CardHolderName; }
-            set
-            {
-                _CardHolderName = value;
-                IncrementLog("CardHolderName");
-            }
-        }
-        public DateTime? TokenExpiry
-        {
-            get { return _TokenExpiry; }
-            set
-            {
-                _TokenExpiry = value;
-                IncrementLog("TokenExpiry");
-            }
-        }
-
+		public String MaskedCardNumber
+		{
+		    get { return _MaskedCardNumber; }
+		    set
+		    {
+		        _MaskedCardNumber = value;
+		        IncrementLog("MaskedCardNumber");
+		    }
+		}
+		public String Token
+		{
+		    get { return _Token; }
+		    set
+		    {
+		        _Token = value;
+		        IncrementLog("Token");
+		    }
+		}
+		public String CardHolderName
+		{
+		    get { return _CardHolderName; }
+		    set
+		    {
+		        _CardHolderName = value;
+		        IncrementLog("CardHolderName");
+		    }
+		}
+		public DateTime? TokenExpiry
+		{
+		    get { return _TokenExpiry; }
+		    set
+		    {
+		        _TokenExpiry = value;
+		        IncrementLog("TokenExpiry");
+		    }
+		}
 
 		
 		private String _Email;

@@ -124,16 +124,16 @@
         .field-container {
             border-bottom: $border-form;
             padding: 21px 0;
-            margin-left: 28px;
+            margin-left: 30px;
             &.form-adult, &.form-child, &.form-infant {
                 border-bottom: none;
                 margin-left: 0;
             }
             &.form-adult, &.form-child {
-                padding: 0 10px 0 28px;
+                padding: 0 10px 0 30px;
             }
             &.form-infant {
-                padding: 0 0 0 28px;
+                padding: 0 0 0 30px;
             }
             p, select {
                 cursor: pointer;

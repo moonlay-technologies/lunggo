@@ -11,39 +11,7 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public String ActivityId
-		{
-		    get { return _ActivityId; }
-		    set
-		    {
-		        _ActivityId = value;
-		        IncrementLog("ActivityId");
-		    }
-		}
-		public DateTime? Date
-		{
-		    get { return _Date; }
-		    set
-		    {
-		        _Date = value;
-		        IncrementLog("Date");
-		    }
-		}
-		public Boolean? Avaliable
-		{
-		    get { return _Avaliable; }
-		    set
-		    {
-		        _Avaliable = value;
-		        IncrementLog("Avaliable");
-		    }
-		}
-
 		
-		private String _ActivityId;
-		private DateTime? _Date;
-		private Boolean? _Avaliable;
-
 
 		public static ActivitySwitchTableRecord CreateNewInstance()
         {
@@ -74,10 +42,6 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("ActivityId", true),
-				new ColumnMetadata("Date", true),
-				new ColumnMetadata("Avaliable", false),
-
             };
         }
 

@@ -10,5 +10,6 @@ namespace Lunggo.Framework.Log
     {
         internal abstract void Init(string webhookUrl);
         internal abstract void Post(string text);
+        internal abstract void Post(string text, string recipient);
     }
 }

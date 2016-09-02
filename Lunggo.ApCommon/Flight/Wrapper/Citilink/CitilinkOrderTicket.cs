@@ -76,7 +76,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     return new IssueTicketResult
                     {
                         IsSuccess = false,
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier },
+                        ErrorMessages = new List<string> { "Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code" }
                     };
 
                 url = "BookingListTravelAgent.aspx";
@@ -115,7 +116,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     {
                         CurrentBalance = GetCurrentBalance(),
                         IsSuccess = false,
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier },
+                        ErrorMessages = new List<string> { "Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code" }
                     };
 
                 try
@@ -186,7 +188,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         {
                             CurrentBalance = GetCurrentBalance(),
                             IsSuccess = false,
-                            Errors = new List<FlightError> { FlightError.FailedOnSupplier }
+                            Errors = new List<FlightError> { FlightError.FailedOnSupplier },
+                            ErrorMessages = new List<string> { "Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code" }
                         };
 
                     url = "BookingListTravelAgent.aspx";
@@ -241,6 +244,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             hasil.CurrentBalance = GetCurrentBalance();
                             hasil.IsSuccess = false;
                             hasil.Errors = new List<FlightError> { FlightError.FailedOnSupplier };
+                            hasil.ErrorMessages = new List<string> { "Status pembayaran is not Konfim or Confirmed" };
                         }
 
                     return hasil;

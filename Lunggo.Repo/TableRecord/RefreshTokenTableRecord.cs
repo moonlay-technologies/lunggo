@@ -38,15 +38,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ClientId");
 		    }
 		}
-        public String DeviceId
-        {
-            get { return _DeviceId; }
-            set
-            {
-                _DeviceId = value;
-                IncrementLog("DeviceId");
-            }
-        }
+		public String DeviceId
+		{
+		    get { return _DeviceId; }
+		    set
+		    {
+		        _DeviceId = value;
+		        IncrementLog("DeviceId");
+		    }
+		}
 		public DateTime? IssueTime
 		{
 		    get { return _IssueTime; }

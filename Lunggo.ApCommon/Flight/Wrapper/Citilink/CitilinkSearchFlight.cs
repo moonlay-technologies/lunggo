@@ -58,7 +58,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var htmlRespon = searchResponse.Content;
 
                 if (searchResponse.ResponseUri.AbsolutePath != "/ScheduleSelect.aspx")
-                    return new SearchFlightResult { Errors = new List<FlightError> { FlightError.FareIdNoLongerValid } };
+                    return new SearchFlightResult { 
+                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                        ErrorMessages = new List<string>{"Error while requesting at Search.aspx. Unexpected RensponseUri absolute path"}
+                    };
 
                 try
                 {
@@ -303,13 +306,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         };
                     return hasil;
                 }
-                catch
+                catch(Exception e)
                 {
                     return new SearchFlightResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Web Layout Changed!" }
+                        ErrorMessages = new List<string> { e.Message }
                     };
                 }
             }

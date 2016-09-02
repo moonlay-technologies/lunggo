@@ -77,6 +77,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         hasil.CurrentBalance = GetCurrentBalance();
                         hasil.IsSuccess = false;
                         hasil.Errors = new List<FlightError> { FlightError.FailedOnSupplier };
+                        hasil.ErrorMessages = new List<string> { "Error because status book is not Confirm or confirmed" };
                     }
                     
                     Logout(clientx);

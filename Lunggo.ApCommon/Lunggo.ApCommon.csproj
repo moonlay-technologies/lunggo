@@ -563,8 +563,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Subscriber\Query\GetSubscriberRowQuery.cs" />
-    <Compile Include="Subscriber\SubscriberEmailModel.cs" />
     <Compile Include="Travolutionary\TravolutionaryPreBookCheckResponse.cs" />
     <Compile Include="Trie\TrieIndexService.cs" />
     <Compile Include="Trie\TrieNode.cs" />
@@ -588,7 +586,6 @@
     <Compile Include="Travolutionary\TravolutionaryResponseBase.cs" />
     <Compile Include="Util\HotelFacilityUtil.cs" />
     <Compile Include="Util\UrlUtil.cs" />
-    <Compile Include="Subscriber\SubscriberService.cs" />
     <Compile Include="Voucher\Query\GetVoucherRecordQuery.cs" />
     <Compile Include="Voucher\VoucherEmailModel.cs" />
     <Compile Include="Voucher\VoucherService.cs" />

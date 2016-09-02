@@ -11,39 +11,7 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public int? CityCd
-		{
-		    get { return _CityCd; }
-		    set
-		    {
-		        _CityCd = value;
-		        IncrementLog("CityCd");
-		    }
-		}
-		public String CityName
-		{
-		    get { return _CityName; }
-		    set
-		    {
-		        _CityName = value;
-		        IncrementLog("CityName");
-		    }
-		}
-		public String LangCd
-		{
-		    get { return _LangCd; }
-		    set
-		    {
-		        _LangCd = value;
-		        IncrementLog("LangCd");
-		    }
-		}
-
 		
-		private int? _CityCd;
-		private String _CityName;
-		private String _LangCd;
-
 
 		public static CitiesTableRecord CreateNewInstance()
         {
@@ -74,10 +42,6 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("CityCd", true),
-				new ColumnMetadata("CityName", false),
-				new ColumnMetadata("LangCd", true),
-
             };
         }
 

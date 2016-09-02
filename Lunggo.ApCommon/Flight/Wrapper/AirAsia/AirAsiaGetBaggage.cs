@@ -30,8 +30,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         {
             public string GetBaggage(string origin, string destination)
             {
-                string baggage = "";
-                string baggages = "";
+                string baggage = "0";
                 var path = "http://www.airasia.com/api/feeandchargesapi/get?siteid=my/en&dep=" + origin + "&arr=" + destination;
                 var client = new RestClient(path);
                 var request = new RestRequest("", Method.GET);
@@ -51,24 +50,30 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     if (string.IsNullOrEmpty(price))
                     {
                         dummyBaggage = (string)data[i]["feedesc"];
+                        Debug.Print("Dummy Bagasi : " + dummyBaggage);
                     }
                 }
 
-                if (string.IsNullOrEmpty(dummyBaggage)) 
+                //Debug.Print(data);
+                if (!string.IsNullOrEmpty(dummyBaggage))
                 {
-                     var temp = dummyBaggage.Split(new string[] { "to" }, StringSplitOptions.None);
-                     if (temp.Length > 1)
-                     {
-                         baggage = temp[1].Trim().Replace("kg)", "").Trim();
-                         //return baggage;
-                     }
-                     else
-                     {
-                         return null;
-                     }
-                }
+                    var temp = dummyBaggage.Split(new string[] { "to" }, StringSplitOptions.None);
+                    if (temp.Length > 1)
+                    {
+                        baggage = temp[1].Trim().Replace("kg)", "").Trim();
+                    }
 
-                return string.IsNullOrEmpty(baggage) ? null : baggage;                
+                }
+                if (baggage != null || baggage != "")
+                {
+                    Debug.Print("Bagasi : "+baggage);
+                    return baggage;
+                }
+                else
+                {
+                    baggage = "0";
+                    return baggage;
+                }                
             }
         }
 

@@ -43,7 +43,7 @@ namespace Lunggo.ApCommon.Flight.Service
             try
             {
                 return GetReservationFromDb(rsvNo);
-        }
+            }
             catch
             {
                 return null;
@@ -55,8 +55,8 @@ namespace Lunggo.ApCommon.Flight.Service
             try
             {
                 var rsv = GetOverviewReservationFromDb(rsvNo);
-            return ConvertToReservationForDisplay(rsv);
-        }
+                return ConvertToReservationForDisplay(rsv);
+            }
             catch
             {
                 return null;
