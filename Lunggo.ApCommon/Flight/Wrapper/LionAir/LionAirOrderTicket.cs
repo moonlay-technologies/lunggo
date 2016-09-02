@@ -81,7 +81,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                              searchResponse0.StatusCode == HttpStatusCode.Redirect))
                             return new IssueTicketResult
                             {
-                                Errors = new List<FlightError> {FlightError.InvalidInputData}
+                                Errors = new List<FlightError> {FlightError.InvalidInputData},
+                                ErrorMessages = new List<string> { "Error while requesting at /lionairagentsportal/default.aspx. Unexpected response path or response status code" }
                             };
                         const string url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
                         var searchRequest1 = new RestRequest(url1, Method.GET);

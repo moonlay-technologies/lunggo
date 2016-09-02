@@ -1280,10 +1280,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        ErrorMessages = new List<string> { "Web Layout Changed!" }
+                        ErrorMessages = new List<string> { "Web Layout Changed! Failed to get Booking Reference" }
                     };
                 }
-                catch //(Exception e)
+                catch (Exception e)
                 {
                     LogOut(cid, client);
                     TurnInUsername(clientx, userName);
@@ -1291,8 +1291,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return new BookFlightResult
                      {
                          IsSuccess = false,
-                        Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Web Layout Changed!" },
+                        Errors = new List<FlightError> { FlightError.TechnicalError},
+                        ErrorMessages = new List<string> { e.Message },
                          Status = new BookingStatusInfo
                          {
                              BookingStatus = BookingStatus.Failed

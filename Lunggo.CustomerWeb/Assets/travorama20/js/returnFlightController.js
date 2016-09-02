@@ -717,9 +717,11 @@ app.controller('returnFlightController', [
                         if (returnData.data.flights.length) {
                             if (returnData.data.flights[0].options.length) {
                                 $scope.arrangeFlightData('departure', returnData.data.flights[0].options); // For Departure Flight
+                                console.log("Ada data");
                             }
                             if (returnData.data.flights[1].options.length) {
                                 $scope.arrangeFlightData('return', returnData.data.flights[1].options); // For Return Flight
+                                console.log("Ada data");
                             }
                         }
                         

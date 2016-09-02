@@ -497,6 +497,7 @@ app.controller('singleFlightController', [
                         $scope.Progress = returnData.data.progress;
                         if (returnData.data.flights.length) {
                             $scope.generateFlightList(returnData.data.flights[0].options);
+                            console.log("Ada data");
                         }
 
                         if ($scope.Progress == 100) {
