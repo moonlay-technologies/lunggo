@@ -171,7 +171,19 @@
                             </div>
 
                             <div class="form-group">
-                                <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(2)" ng-disabled="BuyerForm.$invalid || buyerInfo.title == titles[0].value">LANJUT</button>
+                                <div style="color:red" ng-show="form.incompleteContactTitle">
+                                    Gelar pada Nama Kontak Belum Ditambahkan <br /> <br />
+                                </div>
+                                <div style="color:red" ng-show="form.incompleteContactName">
+                                    Nama pada Data Kontak Belum Ditambahkan <br /> <br />
+                                </div>
+                                <div style="color:red" ng-show="form.incompleteContactPhone">
+                                    Nomor Telepon pada Data Kontak Belum Lengkap. Silakan Pilih Kode Negara atau Lengkapi Nomor Telepon<br /> <br />
+                                </div>
+                                <div style="color:red" ng-show="form.incompleteContactEmail">
+                                    Alamat E-Mail pada Data Kontak Belum Ditambahkan<br /> <br />
+                                </div>
+                                <button class="btn btn-yellow form-control" ng-click="validateForm(1)" @*ng-disabled="BuyerForm.$invalid || buyerInfo.title == titles[0].value"*@>LANJUT</button>
                             </div>
 
                         </form>
@@ -245,7 +257,6 @@
                                     <label class="control-label">No. Paspor</label>
                                     <input type="text" value="" class="form-control" name="passenger_{{$index}}_passportNumber" ng-model="Passenger.passport.number" ng-required="CheckoutConfig.PassportRequired" />
                                 </div>
-
                                 <div class="form-group important" ng-if="CheckoutConfig.PassportRequired">
                                     <label class="control-label">Tanggal Kadaluarsa Paspor: </label>
                                     <div class="row">
@@ -291,12 +302,25 @@
                         </div><!-- .passenger -->
 
                         <div class="form-group">
-                            <div ng-show="hasDuplicatePaxName()" style="color:red">
+                            <div ng-show="form.incompleteTitles" style="color:red">
+                                Gelar pada Penumpang Belum Ditambahkan<br /> <br />
+                            </div>
+                            <div ng-show="form.checkNameIncomplete" style="color:red">
+                                Nama Penumpang Belum Lengkap atau Masih Mengandung Karakter Selain Alfabet dan Spasi<br /> <br />
+                            </div>
+                            <div ng-show="form.hasDuplicatePaxName" style="color:red">
                                 Nama Penumpang Tidak Boleh Ada yang Sama <br /> <br />
                             </div>
+
+                            <div ng-show="form.incompleteBirthDates" style=" color:red">
+                                Tanggal Lahir Penumpang Belum Ditambahkan <br /> <br />
+                            </div>
+                            <div ng-show="form.incompletePassportData" style="color:red">
+                                Data Paspor Belum Lengkap
+                            </div>
                             <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
-                            <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid || !CheckTitle(passengers) || (CheckoutConfig.BirthDateRequired && !CheckDate(passengers))
-                                    || (CheckoutConfig.PassportRequired && !CheckPassportDate(passengers)) || hasDuplicatePaxName()" ng-click="PageConfig.ChangePage(3)">
+                            <button class="btn btn-yellow form-control" @*ng-disabled="PassengerForm.$invalid || !CheckTitle(passengers) || (CheckoutConfig.BirthDateRequired && !CheckDate(passengers))
+                                    || (CheckoutConfig.PassportRequired && !CheckPassportDate(passengers)) || hasDuplicatePaxName()"*@ ng-click="validateForm(2)">
                                 LANJUT
                             </button>
                         </div>
@@ -365,7 +389,7 @@
                                         <dt>Jenis Tiket</dt>
                                         <dd>{{Passenger.typeName}}</dd>
                                     </dl>
-                                    <dl ng-if="CheckoutConfig.BirthDateRequired">
+                                    <dl ng-if="CheckoutConfig.BirthDateRequired || Passenger.type != 'adult'">
                                         <dt>Tanggal Lahir</dt>
                                         <dd>{{Passenger.birth.date}} {{getMonth(parseInt(Passenger.birth.month))}} {{Passenger.birth.year}}</dd>
                                     </dl>
@@ -581,7 +605,7 @@
                 </div>
             </div>
 
-            <div class="popup__wrapper" ng-class="{'active': book.checked == true && book.isSuccess == false}">
+            <div class="popup__wrapper" ng-class="{'active': book.checked == true && book.isSuccess == false && !book.isPriceChanged}">
                 <div class="popup">
                     <header class="popup__header">
                         <h4 class="popup__title">Pemesanan Gagal</h4>

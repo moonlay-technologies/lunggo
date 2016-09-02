@@ -40,7 +40,7 @@
         var paymentTimeout = '';
 
         // development only start
-        paymentTimeout = new Date('@timelimit.AddMinutes(-30).ToString("u")');
+        paymentTimeout = new Date('@timelimit.AddMinutes(-30).ToString("yyyy-MM-dd'T'HH:mm:ss")');
 
         // countdown timer
         $('.timer').countdown(paymentTimeout, function (event) {

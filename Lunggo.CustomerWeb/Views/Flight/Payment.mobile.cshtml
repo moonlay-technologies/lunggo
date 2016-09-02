@@ -49,7 +49,7 @@
         var langCode = 'en';
         var paymentTimeout = '';
         // development only start
-        paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("u")');
+        paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("yyyy-MM-dd'T'HH:mm:ss")');
         console.log("TIME OUT: "+paymentTimeout);
         // countdown timer
         $('.timer').countdown(paymentTimeout, function(event) {
@@ -77,18 +77,18 @@
         var redirectionUrl;
         @if (Model.Reservation.Payment.RedirectionUrl != null) {
        @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-                            }
+                                    }
         var departureDate;
         @if (Model.Reservation.Itinerary.Trips != null)
         {
             if (Model.Reservation.Itinerary.Trips.Count == 2)
             {
                 @:departureDate = '@Model.Reservation.Itinerary.Trips[1].DepartureDate';
-                                                                    }
+                                                                            }
             else
             {
                 @:departureDate = '@Model.Reservation.Itinerary.Trips[0].DepartureDate';
-                                                                    }
+                                                                            }
         }
 
         // change current page
@@ -119,6 +119,7 @@
             <section class="checkout-content">
                 <div class="page__header">
                     <h1 class="text-center section-title stripe">Metode <span>Pembayaran</span></h1>
+                    
                 </div>
                 <div class="page__body" id="step-4">
                     <div class="summary summary--price">
@@ -289,7 +290,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm-4">
+                                        <div class="col-xs-4">
                                             <label class="control-label">Kadaluarsa</label>
                                             <!-- <input type="number" value="" class="form-control" placeholder="MM" maxlength="2" ng-model="CreditCard.Month" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
                                             <select class="form-control" ng-model="CreditCard.Month">
@@ -307,7 +308,7 @@
                                                 <option value="12">Desember</option>
                                             </select>
                                         </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-xs-4">
                                             <label class="control-label">&nbsp;</label>
                                             <select class="form-control" ng-model="CreditCard.Year">
                                                 <option value="2016" selected="selected">
@@ -325,7 +326,7 @@
                                                 <option value="2026">2026</option>
                                             </select>
                                         </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-xs-4">
                                             <label class="control-label">CVV Kartu</label>
                                             <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
                                         </div>

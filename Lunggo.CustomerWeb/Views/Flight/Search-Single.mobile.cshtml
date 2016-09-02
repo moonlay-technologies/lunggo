@@ -527,12 +527,32 @@
                                 <span class="arrow"></span>
                             </div>
                         </div>
-                        <div class="form-group form__passenger">
+                        @*<div class="form-group form__passenger">
                             <span class="icon-people"></span>
                             <div class="field-container">
                                 <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}} Dewasa</p>
                                 <p class="form-control" ng-show="FlightSearchForm.Passenger[1] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('children'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[1]}} Anak</p>
                                 <p class="form-control" ng-show="FlightSearchForm.Passenger[2] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[2]}} Bayi</p>
+                            </div>
+                        </div>*@
+                        <div class="form-group form__passenger clearfix">
+                            <div class="col-custom-logo icon-adult"></div>
+                            <div class="field-container form-adult col-custom-field">
+                                <div class="field-wrapper">
+                                    <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}} Dewasa</p>
+                                </div>
+                            </div>
+                            <div class="col-custom-logo icon-child"></div>
+                            <div class="field-container form-child col-custom-field">
+                                <div class="field-wrapper">
+                                    <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('children'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[1]}} Anak</p>
+                                </div>
+                            </div>
+                            <div class="col-custom-logo icon-infant"></div>
+                            <div class="field-container form-infant col-custom-field">
+                                <div class="field-wrapper">
+                                    <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[2]}} Bayi</p>
+                                </div>
                             </div>
                         </div>
                     </div>

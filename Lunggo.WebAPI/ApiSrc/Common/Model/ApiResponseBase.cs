@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
+using Lunggo.Framework.Log;
 using Lunggo.Framework.Mail;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 using Newtonsoft.Json;
@@ -28,25 +29,20 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
 
         public static ApiResponseBase ExceptionHandling(Exception e)
         {
+            var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
-            MailService.GetInstance().SendPlainEmail(new MailModel
-            {
-                FromMail = "log@travorama.com",
-                FromName = "Travorama Log",
-                RecipientList = new[] { "developer@travelmadezy.com" },
-                Subject = envPrefix + "Error 500 API Log",
-            },
-                "<html><body>Exception : "
+            log.Post(
+                "```Error 500 API Log```"
+                + "\n*Environment :* " + env.ToUpper()
+                + "\n*Exception :* "
                 + e.Message
-                + "<br/><br/>Stack Trace : <br/><br/>"
+                + "\n*Stack Trace :* \n"
                 + e.StackTrace
-                + "<br/><br/>Platform : "
-                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
-                + "<br/><br/></body></html>");
+                + "\n*Platform :* "
+                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
             return e.GetType() == typeof(JsonReaderException)
-                ? ErrorInvalidJson()
-                : Error500();
+                        ? ErrorInvalidJson()
+                        : Error500();
         }
 
         public static ApiResponseBase Error500()

@@ -35,7 +35,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
         {
             return
                 request != null &&
-                request.RegistrationId != null;
+                !string.IsNullOrEmpty(request.RegistrationId);
         }
     }
 }

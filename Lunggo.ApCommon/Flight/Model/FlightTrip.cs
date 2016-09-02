@@ -79,6 +79,8 @@ namespace Lunggo.ApCommon.Flight.Model
         public string Code { get; set; }
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
+        [JsonProperty("fullName", NullValueHandling = NullValueHandling.Ignore)]
+        public string FullName { get; set; }
         [JsonProperty("logoUrl", NullValueHandling = NullValueHandling.Ignore)]
         public string LogoUrl { get; set; }
     }

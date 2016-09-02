@@ -104,9 +104,8 @@ $button-border: #c9cdd2;
 }
 
 @mixin appearance($value) {
-    -webkit-appearence: $value;
-    -moz-appearence: $value;
-    appearance: $value;
+    -webkit-appearance: $value;
+    -moz-appearance: $value;
 }
 
 /*--------------------*/
@@ -150,10 +149,10 @@ img {max-width:100%;}
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {@include appearance(none); margin:0;}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control, select.form-control {@include border-radius($border-radius-default); @include appearance(none);}
-.form-control {@include border-radius($border-radius-default)}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control {@include appearance(none);}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control, select.form-control {box-shadow: none; font-size:12px; height:auto;}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control, select.form-control {@include border-radius($border-radius-default); box-shadow: none; font-size:12px; height:auto;}
+.form-control {@include border-radius($border-radius-default)}
 
 // *****
 // site header
@@ -316,7 +315,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #000000; 
     width: 100%;
     padding: 15px 0;
-    z-index: -1;
+    /*z-index: -1;*/
     position: relative;
     .site-footer-menu {
         nav {
@@ -351,6 +350,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             .instagram {
                 .fa-circle {color: $color-ig;}
             }
+            a:hover {text-decoration: none;}
         }
         // inverse
         .fa-stack {
@@ -451,7 +451,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             &:before {background-image:url(/Assets/images/cal-bg.png); background-size:contain; width:25px; height:25px; top:8px;}
         }
         .form-adult {position:relative; padding:10px 20px; padding-left:45px; text-align:center; height:40px; font-size:14px;
-            &:before {content:""; display:block; width:22px; height:31px; background:url(/Assets/mobile/images/passenger-sprite.png); top:5px; left:10px; position:absolute;}
+            /*&:before {content:""; display:block; width:22px; height:31px; background:url(/Assets/mobile/images/passenger-sprite.png); top:5px; left:10px; position:absolute;}*/
         }
         .form-children {@extend & .form-adult;
             &:before {background-position:-22px 0;}
