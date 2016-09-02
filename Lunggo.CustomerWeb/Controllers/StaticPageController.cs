@@ -111,50 +111,6 @@ namespace Lunggo.CustomerWeb.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult GetCalendar(string email)
-        {
-            DateTime Date = DateTime.Now; 
-            DateTime endDate = new DateTime(2016,2,18);
-            using (var con = DbService.GetInstance().GetOpenConnection())
-            {
-
-                var EmailList = CalendarRecipientTableRepo.GetInstance().FindAll(con).ToList();
-                var UserEmailList = UserTableRepo.GetInstance().FindAll(con).ToList();
-                if (EmailList.Exists(x => x.Email == email))
-                {
-                    ViewBag.Message = "DataExists";
-                }
-                else if (!UserEmailList.Exists(x => x.Email == email))
-                {
-                    ViewBag.Message = "NotRegister";
-                }
-                else if (Date.Date > endDate.Date)
-                {
-                    ViewBag.Message = "Expired";
-                }
-                else 
-                {
-                    ViewBag.Message = "Success";
-                }
-            }
-            CalendarRecipientData mdlCalendar = new CalendarRecipientData(); 
-            mdlCalendar.Email = email;
-
-            return View(mdlCalendar);
-        }
-
-        [HttpPost]
-        public ActionResult GetCalendar(CalendarRecipientData model)
-        {
-            using (var con = DbService.GetInstance().GetOpenConnection()) {
-                CalendarRecipientTableRepo.GetInstance().Insert(con,
-                new CalendarRecipientTableRecord { Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber, Address = model.Address, City = model.City, PostalCode = model.PostalCode});
-                ViewBag.Message = "InputSuccess";
-                return View();
-            }
-        }
-
         public ActionResult GetCalendarTerms()
         {
             return View();

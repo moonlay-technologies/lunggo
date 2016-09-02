@@ -41,8 +41,6 @@ Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Lunggo.CloudApp", "Lunggo.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.CloudApp.EticketHandler", "Lunggo.CloudApp.EticketHandler\Lunggo.CloudApp.EticketHandler.csproj", "{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.FlightCrawlScheduler", "Lunggo.WebJob.FlightCrawlScheduler\Lunggo.WebJob.FlightCrawlScheduler.csproj", "{F88849EF-C947-4D34-A658-AC8CA22EF97C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.FlightProcessor", "Lunggo.WebJob.FlightProcessor\Lunggo.WebJob.FlightProcessor.csproj", "{A2FAA700-930E-43D3-A7C2-866C640CF396}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob", "Lunggo.WebJob\Lunggo.WebJob.csproj", "{304B9323-5306-4569-B047-62DB267B0224}"
@@ -204,16 +202,6 @@ Global
 		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Release|ARM.ActiveCfg = Release|Any CPU
 		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Release|x64.ActiveCfg = Release|Any CPU
 		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Release|x86.ActiveCfg = Release|Any CPU
-		{F88849EF-C947-4D34-A658-AC8CA22EF97C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F88849EF-C947-4D34-A658-AC8CA22EF97C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F88849EF-C947-4D34-A658-AC8CA22EF97C}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{F88849EF-C947-4D34-A658-AC8CA22EF97C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F88849EF-C947-4D34-A658-AC8CA22EF97C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F88849EF-C947-4D34-A658-AC8CA22EF97C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F88849EF-C947-4D34-A658-AC8CA22EF97C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F88849EF-C947-4D34-A658-AC8CA22EF97C}.Release|ARM.ActiveCfg = Release|Any CPU
-		{F88849EF-C947-4D34-A658-AC8CA22EF97C}.Release|x64.ActiveCfg = Release|Any CPU
-		{F88849EF-C947-4D34-A658-AC8CA22EF97C}.Release|x86.ActiveCfg = Release|Any CPU
 		{A2FAA700-930E-43D3-A7C2-866C640CF396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A2FAA700-930E-43D3-A7C2-866C640CF396}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2FAA700-930E-43D3-A7C2-866C640CF396}.Debug|ARM.ActiveCfg = Debug|Any CPU

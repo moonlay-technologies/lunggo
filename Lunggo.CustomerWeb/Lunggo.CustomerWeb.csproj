@@ -273,10 +273,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="WebSrc\Common\Constant\CustomerWebConstant.cs" />
     <Compile Include="WebSrc\UW000\UW000TopPageController.cs" />
-    <Compile Include="WebSrc\UW600\UW610\Logic\ChangeProfileLogic.cs" />
-    <Compile Include="WebSrc\UW600\UW610\Model\UW610ChangePofile.cs" />
-    <Compile Include="WebSrc\UW600\UW610\Object\UW610ChangeProfileRespone.cs" />
-    <Compile Include="WebSrc\UW600\UW610\UW610ChangeProfileController.cs" />
     <Compile Include="WebSrc\UW600\UW620\Logic\OrderHistoryLogic.cs" />
     <Compile Include="WebSrc\UW600\UW620\Model\UW620CompleteHistory.cs" />
     <Compile Include="WebSrc\UW600\UW620\Model\UW620OrderHistory.cs" />
