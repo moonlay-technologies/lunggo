@@ -365,8 +365,15 @@
                             <div class="flight-summary-left">
                                 <div class="summary-top">
                                     <div class="summary-top-left flight-airline">
-                                        <h5>{{flight.trips[0].segments[0].airlineName}}</h5>
-                                        <img ng-src="{{flight.trips[0].segments[0].airlineLogoUrl}}" alt="flight.trips[0].segments[0].airlineName" />
+                                        <div class="summary-top-left-top flight-facilities">
+                                            <h5>{{flight.trips[0].segments[0].airlineName}}</h5>
+                                            <img ng-src="{{flight.trips[0].segments[0].airlineLogoUrl}}" alt="flight.trips[0].segments[0].airlineName" />
+                                        </div>
+                                        <div class="summary-top-left-bottom flight-facilities">
+                                            <span class="flight-baggage">15</span>
+                                            <span class="flight-tax"></span>
+                                            <span class="flight-meal"></span>
+                                        </div><!-- .flight-facilities -->
                                     </div><!-- .flight-airline -->
                                     <div class="summary-top-right flight-date">
                                         <div class="summary-top-right-top">
