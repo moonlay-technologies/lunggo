@@ -5,37 +5,37 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class FlightPriceMarginRuleTableRecord : Lunggo.Framework.Database.TableRecord
+    public class FlightItineraryRuleTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? RuleId
+		public long? Id
 		{
-		    get { return _RuleId; }
+		    get { return _Id; }
 		    set
 		    {
-		        _RuleId = value;
-		        IncrementLog("RuleId");
+		        _Id = value;
+		        IncrementLog("Id");
 		    }
 		}
-		public String Name
+		public int? ConstraintCount
 		{
-		    get { return _Name; }
+		    get { return _ConstraintCount; }
 		    set
 		    {
-		        _Name = value;
-		        IncrementLog("Name");
+		        _ConstraintCount = value;
+		        IncrementLog("ConstraintCount");
 		    }
 		}
-		public String Description
+		public int? Priority
 		{
-		    get { return _Description; }
+		    get { return _Priority; }
 		    set
 		    {
-		        _Description = value;
-		        IncrementLog("Description");
+		        _Priority = value;
+		        IncrementLog("Priority");
 		    }
 		}
 		public String BookingDateSpans
@@ -74,6 +74,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("FareTypes");
 		    }
 		}
+		public String AirlineTypes
+		{
+		    get { return _AirlineTypes; }
+		    set
+		    {
+		        _AirlineTypes = value;
+		        IncrementLog("AirlineTypes");
+		    }
+		}
 		public String CabinClasses
 		{
 		    get { return _CabinClasses; }
@@ -83,13 +92,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("CabinClasses");
 		    }
 		}
-		public String TripTypes
+		public String RequestedTripTypes
 		{
-		    get { return _TripTypes; }
+		    get { return _RequestedTripTypes; }
 		    set
 		    {
-		        _TripTypes = value;
-		        IncrementLog("TripTypes");
+		        _RequestedTripTypes = value;
+		        IncrementLog("RequestedTripTypes");
 		    }
 		}
 		public String DepartureDateSpans
@@ -254,51 +263,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("CountryPairsIsExclusion");
 		    }
 		}
-		public Decimal? Coefficient
-		{
-		    get { return _Coefficient; }
-		    set
-		    {
-		        _Coefficient = value;
-		        IncrementLog("Coefficient");
-		    }
-		}
-		public Decimal? Constant
-		{
-		    get { return _Constant; }
-		    set
-		    {
-		        _Constant = value;
-		        IncrementLog("Constant");
-		    }
-		}
-		public int? ConstraintCount
-		{
-		    get { return _ConstraintCount; }
-		    set
-		    {
-		        _ConstraintCount = value;
-		        IncrementLog("ConstraintCount");
-		    }
-		}
-		public int? Priority
-		{
-		    get { return _Priority; }
-		    set
-		    {
-		        _Priority = value;
-		        IncrementLog("Priority");
-		    }
-		}
-		public Boolean? IsActive
-		{
-		    get { return _IsActive; }
-		    set
-		    {
-		        _IsActive = value;
-		        IncrementLog("IsActive");
-		    }
-		}
 		public String InsertBy
 		{
 		    get { return _InsertBy; }
@@ -355,15 +319,16 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _RuleId;
-		private String _Name;
-		private String _Description;
+		private long? _Id;
+		private int? _ConstraintCount;
+		private int? _Priority;
 		private String _BookingDateSpans;
 		private String _BookingDays;
 		private String _BookingDates;
 		private String _FareTypes;
+		private String _AirlineTypes;
 		private String _CabinClasses;
-		private String _TripTypes;
+		private String _RequestedTripTypes;
 		private String _DepartureDateSpans;
 		private String _DepartureDays;
 		private String _DepartureDates;
@@ -382,11 +347,6 @@ namespace Lunggo.Repository.TableRecord
 		private Boolean? _CityPairsIsExclusion;
 		private String _CountryPairs;
 		private Boolean? _CountryPairsIsExclusion;
-		private Decimal? _Coefficient;
-		private Decimal? _Constant;
-		private int? _ConstraintCount;
-		private int? _Priority;
-		private Boolean? _IsActive;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -395,20 +355,20 @@ namespace Lunggo.Repository.TableRecord
 		private String _UpdatePgId;
 
 
-		public static FlightPriceMarginRuleTableRecord CreateNewInstance()
+		public static FlightItineraryRuleTableRecord CreateNewInstance()
         {
-            var record = new FlightPriceMarginRuleTableRecord();
+            var record = new FlightItineraryRuleTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public FlightPriceMarginRuleTableRecord()
+		public FlightItineraryRuleTableRecord()
         {
             ;
         }
 
-        static FlightPriceMarginRuleTableRecord()
+        static FlightItineraryRuleTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -417,22 +377,23 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "FlightPriceMarginRule";
+            _tableName = "FlightItineraryRule";
         }
 
         private static void InitRecordMetadata()
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("RuleId", true),
-				new ColumnMetadata("Name", false),
-				new ColumnMetadata("Description", false),
+				new ColumnMetadata("Id", true),
+				new ColumnMetadata("ConstraintCount", false),
+				new ColumnMetadata("Priority", false),
 				new ColumnMetadata("BookingDateSpans", false),
 				new ColumnMetadata("BookingDays", false),
 				new ColumnMetadata("BookingDates", false),
 				new ColumnMetadata("FareTypes", false),
+				new ColumnMetadata("AirlineTypes", false),
 				new ColumnMetadata("CabinClasses", false),
-				new ColumnMetadata("TripTypes", false),
+				new ColumnMetadata("RequestedTripTypes", false),
 				new ColumnMetadata("DepartureDateSpans", false),
 				new ColumnMetadata("DepartureDays", false),
 				new ColumnMetadata("DepartureDates", false),
@@ -451,11 +412,6 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("CityPairsIsExclusion", false),
 				new ColumnMetadata("CountryPairs", false),
 				new ColumnMetadata("CountryPairsIsExclusion", false),
-				new ColumnMetadata("Coefficient", false),
-				new ColumnMetadata("Constant", false),
-				new ColumnMetadata("ConstraintCount", false),
-				new ColumnMetadata("Priority", false),
-				new ColumnMetadata("IsActive", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

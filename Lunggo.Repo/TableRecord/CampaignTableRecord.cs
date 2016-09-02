@@ -47,15 +47,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Description");
 		    }
 		}
-        public String DisplayName
-        {
-            get { return _DisplayName; }
-            set
-            {
-                _DisplayName = value;
-                IncrementLog("DisplayName");
-            }
-        }
 		public DateTime? StartDate
 		{
 		    get { return _StartDate; }
@@ -74,7 +65,7 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("EndDate");
 		    }
 		}
-		public short? ValuePercentage
+		public Decimal? ValuePercentage
 		{
 		    get { return _ValuePercentage; }
 		    set
@@ -146,16 +137,24 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("CampaignTypeCd");
 		    }
 		}
+		public String DisplayName
+		{
+		    get { return _DisplayName; }
+		    set
+		    {
+		        _DisplayName = value;
+		        IncrementLog("DisplayName");
+		    }
+		}
 
 		
 		private long? _CampaignId;
 		private int? _ClientId;
 		private String _Name;
 		private String _Description;
-		private String _DisplayName;
 		private DateTime? _StartDate;
 		private DateTime? _EndDate;
-		private short? _ValuePercentage;
+		private Decimal? _ValuePercentage;
 		private Decimal? _ValueConstant;
 		private Decimal? _MaxDiscountValue;
 		private Decimal? _MinSpendValue;
@@ -163,6 +162,7 @@ namespace Lunggo.Repository.TableRecord
 		private Boolean? _IsSingleVoucher;
 		private Boolean? _Status;
 		private String _CampaignTypeCd;
+		private String _DisplayName;
 
 
 		public static CampaignTableRecord CreateNewInstance()
@@ -198,7 +198,6 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("ClientId", false),
 				new ColumnMetadata("Name", false),
 				new ColumnMetadata("Description", false),
-				new ColumnMetadata("DisplayName", false),
 				new ColumnMetadata("StartDate", false),
 				new ColumnMetadata("EndDate", false),
 				new ColumnMetadata("ValuePercentage", false),
@@ -209,6 +208,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("IsSingleVoucher", false),
 				new ColumnMetadata("Status", false),
 				new ColumnMetadata("CampaignTypeCd", false),
+				new ColumnMetadata("DisplayName", false),
 
             };
         }

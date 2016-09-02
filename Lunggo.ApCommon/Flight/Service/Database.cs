@@ -75,76 +75,86 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                FlightReservation reservation = null;
-                var itineraryLookup = new Dictionary<long, FlightItinerary>();
-                var tripLookup = new Dictionary<long, FlightTrip>();
-                var segmentLookup = new Dictionary<long, FlightSegment>();
-                var passengerLookup = new Dictionary<long, Pax>();
-                reservation = GetReservationQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = rsvNo },
-                    (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord, stopRecord) =>
+                var reservationRecord = ReservationTableRepo.GetInstance()
+                    .Find1(conn, new ReservationTableRecord { RsvNo = rsvNo });
+
+                if (reservationRecord == null)
+                    return null;
+
+                var reservation = new FlightReservation
+                {
+                    RsvNo = rsvNo,
+                    RsvTime = reservationRecord.RsvTime.GetValueOrDefault().SpecifyUtc(),
+                    Contact = Contact.GetFromDb(rsvNo),
+                    Itineraries = new List<FlightItinerary>(),
+                    Pax = new List<Pax>(),
+                    Payment = PaymentDetails.GetFromDb(rsvNo),
+                    State = ReservationState.GetFromDb(rsvNo),
+                    User = User.GetFromDb(reservationRecord.UserId)
+                };
+
+                if (reservation.Contact == null || reservation.Payment == null || reservation.State == null)
+                    return null;
+
+                var itinRecords = FlightItineraryTableRepo.GetInstance()
+                    .Find(conn, new FlightItineraryTableRecord { RsvNo = rsvNo }).ToList();
+
+                if (itinRecords.Count == 0)
+                    return null;
+
+                foreach (var itineraryRecord in itinRecords)
+                {
+                    var itin = new FlightItinerary
                     {
-                        if (reservation == null)
+                        BookingId = itineraryRecord.BookingId,
+                        BookingStatus = BookingStatusCd.Mnemonic(itineraryRecord.BookingStatusCd),
+                        TripType = TripTypeCd.Mnemonic(itineraryRecord.TripTypeCd),
+                        Supplier = Constant.SupplierCd.Mnemonic(itineraryRecord.SupplierCd),
+                        TimeLimit = itineraryRecord.TicketTimeLimit.SpecifyUtc(),
+                        Trips = new List<FlightTrip>(),
+                        Price = Price.GetFromDb(itineraryRecord.PriceId.GetValueOrDefault()),
+                        FareType = FareTypeCd.Mnemonic(itineraryRecord.FareTypeCd),
+                        AdultCount = itineraryRecord.AdultCount.GetValueOrDefault(),
+                        ChildCount = itineraryRecord.ChildCount.GetValueOrDefault(),
+                        InfantCount = itineraryRecord.InfantCount.GetValueOrDefault(),
+                        AdultPricePortion = itineraryRecord.AdultPricePortion.GetValueOrDefault(),
+                        ChildPricePortion = itineraryRecord.ChildPricePortion.GetValueOrDefault(),
+                        InfantPricePortion = itineraryRecord.InfantPricePortion.GetValueOrDefault(),
+                        RequestedCabinClass = CabinClassCd.Mnemonic(itineraryRecord.RequestedCabinClassCd),
+                        RequestedTripType = TripTypeCd.Mnemonic(itineraryRecord.RequestedTripTypeCd)
+                    };
+
+                    if (itin.Price == null)
+                        return null;
+
+                    var tripRecords = FlightTripTableRepo.GetInstance()
+                        .Find(conn, new FlightTripTableRecord { ItineraryId = itineraryRecord.Id }).ToList();
+
+                    if (tripRecords.Count == 0)
+                        return null;
+
+                    foreach (var tripRecord in tripRecords)
+                    {
+                        var trip = new FlightTrip
                         {
-                            reservation = new FlightReservation
-                            {
-                                RsvNo = rsvNo,
-                                RsvTime = reservationRecord.RsvTime.GetValueOrDefault().SpecifyUtc(),
-                                Contact = Contact.GetFromDb(rsvNo),
-                                Payment = PaymentDetails.GetFromDb(rsvNo),
-                                Itineraries = new List<FlightItinerary>(),
-                                Pax = new List<Pax>(),
-                                State = ReservationState.GetFromDb(rsvNo),
-                                User = User.GetFromDb(reservationRecord.UserId)
-                            };
-                        }
-                        FlightItinerary itinerary;
-                        if (
-                            !itineraryLookup.TryGetValue(itineraryRecord.Id.GetValueOrDefault(),
-                                out itinerary))
+                            OriginAirport = tripRecord.OriginAirportCd,
+                            OriginAirportName = GetAirportName(tripRecord.OriginAirportCd),
+                            OriginCity = GetAirportCity(tripRecord.OriginAirportCd),
+                            DestinationAirport = tripRecord.DestinationAirportCd,
+                            DestinationAirportName = GetAirportName(tripRecord.DestinationAirportCd),
+                            DestinationCity = GetAirportCity(tripRecord.DestinationAirportCd),
+                            DepartureDate = tripRecord.DepartureDate.GetValueOrDefault().SpecifyUtc(),
+                            Segments = new List<FlightSegment>()
+                        };
+                        var segmentRecords = FlightSegmentTableRepo.GetInstance()
+                            .Find(conn, new FlightSegmentTableRecord { TripId = tripRecord.Id }).ToList();
+
+                        if (segmentRecords.Count == 0)
+                            return null;
+
+                        foreach (var segmentRecord in segmentRecords)
                         {
-                            itinerary = new FlightItinerary
-                            {
-                                BookingId = itineraryRecord.BookingId,
-                                BookingStatus = BookingStatusCd.Mnemonic(itineraryRecord.BookingStatusCd),
-                                TripType = TripTypeCd.Mnemonic(itineraryRecord.TripTypeCd),
-                                Supplier = Constant.SupplierCd.Mnemonic(itineraryRecord.SupplierCd),
-                                TimeLimit = itineraryRecord.TicketTimeLimit.SpecifyUtc(),
-                                Trips = new List<FlightTrip>(),
-                                Price = Price.GetFromDb(itineraryRecord.PriceId.GetValueOrDefault()),
-                                FareType = FareTypeCd.Mnemonic(itineraryRecord.FareTypeCd),
-                                AdultCount = itineraryRecord.AdultCount.GetValueOrDefault(),
-                                ChildCount = itineraryRecord.ChildCount.GetValueOrDefault(),
-                                InfantCount = itineraryRecord.InfantCount.GetValueOrDefault(),
-                                AdultPricePortion = itineraryRecord.AdultPricePortion.GetValueOrDefault(),
-                                ChildPricePortion = itineraryRecord.ChildPricePortion.GetValueOrDefault(),
-                                InfantPricePortion = itineraryRecord.InfantPricePortion.GetValueOrDefault(),
-                                RequestedCabinClass = CabinClassCd.Mnemonic(itineraryRecord.RequestedCabinClassCd),
-                                RequestedTripType = TripTypeCd.Mnemonic(itineraryRecord.RequestedTripTypeCd),
-                            };
-                            itineraryLookup.Add(itineraryRecord.Id.GetValueOrDefault(), itinerary);
-                            reservation.Itineraries.Add(itinerary);
-                        }
-                        FlightTrip trip;
-                        if (!tripLookup.TryGetValue(tripRecord.Id.GetValueOrDefault(), out trip))
-                        {
-                            trip = new FlightTrip
-                            {
-                                OriginAirport = tripRecord.OriginAirportCd,
-                                OriginAirportName = GetAirportName(tripRecord.OriginAirportCd),
-                                OriginCity = GetAirportCity(tripRecord.OriginAirportCd),
-                                DestinationAirport = tripRecord.DestinationAirportCd,
-                                DestinationAirportName = GetAirportName(tripRecord.DestinationAirportCd),
-                                DestinationCity = GetAirportCity(tripRecord.DestinationAirportCd),
-                                DepartureDate = tripRecord.DepartureDate.GetValueOrDefault().SpecifyUtc(),
-                                Segments = new List<FlightSegment>()
-                            };
-                            tripLookup.Add(tripRecord.Id.GetValueOrDefault(), trip);
-                            itinerary.Trips.Add(trip);
-                        }
-                        FlightSegment segment;
-                        if (!segmentLookup.TryGetValue(segmentRecord.Id.GetValueOrDefault(), out segment))
-                        {
-                            segment = new FlightSegment
+                            var segment = new FlightSegment
                             {
                                 OperatingAirlineCode = segmentRecord.OperatingAirlineCd,
                                 OperatingAirlineName = GetAirlineName(segmentRecord.OperatingAirlineCd),
@@ -163,30 +173,145 @@ namespace Lunggo.ApCommon.Flight.Service
                                 ArrivalCity = GetAirportCity(segmentRecord.ArrivalAirportCd),
                                 ArrivalTerminal = segmentRecord.ArrivalTerminal,
                                 ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault().SpecifyUtc(),
-                                CabinClass = CabinClassCd.Mnemonic(segmentRecord.CabinClassCd),
-
+                                CabinClass = CabinClassCd.Mnemonic(segmentRecord.CabinClassCd)
                             };
-                            segmentLookup.Add(segmentRecord.Id.GetValueOrDefault(), segment);
                             trip.Segments.Add(segment);
                         }
-                        Pax passenger;
-                        if (
-                            !passengerLookup.TryGetValue(passengerRecord.Id.GetValueOrDefault(),
-                                out passenger))
+                        itin.Trips.Add(trip);
+                    }
+                    reservation.Itineraries.Add(itin);
+                    var paxRecords = PaxTableRepo.GetInstance()
+                        .Find(conn, new PaxTableRecord { RsvNo = rsvNo }).ToList();
+
+                    if (paxRecords.Count == 0)
+                        return null;
+
+                    foreach (var passengerRecord in paxRecords)
+                    {
+                        var passenger = new Pax
                         {
-                            passenger = new Pax
-                            {
-                                Title = TitleCd.Mnemonic(passengerRecord.TitleCd),
-                                FirstName = passengerRecord.FirstName,
-                                LastName = passengerRecord.LastName,
-                                Type = PaxTypeCd.Mnemonic(passengerRecord.TypeCd)
-                            };
-                            reservation.Pax.Add(passenger);
-                            passengerLookup.Add(passengerRecord.Id.GetValueOrDefault(), passenger);
-                        }
-                        return reservation;
-                    }).Distinct().SingleOrDefault();
+                            Title = TitleCd.Mnemonic(passengerRecord.TitleCd),
+                            FirstName = passengerRecord.FirstName,
+                            LastName = passengerRecord.LastName,
+                            Type = PaxTypeCd.Mnemonic(passengerRecord.TypeCd)
+                        };
+                        reservation.Pax.Add(passenger);
+                    }
+                }
                 return reservation;
+
+                //FlightReservation reservation = null;
+                //var itineraryLookup = new Dictionary<long, FlightItinerary>();
+                //var tripLookup = new Dictionary<long, FlightTrip>();
+                //var segmentLookup = new Dictionary<long, FlightSegment>();
+                //var passengerLookup = new Dictionary<long, Pax>();
+                //reservation = GetReservationQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = rsvNo },
+                //    (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord, stopRecord) =>
+                //    {
+                //        if (reservation == null)
+                //        {
+                //            reservation = new FlightReservation
+                //            {
+                //                RsvNo = rsvNo,
+                //                RsvTime = reservationRecord.RsvTime.GetValueOrDefault().SpecifyUtc(),
+                //                Contact = Contact.GetFromDb(rsvNo),
+                //                Payment = PaymentDetails.GetFromDb(rsvNo),
+                //                Itineraries = new List<FlightItinerary>(),
+                //                Pax = new List<Pax>(),
+                //                State = ReservationState.GetFromDb(rsvNo),
+                //                User = User.GetFromDb(reservationRecord.UserId)
+                //            };
+                //        }
+                //        FlightItinerary itinerary;
+                //        if (
+                //            !itineraryLookup.TryGetValue(itineraryRecord.Id.GetValueOrDefault(),
+                //                out itinerary))
+                //        {
+                //            itinerary = new FlightItinerary
+                //            {
+                //                BookingId = itineraryRecord.BookingId,
+                //                BookingStatus = BookingStatusCd.Mnemonic(itineraryRecord.BookingStatusCd),
+                //                TripType = TripTypeCd.Mnemonic(itineraryRecord.TripTypeCd),
+                //                Supplier = Constant.SupplierCd.Mnemonic(itineraryRecord.SupplierCd),
+                //                TimeLimit = itineraryRecord.TicketTimeLimit.SpecifyUtc(),
+                //                Trips = new List<FlightTrip>(),
+                //                Price = Price.GetFromDb(itineraryRecord.PriceId.GetValueOrDefault()),
+                //                FareType = FareTypeCd.Mnemonic(itineraryRecord.FareTypeCd),
+                //                AdultCount = itineraryRecord.AdultCount.GetValueOrDefault(),
+                //                ChildCount = itineraryRecord.ChildCount.GetValueOrDefault(),
+                //                InfantCount = itineraryRecord.InfantCount.GetValueOrDefault(),
+                //                AdultPricePortion = itineraryRecord.AdultPricePortion.GetValueOrDefault(),
+                //                ChildPricePortion = itineraryRecord.ChildPricePortion.GetValueOrDefault(),
+                //                InfantPricePortion = itineraryRecord.InfantPricePortion.GetValueOrDefault(),
+                //                RequestedCabinClass = CabinClassCd.Mnemonic(itineraryRecord.RequestedCabinClassCd),
+                //                RequestedTripType = TripTypeCd.Mnemonic(itineraryRecord.RequestedTripTypeCd),
+                //            };
+                //            itineraryLookup.Add(itineraryRecord.Id.GetValueOrDefault(), itinerary);
+                //            reservation.Itineraries.Add(itinerary);
+                //        }
+                //        FlightTrip trip;
+                //        if (!tripLookup.TryGetValue(tripRecord.Id.GetValueOrDefault(), out trip))
+                //        {
+                //            trip = new FlightTrip
+                //            {
+                //                OriginAirport = tripRecord.OriginAirportCd,
+                //                OriginAirportName = GetAirportName(tripRecord.OriginAirportCd),
+                //                OriginCity = GetAirportCity(tripRecord.OriginAirportCd),
+                //                DestinationAirport = tripRecord.DestinationAirportCd,
+                //                DestinationAirportName = GetAirportName(tripRecord.DestinationAirportCd),
+                //                DestinationCity = GetAirportCity(tripRecord.DestinationAirportCd),
+                //                DepartureDate = tripRecord.DepartureDate.GetValueOrDefault().SpecifyUtc(),
+                //                Segments = new List<FlightSegment>()
+                //            };
+                //            tripLookup.Add(tripRecord.Id.GetValueOrDefault(), trip);
+                //            itinerary.Trips.Add(trip);
+                //        }
+                //        FlightSegment segment;
+                //        if (!segmentLookup.TryGetValue(segmentRecord.Id.GetValueOrDefault(), out segment))
+                //        {
+                //            segment = new FlightSegment
+                //            {
+                //                OperatingAirlineCode = segmentRecord.OperatingAirlineCd,
+                //                OperatingAirlineName = GetAirlineName(segmentRecord.OperatingAirlineCd),
+                //                OperatingAirlineLogoUrl = GetAirlineLogoUrl(segmentRecord.OperatingAirlineCd),
+                //                AirlineCode = segmentRecord.AirlineCd,
+                //                AirlineName = GetAirlineName(segmentRecord.AirlineCd),
+                //                AirlineLogoUrl = GetAirlineLogoUrl(segmentRecord.AirlineCd),
+                //                FlightNumber = segmentRecord.FlightNumber,
+                //                DepartureAirport = segmentRecord.DepartureAirportCd,
+                //                DepartureAirportName = GetAirportName(segmentRecord.DepartureAirportCd),
+                //                DepartureCity = GetAirportCity(segmentRecord.DepartureAirportCd),
+                //                DepartureTerminal = segmentRecord.DepartureTerminal,
+                //                DepartureTime = segmentRecord.DepartureTime.GetValueOrDefault().SpecifyUtc(),
+                //                ArrivalAirport = segmentRecord.ArrivalAirportCd,
+                //                ArrivalAirportName = GetAirportName(segmentRecord.ArrivalAirportCd),
+                //                ArrivalCity = GetAirportCity(segmentRecord.ArrivalAirportCd),
+                //                ArrivalTerminal = segmentRecord.ArrivalTerminal,
+                //                ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault().SpecifyUtc(),
+                //                CabinClass = CabinClassCd.Mnemonic(segmentRecord.CabinClassCd),
+
+                //            };
+                //            segmentLookup.Add(segmentRecord.Id.GetValueOrDefault(), segment);
+                //            trip.Segments.Add(segment);
+                //        }
+                //        Pax passenger;
+                //        if (
+                //            !passengerLookup.TryGetValue(passengerRecord.Id.GetValueOrDefault(),
+                //                out passenger))
+                //        {
+                //            passenger = new Pax
+                //            {
+                //                Title = TitleCd.Mnemonic(passengerRecord.TitleCd),
+                //                FirstName = passengerRecord.FirstName,
+                //                LastName = passengerRecord.LastName,
+                //                Type = PaxTypeCd.Mnemonic(passengerRecord.TypeCd)
+                //            };
+                //            reservation.Pax.Add(passenger);
+                //            passengerLookup.Add(passengerRecord.Id.GetValueOrDefault(), passenger);
+                //        }
+                //        return reservation;
+                //    }).Distinct().SingleOrDefault();
+                //return reservation;
             }
         }
 

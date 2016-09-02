@@ -5,37 +5,91 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class CurrencyTableRecord : Lunggo.Framework.Database.TableRecord
+    public class MarginTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public String Symbol
+		public long? Id
 		{
-		    get { return _Symbol; }
+		    get { return _Id; }
 		    set
 		    {
-		        _Symbol = value;
-		        IncrementLog("Symbol");
+		        _Id = value;
+		        IncrementLog("Id");
 		    }
 		}
-		public Decimal? Rate
+		public long? OrderRuleId
 		{
-		    get { return _Rate; }
+		    get { return _OrderRuleId; }
 		    set
 		    {
-		        _Rate = value;
-		        IncrementLog("Rate");
+		        _OrderRuleId = value;
+		        IncrementLog("OrderRuleId");
 		    }
 		}
-		public Decimal? RoundingOrder
+		public String Name
 		{
-		    get { return _RoundingOrder; }
+		    get { return _Name; }
 		    set
 		    {
-		        _RoundingOrder = value;
-		        IncrementLog("RoundingOrder");
+		        _Name = value;
+		        IncrementLog("Name");
+		    }
+		}
+		public String Description
+		{
+		    get { return _Description; }
+		    set
+		    {
+		        _Description = value;
+		        IncrementLog("Description");
+		    }
+		}
+		public Decimal? Percentage
+		{
+		    get { return _Percentage; }
+		    set
+		    {
+		        _Percentage = value;
+		        IncrementLog("Percentage");
+		    }
+		}
+		public Decimal? Constant
+		{
+		    get { return _Constant; }
+		    set
+		    {
+		        _Constant = value;
+		        IncrementLog("Constant");
+		    }
+		}
+		public String CurrencyCd
+		{
+		    get { return _CurrencyCd; }
+		    set
+		    {
+		        _CurrencyCd = value;
+		        IncrementLog("CurrencyCd");
+		    }
+		}
+		public Boolean? IsFlat
+		{
+		    get { return _IsFlat; }
+		    set
+		    {
+		        _IsFlat = value;
+		        IncrementLog("IsFlat");
+		    }
+		}
+		public Boolean? IsActive
+		{
+		    get { return _IsActive; }
+		    set
+		    {
+		        _IsActive = value;
+		        IncrementLog("IsActive");
 		    }
 		}
 		public String InsertBy
@@ -92,43 +146,39 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UpdatePgId");
 		    }
 		}
-		public String SupplierCd
-		{
-		    get { return _SupplierCd; }
-		    set
-		    {
-		        _SupplierCd = value;
-		        IncrementLog("SupplierCd");
-		    }
-		}
 
 		
-		private String _Symbol;
-		private Decimal? _Rate;
-		private Decimal? _RoundingOrder;
+		private long? _Id;
+		private long? _OrderRuleId;
+		private String _Name;
+		private String _Description;
+		private Decimal? _Percentage;
+		private Decimal? _Constant;
+		private String _CurrencyCd;
+		private Boolean? _IsFlat;
+		private Boolean? _IsActive;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
 		private String _UpdateBy;
 		private DateTime? _UpdateDate;
 		private String _UpdatePgId;
-		private String _SupplierCd;
 
 
-		public static CurrencyTableRecord CreateNewInstance()
+		public static MarginTableRecord CreateNewInstance()
         {
-            var record = new CurrencyTableRecord();
+            var record = new MarginTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public CurrencyTableRecord()
+		public MarginTableRecord()
         {
             ;
         }
 
-        static CurrencyTableRecord()
+        static MarginTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -137,23 +187,28 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "Currency";
+            _tableName = "Margin";
         }
 
         private static void InitRecordMetadata()
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("Symbol", true),
-				new ColumnMetadata("Rate", false),
-				new ColumnMetadata("RoundingOrder", false),
+				new ColumnMetadata("Id", true),
+				new ColumnMetadata("OrderRuleId", false),
+				new ColumnMetadata("Name", false),
+				new ColumnMetadata("Description", false),
+				new ColumnMetadata("Percentage", false),
+				new ColumnMetadata("Constant", false),
+				new ColumnMetadata("CurrencyCd", false),
+				new ColumnMetadata("IsFlat", false),
+				new ColumnMetadata("IsActive", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),
 				new ColumnMetadata("UpdateBy", false),
 				new ColumnMetadata("UpdateDate", false),
 				new ColumnMetadata("UpdatePgId", false),
-				new ColumnMetadata("SupplierCd", true),
 
             };
         }

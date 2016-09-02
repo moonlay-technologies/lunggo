@@ -53,7 +53,11 @@ namespace Lunggo.ApCommon.Product.Model
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var record = GetReservationStateQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single();
+                var record = GetReservationStateQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).SingleOrDefault();
+
+                if (record == null)
+                    return null;
+
                 return new ReservationState
                 {
                     Platform = PlatformTypeCd.Mnemonic(record.PlatformCd),

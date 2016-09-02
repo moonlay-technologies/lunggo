@@ -41,6 +41,16 @@ namespace Lunggo.Framework.Database
             return  DbWrapper.Update(connection, record, definition);    
         }
 
+        protected T Find1Internal(IDbConnection connection, TableRecord record, CommandDefinition definition)
+        {
+            return DbWrapper.Find1<T>(connection, record, definition);
+        }
+
+        protected IEnumerable<T> FindInternal(IDbConnection connection, TableRecord record, CommandDefinition definition)
+        {
+            return DbWrapper.Find<T>(connection, record, definition);
+        }
+
         protected IEnumerable<T> FindAllInternal(IDbConnection connection, CommandDefinition definition)
         {
             return DbWrapper.FindAll<T>(connection, _tableName, definition);

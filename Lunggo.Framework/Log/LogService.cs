@@ -35,5 +35,10 @@ namespace Lunggo.Framework.Log
         {
             Client.Post(text);
         }
+
+        public void Post(string text, string recipient)
+        {
+            Client.Post(text, recipient);
+        }
     }
 }

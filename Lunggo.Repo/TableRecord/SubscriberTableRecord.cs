@@ -11,39 +11,7 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public String Email
-		{
-		    get { return _Email; }
-		    set
-		    {
-		        _Email = value;
-		        IncrementLog("Email");
-		    }
-		}
-		public Boolean? IsValidated
-		{
-		    get { return _IsValidated; }
-		    set
-		    {
-		        _IsValidated = value;
-		        IncrementLog("IsValidated");
-		    }
-		}
-		public String HashLink
-		{
-		    get { return _HashLink; }
-		    set
-		    {
-		        _HashLink = value;
-		        IncrementLog("HashLink");
-		    }
-		}
-
 		
-		private String _Email;
-		private Boolean? _IsValidated;
-		private String _HashLink;
-
 
 		public static SubscriberTableRecord CreateNewInstance()
         {
@@ -74,10 +42,6 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("Email", true),
-				new ColumnMetadata("IsValidated", false),
-				new ColumnMetadata("HashLink", false),
-
             };
         }
 

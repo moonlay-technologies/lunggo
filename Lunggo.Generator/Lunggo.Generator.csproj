@@ -35,7 +35,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Lunggo.Generator.VoucherGenerator.VoucherGenerator</StartupObject>
+    <StartupObject>Lunggo.Generator.TableRepo.TableRepoGenerator</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.StringTemplate">

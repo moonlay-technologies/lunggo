@@ -35,6 +35,16 @@ namespace Lunggo.Repository.TableRepository
             return Update(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
+		public FlightSavedPassengerTableRecord Find1(IDbConnection connection, FlightSavedPassengerTableRecord record)
+        {
+            return Find1(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
+		public IEnumerable<FlightSavedPassengerTableRecord> Find(IDbConnection connection, FlightSavedPassengerTableRecord record)
+        {
+            return Find(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
         public IEnumerable<FlightSavedPassengerTableRecord> FindAll(IDbConnection connection)
         {
             return FindAll(connection, CommandDefinition.GetDefaultDefinition());
@@ -58,6 +68,16 @@ namespace Lunggo.Repository.TableRepository
         public int Update(IDbConnection connection, FlightSavedPassengerTableRecord record, CommandDefinition definition)
         {
             return UpdateInternal(connection, record, definition);
+        }
+
+		public FlightSavedPassengerTableRecord Find1(IDbConnection connection, FlightSavedPassengerTableRecord record, CommandDefinition definition)
+        {
+			return Find1Internal(connection, record, definition);
+        }
+
+		public IEnumerable<FlightSavedPassengerTableRecord> Find(IDbConnection connection, FlightSavedPassengerTableRecord record, CommandDefinition definition)
+        {
+			return FindInternal(connection, record, definition);
         }
 
         public int DeleteAll(IDbConnection connection, CommandDefinition definition)
