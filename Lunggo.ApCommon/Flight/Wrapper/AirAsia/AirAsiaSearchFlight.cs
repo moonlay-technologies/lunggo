@@ -143,7 +143,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     Debug.Print(html.ToString());
 
                     if (searchResponse.ResponseUri.AbsolutePath != "/Flight/Select" && (searchResponse.StatusCode == HttpStatusCode.OK || searchResponse.StatusCode == HttpStatusCode.Redirect))
-                        return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
+                        return new SearchFlightResult
+                        {
+                            Errors = new List<FlightError> { FlightError.InvalidInputData },
+                            ErrorMessages = new List<string> { "Error while requesting at Flight/Select. Unexpected response path or status code" }
+                        };
                     var searchedHtml = (CQ)html;
                     availableFares = searchedHtml[".radio-markets"];
                     flightTable = searchedHtml[".avail-table-detail-table"];
@@ -457,12 +461,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Itineraries = itins
                     };
                 }
-                catch
+                catch(Exception e)
                 {
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Web Layout Changed!" }
+                        ErrorMessages = new List<string> { e.Message }
                     };
                 }
             }

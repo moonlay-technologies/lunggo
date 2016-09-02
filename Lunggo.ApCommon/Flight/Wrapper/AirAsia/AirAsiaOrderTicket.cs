@@ -101,7 +101,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     return new IssueTicketResult
                     {
                         IsSuccess = false,
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier },
+                        ErrorMessages = new List<string> { "Error while requesting at BookingList.aspx. Unexpected response path or response status code" }
                     };
 
                 // [POST] ChangeItinerary
@@ -128,7 +129,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     return new IssueTicketResult
                     {
                         IsSuccess = false,
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier },
+                        ErrorMessages = new List<string> { "Error while requesting at ChangeItinerary.aspx. Unexpected response path or response status code" }
                     };
 
                 var changeItinCq = (CQ)changeItinHtml;
