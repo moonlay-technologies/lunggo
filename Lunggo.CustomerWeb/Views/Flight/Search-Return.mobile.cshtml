@@ -187,6 +187,12 @@
                         <span>{{Flight.trips[0].airlines[0].name}}</span>
                     </h4>
                 </div>
+                <div class="flight-facility " ng-show="checkMeal(Flight.trips[0]) || !checkBaggageNaN(minBaggage(Flight.trips[0]))
+                     || checkTax(Flight.trips[0])">
+                    <span ng-show="checkMeal(Flight.trips[0])" class="flight-meal"></span>
+                    <span ng-show="!checkBaggageNaN(minBaggage(Flight.trips[0]))" class="flight-baggage">{{minBaggage(Flight.trips[0])}}</span>
+                    <span ng-show="checkTax(Flight.trips[0])" class="flight-tax"></span>
+                </div>
                 <div class="flight-content">
                     <div class="content-left">
                         <h4 class="flight-time">
@@ -236,6 +242,12 @@
                         <img ng-src="{{Flight.trips[0].airlines[0].logoUrl}}" alt="{{Flight.trips[0].airlines[0].name}}" class="flight-airline-image" />
                         <span>{{Flight.trips[0].airlines[0].name}}</span>
                     </h4>
+                </div>
+                <div class="flight-facility " ng-show="checkMeal(Flight.trips[0]) || !checkBaggageNaN(minBaggage(Flight.trips[0]))
+                     || checkTax(Flight.trips[0])">
+                    <span ng-show="checkMeal(Flight.trips[0])" class="flight-meal"></span>
+                    <span ng-show="!checkBaggageNaN(minBaggage(Flight.trips[0]))" class="flight-baggage">{{minBaggage(Flight.trips[0])}}</span>
+                    <span ng-show="checkTax(Flight.trips[0])" class="flight-tax"></span>
                 </div>
                 <div class="flight-content">
                     <div class="content-left">
@@ -302,6 +314,11 @@
                                         <h5>{{Segment.airlineCd}}-{{Segment.flightNo}}</h5>
                                     </div>
                                 </div>
+                                <div class="flight-facility " ng-show="{{Segment.hasMeal || Segment.isBaggageIncluded || Segment.includingPsc}}">
+                                    <span ng-show="Segment.hasMeal" class="flight-meal"></span>
+                                    <span ng-show="Segment.isBaggageIncluded" class="flight-baggage">{{Segment.baggageCapacity}}</span>
+                                    <span ng-show="Segment.includingPsc" class="flight-tax"></span>
+                                </div>
                                 <div class="flight__detail">
                                     <div class="flight__departure">
                                         <h5>{{Segment.departureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
@@ -348,6 +365,11 @@
                                         <h4><b>{{Segment.airlineName}}</b></h4>
                                         <h5>{{Segment.airlineCd}}-{{Segment.flightNo}}</h5>
                                     </div>
+                                </div>
+                                <div class="flight-facility " ng-show="{{Segment.hasMeal || Segment.isBaggageIncluded || Segment.includingPsc}}">
+                                    <span ng-show="Segment.hasMeal" class="flight-meal"></span>
+                                    <span ng-show="Segment.isBaggageIncluded" class="flight-baggage">{{Segment.baggageCapacity}}</span>
+                                    <span ng-show="Segment.includingPsc" class="flight-tax"></span>
                                 </div>
                                 <div class="flight__detail">
                                     <div class="flight__departure">
@@ -439,6 +461,11 @@
                                         <h5>{{Segment.airlineCd}}-{{Segment.flightNo}}</h5>
                                     </div>
                                 </div><!-- .flight__summary -->
+                                <div class="flight-facility " ng-show="{{Segment.hasMeal || Segment.isBaggageIncluded || Segment.includingPsc}}">
+                                    <span ng-show="Segment.hasMeal" class="flight-meal"></span>
+                                    <span ng-show="Segment.isBaggageIncluded" class="flight-baggage">{{Segment.baggageCapacity}}</span>
+                                    <span ng-show="Segment.includingPsc" class="flight-tax"></span>
+                                </div>
                                 <div class="flight__detail">
                                     <div class="flight__departure">
                                         <h5>{{Segment.departureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
@@ -491,6 +518,11 @@
                                         <h5>{{Segment.airlineCd}}-{{Segment.flightNo}}</h5>
                                     </div>
                                 </div><!-- .flight__summary -->
+                                <div class="flight-facility " ng-show="{{Segment.hasMeal || Segment.isBaggageIncluded || Segment.includingPsc}}">
+                                    <span ng-show="Segment.hasMeal" class="flight-meal"></span>
+                                    <span ng-show="Segment.isBaggageIncluded" class="flight-baggage">{{Segment.baggageCapacity}}</span>
+                                    <span ng-show="Segment.includingPsc" class="flight-tax"></span>
+                                </div>
                                 <div class="flight__detail">
                                     <div class="flight__departure">
                                         <h5>{{Segment.departureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>

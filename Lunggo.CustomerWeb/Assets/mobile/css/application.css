@@ -1480,6 +1480,29 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-flight .flight-list .flight .flight-header .flight-airline span {
       color: #2ca3e1;
       font-weight: bold; }
+  .page.page-flight .flight-list .flight .flight-facility {
+    display: block;
+    padding-top: 12px; }
+    .page.page-flight .flight-list .flight .flight-facility span {
+      background: url(/Assets/images/flight-facilities-sprite.png) no-repeat;
+      display: inline-block;
+      margin: 0 5px; }
+      .page.page-flight .flight-list .flight .flight-facility span.flight-baggage {
+        width: 35px;
+        background-position: -64px;
+        text-align: center;
+        color: #fff;
+        position: relative;
+        padding-top: 5px;
+        margin-top: -10px;
+        top: -7px; }
+      .page.page-flight .flight-list .flight .flight-facility span.flight-tax {
+        width: 35px;
+        background-position: -30px;
+        padding-bottom: 30px; }
+      .page.page-flight .flight-list .flight .flight-facility span.flight-meal {
+        width: 30px;
+        padding-bottom: 30px; }
   .page.page-flight .flight-list .flight .flight-content:after {
     display: block;
     width: 100%;
@@ -1970,17 +1993,42 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         font-size: 12px; }
     .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content {
       padding-left: 25px; }
-      .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary:after {
+      .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary {
+        width: 50%; }
+        .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary:after {
+          display: block;
+          width: 100%;
+          content: "";
+          clear: both; }
+        .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary .flight__image {
+          width: 35px;
+          height: auto;
+          float: left; }
+        .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary .flight__airline {
+          color: #2fb4e6; }
+      .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility {
         display: block;
-        width: 100%;
-        content: "";
-        clear: both; }
-      .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary .flight__image {
-        width: 35px;
-        height: auto;
-        float: left; }
-      .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary .flight__airline {
-        color: #2fb4e6; }
+        padding-top: 12px; }
+        .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility span {
+          background: url(/Assets/images/flight-facilities-sprite.png) no-repeat;
+          display: inline-block;
+          margin: 0 5px; }
+          .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility span.flight-baggage {
+            width: 35px;
+            background-position: -64px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            padding-top: 5px;
+            margin-top: -10px;
+            top: -7px; }
+          .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility span.flight-tax {
+            width: 35px;
+            background-position: -30px;
+            padding-bottom: 30px; }
+          .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility span.flight-meal {
+            width: 30px;
+            padding-bottom: 30px; }
       .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail {
         position: relative; }
         .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail:after {

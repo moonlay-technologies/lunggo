@@ -231,6 +231,43 @@ app.controller('returnFlightController', [
             }
         }
 
+
+        $scope.checkMeal = function (trip) {
+            var available = false;
+            for (var x = 0; x < trip.segments.length; x++) {
+                if (trip.segments[x].hasMeal) {
+                    available = true;
+                }
+            }
+
+            return available;
+        }
+
+        $scope.minBaggage = function (trip) {
+            var listbaggage = [];
+            for (var x = 0; x < trip.segments.length; x++) {
+                if (trip.segments[x].baggageCapacity != 0) {
+                    listbaggage.push(trip.segments[x].baggageCapacity);
+                }
+            }
+
+            return Math.min.apply(Math, listbaggage);
+        }
+
+        $scope.checkBaggageNaN = function (val) {
+            return Number.isNaN(val);
+        }
+
+        $scope.checkTax = function (trip) {
+            var valid = true;
+            for (var x = 0; x < trip.segments.length; x++) {
+                if (trip.segments[x].includedPsc) {
+                    valid = false;
+                }
+            }
+            return valid;
+        }
+
         //terakhir dimari//
         // set active flight BUAT DETAIL PENERBANGAN
         $scope.setActiveFlight = function (target, flightSequence) {

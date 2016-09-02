@@ -555,7 +555,7 @@
                                             <h5 class="segment-airline-number">{{segment.airlineCd}}-{{segment.flightNo}}</h5>
                                             <div class="segment-detail flight-facility" ng-show="{{segment.hasMeal || segment.isBaggageIncluded || segment.includingPsc}}">
                                                 <span ng-show="segment.hasMeal" class="flight-meal"></span>
-                                                <span ng-show="segment.isBaggageIncluded" class="flight-baggage">{{segment.isBaggageIncluded}}</span>
+                                                <span ng-show="segment.isBaggageIncluded" class="flight-baggage">{{segment.baggageCapacity}}</span>
                                                 <span ng-show="segment.includingPsc" class="flight-tax"></span>
                                             </div>
                                         </div>
