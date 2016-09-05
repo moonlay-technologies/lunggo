@@ -318,11 +318,11 @@
                             <div ng-show="form.incompletePassportData" style="color:red">
                                 Data Paspor Belum Lengkap
                             </div>
-                            <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
                             <button class="btn btn-yellow form-control" @*ng-disabled="PassengerForm.$invalid || !CheckTitle(passengers) || (CheckoutConfig.BirthDateRequired && !CheckDate(passengers))
                                     || (CheckoutConfig.PassportRequired && !CheckPassportDate(passengers)) || hasDuplicatePaxName()"*@ ng-click="validateForm(2)">
                                 LANJUT
                             </button>
+                            <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
                         </div>
 
                     </form>
