@@ -1482,27 +1482,29 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-weight: bold; }
   .page.page-flight .flight-list .flight .flight-facility {
     display: block;
-    padding-top: 12px; }
+    padding-top: 12px;
+    left: 20px; }
     .page.page-flight .flight-list .flight .flight-facility span {
-      background: url(/Assets/images/flight-facilities-sprite.png) no-repeat;
+      background: url(/Assets/images/flight-facilities-sprite2.png) no-repeat;
       display: inline-block;
-      margin: 0 5px; }
+      margin: 0 2px; }
       .page.page-flight .flight-list .flight .flight-facility span.flight-baggage {
-        width: 35px;
-        background-position: -64px;
+        width: 18px;
+        background-position: -39px 0;
         text-align: center;
         color: #fff;
         position: relative;
-        padding-top: 5px;
-        margin-top: -10px;
-        top: -7px; }
+        top: -3px;
+        font-size: 8px;
+        height: 16px;
+        line-height: 20px; }
       .page.page-flight .flight-list .flight .flight-facility span.flight-tax {
-        width: 35px;
-        background-position: -30px;
-        padding-bottom: 30px; }
+        width: 21px;
+        background-position: -17px -1px;
+        height: 14px; }
       .page.page-flight .flight-list .flight .flight-facility span.flight-meal {
-        width: 30px;
-        padding-bottom: 30px; }
+        width: 14px;
+        height: 16px; }
   .page.page-flight .flight-list .flight .flight-content:after {
     display: block;
     width: 100%;
@@ -2008,27 +2010,29 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           color: #2fb4e6; }
       .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility {
         display: block;
-        padding-top: 12px; }
+        padding-top: 12px;
+        left: 20px; }
         .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility span {
-          background: url(/Assets/images/flight-facilities-sprite.png) no-repeat;
+          background: url(/Assets/images/flight-facilities-sprite2.png) no-repeat;
           display: inline-block;
-          margin: 0 5px; }
+          margin: 0 2px; }
           .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility span.flight-baggage {
-            width: 35px;
-            background-position: -64px;
+            width: 18px;
+            background-position: -39px 0;
             text-align: center;
             color: #fff;
             position: relative;
-            padding-top: 5px;
-            margin-top: -10px;
-            top: -7px; }
+            top: -3px;
+            font-size: 8px;
+            height: 16px;
+            line-height: 20px; }
           .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility span.flight-tax {
-            width: 35px;
-            background-position: -30px;
-            padding-bottom: 30px; }
+            width: 21px;
+            background-position: -17px -1px;
+            height: 14px; }
           .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility span.flight-meal {
-            width: 30px;
-            padding-bottom: 30px; }
+            width: 14px;
+            height: 16px; }
       .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail {
         position: relative; }
         .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail:after {
