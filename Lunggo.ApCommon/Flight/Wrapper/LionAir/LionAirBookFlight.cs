@@ -1002,7 +1002,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         }
                         middle1 += "&hdnDepPorts=&hdnArrPorts=";
 
-                        var c = bookInfo.Contact.Name;
+                        var c = bookInfo.Contact.Name.Trim();
                         string contactFirstname, contactLastname;
                         var contactTitle = "";
                         if (c.Split(' ').Count() == 1)

@@ -79,7 +79,7 @@ namespace Lunggo.ApCommon.Product.Service
             }
             else
             {
-                var splittedName = pax.Name.Split(' ');
+                var splittedName = pax.Name.Trim().Split(' ');
                 if (splittedName.Length == 1)
                 {
                     first = pax.Name;
