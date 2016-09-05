@@ -65,8 +65,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.MystiflyQueueHandler", "Lunggo.Webjob.MystiflyQueueHandler\Lunggo.WebJob.MystiflyQueueHandler.csproj", "{CF2D74B6-E99C-4C39-92F7-E36855C06BD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.CurrencyRate", "Lunggo.Webjob.CurrencyRate\Lunggo.WebJob.CurrencyRate.csproj", "{CEF951AB-7F29-446B-91E3-78DD6F02A590}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.Webjob.CurrencyCrawler", "Lunggo.Webjob.CurrencyCrawler\Lunggo.Webjob.CurrencyCrawler.csproj", "{7BADCBBD-77F0-45B2-9F3E-F384999A277F}"
 EndProject
 Global
@@ -322,16 +320,6 @@ Global
 		{CF2D74B6-E99C-4C39-92F7-E36855C06BD5}.Release|ARM.ActiveCfg = Release|Any CPU
 		{CF2D74B6-E99C-4C39-92F7-E36855C06BD5}.Release|x64.ActiveCfg = Release|Any CPU
 		{CF2D74B6-E99C-4C39-92F7-E36855C06BD5}.Release|x86.ActiveCfg = Release|Any CPU
-		{CEF951AB-7F29-446B-91E3-78DD6F02A590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CEF951AB-7F29-446B-91E3-78DD6F02A590}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CEF951AB-7F29-446B-91E3-78DD6F02A590}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{CEF951AB-7F29-446B-91E3-78DD6F02A590}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{CEF951AB-7F29-446B-91E3-78DD6F02A590}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CEF951AB-7F29-446B-91E3-78DD6F02A590}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CEF951AB-7F29-446B-91E3-78DD6F02A590}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CEF951AB-7F29-446B-91E3-78DD6F02A590}.Release|ARM.ActiveCfg = Release|Any CPU
-		{CEF951AB-7F29-446B-91E3-78DD6F02A590}.Release|x64.ActiveCfg = Release|Any CPU
-		{CEF951AB-7F29-446B-91E3-78DD6F02A590}.Release|x86.ActiveCfg = Release|Any CPU
 		{7BADCBBD-77F0-45B2-9F3E-F384999A277F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7BADCBBD-77F0-45B2-9F3E-F384999A277F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BADCBBD-77F0-45B2-9F3E-F384999A277F}.Debug|ARM.ActiveCfg = Debug|Any CPU

@@ -17,6 +17,11 @@ namespace Lunggo.Webjob.BankTransferChecking
         static void Main(string[] args)
         {
             Init();
+
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            if (env != "production")
+                return;
+
             FlightService flight = FlightService.GetInstance();
             flight.Init("");
             MandiriClientHandler mandiriClient = MandiriClientHandler.GetClientInstance();

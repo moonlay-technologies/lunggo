@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.UI;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
@@ -27,14 +28,14 @@ namespace Lunggo.ApCommon.Flight.Service
     public partial class FlightService
     {
         #region Get
-        private List<FlightReservation> GetOverviewReservationsByUserIdFromDb(string userId)
+        private List<FlightReservation> GetOverviewReservationsByUserIdFromDb(string userId, string[] filters, string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rsvNos =
                     GetRsvNosByUserIdQuery.GetInstance()
-                        .Execute(conn, new { UserId = userId })
-                        .ToList();
+                        .Execute(conn, new { UserId = userId }, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+                        .Distinct().ToList();
                 if (!rsvNos.Any())
                     return null;
                 else
@@ -44,13 +45,13 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private List<FlightReservation> GetOverviewReservationsByDeviceIdFromDb(string deviceId)
+        private List<FlightReservation> GetOverviewReservationsByDeviceIdFromDb(string deviceId, string[] filters, string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rsvNos =
                     GetRsvNosByDeviceIdQuery.GetInstance()
-                        .Execute(conn, new { DeviceId = deviceId })
+                        .Execute(conn, new { DeviceId = deviceId }, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
                         .ToList();
                 if (!rsvNos.Any())
                     return null;

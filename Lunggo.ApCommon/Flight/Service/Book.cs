@@ -99,7 +99,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var reservation = new FlightReservation();
             reservation.RsvNo = RsvNoSequence.GetInstance().GetNext(reservation.Type);
             reservation.RsvTime = DateTime.UtcNow;
-            reservation.RsvStatus = RsvStatus.Reserved;
+            reservation.RsvStatus = RsvStatus.InProcess;
             reservation.Itineraries = itins;
             reservation.Contact = input.Contact;
             reservation.Pax = input.Passengers;

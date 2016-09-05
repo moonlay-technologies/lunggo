@@ -14,7 +14,7 @@
             "filePath": "../Lunggo.Webjob.BankTransferChecking/Lunggo.WebJob.BankTransferChecking.csproj"
         },
         {
-            "filePath": "../Lunggo.Webjob.BankTransferChecking/Lunggo.WebJob.CurrencyCrawler.csproj"
+            "filePath": "../Lunggo.Webjob.CurrencyCrawler/Lunggo.WebJob.CurrencyCrawler.csproj"
         }
     ]
 }

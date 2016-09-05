@@ -44,7 +44,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                     return new ApiResponseBase
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERNSUB02"
+                        ErrorCode = "ERXSUB02"
                     };
                 }
                 else
