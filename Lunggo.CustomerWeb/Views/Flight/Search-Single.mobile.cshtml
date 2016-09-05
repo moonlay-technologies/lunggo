@@ -163,15 +163,15 @@
              | filter: FlightFiltering.PriceFilter() | filter:FlightFiltering.DepartureTimeFilter('departure') |
              filter:FlightFiltering.ArrivalTimeFilter('arrival') | orderBy:FlightConfig[0].FlightSort.Value:FlightConfig[0].FlightSort.Invert"
              id="flight-{{flight.IndexNo}}" ng-click="FlightFunctions.SetActiveFlight(flight.IndexNo)">
-            <div class="flight-header">
-                <h4 class="flight-airline">
+            <div class="flight-header col-xs-8">
+                <h4 class="flight-airline ">
                     <img ng-src="{{flight.trips[0].airlines[0].logoUrl}}" alt="{{flight.trips[0].airlines[0].name}}" class="flight-airline-image" />
                     <span>{{flight.trips[0].airlines[0].name}}</span>
                 </h4>
-                
+
             </div>
            
-            <div class="flight-facility " ng-show="checkMeal(flight.trips[0]) || !checkBaggageNaN(minBaggage(flight.trips[0]))
+            <div class="flight-facility col-xs-4" ng-show="checkMeal(flight.trips[0]) || !checkBaggageNaN(minBaggage(flight.trips[0]))
                      || checkTax(flight.trips[0])">
                 <span ng-show="checkMeal(flight.trips[0])" class="flight-meal"></span>
                 <span ng-show="!checkBaggageNaN(minBaggage(flight.trips[0]))" class="flight-baggage">{{minBaggage(flight.trips[0])}}</span>
@@ -242,19 +242,18 @@
                         <span>{{$index + 1}}</span>
                     </div>
                     <div class="flight__content">
-                        
-                            <div class="flight__summary ">
-                                <img ng-src="{{segment.airlineLogoUrl}}" alt="{{segment.airlineName}}" class="flight__image" />
-                                <div class="flight__airline">
-                                    <h4><b>{{segment.airlineName}}</b></h4>
-                                    <h5>{{segment.airlineCd}}-{{segment.flightNo}}</h5>
-                                </div>
+                        <div class="flight__summary col-xs-8">
+                            <img ng-src="{{segment.airlineLogoUrl}}" alt="{{segment.airlineName}}" class="flight__image" />
+                            <div class="flight__airline">
+                                <h4><b>{{segment.airlineName}}</b></h4>
+                                <h5>{{segment.airlineCd}}-{{segment.flightNo}}</h5>
                             </div>
-                            <div class="flight-facility " ng-show="{{segment.hasMeal || segment.isBaggageIncluded || segment.includingPsc}}">
-                                <span ng-show="segment.hasMeal" class="flight-meal"></span>
-                                <span ng-show="segment.isBaggageIncluded" class="flight-baggage">{{segment.baggageCapacity}}</span>
-                                <span ng-show="segment.includingPsc" class="flight-tax"></span>
-                            </div>
+                        </div>
+                        <div class="flight-facility col-xs-4" ng-show="{{segment.hasMeal || segment.isBaggageIncluded || segment.includingPsc}}">
+                            <span ng-show="segment.hasMeal" class="flight-meal"></span>
+                            <span ng-show="segment.isBaggageIncluded" class="flight-baggage">{{segment.baggageCapacity}}</span>
+                            <span ng-show="segment.includingPsc" class="flight-tax"></span>
+                        </div>
                         
                         <div class="col-xs-12">
                             <div class="flight__detail">

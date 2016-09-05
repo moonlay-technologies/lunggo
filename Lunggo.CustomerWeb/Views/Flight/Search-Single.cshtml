@@ -369,11 +369,13 @@
                                             <h5>{{flight.trips[0].segments[0].airlineName}}</h5>
                                             <img ng-src="{{flight.trips[0].segments[0].airlineLogoUrl}}" alt="flight.trips[0].segments[0].airlineName" />
                                         </div>
-                                        <div class="summary-top-left-bottom flight-facilities">
-                                            <span class="flight-baggage">15</span>
-                                            <span class="flight-tax"></span>
-                                            <span class="flight-meal"></span>
+                                        <div class="summary-top-left-bottom flight-facilities" ng-show="checkMeal(flight.trips[0]) ||
+                                         !checkBaggageNaN(minBaggage(flight.trips[0])) || checkTax(flight.trips[0])">
+                                            <span ng-show="checkMeal(flight.trips[0])" class="flight-meal"></span>
+                                            <span ng-show="!checkBaggageNaN(minBaggage(flight.trips[0]))" class="flight-baggage">{{minBaggage(flight.trips[0])}}</span>
+                                            <span ng-show="checkTax(flight.trips[0])" class="flight-tax"></span>
                                         </div><!-- .flight-facilities -->
+                                        
                                     </div><!-- .flight-airline -->
                                     <div class="summary-top-right flight-date">
                                         <div class="summary-top-right-top">
