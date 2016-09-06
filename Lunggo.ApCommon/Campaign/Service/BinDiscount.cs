@@ -32,7 +32,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
         private bool DiscountGranted(FlightReservation rsv, string bin, string voucherCode)
         {
-            var bin6 = bin.Substring(0, 6);
+            var bin6 = (bin != null && bin.Length >= 6) ? bin.Substring(0, 6) : null;
             return (rsv.Payment.OriginalPriceIdr >= 1000000M &&
                     string.IsNullOrEmpty(voucherCode) &&
                     (bin6 == "421570" ||
