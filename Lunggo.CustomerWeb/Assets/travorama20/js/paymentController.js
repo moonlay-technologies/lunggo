@@ -303,8 +303,8 @@ app.controller('paymentController', [
                                 // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
                                 'secure': true,
                                 'bank': 'mandiri',
-                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode
-                            }
+                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount
+                        }
                         } else {
                             return {
                                 'card_cvv': $scope.CreditCard.Cvv,
