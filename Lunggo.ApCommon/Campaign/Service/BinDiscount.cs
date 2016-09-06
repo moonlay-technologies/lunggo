@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 {
     public partial class CampaignService
     {
-        public BinDiscount CheckBinDiscount(string rsvNo, string bin, string voucherCode)
+        public BinDiscount CheckBinDiscount(string rsvNo, string bin, string hashedPan, string voucherCode)
         {
             var rsv = FlightService.GetInstance().GetReservation(rsvNo);
             if (DiscountGranted(rsv, bin, voucherCode))

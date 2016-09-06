@@ -111,7 +111,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Status = PaymentStatus.Pending,
                 LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
                 OriginalPriceIdr = reservation.Itineraries.Sum(order => order.Price.FinalIdr),
-                TimeLimit = reservation.Itineraries.Min(order => order.TimeLimit.GetValueOrDefault()).AddMinutes(-30),
+                TimeLimit = reservation.Itineraries.Min(order => order.TimeLimit.GetValueOrDefault()).AddMinutes(-15),
             };
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
             var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;

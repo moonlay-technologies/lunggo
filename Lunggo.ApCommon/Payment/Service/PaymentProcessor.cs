@@ -57,7 +57,7 @@ namespace Lunggo.ApCommon.Payment.Service
             if (paymentDetails.Method == PaymentMethod.CreditCard)
             {
                 var binDiscount = CampaignService.GetInstance()
-                    .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, discountCode);
+                    .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, "", discountCode);
                 if (binDiscount != null)
                 {
                     paymentDetails.FinalPriceIdr -= binDiscount.Amount;
@@ -247,9 +247,9 @@ namespace Lunggo.ApCommon.Payment.Service
             };
         }
 
-        public decimal GetTransferFee(string rsvNo, string bin, string discountCode)
+        public decimal GetUniqueCode(string rsvNo, string bin, string discountCode)
         {
-            decimal transferFee, finalPrice;
+            decimal uniqueCode, finalPrice;
             var voucher = CampaignService.GetInstance().ValidateVoucherRequest(rsvNo, discountCode);
             if (voucher.VoucherStatus != VoucherStatus.Success)
             {
@@ -266,24 +266,54 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             if (finalPrice <= 999 && finalPrice >= 0)
             {
-                transferFee = -finalPrice;
+                uniqueCode = -finalPrice;
             }
             else
             {
                 bool isExist;
                 decimal candidatePrice;
                 var rnd = new Random();
-                do
+                uniqueCode = GetTransferFeeFromCache(rsvNo);
+                if (uniqueCode != 0M)
                 {
-                    transferFee = -rnd.Next(1, 999);
-                    candidatePrice = finalPrice + transferFee;
-                    isExist = IsTransferValueExist(candidatePrice);
-                } while (isExist);
-                SaveTransferValue(candidatePrice);
-                SaveTransferFeeinCache(rsvNo, transferFee);
+                    candidatePrice = finalPrice + uniqueCode;
+                    var rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
+                    isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
+                    if (isExist)
+                    {
+                        var cap = -1;
+                        do
+                        {
+                            if (cap < 999)
+                                cap += 50;
+                            uniqueCode = -rnd.Next(1, cap);
+                            candidatePrice = finalPrice + uniqueCode;
+                            rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
+                            isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
+                        } while (isExist);
+                    }
+                    SaveTransferValue(candidatePrice, rsvNo);
+
+                    SaveTransferFeeinCache(rsvNo, uniqueCode);
+                }
+                else
+                {
+                    var cap = -1;
+                    do
+                    {
+                        if (cap < 999)
+                            cap += 50;
+                        uniqueCode = -rnd.Next(1, cap);
+                        candidatePrice = finalPrice + uniqueCode;
+                        var rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
+                        isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
+                    } while (isExist);
+                    SaveTransferValue(candidatePrice, rsvNo);
+                    SaveTransferFeeinCache(rsvNo, uniqueCode);
+                }
             }
 
-            return transferFee;
+            return uniqueCode;
         }
     }
 }

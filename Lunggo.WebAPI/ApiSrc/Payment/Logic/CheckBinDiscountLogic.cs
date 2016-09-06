@@ -20,7 +20,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     ErrorCode = "ERPBIN01"
                 };
             }
-            var binDiscount = CampaignService.GetInstance().CheckBinDiscount(request.RsvNo, request.CardNumber, request.VoucherCode);
+            var binDiscount = CampaignService.GetInstance().CheckBinDiscount(request.RsvNo, request.Bin, request.HashedPan, request.VoucherCode);
             var apiResponse = AssembleApiRspn(binDiscount);
             return apiResponse;
         }
