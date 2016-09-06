@@ -156,16 +156,12 @@
                             <form class="form form-horizontal">
                                 <div class="form-group">
                                     <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherNotFound'">Kode voucher salah</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Di bawah pembelian minimum</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignNotStartedYet'">Voucher belum dapat digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignHasEnded'">Voucher sudah tidak dapat digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignInactive'">Voucher tidak dapat digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'NoVoucherRemaining'">Voucher sudah habis</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'EmailNotEligible'">Voucher tidak dapat digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'UpdateError'">Voucher tidak dapat digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
+                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH02'">Kode voucher salah</p>
+                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH01'">Voucher sudah digunakan</p>
+                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH04'">Di bawah pembelian minimum</p>
+                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH05'">Voucher tidak dapat digunakan</p>
+                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH03'">Voucher sudah habis</p>
+                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH06'">Voucher sudah digunakan</p>
                                     <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
                                 </div>
 

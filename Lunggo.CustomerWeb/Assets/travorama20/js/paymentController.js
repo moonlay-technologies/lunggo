@@ -118,6 +118,7 @@ app.controller('paymentController', [
         //Voucher
         $scope.voucher = {
             confirmedCode: '',
+            receive: false,
             code: '',
             amount: 0,
             status: '',
@@ -152,10 +153,12 @@ app.controller('paymentController', [
                             // get unique code for transfer payment
                             $scope.voucher.status = 'Success';
                             $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
+                            $scope.voucher.receive = true;
                         }
                         else {
                             $scope.voucher.checked = true;
                             $scope.voucher.status = returnData.data.error;
+                            $scope.voucher.receive = false;
                         }
                     }).catch(function (returnData) {
                         $scope.trial++;
@@ -180,6 +183,7 @@ app.controller('paymentController', [
                 $scope.voucher.amount = 0;
                 $scope.voucher.confirmedCode = '';
                 $scope.voucher.checked = false;
+                $scope.voucher.status = '';
                 // get unique code for transfer payment
                 $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
             }
