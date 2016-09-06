@@ -62,7 +62,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 {
                     paymentDetails.FinalPriceIdr -= binDiscount.Amount;
                     paymentDetails.DiscountNominal += binDiscount.Amount;
-                    if (campaign.Discount == null)
+                    if (paymentDetails.Discount == null)
                         paymentDetails.Discount = new UsedDiscount
                         {
                             DisplayName = binDiscount.DisplayName,
