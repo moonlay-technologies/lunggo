@@ -195,6 +195,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 var client = CreateAgentClient();
                 var flight = FlightService.GetInstance();
+                var originCountry = flight.GetAirportCountryCode(origin);
                 var destinationCountry = flight.GetAirportCountryCode(dest);
                 var userId = "";
                 var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
@@ -801,7 +802,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var orderedPassengers = bookInfo.Passengers.OrderBy(x => x.Type).ToList();
                         var dataPassenger = "";
                         
-                        if (destinationCountry == "ID")
+                        if (originCountry == destinationCountry )
                         {
                             var infpax = 1;
                             for (var i = 0; i < orderedPassengers.Count; i++)
@@ -940,7 +941,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                         "&NameBlock" + (i + 1) + "%24ddlDocCountry=" +
                                         orderedPassengers[i].PassportCountry +
                                         "&NameBlock" + (i + 1) + "%24ddlPaxCountry=" +
-                                        orderedPassengers[i].PassportCountry;
+                                        orderedPassengers[i].Nationality; //orderedPassengers[i].Nationality
                                     infpax += 1;
                                 }
                                 else
@@ -980,7 +981,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                         "&NameBlock" + (i + 1) + "%24ddlDocCountry=" +
                                         orderedPassengers[i].PassportCountry +
                                         "&NameBlock" + (i + 1) + "%24ddlPaxCountry=" +
-                                        orderedPassengers[i].PassportCountry;
+                                        orderedPassengers[i].Nationality;
                                 }
                             }
                         }

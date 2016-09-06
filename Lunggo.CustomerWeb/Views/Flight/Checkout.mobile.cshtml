@@ -224,27 +224,27 @@
                                     <label class="control-label">Tanggal Lahir: </label>
                                     <div class="row">
                                         <div class="col-xs-4">
-                                            <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" ng-change="ValidateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
+                                            <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" ng-change="validateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="Passenger.type == 'adult'">{{date}}</option>
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="Passenger.type == 'child'">{{date}}</option>
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="Passenger.type == 'infant'">{{date}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" ng-change="ValidateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
+                                            <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" ng-change="validateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="Passenger.type == 'child'">{{month.name}}</option>
                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="Passenger.type == 'infant'">{{month.name}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'" ng-required="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'">
+                                            <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="validateBirthday(Passenger)" ng-if="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'" ng-required="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'">
                                                 <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
                                             </select>
-                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="Passenger.type == 'child'">
+                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="validateBirthday(Passenger)" ng-if="Passenger.type == 'child'">
                                                 <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
                                             </select>
-                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="Passenger.type == 'infant'">
+                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="validateBirthday(Passenger)" ng-if="Passenger.type == 'infant'">
                                                 <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
                                             </select>
                                         </div>
@@ -318,11 +318,11 @@
                             <div ng-show="form.incompletePassportData" style="color:red">
                                 Data Paspor Belum Lengkap
                             </div>
-                            <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
                             <button class="btn btn-yellow form-control" @*ng-disabled="PassengerForm.$invalid || !CheckTitle(passengers) || (CheckoutConfig.BirthDateRequired && !CheckDate(passengers))
                                     || (CheckoutConfig.PassportRequired && !CheckPassportDate(passengers)) || hasDuplicatePaxName()"*@ ng-click="validateForm(2)">
                                 LANJUT
                             </button>
+                            <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
                         </div>
 
                     </form>

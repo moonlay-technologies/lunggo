@@ -47,14 +47,8 @@
                     .flight-airline-image {height:30px;}
                     span {color:#2ca3e1; font-weight:bold;}
                 }
+                &.col-xs-8 {padding: 0;}
             }
-            .flight-facility {display:block; padding-top:12px; left: 20px;
-                    span {background:url(/Assets/images/flight-facilities-sprite2.png) no-repeat; display:inline-block; margin:0 2px; 
-                        &.flight-baggage {width: 18px; background-position: -39px 0; text-align: center; color: #fff; position: relative; top: -3px; font-size: 8px; height: 16px; line-height: 20px;}
-                            &.flight-tax {width: 21px; background-position: -17px -1px; height: 14px;}
-                            &.flight-meal {width: 14px; height: 16px;}
-                    }
-                }
             .flight-content {@include clearfix();
                 .content-left {float:left; width:50%;
                     .flight-time {@include clearfix();
@@ -227,23 +221,15 @@
         }
         .flight-notice {background:#d70000;}
         .flight-wrapper {
-            .flight {position:relative; @include clearfix();
-                .flight__number {width:15px; left:5px; position:absolute;
+            .flight {position:relative; @include clearfix(); padding: 10px 15px;
+                .flight__number {width:15px; position:absolute; margin-top: 5px;
                     span {background:$color-main-blue; color:#fff; width:16px; height:16px; display:block; text-align:center; line-height:16px; font-size:12px;}
                 }
                 .flight__content {padding-left:25px;
-                    .flight__summary {@include clearfix(); width: 50%;
+                    .flight__summary {@include clearfix();
                         .flight__image {width:35px; height:auto; float:left;}
                         .flight__airline {color:$color-main-blue;}
                     }
-                    .flight-facility {display:block; padding-top:12px; left: 20px;
-                        span {background:url(/Assets/images/flight-facilities-sprite2.png) no-repeat; display:inline-block; margin:0 2px; 
-                        &.flight-baggage {width: 18px; background-position: -39px 0; text-align: center; color: #fff; position: relative; top: -3px; font-size: 8px; height: 16px; line-height: 20px;}
-                            &.flight-tax {width: 21px; background-position: -17px -1px; height: 14px;}
-                            &.flight-meal {width: 14px; height: 16px;}
-                        }
-                    }
-                    
                     .flight__detail {position:relative; @include clearfix();
                         &>div {float:left;}
                         .flight__departure {width:45%;}
@@ -297,4 +283,12 @@
         }
     }
     .tnc {margin-top: 15px;}
+}
+
+.flight-facility {display:block; padding: 5px 0;
+    span {background:url(/Assets/images/flight-facilities-sprite2.png) no-repeat; display:inline-block; margin:0 2px; float: right; 
+        &.flight-baggage {width: 18px; background-position: -39px 0; text-align: center; color: #fff; position: relative; top: -1px; font-size: 8px; height: 16px; line-height: 20px;}
+        &.flight-tax {width: 21px; background-position: -17px -1px; height: 14px;}
+        &.flight-meal {width: 14px; height: 16px;}
+    }
 }

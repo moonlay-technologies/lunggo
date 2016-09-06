@@ -762,24 +762,9 @@ app.controller('checkoutController', [
         }
         // validate passenger birthday
         $scope.validateBirthday = function (passenger) {
-            if (passenger.type != 'adult') {
-               // set minimum date for passenger
-                var minYear = -1;
-                var currentDate = new Date();
-                if (passenger.type == 'child') {
-                    minYear = $scope.flightDetail.departureFullDate.getFullYear() - 12;
-                } else if (passenger.type == 'infant') {
-                    minYear = $scope.flightDetail.departureFullDate.getFullYear() - 2;
-                }
-
-                if (passenger.birth.year == minYear) {
-                    if (passenger.birth.month - 1 <= $scope.flightDetail.departureFullDate.getMonth()) {
-                        passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
-                        if (passenger.birth.date < $scope.flightDetail.departureFullDate.getDate()) {
-                            passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
-                        }
-                    }
-                } else if (passenger.birth.year == $scope.bookingDate.getFullYear()) {
+            if (passenger.type == 'adult') {
+                if (passenger.birth.year >= $scope.bookingDate.getFullYear() - 12) {
+                    passenger.birth.year = $scope.bookingDate.getFullYear() - 12;
                     if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth()) {
                         passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
                         if (passenger.birth.date > $scope.flightDetail.departureFullDate.getDate()) {
@@ -788,14 +773,82 @@ app.controller('checkoutController', [
                     }
                 }
             }
+
+            else if (passenger.type == 'child') {
+                var minYear = $scope.flightDetail.departureFullDate.getFullYear() - 12;
+                var maxYear = $scope.flightDetail.departureFullDate.getFullYear() - 2;
+                if (passenger.birth.year == minYear) {
+                    if (passenger.birth.month - 1 <= $scope.flightDetail.departureFullDate.getMonth()) {
+                        passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
+                        if (passenger.birth.date < $scope.flightDetail.departureFullDate.getDate() + 1) {
+                            passenger.birth.date = $scope.flightDetail.departureFullDate.getDate() + 1;
+                        }
+                    }
+                } else if (passenger.birth.year == maxYear) {
+                    if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth()) {
+                        passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
+                        if (passenger.birth.date > $scope.flightDetail.departureFullDate.getDate()) {
+                            passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
+                        }
+                    }
+                }
+            }
+            else if (passenger.type == 'infant') {
+                minYear = $scope.flightDetail.departureFullDate.getFullYear() - 2;
+                maxYear = $scope.flightDetail.departureFullDate.getFullYear();
+                if (passenger.birth.year == minYear) {
+                    if (passenger.birth.month - 1 <= $scope.flightDetail.departureFullDate.getMonth()) {
+                        passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
+                        if (passenger.birth.date < $scope.flightDetail.departureFullDate.getDate() + 1) {
+                            passenger.birth.date = $scope.flightDetail.departureFullDate.getDate() + 1;
+                        }
+                    }
+                }
+                else if (passenger.birth.year == maxYear) {
+                    if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth() - 2) {
+                        passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() - 1;
+                        if (passenger.birth.date > $scope.flightDetail.departureFullDate.getDate()) {
+                            passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
+                        }
+                    }
+                }
+            }
+            //if (passenger.type != 'adult') {
+            //    // set minimum date for passenger
+            //    var minYear = -1;
+            //    var currentDate = new Date();
+            //    if (passenger.type == 'child') {
+            //        minYear = $scope.flightDetail.departureFullDate.getFullYear() - 12;
+            //    } else if (passenger.type == 'infant') {
+            //        minYear = $scope.flightDetail.departureFullDate.getFullYear() - 2;
+            //    }
+
+            //    if (passenger.birth.year == minYear) {
+            //        if (passenger.birth.month - 1 <= $scope.flightDetail.departureFullDate.getMonth()) {
+            //            passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
+            //            if (passenger.birth.date < $scope.flightDetail.departureFullDate.getDate()) {
+            //                passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
+            //            }
+            //        }
+            //    } else if (passenger.birth.year == $scope.bookingDate.getFullYear()) {
+            //        if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth()) {
+            //            passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
+            //            if (passenger.birth.date > $scope.flightDetail.departureFullDate.getDate()) {
+            //                passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
+            //            }
+            //        }
+            //    }
+            //} else {
+                
+            //}
         }
         // validate passport expiry date
         $scope.validatePassport = function (passenger) {
-            if (passenger.passport.expire.year == $scope.flightDetail.passportDepartureFullDate.getFullYear()) {
-                if (passenger.passport.expire.month - 1 < $scope.flightDetail.passportDepartureFullDate.getMonth()) {
-                    passenger.passport.expire.month = $scope.flightDetail.passportDepartureFullDate.getMonth() + 1;
-                    if (passenger.passport.expire.date < $scope.flightDetail.passportDepartureFullDate.getDate()) {
-                        passenger.passport.expire.date = $scope.flightDetail.passportDepartureFullDate.getDate();
+            if (passenger.passport.expire.year == $scope.flightDetail.passportFullDate.getFullYear()) {
+                if (passenger.passport.expire.month - 1 <= $scope.flightDetail.passportFullDate.getMonth()) {
+                    passenger.passport.expire.month = $scope.flightDetail.passportFullDate.getMonth() + 1;
+                    if (passenger.passport.expire.date <= $scope.flightDetail.passportFullDate.getDate()) {
+                        passenger.passport.expire.date = $scope.flightDetail.passportFullDate.getDate();
                     }
                 }
             }
