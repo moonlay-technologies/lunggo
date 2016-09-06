@@ -62,6 +62,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 {
                     paymentDetails.FinalPriceIdr -= binDiscount.Amount;
                     paymentDetails.DiscountNominal += binDiscount.Amount;
+                    CampaignService.GetInstance().SavePanInCache(paymentData.CreditCard.HashedPan);
                 }
             }
 
