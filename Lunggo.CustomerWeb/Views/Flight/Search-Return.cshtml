@@ -1017,8 +1017,8 @@
 
                     </div>
                     <div class="summary-right">
-                        <label>Harga Total:</label>
-                        <h3><sup>Rp</sup> {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].netTotalFare + returnFlightConfig.flightList[returnFlightConfig.chosenFlight].netTotalFare | number}}</h3>
+                        <label>Harga Tiket per Orang:</label>
+                        <h3><sup>Rp</sup> {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].netAdultFare + returnFlightConfig.flightList[returnFlightConfig.chosenFlight].netAdultFare | number}}</h3>
                         <p>*Harga termasuk Pajak &amp; Service Charge</p>
                         <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="selectFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight);" @*ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" ng-click="pageConfig.redirectingPage"*@ />
                         @*<input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="revalidateSubmit()" />*@

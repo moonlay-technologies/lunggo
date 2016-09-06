@@ -133,6 +133,10 @@
                                 <dt>Potongan Harga</dt>
                                 <dd><sup>Rp</sup>- {{voucher.amount| number}}</dd>
                             </dl>
+                            <dl ng-show="binDiscount.receive">
+                                <dt>{{binDiscount.displayName}}</dt>
+                                <dd>- Rp {{binDiscount.amount | number}}</dd>
+                            </dl>
                             <dl>
                                 <dt>Kode Unik Pembayaran</dt>
                                 <dd><sup>Rp</sup> {{UniqueCodePaymentConfig.UniqueCode | number}}</dd>
@@ -199,7 +203,7 @@
                                         <div class="input-wrapper">
                                             <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
                                         </div>
-                                        <h5>Kartu Kredit</h5>
+                                        <h5>Kartu Kredit / Debit</h5>
                                     </header>
                                     <section>
                                         <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
@@ -286,7 +290,7 @@
                             <div ng-if="CreditCard.TwoClickToken == 'false'">
                                 <div class="form-group">
                                     <label class="control-label">Nomor Kartu</label>
-                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
+                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-blur = "binDiscount.check()" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
                                 </div>
                                 <div class="form-group">
                                     <div class="row">

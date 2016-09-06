@@ -286,7 +286,7 @@
 }
 
 .flight-facility {display:block; padding: 5px 0;
-    span {background:url(/Assets/images/flight-facilities-sprite2.png) no-repeat; display:inline-block; margin:0 2px; float: right;
+    span {background:url(/Assets/images/flight-facilities-sprite2.png) no-repeat; display:inline-block; margin:0 2px; float: right; 
         &.flight-baggage {width: 18px; background-position: -39px 0; text-align: center; color: #fff; position: relative; top: -1px; font-size: 8px; height: 16px; line-height: 20px;}
         &.flight-tax {width: 21px; background-position: -17px -1px; height: 14px;}
         &.flight-meal {width: 14px; height: 16px;}

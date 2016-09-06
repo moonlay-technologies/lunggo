@@ -1,6 +1,8 @@
 ﻿// travorama angular app - payment controller
 app.controller('paymentController', [
     '$http', '$scope', '$interval', '$location', function ($http, $scope, $interval, $location) {
+
+        //$('#creditcardnumber').blur(alert('credit card!'));
         //********************
         // variables
         //********************
@@ -182,6 +184,70 @@ app.controller('paymentController', [
                 $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
             }
         };
+
+        $scope.binDiscount = {
+            amount: 0,
+            displayName: '',
+            status: '',
+            receive: false,
+            checked: false,
+            checking: false,
+            check: function() {
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
+
+                //Check Authorization
+                var authAccess = getAuthAccess();
+                $scope.binDiscount.checking = true;
+                if (authAccess == 1 || authAccess == 2) {
+                    $http({
+                        method: 'POST',
+                        url: CheckBinDiscountConfig.Url,
+                        data: {
+                            bin: $scope.CreditCard.Number,
+                            rsvno: $scope.rsvNo,
+                            voucherCode: $scope.voucher.code
+                        },
+                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                    }).then(function (returnData) {
+                        //console.log(returnData);
+                        if (returnData.data != null) {
+                            $scope.binDiscount.amount = returnData.data.amount;
+                            $scope.binDiscount.displayName = returnData.data.name;
+                            // get unique code for transfer payment
+                            $scope.binDiscount.status = 'Success';
+                            if ($scope.binDiscount.amount != 0) {
+                                $scope.binDiscount.receive = true;
+                            } else {
+                                $scope.binDiscount.receive = false;
+                            }
+                            $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
+                        }
+                        else {
+                            $scope.binDiscount.checked = true;
+                            $scope.binDiscount.receive = false;
+                            $scope.binDiscount.status = returnData.data.error;
+                        }
+                    }).catch(function (returnData) {
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                        {
+                            $scope.binDiscount.check();
+                        }
+                        else {
+                            $scope.binDiscount.checked = true;
+                            $scope.binDiscount.checking = false;
+                            $scope.binDiscount.receive = false;
+                        }
+                    });
+                }
+                else {
+                    console.log('Not Authorized');
+                    $scope.binDiscount.checking = false;
+                }
+            }
+        }
 
         $scope.errorLog = '';
         $scope.errorMessage = '';

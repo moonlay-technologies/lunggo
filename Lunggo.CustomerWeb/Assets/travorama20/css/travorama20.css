@@ -1999,8 +1999,7 @@ file: /Assets/travorama20/css/_page_flight.scss
 .page-flight .search-result-form {
   background: #032e55;
   color: #fff;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px 0 15px;
   letter-spacing: 0; }
   .page-flight .search-result-form > .container {
     position: relative;
@@ -2629,11 +2628,10 @@ file: /Assets/travorama20/css/_page_flight.scss
     margin-bottom: 0;
     display: none; }
     .page-flight .flight .flight-detail > h3 {
-      padding: 10px;
-      padding-left: 5%;
+      padding: 15px 15px 15px 35px;
       font-weight: 600;
       color: #1daee4;
-      margin-top: 10px;
+      margin: 0;
       font-size: 13px; }
       .page-flight .flight .flight-detail > h3 .close-flight-detail {
         color: #bbb;
@@ -2833,7 +2831,6 @@ file: /Assets/travorama20/css/_page_flight.scss
   display: none; }
 
 .page-flight .flight-review-wrapper.active .flight-review .price-detail, .page-flight .flight.active .price-detail {
-  padding-bottom: 20px;
   position: relative;
   height: auto;
   margin-bottom: 0;
@@ -2850,163 +2847,166 @@ file: /Assets/travorama20/css/_page_flight.scss
       font-weight: bold;
       font-size: 13px;
       margin-right: 4px; }
-  .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment, .page-flight .flight.active .price-detail .segment {
-    padding-left: 35px; }
-    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment:before, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment:after, .page-flight .flight.active .price-detail .segment:before, .page-flight .flight.active .price-detail .segment:after {
+  .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment:before, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment:after, .page-flight .flight.active .price-detail .segment:before, .page-flight .flight.active .price-detail .segment:after {
+    content: "";
+    clear: both;
+    display: block;
+    width: 80%; }
+  .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-airline-logo, .page-flight .flight.active .price-detail .segment .segment-airline-logo {
+    width: 50px;
+    border: 1px solid #ccc;
+    float: left;
+    margin-right: 15px;
+    margin-left: 35px;
+    position: absolute; }
+  .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price, .page-flight .flight.active .price-detail .segment .segment-price {
+    float: left;
+    width: 100%;
+    position: relative;
+    padding: 0 25px 15px; }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price:after, .page-flight .flight.active .price-detail .segment .segment-price:after {
       content: "";
-      clear: both;
-      display: block;
-      width: 80%; }
-    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-airline-logo, .page-flight .flight.active .price-detail .segment .segment-airline-logo {
-      width: 50px;
-      border: 1px solid #ccc;
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 10px;
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      width: 0;
+      height: 20px;
+      /*background-image: url(/Assets/images/flight-segment-separator.png);*/ }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-row, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-row {
+      margin-bottom: 0px; }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-q, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-q {
+      content: "";
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      background: #fd8524;
+      left: 0px;
+      top: 3px; }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-left, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-left {
       float: left;
-      margin-right: 15px; }
-    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price, .page-flight .flight.active .price-detail .segment .segment-price {
-      float: left;
-      width: 80%;
+      width: 25%;
       position: relative;
-      margin-bottom: 10px; }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price:after, .page-flight .flight.active .price-detail .segment .segment-price:after {
-        content: "";
-        background-repeat: no-repeat;
-        background-size: contain;
-        width: 10px;
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        width: 0;
-        height: 20px;
-        /*background-image: url(/Assets/images/flight-segment-separator.png);*/ }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-row, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-row {
-        margin-bottom: 0px; }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-q, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-q {
-        content: "";
-        position: absolute;
-        width: 7px;
-        height: 7px;
-        background: #fd8524;
-        left: 0px;
-        top: 3px; }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-left, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-left {
+      font-weight: 500;
+      font-size: 14px;
+      padding-left: 14px; }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-middle, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-middle {
+      float: left;
+      width: 5%;
+      position: relative;
+      font-weight: 700;
+      font-size: 14px; }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-right, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-right {
+      float: left;
+      width: 70%;
+      position: relative;
+      text-align: right;
+      font-weight: 700;
+      font-size: 15px; }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-total, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-total {
+      border-top: 1px dotted #fd8524;
+      /*padding-top: 13px;*/
+      margin-top: 30px; }
+      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-total .segment-price-left, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-total .segment-price-left {
         float: left;
-        width: 25%;
-        position: relative;
-        font-weight: 500;
-        font-size: 14px;
-        padding-left: 14px; }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-middle, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-middle {
-        float: left;
-        width: 5%;
+        width: 50%;
         position: relative;
         font-weight: 700;
-        font-size: 14px; }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-right, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-right {
+        font-size: 15px;
+        padding-left: 14px; }
+      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-total .segment-price-right, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-total .segment-price-right {
         float: left;
-        width: 70%;
+        width: 50%;
         position: relative;
         text-align: right;
         font-weight: 700;
         font-size: 15px; }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-total, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-total {
-        border-top: 1px dotted #fd8524;
-        /*padding-top: 13px;*/
-        margin-top: 30px; }
-        .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-total .segment-price-left, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-total .segment-price-left {
-          float: left;
-          width: 50%;
-          position: relative;
-          font-weight: 700;
-          font-size: 15px;
-          padding-left: 14px; }
-        .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-total .segment-price-right, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-total .segment-price-right {
-          float: left;
-          width: 50%;
-          position: relative;
-          text-align: right;
-          font-weight: 700;
-          font-size: 15px; }
-        .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-total .discount, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-total .discount {
-          color: #1daee4; }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-netprice-total, .page-flight .flight.active .price-detail .segment .segment-price .segment-netprice-total {
-        border-top: 1px solid #fd8524;
-        padding-top: 13px;
-        margin-top: 54px; }
-        .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-netprice-total .segment-price-left, .page-flight .flight.active .price-detail .segment .segment-price .segment-netprice-total .segment-price-left {
-          float: left;
-          width: 50%;
-          position: relative;
-          font-weight: 700;
-          font-size: 15px;
-          padding-left: 14px;
-          margin-top: 0px; }
-        .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-netprice-total .segment-price-right, .page-flight .flight.active .price-detail .segment .segment-price .segment-netprice-total .segment-price-right {
-          float: left;
-          width: 50%;
-          position: relative;
-          text-align: right;
-          font-weight: 600;
-          font-size: 15px; }
-        .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-netprice-total h6.segment-price-left, .page-flight .flight.active .price-detail .segment .segment-price .segment-netprice-total h6.segment-price-left {
-          /*padding-top: 10px;*/
-          float: left;
-          top: -12px;
-          color: #ff7200;
-          font-size: 10px;
-          font-weight: 500; }
-        .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-netprice-total .orange-total-price, .page-flight .flight.active .price-detail .segment .segment-price .segment-netprice-total .orange-total-price {
-          color: #ff7200 !important;
-          font-size: 25px !important;
-          font-weight: bold !important;
-          margin: 0 !important;
-          margin-bottom: 8px !important;
-          /*margin-top: 5px;*/ }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-name, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-name {
-        font-weight: bold;
-        color: #1daee4;
-        font-size: 12px;
-        padding-right: 30px; }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-number, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-number {
-        font-weight: 600;
-        color: #1daee4;
-        font-size: 12px; }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-airline-logo, .page-flight .flight.active .price-detail .segment .segment-price .segment-airline-logo {
-        width: 50px;
-        border: 1px solid #ccc;
+      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-total .discount, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-total .discount {
+        color: #1daee4; }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-netprice-total, .page-flight .flight.active .price-detail .segment .segment-price .segment-netprice-total {
+      border-top: 1px solid #fd8524;
+      padding-top: 13px;
+      margin-top: 54px; }
+      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-netprice-total .segment-price-left, .page-flight .flight.active .price-detail .segment .segment-price .segment-netprice-total .segment-price-left {
         float: left;
-        margin-right: 15px; }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-airline-name, .page-flight .flight.active .price-detail .segment .segment-price .segment-airline-name {
-        font-weight: bold;
-        color: #1daee4;
-        font-size: 12px;
-        padding-right: 30px; }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-airline-number, .page-flight .flight.active .price-detail .segment .segment-price .segment-airline-number {
+        width: 50%;
+        position: relative;
+        font-weight: 700;
+        font-size: 15px;
+        padding-left: 14px;
+        margin-top: 0px; }
+      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-netprice-total .segment-price-right, .page-flight .flight.active .price-detail .segment .segment-price .segment-netprice-total .segment-price-right {
+        float: left;
+        width: 50%;
+        position: relative;
+        text-align: right;
         font-weight: 600;
-        color: #1daee4;
-        font-size: 12px; }
-      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .flight-facility, .page-flight .flight.active .price-detail .segment .segment-price .flight-facility {
-        display: block;
-        padding-top: 58px; }
-        .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .flight-facility span, .page-flight .flight.active .price-detail .segment .segment-price .flight-facility span {
-          background: url(/Assets/images/flight-facilities-sprite.png) no-repeat;
-          display: inline-block;
-          margin: 0 5px; }
-          .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .flight-facility span.flight-baggage, .page-flight .flight.active .price-detail .segment .segment-price .flight-facility span.flight-baggage {
-            width: 35px;
-            background-position: -64px;
-            text-align: center;
-            color: #fff;
-            position: relative;
-            padding-top: 5px;
-            margin-top: -10px;
-            top: -7px; }
-          .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .flight-facility span.flight-tax, .page-flight .flight.active .price-detail .segment .segment-price .flight-facility span.flight-tax {
-            width: 35px;
-            background-position: -30px;
-            padding-bottom: 30px; }
-          .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .flight-facility span.flight-meal, .page-flight .flight.active .price-detail .segment .segment-price .flight-facility span.flight-meal {
-            width: 30px;
-            padding-bottom: 30px; }
+        font-size: 15px; }
+      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-netprice-total h6.segment-price-left, .page-flight .flight.active .price-detail .segment .segment-price .segment-netprice-total h6.segment-price-left {
+        /*padding-top: 10px;*/
+        float: left;
+        top: -12px;
+        color: #ff7200;
+        font-size: 10px;
+        font-weight: 500; }
+      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-netprice-total .orange-total-price, .page-flight .flight.active .price-detail .segment .segment-price .segment-netprice-total .orange-total-price {
+        color: #ff7200 !important;
+        font-size: 21px !important;
+        font-weight: bold !important;
+        margin: 0 !important;
+        margin-bottom: 8px !important;
+        /*margin-top: 5px;*/ }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-name, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-name {
+      font-weight: bold;
+      color: #1daee4;
+      font-size: 12px;
+      position: absolute;
+      margin-left: 70px; }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-number, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-number {
+      font-weight: 600;
+      color: #1daee4;
+      font-size: 12px; }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-airline-logo, .page-flight .flight.active .price-detail .segment .segment-price .segment-airline-logo {
+      width: 50px;
+      border: 1px solid #ccc;
+      float: left;
+      margin-right: 15px; }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-airline-name, .page-flight .flight.active .price-detail .segment .segment-price .segment-airline-name {
+      font-weight: bold;
+      color: #1daee4;
+      font-size: 12px;
+      padding-right: 30px; }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-airline-number, .page-flight .flight.active .price-detail .segment .segment-price .segment-airline-number {
+      font-weight: 600;
+      color: #1daee4;
+      font-size: 12px; }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .flight-facility, .page-flight .flight.active .price-detail .segment .segment-price .flight-facility {
+      display: block;
+      padding-top: 58px; }
+      .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .flight-facility span, .page-flight .flight.active .price-detail .segment .segment-price .flight-facility span {
+        background: url(/Assets/images/flight-facilities-sprite.png) no-repeat;
+        display: inline-block;
+        margin: 0 5px; }
+        .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .flight-facility span.flight-baggage, .page-flight .flight.active .price-detail .segment .segment-price .flight-facility span.flight-baggage {
+          width: 35px;
+          background-position: -64px;
+          text-align: center;
+          color: #fff;
+          position: relative;
+          padding-top: 5px;
+          margin-top: -10px;
+          top: -7px; }
+        .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .flight-facility span.flight-tax, .page-flight .flight.active .price-detail .segment .segment-price .flight-facility span.flight-tax {
+          width: 35px;
+          background-position: -30px;
+          padding-bottom: 30px; }
+        .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .flight-facility span.flight-meal, .page-flight .flight.active .price-detail .segment .segment-price .flight-facility span.flight-meal {
+          width: 30px;
+          padding-bottom: 30px; }
+    .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price > .clearer.ng-scope, .page-flight .flight.active .price-detail .segment .segment-price > .clearer.ng-scope {
+      margin-top: 60px; }
   .page-flight .flight-review-wrapper.active .flight-review .price-detail .transit, .page-flight .flight.active .price-detail .transit {
     text-align: center;
     padding: 15px 0; }
@@ -3204,11 +3204,11 @@ file: /Assets/travorama20/css/_page_flight.scss
       padding-bottom: 20px;
       position: relative; }
       .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail > h3 {
-        padding: 10px;
-        padding-left: 5%;
+        padding: 15px 15px 15px 35px;
         font-weight: 600;
         color: #1daee4;
-        margin-top: 10px; }
+        margin: 0;
+        font-size: 13px; }
         .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail > h3 .close-flight-detail {
           color: #bbb;
           cursor: pointer;
@@ -3335,6 +3335,9 @@ file: /Assets/travorama20/css/_page_flight.scss
           position: relative;
           z-index: 2;
           padding: 0 10px; }
+
+.page-flight.page-flight-return .flight-detail .segment .segment-left .flight-facility, .page-flight.page-flight-return .flight .flight-detail .segment .segment-right .flight-facility, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .flight-facility, .page-flight.page-flight-return .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .flight-facility, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight.page-flight-return .flight-detail .segment .segment-right .flight-facility, .page-flight.page-flight-return .flight-detail .detail-content .segment .segment-right .flight-facility {
+  padding-top: 58px; }
 
 .page-flight.page-flight-return .search-result-warning .notice:after {
   right: 80px; }
@@ -3835,10 +3838,10 @@ file: /Assets/travorama20/css/_page_flight.scss
     .page-flight.page-flight-return .search-result-container .search-result-sort .container > div.sort-duration {
       width: 18%; }
     .page-flight.page-flight-return .search-result-container .search-result-sort .container > div.sort-arrival {
-      width: 15%;
+      width: 13%;
       text-align: left; }
     .page-flight.page-flight-return .search-result-container .search-result-sort .container > div.sort-price {
-      width: 23%;
+      width: 25%;
       text-align: left;
       padding-left: 5px; }
 
@@ -3915,10 +3918,6 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     margin-top: 10px; }
 
-.page-flight.page-flight-return .search-result-container .flight .flight-detail > h3 {
-  margin: 5px 0;
-  padding-left: 7%; }
-
 .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment {
   position: relative; }
   .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-number {
@@ -3972,7 +3971,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     border: 5px solid #1daee4;
     background: #fff;
     width: 860px;
-    height: 340px;
+    height: auto;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -4049,7 +4048,8 @@ file: /Assets/travorama20/css/_page_flight.scss
         width: 25%;
         float: left;
         text-align: center;
-        border-right: 1px solid #ccc; }
+        border-right: 1px solid #ccc;
+        padding: 10px 0; }
         .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-airline h5 {
           color: #1daee4;
           font-weight: bold; }
@@ -4199,11 +4199,11 @@ file: /Assets/travorama20/css/_page_flight.scss
         padding-bottom: 20px;
         position: relative; }
         .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail > h3 {
-          padding: 10px;
-          padding-left: 5%;
+          padding: 15px 15px 15px 35px;
           font-weight: 600;
           color: #1daee4;
-          margin-top: 10px; }
+          margin: 0;
+          font-size: 13px; }
           .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail > h3 .close-flight-detail {
             color: #bbb;
             cursor: pointer;
@@ -4410,6 +4410,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
   width: 48%; }
 
 .page-checkout .step-button .btn {
+  margin-top: 15px;
   font-size: 13px;
   width: 200px; }
   .page-checkout .step-button .btn.btn-grey {
