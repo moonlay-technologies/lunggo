@@ -32,7 +32,8 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 {
                     StatusCode = HttpStatusCode.OK,
                     DiscountAmount = binDiscount.Amount,
-                    DiscountName = binDiscount.DisplayName
+                    DiscountName = binDiscount.DisplayName,
+                    ReplaceOriginalDiscount = true
                 };
             else
             {
