@@ -7,6 +7,9 @@ app.controller('paymentController', [
         // variables
         //********************
         // variables
+        //var SHA256 = require("crypto-js/sha256");
+        //var hash = CryptoJS.SHA512("Message");
+        //console.log("hello" + CryptoJS.SHA512("Message"));
         $scope.currentPage = 4;
         $scope.trial = 0;
         $scope.pageLoaded = true;
@@ -196,6 +199,19 @@ app.controller('paymentController', [
             receive: false,
             checked: false,
             checking: false,
+            tohex: function(str) {
+                
+                var hex, i;
+
+                var result = "";
+                for (i=0; i<str.length; i++) {
+                    hex = str.charCodeAt(i).toString(16);
+                    result += ("000"+hex).slice(-4);
+                }
+
+                return result;
+
+            },
             check: function() {
                 if ($scope.trial > 3) {
                     $scope.trial = 0;
@@ -205,18 +221,21 @@ app.controller('paymentController', [
                 var authAccess = getAuthAccess();
                 $scope.binDiscount.checking = true;
                 if (authAccess == 1 || authAccess == 2) {
+                    var hash = CryptoJS.SHA512($scope.CreditCard.Number);
+                    var hex = hash.toString(CryptoJS.enc.Hex);
                     $http({
                         method: 'POST',
                         url: CheckBinDiscountConfig.Url,
                         data: {
-                            bin: $scope.CreditCard.Number,
+                            bin: $scope.CreditCard.Number.substring(0, 6),
+                            hashedPan: hex,
                             rsvno: $scope.rsvNo,
                             voucherCode: $scope.voucher.code
                         },
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                     }).then(function (returnData) {
                         //console.log(returnData);
-                        if (returnData.data != null) {
+                        if (returnData.data.status == 200) {
                             $scope.binDiscount.amount = returnData.data.amount;
                             $scope.binDiscount.displayName = returnData.data.name;
                             // get unique code for transfer payment
@@ -370,8 +389,10 @@ app.controller('paymentController', [
                 else
                 {
                     switch ($scope.paymentMethod) {
-                        case "CreditCard": 
-                            $scope.PaymentData = '"method":"1","creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name + '"' + '}';
+                        case "CreditCard":
+                            var hash = CryptoJS.SHA512($scope.CreditCard.Number);
+                            var hex = hash.toString(CryptoJS.enc.Hex);
+                            $scope.PaymentData = '"method":"1","creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name  + '","hashedPan":"' + hex + '"}';
                             break;
                         case "MandiriClickPay": 
                             var cardNoLast10 = $scope.MandiriClickPay.CardNo + "";
@@ -399,7 +420,7 @@ app.controller('paymentController', [
                 
                 $scope.pay.postData = '{' + $scope.pay.postData + '}';
                 $scope.pay.postData = JSON.parse($scope.pay.postData);
-                
+                console.log($scope.pay.postData);
                 if ($scope.paymentMethod != "BankTransfer" && $scope.paymentMethod != 'VirtualAccount' || ($scope.redirectionUrl != null && $scope.redirectionUrl.length != 0)) {
                     $scope.pay.go = true;
                     $scope.pay.bayar();
