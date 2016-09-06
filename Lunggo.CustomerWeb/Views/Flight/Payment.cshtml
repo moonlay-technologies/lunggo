@@ -38,6 +38,9 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/jquery.countdown.min.js"></script>
+    <script src ="/Assets/js/CryptoJS/components/core-min.js"></script>
+    <script src="/Assets/js/CryptoJS/rollups/sha512.js"></script>
+    <script src="/Assets/js/CryptoJS/components/enc-base64-min.js"></script>
     <!-- veritrans JS -->
     <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
     <!-- fancybox -->
@@ -228,7 +231,7 @@
                                     <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
 
                                         <form name="creditCardForm" novalidate>
-                                            <h3 class="no-spacing">Detail <b>Kartu Kredit</b></h3>
+                                            <h3 class="no-spacing">Detail <b>Kartu Kredit/Debit</b></h3>
 
                                             @*<!-- credit card selector start -->
                                                 <div class="form-group">
@@ -641,7 +644,7 @@
                     </footer>
                 </div>
             </div><!-- .page-overlay -->
-            
+
             <div class="tnc-popup" ng-show="pay.transfer">
                 <div class="popup">
                     <div class="popup-container">
@@ -663,7 +666,7 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="tnc-popup" ng-show="pay.virtualAccount">
                 <div class="popup">
@@ -682,14 +685,14 @@
                                 <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}" style="width:100%">KEMBALI</a>
                             </div>
                             <div class="col-xs-6">
-                                <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
+                                <input type="submit" class="btn btn-yellow" ng-click="pay.middle('virtualAccount')" value="SETUJU">
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
-               
-                <div class="popup__wrapper" ng-show="pay.virtualAccount">
+            </div>
+
+                @*<div class="popup__wrapper" ng-show="pay.virtualAccount">
                     <div class="popup">
                         <header class="popup__header">
                             <h4 class="popup__title">Syarat dan Ketentuan ATM</h4>
@@ -717,7 +720,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*@
 
 
                 <!--<div class="page-overlay booking-flight" ng-hide="!pay.paying">
@@ -740,7 +743,7 @@
             </div>
         </div>-->
 
-                <div class="payment-popup" ng-if="pay.checked && !pay.isSuccess">
+                <div class="payment-popup" ng-show="pay.checked && !pay.isSuccess">
                     <div class=" overlay-content">
                         <section style="padding-top:60px; padding-left:225px;">
                             <!-- Ini untuk yg gagal -->
@@ -755,7 +758,7 @@
                     </div>
                 </div>
 
-                <div class="bookfailed-popup" ng-if="pay.isPaying || pay.go">
+                <div class="bookfailed-popup" ng-show="pay.isPaying || pay.go">
                     <div class=" overlay-content">
                         <section style="padding-top:60px; padding-left:225px;">
                             <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>
