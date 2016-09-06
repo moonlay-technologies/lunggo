@@ -44,6 +44,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                      bin6 == "462436" ||
                      bin6 == "437527" ||
                      bin6 == "437528" ||
+                     bin6 == "481111" ||
                      bin6 == "437529"));
 
         }
