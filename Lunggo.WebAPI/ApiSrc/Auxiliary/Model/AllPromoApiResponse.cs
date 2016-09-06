@@ -24,7 +24,9 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Model
         [JsonProperty("promoType", NullValueHandling = NullValueHandling.Ignore)]
         public PromoType PromoType { get; set; }
         [JsonProperty("bannerUrl", NullValueHandling = NullValueHandling.Ignore)]
-        public string BannerUrl { get; set; }    
+        public string BannerUrl { get; set; }
+        [JsonProperty("detailsUrl", NullValueHandling = NullValueHandling.Ignore)]
+        public string DetailsUrl { get; set; }    
     }
 
    public enum PromoType

@@ -15,6 +15,8 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Model
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public string Id { get; set; }
         [JsonProperty("bannerUrl", NullValueHandling = NullValueHandling.Ignore)]
-        public string BannerUrl { get; set; }  
+        public string BannerUrl { get; set; }
+        [JsonProperty("detailsUrl", NullValueHandling = NullValueHandling.Ignore)]
+        public string DetailsUrl { get; set; }  
     }
 }

@@ -62,6 +62,17 @@ namespace Lunggo.ApCommon.Payment.Service
                 {
                     paymentDetails.FinalPriceIdr -= binDiscount.Amount;
                     paymentDetails.DiscountNominal += binDiscount.Amount;
+                    if (campaign.Discount == null)
+                        campaign.Discount = new UsedDiscount
+                        {
+                            DisplayName = binDiscount.DisplayName,
+                            Name = binDiscount.DisplayName,
+                            Constant = binDiscount.Amount,
+                            Percentage = 0M,
+                            Currency = new Currency("IDR"),
+                            Description = "BIN Promo",
+                            IsFlat = false
+                        };
                     CampaignService.GetInstance().SavePanInCache(paymentData.CreditCard.HashedPan);
                 }
             }
