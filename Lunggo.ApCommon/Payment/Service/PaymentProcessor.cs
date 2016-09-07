@@ -57,7 +57,7 @@ namespace Lunggo.ApCommon.Payment.Service
             if (paymentDetails.Method == PaymentMethod.CreditCard)
             {
                 var binDiscount = CampaignService.GetInstance()
-                    .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, "", discountCode);
+                    .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, paymentData.CreditCard.HashedPan, discountCode);
                 if (binDiscount != null)
                 {
                     paymentDetails.FinalPriceIdr -= binDiscount.Amount;

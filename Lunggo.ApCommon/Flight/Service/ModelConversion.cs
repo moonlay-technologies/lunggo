@@ -192,10 +192,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     var trip = trips[i - 1];
                     var price = itin.Price;
-                    price.OriginalIdr = (itin.Price.OriginalIdr - cumulativeOri) / i;
+                    price.OriginalIdr = (price.OriginalIdr - cumulativeOri) / i;
                     cumulativeOri += price.OriginalIdr;
-                    var unrounded = (itin.Price.Local - cumulativeLocal) / i;
-                    var rounded = unrounded - unrounded % itin.Price.LocalCurrency.RoundingOrder;
+                    var unrounded = (price.Local - cumulativeLocal) / i;
+                    var rounded = unrounded - unrounded % price.LocalCurrency.RoundingOrder;
                     price.Local = rounded;
                     cumulativeLocal += price.Local;
                     decimal? aOri, cOri, iOri, aNet, cNet, iNet;
@@ -204,7 +204,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         itin.AdultCount, itin.ChildCount, itin.InfantCount,
                         itin.AdultPricePortion, itin.ChildPricePortion, itin.InfantPricePortion,
                         out tOri, out aOri, out cOri, out iOri, out tNet, out aNet, out cNet, out iNet,
-                        itin.Price.LocalCurrency.RoundingOrder);
+                        price.LocalCurrency.RoundingOrder);
                     trip.OriginalTotalFare = tOri;
                     trip.OriginalAdultFare = aOri;
                     trip.OriginalChildFare = cOri;
