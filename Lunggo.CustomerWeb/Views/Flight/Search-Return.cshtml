@@ -1139,10 +1139,15 @@
                 </footer>
 
                 <div class="price-detail" ng-show="pageConfig.overviewPriceDetailShowing">
-                    <h3>Rincian Harga <span class="close-price-detail pull-right" ng-click="toggleOverviewPriceDetail()">X</span></h3>
-                    <price-detail-directive flight="departureFlightConfig.flightList[departureFlightConfig.chosenFlight]"></price-detail-directive>
-                    <price-detail-directive flight="returnFlightConfig.flightList[returnFlightConfig.chosenFlight]"></price-detail-directive>
-                    <!-- .price-detail -->
+                    <h3 class="detail-title">Rincian Harga <span class="close-price-detail pull-right" ng-click="toggleOverviewPriceDetail()">X</span></h3>
+                    <div class="col-sm-6 price-detail-wrapper right flight-departure">
+                        <header class="flight-header"><h3>Penerbangan Pergi</h3></header>
+                        <price-detail-directive flight="departureFlightConfig.flightList[departureFlightConfig.chosenFlight]"></price-detail-directive>
+                    </div>
+                    <div class="col-sm-6 price-detail-wrapper flight-return">
+                        <header class="flight-header"><h3>Penerbangan Pulang</h3></header>
+                        <price-detail-directive flight="returnFlightConfig.flightList[returnFlightConfig.chosenFlight]"></price-detail-directive>
+                    </div>
                 </div>
             </div>
 

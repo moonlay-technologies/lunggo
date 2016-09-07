@@ -1134,6 +1134,7 @@
     <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <Content Include="Assets\js\spin.min.js" />
+    <Content Include="Assets\js\tab.js" />
     <Content Include="Assets\js\travoramaApp.js" />
     <Content Include="Assets\mobile\css\application.css">
       <DependentUpon>application.scss</DependentUpon>
@@ -1206,6 +1207,7 @@
     <Content Include="Assets\script\monitordesktop-12.js" />
     <Content Include="Assets\script\tv-common-300004.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDir.js" />
+    <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDirMobile.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
     <Content Include="Assets\travorama20\css\help_section.css" />
     <Content Include="Assets\travorama20\css\help_section.min.css" />

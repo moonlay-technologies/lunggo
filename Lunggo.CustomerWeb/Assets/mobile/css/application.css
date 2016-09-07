@@ -1480,8 +1480,31 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-flight .flight-list .flight .flight-header .flight-airline span {
       color: #2ca3e1;
       font-weight: bold; }
-  .page.page-flight .flight-list .flight .flight-header.col-xs-8 {
-    padding: 0; }
+  .page.page-flight .flight-list .flight .flight-facility {
+    display: block;
+    padding-top: 12px;
+    left: 20px; }
+    .page.page-flight .flight-list .flight .flight-facility span {
+      background: url(/Assets/images/flight-facilities-sprite2.png) no-repeat;
+      display: inline-block;
+      margin: 0 2px; }
+      .page.page-flight .flight-list .flight .flight-facility span.flight-baggage {
+        width: 18px;
+        background-position: -39px 0;
+        text-align: center;
+        color: #fff;
+        position: relative;
+        top: -3px;
+        font-size: 8px;
+        height: 16px;
+        line-height: 20px; }
+      .page.page-flight .flight-list .flight .flight-facility span.flight-tax {
+        width: 21px;
+        background-position: -17px -1px;
+        height: 14px; }
+      .page.page-flight .flight-list .flight .flight-facility span.flight-meal {
+        width: 14px;
+        height: 16px; }
   .page.page-flight .flight-list .flight .flight-content:after {
     display: block;
     width: 100%;
@@ -1951,8 +1974,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .overlay--flight-detail .overlay__content .flight-notice {
     background: #d70000; }
   .overlay--flight-detail .overlay__content .flight-wrapper .flight {
-    position: relative;
-    padding: 10px 15px; }
+    position: relative; }
     .overlay--flight-detail .overlay__content .flight-wrapper .flight:after {
       display: block;
       width: 100%;
@@ -1960,8 +1982,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       clear: both; }
     .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__number {
       width: 15px;
-      position: absolute;
-      margin-top: 5px; }
+      left: 5px;
+      position: absolute; }
       .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__number span {
         background: #2fb4e6;
         color: #fff;
@@ -1973,17 +1995,44 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         font-size: 12px; }
     .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content {
       padding-left: 25px; }
-      .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary:after {
+      .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary {
+        width: 50%; }
+        .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary:after {
+          display: block;
+          width: 100%;
+          content: "";
+          clear: both; }
+        .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary .flight__image {
+          width: 35px;
+          height: auto;
+          float: left; }
+        .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary .flight__airline {
+          color: #2fb4e6; }
+      .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility {
         display: block;
-        width: 100%;
-        content: "";
-        clear: both; }
-      .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary .flight__image {
-        width: 35px;
-        height: auto;
-        float: left; }
-      .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__summary .flight__airline {
-        color: #2fb4e6; }
+        padding-top: 12px;
+        left: 20px; }
+        .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility span {
+          background: url(/Assets/images/flight-facilities-sprite2.png) no-repeat;
+          display: inline-block;
+          margin: 0 2px; }
+          .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility span.flight-baggage {
+            width: 18px;
+            background-position: -39px 0;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            top: -3px;
+            font-size: 8px;
+            height: 16px;
+            line-height: 20px; }
+          .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility span.flight-tax {
+            width: 21px;
+            background-position: -17px -1px;
+            height: 14px; }
+          .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight-facility span.flight-meal {
+            width: 14px;
+            height: 16px; }
       .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail {
         position: relative; }
         .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail:after {
@@ -2071,32 +2120,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-thankyou .tnc {
   margin-top: 15px; }
 
-.flight-facility {
-  display: block;
-  padding: 5px 0; }
-  .flight-facility span {
-    background: url(/Assets/images/flight-facilities-sprite2.png) no-repeat;
-    display: inline-block;
-    margin: 0 2px;
-    float: right; }
-    .flight-facility span.flight-baggage {
-      width: 18px;
-      background-position: -39px 0;
-      text-align: center;
-      color: #fff;
-      position: relative;
-      top: -1px;
-      font-size: 8px;
-      height: 16px;
-      line-height: 20px; }
-    .flight-facility span.flight-tax {
-      width: 21px;
-      background-position: -17px -1px;
-      height: 14px; }
-    .flight-facility span.flight-meal {
-      width: 14px;
-      height: 16px; }
-
 .page.page-checkout .page__header {
   margin: 0;
   padding: 0;
@@ -2180,7 +2203,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-checkout .page__body .page-loaded {
     display: block; }
   .page.page-checkout .page__body .page-step-2 .btn.btn-yellow {
-    margin-bottom: 15px; }
+    margin-top: 15px; }
   .page.page-checkout .page__body .page-step-3 .btn.btn-yellow.form-control, .page.page-checkout .page__body .page-step-3 .btn.btn-grey.form-control {
     width: 48%;
     float: right; }
