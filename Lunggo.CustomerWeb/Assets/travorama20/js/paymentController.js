@@ -1,10 +1,15 @@
 ﻿// travorama angular app - payment controller
 app.controller('paymentController', [
     '$http', '$scope', '$interval', '$location', function ($http, $scope, $interval, $location) {
+
+        //$('#creditcardnumber').blur(alert('credit card!'));
         //********************
         // variables
         //********************
         // variables
+        //var SHA256 = require("crypto-js/sha256");
+        //var hash = CryptoJS.SHA512("Message");
+        //console.log("hello" + CryptoJS.SHA512("Message"));
         $scope.currentPage = 4;
         $scope.trial = 0;
         $scope.pageLoaded = true;
@@ -116,6 +121,7 @@ app.controller('paymentController', [
         //Voucher
         $scope.voucher = {
             confirmedCode: '',
+            receive: false,
             code: '',
             amount: 0,
             status: '',
@@ -150,10 +156,12 @@ app.controller('paymentController', [
                             // get unique code for transfer payment
                             $scope.voucher.status = 'Success';
                             $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
+                            $scope.voucher.receive = true;
                         }
                         else {
                             $scope.voucher.checked = true;
                             $scope.voucher.status = returnData.data.error;
+                            $scope.voucher.receive = false;
                         }
                     }).catch(function (returnData) {
                         $scope.trial++;
@@ -178,10 +186,94 @@ app.controller('paymentController', [
                 $scope.voucher.amount = 0;
                 $scope.voucher.confirmedCode = '';
                 $scope.voucher.checked = false;
+                $scope.voucher.status = '';
                 // get unique code for transfer payment
                 $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
             }
         };
+
+        $scope.binDiscount = {
+            amount: 0,
+            displayName: '',
+            status: '',
+            receive: false,
+            checked: false,
+            checking: false,
+            tohex: function(str) {
+                
+                var hex, i;
+
+                var result = "";
+                for (i=0; i<str.length; i++) {
+                    hex = str.charCodeAt(i).toString(16);
+                    result += ("000"+hex).slice(-4);
+                }
+
+                return result;
+
+            },
+            check: function() {
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
+
+                //Check Authorization
+                var authAccess = getAuthAccess();
+                $scope.binDiscount.checking = true;
+                if (authAccess == 1 || authAccess == 2) {
+                    var hash = CryptoJS.SHA512($scope.CreditCard.Number);
+                    var hex = hash.toString(CryptoJS.enc.Hex);
+                    $http({
+                        method: 'POST',
+                        url: CheckBinDiscountConfig.Url,
+                        data: {
+                            bin: $scope.CreditCard.Number.substring(0, 6),
+                            hashedPan: hex,
+                            rsvno: $scope.rsvNo,
+                            voucherCode: $scope.voucher.code
+                        },
+                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                    }).then(function (returnData) {
+                        //console.log(returnData);
+                        if (returnData.data.status == 200) {
+                            $scope.binDiscount.amount = returnData.data.amount;
+                            $scope.binDiscount.displayName = returnData.data.name;
+                            // get unique code for transfer payment
+                            $scope.binDiscount.status = 'Success';
+                            if ($scope.binDiscount.amount != 0) {
+                                $scope.binDiscount.receive = true;
+                            } else {
+                                $scope.binDiscount.receive = false;
+                            }
+                            $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
+                        }
+                        else {
+                            $scope.binDiscount.amount = 0;
+                            $scope.binDiscount.checked = true;
+                            $scope.binDiscount.receive = false;
+                            $scope.binDiscount.status = returnData.data.error;
+                        }
+                    }).catch(function (returnData) {
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                        {
+                            $scope.binDiscount.check();
+                        }
+                        else {
+                            $scope.binDiscount.amount = 0;
+                            $scope.binDiscount.checked = true;
+                            $scope.binDiscount.checking = false;
+                            $scope.binDiscount.receive = false;
+                        }
+                    });
+                }
+                else {
+                    console.log('Not Authorized');
+                    $scope.binDiscount.amount = 0;
+                    $scope.binDiscount.checking = false;
+                }
+            }
+        }
 
         $scope.errorLog = '';
         $scope.errorMessage = '';
@@ -214,8 +306,8 @@ app.controller('paymentController', [
                                 // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
                                 'secure': true,
                                 'bank': 'mandiri',
-                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode
-                            }
+                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount
+                        }
                         } else {
                             return {
                                 'card_cvv': $scope.CreditCard.Cvv,
@@ -224,7 +316,7 @@ app.controller('paymentController', [
                                 'two_click': true,
                                 'secure': true,
                                 'bank': 'mandiri',
-                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode
+                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount
                             }
                         }
                     };
@@ -300,8 +392,10 @@ app.controller('paymentController', [
                 else
                 {
                     switch ($scope.paymentMethod) {
-                        case "CreditCard": 
-                            $scope.PaymentData = '"method":"1","creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name + '"' + '}';
+                        case "CreditCard":
+                            var hash = CryptoJS.SHA512($scope.CreditCard.Number);
+                            var hex = hash.toString(CryptoJS.enc.Hex);
+                            $scope.PaymentData = '"method":"1","creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name  + '","hashedPan":"' + hex + '"}';
                             break;
                         case "MandiriClickPay": 
                             var cardNoLast10 = $scope.MandiriClickPay.CardNo + "";
@@ -329,7 +423,7 @@ app.controller('paymentController', [
                 
                 $scope.pay.postData = '{' + $scope.pay.postData + '}';
                 $scope.pay.postData = JSON.parse($scope.pay.postData);
-                
+                console.log($scope.pay.postData);
                 if ($scope.paymentMethod != "BankTransfer" && $scope.paymentMethod != 'VirtualAccount' || ($scope.redirectionUrl != null && $scope.redirectionUrl.length != 0)) {
                     $scope.pay.go = true;
                     $scope.pay.bayar();

@@ -19,5 +19,7 @@ namespace Lunggo.ApCommon.Payment.Model.Data
         public List<string> AllowedBins { get; set; }
         [JsonProperty("saveTokenId")]
         public bool TokenIdSaveEnabled { get; set; }
+        [JsonProperty("hashedPan")]
+        public string HashedPan { get; set; }
     }
 }

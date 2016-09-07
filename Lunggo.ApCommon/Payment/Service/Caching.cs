@@ -11,21 +11,21 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        private static bool IsTransferValueExist(decimal price)
+        private static string GetRsvNoHavingTransferValue(decimal price)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "transferUniquePrice:" + price;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var value = redisDb.StringGet(redisKey);
-            return !value.IsNullOrEmpty;
+            return value;
         }
 
-        private static void SaveTransferValue(decimal price)
+        private static void SaveTransferValue(decimal price, string rsvNo)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "transferUniquePrice:" + price;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            redisDb.StringSet(redisKey, "value", TimeSpan.FromMinutes(150));
+            redisDb.StringSet(redisKey, rsvNo, TimeSpan.FromMinutes(150));
         }
 
         private static void SaveTransferFeeinCache(string rsvNo, decimal transferFee)

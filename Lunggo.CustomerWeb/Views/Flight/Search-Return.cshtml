@@ -1017,8 +1017,8 @@
 
                     </div>
                     <div class="summary-right">
-                        <label>Harga Total:</label>
-                        <h3><sup>Rp</sup> {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].netTotalFare + returnFlightConfig.flightList[returnFlightConfig.chosenFlight].netTotalFare | number}}</h3>
+                        <label>Harga Tiket per Orang:</label>
+                        <h3><sup>Rp</sup> {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].netAdultFare + returnFlightConfig.flightList[returnFlightConfig.chosenFlight].netAdultFare | number}}</h3>
                         <p>*Harga termasuk Pajak &amp; Service Charge</p>
                         <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="selectFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight);" @*ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" ng-click="pageConfig.redirectingPage"*@ />
                         @*<input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="revalidateSubmit()" />*@
@@ -1163,6 +1163,20 @@
                 <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                 <div style="padding-top:5px;"><span style="font-size:14px">Mengalihkan Anda ke halaman checkout.</span></div>
             </section>
+        </div>
+    </div>
+    
+    <div class="bookfailed-popup" ng-show="selectError">
+        <div class="overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Penerbangan ini <span style="color: #15b1e4;font-size:13px"><b>sudah tidak tersedia</b></span>.</span></div>
+                <div><span style="font-size:13px">Silakan klik tombol di bawah untuk kembali ke halaman awal.</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:30px;">
+                <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+            </div>
         </div>
     </div>
 </section><!-- .search-result.return -->

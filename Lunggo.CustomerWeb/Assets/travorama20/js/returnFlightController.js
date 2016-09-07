@@ -10,6 +10,7 @@ app.controller('returnFlightController', [
         });
         // ******************************
         // general variables
+        $scope.returnUrl = "/";
         $scope.pageLoaded = true;
         $scope.trial = 0;
         $scope.pageConfig = {
@@ -451,7 +452,7 @@ app.controller('returnFlightController', [
 
 
 
-
+        $scope.selectError = false;
         $scope.popup = false;
         // ******************************
         // revalidate flights
@@ -509,6 +510,8 @@ app.controller('returnFlightController', [
                             console.log('flight unavailable');
                             $scope.departureFlightConfig.validateAvailable = false;
                             $scope.returnFlightConfig.validateAvailable = false;
+                            $scope.popup = false;
+                            $scope.selectError = true;
                         }
                     }).catch(function (returnData) {
                         $scope.trial++;
@@ -522,6 +525,8 @@ app.controller('returnFlightController', [
                             $scope.returnFlightConfig.validating = false;
                             console.log('ERROR Validating Flight :');
                             console.log('--------------------');
+                            $scope.popup = false;
+                            $scope.selectError = true;
                         }
                     });
                 }
@@ -529,6 +534,8 @@ app.controller('returnFlightController', [
                     $scope.departureFlightConfig.validating = false;
                     $scope.returnFlightConfig.validating = false;
                     console.log('Not Authorized');
+                    $scope.popup = false;
+                    $scope.selectError = true;
                 }
 
                 /*-----------*/

@@ -141,7 +141,8 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                     Description = "Enjoy your holiday by staying in one of these hotels",
                     TravelPeriod = "25 Des 2016 - 2 Jan 2017",
                     PromoType = PromoType.Discount,
-                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/DanamonSweetValentine/danamonsweetvalentine-head.jpg"
+                    BannerUrl = "http://images.huffingtonpost.com/2015-03-20-1426853534-7075669-dreamstimemaximum_30295049.jpg",
+                    DetailsUrl = "http://www.ummi-online.com/"
                 },
                 new AllPromo
                 {
@@ -150,7 +151,8 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                     Description = "Celebrate your Eid with your family by travelling with Citilink",
                     TravelPeriod = "9 Sep 2016 - 15 Sep 2017",
                     PromoType = PromoType.Discount,
-                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/VisaWonderfulWednesday/visa-wonderful-wednesday.jpg"
+                    BannerUrl = "https://wallpaperscraft.com/image/couple_mountain_peak_travel_64552_2560x1440.jpg",
+                    DetailsUrl = "http://tabloidnova.com/"
                 },
                 new AllPromo
                 {
@@ -159,7 +161,8 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                     Description = "Travel to Europe with Special Price for Flights and Hotels!",
                     TravelPeriod = "23 Juni 2016 - 19 Juli 2016",
                     PromoType = PromoType.CouponCode,
-                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/free2016calendar/campaign-2016_calendar.jpg"
+                    BannerUrl = "http://smartbusinesstravels.com/wp-content/uploads/2015/04/black-white-city.jpg",
+                    DetailsUrl = "http://www.fhm.com/p/100-sexiest-2015"
                 },
             
             };
@@ -172,18 +175,15 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                 new FeaturedPromo
                 {
                     Id = "xmas-new-year",
-                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/DanamonSweetValentine/danamonsweetvalentine-head.jpg"
+                    BannerUrl = "http://images.huffingtonpost.com/2015-03-20-1426853534-7075669-dreamstimemaximum_30295049.jpg",
+                    DetailsUrl = "http://www.ummi-online.com/"
                 },
                 new FeaturedPromo
                 {
                     Id = "eid-mubarak",
-                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/VisaWonderfulWednesday/visa-wonderful-wednesday.jpg"
-                },
-                new FeaturedPromo
-                {
-                    Id = "europe",
-                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/free2016calendar/campaign-2016_calendar.jpg"
-                },
+                    BannerUrl = "https://wallpaperscraft.com/image/couple_mountain_peak_travel_64552_2560x1440.jpg",
+                    DetailsUrl = "http://www.fhm.com/p/100-sexiest-2015"
+                }
             };
         }
     }

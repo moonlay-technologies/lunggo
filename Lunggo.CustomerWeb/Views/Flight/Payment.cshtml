@@ -38,6 +38,9 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/jquery.countdown.min.js"></script>
+    <script src ="/Assets/js/CryptoJS/components/core-min.js"></script>
+    <script src="/Assets/js/CryptoJS/rollups/sha512.js"></script>
+    <script src="/Assets/js/CryptoJS/components/enc-base64-min.js"></script>
     <!-- veritrans JS -->
     <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
     <!-- fancybox -->
@@ -103,7 +106,9 @@
         phone: '@User.Identity.GetPhoneNumber()',
         email: '@User.Identity.GetEmail()'
     };
-
+        function myFunction() {
+            $scope.binDiscount.test();
+        }
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/paymentController.js"></script>
@@ -150,7 +155,7 @@
                                                     <div class="input-wrapper">
                                                         <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
                                                     </div>
-                                                    <h5>Kartu Kredit</h5>
+                                                    <h5>Kartu Kredit / Debit</h5>
                                                 </header>
                                                 <section>
                                                     <img src="/Assets/images/payment-cc.jpg" alt="kartu Kredit" />
@@ -226,7 +231,7 @@
                                     <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
 
                                         <form name="creditCardForm" novalidate>
-                                            <h3 class="no-spacing">Detail <b>Kartu Kredit</b></h3>
+                                            <h3 class="no-spacing">Detail <b>Kartu Kredit/Debit</b></h3>
 
                                             @*<!-- credit card selector start -->
                                                 <div class="form-group">
@@ -252,7 +257,7 @@
                                             <div ng-if="CreditCard.TwoClickToken == 'false'">
                                                 <div class="form-group">
                                                     <label class="control-label">Nomor Kartu</label>
-                                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
+                                                    <input type="text" value="" class="form-control cc-number" ng-blur="binDiscount.check()" maxlength="16" ng-model="CreditCard.Number" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
@@ -474,6 +479,10 @@
                                             <dt>{{voucher.displayName}}</dt>
                                             <dd>- Rp {{voucher.amount | number}}</dd>
                                         </dl>
+                                        <dl ng-if="binDiscount.receive">
+                                            <dt>{{binDiscount.displayName}}</dt>
+                                            <dd>- Rp {{binDiscount.amount | number}}</dd>
+                                        </dl>
                                         <dl ng-if="CreditCardPromo.Valid">
                                             <dt>{{CreditCardPromo.PromoName}}</dt>
                                             <dd>- Rp {{CreditCardPromo.Amount | number}}</dd>
@@ -484,7 +493,7 @@
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
-                                            <dd>Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</dd>
+                                            <dd>Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
                                         </dl>
                                     </div>
                                     <!--<footer>
@@ -518,17 +527,17 @@
                                     <div class="widget-content">
                                         <span><b>Punya Kupon Travorama ?</b></span>
                                         <p>Masukkan di sini</p>
+                                        <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
                                         <form class="form" name="voucherForm" novalidate>
                                             <div class="form-group">
                                                 <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERVCHE02'">Kode voucher salah</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERVCHE01'">Voucher tidak dapat digunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERVCHE03'">Voucher sudah habis</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERVCHE04'">Minimum Pembelian Voucher tidak memenuhi</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERVCHE05'">Voucher tidak dapat digunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERVCHE06'">Voucher sudah digunakan</p>
-                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERRGEN99'">Voucher tidak dapat digunakan</p>
-                                                <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH02'">Kode voucher salah</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH01'">Voucher tidak dapat digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH03'">Voucher sudah habis</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH04'">Minimum Pembelian Voucher tidak memenuhi</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH05'">Voucher tidak dapat digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH06'">Voucher sudah digunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH99'">Voucher tidak dapat digunakan</p>
                                             </div>
                                             <div class="form-group">
                                                 <div class="row">
@@ -635,7 +644,7 @@
                     </footer>
                 </div>
             </div><!-- .page-overlay -->
-            
+
             <div class="tnc-popup" ng-show="pay.transfer">
                 <div class="popup">
                     <div class="popup-container">
@@ -657,7 +666,7 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="tnc-popup" ng-show="pay.virtualAccount">
                 <div class="popup">
@@ -676,14 +685,14 @@
                                 <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}" style="width:100%">KEMBALI</a>
                             </div>
                             <div class="col-xs-6">
-                                <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
+                                <input type="submit" class="btn btn-yellow" ng-click="pay.middle('virtualAccount')" value="SETUJU">
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
-               
-                <div class="popup__wrapper" ng-show="pay.virtualAccount">
+            </div>
+
+                @*<div class="popup__wrapper" ng-show="pay.virtualAccount">
                     <div class="popup">
                         <header class="popup__header">
                             <h4 class="popup__title">Syarat dan Ketentuan ATM</h4>
@@ -711,7 +720,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*@
 
 
                 <!--<div class="page-overlay booking-flight" ng-hide="!pay.paying">
@@ -734,7 +743,7 @@
             </div>
         </div>-->
 
-                <div class="payment-popup" ng-if="pay.checked && !pay.isSuccess">
+                <div class="payment-popup" ng-show="pay.checked && !pay.isSuccess">
                     <div class=" overlay-content">
                         <section style="padding-top:60px; padding-left:225px;">
                             <!-- Ini untuk yg gagal -->
@@ -749,7 +758,7 @@
                     </div>
                 </div>
 
-                <div class="bookfailed-popup" ng-if="pay.isPaying || pay.go">
+                <div class="bookfailed-popup" ng-show="pay.isPaying || pay.go">
                     <div class=" overlay-content">
                         <section style="padding-top:60px; padding-left:225px;">
                             <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>

@@ -17,10 +17,10 @@ namespace Lunggo.ApCommon.Campaign.Service
 {
     public partial class CampaignService
     {
-        public BinDiscount CheckBinDiscount(string rsvNo, string bin, string voucherCode)
+        public BinDiscount CheckBinDiscount(string rsvNo, string bin, string hashedPan, string voucherCode)
         {
             var rsv = FlightService.GetInstance().GetReservation(rsvNo);
-            if (DiscountGranted(rsv, bin, voucherCode))
+            if (DiscountGranted(rsv, bin, hashedPan, voucherCode))
                 return new BinDiscount
                 {
                     Amount = 100000,
@@ -30,10 +30,14 @@ namespace Lunggo.ApCommon.Campaign.Service
             else return null;
         }
 
-        private bool DiscountGranted(FlightReservation rsv, string bin, string voucherCode)
+        private bool DiscountGranted(FlightReservation rsv, string bin, string hashedPan, string voucherCode)
         {
-            var bin6 = bin.Substring(0, 6);
+            var bin6 = (bin != null && bin.Length >= 6)
+                ? bin.Substring(0, 6)
+                : null;
+            var hasUsed = CheckPanInCache(hashedPan);
             return (rsv.Payment.OriginalPriceIdr >= 1000000M &&
+                    !hasUsed && 
                     string.IsNullOrEmpty(voucherCode) &&
                     (bin6 == "421570" ||
                      bin6 == "485447" ||
@@ -41,6 +45,9 @@ namespace Lunggo.ApCommon.Campaign.Service
                      bin6 == "462436" ||
                      bin6 == "437527" ||
                      bin6 == "437528" ||
+                     bin6 == "481111" ||
+                     bin6 == "441111" ||
+                     bin6 == "521111" ||
                      bin6 == "437529"));
 
         }

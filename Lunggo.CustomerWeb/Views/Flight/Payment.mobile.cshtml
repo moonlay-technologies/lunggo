@@ -39,6 +39,9 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/jquery.countdown.min.js"></script>
+<script src="/Assets/js/CryptoJS/components/core-min.js"></script>
+<script src="/Assets/js/CryptoJS/rollups/sha512.js"></script>
+<script src="/Assets/js/CryptoJS/components/enc-base64-min.js"></script>
     <!-- veritrans JS -->
     <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
     <!-- fancybox -->
@@ -73,7 +76,7 @@
         var paymentDetail = '';
         var flightDetail = '';
         var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
-        var price = @Model.Reservation.Itinerary.OriginalTotalFare;
+        var price = @Model.Reservation.Itinerary.NetTotalFare;
         var redirectionUrl;
         @if (Model.Reservation.Payment.RedirectionUrl != null) {
        @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
@@ -133,13 +136,17 @@
                                 <dt>Potongan Harga</dt>
                                 <dd><sup>Rp</sup>- {{voucher.amount| number}}</dd>
                             </dl>
+                            <dl ng-show="binDiscount.receive">
+                                <dt>{{binDiscount.displayName}}</dt>
+                                <dd><sup>Rp</sup>- {{binDiscount.amount | number}}</dd>
+                            </dl>
                             <dl>
                                 <dt>Kode Unik Pembayaran</dt>
                                 <dd><sup>Rp</sup> {{UniqueCodePaymentConfig.UniqueCode | number}}</dd>
                             </dl>
                             <dl class="total-price">
                                 <dt>Total</dt>
-                                <dd><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</dd>
+                                <dd><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
                             </dl>
                         </div><!-- .summary__body -->
                     </div><!-- .summar--price -->
@@ -152,16 +159,13 @@
                             <form class="form form-horizontal">
                                 <div class="form-group">
                                     <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherNotFound'">Kode voucher salah</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Di bawah pembelian minimum</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignNotStartedYet'">Voucher belum dapat digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignHasEnded'">Voucher sudah tidak dapat digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignInactive'">Voucher tidak dapat digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'NoVoucherRemaining'">Voucher sudah habis</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'EmailNotEligible'">Voucher tidak dapat digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'UpdateError'">Voucher tidak dapat digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah digunakan</p>
+                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH02'">Kode voucher salah</p>
+                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH01'">Voucher sudah digunakan</p>
+                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH04'">Di bawah pembelian minimum</p>
+                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH05'">Voucher tidak dapat digunakan</p>
+                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH03'">Voucher sudah habis</p>
+                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH06'">Voucher sudah digunakan</p>
+                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH99'">Voucher tidak dapat digunakan</p>
                                     <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
                                 </div>
 
@@ -199,7 +203,7 @@
                                         <div class="input-wrapper">
                                             <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
                                         </div>
-                                        <h5>Kartu Kredit</h5>
+                                        <h5>Kartu Kredit / Debit</h5>
                                     </header>
                                     <section>
                                         <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
@@ -260,7 +264,7 @@
                     <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
 
                         <form name="creditCardForm" novalidate>
-                            <h3 class="no-spacing"><b>DETAIL </b>KARTU KREDIT</h3>
+                            <h3 class="no-spacing"><b>DETAIL </b>KARTU KREDIT/DEBIT</h3>
 
                             <!-- credit card selector start -->
                             @*<div class="form-group">
@@ -286,7 +290,7 @@
                             <div ng-if="CreditCard.TwoClickToken == 'false'">
                                 <div class="form-group">
                                     <label class="control-label">Nomor Kartu</label>
-                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
+                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-blur = "binDiscount.check()" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
@@ -408,7 +412,7 @@
 
                     <div class="step-button">
 
-                        <form name="finalForm" id="finalForm" ng-submit="pay.send()">
+                        <form name="finalForm" id="finalForm" ng-submit="pay.setPaymentMethod()">
 
                             <div class="hidden">
                                 <input type="text" name="RsvNo" value="" ng-model="rsvNo" />
