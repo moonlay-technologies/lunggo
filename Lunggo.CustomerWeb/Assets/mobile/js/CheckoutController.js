@@ -34,6 +34,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         // price
         Price: CheckoutDetail.Price,
         FinalPrice: CheckoutDetail.Price,
+        OriginalPrice: CheckoutDetail.OriginalPrice,
         // passenger
         Passenger: CheckoutDetail.Passenger,
         Passengers: [],
@@ -87,7 +88,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     $scope.token = CheckoutDetail.Token;
     $scope.currency = 'IDR';
     $scope.initialPrice = CheckoutDetail.Price;
-
+     
     // buyer info
     $scope.buyerInfo = {};
     if ($scope.loggedIn) {
@@ -434,7 +435,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                                         '"name":"' + $scope.passengers[i].name + '" ';
 
 
-                if ($scope.CheckoutConfig.BirthDateRequired) {
+                if ($scope.CheckoutConfig.BirthDateRequired || $scope.passengers[i].type != 'adult') {
                     $scope.paxData = $scope.paxData + ', "dob":"' + $scope.passengers[i].birth.full + '"';
                 }
 

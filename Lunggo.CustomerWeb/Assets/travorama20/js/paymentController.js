@@ -17,6 +17,7 @@ app.controller('paymentController', [
         $scope.checkoutForm = {
             loading: false
         };
+        
         $scope.paymentMethod = ''; //Payment
         $scope.trips = trips;
         $scope.stepClass = '';
@@ -117,7 +118,7 @@ app.controller('paymentController', [
         $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo); //payment
         $scope.initialPrice = price;
         $scope.totalPrice = price;
-
+        $scope.originalPrice = originalPrice;
         //Voucher
         $scope.voucher = {
             confirmedCode: '',
@@ -295,8 +296,15 @@ app.controller('paymentController', [
                     Veritrans.url = VeritransTokenConfig.Url;
                     Veritrans.client_key = VeritransTokenConfig.ClientKey;
                     var card = function () {
+                        var gross_amount = 0;
+                        if ($scope.binDiscount.receive && !$scope.voucher.confirmedCode) {
+                            gross_amount = $scope.originalPrice - $scope.CreditCardPromo.Amount + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount;
+                        } else {
+                            gross_amount = $scope.totalPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount;
+                        }
                         if ($scope.CreditCard.TwoClickToken == 'false') {
                             $scope.pay.ccdata = true;
+                            
                             return {
                                 'card_number': $scope.CreditCard.Number,
                                 'card_exp_month': $scope.CreditCard.Month,
@@ -306,7 +314,7 @@ app.controller('paymentController', [
                                 // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
                                 'secure': true,
                                 'bank': 'mandiri',
-                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount
+                                'gross_amount': gross_amount
                         }
                         } else {
                             return {
@@ -316,7 +324,7 @@ app.controller('paymentController', [
                                 'two_click': true,
                                 'secure': true,
                                 'bank': 'mandiri',
-                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount
+                                'gross_amount': gross_amount
                             }
                         }
                     };

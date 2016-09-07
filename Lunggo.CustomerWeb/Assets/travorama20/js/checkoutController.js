@@ -84,6 +84,7 @@ app.controller('checkoutController', [
         $scope.token = token;
         $scope.trips = trips;
         $scope.initialPrice = price;
+        $scope.originalPrice = originalPrice;
         $scope.totalPrice = price;
         $scope.expired = false;
         $scope.expiryDate = new Date(expiryDate);
