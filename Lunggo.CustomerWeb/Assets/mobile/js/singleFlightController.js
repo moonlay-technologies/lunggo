@@ -14,7 +14,7 @@
     //        $.datepicker.regional['id']
     //        )
     //    );
-
+    $scope.returnUrl = "/";
     $scope.Progress = 0;
     $scope.trial = 0;
     $scope.FlightConfig = [
@@ -79,7 +79,7 @@
             }
         }
     ];
-
+    $scope.selectError = false;
     $scope.GetFlight = function (a) {
         if ($scope.trial > 3) {
             $scope.trial = 0;
@@ -466,12 +466,16 @@
                         console.log('ERROR Validating Flight');
                         console.log(returnData);
                         console.log('--------------------');
+                        $scope.selectError = true;
+                        
                     }
                 });
             }
             else
             {
                 console('Not Authorized, Failed to Select the Flight');
+                $scope.PageConfig.Validating = false;
+                $scope.selectError = true;
             }
             
         } else {
