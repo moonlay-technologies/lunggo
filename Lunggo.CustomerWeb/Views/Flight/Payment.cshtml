@@ -493,7 +493,7 @@
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
-                                            <dd>Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</dd>
+                                            <dd>Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
                                         </dl>
                                     </div>
                                     <!--<footer>

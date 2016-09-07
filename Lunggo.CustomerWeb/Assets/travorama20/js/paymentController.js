@@ -248,6 +248,7 @@ app.controller('paymentController', [
                             $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
                         }
                         else {
+                            $scope.binDiscount.amount = 0;
                             $scope.binDiscount.checked = true;
                             $scope.binDiscount.receive = false;
                             $scope.binDiscount.status = returnData.data.error;
@@ -259,6 +260,7 @@ app.controller('paymentController', [
                             $scope.binDiscount.check();
                         }
                         else {
+                            $scope.binDiscount.amount = 0;
                             $scope.binDiscount.checked = true;
                             $scope.binDiscount.checking = false;
                             $scope.binDiscount.receive = false;
@@ -267,6 +269,7 @@ app.controller('paymentController', [
                 }
                 else {
                     console.log('Not Authorized');
+                    $scope.binDiscount.amount = 0;
                     $scope.binDiscount.checking = false;
                 }
             }
@@ -313,7 +316,7 @@ app.controller('paymentController', [
                                 'two_click': true,
                                 'secure': true,
                                 'bank': 'mandiri',
-                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode
+                                'gross_amount': $scope.initialPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount
                             }
                         }
                     };

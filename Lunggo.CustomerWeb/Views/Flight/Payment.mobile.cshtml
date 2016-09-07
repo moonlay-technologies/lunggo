@@ -39,6 +39,9 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/jquery.countdown.min.js"></script>
+<script src="/Assets/js/CryptoJS/components/core-min.js"></script>
+<script src="/Assets/js/CryptoJS/rollups/sha512.js"></script>
+<script src="/Assets/js/CryptoJS/components/enc-base64-min.js"></script>
     <!-- veritrans JS -->
     <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
     <!-- fancybox -->
@@ -73,7 +76,7 @@
         var paymentDetail = '';
         var flightDetail = '';
         var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
-        var price = @Model.Reservation.Itinerary.OriginalTotalFare;
+        var price = @Model.Reservation.Itinerary.NetTotalFare;
         var redirectionUrl;
         @if (Model.Reservation.Payment.RedirectionUrl != null) {
        @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
@@ -143,7 +146,7 @@
                             </dl>
                             <dl class="total-price">
                                 <dt>Total</dt>
-                                <dd><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</dd>
+                                <dd><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
                             </dl>
                         </div><!-- .summary__body -->
                     </div><!-- .summar--price -->
@@ -409,7 +412,7 @@
 
                     <div class="step-button">
 
-                        <form name="finalForm" id="finalForm" ng-submit="pay.send()">
+                        <form name="finalForm" id="finalForm" ng-submit="pay.setPaymentMethod()">
 
                             <div class="hidden">
                                 <input type="text" name="RsvNo" value="" ng-model="rsvNo" />
