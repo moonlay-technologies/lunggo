@@ -6,14 +6,14 @@
         min-height: 892px;
         text-align: center;
         .big-txt {
-            font-size: 42px;
+            font-size: 47px;
             font-weight: 600;
             line-height: 40px;
             padding-top: 140px;
         }
         .sm-txt {
-            font-size: 17px;
-            margin: 40px 0;
+            font-size: 19px;
+            margin: 40px 0 30px;
         }
         .app-download {
             a {
@@ -57,7 +57,7 @@
         .right-content {padding-right: 0; padding-left: 45px;}
         .dash {    
             border-right: 3px solid #1daee4;
-            min-height: 1740px;
+            min-height: 1780px;
             float: left;
             display: inline-block;
             position: absolute;
@@ -104,13 +104,13 @@
             z-index: 1;
             border-radius: 14px;
 
-            &.op-1 {top: 38.6%;}
-            &.op-2 {top: 45%}
-            &.op-3 {top: 52.3%}
-            &.op-4 {top: 58.5%}
-            &.op-5 {top: 67.1%}
-            &.op-6 {top: 73.7%}
-            &.op-7 {top: 81.98%}
+            &.op-1 {top: 37.7%}
+            &.op-2 {top: 44.9%}
+            &.op-3 {top: 51.05%}
+            &.op-4 {top: 58.75%}
+            &.op-5 {top: 66.75%}
+            &.op-6 {top: 73.4%}
+            &.op-7 {top: 81.3%}
 
             &.op-1, &.op-3, &.op-5, &.op-7 {
                 &:before {
@@ -140,7 +140,7 @@
         }
     }
     .mobileApp-wrapper {
-        width: 860px;
+        width: 950px;
         margin: 0 auto;
         max-width: none;
     }
