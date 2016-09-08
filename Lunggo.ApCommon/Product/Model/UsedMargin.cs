@@ -36,6 +36,26 @@ namespace Lunggo.ApCommon.Product.Model
             }
         }
 
+        internal void UpdateToDb(long priceId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                UsedMarginTableRepo.GetInstance().Update(conn, new UsedMarginTableRecord
+                {
+                    PriceId = priceId,
+                    Name = Name,
+                    Description = Description,
+                    Percentage = Percentage,
+                    Constant = Constant,
+                    CurrencyCd = Currency,
+                    IsFlat = IsFlat,
+                    UpdateBy = "LunggoSystem",
+                    UpdateDate = DateTime.UtcNow,
+                    UpdatePgId = "0"
+                });
+            }
+        }
+
         internal static UsedMargin GetFromDb(long priceId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())

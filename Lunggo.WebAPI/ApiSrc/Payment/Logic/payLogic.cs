@@ -14,6 +14,22 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
         public static ApiResponseBase Pay(PayApiRequest request)
         {
             var user = HttpContext.Current.User;
+            if (request.Test == 1)
+            {
+                return new PayApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERPPAY05"
+                };
+            }
+            if (request.Test == 2)
+            {
+                return new PayApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERPPAY06"
+                };
+            }
             if (!IsValid(request))
                 return new PayApiResponse
                 {

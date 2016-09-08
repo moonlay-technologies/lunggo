@@ -33,7 +33,8 @@ namespace Lunggo.ApCommon.Campaign.Service
                     Amount = discAmount,
                     IsAvailable = true,
                     Currency = new Currency("IDR"),
-                    DisplayName = "pocer yey"
+                    DisplayName = "pocer yey",
+                    ReplaceMargin = true
                 }
                     : new BinDiscount
                     {

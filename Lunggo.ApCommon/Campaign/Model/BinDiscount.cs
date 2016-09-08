@@ -13,5 +13,6 @@ namespace Lunggo.ApCommon.Campaign.Model
         public Currency Currency { get; set; }
         public string DisplayName { get; set; }
         public bool IsAvailable { get; set; }
+        public bool ReplaceMargin { get; set; }
     }
 }

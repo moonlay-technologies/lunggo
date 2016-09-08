@@ -31,7 +31,8 @@ namespace Lunggo.ApCommon.Payment.Service
         public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
-            var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
+            var reservation = FlightService.GetInstance().GetReservation(rsvNo);
+            var paymentDetails = reservation.Payment;
 
             if (paymentDetails == null)
                 return null;
@@ -46,18 +47,22 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.Data = paymentData;
             paymentDetails.Method = method;
             paymentDetails.Medium = GetPaymentMedium(method);
+            paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
 
-            var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
-            if (campaign.Discount == null)
+            if (!string.IsNullOrEmpty(discountCode))
             {
-                paymentDetails.Status = PaymentStatus.Failed;
-                paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
-                return paymentDetails;
+                var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
+                if (campaign.Discount == null)
+                {
+                    paymentDetails.Status = PaymentStatus.Failed;
+                    paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
+                    return paymentDetails;
+                }
+                paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
+                paymentDetails.Discount = campaign.Discount;
+                paymentDetails.DiscountCode = campaign.VoucherCode;
+                paymentDetails.DiscountNominal = campaign.TotalDiscount;
             }
-            paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
-            paymentDetails.Discount = campaign.Discount;
-            paymentDetails.DiscountCode = campaign.VoucherCode;
-            paymentDetails.DiscountNominal = campaign.TotalDiscount;
 
             if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
             {
@@ -67,11 +72,24 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (binDiscount == null)
                 {
                     paymentDetails.Status = PaymentStatus.Failed;
-                    paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
+                    paymentDetails.FailureReason = FailureReason.BinPromoNoLongerEligible;
                     return paymentDetails;
                 }
-                paymentDetails.FinalPriceIdr -= binDiscount.Amount;
-                paymentDetails.DiscountNominal += binDiscount.Amount;
+                if (binDiscount.ReplaceMargin)
+                {
+                    foreach (var itin in reservation.Itineraries)
+                    {
+                        itin.Price.Margin = new UsedMargin();
+                        itin.Price.CalculateFinalAndLocal(itin.Price.LocalCurrency);
+                    }
+                    paymentDetails.OriginalPriceIdr = reservation.Itineraries.Sum(i => i.Price.FinalIdr);
+                    paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr-binDiscount.Amount;
+                    }
+                else
+                {
+                    paymentDetails.FinalPriceIdr -= binDiscount.Amount;
+                    
+                }
                 if (paymentDetails.Discount == null)
                     paymentDetails.Discount = new UsedDiscount
                     {
@@ -83,7 +101,10 @@ namespace Lunggo.ApCommon.Payment.Service
                         Description = "BIN Promo",
                         IsFlat = false
                     };
-                var contact = Contact.GetFromDb(rsvNo);
+                else
+                    paymentDetails.Discount.Constant += binDiscount.Amount;
+                paymentDetails.DiscountNominal += binDiscount.Amount;
+                var contact = reservation.Contact;
                 if (contact == null)
                     return null;
                 CampaignService.GetInstance().SavePanAndEmailInCache("btn", paymentData.CreditCard.HashedPan, contact.Email);
@@ -100,6 +121,7 @@ namespace Lunggo.ApCommon.Payment.Service
             var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
             var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
             ProcessPayment(paymentDetails, transactionDetails, itemDetails, method);
+            reservation.Itineraries.ForEach(i => i.Price.UpdateToDb());
             UpdatePaymentToDb(rsvNo, paymentDetails);
             isUpdated = true;
             return paymentDetails;

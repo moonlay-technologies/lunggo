@@ -10,6 +10,8 @@ namespace Lunggo.ApCommon.Product.Model
 {
     public class Price
     {
+        private long Id { get; set; }
+
         public decimal Supplier { get; set; }
         public Currency SupplierCurrency { get; set; }
         public decimal OriginalIdr { get; set; }
@@ -48,6 +50,31 @@ namespace Lunggo.ApCommon.Product.Model
             }
         }
 
+        internal void UpdateToDb()
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                PriceTableRepo.GetInstance().Update(conn, new PriceTableRecord
+                {
+                    Id = Id,
+                    SupplierPrice = Supplier,
+                    SupplierCurrencyCd = SupplierCurrency,
+                    SupplierRate = SupplierCurrency.Rate,
+                    OriginalPriceIdr = OriginalIdr,
+                    MarginNominal = MarginNominal,
+                    Rounding = Rounding,
+                    FinalPriceIdr = FinalIdr,
+                    LocalPrice = Local,
+                    LocalCurrencyCd = LocalCurrency,
+                    LocalRate = LocalCurrency.Rate,
+                    UpdateBy = "LunggoSystem",
+                    UpdateDate = DateTime.UtcNow,
+                    UpdatePgId = "0"
+                });
+                Margin.UpdateToDb(Id);
+            }
+        }
+
         internal static Price GetFromDb(long priceId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -59,6 +86,7 @@ namespace Lunggo.ApCommon.Product.Model
 
                 return new Price
                 {
+                    Id = priceId,
                     Supplier = record.SupplierPrice.GetValueOrDefault(),
                     SupplierCurrency = new Currency(record.SupplierCurrencyCd, record.SupplierRate.GetValueOrDefault()),
                     OriginalIdr = record.OriginalPriceIdr.GetValueOrDefault(),
