@@ -225,6 +225,7 @@
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
+    <Compile Include="Payment\Constant\FailureReason.cs" />
     <Compile Include="Query\ContactUs.cs" />
     <Compile Include="Flight\Model\FlightSlightDelay.cs" />
     <Compile Include="Flight\Model\FlightStop.cs" />

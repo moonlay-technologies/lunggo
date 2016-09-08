@@ -74,6 +74,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     else
                     {
                         payment.Status = PaymentStatus.Failed;
+                        payment.FailureReason = FailureReason.PaymentFailure;
                     }
                     return payment;
                 case PaymentMethod.VirtualAccount:
@@ -89,6 +90,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     else
                     {
                         payment.Status = PaymentStatus.Failed;
+                        payment.FailureReason = FailureReason.PaymentFailure;
                     }
                     return payment;
 
@@ -104,6 +106,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     else
                     {
                         payment.Status = PaymentStatus.Failed;
+                        payment.FailureReason = FailureReason.PaymentFailure;
                     }
                     return payment;
 
@@ -120,6 +123,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     else
                     {
                         payment.Status = PaymentStatus.Failed;
+                        payment.FailureReason = FailureReason.PaymentFailure;
                     }
                     return payment;
 
@@ -136,11 +140,13 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     else
                     {
                         payment.Status = PaymentStatus.Failed;
+                        payment.FailureReason = FailureReason.PaymentFailure;
                     }
                     return payment;
 
                 default:
                     payment.Status = PaymentStatus.Failed;
+                    payment.FailureReason = FailureReason.PaymentFailure;
                     return payment;
             }
         }

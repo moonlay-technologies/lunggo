@@ -15,6 +15,7 @@ using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
@@ -36,45 +37,56 @@ namespace Lunggo.ApCommon.Payment.Service
                 return null;
 
             if (paymentDetails.Method != PaymentMethod.Undefined)
+            {
+                paymentDetails.Status = PaymentStatus.Failed;
+                paymentDetails.FailureReason = FailureReason.MethodNotAvailable;
                 return paymentDetails;
+            }
 
             paymentDetails.Data = paymentData;
             paymentDetails.Method = method;
             paymentDetails.Medium = GetPaymentMedium(method);
-            var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
-            if (campaign.Discount != null)
-            {
-                paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
-                paymentDetails.Discount = campaign.Discount;
-                paymentDetails.DiscountCode = campaign.VoucherCode;
-                paymentDetails.DiscountNominal = campaign.TotalDiscount;
-            }
-            else
-            {
-                paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
-            }
 
-            if (paymentDetails.Method == PaymentMethod.CreditCard)
+            var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
+            if (campaign.Discount == null)
+            {
+                paymentDetails.Status = PaymentStatus.Failed;
+                paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
+                return paymentDetails;
+            }
+            paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
+            paymentDetails.Discount = campaign.Discount;
+            paymentDetails.DiscountCode = campaign.VoucherCode;
+            paymentDetails.DiscountNominal = campaign.TotalDiscount;
+
+            if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
             {
                 var binDiscount = CampaignService.GetInstance()
-                    .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, paymentData.CreditCard.HashedPan, discountCode);
-                if (binDiscount != null)
+                    .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, paymentData.CreditCard.HashedPan,
+                        discountCode);
+                if (binDiscount == null)
                 {
-                    paymentDetails.FinalPriceIdr -= binDiscount.Amount;
-                    paymentDetails.DiscountNominal += binDiscount.Amount;
-                    if (paymentDetails.Discount == null)
-                        paymentDetails.Discount = new UsedDiscount
-                        {
-                            DisplayName = binDiscount.DisplayName,
-                            Name = binDiscount.DisplayName,
-                            Constant = binDiscount.Amount,
-                            Percentage = 0M,
-                            Currency = new Currency("IDR"),
-                            Description = "BIN Promo",
-                            IsFlat = false
-                        };
-                    CampaignService.GetInstance().SavePanInCache(paymentData.CreditCard.HashedPan);
+                    paymentDetails.Status = PaymentStatus.Failed;
+                    paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
+                    return paymentDetails;
                 }
+                paymentDetails.FinalPriceIdr -= binDiscount.Amount;
+                paymentDetails.DiscountNominal += binDiscount.Amount;
+                if (paymentDetails.Discount == null)
+                    paymentDetails.Discount = new UsedDiscount
+                    {
+                        DisplayName = binDiscount.DisplayName,
+                        Name = binDiscount.DisplayName,
+                        Constant = binDiscount.Amount,
+                        Percentage = 0M,
+                        Currency = new Currency("IDR"),
+                        Description = "BIN Promo",
+                        IsFlat = false
+                    };
+                var contact = Contact.GetFromDb(rsvNo);
+                if (contact == null)
+                    return null;
+                CampaignService.GetInstance().SavePanAndEmailInCache("btn", paymentData.CreditCard.HashedPan, contact.Email);
             }
 
             var transferFee = GetTransferFeeFromCache(rsvNo);
@@ -83,7 +95,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
             paymentDetails.TransferFee = transferFee;
             paymentDetails.FinalPriceIdr += paymentDetails.TransferFee;
-            
+
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
             var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
             var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
@@ -153,8 +165,8 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             else
             {
-                paymentDetails.RedirectionUrl = GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
-                paymentDetails.Status = paymentDetails.RedirectionUrl != null ? PaymentStatus.Pending : PaymentStatus.Failed;
+                paymentDetails.Status = PaymentStatus.Failed;
+                paymentDetails.FailureReason = FailureReason.MethodNotAvailable;
             }
             paymentDetails.PaidAmountIdr = paymentDetails.FinalPriceIdr;
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr;

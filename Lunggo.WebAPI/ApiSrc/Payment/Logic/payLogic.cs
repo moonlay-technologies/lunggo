@@ -53,6 +53,22 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 };
             }
 
+            if (paymentDetails.Status == PaymentStatus.Failed)
+            {
+                if (paymentDetails.FailureReason == FailureReason.VoucherNoLongerEligible)
+                    return new PayApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        ErrorCode = "ERPPAY05"
+                    };
+                if (paymentDetails.FailureReason == FailureReason.BinPromoNoLongerEligible)
+                    return new PayApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        ErrorCode = "ERPPAY06"
+                    };
+            }
+
             return new PayApiResponse
             {
                 PaymentStatus = paymentDetails.Status,

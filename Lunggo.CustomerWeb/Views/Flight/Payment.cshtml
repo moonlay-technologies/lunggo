@@ -76,6 +76,7 @@
     var flightDetail = '';
     var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
     var price = @Model.Reservation.Itinerary.NetTotalFare;
+    var originalPrice = '@Model.Reservation.Itinerary.OriginalTotalFare';
     var redirectionUrl;
     @if (Model.Reservation.Payment.RedirectionUrl != null) {
         @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
@@ -473,15 +474,19 @@
                                     <div class="widget-content">
                                         <dl>
                                             <dt>Harga Tiket</dt>
-                                            <dd>Rp {{initialPrice | number}}</dd>
+                                            <dd>Rp {{originalPrice | number}}</dd>
                                         </dl>
                                         <dl ng-if="voucher.confirmedCode">
                                             <dt>{{voucher.displayName}}</dt>
                                             <dd>- Rp {{voucher.amount | number}}</dd>
                                         </dl>
-                                        <dl ng-if="binDiscount.receive">
+                                        <dl ng-if="binDiscount.receive && !voucher.confirmedCode" style="color: #1daee4">
                                             <dt>{{binDiscount.displayName}}</dt>
                                             <dd>- Rp {{binDiscount.amount | number}}</dd>
+                                        </dl>
+                                        <dl ng-if="!(binDiscount.receive && !voucher.confirmedCode)" style="color: #1daee4">
+                                            <dt>Diskon Travorama</dt>
+                                            <dd>- Rp {{originalPrice - totalPrice| number}}</dd>
                                         </dl>
                                         <dl ng-if="CreditCardPromo.Valid">
                                             <dt>{{CreditCardPromo.PromoName}}</dt>
@@ -493,7 +498,8 @@
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
-                                            <dd>Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
+                                            <dd ng-if="binDiscount.receive && !voucher.confirmedCode">Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
+                                            <dd ng-if="!(binDiscount.receive && !voucher.confirmedCode)">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
                                         </dl>
                                     </div>
                                     <!--<footer>

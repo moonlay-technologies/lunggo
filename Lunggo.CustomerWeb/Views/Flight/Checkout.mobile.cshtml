@@ -69,9 +69,10 @@
             ExpiryDate: '@Model.ExpiryTime.ToString("o")',
             Trips: @Html.Raw(Model.Itinerary.Trips.Serialize()),
             Price: @Model.Itinerary.NetTotalFare,
-            TotalAdultFare : @Model.Itinerary.NetAdultFare * @Model.Itinerary.AdultCount,
-            TotalChildFare: @Model.Itinerary.NetChildFare * @Model.Itinerary.ChildCount,
-            TotalInfantFare: @Model.Itinerary.NetInfantFare * @Model.Itinerary.InfantCount,
+            TotalAdultFare : @Model.Itinerary.OriginalAdultFare * @Model.Itinerary.AdultCount,
+            TotalChildFare: @Model.Itinerary.OriginalChildFare * @Model.Itinerary.ChildCount,
+            TotalInfantFare: @Model.Itinerary.OriginalInfantFare * @Model.Itinerary.InfantCount,
+            OriginalPrice: @Model.Itinerary.OriginalTotalFare,
             // passenger
             Passenger: [@Model.Itinerary.AdultCount, @Model.Itinerary.ChildCount, @Model.Itinerary.InfantCount],
             PassengerName: ['Dewasa', 'Anak', 'Bayi'],
@@ -345,6 +346,10 @@
                             <dl ng-if="CheckoutConfig.Passenger[2] > 0">
                                 <dt>Tiket Bayi x{{CheckoutConfig.Passenger[2]}} </dt>
                                 <dd><sup>Rp</sup> {{CheckoutConfig.TotalInfantFare | number}}</dd>
+                            </dl>
+                            <dl style="color: #1daee4">
+                                <dt>Diskon Travorama</dt>
+                                <dd><sup>-Rp</sup> {{CheckoutConfig.OriginalPrice - CheckoutConfig.Price | number}}</dd>
                             </dl>
                             <dl>
                                 <dt>Total</dt>

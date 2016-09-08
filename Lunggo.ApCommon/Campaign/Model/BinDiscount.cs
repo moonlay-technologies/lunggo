@@ -12,5 +12,6 @@ namespace Lunggo.ApCommon.Campaign.Model
         public decimal Amount { get; set; }
         public Currency Currency { get; set; }
         public string DisplayName { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }
