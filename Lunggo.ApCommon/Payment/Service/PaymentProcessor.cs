@@ -15,6 +15,7 @@ using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
@@ -82,7 +83,10 @@ namespace Lunggo.ApCommon.Payment.Service
                         Description = "BIN Promo",
                         IsFlat = false
                     };
-                CampaignService.GetInstance().SavePanInCache("btn", paymentData.CreditCard.HashedPan);
+                var contact = Contact.GetFromDb(rsvNo);
+                if (contact == null)
+                    return null;
+                CampaignService.GetInstance().SavePanAndEmailInCache("btn", paymentData.CreditCard.HashedPan, contact.Email);
             }
 
             var transferFee = GetTransferFeeFromCache(rsvNo);

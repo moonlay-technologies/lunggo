@@ -38,8 +38,9 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 }
                 : new CheckBinDiscountResponse
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPBIN02"
+                    StatusCode = HttpStatusCode.OK,
+                    DiscountAmount = 0,
+                    IsAvailable = false,
                 };
             }
     }
