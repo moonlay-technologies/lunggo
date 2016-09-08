@@ -60,15 +60,6 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 };
             }
 
-            if (!isUpdated)
-            {
-                return new PayApiResponse
-                {
-                    StatusCode = HttpStatusCode.Accepted,
-                    ErrorCode = "ERPPAY03"
-                };
-            }
-
             if (paymentDetails.Status == PaymentStatus.Failed)
             {
                 if (paymentDetails.FailureReason == FailureReason.VoucherNoLongerEligible)
@@ -83,6 +74,15 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                         StatusCode = HttpStatusCode.Accepted,
                         ErrorCode = "ERPPAY06"
                     };
+            }
+
+            if (!isUpdated)
+            {
+                return new PayApiResponse
+                {
+                    StatusCode = HttpStatusCode.Accepted,
+                    ErrorCode = "ERPPAY03"
+                };
             }
 
             return new PayApiResponse
