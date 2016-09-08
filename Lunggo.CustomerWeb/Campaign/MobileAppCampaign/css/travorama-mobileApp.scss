@@ -3,16 +3,16 @@
         background-image: url('/Campaign/MobileAppCampaign/images/background.jpg');
         background-repeat: no-repeat;
         background-size: cover;
-        min-height: 892px;
+        min-height: 780px;
         text-align: center;
         .big-txt {
-            font-size: 47px;
+            font-size: 42px;
             font-weight: 600;
             line-height: 40px;
             padding-top: 140px;
         }
         .sm-txt {
-            font-size: 19px;
+            font-size: 17px;
             margin: 40px 0 30px;
         }
         .app-download {
@@ -35,11 +35,11 @@
         }
     }
     .mobileApp-bottom {
-        margin: 90px auto;
+        margin: 85px auto;
         &.container {padding:0;}
         .title-bg {
             font-size: 30px;
-            font-weight: 700;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
             text-align: center;
@@ -104,13 +104,13 @@
             z-index: 1;
             border-radius: 14px;
 
-            &.op-1 {top: 37.7%}
-            &.op-2 {top: 44.9%}
-            &.op-3 {top: 51.05%}
-            &.op-4 {top: 58.75%}
-            &.op-5 {top: 66.75%}
-            &.op-6 {top: 73.4%}
-            &.op-7 {top: 81.3%}
+            &.op-1 {top: 35.95%}
+            &.op-2 {top: 43.25%}
+            &.op-3 {top: 49.85%}
+            &.op-4 {top: 57.45%}
+            &.op-5 {top: 65.75%}
+            &.op-6 {top: 72.65%}
+            &.op-7 {top: 80.85%}
 
             &.op-1, &.op-3, &.op-5, &.op-7 {
                 &:before {
@@ -143,5 +143,6 @@
         width: 950px;
         margin: 0 auto;
         max-width: none;
+        padding: 0 12px;
     }
 }
