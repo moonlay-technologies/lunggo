@@ -19,6 +19,7 @@ app.controller('singleFlightController', [
         $scope.loadingFlight = false;
         $scope.flightList = [];
         $scope.Progress = 0;
+        $scope.returnUrl = "/";
         var cabin = FlightSearchConfig.flightForm.cabin;
         if (cabin != 'y' || cabin != 'c' || cabin != 'f') {
             switch (cabin) {
@@ -414,6 +415,7 @@ app.controller('singleFlightController', [
         // **********
         // Select flight
         $scope.selectFlightParam = {
+            error: false,
             validated: false,
             token: '',
             validating: false,
@@ -455,6 +457,7 @@ app.controller('singleFlightController', [
                         console.log("Response Select Flight : " + returnData);
                      
                         if (returnData.data.token != "" || returnData.data.token != null) {
+                            
                             console.log('departure flight available');
                             $scope.selectFlightParam.available = true;
                             $scope.selectFlightParam.token = returnData.data.token;
@@ -475,12 +478,16 @@ app.controller('singleFlightController', [
                             $scope.selectFlightParam.validatingFlight = false;
                             console.log('ERROR Validating Flight');
                             console.log('--------------------');
+                            $scope.selectFlightParam.popup = false;
+                            $scope.selectFlightParam.error = true;
                         }
                     });
                 }
                 else {
                     $scope.selectFlightParam.validatingFlight = false;
                     console.log('Not Authorized');
+                    $scope.selectFlightParam.popup = false;
+                    $scope.selectFlightParam.error = true;
                 }
 
                 

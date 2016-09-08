@@ -11,6 +11,7 @@
     // **********
     // variables
     $scope.trial = 0;
+    $scope.returnUrl = "/";
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.PageConfig.Validated = false;
     $scope.PageConfig.ValidateConfirmation = false;
@@ -590,6 +591,7 @@
         $scope.SetOverlay('flight-detail');
     }
 
+    $scope.selectError = false;
     // revalidate flight
     $scope.FlightFunctions.Revalidate = function(departureIndexNo, returnIndexNo) {
 
@@ -645,6 +647,7 @@
                         console.log('flight unavailable');
                         $scope.FlightConfig[0].validateAvailable = false;
                         $scope.FlightConfig[1].validateAvailable = false;
+                        $scope.selectError = true;
                     }
 
                     //if (anotherFlight.FlightValidated) {
@@ -663,12 +666,14 @@
                         console.log('ERROR Validating Flight');
                         console.log(returnData);
                         console.log('--------------------');
+                        $scope.selectError = true;
                     }
                     
                 });
             }
             else
             {
+                $scope.selectError = true;
                 $scope.FlightConfig[0].validateAvailable = false;
                 $scope.FlightConfig[1].validateAvailable = false;
                 console.log('Not Authorized');

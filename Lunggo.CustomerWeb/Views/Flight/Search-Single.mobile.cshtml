@@ -86,7 +86,9 @@
     <script src="/Config/JsConfig.js"></script>
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script> 
-<script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+    @*<script type="text/javascript" src="/Assets/js/tab.js"></script>*@
 }
 @section PageJS{
     
@@ -109,6 +111,7 @@
     </script>
 
     <script src="/Assets/mobile/js/singleFlightController.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/priceDetail/priceDetailDirMobile.js"></script>
 }
 
 <div class="page-loading" ng-class="{'page-loaded':PageConfig.Loaded}">
@@ -215,70 +218,84 @@
     <div class="overlay overlay--theme--blue overlay--flight-detail" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-detail')}">
         <header class="overlay__header">
             <h3 class="overlay__title">
-                DETAIL PENERBANGAN
+                DETAIL
                 <span class="overlay__close" ng-click="FlightFunctions.SetActiveFlight()" ng-hide="PageConfig.Validating">X</span>
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
-            <div class="flight-title flight-title--departure">
-                <div class="flight-info">
-                    <h4><b>{{FlightConfig[0].FlightRequest.Trips[0].OriginCity}}</b> ke <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationCity}}</b></h4>
-                    <h5>{{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'EEE, dd MMM yyyy'}}</h5>
-                </div>
-                <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight()">GANTI</span></a>
-            </div><!-- .flight-title -->
-        
-            <div class="flight-notice" ng-hide="FlightConfig[0].ActiveFlightAvailable">
-                <p ng-show="FlightConfig[0].ActiveFlightNewPrice > 0">Harga berubah menjadi <b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].originalAdultFare | number}}</b></p>
-                <p ng-show="FlightConfig[0].ActiveFlightNewPrice < 0">Penerbangan tidak tersedia</p>
-            </div><!-- .flight-notice -->
-
-            <div class="flight-wrapper" ng-repeat="segment in FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].trips[0].segments track by $index">
-                <div class="transit" ng-if="$index > 0">
-                    <span>Transit di {{segment.departureCity}} ({{segment.departure}}) selama <b>{{msToTime(FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].trips[0].transits[$index-1].duration) | date : 'HH:mm'}}</b></span>
-                </div>
-                <div class="flight">
-                    <div class="flight__number">
-                        <span>{{$index + 1}}</span>
-                    </div>
-                    <div class="flight__content">
-                        <div class="flight__summary col-xs-8">
-                            <img ng-src="{{segment.airlineLogoUrl}}" alt="{{segment.airlineName}}" class="flight__image" />
-                            <div class="flight__airline">
-                                <h4><b>{{segment.airlineName}}</b></h4>
-                                <h5>{{segment.airlineCd}}-{{segment.flightNo}}</h5>
+            <div class="container-detail">
+                <ul class="nav nav-tabs tab-detail">
+                    <li class="col-xs-6 active"><a data-toggle="tab" href="#flight">Penerbangan</a></li>
+                    <li class="col-xs-6"><a data-toggle="tab" href="#price-detail">Rincian Harga</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="flight" class="tab-pane active">
+                        <div class="flight-title flight-title--departure">
+                            <div class="flight-info">
+                                <h4><b>{{FlightConfig[0].FlightRequest.Trips[0].OriginCity}}</b> ke <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationCity}}</b></h4>
+                                <h5>{{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'EEE, dd MMM yyyy'}}</h5>
                             </div>
-                        </div>
-                        <div class="flight-facility col-xs-4" ng-show="{{segment.hasMeal || segment.isBaggageIncluded || segment.includingPsc}}">
-                            <span ng-show="segment.hasMeal" class="flight-meal"></span>
-                            <span ng-show="segment.isBaggageIncluded" class="flight-baggage">{{segment.baggageCapacity}}</span>
-                            <span ng-show="segment.includingPsc" class="flight-tax"></span>
-                        </div>
-                        
-                        <div class="col-xs-12">
-                            <div class="flight__detail">
-                                <div class="flight__departure">
-                                    <h5>{{segment.departureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
-                                    <h4><b>{{segment.departureTime | date : 'HH:mm' : 'UTC'}}</b></h4>
-                                    <h5><b>{{segment.departureCity}} ({{segment.departure}}) </b></h5>
-                                    <h5>{{segment.departureName}}</h5>
+                            <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight()">GANTI</span></a>
+                        </div><!-- .flight-title -->
+
+                        <div class="flight-notice" ng-hide="FlightConfig[0].ActiveFlightAvailable">
+                            <p ng-show="FlightConfig[0].ActiveFlightNewPrice > 0">Harga berubah menjadi <b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].originalAdultFare | number}}</b></p>
+                            <p ng-show="FlightConfig[0].ActiveFlightNewPrice < 0">Penerbangan tidak tersedia</p>
+                        </div><!-- .flight-notice -->
+
+                        <div class="flight-wrapper" ng-repeat="segment in FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].trips[0].segments track by $index">
+                            <div class="transit" ng-if="$index > 0">
+                                <span>Transit di {{segment.departureCity}} ({{segment.departure}}) selama <b>{{msToTime(FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].trips[0].transits[$index-1].duration) | date : 'HH:mm'}}</b></span>
+                            </div>
+                            <div class="flight">
+                                <div class="flight__number">
+                                    <span>{{$index + 1}}</span>
                                 </div>
-                                <div class="flight__separator">
-                                    <h5><b>Durasi: </b>{{(segment.duration) | date : 'HH:mm'}}</h5>
-                                </div>
-                                <div class="flight__arrival">
-                                    <h5>{{segment.arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
-                                    <h4><b>{{segment.arrivalTime | date : 'HH:mm' : 'UTC'}}</b></h4>
-                                    <h5><b>{{segment.arrivalCity}} ({{segment.arrival}})</b></h5>
-                                    <h5>{{segment.arrivalName}}</h5>
+                                <div class="flight__content">
+                                    <div class="flight__summary col-xs-8">
+                                        <img ng-src="{{segment.airlineLogoUrl}}" alt="{{segment.airlineName}}" class="flight__image" />
+                                        <div class="flight__airline">
+                                            <h4><b>{{segment.airlineName}}</b></h4>
+                                            <h5>{{segment.airlineCd}}-{{segment.flightNo}}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="flight-facility col-xs-4" ng-show="{{segment.hasMeal || segment.isBaggageIncluded || segment.includingPsc}}">
+                                        <span ng-show="segment.hasMeal" class="flight-meal"></span>
+                                        <span ng-show="segment.isBaggageIncluded" class="flight-baggage">{{segment.baggageCapacity}}</span>
+                                        <span ng-show="segment.includingPsc" class="flight-tax"></span>
+                                    </div>
+
+                                    <div class="col-xs-12">
+                                        <div class="flight__detail">
+                                            <div class="flight__departure">
+                                                <h5>{{segment.departureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                                <h4><b>{{segment.departureTime | date : 'HH:mm' : 'UTC'}}</b></h4>
+                                                <h5><b>{{segment.departureCity}} ({{segment.departure}}) </b></h5>
+                                                <h5>{{segment.departureName}}</h5>
+                                            </div>
+                                            <div class="flight__separator">
+                                                <h5><b>Durasi: </b>{{(segment.duration) | date : 'HH:mm'}}</h5>
+                                            </div>
+                                            <div class="flight__arrival">
+                                                <h5>{{segment.arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                                <h4><b>{{segment.arrivalTime | date : 'HH:mm' : 'UTC'}}</b></h4>
+                                                <h5><b>{{segment.arrivalCity}} ({{segment.arrival}})</b></h5>
+                                                <h5>{{segment.arrivalName}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
+                        </div><!-- .flight-wrapper -->
+                    </div>
+                    <div id="price-detail" class="tab-pane">
+                        <div class="price-detail-mobile">
+                            <price-detail-directive flight="FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ]"></price-detail-directive>
                         </div>
-                        
                     </div>
                 </div>
-            </div><!-- .flight-wrapper -->
-
+            </div>
         </section><!-- .overlay__content -->
         <footer class="overlay__footer">
             <div class="container_new">
@@ -817,6 +834,24 @@
                             <button class="btn btn-block btn-yellow" ng-click="PageConfig.RefreshPage()" ng-disabled="PageConfig.Refreshing">KEMBALI</button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="popup__wrapper" ng-class="{'active': selectError == true}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Penerbangan Tidak Tersedia</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <span>Mohon Maaf, penerbangan ini tidak tersedia. Silakan klik tombol di bawah untuk kembali ke halaman awal.</span>
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container_new">
+                    <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
                 </div>
             </div>
         </div>

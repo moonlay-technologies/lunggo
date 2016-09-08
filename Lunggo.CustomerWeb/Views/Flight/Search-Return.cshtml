@@ -1139,10 +1139,15 @@
                 </footer>
 
                 <div class="price-detail" ng-show="pageConfig.overviewPriceDetailShowing">
-                    <h3>Rincian Harga <span class="close-price-detail pull-right" ng-click="toggleOverviewPriceDetail()">X</span></h3>
-                    <price-detail-directive flight="departureFlightConfig.flightList[departureFlightConfig.chosenFlight]"></price-detail-directive>
-                    <price-detail-directive flight="returnFlightConfig.flightList[returnFlightConfig.chosenFlight]"></price-detail-directive>
-                    <!-- .price-detail -->
+                    <h3 class="detail-title">Rincian Harga <span class="close-price-detail pull-right" ng-click="toggleOverviewPriceDetail()">X</span></h3>
+                    <div class="col-sm-6 price-detail-wrapper right flight-departure">
+                        <header class="flight-header"><h3>Penerbangan Pergi</h3></header>
+                        <price-detail-directive flight="departureFlightConfig.flightList[departureFlightConfig.chosenFlight]"></price-detail-directive>
+                    </div>
+                    <div class="col-sm-6 price-detail-wrapper flight-return">
+                        <header class="flight-header"><h3>Penerbangan Pulang</h3></header>
+                        <price-detail-directive flight="returnFlightConfig.flightList[returnFlightConfig.chosenFlight]"></price-detail-directive>
+                    </div>
                 </div>
             </div>
 
@@ -1158,6 +1163,20 @@
                 <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                 <div style="padding-top:5px;"><span style="font-size:14px">Mengalihkan Anda ke halaman checkout.</span></div>
             </section>
+        </div>
+    </div>
+    
+    <div class="bookfailed-popup" ng-show="selectError">
+        <div class="overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Penerbangan ini <span style="color: #15b1e4;font-size:13px"><b>sudah tidak tersedia</b></span>.</span></div>
+                <div><span style="font-size:13px">Silakan klik tombol di bawah untuk kembali ke halaman awal.</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:30px;">
+                <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+            </div>
         </div>
     </div>
 </section><!-- .search-result.return -->

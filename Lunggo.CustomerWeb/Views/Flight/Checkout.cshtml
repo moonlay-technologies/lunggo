@@ -64,54 +64,55 @@
 }
 @section PageJS{
     <script>
-        var langCode = '@OnlineContext.GetActiveLanguageCode()';
-        var currentPage = 1;
-        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
-        //var transferWindow = [ '1100', '1124' ];
-        // messages
-        var message = '@ViewBag.Message';
-        // flight detail
-        var token = @Model.Token;
-        var paymentDetail = '';
-        var flightDetail = '';
-        var expiryDate = '@Model.ExpiryTime.ToString("o")';
-        var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
+    var langCode = '@OnlineContext.GetActiveLanguageCode()';
+    var currentPage = 1;
+    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
+    //var transferWindow = [ '1100', '1124' ];
+    // messages
+    var message = '@ViewBag.Message';
+    // flight detail
+    var token = @Model.Token;
+    var paymentDetail = '';
+    var flightDetail = '';
+    var expiryDate = '@Model.ExpiryTime.ToString("o")';
+    var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
 
-        // passenger number
-        var adultPassenger = @Model.Itinerary.AdultCount;
-        var adultFare = @Model.Itinerary.NetAdultFare;
-        var totalAdultFare = adultPassenger * adultFare;
-        var adultTypeName = 'Dewasa';
+    // passenger number
+    var adultPassenger = @Model.Itinerary.AdultCount;
+    var adultFare = @Model.Itinerary.OriginalAdultFare;
+    var totalAdultFare = adultPassenger * adultFare;
+    var adultTypeName = 'Dewasa';
 
-        var childPassenger = @Model.Itinerary.ChildCount;
-        var childFare = @Model.Itinerary.NetChildFare;
-        var totalChildFare = childPassenger * childFare;
-        var childTypeName = 'Anak';
+    var childPassenger = @Model.Itinerary.ChildCount;
+    var childFare = @Model.Itinerary.OriginalChildFare;
+    var totalChildFare = childPassenger * childFare;
+    var childTypeName = 'Anak';
 
-        var infantPassenger = @Model.Itinerary.InfantCount;
-        var infantFare = @Model.Itinerary.NetInfantFare;
-        var totalInfantFare = infantPassenger * infantFare;
-        var infantTypeName = 'Bayi';
-        //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
-        // passport or id requirement
-        var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
-        var idRequired = false;
-        var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
-        var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
-        var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
-        var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
-        var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
-        var price = '@Model.Itinerary.NetTotalFare';
-        //var trips = '@Model.Itinerary.Trips';
-        // change current page
-        if (getParam('page') == 2) {
-            currentPage = getParam('page');
-        } else {
-            currentPage = 1;
-        }
-        
-        
-        
+    var infantPassenger = @Model.Itinerary.InfantCount;
+    var infantFare = @Model.Itinerary.OriginalInfantFare;
+    var totalInfantFare = infantPassenger * infantFare;
+    var infantTypeName = 'Bayi';
+    //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
+    // passport or id requirement
+    var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
+    var idRequired = false;
+    var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
+    var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
+    var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
+    var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
+    var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
+    var originalPrice = '@Model.Itinerary.OriginalTotalFare';
+    var price = '@Model.Itinerary.NetTotalFare';
+    //var trips = '@Model.Itinerary.Trips';
+    // change current page
+    if (getParam('page') == 2) {
+        currentPage = getParam('page');
+    } else {
+        currentPage = 1;
+    }
+
+
+
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
@@ -633,6 +634,10 @@
                                         <dl ng-if="infantCount > 0">
                                             <dt>Tiket Bayi x{{infantCount}}</dt>
                                             <dd>Rp {{totalInfantFare | number:0}}</dd>
+                                        </dl>
+                                        <dl style="color: #1daee4">
+                                            <dt>Diskon Travorama</dt>
+                                            <dd>- Rp {{originalPrice - totalPrice | number}}</dd>
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
