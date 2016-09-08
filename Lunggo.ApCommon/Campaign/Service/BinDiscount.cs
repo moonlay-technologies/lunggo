@@ -26,12 +26,12 @@ namespace Lunggo.ApCommon.Campaign.Service
             return isValid
                 ? isAvailable
                     ? new BinDiscount
-                    {
-                        Amount = 100000,
+                {
+                    Amount = 100000,
                         IsAvailable = true,
-                        Currency = new Currency("IDR"),
-                        DisplayName = "pocer yey"
-                    }
+                    Currency = new Currency("IDR"),
+                    DisplayName = "pocer yey"
+        }
                     : new BinDiscount
                     {
                         Amount = 0,
@@ -47,7 +47,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                 ? bin.Substring(0, 6)
                 : null;
             return IsReservationEligible(rsv) &&
-                   string.IsNullOrEmpty(voucherCode) &&
+                    string.IsNullOrEmpty(voucherCode) &&
                    IsBinGranted(bin6) &&
                    DateValid();
         }
@@ -69,11 +69,11 @@ namespace Lunggo.ApCommon.Campaign.Service
         private bool IsBinGranted(string bin6)
         {
             return (bin6 == "421570" ||
-             bin6 == "485447" ||
-             bin6 == "469345" ||
-             bin6 == "462436" ||
-             bin6 == "437527" ||
-             bin6 == "437528" ||
+                     bin6 == "485447" ||
+                     bin6 == "469345" ||
+                     bin6 == "462436" ||
+                     bin6 == "437527" ||
+                     bin6 == "437528" ||
              bin6 == "437529" ||
              IsBinGrantedDevelopment(bin6));
         }
@@ -89,18 +89,9 @@ namespace Lunggo.ApCommon.Campaign.Service
                                            bin6 == "451111" ||
                                            bin6 == "461111" ||
                                            bin6 == "471111" ||
-                                           bin6 == "481111" ||
-                                           bin6 == "491111" ||
-                                           bin6 == "511011" ||
-                                           bin6 == "521011" ||
-                                           bin6 == "531011" ||
-                                           bin6 == "511111" ||
-                                           bin6 == "521111" ||
-                                           bin6 == "541111" ||
-                                           bin6 == "551111" ||
-                                           bin6 == "541011" ||
-                                           bin6 == "548111" ||
-                                           bin6 == "551011");
+                     bin6 == "481111" ||
+                     bin6 == "437529");
+
         }
     }
 }
