@@ -21,28 +21,26 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 };
             }
             var binDiscount = CampaignService.GetInstance().CheckBinDiscount(request.RsvNo, request.Bin, request.HashedPan, request.VoucherCode);
-            var apiResponse = AssembleApiRspn(binDiscount);
+            var apiResponse = AssembleApiResponse(binDiscount);
             return apiResponse;
         }
 
-        private static CheckBinDiscountResponse AssembleApiRspn(BinDiscount binDiscount)
+        private static CheckBinDiscountResponse AssembleApiResponse(BinDiscount binDiscount)
         {
-            if (binDiscount != null)
-                return new CheckBinDiscountResponse
+            return binDiscount != null
+                ? new CheckBinDiscountResponse
                 {
                     StatusCode = HttpStatusCode.OK,
                     DiscountAmount = binDiscount.Amount,
+                    IsAvailable = binDiscount.IsAvailable,
                     DiscountName = binDiscount.DisplayName,
                     ReplaceOriginalDiscount = true
-                };
-            else
-            {
-                return new CheckBinDiscountResponse
+                }
+                : new CheckBinDiscountResponse
                 {
-                    StatusCode = HttpStatusCode.OK,
-                    DiscountAmount = 0M
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERPBIN02"
                 };
             }
-        }
     }
 }

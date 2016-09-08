@@ -58,6 +58,11 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     {
                         Method = PaymentMethod.VirtualAccount,
                         Available = true
+                    },
+                    new Option
+                    {
+                        Method = PaymentMethod.CimbClicks,
+                        Available = true
                     }
                 }
             };

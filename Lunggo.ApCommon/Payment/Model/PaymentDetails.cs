@@ -49,6 +49,7 @@ namespace Lunggo.ApCommon.Payment.Model
         public PaymentMedium Medium { get; set; }
         public PaymentMethod Method { get; set; }
         public PaymentStatus Status { get; set; }
+        public FailureReason FailureReason { get; set; }
         public DateTime? Time { get; set; }
         public DateTime TimeLimit { get; set; }
         public PaymentData Data { get; set; }

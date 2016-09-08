@@ -18,20 +18,22 @@ namespace Lunggo.ApCommon.Campaign.Service
 {
     public partial class CampaignService
     {
-        private bool CheckPanInCache(string hashedPan)
+        private bool IsPanEligibleInCache(string promoType, string hashedPan)
         {
             var redis = RedisService.GetInstance().GetDatabase(ApConstant.MasterDataCacheName);
-            var redisKey = "binPromo:btn:" + hashedPan;
-            var isExist = !redis.StringGet(redisKey).IsNullOrEmpty;
-            return isExist;
+            var redisKey = "binPromo:" + promoType;
+            var isExist = redis.SetContains(redisKey, hashedPan);
+            var fullyUsed = redis.SetLength(redisKey) >= 50;
+            return !isExist && !fullyUsed;
         }
 
-        public void SavePanInCache(string hashedPan)
+        public void SavePanInCache(string promoType, string hashedPan)
         {
             var redis = RedisService.GetInstance().GetDatabase(ApConstant.MasterDataCacheName);
-            var redisKey = "binPromo:btn:" + hashedPan;
+            var redisKey = "binPromo:" + promoType;
+            redis.SetAdd(redisKey, hashedPan);
             var timeout = DateTime.UtcNow.AddHours(31).Date - DateTime.UtcNow.AddHours(7);
-            redis.StringSet(redisKey, "true", timeout);
+            redis.KeyExpire(redisKey, timeout);
         }
     }
 }

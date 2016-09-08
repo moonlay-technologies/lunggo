@@ -9,6 +9,8 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Model
         public decimal? DiscountAmount { get; set; }
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string DiscountName { get; set; }
+        [JsonProperty("isAvailable", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsAvailable { get; set; }
         [JsonProperty("replaceOriginalDiscount", NullValueHandling = NullValueHandling.Ignore)]
         public bool ReplaceOriginalDiscount { get; set; }
     }

@@ -183,6 +183,12 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                     Id = "eid-mubarak",
                     BannerUrl = "https://wallpaperscraft.com/image/couple_mountain_peak_travel_64552_2560x1440.jpg",
                     DetailsUrl = "http://www.fhm.com/p/100-sexiest-2015"
+                },
+                new FeaturedPromo
+                {
+                    Id = "eid-mubarak",
+                    BannerUrl = "http://www.qa.travorama.com/Assets/images/banner/standard-web-banner.jpg",
+                    DetailsUrl = "http://www.fhm.com/p/100-sexiest-2015"
                 }
             };
         }
