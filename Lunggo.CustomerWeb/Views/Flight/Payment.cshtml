@@ -486,7 +486,8 @@
                                         </dl>
                                         <dl ng-if="!(binDiscount.receive && !voucher.confirmedCode)" style="color: #1daee4">
                                             <dt>Diskon Travorama</dt>
-                                            <dd>- Rp {{originalPrice - totalPrice| number}}</dd>
+                                            <dd ng-if="!binDiscount.replaceDiscount">- Rp {{originalPrice - totalPrice| number}}</dd>
+                                            <dd ng-if="binDiscount.replaceDiscount">- Rp 0</dd>
                                         </dl>
                                         <dl ng-if="CreditCardPromo.Valid">
                                             <dt>{{CreditCardPromo.PromoName}}</dt>

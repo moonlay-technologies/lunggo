@@ -197,6 +197,7 @@ app.controller('paymentController', [
             amount: 0,
             displayName: '',
             status: '',
+            replaceDiscount: false,
             receive: false,
             checked: false,
             checking: false,
@@ -237,16 +238,24 @@ app.controller('paymentController', [
                     }).then(function (returnData) {
                         //console.log(returnData);
                         if (returnData.data.status == 200) {
-                            $scope.binDiscount.amount = returnData.data.amount;
-                            $scope.binDiscount.displayName = returnData.data.name;
-                            // get unique code for transfer payment
-                            $scope.binDiscount.status = 'Success';
-                            if ($scope.binDiscount.amount != 0) {
-                                $scope.binDiscount.receive = true;
+                            if (returnData.data.isAvailable) {
+                                $scope.binDiscount.amount = returnData.data.amount;
+                                $scope.binDiscount.displayName = returnData.data.name;
+                                // get unique code for transfer payment
+                                $scope.binDiscount.status = 'Success';
+                                if ($scope.binDiscount.amount != 0) {
+                                    $scope.binDiscount.receive = true;
+                                } else {
+                                    $scope.binDiscount.receive = false;
+                                }
+                                //$scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
                             } else {
+                                $scope.binDiscount.amount = 0;
+                                $scope.binDiscount.checked = true;
                                 $scope.binDiscount.receive = false;
+                                $scope.binDiscount.status = returnData.data.error;
                             }
-                            $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
+                            $scope.binDiscount.replaceDiscount = returnData.data.replaceOriginalDiscount;
                         }
                         else {
                             $scope.binDiscount.amount = 0;
