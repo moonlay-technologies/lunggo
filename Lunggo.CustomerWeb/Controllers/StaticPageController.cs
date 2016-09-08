@@ -132,5 +132,9 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult TravoramaMobileApp()
+        {
+            return View();
+        }
     }
 }
