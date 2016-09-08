@@ -657,6 +657,7 @@
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
+    <Content Include="Assets\images\banner\standard-web-banner.jpg" />
     <Content Include="Assets\images\bca-logo.jpg" />
     <Content Include="Assets\images\bed-bg.png" />
     <Content Include="Assets\images\benefit-1.jpg" />
@@ -700,6 +701,24 @@
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
+    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.css">
+      <DependentUpon>travorama-mobileApp.scss</DependentUpon>
+    </Content>
+    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.min.css">
+      <DependentUpon>travorama-mobileApp.css</DependentUpon>
+    </Content>
+    <Content Include="Campaign\MobileAppCampaign\images\app-store.png" />
+    <Content Include="Campaign\MobileAppCampaign\images\background.jpg" />
+    <Content Include="Campaign\MobileAppCampaign\images\MobileApp-1.jpg" />
+    <Content Include="Campaign\MobileAppCampaign\images\MobileApp-2.jpg" />
+    <Content Include="Campaign\MobileAppCampaign\images\MobileApp-3.jpg" />
+    <Content Include="Campaign\MobileAppCampaign\images\MobileApp-4.jpg" />
+    <Content Include="Campaign\MobileAppCampaign\images\MobileApp-5.jpg" />
+    <Content Include="Campaign\MobileAppCampaign\images\MobileApp-6.jpg" />
+    <Content Include="Campaign\MobileAppCampaign\images\MobileApp-7.jpg" />
+    <Content Include="Campaign\MobileAppCampaign\images\orange-edge-left.png" />
+    <Content Include="Campaign\MobileAppCampaign\images\orange-edge-right.png" />
+    <Content Include="Campaign\MobileAppCampaign\images\play-store.png" />
     <Content Include="Assets\images\campaign\singapore-text.png" />
     <Content Include="Assets\images\campaign\singapore-thumb.jpg" />
     <Content Include="Assets\images\campaign\singapore.jpg" />
@@ -1418,6 +1437,7 @@
     </Content>
     <Content Include="Assets\travorama20\css\help_section.scss" />
     <Content Include="Assets\travorama20\css\help_section.css.map" />
+    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2773,6 +2793,7 @@
     <Content Include="Views\HelpSection\Contact-Us.cshtml" />
     <Content Include="Views\HelpSection\FAQs.cshtml" />
     <Content Include="Views\HelpSection\How-To.cshtml" />
+    <Content Include="Views\StaticPage\TravoramaMobileApp.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2822,6 +2843,7 @@
   <ItemGroup>
     <Folder Include="Areas\Api\Views\Account\" />
     <Folder Include="Areas\Api\Views\Shared\" />
+    <Folder Include="Assets\images\campaign\MobileApp\" />
     <Folder Include="Assets\travorama20\fonts\" />
     <Folder Include="Assets\travorama20\images\" />
     <Folder Include="Helper\" />
