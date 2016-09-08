@@ -476,18 +476,18 @@
                                             <dt>Harga Tiket</dt>
                                             <dd>Rp {{originalPrice | number}}</dd>
                                         </dl>
+                                        <dl style="color: #1daee4">
+                                            <dt>Diskon Travorama</dt>
+                                            <dd ng-if="!(binDiscount.replaceDiscount && !voucher.confirmedCode)">- Rp {{originalPrice - totalPrice| number}}</dd>
+                                            <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode"> Rp 0</dd>
+                                        </dl>
                                         <dl ng-if="voucher.confirmedCode">
                                             <dt>{{voucher.displayName}}</dt>
                                             <dd>- Rp {{voucher.amount | number}}</dd>
                                         </dl>
-                                        <dl ng-if="binDiscount.receive && !voucher.confirmedCode" style="color: #1daee4">
+                                        <dl ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode" style="color: #1daee4">
                                             <dt>{{binDiscount.displayName}}</dt>
                                             <dd>- Rp {{binDiscount.amount | number}}</dd>
-                                        </dl>
-                                        <dl ng-if="!(binDiscount.receive && !voucher.confirmedCode)" style="color: #1daee4">
-                                            <dt>Diskon Travorama</dt>
-                                            <dd ng-if="!binDiscount.replaceDiscount">- Rp {{originalPrice - totalPrice| number}}</dd>
-                                            <dd ng-if="binDiscount.replaceDiscount">- Rp 0</dd>
                                         </dl>
                                         <dl ng-if="CreditCardPromo.Valid">
                                             <dt>{{CreditCardPromo.PromoName}}</dt>
@@ -499,8 +499,8 @@
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
-                                            <dd ng-if="binDiscount.receive && !voucher.confirmedCode">Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
-                                            <dd ng-if="!(binDiscount.receive && !voucher.confirmedCode)">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
+                                            <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
+                                            <dd ng-if="!(binDiscount.replaceDiscount && !voucher.confirmedCode)">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
                                         </dl>
                                     </div>
                                     <!--<footer>
