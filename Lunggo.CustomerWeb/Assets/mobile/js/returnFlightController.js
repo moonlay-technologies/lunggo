@@ -200,7 +200,13 @@
     ];
 
     $scope.FlightFunctions = {};
-
+    $scope.overlapDate = function (onwardArrival, returnDeparture) {
+        if (onwardArrival && returnDeparture) {
+            onwardArrival = new Date(onwardArrival);
+            returnDeparture = new Date(returnDeparture);
+            return (returnDeparture <= onwardArrival);
+        }
+    }
     // **********
     // functions
 

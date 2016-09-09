@@ -553,12 +553,13 @@
                                 <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight('return',-1); FlightFunctions.ResetValidation(); SetOverlay(); SetSection('return')">GANTI</span></a>
                             </div>
                             <!-- .flight-title -->
-
-                            <div class="flight-notice" ng-show="FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable">
-                                <div class="fare-changed" ng-show="FlightConfig[1].FlightNewPrice">
+                            
+                            <div class="flight-notice" ng-show="overlapDate(FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].trips[0].segments[FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].trips[0].segments.length - 1 ].arrivalTime,
+                                FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight].trips[0].segments[0].departureTime)">
+                                @*<div class="fare-changed" ng-show="FlightConfig[1].FlightNewPrice">
                                     Harga berubah menjadi <b>Rp {{FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].originalAdultFare | number}}</b>
-                                </div>
-                                <div class="fare-unavailable" ng-hide="FlightConfig[1].FlightNewPrice">Penerbangan tidak tersedia.</div>
+                                </div>*@
+                                <div class="fare-unavailable" @*ng-hide="FlightConfig[1].FlightNewPrice"*@>Penerbangan pulang lebih awal daripada penerbangan pergi.</div>
                             </div>
                             <!-- .flight-notice -->
 
