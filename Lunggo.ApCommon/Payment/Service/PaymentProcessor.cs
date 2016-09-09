@@ -85,7 +85,10 @@ namespace Lunggo.ApCommon.Payment.Service
                             Description = "Margin Cancelled by BIN Promo",
                             Currency = itin.Price.LocalCurrency
                         };
-                        itin.Price.CalculateFinalAndLocal(itin.Price.LocalCurrency);
+                        itin.Price.Local = itin.Price.OriginalIdr / itin.Price.LocalCurrency.Rate;
+                        itin.Price.Rounding = 0;
+                        itin.Price.FinalIdr = itin.Price.OriginalIdr;
+                        itin.Price.MarginNominal = 0;
                     }
                     paymentDetails.OriginalPriceIdr = reservation.Itineraries.Sum(i => i.Price.FinalIdr);
                     paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr-binDiscount.Amount;
