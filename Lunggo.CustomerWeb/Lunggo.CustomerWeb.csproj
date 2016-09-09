@@ -1814,6 +1814,9 @@
     <Content Include="Statics\font-awesome-4.1.0\scss\font-awesome.css">
       <DependentUpon>font-awesome.scss</DependentUpon>
     </Content>
+    <Content Include="Statics\font-awesome-4.1.0\scss\font-awesome.min.css">
+      <DependentUpon>font-awesome.css</DependentUpon>
+    </Content>
     <Content Include="Statics\Lunggo\Initializer.js" />
     <Content Include="Statics\Foggy\foggy-1.1.1.js" />
     <Content Include="Statics\font-awesome-4.1.0\css\font-awesome.css" />

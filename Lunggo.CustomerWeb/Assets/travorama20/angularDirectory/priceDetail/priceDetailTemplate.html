@@ -15,14 +15,14 @@
                 <h5 class="segment-price-right">Rp {{flight.originalAdultFare * flight.adultCount | number:0}}</h5>
             </div>
             <div class="clearer" ng-if="flight.childCount > 0">
-                <h6 class="segment-price-left"><span class="segment-price-q"></span>Tiket Anak</h6>
-                <h6 class="segment-price-middle">X{{flight.childCount}}:</h6>
-                <h6 class="segment-price-right">Rp {{flight.originalChildFare * flight.childCount | number:0}}</h6>
+                <h5 class="segment-price-left"><span class="segment-price-q"></span>Tiket Anak</h5>
+                <h5 class="segment-price-middle">X{{flight.childCount}}:</h5>
+                <h5 class="segment-price-right">Rp {{flight.originalChildFare * flight.childCount | number:0}}</h5>
             </div>
             <div class="clearer" ng-if="flight.infantCount > 0">
-                <h6 class="segment-price-left"><span class="segment-price-q"></span>Tiket Bayi</h6>
-                <h6 class="segment-price-middle">X{{flight.infantCount}}:</h6>
-                <h6 class="segment-price-right">Rp {{flight.originalInfantFare * flight.infantCount | number:0}}</h6>
+                <h5 class="segment-price-left"><span class="segment-price-q"></span>Tiket Bayi</h5>
+                <h5 class="segment-price-middle">X{{flight.infantCount}}:</h5>
+                <h5 class="segment-price-right">Rp {{flight.originalInfantFare * flight.infantCount | number:0}}</h5>
             </div>
             <br />
             <div class="segment-price-total clearer">

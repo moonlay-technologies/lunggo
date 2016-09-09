@@ -174,7 +174,7 @@
 
             </div>
            
-            <div class="flight-facility col-xs-4" ng-show="checkMeal(flight.trips[0]) || !checkBaggageNaN(minBaggage(flight.trips[0]))
+            <div align="right" class="flight-facility col-xs-4" ng-show="checkMeal(flight.trips[0]) || !checkBaggageNaN(minBaggage(flight.trips[0]))
                      || checkTax(flight.trips[0])">
                 <span ng-show="checkMeal(flight.trips[0])" class="flight-meal"></span>
                 <span ng-show="!checkBaggageNaN(minBaggage(flight.trips[0]))" class="flight-baggage">{{minBaggage(flight.trips[0])}}</span>

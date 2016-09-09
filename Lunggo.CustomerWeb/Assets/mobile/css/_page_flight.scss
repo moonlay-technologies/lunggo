@@ -311,14 +311,14 @@
                                 & > h5.segment-price-left, & > h5.segment-price-right {width: 50%; font-weight: 700;}
                                 h6.segment-price-left {color: $color-orange;}
                             }
-                            span.segment-price-q {
+                            /*span.segment-price-q {
                                 content: "";
                                 position: absolute;
                                 width: 7px;
                                 height: 7px;
                                 background: #fd8524;
                                 left: 12px;
-                            }
+                            }*/
                         }
                     }
                 }
