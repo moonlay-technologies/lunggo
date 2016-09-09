@@ -429,7 +429,7 @@ app.controller('paymentController', [
                         case "CreditCard":
                             var hash = CryptoJS.SHA512($scope.CreditCard.Number);
                             var hex = hash.toString(CryptoJS.enc.Hex);
-                            $scope.PaymentData = '"method":"1","creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name  + '","hashedPan":"' + hex + '"}';
+                            $scope.PaymentData = '"method":"1","creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name + '","hashedPan":"' + hex + '","reqBinDiscount":"' + $scope.binDiscount.replaceDiscount +'"}';
                             break;
                         case "MandiriClickPay": 
                             var cardNoLast10 = $scope.MandiriClickPay.CardNo + "";

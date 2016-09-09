@@ -200,7 +200,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         RequestedCabinClass = CabinClass.Economy,
                         RequestedTripType = conditions.Itinerary.RequestedTripType,
                         TripType = TripType.OneWay,
-                        Supplier = Supplier.AirAsia,
+                        Supplier = Supplier.Citilink,
                         Price = new Price(),
                         AdultPricePortion = hargaAdult/newPrice,
                         ChildPricePortion = hargaChild/newPrice,
