@@ -133,19 +133,20 @@
                                 <dt>Total Tiket</dt>
                                 <dd><sup>Rp</sup> {{originalPrice | number}}</dd>
                             </dl>
+                            <dl style="color: #1daee4">
+                                <dt>Diskon Travorama</dt>
+                                <dd ng-if="!(binDiscount.replaceDiscount && !voucher.confirmedCode)">- <sup>Rp</sup> {{originalPrice - totalPrice| number}}</dd>
+                                <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode"> <sup>Rp</sup>- 0</dd>
+                            </dl>
                             <dl ng-show="voucher.confirmedCode">
                                 <dt>Potongan Harga</dt>
                                 <dd><sup>Rp</sup>- {{voucher.amount| number}}</dd>
                             </dl>
-                            
-                            <dl ng-show="binDiscount.receive && !voucher.confirmedCode" style="color: #1daee4">
+                            <dl ng-show="binDiscount.replaceDiscount && !voucher.confirmedCode" style="color: #1daee4">
                                 <dt>{{binDiscount.displayName}}</dt>
-                                <dd>- Rp {{binDiscount.amount | number}}</dd>
+                                <dd><sup>Rp</sup>- {{binDiscount.amount | number}}</dd>
                             </dl>
-                            <dl ng-show="!(binDiscount.receive && !voucher.confirmedCode)" style="color: #1daee4">
-                                <dt>Diskon Travorama</dt>
-                                <dd>- Rp {{originalPrice - totalPrice| number}}</dd>
-                            </dl>
+                            
                             <dl>
                                 <dt>Kode Unik Pembayaran</dt>
                                 <dd><sup>Rp</sup> {{UniqueCodePaymentConfig.UniqueCode | number}}</dd>
@@ -153,8 +154,8 @@
                             <dl class="total-price">
                                 <dt>Total</dt>
                                 @*<dd><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>*@
-                                <dd ng-if="binDiscount.receive && !voucher.confirmedCode"><sup>Rp</sup> {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
-                                <dd ng-if="!(binDiscount.receive && !voucher.confirmedCode)"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
+                                <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode"><sup>Rp</sup> {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
+                                <dd ng-if="!(binDiscount.replaceDiscount && !voucher.confirmedCode)"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
                             </dl>
                         </div><!-- .summary__body -->
                     </div><!-- .summar--price -->
@@ -195,18 +196,18 @@
 
                             <form name="paymentMethodForm">
 
-                                <label>
+                                <label ng-click="binDiscount.reset('ncc')">
                                     <header>
                                         <div class="input-wrapper">
                                             <input type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer" ng-model="paymentMethod" />
                                         </div>
-                                        <h5>Bank Transfer</h5>
+                                        <h5>Transfer Bank</h5>
                                     </header>
                                     <section>
                                         <img src="/Assets/images/payment-atm.jpg" alt="Bank Transfer" />
                                     </section>
                                 </label>
-                                <label>
+                                <label ng-click="binDiscount.reset('cc')">
                                     <header>
                                         <div class="input-wrapper">
                                             <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
@@ -217,7 +218,7 @@
                                         <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
                                     </section>
                                 </label>
-                                <label>
+                                <label ng-click="binDiscount.reset('ncc')">
                                     <header>
                                         <div class="input-wrapper">
                                             <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" />
@@ -228,7 +229,7 @@
                                         <img src="/Assets/images/payment-atm.jpg" alt="Virtual Account" />
                                     </section>
                                 </label>
-                                <label>
+                                <label ng-click="binDiscount.reset('ncc')">
                                     <header>
                                         <div class="input-wrapper">
                                             <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriClickPay" ng-model="paymentMethod" />
@@ -239,7 +240,7 @@
                                         <img src="/Assets/images/payment-mandiri.jpg" alt="Mandiri Clickpay" />
                                     </section>
                                 </label>
-                                <label>
+                                <label ng-click="binDiscount.reset('ncc')">
                                     <header>
                                         <div class="input-wrapper">
                                             <input type="radio" name="paymentMethod" value="@PaymentMethod.CimbClicks" ng-model="paymentMethod" />
@@ -299,7 +300,9 @@
                                 <div class="form-group">
                                     <label class="control-label">Nomor Kartu</label>
                                     <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-blur = "binDiscount.check()" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
+                                    <div style="color: green">{{binDiscount.text}}</div>
                                 </div>
+                                
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-xs-4">

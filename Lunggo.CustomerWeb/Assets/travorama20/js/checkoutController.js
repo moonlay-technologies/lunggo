@@ -73,10 +73,13 @@ app.controller('checkoutController', [
         //silubab
         $scope.adultCount = adultPassenger;
         $scope.adultFare = adultFare;
+        $scope.adultNetFare = adultNetFare;
         $scope.childCount = childPassenger;
         $scope.childFare = childFare;
+        $scope.childNetFare = childNetFare;
         $scope.infantCount = infantPassenger;
         $scope.infantFare = infantFare;
+        $scope.infantNetFare = infantNetFare;
         $scope.totalAdultFare = totalAdultFare;
         $scope.totalChildFare = totalChildFare;
         $scope.totalInfantFare = totalInfantFare;
@@ -526,7 +529,7 @@ app.controller('checkoutController', [
                         //console.log(returnData);
                         if (returnData.data.status == '200' && (returnData.data.rsvNo != '' || returnData.data.rsvNo != null)) {
                             if (returnData.data.price != null) {
-                                $scope.book.priceChanged = true;
+                                $scope.book.isPriceChanged = true;
                                 $scope.book.isSuccess = true;
                                 $scope.book.newPrice = returnData.data.price;
                                 $scope.book.checked = false;

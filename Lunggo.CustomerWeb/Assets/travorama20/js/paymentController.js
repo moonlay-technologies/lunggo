@@ -197,10 +197,21 @@ app.controller('paymentController', [
             amount: 0,
             displayName: '',
             status: '',
+            reset: function (method) {
+                if (method == 'cc') {
+                    if ($scope.binDiscount.amount != 0) {
+                        $scope.binDiscount.replaceDiscount = true;
+                    }
+                } else {
+                    $scope.binDiscount.replaceDiscount = false;
+                }
+                
+            },
             replaceDiscount: false,
             receive: false,
             checked: false,
             checking: false,
+            text: '',
             tohex: function(str) {
                 
                 var hex, i;
@@ -243,17 +254,20 @@ app.controller('paymentController', [
                                 $scope.binDiscount.displayName = returnData.data.name;
                                 // get unique code for transfer payment
                                 $scope.binDiscount.status = 'Success';
-                                //if ($scope.binDiscount.amount != 0) {
-                                //    $scope.binDiscount.receive = true;
-                                //} else {
-                                //    $scope.binDiscount.receive = false;
-                                //}
+                                if ($scope.binDiscount.amount != 0) {
+                                    $scope.binDiscount.text = 'Anda menggunakan promo ' + $scope.binDiscount.displayName + '.';
+                                } 
                                 //$scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
                             } else {
                                 $scope.binDiscount.amount = 0;
                                 $scope.binDiscount.checked = true;
                                 //$scope.binDiscount.receive = false;
                                 $scope.binDiscount.status = returnData.data.error;
+                                if (returnData.data.name != null) {
+                                    $scope.binDiscount.text = 'Maaf, kuota promo ' + returnData.data.name + ' hari ini telah habis.';
+                                } else {
+                                    $scope.binDiscount.text = null;
+                                }
                             }
                             $scope.binDiscount.replaceDiscount = returnData.data.replaceOriginalDiscount;
                         }
@@ -262,6 +276,7 @@ app.controller('paymentController', [
                             $scope.binDiscount.checked = true;
                             //$scope.binDiscount.receive = false;
                             $scope.binDiscount.status = returnData.data.error;
+                            $scope.binDiscount.text = '';
                         }
                     }).catch(function (returnData) {
                         $scope.trial++;
@@ -273,6 +288,7 @@ app.controller('paymentController', [
                             $scope.binDiscount.amount = 0;
                             $scope.binDiscount.checked = true;
                             $scope.binDiscount.checking = false;
+                            $scope.binDiscount.text = '';
                             //$scope.binDiscount.receive = false;
                         }
                     });
