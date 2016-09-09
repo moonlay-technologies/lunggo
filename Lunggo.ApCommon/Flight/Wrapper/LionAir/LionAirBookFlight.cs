@@ -786,7 +786,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             return new BookFlightResult
                             {
                                 IsSuccess = false,
-                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                //Errors = new List<FlightError> { FlightError.TechnicalError },
                                 Status = null,
                                 ErrorMessages = new List<string> { "Itinerary is Changed!" },
                                 NewPrice = agentprice,
@@ -1084,7 +1084,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     return new BookFlightResult
                                     {
                                         IsSuccess = false,
-                                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                                        //Errors = new List<FlightError> { FlightError.TechnicalError },
                                         Status = null,
                                         ErrorMessages = new List<string> { "Price is changed!" },
                                         NewPrice = decimal.Parse(newPrice),
@@ -1135,7 +1135,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 return new BookFlightResult
                                 {
                                     IsSuccess = false,
-                                    Errors = new List<FlightError> { FlightError.TechnicalError },
+                                    //Errors = new List<FlightError> { FlightError.TechnicalError },
                                     Status = null,
                                     ErrorMessages = new List<string> { "Price is changed!2" },
                                     NewPrice = harga2,
@@ -1293,7 +1293,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                      {
                          IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.TechnicalError},
-                        ErrorMessages = new List<string> { e.Message },
+                        ErrorMessages = new List<string> { e.Message + "|||" + e.StackTrace },
                          Status = new BookingStatusInfo
                          {
                              BookingStatus = BookingStatus.Failed

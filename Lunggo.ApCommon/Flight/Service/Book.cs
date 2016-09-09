@@ -46,6 +46,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (output.IsPriceChanged)
                     output.NewPrice = bookResults.Sum(result => result.RevalidateSet.NewPrice);
                 SaveItinerariesToCache(newItins, input.Token);
+                itins = newItins;
             }
             if (AllAreBooked(bookResults))
             {
@@ -66,8 +67,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.IsSuccess = false;
                 if (!bookResults.Any())
                     output.AddError(FlightError.InvalidInputData);
-                if (AnyIsBooked(bookResults))
-                    output.PartiallySucceed();
+                //if (AnyIsBooked(bookResults))
+                //    output.PartiallySucceed();
                 output.DistinguishErrors();
             }
 
@@ -149,6 +150,14 @@ namespace Lunggo.ApCommon.Flight.Service
             };
             var response = BookFlightInternal(bookInfo);
             var bookResult = new BookResult();
+            if (response.NewItinerary != null)
+            {
+                var newItin = response.NewItinerary;
+                newItin.Price.SetMargin(itin.Price.Margin);
+                newItin.Price.CalculateFinalAndLocal(itin.Price.LocalCurrency);
+                RoundFinalAndLocalPrice(newItin);
+                itin = newItin;
+            }
             if (response.IsSuccess)
             {
                 bookResult.IsSuccess = true;
@@ -162,14 +171,6 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
-                if (response.NewItinerary != null)
-                {
-                    var newItin = response.NewItinerary;
-                    newItin.Price.SetMargin(itin.Price.Margin);
-                    newItin.Price.CalculateFinalAndLocal(itin.Price.LocalCurrency);
-                    RoundFinalAndLocalPrice(newItin);
-                    itin = newItin;
-                }
                 bookResult.IsSuccess = false;
                 if (response.Errors != null)
                     response.Errors.ForEach(output.AddError);

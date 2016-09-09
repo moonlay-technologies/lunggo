@@ -118,8 +118,8 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             }
             else
             {
-                if (bookServiceResponse.Errors[0] == FlightError.PartialSuccess)
-                    bookServiceResponse.Errors.RemoveAt(0);
+                //if (bookServiceResponse.Errors[0] == FlightError.PartialSuccess)
+                //    bookServiceResponse.Errors.RemoveAt(0);
                 switch (bookServiceResponse.Errors[0])
                 {
                     case FlightError.InvalidInputData:

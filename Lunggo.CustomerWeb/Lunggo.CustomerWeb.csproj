@@ -701,12 +701,6 @@
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
-    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.css">
-      <DependentUpon>travorama-mobileApp.scss</DependentUpon>
-    </Content>
-    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.min.css">
-      <DependentUpon>travorama-mobileApp.css</DependentUpon>
-    </Content>
     <Content Include="Campaign\MobileAppCampaign\images\app-store.png" />
     <Content Include="Campaign\MobileAppCampaign\images\background.jpg" />
     <Content Include="Campaign\MobileAppCampaign\images\MobileApp-1.jpg" />
@@ -1153,7 +1147,6 @@
     <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <Content Include="Assets\js\spin.min.js" />
-    <Content Include="Assets\js\tab.js" />
     <Content Include="Assets\js\travoramaApp.js" />
     <Content Include="Assets\mobile\css\application.css">
       <DependentUpon>application.scss</DependentUpon>
@@ -1443,6 +1436,7 @@
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw__staging.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging.pubxml" />
