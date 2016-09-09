@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Flight.Service;
 
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Http;
 using Lunggo.Framework.Redis;
 
@@ -26,7 +27,8 @@ namespace Lunggo.ApCommon.Campaign.Service
             var emailRedisKey = "binPromo:email:" + promoType;
             var isEmailExist = redis.SetContains(emailRedisKey, email);
             var fullyUsed = redis.SetLength(panRedisKey) >= 50 || redis.SetLength(emailRedisKey) >= 50;
-            return !isPanExist && !isEmailExist && !fullyUsed;
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            return env != "production" || (!isPanExist && !isEmailExist && !fullyUsed);
         }
 
         public void SavePanAndEmailInCache(string promoType, string hashedPan, string email)

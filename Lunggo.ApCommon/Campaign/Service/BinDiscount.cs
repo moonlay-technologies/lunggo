@@ -29,13 +29,13 @@ namespace Lunggo.ApCommon.Campaign.Service
             return isValid
                 ? isAvailable
                     ? new BinDiscount
-                {
-                    Amount = discAmount,
-                    IsAvailable = true,
-                    Currency = new Currency("IDR"),
-                    DisplayName = "pocer yey",
-                    ReplaceMargin = true
-                }
+                    {
+                        Amount = discAmount,
+                        IsAvailable = true,
+                        Currency = new Currency("IDR"),
+                        DisplayName = "pocer yey",
+                        ReplaceMargin = true
+                    }
                     : new BinDiscount
                     {
                         Amount = 0,

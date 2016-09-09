@@ -79,7 +79,12 @@ namespace Lunggo.ApCommon.Payment.Service
                 {
                     foreach (var itin in reservation.Itineraries)
                     {
-                        itin.Price.Margin = new UsedMargin();
+                        itin.Price.Margin = new UsedMargin
+                        {
+                            Name = "Margin Cancel",
+                            Description = "Margin Cancelled by BIN Promo",
+                            Currency = itin.Price.LocalCurrency
+                        };
                         itin.Price.CalculateFinalAndLocal(itin.Price.LocalCurrency);
                     }
                     paymentDetails.OriginalPriceIdr = reservation.Itineraries.Sum(i => i.Price.FinalIdr);

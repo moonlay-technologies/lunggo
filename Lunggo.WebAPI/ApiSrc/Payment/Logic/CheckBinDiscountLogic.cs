@@ -34,7 +34,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     DiscountAmount = binDiscount.Amount,
                     IsAvailable = binDiscount.IsAvailable,
                     DiscountName = binDiscount.DisplayName,
-                    ReplaceOriginalDiscount = true
+                    ReplaceOriginalDiscount = binDiscount.ReplaceMargin
                 }
                 : new CheckBinDiscountResponse
                 {
