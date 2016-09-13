@@ -823,7 +823,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 &.summary--price {
     dl {@include clearfix();
         dt {float:left; width:50%; font-weight:normal; position:relative; padding-left:12px;
-            &:before {position:absolute; content:''; width:7px; height:7px; background:#ff7200; top:3px; left:0;}
+            /*&:before {position:absolute; content:''; width:7px; height:7px; background:#ff7200; top:3px; left:0;}*/
         }
         dd {float:left; width:50%; text-align:right; font-weight:bold;}
         // total price
@@ -868,7 +868,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .accordion-wrapper { 
     .accordion-title {
         background-color: #35b6e7;
-        color: #fff;
+        color: $color-white;
         cursor: pointer;
         padding: 11px 15px;
         width: 100%;

@@ -133,7 +133,7 @@
                                 <dt>Total Tiket</dt>
                                 <dd><sup>Rp</sup> {{originalPrice | number}}</dd>
                             </dl>
-                            <dl style="color: #1daee4">
+                            <dl>
                                 <dt>Diskon Travorama</dt>
                                 <dd ng-if="!(binDiscount.replaceDiscount && !voucher.confirmedCode)">- <sup>Rp</sup> {{originalPrice - totalPrice| number}}</dd>
                                 <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode"> <sup>Rp</sup>- 0</dd>
@@ -142,7 +142,7 @@
                                 <dt>Potongan Harga</dt>
                                 <dd><sup>Rp</sup>- {{voucher.amount| number}}</dd>
                             </dl>
-                            <dl ng-show="binDiscount.replaceDiscount && !voucher.confirmedCode" style="color: #1daee4">
+                            <dl ng-show="binDiscount.replaceDiscount && !voucher.confirmedCode">
                                 <dt>{{binDiscount.displayName}}</dt>
                                 <dd><sup>Rp</sup>- {{binDiscount.amount | number}}</dd>
                             </dl>
