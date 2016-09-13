@@ -67,7 +67,16 @@
                 }
             }
             .flight-footer {
-                .flight-detail-button {display:inline-block; padding:3px 0;}
+                .flight-detail-button {display:inline-block; padding:3px 0;
+                    &:after {
+                        width: 6px;
+                        height: 10px;
+                        content: '';
+                        background: url(/Assets/mobile/images/arrow-detail.png) no-repeat;
+                        display: inline-block;
+                        margin-left: 6px;
+                    }
+                }
                 .flight-order {padding-top:3px; padding-bottom:3px;}
             }
         }
@@ -233,7 +242,7 @@
                     .flight__detail {position:relative; @include clearfix();
                         &>div {float:left;}
                         .flight__departure {width:45%;}
-                        .flight__separator {width:15%; height:100%; position:absolute; background:url(/Assets/mobile/images/flight-separator.png) center center no-repeat; left:35%; text-align: center;}
+                        .flight__separator {width:15%; height:100%; position:absolute; background:url(/Assets/mobile/images/flight-separators.png) center center no-repeat; left:35%; text-align: center;}
                         .flight__arrival {@extend & .flight__departure; margin-left:10%;}
                     }
                 }
@@ -311,14 +320,15 @@
                                 & > h5.segment-price-left, & > h5.segment-price-right {width: 50%; font-weight: 700;}
                                 h6.segment-price-left {color: $color-orange;}
                             }
-                            /*span.segment-price-q {
+                            .segment-price-q:before {
                                 content: "";
-                                position: absolute;
+                                display: inline-block;
                                 width: 7px;
                                 height: 7px;
                                 background: #fd8524;
-                                left: 12px;
-                            }*/
+                                margin-left: -14px;
+                                margin-right: 7px;
+                            }
                         }
                     }
                 }
