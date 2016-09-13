@@ -119,7 +119,7 @@
     default:
         <!-- payment start here -->
 
-        <div ng-app="travorama" ng-controller="paymentController" ng-class="{'page-loaded' : pageLoaded}">
+        <div ng-app="travorama" @*ng-controller="paymentController"*@ ng-class="{'page-loaded' : pageLoaded}">
             <section class="checkout-content">
                 <div class="page__header">
                     <h1 class="text-center section-title stripe">Metode <span>Pembayaran</span></h1>
@@ -516,31 +516,31 @@
                 </div>
             </div>
 
-            @*<div class="page-overlay flight-expired" ng-show="expired">
-                    <div class="overlay-content">
-                        <header>
-                            <h4>Checkout Kadaluarsa</h4>
-                        </header>
-                        <section>
-                            <div class="container_new">
-                              <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
-                              <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
-                            </div>
-                        </section>
-                        <footer>
-                            <div class="container_new">
-                                <div class="row1">
-                                    <div class="col12">
-                                        <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </footer>
+            @*<div class="page-overlay flight-expired" ng-class="{'active' : expired}">
+        <div class="overlay-content">
+            <header>
+                <h4>Checkout Kadaluarsa</h4>
+            </header>
+            <section>
+                <div class="container_new">
+                    <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
+                    <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
+                </div>
+            </section>
+            <footer>
+                <div class="container_new">
+                    <div class="row1">
+                        <div class="col12">
+                            <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
+                        </div>
                     </div>
-                </div><!-- .page-overlay -->
-            *@
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->*@
+            
 
-            <div class="popup__wrapper" ng-class="{'active' : pay.go }">
+            <div class="popup__wrapper" ng-class="{'active' : pay.ispaying || pay.go }">
                 <div class="popup">
                     <header class="popup__header">
                         <h4 class="popup__title">Mohon Tunggu</h4>
@@ -567,7 +567,7 @@
                         <div class="container_new tnc">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                                    <a class="btn btn-grey btn-block" ng-click="pay.close()">TUTUP</a>
                                 </div>
                             </div>
                         </div>
@@ -575,20 +575,58 @@
                 </div>
             </div>
 
-            @*<div class="page-overlay booking-flight" ng-class="{'active' : pay.go}">
-                    <div class="overlay-content">
-                        <header>
-                            <h4>Mohon Tunggu</h4>
-                        </header>
-                        <section>
-                            <div class="container_new">
-                                <div>
-                                    <p>Sedang memproses pilihan Anda.</p>
+            <div class="popup__wrapper" ng-class="{'active' : pay.continueVoucher}">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Mohon Maaf...</h4>
+                    </header>
+                    <div class="popup__body tnc-body">
+                        <div class="container_new">
+                            {{errorMessage}}
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new tnc">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <a class=" btn btn-yellow btn-block" ng-click="pay.continuePay('voucher')" ng-show="!pay.clickpay"><b>YA</b></a>
+
+                                </div>
+                                <div class="col-xs-6">
+                                    <a class="btn btn-grey btn-block" ng-click="pay.continueVoucher = false;" ng-show="!pay.clickpay"><b>TIDAK</b></a>
+                                    <a class="btn btn-grey btn-block" ng-click="pay.continueVoucher = false;" ng-show="pay.clickpay"><b>TUTUP</b></a>
                                 </div>
                             </div>
-                        </section>
+                        </div>
                     </div>
-                </div>*@
+                </div>
+            </div>
+    
+            <div class="popup__wrapper" ng-class="{'active' : pay.continueBIN}">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Mohon Maaf...</h4>
+                    </header>
+                    <div class="popup__body tnc-body">
+                        <div class="container_new">
+                            {{errorMessage}}
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new tnc">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <a class="btn btn-yellow btn-block" ng-click="pay.continuePay('bin')"><b>YA</b></a>
+                                    
+                                </div>
+                                <div class="col-xs-6">
+                                    <a class="btn btn-grey btn-block" ng-click="pay.continueBIN = false;"><b>TIDAK</b></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div><!-- checkout end here -->
     break;
