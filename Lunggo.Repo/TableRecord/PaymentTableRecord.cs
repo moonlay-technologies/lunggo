@@ -119,13 +119,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("DiscountNominal");
 		    }
 		}
-		public Decimal? TransferFee
+		public Decimal? UniqueCode
 		{
-		    get { return _TransferFee; }
+		    get { return _UniqueCode; }
 		    set
 		    {
-		        _TransferFee = value;
-		        IncrementLog("TransferFee");
+		        _UniqueCode = value;
+		        IncrementLog("UniqueCode");
 		    }
 		}
 		public Decimal? FinalPriceIdr
@@ -259,7 +259,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _DiscountCode;
 		private Decimal? _OriginalPriceIdr;
 		private Decimal? _DiscountNominal;
-		private Decimal? _TransferFee;
+		private Decimal? _UniqueCode;
 		private Decimal? _FinalPriceIdr;
 		private Decimal? _PaidAmountIdr;
 		private String _LocalCurrencyCd;
@@ -316,7 +316,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("DiscountCode", false),
 				new ColumnMetadata("OriginalPriceIdr", false),
 				new ColumnMetadata("DiscountNominal", false),
-				new ColumnMetadata("TransferFee", false),
+				new ColumnMetadata("UniqueCode", false),
 				new ColumnMetadata("FinalPriceIdr", false),
 				new ColumnMetadata("PaidAmountIdr", false),
 				new ColumnMetadata("LocalCurrencyCd", false),
