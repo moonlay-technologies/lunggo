@@ -92,7 +92,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     var flight = FlightService.GetInstance();
                     var payment = PaymentService.GetInstance();
                     var expiryTime = flight.GetItineraryExpiry(token);
-                    var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
+                    //var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
                     //var savedCreditCards = User.Identity.IsAuthenticated
                     //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
                     //    : new List<SavedCreditCard>();
@@ -101,7 +101,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         Token = token,
                         Itinerary = itin,
                         ExpiryTime = expiryTime.GetValueOrDefault(),
-                        SavedPassengers = savedPassengers,
+                        //SavedPassengers = savedPassengers,
                         //SavedCreditCards = savedCreditCards
                     });
                 }
@@ -140,16 +140,16 @@ namespace Lunggo.CustomerWeb.Controllers
             //{
             try
             {
-                var savedCreditCards = User.Identity.IsAuthenticated
-                    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
-                    : new List<SavedCreditCard>();
+                //var savedCreditCards = User.Identity.IsAuthenticated
+                //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
+                //    : new List<SavedCreditCard>();
                 var x = reservation.Itinerary.Trips;
                 return View(new FlightPaymentData
                 {
                     RsvNo = rsvNo,
                     Reservation = reservation,
                     TimeLimit = reservation.Payment.TimeLimit,
-                    SavedCreditCards = savedCreditCards
+                    //SavedCreditCards = savedCreditCards
                 });
 
             }

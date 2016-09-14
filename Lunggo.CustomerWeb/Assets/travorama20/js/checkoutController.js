@@ -803,7 +803,7 @@ app.controller('checkoutController', [
             }
             else if (passenger.type == 'infant') {
                 minYear = $scope.flightDetail.departureFullDate.getFullYear() - 2;
-                maxYear = $scope.flightDetail.departureFullDate.getFullYear();
+                maxYear = $scope.bookingDate.getFullYear();
                 if (passenger.birth.year == minYear) {
                     if (passenger.birth.month - 1 <= $scope.flightDetail.departureFullDate.getMonth()) {
                         passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
@@ -813,10 +813,12 @@ app.controller('checkoutController', [
                     }
                 }
                 else if (passenger.birth.year == maxYear) {
-                    if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth() - 2) {
-                        passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() - 1;
-                        if (passenger.birth.date > $scope.flightDetail.departureFullDate.getDate()) {
-                            passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
+                    if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth() - 2 ||
+                        passenger.birth.month - 1 >= $scope.bookingDate.getMonth() - 1
+                        ) {
+                        passenger.birth.month = $scope.bookingDate.getMonth() + 1;
+                        if (passenger.birth.date > $scope.bookingDate.getDate()) {
+                            passenger.birth.date = $scope.bookingDate.getDate();
                         }
                     }
                 }

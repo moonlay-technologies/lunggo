@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     DiscountCode = paymentRecord.DiscountCode,
                     OriginalPriceIdr = paymentRecord.OriginalPriceIdr.GetValueOrDefault(),
                     DiscountNominal = paymentRecord.DiscountNominal.GetValueOrDefault(),
-                    TransferFee = paymentRecord.TransferFee.GetValueOrDefault(),
+                    UniqueCode = paymentRecord.UniqueCode.GetValueOrDefault(),
                     FinalPriceIdr = paymentRecord.FinalPriceIdr.GetValueOrDefault(),
                     PaidAmountIdr = paymentRecord.PaidAmountIdr.GetValueOrDefault(),
                     LocalCurrency =
@@ -77,7 +77,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 decimal? originalPriceIdr = null;
                 string discountCode = null;
                 decimal? discountNominal = null;
-                decimal? transferFee = null;
+                decimal? uniqueCode = null;
                 decimal? finalPriceIdr = null;
                 decimal? paidAmountIdr = null;
                 Currency localCurrency = null;
@@ -111,8 +111,8 @@ namespace Lunggo.ApCommon.Payment.Service
                     discountCode = payment.DiscountCode;
                 if (payment.DiscountNominal != 0)
                     discountNominal = payment.DiscountNominal;
-                if (payment.TransferFee != 0)
-                    transferFee = payment.TransferFee;
+                if (payment.UniqueCode != 0)
+                    uniqueCode = payment.UniqueCode;
                 if (payment.FinalPriceIdr != 0)
                     finalPriceIdr = payment.FinalPriceIdr;
                 if (payment.PaidAmountIdr != 0)
@@ -140,7 +140,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     OriginalPriceIdr = originalPriceIdr,
                     DiscountCode = discountCode,
                     DiscountNominal = discountNominal,
-                    TransferFee = transferFee,
+                    UniqueCode = uniqueCode,
                     FinalPriceIdr = finalPriceIdr,
                     LocalCurrencyCd = localCurrency.Symbol,
                     LocalRate = localCurrency.Rate,

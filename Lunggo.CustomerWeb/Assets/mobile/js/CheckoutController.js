@@ -1047,10 +1047,11 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 }
             }
             else if (passenger.birth.year == maxYear) {
-                if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth() - 2) {
-                    passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() - 1;
-                    if (passenger.birth.date > $scope.flightDetail.departureFullDate.getDate()) {
-                        passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
+                if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth() - 2 |
+                        passenger.birth.month - 1 >= $scope.bookingDate.getMonth() - 1) {
+                    passenger.birth.month = $scope.bookingDate.getMonth() + 1;
+                    if (passenger.birth.date > $scope.bookingDate.getDate()) {
+                        passenger.birth.date = $scope.bookingDate.getDate();
                     }
                 }
             }

@@ -122,8 +122,8 @@ namespace Lunggo.ApCommon.Payment.Service
             if (transferFee == 0M)
                 return paymentDetails;
 
-            paymentDetails.TransferFee = transferFee;
-            paymentDetails.FinalPriceIdr += paymentDetails.TransferFee;
+            paymentDetails.UniqueCode = transferFee;
+            paymentDetails.FinalPriceIdr += paymentDetails.UniqueCode;
 
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
             var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
@@ -281,12 +281,12 @@ namespace Lunggo.ApCommon.Payment.Service
                     Price = (long)-payment.DiscountNominal,
                     Quantity = 1
                 });
-            if (payment.TransferFee != 0)
+            if (payment.UniqueCode != 0)
                 itemDetails.Add(new ItemDetails
                 {
                     Id = "3",
                     Name = "TransferFee",
-                    Price = (long)payment.TransferFee,
+                    Price = (long)payment.UniqueCode,
                     Quantity = 1
                 });
             return itemDetails;

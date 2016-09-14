@@ -87,9 +87,9 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                             "```Payment Log```"
                             + "\n`*Environment :* " + env.ToUpper()
                             + "\n*REQUEST :*\n"
-                            + request.Serialize()
+                            + payment.Serialize()
                             + "\n*RESPONSE :*\n"
-                            + response.Serialize()
+                            + content.Serialize()
                             + "\n*Platform :* "
                             + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
                     }

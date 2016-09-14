@@ -31,7 +31,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 DiscountCode = payment.DiscountCode,
                 DiscountNominal = payment.DiscountNominal / payment.LocalCurrency.Rate,
                 DiscountName = payment.Discount != null ? payment.Discount.DisplayName : null,
-                TransferFee = payment.TransferFee / payment.LocalCurrency.Rate,
+                TransferFee = payment.UniqueCode / payment.LocalCurrency.Rate,
                 Currency = payment.LocalCurrency,
                 FinalPrice = payment.LocalFinalPrice,
                 Refund = ConvertToRefundForDisplay(payment.Refund),
