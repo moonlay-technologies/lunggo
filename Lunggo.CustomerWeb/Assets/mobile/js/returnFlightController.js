@@ -56,6 +56,10 @@
             }
         }
 
+        var minvalue = Math.min.apply(Math, listbaggage);
+        if (minvalue == 'Infinity') {
+            return 0;
+        }
         return Math.min.apply(Math, listbaggage);
     }
 
