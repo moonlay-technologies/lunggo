@@ -92,7 +92,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     var flight = FlightService.GetInstance();
                     var payment = PaymentService.GetInstance();
                     var expiryTime = flight.GetItineraryExpiry(token);
-                    var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
+                    //var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
                     //var savedCreditCards = User.Identity.IsAuthenticated
                     //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
                     //    : new List<SavedCreditCard>();
@@ -101,7 +101,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         Token = token,
                         Itinerary = itin,
                         ExpiryTime = expiryTime.GetValueOrDefault(),
-                        SavedPassengers = savedPassengers,
+                        //SavedPassengers = savedPassengers,
                         //SavedCreditCards = savedCreditCards
                     });
                 }

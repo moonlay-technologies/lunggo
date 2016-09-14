@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     DiscountCode = paymentRecord.DiscountCode,
                     OriginalPriceIdr = paymentRecord.OriginalPriceIdr.GetValueOrDefault(),
                     DiscountNominal = paymentRecord.DiscountNominal.GetValueOrDefault(),
-                    TransferFee = paymentRecord.TransferFee.GetValueOrDefault(),
+                    TransferFee = paymentRecord.UniqueCode.GetValueOrDefault(),
                     FinalPriceIdr = paymentRecord.FinalPriceIdr.GetValueOrDefault(),
                     PaidAmountIdr = paymentRecord.PaidAmountIdr.GetValueOrDefault(),
                     LocalCurrency =
