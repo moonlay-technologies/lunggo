@@ -139,7 +139,7 @@
                                 <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode"> <sup>Rp</sup>- 0</dd>
                             </dl>
                             <dl ng-show="voucher.confirmedCode">
-                                <dt>Potongan Harga</dt>
+                                <dt>{{voucher.displayName}}</dt>
                                 <dd><sup>Rp</sup>- {{voucher.amount| number}}</dd>
                             </dl>
                             <dl ng-show="binDiscount.replaceDiscount && !voucher.confirmedCode">
@@ -245,7 +245,7 @@
                                         <div class="input-wrapper">
                                             <input type="radio" name="paymentMethod" value="@PaymentMethod.CimbClicks" ng-model="paymentMethod" />
                                         </div>
-                                        <h5>CIMB Niaga</h5>
+                                        <h5>CIMB Clicks</h5>
                                     </header>
                                     <section>
                                         <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Niaga" />
@@ -391,7 +391,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Respon Token Mandiri</label>
-                                <input type="text" value="" class="form-control cc-number" maxlength="16" placeholder="XXXXXX" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
+                                <input type="text" value="" class="form-control cc-number" maxlength="6" placeholder="XXXXXX" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
                             </div>
                         </div>
                     </div>

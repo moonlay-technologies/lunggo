@@ -159,8 +159,10 @@ app.controller('paymentController', [
                             $scope.voucher.amount = returnData.data.discount;
                             $scope.voucher.confirmedCode = $scope.voucher.code;
                             $scope.voucher.displayName = returnData.data.name;
+                            $scope.binDiscount.replaceDiscount = false;
                             // get unique code for transfer payment
                             $scope.voucher.status = 'Success';
+                            $scope.binDiscount.text = '';
                             $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
                             $scope.voucher.receive = true;
                         }
@@ -193,11 +195,15 @@ app.controller('paymentController', [
                 $scope.voucher.confirmedCode = '';
                 $scope.voucher.checked = false;
                 $scope.voucher.status = '';
+                if ($scope.currentchoice == 'cc') {
+                    $scope.binDiscount.check();
+                }
+                
                 // get unique code for transfer payment
                 $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
             }
         };
-
+        $scope.currentchoice = '';
         $scope.binDiscount = {
             amount: 0,
             displayName: '',
@@ -210,7 +216,7 @@ app.controller('paymentController', [
                 } else {
                     $scope.binDiscount.replaceDiscount = false;
                 }
-                
+                $scope.currentchoice = method;
             },
             replaceDiscount: false,
             receive: false,
@@ -319,7 +325,7 @@ app.controller('paymentController', [
             transfer: false,
             virtualAccount: false,
             go: false,
-            test: 2,
+            test: 0,
             clickpay: false,
             ccdata: false,
             checked:false,
@@ -430,7 +436,7 @@ app.controller('paymentController', [
                 //generate payment data
                 if ($scope.paymentMethod == 'BankTransfer') {
                     if ($scope.redirectionUrl == null || $scope.redirectionUrl.length == 0) {
-                        $scope.pay.postData = '"test":"' + $scope.pay.test + '","rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2"';
+                        $scope.pay.postData = '"rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2"';
                         $scope.pay.transfer = true;
                     } 
                 }
@@ -440,7 +446,7 @@ app.controller('paymentController', [
                         case "CreditCard":
                             var hash = CryptoJS.SHA512($scope.CreditCard.Number);
                             var hex = hash.toString(CryptoJS.enc.Hex);
-                            $scope.PaymentData = '"test":"' + $scope.pay.test + '","method":"1","creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name + '","hashedPan":"' + hex + '","reqBinDiscount":"' + $scope.binDiscount.replaceDiscount + '"}';
+                            $scope.PaymentData = '"method":"1","creditCard":' + '{' + ' "tokenId":"' + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name + '","hashedPan":"' + hex + '","reqBinDiscount":"' + $scope.binDiscount.replaceDiscount + '"}';
                             break;
                         case "MandiriClickPay": 
                             var cardNoLast10 = $scope.MandiriClickPay.CardNo + "";
@@ -448,7 +454,7 @@ app.controller('paymentController', [
                             var rsvNoLast5 = $scope.rsvNo + "";
                             rsvNoLast5 = rsvNoLast5.substr(rsvNoLast5.length - 5);
                             var netprice = $scope.initialPrice - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode;
-                            $scope.PaymentData = '"test":"' + $scope.pay.test + '","method":"3","mandiriClickPay":' + '{' + ' "cardNo":"' + $scope.MandiriClickPay.CardNo + '","token":"' + $scope.MandiriClickPay.Token + '","cardNoLast10":"' + cardNoLast10 + '","amount":"' + netprice + '","rsvNoLast5":"' + rsvNoLast5 + '"' + '}';
+                            $scope.PaymentData = '"method":"3","mandiriClickPay":' + '{' + ' "cardNo":"' + $scope.MandiriClickPay.CardNo + '","token":"' + $scope.MandiriClickPay.Token + '","cardNoLast10":"' + cardNoLast10 + '","amount":"' + netprice + '","rsvNoLast5":"' + rsvNoLast5 + '"' + '}';
                             $scope.pay.clickpay = true;
                             break;
                         case "CimbClicks": 

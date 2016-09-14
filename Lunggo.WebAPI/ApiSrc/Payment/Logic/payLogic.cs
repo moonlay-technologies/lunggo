@@ -91,7 +91,10 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 Method = paymentDetails.Method,
                 RedirectionUrl = paymentDetails.RedirectionUrl,
                 TransferAccount = paymentDetails.TransferAccount,
-                StatusCode = HttpStatusCode.OK
+                StatusCode =
+                    paymentDetails.Status == PaymentStatus.Settled || paymentDetails.Status == PaymentStatus.Pending
+                        ? HttpStatusCode.OK
+                        : HttpStatusCode.Accepted
             };
         }
 

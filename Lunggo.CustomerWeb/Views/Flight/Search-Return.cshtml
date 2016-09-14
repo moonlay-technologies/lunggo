@@ -279,7 +279,14 @@
                         </h5>
                     </div>
                     <div class="flight-date-arrival">
-                        <h4>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].destination}} <span>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} <span class="overday" ng-if="getFullDate(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime) != getFullDate(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[0].departureTime)">{{getOverdayDate((departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[0].departureTime),(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime))}}</span></span></h4>
+                        <h4>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].destination}} 
+                            <span>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} 
+                                <span class="overday" 
+                                      ng-if="getOverdayDate((departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[0].departureTime),(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime)) != 0">
+                                    {{getOverdayDate((departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[0].departureTime),(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime))}}
+                                </span>
+                            </span>
+                        </h4>
                     </div>
                 </div>
                 <div class="flight-button">
@@ -506,7 +513,13 @@
                                             </h5>
                                         </div>
                                         <div class="flight-date-arrival">
-                                            <h4>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}} <span>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} <span class="overday" ng-if="getFullDate(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime) != getFullDate(flight.trips[0].segments[0].departureTime)">{{getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime))}}</span></span></h4>
+                                            <h4>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}} 
+                                            <span>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} 
+                                                <span class="overday" ng-if="getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime)) != 0">
+                                                    {{getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime))}}
+                                                </span>
+                                            </span>
+                                            </h4>
                                         </div>
                                     </div><!-- .flight-date -->
                                 </div><!-- .summary-top -->
@@ -617,7 +630,10 @@
                         </h5>
                     </div>
                     <div class="flight-date-arrival">
-                        <h4>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].destination}} <span>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} <span class="overday" ng-if="getFullDate(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime) != getFullDate(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[0].departureTime)">{{getOverdayDate((returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[0].departureTime),(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime))}}</span></span></h4>
+                        <h4>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].destination}} <span>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} 
+                                                                                                                        <span class="overday" ng-if="getOverdayDate((returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[0].departureTime),(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime)) != 0">
+                                                                                                                            {{getOverdayDate((returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[0].departureTime),(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime))}}
+                                                                                                                        </span></span></h4>
                     </div>
                 </div>
                 <div class="flight-button">
@@ -843,7 +859,13 @@
                                             </h5>
                                         </div>
                                         <div class="flight-date-arrival">
-                                            <h4>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}} <span>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} <span class="overday" ng-if="getFullDate(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime) != getFullDate(flight.trips[0].segments[0].departureTime)">{{getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].Ssgments.length - 1 ].arrivalTime))}}</span></span></h4>
+                                            <h4>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}} 
+                                                <span>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} 
+                                                    <span class="overday" ng-if="getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].Ssgments.length - 1 ].arrivalTime)) != 0">
+                                                        {{getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].Ssgments.length - 1 ].arrivalTime))}}
+                                                    </span>
+                                                </span>
+                                            </h4>
                                         </div>
                                     </div><!-- .flight-date -->
                                 </div><!-- .summary-top -->
@@ -967,7 +989,13 @@
                                         </h5>
                                     </div>
                                     <div class="flight-date-arrival">
-                                        <h4>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].destination}} <span>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} <span class="overday" ng-if="getFullDate(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime) != getFullDate(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[0].departureTime)">{{getOverdayDate((departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[0].departureTime),(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime))}}</span></span></h4>
+                                        <h4>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].destination}} 
+                                            <span>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} 
+                                                <span class="overday" ng-if="getOverdayDate((departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[0].departureTime),(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime)) != 0">
+                                                    {{getOverdayDate((departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[0].departureTime),(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime))}}
+                                                </span>
+                                            </span>
+                                        </h4>
                                         <h5>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime | date : 'dd MMM yyyy' : 'UTC'}}</h5>
                                     </div>
                                 </div>
@@ -1001,7 +1029,10 @@
                                         </h5>
                                     </div>
                                     <div class="flight-date-arrival">
-                                        <h4>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].destination}} <span>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} <span class="overday" ng-if="getFullDate(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime) != getFullDate(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[0].departureTime)">{{getOverdayDate((returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[0].departureTime),(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime))}}</span></span></h4>
+                                        <h4>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].destination}} <span>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} 
+                                                                                                                                        <span class="overday" ng-if="getOverdayDate((returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[0].departureTime),(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime)) != 0">
+                                                                                                                                            {{getOverdayDate((returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[0].departureTime),(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime))}}
+                                                                                                                                        </span></span></h4>
                                         <h5>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments[ returnFlightConfig.flightList[returnFlightConfig.chosenFlight].trips[0].segments.length - 1 ].arrivalTime | date : 'dd MMM yyyy' : 'UTC'}}</h5>
                                     </div>
                                 </div>
