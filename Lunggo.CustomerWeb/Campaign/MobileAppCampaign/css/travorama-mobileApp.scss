@@ -1,19 +1,22 @@
 ﻿.travorama-mobileApp {
     .mobileApp-top {
         background-image: url('/Campaign/MobileAppCampaign/images/background.jpg');
+        display: block;
+        width: 100%;
+        background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
         min-height: 780px;
         text-align: center;
         .big-txt {
-            font-size: 42px;
+            font-size: 32px;
             font-weight: 600;
             line-height: 40px;
-            padding-top: 140px;
+            padding-top: 120px;
         }
         .sm-txt {
-            font-size: 17px;
-            margin: 40px 0 30px;
+            font-size: 14px;
+            margin: 35px 0 25px;
         }
         .app-download {
             a {
@@ -35,114 +38,66 @@
         }
     }
     .mobileApp-bottom {
-        margin: 85px auto;
-        &.container {padding:0;}
+        margin: 45px auto;
         .title-bg {
-            font-size: 30px;
-            font-weight: 600;
+            font-size: 28px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             text-align: center;
             margin-bottom: 45px;
             span.blue-txt {color: #1daee4;}
         }
-        .left-content, .right-content {
-            padding: 30px;
-            width: 50%;
-            float: left;
-        }
-        .left-content {padding-left: 0; padding-right: 45px;
-            & > .mobileApp-txtbx {text-align: right;}
-        }
-        .right-content {padding-right: 0; padding-left: 45px;}
-        .dash {    
-            border-right: 3px solid #1daee4;
-            min-height: 1780px;
-            float: left;
-            display: inline-block;
-            position: absolute;
+        .mobileApp-content {
+            background: url('/Campaign/MobileAppCampaign/images/box-photo.png');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            padding: 100px 0 50px;
         }
         .mobileApp-txtbx {
-            border: 4px solid #ffb911;
-            border-radius: 8px;
-            padding: 5px 35px 15px;
+            &.right {margin-left: 415px;}
+            &.left {
+                max-width: 415px;
+                text-align: right;
+            }
             .txtbx-title {
                 color: #1daee4;
-                font-size: 18px;
-                font-weight: 600;
-                line-height: 38px;
+                font-size: 14px;
+                font-weight: 700;
+                margin-bottom: 5px;
             }
-            .txtbx-desc {
-                font-size: 13px;
-                line-height: 16px;
+            &.txtbx-1 {
+                padding: 18px 70px;
+                margin-bottom: 122px;
             }
-            &.txtbx-1 {margin: 50px 0 50px;}
-            &.txtbx-2 {margin: 40px 0 80px;}
-            &.txtbx-3 {margin: 20px 0 70px;}
-            &.txtbx-4 {margin: 110px 0 90px;}
-            &.txtbx-5 {margin: 160px 0 0;}
-            &.txtbx-6 {margin: 0 0 60px;}
-            &.txtbx-7 {margin: 40px 0 0;}
-        }
-        .blue-point {
-            width: 16px;
-            height: 16px;
-            position: absolute;
-            display: inline-block;
-            background: #1daee4;
-            margin-left: -7px;
-            z-index: 1;
-            border-radius: 16px;
-        }
-        .orange-point {
-            width: 14px;
-            height: 14px;
-            position: absolute;
-            display: inline-block;
-            background: #ffb911;
-            margin-left: -6px;
-            z-index: 1;
-            border-radius: 14px;
-
-            &.op-1 {top: 35.95%}
-            &.op-2 {top: 43.25%}
-            &.op-3 {top: 49.85%}
-            &.op-4 {top: 57.45%}
-            &.op-5 {top: 65.75%}
-            &.op-6 {top: 72.65%}
-            &.op-7 {top: 80.85%}
-
-            &.op-1, &.op-3, &.op-5, &.op-7 {
-                &:before {
-                    width: 74px;
-                    height: 38px;
-                    position: absolute;
-                    background: url('/Campaign/MobileAppCampaign/images/orange-edge-left.png') no-repeat;
-                    display: inline-block;
-                    content: "";
-                    margin-left: 20px;
-                    margin-top: -12px;
-                }
+            &.txtbx-2 {
+                padding: 10px 50px;
+                margin-bottom: 123px;
             }
-
-            &.op-2, &.op-4, &.op-6 {
-                &:before {
-                    width: 74px;
-                    height: 38px;
-                    position: absolute;
-                    background: url('/Campaign/MobileAppCampaign/images/orange-edge-right.png') no-repeat;
-                    display: inline-block;
-                    content: "";
-                    margin-left: -48px;
-                    margin-top: -12px;
-                }
+            &.txtbx-3 {
+                padding: 7px 70px;
+                margin-bottom: 120px;
             }
+            &.txtbx-4 {
+                padding: 12px 50px;
+                margin-bottom: 150px;
+            }
+            &.txtbx-5 {
+                padding: 10px 67px;
+                margin-bottom: 115px;
+            }
+            &.txtbx-6 {
+                padding: 18px 50px;
+                margin-bottom: 150px;
+            }
+            &.txtbx-7 {
+                padding: 18px 60px;
+                margin-bottom: 30px;
+            }
+            .txtbx-desc {line-height:14px;}
         }
     }
-    .mobileApp-wrapper {
-        width: 950px;
-        margin: 0 auto;
-        max-width: none;
-        padding: 0 12px;
+    .mobileApp-wrapper {max-width: none;
+        &.container {padding:0;}
     }
 }
