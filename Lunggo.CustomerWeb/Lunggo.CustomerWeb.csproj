@@ -701,6 +701,9 @@
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
+    <Content Include="Assets\images\flight-facilities-sprite2.png" />
+    <Content Include="Assets\mobile\images\arrow-detail.png" />
+    <Content Include="Assets\mobile\images\flight-separators.png" />
     <Content Include="Campaign\MobileAppCampaign\images\app-store.png" />
     <Content Include="Campaign\MobileAppCampaign\images\background.jpg" />
     <Content Include="Campaign\MobileAppCampaign\images\MobileApp-1.jpg" />
@@ -1171,7 +1174,6 @@
     <Content Include="Assets\mobile\images\dewasa-bw.png" />
     <Content Include="Assets\mobile\images\dewasa.png" />
     <Content Include="Assets\mobile\images\flight-history-status.png" />
-    <Content Include="Assets\mobile\images\flight-separator.png" />
     <Content Include="Assets\mobile\images\flight-swap.png" />
     <Content Include="Assets\mobile\images\flip.png" />
     <Content Include="Assets\mobile\images\form-sprite.png" />
