@@ -22,9 +22,10 @@ $play-store: '../images/play-store.png';
     .mobile-banner { 
         border-bottom: 1px solid #dddddd;
         .mb-container{
-            margin: 0 20px;
+            margin: 0 auto;
             padding: 20px 0 30px;
             background: url($mobile-banner) no-repeat bottom right;
+            max-width: 280px;
             .banner-txt {
                 @extend .os-semibold;
                 font-size: 12px;

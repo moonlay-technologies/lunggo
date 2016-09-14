@@ -705,6 +705,7 @@
     <Content Include="Assets\images\flight-facilities-sprite2.png" />
     <Content Include="Assets\mobile\images\arrow-detail.png" />
     <Content Include="Assets\mobile\images\flight-separators.png" />
+    <Content Include="Assets\travorama20\images\mobile-app.png" />
     <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.css">
       <DependentUpon>travorama-mobileApp.scss</DependentUpon>
     </Content>
@@ -2848,7 +2849,6 @@
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Assets\images\campaign\MobileApp\" />
     <Folder Include="Assets\travorama20\fonts\" />
-    <Folder Include="Assets\travorama20\images\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>
