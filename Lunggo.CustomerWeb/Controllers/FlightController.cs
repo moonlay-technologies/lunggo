@@ -140,16 +140,16 @@ namespace Lunggo.CustomerWeb.Controllers
             //{
             try
             {
-                var savedCreditCards = User.Identity.IsAuthenticated
-                    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
-                    : new List<SavedCreditCard>();
+                //var savedCreditCards = User.Identity.IsAuthenticated
+                //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
+                //    : new List<SavedCreditCard>();
                 var x = reservation.Itinerary.Trips;
                 return View(new FlightPaymentData
                 {
                     RsvNo = rsvNo,
                     Reservation = reservation,
                     TimeLimit = reservation.Payment.TimeLimit,
-                    SavedCreditCards = savedCreditCards
+                    //SavedCreditCards = savedCreditCards
                 });
 
             }

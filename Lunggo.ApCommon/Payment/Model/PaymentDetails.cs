@@ -60,7 +60,7 @@ namespace Lunggo.ApCommon.Payment.Model
         public string DiscountCode { get; set; }
         public decimal DiscountNominal { get; set; }
         public UsedDiscount Discount { get; set; }
-        public decimal TransferFee { get; set; }
+        public decimal UniqueCode { get; set; }
         public decimal FinalPriceIdr { get; set; }
         public decimal PaidAmountIdr { get; set; }
         public Currency LocalCurrency { get; set; }
@@ -87,7 +87,7 @@ namespace Lunggo.ApCommon.Payment.Model
                     DiscountCode = DiscountCode,
                     OriginalPriceIdr = OriginalPriceIdr,
                     DiscountNominal = DiscountNominal,
-                    UniqueCode = TransferFee,
+                    UniqueCode = UniqueCode,
                     FinalPriceIdr = FinalPriceIdr,
                     PaidAmountIdr = PaidAmountIdr,
                     LocalCurrencyCd = LocalCurrency,
@@ -124,7 +124,7 @@ namespace Lunggo.ApCommon.Payment.Model
                     DiscountCode = record.DiscountCode,
                     OriginalPriceIdr = record.OriginalPriceIdr.GetValueOrDefault(),
                     DiscountNominal = record.DiscountNominal.GetValueOrDefault(),
-                    TransferFee = record.UniqueCode.GetValueOrDefault(),
+                    UniqueCode = record.UniqueCode.GetValueOrDefault(),
                     FinalPriceIdr = record.FinalPriceIdr.GetValueOrDefault(),
                     PaidAmountIdr = record.PaidAmountIdr.GetValueOrDefault(),
                     LocalCurrency = new Currency(record.LocalCurrencyCd, record.LocalRate.GetValueOrDefault()),
