@@ -58,6 +58,7 @@ namespace Lunggo.Configuration
                 "BackendWeb", 
                 "CustomerWeb", 
                 "WebAPI", 
+                "WebJob.CurrencyCrawler",
                 "WebJob.MystiflyQueueHandler",
                 "WebJob.EmailQueueHandler", 
                 "WebJob.FlightProcessor",
@@ -159,7 +160,7 @@ namespace Lunggo.Configuration
                 CreateProjectLogDirectory(project);
                 var configFile = CreateProjectConfigurationFile(project);
                 WriteConfigurationFileToProject(configFile, project);
-                WriteConfigurationFileToLog(configFile, project);
+                //WriteConfigurationFileToLog(configFile, project);
                 var nonConfigFiles = GetAllNonConfigFilesByProjectName(project);
                 foreach (var nonConfigFile in nonConfigFiles)
                 {
@@ -339,6 +340,7 @@ namespace Lunggo.Configuration
             const string autocompleteAirportPath = @"/v1/autocomplete/airports/";
             const string autocompleteAirlinePath = @"/v1/autocomplete/airlines/";
             const string checkVoucherPath = @"/v1/payment/checkvoucher";
+            const string checkBinDiscountPath = @"/v1/payment/checkbindiscount";
             const string subscribePath = @"/v1/newsletter/subscribe";
             const string loginPath = @"/v1/login";
             const string getProfilePath = @"/v1/profile";
@@ -372,6 +374,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("autocompleteAirportPath", autocompleteAirportPath);
             fileTemplate.SetAttribute("autocompleteAirlinePath", autocompleteAirlinePath);
             fileTemplate.SetAttribute("checkVoucherPath", checkVoucherPath);
+            fileTemplate.SetAttribute("checkBinDiscountPath", checkBinDiscountPath);
             fileTemplate.SetAttribute("subscribePath", subscribePath);
             fileTemplate.SetAttribute("trxHistoryPath", trxHistoryPath);
             fileTemplate.SetAttribute("getReservationPath", getReservationPath);
@@ -431,6 +434,7 @@ namespace Lunggo.Configuration
             string[] projectList =
             {
                 "WebJob.EmailQueueHandler", 
+                "WebJob.CurrencyCrawler",
                 "WebJob.MystiflyQueueHandler",
                 "WebJob.FlightProcessor",
                 "WebJob.FlightCrawlScheduler",
@@ -456,6 +460,7 @@ namespace Lunggo.Configuration
             string[] projectList =
             {
                 "WebJob.EmailQueueHandler",
+                "WebJob.CurrencyCrawler",
                 "WebJob.MystiflyQueueHandler",
                 "WebJob.FlightProcessor",
                 "WebJob.FlightCrawlScheduler",

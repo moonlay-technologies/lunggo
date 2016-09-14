@@ -64,51 +64,58 @@
 }
 @section PageJS{
     <script>
-        var langCode = '@OnlineContext.GetActiveLanguageCode()';
-        var currentPage = 1;
-        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
-        //var transferWindow = [ '1100', '1124' ];
-        // messages
-        var message = '@ViewBag.Message';
-        // flight detail
-        var token = @Model.Token;
-        var paymentDetail = '';
-        var flightDetail = '';
-        var expiryDate = '@Model.ExpiryTime.ToString("o")';
-        var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
+    var langCode = '@OnlineContext.GetActiveLanguageCode()';
+    var currentPage = 1;
+    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
+    //var transferWindow = [ '1100', '1124' ];
+    // messages
+    var message = '@ViewBag.Message';
+    // flight detail
+    var token = @Model.Token;
+    var paymentDetail = '';
+    var flightDetail = '';
+    var expiryDate = '@Model.ExpiryTime.ToString("o")';
+    var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
 
-        // passenger number
-        var adultPassenger = @Model.Itinerary.AdultCount;
-        var adultFare = @Model.Itinerary.NetAdultFare;
-        var totalAdultFare = adultPassenger * adultFare;
-        var adultTypeName = 'Dewasa';
+    // passenger number
+    var adultPassenger = @Model.Itinerary.AdultCount;
+    var adultFare = @Model.Itinerary.OriginalAdultFare;
+    var adultNetFare = @Model.Itinerary.NetAdultFare * adultPassenger;
+    var totalAdultFare = adultPassenger * adultFare;
+    var adultTypeName = 'Dewasa';
 
-        var childPassenger = @Model.Itinerary.ChildCount;
-        var childFare = @Model.Itinerary.NetChildFare;
-        var totalChildFare = childPassenger * childFare;
-        var childTypeName = 'Anak';
+    var childPassenger = @Model.Itinerary.ChildCount;
+    var childFare = @Model.Itinerary.OriginalChildFare;
+    var childNetFare = @Model.Itinerary.NetChildFare * childPassenger;
+    var totalChildFare = childPassenger * childFare;
+    var childTypeName = 'Anak';
 
-        var infantPassenger = @Model.Itinerary.InfantCount;
-        var infantFare = @Model.Itinerary.NetInfantFare;
-        var totalInfantFare = infantPassenger * infantFare;
-        var infantTypeName = 'Bayi';
-        //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
-        // passport or id requirement
-        var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
-        var idRequired = false;
-        var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
-        var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
-        var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
-        var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
-        var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
-        var price = '@Model.Itinerary.NetTotalFare';
-        //var trips = '@Model.Itinerary.Trips';
-        // change current page
-        if (getParam('page') == 2) {
-            currentPage = getParam('page');
-        } else {
-            currentPage = 1;
-        }
+    var infantPassenger = @Model.Itinerary.InfantCount;
+    var infantFare = @Model.Itinerary.OriginalInfantFare;
+    var infantNetFare = @Model.Itinerary.NetInfantFare * infantPassenger;
+    var totalInfantFare = infantPassenger * infantFare;
+    var infantTypeName = 'Bayi';
+    //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
+    // passport or id requirement
+    var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
+    var idRequired = false;
+    var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
+    var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
+    var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
+    var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
+    var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
+    var originalPrice = '@Model.Itinerary.OriginalTotalFare';
+    var price = '@Model.Itinerary.NetTotalFare';
+    //var trips = '@Model.Itinerary.Trips';
+    // change current page
+    if (getParam('page') == 2) {
+        currentPage = getParam('page');
+    } else {
+        currentPage = 1;
+    }
+
+
+
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
@@ -173,11 +180,14 @@
                                     <div class="form-group" ng-class="{'has-error' : buyerForm.name.$touched && buyerForm.name.$invalid}">
                                         <label class="control-label important">Nama Lengkap :</label>
                                         <div ng-hide="loggedIn">
-                                            <input type="text" class="form-control" value="" id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="buyerInfo.name" required />
+                                            <input type="text" pattern="[a-zA-Z\s]+" class="form-control nama" value="" id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="buyerInfo.name" required />
                                         </div>
                                         <div ng-hide="!loggedIn">
                                             <!--Jika udah Login-->
-                                            <input type="text" class="form-control" value=buyerInfo.name id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="buyerInfo.name" required />
+                                            <input type="text" pattern="[a-zA-Z\s]+" class="form-control nama" value=buyerInfo.name id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="buyerInfo.name" required />
+                                        </div>
+                                        <div ng-show="!correctName" style="color:red">
+                                            Nama tidak boleh mengandung karakter selain alfabet dan spasi
                                         </div>
                                     </div>
                                    
@@ -223,8 +233,20 @@
 
                                 </form><!-- #buyer-form -->
 
-                                <div class="step-button">
-                                    <button class="btn btn-yellow" ng-click="changePage(2)" ng-disabled="buyerForm.$invalid || buyerInfo.title == titles[0].value || buyerInfo.countryCode == 'xx'">LANJUTKAN</button>
+                                <div class="step-button" >
+                                    <div style="color:red" ng-show="form.incompleteContactTitle">
+                                        Gelar pada Nama Kontak Belum Ditambahkan <br/> <br />
+                                    </div>
+                                    <div style="color:red" ng-show="form.incompleteContactName">
+                                        Nama pada Data Kontak Belum Ditambahkan <br /> <br />
+                                    </div>
+                                    <div style="color:red" ng-show="form.incompleteContactPhone">
+                                        Nomor Telepon pada Data Kontak Belum Lengkap. Silakan Pilih Kode Negara atau Lengkapi Nomor Telepon<br /> <br />
+                                    </div>
+                                    <div style="color:red" ng-show="form.incompleteContactEmail">
+                                        Alamat E-Mail pada Data Kontak Belum Ditambahkan<br /> <br />
+                                    </div>
+                                    <button class="btn btn-yellow" ng-click="validateForm(1)" @*ng-disabled="buyerForm.$invalid"*@ @*|| buyerInfo.title == titles[0].value || buyerInfo.countryCode == 'xx'*@>LANJUTKAN</button>
                                 </div>
 
                             </div><!-- .content-step#step-1 -->
@@ -252,7 +274,11 @@
                                                 </div>
                                                 <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.name.$invalid && passengerForm_{{$index}}.name.$touched }">
                                                     <label class="control-label important">Nama Lengkap :</label>
-                                                    <input type="text" value="" name="passenger_{{$index}}_name" class="form-control" placeholder="Nama Lengkap" ng-model="passenger.name" required />
+                                                    <input type="text" pattern="[a-zA-Z\s]+" value="" name="passenger_{{$index}}_name" class="form-control nama" placeholder="Nama Lengkap" ng-model="passenger.name" required />
+                                                    <div ng-show="!correctName" style="color:red">
+                                                        Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                                                    </div>
+                                                    
                                                 </div>
                                                 <div class="form-group" ng-if="birthDateRequired || passenger.type == 'child' || passenger.type == 'infant'">
                                                     <label class="control-label important">Tanggal Lahir :</label>
@@ -338,14 +364,32 @@
                                 </div><!-- .passengerdetail -->
                                     
                                 <div class="step-button">
+                                    <div ng-show="form.incompleteTitles" style="color:red">
+                                        Gelar pada Penumpang Belum Ditambahkan <br /> <br />
+                                    </div>
+                                    <div ng-show="form.checkNameIncomplete" style="color:red">
+                                        Nama Penumpang Belum Lengkap atau Masih Mengandung Karakter Selain Alfabet dan Spasi<br/> <br/>
+                                    </div>
+                                    <div ng-show="form.hasDuplicatePaxName" style="color:red">
+                                        Nama Penumpang Tidak Boleh Ada yang Sama <br /> <br />
+                                    </div>
+                                    
+                                    <div ng-show="form.incompleteBirthDates" style=" color:red">
+                                        Tanggal Lahir Penumpang Belum Ditambahkan <br /> <br />
+                                    </div>
+                                    <div ng-show="form.incompletePassportData" style="color:red">
+                                        Data Paspor Belum Lengkap
+                                    </div>
                                     <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                                    <button class="btn btn-yellow" ng-click="changePage(3)" ng-disabled="passengersForm.$invalid || !CheckTitle(passengers) || (birthDateRequired && !CheckDate(passengers))
-                                             || (passportRequired && !CheckPassportDate(passengers))">
+                                    <button class="btn btn-yellow" ng-click="validateForm(2)" @*ng-disabled="passengersForm.$invalid || !CheckTitle(passengers) || (birthDateRequired && !CheckDate(passengers)) || hasDuplicatePaxName()
+                                             || (passportRequired &&  (!CheckPassportDate(passengers) || !passportNumberFilled(passengers)))"*@>
                                         LANJUTKAN
                                     </button>
                                 </div>
-                                <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Periksa kembali form Anda.</h4>
-                                
+                                <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">
+                                    Periksa kembali form Anda.
+                                </h4>
+
                             </div><!-- .content-step#step-2 -->
                             <!-- ******************** -->
                             <div class="content-step" id="step-3" ng-show="currentPage > 2">
@@ -399,7 +443,7 @@
                                             </div>
                                             
                                             <div class="passenger-list-content">
-                                                <p ng-if="birthDateRequired">
+                                                <p ng-if="birthDateRequired || passenger.type != 'adult'">
                                                     <span class="passenger-label">Tgl. Lahir</span>
                                                     <span class="passenger-data">{{passenger.birth.date}} {{months[passenger.birth.month].name}} {{passenger.birth.year}}</span>
                                                 </p>
@@ -594,8 +638,16 @@
                                             <dt>Tiket Bayi x{{infantCount}}</dt>
                                             <dd>Rp {{totalInfantFare | number:0}}</dd>
                                         </dl>
-                                        <dl class="total-price">
-                                            <dt>Total</dt>
+                                        <dl style="border-top: 1px dotted #fd8524; padding-top:5px">
+                                            <dt>Harga Total: </dt>
+                                            <dd>Rp {{originalPrice| number}}</dd>
+                                        </dl>
+                                        <dl style="color: #1daee4">
+                                            <dt>Diskon Travorama</dt>
+                                            <dd>- Rp {{originalPrice - totalPrice | number}}</dd>
+                                        </dl>
+                                        <dl class="total-price" style="border-top: 1px solid #fd8524;">
+                                            <dt>Harga Total</dt>
                                             <dd>Rp {{totalPrice | number}}</dd>
                                         </dl>
                                     </div>
@@ -665,37 +717,6 @@
                 </div>
             </section><!-- .checkout-content -->
 
-            <!--<div class="page-overlay flight-expired" ng-show="expired">
-                <div class="overlay-content">
-                    <header>
-                        <h4>Checkout Kadaluarsa</h4>
-                    </header>
-                    <section>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-4 text-align">
-                                    <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
-                                </div>
-                                <div class="col-sm-8">
-                                    <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
-                                    <p>Silahkan klik tombol dibawah untuk kembali ke halaman pencarian.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <footer>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                </div>
-                                <div class="col-sm-6">
-                                    <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-                </div>
-            </div>--><!-- .page-overlay -->
             <div class="bookfailed-popup" ng-show="expired">
                 <div class="overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
@@ -710,26 +731,7 @@
                 </div>
             </div>
 
-            <!--<div class="page-overlay booking-flight" ng-hide="book.checked || !book.booking">
-                <div class="overlay-content">
-                    <header>
-                        <h4>Mohon Tunggu</h4>
-                    </header>
-                    <section>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-4 text-align">
-                                    <img src="/Assets/images/expired-clock.jpg" alt="Expired" />
-                                </div>
-                                <div class="col-sm-8">
-                                    <p>Sedang memproses pemesanan Anda ke maskapai. Proses ini dapat berlangsung hingga 5 (lima) menit.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div> -->
-            <div class="loading-popup" ng-hide="book.checked || !book.booking">
+            <div class="loading-popup" ng-show="book.booking">
                 <div class="overlay-content">
                     <section style="padding-top:40px; padding-left:190px;">
                         <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
@@ -747,17 +749,6 @@
                 </div>
             </div>
 
-            <!--<div class="page-overlay booking-flight" ng-show="book.checked && book.isSuccess">
-                <div class="overlay-content">
-                    <header>
-                        <h4>Pemesanan Berhasil</h4>
-                    </header>
-                    <section>
-                        <p>Penerbangan Tersedia. Mengalihkan Anda ke halaman pembayaran.</p>
-                    </section>
-                </div>
-            </div>-->
-
             <div class="bookfailed-popup" ng-show="book.checked && book.isSuccess">
                 <div class=" overlay-content">
                 <section style="padding-top:60px; padding-left:225px;">
@@ -769,28 +760,6 @@
                 </section>
             </div>
             </div>
-
-            <!--<div class="page-overlay booking-flight" ng-show="book.checked && !book.isSuccess">
-                <div class="overlay-content">
-                    <header>
-                        <h4>Pemesanan Gagal</h4>
-                    </header>
-                    <section>
-                        <p>Mohon Maaf, pemesanan Anda gagal di proses.</p>
-                    </section>
-                    <footer>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                </div>
-                                <div class="col-sm-6">
-                                    <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-                </div>
-            </div>-->
 
             <div class="bookfailed-popup" ng-show="book.checked && !book.isSuccess && !book.isPriceChanged">
                 <div class="overlay-content">
@@ -806,34 +775,7 @@
                 </div>
             </div>
 
-            <!--<div class="page-overlay booking-flight" ng-show="book.isPriceChanged">
-                <div class="overlay-content">
-                    <header>
-                        <h4>Harga Berubah</h4>
-                    </header>
-                    <section>
-                        <p>
-                            Harga tiket untuk penerbangan ini berubah menjadi Rp {{book.newPrice | number : fractionSize}} disebabkan
-                            perubahan dari sistem maskapai.
-                        </p>
-                    </section>
-                    <footer>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <a class="btn btn-grey btn-block" href="{{returnUrl}}">KEMBALI</a>
-                                </div> 
-                                <form name="finalForm" id="finalForm" ng-submit="book.send()">
-                                    <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI" ng-disabled="(checkoutForm.loading)">
-                                </form>
-                            </div>
-                        </div>
-                    </footer>
-
-                </div>
-            </div> -->
-
-            <div class="priceChaged-popup" ng-show="book.priceChanged">
+            <div class="priceChaged-popup" ng-show="book.isPriceChanged">
                 <div class="overlay-content">
                     <section style="padding-top:45px; padding-left:200px;padding-bottom:0px;margin-bottom:0px;">
                         <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
@@ -842,7 +784,7 @@
                         <div align="right" style="padding-right:10px"><img src="/Assets/images/popup/paymentyellowstrip.png"></div>
                         <div style="padding-right:5px;padding-top:5px;padding-bottom:0px;margin-bottom:0px;"><span style="font-size:10px"><b>*Dapat berlangsung hingga 5(lima) menit</b></span></div>
                         <div style="padding-top:0px;margin-top:0px"><hr style="color:#15b1e4;padding-bottom:15px;margin-bottom:0px;padding-top:0px;margin-top:3px;margin-right:75px;" /></div>
-                        
+
                         <footer>
                             <div class="container">
                                 <div class="row">
@@ -855,14 +797,6 @@
                                 </div>
                             </div>
                         </footer>
-                        <!--<div style="padding-top:0px;margin-top:0px;">
-                            <span style="padding-bottom:10px;padding-top:0px;margin-top:0px;margin-bottom:0px;"><a class="btn popup-btn-yellow price-changed" href="{{returnUrl}}">CARI ULANG</a></span>
-                            <span style="padding-left:40px;padding-bottom:10px;padding-top:0px;margin-top:0px;margin-bottom:0px;">
-                                <form name="finalForm" id="finalForm" ng-submit="book.send()">
-                                    <span style="padding-left:40px;padding-bottom:10px;padding-top:0px;margin-top:0px;margin-bottom:0px;"><a class="btn popup-btn-yellow price-changed" href="#"><b>LANJUTKAN</b></a></span>
-                                </form>
-                            </span>   
-                        </div>-->
                     </section>
                 </div>
             </div>

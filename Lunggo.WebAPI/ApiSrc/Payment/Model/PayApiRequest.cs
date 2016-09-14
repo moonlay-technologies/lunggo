@@ -12,5 +12,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Model
         public string DiscountCode { get; set; }
         [JsonProperty("rsvNo", NullValueHandling = NullValueHandling.Ignore)]
         public string RsvNo { get; set; }
+        [JsonProperty("test", NullValueHandling = NullValueHandling.Ignore)]
+        public int Test { get; set; }
     }
 }

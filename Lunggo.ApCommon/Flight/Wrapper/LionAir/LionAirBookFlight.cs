@@ -83,118 +83,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     };
                 }
 
-                var infants = bookInfo.Passengers.Where(pax => pax.Type == PaxType.Infant);
-                var children = bookInfo.Passengers.Where(pax => pax.Type == PaxType.Child);
-                bool isInfantValid = true;
-                bool isChildValid = true;
-                foreach (var inft in infants)
-                {
-                    if (inft.DateOfBirth.Value.AddYears(2) <= depdate)
-                    {
-                        isInfantValid = false;
-                    }
-                }
-
-                foreach (var child in children)
-                {
-                    if (child.DateOfBirth.Value.AddYears(2) > depdate || child.DateOfBirth.Value.AddYears(12) <= depdate)
-                    {
-                        isChildValid = false;
-                    }
-                }
-
-                if (adultCount == 0)
-                {
-                    //throw new Exception("haloooo 3");
+                List<string> errorMessages;
+                CommonInputCheck(bookInfo.Passengers, depdate, out errorMessages);
+                if (errorMessages.Count > 0)
                     return new BookFlightResult
                     {
-                        Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        ErrorMessages = new List<string> { "There Must be one adult" },
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        IsSuccess = false
-                    };
-                }
-                if (adultCount + childCount > 7)
-                {
-                    //throw new Exception("haloooo 4");
-                    return new BookFlightResult
-                    {
-                        Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        ErrorMessages =
-                            new List<string> { "Total adult and children passenger must be not more than seven" },
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        IsSuccess = false
-                    };
-                }
-                if (adultCount < infantCount)
-                {
-                    //throw new Exception("haloooo 5");
-                    return new BookFlightResult
-                    {
-                        Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        ErrorMessages =
-                            new List<string> { "Each infant must be accompanied by one adult" },
                         IsSuccess = false,
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
-                        }
-                    };
-                }
-                if (depdate > DateTime.Now.AddMonths(331).Date)
-                {
-                    //throw new Exception("haloooo 6");
-                    return new BookFlightResult
-                    {
-                        Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        ErrorMessages = new List<string> { "Time of Departure Exceeds" },
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
                         },
-                        IsSuccess = false
-                    };
-                }
-                if (!isInfantValid)
-                {
-                    //throw new Exception("haloooo 7");
-                    
-                    return new BookFlightResult
-                    {
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        ErrorMessages = new List<string> { "Age of infant when traveling must be less than or equal 2 years old" },
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        IsSuccess = false
+                        ErrorMessages = errorMessages
                     };
-                }
-                if (!isChildValid)
-                {
-                    //throw new Exception("haloooo 8");
-                    
-                    return new BookFlightResult
-                    {
-                        Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        ErrorMessages = new List<string> { "Age of chil when traveling must be between 2 and 12 years old" },
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        IsSuccess = false
-                    };
-                }
                 // [GET] Search Flight
 
                 var client = CreateAgentClient();
                 var flight = FlightService.GetInstance();
+                var originCountry = flight.GetAirportCountryCode(origin);
                 var destinationCountry = flight.GetAirportCountryCode(dest);
                 var userId = "";
                 var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
@@ -744,6 +650,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             TripType = TripType.OneWay,
                             Supplier = Supplier.LionAir,
                             Price = new Price(),
+                            AdultPricePortion = bookInfo.Itinerary.AdultPricePortion,
+                            ChildPricePortion = bookInfo.Itinerary.ChildPricePortion,
+                            InfantPricePortion = bookInfo.Itinerary.InfantPricePortion,
                             FareId = bookInfo.Itinerary.FareId,
                             Trips = new List<FlightTrip>
                             {
@@ -785,7 +694,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             return new BookFlightResult
                             {
                                 IsSuccess = false,
-                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                //Errors = new List<FlightError> { FlightError.TechnicalError },
                                 Status = null,
                                 ErrorMessages = new List<string> { "Itinerary is Changed!" },
                                 NewPrice = agentprice,
@@ -801,7 +710,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var orderedPassengers = bookInfo.Passengers.OrderBy(x => x.Type).ToList();
                         var dataPassenger = "";
                         
-                        if (destinationCountry == "ID")
+                        if (originCountry == destinationCountry )
                         {
                             var infpax = 1;
                             for (var i = 0; i < orderedPassengers.Count; i++)
@@ -940,7 +849,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                         "&NameBlock" + (i + 1) + "%24ddlDocCountry=" +
                                         orderedPassengers[i].PassportCountry +
                                         "&NameBlock" + (i + 1) + "%24ddlPaxCountry=" +
-                                        orderedPassengers[i].PassportCountry;
+                                        orderedPassengers[i].Nationality; //orderedPassengers[i].Nationality
                                     infpax += 1;
                                 }
                                 else
@@ -980,7 +889,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                         "&NameBlock" + (i + 1) + "%24ddlDocCountry=" +
                                         orderedPassengers[i].PassportCountry +
                                         "&NameBlock" + (i + 1) + "%24ddlPaxCountry=" +
-                                        orderedPassengers[i].PassportCountry;
+                                        orderedPassengers[i].Nationality;
                                 }
                             }
                         }
@@ -1002,7 +911,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         }
                         middle1 += "&hdnDepPorts=&hdnArrPorts=";
 
-                        var c = bookInfo.Contact.Name;
+                        var c = bookInfo.Contact.Name.Trim();
                         string contactFirstname, contactLastname;
                         var contactTitle = "";
                         if (c.Split(' ').Count() == 1)
@@ -1083,7 +992,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     return new BookFlightResult
                                     {
                                         IsSuccess = false,
-                                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                                        //Errors = new List<FlightError> { FlightError.TechnicalError },
                                         Status = null,
                                         ErrorMessages = new List<string> { "Price is changed!" },
                                         NewPrice = decimal.Parse(newPrice),
@@ -1134,7 +1043,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 return new BookFlightResult
                                 {
                                     IsSuccess = false,
-                                    Errors = new List<FlightError> { FlightError.TechnicalError },
+                                    //Errors = new List<FlightError> { FlightError.TechnicalError },
                                     Status = null,
                                     ErrorMessages = new List<string> { "Price is changed!2" },
                                     NewPrice = harga2,
@@ -1280,10 +1189,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        ErrorMessages = new List<string> { "Web Layout Changed!" }
+                        ErrorMessages = new List<string> { "Web Layout Changed! Failed to get Booking Reference" }
                     };
                 }
-                catch //(Exception e)
+                catch (Exception e)
                 {
                     LogOut(cid, client);
                     TurnInUsername(clientx, userName);
@@ -1291,8 +1200,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return new BookFlightResult
                      {
                          IsSuccess = false,
-                        Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Web Layout Changed!" },
+                        Errors = new List<FlightError> { FlightError.TechnicalError},
+                        ErrorMessages = new List<string> { e.Message + "|||" + e.StackTrace },
                          Status = new BookingStatusInfo
                          {
                              BookingStatus = BookingStatus.Failed

@@ -67,6 +67,7 @@
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\dv1-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob.pubxml" />
     <None Include="Web.Debug.config">
@@ -93,7 +94,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>31449</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

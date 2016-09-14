@@ -4,7 +4,7 @@
         
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1">
+    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="shortcut icon" type="image/ico" href="/Assets/images/favico.ico" />
         
     @{ Html.RenderPartial("_openGraph"); }
@@ -35,7 +35,11 @@
         @Html.Partial("/Views/Shared/_googleTag.cshtml")
 
         <!--********************-->
-        @Html.Partial("/Views/Shared/mobile/_SiteHeader.cshtml")
+        @if (ViewBag.SiteHeader != "header-contact-us")
+        {
+            @Html.Partial("/Views/Shared/mobile/_SiteHeader.cshtml")
+
+        }
         <!--********************-->
         <section class="site-content">
             @RenderBody()

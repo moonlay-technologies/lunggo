@@ -63,28 +63,8 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
         {
             return
                 request != null &&
-                request.RegistrationId != null &&
-                request.Handle != null;
-        }
-
-        private static ApiResponseBase ReturnGoneIfHubResponseIsGone(MessagingException e)
-        {
-            var webex = e.InnerException as WebException;
-            if (webex.Status == WebExceptionStatus.ProtocolError)
-            {
-                var response = (HttpWebResponse)webex.Response;
-                if (response.StatusCode == HttpStatusCode.Gone)
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.Gone,
-                        ErrorCode = "ERNUPD02"
-                    };
-            }
-            return new ApiResponseBase
-            {
-                StatusCode = HttpStatusCode.InternalServerError,
-                ErrorCode = "ERRGEN99"
-            };
+                !string.IsNullOrEmpty(request.RegistrationId) &&
+                !string.IsNullOrEmpty(request.Handle);
         }
     }
 }

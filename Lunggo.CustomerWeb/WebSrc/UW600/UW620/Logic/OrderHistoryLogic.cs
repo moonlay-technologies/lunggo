@@ -34,17 +34,18 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620.Logic
                 idMember
             });
 
-            var HotelMapping = dataCapture.Select(selectedItem => new Uw620HotelHistory
-            {
-                IdMember = idMember,
-                HotelName = getHotelName(request, selectedItem.HotelNo),
-                CheckInDateTime = (DateTime)selectedItem.CheckInDate,
-                CheckOutDateTime = (DateTime)selectedItem.CheckOutDate,
-                OrderId = selectedItem.RsvNo,
-                StatusPayment = getStatusPayment(selectedItem.PaymentStatusCd),
-                Address = getAddress(request, selectedItem.HotelNo),
-                Type = "Hotel"
-            });
+            IEnumerable<Uw620HotelHistory> HotelMapping = null;
+            //dataCapture.Select(selectedItem => new Uw620HotelHistory
+            //{
+            //    IdMember = idMember,
+            //    HotelName = getHotelName(request, selectedItem.HotelNo),
+            //    CheckInDateTime = (DateTime)selectedItem.CheckInDate,
+            //    CheckOutDateTime = (DateTime)selectedItem.CheckOutDate,
+            //    OrderId = selectedItem.RsvNo,
+            //    StatusPayment = getStatusPayment(selectedItem.PaymentStatusCd),
+            //    Address = getAddress(request, selectedItem.HotelNo),
+            //    Type = "Hotel"
+            //});
             
             return HotelMapping;
         }

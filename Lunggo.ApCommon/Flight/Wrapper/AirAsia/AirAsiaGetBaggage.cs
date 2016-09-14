@@ -30,8 +30,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         {
             public string GetBaggage(string origin, string destination)
             {
-                string baggage = "";
-                string baggages = "";
+                string baggage = "0";
                 var path = "http://www.airasia.com/api/feeandchargesapi/get?siteid=my/en&dep=" + origin + "&arr=" + destination;
                 var client = new RestClient(path);
                 var request = new RestRequest("", Method.GET);
@@ -41,29 +40,40 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 //Change to JSON Object
                 var objects = JArray.Parse(content);
-                string data = (string)objects[6]["details"][0]["feedesc"];
+                var data = objects[6]["details"];//(string)objects[6]["details"][0]["feedesc"];
+                string price = "";
+                string dummyBaggage = "";
+                int totalData = data.Count();
+                for (var i = 0; i < totalData; i++)
+                {
+                    price = (string)data[i]["value"];
+                    if (string.IsNullOrEmpty(price))
+                    {
+                        dummyBaggage = (string)data[i]["feedesc"];
+                        Debug.Print("Dummy Bagasi : " + dummyBaggage);
+                    }
+                }
 
                 //Debug.Print(data);
-                var temp = data.Split(new string[] { "to" }, StringSplitOptions.None);
-                if (temp.Length > 1)
+                if (!string.IsNullOrEmpty(dummyBaggage))
                 {
-                    baggage = temp[1].Trim().Replace("kg)", "").Trim();
+                    var temp = dummyBaggage.Split(new string[] { "to" }, StringSplitOptions.None);
+                    if (temp.Length > 1)
+                    {
+                        baggage = temp[1].Trim().Replace("kg)", "").Trim();
+                    }
+
+                }
+                if (baggage != null || baggage != "")
+                {
+                    Debug.Print("Bagasi : "+baggage);
                     return baggage;
                 }
                 else
                 {
-                    return null;
-                }
-                
-
-                if (baggage != null || baggage != "")
-                {
+                    baggage = "0";
                     return baggage;
-                }
-                
-                
-                //Console.WriteLine(content);
-                
+                }                
             }
         }
 

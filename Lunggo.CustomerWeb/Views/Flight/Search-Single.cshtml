@@ -82,7 +82,7 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
-     
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
 }
 
 @section PageJS{
@@ -119,7 +119,7 @@
     <!-- angular controller -->
     <script src="/Assets/travorama20/angularDirectory/priceDetail/priceDetailDir.js"></script>
     <script src="/Assets/travorama20/js/singleFlightController.js"></script>
-    <script src="https://github.com/angular/angular.js/blob/master/src/ngLocale/angular-locale_id-id.js"></script>
+    @*<script src="https://github.com/angular/angular.js/blob/master/src/ngLocale/angular-locale_id-id.js"></script>*@
 }
 
 @if (isValid)
@@ -365,8 +365,17 @@
                             <div class="flight-summary-left">
                                 <div class="summary-top">
                                     <div class="summary-top-left flight-airline">
-                                        <h5>{{flight.trips[0].segments[0].airlineName}}</h5>
-                                        <img ng-src="{{flight.trips[0].segments[0].airlineLogoUrl}}" alt="flight.trips[0].segments[0].airlineName" />
+                                        <div class="summary-top-left-top flight-facilities">
+                                            <h5>{{flight.trips[0].segments[0].airlineName}}</h5>
+                                            <img ng-src="{{flight.trips[0].segments[0].airlineLogoUrl}}" alt="flight.trips[0].segments[0].airlineName" />
+                                        </div>
+                                        <div class="summary-top-left-bottom flight-facilities" ng-show="checkMeal(flight.trips[0]) ||
+                                         !checkBaggageNaN(minBaggage(flight.trips[0])) || checkTax(flight.trips[0])">
+                                            <span ng-show="checkMeal(flight.trips[0])" class="flight-meal"></span>
+                                            <span ng-show="!checkBaggageNaN(minBaggage(flight.trips[0]))" class="flight-baggage">{{minBaggage(flight.trips[0])}}</span>
+                                            <span ng-show="checkTax(flight.trips[0])" class="flight-tax"></span>
+                                        </div><!-- .flight-facilities -->
+                                        
                                     </div><!-- .flight-airline -->
                                     <div class="summary-top-right flight-date">
                                         <div class="summary-top-right-top">
@@ -382,7 +391,7 @@
                                                 </h5>
                                             </div>
                                             <div class="flight-date-arrival">
-                                                <h4>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}} <span>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}}</span><span class="overday" ng-if="getFullDate(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime) != getFullDate(flight.trips[0].segments[0].departureTime)">{{getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime))}}</span></h4>
+                                                <h4>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}} <span>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}}</span><span class="overday" ng-if="getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime)) != 0">{{getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime))}}</span></h4>
                                                 <h5>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'dd MMM yyyy' : 'UTC'}}</h5>
                                             </div>
                                         </div>
@@ -419,10 +428,10 @@
                                         <img ng-src="{{segment.airlineLogoUrl}}" alt="{{segment.airlineName}}" class="segment-airline-logo" />
                                         <h5 class="segment-airline-name">{{segment.airlineName}}</h5>
                                         <h5 class="segment-airline-number">{{segment.airlineCd}}-{{segment.flightNo}}</h5>
-                                        <div class="segment-detail flight-facility" ng-show="{{segment.meal || segment.baggage != ''}}">
-                                            <span ng-show="segment.meal" class="flight-meal"></span>
-                                            <span ng-show="segment.baggage != ''" class="flight-baggage">{{segment.baggage}}</span>
-                                            <span ng-show="segment.tax" class="flight-tax"></span>
+                                        <div class="segment-detail flight-facility" ng-show="{{segment.hasMeal || segment.isBaggageIncluded != ''}}">
+                                            <span ng-show="segment.hasMeal" class="flight-meal"></span>
+                                            <span ng-show="segment.isBaggageIncluded != ''" class="flight-baggage">{{segment.baggageCapacity}}</span>
+                                            <span ng-show="segment.includingPsc" class="flight-tax"></span>
                                         </div>
                                     </div>
                                     <div class="segment-right">
@@ -546,10 +555,10 @@
                                             <img ng-src="{{segment.airlineLogoUrl}}" alt="{{segment.airlineName}}" class="segment-airline-logo" />
                                             <h5 class="segment-airline-name">{{segment.airlineName}}</h5>
                                             <h5 class="segment-airline-number">{{segment.airlineCd}}-{{segment.flightNo}}</h5>
-                                            <div class="segment-detail flight-facility" ng-show="{{segment.meal || segment.baggage || segment.tax}}">
-                                                <span ng-show="segment.meal" class="flight-meal"></span>
-                                                <span ng-show="segment.baggage" class="flight-baggage">{{segment.baggage}}</span>
-                                                <span ng-show="segment.tax" class="flight-tax"></span>
+                                            <div class="segment-detail flight-facility" ng-show="{{segment.hasMeal || segment.isBaggageIncluded || segment.includingPsc}}">
+                                                <span ng-show="segment.hasMeal" class="flight-meal"></span>
+                                                <span ng-show="segment.isBaggageIncluded" class="flight-baggage">{{segment.baggageCapacity}}</span>
+                                                <span ng-show="segment.includingPsc" class="flight-tax"></span>
                                             </div>
                                         </div>
                                         <div class="segment-right">
@@ -586,6 +595,20 @@
                     <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                     <div style="padding-top:5px;"><span style="font-size:14px">Mengalihkan Anda ke halaman checkout.</span></div>
                 </section>
+            </div>
+        </div>
+    
+        <div class="bookfailed-popup" ng-show="selectFlightParam.error">
+            <div class="overlay-content">
+                <section style="padding-top:60px; padding-left:225px;">
+                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                    <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                    <div style="padding-top:5px;"><span style="font-size:13px">Penerbangan ini <span style="color: #15b1e4;font-size:13px"><b>sudah tidak tersedia</b></span>.</span></div>
+                    <div><span style="font-size:13px">Silakan klik tombol di bawah untuk kembali ke halaman awal.</span></div>
+                </section>
+                <div align="right" style="padding-right:30px;padding-top:30px;">
+                    <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+                </div>
             </div>
         </div>
 

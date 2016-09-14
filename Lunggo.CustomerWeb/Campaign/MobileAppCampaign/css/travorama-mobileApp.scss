@@ -1,0 +1,103 @@
+﻿.travorama-mobileApp {
+    .mobileApp-top {
+        background-image: url('/Campaign/MobileAppCampaign/images/background.jpg');
+        display: block;
+        width: 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 780px;
+        text-align: center;
+        .big-txt {
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 40px;
+            padding-top: 120px;
+        }
+        .sm-txt {
+            font-size: 14px;
+            margin: 35px 0 25px;
+        }
+        .app-download {
+            a {
+                &.playstore-icon {    
+                    background: url("/Campaign/MobileAppCampaign/images/play-store.png");
+                    width: 143px;
+                    height: 49px;
+                    display: inline-block;
+                }
+                &.appstore-icon {
+                    background: url("/Campaign/MobileAppCampaign/images/app-store.png");
+                    width: 152px;
+                    height: 50px;
+                    display: inline-block;
+                    margin-left: 30px;
+                }
+            }
+            
+        }
+    }
+    .mobileApp-bottom {
+        margin: 45px auto;
+        .title-bg {
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            margin-bottom: 45px;
+            span.blue-txt {color: #1daee4;}
+        }
+        .mobileApp-content {
+            background: url('/Campaign/MobileAppCampaign/images/box-photo.png');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            padding: 100px 0 50px;
+        }
+        .mobileApp-txtbx {
+            &.right {margin-left: 415px;}
+            &.left {
+                max-width: 415px;
+                text-align: right;
+            }
+            .txtbx-title {
+                color: #1daee4;
+                font-size: 14px;
+                font-weight: 700;
+                margin-bottom: 5px;
+            }
+            &.txtbx-1 {
+                padding: 18px 70px;
+                margin-bottom: 122px;
+            }
+            &.txtbx-2 {
+                padding: 10px 50px;
+                margin-bottom: 123px;
+            }
+            &.txtbx-3 {
+                padding: 7px 70px;
+                margin-bottom: 120px;
+            }
+            &.txtbx-4 {
+                padding: 12px 50px;
+                margin-bottom: 150px;
+            }
+            &.txtbx-5 {
+                padding: 10px 67px;
+                margin-bottom: 115px;
+            }
+            &.txtbx-6 {
+                padding: 18px 50px;
+                margin-bottom: 150px;
+            }
+            &.txtbx-7 {
+                padding: 18px 60px;
+                margin-bottom: 30px;
+            }
+            .txtbx-desc {line-height:14px;}
+        }
+    }
+    .mobileApp-wrapper {max-width: none;
+        &.container {padding:0;}
+    }
+}

@@ -101,18 +101,22 @@
 
             <div class="info-buyer">
                 <header>
+                    <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                        <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                        <input type="text" name="Status" value="" id="message-input" />
+                    </form>
                     <h4>
                         <b>INFO PEMESANAN</b>
-                        <span ng-if="flight.payment.status == 3">
-                            <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow">@Html.I18NString("CW00198")</button>
+                        <span>
+                            <button class="pull-right btn btn-yellow" ng-if="isExist" ng-click="submitRsvNo(flight.rsvNo, flight.rsvStatus)">{{ButtonText(flight.rsvStatus,flight.payment.method)}}</button>
                         </span>
-                        <span ng-if="flight.payment.status == 2">
+                        @*<span ng-if="flight.payment.status == 2">
                             <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" disabled>@Html.I18NString("CW00198")</button>
                         </span>
 
                         <span ng-if="flight.payment.status != 2 && flight.payment.status != 3">
                             <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow hidden">@Html.I18NString("CW00198")</button>
-                        </span>
+                        </span>*@
                     </h4>
                 </header>
 
@@ -164,13 +168,13 @@
                             <label class="control-label col-xs-4">@Html.I18NString("CW00017")</label>
                             <div class="col-xs-8">
                                 <ol class="passenger-list">
-                                    <div ng-repeat="pax in flight.pax">
+                                    <div ng-repeat="passenger in flight.pax">
                                         <li>
                                             <div>
-                                                <p>{{title(pax.tit)}} {{pax.fst}} {{pax.lst}}</p>
+                                                <p>{{title(passenger.title)}} {{passenger.name}}</p>
                                             </div>
                                             <div>
-                                                <span>{{paxtype(pax.typ)}}</span>
+                                                <span>{{paxtype(passenger.type)}}</span>
                                             </div>
                                         </li>
 

@@ -15,6 +15,7 @@ using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Extension;
+using Lunggo.Framework.Log;
 using Lunggo.Framework.Mail;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
@@ -33,26 +34,21 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 var apiResponse = AssembleApiResponse(bookServiceResponse, request.Test);
                 if (apiResponse.StatusCode != HttpStatusCode.OK)
                 {
+                    var log = LogService.GetInstance();
                     var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                    var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
-                    MailService.GetInstance().SendPlainEmail(new MailModel
-                    {
-                        FromMail = "log@travorama.com",
-                        FromName = "Travorama Log",
-                        RecipientList = new[] { "developer@travelmadezy.com" },
-                        Subject = envPrefix + "Booking API Log",
-                    },
-                        "<html><body>ERROR CODE : "
-                        + apiResponse.ErrorCode
-                        + "<br/><br/>REQUEST :<br/><br/>"
+                    log.Post(
+                        "```Booking API Log```"
+                        + "\n`*Environment :* " + env.ToUpper()
+                        + "\n*REQUEST :*\n"
                         + request.Serialize()
-                        + "<br/><br/>RESPONSE :<br/><br/>"
+                        + "\n*RESPONSE :*\n"
                         + apiResponse.Serialize()
-                        + "<br/><br/>Platform : "
+                        + "\n*LOGIC RESPONSE :*\n"
+                        + bookServiceResponse.Serialize()
+                        + "\n*Platform :* "
                         + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
-                        + "<br/><br/>Itinerary : <br/><br/>"
-                        + FlightService.GetInstance().GetItineraryForDisplay(request.Token).Serialize()
-                        + "<br/><br/></body></html>");
+                        + "\n*Itinerary :* \n"
+                        + FlightService.GetInstance().GetItineraryForDisplay(request.Token).Serialize());
                 }
                 return apiResponse;
             }
@@ -122,8 +118,8 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             }
             else
             {
-                if (bookServiceResponse.Errors[0] == FlightError.PartialSuccess)
-                    bookServiceResponse.Errors.RemoveAt(0);
+                //if (bookServiceResponse.Errors[0] == FlightError.PartialSuccess)
+                //    bookServiceResponse.Errors.RemoveAt(0);
                 switch (bookServiceResponse.Errors[0])
                 {
                     case FlightError.InvalidInputData:

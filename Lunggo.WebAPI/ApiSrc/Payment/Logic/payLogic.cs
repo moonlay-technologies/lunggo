@@ -14,6 +14,22 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
         public static ApiResponseBase Pay(PayApiRequest request)
         {
             var user = HttpContext.Current.User;
+            if (request.Test == 1)
+            {
+                return new PayApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERPPAY05"
+                };
+            }
+            if (request.Test == 2)
+            {
+                return new PayApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERPPAY06"
+                };
+            }
             if (!IsValid(request))
                 return new PayApiResponse
                 {
@@ -44,6 +60,22 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 };
             }
 
+            if (paymentDetails.Status == PaymentStatus.Failed)
+            {
+                if (paymentDetails.FailureReason == FailureReason.VoucherNoLongerEligible)
+                    return new PayApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        ErrorCode = "ERPPAY05"
+                    };
+                if (paymentDetails.FailureReason == FailureReason.BinPromoNoLongerEligible)
+                    return new PayApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        ErrorCode = "ERPPAY06"
+                    };
+            }
+
             if (!isUpdated)
             {
                 return new PayApiResponse
@@ -59,7 +91,10 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 Method = paymentDetails.Method,
                 RedirectionUrl = paymentDetails.RedirectionUrl,
                 TransferAccount = paymentDetails.TransferAccount,
-                StatusCode = HttpStatusCode.OK
+                StatusCode =
+                    paymentDetails.Status == PaymentStatus.Settled || paymentDetails.Status == PaymentStatus.Pending
+                        ? HttpStatusCode.OK
+                        : HttpStatusCode.Accepted
             };
         }
 

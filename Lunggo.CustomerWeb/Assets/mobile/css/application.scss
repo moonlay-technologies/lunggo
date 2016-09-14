@@ -104,9 +104,8 @@ $button-border: #c9cdd2;
 }
 
 @mixin appearance($value) {
-    -webkit-appearence: $value;
-    -moz-appearence: $value;
-    appearance: $value;
+    -webkit-appearance: $value;
+    -moz-appearance: $value;
 }
 
 /*--------------------*/
@@ -150,10 +149,10 @@ img {max-width:100%;}
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {@include appearance(none); margin:0;}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea, select.form-control {@include border-radius($border-radius-default); @include appearance(none);}
-.form-control {@include border-radius($border-radius-default)}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control {@include appearance(none);}
 
-input[type="text"], input[type="password"], input[type="number"], input[type="email"], select.form-control {box-shadow: none; font-size:12px; height:auto;}
+input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control, select.form-control {@include border-radius($border-radius-default); box-shadow: none; font-size:12px; height:auto;}
+.form-control {@include border-radius($border-radius-default)}
 
 // *****
 // site header
@@ -300,6 +299,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 .form-wrapper.form-wrapper--register, .form-wrapper.form-wrapper--login {
     font-size: 11px;
+    margin-bottom: 40px;
     a {
         @extend .os-bold; 
         text-decoration: underline;
@@ -315,6 +315,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #000000; 
     width: 100%;
     padding: 15px 0;
+    /*z-index: -1;*/
+    position: relative;
     .site-footer-menu {
         nav {
             padding:0 12px;
@@ -348,6 +350,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             .instagram {
                 .fa-circle {color: $color-ig;}
             }
+            a:hover {text-decoration: none;}
         }
         // inverse
         .fa-stack {
@@ -363,8 +366,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             font-size: 10px;
             color: $color-footer-txt;
             margin: 0 20px;
-            z-index: -1;
-            position: relative;
         }
     }
 }
@@ -450,7 +451,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             &:before {background-image:url(/Assets/images/cal-bg.png); background-size:contain; width:25px; height:25px; top:8px;}
         }
         .form-adult {position:relative; padding:10px 20px; padding-left:45px; text-align:center; height:40px; font-size:14px;
-            &:before {content:""; display:block; width:22px; height:31px; background:url(/Assets/mobile/images/passenger-sprite.png); top:5px; left:10px; position:absolute;}
+            /*&:before {content:""; display:block; width:22px; height:31px; background:url(/Assets/mobile/images/passenger-sprite.png); top:5px; left:10px; position:absolute;}*/
         }
         .form-children {@extend & .form-adult;
             &:before {background-position:-22px 0;}
@@ -822,7 +823,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 &.summary--price {
     dl {@include clearfix();
         dt {float:left; width:50%; font-weight:normal; position:relative; padding-left:12px;
-            &:before {position:absolute; content:''; width:7px; height:7px; background:#ff7200; top:3px; left:0;}
+            /*&:before {position:absolute; content:''; width:7px; height:7px; background:#ff7200; top:3px; left:0;}*/
         }
         dd {float:left; width:50%; text-align:right; font-weight:bold;}
         // total price
@@ -867,7 +868,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .accordion-wrapper { 
     .accordion-title {
         background-color: #35b6e7;
-        color: #fff;
+        color: $color-white;
         cursor: pointer;
         padding: 11px 15px;
         width: 100%;

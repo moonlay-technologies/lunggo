@@ -54,7 +54,7 @@
                                 </form>
                                 <h4>
                                     <b>BUYER INFO</b>
-                                    <button class="pull-right btn btn-yellow" ng-click="submitRsvNo(flight.rsvNo, flight.rsvStatus)">{{ButtonText(flight.rsvStatus,flight.payment.method)}}</button>
+                                    <button class="pull-right btn btn-yellow" ng-if="isExist" ng-click="submitRsvNo(flight.rsvNo, flight.rsvStatus)">{{ButtonText(flight.rsvStatus,flight.payment.method)}}</button>
                                 </h4>
                             </header>
                             <section>

@@ -82,6 +82,9 @@ namespace Lunggo.ApCommon.Flight.Model
         public decimal AdultPricePortion { get; set; }
         public decimal ChildPricePortion { get; set; }
         public decimal InfantPricePortion { get; set; }
+        public decimal NetAdultPricePortion { get; set; }
+        public decimal NetChildPricePortion { get; set; }
+        public decimal NetInfantPricePortion { get; set; }
         public TripType TripType { get; set; }
         public TripType RequestedTripType { get; set; }
         public CabinClass RequestedCabinClass { get; set; }

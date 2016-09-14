@@ -514,6 +514,7 @@ app.controller('orderDetailController', [
 
         $scope.pageLoaded = true;
         $scope.trial = 0;
+        $scope.isExist = false;
         $scope.getTime = function (dateTime) {
             return new Date(dateTime);
         }
@@ -666,15 +667,15 @@ app.controller('orderDetailController', [
                     return 'Halaman Pembayaran';
                 }
                 else {
-                    return 'Halaman Thank You';
+                    return 'Lihat Detail';
                 }
             }
 
-            else if (status == 4 || status == 7 || status == 9 || status == 10) {
-                return 'Halaman Thank You';
+            else if (status == 7 || status == 9 || status == 10) {
+                return 'Lihat Detail';
             }
 
-            else if (status == 5) { return 'Cetak E-tiket'; }
+            else if (status == 4 || status == 5) { return 'Cetak E-tiket'; }
 
             else if (status == 6 || status == 8) { return 'Cari Penerbangan'; }
 
@@ -696,6 +697,7 @@ app.controller('orderDetailController', [
                     if (returnData.data.status == "200") {
                         $scope.flight = returnData.data.flight;
                         $scope.datafailed = false;
+                        $scope.isExist = true;
                     }
                     else {
                         console.log('There is an error');

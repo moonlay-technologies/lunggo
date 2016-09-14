@@ -11,39 +11,7 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public int? AreaCd
-		{
-		    get { return _AreaCd; }
-		    set
-		    {
-		        _AreaCd = value;
-		        IncrementLog("AreaCd");
-		    }
-		}
-		public String AreaName
-		{
-		    get { return _AreaName; }
-		    set
-		    {
-		        _AreaName = value;
-		        IncrementLog("AreaName");
-		    }
-		}
-		public String LangCd
-		{
-		    get { return _LangCd; }
-		    set
-		    {
-		        _LangCd = value;
-		        IncrementLog("LangCd");
-		    }
-		}
-
 		
-		private int? _AreaCd;
-		private String _AreaName;
-		private String _LangCd;
-
 
 		public static AreasTableRecord CreateNewInstance()
         {
@@ -74,10 +42,6 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("AreaCd", true),
-				new ColumnMetadata("AreaName", false),
-				new ColumnMetadata("LangCd", true),
-
             };
         }
 

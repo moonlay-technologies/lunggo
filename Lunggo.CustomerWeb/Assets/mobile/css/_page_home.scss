@@ -8,6 +8,7 @@ $play-store: '../images/play-store.png';
     overflow-y: auto;
     @include clearfix(); 
     background: $color-white;
+    &.burger-shown {overflow-y: hidden;}
     .form-container { 
         @import 'home_page_layout';
     }

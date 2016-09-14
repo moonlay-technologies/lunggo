@@ -37,7 +37,7 @@ namespace Lunggo.ApCommon.Flight.Service
             { 3, CitilinkWrapper},
             { 4, SriwijayaWrapper},
             { 5, LionAirWrapper},
-            { 6, GarudaWrapper}
+            //{ 6, GarudaWrapper}
         };
 
         private FlightService()

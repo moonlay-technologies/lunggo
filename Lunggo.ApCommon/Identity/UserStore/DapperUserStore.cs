@@ -197,7 +197,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 LockoutEnabled = record.LockoutEnabled,
                 LockoutEndDateUtc = record.LockoutEndDateUtc,
                 PasswordHash = record.PasswordHash,
-                CountryCallCd = record.CountryCd,
+                CountryCallCd = record.CountryCallCd,
                 PhoneNumber = record.PhoneNumber,
                 PhoneNumberConfirmed = record.PhoneNumberConfirmed,
                 SecurityStamp = record.SecurityStamp,

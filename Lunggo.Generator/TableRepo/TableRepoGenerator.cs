@@ -166,13 +166,13 @@ namespace Lunggo.Generator.TableRepo
 
         private String GetTableRecordFileName(String tableName)
         {
-            var nameBuilder = new StringBuilder().AppendFormat("{0}TableRecord.cs", tableName);
+            var nameBuilder = new StringBuilder().AppendFormat("TableRecord\\{0}TableRecord.cs", tableName);
             return nameBuilder.ToString();
         }
 
         private String GetTableRepoFileName(String tableName)
         {
-            var nameBuilder = new StringBuilder().AppendFormat("{0}Repository.cs", tableName);
+            var nameBuilder = new StringBuilder().AppendFormat("Repository\\{0}Repository.cs", tableName);
             return nameBuilder.ToString();
         }
 

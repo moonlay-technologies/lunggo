@@ -200,6 +200,9 @@
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\zendesk.properties" />
     <None Include="Config\Driver\azureStorage.properties" />
+    <None Include="Config\WebAPI\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\notification.properties">
       <SubType>Designer</SubType>
     </None>
@@ -454,6 +457,48 @@
     <None Include="Config\WebJob.FlightCrawlScheduler\redis.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.CurrencyCrawler\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.CurrencyCrawler\api.properties" />
+    <None Include="Config\WebJob.CurrencyCrawler\azureStorage.properties" />
+    <None Include="Config\WebJob.CurrencyCrawler\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.CurrencyCrawler\cw.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.CurrencyCrawler\db.properties" />
+    <None Include="Config\WebJob.CurrencyCrawler\domain.properties" />
+    <None Include="Config\WebJob.CurrencyCrawler\facebook.properties" />
+    <None Include="Config\WebJob.CurrencyCrawler\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.CurrencyCrawler\freshdesk.properties" />
+    <None Include="Config\WebJob.CurrencyCrawler\Garuda.properties" />
+    <None Include="Config\WebJob.CurrencyCrawler\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.CurrencyCrawler\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.CurrencyCrawler\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.CurrencyCrawler\mandrill.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.CurrencyCrawler\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.CurrencyCrawler\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.CurrencyCrawler\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.CurrencyCrawler\veritrans.properties" />
+    <None Include="Config\WebJob.CurrencyCrawler\zendesk.properties" />
     <None Include="Config\WebJob.FlightProcessor\airAsia.properties">
       <SubType>Designer</SubType>
     </None>

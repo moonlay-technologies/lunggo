@@ -3,10 +3,11 @@
     public enum RsvStatus
     {
         Undefined = 0,
-        Reserved = 1,
-        Expired = 2,
-        Cancelled = 3,
-        Failed = 4
+        InProcess = 1,
+        Completed = 2,
+        Expired = 3,
+        Cancelled = 4,
+        Failed = 5
     }
 
     public enum RsvDisplayStatus
@@ -30,8 +31,10 @@
         {
             switch (rsvStatus)
             {
-                case RsvStatus.Reserved:
-                    return "RSVD";
+                case RsvStatus.InProcess:
+                    return "PROC";
+                case RsvStatus.Completed:
+                    return "COMP";
                 case RsvStatus.Expired:
                     return "EXPD";
                 case RsvStatus.Cancelled:
@@ -47,8 +50,10 @@
         {
             switch (rsvStatus)
             {
-                case "RSVD":
-                    return RsvStatus.Reserved;
+                case "PROC":
+                    return RsvStatus.InProcess;
+                case "COMP":
+                    return RsvStatus.Completed;
                 case "EXPD":
                     return RsvStatus.Expired;
                 case "CANC":

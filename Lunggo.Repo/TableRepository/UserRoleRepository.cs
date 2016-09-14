@@ -35,6 +35,16 @@ namespace Lunggo.Repository.TableRepository
             return Update(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
+		public UserRoleTableRecord Find1(IDbConnection connection, UserRoleTableRecord record)
+        {
+            return Find1(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
+		public IEnumerable<UserRoleTableRecord> Find(IDbConnection connection, UserRoleTableRecord record)
+        {
+            return Find(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
         public IEnumerable<UserRoleTableRecord> FindAll(IDbConnection connection)
         {
             return FindAll(connection, CommandDefinition.GetDefaultDefinition());
@@ -58,6 +68,16 @@ namespace Lunggo.Repository.TableRepository
         public int Update(IDbConnection connection, UserRoleTableRecord record, CommandDefinition definition)
         {
             return UpdateInternal(connection, record, definition);
+        }
+
+		public UserRoleTableRecord Find1(IDbConnection connection, UserRoleTableRecord record, CommandDefinition definition)
+        {
+			return Find1Internal(connection, record, definition);
+        }
+
+		public IEnumerable<UserRoleTableRecord> Find(IDbConnection connection, UserRoleTableRecord record, CommandDefinition definition)
+        {
+			return FindInternal(connection, record, definition);
         }
 
         public int DeleteAll(IDbConnection connection, CommandDefinition definition)

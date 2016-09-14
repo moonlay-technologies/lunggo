@@ -197,6 +197,7 @@
     <Compile Include="Campaign\Model\CampaignVoucher.cs" />
     <Compile Include="Campaign\Model\BinDiscount.cs" />
     <Compile Include="Campaign\Model\VoucherResponse.cs" />
+    <Compile Include="Campaign\Service\Caching.cs" />
     <Compile Include="Campaign\Service\BinDiscount.cs" />
     <Compile Include="Campaign\Service\CampaignVoucher.cs" />
     <Compile Include="Campaign\Service\ServiceSingleton.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
+    <Compile Include="Payment\Constant\FailureReason.cs" />
     <Compile Include="Query\ContactUs.cs" />
     <Compile Include="Flight\Model\FlightSlightDelay.cs" />
     <Compile Include="Flight\Model\FlightStop.cs" />
@@ -563,8 +565,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Subscriber\Query\GetSubscriberRowQuery.cs" />
-    <Compile Include="Subscriber\SubscriberEmailModel.cs" />
     <Compile Include="Travolutionary\TravolutionaryPreBookCheckResponse.cs" />
     <Compile Include="Trie\TrieIndexService.cs" />
     <Compile Include="Trie\TrieNode.cs" />
@@ -588,7 +588,6 @@
     <Compile Include="Travolutionary\TravolutionaryResponseBase.cs" />
     <Compile Include="Util\HotelFacilityUtil.cs" />
     <Compile Include="Util\UrlUtil.cs" />
-    <Compile Include="Subscriber\SubscriberService.cs" />
     <Compile Include="Voucher\Query\GetVoucherRecordQuery.cs" />
     <Compile Include="Voucher\VoucherEmailModel.cs" />
     <Compile Include="Voucher\VoucherService.cs" />

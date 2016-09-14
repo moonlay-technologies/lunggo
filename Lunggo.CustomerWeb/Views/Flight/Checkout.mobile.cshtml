@@ -69,9 +69,10 @@
             ExpiryDate: '@Model.ExpiryTime.ToString("o")',
             Trips: @Html.Raw(Model.Itinerary.Trips.Serialize()),
             Price: @Model.Itinerary.NetTotalFare,
-            TotalAdultFare : @Model.Itinerary.NetAdultFare * @Model.Itinerary.AdultCount,
-            TotalChildFare: @Model.Itinerary.NetChildFare * @Model.Itinerary.ChildCount,
-            TotalInfantFare: @Model.Itinerary.NetInfantFare * @Model.Itinerary.InfantCount,
+            TotalAdultFare : @Model.Itinerary.OriginalAdultFare * @Model.Itinerary.AdultCount,
+            TotalChildFare: @Model.Itinerary.OriginalChildFare * @Model.Itinerary.ChildCount,
+            TotalInfantFare: @Model.Itinerary.OriginalInfantFare * @Model.Itinerary.InfantCount,
+            OriginalPrice: @Model.Itinerary.OriginalTotalFare,
             // passenger
             Passenger: [@Model.Itinerary.AdultCount, @Model.Itinerary.ChildCount, @Model.Itinerary.InfantCount],
             PassengerName: ['Dewasa', 'Anak', 'Bayi'],
@@ -142,7 +143,10 @@
 
                             <div class="form-group important">
                                 <label class="control-label">Nama Lengkap : </label>
-                                <input type="text" value="" ng-model="buyerInfo.name" name="name" class="form-control" placeholder="Nama Lengkap" required />
+                                <input type="text" value="" pattern="[a-zA-Z\s]+" ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
+                                <div ng-show="!correctName" style="color:red">
+                                    Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                                </div>
                             </div>
 
                             <div class="form-group important">
@@ -168,7 +172,19 @@
                             </div>
 
                             <div class="form-group">
-                                <button class="btn btn-yellow form-control" ng-click="PageConfig.ChangePage(2)" ng-disabled="BuyerForm.$invalid || buyerInfo.title == titles[0].value">LANJUT</button>
+                                <div style="color:red" ng-show="form.incompleteContactTitle">
+                                    Gelar pada Nama Kontak Belum Ditambahkan <br /> <br />
+                                </div>
+                                <div style="color:red" ng-show="form.incompleteContactName">
+                                    Nama pada Data Kontak Belum Ditambahkan <br /> <br />
+                                </div>
+                                <div style="color:red" ng-show="form.incompleteContactPhone">
+                                    Nomor Telepon pada Data Kontak Belum Lengkap. Silakan Pilih Kode Negara atau Lengkapi Nomor Telepon<br /> <br />
+                                </div>
+                                <div style="color:red" ng-show="form.incompleteContactEmail">
+                                    Alamat E-Mail pada Data Kontak Belum Ditambahkan<br /> <br />
+                                </div>
+                                <button class="btn btn-yellow form-control" ng-click="validateForm(1)" @*ng-disabled="BuyerForm.$invalid || buyerInfo.title == titles[0].value"*@>LANJUT</button>
                             </div>
 
                         </form>
@@ -197,7 +213,10 @@
 
                                 <div class="form-group important">
                                     <label class="control-label">Nama Lengkap : </label>
-                                    <input type="text" value="" class="form-control" required name="passenger_{{$index}}_name" placeholder="Ex : John" ng-model="Passenger.name" />
+                                    <input type="text" value="" pattern="[a-zA-Z\s]+" class="form-control nama" required name="passenger_{{$index}}_name" placeholder="Ex : John" ng-model="Passenger.name" />
+                                    <div ng-show="!correctName" style="color:red">
+                                        Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                                    </div>
                                 </div>
 
 
@@ -206,27 +225,27 @@
                                     <label class="control-label">Tanggal Lahir: </label>
                                     <div class="row">
                                         <div class="col-xs-4">
-                                            <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" ng-change="ValidateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
+                                            <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" ng-change="validateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="Passenger.type == 'adult'">{{date}}</option>
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="Passenger.type == 'child'">{{date}}</option>
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month, Passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="Passenger.type == 'infant'">{{date}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" ng-change="ValidateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
+                                            <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" ng-change="validateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="Passenger.type == 'child'">{{month.name}}</option>
                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="Passenger.type == 'infant'">{{month.name}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'" ng-required="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'">
+                                            <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="validateBirthday(Passenger)" ng-if="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'" ng-required="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'">
                                                 <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
                                             </select>
-                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="Passenger.type == 'child'">
+                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="validateBirthday(Passenger)" ng-if="Passenger.type == 'child'">
                                                 <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
                                             </select>
-                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="ValidateBirthday(Passenger)" ng-if="Passenger.type == 'infant'">
+                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="validateBirthday(Passenger)" ng-if="Passenger.type == 'infant'">
                                                 <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
                                             </select>
                                         </div>
@@ -239,7 +258,6 @@
                                     <label class="control-label">No. Paspor</label>
                                     <input type="text" value="" class="form-control" name="passenger_{{$index}}_passportNumber" ng-model="Passenger.passport.number" ng-required="CheckoutConfig.PassportRequired" />
                                 </div>
-
                                 <div class="form-group important" ng-if="CheckoutConfig.PassportRequired">
                                     <label class="control-label">Tanggal Kadaluarsa Paspor: </label>
                                     <div class="row">
@@ -285,11 +303,27 @@
                         </div><!-- .passenger -->
 
                         <div class="form-group">
-                            <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
-                            <button class="btn btn-yellow form-control" ng-disabled="PassengerForm.$invalid || !CheckTitle(passengers) || (CheckoutConfig.BirthDateRequired && !CheckDate(passengers))
-                                    || (CheckoutConfig.PassportRequired && !CheckPassportDate(passengers))" ng-click="PageConfig.ChangePage(3)">
+                            <div ng-show="form.incompleteTitles" style="color:red">
+                                Gelar pada Penumpang Belum Ditambahkan<br /> <br />
+                            </div>
+                            <div ng-show="form.checkNameIncomplete" style="color:red">
+                                Nama Penumpang Belum Lengkap atau Masih Mengandung Karakter Selain Alfabet dan Spasi<br /> <br />
+                            </div>
+                            <div ng-show="form.hasDuplicatePaxName" style="color:red">
+                                Nama Penumpang Tidak Boleh Ada yang Sama <br /> <br />
+                            </div>
+
+                            <div ng-show="form.incompleteBirthDates" style=" color:red">
+                                Tanggal Lahir Penumpang Belum Ditambahkan <br /> <br />
+                            </div>
+                            <div ng-show="form.incompletePassportData" style="color:red">
+                                Data Paspor Belum Lengkap
+                            </div>
+                            <button class="btn btn-yellow form-control" @*ng-disabled="PassengerForm.$invalid || !CheckTitle(passengers) || (CheckoutConfig.BirthDateRequired && !CheckDate(passengers))
+                                    || (CheckoutConfig.PassportRequired && !CheckPassportDate(passengers)) || hasDuplicatePaxName()"*@ ng-click="validateForm(2)">
                                 LANJUT
                             </button>
+                            <button class="btn btn-grey form-control" ng-click="PageConfig.ChangePage(1)">KEMBALI</button>
                         </div>
 
                     </form>
@@ -314,7 +348,15 @@
                                 <dd><sup>Rp</sup> {{CheckoutConfig.TotalInfantFare | number}}</dd>
                             </dl>
                             <dl>
-                                <dt>Total</dt>
+                                <dt>Harga Total: </dt>
+                                <dd><sup>Rp</sup> {{CheckoutConfig.OriginalPrice| number}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>Diskon Travorama</dt>
+                                <dd><sup>-Rp</sup> {{CheckoutConfig.OriginalPrice - CheckoutConfig.Price | number}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>Harga Total: </dt>
                                 <dd><sup>Rp</sup> {{CheckoutConfig.Price | number}}</dd>
                             </dl>
                         </div><!-- .summary__body -->
@@ -356,7 +398,7 @@
                                         <dt>Jenis Tiket</dt>
                                         <dd>{{Passenger.typeName}}</dd>
                                     </dl>
-                                    <dl ng-if="CheckoutConfig.BirthDateRequired">
+                                    <dl ng-if="CheckoutConfig.BirthDateRequired || Passenger.type != 'adult'">
                                         <dt>Tanggal Lahir</dt>
                                         <dd>{{Passenger.birth.date}} {{getMonth(parseInt(Passenger.birth.month))}} {{Passenger.birth.year}}</dd>
                                     </dl>
@@ -572,7 +614,7 @@
                 </div>
             </div>
 
-            <div class="popup__wrapper" ng-class="{'active': book.checked == true && book.isSuccess == false}">
+            <div class="popup__wrapper" ng-class="{'active': book.checked == true && book.isSuccess == false && !book.isPriceChanged}">
                 <div class="popup">
                     <header class="popup__header">
                         <h4 class="popup__title">Pemesanan Gagal</h4>

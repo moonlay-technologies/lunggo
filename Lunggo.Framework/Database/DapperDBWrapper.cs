@@ -42,6 +42,20 @@ namespace Lunggo.Framework.Database
             return SqlMapper.Execute(connection, queryString, queryParams as object, null, definition.CommandTimeout, definition.CommandType);
         }
 
+        public T Find1<T>(IDbConnection connection, TableRecord record, CommandDefinition definition) where T : TableRecord
+        {
+            var queryString = CreateFindQuery(record);
+            var queryParams = CreateUpdateQueryParams(record);
+            return SqlMapper.Query<T>(connection, queryString, queryParams as object, null, true, definition.CommandTimeout, definition.CommandType).SingleOrDefault();
+        }
+
+        public IEnumerable<T> Find<T>(IDbConnection connection, TableRecord record, CommandDefinition definition) where T : TableRecord
+        {
+            var queryString = CreateFindQuery(record);
+            var queryParams = CreateUpdateQueryParams(record);
+            return SqlMapper.Query<T>(connection, queryString, queryParams as object, null, true, definition.CommandTimeout, definition.CommandType);
+        }
+
         public IEnumerable<T> FindAll<T>(IDbConnection connection, String tableName, CommandDefinition definition) where T : TableRecord
         {
             var queryString = CreateFindAllQuery(tableName);
@@ -62,10 +76,40 @@ namespace Lunggo.Framework.Database
             return queryBuilder.ToString();
         }
 
+        private String CreateFindQuery(TableRecord record)
+        {
+            var selectClause = CreateSelectClause(record);
+            var whereClause = CreateWhereClause(record);
+            return GetAssembledFindQuery(selectClause, whereClause);
+        }
+
         private String CreateDeleteAllQuery(String tableName)
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.AppendFormat("DELETE FROM [{0}]", tableName);
+            return queryBuilder.ToString();
+        }
+
+        private String CreateSelectClause(TableRecord record)
+        {
+            var clauseBuilder = new StringBuilder();
+            clauseBuilder.AppendFormat("SELECT * FROM [{0}] ", record.GetTableName());
+            return clauseBuilder.ToString();
+        }
+
+        private String CreateWhereClause(TableRecord record)
+        {
+            var iRecord = (ITableRecord)record;
+            var clauseBuilder = new StringBuilder();
+            var columnAssignmentClause = String.Join(",", record.GetMetadata().Where(p => iRecord.IsSet(p.ColumnName)).Select(p => p.ColumnName + "=@" + p.ColumnName));
+            clauseBuilder.AppendFormat("WHERE {0} ", columnAssignmentClause);
+            return clauseBuilder.ToString();
+        }
+
+        private String GetAssembledFindQuery(String selectClause, String whereClause)
+        {
+            var queryBuilder = new StringBuilder();
+            queryBuilder.AppendFormat("{0} {1}", selectClause, whereClause);
             return queryBuilder.ToString();
         }
 
@@ -196,6 +240,12 @@ namespace Lunggo.Framework.Database
         }
 
         private DynamicParameters CreatePrimaryKeyQueryParamsForDelete(TableRecord record)
+        {
+            var iRecord = record.AsInterface();
+            return CreateDynamicParameters(record, record.GetPrimaryKeys().Where(p => iRecord.IsSet(p.ColumnName)).Select(p => p.ColumnName));
+        }
+
+        private DynamicParameters CreatePrimaryKeyQueryParams(TableRecord record)
         {
             var iRecord = record.AsInterface();
             return CreateDynamicParameters(record, record.GetPrimaryKeys().Where(p => iRecord.IsSet(p.ColumnName)).Select(p => p.ColumnName));

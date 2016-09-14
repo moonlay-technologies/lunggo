@@ -108,6 +108,10 @@ var CheckVoucherConfig = {
     Url: 'https://api.local.travorama.com/v1/payment/checkvoucher'
 };
 
+var CheckBinDiscountConfig = {
+    Url: 'https://api.local.travorama.com/v1/payment/checkbindiscount'
+};
+
 var SubscribeConfig = {
     Url: 'https://api.local.travorama.com/v1/newsletter/subscribe'
 };

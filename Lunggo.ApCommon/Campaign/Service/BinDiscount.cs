@@ -11,38 +11,94 @@ using Lunggo.ApCommon.Flight.Service;
 
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Http;
 
 namespace Lunggo.ApCommon.Campaign.Service
 {
     public partial class CampaignService
     {
-        public BinDiscount CheckBinDiscount(string rsvNo, string bin, string voucherCode)
+        public BinDiscount CheckBinDiscount(string rsvNo, string bin, string hashedPan, string voucherCode)
         {
             var rsv = FlightService.GetInstance().GetReservation(rsvNo);
-            if (DiscountGranted(rsv, bin, voucherCode))
-                return new BinDiscount
-                {
-                    Amount = 100000,
-                    Currency = new Currency("IDR"),
-                    DisplayName = "pocer yey"
-                };
-            else return null;
+            var isAvailable = IsPanAndEmailEligibleInCache("btn", hashedPan, rsv.Contact.Email);
+            var isValid = IsPromoValid(rsv, bin, hashedPan, voucherCode);
+            var discAmount = rsv.Itineraries.Sum(i => i.Price.OriginalIdr) * 0.1M;
+            if (discAmount >= 300000)
+                discAmount = 300000;
+            return isValid
+                ? isAvailable
+                    ? new BinDiscount
+                    {
+                        Amount = discAmount,
+                        IsAvailable = true,
+                        Currency = new Currency("IDR"),
+                        DisplayName = "BTN Promo",
+                        ReplaceMargin = true
+                    }
+                    : new BinDiscount
+                    {
+                        Amount = 0,
+                        IsAvailable = false,
+                        DisplayName = "BTN Promo"
+                    }
+                : null;
         }
 
-        private bool DiscountGranted(FlightReservation rsv, string bin, string voucherCode)
+        private bool IsPromoValid(FlightReservation rsv, string bin, string hashedPan, string voucherCode)
         {
-            var bin6 = bin.Substring(0, 6);
-            return (rsv.Payment.OriginalPriceIdr >= 1000000M &&
+            var bin6 = (bin != null && bin.Length >= 6)
+                ? bin.Substring(0, 6)
+                : "";
+            return IsReservationEligible(rsv) &&
                     string.IsNullOrEmpty(voucherCode) &&
-                    (bin6 == "421570" ||
-                     bin6 == "485447" ||
-                     bin6 == "469345" ||
-                     bin6 == "462436" ||
-                     bin6 == "437527" ||
-                     bin6 == "437528" ||
-                     bin6 == "437529"));
+                   IsBinGranted(bin6) &&
+                   DateValid();
+        }
 
+        private bool IsReservationEligible(FlightReservation rsv)
+        {
+            var flight = FlightService.GetInstance();
+            return rsv.Itineraries.Sum(i => i.Price.OriginalIdr) >= 1500000 &&
+                rsv.Itineraries.SelectMany(i => i.Trips)
+                    .All(
+                        t =>
+                            flight.GetAirportCountryCode(t.OriginAirport) == "ID" &&
+                            flight.GetAirportCountryCode(t.DestinationAirport) == "ID");
+        }
+
+        private bool DateValid()
+        {
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var dateNow = DateTime.UtcNow.AddHours(7).Date;
+            return env != "production" || (dateNow >= new DateTime(2016, 9, 20) &&
+                                           dateNow <= new DateTime(2016, 10, 20));
+        }
+
+        private bool IsBinGranted(string bin6)
+        {
+            return (bin6 == "421570" ||
+                    bin6 == "485447" ||
+                    bin6 == "469345" ||
+                    bin6 == "462436" ||
+                    bin6 == "437527" ||
+                    bin6 == "437528" ||
+                    bin6 == "437529" ||
+                    IsBinGrantedDevelopment(bin6));
+        }
+
+        private bool IsBinGrantedDevelopment(string bin6)
+        {
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            return env != "production" && (bin6 == "401111" ||
+                                           bin6 == "411111" ||
+                                           bin6 == "421111" ||
+                                           bin6 == "431111" ||
+                                           bin6 == "441111" ||
+                                           bin6 == "451111" ||
+                                           bin6 == "461111" ||
+                                           bin6 == "471111" ||
+                                           bin6 == "481111");
         }
     }
 }

@@ -15,6 +15,7 @@ using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
@@ -30,39 +31,91 @@ namespace Lunggo.ApCommon.Payment.Service
         public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
-            var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
+            var reservation = FlightService.GetInstance().GetReservation(rsvNo);
+            var paymentDetails = reservation.Payment;
 
             if (paymentDetails == null)
                 return null;
 
             if (paymentDetails.Method != PaymentMethod.Undefined)
+            {
+                paymentDetails.Status = PaymentStatus.Failed;
+                paymentDetails.FailureReason = FailureReason.MethodNotAvailable;
                 return paymentDetails;
+            }
 
             paymentDetails.Data = paymentData;
             paymentDetails.Method = method;
             paymentDetails.Medium = GetPaymentMedium(method);
-            var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
-            if (campaign.Discount != null)
+            paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
+
+            if (!string.IsNullOrEmpty(discountCode))
             {
+                var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
+                if (campaign.Discount == null)
+                {
+                    paymentDetails.Status = PaymentStatus.Failed;
+                    paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
+                    return paymentDetails;
+                }
                 paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
                 paymentDetails.Discount = campaign.Discount;
                 paymentDetails.DiscountCode = campaign.VoucherCode;
                 paymentDetails.DiscountNominal = campaign.TotalDiscount;
             }
-            else
-            {
-                paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
-            }
 
-            if (paymentDetails.Method == PaymentMethod.CreditCard)
+            if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
             {
                 var binDiscount = CampaignService.GetInstance()
-                    .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, discountCode);
-                if (binDiscount != null)
+                    .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, paymentData.CreditCard.HashedPan,
+                        discountCode);
+                if (binDiscount == null)
+                {
+                    paymentDetails.Status = PaymentStatus.Failed;
+                    paymentDetails.FailureReason = FailureReason.BinPromoNoLongerEligible;
+                    return paymentDetails;
+                }
+                if (binDiscount.ReplaceMargin)
+                {
+                    foreach (var itin in reservation.Itineraries)
+                    {
+                        itin.Price.Margin = new UsedMargin
+                        {
+                            Name = "Margin Cancel",
+                            Description = "Margin Cancelled by BIN Promo",
+                            Currency = itin.Price.LocalCurrency
+                        };
+                        itin.Price.Local = itin.Price.OriginalIdr / itin.Price.LocalCurrency.Rate;
+                        itin.Price.Rounding = 0;
+                        itin.Price.FinalIdr = itin.Price.OriginalIdr;
+                        itin.Price.MarginNominal = 0;
+                    }
+                    paymentDetails.OriginalPriceIdr = reservation.Itineraries.Sum(i => i.Price.FinalIdr);
+                    paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr-binDiscount.Amount;
+                    }
+                else
                 {
                     paymentDetails.FinalPriceIdr -= binDiscount.Amount;
-                    paymentDetails.DiscountNominal += binDiscount.Amount;
+                    
                 }
+                if (paymentDetails.Discount == null)
+                    paymentDetails.Discount = new UsedDiscount
+                    {
+                        DisplayName = binDiscount.DisplayName,
+                        Name = binDiscount.DisplayName,
+                        Constant = binDiscount.Amount,
+                        Percentage = 0M,
+                        Currency = new Currency("IDR"),
+                        Description = "BIN Promo",
+                        IsFlat = false
+                    };
+                else
+                    paymentDetails.Discount.Constant += binDiscount.Amount;
+                paymentDetails.DiscountNominal += binDiscount.Amount;
+                var contact = reservation.Contact;
+                if (contact == null)
+                    return null;
+                CampaignService.GetInstance().SavePanAndEmailInCache("btn", paymentData.CreditCard.HashedPan, contact.Email);
             }
 
             var transferFee = GetTransferFeeFromCache(rsvNo);
@@ -71,12 +124,14 @@ namespace Lunggo.ApCommon.Payment.Service
 
             paymentDetails.TransferFee = transferFee;
             paymentDetails.FinalPriceIdr += paymentDetails.TransferFee;
-            
+
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
             var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
             var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
             ProcessPayment(paymentDetails, transactionDetails, itemDetails, method);
-            UpdatePaymentToDb(rsvNo, paymentDetails);
+            reservation.Itineraries.ForEach(i => i.Price.UpdateToDb());
+            if (paymentDetails.Status != PaymentStatus.Failed)
+                UpdatePaymentToDb(rsvNo, paymentDetails);
             isUpdated = true;
             return paymentDetails;
         }
@@ -141,8 +196,8 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             else
             {
-                paymentDetails.RedirectionUrl = GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
-                paymentDetails.Status = paymentDetails.RedirectionUrl != null ? PaymentStatus.Pending : PaymentStatus.Failed;
+                paymentDetails.Status = PaymentStatus.Failed;
+                paymentDetails.FailureReason = FailureReason.MethodNotAvailable;
             }
             paymentDetails.PaidAmountIdr = paymentDetails.FinalPriceIdr;
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr;
@@ -247,9 +302,9 @@ namespace Lunggo.ApCommon.Payment.Service
             };
         }
 
-        public decimal GetTransferFee(string rsvNo, string bin, string discountCode)
+        public decimal GetUniqueCode(string rsvNo, string bin, string discountCode)
         {
-            decimal transferFee, finalPrice;
+            decimal uniqueCode, finalPrice;
             var voucher = CampaignService.GetInstance().ValidateVoucherRequest(rsvNo, discountCode);
             if (voucher.VoucherStatus != VoucherStatus.Success)
             {
@@ -266,24 +321,54 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             if (finalPrice <= 999 && finalPrice >= 0)
             {
-                transferFee = -finalPrice;
+                uniqueCode = -finalPrice;
             }
             else
             {
                 bool isExist;
                 decimal candidatePrice;
                 var rnd = new Random();
-                do
+                uniqueCode = GetTransferFeeFromCache(rsvNo);
+                if (uniqueCode != 0M)
                 {
-                    transferFee = -rnd.Next(1, 999);
-                    candidatePrice = finalPrice + transferFee;
-                    isExist = IsTransferValueExist(candidatePrice);
-                } while (isExist);
-                SaveTransferValue(candidatePrice);
-                SaveTransferFeeinCache(rsvNo, transferFee);
+                    candidatePrice = finalPrice + uniqueCode;
+                    var rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
+                    isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
+                    if (isExist)
+                    {
+                        var cap = -1;
+                        do
+                        {
+                            if (cap < 999)
+                                cap += 50;
+                            uniqueCode = -rnd.Next(1, cap);
+                            candidatePrice = finalPrice + uniqueCode;
+                            rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
+                            isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
+                        } while (isExist);
+                    }
+                    SaveTransferValue(candidatePrice, rsvNo);
+
+                    SaveTransferFeeinCache(rsvNo, uniqueCode);
+                }
+                else
+                {
+                    var cap = -1;
+                    do
+                    {
+                        if (cap < 999)
+                            cap += 50;
+                        uniqueCode = -rnd.Next(1, cap);
+                        candidatePrice = finalPrice + uniqueCode;
+                        var rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
+                        isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
+                    } while (isExist);
+                    SaveTransferValue(candidatePrice, rsvNo);
+                    SaveTransferFeeinCache(rsvNo, uniqueCode);
+                }
             }
 
-            return transferFee;
+            return uniqueCode;
         }
     }
 }

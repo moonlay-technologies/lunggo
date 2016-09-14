@@ -34,7 +34,7 @@
         .page-loaded {display:block;}
         .page-step-1 {}
         .page-step-2 {
-            .btn.btn-yellow {margin-top:15px;}
+            .btn.btn-yellow {margin-bottom:15px;}
         }
         .page-step-3 {
             .btn.btn-yellow.form-control,.btn.btn-grey.form-control {width: 48%; float: right;}
@@ -55,21 +55,46 @@
     // summary
     .summary {
         .summary__title {color:#333;}
-        .summary__body {}
+        .summary__body {
+            & > dl {padding: 7.5px 0; margin-bottom: 0; font-size: 11px;
+                &:first-child {
+                    border-bottom: 1px dotted $color-orange;
+                    padding-top: 0;
+                    & > dt:before {
+                        width: 7px;
+                        height: 7px;
+                        background: $color-orange;
+                        display: inline-block;
+                        content: '';
+                        margin-left: -14px;
+                        margin-right: 7px;
+                    }
+                }
+                &:nth-child(3) {color: $color-main-blue;}
+                &:last-child {
+                    border-top: 1px solid $color-orange;
+                    & > dd {
+                        color: #ff9a24;
+                        font-size: 16px;
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
         // price
         &.summary--price {
             dl {@include clearfix();
-                dt {float:left; width:50%; font-weight:normal; position:relative; padding-left:12px;
-                    &:before {position:absolute; content:''; width:7px; height:7px; background:#ff7200; top:3px; left:0;}
+                dt {float:left; width:50%; font-weight:normal; position:relative; padding-left:12px; font-weight:700;
                 }
-                dd {float:left; width:50%; text-align:right; font-weight:bold;}
+                dd {float:left; width:50%; text-align:right; font-weight:700;}
                 // total price
-                &.total-price {border-top:$border-default; padding-top:10px;
+                &.total-price {
                     dt {width:35%;
                         &:before {display:none;}
                     }
                     dd {width:65%; color:#ff7200; font-size:16px;}
                 }
+                &:nth-child(2) {color: $color-main-blue;}
             }
         }
         // passenger
@@ -86,9 +111,24 @@
             }
         }
         // voucher
-        &.summary--voucher {background:#eaeaea; padding:10px;
+        &.summary--voucher {
+            background:#eaeaea;
+            padding:10px;
+            margin-bottom: 10px;
             h4 {font-weight:bold;}
-            form {}
+            .container_new p {
+                margin-left: 0;
+                margin-right: 0;
+                padding: 10px 0 0;
+            }
+            .form-horizontal .form-group {
+                margin-bottom: 10px;
+                .col-xs-offset-6 {
+                    margin: 0; 
+                    float: right;
+                    padding: 0;
+                }
+            }
         }
         // payment
         &.summary--payment {
@@ -157,6 +197,11 @@
         min-height: 1px; 
     }
     .bottom-divider {margin-bottom: 7.5px;}
+    
+    .form-horizontal .form-group {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
 
 

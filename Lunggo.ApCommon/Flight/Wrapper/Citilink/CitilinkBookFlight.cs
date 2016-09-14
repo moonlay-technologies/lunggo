@@ -53,29 +53,49 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var client = CreateAgentClient();
                 Login(client);
 
-                var splittedFareId = bookInfo.Itinerary.FareId.Split('.').ToList();
-                var date = new DateTime(int.Parse(splittedFareId[4]), int.Parse(splittedFareId[3]), int.Parse(splittedFareId[2]));
-                var adultCount = int.Parse(splittedFareId[5]);
-                var childCount = int.Parse(splittedFareId[6]);
-                var infantCount = int.Parse(splittedFareId[7]);
-                var airlineCode = splittedFareId[8];
-                var flightNumber = splittedFareId[9];
-                var coreFareId = splittedFareId[11];
-                var splitcoreFareId = coreFareId.Split('~').ToList();
-                string origin;
-                string dest;
-                int index;
-                if (splitcoreFareId.Count > 16)
+                string origin, dest, coreFareId;
+                DateTime date;
+                int adultCount, childCount, infantCount;
+                CabinClass cabinClass;
+                decimal price;
+                try
                 {
-                    index = 11;
-                    origin = splitcoreFareId[index];
-                    dest = splitcoreFareId[21];
+                    var splittedFareId = bookInfo.Itinerary.FareId.Split('.').ToList();
+                    date = new DateTime(int.Parse(splittedFareId[4]), int.Parse(splittedFareId[3]), int.Parse(splittedFareId[2]));
+                    adultCount = int.Parse(splittedFareId[5]);
+                    childCount = int.Parse(splittedFareId[6]);
+                    infantCount = int.Parse(splittedFareId[7]);
+                    string airlineCode = splittedFareId[8];
+                    string flightNumber = splittedFareId[9];
+                    coreFareId = splittedFareId[11];
+                    var splitcoreFareId = coreFareId.Split('~').ToList();
+                    int index;
+                    if (splitcoreFareId.Count > 16)
+                    {
+                        index = 11;
+                        origin = splitcoreFareId[index];
+                        dest = splitcoreFareId[21];
+                    }
+                    else
+                    {
+                        origin = splitcoreFareId[11];
+                        dest = splitcoreFareId[13];
+                    }
                 }
-                else
+                catch 
                 {
-                    origin = splitcoreFareId[11];
-                    dest = splitcoreFareId[13];
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                        ErrorMessages = new List<string> { "Error while splitting the fareid" }
+                    };
                 }
+                
 
 
 
@@ -124,7 +144,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "Error in requesting at BookingListTravelAgent.aspx.Unexpected absolute path response or status code" }
                     };
 
                 // SELECT
@@ -172,7 +193,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "Error in requesting at ScheduleSelect.aspx.Unexpected absolute path response or status code" }
                     };
 
                 // INPUT DATA (TRAVELER)
@@ -278,7 +300,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.InvalidInputData }
+                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        ErrorMessages = new List<string> { "Error while posting passenger data at Passenger.aspx.Unexpected absolute path response or status code" }
                     };
 
                 // SELECT SEAT (UNITMAP)
@@ -321,7 +344,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.InvalidInputData }
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "Error in SeatMap.aspx.Unexpected absolute path response or status code" }
                     };
 
                 /*Buat dapat Info Itinerary dan Harga*/
@@ -403,7 +427,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.TechnicalError }
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "Error in SeatMap.aspx.Unexpected absolute path response or status code" }
                     };
 
                 // WAIT
@@ -424,50 +449,66 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 
                 var hasil = new BookFlightResult();
 
-
-                var tunjukDataNomorBooking = ambilDataItin.MakeRoot()["#SpanRecordLocator"];
-                var NomorBooking = tunjukDataNomorBooking.Select(x => x.Cq().Text()).FirstOrDefault();
-                var tunjukDataTimeLimit = ambilDataItin.MakeRoot()["#itineraryBody>p"];
-                //var tunjukDataTimeLimit1 = tunjukDataTimeLimit["p:nth-child(1)"];
-                var ambilTimeLimit = tunjukDataTimeLimit.Select(x => x.Cq().Text()).FirstOrDefault();
-                var timelimitIndex = ambilTimeLimit.IndexOf("[");
-                var timelimitIndex2 = ambilTimeLimit.IndexOf("]");
-                var timelimitParse3 = ambilTimeLimit.Split(' ');
-                var timelimitString = ambilTimeLimit.Substring(timelimitIndex + 1, timelimitIndex2 - timelimitIndex - 1);
-                var timelimitSplitComma = timelimitString.Split(',');
-                var timelimit1SplitSpace = timelimitSplitComma[1].Trim().Split(' ');
-                var timelimit2SplitSpace = timelimitSplitComma[2].Trim().Split(' ');
-                var timelimitDate = timelimit1SplitSpace[1].Trim();
-                var timelimitMonth = timelimit1SplitSpace[0].Trim();
-                var timelimitYear = timelimit2SplitSpace[0].Trim();
-                var timelimitTime = timelimit2SplitSpace[28].Trim();
-                string tahun;
-                if (timelimitYear.Length > 4)
+                try 
                 {
-                    tahun = timelimitYear.Substring(0, 4);
+                    var tunjukDataNomorBooking = ambilDataItin.MakeRoot()["#SpanRecordLocator"];
+                    var NomorBooking = tunjukDataNomorBooking.Select(x => x.Cq().Text()).FirstOrDefault();
+                    var tunjukDataTimeLimit = ambilDataItin.MakeRoot()["#itineraryBody>p"];
+                    //var tunjukDataTimeLimit1 = tunjukDataTimeLimit["p:nth-child(1)"];
+                    var ambilTimeLimit = tunjukDataTimeLimit.Select(x => x.Cq().Text()).FirstOrDefault();
+                    var timelimitIndex = ambilTimeLimit.IndexOf("[");
+                    var timelimitIndex2 = ambilTimeLimit.IndexOf("]");
+                    var timelimitParse3 = ambilTimeLimit.Split(' ');
+                    var timelimitString = ambilTimeLimit.Substring(timelimitIndex + 1, timelimitIndex2 - timelimitIndex - 1);
+                    var timelimitSplitComma = timelimitString.Split(',');
+                    var timelimit1SplitSpace = timelimitSplitComma[1].Trim().Split(' ');
+                    var timelimit2SplitSpace = timelimitSplitComma[2].Trim().Split(' ');
+                    var timelimitDate = timelimit1SplitSpace[1].Trim();
+                    var timelimitMonth = timelimit1SplitSpace[0].Trim();
+                    var timelimitYear = timelimit2SplitSpace[0].Trim();
+                    var timelimitTime = timelimit2SplitSpace[28].Trim();
+                    string tahun;
+                    if (timelimitYear.Length > 4)
+                    {
+                        tahun = timelimitYear.Substring(0, 4);
+                    }
+                    else
+                    {
+                        tahun = timelimitYear;
+                    }
+
+
+                    if (timelimitMonth == "Nop")
+                        timelimitMonth = "Nov";
+
+                    if (timelimitMonth == "Agust")
+                        timelimitMonth = "Agu";
+
+                    var timelimit = DateTime.Parse(timelimitDate + "-" + timelimitMonth + "-" + tahun + " " + timelimitTime, CultureInfo.CreateSpecificCulture("id-ID"));
+
+                    var status = new BookingStatusInfo();
+                    status.BookingId = NomorBooking;
+                    status.BookingStatus = BookingStatus.Booked;
+                    status.TimeLimit = DateTime.SpecifyKind(timelimit, DateTimeKind.Utc);
+
+                    hasil.Status = status;
+                    hasil.IsSuccess = true;
+                    return hasil;
                 }
-                else
+                catch 
                 {
-                    tahun = timelimitYear;
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "Failed to get Booking Id and timelimit booking" }
+                    };
                 }
-
-
-                if (timelimitMonth == "Nop")
-                    timelimitMonth = "Nov";
-
-                if (timelimitMonth == "Agust")
-                    timelimitMonth = "Agu";
-
-                var timelimit = DateTime.Parse(timelimitDate + "-" + timelimitMonth + "-" + tahun + " " + timelimitTime, CultureInfo.CreateSpecificCulture("id-ID"));
-
-                var status = new BookingStatusInfo();
-                status.BookingId = NomorBooking;
-                status.BookingStatus = BookingStatus.Booked;
-                status.TimeLimit = DateTime.SpecifyKind(timelimit, DateTimeKind.Utc);
-
-                hasil.Status = status;
-                hasil.IsSuccess = true;
-                return hasil;
+                
             }
         }
     }

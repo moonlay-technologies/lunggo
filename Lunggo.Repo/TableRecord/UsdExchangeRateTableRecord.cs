@@ -11,29 +11,7 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public String CurrencyCd
-		{
-		    get { return _CurrencyCd; }
-		    set
-		    {
-		        _CurrencyCd = value;
-		        IncrementLog("CurrencyCd");
-		    }
-		}
-		public Decimal? ExchangeRate
-		{
-		    get { return _ExchangeRate; }
-		    set
-		    {
-		        _ExchangeRate = value;
-		        IncrementLog("ExchangeRate");
-		    }
-		}
-
 		
-		private String _CurrencyCd;
-		private Decimal? _ExchangeRate;
-
 
 		public static UsdExchangeRateTableRecord CreateNewInstance()
         {
@@ -64,9 +42,6 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("CurrencyCd", true),
-				new ColumnMetadata("ExchangeRate", false),
-
             };
         }
 

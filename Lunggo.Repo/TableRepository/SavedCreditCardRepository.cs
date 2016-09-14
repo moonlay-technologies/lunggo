@@ -8,7 +8,7 @@ namespace Lunggo.Repository.TableRepository
 {
 	public class SavedCreditCardTableRepo : TableDao<SavedCreditCardTableRecord>, IDbTableRepository<SavedCreditCardTableRecord> 
     {
-		private static readonly SavedCreditCardTableRepo Instance = new SavedCreditCardTableRepo("Activities");
+		private static readonly SavedCreditCardTableRepo Instance = new SavedCreditCardTableRepo("SavedCreditCard");
         
         private SavedCreditCardTableRepo(String tableName) : base(tableName)
         {
@@ -35,6 +35,16 @@ namespace Lunggo.Repository.TableRepository
             return Update(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
+		public SavedCreditCardTableRecord Find1(IDbConnection connection, SavedCreditCardTableRecord record)
+        {
+            return Find1(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
+		public IEnumerable<SavedCreditCardTableRecord> Find(IDbConnection connection, SavedCreditCardTableRecord record)
+        {
+            return Find(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
         public IEnumerable<SavedCreditCardTableRecord> FindAll(IDbConnection connection)
         {
             return FindAll(connection, CommandDefinition.GetDefaultDefinition());
@@ -58,6 +68,16 @@ namespace Lunggo.Repository.TableRepository
         public int Update(IDbConnection connection, SavedCreditCardTableRecord record, CommandDefinition definition)
         {
             return UpdateInternal(connection, record, definition);
+        }
+
+		public SavedCreditCardTableRecord Find1(IDbConnection connection, SavedCreditCardTableRecord record, CommandDefinition definition)
+        {
+			return Find1Internal(connection, record, definition);
+        }
+
+		public IEnumerable<SavedCreditCardTableRecord> Find(IDbConnection connection, SavedCreditCardTableRecord record, CommandDefinition definition)
+        {
+			return FindInternal(connection, record, definition);
         }
 
         public int DeleteAll(IDbConnection connection, CommandDefinition definition)

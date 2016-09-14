@@ -58,20 +58,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         {
 
                             case CabinClass.Business:
-                                if (originCountry == "ID" && destCountry == "ID")
-                                {
-                                    adultBaggage = "30";
-                                    childBaggage = "30";
-                                    infantBaggage = "0";
-                                }
+                                adultBaggage = "30";
+                                childBaggage = "30";
+                                infantBaggage = "0";
                                 break;
                             case CabinClass.Economy:
-                                if (originCountry == "ID" && destCountry == "ID")
-                                {
-                                    adultBaggage = "20";
-                                    childBaggage = "20";
-                                    infantBaggage = "0";
-                                }
+                                adultBaggage = "20";
+                                childBaggage = "20";
+                                infantBaggage = "0";
                                 break;
                         }
                         break;
@@ -115,11 +109,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                         childBaggage = "20";
                                         infantBaggage = "0";
                                     } 
-                                    {
-                                        adultBaggage = "30";
-                                        childBaggage = "30";
-                                        infantBaggage = "0";
-                                    }
                                 }
                                 break;
                             case CabinClass.Business:
@@ -178,7 +167,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 }
                                 break;
                             case CabinClass.Economy:
-                                if (originCountry == "ID" && destCountry == "ID")
+                                if (originCountry == "MY" && destCountry == "MY")
                                 {
                                     adultBaggage = "15";
                                     childBaggage = "15";

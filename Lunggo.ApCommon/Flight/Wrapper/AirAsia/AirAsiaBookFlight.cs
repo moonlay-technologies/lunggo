@@ -81,9 +81,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
+                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                        ErrorMessages = new List<string>{"Error while splitting the fareid"}
                     };
                 }
+
+                List<string> errorMessages;
+                CommonInputCheck(bookInfo.Passengers, date, out errorMessages);
+                if (errorMessages.Count > 0)
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        ErrorMessages = errorMessages
+                    };
 
                 if (!Login(client))
                     return new BookFlightResult
@@ -94,7 +109,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Can't Login!" }
+                        ErrorMessages = new List<string> { "Failed to Login" }
                     };
 
                 var flightPart = coreFareId.Split('|')[1];
@@ -163,7 +178,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> {"Error in requesting at Search.aspx.Unexpected absolute path response or status code"}
                     };
 
                 Thread.Sleep(1000);
@@ -225,7 +241,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
+                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                        ErrorMessages = new List<string> { "Error in requesting at Select.aspx. Unexpected absolute path response or status code" }
+
                     };
 
                 Thread.Sleep(1000);
@@ -344,7 +362,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.InvalidInputData }
+                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        ErrorMessages = new List<string>{"Error while requesting at Traveler.aspx. Unexpected absolute path response or status code"}
                     };
                 Thread.Sleep(1000);
 
@@ -377,7 +396,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier },
+                        ErrorMessages = new List<string> { "Error while requesting at UnitMap.aspx. Unexpected absolute path response or status code" }
                     };
 
                 Thread.Sleep(1000);
@@ -490,7 +510,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             IsItineraryChanged = false,
                             IsPriceChanged = bookInfo.Itinerary.Price.Supplier != decimal.Parse(newPrice),
                             IsSuccess = false,
-                            ErrorMessages = new List<string> { "Itinerary is changed!" },
+                            ErrorMessages = new List<string> { "Error while trying to get currency value" },
                             NewItinerary = itin,
                             NewPrice = decimal.Parse(newPrice),
                             Status = null
@@ -611,7 +631,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier },
+                        ErrorMessages = new List<string> { "Error while select hold payment. Unexpected absolute path response or status code" }
                     };
 
                 Thread.Sleep(1000);
@@ -664,7 +685,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier },
+                        ErrorMessages = new List<string> { "Error while select submit payment at payment.aspx. Unexpected absolute path response or status code" }
+
                     };
                 Thread.Sleep(1000);
 
@@ -702,7 +725,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             {
                                 BookingStatus = BookingStatus.Failed
                             },
-                            Errors = new List<FlightError> { FlightError.FailedOnSupplier }
+                            Errors = new List<FlightError> { FlightError.FailedOnSupplier },
+                            ErrorMessages = new List<string> { "Failed to get booking id" }
                         };
                     }
                     else
@@ -747,7 +771,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Web Layout Changed!" }
+                        ErrorMessages = new List<string> { "Web Layout Changed! Error while getting bookingid and timelimit " }
                     };
                 }
             }

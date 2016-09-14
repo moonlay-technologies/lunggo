@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -22,6 +23,7 @@
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <NuGetPackageImportStamp>644122b3</NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -273,10 +275,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="WebSrc\Common\Constant\CustomerWebConstant.cs" />
     <Compile Include="WebSrc\UW000\UW000TopPageController.cs" />
-    <Compile Include="WebSrc\UW600\UW610\Logic\ChangeProfileLogic.cs" />
-    <Compile Include="WebSrc\UW600\UW610\Model\UW610ChangePofile.cs" />
-    <Compile Include="WebSrc\UW600\UW610\Object\UW610ChangeProfileRespone.cs" />
-    <Compile Include="WebSrc\UW600\UW610\UW610ChangeProfileController.cs" />
     <Compile Include="WebSrc\UW600\UW620\Logic\OrderHistoryLogic.cs" />
     <Compile Include="WebSrc\UW600\UW620\Model\UW620CompleteHistory.cs" />
     <Compile Include="WebSrc\UW600\UW620\Model\UW620OrderHistory.cs" />
@@ -660,6 +658,7 @@
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
+    <Content Include="Assets\images\banner\standard-web-banner.jpg" />
     <Content Include="Assets\images\bca-logo.jpg" />
     <Content Include="Assets\images\bed-bg.png" />
     <Content Include="Assets\images\benefit-1.jpg" />
@@ -703,6 +702,19 @@
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
+    <Content Include="Assets\images\flight-facilities-sprite2.png" />
+    <Content Include="Assets\mobile\images\arrow-detail.png" />
+    <Content Include="Assets\mobile\images\flight-separators.png" />
+    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.css">
+      <DependentUpon>travorama-mobileApp.scss</DependentUpon>
+    </Content>
+    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.min.css">
+      <DependentUpon>travorama-mobileApp.css</DependentUpon>
+    </Content>
+    <Content Include="Campaign\MobileAppCampaign\images\app-store.png" />
+    <Content Include="Campaign\MobileAppCampaign\images\background.jpg" />
+    <Content Include="Campaign\MobileAppCampaign\images\box-photo.png" />
+    <Content Include="Campaign\MobileAppCampaign\images\play-store.png" />
     <Content Include="Assets\images\campaign\singapore-text.png" />
     <Content Include="Assets\images\campaign\singapore-thumb.jpg" />
     <Content Include="Assets\images\campaign\singapore.jpg" />
@@ -809,6 +821,15 @@
     <Content Include="Assets\images\header-bg-gray.jpg" />
     <Content Include="Assets\images\header-bg.jpg" />
     <Content Include="Assets\images\header.png" />
+    <Content Include="Assets\images\helpSection\arrow-down.png" />
+    <Content Include="Assets\images\helpSection\arrow-up.png" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-1.jpg" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-2.jpg" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-3.jpg" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-4.jpg" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-5.jpg" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-6.jpg" />
+    <Content Include="Assets\images\helpSection\howtoorder-image-7.jpg" />
     <Content Include="Assets\images\hexagon-cover-blue.png" />
     <Content Include="Assets\images\hexagon-cover-yellow.png" />
     <Content Include="Assets\images\home-info-1.png" />
@@ -983,6 +1004,7 @@
     <Content Include="Assets\images\ui-icons_454545_256x240.png" />
     <Content Include="Assets\images\ui-icons_888888_256x240.png" />
     <Content Include="Assets\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Assets\images\Untitled-2.png" />
     <Content Include="Assets\images\user-account-active-arrow.png" />
     <Content Include="Assets\images\user-account-sprite.png" />
     <Content Include="Assets\images\user-icon-white.png" />
@@ -1025,6 +1047,94 @@
     <Content Include="Assets\js\angularApp.js" />
     <Content Include="Assets\js\angular_app.js" />
     <Content Include="Assets\js\application.js" />
+    <Content Include="Assets\js\CryptoJS\components\aes-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\aes.js" />
+    <Content Include="Assets\js\CryptoJS\components\cipher-core-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\cipher-core.js" />
+    <Content Include="Assets\js\CryptoJS\components\core-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\core.js" />
+    <Content Include="Assets\js\CryptoJS\components\enc-base64-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\enc-base64.js" />
+    <Content Include="Assets\js\CryptoJS\components\enc-utf16-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\enc-utf16.js" />
+    <Content Include="Assets\js\CryptoJS\components\evpkdf-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\evpkdf.js" />
+    <Content Include="Assets\js\CryptoJS\components\format-hex-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\format-hex.js" />
+    <Content Include="Assets\js\CryptoJS\components\hmac-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\hmac.js" />
+    <Content Include="Assets\js\CryptoJS\components\lib-typedarrays-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\lib-typedarrays.js" />
+    <Content Include="Assets\js\CryptoJS\components\md5-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\md5.js" />
+    <Content Include="Assets\js\CryptoJS\components\mode-cfb-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\mode-cfb.js" />
+    <Content Include="Assets\js\CryptoJS\components\mode-ctr-gladman-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\mode-ctr-gladman.js" />
+    <Content Include="Assets\js\CryptoJS\components\mode-ctr-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\mode-ctr.js" />
+    <Content Include="Assets\js\CryptoJS\components\mode-ecb-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\mode-ecb.js" />
+    <Content Include="Assets\js\CryptoJS\components\mode-ofb-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\mode-ofb.js" />
+    <Content Include="Assets\js\CryptoJS\components\pad-ansix923-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\pad-ansix923.js" />
+    <Content Include="Assets\js\CryptoJS\components\pad-iso10126-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\pad-iso10126.js" />
+    <Content Include="Assets\js\CryptoJS\components\pad-iso97971-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\pad-iso97971.js" />
+    <Content Include="Assets\js\CryptoJS\components\pad-nopadding-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\pad-nopadding.js" />
+    <Content Include="Assets\js\CryptoJS\components\pad-zeropadding-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\pad-zeropadding.js" />
+    <Content Include="Assets\js\CryptoJS\components\pbkdf2-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\pbkdf2.js" />
+    <Content Include="Assets\js\CryptoJS\components\rabbit-legacy-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\rabbit-legacy.js" />
+    <Content Include="Assets\js\CryptoJS\components\rabbit-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\rabbit.js" />
+    <Content Include="Assets\js\CryptoJS\components\rc4-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\rc4.js" />
+    <Content Include="Assets\js\CryptoJS\components\ripemd160-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\ripemd160.js" />
+    <Content Include="Assets\js\CryptoJS\components\sha1-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\sha1.js" />
+    <Content Include="Assets\js\CryptoJS\components\sha224-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\sha224.js" />
+    <Content Include="Assets\js\CryptoJS\components\sha256-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\sha256.js" />
+    <Content Include="Assets\js\CryptoJS\components\sha3-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\sha3.js" />
+    <Content Include="Assets\js\CryptoJS\components\sha384-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\sha384.js" />
+    <Content Include="Assets\js\CryptoJS\components\sha512-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\sha512.js" />
+    <Content Include="Assets\js\CryptoJS\components\tripledes-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\tripledes.js" />
+    <Content Include="Assets\js\CryptoJS\components\x64-core-min.js" />
+    <Content Include="Assets\js\CryptoJS\components\x64-core.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\aes.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\hmac-md5.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\hmac-ripemd160.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\hmac-sha1.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\hmac-sha224.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\hmac-sha256.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\hmac-sha3.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\hmac-sha384.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\hmac-sha512.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\md5.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\pbkdf2.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\rabbit-legacy.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\rabbit.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\rc4.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\ripemd160.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\sha1.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\sha224.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\sha256.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\sha3.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\sha384.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\sha512.js" />
+    <Content Include="Assets\js\CryptoJS\rollups\tripledes.js" />
     <Content Include="Assets\js\date-id-ID.js" />
     <Content Include="Assets\js\jquery-ui.min.js" />
     <Content Include="Assets\js\jquery.countdown.min.js" />
@@ -1067,7 +1177,6 @@
     <Content Include="Assets\mobile\images\dewasa-bw.png" />
     <Content Include="Assets\mobile\images\dewasa.png" />
     <Content Include="Assets\mobile\images\flight-history-status.png" />
-    <Content Include="Assets\mobile\images\flight-separator.png" />
     <Content Include="Assets\mobile\images\flight-swap.png" />
     <Content Include="Assets\mobile\images\flip.png" />
     <Content Include="Assets\mobile\images\form-sprite.png" />
@@ -1117,7 +1226,10 @@
     <Content Include="Assets\script\monitordesktop-12.js" />
     <Content Include="Assets\script\tv-common-300004.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDir.js" />
+    <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDirMobile.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
+    <Content Include="Assets\travorama20\css\help_section.css" />
+    <Content Include="Assets\travorama20\css\help_section.min.css" />
     <Content Include="Assets\travorama20\css\travorama20.css">
       <DependentUpon>travorama20.scss</DependentUpon>
     </Content>
@@ -1325,17 +1437,16 @@
     <Content Include="Assets\mobile\css\application.css.map">
       <DependentUpon>application.css</DependentUpon>
     </Content>
+    <Content Include="Assets\travorama20\css\help_section.scss" />
+    <Content Include="Assets\travorama20\css\help_section.css.map" />
+    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv2-api.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv2-cw %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv2-cw %283%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv2-cw %284%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv2-cw %285%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw__staging.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-cw %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
@@ -2685,6 +2796,7 @@
     <Content Include="Views\HelpSection\Contact-Us.cshtml" />
     <Content Include="Views\HelpSection\FAQs.cshtml" />
     <Content Include="Views\HelpSection\How-To.cshtml" />
+    <Content Include="Views\StaticPage\TravoramaMobileApp.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2734,7 +2846,7 @@
   <ItemGroup>
     <Folder Include="Areas\Api\Views\Account\" />
     <Folder Include="Areas\Api\Views\Shared\" />
-    <Folder Include="Assets\images\NewFolder1\" />
+    <Folder Include="Assets\images\campaign\MobileApp\" />
     <Folder Include="Assets\travorama20\fonts\" />
     <Folder Include="Assets\travorama20\images\" />
     <Folder Include="Helper\" />
@@ -2773,11 +2885,15 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\typings\cryptojs\cryptojs.d.ts" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

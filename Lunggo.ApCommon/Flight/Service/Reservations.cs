@@ -43,7 +43,7 @@ namespace Lunggo.ApCommon.Flight.Service
             try
             {
                 return GetReservationFromDb(rsvNo);
-        }
+            }
             catch
             {
                 return null;
@@ -55,23 +55,25 @@ namespace Lunggo.ApCommon.Flight.Service
             try
             {
                 var rsv = GetOverviewReservationFromDb(rsvNo);
-            return ConvertToReservationForDisplay(rsv);
-        }
+                return ConvertToReservationForDisplay(rsv);
+            }
             catch
             {
                 return null;
             }
         }
 
-        public List<FlightReservationForDisplay> GetOverviewReservationsByUserId(string userId)
+        public List<FlightReservationForDisplay> GetOverviewReservationsByUserId(string userId, string filter, string sort, int? page, int? itemsPerPage)
         {
-            var rsvs = GetOverviewReservationsByUserIdFromDb(userId) ?? new List<FlightReservation>();
+            var filters = filter != null ? filter.Split(',') : null;
+            var rsvs = GetOverviewReservationsByUserIdFromDb(userId, filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 
-        public List<FlightReservationForDisplay> GetOverviewReservationsByDeviceId(string deviceId)
+        public List<FlightReservationForDisplay> GetOverviewReservationsByDeviceId(string deviceId, string filter, string sort, int? page, int? itemsPerPage)
         {
-            var rsvs = GetOverviewReservationsByDeviceIdFromDb(deviceId) ?? new List<FlightReservation>();
+            var filters = filter != null ? filter.Split(',') : null;
+            var rsvs = GetOverviewReservationsByDeviceIdFromDb(deviceId, filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 

@@ -11,59 +11,7 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? ActivityPriceTypeId
-		{
-		    get { return _ActivityPriceTypeId; }
-		    set
-		    {
-		        _ActivityPriceTypeId = value;
-		        IncrementLog("ActivityPriceTypeId");
-		    }
-		}
-		public long? ActivityId
-		{
-		    get { return _ActivityId; }
-		    set
-		    {
-		        _ActivityId = value;
-		        IncrementLog("ActivityId");
-		    }
-		}
-		public String PriceTypeName
-		{
-		    get { return _PriceTypeName; }
-		    set
-		    {
-		        _PriceTypeName = value;
-		        IncrementLog("PriceTypeName");
-		    }
-		}
-		public String PriceTypeMetric
-		{
-		    get { return _PriceTypeMetric; }
-		    set
-		    {
-		        _PriceTypeMetric = value;
-		        IncrementLog("PriceTypeMetric");
-		    }
-		}
-		public String LangCd
-		{
-		    get { return _LangCd; }
-		    set
-		    {
-		        _LangCd = value;
-		        IncrementLog("LangCd");
-		    }
-		}
-
 		
-		private long? _ActivityPriceTypeId;
-		private long? _ActivityId;
-		private String _PriceTypeName;
-		private String _PriceTypeMetric;
-		private String _LangCd;
-
 
 		public static ActivityPriceTypeTableRecord CreateNewInstance()
         {
@@ -94,12 +42,6 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("ActivityPriceTypeId", true),
-				new ColumnMetadata("ActivityId", false),
-				new ColumnMetadata("PriceTypeName", false),
-				new ColumnMetadata("PriceTypeMetric", false),
-				new ColumnMetadata("LangCd", true),
-
             };
         }
 

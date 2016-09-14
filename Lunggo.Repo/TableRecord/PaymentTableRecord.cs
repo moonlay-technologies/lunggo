@@ -304,7 +304,7 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("RsvNo", false),
+				new ColumnMetadata("RsvNo", true),
 				new ColumnMetadata("MediumCd", false),
 				new ColumnMetadata("MethodCd", false),
 				new ColumnMetadata("StatusCd", false),

@@ -108,6 +108,10 @@ var CheckVoucherConfig = {
     Url: '$apiUrl$$checkVoucherPath$'
 };
 
+var CheckBinDiscountConfig = {
+    Url: '$apiUrl$$checkBinDiscountPath$'
+};
+
 var SubscribeConfig = {
     Url: '$apiUrl$$subscribePath$'
 };

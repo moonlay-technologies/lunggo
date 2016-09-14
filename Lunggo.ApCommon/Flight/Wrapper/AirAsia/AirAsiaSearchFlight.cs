@@ -122,7 +122,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         break;
                 }
 
-                if (originCountry == "ID")
+                //if (originCountry == "ID")
                 {
                     string url = @"Flight/Select";
                     var searchRequest = new RestRequest(url, Method.GET);
@@ -143,20 +143,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     Debug.Print(html.ToString());
 
                     if (searchResponse.ResponseUri.AbsolutePath != "/Flight/Select" && (searchResponse.StatusCode == HttpStatusCode.OK || searchResponse.StatusCode == HttpStatusCode.Redirect))
-                        return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
+                        return new SearchFlightResult
+                        {
+                            Errors = new List<FlightError> { FlightError.InvalidInputData },
+                            ErrorMessages = new List<string> { "Error while requesting at Flight/Select. Unexpected response path or status code" }
+                        };
                     var searchedHtml = (CQ)html;
                     availableFares = searchedHtml[".radio-markets"];
                     flightTable = searchedHtml[".avail-table-detail-table"];
                 }
 
-                else
-                {
-                    return new SearchFlightResult
-                    {
-                        IsSuccess = true,
-                        Itineraries = new List<FlightItinerary>()
-                    };
-                }
+                //else
+                //{
+                //    return new SearchFlightResult
+                //    {
+                //        IsSuccess = true,
+                //        Itineraries = new List<FlightItinerary>()
+                //    };
+                //}
 
                 // [Scrape]
 
@@ -297,7 +301,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             };
                         }
                         itin.Price.SetSupplier(price, new Currency(currency, Payment.Constant.Supplier.AirAsia));
-                        itins.Add(itin);
+                        //itins.Add(itin);
 
                         //ambil row2nya (.fare-light-row)
                         var m = fareIds.IndexOf(fareId);
@@ -457,12 +461,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Itineraries = itins
                     };
                 }
-                catch
+                catch(Exception e)
                 {
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Web Layout Changed!" }
+                        ErrorMessages = new List<string> { e.Message }
                     };
                 }
             }

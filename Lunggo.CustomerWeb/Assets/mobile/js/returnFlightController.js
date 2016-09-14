@@ -11,6 +11,7 @@
     // **********
     // variables
     $scope.trial = 0;
+    $scope.returnUrl = "/";
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.PageConfig.Validated = false;
     $scope.PageConfig.ValidateConfirmation = false;
@@ -34,6 +35,42 @@
             }, 1000);
         },
         Starting: false
+    }
+
+    $scope.checkMeal = function (trip) {
+        var available = false;
+        for (var x = 0; x < trip.segments.length; x++) {
+            if (trip.segments[x].hasMeal) {
+                available = true;
+            }
+        }
+
+        return available;
+    }
+
+    $scope.minBaggage = function (trip) {
+        var listbaggage = [];
+        for (var x = 0; x < trip.segments.length; x++) {
+            if (trip.segments[x].baggageCapacity != 0) {
+                listbaggage.push(trip.segments[x].baggageCapacity);
+            }
+        }
+
+        return Math.min.apply(Math, listbaggage);
+    }
+
+    $scope.checkBaggageNaN = function (val) {
+        return Number.isNaN(val);
+    }
+
+    $scope.checkTax = function (trip) {
+        var valid = true;
+        for (var x = 0; x < trip.segments.length; x++) {
+            if (trip.segments[x].includedPsc) {
+                valid = false;
+            }
+        }
+        return valid;
     }
 
     $scope.FlightConfig = [
@@ -163,7 +200,13 @@
     ];
 
     $scope.FlightFunctions = {};
-
+    $scope.overlapDate = function (onwardArrival, returnDeparture) {
+        if (onwardArrival && returnDeparture) {
+            onwardArrival = new Date(onwardArrival);
+            returnDeparture = new Date(returnDeparture);
+            return (returnDeparture <= onwardArrival);
+        }
+    }
     // **********
     // functions
 
@@ -209,9 +252,9 @@
     $scope.getOverdayDate = function (departureDate, arrivalDate) {
         if (departureDate && arrivalDate) {
             departureDate = new Date(departureDate);
-            departureDate = new Date((departureDate.getFullYear() + ' ' + (departureDate.getUTCMonth() + 1) + ' ' + departureDate.getUTCDate()));
+            departureDate = Date.UTC(departureDate.getUTCFullYear(), (departureDate.getUTCMonth() + 1), departureDate.getUTCDate());
             arrivalDate = new Date(arrivalDate);
-            arrivalDate = new Date((arrivalDate.getFullYear() + ' ' + (arrivalDate.getUTCMonth() + 1) + ' ' + arrivalDate.getUTCDate()));
+            arrivalDate = Date.UTC(arrivalDate.getUTCFullYear(), (arrivalDate.getUTCMonth() + 1), arrivalDate.getUTCDate());
             var overday = arrivalDate - departureDate;
             overday = overday / 1000 / 60 / 60 / 24;
             if (overday > 0) {
@@ -554,6 +597,7 @@
         $scope.SetOverlay('flight-detail');
     }
 
+    $scope.selectError = false;
     // revalidate flight
     $scope.FlightFunctions.Revalidate = function(departureIndexNo, returnIndexNo) {
 
@@ -609,6 +653,7 @@
                         console.log('flight unavailable');
                         $scope.FlightConfig[0].validateAvailable = false;
                         $scope.FlightConfig[1].validateAvailable = false;
+                        $scope.selectError = true;
                     }
 
                     //if (anotherFlight.FlightValidated) {
@@ -627,12 +672,14 @@
                         console.log('ERROR Validating Flight');
                         console.log(returnData);
                         console.log('--------------------');
+                        $scope.selectError = true;
                     }
                     
                 });
             }
             else
             {
+                $scope.selectError = true;
                 $scope.FlightConfig[0].validateAvailable = false;
                 $scope.FlightConfig[1].validateAvailable = false;
                 console.log('Not Authorized');

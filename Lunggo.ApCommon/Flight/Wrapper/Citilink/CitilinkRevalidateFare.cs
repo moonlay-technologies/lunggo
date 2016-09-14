@@ -94,21 +94,55 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 
                     var responAjax = fareResponse.Content;
                     CQ ambilDataAjax = (CQ)responAjax;
-                    
-                    //Price
+
+                    //Price 
+
                     var tunjukHarga = ambilDataAjax["#taxAndFeeInclusiveTotal"];
                     var ambilharga = tunjukHarga.Select(x => x.Cq().Text()).FirstOrDefault();
-                    var harga = ambilharga.Split('.');
-                    var newPrice = decimal.Parse(harga[1]);
-                    var breakdownHarga = ambilDataAjax[".itern-rgt-txt-2>p>span"];
+                    var harga = decimal.Parse(ambilharga.Split('.')[1]);
+                    var breakdownHarga = ambilDataAjax[".right.stripeMe>tbody"];
+                    var pscRow = breakdownHarga[0].ChildElements.ToList()[1];
+                    var adultPsc = decimal.Parse(pscRow.ChildElements.ToList()[1].InnerText.Split('.')[1]);
+                    var childPsc = decimal.Parse("0");
+                    if (childCount > 0)
+                    {
+                        childPsc = decimal.Parse(pscRow.ChildElements.ToList()[2].InnerText.Split('.')[1]);
+                    }
+
+                    var insChrg = breakdownHarga[0].ChildElements.ToList()[2];
+                    var adultIns = decimal.Parse(insChrg.ChildElements.ToList()[1].InnerText.Split('.')[1]);
+                    var childIns = decimal.Parse("0");
+                    if (childCount > 0)
+                    {
+                        childIns = decimal.Parse(insChrg.ChildElements.ToList()[2].InnerText.Split('.')[1]);
+                    }
+
+                    var vatRow = breakdownHarga[0].ChildElements.ToList()[3];
+                    var adultVat = decimal.Parse(vatRow.ChildElements.ToList()[1].InnerText.Split('.')[1]);
+                    var childVat = decimal.Parse("0");
+                    if (childCount > 0)
+                    {
+                        childVat = decimal.Parse(vatRow.ChildElements.ToList()[2].InnerText.Split('.')[1]);
+                    }
+
                     var hargaAdult = 0M;
                     var hargaChild = 0M;
                     var hargaInfant = 0M;
+                    var adultTax = adultIns + adultPsc + adultVat;
+                    var childTax = childPsc + childIns + childVat;
+
+                    var taxTable = ambilDataAjax[".itern-rgt-txt-2>p>span"];
                     try
                     {
-                        hargaAdult = decimal.Parse(breakdownHarga[0].InnerText.Split('.')[1]);
-                        hargaChild = decimal.Parse(breakdownHarga[1].InnerText.Split('.')[1]);
-                        hargaInfant = decimal.Parse(breakdownHarga[2].InnerText.Split('.')[1]);
+                        hargaAdult = decimal.Parse(taxTable[0].InnerText.Split('.')[1]) + adultTax;
+                        hargaChild = decimal.Parse(taxTable[1].InnerText.Split('.')[1]) + childTax;
+                        hargaInfant = decimal.Parse(taxTable[2].InnerText.Split('.')[1]);
+                        if (infantCount > 0)
+                        {
+                            var infantTax = harga - (hargaAdult + hargaChild + hargaInfant);
+                            hargaInfant += infantTax;
+                        }
+
                     }
                     catch { }
 
@@ -123,7 +157,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         "." + infantCount + "" +
                         "." + ParseFID2[0] + "" +
                         "." + ParseFID2[1] + "" +
-                        "." + decimal.Parse(harga[1]) + "" +
+                        "." + harga + "" +
                         ".";
 
                     //for (int l = 0; l < ACpisah1.Count; l++)
@@ -200,11 +234,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         RequestedCabinClass = CabinClass.Economy,
                         RequestedTripType = conditions.Itinerary.RequestedTripType,
                         TripType = TripType.OneWay,
-                        Supplier = Supplier.AirAsia,
+                        Supplier = Supplier.Citilink,
                         Price = new Price(),
-                        AdultPricePortion = hargaAdult/newPrice,
-                        ChildPricePortion = hargaChild/newPrice,
-                        InfantPricePortion = hargaInfant/newPrice,
+                        AdultPricePortion = hargaAdult/harga,
+                        ChildPricePortion = hargaChild/harga,
+                        InfantPricePortion = hargaInfant/harga,
                         FareId = prefix + foundFareId,
                         Trips = new List<FlightTrip>
                         {
@@ -217,18 +251,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             }
                         }
                     };
-                    itin.Price.SetSupplier(newPrice, new Currency("IDR"));
+                    itin.Price.SetSupplier(harga, new Currency("IDR"));
                     
                     var result = new RevalidateFareResult
                     {
                         IsSuccess = true,
                         IsValid = true,
-                        IsPriceChanged = price != newPrice,
+                        IsPriceChanged = price != harga,
                         NewItinerary = itin,
                         IsItineraryChanged = !conditions.Itinerary.Identical(itin)
                     };
                     if (result.IsPriceChanged)
-                        result.NewPrice = newPrice;
+                        result.NewPrice = harga;
                     return result;
                 }    
                else

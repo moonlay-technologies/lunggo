@@ -152,7 +152,7 @@ namespace Lunggo.ApCommon.Identity.Users
                 UserName = userRecord.UserName,
                 AccessFailedCount = userRecord.AccessFailedCount,
                 EmailConfirmed = userRecord.EmailConfirmed,
-                CountryCallCd = userRecord.CountryCd,
+                CountryCallCd = userRecord.CountryCallCd,
                 PhoneNumber = userRecord.PhoneNumber,
                 Address = userRecord.Address,
                 LockoutEnabled = userRecord.LockoutEnabled,

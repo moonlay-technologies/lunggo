@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Lunggo.Framework.Database;
@@ -7,72 +7,13 @@ namespace Lunggo.Repository.TableRecord
 {
     public class PersonTableRecord : Lunggo.Framework.Database.TableRecord
     {
-
-        private static List<ColumnMetadata> _recordMetadata;
+		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-        public int PersonID
-        {
-            get { return _PersonID; }
-            set
-            {
-                _PersonID = value; 
-                IncrementLog("PersonID");
-            }
-        }
+		
 
-        public String LastName
-        {
-            get { return _LastName; }
-            set
-            {
-                _LastName = value;
-                IncrementLog("LastName");
-            }
-        }
-
-        public String FirstName
-        {
-            get { return _FirstName; }
-            set
-            {
-                _FirstName = value;
-                IncrementLog("FirstName");
-            }
-        }
-
-        public DateTime HireDate
-        {
-            get { return _HireDate; }
-            set
-            {
-                _HireDate = value;
-                IncrementLog("HireDate");
-            }
-        }
-
-        public DateTime EnrollmentDate
-        {
-            get { return _EnrollmentDate; }
-            set
-            {
-                _EnrollmentDate = value;
-                IncrementLog("EnrollmentDate");
-            }
-        }
-
-        public DateTime LalaDate
-        {
-            get { return _LalaDate; }
-            set
-            {
-                _LalaDate = value;
-                IncrementLog("LalaDate");
-            }
-        }
-
-        public static PersonTableRecord CreateNewInstance()
+		public static PersonTableRecord CreateNewInstance()
         {
             var record = new PersonTableRecord();
             var iRecord = record.AsInterface();
@@ -80,14 +21,7 @@ namespace Lunggo.Repository.TableRecord
             return record;
         }
 
-        private int _PersonID;
-        private String _LastName;
-        private String _FirstName;
-        private DateTime _HireDate;
-        private DateTime _EnrollmentDate;
-        private DateTime _LalaDate;
-
-        private PersonTableRecord()
+		public PersonTableRecord()
         {
             ;
         }
@@ -108,12 +42,6 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-                new ColumnMetadata("PersonID", true),
-                new ColumnMetadata("LastName", false),
-                new ColumnMetadata("FirstName",false),
-                new ColumnMetadata("HireDate", false),
-                new ColumnMetadata("EnrollmentDate", false),
-                new ColumnMetadata("LalaDate", false)
             };
         }
 
@@ -122,7 +50,7 @@ namespace Lunggo.Repository.TableRecord
             _primaryKeys = _recordMetadata.Where(p => p.IsPrimaryKey).ToList();
         }
 
-        public override List<ColumnMetadata> GetMetadata()
+		public override List<ColumnMetadata> GetMetadata()
         {
             return _recordMetadata;
         }
@@ -136,8 +64,8 @@ namespace Lunggo.Repository.TableRecord
         {
             return _primaryKeys;
         }
+
+
+
     }
-
 }
-
-

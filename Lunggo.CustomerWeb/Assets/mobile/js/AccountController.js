@@ -525,6 +525,7 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
 
     $scope.pageLoaded = true;
     $scope.trial = 0;
+    $scope.isExist = false;
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.orderDate = new Date(orderDate);
     $scope.rsvNo = rsvNo;
@@ -545,6 +546,13 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
             return 'Anak';
         else if (types == 3)
             return 'Bayi';
+    }
+
+    // Pass Data into MVC Controller
+    $scope.submitRsvNo = function (rsvNo, rsvStatus) {
+        $('form#rsvno input#rsvno-input').val(rsvNo);
+        $('form#rsvno input#message-input').val(rsvStatus);
+        $('form#rsvno').submit();
     }
 
     $scope.methodpayment = function(types) {
@@ -601,6 +609,31 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
             return 'Gagal';
     }
 
+    $scope.ButtonText = function (status, method) {
+        if (status == 1) { return 'Halaman Pembayaran'; }
+
+        else if (status == 2 || status == 3) {
+            if (method == 2 || method == 5) {
+                return 'Instruksi Pembayaran';
+            }
+            else if (method == 4) {
+                return 'Halaman Pembayaran';
+            }
+            else {
+                return 'Lihat Detail';
+            }
+        }
+
+        else if (status == 7 || status == 9 || status == 10) {
+            return 'Lihat Detail';
+        }
+
+        else if (status == 4 || status == 5) { return 'Cetak E-tiket'; }
+
+        else if (status == 6 || status == 8) { return 'Cari Penerbangan'; }
+
+    }
+
     $scope.closeOverlay = function() {
         window.location.href = "/";
     }
@@ -611,7 +644,7 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
         }
         $scope.errormsg = '';
         var authAccess = getAuthAccess();
-        if (authAccess == 2)
+        if (authAccess == 2 || authAccess == 1)
         {
             $http.get(GetReservationConfig.Url + $scope.rsvNo, {
                 headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
@@ -620,6 +653,7 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
                 if (returnData.data.status == "200") {
                     $scope.flight = returnData.data.flight;
                     $scope.datafailed = false;
+                    $scope.isExist = true;
                 }
                 else {
                     console.log('There is an error');

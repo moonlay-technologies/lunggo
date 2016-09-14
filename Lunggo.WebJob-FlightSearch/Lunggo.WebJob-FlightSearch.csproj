@@ -72,6 +72,7 @@
     <None Include="Properties\PublishProfiles\dv1-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-webjobflightsearch %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-webjobflightsearch %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-dv2-webjobflightsearch %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-webjobflightsearch - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-webjobflightsearch - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-webjobflightsearch - Web Deploy %282%29.pubxml" />

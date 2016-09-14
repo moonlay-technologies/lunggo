@@ -35,6 +35,16 @@ namespace Lunggo.Repository.TableRepository
             return Update(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
+		public CitiesTableRecord Find1(IDbConnection connection, CitiesTableRecord record)
+        {
+            return Find1(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
+		public IEnumerable<CitiesTableRecord> Find(IDbConnection connection, CitiesTableRecord record)
+        {
+            return Find(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
         public IEnumerable<CitiesTableRecord> FindAll(IDbConnection connection)
         {
             return FindAll(connection, CommandDefinition.GetDefaultDefinition());
@@ -58,6 +68,16 @@ namespace Lunggo.Repository.TableRepository
         public int Update(IDbConnection connection, CitiesTableRecord record, CommandDefinition definition)
         {
             return UpdateInternal(connection, record, definition);
+        }
+
+		public CitiesTableRecord Find1(IDbConnection connection, CitiesTableRecord record, CommandDefinition definition)
+        {
+			return Find1Internal(connection, record, definition);
+        }
+
+		public IEnumerable<CitiesTableRecord> Find(IDbConnection connection, CitiesTableRecord record, CommandDefinition definition)
+        {
+			return FindInternal(connection, record, definition);
         }
 
         public int DeleteAll(IDbConnection connection, CommandDefinition definition)

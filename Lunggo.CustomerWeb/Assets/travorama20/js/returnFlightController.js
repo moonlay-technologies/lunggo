@@ -10,6 +10,7 @@ app.controller('returnFlightController', [
         });
         // ******************************
         // general variables
+        $scope.returnUrl = "/";
         $scope.pageLoaded = true;
         $scope.trial = 0;
         $scope.pageConfig = {
@@ -231,6 +232,43 @@ app.controller('returnFlightController', [
             }
         }
 
+
+        $scope.checkMeal = function (trip) {
+            var available = false;
+            for (var x = 0; x < trip.segments.length; x++) {
+                if (trip.segments[x].hasMeal) {
+                    available = true;
+                }
+            }
+
+            return available;
+        }
+
+        $scope.minBaggage = function (trip) {
+            var listbaggage = [];
+            for (var x = 0; x < trip.segments.length; x++) {
+                if (trip.segments[x].baggageCapacity != 0) {
+                    listbaggage.push(trip.segments[x].baggageCapacity);
+                }
+            }
+
+            return Math.min.apply(Math, listbaggage);
+        }
+
+        $scope.checkBaggageNaN = function (val) {
+            return Number.isNaN(val);
+        }
+
+        $scope.checkTax = function (trip) {
+            var valid = true;
+            for (var x = 0; x < trip.segments.length; x++) {
+                if (trip.segments[x].includedPsc) {
+                    valid = false;
+                }
+            }
+            return valid;
+        }
+
         //terakhir dimari//
         // set active flight BUAT DETAIL PENERBANGAN
         $scope.setActiveFlight = function (target, flightSequence) {
@@ -414,7 +452,7 @@ app.controller('returnFlightController', [
 
 
 
-
+        $scope.selectError = false;
         $scope.popup = false;
         // ******************************
         // revalidate flights
@@ -472,6 +510,8 @@ app.controller('returnFlightController', [
                             console.log('flight unavailable');
                             $scope.departureFlightConfig.validateAvailable = false;
                             $scope.returnFlightConfig.validateAvailable = false;
+                            $scope.popup = false;
+                            $scope.selectError = true;
                         }
                     }).catch(function (returnData) {
                         $scope.trial++;
@@ -485,6 +525,8 @@ app.controller('returnFlightController', [
                             $scope.returnFlightConfig.validating = false;
                             console.log('ERROR Validating Flight :');
                             console.log('--------------------');
+                            $scope.popup = false;
+                            $scope.selectError = true;
                         }
                     });
                 }
@@ -492,6 +534,8 @@ app.controller('returnFlightController', [
                     $scope.departureFlightConfig.validating = false;
                     $scope.returnFlightConfig.validating = false;
                     console.log('Not Authorized');
+                    $scope.popup = false;
+                    $scope.selectError = true;
                 }
 
                 /*-----------*/
@@ -717,9 +761,11 @@ app.controller('returnFlightController', [
                         if (returnData.data.flights.length) {
                             if (returnData.data.flights[0].options.length) {
                                 $scope.arrangeFlightData('departure', returnData.data.flights[0].options); // For Departure Flight
+                                console.log("Ada data");
                             }
                             if (returnData.data.flights[1].options.length) {
                                 $scope.arrangeFlightData('return', returnData.data.flights[1].options); // For Return Flight
+                                console.log("Ada data");
                             }
                         }
                         

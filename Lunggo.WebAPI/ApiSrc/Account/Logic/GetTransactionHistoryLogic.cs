@@ -21,11 +21,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
             var flight = FlightService.GetInstance();
             var rsvs = identity.IsUserAuthorized() 
-                ? flight.GetOverviewReservationsByUserId(identity.GetUser().Id) 
-                : flight.GetOverviewReservationsByDeviceId(identity.GetDeviceId());
-            rsvs = FilterTransactionHistory(filter, rsvs);
+                ? flight.GetOverviewReservationsByUserId(identity.GetUser().Id, filter, sort, page, itemsPerPage)
+                : flight.GetOverviewReservationsByDeviceId(identity.GetDeviceId(), filter, sort, page, itemsPerPage);
+            //rsvs = FilterTransactionHistory(filter, rsvs);
             rsvs = SortTransactionHistory(sort, rsvs);
-            rsvs = PageTransactionHistory(page, itemsPerPage, rsvs);
+            //rsvs = PageTransactionHistory(page, itemsPerPage, rsvs);
             return new TransactionHistoryApiResponse
             {
                 FlightReservations = rsvs,

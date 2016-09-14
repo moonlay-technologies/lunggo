@@ -566,15 +566,6 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
-        public ActionResult Account()
-        {
-            var model = new AccountViewModel();
-            var flightService = FlightService.GetInstance();
-            model.User = User.Identity.GetUser();
-            model.FlightReservations = flightService.GetOverviewReservationsByUserId(model.User.Email);
-            return View(model);
-        }
-
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";

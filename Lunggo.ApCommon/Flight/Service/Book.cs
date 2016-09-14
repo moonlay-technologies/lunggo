@@ -46,6 +46,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (output.IsPriceChanged)
                     output.NewPrice = bookResults.Sum(result => result.RevalidateSet.NewPrice);
                 SaveItinerariesToCache(newItins, input.Token);
+                itins = newItins;
             }
             if (AllAreBooked(bookResults))
             {
@@ -66,8 +67,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.IsSuccess = false;
                 if (!bookResults.Any())
                     output.AddError(FlightError.InvalidInputData);
-                if (AnyIsBooked(bookResults))
-                    output.PartiallySucceed();
+                //if (AnyIsBooked(bookResults))
+                //    output.PartiallySucceed();
                 output.DistinguishErrors();
             }
 
@@ -99,7 +100,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var reservation = new FlightReservation();
             reservation.RsvNo = RsvNoSequence.GetInstance().GetNext(reservation.Type);
             reservation.RsvTime = DateTime.UtcNow;
-            reservation.RsvStatus = RsvStatus.Reserved;
+            reservation.RsvStatus = RsvStatus.InProcess;
             reservation.Itineraries = itins;
             reservation.Contact = input.Contact;
             reservation.Pax = input.Passengers;
@@ -111,7 +112,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Status = PaymentStatus.Pending,
                 LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
                 OriginalPriceIdr = reservation.Itineraries.Sum(order => order.Price.FinalIdr),
-                TimeLimit = reservation.Itineraries.Min(order => order.TimeLimit.GetValueOrDefault()).AddMinutes(-30),
+                TimeLimit = reservation.Itineraries.Min(order => order.TimeLimit.GetValueOrDefault()).AddMinutes(-15),
             };
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
             var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
@@ -149,6 +150,14 @@ namespace Lunggo.ApCommon.Flight.Service
             };
             var response = BookFlightInternal(bookInfo);
             var bookResult = new BookResult();
+            if (response.NewItinerary != null)
+            {
+                var newItin = response.NewItinerary;
+                newItin.Price.SetMargin(itin.Price.Margin);
+                newItin.Price.CalculateFinalAndLocal(itin.Price.LocalCurrency);
+                RoundFinalAndLocalPrice(newItin);
+                itin = newItin;
+            }
             if (response.IsSuccess)
             {
                 bookResult.IsSuccess = true;
@@ -162,14 +171,6 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
-                if (response.NewItinerary != null)
-                {
-                    var newItin = response.NewItinerary;
-                    newItin.Price.SetMargin(itin.Price.Margin);
-                    newItin.Price.CalculateFinalAndLocal(itin.Price.LocalCurrency);
-                    RoundFinalAndLocalPrice(newItin);
-                    itin = newItin;
-                }
                 bookResult.IsSuccess = false;
                 if (response.Errors != null)
                     response.Errors.ForEach(output.AddError);

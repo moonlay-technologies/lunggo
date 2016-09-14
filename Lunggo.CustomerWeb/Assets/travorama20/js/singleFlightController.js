@@ -19,6 +19,7 @@ app.controller('singleFlightController', [
         $scope.loadingFlight = false;
         $scope.flightList = [];
         $scope.Progress = 0;
+        $scope.returnUrl = "/";
         var cabin = FlightSearchConfig.flightForm.cabin;
         if (cabin != 'y' || cabin != 'c' || cabin != 'f') {
             switch (cabin) {
@@ -185,6 +186,43 @@ app.controller('singleFlightController', [
                 }
                 return overday;
             }
+        }
+
+
+        $scope.checkMeal = function (trip) {
+            var available = false;
+            for (var x = 0; x < trip.segments.length; x++) {
+                if (trip.segments[x].hasMeal) {
+                    available = true;
+                }
+            }
+
+            return available;
+        }
+
+        $scope.minBaggage = function (trip) {
+            var listbaggage = [];
+            for (var x = 0; x < trip.segments.length; x++) {
+                if (trip.segments[x].baggageCapacity != 0) {
+                    listbaggage.push(trip.segments[x].baggageCapacity);
+                }
+            }
+
+            return Math.min.apply(Math, listbaggage);
+        }
+
+        $scope.checkBaggageNaN = function (val) {
+            return Number.isNaN(val);
+        }
+
+        $scope.checkTax = function (trip) {
+            var valid = true;
+            for (var x = 0; x < trip.segments.length; x++) {
+                if (trip.segments[x].includedPsc) {
+                    valid = false;
+                }
+            }
+            return valid;
         }
 
         // **********
@@ -377,6 +415,7 @@ app.controller('singleFlightController', [
         // **********
         // Select flight
         $scope.selectFlightParam = {
+            error: false,
             validated: false,
             token: '',
             validating: false,
@@ -418,6 +457,7 @@ app.controller('singleFlightController', [
                         console.log("Response Select Flight : " + returnData);
                      
                         if (returnData.data.token != "" || returnData.data.token != null) {
+                            
                             console.log('departure flight available');
                             $scope.selectFlightParam.available = true;
                             $scope.selectFlightParam.token = returnData.data.token;
@@ -438,12 +478,16 @@ app.controller('singleFlightController', [
                             $scope.selectFlightParam.validatingFlight = false;
                             console.log('ERROR Validating Flight');
                             console.log('--------------------');
+                            $scope.selectFlightParam.popup = false;
+                            $scope.selectFlightParam.error = true;
                         }
                     });
                 }
                 else {
                     $scope.selectFlightParam.validatingFlight = false;
                     console.log('Not Authorized');
+                    $scope.selectFlightParam.popup = false;
+                    $scope.selectFlightParam.error = true;
                 }
 
                 
@@ -497,6 +541,7 @@ app.controller('singleFlightController', [
                         $scope.Progress = returnData.data.progress;
                         if (returnData.data.flights.length) {
                             $scope.generateFlightList(returnData.data.flights[0].options);
+                            console.log("Ada data");
                         }
 
                         if ($scope.Progress == 100) {

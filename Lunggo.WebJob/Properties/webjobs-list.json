@@ -1,17 +1,20 @@
 ﻿{
-  "$schema": "http://schemastore.org/schemas/json/webjobs-list.json",
-  "WebJobs": [
-    {
-      "filePath": "../Lunggo.Webjob.MystiflyQueueHandler/Lunggo.WebJob.MystiflyQueueHandler.csproj"
-    },
-    {
-      "filePath": "../Lunggo.WebJob.EmailQueueHandler/Lunggo.WebJob.EmailQueueHandler.csproj"
-    },
-    {
-      "filePath": "../Lunggo.WebJob.FlightProcessor/Lunggo.WebJob.FlightProcessor.csproj"
-    },
-    {
-      "filePath": "../Lunggo.Webjob.BankTransferChecking/Lunggo.WebJob.BankTransferChecking.csproj"
-    }
-  ]
+    "$schema": "http://schemastore.org/schemas/json/webjobs-list.json",
+    "WebJobs": [
+        {
+            "filePath": "../Lunggo.Webjob.MystiflyQueueHandler/Lunggo.WebJob.MystiflyQueueHandler.csproj"
+        },
+        {
+            "filePath": "../Lunggo.WebJob.EmailQueueHandler/Lunggo.WebJob.EmailQueueHandler.csproj"
+        },
+        {
+            "filePath": "../Lunggo.WebJob.FlightProcessor/Lunggo.WebJob.FlightProcessor.csproj"
+        },
+        {
+            "filePath": "../Lunggo.Webjob.BankTransferChecking/Lunggo.WebJob.BankTransferChecking.csproj"
+        },
+        {
+            "filePath": "../Lunggo.Webjob.CurrencyCrawler/Lunggo.WebJob.CurrencyCrawler.csproj"
+        }
+    ]
 }

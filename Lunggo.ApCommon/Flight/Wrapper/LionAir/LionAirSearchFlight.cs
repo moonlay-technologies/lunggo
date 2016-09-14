@@ -112,8 +112,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                          searchResponse0.StatusCode == HttpStatusCode.Redirect))
                         return new SearchFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
 
-                    if (originCountry == "ID")
-                    {
+                    //if (originCountry == "ID")
+                    //{
                     // Calling The First Page
                     client.BaseUrl = new Uri("https://secure2.lionair.co.id");
                     const string url = @"lionairibe2/OnlineBooking.aspx";
@@ -148,15 +148,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             {
                                 Errors = new List<FlightError> {FlightError.InvalidInputData}
                             };
-                    }
-                    else
-                    {
-                        return new SearchFlightResult
-                        {
-                            IsSuccess = true,
-                            Itineraries = new List<FlightItinerary>()
-                        };
-                    }
+                    //}
+                    //else
+                    //{
+                    //    return new SearchFlightResult
+                    //    {
+                    //        IsSuccess = true,
+                    //        Itineraries = new List<FlightItinerary>()
+                    //    };
+                    //}
                     try
                     {
                     //Calling The Second Page
@@ -177,7 +177,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                          searchResponse2.StatusCode == HttpStatusCode.Redirect))
                             return new SearchFlightResult
                             {
-                                Errors = new List<FlightError> {FlightError.InvalidInputData}
+                                Errors = new List<FlightError> {FlightError.InvalidInputData},
+                                ErrorMessages = new List<string> { "Error while requesting at lionairibe2/OnlineBooking.aspx. Unexpected Rensponse path or status code" }
                             };
 
                     var searchedHtml = (CQ) html2;
@@ -416,7 +417,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             var infantPrice = pricefunc.GetInfantPrice(conditions.InfantCount);
                             var price = adultPrice + childPrice + infantPrice;
 
-                            var baggage = GetBaggage(flightNo.Split(' ')[0], conditions.CabinClass, airportDeparture, airportArrival, originCountry, destinationCountry);
+                            var originCountry1 = FlightService.GetInstance().GetAirportCountryCode(airportDeparture);
+                            var destinationCountry1 = FlightService.GetInstance().GetAirportCountryCode(airportArrival);
+
+                            var baggage = GetBaggage(flightNo.Split(' ')[0], conditions.CabinClass, airportDeparture, airportArrival, originCountry1, destinationCountry1);
                             var isBaggageIncluded = false;
 
                             if (baggage != null)
@@ -524,6 +528,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 arrDate = arrDate2;
                                 timeArrival = timeArrival2;
 
+                                var originCountry2 = FlightService.GetInstance().GetAirportCountryCode(airportDeparture2);
+                                var destinationCountry2 = FlightService.GetInstance().GetAirportCountryCode(airportArrival2);
+
+                                var baggage2 = GetBaggage(flightNo.Split(' ')[0], conditions.CabinClass, airportDeparture2, airportArrival2, originCountry2, destinationCountry2);
+                                var isBaggageIncluded2 = false;
+
+                                if (baggage2 != null)
+                                {
+                                    isBaggageIncluded2 = true;
+                                }
+
                                 segments.Add(new FlightSegment
                                 {
                                     AirlineCode = flightNo.Split(' ')[0],
@@ -543,6 +558,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     AirlineName = airplaneName,
                                     OperatingAirlineName = airplaneName,
                                     IsMealIncluded = flightNo.Split(' ')[0] == "ID",
+                                    IsBaggageIncluded = isBaggageIncluded2,
+                                    BaggageCapacity = baggage2,
                                     IsPscIncluded = true
                                 });
                                 j += 1;
@@ -651,12 +668,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Itineraries = itins
                     };
                 }
-                catch
+                catch(Exception e)
                 {
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> {FlightError.TechnicalError},
-                        ErrorMessages = new List<string> {"Web Layout Changed!"}
+                        ErrorMessages = new List<string> {e.Message}
                     };
                 }
             }
