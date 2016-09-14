@@ -686,7 +686,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Price = new Price(),
                         AdultPricePortion = conditions.Itinerary.AdultPricePortion,
                         ChildPricePortion = conditions.Itinerary.ChildPricePortion,
-                        InfantPricePortion = conditions.Itinerary.InfantCount,
+                        InfantPricePortion = conditions.Itinerary.InfantPricePortion,
                         FareId = conditions.Itinerary.FareId,
                         Trips = new List<FlightTrip>
                         {

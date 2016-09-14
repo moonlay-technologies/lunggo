@@ -4,12 +4,17 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Web;
+using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
+using Lunggo.Framework.Extension;
+using Lunggo.Framework.Log;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
@@ -75,6 +80,18 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     {
                         payment.Status = PaymentStatus.Failed;
                         payment.FailureReason = FailureReason.PaymentFailure;
+
+                            var log = LogService.GetInstance();
+                            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                        log.Post(
+                            "```Payment Log```"
+                            + "\n`*Environment :* " + env.ToUpper()
+                            + "\n*REQUEST :*\n"
+                            + request.Serialize()
+                            + "\n*RESPONSE :*\n"
+                            + response.Serialize()
+                            + "\n*Platform :* "
+                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
                     }
                     return payment;
                 case PaymentMethod.VirtualAccount:

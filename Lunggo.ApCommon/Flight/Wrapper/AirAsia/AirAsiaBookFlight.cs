@@ -86,6 +86,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     };
                 }
 
+                List<string> errorMessages;
+                CommonInputCheck(bookInfo.Passengers, date, out errorMessages);
+                if (errorMessages.Count > 0)
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        ErrorMessages = errorMessages
+                    };
+
                 if (!Login(client))
                     return new BookFlightResult
                     {

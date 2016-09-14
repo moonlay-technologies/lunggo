@@ -81,116 +81,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 }
 
                 var returnPath = "";
-                var infants = bookInfo.Passengers.Where(pax => pax.Type == PaxType.Infant);
-                var children = bookInfo.Passengers.Where(pax => pax.Type == PaxType.Child);
-                bool isInfantValid = true;
-                bool isChildValid = true;
-                foreach (var inft in infants)
-                {
-                    if (inft.DateOfBirth.Value.AddYears(2) <= depdate)
-                    {
-                        isInfantValid = false;
-                    }
-                }
-
-                foreach (var child in children)
-                {
-                    if (child.DateOfBirth.Value.AddYears(2) > depdate || child.DateOfBirth.Value.AddYears(12) <= depdate)
-                    {
-                        isChildValid = false;
-                    }
-                }
-
-                if (adultCount == 0)
-                {
-                    //throw new Exception("haloooo 3");
+                List<string> errorMessages;
+                CommonInputCheck(bookInfo.Passengers, depdate, out errorMessages);
+                if (errorMessages.Count > 0)
                     return new BookFlightResult
                     {
-                        Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages = new List<string> {"There Must be one adult"},
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        IsSuccess = false
-                    };
-                }
-                if (adultCount + childCount > 9)
-                {
-                    //throw new Exception("haloooo 4");
-                    return new BookFlightResult
-                    {
-                        Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages =
-                            new List<string> {"Total adult and children passenger must be not more than nine"},
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        IsSuccess = false
-                    };
-                }
-                if (adultCount < infantCount)
-                {
-                    //throw new Exception("haloooo 5");
-                    return new BookFlightResult
-                    {
-                        Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages =
-                            new List<string> {"Each infant must be accompanied by one adult"},
                         IsSuccess = false,
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
-                        }
-                    };
-                }
-                if (depdate > DateTime.Now.AddMonths(331).Date)
-                {
-                    //throw new Exception("haloooo 6");
-                    return new BookFlightResult
-                    {
-                        Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages = new List<string> {"Time of Departure Exceeds"},
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
                         },
-                        IsSuccess = false
+                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        ErrorMessages = errorMessages
                     };
-                }
-                if (!isInfantValid)
-                {
-                    //throw new Exception("haloooo 7");
 
-                    return new BookFlightResult
-                    {
-                        Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages =
-                            new List<string> {"Age of infant when traveling must be less than or equal 2 years old"},
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        IsSuccess = false
-                    };
-                }
-                if (!isChildValid)
-                {
-                    //throw new Exception("haloooo 8");
-
-                    return new BookFlightResult
-                    {
-                        Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages =
-                            new List<string> {"Age of child when traveling must be between 2 and 12 years old"},
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        IsSuccess = false
-                    };
-                }
                 var client = CreateAgentClient();
                 var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
                 var clientx = new RestClient(cloudAppUrl);
