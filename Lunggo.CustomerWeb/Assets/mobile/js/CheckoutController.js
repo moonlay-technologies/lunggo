@@ -1005,8 +1005,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
     $scope.validateBirthday = function (passenger) {
         if (passenger.type == 'adult') {
-            if (passenger.birth.year >= $scope.bookingDate.getFullYear() - 12) {
-                passenger.birth.year = $scope.bookingDate.getFullYear() - 12;
+            if (passenger.birth.year >= $scope.flightDetail.departureFullDate.getFullYear() - 12) {
+                passenger.birth.year = $scope.flightDetail.departureFullDate.getFullYear() - 12;
                 if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth()) {
                     passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
                     if (passenger.birth.date > $scope.flightDetail.departureFullDate.getDate()) {
