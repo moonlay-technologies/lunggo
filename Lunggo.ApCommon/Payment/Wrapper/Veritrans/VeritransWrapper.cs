@@ -81,12 +81,12 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                         payment.Status = PaymentStatus.Failed;
                         payment.FailureReason = FailureReason.PaymentFailure;
 
-                            var log = LogService.GetInstance();
-                            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                        var log = LogService.GetInstance();
+                        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
                         log.Post(
                             "```Payment Log```"
                             + "\n`*Environment :* " + env.ToUpper()
-                            + "\n*REQUEST :*\n"
+                            + "\n*PAYMENT DETAILS :*\n"
                             + payment.Serialize()
                             + "\n*RESPONSE :*\n"
                             + content.Serialize()
@@ -100,7 +100,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     content = GetResponseContent(response);
                     if (content != null && content.StatusCode.StartsWith("2"))
                     {
-                        payment.TransferAccount= content.PermataVANumber;
+                        payment.TransferAccount = content.PermataVANumber;
                         payment.Status = PaymentResult(content);
                         payment.ExternalId = content.TransactionId;
                     }
@@ -204,7 +204,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             request.Headers.Add("Authorization", "Basic " + authorizationKey);
             request.ContentType = "application/json";
             request.Accept = "application/json";
-            
+
             ProcessVtDirectRequestParams(request, data, transactionDetail, itemDetails, method);
             return request;
         }
@@ -235,7 +235,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     Duration = timeout,
                     Unit = "minute"
                 }
-                
+
             };
             if (method == PaymentMethod.CreditCard)
             {
@@ -247,8 +247,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     TokenIdSaveEnabled = data.CreditCard.TokenIdSaveEnabled
                 };
             }
-           
-            else if (method == PaymentMethod.VirtualAccount) 
+
+            else if (method == PaymentMethod.VirtualAccount)
             {
                 requestParams.BankTransfer = new BankTransfer
                 {
@@ -260,14 +260,14 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             {
                 requestParams.MandiriClickPay = new MandiriClickPay
                 {
-                   CardNumber = data.MandiriClickPay.CardNumber,
-                   CardNumberLast10 = data.MandiriClickPay.CardNumberLast10,
-                   GivenRandomNumber = data.MandiriClickPay.GivenRandomNumber,
-                   Amount = (long)data.MandiriClickPay.Amount,
-                   Token = data.MandiriClickPay.Token
+                    CardNumber = data.MandiriClickPay.CardNumber,
+                    CardNumberLast10 = data.MandiriClickPay.CardNumberLast10,
+                    GivenRandomNumber = data.MandiriClickPay.GivenRandomNumber,
+                    Amount = (long)data.MandiriClickPay.Amount,
+                    Token = data.MandiriClickPay.Token
                 };
             }
-            
+
             //CimbClicks
             else if (method == PaymentMethod.CimbClicks)
             {
@@ -282,7 +282,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             }
 
             //Mandiri Bill Payment
-            else if (method == PaymentMethod.MandiriBillPayment) 
+            else if (method == PaymentMethod.MandiriBillPayment)
             {
                 requestParams.MandiriBillPayment = new MandiriBillPayment
                 {
@@ -321,7 +321,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                 VtWeb = new VtWeb
                 {
                     EnabledPayments = new List<string> { MapPaymentMethod(method) },
-                    CreditCard3DSecure = false,
+                    CreditCard3DSecure = true,
                     FinishRedirectUrl = _finishedRedirectUrl,
                     UnfinishRedirectUrl = _unfinishedRedirectUrl,
                     ErrorRedirectUrl = _errorRedirectUrl

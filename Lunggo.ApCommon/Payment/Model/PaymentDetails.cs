@@ -34,6 +34,8 @@ namespace Lunggo.ApCommon.Payment.Model
         public string DiscountName { get; set; }
         [JsonProperty("uniqueCode", NullValueHandling = NullValueHandling.Ignore)]
         public decimal UniqueCode { get; set; }
+        [JsonProperty("transferFee", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal TransferFee { get; set; }
         [JsonProperty("currency", NullValueHandling = NullValueHandling.Ignore)]
         public string Currency { get; set; }
         [JsonProperty("finalPrice", NullValueHandling = NullValueHandling.Ignore)]

@@ -24,7 +24,7 @@
 }
 
 <div ng-app="Travorama" ng-controller="EticketController">
-    @if (Model.RsvDisplayStatus == RsvDisplayStatus.Paid)
+    @if (Model.RsvDisplayStatus == RsvDisplayStatus.Paid || Model.RsvDisplayStatus == RsvDisplayStatus.Issued)
     {
         <section class="section-eticket" ng-init ="refresh()">
 

@@ -52,7 +52,8 @@ namespace Lunggo.CustomerWeb.Controllers
                 };
 
                 var flight = FlightService.GetInstance();
-                PaymentService.GetInstance().UpdatePayment(notif.order_id, paymentInfo);
+                if (paymentInfo.Status != PaymentStatus.Failed && paymentInfo.Status != PaymentStatus.Denied)
+                    PaymentService.GetInstance().UpdatePayment(notif.order_id, paymentInfo);
                 if (paymentInfo.Method == PaymentMethod.CreditCard && paymentInfo.Status == PaymentStatus.Denied)
                 {
                     flight.SendFailedVerificationCreditCardNotifToCustomer(notif.order_id);
