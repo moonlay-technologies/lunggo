@@ -373,17 +373,17 @@
                                         <li class="col-right">3</li>
                                     </ul>
                                     <ul class="form-row clearfix">
-                                        <li class="col-left">10 Digit Terakhir Nomor Kartu Debit (Input 1)</li>
+                                        <li class="col-left">Input 1</li>
                                         <li class="col-middle">:</li>
                                         <li class="col-right">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
                                     </ul>
                                     <ul class="form-row clearfix">
-                                        <li class="col-left">Jumlah Transaksi</li>
+                                        <li class="col-left">Input 2</li>
                                         <li class="col-middle">:</li>
-                                        <li class="col-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</li>
+                                        <li class="col-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}}</li>
                                     </ul>
                                     <ul class="form-row clearfix">
-                                        <li class="col-left">5 Digit Terakhir Nomor Transaksi (Input 2)</li>
+                                        <li class="col-left">Input 3</li>
                                         <li class="col-middle">:</li>
                                         <li class="col-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
                                     </ul>

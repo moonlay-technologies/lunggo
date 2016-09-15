@@ -17,17 +17,19 @@ namespace Lunggo.ApCommon.Campaign.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT COUNT(RsvNo) ");
-            clauseBuilder.Append("FROM [FlightReservation] ");
+            clauseBuilder.Append("SELECT COUNT(p.RsvNo) ");
+            clauseBuilder.Append("FROM [Reservation] AS r ");
+            clauseBuilder.Append("INNER JOIN [Payment] AS p ON p.RsvNo = r.RsvNo ");
+            clauseBuilder.Append("LEFT OUTER JOIN [User] AS u ON u.Id = r.UserId ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE [VoucherCode] = @VoucherCode ");
-            clauseBuilder.Append("AND [ContactEmail] = @Email ");
-            clauseBuilder.Append("AND [PaymentStatusCd] <> '" + PaymentStatusCd.Mnemonic(PaymentStatus.Expired) + "'");
+            clauseBuilder.Append("WHERE p.[DiscountCode] = @VoucherCode ");
+            clauseBuilder.Append("AND u.[Email] = @Email ");
+            clauseBuilder.Append("AND p.[StatusCd] <> '" + PaymentStatusCd.Mnemonic(PaymentStatus.Expired) + "'");
             return clauseBuilder.ToString();
         }
     }

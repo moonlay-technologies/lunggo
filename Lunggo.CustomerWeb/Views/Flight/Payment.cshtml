@@ -333,19 +333,19 @@
                                                         <li class="col-sm-right">3</li>
                                                     </ul>
                                                     <ul class="form-row clearfix">
-                                                        <li class="col-sm-left">10 Digit Terakhir Nomor Kartu Debit (Input 1)</li>
+                                                        <li class="col-sm-left">10 Digit Terakhir Nomor Kartu</li>
                                                         <li class="col-sm-middle">:</li>
-                                                        <li class="col-sm-right">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
+                                                        <li class="col-sm-right">{{MandiriClickPay.CardNo | limitTo:-10}} (Input 1)</li>
                                                     </ul>
                                                     <ul class="form-row clearfix">
                                                         <li class="col-sm-left">Jumlah Transaksi</li>
                                                         <li class="col-sm-middle">:</li>
-                                                        <li class="col-sm-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode | number}}</li>
+                                                        <li class="col-sm-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}} (Input 2)</li>
                                                     </ul>
                                                     <ul class="form-row clearfix">
-                                                        <li class="col-sm-left">5 Digit Terakhir Nomor Transaksi (Input 2)</li>
+                                                        <li class="col-sm-left">5 Digit Terakhir Nomor Reservasi</li>
                                                         <li class="col-sm-middle">:</li>
-                                                        <li class="col-sm-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
+                                                        <li class="col-sm-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5) (Input 3)</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -508,28 +508,6 @@
                                             <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
                                         </footer> -->
                                 </div><!-- .widget.price-detail -->
-                                <div class="widget countdown">
-                                    <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
-                                    <div class="widget-content">
-                                        <p>Sisa waktu Anda untuk melakukan pembayaran</p>
-                                        <div class="timer">
-                                            <div>
-                                                <h5 class="hour">00</h5>
-                                                <span>jam</span>
-                                            </div>
-                                            <div class="separator"><h5>:</h5></div>
-                                            <div>
-                                                <h5 class="minute">00</h5>
-                                                <span>menit</span>
-                                            </div>
-                                            <div class="separator"><h5>:</h5></div>
-                                            <div>
-                                                <h5 class="second">00</h5>
-                                                <span>detik</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- .widget.countdown -->
                                 <div class="widget voucher" ng-class="{'hide' : CreditCardPromo.Valid}">
                                     <h3 class="widget-title"><b>KODE</b> VOUCHER</h3>
                                     <div class="widget-content">
@@ -558,6 +536,28 @@
                                         </form>
                                     </div>
                                 </div><!-- .widget.voucher -->
+                                <div class="widget countdown">
+                                    <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
+                                    <div class="widget-content">
+                                        <p>Sisa waktu Anda untuk melakukan pembayaran</p>
+                                        <div class="timer">
+                                            <div>
+                                                <h5 class="hour">00</h5>
+                                                <span>jam</span>
+                                            </div>
+                                            <div class="separator"><h5>:</h5></div>
+                                            <div>
+                                                <h5 class="minute">00</h5>
+                                                <span>menit</span>
+                                            </div>
+                                            <div class="separator"><h5>:</h5></div>
+                                            <div>
+                                                <h5 class="second">00</h5>
+                                                <span>detik</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- .widget.countdown -->
                                 <div class="widget flight">
                                     <div class="flight-detail" id="departure-flight" ng-if="trips[0]">
                                         <h3 class="widget-title"><b>RINCIAN</b> PENERBANGAN</h3>

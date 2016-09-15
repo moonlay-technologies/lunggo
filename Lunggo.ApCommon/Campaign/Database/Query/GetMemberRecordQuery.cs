@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Campaign.Database.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT Email ");
-            clauseBuilder.Append("FROM [Users] ");
+            clauseBuilder.Append("FROM [User] ");
             return clauseBuilder.ToString();
         }
 

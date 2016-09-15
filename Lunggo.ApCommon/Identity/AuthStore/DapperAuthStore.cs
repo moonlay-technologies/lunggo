@@ -59,14 +59,16 @@ namespace Lunggo.ApCommon.Identity.AuthStore
                     }
                     else
                     {
-                        var existingTokenRecord =
+                        var existingTokenRecords =
                             GetRefreshTokenByClientAndSubjectAndDeviceQuery.GetInstance()
-                                .Execute(conn, new { token.Subject, token.ClientId, token.DeviceId })
-                                .SingleOrDefault();
+                                .Execute(conn, new { token.Subject, token.ClientId, token.DeviceId });
 
-                        var existingToken = ToRefreshToken(existingTokenRecord);
-                        if (existingToken != null)
-                            RemoveRefreshToken(existingToken).Wait();
+                        Parallel.ForEach(existingTokenRecords, existingTokenRecord =>
+                        {
+                            var existingToken = ToRefreshToken(existingTokenRecord);
+                            if (existingToken != null)
+                                RemoveRefreshToken(existingToken).Wait();
+                        });
 
                         return RefreshTokenTableRepo.GetInstance().Insert(conn, ToRefreshTokenRecord(token)) > 0;
                     }
