@@ -324,6 +324,7 @@ app.controller('paymentController', [
             virtualAccount: false,
             go: false,
             test: 0,
+            chooseOther : false,
             clickpay: false,
             ccdata: false,
             checked: false,
@@ -530,6 +531,7 @@ app.controller('paymentController', [
                                         $scope.pay.checked = true;
                                         $scope.pay.isSuccess = false;
                                         $scope.pay.isPaying = false;
+                                        $scope.pay.chooseOther = true;
                                         console.log($scope.errorLog);
                                     } else {
                                         $scope.errorLog = 'Payment Denied';
@@ -537,6 +539,7 @@ app.controller('paymentController', [
                                         $scope.pay.checked = true;
                                         $scope.pay.isSuccess = false;
                                         $scope.pay.isPaying = false;
+                                        $scope.pay.chooseOther = true;
                                         console.log($scope.errorLog);
                                     }
                                     break;

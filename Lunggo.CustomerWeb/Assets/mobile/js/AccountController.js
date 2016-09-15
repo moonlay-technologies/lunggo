@@ -749,8 +749,8 @@ app.controller('LoginController', ['$http', '$scope', '$rootScope', function($ht
                     data:{
                         userName: $scope.User.Email,
                         password: $scope.User.Password,
-                        clientId: 'Jajal',
-                        clientSecret: 'Standar'
+                        clientId: 'WWxoa2VrOXFSWFZOUXpSM1QycEpORTB5U1RWT1IxcHNXVlJOTTFsWFZYaE5hbVJwVFVSSk5FOUVTbWxOUkVVMFRrUlNhVmxxVlhwT01sbDNUbXBvYkUxNlJUMD0=',
+                        clientSecret: 'VFVSTk1sbHFiR3hhVjAweFdXMUdhbHBYVVhwYVIxRXpUWHBCTlUxRVRtdGFhbHBvV1ZSU2FFMUhSbXhOUkdob1dtcEpkMDVSUFQwPQ=='
                     },
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).then(function (returnData) {

@@ -702,14 +702,14 @@
 
              <div class="payment-popup" ng-show="pay.checked && !pay.isSuccess">
                 <div class=" overlay-content">
-                    <section style="padding-top:60px; padding-left:225px;">
+                    <section style="padding-top:40px; padding-left:225px;">
                         <!-- Ini untuk yg gagal -->
                         <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
                         <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                        <div style="padding-top:5px;"><span style="font-size:14px">{{errorMessage}}</span></div>
+                        <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">{{errorMessage}}</span></div>
                     </section>
-                    <div align="right" style="padding-right:30px;padding-top:30px;">
+                    <div align="right" style="padding-right:30px;padding-top:10px;">
                         <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
                     </div>
                 </div>

@@ -268,7 +268,10 @@ function getAnonymousFirstAccess()
         url: LoginConfig.Url,
         method: 'POST',
         async: false,
-        data: JSON.stringify({ "clientId": "Jajal", "clientSecret": "Standar" }),
+        data: JSON.stringify({
+            "clientId": "V2toa2VrOXFSWFZOUXpSM1QycEZlRTlIVlhwYWFrVjVUVVJrYlZsVVp6Vk5WRlp0VGtSR2FrOUhSWGhhYWsweFRucGpNRTE2U1RCT2VtTjNXbTFKZDFwcVFUMD0=",
+            "clientSecret": "V2tkS2FFOUVhek5QUjFsNFRucFpNVmt5UlRST2JVWnNXVmRKTTA1dFVtaFBSMDVyV1dwQk5WcEhTWGxPZWtwcVRVUkpNVTFCUFQwPQ=="
+        }),
         contentType: 'application/json',
     }).done(function (returnData) {
         if (returnData.status == '200') {
