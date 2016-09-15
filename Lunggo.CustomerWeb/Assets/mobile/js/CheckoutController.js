@@ -304,6 +304,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         isSuccess: false,
         ccChecked: false,
         checkCreditCard: function () {
+            $scope.book.isPriceChanged = false;
+            $scope.book.booking = true;
             if ($scope.paymentMethod == 'CreditCard') {
 
                 Veritrans.url = VeritransTokenConfig.Url;
@@ -361,7 +363,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                         $('#submit-button').removeAttr('disabled');
                         // Show status message.
                         $('#message').text(response.status_message);
-                        console.log(JSON.stringify(response));
+                        //console.log(JSON.stringify(response));
                     }
                 }
 
@@ -483,9 +485,9 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             }
             $scope.paxData = $scope.paxData + ']';
             $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + '}';
-            console.log($scope.book.postData);
+            //console.log($scope.book.postData);
             $scope.book.postData = JSON.parse($scope.book.postData);
-            console.log($scope.book.postData);
+            //console.log($scope.book.postData);
 
             //Check Authorization
             var authAccess = getAuthAccess();
@@ -498,7 +500,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                     //headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 }).then(function (returnData) {
-                    console.log(returnData);
+                    //console.log(returnData);
 
                     $scope.book.checked = true;
                     $scope.book.booking = false;
@@ -527,7 +529,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                             } else {
                                 $scope.book.isSuccess = false;
                                 $scope.book.checked = true;
-                                console.log(returnData);
+                                //console.log(returnData);
                                 $scope.errorMessage = returnData.data.error;
                             }
                         }
@@ -887,10 +889,10 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
     // print scope
     $scope.PrintScope = function() {
-        console.log($scope);
+        //console.log($scope);
     }
     $scope.PrintForm = function() {
-        console.log($scope.PassengerForm.$error);
+        //console.log($scope.PassengerForm.$error);
     }
 
     // date, months, and year
@@ -952,7 +954,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 return ['Tahun'].concat(years);
                 break;
             case 'infant':
-                listYear(($scope.flightDetail.beforeDepartureFullDate.getFullYear() - 2), $scope.flightDetail.beforeDepartureFullDate.getFullYear());
+                listYear(($scope.flightDetail.beforeDepartureFullDate.getFullYear() - 2), $scope.bookingDate.getFullYear());
                 years = years.reverse();
                 return ['Tahun'].concat(years);
                 break;
@@ -1037,7 +1039,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         }
         else if (passenger.type == 'infant') {
             minYear = $scope.flightDetail.departureFullDate.getFullYear() - 2;
-            maxYear = $scope.flightDetail.departureFullDate.getFullYear();
+            maxYear = $scope.bookingDate.getFullYear();
             if (passenger.birth.year == minYear) {
                 if (passenger.birth.month - 1 <= $scope.flightDetail.departureFullDate.getMonth()) {
                     passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
@@ -1047,8 +1049,10 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 }
             }
             else if (passenger.birth.year == maxYear) {
-                if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth() - 2 |
-                        passenger.birth.month - 1 >= $scope.bookingDate.getMonth() - 1) {
+                if ((passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth() - 2 &&
+                        passenger.birth.year == $scope.flightDetail.departureFullDate.getFullYear()) ||
+                        passenger.birth.month - 1 >= $scope.bookingDate.getMonth() - 1)
+                {
                     passenger.birth.month = $scope.bookingDate.getMonth() + 1;
                     if (passenger.birth.date > $scope.bookingDate.getDate()) {
                         passenger.birth.date = $scope.bookingDate.getDate();
@@ -1173,7 +1177,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             if ($scope.trial > 3) {
                 $scope.trial = 0;
             }
-            console.log('Validating Voucher');
+            //console.log('Validating Voucher');
             //Check Authorization
             var authAccess = getAuthAccess();
             $scope.CheckoutConfig.Voucher.Validating = true;
@@ -1190,7 +1194,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     }
                 }).then(function (returnData) {
                     console.log('Voucher code validated :');
-                    console.log(returnData);
+                    //console.log(returnData);
                     $scope.CheckoutConfig.Voucher.Validating = false;
                     $scope.CheckoutConfig.Voucher.Validated = true;
                     $scope.CheckoutConfig.Voucher.Status = returnData.data.ValidationStatus;
@@ -1211,7 +1215,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                         $scope.CheckoutConfig.Voucher.Validated = true;
                         $scope.CheckoutConfig.Voucher.Validating = false;
                         $scope.CheckoutConfig.Voucher.Valid = false;
-                        console.log('Error validating voucher. Reason : ');
+                        //console.log('Error validating voucher. Reason : ');
                     }
                 });
             }

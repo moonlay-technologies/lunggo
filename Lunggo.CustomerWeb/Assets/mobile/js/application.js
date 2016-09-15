@@ -332,7 +332,7 @@ if (typeof (angular) == 'object') {
             // page overlay
             ActiveOverlay: '',
             SetOverlay: function (overlay) {
-                console.log('changing overlay to : ' + overlay);
+                //console.log('changing overlay to : ' + overlay);
                 if (typeof(overlay) == 'undefined') {
                     $rootScope.PageConfig.ActiveOverlay = '';
                     $rootScope.PageConfig.SetBodyNoScroll(true);
@@ -485,7 +485,7 @@ if (typeof (angular) == 'object') {
                             $rootScope.PageConfig.SetOverlay(overlay);
                         }
                        
-                        console.log("tes123: "+ trsdate);
+                        //console.log("tes123: "+ trsdate);
                         $rootScope.DatePicker.Settings.SelectedDate = new Date(trsdate);
                         $($rootScope.DatePicker.Settings.Target).val(trsdate);
                         $($rootScope.DatePicker.Settings.Target).trigger('input');
@@ -560,7 +560,7 @@ if (typeof (angular) == 'object') {
                     
                     
                     else {
-                        console.log($rootScope.DatePicker.Settings.SelectedDate);
+                        //console.log($rootScope.DatePicker.Settings.SelectedDate);
                         $('.ui-datepicker').datepicker('option', 'maxDate', null);
                     }
                     if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.DepartureDate) {
@@ -670,7 +670,7 @@ if (typeof (angular) == 'object') {
                                 }
                             }).error(function (returnData) {
                                 trial++;
-                                console.log(trial);
+                                //console.log(trial);
                                 if (refreshAuthAccess() && trial < 4) //refresh cookie
                                 {
                                     $rootScope.FlightSearchForm.AutoComplete.GetAirport(keyword);
@@ -705,7 +705,7 @@ if (typeof (angular) == 'object') {
                         }
                         $rootScope.FlightSearchForm.AirportDestination = airport;
                     }
-                    console.log(airport);
+                    //console.log(airport);
                 }
             },// auto complete
             PassengerPicker: {
@@ -772,8 +772,8 @@ if (typeof (angular) == 'object') {
             },// passenger picker
             Url: '',
             Submit: function() {
-                console.log($rootScope.FlightSearchForm);
-                console.log('Generating search form');
+                //console.log($rootScope.FlightSearchForm);
+                //console.log('Generating search form');
 
                 if ($rootScope.FlightSearchForm.DepartureDate == '') {
                     var departure = new Date();

@@ -241,7 +241,7 @@
         if (section) {
             $scope.PageConfig.ActiveSection = section;
         }
-        console.log('Changing section to : '+section);
+        //console.log('Changing section to : '+section);
     }
 
     // get full date time
@@ -425,7 +425,7 @@
         $scope.PageConfig.Busy = true;
         var requestReturnParams = $scope.flightFixRequest();
         targetScope = $scope.FlightConfig[1];
-        console.log('Getting flight for : ' + targetScope.Name + ' . Request : '+targetScope.FlightRequest.Requests);
+        //console.log('Getting flight for : ' + targetScope.Name + ' . Request : '+targetScope.FlightRequest.Requests);
         if (targetScope.FlightRequest.Progress < 100) {
 
             // **********
@@ -460,7 +460,7 @@
                             // update total progress
                             targetScope.FlightRequest.Progress = returnData.data.progress;
                             console.log('Progress : ' + targetScope.FlightRequest.Progress + ' %');
-                            console.log(returnData);
+                            //console.log(returnData);
 
                             if (returnData.data.flights.length != 0) {
                                 if (returnData.data.flights[0].options.length) {
@@ -488,7 +488,7 @@
                         }
                         else {
                             console.log('Failed to get flight list');
-                            console.log(returnData);
+                            //console.log(returnData);
                             for (var i = 0; i < targetScope.FlightRequest.Requests.length; i++) {
                                 // add to completed
                                 if (targetScope.FlightRequest.Completed.indexOf(targetScope.FlightRequest.Requests[i] < 0)) {
@@ -559,7 +559,7 @@
         });
         targetScope.FlightFilter.Airline = Airlines;
         Airlines = []; // empty the variable
-        console.log(targetScope);
+        //console.log(targetScope);
     }
 
     // set active flight
@@ -665,7 +665,7 @@
                     //$scope.PageConfig.Validated = true;
                     //}
 
-                    console.log(targetFlight);
+                    //console.log(targetFlight);
                 }).catch(function (returnData) {
                     $scope.trial++;
                     if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
@@ -674,7 +674,7 @@
                     }
                     else {
                         console.log('ERROR Validating Flight');
-                        console.log(returnData);
+                        //console.log(returnData);
                         console.log('--------------------');
                         $scope.selectError = true;
                     }
@@ -695,7 +695,7 @@
         // start validate
         if ($scope.PageConfig.Validated && $scope.PageConfig.ValidateConfirmation) {
             var fareToken = $scope.FlightConfig[0].Token + '.' + $scope.FlightConfig[1].Token;
-            console.log('Token : ' + fareToken);
+            //console.log('Token : ' + fareToken);
             $('.pushToken .fareToken').val(fareToken);
             $('.pushToken').submit();
         } else {
@@ -713,7 +713,7 @@
             if ($scope.FlightConfig[0].FlightAvailable && $scope.FlightConfig[1].FlightAvailable) {
                 console.log('Flights available. Will be redirected shortly');
                 var fareToken = $scope.FlightConfig[0].Token;
-                console.log('Token : ' + fareToken);
+                //console.log('Token : ' + fareToken);
                 $('.pushToken .fareToken').val(fareToken);
                 $('.pushToken').submit();
             } else {
@@ -722,7 +722,7 @@
                 } else {
                     $scope.PageConfig.ValidateConfirmation = true;
                 }
-                console.log($scope.PageConfig.ValidateConfirmation);
+                //console.log($scope.PageConfig.ValidateConfirmation);
                 $scope.PageConfig.Validating = false;
             }
         }

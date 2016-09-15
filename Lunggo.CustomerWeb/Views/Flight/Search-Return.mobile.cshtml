@@ -343,7 +343,7 @@
                                                         <h5>{{Segment.departureName}}</h5>
                                                     </div>
                                                     <div class="flight__separator">
-                                                        <h5><b>Durasi: </b> {{(Segment.duration | date : 'HH:mm')}}</h5>
+                                                        <h5><b>Durasi: </b> {{msToTime(Segment.duration)}}</h5>
                                                     </div>
                                                     <div class="flight__arrival">
                                                         <h5>{{Segment.arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
@@ -398,7 +398,7 @@
                                                         <h5>{{Segment.departureName}}</h5>
                                                     </div>
                                                     <div class="flight__separator">
-                                                        <h5><b>Durasi: </b> {{(Segment.duration | date : 'HH:mm')}}</h5>
+                                                        <h5><b>Durasi: </b> {{msToTime(Segment.duration)}}</h5>
                                                     </div>
                                                     <div class="flight__arrival">
                                                         <h5>{{Segment.arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
@@ -430,8 +430,8 @@
                 <div class="container_new" ng-show="PageConfig.ActiveSection == 'departure'">
                     <div class="row1">
                         <div class="col-xs-6">
-                            <h5>Harga Total:</h5>
-                            <h4><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].DetailFlight ].netTotalFare | number}}</b></h4>
+                            <h5>Harga Tiket per Orang:</h5>
+                            <h4><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].DetailFlight ].netAdultFare | number}}</b></h4>
                             <h6>*Harga Sudah Termasuk Pajak dan Service Charges</h6>
                         </div>
                         <div class="col-xs-6">
@@ -442,8 +442,8 @@
                 <div class="container_new" ng-show="PageConfig.ActiveSection == 'return'">
                     <div class="row1">
                         <div class="col-xs-6">
-                            <h5>Harga Total:</h5>
-                            <h4><b>Rp {{FlightConfig[1].FlightList[ FlightConfig[1].DetailFlight ].netTotalFare | number}}</b></h4>
+                            <h5>Harga Tiket per Orang:</h5>
+                            <h4><b>Rp {{FlightConfig[1].FlightList[ FlightConfig[1].DetailFlight ].netAdultFare | number}}</b></h4>
                             <h6>*Harga Sudah Termasuk Pajak dan Service Charges</h6>
                         </div>
                         <div class="col-xs-6">
@@ -526,7 +526,7 @@
                                                     <h5>{{Segment.departureName}}</h5>
                                                 </div>
                                                 <div class="flight__separator">
-                                                    <h5><b>Durasi: </b> {{(Segment.duration | date : 'HH:mm')}}</h5>
+                                                    <h5><b>Durasi: </b> {{msToTime(Segment.duration)}}</h5>
                                                 </div>
                                                 <div class="flight__arrival">
                                                     <h5>{{Segment.arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
@@ -596,7 +596,7 @@
                                                     <h5>{{Segment.departureName}}</h5>
                                                 </div>
                                                 <div class="flight__separator">
-                                                    <h5><b>Durasi: </b> {{Segment.duration| date : 'HH:mm'}}</h5>
+                                                    <h5><b>Durasi: </b> {{msToTime(Segment.duration)}}</h5>
                                                 </div>
                                                 <div class="flight__arrival">
                                                     <h5>{{Segment.arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
@@ -638,9 +638,9 @@
                 <div class="container_new">
                     <div class="row1">
                         <div class="col-xs-6">
-                            <h5>Harga Total:</h5>
-                            <h4 ng-hide="( (FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable && !FlightConfig[0].FlightNewPrice) || (FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable && !FlightConfig[1].FlightNewPrice) )"><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].netTotalFare + FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].netTotalFare | number}}</b></h4>
-                            <h4 ng-show="( (FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable && !FlightConfig[0].FlightNewPrice) || (FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable && !FlightConfig[1].FlightNewPrice) )"><b>Unavailable</b></h4>
+                            <h5>Harga Tiket per Orang:</h5>
+                            <h4 ng-hide="( (FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable && !FlightConfig[0].FlightNewPrice) || (FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable && !FlightConfig[1].FlightNewPrice) )"><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].netAdultFare + FlightConfig[1].FlightList[ FlightConfig[1].ActiveFlight ].netAdultFare | number}}</b></h4>
+                            <h4 ng-show="( (FlightConfig[0].FlightValidated && !FlightConfig[0].FlightAvailable && !FlightConfig[0].FlightNewPrice) || (FlightConfig[1].FlightValidated && !FlightConfig[1].FlightAvailable && !FlightConfig[1].FlightNewPrice) )"><b>Tidak Tersedia</b></h4>
                             <h6>*Harga Sudah Termasuk Pajak dan Service Charges</h6>
                         </div>
                         <div class="col-xs-6">

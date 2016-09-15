@@ -121,7 +121,7 @@ app.controller('checkoutController', [
                     data: {
                         userName: $scope.form.email,
                         password: $scope.form.password,
-                        clientId: 'Jajal',
+                        clientId: 'V2pKT2RFOXFSWGxOZW5BMVdsaE5QUT09',
                         clientSecret: 'Standar'
                     },
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
@@ -813,13 +813,15 @@ app.controller('checkoutController', [
                     }
                 }
                 else if (passenger.birth.year == maxYear) {
-                    if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth() - 2 ||
-                        passenger.birth.month - 1 >= $scope.bookingDate.getMonth() - 1
-                        ) {
+                    if ((passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth() - 2 &&
+                        passenger.birth.year == $scope.flightDetail.departureFullDate.getFullYear()) ||
+                        passenger.birth.month - 1 >= $scope.bookingDate.getMonth() - 1)
+                    {
                         passenger.birth.month = $scope.bookingDate.getMonth() + 1;
-                        if (passenger.birth.date > $scope.bookingDate.getDate()) {
+                        if (passenger.birth.date > $scope.bookingDate.getDate())
+                        {
                             passenger.birth.date = $scope.bookingDate.getDate();
-                        }
+                        }   
                     }
                 }
             }
@@ -854,14 +856,14 @@ app.controller('checkoutController', [
         }
         // validate passport expiry date
         $scope.validatePassport = function (passenger) {
-            //if (passenger.passport.expire.year == $scope.flightDetail.passportFullDate.getFullYear()) {
-            if (passenger.passport.expire.month - 1 <= $scope.flightDetail.passportFullDate.getMonth() ) {
-                    passenger.passport.expire.month = $scope.flightDetail.passportFullDate.getMonth() + 1;
+            if (passenger.passport.expire.year == $scope.flightDetail.passportFullDate.getFullYear()) {
+                if (passenger.passport.expire.month - 1 <= $scope.flightDetail.passportFullDate.getMonth() ) {
+                        passenger.passport.expire.month = $scope.flightDetail.passportFullDate.getMonth() + 1;
                     if (passenger.passport.expire.date <= $scope.flightDetail.passportFullDate.getDate()) {
                         passenger.passport.expire.date = $scope.flightDetail.passportFullDate.getDate();
                     }
                 }
-            //}
+            }
         }
         // get number
         $scope.getNumber = function (number) {
