@@ -1,4 +1,10 @@
-﻿.page.page-home {
+﻿/*--------------------*/
+/* icon */
+$mobile-banner: '../images/mobile-app.png';
+$app-store: '../images/app-store.png';
+$play-store: '../images/play-store.png';
+
+.page.page-home {
     overflow-y: auto;
     @include clearfix(); 
     background: $color-white;
@@ -11,6 +17,37 @@
         .ui-datepicker {
             max-width: 340px;
             margin: 0 auto 15px;
+        }
+    }
+    .mobile-banner { 
+        border-bottom: 1px solid #dddddd;
+        .mb-container{
+            margin: 0 auto;
+            padding: 20px 0 30px;
+            background: url($mobile-banner) no-repeat bottom right;
+            max-width: 280px;
+            .banner-txt {
+                @extend .os-semibold;
+                font-size: 12px;
+                color: $color_black;
+                max-width: 120px;
+                margin: 15px 0;
+            }
+            .banner-button {
+                a.button {
+                    &.btn-appstore {
+                        background: url($app-store);
+                        @include size(84px, 28px);
+                        display: block;
+                    } 
+                    &.btn-playstore {
+                        background: url($play-store);
+                        @include size(84px, 29px);
+                        display: block;
+                        margin-bottom: 10px;
+                    }
+                }
+            }
         }
     }
 }

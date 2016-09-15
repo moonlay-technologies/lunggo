@@ -702,8 +702,14 @@
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
     <Content Include="Assets\images\flight-facilities-sprite2.png" />
+    <Content Include="Assets\mobile\images\app-store.png" />
     <Content Include="Assets\mobile\images\arrow-detail.png" />
     <Content Include="Assets\mobile\images\flight-separators.png" />
+    <Content Include="Assets\mobile\images\mobile-app.png" />
+    <Content Include="Assets\mobile\images\play-store.png" />
+    <Content Include="Assets\travorama20\images\app-store-bg.png" />
+    <Content Include="Assets\travorama20\images\mobile-app.png" />
+    <Content Include="Assets\travorama20\images\play-store-bg.png" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.umd.js" />
@@ -2842,7 +2848,6 @@
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Assets\images\campaign\MobileApp\" />
     <Folder Include="Assets\travorama20\fonts\" />
-    <Folder Include="Assets\travorama20\images\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>

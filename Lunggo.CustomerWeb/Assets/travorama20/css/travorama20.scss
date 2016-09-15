@@ -14,6 +14,13 @@ $border-radius-default:2px;
 $transition-default:all 0.5s;
 
 /*--------------------*/
+/* icon */
+$app-store-bg: '../images/app-store-bg.png';
+$play-store-bg: '../images/play-store-bg.png';
+$mobile-app: '../images/mobile-app.png';
+
+
+/*--------------------*/
 /* mixins */
 @mixin letter-spacing($value){
     letter-spacing:$value;
@@ -83,7 +90,8 @@ $transition-default:all 0.5s;
 /*--------------------*/
 /* general class */
 html {height:100%;}
-body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; padding-bottom: 415px;}
+
+body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; padding-bottom: 665px;}
 
 hr {border-top:$border-default;}
 
@@ -99,7 +107,7 @@ span.close {cursor:pointer;}
 .no-scroll {overflow:hidden;}
 
 .btn.btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; font-weight:bold;}
-.btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; border:2px solid #999;}
+.btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; border:2px solid #adadad;}
 .btn.block {display:block; width:100%;}
 
 .section-title.stripe {font-weight:600; background:url(/Assets/images/yellow-stripe.png) center bottom no-repeat; padding-bottom:30px; margin-bottom:45px;
