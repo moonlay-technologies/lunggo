@@ -704,6 +704,9 @@
     <Content Include="Assets\images\flight-facilities-sprite2.png" />
     <Content Include="Assets\mobile\images\arrow-detail.png" />
     <Content Include="Assets\mobile\images\flight-separators.png" />
+    <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.js" />
+    <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.js" />
+    <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.umd.js" />
     <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.css">
       <DependentUpon>travorama-mobileApp.scss</DependentUpon>
     </Content>

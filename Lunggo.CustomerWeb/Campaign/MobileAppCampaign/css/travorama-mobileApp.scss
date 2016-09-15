@@ -1,4 +1,5 @@
-﻿.travorama-mobileApp {
+﻿body.page-mobileApp {background: #ffffff;}
+.travorama-mobileApp {
     .mobileApp-top {
         background-image: url('/Campaign/MobileAppCampaign/images/background.jpg');
         display: block;
@@ -55,9 +56,10 @@
             padding: 100px 0 50px;
         }
         .mobileApp-txtbx {
+            height: 220px;
             &.right {margin-left: 415px;}
             &.left {
-                max-width: 415px;
+                margin-right: 435px;
                 text-align: right;
             }
             .txtbx-title {
@@ -66,34 +68,13 @@
                 font-weight: 700;
                 margin-bottom: 5px;
             }
-            &.txtbx-1 {
-                padding: 18px 70px;
-                margin-bottom: 122px;
-            }
-            &.txtbx-2 {
-                padding: 10px 50px;
-                margin-bottom: 123px;
-            }
-            &.txtbx-3 {
-                padding: 7px 70px;
-                margin-bottom: 120px;
-            }
-            &.txtbx-4 {
-                padding: 12px 50px;
-                margin-bottom: 150px;
-            }
-            &.txtbx-5 {
-                padding: 10px 67px;
-                margin-bottom: 115px;
-            }
-            &.txtbx-6 {
-                padding: 18px 50px;
-                margin-bottom: 150px;
-            }
-            &.txtbx-7 {
-                padding: 18px 60px;
-                margin-bottom: 30px;
-            }
+            &.txtbx-1 {padding: 18px 67px 0;}
+            &.txtbx-2 {padding: 10px 60px 0;}
+            &.txtbx-3 {padding: 16px 67px 0;}
+            &.txtbx-4 {padding: 16px 60px 0;}
+            &.txtbx-5 {padding: 18px 67px 0;}
+            &.txtbx-6 {padding: 22px 60px 0;}
+            &.txtbx-7 {padding: 52px 67px 0;}
             .txtbx-desc {line-height:14px;}
         }
     }
