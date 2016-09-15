@@ -6,7 +6,7 @@
 }
 
 // static page header
-.static-header {background:#003b70;
+.static-header {background:#003b70; margin-bottom: 25px;
     .row {padding-top:12px;
         .col-xs-4 {
             a {color:#fff; display:block; width:100%; text-align:center; font-size:16px; @include border-radius($border-radius-default $border-radius-default 0 0); padding:12px 0;
