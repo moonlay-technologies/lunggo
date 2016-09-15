@@ -1005,8 +1005,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
     $scope.validateBirthday = function (passenger) {
         if (passenger.type == 'adult') {
-            if (passenger.birth.year >= $scope.bookingDate.getFullYear() - 12) {
-                passenger.birth.year = $scope.bookingDate.getFullYear() - 12;
+            if (passenger.birth.year >= $scope.flightDetail.departureFullDate.getFullYear() - 12) {
+                passenger.birth.year = $scope.flightDetail.departureFullDate.getFullYear() - 12;
                 if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth()) {
                     passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
                     if (passenger.birth.date > $scope.flightDetail.departureFullDate.getDate()) {
@@ -1047,10 +1047,11 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 }
             }
             else if (passenger.birth.year == maxYear) {
-                if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth() - 2) {
-                    passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() - 1;
-                    if (passenger.birth.date > $scope.flightDetail.departureFullDate.getDate()) {
-                        passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
+                if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth() - 2 |
+                        passenger.birth.month - 1 >= $scope.bookingDate.getMonth() - 1) {
+                    passenger.birth.month = $scope.bookingDate.getMonth() + 1;
+                    if (passenger.birth.date > $scope.bookingDate.getDate()) {
+                        passenger.birth.date = $scope.bookingDate.getDate();
                     }
                 }
             }
