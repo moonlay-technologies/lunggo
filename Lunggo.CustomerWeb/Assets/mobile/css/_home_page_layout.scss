@@ -71,6 +71,12 @@
                 @extend .display-icon;
                 @include size(41px, 57px);
                 top: 16px;
+            } &.icon-flip {
+                background-image: url($icon-flip);
+                @extend .display-icon;
+                @include size(43px, 40px);
+                top: 7px;
+                left: 5px;
             } &.arrow {
                 background-image: url($icon-arrow-down-bw);
                 @extend .display-icon;
@@ -139,23 +145,19 @@
             }
         }
         .flip-container {
-            padding-top: 50px;
+            position: relative;
             min-height: 104px;
             .flip {
+                position: absolute;
                 width: 35px;
                 height: 37px;
                 background: #ecf0f4;
                 border: $border-grey-btn;
                 display: inline-block;
                 @include border-radius($border-radius-big);
-                &:before {
-                    background-image: url($icon-flip);
-                    @extend .display-icon;
-                    @include size(43px, 40px);
-                    margin-top: 7px;
-                    margin-left: 5px;
-                    content: '';
-                } 
+                top: 60%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }
         } 
         .form__roundtrip {

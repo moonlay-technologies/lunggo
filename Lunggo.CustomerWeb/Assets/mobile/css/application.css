@@ -910,7 +910,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 #ui-datepicker-div > .ui-datepicker {
   display: none !important; }
 
-.display-icon, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.infant:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.infant:before, .page.page-home .form-container .form-wrapper form span.icon-pp, .page.page-home .form-container .form-wrapper form span.icon-return, .page.page-home .form-container .form-wrapper form span.icon-fc, .page.page-home .form-container .form-wrapper form span.icon-people, .page.page-home .form-container .form-wrapper form span.arrow, .page.page-home .form-container .form-wrapper form .flip-container .flip:before, .page.page-home .form-container .col-custom-logo.icon-adult:before, .page.page-home .form-container .col-custom-logo.icon-child:before, .page.page-home .form-container .col-custom-logo.icon-infant:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-pp, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-return, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-fc, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-people, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.arrow, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container .flip:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-adult:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-child:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-infant:before {
+.display-icon, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.infant:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.infant:before, .page.page-home .form-container .form-wrapper form span.icon-pp, .page.page-home .form-container .form-wrapper form span.icon-return, .page.page-home .form-container .form-wrapper form span.icon-fc, .page.page-home .form-container .form-wrapper form span.icon-people, .page.page-home .form-container .form-wrapper form span.icon-flip, .page.page-home .form-container .form-wrapper form span.arrow, .page.page-home .form-container .col-custom-logo.icon-adult:before, .page.page-home .form-container .col-custom-logo.icon-child:before, .page.page-home .form-container .col-custom-logo.icon-infant:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-pp, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-return, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-fc, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-people, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-flip, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.arrow, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-adult:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-child:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-infant:before {
   background-repeat: no-repeat;
   display: inline-block;
   vertical-align: middle;
@@ -1162,6 +1162,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       width: 41px;
       height: 57px;
       top: 16px; }
+    .page.page-home .form-container .form-wrapper form span.icon-flip {
+      background-image: url("../images/flip.png");
+      width: 43px;
+      height: 40px;
+      top: 7px;
+      left: 5px; }
     .page.page-home .form-container .form-wrapper form span.arrow {
       background-image: url("../images/arrow-down-bw.png");
       width: 24px;
@@ -1220,9 +1226,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border-bottom: 1px solid #dddddd;
         text-align: center; }
     .page.page-home .form-container .form-wrapper form .flip-container {
-      padding-top: 50px;
+      position: relative;
       min-height: 104px; }
       .page.page-home .form-container .form-wrapper form .flip-container .flip {
+        position: absolute;
         width: 35px;
         height: 37px;
         background: #ecf0f4;
@@ -1231,14 +1238,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         -ms-border-radius: 5px;
-        border-radius: 5px; }
-        .page.page-home .form-container .form-wrapper form .flip-container .flip:before {
-          background-image: url("../images/flip.png");
-          width: 43px;
-          height: 40px;
-          margin-top: 7px;
-          margin-left: 5px;
-          content: ''; }
+        border-radius: 5px;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%); }
     .page.page-home .form-container .form-wrapper form .form__roundtrip .switch {
       float: right;
       position: relative;
@@ -1551,9 +1554,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       content: '';
       background: url(/Assets/mobile/images/arrow-detail.png) no-repeat;
       display: inline-block;
-      margin-left: 6px;
-      background-size: 90%;
-      vertical-align: middle; }
+      margin-left: 6px; }
   .page.page-flight .flight-list .flight .flight-footer .flight-order {
     padding-top: 3px;
     padding-bottom: 3px; }
@@ -1622,6 +1623,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       width: 41px;
       height: 57px;
       top: 16px; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-flip {
+      background-image: url("../images/flip.png");
+      width: 43px;
+      height: 40px;
+      top: 7px;
+      left: 5px; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.arrow {
       background-image: url("../images/arrow-down-bw.png");
       width: 24px;
@@ -1680,9 +1687,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border-bottom: 1px solid #dddddd;
         text-align: center; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container {
-      padding-top: 50px;
+      position: relative;
       min-height: 104px; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container .flip {
+        position: absolute;
         width: 35px;
         height: 37px;
         background: #ecf0f4;
@@ -1691,14 +1699,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         -ms-border-radius: 5px;
-        border-radius: 5px; }
-        .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container .flip:before {
-          background-image: url("../images/flip.png");
-          width: 43px;
-          height: 40px;
-          margin-top: 7px;
-          margin-left: 5px;
-          content: ''; }
+        border-radius: 5px;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%); }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .switch {
       float: right;
       position: relative;
