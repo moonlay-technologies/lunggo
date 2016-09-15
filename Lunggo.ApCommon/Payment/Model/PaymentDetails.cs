@@ -32,8 +32,8 @@ namespace Lunggo.ApCommon.Payment.Model
         public decimal DiscountNominal { get; set; }
         [JsonProperty("discountName", NullValueHandling = NullValueHandling.Ignore)]
         public string DiscountName { get; set; }
-        [JsonProperty("transferFee", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal TransferFee { get; set; }
+        [JsonProperty("uniqueCode", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal UniqueCode { get; set; }
         [JsonProperty("currency", NullValueHandling = NullValueHandling.Ignore)]
         public string Currency { get; set; }
         [JsonProperty("finalPrice", NullValueHandling = NullValueHandling.Ignore)]
@@ -60,7 +60,7 @@ namespace Lunggo.ApCommon.Payment.Model
         public string DiscountCode { get; set; }
         public decimal DiscountNominal { get; set; }
         public UsedDiscount Discount { get; set; }
-        public decimal TransferFee { get; set; }
+        public decimal UniqueCode { get; set; }
         public decimal FinalPriceIdr { get; set; }
         public decimal PaidAmountIdr { get; set; }
         public Currency LocalCurrency { get; set; }
@@ -87,7 +87,7 @@ namespace Lunggo.ApCommon.Payment.Model
                     DiscountCode = DiscountCode,
                     OriginalPriceIdr = OriginalPriceIdr,
                     DiscountNominal = DiscountNominal,
-                    TransferFee = TransferFee,
+                    UniqueCode = UniqueCode,
                     FinalPriceIdr = FinalPriceIdr,
                     PaidAmountIdr = PaidAmountIdr,
                     LocalCurrencyCd = LocalCurrency,
@@ -124,7 +124,7 @@ namespace Lunggo.ApCommon.Payment.Model
                     DiscountCode = record.DiscountCode,
                     OriginalPriceIdr = record.OriginalPriceIdr.GetValueOrDefault(),
                     DiscountNominal = record.DiscountNominal.GetValueOrDefault(),
-                    TransferFee = record.TransferFee.GetValueOrDefault(),
+                    UniqueCode = record.UniqueCode.GetValueOrDefault(),
                     FinalPriceIdr = record.FinalPriceIdr.GetValueOrDefault(),
                     PaidAmountIdr = record.PaidAmountIdr.GetValueOrDefault(),
                     LocalCurrency = new Currency(record.LocalCurrencyCd, record.LocalRate.GetValueOrDefault()),
@@ -142,7 +142,7 @@ namespace Lunggo.ApCommon.Payment.Model
             protected override string GetQuery(dynamic condition = null)
             {
                 return "SELECT MediumCd, MethodCd, StatusCd, Time, TimeLimit, TransferAccount, RedirectionUrl, " +
-                       "ExternalId, DiscountCode, OriginalPriceIdr, DiscountNominal, TransferFee, FinalPriceIdr, " +
+                       "ExternalId, DiscountCode, OriginalPriceIdr, DiscountNominal, UniqueCode, FinalPriceIdr, " +
                        "PaidAmountIdr, LocalCurrencyCd, LocalRate, LocalFinalPrice, LocalPaidAmount, InvoiceNo " +
                        "FROM Payment " +
                        "WHERE RsvNo = @RsvNo";

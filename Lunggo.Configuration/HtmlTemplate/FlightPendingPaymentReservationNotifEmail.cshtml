@@ -26,13 +26,13 @@
                         <br />
                         <a href="https://www.facebook.com/travorama" style="text-decoration:none;">
                             <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-facebook.jpg")" alt="Travorama on Facebook" />
-                         </a>
+                        </a>
                         <a href="https://twitter.com/travoramaid" style="text-decoration:none;">
                             <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-twitter.jpg")" alt="Travorama on Twitter" />
-                         </a>
+                        </a>
                         <a href="https://instagram.com/travorama" style="text-decoration:none;">
                             <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-instagram.jpg")" alt="Travorama on Instagram" />
-                         </a>
+                        </a>
                     </p>
                 </th>
                 <th width="5%"></th>
@@ -54,28 +54,33 @@
                                         <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-departure-icon.png")" />
                                     </td>
                                     <td width="60%" style="padding-left: 0px">
-                                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[0].Segments[0].DepartureCity - @Model.Itinerary.Trips[0].Segments.Last().ArrivalCity</b></p>
                                     </td>
-                                    <td width="5%">
-                                        <hr style="border-color: #15b1e4">
-                                    </td>
-                                    @{ var jamBerangkat = Model.Itinerary.Trips[0].Segments[0].DepartureTime;}
-                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("HH:mm")</td>
-                                </tr>
-                                <tr width="100%">
-                                    <td width="5%">
-                                        <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-return-icon.png")" />
-                                    </td>
-                                    <td width="60%" style="padding-left: 0px">
-                                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[1].Segments[0].DepartureCity - @Model.Itinerary.Trips[1].Segments.Last().ArrivalCity</b></p>
-                                    </td>
-                                    <td width="5%">
-                                        <hr style="border-color: #15b1e4">
-                                    </td>
-                                    @{ var jamKembali = Model.Itinerary.Trips[1].Segments[0].DepartureTime;}
-                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.ToString("HH:mm")</td>
                                 </tr>
                             </table>
+                        </p>
+                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[0].Segments[0].DepartureCity - @Model.Itinerary.Trips[0].Segments.Last().ArrivalCity</b></p>
+                    </td>
+                    <td width="5%">
+                        <hr style="border-color: #15b1e4" />
+                    </td>
+                    @{ var jamBerangkat = Model.Itinerary.Trips[0].Segments[0].DepartureTime;}
+                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.GetValueOrDefault().ToString("HH:mm")</td>
+                </tr>
+                <tr width="100%">
+                    <td width="5%">
+                        <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-return-icon.png")" />
+                    </td>
+                    <td width="60%" style="padding-left: 0px">
+                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[1].Segments[0].DepartureCity - @Model.Itinerary.Trips[1].Segments.Last().ArrivalCity</b></p>
+                    </td>
+                    <td width="5%">
+                        <hr style="border-color: #15b1e4" />
+                    </td>
+                    @{ var jamKembali = Model.Itinerary.Trips[1].Segments[0].DepartureTime;}
+                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.GetValueOrDefault().ToString("HH:mm")</td>
+                </tr>
+            </tbody>
+        </table>
                         }
                         else
                         {
@@ -91,7 +96,7 @@
                                         <hr style="border-color: #15b1e4" />
                                     </td>
                                     @{ var jamBerangkat = Model.Itinerary.Trips[0].Segments[0].DepartureTime;}
-                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("HH:mm")</td>
+                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.GetValueOrDefault().ToString("HH:mm")</td>
                                 </tr>
                             </table>
                         }
@@ -150,7 +155,7 @@
                         </table>
 
                         @{ var jamTimeLimit = Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7);
-                           jamTimeLimit = jamTimeLimit.AddMinutes(-30);}
+                         jamTimeLimit = jamTimeLimit.AddMinutes(-30);}
                         <p style="font-style: italic; font-size: 11px; margin-left: 6%; margin-bottom: 0px;">Batas waktu pembayaran anda adalah sebelum <span style="color: #15b1e4">@jamTimeLimit.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @jamTimeLimit.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.ToString("HH:mm") WIB</span>.</p>
                         <p style="font-size: 10px; opacity: 0.5; font-style: italic; margin-left: 6%; margin-top: 1px; margin-bottom: 50px;">Jika lewat, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan berubah</p>
 
@@ -193,7 +198,7 @@
 
                                     <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
 
-                                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy International</h4>
+                                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy Internasional</h4>
                                         <p style="margin-top:0; margin-bottom:5px;">
                                             <span style="color:#1daee5;">A.</span> Equity Tower 25th Floor, SCBD lot 9<br />Jl. Jenderal Sudirman Kav.52-53<br />Jakarta 12190
                                         </p>

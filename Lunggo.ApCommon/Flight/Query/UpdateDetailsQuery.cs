@@ -22,7 +22,7 @@ namespace Lunggo.ApCommon.Flight.Query
             clauseBuilder.Append(@"sg.Pnr = @Pnr, ");
             clauseBuilder.Append(@"sg.DepartureTerminal = @DepartureTerminal, ");
             clauseBuilder.Append(@"sg.ArrivalTerminal = @ArrivalTerminal, ");
-            clauseBuilder.Append(@"sg.Baggage = @Baggage ");
+            clauseBuilder.Append(@"sg.Baggage = @BaggageCapacity ");
             return clauseBuilder.ToString();
         }
 
@@ -30,8 +30,8 @@ namespace Lunggo.ApCommon.Flight.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append(@"FROM FlightSegment AS sg ");
-            clauseBuilder.Append(@"INNER JOIN FlightTrip AS t ON sg.TripId = t.TripId ");
-            clauseBuilder.Append(@"INNER JOIN FlightItinerary AS i ON t.ItineraryId = i.ItineraryId ");
+            clauseBuilder.Append(@"INNER JOIN FlightTrip AS t ON sg.TripId = t.Id ");
+            clauseBuilder.Append(@"INNER JOIN FlightItinerary AS i ON t.ItineraryId = i.Id ");
             return clauseBuilder.ToString();
         }
 

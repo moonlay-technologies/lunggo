@@ -93,11 +93,12 @@ span.italic {font-style: italic;}
         background-color: #f0f0f4;
         color: #000;
         cursor: pointer;
-        padding: 15px;
         width: 100%;
         font-size: 13px;
         font-weight: 600;
         border-top: 1px solid #c9c9c9;
+        float: left;
+        padding: 15px;
         &.active {
             border-bottom: 1px solid #c9c9c9;
             &:after {
@@ -108,18 +109,24 @@ span.italic {font-style: italic;}
                 height: 8px;
                 background-size: 70%;
                 float: right;
-                margin-top: 6px;
+                position: absolute;
+                right: 0;
+                margin-right: 10px;
+                margin-top: -10px;
             }
         }
         &:after {
             content: " ";
             display: block;
-            background:url(/Assets/images/helpSection/arrow-down.png) no-repeat;
+            background: url(/Assets/images/helpSection/arrow-down.png) no-repeat;
             width: 20px;
             height: 8px;
             background-size: 70%;
             float: right;
-            margin-top: 6px;
+            position: absolute;
+            right: 0;
+            margin-right: 10px;
+            margin-top: -10px;        
         }
     }
     .accordion-content {
@@ -160,3 +167,13 @@ span.italic {font-style: italic;}
     }
 }
 
+@media only screen 
+    and (max-device-width : 375px) // or 213.4375em
+{ 
+    .accordion-wrapper .accordion-title .txt-title {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 270px;
+    }
+}

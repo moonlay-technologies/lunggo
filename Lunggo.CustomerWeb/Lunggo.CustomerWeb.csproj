@@ -645,7 +645,6 @@
     <Content Include="Assets\images\airlines\ZL.png" />
     <Content Include="Assets\images\airplane-image.jpg" />
     <Content Include="Assets\images\ajax-loader.gif" />
-    <Content Include="Assets\images\app-store-bg.png" />
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\css\neweticket.scss" />
@@ -705,7 +704,9 @@
     <Content Include="Assets\images\flight-facilities-sprite2.png" />
     <Content Include="Assets\mobile\images\arrow-detail.png" />
     <Content Include="Assets\mobile\images\flight-separators.png" />
-    <Content Include="Assets\travorama20\images\mobile-app.png" />
+    <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.js" />
+    <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.js" />
+    <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.umd.js" />
     <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.css">
       <DependentUpon>travorama-mobileApp.scss</DependentUpon>
     </Content>
@@ -906,7 +907,6 @@
     <Content Include="Assets\images\plane-down.png" />
     <Content Include="Assets\images\plane-up.png" />
     <Content Include="Assets\images\plane-updown-sprite.png" />
-    <Content Include="Assets\images\play-store-bg.png" />
     <Content Include="Assets\images\pop-bali.jpg" />
     <Content Include="Assets\images\pop-bandung.jpg" />
     <Content Include="Assets\images\pop-hongkong.jpg" />
@@ -989,8 +989,6 @@
     <Content Include="Assets\images\travorama-logo-color.png" />
     <Content Include="Assets\images\travorama-logo.png" />
     <Content Include="Assets\images\travorama-og.jpg" />
-    <Content Include="Assets\images\travorama20\app-store-bg.png" />
-    <Content Include="Assets\images\travorama20\play-store-bg.png" />
     <Content Include="Assets\images\travorama20\travorama-logo.png" />
     <Content Include="Assets\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Assets\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -1162,7 +1160,6 @@
     </Content>
     <Content Include="Assets\mobile\images\anak-bw.png" />
     <Content Include="Assets\mobile\images\anak.png" />
-    <Content Include="Assets\mobile\images\app-store.png" />
     <Content Include="Assets\mobile\images\arrow-down-bw.png" />
     <Content Include="Assets\mobile\images\arrow-down.png" />
     <Content Include="Assets\mobile\images\arrow-up.png" />
@@ -1193,13 +1190,11 @@
     <Content Include="Assets\mobile\images\logo-promo.jpg" />
     <Content Include="Assets\mobile\images\loop.png" />
     <Content Include="Assets\mobile\images\medals.png" />
-    <Content Include="Assets\mobile\images\mobile-app.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-white.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-yellow.png" />
     <Content Include="Assets\mobile\images\passenger-sprite.png" />
     <Content Include="Assets\mobile\images\people.png" />
-    <Content Include="Assets\mobile\images\play-store.png" />
     <Content Include="Assets\mobile\images\promo-logo.png" />
     <Content Include="Assets\mobile\images\register-header-left.png" />
     <Content Include="Assets\mobile\images\revalidate-plane.png" />
@@ -1241,8 +1236,6 @@
     <Content Include="Assets\travorama20\css\_page_index.scss" />
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
-    <Content Include="Assets\travorama20\images\app-store-bg.png" />
-    <Content Include="Assets\travorama20\images\play-store-bg.png" />
     <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\countries.js" />
     <Content Include="Assets\travorama20\js\checkoutController.js" />
@@ -2849,6 +2842,7 @@
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Assets\images\campaign\MobileApp\" />
     <Folder Include="Assets\travorama20\fonts\" />
+    <Folder Include="Assets\travorama20\images\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>
@@ -2903,7 +2897,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>23321</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

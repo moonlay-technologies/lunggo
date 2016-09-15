@@ -111,13 +111,13 @@
                                 {
                                     var jamBerangkat = Model.Itinerary.Trips[0].Segments[0].DepartureTime;
                                     var jamKembali = Model.Itinerary.Trips[1].Segments[0].DepartureTime;
-                                    <p style=""><b>@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("HH:mm")</b></p>
-                                    <p style=""><b>@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.ToString("HH:mm")</b></p>
+                                    <p style=""><b>@Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.GetValueOrDefault().ToString("HH:mm")</b></p>
+                                    <p style=""><b>@Model.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.GetValueOrDefault().ToString("HH:mm")</b></p>
                                 }
                                 else
                                 {
                                     var jamBerangkat = Model.Itinerary.Trips[0].Segments[0].DepartureTime;
-                                    <p style=""><b>@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("HH:mm")</b></p>
+                                    <p style=""><b>@Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.GetValueOrDefault().ToString("HH:mm")</b></p>
                                 }
 
                             </td>
@@ -155,14 +155,14 @@
                                 <p style="color: #15b1e4; text-align: center;">:</p>
                             </td>
                             <td>
-                                <p style="color: #15b1e4; text-align: left;">1. @Model.Passengers[0].FirstName @Model.Passengers[0].LastName</p>
+                                <p style="color: #15b1e4; text-align: left;">1. @Model.Passengers[0].Name</p>
                             </td>
                             <td width="20%"></td>
                             <td width="5%" style="padding-right: 1%;">
                                 <hr style="border-color:#15b1e4;" />
                             </td>
                             <td width="7%">
-                                @EnumDisplay.PassengerType(Model.Passengers[0].Type)
+                                @EnumDisplay.PassengerType(Model.Passengers[0].Type.GetValueOrDefault())
                             </td>
                         </tr>
                         @for (int k = 1; k < i; k++)
@@ -172,14 +172,14 @@
                                     <p style="color: #15b1e4; text-align: center;">:</p>
                                 </td>
                                 <td>
-                                    <p style="color: #15b1e4; text-align: left;">@(k + 1). @Model.Passengers[k].FirstName @Model.Passengers[k].LastName</p>
+                                    <p style="color: #15b1e4; text-align: left;">@(k + 1). @Model.Passengers[k].Name</p>
                                 </td>
                                 <td width="20%"></td>
                                 <td width="5%" style="padding-right: 1%;">
                                     <hr style="border-color:#15b1e4;" />
                                 </td>
                                 <td width="7%">
-                                    @EnumDisplay.PassengerType(Model.Passengers[k].Type)
+                                    @EnumDisplay.PassengerType(Model.Passengers[k].Type.GetValueOrDefault())
                                 </td>
                             </tr>
                         }
@@ -201,7 +201,7 @@
 
                     <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
 
-                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy International</h4>
+                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy Internasional</h4>
                         <p style="margin-top:0; margin-bottom:5px;">
                             <span style="color:#1daee5;">A.</span> Equity Tower 25th Floor, SCBD lot 9<br />Jl. Jenderal Sudirman Kav.52-53<br />Jakarta 12190
                         </p>
@@ -213,8 +213,7 @@
 
                 </td>
 
-                <td>
-                </td>
+                <td></td>
                 <td></td>
             </tr>
         </tfoot>

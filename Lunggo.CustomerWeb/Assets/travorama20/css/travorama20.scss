@@ -90,7 +90,11 @@ $mobile-app: '../images/mobile-app.png';
 /*--------------------*/
 /* general class */
 html {height:100%;}
+<<<<<<< HEAD
 body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; padding-bottom: 705px;}
+=======
+body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; padding-bottom: 415px;}
+>>>>>>> refs/remotes/origin/topic_lunggoMassiveRework
 
 hr {border-top:$border-default;}
 

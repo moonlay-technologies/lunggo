@@ -887,7 +887,8 @@ namespace Lunggo.ApCommon.Flight.Service
                         segment.Duration,
                         segment.Pnr,
                         segment.DepartureTerminal,
-                        segment.ArrivalTerminal
+                        segment.ArrivalTerminal,
+                        segment.BaggageCapacity
                     });
                 }
             }

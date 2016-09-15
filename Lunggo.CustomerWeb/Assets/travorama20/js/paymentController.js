@@ -512,7 +512,7 @@ app.controller('paymentController', [
                     }).then(function (returnData) {
                         console.log(returnData);
 
-                        if (returnData.data.status == '200') {
+                        if (returnData.data.status == '200' || returnData.data.status == '202') {
                             $scope.pay.isSuccess = true;
                             $scope.pay.rsvNo = $scope.rsvNo;
                             $('form#rsvno input#rsvno-input').val($scope.pay.rsvNo);

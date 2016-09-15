@@ -40,7 +40,7 @@
                     <br /><br />
                     <p>
                         <b>Mohon Maaf</b>, pemesanan Anda gagal dikarenakan kesalahan sistem.Tiket Anda akan direfund secara otomatis setelah Anda menerima email ini
-                         Anda dapat melakukan pemesanan ulang tiket di <span style="color: #15b1e4;">www.travorama.com</span> dengan pilihan metode maskapai lain.
+                        Anda dapat melakukan pemesanan ulang tiket di <span style="color: #15b1e4;">www.travorama.com</span> dengan pilihan metode maskapai lain.
                     </p>
 
                     <p style="margin-bottom:10px;">Berikut Rincian Penerbangan Anda : </p>
@@ -61,7 +61,7 @@
                                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-departure-icon.png")" />
                                 </td>
                                 <td style="color: #15b1e4; text-align: center;" width="2%">
-                                    <img width="100%" height="auto" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
+                                    <img width="100%" height="auto" src="@Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl" />
                                     Berangkat
                                 </td>
                                 <td rowspan="2" width="6%">
@@ -70,7 +70,7 @@
                                 <td rowspan="2" width="40%">
                                     <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Itinerary.Trips[0].Segments[0].FlightNumber</b></p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</p>
-                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                 </td>
                             </tr>
                             <tr>
@@ -82,7 +82,7 @@
                                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-return-icon.png")" />
                                 </td>
                                 <td style="color: #15b1e4; text-align: center;" width="2%">
-                                    <img width="100%" height="auto" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[1].Segments[0].AirlineLogoUrl)" />
+                                    <img width="100%" height="auto" src="@Model.Itinerary.Trips[1].Segments[0].AirlineLogoUrl" />
                                     Kembali
                                 </td>
                                 <td rowspan="2" width="6%">
@@ -91,7 +91,7 @@
                                 <td rowspan="2" width="40%">
                                     <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[1].Segments[0].AirlineName - @Model.Itinerary.Trips[1].Segments[0].AirlineCode-@Model.Itinerary.Trips[1].Segments[0].FlightNumber</b></p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</p>
-                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("dddd"), @Model.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                 </td>
                             </tr>
                             <tr>
@@ -108,7 +108,7 @@
                                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-departure-icon.png")" />
                                 </td>
                                 <td style="color: #15b1e4; text-align: center;" width="2%">
-                                    <img width="100%" height="auto" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
+                                    <img width="100%" height="auto" src="@Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl" />
                                     Berangkat
                                 </td>
                                 <td rowspan="2" width="6%">
@@ -117,7 +117,7 @@
                                 <td rowspan="2" width="40%">
                                     <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Itinerary.Trips[0].Segments[0].FlightNumber</b></p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</p>
-                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                 </td>
                             </tr>
                             <tr>
@@ -127,8 +127,10 @@
                         </table>
                     }
 
-                    <p style="margin-bottom:30px;">Mohon hubungi kami melalui email ke <span style="color: #15b1e4;">cs@travorama.com</span> apabila Anda belum menerima dana
-                        refund selama 1 X 24 jam. Mohon maaf atas ketidaknyamanan dalam proses pemesanan Anda.</p>
+                    <p style="margin-bottom:30px;">
+                        Mohon hubungi kami melalui email ke <span style="color: #15b1e4;">cs@travorama.com</span> apabila Anda belum menerima dana
+                        refund selama 1 X 24 jam. Mohon maaf atas ketidaknyamanan dalam proses pemesanan Anda.
+                    </p>
 
                 </td>
                 <td width="5%"></td>

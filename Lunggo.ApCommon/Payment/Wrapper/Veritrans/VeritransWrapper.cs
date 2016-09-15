@@ -87,9 +87,9 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                             "```Payment Log```"
                             + "\n`*Environment :* " + env.ToUpper()
                             + "\n*REQUEST :*\n"
-                            + request.Serialize()
+                            + payment.Serialize()
                             + "\n*RESPONSE :*\n"
-                            + response.Serialize()
+                            + content.Serialize()
                             + "\n*Platform :* "
                             + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
                     }
@@ -321,7 +321,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                 VtWeb = new VtWeb
                 {
                     EnabledPayments = new List<string> { MapPaymentMethod(method) },
-                    CreditCard3DSecure = true,
+                    CreditCard3DSecure = false,
                     FinishRedirectUrl = _finishedRedirectUrl,
                     UnfinishRedirectUrl = _unfinishedRedirectUrl,
                     ErrorRedirectUrl = _errorRedirectUrl
