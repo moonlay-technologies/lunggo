@@ -127,23 +127,31 @@
                                 <tr>
                                     <td class="no">@(k + 1).</td>
                                     <td class="item">Tiket Pesawat</td>
-                                    <td class="description">@Model.Itinerary.Trips[k].Segments[0].AirlineName @Model.Itinerary.Trips[k].OriginAirport-@Model.Itinerary.Trips[k].DestinationAirport @Model.Itinerary.Trips[k].DepartureDate.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    <td class="description">@Model.Itinerary.Trips[k].Segments[0].AirlineName @Model.Itinerary.Trips[k].OriginAirport-@Model.Itinerary.Trips[k].DestinationAirport @Model.Itinerary.Trips[k].DepartureDate.GetValueOrDefault().ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                     <td class="qty">@Model.Passengers.Count</td>
                                     <td class="price"></td>
-                                    <td class="total">@((Model.Payment.FinalPrice + Model.Discount).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</td>
+                                    <td class="total">@(Model.Itinerary.Trips[k].NetTotalFare.GetValueOrDefault().ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</td>
                                 </tr>
                             }
-                            @if (Model.VoucherCode != null)
+                            @if (Model.Payment.Discount != null)
                             {
                                 <tr>
                                     <td class="no"></td>
                                     <td class="item">Voucher</td>
-                                    <td class="description">@Model.VoucherCode</td>
+                                    <td class="description">@Model.Payment.Discount.Name</td>
                                     <td class="qty">1</td>
                                     <td class="price"></td>
-                                    <td class="total">-@Model.Discount.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    <td class="total">-@Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                 </tr>
                             }
+                            <tr>
+                                <td class="no"></td>
+                                <td class="item">Kode Unik</td>
+                                <td class="description"></td>
+                                <td class="qty">1</td>
+                                <td class="price"></td>
+                                <td class="total">@Model.Payment.UniqueCode.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                            </tr>
                         </tbody>
                         <tfoot>
                             <tr>
@@ -168,8 +176,6 @@
 
         </section><!-- .page-content -->
     </div><!-- .page -->
-    
-
     <!-- ****************************** -->
     <!-- javascripts -->
     <script src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/js/jquery.min.js")"></script>

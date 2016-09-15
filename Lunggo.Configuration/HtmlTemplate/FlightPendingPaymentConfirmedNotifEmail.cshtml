@@ -5,7 +5,7 @@
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 @{
-    FlightSegment prevSegment = null;
+    FlightSegmentForDisplay prevSegment = null;
 }
 
 
@@ -173,14 +173,14 @@
                                 <p style="color: #15b1e4; text-align: center;">:</p>
                             </td>
                             <td>
-                                <p style="color: #15b1e4; text-align: left;">1. @Model.Passengers[0].FirstName @Model.Passengers[0].LastName</p>
+                                <p style="color: #15b1e4; text-align: left;">1. @Model.Passengers[0].Name</p>
                             </td>
                             <td width="20%"></td>
                             <td width="5%" style="padding-right: 1%;">
                                 <hr style="border-color:#15b1e4;" />
                             </td>
                             <td width="7%">
-                                @EnumDisplay.PassengerType(Model.Passengers[0].Type)
+                                @EnumDisplay.PassengerType(Model.Passengers[0].Type.GetValueOrDefault())
                             </td>
                         </tr>
                         @for (int k = 1; k < i; k++)
@@ -190,14 +190,14 @@
                                     <p style="color: #15b1e4; text-align: center;">:</p>
                                 </td>
                                 <td>
-                                    <p style="color: #15b1e4; text-align: left;">@(k+1). @Model.Passengers[k].FirstName @Model.Passengers[k].LastName</p>
+                                    <p style="color: #15b1e4; text-align: left;">@(k + 1). @Model.Passengers[k].Name</p>
                                 </td>
                                 <td width="20%"></td>
                                 <td width="5%" style="padding-right: 1%;">
                                     <hr style="border-color:#15b1e4;" />
                                 </td>
                                 <td width="7%">
-                                    @EnumDisplay.PassengerType(Model.Passengers[k].Type)
+                                    @EnumDisplay.PassengerType(Model.Passengers[k].Type.GetValueOrDefault())
                                 </td>
                             </tr>
                         }
@@ -222,17 +222,17 @@
                         <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
                             <tbody>
                                 <tr>
-                                    <td width="15%" rowspan="3"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" width="40%" alt="@segment.AirlineName" class="flight-airline" /></td>
+                                    <td width="15%" rowspan="3"><img src="@segment.AirlineLogoUrl" width="40%" alt="@segment.AirlineName" class="flight-airline" /></td>
                                     <td width="4%" rowspan="4"></td>
-                                    <td width="25%">@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    <td width="25%">@segment.DepartureTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                     <td width="3" rowspan="4"></td>
-                                    <td width="25%" rowspan="4"><p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Duration:</b> @segment.Duration</p></td>
+                                    <td width="25%" rowspan="4"><p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Duration:</b> @@TimeSpan.FromMilliseconds(segment.Duration.GetValueOrDefault()).ToString(@"h'j 'm'm'")</p></td>
                                     <td width="3" rowspan="4"></td>
-                                    <td width="25%">@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    <td width="25%">@segment.ArrivalTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                 </tr>
                                 <tr>
-                                    <td width="25%"><b>@segment.DepartureTime.ToString("HH:mm")</b></td>
-                                    <td width="25%"><b>@segment.ArrivalTime.ToString("HH:mm")</b></td>
+                                    <td width="25%"><b>@segment.DepartureTime.GetValueOrDefault().ToString("HH:mm")</b></td>
+                                    <td width="25%"><b>@segment.ArrivalTime.GetValueOrDefault().ToString("HH:mm")</b></td>
                                 </tr>
                                 <tr>
                                     <td width="25%"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></td>
@@ -252,48 +252,48 @@
             </tr>
             @if (Model.Itinerary.Trips.Count > 1)
             {
-               <tr>
-                   <td width="5%" style="padding-top:20px;"></td>
-                   <td colspan="2" width="90%" style="padding-top:20px;">
-                       <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-return-icon.png")" /> <b>KEMBALI</b></p>
-                       @foreach (var segment in Model.Itinerary.Trips[0].Segments)
-                       {
-                           if (segment != Model.Itinerary.Trips[0].Segments.First())
-                           {
-                               var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
-                               <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;"><span style="background:#fff;padding:0 10px;color:#15b1e4;">Transit Duration : @transitDuration.ToString()</span></p>
-                           }
-                           <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
-                               <tbody>
-                                   <tr>
-                                       <td width="15%" rowspan="3"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" width="40%" alt="@segment.AirlineName" class="flight-airline" /></td>
-                                       <td width="4%" rowspan="4"></td>
-                                       <td width="25%">@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                                       <td width="3" rowspan="4"></td>
-                                       <td width="25%" rowspan="4"><p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Duration:</b> @segment.Duration</p></td>
-                                       <td width="3" rowspan="4"></td>
-                                       <td width="25%">@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                                   </tr>
-                                   <tr>
-                                       <td width="25%"><b>@segment.DepartureTime.ToString("HH:mm")</b></td>
-                                       <td width="25%"><b>@segment.ArrivalTime.ToString("HH:mm")</b></td>
-                                   </tr>
-                                   <tr>
-                                       <td width="25%"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></td>
-                                       <td width="25%"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></td>
-                                   </tr>
-                                   <tr>
-                                       <td width="15%"><span style="color: #15b1e4;">@segment.AirlineName</span></td>
-                                       <td width="25%">@segment.DepartureAirportName</td>
-                                       <td width="25%">@segment.ArrivalAirportName</td>
-                                   </tr>
-                               </tbody>
-                           </table>
-                           prevSegment = segment;
-                       }
-                   </td>
-                   <td width="5%" style="padding-top:20px;"></td>
-               </tr>
+                <tr>
+                    <td width="5%" style="padding-top:20px;"></td>
+                    <td colspan="2" width="90%" style="padding-top:20px;">
+                        <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-return-icon.png")" /> <b>KEMBALI</b></p>
+                        @foreach (var segment in Model.Itinerary.Trips[0].Segments)
+                        {
+                            if (segment != Model.Itinerary.Trips[0].Segments.First())
+                            {
+                                var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
+                                <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;"><span style="background:#fff;padding:0 10px;color:#15b1e4;">Transit Duration : @transitDuration.ToString()</span></p>
+                            }
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
+                                <tbody>
+                                    <tr>
+                                        <td width="15%" rowspan="3"><img src="@segment.AirlineLogoUrl" width="40%" alt="@segment.AirlineName" class="flight-airline" /></td>
+                                        <td width="4%" rowspan="4"></td>
+                                        <td width="25%">@segment.DepartureTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                        <td width="3" rowspan="4"></td>
+                                        <td width="25%" rowspan="4"><p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Duration:</b> @@TimeSpan.FromMilliseconds(segment.Duration.GetValueOrDefault()).ToString(@"h'j 'm'm'")</p></td>
+                                        <td width="3" rowspan="4"></td>
+                                        <td width="25%">@segment.ArrivalTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%"><b>@segment.DepartureTime.GetValueOrDefault().ToString("HH:mm")</b></td>
+                                        <td width="25%"><b>@segment.ArrivalTime.GetValueOrDefault().ToString("HH:mm")</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></td>
+                                        <td width="25%"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="15%"><span style="color: #15b1e4;">@segment.AirlineName</span></td>
+                                        <td width="25%">@segment.DepartureAirportName</td>
+                                        <td width="25%">@segment.ArrivalAirportName</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            prevSegment = segment;
+                        }
+                    </td>
+                    <td width="5%" style="padding-top:20px;"></td>
+                </tr>
             }
             <tr>
                 <td width="5%" style="padding-top:20px;"></td>
@@ -301,9 +301,11 @@
                     @{ var jamMaxEtiket = Model.Payment.Time.GetValueOrDefault().AddHours(9); }
 
                     @*<p>Kuitansi pembayaran Anda telah disertakan sebagai attachment.</p>*@
-                    <p>E-tiket Anda akan dikirimkan secara otomatis ke email Anda maksimal <span style="color: #15b1e4;">@jamMaxEtiket.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.ToString("HH:mm") WIB</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">cs@travorama.com.</span>
+                    <p>
+                        E-tiket Anda akan dikirimkan secara otomatis ke email Anda maksimal <span style="color: #15b1e4;">@jamMaxEtiket.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.ToString("HH:mm") WIB</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">cs@travorama.com.</span>
 
-                    </p></td>
+                    </p>
+                </td>
                 <td width="5%" style="padding-top:20px;"></td>
             </tr>
         </tbody>
@@ -315,7 +317,7 @@
 
                     <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
 
-                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy International</h4>
+                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy Internasional</h4>
                         <p style="margin-top:0; margin-bottom:5px;">
                             <span style="color:#1daee5;">A.</span> Equity Tower 25th Floor, SCBD lot 9<br />Jl. Jenderal Sudirman Kav.52-53<br />Jakarta 12190
                         </p>

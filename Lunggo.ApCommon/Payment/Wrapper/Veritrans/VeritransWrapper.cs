@@ -321,7 +321,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                 VtWeb = new VtWeb
                 {
                     EnabledPayments = new List<string> { MapPaymentMethod(method) },
-                    CreditCard3DSecure = true,
+                    CreditCard3DSecure = false,
                     FinishRedirectUrl = _finishedRedirectUrl,
                     UnfinishRedirectUrl = _unfinishedRedirectUrl,
                     ErrorRedirectUrl = _errorRedirectUrl

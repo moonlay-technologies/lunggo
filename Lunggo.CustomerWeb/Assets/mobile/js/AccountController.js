@@ -106,6 +106,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                     $scope.profileloaded = true;
                     console.log(returnData);
                     $scope.UserProfile.name = returnData.data.name;
+                    $scope.UserProfile.email = returnData.data.email;
                     $scope.UserProfile.phone = returnData.data.phone;
                     $scope.UserProfile.country = returnData.data.countryCallCd;
                 }

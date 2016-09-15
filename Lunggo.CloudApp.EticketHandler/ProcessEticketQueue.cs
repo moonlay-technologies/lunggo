@@ -141,7 +141,7 @@ namespace Lunggo.CloudApp.EticketHandler
             emailQueue.AddMessage(new CloudQueueMessage(rsvNo));
 
             Trace.WriteLine("Pushing Eticket Eticket Notification for RsvNo " + rsvNo + "...");
-            flightService.PushEticketIssuedNotif(rsvNo);
+            //flightService.PushEticketIssuedNotif(rsvNo);
 
             Trace.WriteLine("Done Processing Eticket for RsvNo " + rsvNo);
 

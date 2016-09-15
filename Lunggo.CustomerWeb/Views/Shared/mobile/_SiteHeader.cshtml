@@ -56,15 +56,18 @@
                         </li>
                     </div>*@
                     
-                    <div ng-if="name.length != 0">
-                        <li class="account">
+                    <div>
+                        <li class="account" ng-if="name.length != 0">
                             <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{name}}</a>
                         </li>
-                        <li class="account" ng-if="!(name != null)">
-                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{name}}</a>
+                        <li class="account" ng-if="name.length == 0">
+                            <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{email}}</a>
                         </li>
+                        @*<li class="account" ng-if="name.length == 0">
+                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{email}}</a>
+                        </li>*@
                     </div>
-                    
+
                     <li class="logout hidden @(ViewBag.CurrentPage == "Log Out" ? "active" : "") ">
                         <a href="@Url.Action("Logout","Account")">Keluar</a>
                     </li>

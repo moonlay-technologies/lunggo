@@ -19,14 +19,14 @@ namespace Lunggo.ApCommon.Flight.Query
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append(@"SELECT t.OriginAirportCd, t.DestinationAirportCd, t.DepartureDate ");
             clauseBuilder.Append(@"FROM FlightTrip AS t ");
-            clauseBuilder.Append(@"INNER JOIN FlightItinerary AS i ON t.ItineraryId = i.ItineraryId ");
+            clauseBuilder.Append(@"INNER JOIN FlightItinerary AS i ON t.ItineraryId = i.Id ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"WHERE i.BookingId IN @BookingId");
+            clauseBuilder.Append(@"WHERE i.BookingId = @BookingId");
             return clauseBuilder.ToString();
         }
     }

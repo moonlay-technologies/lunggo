@@ -130,7 +130,7 @@ namespace Lunggo.ApCommon.Payment.Service
             var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
             ProcessPayment(paymentDetails, transactionDetails, itemDetails, method);
             reservation.Itineraries.ForEach(i => i.Price.UpdateToDb());
-            if (paymentDetails.Status != PaymentStatus.Failed)
+            if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
                 UpdatePaymentToDb(rsvNo, paymentDetails);
             isUpdated = true;
             return paymentDetails;
