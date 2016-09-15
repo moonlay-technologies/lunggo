@@ -7,6 +7,8 @@ file : /Assets/travorama20/css/travorama20.scss
 /*--------------------*/
 /* variables */
 /*--------------------*/
+/* icon */
+/*--------------------*/
 /* mixins */
 /*--------------------*/
 /* mixins */
@@ -23,8 +25,8 @@ body {
   -webkit-font-smoothing: subpixel-antialiased;
   position: relative;
   min-height: 100%;
-  background: #ffffff;
-  padding-bottom: 415px; }
+  background: #f9f9f9;
+  padding-bottom: 665px; }
 
 hr {
   border-top: 1px solid #ccc; }
@@ -62,7 +64,7 @@ span.close {
   background: #adadad;
   color: #fff;
   font-weight: bold;
-  border: 2px solid #999; }
+  border: 2px solid #adadad; }
 
 .btn.block {
   display: block;
@@ -1076,7 +1078,7 @@ including in this file :
   color: #fff;
   padding: 0 0 30px;
   width: 100%;
-  bottom: 157px;
+  bottom: 152px;
   position: absolute; }
   .site-footer-menu a {
     color: #fff; }
@@ -1141,6 +1143,34 @@ including in this file :
       margin-bottom: 2px; }
   .site-footer-menu > .container {
     max-width: none; }
+  .site-footer-menu .web-banner {
+    padding: 20px 0;
+    border-bottom: 1px solid #fff; }
+    .site-footer-menu .web-banner .menu-left {
+      background: url("../images/mobile-app.png") no-repeat;
+      height: 165px;
+      display: block;
+      margin: 20px 0; }
+    .site-footer-menu .web-banner .menu-right .text-lg-banner {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 20px; }
+      .site-footer-menu .web-banner .menu-right .text-lg-banner .top-txt {
+        line-height: 42px; }
+    .site-footer-menu .web-banner .menu-right .banner-button {
+      margin: 12px 0; }
+      .site-footer-menu .web-banner .menu-right .banner-button a.button.btn-appstore {
+        background: url("../images/app-store-bg.png") no-repeat;
+        width: 171px;
+        height: 47px;
+        display: inline-block;
+        background-size: 80%; }
+      .site-footer-menu .web-banner .menu-right .banner-button a.button.btn-playstore {
+        background: url("../images/play-store-bg.png") no-repeat;
+        width: 171px;
+        height: 49px;
+        display: inline-block;
+        background-size: 80%; }
 
 /* site-footer */
 .site-footer {
@@ -1970,11 +2000,10 @@ file: /Assets/travorama20/css/_page_flight.scss
       position: absolute;
       top: -10px;
       left: 100%;
-      background: #fff;
       height: 30px;
       width: 120px;
       padding-left: 40px;
-      background: url(/Assets/images/loading-plane.png) left center #ffffff no-repeat;
+      background: url(/Assets/images/loading-plane.png) left center #f9f9f9 no-repeat;
       font-size: 27px;
       color: #ccc;
       text-align: center;
@@ -5688,9 +5717,12 @@ file : /Assets/travorama20/css/_page_password.scss
 .page-static .site-content {
   padding: 0;
   padding-bottom: 24px; }
+  .page-static .site-content section > .container {
+    max-width: none; }
 
 .static-header {
-  background: #003b70; }
+  background: #003b70;
+  margin-bottom: 25px; }
   .static-header .row {
     padding-top: 12px; }
     .static-header .row .col-xs-4 a {
@@ -5906,13 +5938,16 @@ file : /Assets/travorama20/css/_page_password.scss
   .page-contact .section-contact .contact-form-wrapper {
     background-color: #eaeaea;
     padding: 24px; }
+  .page-contact .section-contact > .container {
+    max-width: none; }
 
 .page-howtopay .list-wrapper, .page-howtoorder .list-wrapper {
   counter-reset: list-item; }
   .page-howtopay .list-wrapper .list, .page-howtoorder .list-wrapper .list {
     counter-increment: list-item; }
-    .page-howtopay .list-wrapper .list .list-summary .container, .page-howtoorder .list-wrapper .list .list-summary .container {
-      padding-left: 85px; }
+    .page-howtopay .list-wrapper .list .list-summary > .container, .page-howtoorder .list-wrapper .list .list-summary > .container {
+      padding-left: 85px;
+      max-width: none; }
     .page-howtopay .list-wrapper .list .list-summary h4, .page-howtoorder .list-wrapper .list .list-summary h4 {
       font-weight: bold;
       color: #1daee4;

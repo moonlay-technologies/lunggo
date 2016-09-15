@@ -14,7 +14,7 @@
 .os-regular, .form-group label.control-label, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .note > p, .page.page-home .form-container .form-wrapper form span.code-airport, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.code-airport {
   font-weight: 400; }
 
-.os-semibold, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event, .overlay--flight-filter .overlay__content .reset .btn-reset {
+.os-semibold, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event, .page.page-home .mobile-banner .mb-container .banner-txt, .overlay--flight-filter .overlay__content .reset .btn-reset {
   font-weight: 600; }
 
 .os-bold, .form-group button, .form-wrapper.form-wrapper--register a, .form-wrapper.form-wrapper--login a, .overlay .overlay__header h3.overlay__title, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li, .desc {
@@ -909,7 +909,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 #ui-datepicker-div > .ui-datepicker {
   display: none !important; }
 
-.display-icon, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.infant:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.infant:before, .page.page-home .form-container .form-wrapper form span.icon-pp, .page.page-home .form-container .form-wrapper form span.icon-return, .page.page-home .form-container .form-wrapper form span.icon-fc, .page.page-home .form-container .form-wrapper form span.icon-people, .page.page-home .form-container .form-wrapper form span.icon-flip, .page.page-home .form-container .form-wrapper form span.arrow, .page.page-home .form-container .col-custom-logo.icon-adult:before, .page.page-home .form-container .col-custom-logo.icon-child:before, .page.page-home .form-container .col-custom-logo.icon-infant:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-pp, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-return, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-fc, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-people, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-flip, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.arrow, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-adult:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-child:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-infant:before {
+.display-icon, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.active.infant:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.adult:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.children:before, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__header ul li a.infant:before, .page.page-home .form-container .form-wrapper form span.icon-pp, .page.page-home .form-container .form-wrapper form span.icon-return, .page.page-home .form-container .form-wrapper form span.icon-fc, .page.page-home .form-container .form-wrapper form span.icon-people, .page.page-home .form-container .form-wrapper form span.arrow, .page.page-home .form-container .form-wrapper form .flip-container .flip:before, .page.page-home .form-container .col-custom-logo.icon-adult:before, .page.page-home .form-container .col-custom-logo.icon-child:before, .page.page-home .form-container .col-custom-logo.icon-infant:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-pp, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-return, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-fc, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-people, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.arrow, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container .flip:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-adult:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-child:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-infant:before {
   background-repeat: no-repeat;
   display: inline-block;
   vertical-align: middle;
@@ -959,15 +959,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   width: 50%;
   font-weight: normal;
   position: relative;
-  padding-left: 12px; }
-  .summary--price dl dt:before {
-    position: absolute;
-    content: '';
-    width: 7px;
-    height: 7px;
-    background: #ff7200;
-    top: 3px;
-    left: 0; }
+  padding-left: 12px;
+  /*&:before {position:absolute; content:''; width:7px; height:7px; background:#ff7200; top:3px; left:0;}*/ }
 
 .summary--price dl dd {
   float: left;
@@ -1058,7 +1051,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 /*ACCORDION*/
 .accordion-wrapper .accordion-title {
   background-color: #35b6e7;
-  color: #fff;
+  color: #ffffff;
   cursor: pointer;
   padding: 11px 15px;
   width: 100%;
@@ -1095,6 +1088,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         margin-bottom: 10px; }
 
 /*--------------------*/
+/*--------------------*/
+/* icon */
 .page.page-home {
   overflow-y: auto;
   background: #ffffff; }
@@ -1166,12 +1161,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       width: 41px;
       height: 57px;
       top: 16px; }
-    .page.page-home .form-container .form-wrapper form span.icon-flip {
-      background-image: url("../images/flip.png");
-      width: 43px;
-      height: 40px;
-      top: 7px;
-      left: 5px; }
     .page.page-home .form-container .form-wrapper form span.arrow {
       background-image: url("../images/arrow-down-bw.png");
       width: 24px;
@@ -1230,10 +1219,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border-bottom: 1px solid #dddddd;
         text-align: center; }
     .page.page-home .form-container .form-wrapper form .flip-container {
-      position: relative;
+      padding-top: 50px;
       min-height: 104px; }
       .page.page-home .form-container .form-wrapper form .flip-container .flip {
-        position: absolute;
         width: 35px;
         height: 37px;
         background: #ecf0f4;
@@ -1242,10 +1230,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         -ms-border-radius: 5px;
-        border-radius: 5px;
-        top: 60%;
-        left: 50%;
-        transform: translate(-50%, -50%); }
+        border-radius: 5px; }
+        .page.page-home .form-container .form-wrapper form .flip-container .flip:before {
+          background-image: url("../images/flip.png");
+          width: 43px;
+          height: 40px;
+          margin-top: 7px;
+          margin-left: 5px;
+          content: ''; }
     .page.page-home .form-container .form-wrapper form .form__roundtrip .switch {
       float: right;
       position: relative;
@@ -1326,6 +1318,29 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-home .calendar-container .ui-datepicker {
     max-width: 340px;
     margin: 0 auto 15px; }
+  .page.page-home .mobile-banner {
+    border-bottom: 1px solid #dddddd; }
+    .page.page-home .mobile-banner .mb-container {
+      margin: 0 auto;
+      padding: 20px 0 30px;
+      background: url("../images/mobile-app.png") no-repeat bottom right;
+      max-width: 280px; }
+      .page.page-home .mobile-banner .mb-container .banner-txt {
+        font-size: 12px;
+        color: #000000;
+        max-width: 120px;
+        margin: 15px 0; }
+      .page.page-home .mobile-banner .mb-container .banner-button a.button.btn-appstore {
+        background: url("../images/app-store.png");
+        width: 84px;
+        height: 28px;
+        display: block; }
+      .page.page-home .mobile-banner .mb-container .banner-button a.button.btn-playstore {
+        background: url("../images/play-store.png");
+        width: 84px;
+        height: 29px;
+        display: block;
+        margin-bottom: 10px; }
 
 @media only screen and (min-width: 375px) and (max-height: 667px) {
   .page.page-home .form-container {
@@ -1529,6 +1544,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-flight .flight-list .flight .flight-footer .flight-detail-button {
     display: inline-block;
     padding: 3px 0; }
+    .page.page-flight .flight-list .flight .flight-footer .flight-detail-button:after {
+      width: 6px;
+      height: 10px;
+      content: '';
+      background: url(/Assets/mobile/images/arrow-detail.png) no-repeat;
+      display: inline-block;
+      margin-left: 6px;
+      background-size: 90%;
+      vertical-align: middle; }
   .page.page-flight .flight-list .flight .flight-footer .flight-order {
     padding-top: 3px;
     padding-bottom: 3px; }
@@ -1597,12 +1621,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       width: 41px;
       height: 57px;
       top: 16px; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.icon-flip {
-      background-image: url("../images/flip.png");
-      width: 43px;
-      height: 40px;
-      top: 7px;
-      left: 5px; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.arrow {
       background-image: url("../images/arrow-down-bw.png");
       width: 24px;
@@ -1661,10 +1679,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border-bottom: 1px solid #dddddd;
         text-align: center; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container {
-      position: relative;
+      padding-top: 50px;
       min-height: 104px; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container .flip {
-        position: absolute;
         width: 35px;
         height: 37px;
         background: #ecf0f4;
@@ -1673,10 +1690,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         -ms-border-radius: 5px;
-        border-radius: 5px;
-        top: 60%;
-        left: 50%;
-        transform: translate(-50%, -50%); }
+        border-radius: 5px; }
+        .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container .flip:before {
+          background-image: url("../images/flip.png");
+          width: 43px;
+          height: 40px;
+          margin-top: 7px;
+          margin-left: 5px;
+          content: ''; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .switch {
       float: right;
       position: relative;
@@ -1999,7 +2020,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           width: 15%;
           height: 100%;
           position: absolute;
-          background: url(/Assets/mobile/images/flight-separator.png) center center no-repeat;
+          background: url(/Assets/mobile/images/flight-separators.png) center center no-repeat;
           left: 35%;
           text-align: center; }
         .overlay--flight-detail .overlay__content .flight-wrapper .flight .flight__content .flight__detail .flight__arrival {
@@ -2054,15 +2075,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       width: auto;
       position: absolute; }
     .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price {
-      padding: 0 15px 15px;
-      /*span.segment-price-q {
-                                content: "";
-                                position: absolute;
-                                width: 7px;
-                                height: 7px;
-                                background: #fd8524;
-                                left: 12px;
-                            }*/ }
+      padding: 0 15px 15px; }
       .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price h5.segment-price-name {
         padding: 8px 25px 15px;
         margin: 0;
@@ -2097,6 +2110,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           font-weight: 700; }
         .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price .segment-netprice-total h6.segment-price-left {
           color: #ff9a24; }
+      .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price .segment-price-q:before {
+        content: "";
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        background: #fd8524;
+        margin-left: -14px;
+        margin-right: 7px; }
 
 .overlay--flight-detail .overlay__footer h5 {
   margin-top: 0;
@@ -2284,6 +2305,30 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-checkout .summary .summary__title {
   color: #333; }
 
+.page.page-checkout .summary .summary__body > dl {
+  padding: 7.5px 0;
+  margin-bottom: 0;
+  font-size: 11px; }
+  .page.page-checkout .summary .summary__body > dl:first-child {
+    border-bottom: 1px dotted #ff9a24;
+    padding-top: 0; }
+    .page.page-checkout .summary .summary__body > dl:first-child > dt:before {
+      width: 7px;
+      height: 7px;
+      background: #ff9a24;
+      display: inline-block;
+      content: '';
+      margin-left: -14px;
+      margin-right: 7px; }
+  .page.page-checkout .summary .summary__body > dl:nth-child(3) {
+    color: #2fb4e6; }
+  .page.page-checkout .summary .summary__body > dl:last-child {
+    border-top: 1px solid #ff9a24; }
+    .page.page-checkout .summary .summary__body > dl:last-child > dd {
+      color: #ff9a24;
+      font-size: 16px;
+      font-weight: 700; }
+
 .page.page-checkout .summary.summary--price dl:after {
   display: block;
   width: 100%;
@@ -2295,33 +2340,27 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   width: 50%;
   font-weight: normal;
   position: relative;
-  padding-left: 12px; }
-  .page.page-checkout .summary.summary--price dl dt:before {
-    position: absolute;
-    content: '';
-    width: 7px;
-    height: 7px;
-    background: #ff7200;
-    top: 3px;
-    left: 0; }
+  padding-left: 12px;
+  font-weight: 700; }
 
 .page.page-checkout .summary.summary--price dl dd {
   float: left;
   width: 50%;
   text-align: right;
-  font-weight: bold; }
+  font-weight: 700; }
 
-.page.page-checkout .summary.summary--price dl.total-price {
-  border-top: 1px solid #ccc;
-  padding-top: 10px; }
-  .page.page-checkout .summary.summary--price dl.total-price dt {
-    width: 35%; }
-    .page.page-checkout .summary.summary--price dl.total-price dt:before {
-      display: none; }
-  .page.page-checkout .summary.summary--price dl.total-price dd {
-    width: 65%;
-    color: #ff7200;
-    font-size: 16px; }
+.page.page-checkout .summary.summary--price dl.total-price dt {
+  width: 35%; }
+  .page.page-checkout .summary.summary--price dl.total-price dt:before {
+    display: none; }
+
+.page.page-checkout .summary.summary--price dl.total-price dd {
+  width: 65%;
+  color: #ff7200;
+  font-size: 16px; }
+
+.page.page-checkout .summary.summary--price dl:nth-child(2) {
+  color: #2fb4e6; }
 
 .page.page-checkout .summary.summary--passenger {
   color: #63c6ec; }

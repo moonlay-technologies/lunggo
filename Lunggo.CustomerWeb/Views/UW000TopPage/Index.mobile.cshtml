@@ -24,6 +24,15 @@
 }
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">
+    <div class="mobile-banner">
+        <div class="mb-container">
+            <div class="banner-txt">Pesan hotel & flight lebih murah & mudah!</div>
+            <div class="banner-button">
+                <a href="#" class="button btn-playstore"></a>
+                <a href="#" class="button btn-appstore"></a>
+            </div>
+        </div>
+    </div>
     <div class="form-wrapper">
         <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
             <div class="top-form row">
@@ -31,7 +40,7 @@
                     <div class="form-group form__origin">
                         <div class="title-destination">Asal</div>
                         <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('departure'); PageConfig.SetOverlay('airport-select')">
-                            <span class="code-airport">{{FlightSearchForm.AirportOrigin.Code}}</span><br/><span class="city">{{FlightSearchForm.AirportOrigin.City}}</span> 
+                            <span class="code-airport">{{FlightSearchForm.AirportOrigin.Code}}</span><br/><span class="city">{{FlightSearchForm.AirportOrigin.City}}</span>
                         </p>
                     </div>
                 </div>
@@ -67,7 +76,7 @@
                         <label class="switch">
                             <input type="checkbox" ng-model="val" ng-true-value="true" ng-false-value="false" ng-click="DatePicker.SetDefaultReturnDate(val)">
                             <div class="slider round"></div>
-                         </label>
+                        </label>
                     </div>
                 </div>
                 <div class="form-group form__return" ng-show="val">
@@ -116,7 +125,6 @@
             </div>
         </form><!-- .flight-form -->
     </div><!-- .form-wrapper -->
-    
     <!-- overlays -->
     <!-- overlay date picker -->
     <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--departure" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-departure') }">
@@ -129,23 +137,22 @@
         <section class="overlay__content">
             <div class="overlay-selector">
                 @*<div class="overlay-selector__header">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#">Berangkat</a></li>
-                        <li><a href="#">Pergi</a></li>
-                    </ul>
-                </div>*@
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#">Berangkat</a></li>
+                            <li><a href="#">Pergi</a></li>
+                        </ul>
+                    </div>*@
                 <div class="overlay-selector__body">
                     <div class="calendar-container">
                         <div class="ui-datepicker departure-date"></div>
                     </div>
                     @*<div class="event">
-                        <span class="date-event">24:</span> Holiday
-                    </div>*@
+                            <span class="date-event">24:</span> Holiday
+                        </div>*@
                 </div>
             </div>
         </section>
     </div><!-- .overlay--datepicker-->
-
     <!-- overlay date picker -->
     <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--return" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-return') }">
         <header class="overlay__header">
@@ -157,44 +164,43 @@
         <section class="overlay__content">
             <div class="overlay-selector">
                 @*<div class="overlay-selector__header">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#">Berangkat</a></li>
-                        <li><a href="#">Pergi</a></li>
-                    </ul>
-                </div>*@
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#">Berangkat</a></li>
+                            <li><a href="#">Pergi</a></li>
+                        </ul>
+                    </div>*@
                 <div class="overlay-selector__body">
                     <div class="calendar-container">
                         <div class="ui-datepicker return-date" id="returnDate"></div>
                     </div>
                     @*<div class="event">
-                        <span class="date-event">24:</span> Holiday
-                    </div>*@
+                            <span class="date-event">24:</span> Holiday
+                        </div>*@
                 </div>
             </div>
         </section>
     </div><!-- .overlay--datepicker-->
-
     <!-- overlay airport selector -->
     <div class="overlay overlay--theme--blue overlay--airport-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'airport-select')}">
         <header class="overlay__header">
             <h3 class="overlay__title">
                 <small>PILIH TUJUAN PENERBANGAN</small>
-                 <span class="overlay__close" ng-click="PageConfig.SetOverlay();">X</span>
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay();">X</span>
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
-        
+
             <div class="autocomplete-input">
                 <input type="text" class="form-control" name="name" value="" placeholder="Masukkan lokasi tujuan penerbangan" ng-model="FlightSearchForm.AutoComplete.Keyword" ng-change="FlightSearchForm.AutoComplete.GetAirport()" />
             </div><!-- .autocomplete-input -->
-        
+
             <div class="autocomplete-preload" ng-show="FlightSearchForm.AutoComplete.Keyword.length < FlightSearchForm.AutoComplete.MinLength">
                 <div class="list__header">
                     <h4>POPULAR DESTINATION</h4>
                 </div>
                 <ul class="result">
-                    <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Popular" >
-                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay();" ></a>
+                    <li class="airport" ng-repeat="result in PageConfig.PopularDestination.Popular">
+                        <a class="airport__link" ng-click="FlightSearchForm.AutoComplete.SetAirport( FlightSearchForm.AutoComplete.Target , result); PageConfig.SetOverlay();"></a>
                         <span class="airport__code">{{result.Code}}</span>
                         <div class="airport__detail">
                             <p class="airport__location">{{result.City}}, {{result.Country}}</p>
@@ -281,7 +287,7 @@
                     </li>
                 </ul>
             </div><!-- .autocomplete-preload -->
-        
+
             <div class="autocomplete-loading">
                 <h4 class="text-center text-loading">Mencari Bandara</h4>
             </div>
@@ -291,11 +297,10 @@
             </div>
 
             <div class="autocomplete-result">
-                <ul class="result" ng-click= "PageConfig.SetOverlay()"></ul>
+                <ul class="result" ng-click="PageConfig.SetOverlay()"></ul>
             </div>
         </section><!-- .overlay__content -->
     </div><!-- .overlay--airport-select -->
-    
     <!-- overlay passenger picker -->
     <div class="overlay overlay--theme--blue overlay--passenger-selector" ng-class="{'active' : (PageConfig.ActiveOverlay == 'passenger-select')}">
         <header class="overlay__header">
