@@ -97,11 +97,12 @@ span.italic {
     background-color: #f0f0f4;
     color: #000;
     cursor: pointer;
-    padding: 15px;
     width: 100%;
     font-size: 13px;
     font-weight: 600;
-    border-top: 1px solid #c9c9c9; }
+    border-top: 1px solid #c9c9c9;
+    float: left;
+    padding: 15px; }
     .accordion-wrapper .accordion-title.active {
       border-bottom: 1px solid #c9c9c9; }
       .accordion-wrapper .accordion-title.active:after {
@@ -112,7 +113,10 @@ span.italic {
         height: 8px;
         background-size: 70%;
         float: right;
-        margin-top: 6px; }
+        position: absolute;
+        right: 0;
+        margin-right: 10px;
+        margin-top: -10px; }
     .accordion-wrapper .accordion-title:after {
       content: " ";
       display: block;
@@ -121,7 +125,10 @@ span.italic {
       height: 8px;
       background-size: 70%;
       float: right;
-      margin-top: 6px; }
+      position: absolute;
+      right: 0;
+      margin-right: 10px;
+      margin-top: -10px; }
   .accordion-wrapper .accordion-content {
     max-height: 0;
     overflow: hidden;
@@ -151,3 +158,10 @@ span.italic {
   .accordion-wrapper img {
     max-width: 100%;
     height: auto; }
+
+@media only screen and (max-device-width: 375px) {
+  .accordion-wrapper .accordion-title .txt-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 270px; } }
