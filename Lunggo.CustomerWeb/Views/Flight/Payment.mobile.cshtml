@@ -52,8 +52,8 @@
     var langCode = 'en';
     var paymentTimeout = '';
     // development only start
-    paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().AddMinutes(-30).ToString("yyyy-MM-dd'T'HH:mm:ss")');
-    console.log("TIME OUT: "+paymentTimeout);
+    paymentTimeout = new Date('@Model.TimeLimit.GetValueOrDefault().ToString("yyyy-MM-dd'T'HH:mm:ss")');
+    console.log("TIME OUT: "+ paymentTimeout);
     // countdown timer
     $('.timer').countdown(paymentTimeout, function(event) {
         $('.timer .hour').text(event.strftime('%H'));
@@ -516,28 +516,28 @@
                 </div>
             </div>
 
-            @*<div class="page-overlay flight-expired" ng-class="{'active' : expired}">
-        <div class="overlay-content">
-            <header>
-                <h4>Checkout Kadaluarsa</h4>
-            </header>
-            <section>
-                <div class="container_new">
-                    <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
-                    <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
-                </div>
-            </section>
-            <footer>
-                <div class="container_new">
-                    <div class="row1">
-                        <div class="col12">
-                            <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
+            <div class="popup__wrapper" ng-class="{'active' : expired}">
+
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Waktu Habis</h4>
+                    </header>
+                    
+                    <div class="popup__body tnc-body">
+                        <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
+                        <p>Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</p>
+                    </div>
+                    
+                    <div class="container_new popup__footer">
+                        <div class="container_new tnc">
+                            <div class="row">
+                                <a class="btn btn-yellow btn-block" href="{{returnUrl}}">KEMBALI</a>
+                            </div>
                         </div>
                     </div>
+
                 </div>
-            </footer>
-        </div>
-    </div><!-- .page-overlay -->*@
+            </div><!-- .page-overlay -->
             
 
             <div class="popup__wrapper" ng-class="{'active' : pay.ispaying || pay.go }">
