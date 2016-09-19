@@ -12,7 +12,7 @@ app.controller('paymentController', [
         //console.log("hello" + CryptoJS.SHA512("Message"));
         angular.element(document).ready(function () {
             $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo);
-
+            $scope.expired();
         });
         $scope.currentPage = 4;
         $scope.trial = 0;
@@ -21,7 +21,7 @@ app.controller('paymentController', [
         $scope.checkoutForm = {
             loading: false
         };
-
+        $scope.paymentTimeout = paymentTimeout;
         $scope.paymentMethod = ''; //Payment
         $scope.trips = trips;
         $scope.stepClass = '';
@@ -42,7 +42,7 @@ app.controller('paymentController', [
             CardNo: ''
         };
         $scope.PageConfig = {
-            ReturnUrl: "",
+            ReturnUrl: "/",
         };
         $scope.msToTime = function (duration) {
 
@@ -310,7 +310,13 @@ app.controller('paymentController', [
                 }
             }
         }
-
+        $interval(function () {
+            var nowTime = new Date();
+            if (nowTime > $scope.paymentTimeout) {
+                $scope.expired = true;
+            }
+        }, 1000);
+        $scope.expired = false;
         $scope.errorLog = '';
         $scope.errorMessage = '';
         $scope.pay = {
