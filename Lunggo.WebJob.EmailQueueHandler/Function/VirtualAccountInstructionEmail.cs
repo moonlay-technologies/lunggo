@@ -9,14 +9,14 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 {
     public partial class ProcessEmailQueue
     {
-        public static void FlightPendingPaymentReservationNotifEmail([QueueTrigger("flightpendingpaymentreservationnotifemail")] string rsvNo)
+        public static void FlightInstantPaymentReservationNotifEmail([QueueTrigger("virtualaccountinstructionemail")] string rsvNo)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
 
             var flightService = FlightService.GetInstance();
             var sw = new Stopwatch();
-            Console.WriteLine("Processing Flight Pending Payment Reservation Notif Email for RsvNo " + rsvNo + "...");
+            Console.WriteLine("Processing Virtual Account Instruction Email for RsvNo " + rsvNo + "...");
 
             Console.WriteLine("Getting Required Data...");
             sw.Start();
@@ -34,9 +34,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama"
             };
             Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(reservation, mailModel, "FlightPendingPaymentReservationNotifEmail");
+            mailService.SendEmail(reservation, mailModel, "VirtualAccountInstructionEmail");
             
-            Console.WriteLine("Done Processing Flight Pending Payment Reservation Notif Email for RsvNo " + rsvNo);
+            Console.WriteLine("Done Processing Virtual Account Instruction Email for RsvNo " + rsvNo);
         }
     }
 }

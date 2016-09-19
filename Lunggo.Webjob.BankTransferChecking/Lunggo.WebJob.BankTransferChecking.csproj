@@ -73,11 +73,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="i18n_message.xml" />
+    <None Include="Airline.csv" />
+    <None Include="Airport.csv" />
     <None Include="App.config" />
     <Content Include="application.properties">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Country.csv" />
+    <None Include="HotelLocation.csv" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob.pubxml" />

@@ -163,6 +163,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 var records = GetUnpaidQuery.GetInstance().Execute(conn, null);
                 var payments = records.ToDictionary(rec => rec.RsvNo, rec => new PaymentDetails
                 {
+                    Time = rec.InsertDate,
                     TimeLimit = rec.TimeLimit.GetValueOrDefault(),
                     FinalPriceIdr = rec.FinalPriceIdr.GetValueOrDefault()
                 });

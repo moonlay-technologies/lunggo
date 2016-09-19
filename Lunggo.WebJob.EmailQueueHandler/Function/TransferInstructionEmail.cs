@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
@@ -9,14 +10,14 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 {
     public partial class ProcessEmailQueue
     {
-        public static void FlightInstantPaymentReservationNotifEmail([QueueTrigger("flightinstantpaymentreservationnotifemail")] string rsvNo)
+        public static void FlightPendingPaymentReservationNotifEmail([QueueTrigger("transferinstructionemail")] string rsvNo)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
 
             var flightService = FlightService.GetInstance();
             var sw = new Stopwatch();
-            Console.WriteLine("Processing Flight Instant Payment Reservation Notif Email for RsvNo " + rsvNo + "...");
+            Console.WriteLine("Processing Transfer Instruction Email for RsvNo " + rsvNo + "...");
 
             Console.WriteLine("Getting Required Data...");
             sw.Start();
@@ -33,10 +34,18 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama"
             };
-            Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(reservation, mailModel, "FlightInstantPaymentReservationNotifEmail");
-            
-            Console.WriteLine("Done Processing Flight Instant Payment Reservation Notif Email for RsvNo " + rsvNo);
+            if (reservation.Payment.Method == PaymentMethod.BankTransfer)
+            {
+                Console.WriteLine("Sending Bank Transfer Instruction Email...");
+                mailService.SendEmail(reservation, mailModel, "BankTransferInstructionEmail");
+            }
+            else if (reservation.Payment.Method == PaymentMethod.VirtualAccount)
+            {
+                Console.WriteLine("Sending Virtual Account Instruction Email...");
+                mailService.SendEmail(reservation, mailModel, "VirtualAccountInstructionEmail");
+            }
+
+            Console.WriteLine("Done Processing Transfer Instruction Email for RsvNo " + rsvNo);
         }
     }
 }

@@ -17,6 +17,7 @@ using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using Newtonsoft.Json.Schema;
 
 namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 {
@@ -31,6 +32,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
         private static string _finishedRedirectUrl;
         private static string _unfinishedRedirectUrl;
         private static string _errorRedirectUrl;
+        private static string _temp = "";
 
         private const string FinishRedirectPath = @"/id/Veritrans/PaymentFinish";
         private const string UnfinishRedirectPath = @"/id/Veritrans/PaymentUnfinish";
@@ -88,10 +90,12 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                             + "\n`*Environment :* " + env.ToUpper()
                             + "\n*PAYMENT DETAILS :*\n"
                             + payment.Serialize()
-                            + "\n*TRANS DETAILS :*\n"
-                            + transactionDetail.Serialize()
-                            + "\n*ITEM DETAILS :*\n"
-                            + itemDetails.Serialize()
+                                + "\n*TRANSAC DETAILS :*\n"
+                                + transactionDetail.Serialize()
+                                + "\n*ITEM DETAILS :*\n"
+                                + itemDetails.Serialize()
+                                + "\n*REQUEST :*\n"
+                                + _temp
                             + "\n*RESPONSE :*\n"
                             + content.Serialize()
                             + "\n*Platform :* "
@@ -301,6 +305,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             {
                 streamWriter.Write(jsonRequestParams);
             }
+            _temp = jsonRequestParams;
         }
 
         private static void ProcessVtWebRequestParams(WebRequest request, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)

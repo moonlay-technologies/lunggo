@@ -28,12 +28,13 @@ namespace Lunggo.Webjob.BankTransferChecking
                     var rsvNo = unpaid.Key;
                     var payment = unpaid.Value;
                     var transacDate = DateTime.ParseExact(pair.Value, format, provider).AddHours(-7);
+                    var time = payment.Time.GetValueOrDefault();
                     var timelimit = (DateTime)payment.TimeLimit;
                     var transacUTCDate = DateTime.SpecifyKind(transacDate, DateTimeKind.Utc);
                     if (decimal.Parse(pair.Key) == payment.FinalPriceIdr)
                     {
                         Console.WriteLine("The Price is Same ");
-                        if (transacUTCDate >= timelimit.AddMinutes(-120) && transacUTCDate <= timelimit)
+                        if (transacUTCDate >= time && transacUTCDate <= timelimit)
                         {
                             Console.WriteLine("---->FIND : Same price and valid date transaction");
                             //Change Payment Reservation
@@ -44,7 +45,7 @@ namespace Lunggo.Webjob.BankTransferChecking
 
                             //Update in database
                             PaymentService.GetInstance().UpdatePayment(rsvNo, payment);
-                            FlightService.GetInstance().SendPendingPaymentConfirmedNotifToCustomer(rsvNo);
+                            //FlightService.GetInstance().SendPendingPaymentConfirmedNotifToCustomer(rsvNo);
                         }
                     }
                 }

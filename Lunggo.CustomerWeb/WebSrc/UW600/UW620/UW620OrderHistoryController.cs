@@ -133,17 +133,17 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
             return Redirect("https://lunggostorageqa.blob.core.windows.net/eticket/" + rsvNo + ".pdf");
         }
 
-        public ActionResult OrderFlightHistoryDetailResendTicket(string rsvNo)
-        {
-            var flightService = FlightService.GetInstance();
-            var reservation = flightService.GetReservationForDisplay(rsvNo);
-            if (reservation.Payment.Status != ApCommon.Payment.Constant.PaymentStatus.Settled)
-                return Content("ticket unavailable");
-            if (reservation.Payment.Method != PaymentMethod.BankTransfer)
-                flightService.SendInstantPaymentConfirmedNotifToCustomer(rsvNo);
-            else
-                flightService.SendPendingPaymentConfirmedNotifToCustomer(rsvNo);
-            return Content("Success");
-        }
+        //public ActionResult OrderFlightHistoryDetailResendTicket(string rsvNo)
+        //{
+        //    var flightService = FlightService.GetInstance();
+        //    var reservation = flightService.GetReservationForDisplay(rsvNo);
+        //    if (reservation.Payment.Status != ApCommon.Payment.Constant.PaymentStatus.Settled)
+        //        return Content("ticket unavailable");
+        //    if (reservation.Payment.Method != PaymentMethod.BankTransfer)
+        //        flightService.SendInstantPaymentConfirmedNotifToCustomer(rsvNo);
+        //    else
+        //        flightService.SendPendingPaymentConfirmedNotifToCustomer(rsvNo);
+        //    return Content("Success");
+        //}
     }
 }

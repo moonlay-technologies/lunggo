@@ -45,42 +45,42 @@
 
                     <!-- CONTENT  -->
                     <p>
-                        Terima kasih, Anda baru saja memesan penerbangan dari:
+                    Terima kasih, Anda baru saja memesan penerbangan dari:
+                    </p>
                         @if (Model.Itinerary.Trips.Count > 1)
                         {
-                            <table width="100%" style="margin-bottom: 20px;">
+                            <table width="100%" style="margin-bottom: 20px">
                                 <tr width="100%">
                                     <td width="5%">
                                         <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-departure-icon.png")" />
                                     </td>
                                     <td width="60%" style="padding-left: 0px">
+                                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[0].Segments[0].DepartureCity - @Model.Itinerary.Trips[0].Segments.Last().ArrivalCity</b></p>
+                                    </td>
+                                    <td width="5%">
+                                        <hr style="border-color: #15b1e4" />
+                                    </td>
+                                    @{ var jamBerangkat = Model.Itinerary.Trips[0].Segments[0].DepartureTime;}
+                                    <td width="30%" style="padding-left: 10px; text-align: left">
+                                        @Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.GetValueOrDefault().ToString("HH:mm")
+                                    </td>
+                                </tr>
+                                <tr width="100%">
+                                    <td width="5%">
+                                        <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-return-icon.png")" />
+                                    </td>
+                                    <td width="60%" style="padding-left: 0px">
+                                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[1].Segments[0].DepartureCity - @Model.Itinerary.Trips[1].Segments.Last().ArrivalCity</b></p>
+                                    </td>
+                                    <td width="5%">
+                                        <hr style="border-color: #15b1e4" />
+                                    </td>
+                                    @{ var jamKembali = Model.Itinerary.Trips[1].Segments[0].DepartureTime;}
+                                    <td width="30%" style="padding-left: 10px; text-align: left">
+                                        @Model.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.GetValueOrDefault().ToString("HH:mm")
                                     </td>
                                 </tr>
                             </table>
-                        </p>
-                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[0].Segments[0].DepartureCity - @Model.Itinerary.Trips[0].Segments.Last().ArrivalCity</b></p>
-                    </td>
-                    <td width="5%">
-                        <hr style="border-color: #15b1e4" />
-                    </td>
-                    @{ var jamBerangkat = Model.Itinerary.Trips[0].Segments[0].DepartureTime;}
-                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.GetValueOrDefault().ToString("HH:mm")</td>
-                </tr>
-                <tr width="100%">
-                    <td width="5%">
-                        <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-return-icon.png")" />
-                    </td>
-                    <td width="60%" style="padding-left: 0px">
-                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[1].Segments[0].DepartureCity - @Model.Itinerary.Trips[1].Segments.Last().ArrivalCity</b></p>
-                    </td>
-                    <td width="5%">
-                        <hr style="border-color: #15b1e4" />
-                    </td>
-                    @{ var jamKembali = Model.Itinerary.Trips[1].Segments[0].DepartureTime;}
-                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.GetValueOrDefault().ToString("HH:mm")</td>
-                </tr>
-            </tbody>
-        </table>
                         }
                         else
                         {

@@ -32,19 +32,9 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return response;
             }
 
-            if (HttpContext.Current.User.Identity.IsAuthenticated && HttpContext.Current.User.Identity.IsUserAuthorized())
-                response.Email = HttpContext.Current.User.Identity.GetEmail();
+            if (user.Identity.IsAuthenticated && user.Identity.IsUserAuthorized())
+                response.Email = user.Identity.GetEmail();
             response.VoucherCode = voucherCode;
-            response.Discount = new UsedDiscount
-            {
-                Name = voucher.CampaignName,
-                Description = voucher.CampaignDescription,
-                DisplayName = voucher.DisplayName,
-                Percentage = voucher.ValuePercentage.GetValueOrDefault(),
-                Constant = voucher.ValueConstant.GetValueOrDefault(),
-                Currency = new Currency("IDR"),
-                IsFlat = false
-            };
 
             var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
             if (paymentDetails == null)
@@ -55,37 +45,11 @@ namespace Lunggo.ApCommon.Campaign.Service
 
             var price = paymentDetails.OriginalPriceIdr*paymentDetails.LocalCurrency.Rate;
 
-            var validationStatus = ValidateVoucher(voucher, price, user, voucherCode);
+            var validationStatus = ValidateVoucher(voucher, price, response.Email, voucherCode);
 
             if (validationStatus == VoucherStatus.Success)
             {
                 CalculateVoucherDiscount(voucher, price, response);
-            }
-            response.VoucherStatus = validationStatus;
-            return response;
-        }
-        public VoucherResponse UseVoucherRequest(string rsvNo, string voucherCode)
-        {
-            var response = new VoucherResponse();
-            var user = HttpContext.Current.User;
-
-            var voucher = GetDb.GetCampaignVoucher(voucherCode);
-
-            if (HttpContext.Current.User.Identity.IsAuthenticated && HttpContext.Current.User.Identity.IsUserAuthorized())
-                response.Email = HttpContext.Current.User.Identity.GetEmail();
-
-            var reservation = FlightService.GetInstance().GetReservation(rsvNo);
-            response.VoucherCode = voucherCode;
-
-            var paymentDetails = reservation.Payment;
-            var price = paymentDetails.OriginalPriceIdr * paymentDetails.LocalCurrency.Rate;
-
-            var validationStatus = ValidateVoucher(voucher, reservation.Payment.FinalPriceIdr, user, voucherCode);
-
-            if (validationStatus == VoucherStatus.Success)
-            {
-                CalculateVoucherDiscount(voucher, price, response);
-                validationStatus = VoucherDecrement(voucherCode);
                 response.Discount = new UsedDiscount
                 {
                     Name = voucher.CampaignName,
@@ -94,17 +58,24 @@ namespace Lunggo.ApCommon.Campaign.Service
                     Percentage = voucher.ValuePercentage.GetValueOrDefault(),
                     Constant = voucher.ValueConstant.GetValueOrDefault(),
                     Currency = new Currency("IDR"),
-                    IsFlat = false,
+                    IsFlat = false
                 };
             }
-
             response.VoucherStatus = validationStatus;
             return response;
         }
-        private VoucherStatus ValidateVoucher(CampaignVoucher voucher, decimal price, IPrincipal user, string voucherCode)
+
+        public VoucherResponse UseVoucherRequest(string rsvNo, string voucherCode)
+        {
+            var response = ValidateVoucherRequest(rsvNo, voucherCode);
+            if (response.VoucherStatus == VoucherStatus.Success)
+                response.VoucherStatus = VoucherDecrement(voucherCode);
+            return response;
+        }
+
+        private VoucherStatus ValidateVoucher(CampaignVoucher voucher, decimal price, string email, string voucherCode)
         {
             var currentTime = DateTime.Now;
-            var email = user.Identity.IsUserAuthorized() ? user.Identity.GetEmail() : null;
             if (voucher == null)
                 return VoucherStatus.VoucherNotFound;
             if (voucher.StartDate >= currentTime)

@@ -39,25 +39,21 @@ namespace Lunggo.CustomerWeb.Controllers
                 else
                     time = null;
 
+                var status = MapPaymentStatus(notif);
                 var paymentInfo = new PaymentDetails
                 {
                     Medium = PaymentMedium.Veritrans,
                     Method = MapPaymentMethod(notif),
-                    Status = MapPaymentStatus(notif),
-                    Time = time,
+                    Status = status,
+                    Time = status == PaymentStatus.Settled ? time : null,
                     ExternalId = notif.approval_code,
                     TransferAccount = notif.permata_va_number,
                     FinalPriceIdr = notif.gross_amount,
                     LocalCurrency = new Currency("IDR")
                 };
 
-                var flight = FlightService.GetInstance();
                 if (paymentInfo.Status != PaymentStatus.Failed && paymentInfo.Status != PaymentStatus.Denied)
                     PaymentService.GetInstance().UpdatePayment(notif.order_id, paymentInfo);
-                if (paymentInfo.Method == PaymentMethod.CreditCard && paymentInfo.Status == PaymentStatus.Denied)
-                {
-                    flight.SendFailedVerificationCreditCardNotifToCustomer(notif.order_id);
-                }
             }
             return new EmptyResult();
         }
