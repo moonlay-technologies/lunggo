@@ -30,21 +30,32 @@ $play-store: '../images/play-store.png';
                 @extend .os-semibold;
                 font-size: 12px;
                 color: $color_black;
-                max-width: 120px;
+                max-width: 130px;
                 margin: 15px 0;
             }
             .banner-button {
                 a.button {
                     &.btn-appstore {
-                        background: url($app-store);
+                        /*background: url($app-store);
                         @include size(84px, 28px);
+                        display: block;*/
+                        background: url("/Assets/Travorama20/images/app-store-cs.png") no-repeat;
+                        width: 100%;
+                        height: 41px;
                         display: block;
+                        background-size: 42%;
                     } 
                     &.btn-playstore {
-                        background: url($play-store);
+                        /*background: url($play-store);
                         @include size(84px, 29px);
                         display: block;
+                        margin-bottom: 10px;*/
+                        background: url("/Assets/Travorama20/images/play-store-bg.png") no-repeat;
+                        width: 100%;
+                        height: 41px;
+                        display: block;
                         margin-bottom: 10px;
+                        background-size: 40%;
                     }
                 }
             }
