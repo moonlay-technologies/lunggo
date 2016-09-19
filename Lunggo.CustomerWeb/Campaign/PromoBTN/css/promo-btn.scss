@@ -109,6 +109,15 @@
 	}
 
     /*Mobile*/
+    img.img-promo {
+        display: block;
+        width: 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 110px;
+        text-align: center;
+    }
     .tab-promo {
         .section-title {
             font-size: 16px;
@@ -122,8 +131,9 @@
                 height: 18px;
                 content: '';
                 display: block;
-                width: 100%;
+                width: 362px;
                 background-size: 50%;
+                margin: 0 auto;
             }
         }
         ol.list-number {
