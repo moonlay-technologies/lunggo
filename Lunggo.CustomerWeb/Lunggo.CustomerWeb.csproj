@@ -239,6 +239,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobileTemplateController.cs" />
+    <Compile Include="Controllers\PromoController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\StaticPageController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
@@ -701,6 +702,8 @@
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
+    <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-bg.jpg" />
+    <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider.jpg" />
     <Content Include="Assets\images\flight-facilities-sprite2.png" />
     <Content Include="Assets\mobile\images\app-store.png" />
     <Content Include="Assets\mobile\images\arrow-detail.png" />
@@ -1311,6 +1314,11 @@
     <Content Include="Campaign\Imlek2016\images\wrapper-bg.png" />
     <Content Include="Assets\vendor\transitJS\jquery.transit.min.js" />
     <Content Include="Campaign\Imlek2016\js\imlek2016.js" />
+    <Content Include="Campaign\PromoBTN\css\promo-btn.css" />
+    <Content Include="Campaign\PromoBTN\css\promo-btn.min.css" />
+    <Content Include="Campaign\PromoBTN\images\credit-card.png" />
+    <Content Include="Campaign\PromoBTN\images\debit.png" />
+    <Content Include="Campaign\PromoBTN\images\top-banner.jpg" />
     <Content Include="checkin.png" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
@@ -1442,6 +1450,9 @@
     <Content Include="Assets\travorama20\css\help_section.scss" />
     <Content Include="Assets\travorama20\css\help_section.css.map" />
     <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.scss" />
+    <Content Include="Campaign\PromoBTN\css\promo-btn-mobile.css.map" />
+    <Content Include="Campaign\PromoBTN\css\promo-btn.css.map" />
+    <Content Include="Campaign\PromoBTN\css\promo-btn.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2799,6 +2810,9 @@
     <Content Include="Views\HelpSection\FAQs.cshtml" />
     <Content Include="Views\HelpSection\How-To.cshtml" />
     <Content Include="Views\StaticPage\TravoramaMobileApp.cshtml" />
+    <Content Include="Views\Promo\Btn.cshtml" />
+    <Content Include="Views\Promo\Btn.mobile.cshtml" />
+    <Content Include="Views\Promo\BtnWebview.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
