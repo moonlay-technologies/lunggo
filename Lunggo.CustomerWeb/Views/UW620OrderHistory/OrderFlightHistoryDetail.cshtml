@@ -53,56 +53,52 @@
                                     <input type="text" name="Status" value="" id="message-input" />
                                 </form>
                                 <h4>
-                                    <b>BUYER INFO</b>
+                                    <b>INFO PEMESANAN</b>
                                     <button class="pull-right btn btn-yellow" ng-if="isExist" ng-click="submitRsvNo(flight.rsvNo, flight.rsvStatus)">{{ButtonText(flight.rsvStatus,flight.payment.method)}}</button>
                                 </h4>
                             </header>
                             <section>
                                 <div class="form form-horizontal">
+                                    
                                     <div class="form-group">
-                                        <label class="control-label col-xs-3">User ID</label>
-                                        <div class="col-xs-9">
-                                            <p class="form-control-static">{{flight.contact.email}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3">Order Name</label>
+                                        <label class="control-label col-xs-3">Nama Pemesan</label>
                                         <div class="col-xs-9">
                                             <p class="form-control-static">{{flight.contact.name}}</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-xs-3">Order Date</label>
+                                        <label class="control-label col-xs-3">Tanggal Pemesanan</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">{{flight.rsvTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
+                                            <p class="form-control-static">{{flight.rsvTime | date : 'dd MMMM yyyy , HH:mm' }}</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-xs-3">Order Type</label>
+                                        <label class="control-label col-xs-3">Tipe</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">Flight</p>
+                                            <p class="form-control-static">Penerbangan</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-xs-3">Order Final Price</label>
+                                        <label class="control-label col-xs-3">Harga Pemesanan</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">Rp {{flight.payment.finalPrice | number}}</p>
+                                            <p class="form-control-static">Rp {{flight.payment.originalPrice | number}}</p>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3">Payment Method</label>
+                                    
+                                    <div class="form-group" ng-show="flight.payment.method">
+                                        <label class="control-label col-xs-3">Metode Pembayaran</label>
                                         <div class="col-xs-9">
                                             <p class="form-control-static">{{methodpayment(flight.payment.method)}}</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-xs-3">Payment Status</label>
+                                        <label class="control-label col-xs-3">Status Pembayaran</label>
                                         <div class="col-xs-9">
                                             <p class="form-control-static">{{paymentstatus(flight.payment.status)}}</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-xs-3">@Html.I18NString("CW00017")</label>
+                                        <label class="control-label col-xs-3">Penumpang</label>
                                         <div class="col-xs-9">
                                             <ol class="passenger-list">
                                                 <li ng-repeat="passenger in flight.pax track by $index">
@@ -159,40 +155,40 @@
                             </section>
 
                         </div><!-- .info-flight -->
-
-                        <div class="refund-detail">
-                            <header>
-                                <h4><b>@Html.I18NString("CW00199")</b></h4>
-                            </header>
-                            <section>
-                                <div class="form form-horizontal">
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3">No Refund</label>
-                                        <div class="col-xs-9">
-                                            <p class="form-control-static">
-                                                <span ng-show="flight.payment.refund != null">{{flight.payment.refund.amount}}</span>
-                                                <span ng-show="flight.payment.refund != null">-</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3">Tgl Pengajuan</label>
-                                        <div class="col-xs-9">
-                                            <p class="form-control-static">
-                                                <span>{{flight.payment.refund.Time | date : 'dd - MMMM - yyyy , HH:mm' : 'UTC'}}</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3">Status Refund</label>
-                                        <div class="col-xs-9">
-                                            <p class="form-control-static">-</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </div><!-- .refund-detail -->
-
+                        @*
+    <div class="refund-detail">
+        <header>
+            <h4><b>@Html.I18NString("CW00199")</b></h4>
+        </header>
+        <section>
+            <div class="form form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-xs-3">No Refund</label>
+                    <div class="col-xs-9">
+                        <p class="form-control-static">
+                            <span ng-show="flight.payment.refund != null">{{flight.payment.refund.amount}}</span>
+                            <span ng-show="flight.payment.refund != null">-</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-3">Tgl Pengajuan</label>
+                    <div class="col-xs-9">
+                        <p class="form-control-static">
+                            <span>{{flight.payment.refund.Time | date : 'dd - MMMM - yyyy , HH:mm' : 'UTC'}}</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-3">Status Refund</label>
+                    <div class="col-xs-9">
+                        <p class="form-control-static">-</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div><!-- .refund-detail -->
+                        *@
                     </section>
                 </div><!-- .history-content -->
 
