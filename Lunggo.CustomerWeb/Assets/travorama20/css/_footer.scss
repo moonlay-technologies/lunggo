@@ -61,26 +61,27 @@ including in this file :
     }
     &>.container {max-width: none;}
     .web-banner {
-        padding: 20px 0;
+        padding: 35px 0;
         border-bottom: 1px solid #fff;
-        .menu-left {
+        /*display: none;*/
+        .menu-left a {
             background: url($mobile-app) no-repeat;
             height: 165px;
             display: block;
-            margin: 20px 0;
         }
-        .menu-right {
+        .menu-right {    
+            padding: 20px 0;
             .text-lg-banner {
                 font-size: 16px;
                 font-weight: 700;
-                line-height: 20px;
+                line-height: 36px;
                 .top-txt {line-height: 42px;}
             }
             .banner-button {
                 margin: 12px 0;
                 a.button {
                     &.btn-appstore {
-                        background: url($app-store-bg) no-repeat;
+                        background: url($app-store-cs) no-repeat;
                         @include size(171px, 47px);
                         display: inline-block;
                         background-size: 80%;

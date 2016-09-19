@@ -122,12 +122,7 @@
 
                 <section>
                     <div class="form form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label col-xs-4">User ID</label>
-                            <div class="col-xs-8">
-                                <p class="form-control-static">{{flight.contact.email}}</p>
-                            </div>
-                        </div>
+                        
                         <div class="form-group">
                             <label class="control-label col-xs-4">Nama Pemesan</label>
                             <div class="col-xs-8">
@@ -137,7 +132,7 @@
                         <div class="form-group">
                             <label class="control-label col-xs-4">Tanggal Pemesanan</label>
                             <div class="col-xs-8">
-                                <p class="form-control-static">{{flight.rsvTime | date : 'dd MMMM yyyy , HH:mm' :'UTC'}}</p>
+                                <p class="form-control-static">{{flight.rsvTime | date : 'dd MMMM yyyy , HH:mm' }}</p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -149,10 +144,10 @@
                         <div class="form-group">
                             <label class="control-label col-xs-4">Harga Pemesanan</label>
                             <div class="col-xs-8">
-                                <p class="form-control-static">{{flight.payment.originalPrice | currency}}</p>
+                                <p class="form-control-static">Rp {{flight.payment.originalPrice | number}}</p>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-show="flight.payment.method">
                             <label class="control-label col-xs-4">Metode Pembayaran</label>
                             <div class="col-xs-8">
                                 <p class="form-control-static">{{methodpayment(flight.payment.method)}}</p>

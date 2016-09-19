@@ -83,24 +83,24 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                         payment.Status = PaymentStatus.Failed;
                         payment.FailureReason = FailureReason.PaymentFailure;
 
-                            var log = LogService.GetInstance();
-                            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                            log.Post(
-                                "```Payment Log```"
-                                + "\n`*Environment :* " + env.ToUpper()
-                                + "\n*PAYMENT DETAILS :*\n"
-                                + payment.Serialize()
+                        var log = LogService.GetInstance();
+                        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                        log.Post(
+                            "```Payment Log```"
+                            + "\n`*Environment :* " + env.ToUpper()
+                            + "\n*PAYMENT DETAILS :*\n"
+                            + payment.Serialize()
                                 + "\n*TRANSAC DETAILS :*\n"
                                 + transactionDetail.Serialize()
                                 + "\n*ITEM DETAILS :*\n"
                                 + itemDetails.Serialize()
                                 + "\n*REQUEST :*\n"
                                 + _temp
-                                + "\n*RESPONSE :*\n"
-                                + content.Serialize()
-                                + "\n*Platform :* "
-                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
-                        }
+                            + "\n*RESPONSE :*\n"
+                            + content.Serialize()
+                            + "\n*Platform :* "
+                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
+                    }
                     return payment;
                 case PaymentMethod.VirtualAccount:
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);

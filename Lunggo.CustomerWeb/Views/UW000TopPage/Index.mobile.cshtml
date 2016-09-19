@@ -26,10 +26,10 @@
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">
     <div class="mobile-banner">
         <div class="mb-container">
-            <div class="banner-txt">Pesan hotel & flight lebih murah & mudah!</div>
+            <div class="banner-txt">Booking Tiket Mudah & Cepat</div>
             <div class="banner-button">
                 <a href="#" class="button btn-playstore"></a>
-                <a href="#" class="button btn-appstore"></a>
+                <a href="/" class="button btn-appstore"></a>
             </div>
         </div>
     </div>
@@ -45,9 +45,10 @@
                     </div>
                 </div>
                 <div class="col-xs-2">
-                    <div class="flip-container">
-                        <a class="flip" href="#"><span class="icon-flip" ng-click="temp = FlightSearchForm.AirportOrigin.Code; FlightSearchForm.AirportOrigin.Code = FlightSearchForm.AirportDestination.Code; FlightSearchForm.AirportDestination.Code = temp;
-                                                       temp = FlightSearchForm.AirportOrigin.City; FlightSearchForm.AirportOrigin.City = FlightSearchForm.AirportDestination.City; FlightSearchForm.AirportDestination.City= temp;"></span></a>
+
+                    <div class="flip-container" ng-click="flip()">
+                        <a class="flip" href="#"><span class="icon-flip"></span></a>
+                    
                     </div>
                 </div>
                 <div class="col-xs-5">
