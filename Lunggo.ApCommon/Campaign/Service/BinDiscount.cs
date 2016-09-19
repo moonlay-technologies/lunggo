@@ -33,14 +33,14 @@ namespace Lunggo.ApCommon.Campaign.Service
                         Amount = discAmount,
                         IsAvailable = true,
                         Currency = new Currency("IDR"),
-                        DisplayName = "BTN Promo",
+                        DisplayName = "BTN",
                         ReplaceMargin = true
                     }
                     : new BinDiscount
                     {
                         Amount = 0,
                         IsAvailable = false,
-                        DisplayName = "BTN Promo"
+                        DisplayName = "BTN"
                     }
                 : null;
         }

@@ -702,6 +702,7 @@
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
+    <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-app.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-bg.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider.jpg" />
     <Content Include="Assets\images\flight-facilities-sprite2.png" />
@@ -1450,8 +1451,6 @@
     <Content Include="Assets\travorama20\css\help_section.scss" />
     <Content Include="Assets\travorama20\css\help_section.css.map" />
     <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.scss" />
-    <Content Include="Campaign\PromoBTN\css\promo-btn-mobile.css.map" />
-    <Content Include="Campaign\PromoBTN\css\promo-btn.css.map" />
     <Content Include="Campaign\PromoBTN\css\promo-btn.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
@@ -1462,6 +1461,7 @@
     <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
