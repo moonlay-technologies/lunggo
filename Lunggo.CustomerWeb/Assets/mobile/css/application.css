@@ -1320,7 +1320,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     max-width: 340px;
     margin: 0 auto 15px; }
   .page.page-home .mobile-banner {
-    border-bottom: 1px solid #dddddd; }
+    border-bottom: 1px solid #dddddd;
+    display: none; }
     .page.page-home .mobile-banner .mb-container {
       margin: 0 auto;
       padding: 20px 0 30px;
