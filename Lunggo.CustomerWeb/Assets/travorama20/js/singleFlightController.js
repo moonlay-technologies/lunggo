@@ -178,8 +178,8 @@ app.controller('singleFlightController', [
             if (departureDate && arrivalDate) {
                 departureDate = new Date(departureDate);
                 arrivalDate = new Date(arrivalDate);
-                departureDate = Date.UTC(departureDate.getUTCFullYear(), (departureDate.getUTCMonth() + 1), departureDate.getUTCDate());
-                arrivalDate = Date.UTC(arrivalDate.getUTCFullYear(), (arrivalDate.getUTCMonth() + 1), arrivalDate.getUTCDate());
+                departureDate = Date.UTC(departureDate.getUTCFullYear(), (departureDate.getUTCMonth() ), departureDate.getUTCDate());
+                arrivalDate = Date.UTC(arrivalDate.getUTCFullYear(), (arrivalDate.getUTCMonth() ), arrivalDate.getUTCDate());
                 var overday = Math.floor((arrivalDate - departureDate) / (1000 * 3600 * 24));
                 if (overday > 0) {
                     overday = '+' + overday;
@@ -222,7 +222,7 @@ app.controller('singleFlightController', [
         $scope.checkTax = function (trip) {
             var valid = true;
             for (var x = 0; x < trip.segments.length; x++) {
-                if (trip.segments[x].includedPsc) {
+                if (trip.segments[x].includingPsc == false) {
                     valid = false;
                 }
             }

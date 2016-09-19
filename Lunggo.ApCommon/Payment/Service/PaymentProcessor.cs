@@ -272,25 +272,25 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 Id = "1",
                 Name = ProductTypeCd.Parse(rsvNo).ToString(),
-                Price = decimal.ToInt64(payment.OriginalPriceIdr),
+                Price = decimal.ToInt64(payment.FinalPriceIdr),
                 Quantity = 1
             });
-            if (payment.Discount != null)
-                itemDetails.Add(new ItemDetails
-                {
-                    Id = "2",
-                    Name = "Discount",
-                    Price = (long)-payment.DiscountNominal,
-                    Quantity = 1
-                });
-            if (payment.UniqueCode != 0)
-                itemDetails.Add(new ItemDetails
-                {
-                    Id = "3",
-                    Name = "TransferFee",
-                    Price = (long)payment.UniqueCode,
-                    Quantity = 1
-                });
+            //if (payment.Discount != null)
+            //    itemDetails.Add(new ItemDetails
+            //    {
+            //        Id = "2",
+            //        Name = "Discount",
+            //        Price = (long)-payment.DiscountNominal,
+            //        Quantity = 1
+            //    });
+            //if (payment.UniqueCode != 0)
+            //    itemDetails.Add(new ItemDetails
+            //    {
+            //        Id = "3",
+            //        Name = "TransferFee",
+            //        Price = (long)payment.UniqueCode,
+            //        Quantity = 1
+            //    });
             return itemDetails;
         }
 
