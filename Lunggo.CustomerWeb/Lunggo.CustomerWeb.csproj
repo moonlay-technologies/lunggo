@@ -702,6 +702,8 @@
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
+    <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-bg.jpg" />
+    <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider.jpg" />
     <Content Include="Assets\images\flight-facilities-sprite2.png" />
     <Content Include="Assets\mobile\images\app-store.png" />
     <Content Include="Assets\mobile\images\arrow-detail.png" />
@@ -2808,8 +2810,9 @@
     <Content Include="Views\HelpSection\FAQs.cshtml" />
     <Content Include="Views\HelpSection\How-To.cshtml" />
     <Content Include="Views\StaticPage\TravoramaMobileApp.cshtml" />
-    <Content Include="Views\Promo\PromoBTN.cshtml" />
-    <Content Include="Views\Promo\PromoBTN.mobile.cshtml" />
+    <Content Include="Views\Promo\Btn.cshtml" />
+    <Content Include="Views\Promo\Btn.mobile.cshtml" />
+    <Content Include="Views\Promo\BtnWebview.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
