@@ -118,7 +118,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Function\FlightEticketSlightDelayNotifEmail.cs" />
-    <Compile Include="Function\FlightFailedVerificationCreditCardNotifEmail.cs" />
     <Compile Include="Function\FlightIssueFailedNotifEmail.cs" />
     <Compile Include="Function\ContactUsEmail.cs" />
     <Compile Include="Function\FlightIssueSlightDelayNotifEmail.cs" />
@@ -127,11 +126,7 @@
     <Compile Include="Init.cs" />
     <Compile Include="Function\FlightChangedEticketEmail.cs" />
     <Compile Include="Function\FlightEticketEmail.cs" />
-    <Compile Include="Function\FlightPendingPaymentExpiredNotifEmail.cs" />
-    <Compile Include="Function\FlightPendingPaymentConfirmedNotifEmail.cs" />
-    <Compile Include="Function\FlightInstantPaymentReservationNotifEmail.cs" />
-    <Compile Include="Function\FlightPendingPaymentReservationNotifEmail.cs" />
-    <Compile Include="Function\FlightInstantPaymentConfirmedNotifEmail.cs" />
+    <Compile Include="Function\TransferInstructionEmail.cs" />
     <Compile Include="Function\GetCalendarEmail.cs" />
     <Compile Include="Function\TransferConfirmationEmail.cs" />
     <Compile Include="Function\ForgotPasswordEmail.cs" />

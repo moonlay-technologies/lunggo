@@ -17,6 +17,7 @@ using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using Newtonsoft.Json.Schema;
 
 namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 {
@@ -31,6 +32,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
         private static string _finishedRedirectUrl;
         private static string _unfinishedRedirectUrl;
         private static string _errorRedirectUrl;
+        private static string _temp = "";
 
         private const string FinishRedirectPath = @"/id/Veritrans/PaymentFinish";
         private const string UnfinishRedirectPath = @"/id/Veritrans/PaymentUnfinish";
@@ -81,18 +83,24 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                         payment.Status = PaymentStatus.Failed;
                         payment.FailureReason = FailureReason.PaymentFailure;
 
-                        var log = LogService.GetInstance();
-                        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                        log.Post(
-                            "```Payment Log```"
-                            + "\n`*Environment :* " + env.ToUpper()
-                            + "\n*PAYMENT DETAILS :*\n"
-                            + payment.Serialize()
-                            + "\n*RESPONSE :*\n"
-                            + content.Serialize()
-                            + "\n*Platform :* "
-                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
-                    }
+                            var log = LogService.GetInstance();
+                            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                            log.Post(
+                                "```Payment Log```"
+                                + "\n`*Environment :* " + env.ToUpper()
+                                + "\n*PAYMENT DETAILS :*\n"
+                                + payment.Serialize()
+                                + "\n*TRANSAC DETAILS :*\n"
+                                + transactionDetail.Serialize()
+                                + "\n*ITEM DETAILS :*\n"
+                                + itemDetails.Serialize()
+                                + "\n*REQUEST :*\n"
+                                + _temp
+                                + "\n*RESPONSE :*\n"
+                                + content.Serialize()
+                                + "\n*Platform :* "
+                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
+                        }
                     return payment;
                 case PaymentMethod.VirtualAccount:
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
@@ -297,6 +305,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             {
                 streamWriter.Write(jsonRequestParams);
             }
+            _temp = jsonRequestParams;
         }
 
         private static void ProcessVtWebRequestParams(WebRequest request, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)

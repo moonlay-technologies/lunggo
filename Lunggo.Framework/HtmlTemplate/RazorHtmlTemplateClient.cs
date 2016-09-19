@@ -42,6 +42,7 @@ namespace Lunggo.Framework.HtmlTemplate
             };
             var razorService = RazorEngineService.Create(razorConfig);
             razorService.AddTemplate(typeName, template);
+            
             var result = razorService.RunCompile(typeName, model: objectParam);
             return result;
         }

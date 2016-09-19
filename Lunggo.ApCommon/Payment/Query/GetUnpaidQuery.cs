@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Payment.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SELECT RsvNo, TimeLimit, FinalPriceIdr ");
+            clauseBuilder.Append(@"SELECT RsvNo, TimeLimit, FinalPriceIdr, InsertDate ");
             clauseBuilder.Append(@"FROM Payment ");
             return clauseBuilder.ToString();
         }
@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Payment.Query
         private static string CreateWhereClause(dynamic condition)
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"WHERE StatusCd = 'PEN'");
+            clauseBuilder.Append(@"WHERE StatusCd = 'PEN' AND MethodCd = 'TRF'");
             return clauseBuilder.ToString();
         }
     }

@@ -26,19 +26,10 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                             new BankDetails
                             {
                                 Bank = 0,
-                                Account = "1234567890",
-                                Branch = "Ranting",
-                                Name = "PT. Travel Madezy Internasional",
+                                Account = "1020006675802",
+                                Branch = "KC Jakarta Sudirman",
+                                Name = "Travel Madezy Internasional",
                                 LogoUrl = "https://ib.bankmandiri.co.id/retail/images/mandiri_logo.gif",
-                                Available = true
-                            },
-                            new BankDetails
-                            {
-                                Bank = 0,
-                                Account = "0987654321",
-                                Branch = "Dahan",
-                                Name = "PT. Travel Madezy Internasional",
-                                LogoUrl = "https://upload.wikimedia.org/wikipedia/en/thumb/2/27/BankNegaraIndonesia46-logo.svg/1280px-BankNegaraIndonesia46-logo.svg.png",
                                 Available = true
                             }
                         },

@@ -696,7 +696,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightFailedVerificationCreditCardNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ContactUsEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueFailedNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueSlightDelayNotifEmail.cshtml" />
@@ -708,11 +707,8 @@
     <None Include="HtmlTemplate\TransferConfirmationEmail.cshtml" />
     <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightPendingPaymentExpiredNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightPendingPaymentConfirmedNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightInstantPaymentReservationNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightPendingPaymentReservationNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightInstantPaymentConfirmedNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\VirtualAccountInstructionEmail.cshtml" />
+    <None Include="HtmlTemplate\BankTransferInstructionEmail.cshtml" />
     <None Include="HtmlTemplate\ForgotPasswordEmail.cshtml" />
     <None Include="HtmlTemplate\Subscribe.cshtml" />
     <None Include="HtmlTemplate\Newsletter.cshtml" />

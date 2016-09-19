@@ -176,13 +176,13 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                 {
                     Id = "xmas-new-year",
                     BannerUrl = "http://images.huffingtonpost.com/2015-03-20-1426853534-7075669-dreamstimemaximum_30295049.jpg",
-                    DetailsUrl = "http://www.ummi-online.com/"
+                    DetailsUrl = null
                 },
                 new FeaturedPromo
                 {
                     Id = "eid-mubarak",
                     BannerUrl = "https://wallpaperscraft.com/image/couple_mountain_peak_travel_64552_2560x1440.jpg",
-                    DetailsUrl = "http://www.fhm.com/p/100-sexiest-2015"
+                    DetailsUrl = ""
                 },
                 new FeaturedPromo
                 {

@@ -52,7 +52,7 @@ namespace Lunggo.ApCommon.Payment.Service
             if (!string.IsNullOrEmpty(discountCode))
             {
                 var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
-                if (campaign.Discount == null)
+                if (campaign.VoucherStatus != VoucherStatus.Success || campaign.Discount == null)
                 {
                     paymentDetails.Status = PaymentStatus.Failed;
                     paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
@@ -134,6 +134,8 @@ namespace Lunggo.ApCommon.Payment.Service
                 reservation.Itineraries.ForEach(i => i.Price.UpdateToDb());
                 UpdatePaymentToDb(rsvNo, paymentDetails);
             }
+            if (method == PaymentMethod.BankTransfer || method == PaymentMethod.VirtualAccount)
+                FlightService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
             isUpdated = true;
             return paymentDetails;
         }
@@ -272,25 +274,25 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 Id = "1",
                 Name = ProductTypeCd.Parse(rsvNo).ToString(),
-                Price = decimal.ToInt64(payment.OriginalPriceIdr),
+                Price = (long) payment.FinalPriceIdr,
                 Quantity = 1
             });
-            if (payment.Discount != null)
-                itemDetails.Add(new ItemDetails
-                {
-                    Id = "2",
-                    Name = "Discount",
-                    Price = (long)-payment.DiscountNominal,
-                    Quantity = 1
-                });
-            if (payment.UniqueCode != 0)
-                itemDetails.Add(new ItemDetails
-                {
-                    Id = "3",
-                    Name = "TransferFee",
-                    Price = (long)payment.UniqueCode,
-                    Quantity = 1
-                });
+            //if (payment.Discount != null)
+            //    itemDetails.Add(new ItemDetails
+            //    {
+            //        Id = "2",
+            //        Name = "Discount",
+            //        Price = (long)-payment.DiscountNominal,
+            //        Quantity = 1
+            //    });
+            //if (payment.UniqueCode != 0)
+            //    itemDetails.Add(new ItemDetails
+            //    {
+            //        Id = "3",
+            //        Name = "TransferFee",
+            //        Price = (long)payment.UniqueCode,
+            //        Quantity = 1
+            //    });
             return itemDetails;
         }
 
