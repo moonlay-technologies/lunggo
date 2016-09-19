@@ -16,56 +16,22 @@
     <script src="/Assets/mobile/js/StaticController.js"></script>
 }
 
-@*<section>
-    <div class="container">
-
-        <header class="page__header">
-            <h1 class="text-center section-title stripe">Promo</h1>
-        </header><!-- .page__header -->
-
-        <p class="page__content">
-
-            <p>
-                <a href="@Url.Action("danamonsweetvalentine","StaticPage")">
-                    <img src="/Assets/images/campaign/DanamonSweetValentine/danamonsweetvalentine-slider.jpg" alt="Danamon Sweet Valentine" />
-                </a>
-            </p>
-            <p>
-                <img src="/Assets/images/campaign/VisaWonderfulWednesday/visa-wonderful-wednesday-front.jpg" alt="Wonderful Wednesday with VISA" />
-                <br /><br/>
-                Untuk pemegang kartu berlogo Visa, dapatkan diskon sebesar Rp 50.000 setiap hari Rabu!
-                <br/>
-                <a href="@Url.Action("VisaWonderfulWednesday","StaticPage")">
-                    Lihat promo ini selengkapnya
-                </a>
-                <br /><br />
-            </p>
-            <p>
-                <img src="/Assets/images/campaign/free2016calendar/campaign-2016_calendar.jpg" alt="Free 2016 Calendar" />
-                <br/><br/>
-                Dapatkan kalender 2016 dengan mendaftarkan diri di Travorama!
-                <br/>
-                <a href="@Url.Action("GetCalendarTerms","StaticPage")">
-                    Lihat promo ini selengkapnya
-                </a>
-                <br /><br />
-            </p>
-            <p>
-                <a href="#">
-                    <img src="/Assets/images/default-banner.jpg" alt="Travorama" />
-                </a>
-            </p>
-
-        </p>
-
-    </div>
-</section>*@
-
 <section class="site-content">
     <header class="page_header">
-        <h1 class="text-center section-title stripe">Promo</h1>
+        <h1 class="text-center section-title stripe">Promo <span>Berlangsung</span></h1>
     </header>
     <div class=" container-page">
+        <div class="promo-list">
+            <p>
+                <a href="@Url.Action("PromoBTN","Promo")"><img src="/Assets/images/campaign/PromoBTN/PromoBTN-slider.jpg" alt="Promo BTN" /></a>
+            </p>
+            <p>Nikmati terbang hemat dengan menggunakan Kartu Debit & Kartu Kredit BTN.</p>
+            <p>
+                Pediode booking: <b>20 September - 20 Oktober 2016</b>
+                <br />
+                <a href="@Url.Action("PromoBTN","Promo")">Selengkapnya</a>
+            </p>
+        </div>
         @*<p>
             <a href="@Url.Action("danamonsweetvalentine","StaticPage")">
                 <img src="/Assets/images/campaign/DanamonSweetValentine/danamonsweetvalentine-slider.jpg" alt="Danamon Sweet Valentine" />

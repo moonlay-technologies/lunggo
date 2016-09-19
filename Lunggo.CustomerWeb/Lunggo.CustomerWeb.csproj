@@ -1453,6 +1453,8 @@
     <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.scss" />
     <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.css.map" />
     <Content Include="Campaign\PromoBTN\css\promo-btn.scss" />
+    <Content Include="Campaign\PromoBTN\css\promo-btn.css.map" />
+    <Content Include="Campaign\PromoBTN\css\promo-btn-mobile.css.map" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2811,6 +2813,7 @@
     <Content Include="Views\HelpSection\How-To.cshtml" />
     <Content Include="Views\StaticPage\TravoramaMobileApp.cshtml" />
     <Content Include="Views\Promo\PromoBTN.cshtml" />
+    <Content Include="Views\Promo\PromoBTN.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
