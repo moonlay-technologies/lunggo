@@ -202,7 +202,7 @@
     $scope.checkTax = function(trip) {
         var valid = true;
         for (var x = 0; x < trip.segments.length; x++) {
-            if (trip.segments[x].includedPsc) {
+            if (trip.segments[x].includingPsc == false) {
                 valid = false;
             }
         }
@@ -211,6 +211,15 @@
 
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.FlightSearchForm = $rootScope.FlightSearchForm;
+
+    $rootScope.flip = function () {
+        var temp = $rootScope.FlightSearchForm.AirportOrigin.Code;
+        $rootScope.FlightSearchForm.AirportOrigin.Code = $rootScope.FlightSearchForm.AirportDestination.Code;
+        $rootScope.FlightSearchForm.AirportDestination.Code = temp;
+        temp = $rootScope.FlightSearchForm.AirportOrigin.City;
+        $rootScope.FlightSearchForm.AirportOrigin.City = $rootScope.FlightSearchForm.AirportDestination.City;
+        $rootScope.FlightSearchForm.AirportDestination.City = temp;
+    }
 
     // set additional variables for Flight Page
     $scope.PageConfig.ActiveSection = 'departure';
@@ -286,12 +295,13 @@
     // get overday date
     $scope.getOverdayDate = function (departureDate, arrivalDate) {
         if (departureDate && arrivalDate) {
+
             departureDate = new Date(departureDate);
             //departureDate = new Date((departureDate.getFullYear() + ' ' + (departureDate.getUTCMonth() + 1) + ' ' + departureDate.getUTCDate()));
 
-            departureDate = Date.UTC(departureDate.getUTCFullYear(), (departureDate.getUTCMonth() + 1), departureDate.getUTCDate());
+            departureDate = Date.UTC(departureDate.getUTCFullYear(), (departureDate.getUTCMonth()), departureDate.getUTCDate());
             arrivalDate = new Date(arrivalDate);
-            arrivalDate = Date.UTC(arrivalDate.getUTCFullYear(), (arrivalDate.getUTCMonth() + 1), arrivalDate.getUTCDate());
+            arrivalDate = Date.UTC(arrivalDate.getUTCFullYear(), (arrivalDate.getUTCMonth() ), arrivalDate.getUTCDate());
             //arrivalDate = new Date((arrivalDate.getFullYear() + ' ' + (arrivalDate.getUTCMonth() + 1) + ' ' + arrivalDate.getUTCDate()));
             var overday = arrivalDate - departureDate;
             overday = overday / 1000 / 60 / 60 / 24;

@@ -7,7 +7,14 @@
         //$scope.FlightFunctions.GetFlight('departure');
         $scope.FlightFunctions.GetFlight('return');
     });
-
+    $rootScope.flip = function () {
+        var temp = $rootScope.FlightSearchForm.AirportOrigin.Code;
+        $rootScope.FlightSearchForm.AirportOrigin.Code = $rootScope.FlightSearchForm.AirportDestination.Code;
+        $rootScope.FlightSearchForm.AirportDestination.Code = temp;
+        temp = $rootScope.FlightSearchForm.AirportOrigin.City;
+        $rootScope.FlightSearchForm.AirportOrigin.City = $rootScope.FlightSearchForm.AirportDestination.City;
+        $rootScope.FlightSearchForm.AirportDestination.City = temp;
+    }
     // **********
     // variables
     $scope.trial = 0;
@@ -70,7 +77,7 @@
     $scope.checkTax = function (trip) {
         var valid = true;
         for (var x = 0; x < trip.segments.length; x++) {
-            if (trip.segments[x].includedPsc) {
+            if (trip.segments[x].includingPsc == false) {
                 valid = false;
             }
         }
@@ -256,9 +263,9 @@
     $scope.getOverdayDate = function (departureDate, arrivalDate) {
         if (departureDate && arrivalDate) {
             departureDate = new Date(departureDate);
-            departureDate = Date.UTC(departureDate.getUTCFullYear(), (departureDate.getUTCMonth() + 1), departureDate.getUTCDate());
+            departureDate = Date.UTC(departureDate.getUTCFullYear(), (departureDate.getUTCMonth()), departureDate.getUTCDate());
             arrivalDate = new Date(arrivalDate);
-            arrivalDate = Date.UTC(arrivalDate.getUTCFullYear(), (arrivalDate.getUTCMonth() + 1), arrivalDate.getUTCDate());
+            arrivalDate = Date.UTC(arrivalDate.getUTCFullYear(), (arrivalDate.getUTCMonth()), arrivalDate.getUTCDate());
             var overday = arrivalDate - departureDate;
             overday = overday / 1000 / 60 / 60 / 24;
             if (overday > 0) {

@@ -1,21 +1,15 @@
 ﻿// checkout controller
 app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interval', '$location', function ($http, $scope, $rootScope, $interval, $location) {
     
-    angular.element(document).ready(function () {
-        $('.nama').keydown(checkName);
-    });
+    
+    $scope.checkName = function(name) {
 
-    function checkName(event) {
-
-        var key = window.event ? event.keyCode : event.which;
-
-        if ((event.keyCode >= 65 && event.keyCode <= 90) || event.keyCode == 16 || (event.keyCode >= 37 && event.keyCode <= 40)
-                || (event.keyCode >= 97 && event.keyCode <= 122) || event.keyCode === 13 || event.keyCode === 9
-                || event.keyCode === 32 || event.keyCode === 8 || event.keyCode === 46 || event.keyCode === 20) {
-            $scope.correctName = true;
-        }
-        else {
-            $scope.correctName = false;
+        var re = /^[a-zA-Z ]+$/;
+        var x = $scope.buyerInfo.name;
+        if (name == null || name.match(re) ) {
+            return true;
+        } else {
+            return false;
         }
 
     }

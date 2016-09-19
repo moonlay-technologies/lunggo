@@ -143,8 +143,8 @@
 
                             <div class="form-group important">
                                 <label class="control-label">Nama Lengkap : </label>
-                                <input type="text" value="" pattern="[a-zA-Z\s]+" ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
-                                <div ng-show="!correctName" style="color:red">
+                                <input type="text" value="" @*pattern="[a-zA-Z\s]+"*@ ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
+                                <div ng-show="!checkName(buyerInfo.name)" style="color:red">
                                     Nama tidak boleh mengandung karakter selain alfabet dan spasi
                                 </div>
                             </div>
@@ -213,8 +213,8 @@
 
                                 <div class="form-group important">
                                     <label class="control-label">Nama Lengkap : </label>
-                                    <input type="text" value="" pattern="[a-zA-Z\s]+" class="form-control nama" required name="passenger_{{$index}}_name" placeholder="Ex : John" ng-model="Passenger.name" />
-                                    <div ng-show="!correctName" style="color:red">
+                                    <input type="text" value="" class="form-control nama" required name="passenger_{{$index}}_name" placeholder="Ex : John" ng-model="Passenger.name" />
+                                    <div ng-show="!checkName(Passenger.name)" style="color:red">
                                         Nama tidak boleh mengandung karakter selain alfabet dan spasi
                                     </div>
                                 </div>

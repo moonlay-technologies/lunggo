@@ -368,7 +368,14 @@ if (typeof (angular) == 'object') {
 
         }; // $rootScope.PageConfig
 
-        
+        $rootScope.flip = function() {
+            var temp = $rootScope.FlightSearchForm.AirportOrigin.Code;
+            $rootScope.FlightSearchForm.AirportOrigin.Code = $rootScope.FlightSearchForm.AirportDestination.Code;
+            $rootScope.FlightSearchForm.AirportDestination.Code = temp;
+            temp = $rootScope.FlightSearchForm.AirportOrigin.City;
+            $rootScope.FlightSearchForm.AirportOrigin.City = $rootScope.FlightSearchForm.AirportDestination.City;
+            $rootScope.FlightSearchForm.AirportDestination.City = temp;
+        }
         // countries
         $rootScope.Countries = {
             List: Countries,
