@@ -88,6 +88,10 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                             + "\n`*Environment :* " + env.ToUpper()
                             + "\n*PAYMENT DETAILS :*\n"
                             + payment.Serialize()
+                            + "\n*TRANS DETAILS :*\n"
+                            + transactionDetail.Serialize()
+                            + "\n*ITEM DETAILS :*\n"
+                            + itemDetails.Serialize()
                             + "\n*RESPONSE :*\n"
                             + content.Serialize()
                             + "\n*Platform :* "
