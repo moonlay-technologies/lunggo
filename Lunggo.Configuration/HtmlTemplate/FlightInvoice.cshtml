@@ -29,7 +29,7 @@
                     <div class="col-xs-12">
                         <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travelmadezy-logo.jpg")" alt="Travelmadezy" />
                         <address>
-                            <p><b>PT. Travelmadezy Internasional</b></p>
+                            <p><b>PT. Travel Madezy Internasional</b></p>
                             <p>Equity Tower 25th ﬂoor, SCBD Lot 9, Jl. Jendral Sudirman kav. 52 - 53</p>
                             <!-- <p>p. +62 21 29035088  / +62 21 29035089 | f. +62 21 29035099 </p> -->
                         </address>
@@ -133,12 +133,12 @@
                                     <td class="total">@(Model.Itinerary.Trips[k].NetTotalFare.GetValueOrDefault().ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</td>
                                 </tr>
                             }
-                            @if (Model.Payment.Discount != null)
+                            @if (Model.Payment.DiscountName != null)
                             {
                                 <tr>
                                     <td class="no"></td>
                                     <td class="item">Voucher</td>
-                                    <td class="description">@Model.Payment.Discount.Name</td>
+                                    <td class="description">@Model.Payment.DiscountName</td>
                                     <td class="qty">1</td>
                                     <td class="price"></td>
                                     <td class="total">-@Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
