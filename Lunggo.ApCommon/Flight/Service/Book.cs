@@ -17,6 +17,7 @@ using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
@@ -112,7 +113,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Status = PaymentStatus.Pending,
                 LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
                 OriginalPriceIdr = reservation.Itineraries.Sum(order => order.Price.FinalIdr),
-                TimeLimit = reservation.Itineraries.Min(order => order.TimeLimit.GetValueOrDefault()).AddMinutes(-15),
+                TimeLimit = reservation.Itineraries.Min(order => order.TimeLimit.GetValueOrDefault()).AddMinutes(-10),
             };
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
             var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
@@ -125,6 +126,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Language = "id", //OnlineContext.GetActiveLanguageCode();
                 Currency = new Currency("IDR"), //OnlineContext.GetActiveCurrencyCode());
             };
+            PaymentService.GetInstance().GetUniqueCode(reservation.RsvNo, null, null);
             return reservation;
         }
 
@@ -164,10 +166,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 itin.BookingId = response.Status.BookingId;
                 itin.BookingStatus = response.Status.BookingStatus;
                 if (response.Status.BookingStatus == BookingStatus.Booked)
-                {
-                    bookResult.TimeLimit = response.Status.TimeLimit;
-                    itin.TimeLimit = bookResult.TimeLimit;
-                }
+                    itin.TimeLimit = bookResult.TimeLimit = response.Status.TimeLimit;
             }
             else
             {
@@ -197,9 +196,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 
             var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
             if (result.Status != null)
+            {
                 result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit
                     ? defaultTimeout
                     : result.Status.TimeLimit;
+                    result.Status.TimeLimit = result.Status.TimeLimit.GetValueOrDefault().AddMinutes(-10);
+            }
             return result;
         }
     }
