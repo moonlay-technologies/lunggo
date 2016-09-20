@@ -16,6 +16,7 @@ $transition-default:all 0.5s;
 /*--------------------*/
 /* icon */
 $app-store-bg: '../images/app-store-bg.png';
+$app-store-cs: '../images/app-store-cs.png';
 $play-store-bg: '../images/play-store-bg.png';
 $mobile-app: '../images/mobile-app.png';
 
@@ -89,9 +90,9 @@ $mobile-app: '../images/mobile-app.png';
 }
 /*--------------------*/
 /* general class */
-html {height:100%;}
+html {height:100%}
 
-body { overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; padding-bottom: 412px;}
+body {overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; padding-bottom: 650px; /*412px*/}
 
 hr {border-top:$border-default;}
 
@@ -334,7 +335,7 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
                 }
             }
         }
-    }
+    } 
 }
 
 .popup__wrapper {background:rgba(0,0,0,0.7); position:fixed; top:0; left:0; width:100%; height:100%; z-index:1000; display:none;
