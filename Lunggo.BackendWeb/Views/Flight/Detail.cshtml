@@ -1,4 +1,4 @@
-﻿@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+﻿@model Lunggo.ApCommon.Flight.Model.FlightReservation
 
 @{
     ViewBag.Title = "Flight Reservation Detail";
@@ -18,7 +18,7 @@
         @{
             var count = 0;
         }
-        @foreach (var trip in Model.Itinerary.Trips)
+        @foreach (var trip in Model.Itineraries.SelectMany(p => p.Trips))
         {
             <div class="col-md-8">
                 <div class="showback">
@@ -42,7 +42,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            @{ Html.RenderPartial("RenderPassenger", Model.Passengers); }
+            @{ Html.RenderPartial("RenderPassenger", Model.Pax); }
         </div>
     </div>
 }
