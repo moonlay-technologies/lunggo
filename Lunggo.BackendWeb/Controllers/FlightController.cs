@@ -16,7 +16,6 @@ using Lunggo.BackendWeb.Model;
 
 namespace Lunggo.BackendWeb.Controllers
 {
-    [Authorize]
     public class FlightController : Controller
     {
         public ActionResult Search()

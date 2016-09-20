@@ -18,16 +18,16 @@
             <table class="table table-hover table-flight-booking">
                 <thead>
                     <tr>
-                        <th>Reservation</th>
-                        <th>Contact Name</th>
-                        <th>Reservation Time</th>
-                        <th>Flight</th>
-                        <th>Type</th>
-                        <th>Departure Date</th>
-                        <th>Return Date</th>
-                        <th>Passenger</th>
-                        <th>Total Price</th>
-                        <th>Payment</th>
+                        <th>No. Reservasi</th>
+                        <th>Nama Kontak</th>
+                        <th>Waktu Reservasi</th>
+                        <th>Rute</th>
+                        <th>Tipe Penerbangan</th>
+                        <th>Tgl Pergi</th>
+                        <th>Tgl Pulang</th>
+                        <th>Jlh Penumpang</th>
+                        <th>Harga</th>
+                        <th>Status Pembayaran</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -50,7 +50,7 @@
                                 @trip.OriginAirport - @trip.DestinationAirport
                             </td>
                             <td>
-                                @if (@rsv.OverallTripType == TripType.RoundTrip)
+                                @if (@rsv.Itinerary.TripType == TripType.RoundTrip)
                                 {
                                     @Html.Raw("RETURN");
                                 }
@@ -60,12 +60,12 @@
                                 }
                             </td>
                             <td>
-                                @trip.DepartureDate.ToString("d MMM yyyy")
+                                @trip.DepartureDate.GetValueOrDefault().ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))
                             </td>
                             <td>
-                                @if (rsv.OverallTripType == TripType.RoundTrip)
+                                @if (rsv.Itinerary.TripType == TripType.RoundTrip)
                                 {
-                                    @rsv.Itinerary.Trips.Last().DepartureDate.ToString("d MMM yyyy")
+                                    @rsv.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))
                                 }
                                 else
                                 {
@@ -79,9 +79,9 @@
                                 }
                                 else
                                 {
-                                    var passenger = rsv.Passengers.First(p => (p.FirstName + " " + p.LastName).ToLower().Contains(ViewData["Name"].ToString().ToLower()));
-                                    @passenger.FirstName<wbr/>
-                                    @passenger.LastName<br/>
+                                    var passenger = rsv.Passengers.First(p => (p.Name).ToLower().Contains(ViewData["Name"].ToString().ToLower()));
+                                    @passenger.Name<wbr/>
+                                    
                                     if (rsv.Passengers.Count > 1)
                                     {
                                         @Html.Raw(String.Format("et. al. ({0} more)", rsv.Passengers.Count - 1));
@@ -89,7 +89,7 @@
                                 }
                             </td>
                             <td>
-                                @rsv.Payment.FinalPriceIdr.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))
+                                @rsv.Payment.FinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))
                             </td>
                             <td>
                                 @switch (rsv.Payment.Status)

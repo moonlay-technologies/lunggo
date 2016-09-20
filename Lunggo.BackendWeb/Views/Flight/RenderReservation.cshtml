@@ -9,17 +9,17 @@
         <table class="table table-hover table-no-border">
             <tbody>
                 <tr>
-                    <td>Reservation Number </td>
+                    <td>No. Reservasi </td>
                     <td>:</td>
                     <td>@Model.RsvNo</td>
                 </tr>
                 <tr>
-                    <td>Reservation Time</td>
+                    <td>Tanggal Reservasi</td>
                     <td>:</td>
                     <td>@Model.RsvTime.AddHours(7).ToString("d MMM yyyy HH:mm:ss")</td>
                 </tr>
                 <tr>
-                    <td>Name</td>
+                    <td>Nama</td>
                     <td>:</td>
                     <td>@Model.Contact.Name</td>
                 </tr>
@@ -29,15 +29,11 @@
                     <td>@Model.Contact.Email</td>
                 </tr>
                 <tr>
-                    <td>Phone</td>
+                    <td>Telepon</td>
                     <td>:</td>
                     <td>@Model.Contact.Phone</td>
                 </tr>
-                <tr>
-                    <td>Address</td>
-                    <td>:</td>
-                    <td>@Model.Contact.Address</td>
-                </tr>
+                
             </tbody>
         </table>
     </div>
@@ -45,22 +41,32 @@
 
 <div class="col-md-6">
     <div class="showback">
-        <h4><b>Payment Detail</b></h4>
+        <h4><b>Detail Pembayaran</b></h4>
         <hr />
         <table class="table table-hover table-no-border">
             <tbody>
                 <tr>
-                    <td>Total Price</td>
+                    <td>Harga Total</td>
                     <td>:</td>
-                    <td>@Model.Payment.FinalPriceIdr.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                    <td>@Model.Payment.FinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                 </tr>
                 <tr>
-                    <td>Payment Method</td>
+                    <td>Kode Voucher</td>
+                    <td>:</td>
+                    <td>@Model.Payment.DiscountName (@Model.Payment.DiscountCode)</td>
+                </tr>
+                <tr>
+                    <td>Nominal Voucher</td>
+                    <td>:</td>
+                    <td>@Model.Payment.DiscountNominal</td>
+                </tr>
+                <tr>
+                    <td>Metode Pembayaran</td>
                     <td>:</td>
                     <td>@Model.Payment.Method.ToString()</td>
                 </tr>
                 <tr>
-                    <td>Payment Status</td>
+                    <td>Status Pembayaran</td>
                     <td>:</td>
                     <td>
                         @switch (Model.Payment.Status)
@@ -92,7 +98,7 @@
                         }
                     </td>
                 </tr>
-                @if (Model.Payment.Refund != null)
+                @*@if (Model.Payment.Refund != null)
                 {
                     <tr>
                         <td>Refund Time</td>
@@ -110,7 +116,7 @@
                         <td>Refund Account</td>
                         <td>@Model.Payment.Refund.TargetAccount</td>
                     </tr>
-                }
+                }*@
             </tbody>
         </table>
     </div>

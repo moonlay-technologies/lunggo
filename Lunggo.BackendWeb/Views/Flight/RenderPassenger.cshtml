@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Lunggo.ApCommon.Product.Model.Pax>
+﻿@model IEnumerable<Lunggo.ApCommon.Product.Model.PaxForDisplay>
 
 <div class="row">
     <div class="col-md-2"></div>
@@ -11,12 +11,14 @@
                 <tbody>
                     <tr>
                         <th><b>NO</b></th>
-                        <th><b>TITLE</b></th>
-                        <th><b>FIRST NAME</b></th>
-                        <th><b>LAST NAME</b></th>
-                        <th><b>TYPE</b></th>
-                        <th><b>BIRTH DATE</b></th>
-                        <th><b>PASPORT NUMBER</b></th>
+                        <th><b>GELAR</b></th>
+                        <th><b>NAMA</b></th>
+                        <th><b>TIPE</b></th>
+                        <th><b>TANGGAL LAHIR</b></th>
+                        <th><b>KEBANGSAAN</b></th>
+                        <th><b>NOMOR PASPOR</b></th>
+                        <th><b>TGL KADALUARSA PASPOR</b></th>
+                        <th><b>NEGARA PENERBIT PASPOR</b></th>
                     </tr>
                     @{var count = 1;}
                     @foreach (var passenger in Model)
@@ -26,13 +28,10 @@
                                 @count
                             </td>
                             <td>
-                                @passenger.Title.ToString()
+                                @passenger.Title
                             </td>
                             <td>
-                                @passenger.FirstName
-                            </td>
-                            <td>
-                                @passenger.LastName
+                                @passenger.Name
                             </td>
                             <td>
                                 @passenger.Type.ToString()
@@ -44,7 +43,16 @@
                                 }
                             </td>
                             <td>
+                                @passenger.Nationality
+                            </td>
+                            <td>
                                 @passenger.PassportNumber
+                            </td>
+                            <td>
+                                @passenger.PassportExpiryDate
+                            </td>
+                            <td>
+                                @passenger.PassportCountry
                             </td>
                             @{
                                 count += 1;

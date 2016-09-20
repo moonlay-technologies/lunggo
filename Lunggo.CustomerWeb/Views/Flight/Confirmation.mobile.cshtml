@@ -56,7 +56,7 @@
         var paymentTimeout = '';
 
         // development only start
-        paymentTimeout = new Date('@timelimit.AddMinutes(-30).ToString("yyyy-MM-dd'T'HH:mm:ss")');
+        paymentTimeout = new Date('@timelimit.ToString("yyyy-MM-dd'T'HH:mm:ss")');
         console.log("TIME OUT: " + paymentTimeout);
         //paymentTimeout = new Date('@Model.RsvTime.AddMinutes(-30).ToString("u")');
         // countdown timer
