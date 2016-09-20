@@ -134,7 +134,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       left: auto;
       right: 10px; }
     .site-header .header-display .promo {
-      background: url(/Assets/mobile/images/promo-logo.png);
+      background: url(/Assets/mobile/images/promo-logo-notif.png);
       left: auto;
       right: 20px; }
     .site-header .header-display .flight-swap {
@@ -1338,7 +1338,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         width: 100%;
         height: 41px;
         display: block;
-        background-size: 42%; }
+        background-size: 42%;
+        pointer-events: none;
+        cursor: default; }
       .page.page-home .mobile-banner .mb-container .banner-button a.button.btn-playstore {
         /*background: url($play-store);
                         @include size(84px, 29px);

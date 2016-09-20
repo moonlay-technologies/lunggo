@@ -1166,7 +1166,9 @@ including in this file :
           width: 171px;
           height: 47px;
           display: inline-block;
-          background-size: 80%; }
+          background-size: 80%;
+          pointer-events: none;
+          cursor: default; }
         .site-footer-menu .web-banner .menu-right .banner-button a.button.btn-playstore {
           background: url("../images/play-store-bg.png") no-repeat;
           width: 171px;
