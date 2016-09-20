@@ -714,6 +714,7 @@
     <Content Include="Assets\mobile\images\flight-separators.png" />
     <Content Include="Assets\mobile\images\mobile-app.png" />
     <Content Include="Assets\mobile\images\play-store.png" />
+    <Content Include="Assets\mobile\js\PromoController.js" />
     <Content Include="Assets\travorama20\css\global-error.css">
       <DependentUpon>global-error.scss</DependentUpon>
     </Content>
