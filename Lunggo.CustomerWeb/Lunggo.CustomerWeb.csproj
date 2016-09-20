@@ -1451,7 +1451,6 @@
     <Content Include="Campaign\PromoBTN\css\promo-btn.scss" />
     <Content Include="Assets\travorama20\css\travorama20.scss" />
     <Content Include="Assets\travorama20\css\travorama20.css.map" />
-    <Content Include="Campaign\PromoBTN\css\promo-btn.css.map" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
