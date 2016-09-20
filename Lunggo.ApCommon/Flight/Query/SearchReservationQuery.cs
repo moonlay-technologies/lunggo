@@ -24,6 +24,9 @@ namespace Lunggo.ApCommon.Flight.Query
             clauseBuilder.Append("INNER JOIN FlightTrip AS t ON i.Id = t.ItineraryId ");
             clauseBuilder.Append("INNER JOIN FlightSegment AS s ON t.Id = s.TripId ");
             clauseBuilder.Append("INNER JOIN Pax AS p ON r.RsvNo = p.RsvNo ");
+            clauseBuilder.Append("INNER JOIN Contact AS c ON r.RsvNo = c.RsvNo ");
+            clauseBuilder.Append("INNER JOIN Payment AS b ON r.RsvNo = b.RsvNo ");
+            clauseBuilder.Append("LEFT OUTER JOIN ReservationState AS v ON r.RsvNo = v.RsvNo ");
             return clauseBuilder.ToString();
         }
 
@@ -38,11 +41,11 @@ namespace Lunggo.ApCommon.Flight.Query
             else
             {
                 if (condition.ContactName != null)
-                    clauseBuilder.Append("r.ContactName LIKE ('%' + @ContactName + '%') AND ");
+                    clauseBuilder.Append("c.Name LIKE ('%' + @ContactName + '%') AND ");
                 if (condition.ContactEmail != null)
-                    clauseBuilder.Append("r.ContactEmail LIKE ('%' + @ContactEmail + '%') AND ");
+                    clauseBuilder.Append("c.Email LIKE ('%' + @ContactEmail + '%') AND ");
                 if (condition.ContactPhone != null)
-                    clauseBuilder.Append("r.ContactPhone LIKE ('%' + @ContactPhone + '%') AND ");
+                    clauseBuilder.Append("c.Phone LIKE ('%' + @ContactPhone + '%') AND ");
                 if (condition.PassengerName != null)
                     clauseBuilder.Append("p.FirstName + p.LastName = '%' + @PassengerName + '%' AND ");
                 if (condition.Airline != null)

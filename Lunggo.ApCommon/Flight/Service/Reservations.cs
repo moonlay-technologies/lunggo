@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        internal FlightReservation GetReservation(string rsvNo)
+        public FlightReservation GetReservation(string rsvNo)
         {
             try
             {
