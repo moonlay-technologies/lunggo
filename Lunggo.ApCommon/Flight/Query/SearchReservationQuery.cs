@@ -21,8 +21,8 @@ namespace Lunggo.ApCommon.Flight.Query
             clauseBuilder.Append("SELECT DISTINCT r.RsvNo ");
             clauseBuilder.Append("FROM Reservation AS r ");
             clauseBuilder.Append("INNER JOIN FlightItinerary AS i ON r.RsvNo = i.RsvNo ");
-            clauseBuilder.Append("INNER JOIN FlightTrip AS t ON i.ItineraryId = t.ItineraryId ");
-            clauseBuilder.Append("INNER JOIN FlightSegment AS s ON t.TripId = s.TripId ");
+            clauseBuilder.Append("INNER JOIN FlightTrip AS t ON i.Id = t.ItineraryId ");
+            clauseBuilder.Append("INNER JOIN FlightSegment AS s ON t.Id = s.TripId ");
             clauseBuilder.Append("INNER JOIN Pax AS p ON r.RsvNo = p.RsvNo ");
             return clauseBuilder.ToString();
         }
