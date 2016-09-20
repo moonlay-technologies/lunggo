@@ -44,6 +44,8 @@ $play-store: '../images/play-store.png';
                         height: 41px;
                         display: block;
                         background-size: 42%;
+                        pointer-events: none;
+                        cursor: default;
                     } 
                     &.btn-playstore {
                         /*background: url($play-store);

@@ -702,15 +702,27 @@
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
+    <Content Include="Assets\images\campaign\MobileApp\mobile-app-banner.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-app.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-bg.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider.jpg" />
     <Content Include="Assets\images\flight-facilities-sprite2.png" />
+    <Content Include="Assets\images\global-error.jpg" />
+    <Content Include="Assets\images\logo-travorama.png" />
+    <Content Include="Assets\images\promo-logo-notif.png" />
     <Content Include="Assets\mobile\images\app-store.png" />
     <Content Include="Assets\mobile\images\arrow-detail.png" />
     <Content Include="Assets\mobile\images\flight-separators.png" />
     <Content Include="Assets\mobile\images\mobile-app.png" />
     <Content Include="Assets\mobile\images\play-store.png" />
+    <Content Include="Assets\mobile\images\promo-logo-notif.png" />
+    <Content Include="Assets\mobile\js\PromoController.js" />
+    <Content Include="Assets\travorama20\css\global-error.css">
+      <DependentUpon>global-error.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\travorama20\css\global-error.min.css">
+      <DependentUpon>global-error.css</DependentUpon>
+    </Content>
     <Content Include="Assets\travorama20\css\travorama20.css" />
     <Content Include="Assets\travorama20\css\travorama20.min.css" />
     <Content Include="Assets\travorama20\images\app-store-bg.png" />
@@ -1452,6 +1464,7 @@
     <Content Include="Assets\travorama20\css\travorama20.scss" />
     <Content Include="Assets\travorama20\css\travorama20.css.map" />
     <Content Include="Campaign\PromoBTN\css\promo-btn.css.map" />
+    <Content Include="Assets\travorama20\css\global-error.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2730,7 +2743,6 @@
     <Content Include="Views\Template\FlightSearchListNew.cshtml" />
     <Content Include="Views\Shared\_layout_20150506.cshtml" />
     <Content Include="Views\Flight\Thankyou.cshtml" />
-    <Content Include="Views\Shared\GlobalError.cshtml" />
     <Content Include="Views\Flight\Confirmation.cshtml" />
     <Content Include="Views\Shared\_layout_mobile.cshtml" />
     <Content Include="Views\MobileTemplate\HomePage.cshtml" />
@@ -2814,6 +2826,8 @@
     <Content Include="Views\Promo\Btn.cshtml" />
     <Content Include="Views\Promo\Btn.mobile.cshtml" />
     <Content Include="Views\Promo\BtnWebview.cshtml" />
+    <Content Include="Views\Shared\GlobalError.cshtml" />
+    <Content Include="Views\Shared\GlobalError.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2863,7 +2877,6 @@
   <ItemGroup>
     <Folder Include="Areas\Api\Views\Account\" />
     <Folder Include="Areas\Api\Views\Shared\" />
-    <Folder Include="Assets\images\campaign\MobileApp\" />
     <Folder Include="Assets\travorama20\fonts\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />
