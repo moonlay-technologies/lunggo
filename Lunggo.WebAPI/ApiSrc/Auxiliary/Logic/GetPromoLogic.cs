@@ -71,7 +71,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                 {
                     Id = "1",
                     BannerUrl = "http://www.travorama.com/Assets/images/banner/standard-web-banner.jpg",
-                    DetailsUrl = null
+                    DetailsUrl = ""
                 },
                 new FeaturedPromo
                 {
