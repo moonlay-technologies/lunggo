@@ -84,6 +84,8 @@ including in this file :
                         @include size(171px, 47px);
                         display: inline-block;
                         background-size: 80%;
+                        pointer-events: none;
+                        cursor: default;
                     } 
                     &.btn-playstore {
                         background: url($play-store-bg) no-repeat;
