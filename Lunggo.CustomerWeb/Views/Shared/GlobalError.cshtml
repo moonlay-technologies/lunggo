@@ -1,80 +1,63 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 
 @{
-    Layout = null;
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.Title = "Promo";
+    ViewBag.SiteHeader = "header-global-error";
+    ViewBag.BodyClass = "page-error global-error-page";
+    ViewBag.Title = "Halaman Error Global";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@section AdditionalCSS{
+    <!-- additional CSS-->
+    <link rel="stylesheet" href="/Assets/travorama20/css/global-error.css">
+}
 
-    <title>Halaman Error Global</title>
-    
-    <link rel="stylesheet" href="/Assets/css/bootstrap.min.css">
-    <link href="/Assets/css/application.min.css" rel="stylesheet" />
+@section AdditionalJS{
+    <!-- additional JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
 
-</head>
-<body class="error-page global-error-page">
-    
-    
-    <div class="site-header">
-        <div class="container">
-            <a href="/">
-                <img src="/Assets/images/logo.png" alt="Travorama - Traveling Made Easy" />
-            </a>
-        </div>
-    </div><!-- .site-header -->
-    
+<div class="error-page">
     <div class="site-content">
-    
         <div class="container">
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="page-content">
-                        <h1>The page you are looking for can't be found.</h1>
-                        <h3>The page on : @HttpContext.Current.Request.Url.AbsoluteUri cannot be accessed. <br/>Please contact <a href="#">Our Customer Service</a> to report about the missing page.</h3>
-                        <h2>Go back to <a href="/">Homepage</a></h2>
-                    </div>
+            <div class="page-content">
+                <div class="logo"></div>
+                <div class="bg-txt">
+                    The page you are looking for can't be found
                 </div>
-                <div class="col-sm-8">
-                    <img src="/Assets/images/_sample/people-2.png" alt="Main Image" class="page-char plax" />
+                <div class="sm-txt">
+                    The page on:<br />
+                    <b>@HttpContext.Current.Request.Url.AbsoluteUri</b> <br />
+                    cannot be accessed. <br />
+                    Please contact <a href="/id/contact" target="_blank"><b>Our Customer Service</b></a> to report about the missing page.
+                </div>
+                <div class="btn-home">
+                    <a class="btn btn-yellow" href="/">Back to homepage</a>
                 </div>
             </div>
         </div>
-
     </div><!-- .site-content -->
-    <img src="/Assets/images/_sample/bg-1.png" alt="Sample" class="site-background plax" />
-
     
-
-
+    @*
     <div class="error-detail container">
         <h1>Halaman Error Global</h1>
-
         <h2>Action Name : @Model.ActionName</h2>
         <h2>Controller Name : @Model.ControllerName</h2>
-
         <h2>Exception</h2>
         <h3>Exception Message : @Model.Exception.Message</h3>
-        <h3>Exception Stack Trace: @Model.Exception.StackTrace</h3>
+        <h3>Exception Stack Trace: @Model.Exception.StackTrace</h3
         <h3>Exception Source: @Model.Exception.Source</h3>
-    </div><!-- .error-detail -->
-    
-    <!-- javascript -->
+    </div>
     <script src="/Assets/js/jquery.min.js"></script>
     <script src="/Assets/js/plax.js"></script>
-    
     <script>
-
         function showError() {
             $('.error-detail').show();
         }
-
-        $(document).ready(function() {
-
+        $(document).ready(function () {
             var randomNumber = Math.random() * 10;
             if (randomNumber < 5) {
                 randomNumber = 1;
@@ -85,17 +68,12 @@
             $('.page-char').attr('src', '/Assets/images/_sample/people-' + randomNumber + '.png');
 
         });
-
         // on window load
-        $(window).load(function() {
+        $(window).load(function () {
             $('.plax').plaxify({ "xRange": 50, "yRange": 50 });
             $('.site-background').plaxify({ "xRange": 50, "yRange": 50, "invert": true });
             $.plax.enable();
         });
-
     </script>
-
-
-</body>
-</html>
-
+    *@
+</div>
