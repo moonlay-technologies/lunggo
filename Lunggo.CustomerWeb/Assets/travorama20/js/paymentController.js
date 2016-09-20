@@ -42,7 +42,7 @@ app.controller('paymentController', [
             CardNo: ''
         };
         $scope.PageConfig = {
-            ReturnUrl: "/",
+            ReturnUrl: "",
         };
         $scope.msToTime = function (duration) {
 
