@@ -21,6 +21,7 @@ namespace Lunggo.ApCommon.Flight.Query
             clauseBuilder.Append("SELECT r.RsvNo ");
             clauseBuilder.Append("FROM Reservation AS r ");
             clauseBuilder.Append("INNER JOIN Payment AS p ON r.RsvNo = p.RsvNo ");
+            clauseBuilder.Append("INNER JOIN Contact AS c ON r.RsvNo = c.RsvNo ");
             clauseBuilder.Append("INNER JOIN FlightItinerary AS i ON r.RsvNo = i.RsvNo ");
             clauseBuilder.Append("INNER JOIN FlightTrip AS t ON i.Id = ");
             clauseBuilder.Append("(SELECT TOP 1 t.ItineraryId FROM FlightTrip WHERE t.ItineraryId = i.Id) ");
@@ -30,7 +31,7 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE r.UserId = @UserId");
+            clauseBuilder.Append("WHERE (r.UserId = @UserId OR c.Email = @ContactEmail)");
             return clauseBuilder.ToString();
         }
 

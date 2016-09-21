@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Payment.Constant;
+﻿using System;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Newtonsoft.Json;
 
@@ -14,5 +15,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Model
         public string RedirectionUrl { get; set; }
         [JsonProperty("transferAccount", NullValueHandling = NullValueHandling.Ignore)]
         public string TransferAccount { get; set; }
+        [JsonProperty("timeLimit", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? TimeLimit { get; set; }
     }
 }

@@ -36,5 +36,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans.Model
         internal TransactionDetails TransactionDetail { get; set; }
         [JsonProperty("item_details")]
         internal List<ItemDetails> ItemDetail { get; set; }
+        [JsonProperty("customer_details")]
+        internal CustomerDetails CustomerDetail { get; set; }
     }
 }

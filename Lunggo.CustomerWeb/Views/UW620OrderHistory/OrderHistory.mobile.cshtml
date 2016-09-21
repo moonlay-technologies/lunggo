@@ -169,7 +169,7 @@
             <li class="" ng-repeat="flight in flightlist track by $index" ng-class="{'done' : flight.payment.status == 3, 'pending' : flight.payment.status == 2 ||  flight.payment.status == 6, 'canceled' : flight.payment.status == 1 || flight.payment.status == 4 || flight.payment.status == 5 || flight.payment.status == 8}">
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="blue">Nomor Pemesanan</span>
+                        <span class="blue">Nomor Pesanan</span>
                     </div>
                     <div class="col-xs-8">
                         <span class="blue">: <b>{{flight.rsvNo}}</b></span>

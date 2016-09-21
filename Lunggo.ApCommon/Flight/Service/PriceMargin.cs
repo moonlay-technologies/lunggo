@@ -221,7 +221,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private FlightMarginRule GetFirstMatchingRule(FlightItinerary itin, List<FlightMarginRule> rules)
         {
-            foreach (var marginRule in rules)
+           foreach (var marginRule in rules)
             {
                 var rule = marginRule.Rule;
                 if (!BookingDateMatches(rule)) continue;

@@ -709,7 +709,6 @@
     <Content Include="Assets\images\flight-facilities-sprite2.png" />
     <Content Include="Assets\images\global-error.jpg" />
     <Content Include="Assets\images\logo-travorama.png" />
-    <Content Include="Assets\images\promo-logo-notif.png" />
     <Content Include="Assets\mobile\images\app-store.png" />
     <Content Include="Assets\mobile\images\arrow-detail.png" />
     <Content Include="Assets\mobile\images\flight-separators.png" />
@@ -1463,7 +1462,6 @@
     <Content Include="Campaign\PromoBTN\css\promo-btn.scss" />
     <Content Include="Assets\travorama20\css\travorama20.scss" />
     <Content Include="Assets\travorama20\css\travorama20.css.map" />
-    <Content Include="Campaign\PromoBTN\css\promo-btn.css.map" />
     <Content Include="Assets\travorama20\css\global-error.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
