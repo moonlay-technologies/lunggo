@@ -21,13 +21,13 @@ namespace Lunggo.ApCommon.Product.Model
         public bool IsActive { get; set; }
         public long RuleId { get; set; }
 
-        internal void InsertToDb()
+        internal void InsertToDb(ProductType productType)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 MarginTableRepo.GetInstance().Insert(conn, new MarginTableRecord
                 {
-                    Id = MarginIdSequence.GetInstance().GetNext(),
+                    Id = MarginIdSequence.GetInstance().GetNext(productType),
                     Name = Name,
                     Description = Description,
                     Percentage = Percentage,
