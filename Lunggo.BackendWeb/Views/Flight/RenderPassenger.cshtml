@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Lunggo.ApCommon.Product.Model.PaxForDisplay>
+﻿@model IEnumerable<Lunggo.ApCommon.Product.Model.Pax>
 
 <div class="row">
     <div class="col-md-2"></div>
@@ -31,7 +31,7 @@
                                 @passenger.Title
                             </td>
                             <td>
-                                @passenger.Name
+                                @passenger.FirstName @passenger.LastName
                             </td>
                             <td>
                                 @passenger.Type.ToString()

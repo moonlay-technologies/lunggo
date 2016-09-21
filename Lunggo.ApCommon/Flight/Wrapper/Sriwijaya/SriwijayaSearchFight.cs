@@ -431,7 +431,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     itin.Price.SetSupplier(harga, new Currency("IDR", Payment.Constant.Supplier.Sriwijaya));
                                     itins.Add(itin);
                                     hasil.IsSuccess = true;
-                                    hasil.Itineraries = itins;
+                                    hasil.Itineraries = itins.Where(it => it.Price.SupplierCurrency.Rate != 0).ToList();
 
                                     //if (hasil.Itineraries == null)
                                     //    return new SearchFlightResult
@@ -709,7 +709,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     itin.Price.SetSupplier(harga, new Currency("IDR", Payment.Constant.Supplier.Sriwijaya));
                                     itins.Add(itin);
                                     hasil.IsSuccess = true;
-                                    hasil.Itineraries = itins;
+                                    hasil.Itineraries = itins.Where(it => it.Price.SupplierCurrency.Rate != 0).ToList();
 
                                     //if (hasil.Itineraries == null)
                                     //    return new SearchFlightResult

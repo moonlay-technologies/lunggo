@@ -1,4 +1,4 @@
-﻿@model Lunggo.ApCommon.Flight.Model.FlightTripForDisplay
+﻿@model Lunggo.ApCommon.Flight.Model.FlightTrip
 @using System.Globalization
 
     <table class="table table-hover table-no-border">
@@ -21,7 +21,7 @@
                 <td>Tanggal Keberangkatan</td>
                 <td>:</td>
                 <td>
-                    @Model.DepartureDate.GetValueOrDefault().ToString("dddd, d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))
+                    @Model.DepartureDate.ToString("dddd, d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))
                 </td>
             </tr>
             @{ Html.RenderPartial("RenderSegment", Model.Segments); }

@@ -1,4 +1,6 @@
-﻿using Lunggo.Framework.Sequence;
+﻿using System.Globalization;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.Framework.Sequence;
 
 namespace Lunggo.ApCommon.Sequence
 {
@@ -25,6 +27,13 @@ namespace Lunggo.ApCommon.Sequence
         public override long GetNext()
         {
             return GetNextNumber(_properties);
+        }
+
+        public long GetNext(ProductType productType)
+        {
+            var number = GetNextNumber(_properties);
+            var numberString = (int) productType + number.ToString(CultureInfo.InvariantCulture);
+            return long.Parse(numberString);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Payment.Constant
-@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+@model Lunggo.ApCommon.Flight.Model.FlightReservation
 
 <div class="col-md-6">
     <div class="showback">
@@ -33,7 +33,14 @@
                     <td>:</td>
                     <td>@Model.Contact.Phone</td>
                 </tr>
-                
+                @if (Model.State != null)
+                {
+                    <tr>
+                        <td>Platform</td>
+                        <td>:</td>
+                        <td>@Model.State.Platform</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
@@ -48,18 +55,22 @@
                 <tr>
                     <td>Harga Total</td>
                     <td>:</td>
-                    <td>@Model.Payment.FinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                    <td>@Model.Payment.LocalFinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                 </tr>
-                <tr>
-                    <td>Kode Voucher</td>
-                    <td>:</td>
-                    <td>@Model.Payment.DiscountName (@Model.Payment.DiscountCode)</td>
-                </tr>
-                <tr>
-                    <td>Nominal Voucher</td>
-                    <td>:</td>
-                    <td>@Model.Payment.DiscountNominal</td>
-                </tr>
+                @if (Model.Payment.DiscountCode != null)
+                {
+                    <tr>
+                        <td>Kode Voucher</td>
+                        <td>:</td>
+                        <td>@Model.Payment.Discount.Name (@Model.Payment.DiscountCode)</td>
+                    </tr>
+                    <tr>
+                        <td>Nominal Voucher</td>
+                        <td>:</td>
+                        <td>@Model.Payment.DiscountNominal</td>
+                    </tr>
+                }
+                
                 <tr>
                     <td>Metode Pembayaran</td>
                     <td>:</td>

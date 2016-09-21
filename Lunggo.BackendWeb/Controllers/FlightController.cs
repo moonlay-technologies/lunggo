@@ -16,6 +16,7 @@ using Lunggo.BackendWeb.Model;
 
 namespace Lunggo.BackendWeb.Controllers
 {
+    [Authorize]
     public class FlightController : Controller
     {
         public ActionResult Search()
@@ -35,7 +36,7 @@ namespace Lunggo.BackendWeb.Controllers
         public ActionResult Detail(string rsvNo)
         {
             var flight = FlightService.GetInstance();
-            var reservation = flight.GetReservationForDisplay(rsvNo);
+            var reservation = flight.GetReservation(rsvNo);
             return View(reservation);
         }
 

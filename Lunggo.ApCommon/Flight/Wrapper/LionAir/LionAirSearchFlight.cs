@@ -665,7 +665,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return new SearchFlightResult
                     {
                         IsSuccess = true,
-                        Itineraries = itins
+                        Itineraries = itins.Where(itin => itin.Price.SupplierCurrency.Rate != 0).ToList()
                     };
                 }
                 catch(Exception e)

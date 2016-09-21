@@ -285,7 +285,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 }
 
                                 hasil.IsSuccess = true;
-                                hasil.Itineraries = itins;
+                                hasil.Itineraries = itins.Where(itin => itin.Price.SupplierCurrency.Rate != 0).ToList();
                                 #endregion
                                 break;
 

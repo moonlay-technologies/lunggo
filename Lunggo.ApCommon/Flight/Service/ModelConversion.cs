@@ -30,7 +30,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Passengers = ConvertToPaxForDisplay(reservation.Pax),
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
                 UserId = reservation.User != null ? reservation.User.Id : null,
-                DeviceId = reservation.State.DeviceId
+                DeviceId = reservation.State != null ? reservation.State.DeviceId : null
             };
         }
 

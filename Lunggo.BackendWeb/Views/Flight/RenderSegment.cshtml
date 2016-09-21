@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Autocomplete
-@model IEnumerable<Lunggo.ApCommon.Flight.Model.FlightSegmentForDisplay>
+@model IEnumerable<Lunggo.ApCommon.Flight.Model.FlightSegment>
 
 @{
     var dict = AutocompleteManager.GetInstance();
@@ -17,8 +17,8 @@
                     (@segment.DepartureAirport)
                 </td>
                 <td class="dep-time">
-                    @segment.DepartureTime.GetValueOrDefault().ToString("d MMM yy", CultureInfo.CreateSpecificCulture("id-ID"))<br />
-                    @segment.DepartureTime.GetValueOrDefault().ToString("hh:mm", CultureInfo.CreateSpecificCulture("id-ID"))
+                    @segment.DepartureTime.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("id-ID"))<br />
+                    @segment.DepartureTime.ToString("hh:mm", CultureInfo.CreateSpecificCulture("id-ID"))
                 </td>
                 <td class="airline">
                     @segment.AirlineName<br />
@@ -29,8 +29,8 @@
                     }
                 </td>
                 <td class="arr-time">
-                    @segment.ArrivalTime.GetValueOrDefault().ToString("d MMM yy", CultureInfo.CreateSpecificCulture("id-ID"))<br />
-                    @segment.ArrivalTime.GetValueOrDefault().ToString("hh:mm", CultureInfo.CreateSpecificCulture("id-ID"))
+                    @segment.ArrivalTime.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("id-ID"))<br />
+                    @segment.ArrivalTime.ToString("hh:mm", CultureInfo.CreateSpecificCulture("id-ID"))
                 </td>
                 <td class="arr-city">
                     @segment.ArrivalCity<br />
