@@ -39,7 +39,7 @@
                 <img src="/Assets/images/sad-image.png" alt="Registered">
                 <section>
                     <p>
-                        Mohon maaf, reservasi dengan nomor {{rsvNo}} tidak ditemukan.
+                        Mohon maaf, pesanan dengan nomor {{rsvNo}} tidak ditemukan.
                     </p>
                 </section>
                 <div class="text-center">
@@ -67,7 +67,7 @@
                 <img src="/Assets/images/sad-image.png" alt="Not authorised">
                 <section>
                     <p>
-                        Mohon maaf, Anda tidak dapat melihat pemesanan dengan nomor {{rsvNo}}.
+                        Mohon maaf, Anda tidak dapat melihat pesanan dengan nomor {{rsvNo}}.
                     </p>
                 </section>
                 <div class="text-center">
@@ -81,7 +81,7 @@
                 <img src="/Assets/images/sad-image.png" alt="Problem">
                 <section>
                     <p>
-                        Mohon maaf, Anda tidak dapat melihat pemesanan dengan nomor {{rsvNo}}.
+                        Mohon maaf, Anda tidak dapat melihat pesanan dengan nomor {{rsvNo}}.
                     </p>
                 </section>
                 <div class="text-center">
@@ -95,7 +95,7 @@
 
     <div class="order-detail">
         <header class="content-header">
-            <h3>NOMOR PEMESANAN: <b>@Model.RsvNo</b></h3>
+            <h3>NOMOR PESANAN: <b>@Model.RsvNo</b></h3>
         </header>
         <section class="content-body">
 
@@ -142,7 +142,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-4">Harga Pemesanan</label>
+                            <label class="control-label col-xs-4">Harga Pesanan</label>
                             <div class="col-xs-8">
                                 <p class="form-control-static">Rp {{flight.payment.originalPrice | number}}</p>
                             </div>

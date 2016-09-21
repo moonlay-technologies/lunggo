@@ -12,7 +12,6 @@ app.controller('paymentController', [
         //console.log("hello" + CryptoJS.SHA512("Message"));
         angular.element(document).ready(function () {
             $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo);
-            $scope.expired();
         });
         $scope.currentPage = 4;
         $scope.trial = 0;

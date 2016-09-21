@@ -43,7 +43,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 PassengerTypeQuantities = MapPassengerTypes(conditions),
                 PricingSourceType = PricingSourceType.All,
                 TravelPreferences = MapTravelPreferences(conditions),
-                RequestOptions = RequestOptions.TwoHundred,
+                RequestOptions = RequestOptions.Fifty,
                 SessionId = Client.SessionId,
                 Target = Client.Target,
                 ExtensionData = null
@@ -207,7 +207,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         private static List<FlightItinerary> MapFlightItineraries(AirLowFareSearchRS response, SearchFlightConditions conditions)
         {
-            return response.PricedItineraries.Select(itin => MapFlightItinerary(itin, conditions)).Where(itin => itin != null).ToList();
+            return response.PricedItineraries.Select(itin => MapFlightItinerary(itin, conditions)).Where(itin => itin != null && itin.Price.SupplierCurrency.Rate != 0).ToList();
         }
 
         private static FlightItinerary MapFlightItinerary(PricedItinerary pricedItinerary, ConditionsBase conditions)

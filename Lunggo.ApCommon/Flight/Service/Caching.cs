@@ -200,11 +200,9 @@ namespace Lunggo.ApCommon.Flight.Service
             redisTransaction.Execute();
         }
 
-        private static void SaveSearchedPartialItinerariesToBufferCache(List<FlightItinerary> itineraryList, string searchId, int timeout, int supplierIndex, int partNumber)
+        private static void SaveSearchedPartialItinerariesToBufferCache(List<FlightItinerary> itineraryList, string searchId, int supplierIndex, int partNumber)
         {
-            if (timeout == 0)
-                timeout =
-                    Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
+            var timeout = Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
             var redisService = RedisService.GetInstance();
             var redisKey = "searchedPartialFlightItineraries:" + searchId + ":" + supplierIndex + ":" + partNumber;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -349,7 +347,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "flightCombos:" + searchId + ":" + supplierIndex;
             var cacheObject = combos.ToCacheObject();
-            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"));
+            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(timeout));
         }

@@ -59,7 +59,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             }
         }
 
-        internal PaymentDetails ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
+        internal PaymentDetails ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetail, PaymentMethod method)
         {
             var authorizationKey = ProcessAuthorizationKey(_serverKey);
             WebRequest request;
@@ -69,7 +69,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             {
                 case PaymentMethod.CreditCard:
                     payment.Data.CreditCard.Bank = "mandiri";
-                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
                     if (content != null && content.StatusCode.StartsWith("2"))
@@ -92,8 +92,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                             + payment.Serialize()
                                 + "\n*TRANSAC DETAILS :*\n"
                                 + transactionDetail.Serialize()
-                                + "\n*ITEM DETAILS :*\n"
-                                + itemDetails.Serialize()
+                                //+ "\n*ITEM DETAILS :*\n"
+                                //+ itemDetails.Serialize()
                                 + "\n*REQUEST :*\n"
                                 + _temp
                             + "\n*RESPONSE :*\n"
@@ -103,7 +103,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     }
                     return payment;
                 case PaymentMethod.VirtualAccount:
-                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
                     if (content != null && content.StatusCode.StartsWith("2"))
@@ -116,11 +116,29 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     {
                         payment.Status = PaymentStatus.Failed;
                         payment.FailureReason = FailureReason.PaymentFailure;
+
+                        var log = LogService.GetInstance();
+                        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                        log.Post(
+                            "```Payment Log```"
+                            + "\n`*Environment :* " + env.ToUpper()
+                            + "\n*PAYMENT DETAILS :*\n"
+                            + payment.Serialize()
+                                + "\n*TRANSAC DETAILS :*\n"
+                                + transactionDetail.Serialize()
+                                //+ "\n*ITEM DETAILS :*\n"
+                                //+ itemDetails.Serialize()
+                                + "\n*REQUEST :*\n"
+                                + _temp
+                            + "\n*RESPONSE :*\n"
+                            + content.Serialize()
+                            + "\n*Platform :* "
+                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
                     }
                     return payment;
 
                 case PaymentMethod.MandiriClickPay:
-                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
                     if (content != null && content.StatusCode.StartsWith("2"))
@@ -132,11 +150,29 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     {
                         payment.Status = PaymentStatus.Failed;
                         payment.FailureReason = FailureReason.PaymentFailure;
+
+                        var log = LogService.GetInstance();
+                        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                        log.Post(
+                            "```Payment Log```"
+                            + "\n`*Environment :* " + env.ToUpper()
+                            + "\n*PAYMENT DETAILS :*\n"
+                            + payment.Serialize()
+                                + "\n*TRANSAC DETAILS :*\n"
+                                + transactionDetail.Serialize()
+                                //+ "\n*ITEM DETAILS :*\n"
+                                //+ itemDetails.Serialize()
+                                + "\n*REQUEST :*\n"
+                                + _temp
+                            + "\n*RESPONSE :*\n"
+                            + content.Serialize()
+                            + "\n*Platform :* "
+                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
                     }
                     return payment;
 
                 case PaymentMethod.CimbClicks:
-                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
                     if (content != null && content.StatusCode.StartsWith("2"))
@@ -149,11 +185,29 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     {
                         payment.Status = PaymentStatus.Failed;
                         payment.FailureReason = FailureReason.PaymentFailure;
+
+                        var log = LogService.GetInstance();
+                        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                        log.Post(
+                            "```Payment Log```"
+                            + "\n`*Environment :* " + env.ToUpper()
+                            + "\n*PAYMENT DETAILS :*\n"
+                            + payment.Serialize()
+                                + "\n*TRANSAC DETAILS :*\n"
+                                + transactionDetail.Serialize()
+                                //+ "\n*ITEM DETAILS :*\n"
+                                //+ itemDetails.Serialize()
+                                + "\n*REQUEST :*\n"
+                                + _temp
+                            + "\n*RESPONSE :*\n"
+                            + content.Serialize()
+                            + "\n*Platform :* "
+                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
                     }
                     return payment;
 
                 case PaymentMethod.MandiriBillPayment:
-                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, itemDetails, method);
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
                     if (content != null && content.StatusCode.StartsWith("2"))
@@ -166,12 +220,31 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     {
                         payment.Status = PaymentStatus.Failed;
                         payment.FailureReason = FailureReason.PaymentFailure;
+
+                        var log = LogService.GetInstance();
+                        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                        log.Post(
+                            "```Payment Log```"
+                            + "\n`*Environment :* " + env.ToUpper()
+                            + "\n*PAYMENT DETAILS :*\n"
+                            + payment.Serialize()
+                                + "\n*TRANSAC DETAILS :*\n"
+                                + transactionDetail.Serialize()
+                                //+ "\n*ITEM DETAILS :*\n"
+                                //+ itemDetails.Serialize()
+                                + "\n*REQUEST :*\n"
+                                + _temp
+                            + "\n*RESPONSE :*\n"
+                            + content.Serialize()
+                            + "\n*Platform :* "
+                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
                     }
                     return payment;
 
                 default:
                     payment.Status = PaymentStatus.Failed;
                     payment.FailureReason = FailureReason.PaymentFailure;
+
                     return payment;
             }
         }
@@ -205,7 +278,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             return hashedAuthorizationKey;
         }
 
-        private static WebRequest CreateVtDirectRequest(string authorizationKey, PaymentData data, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static WebRequest CreateVtDirectRequest(string authorizationKey, PaymentData data, TransactionDetails transactionDetail, PaymentMethod method)
         {
             var request = (HttpWebRequest)WebRequest.Create(_endPoint);
             request.Method = "POST";
@@ -213,7 +286,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             request.ContentType = "application/json";
             request.Accept = "application/json";
 
-            ProcessVtDirectRequestParams(request, data, transactionDetail, itemDetails, method);
+            ProcessVtDirectRequestParams(request, data, transactionDetail, method);
             return request;
         }
 
@@ -228,7 +301,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             return request;
         }
 
-        private static void ProcessVtDirectRequestParams(WebRequest request, PaymentData data, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static void ProcessVtDirectRequestParams(WebRequest request, PaymentData data, TransactionDetails transactionDetail, PaymentMethod method)
         {
             data = data ?? new PaymentData();
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout"));
@@ -236,7 +309,6 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             {
                 PaymentType = MapPaymentMethod(method),
                 TransactionDetail = transactionDetail,
-                ItemDetail = itemDetails,
                 PaymentExpiry = new PaymentExpiry
                 {
                     OrderTime = transactionDetail.OrderTime.ToString("yyyy-MM-dd HH:mm:ss' +0000'", CultureInfo.InvariantCulture),
@@ -253,6 +325,10 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     Bank = "mandiri",
                     AllowedBins = new List<string> { data.CreditCard.TokenId.Substring(0, 6) },
                     TokenIdSaveEnabled = data.CreditCard.TokenIdSaveEnabled
+                };
+                requestParams.CustomerDetail = new CustomerDetails
+                {
+                    FirstName = data.CreditCard.HolderName
                 };
             }
 

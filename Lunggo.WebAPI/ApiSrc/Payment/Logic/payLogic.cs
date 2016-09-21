@@ -4,6 +4,7 @@ using System.Web;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Payment.Model;
 
@@ -89,6 +90,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             {
                 PaymentStatus = paymentDetails.Status,
                 Method = paymentDetails.Method,
+                TimeLimit = paymentDetails.TimeLimit.TruncateMilliseconds(),
                 RedirectionUrl = paymentDetails.RedirectionUrl,
                 TransferAccount = paymentDetails.TransferAccount,
                 StatusCode =
