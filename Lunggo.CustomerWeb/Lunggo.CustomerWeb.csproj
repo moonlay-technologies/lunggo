@@ -714,6 +714,7 @@
     <Content Include="Assets\images\promo-logo-notif.png" />
     <Content Include="Assets\mobile\images\app-store.png" />
     <Content Include="Assets\mobile\images\arrow-detail.png" />
+    <Content Include="Assets\mobile\images\burger-button.png" />
     <Content Include="Assets\mobile\images\flight-separators.png" />
     <Content Include="Assets\mobile\images\mobile-app-banner.jpg" />
     <Content Include="Assets\mobile\images\mobile-app.png" />

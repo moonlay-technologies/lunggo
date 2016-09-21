@@ -81,17 +81,16 @@ including in this file :
                 a.button {
                     &.btn-appstore {
                         background: url($app-store-cs) no-repeat;
-                        @include size(171px, 47px);
+                        @include size(136px, 45px);
                         display: inline-block;
-                        background-size: 80%;
                         pointer-events: none;
                         cursor: default;
                     } 
                     &.btn-playstore {
                         background: url($play-store-bg) no-repeat;
-                        @include size(171px, 49px);
+                        @include size(128px, 44px);
+                        margin-right: 25px;
                         display: inline-block;
-                        background-size: 80%;
                     }
                 }
             }
