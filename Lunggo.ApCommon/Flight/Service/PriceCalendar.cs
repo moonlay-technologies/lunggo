@@ -28,7 +28,11 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public string SetRoute(List<FlightItinerary> itins)
         {
-            return itins[0].Trips[0].OriginAirport + itins[0].Trips[0].DestinationAirport;
+            if (itins != null)
+            {
+                return itins[0].Trips[0].OriginAirport + itins[0].Trips[0].DestinationAirport;
+            }
+            return "";
         }
 
         public string SetDate(DateTime date)

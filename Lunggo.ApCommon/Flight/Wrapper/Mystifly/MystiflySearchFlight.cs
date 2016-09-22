@@ -207,7 +207,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         private static List<FlightItinerary> MapFlightItineraries(AirLowFareSearchRS response, SearchFlightConditions conditions)
         {
-            return response.PricedItineraries.Select(itin => MapFlightItinerary(itin, conditions)).Where(itin => itin != null).ToList();
+            return response.PricedItineraries.Select(itin => MapFlightItinerary(itin, conditions)).Where(itin => itin != null && itin.Price.SupplierCurrency.Rate != 0).ToList();
         }
 
         private static FlightItinerary MapFlightItinerary(PricedItinerary pricedItinerary, ConditionsBase conditions)
