@@ -28,13 +28,13 @@ namespace Lunggo.ApCommon.Flight.Service
     public partial class FlightService
     {
         #region Get
-        private List<FlightReservation> GetOverviewReservationsByUserIdFromDb(string userId, string[] filters, string sort, int? page, int? itemsPerPage)
+        private List<FlightReservation> GetOverviewReservationsByUserIdOrEmailFromDb(string userId, string email, string[] filters, string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rsvNos =
                     GetRsvNosByUserIdQuery.GetInstance()
-                        .Execute(conn, new { UserId = userId }, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+                        .Execute(conn, new { UserId = userId, ContactEmail = email}, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
                         .Distinct().ToList();
                 if (!rsvNos.Any())
                     return null;

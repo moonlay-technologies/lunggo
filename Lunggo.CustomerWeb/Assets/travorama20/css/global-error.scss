@@ -2,30 +2,30 @@
 .error-page {
     background-image: url(/Assets/images/global-error.jpg);
     background-size: cover;
-    min-height: 1080px;
+    min-height: 974px;
     background-position: center center;
     background-repeat: no-repeat;
     width: 100%;
     font-family: 'Open Sans';
-    /*.container {width: 860px;}*/
+    .container {width: 860px;}
     .page-content {
-        max-width: 380px;
+        max-width: 300px;
         margin-top: 120px;
         .logo {
             background: url('/Assets/images/logo-travorama.png') no-repeat;
             display: block;
-            height: 60px;
-            margin-bottom: 60px;
+            height: 34px;
+            margin-bottom: 40px;
         }
         .bg-txt {
-            font-size: 40px;
+            font-size: 27px;
             text-transform: uppercase;
             font-weight: 600;
         }
         .sm-txt {
-            font-size: 16px;
-            line-height: 24px;
-            margin: 60px 0 40px;
+            font-size: 13px;
+            line-height: 20px;
+            margin: 40px 0 30px;
             &>a {
                 color: #000;
                 text-decoration: underline;
@@ -43,39 +43,42 @@
         }
     }
     &.mobile {
+        background-image: none;
+        min-height: auto;
+        .container {width: auto;}
         .logo {
             background: url(/Assets/images/travorama-logo-color.png) no-repeat center;
             display: block;
-            height: 47px;
-            margin: 30px 0;
+            height: 27px;
+            margin: 15px 0 60px;
         }
         .page-content {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             position: absolute;
-            min-width: 320px;
-            margin: 0 auto;
             padding: 0 15px;
             width: 100%;
+            max-width: none;
+            margin-top: 0;
             .bg-txt {
-                font-size: 20px;
+                font-size: 16px;
                 text-transform: uppercase;
                 font-weight: 700;
                 text-align: center;
-                padding-bottom: 15px;
-                border-bottom: 1px solid #9d9d9d;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #ccc;
             }
             .sm-txt {
                 font-size: 11px;
                 line-height: 16px;
-                margin: 40px 0 30px;
+                margin: 30px 0;
             }
             a.btn.btn-yellow {
                 font-size: 11px;
                 font-weight: 700;
                 padding: 8px 10px;
-                border: 2px solid #ebb600;
+                border: none;
                 width: 100%;
                 letter-spacing: 0;
             }

@@ -127,8 +127,8 @@ namespace Lunggo.ApCommon.Payment.Service
 
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
             var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
-            var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
-            ProcessPayment(paymentDetails, transactionDetails, itemDetails, method);
+            //var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
+            ProcessPayment(paymentDetails, transactionDetails, method);
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
             {
                 reservation.Itineraries.ForEach(i => i.Price.UpdateToDb());
@@ -175,7 +175,7 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private static void ProcessPayment(PaymentDetails paymentDetails, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static void ProcessPayment(PaymentDetails paymentDetails, TransactionDetails transactionDetails, PaymentMethod method)
         {
             if (method == PaymentMethod.BankTransfer)
             {
@@ -183,7 +183,7 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             else if (method == PaymentMethod.CreditCard || method == PaymentMethod.VirtualAccount || method == PaymentMethod.MandiriClickPay || method == PaymentMethod.CimbClicks || method == PaymentMethod.MandiriBillPayment)
             {
-                var paymentResponse = SubmitPayment(paymentDetails, transactionDetails, itemDetails, method);
+                var paymentResponse = SubmitPayment(paymentDetails, transactionDetails, method);
                 if (method == PaymentMethod.VirtualAccount)
                 {
                     paymentDetails.TransferAccount = paymentResponse.TransferAccount;
@@ -243,9 +243,9 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private static PaymentDetails SubmitPayment(PaymentDetails payment, TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
+        private static PaymentDetails SubmitPayment(PaymentDetails payment, TransactionDetails transactionDetails, PaymentMethod method)
         {
-            var paymentResponse = VeritransWrapper.ProcessPayment(payment, transactionDetails, itemDetails, method);
+            var paymentResponse = VeritransWrapper.ProcessPayment(payment, transactionDetails, method);
             return paymentResponse;
         }
 

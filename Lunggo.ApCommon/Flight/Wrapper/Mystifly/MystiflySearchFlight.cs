@@ -43,7 +43,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 PassengerTypeQuantities = MapPassengerTypes(conditions),
                 PricingSourceType = PricingSourceType.All,
                 TravelPreferences = MapTravelPreferences(conditions),
-                RequestOptions = RequestOptions.TwoHundred,
+                RequestOptions = RequestOptions.Fifty,
                 SessionId = Client.SessionId,
                 Target = Client.Target,
                 ExtensionData = null

@@ -148,7 +148,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     if (searchCancellation.IsCancellationRequested)
                         return;
 
-                    SaveSearchedPartialItinerariesToBufferCache(result.Itineraries, searchId, timeout, supplierIndex,
+                    SaveSearchedPartialItinerariesToBufferCache(result.Itineraries, searchId, supplierIndex,
                         conditionsList.IndexOf(partialConditions));
                 });
             }, searchCancellation);
@@ -162,7 +162,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 searchCancellationSource.Cancel();
                 Parallel.ForEach(conditionsList,
                     partialConditions =>
-                        SaveSearchedPartialItinerariesToBufferCache(new List<FlightItinerary>(), searchId, timeout, supplierIndex, conditionsList.IndexOf(partialConditions)));
+                        SaveSearchedPartialItinerariesToBufferCache(new List<FlightItinerary>(), searchId, supplierIndex, conditionsList.IndexOf(partialConditions)));
             }
 
             var itinLists = GetSearchedPartialItinerariesFromBufferCache(searchId, supplierIndex);

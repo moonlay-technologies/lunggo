@@ -270,10 +270,28 @@ file: /Assets/travorama20/css/_page_flight.scss
                 }
                 .summary-bottom {
                     .summary-bottom-left {float:left; width:25%; border-right:$border-default; text-align:center; padding:10px;
-                        span {background:url(/Assets/images/flight-facilities-sprite2.png) no-repeat; display:inline-block;
-                            &.flight-baggage {width: 18px; background-position: -39px 0; text-align: center; color: #fff; position: relative; top: -3px; font-size: 8px; height: 16px; line-height: 20px;}
-                            &.flight-tax {width: 21px; background-position: -17px -1px; height: 14px;}
-                            &.flight-meal {width: 14px; height: 16px;}
+                        span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin-right: 5px;
+                            &.flight-baggage {   
+                                width: 20px;
+                                background-position: 0 -1px;
+                                text-align: center;
+                                color: #fff;
+                                position: relative;
+                                top: -3px;
+                                font-size: 8px;
+                                height: 18px;
+                                line-height: 21px;
+                            }
+                            &.flight-tax {
+                                width: 25px;
+                                background-position: -30px -2px;
+                                height: 16px;
+                            }
+                            &.flight-meal {
+                                width: 19px;
+                                height: 20px;
+                                background-position: -65px 0;        
+                            }
                         }
                     }
                     .summary-bottom-right {float:right; width:75%; text-align:right;
@@ -310,10 +328,28 @@ file: /Assets/travorama20/css/_page_flight.scss
                     .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px; padding-right:30px;}
                     .segment-airline-number {font-weight:600; color:$color-main-blue; font-size:12px;}
                     .flight-facility {display:block; padding-top:12px;
-                        span {background:url(/Assets/images/flight-facilities-sprite2.png) no-repeat; display:inline-block; margin:0 2px;
-                            &.flight-baggage {width: 18px; background-position: -39px 0; text-align: center; color: #fff; position: relative; top: -3px; font-size: 8px; height: 16px; line-height: 20px;}
-                            &.flight-tax {width: 21px; background-position: -17px -1px; height: 14px;}
-                            &.flight-meal {width: 14px; height: 16px;}
+                        span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin-right: 5px;
+                            &.flight-baggage {   
+                                width: 20px;
+                                background-position: 0 -1px;
+                                text-align: center;
+                                color: #fff;
+                                position: relative;
+                                top: -3px;
+                                font-size: 8px;
+                                height: 18px;
+                                line-height: 21px;
+                            }
+                            &.flight-tax {
+                                width: 25px;
+                                background-position: -30px -2px;
+                                height: 16px;
+                            }
+                            &.flight-meal {
+                                width: 19px;
+                                height: 20px;
+                                background-position: -65px 0;        
+                            }
                         }
                     }
                 }
@@ -435,10 +471,28 @@ file: /Assets/travorama20/css/_page_flight.scss
     }
     .summary-top-left-bottom.flight-facilities {
         padding: 10px;
-        span {background:url(/Assets/images/flight-facilities-sprite2.png) no-repeat; display:inline-block; margin:0 2px;
-            &.flight-baggage {width: 18px; background-position: -39px 0; text-align: center; color: #fff; position: relative; top: -3px; font-size: 8px; height: 16px; line-height: 20px;}
-            &.flight-tax {width: 21px; background-position: -17px -1px; height: 14px;}
-            &.flight-meal {width: 14px; height: 16px;}
+        span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin-right: 5px;
+            &.flight-baggage {   
+                width: 20px;
+                background-position: 0 -1px;
+                text-align: center;
+                color: #fff;
+                position: relative;
+                top: -3px;
+                font-size: 8px;
+                height: 18px;
+                line-height: 21px;
+            }
+            &.flight-tax {
+                width: 25px;
+                background-position: -30px -2px;
+                height: 16px;
+            }
+            &.flight-meal {
+                width: 19px;
+                height: 20px;
+                background-position: -65px 0;        
+            }
         }
     }
     .summary-top-right-top {padding: 24px 0;}
@@ -974,10 +1028,28 @@ file: /Assets/travorama20/css/_page_flight.scss
                             .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px;}
                             .segment-airline-number {font-weight:600; color:$color-main-blue; font-size:12px;}
                             .flight-facility {display:block; padding-top:12px;
-                                span {background:url(/Assets/images/flight-facilities-sprite2.png) no-repeat; display:inline-block; margin:0 2px;
-                                    &.flight-baggage {width: 18px; background-position: -39px 0; text-align: center; color: #fff; position: relative; top: -3px; font-size: 8px; height: 16px; line-height: 20px;}
-                                    &.flight-tax {width: 21px; background-position: -17px -1px; height: 14px;}
-                                    &.flight-meal {width: 14px; height: 16px;}
+                                span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin-right: 5px;
+                                    &.flight-baggage {   
+                                        width: 20px;
+                                        background-position: 0 -1px;
+                                        text-align: center;
+                                        color: #fff;
+                                        position: relative;
+                                        top: -3px;
+                                        font-size: 8px;
+                                        height: 18px;
+                                        line-height: 21px;
+                                    }
+                                    &.flight-tax {
+                                        width: 25px;
+                                        background-position: -30px -2px;
+                                        height: 16px;
+                                    }
+                                    &.flight-meal {
+                                        width: 19px;
+                                        height: 20px;
+                                        background-position: -65px 0;        
+                                    }
                                 }
                             }
                         }
