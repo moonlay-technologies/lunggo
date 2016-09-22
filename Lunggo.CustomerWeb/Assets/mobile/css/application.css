@@ -127,6 +127,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       top: 15px;
       left: 10px; }
     .site-header .header-display .site-logo {
+      height: 30px;
       margin-top: 15px; }
     .site-header .header-display .user-menu {
       background-position: 0 0;
@@ -135,7 +136,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .site-header .header-display .promo {
       background: url(/Assets/mobile/images/promo-logo-notif.png);
       left: auto;
-      right: 20px; }
+      right: 20px;
+      background-size: 100%;
+      background-repeat: no-repeat; }
     .site-header .header-display .flight-swap {
       background: url(/Assets/mobile/images/flight-swap.png);
       left: auto;
@@ -1319,31 +1322,45 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin: 0 auto 15px; }
   .page.page-home .carousel {
     border-bottom: 1px solid #dddddd; }
-    .page.page-home .carousel .item {
-      height: 200px;
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat; }
-      .page.page-home .carousel .item.img-1 {
-        background-image: url("/Assets/images/campaign/PromoBTN/PromoBTN-slider-app.jpg"); }
-  .page.page-home .carousel-control {
-    font-size: 16px;
-    text-shadow: none;
-    opacity: 0.3; }
-    .page.page-home .carousel-control.left, .page.page-home .carousel-control.right {
-      background-image: none; }
-    .page.page-home .carousel-control:hover, .page.page-home .carousel-control:focus {
+  .page.page-home .carousel-control.left, .page.page-home .carousel-control.right {
+    background-image: none; }
+  .page.page-home .carousel-control span.glyphicon {
+    background: rgba(0, 0, 0, 0.2) no-repeat 50% 50%;
+    width: 27px;
+    height: 27px;
+    border-radius: 27px; }
+  .page.page-home .carousel-control .glyphicon-chevron-right {
+    margin-right: -15px; }
+    .page.page-home .carousel-control .glyphicon-chevron-right:before {
+      background: url(/Assets/mobile/images/next.png) no-repeat;
+      display: block;
+      content: '';
+      width: 6px;
+      height: 11px;
+      margin-top: 8px;
+      margin-left: 11px; }
+  .page.page-home .carousel-control .glyphicon-chevron-left {
+    margin-left: -16px; }
+    .page.page-home .carousel-control .glyphicon-chevron-left:before {
+      background: url(/Assets/mobile/images/prev.png) no-repeat;
+      display: block;
+      content: '';
+      width: 6px;
+      height: 11px;
+      margin-top: 8px;
+      margin-left: 11px; }
+  .page.page-home .carousel-indicators {
+    margin-bottom: 0; }
+    .page.page-home .carousel-indicators li {
+      border: none;
+      width: 10px;
+      height: 10px;
+      margin: 0 3px;
+      background-color: #999;
+      opacity: 0.5; }
+    .page.page-home .carousel-indicators .active {
+      background-color: #2fb4e6;
       opacity: 1; }
-  .page.page-home .carousel-indicators li {
-    border: 2px solid #2eb4e7;
-    width: 12px;
-    height: 12px;
-    margin: 0;
-    background-color: #fff; }
-  .page.page-home .carousel-indicators .active {
-    background-color: #2eb4e7; }
-  .page.page-home .site-content a {
-    color: #999; }
   .page.page-home .mobile-banner .mb-container {
     margin: 0 auto;
     padding: 30px 0;

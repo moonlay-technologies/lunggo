@@ -21,32 +21,52 @@ $play-store: '../images/play-store.png';
     }
     .carousel {
         border-bottom: 1px solid #dddddd;
-        .item {
-            height: 200px;
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            &.img-1 {background-image: url('/Assets/images/campaign/PromoBTN/PromoBTN-slider-app.jpg');}
-        }
     }
     .carousel-control {
         &.left, &.right {background-image: none;}
-        &:hover, &:focus {opacity: 1;}
-        font-size: 16px;
-        text-shadow: none; 
-        opacity: 0.3;
-    }
-    .carousel-indicators {
-        li {
-            border: 2px solid #2eb4e7;
-            width: 12px;
-            height: 12px;
-            margin: 0;
-            background-color: #fff;
+        span.glyphicon {
+            background: rgba(0,0,0,.2) no-repeat 50% 50%;
+            width: 27px;
+            height: 27px;
+            border-radius: 27px;
         }
-        .active {background-color: #2eb4e7;}
+        .glyphicon-chevron-right { margin-right: -15px;
+            &:before {
+                background: url(/Assets/mobile/images/next.png) no-repeat;
+                display: block;
+                content: '';
+                width: 6px;
+                height: 11px;
+                margin-top: 8px;
+                margin-left: 11px;
+            }
+        }
+        .glyphicon-chevron-left { margin-left: -16px;
+            &:before {
+                background: url(/Assets/mobile/images/prev.png) no-repeat;
+                display: block;
+                content: '';
+                width: 6px;
+                height: 11px;
+                margin-top: 8px;
+                margin-left: 11px;
+            }
+        }
     }
-    .site-content a {color: #999;}
+    .carousel-indicators { margin-bottom: 0;
+        li {
+            border: none;
+            width: 10px;
+            height: 10px;
+            margin: 0 3px;
+            background-color: #999;
+            opacity: 0.5;
+        }
+        .active {
+            background-color: $color_main_blue;
+            opacity: 1;
+        }
+    }
     .mobile-banner { 
         .mb-container {
             margin: 0 auto;

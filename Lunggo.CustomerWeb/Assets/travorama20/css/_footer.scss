@@ -81,7 +81,7 @@ including in this file :
                 a.button {
                     &.btn-appstore {
                         background: url($app-store-cs) no-repeat;
-                        @include size(136px, 45px);
+                        @include size(128px, 45px);
                         display: inline-block;
                         pointer-events: none;
                         cursor: default;

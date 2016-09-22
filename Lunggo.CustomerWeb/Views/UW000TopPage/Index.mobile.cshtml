@@ -25,23 +25,17 @@
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        @*<ol class="carousel-indicators">
+        <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
             <li data-target="#myCarousel" data-slide-to="1"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <div class="mobile-banner">
-                    <div class="mb-container">
-                        <div class="banner-txt">Booking Tiket Mudah & Cepat</div>
-                        <div class="banner-button">
-                            <a href="https://play.google.com/store/apps/details?id=com.travorama&hl=en" class="button btn-playstore"></a>
-                            <a href="/" class="button btn-appstore"></a>
-                        </div>
-                    </div>
-                </div>
+                <a href="/"><img src="/Assets/images/banner/download-app-sc.jpg" alt="Download Applikasi Travorama!" /></a>
             </div>
-            <div class="item img-1"></div>
+            <div class="item">
+                <a href="/id/Promo/Btn"><img src="/Assets/images/campaign/PromoBTN/PromoBTN-slider-app.jpg" alt="Terbang Hemat Bersama BTN" /></a>
+            </div>
         </div>
         <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -50,8 +44,8 @@
         <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
             <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
-        </a>*@
-        <div class="mobile-banner">
+        </a>
+        @*<div class="mobile-banner">
             <div class="mb-container">
                 <div class="banner-txt">Booking Tiket Mudah & Cepat</div>
                 <div class="banner-button">
@@ -59,7 +53,7 @@
                     <a href="/" class="button btn-appstore"></a>
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
     <div class="form-wrapper">
         <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
