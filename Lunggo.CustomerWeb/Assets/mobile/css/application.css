@@ -127,6 +127,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       top: 15px;
       left: 10px; }
     .site-header .header-display .site-logo {
+      height: 30px;
       margin-top: 15px; }
     .site-header .header-display .user-menu {
       background-position: 0 0;
@@ -135,7 +136,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .site-header .header-display .promo {
       background: url(/Assets/mobile/images/promo-logo-notif.png);
       left: auto;
-      right: 20px; }
+      right: 20px;
+      background-size: 100%;
+      background-repeat: no-repeat; }
     .site-header .header-display .flight-swap {
       background: url(/Assets/mobile/images/flight-swap.png);
       left: auto;
@@ -804,7 +807,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding-top: 20px;
   height: 50px;
   color: #2fb4e6;
-  font-size: 22px; }
+  font-size: 15px;
+  line-height: 30px; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header:after {
     display: block;
     width: 100%;
@@ -831,7 +835,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar {
   width: 100%;
-  font-size: 15px; }
+  font-size: 13px; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-state-disabled {
     opacity: 0.3; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end a, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end span {
@@ -1086,6 +1090,24 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .accordion-wrapper .accordion-content.show > ol > li {
         margin-bottom: 10px; }
 
+.slider-price {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: #666; }
+  .slider-price .ui-slider-range {
+    background: #fed446; }
+  .slider-price .ui-slider-handle {
+    background: #dedede;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    border-radius: 20px;
+    width: 15px;
+    height: 15px;
+    color: #fff; }
+    .slider-price .ui-slider-handle:focus {
+      border: 0; }
+
 /*--------------------*/
 /*--------------------*/
 /* icon */
@@ -1319,31 +1341,50 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin: 0 auto 15px; }
   .page.page-home .carousel {
     border-bottom: 1px solid #dddddd; }
-    .page.page-home .carousel .item {
-      height: 200px;
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat; }
-      .page.page-home .carousel .item.img-1 {
-        background-image: url("/Assets/images/campaign/PromoBTN/PromoBTN-slider-app.jpg"); }
-  .page.page-home .carousel-control {
-    font-size: 16px;
-    text-shadow: none;
-    opacity: 0.3; }
-    .page.page-home .carousel-control.left, .page.page-home .carousel-control.right {
-      background-image: none; }
-    .page.page-home .carousel-control:hover, .page.page-home .carousel-control:focus {
+  .page.page-home .carousel-control.left, .page.page-home .carousel-control.right {
+    background-image: none; }
+  .page.page-home .carousel-control span.glyphicon {
+    background: rgba(0, 0, 0, 0.2) no-repeat 50% 50%;
+    width: 27px;
+    height: 27px;
+    border-radius: 27px; }
+  .page.page-home .carousel-control .glyphicon-chevron-right {
+    margin-right: -15px; }
+    .page.page-home .carousel-control .glyphicon-chevron-right:before {
+      background: url(/Assets/mobile/images/next.png) no-repeat;
+      display: block;
+      content: '';
+      width: 6px;
+      height: 11px;
+      margin-top: 8px;
+      margin-left: 11px; }
+  .page.page-home .carousel-control .glyphicon-chevron-left {
+    margin-left: -16px; }
+    .page.page-home .carousel-control .glyphicon-chevron-left:before {
+      background: url(/Assets/mobile/images/prev.png) no-repeat;
+      display: block;
+      content: '';
+      width: 6px;
+      height: 11px;
+      margin-top: 8px;
+      margin-left: 11px; }
+  .page.page-home .carousel-indicators {
+    margin-bottom: 0;
+    left: auto;
+    width: auto;
+    margin-left: 0;
+    right: 0;
+    margin-right: 5%; }
+    .page.page-home .carousel-indicators li {
+      border: none;
+      width: 8px;
+      height: 8px;
+      margin: 0 3px;
+      background-color: #999;
+      opacity: 0.5; }
+    .page.page-home .carousel-indicators .active {
+      background-color: #2fb4e6;
       opacity: 1; }
-  .page.page-home .carousel-indicators li {
-    border: 2px solid #2eb4e7;
-    width: 12px;
-    height: 12px;
-    margin: 0;
-    background-color: #fff; }
-  .page.page-home .carousel-indicators .active {
-    background-color: #2eb4e7; }
-  .page.page-home .site-content a {
-    color: #999; }
   .page.page-home .mobile-banner .mb-container {
     margin: 0 auto;
     padding: 30px 0;
@@ -1451,14 +1492,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       width: 50px;
       height: 20px; }
 
-.page.page-flight .flight-sort-filter .flight-sort-filter-action {
+.page.page-flight .tab-filter .flight-sort-filter-action, .page.page-flight .flight-sort-filter .flight-sort-filter-action {
   background: #616161; }
-  .page.page-flight .flight-sort-filter .flight-sort-filter-action:after {
+  .page.page-flight .tab-filter .flight-sort-filter-action:after, .page.page-flight .flight-sort-filter .flight-sort-filter-action:after {
     display: block;
     width: 100%;
     content: "";
     clear: both; }
-  .page.page-flight .flight-sort-filter .flight-sort-filter-action a {
+  .page.page-flight .tab-filter .flight-sort-filter-action a, .page.page-flight .flight-sort-filter .flight-sort-filter-action a {
     float: left;
     color: #fff;
     text-align: center;
@@ -1466,7 +1507,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 50%;
     font-weight: bold;
     padding: 15px 0; }
-  .page.page-flight .flight-sort-filter .flight-sort-filter-action a + a {
+  .page.page-flight .tab-filter .flight-sort-filter-action a + a, .page.page-flight .flight-sort-filter .flight-sort-filter-action a + a {
     border-left: 1px solid #8f8f8f; }
 
 .page.page-flight .flight-notice {
@@ -1853,8 +1894,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           -ms-border-radius: 2px;
           border-radius: 2px; }
 
-.overlay--flight-filter .overlay__content .filter-group {
+.overlay--flight-filter .overlay__content .filter-container {
   padding: 12px; }
+
+.overlay--flight-filter .overlay__content .filter-group {
+  padding: 15px 12px; }
   .overlay--flight-filter .overlay__content .filter-group label {
     font-weight: normal; }
   .overlay--flight-filter .overlay__content .filter-group + .filter-group {
@@ -1863,7 +1907,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin-bottom: 12px; }
     .overlay--flight-filter .overlay__content .filter-group .filter-group__header .filter-group__title {
       margin: 0;
-      font-weight: normal; }
+      font-weight: 700;
+      font-size: 12px; }
   .overlay--flight-filter .overlay__content .filter-group .filter-group__content label {
     display: block;
     padding: 12px 0; }
@@ -1871,6 +1916,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       border-top: 1px solid #ccc; }
   .overlay--flight-filter .overlay__content .filter-group .filter-group__content input[type="checkbox"] {
     float: right; }
+  .overlay--flight-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal {
+    -webkit-border-radius: 1px 1px 1px #666;
+    -moz-border-radius: 1px 1px 1px #666;
+    -ms-border-radius: 1px 1px 1px #666;
+    box-shadow: 1px 1px 1px #666; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal .ui-slider-handle {
+      -webkit-border-radius: 1px 1px 1px #666;
+      -moz-border-radius: 1px 1px 1px #666;
+      -ms-border-radius: 1px 1px 1px #666;
+      box-shadow: 1px 1px 1px #666;
+      background: #fff; }
   .overlay--flight-filter .overlay__content .filter-group.filter-group--airline label img {
     height: 30px;
     margin-right: 10px; }
@@ -1885,8 +1941,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 50%;
     border: 0;
     margin-bottom: 0;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 6px 0;
     position: relative; }
     .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label .switch {
       float: left;
@@ -1897,7 +1952,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       border: 3px solid #fff;
       position: absolute;
       top: 50%;
-      margin-top: -10px; }
+      margin-top: -10px;
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      -ms-border-radius: 20px;
+      border-radius: 20px; }
     .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label input {
       display: none; }
     .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label span {
@@ -2207,7 +2266,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .flight-facility span {
     background: url(/Assets/images/flight-facilities-sprite.png) no-repeat;
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 5px;
     float: right; }
     .flight-facility span.flight-baggage {
       width: 20px;

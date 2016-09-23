@@ -206,6 +206,7 @@
 
             <div class="container" ng-hide="!flightList.length && loading && loadingFlight">
                 <h3><b>HASIL</b> PENCARIAN</h3>
+               
             </div>
             <div class="search-result-filter" @*ng-show="Progress == 100"*@>
                 <div class="container">
@@ -289,6 +290,9 @@
                                         </div>
                                     </div>
                                 </div>
+                              
+                                    {{$scope.airlineFilterParam.selected}}
+                                
                             </div>
                             <div id="filter-time" class="filter-time">
                                 <div class="close-filter">X</div>
@@ -361,7 +365,7 @@
             
             <div class="search-result-list">
                 <div class="container">
-                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (flightActive == flight.IndexNo || priceActiveIndex == flight.IndexNo) }" id="flight-{{flight.IndexNo}}" ng-repeat="flight in flightList | filter:availableFilter | filter:stopFilter | filter:timeFilter | filter:airlineFilter | filter: priceFilter| orderBy:sort.value:sort.reverse">
+                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (flightActive == flight.IndexNo || priceActiveIndex == flight.IndexNo) }" id="flight-{{flight.IndexNo}}" ng-repeat="flight in flightList | filter:availableFilter | filter:stopFilter | filter:timeFilter | filter:airlineFilter |  orderBy:sort.value:sort.reverse">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">

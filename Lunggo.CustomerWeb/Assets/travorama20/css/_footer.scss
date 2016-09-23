@@ -80,11 +80,9 @@ including in this file :
                 margin: 12px 0;
                 a.button {
                     &.btn-appstore {
-                        background: url($app-store-cs) no-repeat;
-                        @include size(136px, 45px);
+                        background: url($app-store-bg) no-repeat;
+                        @include size(128px, 45px);
                         display: inline-block;
-                        pointer-events: none;
-                        cursor: default;
                     } 
                     &.btn-playstore {
                         background: url($play-store-bg) no-repeat;

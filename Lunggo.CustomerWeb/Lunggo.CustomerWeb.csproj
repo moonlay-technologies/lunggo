@@ -659,6 +659,8 @@
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
+    <Content Include="Assets\images\banner\download-app-sc.jpg" />
+    <Content Include="Assets\images\banner\download-app.jpg" />
     <Content Include="Assets\images\banner\standard-web-banner.jpg" />
     <Content Include="Assets\images\bca-logo.jpg" />
     <Content Include="Assets\images\bed-bg.png" />
@@ -707,7 +709,6 @@
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-app.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-bg.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider.jpg" />
-    <Content Include="Assets\images\flight-facilities-sprite2.png" />
     <Content Include="Assets\images\global-error.jpg" />
     <Content Include="Assets\images\logo-travorama-sm.png" />
     <Content Include="Assets\images\logo-travorama.png" />
@@ -716,7 +717,9 @@
     <Content Include="Assets\mobile\images\burger-button.png" />
     <Content Include="Assets\mobile\images\flight-separators.png" />
     <Content Include="Assets\mobile\images\mobile-app.png" />
+    <Content Include="Assets\mobile\images\next.png" />
     <Content Include="Assets\mobile\images\play-store.png" />
+    <Content Include="Assets\mobile\images\prev.png" />
     <Content Include="Assets\mobile\images\promo-logo-notif.png" />
     <Content Include="Assets\mobile\js\PromoController.js" />
     <Content Include="Assets\travorama20\css\global-error.css">

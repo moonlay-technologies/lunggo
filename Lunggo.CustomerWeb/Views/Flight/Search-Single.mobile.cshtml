@@ -135,7 +135,7 @@
         <a ng-click="PageConfig.SetOverlay('flight-form');" class="summary-right"><span>GANTI</span></a>
     </section><!-- .flight-summary -->
 
-    <section class="flight-sort-filter" ng-show="FlightConfig[0].FlightRequest.Progress == 100">
+    <section class="flight-sort-filter" @*ng-show="FlightConfig[0].FlightRequest.Progress == 100"*@>
         <div class="flight-sort-filter-action">
             <a ng-click="PageConfig.SetOverlay('flight-filter')">FILTER</a>
             <a ng-click="PageConfig.SetOverlay('flight-sort')">SORTIR</a>
@@ -328,7 +328,7 @@
                     <h4 class="filter-group__title">Berdasarkan Harga:</h4>
                  </div>
                 <div class="filter-group__content">
-                    <div class="slider price-slider" id="price-slider"></div>
+                    <div class="slider-price price-slider" id="price-slider"></div>
                     <div class="slider-minmax">
                         <span>Rp {{priceFilterParam.current[0] | number}}</span>
                         <span class="pull-right">Rp {{priceFilterParam.current[1] | number}}</span>

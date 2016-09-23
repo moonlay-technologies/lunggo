@@ -495,7 +495,7 @@
                 <div class="container">
                     @*| filter:airlineFilter('departure') | filter:priceFilter('departure')*@
                     <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (departureFlightConfig.activeFlight == flight.IndexNo || departureFlightConfig.activePrice == flight.IndexNo) }"
-                         ng-repeat="flight in departureFlight = (departureFlightConfig.flightList | filter:priceFilter('departure') | filter: airlineFilter('departure') | filter:availableFilter() | filter:transitFilter('departure')  | filter:timeFilter('departure') | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse)" id="flight-{{flight.IndexNo}}">
+                         ng-repeat="flight in departureFlight = (departureFlightConfig.flightList |  filter: airlineFilter('departure') | filter:availableFilter() | filter:transitFilter('departure')  | filter:timeFilter('departure') | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse)" id="flight-{{flight.IndexNo}}">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">
