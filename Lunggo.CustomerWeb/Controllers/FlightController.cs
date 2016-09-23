@@ -148,7 +148,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     RsvNo = rsvNo,
                     Reservation = reservation,
-                    TimeLimit = reservation.Payment.TimeLimit,
+                    TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault(),
                     //SavedCreditCards = savedCreditCards
                 });
 
@@ -216,7 +216,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     RsvNo = rsvNo,
                     FinalPrice = reservation.Payment.FinalPrice,
-                    TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault()
+                    TimeLimit = reservation.Payment.TimeLimit
                 });*/
                 var service = FlightService.GetInstance();
                 var summary = service.GetReservationForDisplay(rsvNo);

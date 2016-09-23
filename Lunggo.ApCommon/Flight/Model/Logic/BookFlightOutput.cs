@@ -11,13 +11,13 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public FlightItineraryForDisplay NewItinerary { get; set; }
         public decimal? NewPrice { get; set; }
         public string RsvNo { get; set; }
-        public DateTime? TimeLimit { get; set; }
+        public DateTime TimeLimit { get; set; }
     }
 
     public class BookResult
     {
         public bool IsSuccess { get; set; }
         public RevalidateFlightOutputSet RevalidateSet { get; set; }
-        public DateTime? TimeLimit { get; set; }
+        public DateTime TimeLimit { get; set; }
     }
 }

@@ -28,26 +28,32 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
+            var rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+            var email = userManager.GetEmail(request.UserId);
             var isConfirmed = userManager.IsEmailConfirmed(request.UserId);
+            var isPasswordSet = userManager.HasPassword(request.UserId);
             //var queueService = QueueService.GetInstance();
             //var queue = queueService.GetQueueByReference("GetCalendar");
             //queue.AddMessage(new CloudQueueMessage(userId));
 
             if (isConfirmed)
             {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERACON02"
-                };
+                return isPasswordSet
+                    ? new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.Accepted
+                    }
+                    : new ConfirmEmailApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        RedirectionUrl = rootUrl + "/id/Account/ResetPassword?email=" + email
+                    };
             }
 
             var result = userManager.ConfirmEmail(request.UserId, request.Code);
-            var email = userManager.GetEmail(request.UserId);
             if (result.Succeeded)
             {
                 userManager.AddToRole(request.UserId, "Customer");
-                var rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
                 return new ConfirmEmailApiResponse
                 {
                     StatusCode = HttpStatusCode.OK,

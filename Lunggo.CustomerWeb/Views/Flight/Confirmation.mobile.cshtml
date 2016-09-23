@@ -29,7 +29,7 @@
     }
 }
 @{
-    DateTime timelimit = (DateTime)Model.Payment.TimeLimit;
+    var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
     FlightSegment prevSegment = null;
 }
 
