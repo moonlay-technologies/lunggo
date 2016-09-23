@@ -1163,12 +1163,10 @@ including in this file :
       .site-footer-menu .web-banner .menu-right .banner-button {
         margin: 12px 0; }
         .site-footer-menu .web-banner .menu-right .banner-button a.button.btn-appstore {
-          background: url("../images/app-store-cs.png") no-repeat;
+          background: url("../images/app-store-bg.png") no-repeat;
           width: 128px;
           height: 45px;
-          display: inline-block;
-          pointer-events: none;
-          cursor: default; }
+          display: inline-block; }
         .site-footer-menu .web-banner .menu-right .banner-button a.button.btn-playstore {
           background: url("../images/play-store-bg.png") no-repeat;
           width: 128px;

@@ -807,7 +807,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding-top: 20px;
   height: 50px;
   color: #2fb4e6;
-  font-size: 22px; }
+  font-size: 15px;
+  line-height: 30px; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header:after {
     display: block;
     width: 100%;
@@ -834,7 +835,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar {
   width: 100%;
-  font-size: 15px; }
+  font-size: 13px; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-state-disabled {
     opacity: 0.3; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end a, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-week-end span {
@@ -1350,11 +1351,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       margin-top: 8px;
       margin-left: 11px; }
   .page.page-home .carousel-indicators {
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    left: auto;
+    width: auto;
+    margin-left: 0;
+    right: 0;
+    margin-right: 5%; }
     .page.page-home .carousel-indicators li {
       border: none;
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       margin: 0 3px;
       background-color: #999;
       opacity: 0.5; }
@@ -2224,7 +2230,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .flight-facility span {
     background: url(/Assets/images/flight-facilities-sprite.png) no-repeat;
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 5px;
     float: right; }
     .flight-facility span.flight-baggage {
       width: 20px;

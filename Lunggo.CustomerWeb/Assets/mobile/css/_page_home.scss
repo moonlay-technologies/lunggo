@@ -53,11 +53,17 @@ $play-store: '../images/play-store.png';
             }
         }
     }
-    .carousel-indicators { margin-bottom: 0;
+    .carousel-indicators { 
+        margin-bottom: 0;
+        left: auto; 
+        width: auto; 
+        margin-left: 0; 
+        right: 0;
+        margin-right: 5%;
         li {
             border: none;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             margin: 0 3px;
             background-color: #999;
             opacity: 0.5;

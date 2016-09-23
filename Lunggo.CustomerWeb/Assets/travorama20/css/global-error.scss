@@ -33,7 +33,7 @@
         }
         a.btn.btn-yellow {
             background: #ffd632;
-            font-size: 14px;
+            font-size: 15px;
             text-transform: uppercase;
             color: #000;
             font-weight: 700;
@@ -75,12 +75,14 @@
                 margin: 30px 0;
             }
             a.btn.btn-yellow {
-                font-size: 11px;
+                background: #ffd632;
+                font-size: 15px;
+                text-transform: uppercase;
+                color: #000;
                 font-weight: 700;
-                padding: 8px 10px;
-                border: none;
-                width: 100%;
-                letter-spacing: 0;
+                letter-spacing: 0.5px;
+                padding: 10px;
+                height: 40px;
             }
         }
     }

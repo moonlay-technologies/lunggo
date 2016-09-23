@@ -662,7 +662,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             padding-top:20px; 
             height:50px;
             color:$color-main-blue; 
-            font-size:22px; 
+            font-size: 15px; 
+            line-height: 30px;
             @include clearfix();
             .ui-datepicker-month {
                 font-weight:bold; 
@@ -687,7 +688,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
         .ui-datepicker-calendar {
             width:100%; 
-            font-size: 15px;
+            font-size: 13px;
             .ui-state-disabled {opacity:0.3;}
             .ui-datepicker-week-end {
                 a, span {color:$color-orange;}
