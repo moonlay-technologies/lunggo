@@ -1090,6 +1090,24 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .accordion-wrapper .accordion-content.show > ol > li {
         margin-bottom: 10px; }
 
+.slider-price {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: #666; }
+  .slider-price .ui-slider-range {
+    background: #fed446; }
+  .slider-price .ui-slider-handle {
+    background: #dedede;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    border-radius: 20px;
+    width: 15px;
+    height: 15px;
+    color: #fff; }
+    .slider-price .ui-slider-handle:focus {
+      border: 0; }
+
 /*--------------------*/
 /*--------------------*/
 /* icon */
@@ -1474,14 +1492,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       width: 50px;
       height: 20px; }
 
-.page.page-flight .flight-sort-filter .flight-sort-filter-action {
+.page.page-flight .tab-filter .flight-sort-filter-action, .page.page-flight .flight-sort-filter .flight-sort-filter-action {
   background: #616161; }
-  .page.page-flight .flight-sort-filter .flight-sort-filter-action:after {
+  .page.page-flight .tab-filter .flight-sort-filter-action:after, .page.page-flight .flight-sort-filter .flight-sort-filter-action:after {
     display: block;
     width: 100%;
     content: "";
     clear: both; }
-  .page.page-flight .flight-sort-filter .flight-sort-filter-action a {
+  .page.page-flight .tab-filter .flight-sort-filter-action a, .page.page-flight .flight-sort-filter .flight-sort-filter-action a {
     float: left;
     color: #fff;
     text-align: center;
@@ -1489,7 +1507,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 50%;
     font-weight: bold;
     padding: 15px 0; }
-  .page.page-flight .flight-sort-filter .flight-sort-filter-action a + a {
+  .page.page-flight .tab-filter .flight-sort-filter-action a + a, .page.page-flight .flight-sort-filter .flight-sort-filter-action a + a {
     border-left: 1px solid #8f8f8f; }
 
 .page.page-flight .flight-notice {
@@ -1876,8 +1894,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           -ms-border-radius: 2px;
           border-radius: 2px; }
 
-.overlay--flight-filter .overlay__content .filter-group {
+.overlay--flight-filter .overlay__content .filter-container {
   padding: 12px; }
+
+.overlay--flight-filter .overlay__content .filter-group {
+  padding: 15px 12px; }
   .overlay--flight-filter .overlay__content .filter-group label {
     font-weight: normal; }
   .overlay--flight-filter .overlay__content .filter-group + .filter-group {
@@ -1886,7 +1907,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin-bottom: 12px; }
     .overlay--flight-filter .overlay__content .filter-group .filter-group__header .filter-group__title {
       margin: 0;
-      font-weight: normal; }
+      font-weight: 700;
+      font-size: 12px; }
   .overlay--flight-filter .overlay__content .filter-group .filter-group__content label {
     display: block;
     padding: 12px 0; }
@@ -1894,6 +1916,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       border-top: 1px solid #ccc; }
   .overlay--flight-filter .overlay__content .filter-group .filter-group__content input[type="checkbox"] {
     float: right; }
+  .overlay--flight-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal {
+    -webkit-border-radius: 1px 1px 1px #666;
+    -moz-border-radius: 1px 1px 1px #666;
+    -ms-border-radius: 1px 1px 1px #666;
+    box-shadow: 1px 1px 1px #666; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal .ui-slider-handle {
+      -webkit-border-radius: 1px 1px 1px #666;
+      -moz-border-radius: 1px 1px 1px #666;
+      -ms-border-radius: 1px 1px 1px #666;
+      box-shadow: 1px 1px 1px #666;
+      background: #fff; }
   .overlay--flight-filter .overlay__content .filter-group.filter-group--airline label img {
     height: 30px;
     margin-right: 10px; }
@@ -1908,8 +1941,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 50%;
     border: 0;
     margin-bottom: 0;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 6px 0;
     position: relative; }
     .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label .switch {
       float: left;
@@ -1920,7 +1952,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       border: 3px solid #fff;
       position: absolute;
       top: 50%;
-      margin-top: -10px; }
+      margin-top: -10px;
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      -ms-border-radius: 20px;
+      border-radius: 20px; }
     .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label input {
       display: none; }
     .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label span {

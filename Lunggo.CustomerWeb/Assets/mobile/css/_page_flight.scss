@@ -147,21 +147,15 @@
                 input[type="checkbox"] {float:right;}
             }
             // price filter
-            /*&.filter-group--price {
+            &.filter-group--price {
                 .ui-slider-horizontal {
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                    background: #666;
-                    .ui-slider-range {background: #fed446;}
+                    @include box-shadow(1px 1px 1px #666);
                     .ui-slider-handle {
-                        @include border-radius(15px);
                         @include box-shadow(1px 1px 1px #666);
-                        width: 15px;
-                        height: 15px;
                         background: #fff;
                     }
                 }
-            }*/
+            }
             // airline filter
             &.filter-group--airline {
                 label {

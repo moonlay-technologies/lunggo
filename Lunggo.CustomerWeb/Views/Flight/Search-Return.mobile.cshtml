@@ -125,7 +125,7 @@
             <input type="text" name="Token" id="fareToken" class="fareToken" value="" />
         </form>
 
-    <div class="flight-loading" ng-hide="$scope.FlightConfig[0].FlightRequest.Progress == 100">
+    <div class="flight-loading" ng-hide="FlightConfig[0].FlightRequest.Progress == 100 && FlightConfig[1].FlightRequest.Progress == 100">
         <div class="flight-progress" style="width:{{FlightConfig[0].FlightRequest.Progress}}%;"></div>
     </div><!-- .flight-loading -->
 
@@ -144,14 +144,14 @@
         </section><!-- .flight-summary -->
 
     @*&& FlightConfig[0].FlightRequest.Progress == 100*@
-    <section class="flight-sort-filter flight-sort-filter--departure" ng-show="PageConfig.ActiveSection == 'departure' && FlightConfig[0].FlightRequest.Progress == 100">
+    <section class="flight-sort-filter flight-sort-filter--departure" ng-show="PageConfig.ActiveSection == 'departure'">
         <div class="flight-sort-filter-action">
             <a ng-click="SetOverlay('flight-filter-departure')">FILTER</a>
             <a ng-click="SetOverlay('flight-sort-departure')">SORTIR</a>
         </div>
     </section><!-- .flight-sort -->
 
-    <section class="flight-sort-filter flight-sort-filter--return" ng-show="PageConfig.ActiveSection == 'return' &&  FlightConfig[1].FlightRequest.Progress == 100">
+    <section class="flight-sort-filter flight-sort-filter--return" ng-show="PageConfig.ActiveSection == 'return'">
         <div class="flight-sort-filter-action">
             <a ng-click="SetOverlay('flight-filter-return')">FILTER</a>
             <a ng-click="SetOverlay('flight-sort-return')">SORTIR</a>
@@ -665,7 +665,7 @@
                         <h4 class="filter-group__title">Berdasarkan Harga</h4>
                     </div>
                     <div class="filter-group__content">
-                        <div class="slider departure-price-slider" id="departure-price-slider"></div>
+                        <div class="slider-price departure-price-slider" id="departure-price-slider"></div>
                         <div class="slider-minmax">
                             <span>Rp {{FlightConfig[0].FlightFilter.Price.current[0] | number}}</span>
                             <span class="pull-right">Rp {{FlightConfig[0].FlightFilter.Price.current[1] | number}}</span>
@@ -804,7 +804,7 @@
                         <h4 class="filter-group__title">Berdasarkan Harga</h4>
                     </div>
                     <div class="filter-group__content">
-                        <div class="slider return-price-slider" id="return-price-slider"></div>
+                        <div class="slider-price return-price-slider" id="return-price-slider"></div>
                         <div class="slider-minmax">
                             <span>Rp {{FlightConfig[1].FlightFilter.Price.current[0] | number}}</span>
                             <span class="pull-right">Rp {{FlightConfig[1].FlightFilter.Price.current[1] | number}}</span>
