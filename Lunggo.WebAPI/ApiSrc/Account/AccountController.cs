@@ -47,16 +47,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("v1/login")]
         public ApiResponseBase Login()
         {
+            LoginApiRequest request = null;
             try
             {
-                var a = Request.Content.ReadAsStringAsync().Result;
-                var request = a.Deserialize<LoginApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<LoginApiRequest>();
                 var apiResponse = AccountLogic.Login(request);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -66,15 +66,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("v1/register")]
         public ApiResponseBase Register()
         {
+            RegisterApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<RegisterApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<RegisterApiRequest>();
                 var apiResponse = AccountLogic.Register(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -84,15 +85,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("v1/resendconfirmationemail")]
         public ApiResponseBase ResendConfirmationEmail()
         {
+            ResendConfirmationEmailApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ResendConfirmationEmailApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<ResendConfirmationEmailApiRequest>();
                 var apiResponse = AccountLogic.ResendConfirmationEmail(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -102,15 +104,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("v1/forgot")]
         public ApiResponseBase ForgotPassword()
         {
+            ForgotPasswordApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ForgotPasswordApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<ForgotPasswordApiRequest>();
                 var apiResponse = AccountLogic.ForgotPassword(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -120,15 +123,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("v1/profile")]
         public ApiResponseBase ChangeProfile()
         {
+            ChangeProfileApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangeProfileApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<ChangeProfileApiRequest>();
                 var apiResponse = AccountLogic.ChangeProfile(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -155,15 +159,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("v1/changepassword")]
         public ApiResponseBase ChangePassword()
         {
+            ChangePasswordApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ChangePasswordApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<ChangePasswordApiRequest>();
                 var apiResponse = AccountLogic.ChangePassword(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -173,15 +178,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("v1/resetpassword")]
         public ApiResponseBase ResetPassword()
         {
+            ResetPasswordApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<ResetPasswordApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<ResetPasswordApiRequest>();
                 var apiResponse = AccountLogic.ResetPassword(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -191,16 +197,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("v1/confirmemail")]
         public ApiResponseBase ConfirmEmail()
         {
+            ConfirmEmailApiRequest request = null;
             try
             {
-                var a = Request.Content.ReadAsStringAsync().Result;
-                var request = a.Deserialize<ConfirmEmailApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<ConfirmEmailApiRequest>();
                 var apiResponse = AccountLogic.ConfirmEmail(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 

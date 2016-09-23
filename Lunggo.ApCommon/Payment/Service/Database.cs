@@ -142,8 +142,8 @@ namespace Lunggo.ApCommon.Payment.Service
                     DiscountNominal = discountNominal,
                     UniqueCode = uniqueCode,
                     FinalPriceIdr = finalPriceIdr,
-                    LocalCurrencyCd = localCurrency.Symbol,
-                    LocalRate = localCurrency.Rate,
+                    LocalCurrencyCd = localCurrency != null ? localCurrency.Symbol : null,
+                    LocalRate = localCurrency != null ? localCurrency.Rate : (decimal?) null,
                     LocalFinalPrice = localFinalPrice,
                     InvoiceNo = invoiceNo
                 };
