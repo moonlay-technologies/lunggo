@@ -106,7 +106,7 @@ app.controller('returnFlightController', [
             },
             flightSort: {
                 label: 'price',
-                value: 'originalAdultFare',
+                value: 'netAdultFare',
                 reverse: false
             },
             activeFlight: -1,
@@ -156,7 +156,7 @@ app.controller('returnFlightController', [
             },
             flightSort: {
                 label: 'price',
-                value: 'originalAdultFare',
+                value: 'netAdultFare',
                 reverse: false
             },
             activeFlight: -1,
@@ -587,7 +587,7 @@ app.controller('returnFlightController', [
                     targetFlight.flightSort.value = 'trips[0].totalDuration';
                     break;
                 case 'price':
-                    targetFlight.flightSort.value = 'originalAdultFare';
+                    targetFlight.flightSort.value = 'netAdultFare';
                     break;
             }
         }
@@ -664,7 +664,7 @@ app.controller('returnFlightController', [
             targetScope.flightFilter.airline.value = [];
             for (var i = 0; i < targetScope.flightFilter.airline.list.length; i++) {
                 if (targetScope.flightFilter.airline.list[i].checked == true) {
-                    targetScope.flightFilter.airline.value.push(targetScope.flightFilter.airline.list[i].code);
+                    targetScope.flightFilter.airline.value.push(targetScope.flightFilter.airline.list[i].name);
                 }
             }
         }
@@ -735,7 +735,7 @@ app.controller('returnFlightController', [
                 targetScope.flightList[i].AirlinesTag = [];
                 for (var x = 0; x < targetScope.flightList[i].trips[0].airlines.length; x++) {
                     targetScope.flightFilter.airline.airlines.push(targetScope.flightList[i].trips[0].airlines[x]);
-                    targetScope.flightList[i].AirlinesTag.push(targetScope.flightList[i].trips[0].airlines[x].code);
+                    targetScope.flightList[i].AirlinesTag.push(targetScope.flightList[i].trips[0].airlines[x].name);
                 }
 
             }
@@ -743,13 +743,13 @@ app.controller('returnFlightController', [
             //var dupes = {};
             $.each(targetScope.flightFilter.airline.airlines, function (i, el) {
                 if (v == 'departure') {
-                    if (!$scope.dupes.departure[el.code]) {
-                        $scope.dupes.departure[el.code] = true;
+                    if (!$scope.dupes.departure[el.name]) {
+                        $scope.dupes.departure[el.name] = true;
                         targetScope.flightFilter.airline.list.push(el);
                     }
                 } else {
-                    if (!$scope.dupes.ret[el.code]) {
-                        $scope.dupes.ret[el.code] = true;
+                    if (!$scope.dupes.ret[el.name]) {
+                        $scope.dupes.ret[el.name] = true;
                         targetScope.flightFilter.airline.list.push(el);
                     }
                 }

@@ -120,14 +120,14 @@
             },
             FlightSort: {
                 Label: 'price',
-                Value: 'originalAdultFare',
+                Value: 'netAdultFare',
                 Invert: false,
                 Set: function(sortBy, invert) {
                     $scope.FlightConfig[0].FlightSort.Label = sortBy;
                     $scope.FlightConfig[0].FlightSort.Invert = invert;
                     switch (sortBy) {
                         case 'price':
-                            $scope.FlightConfig[0].FlightSort.Value = 'originalAdultFare';
+                            $scope.FlightConfig[0].FlightSort.Value = 'netAdultFare';
                             break;
                         case 'duration':
                             $scope.FlightConfig[0].FlightSort.Value = 'trips[0].totalDuration';
@@ -182,14 +182,14 @@
             },
             FlightSort: {
                 Label: 'price',
-                Value: 'originalAdultFare',
+                Value: 'netAdultFare',
                 Invert: false,
                 Set: function (sortBy, invert) {
                     $scope.FlightConfig[1].FlightSort.Label = sortBy;
                     $scope.FlightConfig[1].FlightSort.Invert = invert;
                     switch (sortBy) {
                         case 'price':
-                            $scope.FlightConfig[1].FlightSort.Value = 'originalAdultFare';
+                            $scope.FlightConfig[1].FlightSort.Value = 'netAdultFare';
                             break;
                         case 'duration':
                             $scope.FlightConfig[1].FlightSort.Value = 'trips[0].totalDuration';
@@ -342,7 +342,7 @@
             }
         }
 
-        if (targetScope.FlightRequest.Progress == 100) {
+        //if (targetScope.FlightRequest.Progress == 100) {
 
             // start expiry date
             $scope.PageConfig.ExpiryDate.Start();
@@ -350,13 +350,13 @@
             // loop the result
             for (var i = 0; i < targetScope.FlightList.length; i++) {
                 // populate prices
-                targetScope.FlightFilter.Price.prices.push(targetScope.FlightList[i].originalAdultFare);
+                targetScope.FlightFilter.Price.prices.push(targetScope.FlightList[i].netAdultFare);
 
                 // populate airline code
                 targetScope.FlightList[i].AirlinesTag = [];
                 for (var x = 0; x < targetScope.FlightList[i].trips[0].airlines.length; x++) {
                     targetScope.FlightFilter.Airline.push(targetScope.FlightList[i].trips[0].airlines[x]);
-                    targetScope.FlightList[i].AirlinesTag.push(targetScope.FlightList[i].trips[0].airlines[x].code);
+                    targetScope.FlightList[i].AirlinesTag.push(targetScope.FlightList[i].trips[0].airlines[x].name);
                 }
             }
 
@@ -414,15 +414,15 @@
             var dupes = {};
             var Airlines = [];
             $.each(targetScope.FlightFilter.Airline, function (i, el) {
-                if (!dupes[el.code]) {
-                    dupes[el.code] = true;
+                if (!dupes[el.name]) {
+                    dupes[el.name] = true;
                     Airlines.push(el);
                 }
             });
             targetScope.FlightFilter.Airline = Airlines;
             Airlines = [];
         }
-    }
+    //}
 
     // get  flight
     $scope.FlightFunctions.GetFlight = function (targetScope) {
@@ -551,7 +551,7 @@
         for (var i = 0; i < targetScope.FlightList.length; i++) {
             targetScope.FlightList[i].AirlinesTag = [];
             for (var x = 0; x < targetScope.FlightList[i].trips[0].airlines.length; x++) {
-                targetScope.FlightList[i].AirlinesTag.push(targetScope.FlightList[i].trips[0].airlines[x].code);
+                targetScope.FlightList[i].AirlinesTag.push(targetScope.FlightList[i].trips[0].airlines[x].name);
                 targetScope.FlightFilter.Airline.push(targetScope.FlightList[i].trips[0].airlines[x]);
             }
         }
@@ -559,8 +559,8 @@
         var dupes = {};
         var Airlines = [];
         $.each(targetScope.FlightFilter.Airline, function (i, el) {
-            if (!dupes[el.code]) {
-                dupes[el.code] = true;
+            if (!dupes[el.name]) {
+                dupes[el.name] = true;
                 Airlines.push(el);
             }
         });
@@ -760,11 +760,11 @@
     $scope.priceFilter = function(targetFlight) {
         return function (flight) {
             if (targetFlight == 'departure') {
-                if (flight.originalAdultFare >= $scope.FlightConfig[0].FlightFilter.Price.current[0] && flight.originalAdultFare <= $scope.FlightConfig[0].FlightFilter.Price.current[1]) {
+                if (flight.netAdultFare >= $scope.FlightConfig[0].FlightFilter.Price.current[0] && flight.netAdultFare <= $scope.FlightConfig[0].FlightFilter.Price.current[1]) {
                     return flight;
                 }
             } else {
-                if (flight.originalAdultFare >= $scope.FlightConfig[1].FlightFilter.Price.current[0] && flight.originalAdultFare <= $scope.FlightConfig[1].FlightFilter.Price.current[1]) {
+                if (flight.netAdultFare >= $scope.FlightConfig[1].FlightFilter.Price.current[0] && flight.netAdultFare <= $scope.FlightConfig[1].FlightFilter.Price.current[1]) {
                     return flight;
                 }
             }        
@@ -893,13 +893,13 @@
         }
         for (var i = 0; i < targetScope.FlightFilter.Airline.length; i++) {
             if (!targetScope.FlightFilter.Airline[i].Checked) {
-                targetScope.FlightFilter.AirlineSelected.push(targetScope.FlightFilter.Airline[i].code);
+                targetScope.FlightFilter.AirlineSelected.push(targetScope.FlightFilter.Airline[i].name);
             }
         }
 
         if (targetScope.FlightFilter.AirlineSelected.length == 0) {
             for (var x = 0; x < targetScope.FlightFilter.Airline.length; x++) {
-                targetScope.FlightFilter.AirlineSelected.push(targetScope.FlightFilter.Airline[x].code);
+                targetScope.FlightFilter.AirlineSelected.push(targetScope.FlightFilter.Airline[x].name);
             }
         }
     }
