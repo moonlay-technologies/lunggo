@@ -6,7 +6,7 @@ namespace Lunggo.ApCommon.Product.Model
     {
         //public abstract ProductType Type { get; }
         public Price Price { get; set; }
-        public DateTime? TimeLimit { get; set; }
+        public DateTime TimeLimit { get; set; }
 
         //public void SetPrice(decimal supplierPrice, string supplierCurrency)
         //{

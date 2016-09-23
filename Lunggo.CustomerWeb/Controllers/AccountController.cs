@@ -244,7 +244,7 @@ namespace Lunggo.CustomerWeb.Controllers
             confirmRequest.RequestFormat = DataFormat.Json;
             confirmRequest.AddBody(new {userId, code});
             var confirmResponse = confirmClient.Execute(confirmRequest).Content.Deserialize<ConfirmResponse>();
-            if (confirmResponse.Status == "200")
+            if (confirmResponse.Status.StartsWith("2") && confirmResponse.Url != null)
                 return Redirect(confirmResponse.Url);
             return RedirectToAction("Index", "UW000TopPage");
         }

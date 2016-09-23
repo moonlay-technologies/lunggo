@@ -7,6 +7,6 @@ namespace Lunggo.ApCommon.Flight.Model
     {
         public BookingStatus BookingStatus { get; set; }
         public string BookingId { get; set; }
-        public DateTime? TimeLimit { get; set; }
+        public DateTime TimeLimit { get; set; }
     }
 }

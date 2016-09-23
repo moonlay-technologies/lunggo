@@ -34,6 +34,15 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
             while (e.InnerException != null)
                 e = e.InnerException;
 
+            string requestString;
+            try
+            {
+                requestString = request.Serialize();
+            }
+            catch
+            {
+                requestString = "Invalid JSON";
+            }
             var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             log.Post(
@@ -44,7 +53,7 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
                 + "\n*Stack Trace :* \n"
                 + e.StackTrace
                 + "\n*Request :* \n"
-                + request.Serialize()
+                + requestString
                 + "\n*Platform :* "
                 + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
             return e.GetType() == typeof(JsonReaderException)

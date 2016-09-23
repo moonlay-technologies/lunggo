@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
@@ -39,7 +40,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     {
                         BookingId = item.UniqueID,
                         BookingStatus = MapMessageCategory(category),
-                        TimeLimit = null
+                        TimeLimit = DateTime.MinValue
                     }));
                 }
                 else
