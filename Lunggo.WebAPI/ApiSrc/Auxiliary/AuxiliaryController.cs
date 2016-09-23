@@ -33,15 +33,16 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary
         [Route("v1/newsletter/subscribe")]
         public ApiResponseBase NewsletterSubscribe()
         {
+            NewsletterSubscribeApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<NewsletterSubscribeApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<NewsletterSubscribeApiRequest>();
                 var apiResponse = AuxiliaryLogic.NewsletterSubscribe(request);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
