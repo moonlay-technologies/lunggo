@@ -342,7 +342,8 @@
                     <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block" ng-click="setChosenFlight('departure',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
-            <div class="search-result-filter" ng-hide="(departureFlightConfig.loading && departureFlightConfig.loadingFlight) || (!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length)">
+        @*ng-hide="(departureFlightConfig.loading && departureFlightConfig.loadingFlight) || (!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length)"*@
+            <div class="search-result-filter" >
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
@@ -492,8 +493,9 @@
             </div>
             <div class="search-result-list" ng-hide="!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length">
                 <div class="container">
-
-                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (departureFlightConfig.activeFlight == flight.IndexNo || departureFlightConfig.activePrice == flight.IndexNo) }" ng-repeat="flight in departureFlight = (departureFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('departure') | filter:airlineFilter('departure') | filter:priceFilter('departure') | filter:timeFilter('departure') | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse)" id="flight-{{flight.IndexNo}}">
+                    @*| filter:airlineFilter('departure') | filter:priceFilter('departure')*@
+                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (departureFlightConfig.activeFlight == flight.IndexNo || departureFlightConfig.activePrice == flight.IndexNo) }"
+                         ng-repeat="flight in departureFlight = (departureFlightConfig.flightList | filter:priceFilter('departure') | filter: airlineFilter('departure') | filter:availableFilter() | filter:transitFilter('departure')  | filter:timeFilter('departure') | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse)" id="flight-{{flight.IndexNo}}">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">
@@ -513,24 +515,26 @@
                                             </h5>
                                         </div>
                                         <div class="flight-date-arrival">
-                                            <h4>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}} 
-                                            <span>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} 
-                                                <span class="overday" ng-if="getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime)) != 0">
-                                                    {{getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime))}}
+                                            <h4>
+                                                {{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}}
+                                                <span>
+                                                    {{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}}
+                                                    <span class="overday" ng-if="getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime)) != 0">
+                                                        {{getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime))}}
+                                                    </span>
                                                 </span>
-                                            </span>
                                             </h4>
                                         </div>
                                     </div><!-- .flight-date -->
                                 </div><!-- .summary-top -->
                                 <div class="summary-bottom">
-                                    <div class="summary-bottom-left flight-facilities" ng-show="checkMeal(flight.trips[0]) || 
+                                    <div class="summary-bottom-left flight-facilities" ng-show="checkMeal(flight.trips[0]) ||
                                          !checkBaggageNaN(minBaggage(flight.trips[0])) || checkTax(flight.trips[0])">
                                         <span ng-show="checkMeal(flight.trips[0])" class="flight-meal"></span>
                                         <span ng-show="!checkBaggageNaN(minBaggage(flight.trips[0])) &&  minBaggage(flight.trips[0]) > 0" class="flight-baggage">{{minBaggage(flight.trips[0])}}</span>
                                         <span ng-show="checkTax(flight.trips[0])" class="flight-tax"></span>
                                     </div><!-- .flight-facilities -->
-                                   <div class="summary-bottom-right flight-button">
+                                    <div class="summary-bottom-right flight-button">
                                         <a class="flight-detail-trigger col-xs-7" ng-click="setActiveFlight('departure',flight.IndexNo)">Detail Penerbangan <span class="caret"></span></a>
                                         <span ng-click="showPriceDetail('departure', flight.IndexNo)" class="price-detail-trigger col-xs-5">Rincian Harga <span class="caret"></span></span>
                                         <!-- <a class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a> -->
@@ -692,7 +696,8 @@
                     <input type="submit" value="GANTI PENERBANGAN PULANG" class="btn btn-grey block" ng-click="setChosenFlight('return',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
-            <div class="search-result-filter" ng-hide="(returnFlightConfig.loading && returnFlightConfig.loadingFlight) || (!returnFlightConfig.loading && !returnFlightConfig.loadingFlight && !returnFlightConfig.flightList.length)">
+        @*ng-hide="(returnFlightConfig.loading && returnFlightConfig.loadingFlight) || (!returnFlightConfig.loading && !returnFlightConfig.loadingFlight && !returnFlightConfig.flightList.length)"*@
+            <div class="search-result-filter" >
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
@@ -842,8 +847,9 @@
             </div>
             <div class="search-result-list" ng-hide="!returnFlightConfig.loading && !returnFlightConfig.loadingFlight && !returnFlightConfig.flightList.length">
                 <div class="container">
-
-                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (returnFlightConfig.activeFlight == flight.IndexNo || returnFlightConfig.activePrice == flight.IndexNo) }" ng-repeat="flight in returnFlight = (returnFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('return') | filter:airlineFilter('return') | filter:priceFilter('return') | filter:timeFilter('return') | orderBy:returnFlightConfig.flightSort.value:returnFlightConfig.flightSort.reverse)" id="flight-{{flight.IndexNo}}">
+                    @* filter: filter:airlineFilter('return') | filter:priceFilter('return') | *@
+                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (returnFlightConfig.activeFlight == flight.IndexNo || returnFlightConfig.activePrice == flight.IndexNo) }"
+                         ng-repeat="flight in returnFlight = (returnFlightConfig.flightList | filter: priceFilter('return') | filter:availableFilter() | filter:timeFilter('return') | filter: transitFilter('return') |  filter: airlineFilter('return') | orderBy:returnFlightConfig.flightSort.value:returnFlightConfig.flightSort.reverse)" id="flight-{{flight.IndexNo}}">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">
@@ -863,8 +869,10 @@
                                             </h5>
                                         </div>
                                         <div class="flight-date-arrival">
-                                            <h4>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}} 
-                                                <span>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}} 
+                                            <h4>
+                                                {{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}}
+                                                <span>
+                                                    {{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}}
                                                     <span class="overday" ng-if="getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime)) != 0">
                                                         {{getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime))}}
                                                     </span>
@@ -874,7 +882,7 @@
                                     </div><!-- .flight-date -->
                                 </div><!-- .summary-top -->
                                 <div class="summary-bottom">
-                                    <div class="summary-bottom-left flight-facilities" ng-show="checkMeal(flight.trips[0]) 
+                                    <div class="summary-bottom-left flight-facilities" ng-show="checkMeal(flight.trips[0])
                                          || !checkBaggageNaN(minBaggage(flight.trips[0])) || checkTax(flight.trips[0])">
                                         <span ng-show="checkMeal(flight.trips[0])" class="flight-meal"></span>
                                         <span ng-show="!checkBaggageNaN(minBaggage(flight.trips[0]))  &&  minBaggage(flight.trips[0]) > 0" class="flight-baggage">{{minBaggage(flight.trips[0])}}</span>

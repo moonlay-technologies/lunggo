@@ -16,15 +16,16 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [Route("v1/payment/pay")]
         public ApiResponseBase Pay()
         {
+            PayApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<PayApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<PayApiRequest>();
                 var apiResponse = PaymentLogic.Pay(request);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -68,15 +69,16 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [Route("v1/payment/uniquecode")]
         public ApiResponseBase GetUniqueCode()
         {
+            UniqueCodeApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<UniqueCodeApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<UniqueCodeApiRequest>();
                 var apiResponse = PaymentLogic.GetUniqueCode(request);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -86,15 +88,16 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [Route("v1/payment/checkvoucher")]
         public ApiResponseBase CheckVoucher()
         {
+            CheckVoucherApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<CheckVoucherApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<CheckVoucherApiRequest>();
                 var apiResponse = VoucherLogic.CheckVoucher(request);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -104,15 +107,16 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [Route("v1/payment/checkbindiscount")]
         public ApiResponseBase CheckBinDiscount()
         {
+            CheckBinDiscountApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<CheckBinDiscountApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<CheckBinDiscountApiRequest>();
                 var apiResponse = PaymentLogic.CheckBinDiscount(request);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
     }

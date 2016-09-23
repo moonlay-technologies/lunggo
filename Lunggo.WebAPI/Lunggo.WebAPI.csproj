@@ -254,6 +254,7 @@
     <Compile Include="ApiSrc\Auxiliary\Model\AllPromoApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\FeaturedPromoApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\GetCalendarApiResponse.cs" />
+    <Compile Include="ApiSrc\Common\Model\ApiRequestBase.cs" />
     <Compile Include="ApiSrc\Common\Model\ApiResponseBase.cs" />
     <Compile Include="ApiSrc\Flight\FlightController.cs" />
     <Compile Include="ApiSrc\Flight\Logic\CheckFlightIssuanceLogic.cs" />

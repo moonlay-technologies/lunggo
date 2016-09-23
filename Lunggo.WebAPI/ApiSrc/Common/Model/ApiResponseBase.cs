@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Web;
 using Lunggo.ApCommon.Flight.Service;
@@ -27,8 +29,11 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
         [JsonProperty("error", NullValueHandling = NullValueHandling.Ignore)]
         public string ErrorCode { get; set; }
 
-        public static ApiResponseBase ExceptionHandling(Exception e)
+        public static ApiResponseBase ExceptionHandling(Exception e, object request = null)
         {
+            while (e.InnerException != null)
+                e = e.InnerException;
+
             var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             log.Post(
@@ -38,11 +43,13 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
                 + e.Message
                 + "\n*Stack Trace :* \n"
                 + e.StackTrace
+                + "\n*Request :* \n"
+                + request.Serialize()
                 + "\n*Platform :* "
                 + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
             return e.GetType() == typeof(JsonReaderException)
-                        ? ErrorInvalidJson()
-                        : Error500();
+                ? ErrorInvalidJson()
+                : Error500();
         }
 
         public static ApiResponseBase Error500()

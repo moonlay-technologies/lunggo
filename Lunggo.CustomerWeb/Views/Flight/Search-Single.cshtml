@@ -207,7 +207,7 @@
             <div class="container" ng-hide="!flightList.length && loading && loadingFlight">
                 <h3><b>HASIL</b> PENCARIAN</h3>
             </div>
-            <div class="search-result-filter" ng-show="Progress == 100">
+            <div class="search-result-filter" @*ng-show="Progress == 100"*@>
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
@@ -357,10 +357,11 @@
                     </div>
                 </div>
             </div><!-- .flight-result-sort -->
-
+            @*  filter:priceFilter | filter:airlineFilter | filter:timeFilter*@
+            
             <div class="search-result-list">
                 <div class="container">
-                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (flightActive == flight.IndexNo || priceActiveIndex == flight.IndexNo) }" id="flight-{{flight.IndexNo}}" ng-repeat="flight in flightList | filter:availableFilter | filter:stopFilter | filter:priceFilter | filter:airlineFilter | filter:timeFilter | orderBy:sort.value:sort.reverse">
+                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (flightActive == flight.IndexNo || priceActiveIndex == flight.IndexNo) }" id="flight-{{flight.IndexNo}}" ng-repeat="flight in flightList | filter:availableFilter | filter:stopFilter | filter:timeFilter | filter:airlineFilter | filter: priceFilter| orderBy:sort.value:sort.reverse">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">
@@ -375,7 +376,7 @@
                                             <span ng-show="!checkBaggageNaN(minBaggage(flight.trips[0])) &&  minBaggage(flight.trips[0]) > 0" class="flight-baggage">{{minBaggage(flight.trips[0])}}</span>
                                             <span ng-show="checkTax(flight.trips[0])" class="flight-tax"></span>
                                         </div><!-- .flight-facilities -->
-                                        
+
                                     </div><!-- .flight-airline -->
                                     <div class="summary-top-right flight-date">
                                         <div class="summary-top-right-top">

@@ -71,15 +71,16 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [Route("v1/flight/select")]
         public ApiResponseBase SelectFlight()
         {
+            FlightSelectApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightSelectApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<FlightSelectApiRequest>();
                 var apiResponse = FlightLogic.SelectFlight(request);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -127,15 +128,16 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [Route("v1/flight/book")]
         public ApiResponseBase BookFlight()
         {
+            FlightBookApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightBookApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<FlightBookApiRequest>();
                 var apiResponse = FlightLogic.BookFlight(request);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -145,15 +147,16 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [Route("v1/flight/issue")]
         public ApiResponseBase IssueFlight()
         {
+            FlightIssueApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<FlightIssueApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<FlightIssueApiRequest>();
                 var apiResponse = FlightLogic.IssueFlight(request);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -163,15 +166,16 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
         [Route("v1/flight/check/{rsvNo}")]
         public ApiResponseBase CheckFlightIssuance(string rsvNo)
         {
+            FlightIssuanceApiRequest request = null;
             try
             {
-                var request = new FlightIssuanceApiRequest { RsvNo = rsvNo };
+                request = new FlightIssuanceApiRequest { RsvNo = rsvNo };
                 var apiResponse = FlightLogic.CheckFlightIssuance(request);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 

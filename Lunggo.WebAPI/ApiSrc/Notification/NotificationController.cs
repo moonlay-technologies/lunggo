@@ -19,15 +19,16 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
         [Authorize]
         public async Task<ApiResponseBase> RegisterDevice()
         {
+            RegisterDeviceApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<RegisterDeviceApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<RegisterDeviceApiRequest>();
                 var apiResponse = await RegistrationLogic.RegisterDevice(request);
                 return apiResponse; 
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -38,15 +39,16 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
         [Authorize]
         public async Task<ApiResponseBase> UpdateRegistration()
         {
+            UpdateRegistrationApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<UpdateRegistrationApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<UpdateRegistrationApiRequest>();
                 var apiResponse = await RegistrationLogic.UpdateRegistration(request);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -56,15 +58,16 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
         [Authorize]
         public async Task<ApiResponseBase> DeleteRegistration()
         {
+            DeleteRegistrationApiRequest request = null;
             try
             {
-                var request = Request.Content.ReadAsStringAsync().Result.Deserialize<DeleteRegistrationApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<DeleteRegistrationApiRequest>();
                 var apiResponse = await RegistrationLogic.DeleteRegistration(request);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
