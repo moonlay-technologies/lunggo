@@ -255,20 +255,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 pricedItinerary.AirItineraryPricingInfo.PTC_FareBreakdowns.SingleOrDefault(
                     ptc => ptc.PassengerTypeQuantity.Code == PassengerType.INF);
 
+            var totalBreakdownPrice =
+                pricedItinerary.AirItineraryPricingInfo.PTC_FareBreakdowns.Sum(ptc => decimal.Parse(ptc.PassengerFare.TotalFare.Amount));
+
             if (adultBreakdown != null)
             {
                 var adultPrice = decimal.Parse(adultBreakdown.PassengerFare.TotalFare.Amount);
-                flightItinerary.AdultPricePortion = adultPrice / flightItinerary.Price.Supplier;
+                flightItinerary.AdultPricePortion = adultPrice / totalBreakdownPrice;
             }
             if (childBreakdown != null)
             {
                 var childPrice = decimal.Parse(childBreakdown.PassengerFare.TotalFare.Amount);
-                flightItinerary.ChildPricePortion = childPrice / flightItinerary.Price.Supplier;
+                flightItinerary.ChildPricePortion = childPrice / totalBreakdownPrice;
             }
             if (infantBreakdown != null)
             {
                 var infantPrice = decimal.Parse(infantBreakdown.PassengerFare.TotalFare.Amount);
-                flightItinerary.InfantPricePortion = infantPrice / flightItinerary.Price.Supplier;
+                flightItinerary.InfantPricePortion = infantPrice / totalBreakdownPrice;
             }
         }
 
