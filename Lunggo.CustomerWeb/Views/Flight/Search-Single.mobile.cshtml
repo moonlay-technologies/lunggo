@@ -84,11 +84,10 @@
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/mobile/js/application.js"></script>
     <script src="/Config/JsConfig.js"></script>
-    <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script> 
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
-    @*<script type="text/javascript" src="/Assets/js/tab.js"></script>*@
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 }
 @section PageJS{
     
@@ -108,6 +107,10 @@
             Requests:[],
             SecureCode: '@ViewBag.RequestId'
         };
+        $(document).ready(function(){
+            $('.ui-slider-handle').draggable();
+        });
+        
     </script>
 
     <script src="/Assets/mobile/js/singleFlightController.js"></script>

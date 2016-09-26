@@ -137,7 +137,7 @@
         .filter-group {padding:15px 12px;
             label {font-weight:normal;}
             &+.filter-group {border-top:$border-default;}
-            .filter-group__header {margin-bottom:12px;
+            .filter-group__header {margin-bottom: 5px;
                 .filter-group__title {margin:0; font-weight:700; font-size: 12px;}
             }
             .filter-group__content {
