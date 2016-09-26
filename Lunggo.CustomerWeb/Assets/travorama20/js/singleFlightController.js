@@ -540,7 +540,7 @@ app.controller('singleFlightController', [
                         //console.log($scope.flightFixRequest);
 
                         $scope.Progress = returnData.data.progress;
-                        if (returnData.data.flights.length) {
+                        if (returnData.data.flights.length != 0) {
                             $scope.generateFlightList(returnData.data.flights[0].options);
                             console.log("Ada data");
                         }
