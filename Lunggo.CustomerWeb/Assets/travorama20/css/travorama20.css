@@ -1606,12 +1606,13 @@ file : /Assets/travorama20/css/_page_index.scss
       z-index: 2; }
     .page-index .section-search .page-slider .slick-dots {
       position: absolute;
-      bottom: 10px;
-      text-align: center;
+      bottom: 20px;
+      text-align: right;
       width: 100%;
       list-style: none;
       margin: 0;
-      padding: 0; }
+      padding: 0;
+      padding-right: 5%; }
       .page-index .section-search .page-slider .slick-dots li {
         list-style: none;
         display: inline-block; }
