@@ -80,7 +80,7 @@ namespace Lunggo.CustomerWeb.Controllers
             ViewBag.ReturnUrl = returnUrl;
             var defaultReturnUrl = OnlineContext.GetDefaultHomePageUrl();
 
-            var returnPage = (ActionResult) View(model);
+            var returnPage = (ActionResult)View(model);
             if (returnUrl.Contains("/Flight/Checkout"))
                 returnPage = Redirect(String.IsNullOrEmpty(returnUrl) || returnUrl.Contains("/Account/") ? defaultReturnUrl : returnUrl);
 
@@ -232,21 +232,50 @@ namespace Lunggo.CustomerWeb.Controllers
         //
         // GET: /Account/ConfirmEmail
         [System.Web.Mvc.AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string apiUrl, string userId, string code)
+        public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
             {
                 return RedirectToAction("Index", "UW000TopPage");
             }
 
-            var confirmClient = new RestClient(apiUrl.Split(' ')[0]);
+            var apiUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+            var confirmClient = new RestClient(apiUrl);
             var confirmRequest = new RestRequest("/v1/confirmemail", Method.POST);
             confirmRequest.RequestFormat = DataFormat.Json;
-            confirmRequest.AddBody(new {userId, code});
+            confirmRequest.AddBody(new { userId, code });
             var confirmResponse = confirmClient.Execute(confirmRequest).Content.Deserialize<ConfirmResponse>();
-            if (confirmResponse.Status.StartsWith("2") && confirmResponse.Url != null)
-                return Redirect(confirmResponse.Url);
-            return RedirectToAction("Index", "UW000TopPage");
+
+            if (confirmResponse.Status == "200" || confirmResponse.ErrorCode == "ERACON03")
+            {
+                var isPasswordSet = UserManager.HasPassword(userId);
+                if (isPasswordSet)
+                {
+                    ViewBag.PasswordIsSet = true;
+                    return View();
+                }
+                else
+                {
+                    var email = UserManager.GetEmail(userId);
+                    return RedirectToAction("ResetPassword", new { email });
+                }
+            }
+
+            if (confirmResponse.ErrorCode == "ERACON01" || confirmResponse.ErrorCode == "ERACON02")
+            {
+                ViewBag.UserNotFound = true;
+                return View();
+            }
+
+            if (confirmResponse.ErrorCode == "ERACON04")
+            {
+                ViewBag.LinkExpired = true;
+                return View();
+            }
+
+
+            ViewBag.FailedConfirmation = true;
+            return View();
         }
 
         //
@@ -303,11 +332,27 @@ namespace Lunggo.CustomerWeb.Controllers
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult ResetPassword(string code, string email)
         {
-            if (email == null)
-                return Redirect("/");
-
             var model = new ResetPasswordViewModel { Email = email, Code = code };
+            if (email == null)
+            {
+                ViewBag.NotRegistered = true;
+                return View(model);
+            }
+
+            var user = UserManager.FindByEmail(email);
+
+            if (user == null)
+            {
+                ViewBag.NotRegistered = true;
+                return View(model);
+            }
+
+            var isPasswordSet = UserManager.HasPassword(user.Id);
+            if (isPasswordSet && code == null)
+                return RedirectToAction("Login");
+
             return View(model);
+            
         }
 
         //
@@ -341,7 +386,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var resetResponse = resetClient.Execute(resetRequest).Content.Deserialize<ConfirmResponse>();
                 isSuccess = resetResponse.Status == "200";
             }
-            
+
             if (isSuccess)
             {
                 var returnUrl = Url.Action("Index", "UW000TopPage");
@@ -368,6 +413,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 ViewBag.Message = "Failed";
                 return View();
             }
+            return View();
         }
 
         //
@@ -626,5 +672,5 @@ namespace Lunggo.CustomerWeb.Controllers
         #endregion
 
 
-    }   
+    }
 }

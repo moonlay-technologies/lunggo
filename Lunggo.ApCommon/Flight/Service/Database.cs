@@ -639,7 +639,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             };
                             FlightSegmentTableRepo.GetInstance().Insert(conn, segmentRecord);
 
-                            if (segment.StopQuantity > 0)
+                            if (segment.Stops != null && segment.Stops.Count > 0)
                             {
                                 foreach (var stop in segment.Stops)
                                 {

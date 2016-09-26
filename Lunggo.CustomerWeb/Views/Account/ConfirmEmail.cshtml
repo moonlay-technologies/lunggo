@@ -1,10 +1,248 @@
 ﻿@{
-    ViewBag.Title = "Confirm Email";
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.Title = "Ganti Password";
+    ViewBag.BodyClass = "page-password page-password-reset";
+    var buttonText = "SET PASSWORD";
 }
 
-<h2>@ViewBag.Title.</h2>
-<div>
-    <p>
-        Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-    </p>
-</div>
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+
+@section PageJS{
+<script>
+    var langCode = 'en';
+    var userEmail = '';
+    var code = '';
+</script>
+
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/accountController.js"></script>
+}
+
+<section class="form-section page-loading" ng-app="travorama" ng-controller="resetController" ng-class="{'page-loaded' : pageLoaded}">
+
+    <h1 class="text-center section-title stripe">SET <span>PASSWORD</span></h1>
+
+    <div class="container form-container" ng-hide="form.submitted">
+
+        <div class="form-wrapper">
+            <header>
+                <h4 class="header-title">@Html.I18NString("CW00200")</h4>
+            </header>
+            <section class="form-content">
+                <form class="form form-horizontal" name="resetForm" ng-submit="form.submit()" novalidate>
+                    <div class="row">
+                        <div class="col-xs-4 col-xs-offset-4">
+
+                            <div class="form-group">
+                                <input type="hidden" value="{{form.code}}" name="code" />
+                                <label class="control-label">@Html.I18NString("CW00166"):</label>
+                                <input type="password" name="password" value="" ng-model="form.password" placeholder="@Html.I18NString("CW00181")" class="form-control" ng-disabled="form.submitting" required />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="{{ form.submitting? 'LOADING' : '@buttonText' }}" class="btn btn-yellow form-control" ng-disabled="form.submitting || (resetForm.$invalid)" />
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </section><!-- .form-content -->
+        </div>
+
+    </div><!-- .form-container -->
+
+    <div class="form-container-sent" ng-show="form.submitted && form.isSuccess">
+
+        <div class="container">
+            <div class="text-center">
+                <img src="/Assets/images/lock-image.png" alt="Password Reset Success" />
+            </div>
+            <h3 class="text-center">Reset Password Anda telah <b>berhasil.</b></h3>
+            <p class="text-center"></p>
+            <div class="text-center">
+                <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
+            </div>
+
+        </div>
+
+    </div><!-- .form-sent -->
+    @if (ViewBag.PasswordIsSet != null)
+    {
+        <div class="page-overlay" style="display:block">
+            <div class="overlay-content">
+                <header>
+                    <h4>Silakan Login</h4>
+                </header>
+                <section>
+                    <div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4 text-align">
+                                    <img src="/Assets/images/smile-image.png" alt="Smile" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <h3>E-mail Sudah Terkonfirmasi</h3>
+                                    <p>Silakan masuk ke Travorama.</p>
+                                    <p>Atau Anda <a href="@Url.Action("ForgotPassword")">Lupa Password?</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-6">
+                                <a class="btn btn-yellow btn-block" href="@Url.Action("Login")" ng-click="closeoverlay()">MASUK</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div><!-- .page-overlay -->
+    }
+    else if (ViewBag.FailedConfirmation != null)
+    {
+        <div class="page-overlay">
+            <div class="overlay-content">
+                <header>
+                    <h4>Gagal Konfirmasi</h4>
+                </header>
+                <section>
+                    <div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4 text-align">
+                                    <img src="/Assets/images/sad-image.png" alt="Sad" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <h3>E-mail Gagal Dikonfirmasi</h3>
+                                    <p>Mohon untuk melakukan pendaftaran ulang.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-6">
+                                <a class="btn btn-yellow btn-block" href="@Url.Action("Register")" ng-click="closeoverlay()">DAFTAR</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <!-- .page-overlay -->
+    }
+    else if (ViewBag.UserNotFound != null)
+    {
+        <div class="page-overlay">
+            <div class="overlay-content">
+                <header>
+                    <h4>Belum Terdaftar</h4>
+                </header>
+                <section>
+                    <div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4 text-align">
+                                    <img src="/Assets/images/sad-image.png" alt="Sad" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <h3>E-mail Belum Terdaftar</h3>
+                                    <p>Silakan bergabung dengan Travorama.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-6">
+                                <a class="btn btn-yellow btn-block" href="@Url.Action("Register")" ng-click="closeoverlay()">DAFTAR</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <!-- .page-overlay -->
+    }
+    else if (ViewBag.LinkExpired != null)
+    {
+        <div class="page-overlay">
+            <div class="overlay-content">
+                <header>
+                    <h4>Tautan Kadaluarsa</h4>
+                </header>
+                <section>
+                    <div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4 text-align">
+                                    <img src="/Assets/images/sad-image.png" alt="Sad" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <h3>Tautan untuk konfirmasi e-mail telah kadaluarsa.</h3>
+                                    <p>Mohon untuk meminta ulang tautan.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-6">
+                                <a class="btn btn-yellow btn-block" href="@Url.Action("Register")" ng-click="closeoverlay()">DAFTAR</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <!-- .page-overlay -->
+    }
+    else
+    {
+        <div class="page-overlay" ng-show="form.submitted && !form.isSuccess">
+            <div class="overlay-content">
+                <header>
+                    <h4>Mohon Maaf</h4>
+                </header>
+                <section>
+                    <div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4 text-align">
+                                    <img src="/Assets/images/sad-image.png" alt="Sad" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <h3>Konfirmasi Gagal</h3>
+                                    <p>{{errorMessage}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-6">
+                                <a class="btn btn-yellow btn-block" ng-click="closeOverlay()">TUTUP</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div><!-- .page-overlay -->
+    }
+
+</section><!-- .form-section -->
