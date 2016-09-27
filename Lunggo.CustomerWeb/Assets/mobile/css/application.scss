@@ -136,7 +136,9 @@ img {max-width:100%;}
 .page-loading {display:none;}
 .page-loaded {display:block;}
 
-.no-scroll {overflow:hidden;}
+.no-scroll {
+    overflow: hidden;
+}
 
 .display-block {display:block !important;}
 
