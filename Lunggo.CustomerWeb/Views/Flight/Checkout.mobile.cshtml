@@ -466,7 +466,7 @@
                                             @if (trips[0].Transits.Count > 0 && segment < trips[0].TotalTransit)
                                             {
                                                 <div class="transit">
-                                                    <span>Transit di @trips[0].Segments[segment].ArrivalCity (@trips[0].Segments[segment].ArrivalAirportName) selama <b>@msToTime(trips[0].Transits.ElementAt(segment).Duration)</b></span>
+                                                    <span>Transit di @trips[0].Segments[segment].ArrivalCity (@trips[0].Segments[segment].ArrivalAirport) selama <b>@msToTime(trips[0].Transits.ElementAt(segment).Duration)</b></span>
                                                 </div><!-- .transit -->
                                             }
                                         </div> <!-- .flight-wrapper -->
@@ -481,7 +481,7 @@
                             <div class="overlay__body overlay__content">
                                 <div class=" flight-fare-wrapper">
                                     <h4><b>KEMBALI</b></h4>
-                                    <div class="flight-title flight-title--departure">
+                                    <div class="flight-title flight-title--return">
                                         <div class="flight-info">
                                             <h4><b>@trips[1].OriginCity</b> ke <b>@trips[1].DestinationCity</b></h4>
                                             <h5>@trips[1].DepartureDate.GetValueOrDefault().ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
@@ -525,7 +525,7 @@
                                             @if (trips[1].Transits.Count > 0 && segment < trips[1].TotalTransit)
                                             {
                                                 <div class="transit">
-                                                    <span>Transit di @trips[1].Segments[segment].ArrivalCity selama <b>@msToTime(trips[1].Transits.ElementAt(segment).Duration)</b></span>
+                                                    <span>Transit di @trips[1].Segments[segment].ArrivalCity (@trips[1].Segments[segment].ArrivalAirport) selama <b>@msToTime(trips[1].Transits.ElementAt(segment).Duration)</b></span>
                                                 </div><!-- .transit -->
                                             }
                                         </div> <!-- .flight-wrapper -->

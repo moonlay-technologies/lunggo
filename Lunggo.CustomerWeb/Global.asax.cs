@@ -21,37 +21,34 @@ namespace Lunggo.CustomerWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
-        
+
         void Application_BeginRequest(object sender, EventArgs e)
         {
             // Redirect mobile users to the mobile home page
-            
+
             var httpRequest = Request;
-            if (httpRequest.Browser.IsMobileDevice)
+            var configManager = ConfigManager.GetInstance();
+            var mobileUrl = configManager.GetConfigValue("general", "mobileUrl");
+            var host = httpRequest.Url.Host;
+            var path = httpRequest.Url.PathAndQuery;
+            var userAgent = httpRequest.UserAgent;
+            var browserDetectionService = BrowserDetectionService.GetInstance();
+            var isSmartphone = browserDetectionService.IsRequestFromSmartphone(userAgent);
+            var isOnMobilePage = host == mobileUrl;
+            if (!isOnMobilePage && isSmartphone)
             {
-                var configManager = ConfigManager.GetInstance();
-                var mobileUrl = configManager.GetConfigValue("general", "mobileUrl");
-                var host = httpRequest.Url.Host;
-                var path = httpRequest.Url.PathAndQuery;
-                var userAgent = httpRequest.UserAgent;
-                var browserDetectionService = BrowserDetectionService.GetInstance();
-                var isSmartphone = browserDetectionService.IsRequestFromSmartphone(userAgent);
-                var isOnMobilePage = host == mobileUrl && isSmartphone;
-                if (!isOnMobilePage)
-                {
-                    string redirectTo = "http://" + mobileUrl + path;
+                string redirectTo = "http://" + mobileUrl + path;
 
-                    // Could also add special logic to redirect from certain 
-                    // recognized pages to the mobile equivalents of those 
-                    // pages (where they exist). For example,
-                    // if (HttpContext.Current.Handler is UserRegistration)
-                    //     redirectTo = "~/Mobile/Register.aspx";
+                // Could also add special logic to redirect from certain 
+                // recognized pages to the mobile equivalents of those 
+                // pages (where they exist). For example,
+                // if (HttpContext.Current.Handler is UserRegistration)
+                //     redirectTo = "~/Mobile/Register.aspx";
 
-                    Response.Redirect(redirectTo);
-                }
+                Response.Redirect(redirectTo);
             }
-            
+
         }
-        
+
     }
 }
