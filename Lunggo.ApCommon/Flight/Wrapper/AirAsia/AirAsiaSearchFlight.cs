@@ -51,6 +51,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     trip0.OriginAirport = "CGK";
                 if (trip0.DestinationAirport == "JKT")
                     trip0.DestinationAirport = "CGK";
+                if (trip0.OriginAirport == "SHA")
+                    trip0.OriginAirport = "PVG";
+                if (trip0.DestinationAirport == "SHA")
+                    trip0.DestinationAirport = "PVG";
+                if (trip0.OriginAirport == "BKK")
+                    trip0.OriginAirport = "DMK";
+                if (trip0.DestinationAirport == "BKK")
+                    trip0.DestinationAirport = "DMK";
 
                 // [GET] Search Flight
                 var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);
