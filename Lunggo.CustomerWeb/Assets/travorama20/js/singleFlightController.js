@@ -646,7 +646,7 @@ app.controller('singleFlightController', [
                 $scope.flightList[i].AirlinesTag = [];
                 for (var x = 0 ; x < $scope.flightList[i].trips[0].airlines.length; x++) {
                     $scope.airlineFilterParam.airlinesList.push($scope.flightList[i].trips[0].airlines[x]);
-                    $scope.flightList[i].AirlinesTag.push($scope.flightList[i].trips[0].airlines[x].code);
+                    $scope.flightList[i].AirlinesTag.push($scope.flightList[i].trips[0].airlines[x].name);
                 }
 
             }
