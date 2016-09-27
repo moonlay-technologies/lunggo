@@ -710,6 +710,7 @@
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-bg.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider.jpg" />
     <Content Include="Assets\images\global-error.jpg" />
+    <Content Include="Assets\images\load2.gif" />
     <Content Include="Assets\images\logo-travorama-sm.png" />
     <Content Include="Assets\images\logo-travorama.png" />
     <Content Include="Assets\mobile\images\app-store.png" />

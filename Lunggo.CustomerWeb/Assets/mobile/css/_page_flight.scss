@@ -138,7 +138,7 @@
             padding:15px 12px;
             font-size: 11px;
             label {font-weight:normal;}
-            &+.filter-group {border-top:$border-default;}
+            &+.filter-group {border-top: 1px solid #999;}
             .filter-group__header {margin-bottom: 5px;
                 .filter-group__title {margin:0; font-weight:600; font-size: 12px;}
             }
@@ -219,6 +219,7 @@
                 text-transform: uppercase;
                 @extend .os-semibold;
                 letter-spacing: 1px;
+                color: #fff;
             }
         }
     }
@@ -227,13 +228,14 @@
 // --------------------
 // overlay--flight-sort
 .overlay--flight-sort {
-    .overlay__content {padding:0;
-        span {display:block; padding:15px;
+    .overlay__content {padding:0; font-size: 11px;
+        span {display:block; padding:20px 15px;
             &:before {content:''; width:20px; height:20px; background:#fff; display:inline-block; vertical-align:middle; margin-right:10px; border:3px solid #fff; @include border-radius(50px);}
-            &+span {border-top:$border-default;}
+            &+span {border-top: 1px solid #999;}
             &.active {color:#fff;
                 &:before {background:#ffca10;}
             }
+            &:hover {background: $color-main-blue;}
         }
         label {display:block; width:100%; padding:12px 0;
             &+label {border-top:$border-default;}
