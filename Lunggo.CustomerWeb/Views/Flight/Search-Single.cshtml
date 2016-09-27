@@ -365,7 +365,8 @@
             
             <div class="search-result-list">
                 <div class="container">
-                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (flightActive == flight.IndexNo || priceActiveIndex == flight.IndexNo) }" id="flight-{{flight.IndexNo}}" ng-repeat="flight in flightList | filter:availableFilter | filter:stopFilter | filter:timeFilter | filter:airlineFilter |  orderBy:sort.value:sort.reverse">
+                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (flightActive == flight.IndexNo || priceActiveIndex == flight.IndexNo) }" id="flight-{{flight.IndexNo}}"
+                         ng-repeat="flight in flightList | filter:availableFilter | filter:stopFilter | filter:timeFilter | filter:airlineFilter |  filter:priceFilter |orderBy:sort.value:sort.reverse">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">

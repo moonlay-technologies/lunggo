@@ -698,18 +698,19 @@ app.controller('returnFlightController', [
 
         // time filter
         $scope.getHour = function (dateTime) {
-            dateTime = dateTime.substr(11, 2);
-            return parseInt(dateTime);
+            var hour = dateTime.substr(11, 2);
+            var minute = dateTime.substr(14, 2);
+            return parseInt(hour) * 60 + parseInt(minute);
         }
 
         $scope.timeFilter = function (targetFlight) {
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
             return function (flight) {
                 //if (!targetScope.loading && !targetScope.loadingFlight) {
-                    if ($scope.getHour(flight.trips[0].segments[0].departureTime) >= parseInt(targetScope.flightFilter.time.departure[0])
-                        && $scope.getHour(flight.trips[0].segments[0].departureTime) <= parseInt(targetScope.flightFilter.time.departure[1])
-                        && $scope.getHour(flight.trips[0].segments[flight.trips[0].segments.length - 1].arrivalTime) >= parseInt(targetScope.flightFilter.time.arrival[0])
-                        && $scope.getHour(flight.trips[0].segments[flight.trips[0].segments.length - 1].arrivalTime) <= parseInt(targetScope.flightFilter.time.arrival[1]))
+                    if ($scope.getHour(flight.trips[0].segments[0].departureTime) >= parseInt(targetScope.flightFilter.time.departure[0]) * 60
+                        && $scope.getHour(flight.trips[0].segments[0].departureTime) <= parseInt(targetScope.flightFilter.time.departure[1]) * 60
+                        && $scope.getHour(flight.trips[0].segments[flight.trips[0].segments.length - 1].arrivalTime) >= parseInt(targetScope.flightFilter.time.arrival[0]) * 60
+                        && $scope.getHour(flight.trips[0].segments[flight.trips[0].segments.length - 1].arrivalTime) <= parseInt(targetScope.flightFilter.time.arrival[1]) * 60)
                     {
                         return flight;
                     }

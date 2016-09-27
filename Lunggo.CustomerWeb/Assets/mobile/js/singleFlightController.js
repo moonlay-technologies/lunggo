@@ -711,11 +711,11 @@
             }
         }
 
-        if (targetScope.FlightFilter.AirlineSelected.length == 0) {
-            for (var x = 0;x < targetScope.FlightFilter.Airline.length; x++) {
-                targetScope.FlightFilter.AirlineSelected.push(targetScope.FlightFilter.Airline[x].name);
-            }
-        }
+        //if (targetScope.FlightFilter.AirlineSelected.length == 0) {
+        //    for (var x = 0;x < targetScope.FlightFilter.Airline.length; x++) {
+        //        targetScope.FlightFilter.AirlineSelected.push(targetScope.FlightFilter.Airline[x].name);
+        //    }
+        //}
     }
     $scope.FlightFiltering.AirlineFilter = function (targetFlight) {
         var targetScope = (targetFlight == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1]);
