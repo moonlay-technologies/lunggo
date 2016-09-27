@@ -1210,7 +1210,10 @@ app.controller('ResetpasswordController', ['$http', '$scope', '$rootScope', func
             code: code,
             password: '',
             start: true,
-        };
+            resubmitted: false,
+            resubmitting: false,
+            reconfirm: false
+    };
         $('.text').keyup(updateCount);
         $('.text').keydown(updateCount);
 
@@ -1302,6 +1305,54 @@ app.controller('ResetpasswordController', ['$http', '$scope', '$rootScope', func
                 $scope.form.submitting = false;
                 $scope.form.lala = true;
             }
+            
+        }
+        $scope.reconfirm = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
+            $scope.form.resubmitting = true;
+            var authAccess = getAuthAccess();
+            //console.log("at reconfirm: " + $scope.emailReconfirm);
+            if (authAccess == 1 || authAccess == 2)
+            {
+                $http({
+                    url: ResendConfirmationEmailConfig.Url,
+                    method: 'POST',
+                    data: {
+                        email: $scope.form.userEmail,
+                    },
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).then(function (returnData) {
+                    $scope.form.resubmitting = false;
+                    if (returnData.data.status == 200) {
+                        $scope.form.resubmitted = true;
+                    } else {
+                        $scope.form.reconfirm = true;
+                    }
+                    
+
+                }).catch(function (returnData) {
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                    {
+                        $scope.EmailForm.Reconfirm();
+                    }
+                    else {
+                        console.log('Failed requesting confirmation email');
+                        $scope.form.resubmitting = false;
+                        $scope.form.resubmitted = false;
+                    }
+
+                });
+            }
+            else
+            {
+                console.log('Not Authorized');
+                $scope.EmailForm.Resubmit = false;
+                $scope.EmailForm.SentReconfirm = false;
+            }
+                
             
         }
     }

@@ -26,7 +26,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERACON01"
                 };
 
-            var user = userManager.FindByIdAsync(request.UserId);
+            var user = userManager.FindById(request.UserId);
             if (user == null)
                 return new ApiResponseBase
                 {

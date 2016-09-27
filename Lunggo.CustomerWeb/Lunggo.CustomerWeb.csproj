@@ -722,12 +722,6 @@
     <Content Include="Assets\mobile\images\prev.png" />
     <Content Include="Assets\mobile\images\promo-logo-notif.png" />
     <Content Include="Assets\mobile\js\PromoController.js" />
-    <Content Include="Assets\travorama20\css\global-error.css">
-      <DependentUpon>global-error.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\travorama20\css\global-error.min.css">
-      <DependentUpon>global-error.css</DependentUpon>
-    </Content>
     <Content Include="Assets\travorama20\css\travorama20.css" />
     <Content Include="Assets\travorama20\css\travorama20.min.css" />
     <Content Include="Assets\travorama20\images\app-store-bg.png" />
@@ -737,12 +731,6 @@
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.umd.js" />
-    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.css">
-      <DependentUpon>travorama-mobileApp.scss</DependentUpon>
-    </Content>
-    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.min.css">
-      <DependentUpon>travorama-mobileApp.css</DependentUpon>
-    </Content>
     <Content Include="Campaign\MobileAppCampaign\images\app-store-cs.png" />
     <Content Include="Campaign\MobileAppCampaign\images\app-store.png" />
     <Content Include="Campaign\MobileAppCampaign\images\background.jpg" />
@@ -1329,12 +1317,6 @@
     <Content Include="Campaign\Imlek2016\images\wrapper-bg.png" />
     <Content Include="Assets\vendor\transitJS\jquery.transit.min.js" />
     <Content Include="Campaign\Imlek2016\js\imlek2016.js" />
-    <Content Include="Campaign\PromoBTN\css\promo-btn.css">
-      <DependentUpon>promo-btn.scss</DependentUpon>
-    </Content>
-    <Content Include="Campaign\PromoBTN\css\promo-btn.min.css">
-      <DependentUpon>promo-btn.css</DependentUpon>
-    </Content>
     <Content Include="Campaign\PromoBTN\images\credit-card.png" />
     <Content Include="Campaign\PromoBTN\images\debit.png" />
     <Content Include="Campaign\PromoBTN\images\top-banner.jpg" />
@@ -1357,9 +1339,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Config\application.properties">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Config\application.properties" />
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Config\Country.csv" />
