@@ -152,7 +152,7 @@
     </section><!-- .flight-notice -->
 
     <section class="container_new flight-list" ng-show="FlightConfig[0].FlightList.length == 0 && !(!departureFlight.length && FlightConfig[0].FlightRequest.Progress == 100)">
-        <img class="loading-image" src="/Assets/images/load.gif" alt="Loading" />
+        <img class="loading-image" src="/Assets/images/load.gif" width="40px" height="40px" alt="Loading" />
     </section>
 
     <section class="flight-list">
@@ -423,7 +423,7 @@
                     <h4 class="filter-group__title">Berdasarkan Maskapai:</h4>
                 </div>
                 <div class="filter-group__content">
-                    <label ng-repeat="Airline in FlightConfig[0].FlightFilter.Airline" ng-class="{'active' : !Airline.Checked}">
+                    <label ng-repeat="Airline in FlightConfig[0].FlightFilter.Airline" ng-class="{'active' : Airline.Checked}">
                         <div class="switch"></div>
                         <span><img ng-src="{{Airline.logoUrl}}" alt="{{Airline.name}}" /> {{Airline.name}}</span>
                         <input type="checkbox" value="false" ng-model="Airline.Checked" ng-change="FlightFiltering.AirlineCheck('departure')" />
@@ -431,7 +431,7 @@
                 </div>
             </div>
             <div class="reset">
-                <button class="btn btn-reset" value="Reset">Reset</button>
+                <button class="btn btn-reset" value="Reset" ng-click="resetFilter()">Reset</button>
             </div>
         </section><!-- .overlay__content -->
     </div><!-- .overlay -->

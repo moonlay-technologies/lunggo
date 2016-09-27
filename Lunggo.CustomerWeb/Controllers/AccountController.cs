@@ -269,6 +269,8 @@ namespace Lunggo.CustomerWeb.Controllers
 
             if (confirmResponse.ErrorCode == "ERACON04")
             {
+                var email = UserManager.GetEmail(userId);
+                ViewBag.Email = email;
                 ViewBag.LinkExpired = true;
                 return View();
             }
@@ -344,6 +346,13 @@ namespace Lunggo.CustomerWeb.Controllers
             if (user == null)
             {
                 ViewBag.NotRegistered = true;
+                return View(model);
+            }
+
+            var isConfirmed = UserManager.IsEmailConfirmed(user.Id);
+            if (!isConfirmed)
+            {
+                ViewBag.NotConfirmed = true;
                 return View(model);
             }
 

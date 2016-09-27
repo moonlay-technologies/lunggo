@@ -754,7 +754,9 @@ app.controller('resetController', [
             submitting: false,
             isSuccess: false,
             userEmail: userEmail,
-            code: code
+            code: code,
+            resubmitting: false,
+            reconfirm: false,
         };
         $scope.closeOverlay = function () {
             $scope.form.submitting = false;
@@ -835,6 +837,49 @@ app.controller('resetController', [
                 $scope.form.submitting = false;
                 $scope.form.submitted = true;
                 $scope.form.isSuccess = false;
+            }
+
+        }
+        $scope.reconfirm = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
+            $scope.form.resubmitting = true;
+            var authAccess = getAuthAccess();
+            if (authAccess == 1 || authAccess == 2) {
+                $http({
+                    url: ResendConfirmationEmailConfig.Url,
+                    method: 'POST',
+                    data: {
+                        Email: $scope.form.userEmail,
+                    },
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).then(function (returnData) {
+                    $scope.form.resubmitting = false;
+                    if (returnData.data.status == 200) {
+                        $scope.form.resubmitted = true;
+                    } else {
+                        $scope.form.reconfirm = true;
+                    }
+
+                }).catch(function (returnData) {
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                    {
+                        $scope.form.resubmit();
+                    }
+                    else {
+                        console.log('Failed requesting confirmation e-mail');
+                        $scope.form.resubmitting = false;
+                        $scope.form.resubmitted = false;
+                    }
+
+                });
+            }
+            else {
+                console.log('Not Authorized');
+                $scope.form.submitting = false;
+                $scope.form.submitted = false;
             }
 
         }

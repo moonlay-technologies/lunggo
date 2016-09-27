@@ -22,6 +22,17 @@
   font-weight: 700; }
 
 /*--------------------*/
+/* animation */
+.overlay-move, .burger-content, .burger-content.active, .overlay {
+  -webkit-animation-name: overlaymove;
+  -webkit-animation-duration: .5s;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-timing-function: linear;
+  -webkit-transform: translateZ(0);
+  webkit-backface-visibility: hidden; }
+
+/*--------------------*/
 @media only screen and (min-width: 400px) {
   .page.page-flight .flight-summary {
     background-color: red; } }
@@ -139,18 +150,23 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       right: 15px;
       background-size: 100%;
       background-repeat: no-repeat; }
-      .site-header .header-display .promo:after {
+      .site-header .header-display .promo span.number-promo {
         content: '';
         width: 12px;
         height: 12px;
         background: red;
         display: block;
         border-radius: 12px;
-        float: right; }
+        float: right;
+        font-size: 8px;
+        color: #fff; }
     .site-header .header-display .flight-swap {
-      background: url(/Assets/mobile/images/flight-swap.png);
+      background: url(/Assets/mobile/images/flight-swap.png) no-repeat;
       left: auto;
-      right: 10px; }
+      right: 15px;
+      width: 23px;
+      height: 25px;
+      top: 18px; }
     .site-header .header-display .flight-detail {
       width: 40px;
       background: none;
@@ -174,24 +190,23 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   overflow: hidden;
   width: 320px;
   padding-right: 20px;
-  background: none; }
+  background: none;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s; }
   .burger-content.active {
     left: 0;
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     -o-transition: all 0.5s;
     transition: all 0.5s; }
-    .burger-content.active .burger-content__header {
-      left: 0; }
   .burger-content .burger-content__header {
     background: #028ec3;
     color: #fff;
-    position: relative;
     width: 300px;
     height: 60px;
-    top: 0;
-    left: -300px;
-    z-index: 2; }
+    top: 0; }
     .burger-content .burger-content__header ul {
       list-style: none;
       margin: 0;
@@ -213,11 +228,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .burger-content .burger-content__header .burger-content__close {
       color: #fff;
       position: absolute;
-      right: 15px;
+      right: 40px;
       top: 12px;
       font-size: 24px;
       font-weight: 600;
-      cursor: pointer; }
+      cursor: pointer;
+      text-decoration: none;
+      text-transform: lowercase;
+      line-height: 30px; }
   .burger-content .burger-content__body {
     background: #fff;
     min-height: 100%; }
@@ -489,10 +507,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background: #fff;
   padding-top: 0;
   overflow: auto;
-  -webkit-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  transition: all 0.4s; }
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s; }
   .overlay .overlay__header {
     background: #878787;
     color: #fff;
@@ -1265,10 +1283,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       right: 0;
       bottom: 0;
       background-color: #ccc;
-      -webkit-transition: all 0.4s;
-      -moz-transition: all 0.4s;
-      -o-transition: all 0.4s;
-      transition: all 0.4s; }
+      -webkit-transition: all 0.5s;
+      -moz-transition: all 0.5s;
+      -o-transition: all 0.5s;
+      transition: all 0.5s; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip .slider:before {
         position: absolute;
         content: "";
@@ -1277,10 +1295,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         left: 4px;
         bottom: 4px;
         background-color: #ffffff;
-        -webkit-transition: all 0.4s;
-        -moz-transition: all 0.4s;
-        -o-transition: all 0.4s;
-        transition: all 0.4s; }
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s; }
     .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider {
       background-color: #2ea1e8; }
     .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider:before {
@@ -1738,10 +1756,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       right: 0;
       bottom: 0;
       background-color: #ccc;
-      -webkit-transition: all 0.4s;
-      -moz-transition: all 0.4s;
-      -o-transition: all 0.4s;
-      transition: all 0.4s; }
+      -webkit-transition: all 0.5s;
+      -moz-transition: all 0.5s;
+      -o-transition: all 0.5s;
+      transition: all 0.5s; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .slider:before {
         position: absolute;
         content: "";
@@ -1750,10 +1768,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         left: 4px;
         bottom: 4px;
         background-color: #ffffff;
-        -webkit-transition: all 0.4s;
-        -moz-transition: all 0.4s;
-        -o-transition: all 0.4s;
-        transition: all 0.4s; }
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip input:checked + .slider {
       background-color: #2ea1e8; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip input:checked + .slider:before {
@@ -1849,7 +1867,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .overlay--flight-filter .overlay__content .filter-group label {
     font-weight: normal; }
   .overlay--flight-filter .overlay__content .filter-group + .filter-group {
-    border-top: 1px solid #ccc; }
+    border-top: 1px solid #999; }
   .overlay--flight-filter .overlay__content .filter-group .filter-group__header {
     margin-bottom: 5px; }
     .overlay--flight-filter .overlay__content .filter-group .filter-group__header .filter-group__title {
@@ -1944,13 +1962,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background: #696969;
     font-size: 15px;
     text-transform: uppercase;
-    letter-spacing: 1px; }
+    letter-spacing: 1px;
+    color: #fff; }
 
 .overlay--flight-sort .overlay__content {
-  padding: 0; }
+  padding: 0;
+  font-size: 11px; }
   .overlay--flight-sort .overlay__content span {
     display: block;
-    padding: 15px; }
+    padding: 20px 15px; }
     .overlay--flight-sort .overlay__content span:before {
       content: '';
       width: 20px;
@@ -1965,11 +1985,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       -ms-border-radius: 50px;
       border-radius: 50px; }
     .overlay--flight-sort .overlay__content span + span {
-      border-top: 1px solid #ccc; }
+      border-top: 1px solid #999; }
     .overlay--flight-sort .overlay__content span.active {
       color: #fff; }
       .overlay--flight-sort .overlay__content span.active:before {
         background: #ffca10; }
+    .overlay--flight-sort .overlay__content span:hover {
+      background: #2fb4e6; }
   .overlay--flight-sort .overlay__content label {
     display: block;
     width: 100%;
@@ -2850,72 +2872,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-orderdetail .info-flight .flight.return:before {
     background-position: -16px; }
 
-/*.page-overlay {
-position: fixed;
-width: 100%;
-height: 100%;
-top: 0;
-left: 0;
-z-index: 1000;
-background: rgba(0, 0, 0, 0.7); }
-.page-overlay .overlay-content {
-width: 92%;
-height: 220px;
-background: #fff;
-position: absolute;
-margin: auto;
-top: 0;
-right: 0;
-bottom: 0;
-left: 0;
--webkit-border-radius: 2px;
--moz-border-radius: 2px;
-border-radius: 2px;
-overflow: hidden; }
-.page-overlay .overlay-content header {
-    background: #1daee4;
-    text-align: center;
-    color: #fff;
-    padding: 15px; }
-    .page-overlay .overlay-content header h4 {
-    margin: 0;
-    font-weight: 600; }
-    .page-overlay .overlay-content header .close {
-    color: #fff;
-    opacity: 1; }
-.page-overlay .overlay-content div section {
-   
-    padding: 15px; 
-    width:70%;
-    left: 33%;
-    top: 20%;
-    position: absolute;
-}
-.page-overlay .overlay-content div section p{
-    padding: 15px; 
-}
-.page-overlay .overlay-content div img{
-    padding-left: 15px;
-    vertical-align: 20%;
-    position: absolute;
-    top: 30%;
-}
-
-.page-overlay .overlay-content div div a{
-    display: inline-block;
-    width: 30%;
-    right: 20%;
-    bottom: 15%;
-    position: absolute;
-}
-
-.page-overlay .overlay-content section a {
-cursor: pointer; }
-.page-overlay .overlay-content footer {
-    position: absolute;
-    bottom: 15px;
-    left: 0;
-    width: 100%; }*/
 .page.page-forgotpassword .desc {
   margin-bottom: 25px; }
 

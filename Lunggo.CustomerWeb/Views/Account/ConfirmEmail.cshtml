@@ -15,7 +15,7 @@
 @section PageJS{
 <script>
     var langCode = 'en';
-    var userEmail = '';
+    var userEmail = '@ViewBag.Email';
     var code = '';
 </script>
 
@@ -87,7 +87,7 @@
                                 <div class="col-sm-8">
                                     <h3>E-mail Sudah Terkonfirmasi</h3>
                                     <p>Silakan masuk ke Travorama.</p>
-                                    <p>Atau Anda <a href="@Url.Action("ForgotPassword")">Lupa Password?</a></p>
+                                    <p style="font-size: 11px"><a href="@Url.Action("ForgotPassword")">Lupa Password?</a></p>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-6">
-                                <a class="btn btn-yellow btn-block" href="@Url.Action("Login")" ng-click="closeoverlay()">MASUK</a>
+                                <a class="btn btn-yellow btn-block" href="@Url.Action("Login")">MASUK</a>
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
     }
     else if (ViewBag.FailedConfirmation != null)
     {
-        <div class="page-overlay">
+        <div class="page-overlay" >
             <div class="overlay-content">
                 <header>
                     <h4>Gagal Konfirmasi</h4>
@@ -120,8 +120,8 @@
                                     <img src="/Assets/images/sad-image.png" alt="Sad" />
                                 </div>
                                 <div class="col-sm-8">
-                                    <h3>E-mail Gagal Dikonfirmasi</h3>
-                                    <p>Mohon untuk melakukan pendaftaran ulang.</p>
+                                    <h3>E-mail Anda Gagal Dikonfirmasi</h3>
+                                    <p>Silakan lakukan pendaftaran ulang.</p>
                                 </div>
                             </div>
                         </div>
@@ -131,7 +131,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-6">
-                                <a class="btn btn-yellow btn-block" href="@Url.Action("Register")" ng-click="closeoverlay()">DAFTAR</a>
+                                <a class="btn btn-yellow btn-block" href="@Url.Action("Register")" >DAFTAR</a>
                             </div>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                                     <img src="/Assets/images/sad-image.png" alt="Sad" />
                                 </div>
                                 <div class="col-sm-8">
-                                    <h3>E-mail Belum Terdaftar</h3>
+                                    <h3>E-mail Anda Belum Terdaftar</h3>
                                     <p>Silakan bergabung dengan Travorama.</p>
                                 </div>
                             </div>
@@ -177,7 +177,7 @@
     }
     else if (ViewBag.LinkExpired != null)
     {
-        <div class="page-overlay">
+        <div class="page-overlay" ng-hide="form.resubmitted">
             <div class="overlay-content">
                 <header>
                     <h4>Tautan Kadaluarsa</h4>
@@ -190,8 +190,8 @@
                                     <img src="/Assets/images/sad-image.png" alt="Sad" />
                                 </div>
                                 <div class="col-sm-8">
-                                    <h3>Tautan untuk konfirmasi e-mail telah kadaluarsa.</h3>
-                                    <p>Mohon untuk meminta ulang tautan.</p>
+                                    <h3>Tautan untuk Konfirmasi E-mail Telah Kadaluarsa.</h3>
+                                    <p style="font-size:12px">Klik tombol di bawah untuk mengirim ulang e-mail konfirmasi.</p>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +201,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-6">
-                                <a class="btn btn-yellow btn-block" href="@Url.Action("Register")" ng-click="closeoverlay()">DAFTAR</a>
+                                <a class="btn btn-yellow btn-block" ng-click="reconfirm()">KIRIM ULANG</a>
                             </div>
                         </div>
                     </div>
@@ -244,5 +244,69 @@
             </div>
         </div><!-- .page-overlay -->
     }
+    
+    <div class="page-overlay" style="display:block" ng-show="form.resubmitted">
+        <div class="overlay-content">
+            <header>
+                <h4>Pengiriman E-Mail Konfirmasi Berhasil</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/smile-image.png" alt="Smile" />
+                            </div>
+                            <div class="col-sm-8">
+                                <h3>E-mail Konfirmasi Sudah Terkirim.</h3>
+                                <p>Silakan cek e-mail Anda untuk melakukan konfirmasi ulang.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block" href="/" >KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+    
+    <div class="page-overlay" style="display:block" ng-show="form.reconfirm">
+        <div class="overlay-content">
+            <header>
+                <h4>Pengiriman E-Mail Konfirmasi Gagal</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/sad-image.png" alt="Sad" />
+                            </div>
+                            <div class="col-sm-8">
+                                <h3>E-mail Konfirmasi Tidak Berhasil Terkirim</h3>
+                                <p style="font-size:11px">Klik tombol di bawah untuk mengirim ulang e-mail konfirmasi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block" ng-click="reconfirm()">KIRIM ULANG</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
 
 </section><!-- .form-section -->

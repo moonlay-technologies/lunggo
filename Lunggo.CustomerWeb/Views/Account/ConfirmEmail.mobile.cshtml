@@ -14,7 +14,7 @@
 @section PageJS{
     <script>
         var langCode = 'en';
-        var userEmail = '';
+        var userEmail = '@ViewBag.Email';
         var code = '';
     </script>
     <!-- angular controller -->
@@ -71,99 +71,177 @@
 
         @if (ViewBag.PasswordIsSet != null)
         {
-            <div class="overlay-container">
-                <header class="overlay-header">
-                    <span>E-mail Sudah Terkonfirmasi</span>
-                </header>
-                <div class="overlay-body clearfix">
-                    <div class="col-xs-4"><img src="/Assets/images/smile-image.png" alt="Registered"></div>
-                    <div class="col-xs-8">
-                        <span>
-                            Silakan masuk ke Travorama. Atau Anda <a href="@Url.Action("ForgotPassword")">Lupa Password?</a>
-                        </span>
-                    </div>
-                </div>
-                <div class="overlay-footer text-center">
-                    <a class="btn btn-yellow" href="@Url.Action("Login")" ng-click="closeOverlay(); User.Email = ''; User.Name = ''; ">MASUK</a>
+            <div class="page-overlay">
+                <div class="overlay-content">
+                   
+                        <div class="overlay-container">
+                            <header class="overlay-header">
+                                <span>E-mail Sudah Terkonfirmasi</span>
+                            </header>
+                            <div class="overlay-body clearfix">
+                                <div class="col-xs-4"><img src="/Assets/images/smile-image.png" alt="Registered"></div>
+                                <div class="col-xs-8">
+                                    <span>
+                                        Silakan masuk ke Travorama. Atau Anda <a href="@Url.Action("ForgotPassword")">Lupa Password?</a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="overlay-footer text-center">
+                                <a class="btn btn-yellow" href="@Url.Action("Login")">MASUK</a>
+                            </div>
+                        </div>
+              
                 </div>
             </div>
-        } 
+            
+        }
         else if (ViewBag.FailedConfirmation != null)
         {
-            <div class="overlay-container">
-                <header class="overlay-header">
-                    <span>E-mail Gagal Dikonfirmasi</span>
-                </header>
-                <div class="overlay-body clearfix">
-                    <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Registered"></div>
-                    <div class="col-xs-8">
-                        <span>
-                            Silakan bergabung dengan Travorama.
-                        </span>
-                    </div>
-                </div>
-                <div class="overlay-footer text-center">
-                    <a class="btn btn-yellow" href="@Url.Action("Register")" ng-click="closeOverlay(); User.Email = ''; User.Name = ''; ">DAFTAR</a>
+            <div class="page-overlay">
+                <div class="overlay-content">
+                    
+                        <div class="overlay-container">
+                            <header class="overlay-header">
+                                <span>E-mail Gagal Dikonfirmasi</span>
+                            </header>
+                            <div class="overlay-body clearfix">
+                                <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Registered"></div>
+                                <div class="col-xs-8">
+                                    <span>
+                                        Silakan bergabung dengan Travorama.
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="overlay-footer text-center">
+                                <a class="btn btn-yellow" href="@Url.Action("Register")">DAFTAR</a>
+                            </div>
+                        </div>
+                  
                 </div>
             </div>
+            
         }
         else if (ViewBag.UserNotFound != null)
         {
-            <div class="overlay-container">
-                <header class="overlay-header">
-                    <span>E-mail Belum Terdaftar</span>
-                </header>
-                <div class="overlay-body clearfix">
-                    <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Registered"></div>
-                    <div class="col-xs-8">
-                        <span>
-                            Silakan bergabung dengan Travorama.
-                        </span>
-                    </div>
-                </div>
-                <div class="overlay-footer text-center">
-                    <a class="btn btn-yellow" href="@Url.Action("Register")" ng-click="closeOverlay(); User.Email = ''; User.Name = ''; ">DAFTAR</a>
+            <div class="page-overlay">
+                <div class="overlay-content">
+                   
+                        <div class="overlay-container">
+                            <header class="overlay-header">
+                                <span>E-mail Belum Terdaftar</span>
+                            </header>
+                            <div class="overlay-body clearfix">
+                                <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Registered"></div>
+                                <div class="col-xs-8">
+                                    <span>
+                                        Silakan bergabung dengan Travorama.
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="overlay-footer text-center">
+                                <a class="btn btn-yellow" href="@Url.Action("Register")">DAFTAR</a>
+                            </div>
+                        </div>
+                   
                 </div>
             </div>
+            
         }
         else if (ViewBag.LinkExpired != null)
         {
-            <div class="overlay-container">
-                <header class="overlay-header">
-                    <span>Tautan Kadaluarsa</span>
-                </header>
-                <div class="overlay-body clearfix">
-                    <div class="col-xs-4"><img src="/Assets/images/smile-image.png" alt="Registered"></div>
-                    <div class="col-xs-8">
-                        <span>
-                            Tautan untuk konfirmasi e-mail telah kadaluarsa. Mohon untuk meminta ulang tautan.
-                        </span>
+            <div class="page-overlay" ng-hide="form.resubmitted">
+                <div class="overlay-content">
+                    <div class="overlay-container">
+                        <header class="overlay-header">
+                            <span>Tautan Kadaluarsa</span>
+                        </header>
+                        <div class="overlay-body clearfix">
+                            <div class="col-xs-4"><img src="/Assets/images/smile-image.png" alt="Registered"></div>
+                            <div class="col-xs-8">
+                                <span>
+                                    Tautan untuk konfirmasi e-mail Anda telah kadaluarsa. Silakan Klik tombol di bawah untuk mengirim ulang e-mail konfirmasi.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="overlay-footer text-center">
+                            <a class="btn btn-yellow" ng-click="reconfirm()">KIRIM ULANG</a>
+                        </div>
                     </div>
-                </div>
-                <div class="overlay-footer text-center">
-                    <a class="btn btn-yellow" href="@Url.Action("Register")" ng-click="closeOverlay(); User.Email = ''; User.Name = ''; ">DAFTAR</a>
                 </div>
             </div>
         }
         else
         {
-            <div class="overlay-container">
-                <header class="overlay-header">
-                    <span>Konfirmasi Gagal</span>
-                </header>
-                <div class="overlay-body clearfix">
-                    <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Registered"></div>
-                    <div class="col-xs-8">
-                        <span>
-                            Konfirmasi Gagal.
-                        </span>
-                    </div>
-                </div>
-                <div class="overlay-footer text-center">
-                    <a class="btn btn-yellow" href="@Url.Action("Register")" ng-click="closeOverlay(); User.Email = ''; User.Name = ''; ">DAFTAR</a>
+            <div class="page-overlay">
+                <div class="overlay-content">
+                    
+                        <div class="overlay-container">
+                            <header class="overlay-header">
+                                <span>Konfirmasi Gagal</span>
+                            </header>
+                            <div class="overlay-body clearfix">
+                                <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Registered"></div>
+                                <div class="col-xs-8">
+                                    <span>
+                                        Konfirmasi Gagal.
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="overlay-footer text-center">
+                                <a class="btn btn-yellow" href="/">KEMBALI</a>
+                            </div>
+                        </div>
+                    
                 </div>
             </div>
+            
         }
+    
+        <div class="page-overlay" ng-show="form.resubmitted">
+            <div class="overlay-content">
+                
+                    <div class="overlay-container">
+                        <header class="overlay-header">
+                            <span>Pengiriman E-Mail Konfirmasi Berhasil</span>
+                        </header>
+                        <div class="overlay-body clearfix">
+                            <div class="col-xs-4"><img src="/Assets/images/smile-image.png" alt="Success"></div>
+                            <div class="col-xs-8">
+                                <span>
+                                    E-mail Konfirmasi Sudah Terkirim. Silakan cek e-mail Anda untuk melakukan konfirmasi ulang
+                                </span>
+                            </div>
+                        </div>
+                        <div class="overlay-footer text-center">
+                            <a class="btn btn-yellow" href="/">KEMBALI</a>
+                        </div>
+                    </div>
+               
+            </div>
+        </div>
+    
+        <div class="page-overlay" ng-show="form.reconfirm">
+            <div class="overlay-content">
+                
+                    <div class="overlay-container">
+                        <header class="overlay-header">
+                            <span>Pengiriman E-Mail Konfirmasi Gagal</span>
+                        </header>
+                        <div class="overlay-body clearfix">
+                            <div class="col-xs-4"><img src="/Assets/images/sad-image.png" alt="Registered"></div>
+                            <div class="col-xs-8">
+                                <span>
+                                    E-mail Konfirmasi Tidak Berhasil Terkirim. Klik tombol di bawah untuk mengirim ulang e-mail konfirmasi.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="overlay-footer text-center">
+                            <a class="btn btn-yellow" ng-click="reconfirm()">KIRIM ULANG</a>
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
 
     </div><!-- .form-container -->
 </div>
