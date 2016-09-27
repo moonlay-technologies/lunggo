@@ -1357,7 +1357,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Config\application.properties" />
+    <Content Include="Config\application.properties">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Config\Country.csv" />
@@ -2799,6 +2801,7 @@
     <Content Include="Views\StaticPage\Contact.cshtml" />
     <Content Include="Views\StaticPage\_SectionHowTo.cshtml" />
     <Content Include="Views\Flight\Search-Single.mobile.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.mobile.cshtml" />
     <None Include="Views\Flight\Checkout.mobile.cshtml.bak" />
     <Content Include="Views\Flight\Eticket.cshtml" />
     <Content Include="Views\Flight\Confirmation.mobile.cshtml" />

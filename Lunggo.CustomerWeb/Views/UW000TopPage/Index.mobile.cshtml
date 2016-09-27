@@ -7,6 +7,10 @@
     ViewBag.SiteHeader = "mobile-home-page";
 }
 
+@section AdditionalCSS{
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
+}
+
 @section AdditionalJS {
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
@@ -16,44 +20,30 @@
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
-
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
 }
 
 @section PageJS {
+    <script>
+        $('.carousel-inner').slick({
+            autoplay: true,
+            autoplaySpeed: 3000,
+            dots: true,
+            prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
+            nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+        });
+    </script>
     <script src="/Assets/mobile/js/HomeController.js"></script>
 }
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <a href="https://onelink.to/travoramaapp"><img src="/Assets/images/banner/download-app.jpg" alt="Download Applikasi Travorama!" /></a>
-            </div>
-            <div class="item">
-                <a href="/id/Promo/Btn"><img src="/Assets/images/campaign/PromoBTN/PromoBTN-slider-app.jpg" alt="Terbang Hemat Bersama BTN" /></a>
-            </div>
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <a href="http://onelink.to/travoramaapp"><img src="/Assets/images/banner/download-app.jpg" alt="Download Applikasi Travorama!" /></a>
         </div>
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-        @*<div class="mobile-banner">
-            <div class="mb-container">
-                <div class="banner-txt">Booking Tiket Mudah & Cepat</div>
-                <div class="banner-button">
-                    <a href="https://play.google.com/store/apps/details?id=com.travorama&hl=en" class="button btn-playstore"></a>
-                    <a href="/" class="button btn-appstore"></a>
-                </div>
-            </div>
-        </div>*@
+        <div class="item">
+            <a href="/id/Promo/Btn"><img src="/Assets/images/campaign/PromoBTN/PromoBTN-slider-app.jpg" alt="Terbang Hemat Bersama BTN" /></a>
+        </div>
     </div>
     <div class="form-wrapper">
         <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>

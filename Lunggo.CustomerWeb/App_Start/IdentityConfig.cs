@@ -65,7 +65,8 @@ namespace Lunggo.CustomerWeb
             if (dataProtectionProvider != null)
             {
                 manager.UserTokenProvider =
-                    new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity")) {
+                    new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"))
+                    {
                         TokenLifespan = TimeSpan.FromDays(180)
                     };
             }

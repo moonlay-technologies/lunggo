@@ -18,7 +18,7 @@
                 </td>
                 <td class="dep-time">
                     @segment.DepartureTime.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("id-ID"))<br />
-                    @segment.DepartureTime.ToString("hh:mm", CultureInfo.CreateSpecificCulture("id-ID"))
+                    @segment.DepartureTime.ToString("HH:mm", CultureInfo.CreateSpecificCulture("id-ID"))
                 </td>
                 <td class="airline">
                     @segment.AirlineName<br />
@@ -30,7 +30,7 @@
                 </td>
                 <td class="arr-time">
                     @segment.ArrivalTime.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("id-ID"))<br />
-                    @segment.ArrivalTime.ToString("hh:mm", CultureInfo.CreateSpecificCulture("id-ID"))
+                    @segment.ArrivalTime.ToString("HH:mm", CultureInfo.CreateSpecificCulture("id-ID"))
                 </td>
                 <td class="arr-city">
                     @segment.ArrivalCity<br />

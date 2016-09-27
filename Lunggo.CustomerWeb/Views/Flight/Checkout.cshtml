@@ -64,58 +64,60 @@
 }
 @section PageJS{
     <script>
-    var langCode = '@OnlineContext.GetActiveLanguageCode()';
-    var currentPage = 1;
-    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
-    //var transferWindow = [ '1100', '1124' ];
-    // messages
-    var message = '@ViewBag.Message';
-    // flight detail
-    var token = @Model.Token;
-    var paymentDetail = '';
-    var flightDetail = '';
-    var expiryDate = '@Model.ExpiryTime.ToString("o")';
-    var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
+        var currentPage = 1;
+        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
+        //var transferWindow = [ '1100', '1124' ];
+        // messages
+        var message = '@ViewBag.Message';
+        // flight detail
+        var token = @Model.Token;
+        var paymentDetail = '';
+        var flightDetail = '';
+        var expiryDate = '@Model.ExpiryTime.ToString("o")';
+        var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
 
-    // passenger number
-    var adultPassenger = @Model.Itinerary.AdultCount;
-    var adultFare = @Model.Itinerary.OriginalAdultFare;
-    var adultNetFare = @Model.Itinerary.NetAdultFare * adultPassenger;
-    var totalAdultFare = adultPassenger * adultFare;
-    var adultTypeName = 'Dewasa';
+        // passenger number
+        var adultPassenger = @Model.Itinerary.AdultCount;
+        var adultFare = @Model.Itinerary.OriginalAdultFare;
+        var adultNetFare = @Model.Itinerary.NetAdultFare * adultPassenger;
+        var totalAdultFare = adultPassenger * adultFare;
+        var adultTypeName = 'Dewasa';
 
-    var childPassenger = @Model.Itinerary.ChildCount;
-    var childFare = @Model.Itinerary.OriginalChildFare;
-    var childNetFare = @Model.Itinerary.NetChildFare * childPassenger;
-    var totalChildFare = childPassenger * childFare;
-    var childTypeName = 'Anak';
+        var childPassenger = @Model.Itinerary.ChildCount;
+        var childFare = @Model.Itinerary.OriginalChildFare;
+        var childNetFare = @Model.Itinerary.NetChildFare * childPassenger;
+        var totalChildFare = childPassenger * childFare;
+        var childTypeName = 'Anak';
 
-    var infantPassenger = @Model.Itinerary.InfantCount;
-    var infantFare = @Model.Itinerary.OriginalInfantFare;
-    var infantNetFare = @Model.Itinerary.NetInfantFare * infantPassenger;
-    var totalInfantFare = infantPassenger * infantFare;
-    var infantTypeName = 'Bayi';
-    //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
-    // passport or id requirement
-    var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
-    var idRequired = false;
-    var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
-    var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
-    var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
-    var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
-    var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
-    var originalPrice = '@Model.Itinerary.OriginalTotalFare';
-    var price = '@Model.Itinerary.NetTotalFare';
-    //var trips = '@Model.Itinerary.Trips';
-    // change current page
-    if (getParam('page') == 2) {
-        currentPage = getParam('page');
-    } else {
-        currentPage = 1;
-    }
+        var infantPassenger = @Model.Itinerary.InfantCount;
+        var infantFare = @Model.Itinerary.OriginalInfantFare;
+        var infantNetFare = @Model.Itinerary.NetInfantFare * infantPassenger;
+        var totalInfantFare = infantPassenger * infantFare;
+        var infantTypeName = 'Bayi';
+        //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
+        // passport or id requirement
+        var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
+        var idRequired = false;
+        var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
+        var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
+        var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
+        var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
+        var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
+        var originalPrice = '@Model.Itinerary.OriginalTotalFare';
+        var price = '@Model.Itinerary.NetTotalFare';
+        //var trips = '@Model.Itinerary.Trips';
+        // change current page
+        if (getParam('page') == 2) {
+            currentPage = getParam('page');
+        } else {
+            currentPage = 1;
+        }
 
-
-
+        //Go to top
+        $(".go-top").on("click", function() {
+            $("body").scrollTop(0);
+        });
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
@@ -246,7 +248,7 @@
                                     <div style="color:red" ng-show="form.incompleteContactEmail">
                                         Alamat E-Mail pada Data Kontak Belum Ditambahkan<br /> <br />
                                     </div>
-                                    <button class="btn btn-yellow" ng-click="validateForm(1)" @*ng-disabled="buyerForm.$invalid"*@ @*|| buyerInfo.title == titles[0].value || buyerInfo.countryCode == 'xx'*@>LANJUTKAN</button>
+                                    <button class="btn btn-yellow go-top" ng-click="validateForm(1)" @*ng-disabled="buyerForm.$invalid"*@ @*|| buyerInfo.title == titles[0].value || buyerInfo.countryCode == 'xx'*@>LANJUTKAN</button>
                                 </div>
 
                             </div><!-- .content-step#step-1 -->
@@ -381,7 +383,7 @@
                                         Data Paspor Belum Lengkap
                                     </div>
                                     <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                                    <button class="btn btn-yellow" ng-click="validateForm(2)" @*ng-disabled="passengersForm.$invalid || !CheckTitle(passengers) || (birthDateRequired && !CheckDate(passengers)) || hasDuplicatePaxName()
+                                    <button class="btn btn-yellow go-top" ng-click="validateForm(2)" @*ng-disabled="passengersForm.$invalid || !CheckTitle(passengers) || (birthDateRequired && !CheckDate(passengers)) || hasDuplicatePaxName()
                                              || (passportRequired &&  (!CheckPassportDate(passengers) || !passportNumberFilled(passengers)))"*@>
                                         LANJUTKAN
                                     </button>
@@ -470,7 +472,7 @@
                                     <header>
                                         <span>Penerbangan Pergi</span>
                                         <div class="fare-detail">
-                                            <b>{{trips[0].origin}}</b> ke <b>{{trips[0].destination}}</b> | {{trips[0].segments[0].departureTime | date: 'dd-MM-yyyy' : 'UTC'}}
+                                            <b>{{trips[0].segments.origin}}</b> ke <b>{{trips[0].destination}}</b> | {{trips[0].date | date: 'dd-MM-yyyy' : 'UTC'}}
                                                     </div>
                                     </header>
                                     <section class="detail-content">
@@ -518,7 +520,7 @@
                                     <header>
                                         <span>Penerbangan Pulang</span>
                                         <div class="fare-detail">
-                                            <b>{{trips[1].origin}}</b> ke <b>{{trips[1].destination}}</b> | {{trips[1].segments[0].departureTime | date: 'dd-MM-yyyy' : 'UTC'}}
+                                            <b>{{trips[1].origin}}</b> ke <b>{{trips[1].destination}}</b> | {{trips[1].date | date: 'dd-MM-yyyy' : 'UTC'}}
                                         </div>
                                     </header>
                                     <section class="detail-content">
@@ -604,7 +606,7 @@
                                         </div>
 
                                         <a class="btn btn-grey" ng-click="changePage(2)" ng-disabled="checkoutForm.loading">KEMBALI</a>
-                                        <input type="submit" ng-disabled="finalForm.$invalid" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'PESAN' : 'MEMPROSES' }}">
+                                        <input type="submit" ng-disabled="finalForm.$invalid" class="btn btn-yellow go-top" value="{{ !checkoutForm.loading? 'PESAN' : 'MEMPROSES' }}">
 
                                     </form>
 
@@ -700,10 +702,10 @@
                                                     </div>
                                                     <div class="duration"></div>
                                                     <div class="destination">
-                                                        <h5>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
-                                                        <h3>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
-                                                        <h4>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalCity}} ({{trips[1].segments[ trips[0].segments.length - 1 ].arrival}})</h4>
-                                                        <h5>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalName}}</h5>
+                                                        <h5>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                                        <h3>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                                        <h4>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalCity}} ({{trips[1].segments[ trips[1].segments.length - 1 ].arrival}})</h4>
+                                                        <h5>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalName}}</h5>
                                                     </div>
                                                 </div>
                                             </div>
