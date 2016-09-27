@@ -1089,30 +1089,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .accordion-wrapper .accordion-content.show > ol > li {
         margin-bottom: 10px; }
 
-.slider-price {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  background: #666;
-  border: none !important;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  border-radius: 0; }
-  .slider-price .ui-slider-range {
-    background: #fed446; }
-  .slider-price .ui-slider-handle {
-    background: #dedede;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    -ms-border-radius: 20px;
-    border-radius: 20px;
-    width: 15px;
-    height: 15px;
-    color: #fff;
-    border: 0; }
-    .slider-price .ui-slider-handle:focus {
-      border: 0; }
-
 /*--------------------*/
 /*--------------------*/
 /* icon */
@@ -1859,7 +1835,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding: 12px; }
 
 .overlay--flight-filter .overlay__content .filter-group {
-  padding: 15px 12px; }
+  padding: 15px 12px;
+  font-size: 11px; }
   .overlay--flight-filter .overlay__content .filter-group label {
     font-weight: normal; }
   .overlay--flight-filter .overlay__content .filter-group + .filter-group {
@@ -1868,7 +1845,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin-bottom: 5px; }
     .overlay--flight-filter .overlay__content .filter-group .filter-group__header .filter-group__title {
       margin: 0;
-      font-weight: 700;
+      font-weight: 600;
       font-size: 12px; }
   .overlay--flight-filter .overlay__content .filter-group .filter-group__content label {
     display: block;
@@ -1881,13 +1858,27 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     -webkit-border-radius: 1px 1px 1px #666;
     -moz-border-radius: 1px 1px 1px #666;
     -ms-border-radius: 1px 1px 1px #666;
-    box-shadow: 1px 1px 1px #666; }
-    .overlay--flight-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal .ui-slider-handle {
-      -webkit-border-radius: 1px 1px 1px #666;
-      -moz-border-radius: 1px 1px 1px #666;
-      -ms-border-radius: 1px 1px 1px #666;
+    box-shadow: 1px 1px 1px #666;
+    margin: 10px 0;
+    background: #fff;
+    border: none !important;
+    border-radius: 0;
+    height: 15px; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal .ui-slider-range {
+      background: #fed446;
       box-shadow: 1px 1px 1px #666;
-      background: #fff; }
+      border-radius: 0; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal .ui-slider-handle {
+      -webkit-border-radius: 1px 1px 5px #666;
+      -moz-border-radius: 1px 1px 5px #666;
+      -ms-border-radius: 1px 1px 5px #666;
+      box-shadow: 1px 1px 5px #666;
+      width: 20px;
+      height: 20px;
+      background: #fed446;
+      border: 0;
+      border-radius: 0;
+      margin-left: -10px; }
   .overlay--flight-filter .overlay__content .filter-group.filter-group--airline label img {
     height: 30px;
     margin-right: 10px; }

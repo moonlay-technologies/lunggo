@@ -134,11 +134,13 @@
         .filter-container {
             padding: 12px;
         }
-        .filter-group {padding:15px 12px;
+        .filter-group {
+            padding:15px 12px;
+            font-size: 11px;
             label {font-weight:normal;}
             &+.filter-group {border-top:$border-default;}
             .filter-group__header {margin-bottom: 5px;
-                .filter-group__title {margin:0; font-weight:700; font-size: 12px;}
+                .filter-group__title {margin:0; font-weight:600; font-size: 12px;}
             }
             .filter-group__content {
                 label {display:block; padding:12px 0;
@@ -150,9 +152,24 @@
             &.filter-group--price {
                 .ui-slider-horizontal {
                     @include box-shadow(1px 1px 1px #666);
+                    margin: 10px 0;
+                    background: #fff;
+                    border: none !important;
+                    border-radius: 0;
+                    height: 15px;
+                    .ui-slider-range {
+                        background: #fed446;
+                        box-shadow: 1px 1px 1px #666;
+                        border-radius: 0;
+                    }
                     .ui-slider-handle {
-                        @include box-shadow(1px 1px 1px #666);
-                        background: #fff;
+                        @include box-shadow(1px 1px 5px #666);
+                        width: 20px;
+                        height: 20px;
+                        background: #fed446;
+                        border: 0;
+                        border-radius: 0;
+                        margin-left: -10px;
                     }
                 }
             }
