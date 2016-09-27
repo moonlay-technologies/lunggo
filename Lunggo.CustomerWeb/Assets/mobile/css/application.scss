@@ -23,7 +23,7 @@ $border-radius-default: 2px;
 $border-radius-big: 5px;
 $border-grey-btn: 1px solid #d3d7da;
 $border-form: 1px solid #dddddd;
-$transition-default: all 0.4s;
+$transition-default: all 0.5s;
 $header-height: 60px;
 $toggle-box-shadow: 0 0 1px #2196F3;
 
@@ -116,6 +116,18 @@ $button-border: #c9cdd2;
 .os-bold {font-weight: 700;}
 
 /*--------------------*/
+/* animation */
+.overlay-move {
+    -webkit-animation-name: overlaymove;
+    -webkit-animation-duration: .5s;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: linear;
+    -webkit-transform: translateZ(0);
+    webkit-backface-visibility: hidden;
+}
+
+/*--------------------*/
 // General Styling
   @media only screen and (min-width:400px) {
     .page.page-flight .flight-summary{
@@ -164,19 +176,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .site-logo {height: 30px; margin-top: 15px;}
         .user-menu {@extend & .site-menu; background-position:0 0; left:auto; right:10px;}
         .promo {@extend & .site-menu; background:url(/Assets/mobile/images/promo-logo.png); left:auto; right:15px; background-size: 100%; background-repeat: no-repeat;
-            &:after {content: ''; width: 12px; height: 12px; background: red; display: block; border-radius: 12px; float: right;}
+            span.number-promo {content: ''; width: 12px; height: 12px; background: red; display: block; border-radius: 12px; float: right; font-size: 8px; color: #fff;}
         }
-        .flight-swap {@extend & .site-menu; background:url(/Assets/mobile/images/flight-swap.png); left:auto; right:10px;}
+        .flight-swap {@extend & .site-menu; background:url(/Assets/mobile/images/flight-swap.png) no-repeat; left:auto; right:15px; width: 23px; height: 25px; top: 18px;}
         .flight-detail {@extend & .site-menu; width:40px; background:none; left:auto; right:15px; color:$color-main-blue; text-decoration:none; text-align:right; font-weight:600; padding:10px 0; font-size:14px;}
     }
 }
 
-.burger-content {position:fixed; height:100%; width:300px; top:0; left:-320px; z-index:9999; background:#fff; overflow:hidden; width:320px; padding-right:20px; background:none;
+.burger-content {position:fixed; height:100%; width:300px; top:0; left:-320px; z-index:9999; background:#fff; overflow:hidden; width:320px; padding-right:20px; background:none; @include transition($transition-default); @extend .overlay-move; 
     // if active
-    &.active {left:0; @include transition(all 0.5s);
-        .burger-content__header {left:0;}
-    }
-    .burger-content__header {background:#028ec3; color:#fff; position:relative; width:300px; height:$header-height; top:0; left:-300px; z-index:2;
+    &.active {left:0; @include transition($transition-default); @extend .overlay-move;}
+    .burger-content__header {background:#028ec3; color:#fff; width:300px; height:$header-height; top:0;
         ul {list-style:none; margin:0; padding:10px 20px;
             li {display:inline-block; width:70px; padding-top:10px; padding-bottom:10px; padding-left:15px;
                 a {color:#fff; font-weight:600;}
@@ -187,7 +197,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 &.currency {border-left:1px solid $color-main-blue; padding-left:30px;}
             }
         }
-        .burger-content__close {color:#fff; position:absolute; right:15px; top:12px; font-size:24px; font-weight:600; cursor: pointer;}
+        .burger-content__close {color:#fff; position:absolute; right:40px; top:12px; font-size:24px; font-weight:600; cursor: pointer; text-decoration: none; text-transform: lowercase; line-height: 30px;}
     }
     .burger-content__body {background:#fff; min-height: 100%;
         ul {list-style:none; margin:0; padding:0; 
@@ -414,7 +424,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // *****
 // overlay
-.overlay {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:1000; background:#fff; padding-top:0; overflow:auto; @include transition($transition-default);
+.overlay {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:1000; background:#fff; padding-top:0; overflow:auto; @include transition($transition-default); @extend .overlay-move;
     .overlay__header {background:#878787; color:#fff; padding:22px 18px; height:$header-height; position:fixed; z-index:1; top:0; left:0; width:100%; display:none; text-align:center;
         .overlay__title {margin:0;
             small {color:#fff; font-weight:600; font-size:14px;}

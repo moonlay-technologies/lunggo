@@ -12,10 +12,8 @@
         max-width: 300px;
         margin-top: 120px;
         .logo {
-            background: url('/Assets/images/logo-travorama.png') no-repeat;
-            display: block;
-            height: 34px;
             margin-bottom: 40px;
+            .logo-img {height: 40px;}
         }
         .bg-txt {
             font-size: 27px;
@@ -47,10 +45,9 @@
         min-height: auto;
         .container {width: auto;}
         .logo {
-            background: url(/Assets/images/travorama-logo-color.png) no-repeat center;
-            display: block;
-            height: 27px;
-            margin: 15px 0 60px;
+            margin: 15px 0;
+            text-align: center;
+            .logo-img {height: 30px;}
         }
         .page-content {
             top: 50%;
@@ -66,23 +63,27 @@
                 text-transform: uppercase;
                 font-weight: 700;
                 text-align: center;
-                padding-bottom: 10px;
+                padding-bottom: 15px;
                 border-bottom: 1px solid #ccc;
             }
             .sm-txt {
                 font-size: 11px;
                 line-height: 16px;
-                margin: 30px 0;
+                margin: 15px 0 30px;
             }
+            .btn-home {text-align: center;}
             a.btn.btn-yellow {
                 background: #ffd632;
                 font-size: 15px;
+                line-height: 18px;
                 text-transform: uppercase;
                 color: #000;
                 font-weight: 700;
                 letter-spacing: 0.5px;
-                padding: 10px;
+                padding: 10px 30px;
                 height: 40px;
+                border: none;
+                width: 100%;
             }
         }
     }
