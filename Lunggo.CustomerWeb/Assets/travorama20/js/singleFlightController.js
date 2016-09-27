@@ -397,7 +397,7 @@ app.controller('singleFlightController', [
         }
 
         // time filter
-        $scope.getHour = function (dateTime) {
+        $scope.getMinute = function (dateTime) {
             var hour = dateTime.substr(11, 2);
             var minute = dateTime.substr(14, 2);
             return parseInt(hour) *60 + parseInt(minute);
@@ -407,10 +407,10 @@ app.controller('singleFlightController', [
             arrival: [0, 24]
         };
         $scope.timeFilter = function (flight) {
-            if ($scope.getHour(flight.trips[0].segments[0].departureTime) >= parseInt($scope.timeFilterParam.departure[0]) * 60
-                && $scope.getHour(flight.trips[0].segments[0].departureTime) <= parseInt($scope.timeFilterParam.departure[1]) * 60
-                && $scope.getHour(flight.trips[0].segments[flight.trips[0].segments.length - 1].arrivalTime) >= parseInt($scope.timeFilterParam.arrival[0]) * 60
-                && $scope.getHour(flight.trips[0].segments[flight.trips[0].segments.length - 1].arrivalTime) <= parseInt($scope.timeFilterParam.arrival[1]) * 60
+            if ($scope.getMinute(flight.trips[0].segments[0].departureTime) >= parseInt($scope.timeFilterParam.departure[0]) * 60
+                && $scope.getMinute(flight.trips[0].segments[0].departureTime) <= parseInt($scope.timeFilterParam.departure[1]) * 60
+                && $scope.getMinute(flight.trips[0].segments[flight.trips[0].segments.length - 1].arrivalTime) >= parseInt($scope.timeFilterParam.arrival[0]) * 60
+                && $scope.getMinute(flight.trips[0].segments[flight.trips[0].segments.length - 1].arrivalTime) <= parseInt($scope.timeFilterParam.arrival[1]) * 60
             ) {
                 return flight;
             }
