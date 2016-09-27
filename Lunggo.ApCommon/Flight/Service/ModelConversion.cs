@@ -362,10 +362,10 @@ namespace Lunggo.ApCommon.Flight.Service
 
             if (tOri <= tNet)
             {
-                tOri = decimal.Round(tNet*1.1M);
-                aOri = decimal.Round(aNet.Value*1.1M);
-                cOri = decimal.Round(cNet.Value*1.1M);
-                iOri = decimal.Round(iNet.Value*1.1M);
+                tOri = decimal.Round(tNet*1.01M);
+                aOri = decimal.Round(aNet.Value*1.01M);
+                cOri = decimal.Round(cNet.Value*1.01M);
+                iOri = decimal.Round(iNet.Value*1.01M);
             }
         }
 

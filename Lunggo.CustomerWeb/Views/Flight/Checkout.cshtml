@@ -472,7 +472,7 @@
                                     <header>
                                         <span>Penerbangan Pergi</span>
                                         <div class="fare-detail">
-                                            <b>{{trips[0].origin}}</b> ke <b>{{trips[0].destination}}</b> | {{trips[0].segments[0].departureTime | date: 'dd-MM-yyyy' : 'UTC'}}
+                                            <b>{{trips[0].segments.origin}}</b> ke <b>{{trips[0].destination}}</b> | {{trips[0].date | date: 'dd-MM-yyyy' : 'UTC'}}
                                                     </div>
                                     </header>
                                     <section class="detail-content">
@@ -520,7 +520,7 @@
                                     <header>
                                         <span>Penerbangan Pulang</span>
                                         <div class="fare-detail">
-                                            <b>{{trips[1].origin}}</b> ke <b>{{trips[1].destination}}</b> | {{trips[1].segments[0].departureTime | date: 'dd-MM-yyyy' : 'UTC'}}
+                                            <b>{{trips[1].origin}}</b> ke <b>{{trips[1].destination}}</b> | {{trips[1].date | date: 'dd-MM-yyyy' : 'UTC'}}
                                         </div>
                                     </header>
                                     <section class="detail-content">
@@ -702,10 +702,10 @@
                                                     </div>
                                                     <div class="duration"></div>
                                                     <div class="destination">
-                                                        <h5>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
-                                                        <h3>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
-                                                        <h4>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalCity}} ({{trips[1].segments[ trips[0].segments.length - 1 ].arrival}})</h4>
-                                                        <h5>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalName}}</h5>
+                                                        <h5>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                                        <h3>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                                        <h4>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalCity}} ({{trips[1].segments[ trips[1].segments.length - 1 ].arrival}})</h4>
+                                                        <h5>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalName}}</h5>
                                                     </div>
                                                 </div>
                                             </div>

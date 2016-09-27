@@ -602,10 +602,10 @@
                                             </div>
                                             <div class="duration"></div>
                                             <div class="destination">
-                                                <h5>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
-                                                <h3>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
-                                                <h4>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalCity}} ({{trips[1].segments[ trips[0].segments.length - 1 ].arrival}})</h4>
-                                                <h5>{{trips[1].segments[ trips[0].segments.length - 1 ].arrivalName}}</h5>
+                                                <h5>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                                <h3>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                                <h4>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalCity}} ({{trips[1].segments[ trips[1].segments.length - 1 ].arrival}})</h4>
+                                                <h5>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalName}}</h5>
                                             </div>
                                         </div>
                                     </div>
