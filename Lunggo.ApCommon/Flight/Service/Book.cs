@@ -200,11 +200,14 @@ namespace Lunggo.ApCommon.Flight.Service
                 result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit
                     ? defaultTimeout
                     : result.Status.TimeLimit;
-                result.Status.TimeLimit = result.Status.TimeLimit.AddMinutes(-10);
-                if (result.Status.TimeLimit < DateTime.UtcNow.AddMinutes(10))
+                if (result.Status.TimeLimit < DateTime.UtcNow.AddMinutes(20))
                 {
                     result.IsSuccess = false;
                     result.AddError(FlightError.FareIdNoLongerValid, "Time limit too short.");
+                }
+                else
+                {
+                    result.Status.TimeLimit = result.Status.TimeLimit.AddMinutes(-10);
                 }
             }
             return result;
