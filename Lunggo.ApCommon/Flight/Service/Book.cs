@@ -189,7 +189,6 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
-            var fareType = bookInfo.Itinerary.FareType;
             var supplierName = bookInfo.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
             var result = supplier.BookFlight(bookInfo);

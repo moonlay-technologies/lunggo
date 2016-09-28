@@ -170,7 +170,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var searchResponse = client.Execute(searchRequest);
 
-                if (searchResponse.ResponseUri.AbsolutePath != "/Select.aspx" || (searchResponse.StatusCode != HttpStatusCode.OK && searchResponse.StatusCode != HttpStatusCode.Redirect))
+                if ((searchResponse.ResponseUri != null && searchResponse.ResponseUri.AbsolutePath != "/Select.aspx") || (searchResponse.StatusCode != HttpStatusCode.OK && searchResponse.StatusCode != HttpStatusCode.Redirect))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -233,7 +233,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 selectRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var selectResponse = client.Execute(selectRequest);
 
-                if (selectResponse.ResponseUri.AbsolutePath != "/Traveler.aspx" || (selectResponse.StatusCode != HttpStatusCode.OK && selectResponse.StatusCode != HttpStatusCode.Redirect))
+                if ((selectResponse.ResponseUri != null && selectResponse.ResponseUri.AbsolutePath != "/Traveler.aspx") || (selectResponse.StatusCode != HttpStatusCode.OK && selectResponse.StatusCode != HttpStatusCode.Redirect))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -353,7 +353,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 travelerRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var travelerResponse = client.Execute(travelerRequest);
 
-                if (travelerResponse.ResponseUri.AbsolutePath != "/UnitMap.aspx" || (travelerResponse.StatusCode != HttpStatusCode.OK && travelerResponse.StatusCode != HttpStatusCode.Redirect))
+                if ((travelerResponse.ResponseUri != null && travelerResponse.ResponseUri.AbsolutePath != "/UnitMap.aspx") || (travelerResponse.StatusCode != HttpStatusCode.OK && travelerResponse.StatusCode != HttpStatusCode.Redirect))
 
                     return new BookFlightResult
                     {
@@ -388,7 +388,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 unitMapRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var unitMapResponse = client.Execute(unitMapRequest);
 
-                if (unitMapResponse.ResponseUri.AbsolutePath != "/Payment.aspx" || (unitMapResponse.StatusCode != HttpStatusCode.OK && unitMapResponse.StatusCode != HttpStatusCode.Redirect))
+                if ((unitMapResponse.ResponseUri != null && unitMapResponse.ResponseUri.AbsolutePath != "/Payment.aspx") || (unitMapResponse.StatusCode != HttpStatusCode.OK && unitMapResponse.StatusCode != HttpStatusCode.Redirect))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
