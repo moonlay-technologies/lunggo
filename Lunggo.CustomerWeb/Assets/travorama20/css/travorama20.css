@@ -1627,7 +1627,11 @@ file : /Assets/travorama20/css/_page_index.scss
           -moz-border-radius: 30px;
           -ms-border-radius: 30px;
           border-radius: 30px;
-          outline: none; }
+          outline: none;
+          padding: 0;
+          width: 30px;
+          height: 30px;
+          line-height: 0; }
         .page-index .section-search .page-slider .slick-dots li.slick-active button {
           background: #1daee4;
           color: #1daee4; }
