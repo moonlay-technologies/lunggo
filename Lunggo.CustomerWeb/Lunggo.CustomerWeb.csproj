@@ -237,6 +237,7 @@
     <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HelpSectionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobileTemplateController.cs" />
     <Compile Include="Controllers\PromoController.cs" />
@@ -705,6 +706,7 @@
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
     <Content Include="Assets\images\campaign\MobileApp\mobile-app-banner.jpg" />
+    <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-mobile.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-app.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-bg.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider.jpg" />
@@ -731,6 +733,10 @@
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.umd.js" />
+    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.css" />
+    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.min.css">
+      <DependentUpon>travorama-mobileApp.css</DependentUpon>
+    </Content>
     <Content Include="Campaign\MobileAppCampaign\images\app-store-cs.png" />
     <Content Include="Campaign\MobileAppCampaign\images\app-store.png" />
     <Content Include="Campaign\MobileAppCampaign\images\background.jpg" />
@@ -1317,6 +1323,12 @@
     <Content Include="Campaign\Imlek2016\images\wrapper-bg.png" />
     <Content Include="Assets\vendor\transitJS\jquery.transit.min.js" />
     <Content Include="Campaign\Imlek2016\js\imlek2016.js" />
+    <Content Include="Campaign\PromoBTN\css\promo-btn.css">
+      <DependentUpon>promo-btn.scss</DependentUpon>
+    </Content>
+    <Content Include="Campaign\PromoBTN\css\promo-btn.min.css">
+      <DependentUpon>promo-btn.css</DependentUpon>
+    </Content>
     <Content Include="Campaign\PromoBTN\images\credit-card.png" />
     <Content Include="Campaign\PromoBTN\images\debit.png" />
     <Content Include="Campaign\PromoBTN\images\top-banner.jpg" />
@@ -2819,6 +2831,7 @@
     <Content Include="Views\Promo\BtnWebview.cshtml" />
     <Content Include="Views\Shared\GlobalError.cshtml" />
     <Content Include="Views\Shared\GlobalError.mobile.cshtml" />
+    <Content Include="Views\Hotel\Search.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
