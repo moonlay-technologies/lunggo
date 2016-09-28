@@ -1623,14 +1623,14 @@ file : /Assets/travorama20/css/_page_index.scss
           background: #fff;
           color: #fff;
           border: 3px solid #1daee4;
-          -webkit-border-radius: 30px;
-          -moz-border-radius: 30px;
-          -ms-border-radius: 30px;
-          border-radius: 30px;
+          -webkit-border-radius: 25px;
+          -moz-border-radius: 25px;
+          -ms-border-radius: 25px;
+          border-radius: 25px;
           outline: none;
           padding: 0;
-          width: 30px;
-          height: 30px;
+          width: 25px;
+          height: 25px;
           line-height: 0; }
         .page-index .section-search .page-slider .slick-dots li.slick-active button {
           background: #1daee4;

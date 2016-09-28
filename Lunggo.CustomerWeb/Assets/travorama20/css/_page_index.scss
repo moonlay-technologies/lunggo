@@ -173,7 +173,7 @@ file : /Assets/travorama20/css/_page_index.scss
             .slick-dots {position:absolute; bottom:20px; text-align:right; width:100%; list-style:none; margin:0; padding:0; padding-right: 5%; 
                 li {list-style:none; display:inline-block;
                     &+li {margin-left:5px;}
-                    button {background:#fff; color:#fff; border:3px solid $color-main-blue; @include border-radius(30px); outline:none; padding: 0; width: 30px; height: 30px; line-height: 0;}
+                    button {background:#fff; color:#fff; border:3px solid $color-main-blue; @include border-radius(25px); outline:none; padding: 0; width: 25px; height: 25px; line-height: 0;}
                     // if active
                     &.slick-active {
                         button {background:$color-main-blue; color:$color-main-blue;}
