@@ -141,13 +141,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background-repeat: no-repeat; }
       .site-header .header-display .promo span.number-promo {
         content: '';
-        width: 13px;
-        height: 13px;
+        width: 12px;
+        height: 12px;
         background: red;
         display: block;
         border-radius: 12px;
         float: right;
-        font-size: 8px;
+        font-size: 6px;
         line-height: 12px;
         color: #fff; }
     .site-header .header-display .flight-swap {
