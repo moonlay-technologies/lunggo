@@ -85,10 +85,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     DestinationAirport = conditions.Trips[0].DestinationAirport,
                     DepartureDate = conditions.Trips[0].DepartureDate
                 };
+                if (trip0.OriginAirport == "JKT")
+                    trip0.OriginAirport = "CGK";
+                if (trip0.DestinationAirport == "JKT")
+                    trip0.DestinationAirport = "CGK";
+                if (trip0.OriginAirport == "SHA")
+                    trip0.OriginAirport = "PVG";
+                if (trip0.DestinationAirport == "SHA")
+                    trip0.DestinationAirport = "PVG";
+                if (trip0.OriginAirport == "BKK")
+                    trip0.OriginAirport = "DMK";
+                if (trip0.DestinationAirport == "BKK")
+                    trip0.DestinationAirport = "DMK";
 
-                var originAirport = trip0.OriginAirport == "JKT" ? "CGK" : trip0.OriginAirport;
-                    
-                var destinationAirport = trip0.DestinationAirport == "JKT" ? "CGK" : trip0.DestinationAirport;
+                var originAirport = trip0.OriginAirport;
+                var destinationAirport = trip0.DestinationAirport;
 
                 // [GET] Search Flight
                 var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);

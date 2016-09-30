@@ -21,17 +21,6 @@
   font-weight: 700; }
 
 /*--------------------*/
-/* animation */
-.overlay-move, .burger-content, .burger-content.active, .overlay {
-  -webkit-animation-name: overlaymove;
-  -webkit-animation-duration: .5s;
-  -webkit-animation-fill-mode: forwards;
-  -webkit-animation-iteration-count: 1;
-  -webkit-animation-timing-function: linear;
-  -webkit-transform: translateZ(0);
-  webkit-backface-visibility: hidden; }
-
-/*--------------------*/
 @media only screen and (min-width: 400px) {
   .page.page-flight .flight-summary {
     background-color: red; } }
@@ -157,7 +146,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         display: block;
         border-radius: 12px;
         float: right;
-        font-size: 8px;
+        font-size: 6px;
+        line-height: 12px;
         color: #fff; }
     .site-header .header-display .flight-swap {
       background: url(/Assets/mobile/images/flight-swap.png) no-repeat;
@@ -190,16 +180,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   width: 320px;
   padding-right: 20px;
   background: none;
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  -o-transition: all 0.5s;
-  transition: all 0.5s; }
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out; }
   .burger-content.active {
     left: 0;
-    -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    transition: all 0.5s; }
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out; }
   .burger-content .burger-content__header {
     background: #028ec3;
     color: #fff;
@@ -229,8 +219,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       position: absolute;
       right: 40px;
       top: 12px;
-      font-size: 24px;
-      font-weight: 600;
+      font-size: 18px;
+      font-weight: 400;
       cursor: pointer;
       text-decoration: none;
       text-transform: lowercase;
@@ -506,10 +496,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background: #fff;
   padding-top: 0;
   overflow: auto;
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  -o-transition: all 0.5s;
-  transition: all 0.5s; }
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out; }
   .overlay .overlay__header {
     background: #878787;
     color: #fff;
@@ -533,8 +523,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       text-transform: uppercase; }
     .overlay .overlay__header .overlay__close {
       float: right;
-      font-size: 16.5px;
-      cursor: pointer; }
+      font-size: 17px;
+      cursor: pointer;
+      text-transform: lowercase;
+      line-height: 9px;
+      font-weight: 400; }
   .overlay .overlay__content, .overlay .overlay__body {
     background: #fff;
     min-height: 100%;
@@ -1282,10 +1275,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       right: 0;
       bottom: 0;
       background-color: #ccc;
-      -webkit-transition: all 0.5s;
-      -moz-transition: all 0.5s;
-      -o-transition: all 0.5s;
-      transition: all 0.5s; }
+      -webkit-transition: all 0.3s ease-out;
+      -moz-transition: all 0.3s ease-out;
+      -o-transition: all 0.3s ease-out;
+      transition: all 0.3s ease-out; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip .slider:before {
         position: absolute;
         content: "";
@@ -1294,10 +1287,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         left: 4px;
         bottom: 4px;
         background-color: #ffffff;
-        -webkit-transition: all 0.5s;
-        -moz-transition: all 0.5s;
-        -o-transition: all 0.5s;
-        transition: all 0.5s; }
+        -webkit-transition: all 0.3s ease-out;
+        -moz-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out; }
     .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider {
       background-color: #2ea1e8; }
     .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider:before {
@@ -1755,10 +1748,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       right: 0;
       bottom: 0;
       background-color: #ccc;
-      -webkit-transition: all 0.5s;
-      -moz-transition: all 0.5s;
-      -o-transition: all 0.5s;
-      transition: all 0.5s; }
+      -webkit-transition: all 0.3s ease-out;
+      -moz-transition: all 0.3s ease-out;
+      -o-transition: all 0.3s ease-out;
+      transition: all 0.3s ease-out; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip .slider:before {
         position: absolute;
         content: "";
@@ -1767,10 +1760,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         left: 4px;
         bottom: 4px;
         background-color: #ffffff;
-        -webkit-transition: all 0.5s;
-        -moz-transition: all 0.5s;
-        -o-transition: all 0.5s;
-        transition: all 0.5s; }
+        -webkit-transition: all 0.3s ease-out;
+        -moz-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip input:checked + .slider {
       background-color: #2ea1e8; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip input:checked + .slider:before {

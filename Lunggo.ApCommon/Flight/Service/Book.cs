@@ -189,7 +189,6 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
-            var fareType = bookInfo.Itinerary.FareType;
             var supplierName = bookInfo.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
             var result = supplier.BookFlight(bookInfo);
@@ -200,11 +199,14 @@ namespace Lunggo.ApCommon.Flight.Service
                 result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit
                     ? defaultTimeout
                     : result.Status.TimeLimit;
-                result.Status.TimeLimit = result.Status.TimeLimit.AddMinutes(-10);
-                if (result.Status.TimeLimit < DateTime.UtcNow.AddMinutes(10))
+                if (result.Status.TimeLimit < DateTime.UtcNow.AddMinutes(20))
                 {
                     result.IsSuccess = false;
                     result.AddError(FlightError.FareIdNoLongerValid, "Time limit too short.");
+                }
+                else
+                {
+                    result.Status.TimeLimit = result.Status.TimeLimit.AddMinutes(-10);
                 }
             }
             return result;
