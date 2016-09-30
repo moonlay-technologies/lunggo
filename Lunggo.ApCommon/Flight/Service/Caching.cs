@@ -24,17 +24,18 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetSavedPassengersFromDb(contactEmail);
         }
 
-        private void SetLowestPriceToCache(List<FlightItinerary> itins)
+        public void SetLowestPriceToCache(List<FlightItineraryForDisplay> itins)
         {
             var keyRoute = SetRoute(itins);
             var keyDate = SetDate(itins);
             var lowestvalue = GetLowestPrice(itins);
+            Console.WriteLine("Lowest value for route: " + keyRoute + keyDate + " is " + lowestvalue);
             var redis = RedisService.GetInstance();
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.HashSet(keyRoute, keyDate, Convert.ToString(lowestvalue));
         }
 
-        private void SetLowestPriceToCache(List<FlightItinerary> itins, string origin, string destination, DateTime date)
+        private void SetLowestPriceToCache(List<FlightItineraryForDisplay> itins, string origin, string destination, DateTime date)
         {
             var keyRoute = SetRoute(origin, destination);
             var keyDate = SetDate(date);
@@ -173,12 +174,41 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
+        private static bool GetSearchingStatusInCache(string searchId)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = "searchFlightStatus:" + searchId;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var redisTransaction = redisDb.CreateTransaction();
+                redisTransaction.AddCondition(Condition.KeyNotExists(redisKey));
+                redisTransaction.StringSetAsync(redisKey, true, TimeSpan.FromMinutes(5));
+                var currentStatusTask = redisTransaction.StringGetAsync(redisKey);
+                redisTransaction.Execute();
+                return currentStatusTask.Status == TaskStatus.Canceled;
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
         private void InvalidateSearchingStatusInCache(string searchId, int supplierIndex)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "searchFlightStatus:" + searchId + ":" + supplierIndex;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var expiry = GetSearchedItinerariesExpiry(searchId, supplierIndex);
+            redisDb.StringSet(redisKey, false, expiry - DateTime.UtcNow);
+        }
+
+        public void InvalidateSearchingStatusInCache(string searchId)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "searchFlightStatus:" + searchId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var expiry = GetSearchedItinerariesExpiry(searchId, 0);
             redisDb.StringSet(redisKey, false, expiry - DateTime.UtcNow);
         }
 

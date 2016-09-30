@@ -8,17 +8,10 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public decimal GetLowestPrice(List<FlightItinerary> itins)
+        public decimal GetLowestPrice(List<FlightItineraryForDisplay> itins)
         {
-            var lowestprice = itins[0].AdultPricePortion / itins[0].AdultCount *itins[0].Price.OriginalIdr;
-            for (var ind = 1; ind < itins.Count; ind++)
-            {
-                if (itins[ind].AdultPricePortion/itins[ind].AdultCount*itins[ind].Price.OriginalIdr < lowestprice)
-                {
-                    lowestprice = itins[ind].AdultPricePortion/itins[ind].AdultCount*itins[ind].Price.OriginalIdr;
-                }
-            }
-            return lowestprice;
+            return itins.Min(p => p.NetAdultFare).GetValueOrDefault();
+            
         }
 
         public string SetRoute(string origin, string destination)
@@ -26,7 +19,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return origin + destination ;
         }
 
-        public string SetRoute(List<FlightItinerary> itins)
+        public string SetRoute(List<FlightItineraryForDisplay> itins)
         {
             if (itins != null)
             {
@@ -40,9 +33,9 @@ namespace Lunggo.ApCommon.Flight.Service
             return date.ToString("ddMMyy", CultureInfo.InvariantCulture);
         }
 
-        public string SetDate(List<FlightItinerary> itins)
+        public string SetDate(List<FlightItineraryForDisplay> itins)
         {
-            return itins[0].Trips[0].DepartureDate.ToString("ddMMyy", CultureInfo.InvariantCulture);
+            return itins[0].Trips[0].DepartureDate.GetValueOrDefault().ToString("ddMMyy", CultureInfo.InvariantCulture);
         }
 
         public List<decimal> GetLowestPricesForAMonth(string origin, string destination, string month, string year)

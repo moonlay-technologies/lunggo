@@ -26,13 +26,20 @@ namespace Lunggo.ApCommon.Flight.Service
             var requestedSupplierIds = searchedSupplierIds.Skip(gottenSupplierCount).ToList();
             var unsearchedSupplierIds = Suppliers.Keys.Except(searchedSupplierIds);
 
+            var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "searchTimeout"));
+
+            var isSearching = GetSearchingStatusInCache(input.SearchId);
+            if (!isSearching)
+            {
+                var priceCalendarQueue = QueueService.GetInstance().GetQueueByReference("FlightPriceCalendar");
+                priceCalendarQueue.AddMessage(new CloudQueueMessage(input.SearchId), initialVisibilityDelay: new TimeSpan(0, 0, searchTimeout));
+            }
+
             foreach (var unsearchedSupplierId in unsearchedSupplierIds)
             {
-                var isSearching = GetSearchingStatusInCache(input.SearchId, unsearchedSupplierId);
-                if (!isSearching)
+                var isSupplierSearching = GetSearchingStatusInCache(input.SearchId, unsearchedSupplierId);
+                if (!isSupplierSearching)
                 {
-                    var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "searchTimeout"));
-
                     var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl" + unsearchedSupplierId);
                     queue.AddMessage(new CloudQueueMessage(input.SearchId), timeToLive: new TimeSpan(0, 0, searchTimeout));
 
