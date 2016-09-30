@@ -367,7 +367,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 {
                                     colCollection.Add(new List<string>());
                                     seatCollection.Add(new List<string>());
-                                    var selectedColumns = selectedRows[i].ChildElements.ToList().GetRange(4, 5).ToList();
+                                    var selectedColumns = selectedRows[i].ChildElements.ToList().GetRange(5, 5).ToList();
                                     foreach (IDomElement t in selectedColumns)
                                     {
                                         if (t.GetAttribute("class") != "step2_soldcell fareInfo_middle_tconx"
@@ -398,10 +398,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             }
                     }
 
+                    List<String> priceCollections;
+                    string seat;
                     //priceCollections = list of string, isinya kolom paling kanan/terakhir dari tiap segmen
-                    var priceCollections = colCollection.Select(seg => seg[seg.Count - 1]).ToList();
-                    var seat = string.Join("|", seatCollection.Select(seg => seg[seg.Count - 1]).ToArray());
-
+                    if (colCollection.Count != 0)
+                    {
+                        priceCollections = colCollection.Select(seg => seg[seg.Count - 1]).ToList();
+                        seat = string.Join("|", seatCollection.Select(seg => seg[seg.Count - 1]).ToArray());
+                    }
+                    else
+                    {
+                        return new BookFlightResult
+                        {
+                            IsSuccess = false,
+                            Errors = new List<FlightError> { FlightError.TechnicalError },
+                            Status = null,
+                            ErrorMessages = new List<string> { "Flight is not available anymore" },
+                            IsValid = true
+                        };
+                    }
                     
                     if (priceCollections.Count != 0) // Kalau casenya cabin business kdg2 suka habis
                     {
