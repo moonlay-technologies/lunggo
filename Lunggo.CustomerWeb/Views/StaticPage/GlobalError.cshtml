@@ -1,0 +1,79 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.Title = "Promo";
+    ViewBag.SiteHeader = "header-global-error";
+    ViewBag.BodyClass = "page-error global-error-page";
+    ViewBag.Title = "Halaman Error Global";
+}
+
+@section AdditionalCSS{
+    <!-- additional CSS-->
+    <link rel="stylesheet" href="/Assets/travorama20/css/global-error.css">
+}
+
+@section AdditionalJS{
+    <!-- additional JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+
+<div class="error-page">
+    <div class="site-content">
+        <div class="container">
+            <div class="page-content">
+                <div class="logo"><img src="/Assets/images/travorama-logo-color.png" alt="Travorama" class="logo-img" /></div>
+                <div class="bg-txt">
+                    The page you are looking for can't be found
+                </div>
+                <div class="sm-txt">
+                    The page on:<br />
+                    <b>@HttpContext.Current.Request.Url.AbsoluteUri</b> <br />
+                    cannot be accessed. <br />
+                    Please contact <a href="/id/contact" target="_blank"><b>Our Customer Service</b></a> to report about the missing page.
+                </div>
+                <div class="btn-home">
+                    <a class="btn btn-yellow" href="/">Back to homepage</a>
+                </div>
+            </div>
+        </div>
+    </div><!-- .site-content -->
+    
+    @*
+    <div class="error-detail container">
+        <h1>Halaman Error Global</h1>
+        <h2>Action Name : @Model.ActionName</h2>
+        <h2>Controller Name : @Model.ControllerName</h2>
+        <h2>Exception</h2>
+        <h3>Exception Message : @Model.Exception.Message</h3>
+        <h3>Exception Stack Trace: @Model.Exception.StackTrace</h3
+        <h3>Exception Source: @Model.Exception.Source</h3>
+    </div>
+    <script src="/Assets/js/jquery.min.js"></script>
+    <script src="/Assets/js/plax.js"></script>
+    <script>
+        function showError() {
+            $('.error-detail').show();
+        }
+        $(document).ready(function () {
+            var randomNumber = Math.random() * 10;
+            if (randomNumber < 5) {
+                randomNumber = 1;
+            } else {
+                randomNumber = 2;
+            }
+            $('.site-background').attr('src', '/Assets/images/_sample/bg-' + randomNumber + '.png');
+            $('.page-char').attr('src', '/Assets/images/_sample/people-' + randomNumber + '.png');
+
+        });
+        // on window load
+        $(window).load(function () {
+            $('.plax').plaxify({ "xRange": 50, "yRange": 50 });
+            $('.site-background').plaxify({ "xRange": 50, "yRange": 50, "invert": true });
+            $.plax.enable();
+        });
+    </script>
+    *@
+</div>

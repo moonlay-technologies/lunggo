@@ -202,6 +202,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (result.Status.TimeLimit < DateTime.UtcNow.AddMinutes(20))
                 {
                     result.IsSuccess = false;
+                    result.Status.BookingStatus = BookingStatus.Failed;
                     result.AddError(FlightError.FareIdNoLongerValid, "Time limit too short.");
                 }
                 else
