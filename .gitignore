@@ -160,20 +160,6 @@ Lunggo.Configuration/Log/
 
 # Lunggo.Driver Config Directory
 Lunggo.Driver/Config/
-/Lunggo.Webjob.MystiflyQueueHandler/i18n_message.xml
-/Lunggo.Generator/CampaignRepository.cs
-/Lunggo.Generator/CampaignTableRecord.cs
-/Lunggo.Generator/CampaignVoucherRepository.cs
-/Lunggo.Generator/CampaignVoucherTableRecord.cs
-/Lunggo.Generator/ClientRepository.cs
-/Lunggo.Generator/ClientTableRecord.cs
-/Lunggo.Generator/VoucherRecipientsRepository.cs
-/Lunggo.Generator/VoucherRecipientsTableRecord.cs
-/Lunggo.CustomerWeb/Views/Template/FlightInstantPaymentConfirmedNotifEmail.cshtml
-Lunggo.CustomerWeb/Assets/travorama20/css/travorama20.css.map
-*.map
-Lunggo.CustomerWeb/Assets/mobile/css/application.css.map
-*.map
-Lunggo.CustomerWeb/Assets/mobile/css/application.css.map
+
 /Lunggo.Generator/Repository
 /Lunggo.Generator/TableRecord

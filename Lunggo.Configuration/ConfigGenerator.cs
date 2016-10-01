@@ -165,13 +165,13 @@ namespace Lunggo.Configuration
                 foreach (var nonConfigFile in nonConfigFiles)
                 {
                     WriteNonConfigurationFileToProject(nonConfigFile, project);
-                    WriteNonConfigurationFileToLog(nonConfigFile, project);
+                    //WriteNonConfigurationFileToLog(nonConfigFile, project);
                 }
                 var commonFiles = GetAllCommonFiles();
                 foreach (var commonFile in commonFiles)
                 {
                     WriteCommonFileToProject(commonFile, project);
-                    WriteCommonFileToLog(commonFile, project);
+                    //WriteCommonFileToLog(commonFile, project);
                 }
             }
         }
