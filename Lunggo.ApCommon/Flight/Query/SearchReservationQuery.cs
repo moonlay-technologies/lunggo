@@ -4,7 +4,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    public class SearchReservationQuery : QueryBase<SearchReservationQuery, string>
+    public class SearchReservationQuery : DbQueryBase<SearchReservationQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {

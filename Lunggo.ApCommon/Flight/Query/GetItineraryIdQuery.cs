@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class GetItineraryIdQuery : QueryBase<GetItineraryIdQuery, long>
+    internal class GetItineraryIdQuery : DbQueryBase<GetItineraryIdQuery, long>
     {
         protected override string GetQuery(dynamic condition = null)
         {

@@ -3,7 +3,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Payment.Query
 {
-    internal class GetPaymentByRsvNoQuery : QueryBase<GetPaymentByRsvNoQuery, PaymentTableRecord>
+    internal class GetPaymentByRsvNoQuery : DbQueryBase<GetPaymentByRsvNoQuery, PaymentTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

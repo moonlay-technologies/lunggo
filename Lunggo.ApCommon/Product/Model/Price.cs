@@ -100,7 +100,7 @@ namespace Lunggo.ApCommon.Product.Model
             }
         }
 
-        private class GetPriceQuery : QueryBase<GetPriceQuery, PriceTableRecord>
+        private class GetPriceQuery : DbQueryBase<GetPriceQuery, PriceTableRecord>
         {
             protected override string GetQuery(dynamic condition = null)
             {

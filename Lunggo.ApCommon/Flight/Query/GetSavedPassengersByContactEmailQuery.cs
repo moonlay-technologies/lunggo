@@ -4,7 +4,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class GetSavedPassengersByContactEmailQuery : QueryBase<GetSavedPassengersByContactEmailQuery, FlightSavedPassengerTableRecord>
+    internal class GetSavedPassengersByContactEmailQuery : DbQueryBase<GetSavedPassengersByContactEmailQuery, FlightSavedPassengerTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class GetPassengerPrimKeyQuery : QueryBase<GetPassengerPrimKeyQuery, long>
+    internal class GetPassengerPrimKeyQuery : DbQueryBase<GetPassengerPrimKeyQuery, long>
     {
         protected override string GetQuery(dynamic condition = null)
         {

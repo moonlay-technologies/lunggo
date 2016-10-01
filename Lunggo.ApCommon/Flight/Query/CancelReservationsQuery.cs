@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class CancelReservationsQuery : NoReturnQueryBase<CancelReservationsQuery>
+    internal class CancelReservationsQuery : NoReturnDbQueryBase<CancelReservationsQuery>
     {
         protected override string GetQuery(dynamic condition = null)
         {

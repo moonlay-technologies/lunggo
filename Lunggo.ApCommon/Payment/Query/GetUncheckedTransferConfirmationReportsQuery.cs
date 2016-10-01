@@ -9,7 +9,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Payment.Query
 {
-    internal class GetUncheckedTransferConfirmationReportsQuery : QueryBase<GetUncheckedTransferConfirmationReportsQuery, TransferConfirmationReportTableRecord>
+    internal class GetUncheckedTransferConfirmationReportsQuery : DbQueryBase<GetUncheckedTransferConfirmationReportsQuery, TransferConfirmationReportTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {
