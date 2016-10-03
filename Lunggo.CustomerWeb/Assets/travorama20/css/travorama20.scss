@@ -1,8 +1,6 @@
 ﻿/*
-
 TRAVORAMA 2.0
 file : /Assets/travorama20/css/travorama20.scss
-
 */
 
 /*--------------------*/
@@ -92,7 +90,7 @@ $mobile-app: '../images/mobile-app.png';
 /* general class */
 html {height:100%}
 
-body {overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; padding-bottom: 650px; /*412px*/}
+body {overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; /*padding-bottom: 650px;*/}
 
 hr {border-top:$border-default;}
 
@@ -533,6 +531,7 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
 
 @import 'page_index';
 @import 'page_flight';
+@import 'travorama_hotel';
 
 @import 'page_checkout';
 @import 'page_password';

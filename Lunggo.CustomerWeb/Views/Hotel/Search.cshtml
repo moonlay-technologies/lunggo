@@ -1,12 +1,349 @@
-﻿
-@{
+﻿@{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-hotel page-search";
     ViewBag.Title = "Pencarian Hotel";
 }
 
-<!DOCTYPE html>
+@section AdditionalCSS{
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+}
 
-<div class="search-list">
-    <div class="container"></div>
+@section AdditionalJS {
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+}
+
+@section PageJS{
+    <script>
+        $(function () {
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 500,
+                values: [75, 300],
+                slide: function (event, ui) {
+                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                }
+            });
+            $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+              " - $" + $("#slider-range").slider("values", 1));
+        });
+    </script>
+}
+
+@Html.Partial("/Views/Hotel/Shared/_PageSlider.cshtml")
+<div class="travorama-hotel">
+    <div class="container">
+        <div class="search-list">
+            @Html.Partial("/Views/Hotel/Shared/_BreadCrumb.cshtml")
+            <div class="top-title clearfix">
+                <div class="col-left bg-title"><b>Hasil</b> Pencarian </div>
+                <div class="col-right total-result md-txt">Hotels Found: <b>332</b></div>
+            </div>
+            <div class="search-list-result clearfix">
+                <div class="col-left-result filter">
+                    <div class="map-filter">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.576207608118!2d106.82465531533295!3d-6.187424662347063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69fa9d5f6b0e51%3A0x78d0672b773afe93!2sHotel+ibis+Jakarta+Tamarin!5e0!3m2!1sen!2sid!4v1475128137389" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                    <div class="filter-container">
+                        <div class="header-filter">Filter Pencarian</div>
+                        <div class="filter-group">
+                            <label class="filter-title">Nama Hotel</label>
+                            <input type="text" value="" class="form-hotel-name form-control">
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-title">Harga Hotel</label>
+                            <div class="slider-price" id="slider-range"></div>
+                            <div class="slider-minmax">
+                                <span>Rp 500.000</span>
+                                <span class="pull-right">Rp 100.000.000</span>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-title">Bintang Hotel</label>
+                            <div class="rating">
+                                <label class="square active">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <span class="star star-5"></span>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                </label>
+                                <label class="square">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <span class="star star-4"></span>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                </label>
+                                <label class="square">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <span class="star star-3"></span>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                </label>
+                                <label class="square">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <span class="star star-2"></span>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                </label>
+                                <label class="square">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <span class="star star-1"></span>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-title">Hotel Area:</label><span class="city-name blue-txt"><a href="#">(Jakarta)</a></span>
+                            <div class="area">
+                                <label class="square active city-point">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <span class="name">Jakarta Selatan</span>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                </label>
+                                <span class="city-hotel">54</span>
+                                <label class="square city-point">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <span class="name">Jakarta Pusat</span>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                </label>
+                                <span class="city-hotel">54</span>
+                                <label class="square city-point">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <span class="name">Jakarta Barat</span>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                </label>
+                                <span class="city-hotel">54</span>
+                                <label class="square city-point">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <span class="name">Jakarta Utara</span>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                </label>
+                                <span class="city-hotel">54</span>
+                                <label class="square city-point">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <span class="name">Jakarta Timur</span>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                </label>
+                                <span class="city-hotel">54</span>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-title">Tipe Kamar</label>
+                            <div class="room">
+                                <label class="square active">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <span class="name">Single</span>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                </label>
+                                <label class="square">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <span class="name">Twin</span>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                </label>
+                                <label class="square">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <span class="name">King</span>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-right-result">
+                    <div class="sort clearfix">
+                        <div class="col-xs-left"><b>Sort By:</b></div>
+                        <div class="col-xs-middle">
+                            <label class="round active">
+                                <div class="chck-container"><span class="switch"></span></div>
+                                <span class="name">Rekomendasi Travorama</span>
+                                <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                            </label>
+                        </div>
+                        <div class="col-xs-right">
+                            <label class="round">
+                                <div class="chck-container"><span class="switch"></span></div>
+                                <span class="name">Harga Hotel</span>
+                                <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="hotel-list-container">
+                        <div class="hotel-list clearfix">
+                            <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel.jpg" alt="Hotel" /></div>
+                            <div class="col-right-hotel">
+                                <span class="blue-txt bg">Bliss Hotel Singapore</span>
+                                <span class="facility"></span>
+                                <div class="star star-5"></div>
+                                <div class="location">
+                                    Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ;
+                                    Jakarta Barat
+                                </div>
+                                <div class="review clearfix">
+                                    <div class="col-half left">
+                                        <b><span class="md-txt">8.0</span> - </b> Sangat Baik
+                                        <br /><span class="grey-txt">540 ulasan</span>
+                                    </div>
+                                    <div class="col-half">
+                                        <span class="trip-advisor"></span>
+                                        <br /><span class="grey-txt">540 ulasan</span>
+                                    </div>
+                                </div>
+                                <div class="price clearfix">
+                                    <div class="col-half">
+                                        <span class="txt-md"><b>Harga per malam mulai dari:</b></span>
+                                        <br /><span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                                    </div>
+                                    <div class="col-half">
+                                        <span class="underline-txt">Rp 899.999.999</span>
+                                        <br /><span class="lg-txt"><b><sup>Rp</sup>999.999.999</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hotel-list clearfix">
+                            <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel.jpg" alt="Hotel" /></div>
+                            <div class="col-right-hotel">
+                                <span class="blue-txt bg">Bliss Hotel Singapore</span>
+                                <span class="facility"></span>
+                                <div class="star star-4 e-star"></div>
+                                <div class="location">
+                                    Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ;
+                                    Jakarta Barat
+                                </div>
+                                <div class="review clearfix">
+                                    <div class="col-half left">
+                                        <b><span class="md-txt">8.0</span> - </b> Sangat Baik
+                                        <br /><span class="grey-txt">540 ulasan</span>
+                                    </div>
+                                    <div class="col-half">
+                                        <span class="trip-advisor"></span>
+                                        <br /><span class="grey-txt">540 ulasan</span>
+                                    </div>
+                                </div>
+                                <div class="price clearfix">
+                                    <div class="col-half">
+                                        <span class="txt-md"><b>Harga per malam mulai dari:</b></span>
+                                        <br /><span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                                    </div>
+                                    <div class="col-half">
+                                        <span class="underline-txt">Rp 899.999.999</span>
+                                        <br /><span class="lg-txt"><b><sup>Rp</sup>999.999.999</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hotel-list clearfix">
+                            <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel.jpg" alt="Hotel" /></div>
+                            <div class="col-right-hotel">
+                                <span class="blue-txt bg">Bliss Hotel Singapore</span>
+                                <span class="facility"></span>
+                                <div class="star star-3 e-star"></div>
+                                <div class="location">
+                                    Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ;
+                                    Jakarta Barat
+                                </div>
+                                <div class="review clearfix">
+                                    <div class="col-half left">
+                                        <b><span class="md-txt">8.0</span> - </b> Sangat Baik
+                                        <br /><span class="grey-txt">540 ulasan</span>
+                                    </div>
+                                    <div class="col-half">
+                                        <span class="trip-advisor"></span>
+                                        <br /><span class="grey-txt">540 ulasan</span>
+                                    </div>
+                                </div>
+                                <div class="price clearfix">
+                                    <div class="col-half">
+                                        <span class="txt-md"><b>Harga per malam mulai dari:</b></span>
+                                        <br /><span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                                    </div>
+                                    <div class="col-half">
+                                        <span class="underline-txt">Rp 899.999.999</span>
+                                        <br /><span class="lg-txt"><b><sup>Rp</sup>999.999.999</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hotel-list clearfix">
+                            <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel.jpg" alt="Hotel" /></div>
+                            <div class="col-right-hotel">
+                                <span class="blue-txt bg">Bliss Hotel Singapore</span>
+                                <span class="facility"></span>
+                                <div class="star star-2 e-star"></div>
+                                <div class="location">
+                                    Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ;
+                                    Jakarta Barat
+                                </div>
+                                <div class="review clearfix">
+                                    <div class="col-half left">
+                                        <b><span class="md-txt">8.0</span> - </b> Sangat Baik
+                                        <br /><span class="grey-txt">540 ulasan</span>
+                                    </div>
+                                    <div class="col-half">
+                                        <span class="trip-advisor"></span>
+                                        <br /><span class="grey-txt">540 ulasan</span>
+                                    </div>
+                                </div>
+                                <div class="price clearfix">
+                                    <div class="col-half">
+                                        <span class="txt-md"><b>Harga per malam mulai dari:</b></span>
+                                        <br /><span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                                    </div>
+                                    <div class="col-half">
+                                        <span class="underline-txt">Rp 899.999.999</span>
+                                        <br /><span class="lg-txt"><b><sup>Rp</sup>999.999.999</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hotel-list clearfix">
+                            <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel.jpg" alt="Hotel" /></div>
+                            <div class="col-right-hotel">
+                                <span class="blue-txt bg">Bliss Hotel Singapore</span>
+                                <span class="facility"></span>
+                                <div class="star e-star"></div>
+                                <div class="location">
+                                    Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ;
+                                    Jakarta Barat
+                                </div>
+                                <div class="review clearfix">
+                                    <div class="col-half left">
+                                        <b><span class="md-txt">8.0</span> - </b> Sangat Baik
+                                        <br /><span class="grey-txt">540 ulasan</span>
+                                    </div>
+                                    <div class="col-half">
+                                        <span class="trip-advisor"></span>
+                                        <br /><span class="grey-txt">540 ulasan</span>
+                                    </div>
+                                </div>
+                                <div class="price clearfix">
+                                    <div class="col-half">
+                                        <span class="txt-md"><b>Harga per malam mulai dari:</b></span>
+                                        <br /><span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                                    </div>
+                                    <div class="col-half">
+                                        <span class="underline-txt">Rp 899.999.999</span>
+                                        <br /><span class="lg-txt"><b><sup>Rp</sup>999.999.999</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pagination">
+                        Halaman
+                        <div class="page-container">
+                            <span class="prev"></span>
+                            <ul class="page-list">
+                                <li class="active">1</li>
+                                <li>2</li>
+                                <li>...</li>
+                                <li>3</li>
+                            </ul>
+                            <span class="next"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
