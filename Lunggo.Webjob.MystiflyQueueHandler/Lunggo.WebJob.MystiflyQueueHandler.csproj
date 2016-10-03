@@ -101,6 +101,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="i18n_message.xml" />
+    <None Include="Airline.csv" />
+    <None Include="Airport.csv" />
     <None Include="App.config" />
     <None Include="App.Release.config">
       <DependentUpon>App.Config</DependentUpon>
@@ -114,6 +116,8 @@
     <Content Include="application.properties">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Country.csv" />
+    <None Include="HotelLocation.csv" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
@@ -166,17 +170,5 @@
   </Target>
   -->
   <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.Tasks.dll" />
-  <Target Name="AfterCompile" Condition="exists('app.$(Configuration).config')">
-    
-    <ItemGroup>
-      <AppConfigWithTargetPath Remove="app.config" />
-      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
-        <TargetPath>$(TargetFileName).config</TargetPath>
-      </AppConfigWithTargetPath>
-      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
-        <TargetPath>$(TargetName).vshost$(TargetExt).config</TargetPath>
-      </AppConfigWithTargetPath>
-    </ItemGroup>
-  </Target>
   <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.0.7\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.0.7\tools\webjobs.targets')" />
 </Project>
