@@ -6,6 +6,7 @@
 
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="/Assets/vendor/flexslider/flexslider.css" rel="stylesheet" />
 }
 
 @section AdditionalJS {
@@ -18,8 +19,20 @@
 
 @section PageJS{
     <script>
-
+        $(function(){
+            SyntaxHighlighter.all();
+        });
+        $(window).load(function(){
+            $('.flexslider').flexslider({
+                animation: "slide",
+                controlNav: "thumbnails",
+                start: function(slider){
+                    $('body').removeClass('loading');
+                }
+            });
+        });
     </script>
+    <script src="/Assets/vendor/flexslider/jquery.flexslider.js"></script>
 }
 
 @Html.Partial("/Views/Hotel/Shared/_PageSlider.cshtml")
@@ -39,8 +52,23 @@
                     </div>
                     <div class="slider-container clearfix">
                         <div class="col-left-slider">
-                            <div>
-                                <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
+                            <div class="slider">
+                                <div class="flexslider">
+                                    <ul class="slides">
+                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
+                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
+                                        </li>
+                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
+                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
+                                        </li>
+                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
+                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
+                                        </li>
+                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
+                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="col-right-slider">

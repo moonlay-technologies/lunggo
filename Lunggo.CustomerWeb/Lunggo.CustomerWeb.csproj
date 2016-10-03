@@ -302,6 +302,7 @@
       <DependentUpon>eticket.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\eticket.scss" />
+    <Content Include="Assets\vendor\flexslider\flexslider.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Assets\css\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -324,6 +325,7 @@
     </Content>
     <Content Include="Assets\css\invoice.scss" />
     <Content Include="Areas\Api\Views\web.config" />
+    <Content Include="Assets\vendor\flexslider\flexslider.less" />
     <None Include="Assets\css\jquery-ui.min.css.bak" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\jquery.range.css" />
@@ -364,6 +366,7 @@
     <Content Include="Assets\fonts\DINR-webfont.ttf" />
     <Content Include="Assets\fonts\DINR-webfont.woff" />
     <Content Include="Assets\fonts\DINR-webfont.woff2" />
+    <Content Include="Assets\vendor\flexslider\fonts\flexslider-icon.svg" />
     <Content Include="Assets\fonts\fontawesome-webfont.eot" />
     <Content Include="Assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Assets\fonts\fontawesome-webfont.ttf" />
@@ -724,6 +727,7 @@
     <Content Include="Assets\mobile\images\prev.png" />
     <Content Include="Assets\mobile\images\promo-logo-notif.png" />
     <Content Include="Assets\mobile\js\PromoController.js" />
+    <Content Include="Assets\vendor\flexslider\jquery.flexslider.js" />
     <Content Include="Assets\travorama20\css\global-error.css">
       <DependentUpon>global-error.scss</DependentUpon>
     </Content>
@@ -1495,6 +1499,9 @@
     <Content Include="Assets\travorama20\css\_travorama_hotel.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel_detail.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel_search.scss" />
+    <Content Include="Assets\vendor\flexslider\fonts\flexslider-icon.eot" />
+    <Content Include="Assets\vendor\flexslider\fonts\flexslider-icon.ttf" />
+    <Content Include="Assets\vendor\flexslider\fonts\flexslider-icon.woff" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
