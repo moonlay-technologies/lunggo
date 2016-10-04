@@ -5,7 +5,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    public class GetActivePriceMarginRuleQuery : QueryBase<GetActivePriceMarginRuleQuery, FlightMarginRule, MarginTableRecord, FlightItineraryRuleTableRecord>
+    public class GetActivePriceMarginRuleQuery : DbQueryBase<GetActivePriceMarginRuleQuery, FlightMarginRule, MarginTableRecord, FlightItineraryRuleTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

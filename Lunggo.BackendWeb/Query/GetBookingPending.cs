@@ -2,7 +2,7 @@
 
 namespace Lunggo.BackendWeb.Query
 {
-    public class GetBookingPending : QueryBase<GetBookingPending, GetBookingPendingRecord>
+    public class GetBookingPending : DbQueryBase<GetBookingPending, GetBookingPendingRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

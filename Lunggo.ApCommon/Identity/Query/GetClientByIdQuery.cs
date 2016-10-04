@@ -5,7 +5,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Identity.Query
 {
-    public class GetClientByIdQuery : QueryBase<GetClientByIdQuery, ClientTableRecord>
+    public class GetClientByIdQuery : DbQueryBase<GetClientByIdQuery, ClientTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {
