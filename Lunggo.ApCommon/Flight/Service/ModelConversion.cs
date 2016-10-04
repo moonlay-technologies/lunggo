@@ -67,7 +67,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         internal FlightItineraryForDisplay ConvertToItineraryForDisplay(List<FlightItinerary> itins)
         {
-            if (itins == null || itins.Count == 0)
+            if (itins == null || itins.Count == 0 || itins.Contains(null))
                 return null;
 
             decimal? aOri, cOri, iOri, aNet, cNet, iNet;

@@ -35,19 +35,28 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var output = new BookFlightOutput();
             var itins = GetItinerariesFromCache(input.Token);
+
+            if (itins == null || itins.Contains(null))
+                return new BookFlightOutput
+                {
+                    IsSuccess = false,
+                    IsValid = false,
+                    Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                };
+
             var bookResults = BookItineraries(itins, input, output);
-            output.IsValid = bookResults.TrueForAll(result => result.RevalidateSet.IsValid);
+            UpdateItineraries(itins, bookResults);
+            SaveItinerariesToCache(itins, input.Token);
+
+            output.IsValid = bookResults.TrueForAll(result => result.IsSuccess || result.RevalidateSet.IsValid);
             if (output.IsValid)
             {
                 output.IsItineraryChanged = bookResults.Exists(result => result.RevalidateSet.IsItineraryChanged);
-                var newItins = bookResults.Select(result => result.RevalidateSet.NewItinerary).ToList();
                 if (output.IsItineraryChanged)
-                    output.NewItinerary = ConvertToItineraryForDisplay(newItins);
+                    output.NewItinerary = ConvertToItineraryForDisplay(itins);
                 output.IsPriceChanged = bookResults.Exists(result => result.RevalidateSet.IsPriceChanged);
                 if (output.IsPriceChanged)
                     output.NewPrice = bookResults.Sum(result => result.RevalidateSet.NewPrice);
-                SaveItinerariesToCache(newItins, input.Token);
-                itins = newItins;
             }
             if (AllAreBooked(bookResults))
             {
@@ -212,7 +221,15 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             return result;
         }
-    }
 
+        private static void UpdateItineraries(List<FlightItinerary> itins, List<BookResult> bookResults)
+        {
+            for (var i = 0; i < itins.Count; i++)
+            {
+                if (!bookResults[i].IsSuccess)
+                    itins[i] = bookResults[i].RevalidateSet.NewItinerary;
+            }
+        }
         #endregion
+    }
 }

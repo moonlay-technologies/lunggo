@@ -53,7 +53,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                 var clientx = CreateAgentClient();
                 var hasil = new BookFlightResult();
-                var Fare = bookInfo.Itinerary.FareId; 
+                var Fare = bookInfo.Itinerary.FareId;
                 //var Fare =
                 //    "SJ.017.SJ.272.IN.9662.KNO.WGP?2015-11-11|1.0.0|2346000.0.97174,3853813,1953461:X,M,T:S:KNO:WGP:U2s5VlVrNUZXUT09";
                 var ParseFare = Fare.Split('.');
@@ -348,14 +348,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                         var fixFlight = new BookFlightResult();
                         fixFlight.IsSuccess = true;
-                        fixFlight.IsValid = true;
-                        fixFlight.IsPriceChanged = bookInfo.Itinerary.Price.Supplier != hargaBaru;
-                        fixFlight.IsItineraryChanged = !bookInfo.Itinerary.Identical(itin);
-                        if (hasil.IsPriceChanged)
-                        {
-                            hasil.NewPrice = hargaBaru;
-                        }
-                        fixFlight.NewItinerary = itin;
                         if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
                         {
                             return fixFlight;
@@ -377,7 +369,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 }
 
                 /*END HERE*/
-                
+
                 int i = 0;
                 foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PaxType.Adult))
                 {
@@ -458,11 +450,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var bookResponse = clientx.Execute(bookRequest);
                 var bookingResult = bookResponse.Content;
                 //var bookingResult = System.IO.File.ReadAllText(@"C:\Users\User\Documents\Kerja\Crawl\mbuhlali.txt");
-                
+
                 if (bookResponse.ResponseUri.AbsoluteUri.Contains("/application/?action=Check"))
                 {
                     CQ ambilDataBooking = (CQ)bookingResult;
-                    
+
                     var tunjukKodeBook = ambilDataBooking.MakeRoot()[".bookingCode>input"];
                     var kodeBook = tunjukKodeBook.Select(x => x.Cq().Attr("value")).FirstOrDefault();
 
@@ -475,7 +467,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     checkRequest.AddParameter("application/x-www-form-urlencoded", checkParams, ParameterType.RequestBody);
                     var checkResponse = clientx.Execute(checkRequest);
                     var cekresult = checkResponse.Content;
-                    
+
                     CQ ambilTimeLimit = (CQ)cekresult;
 
                     var tunjukTimeLimit = ambilTimeLimit.MakeRoot()[".timeLimit"];
@@ -487,15 +479,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var timeLimitDate = DateTime.Parse(timelimitParse[0] + "/" + timelimitParse[1] + "/" + timelimitParse[2] + " " + timelimitParse[3]);
                     var timeLimitGMT = timelimitParse[4].Substring(4, 2);
                     var timeLimitFinal = DateTime.Parse(timeLimitDate + " " + timeLimitGMT);
-                    
+
                     status.BookingId = kodeBook;
                     status.BookingStatus = BookingStatus.Booked;
                     status.TimeLimit = DateTime.SpecifyKind(timeLimitFinal, DateTimeKind.Utc);
-                
+
                     hasil.Status = status;
                     hasil.IsSuccess = true;
                     return hasil;
-                
+
                 }
                 else
                 {
@@ -509,7 +501,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
                         ErrorMessages = new List<string> { "Error while requesting at SJ-Eticket/application/menu_others.php. Unexpected absolute path response or status code" }
                     };
-                
+
                 }
             }
         }

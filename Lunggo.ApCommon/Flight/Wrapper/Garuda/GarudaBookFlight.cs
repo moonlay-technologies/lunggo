@@ -33,12 +33,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     return new BookFlightResult
                     {
                         IsSuccess = false,
-                        Errors = new List<FlightError> {FlightError.InvalidInputData},
+                        Errors = new List<FlightError> { FlightError.InvalidInputData },
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        ErrorMessages = new List<string> {"FareId is null"}
+                        ErrorMessages = new List<string> { "FareId is null" }
                     };
                 }
 
@@ -47,7 +47,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 int adultCount, childCount, infantCount;
                 var bookingTimeLimit = "";
                 var bookingReference = "";
-               
+
                 List<string> listflight;
                 CabinClass cabinClass;
                 var splittedFareId = bookInfo.Itinerary.FareId.Split('+');
@@ -70,13 +70,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 {
                     return new BookFlightResult
                     {
-                        Errors = new List<FlightError> {FlightError.FareIdNoLongerValid},
+                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
                         },
                         IsSuccess = false,
-                        ErrorMessages = new List<string> {"FareId is no longer valid"}
+                        ErrorMessages = new List<string> { "FareId is no longer valid" }
                     };
                 }
 
@@ -104,164 +104,164 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 
                 try
                 {
-                // [GET] Search Flight
-                
-                client.BaseUrl = new Uri("https://gosga.garuda-indonesia.com");
-                string urlweb = @"";
-                var searchReqAgent0 = new RestRequest(urlweb, Method.GET);
-                searchReqAgent0.AddHeader("Accept",
-                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
-                searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
-                searchResAgent0 = client.Execute(searchReqAgent0);
-                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+                    // [GET] Search Flight
 
-                urlweb = @"web/user/login/id";
-                searchReqAgent0 = new RestRequest(urlweb, Method.GET);
-                searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/");
-                searchReqAgent0.AddHeader("Accept",
-                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
-                searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
-                searchResAgent0 = client.Execute(searchReqAgent0);
-                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
-                    
-                var accReq = new RestRequest("/api/GarudaAccount/ChooseUserId", Method.GET);
-                
-                var reqTime = DateTime.UtcNow;
-                var newitin = new FlightItinerary();
-                
-                var counter = 0;
-                
-                while (!successLogin && counter < 31)
-                {
-                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnPath != "/web/dashboard/welcome")
+                    client.BaseUrl = new Uri("https://gosga.garuda-indonesia.com");
+                    string urlweb = @"";
+                    var searchReqAgent0 = new RestRequest(urlweb, Method.GET);
+                    searchReqAgent0.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                    searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                    searchResAgent0 = client.Execute(searchReqAgent0);
+                    returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+
+                    urlweb = @"web/user/login/id";
+                    searchReqAgent0 = new RestRequest(urlweb, Method.GET);
+                    searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/");
+                    searchReqAgent0.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                    searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                    searchResAgent0 = client.Execute(searchReqAgent0);
+                    returnPath = searchResAgent0.ResponseUri.AbsolutePath;
+
+                    var accReq = new RestRequest("/api/GarudaAccount/ChooseUserId", Method.GET);
+
+                    var reqTime = DateTime.UtcNow;
+                    var newitin = new FlightItinerary();
+
+                    var counter = 0;
+
+                    while (!successLogin && counter < 31)
                     {
-
-                        var accRs = (RestResponse)clientx.Execute(accReq);
-                        var lastUserId = userName;
-                        userName = accRs.Content.Trim('"');
-                        if (returnPath != "/web/dashboard/welcome")
+                        while (DateTime.UtcNow <= reqTime.AddMinutes(10) && returnPath != "/web/dashboard/welcome")
                         {
-                            TurnInUsername(clientx, lastUserId);
-                        }
-                        if (userName.Length != 0)
-                        {
-                            returnPath = "/web/dashboard/welcome";
+
+                            var accRs = (RestResponse)clientx.Execute(accReq);
+                            var lastUserId = userName;
+                            userName = accRs.Content.Trim('"');
+                            if (returnPath != "/web/dashboard/welcome")
+                            {
+                                TurnInUsername(clientx, lastUserId);
+                            }
+                            if (userName.Length != 0)
+                            {
+                                returnPath = "/web/dashboard/welcome";
+                            }
+
                         }
 
+                        if (userName.Length == 0)
+                        {
+                            return new BookFlightResult
+                            {
+                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                ErrorMessages = new List<string> { "All usernames are used " + returnPath }
+                            };
+                        }
+
+                        const string password = "Standar123";
+                        counter++;
+                        successLogin = Login(client, userName, password, out returnPath);
                     }
 
-                    if (userName.Length == 0)
+                    if (counter >= 31)
                     {
+                        TurnInUsername(clientx, userName);
                         return new BookFlightResult
                         {
-                            Errors = new List<FlightError> { FlightError.TechnicalError },
-                            ErrorMessages = new List<string> { "All usernames are used " + returnPath }
+
+                            Errors = new List<FlightError> { FlightError.InvalidInputData },
+                            Status = new BookingStatusInfo
+                            {
+                                BookingStatus = BookingStatus.Failed
+                            },
+                            IsSuccess = false,
+                            ErrorMessages = new List<string> { "Can't get id " + returnPath + userName }
                         };
                     }
 
-                    const string password = "Standar123";
-                    counter++;
-                    successLogin = Login(client, userName, password, out returnPath);
-                }
+                    urlweb = @"web/order/e-retail";
+                    searchReqAgent0 = new RestRequest(urlweb, Method.GET);
+                    searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/dashboard/welcome");
+                    searchReqAgent0.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                    searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                    searchResAgent0 = client.Execute(searchReqAgent0);
+                    var htmlX = searchResAgent0.Content;
+                    returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
-                if (counter >= 31)
-                {
-                    TurnInUsername(clientx, userName);
-                    return new BookFlightResult
+                    //POST 
+
+                    searchReqAgent0 = new RestRequest(urlweb, Method.POST);
+                    searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/dashboard/welcome");
+                    searchReqAgent0.AddHeader("Accept",
+                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                    searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
+                    searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
+                    searchReqAgent0.AddHeader("Origin", "https://gosga.garuda-indonesia.com");
+
+                    var airportScript = htmlX;
+                    var startIndex = airportScript.IndexOf("var airports");
+                    var endIndex = airportScript.IndexOf("var airportsdest");
+                    var scr = airportScript.SubstringBetween(startIndex + 15, endIndex - 3).Replace("\n", "").Replace("\t", "");
+                    var depAirport = GetGarudaAirportBooking(scr, origin);
+                    var arrAirport = GetGarudaAirportBooking(scr, dest);
+
+                    if (depAirport.Length == 0 || arrAirport.Length == 0)
                     {
-
-                        Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        Status = new BookingStatusInfo
+                        LogOut(returnPath, client);
+                        TurnInUsername(clientx, userName);
+                        return new BookFlightResult
                         {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        IsSuccess = false,
-                        ErrorMessages = new List<string> { "Can't get id " + returnPath + userName }
-                    };
-                }
+                            IsSuccess = false,
+                            Errors = new List<FlightError> { FlightError.InvalidInputData },
+                            ErrorMessages = new List<string> { "Airports are not available in agent site " + returnPath }
+                        };
+                    }
+                    string cabinstring;
 
-                urlweb = @"web/order/e-retail";
-                searchReqAgent0 = new RestRequest(urlweb, Method.GET);
-                searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/dashboard/welcome");
-                searchReqAgent0.AddHeader("Accept",
-                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
-                searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
-                searchResAgent0 = client.Execute(searchReqAgent0);
-                var htmlX = searchResAgent0.Content;
-                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
-
-                //POST 
-
-                searchReqAgent0 = new RestRequest(urlweb, Method.POST);
-                searchReqAgent0.AddHeader("Referer", "https://gosga.garuda-indonesia.com/web/dashboard/welcome");
-                searchReqAgent0.AddHeader("Accept",
-                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                searchReqAgent0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
-                searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
-                searchReqAgent0.AddHeader("Origin", "https://gosga.garuda-indonesia.com");
-
-                var airportScript = htmlX;
-                var startIndex = airportScript.IndexOf("var airports");
-                var endIndex = airportScript.IndexOf("var airportsdest");
-                var scr = airportScript.SubstringBetween(startIndex + 15, endIndex - 3).Replace("\n", "").Replace("\t", "");
-                var depAirport = GetGarudaAirportBooking(scr, origin);
-                var arrAirport = GetGarudaAirportBooking(scr, dest);
-
-                if (depAirport.Length == 0 || arrAirport.Length == 0)
-                {
-                    LogOut(returnPath, client);
-                    TurnInUsername(clientx, userName);
-                    return new BookFlightResult
+                    if (cabinClass == CabinClass.Economy)
                     {
-                        IsSuccess = false,
-                        Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages = new List<string> { "Airports are not available in agent site " + returnPath}
-                    };
-                }
-                string cabinstring;
+                        cabinstring = "eco";
+                    }
+                    else if (cabinClass == CabinClass.Business)
+                    {
+                        cabinstring = "exe";
+                    }
+                    else
+                    {
+                        cabinstring = "1st";
+                    }
 
-                if (cabinClass == CabinClass.Economy)
-                {
-                    cabinstring = "eco";
-                }
-                else if (cabinClass == CabinClass.Business)
-                {
-                    cabinstring = "exe";
-                }
-                else
-                {
-                    cabinstring = "1st";
-                }
+                    var postdata =
+                        "Inputs%5BoriginDetail%5D=" + HttpUtility.UrlEncode(depAirport) +
+                        "&Inputs%5Borigin%5D=" + origin +
+                        "&Inputs%5BdestDetail%5D=" + HttpUtility.UrlEncode(arrAirport) +
+                        "&Inputs%5Bdest%5D=" + dest +
+                        "&Inputs%5BtripType%5D=o" +
+                        "&Inputs%5BoutDate%5D=" + splittedFareId[4] + "-" + splittedFareId[3] + "-" + splittedFareId[2] +  //2016-06-06
+                        "&Inputs%5BretDate%5D=" + splittedFareId[4] + "-" + splittedFareId[3] + "-" + splittedFareId[2] +
+                        "&Inputs%5Badults%5D=" + adultCount +
+                        "&Inputs%5Bchilds%5D=" + childCount +
+                        "&Inputs%5Binfants%5D=" + infantCount +
+                        "&Inputs%5BserviceClass%5D=" + cabinstring +
+                        "&btnSubmit=+Cari";
 
-                var postdata =
-                    "Inputs%5BoriginDetail%5D=" + HttpUtility.UrlEncode(depAirport) +
-                    "&Inputs%5Borigin%5D=" + origin +
-                    "&Inputs%5BdestDetail%5D=" + HttpUtility.UrlEncode(arrAirport) +
-                    "&Inputs%5Bdest%5D=" + dest +
-                    "&Inputs%5BtripType%5D=o" +
-                    "&Inputs%5BoutDate%5D=" + splittedFareId[4] + "-" + splittedFareId[3] + "-" + splittedFareId[2] +  //2016-06-06
-                    "&Inputs%5BretDate%5D=" + splittedFareId[4] + "-" + splittedFareId[3] + "-" + splittedFareId[2] + 
-                    "&Inputs%5Badults%5D=" + adultCount +
-                    "&Inputs%5Bchilds%5D=" + childCount +
-                    "&Inputs%5Binfants%5D=" + infantCount + 
-                    "&Inputs%5BserviceClass%5D=" + cabinstring +
-                    "&btnSubmit=+Cari";
+                    searchReqAgent0.AddParameter("application/x-www-form-urlencoded", postdata, ParameterType.RequestBody);
+                    searchResAgent0 = client.Execute(searchReqAgent0);
+                    var htmlFlight = searchResAgent0.Content;
+                    returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
-                searchReqAgent0.AddParameter("application/x-www-form-urlencoded", postdata, ParameterType.RequestBody);
-                searchResAgent0 = client.Execute(searchReqAgent0);
-                var htmlFlight = searchResAgent0.Content;
-                returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
-                
-                    var htmlFlightList = (CQ) htmlFlight;
+                    var htmlFlightList = (CQ)htmlFlight;
                     var tableFlight = htmlFlightList[".gtable"];
                     var rows = tableFlight[0].ChildElements.ToList()[1].ChildElements.ToList();
                     //var selectedRows = (from flightNo in listflight from row in rows let x = flightNo.Replace("-", "") let y = row.ChildElements.ToList()[1].InnerText where flightNo.Replace("-", "") == row.ChildElements.ToList()[1].InnerText select row).Cast<IDomObject>().ToList();
-                    var selectedRows =  new List<IDomObject>();
-                    
+                    var selectedRows = new List<IDomObject>();
+
                     var v = 2;
                     while (v < rows.Count())
                     {
@@ -275,7 +275,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         if (currentPlane == listflight.ElementAt(w).Replace("-", ""))
                         {
                             selectedRows.Add(rows[v]);
-                            var z =  v + 1;
+                            var z = v + 1;
                             w += 1;
                             while (z < rows.Count && z < v + listflight.Count)
                             {
@@ -305,20 +305,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     var segments = new List<FlightSegment>();
                     var inputsdepoptlist = new List<string>();
                     var valuesdepoptlist = new List<string>();
-                    for(var ind = 0; ind < selectedRows.Count; ind++)
+                    for (var ind = 0; ind < selectedRows.Count; ind++)
                     {
                         var ct = 1;
                         if (ind != 0)
                         {
                             ct = 0;
                         }
-                        
+
                         var airlineCode = selectedRows[ind].ChildElements.ToList()[ct].InnerText.SubstringBetween(0, 2);
                         var flightNumber = selectedRows[ind].ChildElements.ToList()[ct].InnerText.Substring(2);
                         flightstring += airlineCode + "-" + flightNumber + "|";
                         var depdata = selectedRows[ind].ChildElements.ToList()[ct + 1].InnerText;
                         var oriAirport = depdata.SubstringBetween(0, 3);
-                        var oriHour = depdata.SubstringBetween(depdata.Length-5, depdata.Length);
+                        var oriHour = depdata.SubstringBetween(depdata.Length - 5, depdata.Length);
                         DateTime oriHr;
                         if (Convert.ToInt32(oriHour.Split('.')[0]) < depdateTemp.Hour)
                         {
@@ -327,16 +327,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 Convert.ToInt32(oriHour.Split('.')[0]),
                                 Convert.ToInt32(oriHour.Split('.')[1]), 0), DateTimeKind.Utc);
                         }
-                        else 
+                        else
                         {
                             oriHr = DateTime.SpecifyKind(new DateTime(depdateTemp.Year, depdateTemp.Month, depdateTemp.Day,
                                         Convert.ToInt32(oriHour.Split('.')[0]),
-                                        Convert.ToInt32(oriHour.Split('.')[1]), 0), DateTimeKind.Utc); 
+                                        Convert.ToInt32(oriHour.Split('.')[1]), 0), DateTimeKind.Utc);
                         }
 
                         var arrdata = selectedRows[ind].ChildElements.ToList()[ct + 2].InnerText;
                         var desAirport = arrdata.SubstringBetween(0, 3);
-                        var desHour = arrdata.SubstringBetween(arrdata.Length-5, arrdata.Length);
+                        var desHour = arrdata.SubstringBetween(arrdata.Length - 5, arrdata.Length);
                         DateTime arrHr;
                         if (Convert.ToInt32(desHour.Split('.')[0]) < oriHr.Hour)
                         {
@@ -402,11 +402,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     for (var ind = 1; ind < inputsdepoptlist.Count; ind++)
                     {
                         postdata += "&" + HttpUtility.UrlEncode(inputsdepoptlist[ind]) + "="
-                            + HttpUtility.UrlEncode(valuesdepoptlist[ind]); 
+                            + HttpUtility.UrlEncode(valuesdepoptlist[ind]);
                     }
 
                     postdata = HttpUtility.UrlEncode(inputsdepoptlist[0]) + "="
-                            + HttpUtility.UrlEncode(valuesdepoptlist[0]) + postdata + "&" 
+                            + HttpUtility.UrlEncode(valuesdepoptlist[0]) + postdata + "&"
                             + HttpUtility.UrlEncode("Inputs[depOptKey]") + "="
                             + valueDeptOptKey;
 
@@ -436,10 +436,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     postdata += "&btnSubmit=1";
                     searchReqAgent0.AddParameter("application/x-www-form-urlencoded", postdata, ParameterType.RequestBody);
                     searchResAgent0 = client.Execute(searchReqAgent0);
-                    var htmlPrice = (CQ) searchResAgent0.Content;
+                    var htmlPrice = (CQ)searchResAgent0.Content;
                     returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
-                    var classprice = htmlPrice["#sidebarTotal"].Text().Replace(",","");
+                    var classprice = htmlPrice["#sidebarTotal"].Text().Replace(",", "");
                     var newprice = Convert.ToDecimal(classprice);
                     var tableBreakdown = htmlPrice[".farebreakdown"];
 
@@ -461,13 +461,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     {
                         infantPriceEach = tableBreakdown[0].ChildElements.ToList()[0].
                             ChildElements.ToList()[20].ChildElements.ToList()[1].InnerText.Replace("&nbsp;", " ").Split(' ')[0].
-                        Replace(",", ""); 
+                        Replace(",", "");
                     }
 
                     var newFareId = origin + "+" + dest + "+" + segments.ElementAt(0).DepartureTime.Day + "+" +
                             segments.ElementAt(0).DepartureTime.Month + "+" +
                             segments.ElementAt(0).DepartureTime.Year + "+" +
-                            segments.ElementAt(0).DepartureTime.Hour + "+" + 
+                            segments.ElementAt(0).DepartureTime.Hour + "+" +
                             segments.ElementAt(0).DepartureTime.Minute + "+" +
                             adultCount + "+" + childCount + "+" + infantCount + "+" + splittedFareId[10] + "+" +
                             price + "+" + flightstring.SubstringBetween(0, flightstring.Length - 1);
@@ -512,7 +512,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             IsSuccess = false,
                             Errors = new List<FlightError> { FlightError.TechnicalError },
                             Status = null,
-                            ErrorMessages = new List<string> { "currency is not available"},
+                            ErrorMessages = new List<string> { "currency is not available" },
                             NewPrice = newprice,
                             IsValid = true,
                             IsPriceChanged = newprice != bookInfo.Itinerary.Price.Supplier,
@@ -604,7 +604,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     var childIndex = 1;
                     var infantIndex = 1;
 
-                   
+
                     for (var i = 0; i < orderedPassengers.Count(); i++)
                     {
                         var title = "";
@@ -628,55 +628,55 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         {
                             case PaxType.Adult:
                                 dataPassenger +=
-                                    "&Inputs%5Badt%5D%5B"+ adultIndex + "%5D%5Bnameprefix%5D=" + title +
-                                    "&Inputs%5Badt%5D%5B"+ adultIndex + "%5D%5Bfirstname%5D=" + firstname +
-                                    "&Inputs%5Badt%5D%5B"+ adultIndex + "%5D%5Bmiddlename%5D=" + middlename +
-                                    "&Inputs%5Badt%5D%5B"+ adultIndex + "%5D%5Blastname%5D=" + 
+                                    "&Inputs%5Badt%5D%5B" + adultIndex + "%5D%5Bnameprefix%5D=" + title +
+                                    "&Inputs%5Badt%5D%5B" + adultIndex + "%5D%5Bfirstname%5D=" + firstname +
+                                    "&Inputs%5Badt%5D%5B" + adultIndex + "%5D%5Bmiddlename%5D=" + middlename +
+                                    "&Inputs%5Badt%5D%5B" + adultIndex + "%5D%5Blastname%5D=" +
                                         orderedPassengers.ElementAt(i).LastName +
-                                    "&Inputs%5Badt%5D%5B"+ adultIndex + "%5D%5Bgff%5D=";
+                                    "&Inputs%5Badt%5D%5B" + adultIndex + "%5D%5Bgff%5D=";
 
                                 adultIndex += 1;
-                                        
+
                                 break;
                             case PaxType.Child:
                                 dataPassenger +=
-                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5Bnameprefix%5D=" + title +
-                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5Bfirstname%5D=" + firstname +
-                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5Bmiddlename%5D=" + middlename +
-                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5Blastname%5D=" + 
+                                    "&Inputs%5Bchd%5D%5B" + childIndex + "%5D%5Bnameprefix%5D=" + title +
+                                    "&Inputs%5Bchd%5D%5B" + childIndex + "%5D%5Bfirstname%5D=" + firstname +
+                                    "&Inputs%5Bchd%5D%5B" + childIndex + "%5D%5Bmiddlename%5D=" + middlename +
+                                    "&Inputs%5Bchd%5D%5B" + childIndex + "%5D%5Blastname%5D=" +
                                         orderedPassengers.ElementAt(i).LastName +
-                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5Bgff%5D=" +
-                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5BbirthDD%5D=" + 
+                                    "&Inputs%5Bchd%5D%5B" + childIndex + "%5D%5Bgff%5D=" +
+                                    "&Inputs%5Bchd%5D%5B" + childIndex + "%5D%5BbirthDD%5D=" +
                                         orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd") +
-                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5BbirthMM%5D=" +
+                                    "&Inputs%5Bchd%5D%5B" + childIndex + "%5D%5BbirthMM%5D=" +
                                         orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("MM") +
-                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5BbirthYY%5D=" +
+                                    "&Inputs%5Bchd%5D%5B" + childIndex + "%5D%5BbirthYY%5D=" +
                                         orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year +
-                                    "&Inputs%5Bchd%5D%5B"+ childIndex + "%5D%5BChildDate%5D="
-                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year + "-" 
+                                    "&Inputs%5Bchd%5D%5B" + childIndex + "%5D%5BChildDate%5D="
+                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year + "-"
                                         + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("MM") + "-"
-                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd") ;
+                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd");
 
                                 childIndex++;
                                 break;
                             case PaxType.Infant:
                                 dataPassenger +=
-                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5Bnameprefix%5D=" + title +
-                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5Bfirstname%5D=" + firstname +
-                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5Bmiddlename%5D=" + middlename +
-                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5Blastname%5D=" + 
+                                    "&Inputs%5Binf%5D%5B" + infantIndex + "%5D%5Bnameprefix%5D=" + title +
+                                    "&Inputs%5Binf%5D%5B" + infantIndex + "%5D%5Bfirstname%5D=" + firstname +
+                                    "&Inputs%5Binf%5D%5B" + infantIndex + "%5D%5Bmiddlename%5D=" + middlename +
+                                    "&Inputs%5Binf%5D%5B" + infantIndex + "%5D%5Blastname%5D=" +
                                         orderedPassengers.ElementAt(i).LastName +
-                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5Bgff%5D=" +
-                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5BbirthDD%5D=" + 
+                                    "&Inputs%5Binf%5D%5B" + infantIndex + "%5D%5Bgff%5D=" +
+                                    "&Inputs%5Binf%5D%5B" + infantIndex + "%5D%5BbirthDD%5D=" +
                                         orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd") +
-                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5BbirthMM%5D=" +
+                                    "&Inputs%5Binf%5D%5B" + infantIndex + "%5D%5BbirthMM%5D=" +
                                         orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("MM") +
-                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5BbirthYY%5D=" +
+                                    "&Inputs%5Binf%5D%5B" + infantIndex + "%5D%5BbirthYY%5D=" +
                                         orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year +
-                                    "&Inputs%5Binf%5D%5B"+ infantIndex + "%5D%5BChildDate%5D="
-                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year + "-" 
+                                    "&Inputs%5Binf%5D%5B" + infantIndex + "%5D%5BChildDate%5D="
+                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().Year + "-"
                                         + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("MM") + "-"
-                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd") ;
+                                        + orderedPassengers.ElementAt(i).DateOfBirth.GetValueOrDefault().ToString("dd");
                                 infantIndex++;
                                 break;
                         }
@@ -688,7 +688,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         "&Inputs%5BaddInfant%5D=" +
                         "&Inputs%5BcontactPaxKey%5D=1" +
                         "&Inputs%5Bcontact_phone%5D=" +
-                        "&Inputs%5Bcontact_mobileph%5D=" + bookInfo.Contact.CountryCallingCode+ bookInfo.Contact.Phone +
+                        "&Inputs%5Bcontact_mobileph%5D=" + bookInfo.Contact.CountryCallingCode + bookInfo.Contact.Phone +
                         "&btnContinue=++++++Lanjutkan++++++";
 
                     urlweb = @"web/order/pax";
@@ -700,7 +700,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
                     searchReqAgent0.AddHeader("Origin", "https://gosga.garuda-indonesia.com");
                     searchReqAgent0.AddHeader("Cache-Control", "max-age=0");
-                    searchReqAgent0.AddParameter("application/x-www-form-urlencoded",dataPassenger, ParameterType.RequestBody);
+                    searchReqAgent0.AddParameter("application/x-www-form-urlencoded", dataPassenger, ParameterType.RequestBody);
                     searchResAgent0 = client.Execute(searchReqAgent0);
                     returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
@@ -734,7 +734,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     searchResAgent0 = client.Execute(searchReqAgent0);
                     returnPath = searchResAgent0.ResponseUri.AbsolutePath;
 
-                    var htmlConfirmation = (CQ) searchResAgent0.Content;
+                    var htmlConfirmation = (CQ)searchResAgent0.Content;
                     var dataConfirmation = htmlConfirmation["#Confirm"];
                     bookingReference = dataConfirmation[0].ChildElements.ToList()[2].ChildElements.ToList()[0].
                         ChildElements.ToList()[3].InnerText;
@@ -762,23 +762,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 BookingId = bookingReference,
                                 TimeLimit = timeLimit,
                                 BookingStatus = BookingStatus.Booked
-                            },
-                            IsValid = true,
-                            IsItineraryChanged = false,
-                            IsPriceChanged = false,
-                            NewItinerary = newitin
+                            }
                         };
                     }
 
                     return new BookFlightResult
                     {
                         IsSuccess = false,
-                        Errors = new List<FlightError> {FlightError.TechnicalError},
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        ErrorMessages = new List<string> {"Web Layout Changed!"}
+                        ErrorMessages = new List<string> { "Web Layout Changed!" }
                     };
                 }
                 catch //(Exception e)
@@ -789,8 +785,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     return new BookFlightResult
                     {
                         IsSuccess = false,
-                        Errors = new List<FlightError> {FlightError.TechnicalError},
-                        ErrorMessages = new List<string> {"Web Layout Changed! " + returnPath + successLogin + searchResAgent0.Content},
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "Web Layout Changed! " + returnPath + successLogin + searchResAgent0.Content },
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
@@ -818,7 +814,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
             var accRs = (RestResponse)client.Execute(accReq);
         }
 
-       private static string GetGarudaAirportBooking(string scr, string code)
+        private static string GetGarudaAirportBooking(string scr, string code)
         {
             var airportScr = scr.Deserialize<List<List<string>>>();
             var arpt = "";
@@ -830,7 +826,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
             }
             return arpt;
         }
-        
-     }
- }
+
+    }
+}
 

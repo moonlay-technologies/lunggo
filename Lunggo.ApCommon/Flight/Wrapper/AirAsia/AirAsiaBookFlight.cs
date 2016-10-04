@@ -82,7 +82,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
-                        ErrorMessages = new List<string>{"Error while splitting the fareid"}
+                        ErrorMessages = new List<string> { "Error while splitting the fareid" }
                     };
                 }
 
@@ -119,16 +119,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var hidden = date.ToString("yyyyMMdd");
                 //var hidden = string.Join("+", date.ToString("yyyyMMdd"), airlineCode, flightNumber,
                 //    origin + dest + "IDR");
-                var rep = (splitted.Length - 1)/8;
+                var rep = (splitted.Length - 1) / 8;
                 var data = "";
                 for (var m = 0; m < rep; m++)
                 {
-                    data += splitted[8*m].Trim(' ').Trim('^') + " " 
-                        + splitted[1 + 8*m].Trim(' ') + " "
-                        + splitted[4 + 8*m] + splitted[6 + 8*m];
+                    data += splitted[8 * m].Trim(' ').Trim('^') + " "
+                        + splitted[1 + 8 * m].Trim(' ') + " "
+                        + splitted[4 + 8 * m] + splitted[6 + 8 * m];
                     if (m != rep - 1)
                     {
-                        data +="/ "; ;
+                        data += "/ "; ;
                     }
                 }
 
@@ -179,7 +179,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> {"Error in requesting at Search.aspx.Unexpected absolute path response or status code"}
+                        ErrorMessages = new List<string> { "Error in requesting at Search.aspx.Unexpected absolute path response or status code" }
                     };
 
                 Thread.Sleep(1000);
@@ -363,7 +363,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        ErrorMessages = new List<string>{"Error while requesting at Traveler.aspx. Unexpected absolute path response or status code"}
+                        ErrorMessages = new List<string>
+                        {
+                            "Error while requesting at Traveler.aspx. Unexpected absolute path response or status code" + 
+                            ((CQ) travelerResponse.Content)["#errorSectionContent"]
+                        }
                     };
                 Thread.Sleep(1000);
 

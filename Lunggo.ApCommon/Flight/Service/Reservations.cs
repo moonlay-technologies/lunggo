@@ -21,8 +21,15 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public FlightItineraryForDisplay GetItineraryForDisplay(string token)
         {
-            var itins = GetItinerariesFromCache(token);
-            return ConvertToItineraryForDisplay(itins);
+            try
+            {
+                var itins = GetItinerariesFromCache(token);
+                return ConvertToItineraryForDisplay(itins);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public FlightReservationForDisplay GetReservationForDisplay(string rsvNo)
