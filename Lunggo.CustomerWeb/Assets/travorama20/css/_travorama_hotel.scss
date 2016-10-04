@@ -3,6 +3,8 @@
     font-size: 12px;
     font-weight: 400;
     color: #000;
+    letter-spacing: 0;
+    -webkit-font-smoothing: antialiased;
     .main-title {
         font-size: 25px;
         font-weight: 400;
@@ -24,7 +26,8 @@
     .md-txt {font-size: 15px;}
     .sm-txt {font-size: 10px;}
     .xs-txt {font-size: 9px;}
-    .italic-txt {font-style: italic;}    
+    .italic-txt {font-style: italic;}
+    .underline-txt {text-decoration: line-through;}    
     .blue-txt {color: $color-main-blue;
         &.bg {
             font-size: 16px;
@@ -34,34 +37,47 @@
     }
     .grey-txt {color: #999;}
     .green-txt {color: #3a8e1b;}
+    .orange-txt {color: #ff7200;}
     .bg-title {
         font-size: 19px;
         text-transform: uppercase;
         margin-bottom: 15px;
     }
     .col-left, col-right, .col-left-result, .col-right-result, .col-xs-left, .col-xs-middle, .col-xs-right, .col-left-hotel, .col-right-hotel, .col-half, .col-left-page, .col-right-page, 
-    .col-left-slider, col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right {
+    .col-left-slider, col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
+    .room-rl, .room-rm, .room-rr {
         position: relative;
         min-height: 1px;
     }
-    .col-left, .col-right-result, .col-left-slider {
-        width: 70%;
-    }
+
     .col-left, .col-left-result, .col-right-result, .col-left-hotel, .col-right-hotel, .col-xs-left, .col-xs-middle, .col-xs-right, .col-half, .col-left-page, .col-right-page,
-    .col-left-slider, .col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right {float: left;}
+    .col-left-slider, .col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
+    .room-rl, .room-rm, .room-rr {float: left;}
+    
     .col-right {float: right;}
+    
+    .col-left, .col-right-result, .col-left-slider {width: 70%;}
+
     .col-right, .col-left-result, .col-right-slider {width: 30%;}
-    .col-xs-left {width: 16.66667%;}
-    .col-xs-middle {width: 41.66667%;} 
-    .col-xs-right { width: 41.66667%;}
-    .col-left-hotel {width: 25%;}
-    .col-right-hotel {width: 75%; padding-left: 15px;}
+
+    .col-xs-left {width: 16.66667%;} .col-xs-middle {width: 41.66667%;} .col-xs-right { width: 41.66667%;}
+
+    .col-left-hotel {width: 25%;} .col-right-hotel {width: 75%; padding-left: 15px;}
+
     .col-half {width: 50%;}
-    .col-left-page {width: 10%;} 
-    .col-right-page {width: 90%;}
-    .col-left-rs {width: 40%;}
-    .col-right-rs {width: 60%;}
+
+    .col-left-page {width: 10%;} .col-right-page {width: 90%;}
+
+    .col-left-rs {width: 40%;} .col-right-rs {width: 60%;}
+
     .rb-left {width: 32%;} .rb-mid {width: 3%;} .rb-right {width: 65%;}
+
+    .room-sort-left {width: 60%;} .room-sort-mid {width: 15%;} .room-sort-right {width: 25%;}
+
+    .room-left {width: 15%;} .room-right {width: 85%;}
+
+    .room-rl {width: 53%;} .room-rm {width: 19%;} .room-rr {width: 28%;}
+
     .star-outline {
         content: '';
         display: inline-block;
@@ -148,6 +164,23 @@
         display: inline-block;
         vertical-align: middle;
     }
+    .facility {
+        &:before {
+            content: '';
+            display: inline-block;
+            background: url(/Assets/travorama20/images/Hotel/wifi.png) no-repeat;
+            width: 23px;
+            height: 19px;
+        }
+        &:after {
+            content: '';
+            display: inline-block;
+            background: url(/Assets/travorama20/images/Hotel/meal.png) no-repeat;
+            width: 18px;
+            height: 20px;
+            margin-left: 10px;
+        }
+    }
 
     label {
         &.round, &.square{
@@ -188,7 +221,10 @@
             &.active .switch {background: $color-main-blue;}
         }
         &.square {
-            &.city-point {display: inline-block;}
+            &.city-point {
+                width: 80%;
+                display: inline-block;
+            }
             display: block;
             border: 0;
             margin-bottom: 0;
@@ -230,8 +266,13 @@
             font-weight: 600;
             text-decoration: none;
             display: inline-block;
-            &.small {padding: 6px 10px; float: right;}
+            @include border-radius(2px);
+            &.small {padding: 6px 15px; float: right;}
             &.big {padding: 6px 20px;}
+            &:hover {
+                opacity: 0.7;
+                @include transition(all .3s ease);
+            }
         }
         &.btn-green {
             background: #3a8e1b;
@@ -240,6 +281,11 @@
             text-decoration: none;
             padding: 6px 20px;
             display: inline-block;
+            @include border-radius(2px);
+            &:hover {
+                opacity: 0.7;
+                @include transition(all .3s ease);
+            }
         }
     }
     .page-slider {
@@ -256,7 +302,37 @@
         letter-spacing: 0;
         .search-result-form-trigger {padding: 10px 15px;}
     }
-
+    .form-control {
+        height: 36px;
+        box-shadow: none;
+         .option {
+            position: absolute;
+            top: 100%;
+            width: 100%;
+            z-index: 2;
+            display: none; 
+            margin: 0 auto;
+            left: 28px;
+            max-width: 80px;
+            text-align: center;
+            padding: 0;
+            @include border-radius(0);
+            border: 1px solid #ccc;
+            span {
+                display: block;
+                width: 100%;
+                background: #fff;
+                position: static;
+                font-size: 12px;
+                padding: 5px;
+                &:hover {
+                    color: #fff;
+                    background: #999;
+                    @include transition(all .3s ease);
+                }
+            }
+        }
+    }
     .travorama-hotel {
         margin: 30px 0;
         .bread-crumb {

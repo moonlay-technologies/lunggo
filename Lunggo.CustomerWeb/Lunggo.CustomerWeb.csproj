@@ -302,6 +302,15 @@
       <DependentUpon>eticket.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\eticket.scss" />
+    <Content Include="Assets\travorama20\images\Hotel\bed.png" />
+    <Content Include="Assets\travorama20\images\Hotel\mini-slider.jpg" />
+    <Content Include="Assets\travorama20\images\Hotel\next-white.png" />
+    <Content Include="Assets\travorama20\images\Hotel\prev-white.png" />
+    <Content Include="Assets\travorama20\images\Hotel\room.jpg" />
+    <Content Include="Assets\travorama20\images\Hotel\size.png" />
+    <Content Include="Assets\travorama20\images\Hotel\sort.png" />
+    <Content Include="Assets\travorama20\images\Hotel\triangle-grey.png" />
+    <Content Include="Assets\travorama20\images\Hotel\view.png" />
     <Content Include="Assets\vendor\flexslider\flexslider.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
