@@ -35,6 +35,12 @@
     <Reference Include="Base36Encoder">
       <HintPath>..\packages\csharpbase36.1.0.0\lib\Base36Encoder.dll</HintPath>
     </Reference>
+    <Reference Include="com.hotelbeds.distribution.hotel_api_model">
+      <HintPath>..\..\..\..\..\Downloads\hotel-api-sdk-Net-master\hotel-api-sdk-Net-master\hotel-api-model\bin\Debug\com.hotelbeds.distribution.hotel_api_model.dll</HintPath>
+    </Reference>
+    <Reference Include="com.hotelbeds.distribution.hotel_api_sdk">
+      <HintPath>..\..\..\..\..\Downloads\hotel-api-sdk-Net-master\hotel-api-sdk-Net-master\hotel-api-sdk\bin\Debug\com.hotelbeds.distribution.hotel_api_sdk.dll</HintPath>
+    </Reference>
     <Reference Include="CsQuery, Version=1.3.3.249, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CsQuery.1.3.4\lib\net40\CsQuery.dll</HintPath>
