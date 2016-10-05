@@ -4323,24 +4323,20 @@ file: /Assets/travorama20/css/_page_flight.scss
       border-top: 5px solid #1daee4; }
 
 .page-hotel {
+  /*General*/
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 400;
   color: #000;
   letter-spacing: 0;
-  -webkit-font-smoothing: antialiased; }
-  .page-hotel .main-title {
-    font-size: 25px;
-    font-weight: 400;
-    margin: 15px 0;
-    line-height: 32px; }
-    .page-hotel .main-title:after {
-      content: '';
-      display: inline-block;
-      background: url('/Assets/images/yellow-stripe-small.png');
-      background-repeat: no-repeat;
-      height: 19px;
-      width: 100%; }
+  -webkit-font-smoothing: antialiased;
+  /*Fonts*/
+  /*Custom Column*/
+  /*Icon*/
+  /*Bullets*/
+  /*Checklist & Radio Button*/
+  /*Form & Lable*/
+  /*Shared Page*/ }
   .page-hotel .lg-txt {
     font-size: 22px;
     line-height: 24px; }
@@ -4531,6 +4527,23 @@ file: /Assets/travorama20/css/_page_flight.scss
     width: 32px;
     height: 31px;
     background-position: -128px -5px; }
+  .page-hotel .blue-list {
+    list-style: none;
+    padding-left: 20px;
+    display: inline-block;
+    float: left; }
+    .page-hotel .blue-list > li:before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      background: #1daee4;
+      vertical-align: middle;
+      margin-right: 10px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+      border-radius: 5px; }
   .page-hotel label.round input, .page-hotel label.square input {
     display: none; }
   .page-hotel label.round {
@@ -4640,20 +4653,6 @@ file: /Assets/travorama20/css/_page_flight.scss
       -moz-transition: all 0.3s ease;
       -o-transition: all 0.3s ease;
       transition: all 0.3s ease; }
-  .page-hotel .page-slider {
-    background: url('/Assets/travorama20/images/Hotel/header-bg.jpg');
-    background-size: cover;
-    height: 200px;
-    color: #fff; }
-    .page-hotel .page-slider .header-title {
-      padding: 35px 0; }
-  .page-hotel .search-result-form {
-    background: #032e55;
-    color: #fff;
-    padding: 20px 0;
-    letter-spacing: 0; }
-    .page-hotel .search-result-form .search-result-form-trigger {
-      padding: 10px 15px; }
   .page-hotel .form-control {
     height: 36px;
     box-shadow: none; }
@@ -4684,20 +4683,33 @@ file: /Assets/travorama20/css/_page_flight.scss
           -o-transition: all 0.3s ease;
           transition: all 0.3s ease;
           cursor: pointer; }
-  .page-hotel .blue-list {
-    list-style: none;
-    padding-left: 20px;
-    display: inline-block;
-    float: left; }
-    .page-hotel .blue-list > li:before {
+  .page-hotel .page-slider {
+    background: url('/Assets/travorama20/images/Hotel/header-bg.jpg');
+    background-size: cover;
+    height: 200px;
+    color: #fff; }
+    .page-hotel .page-slider .header-title {
+      padding: 35px 0; }
+  .page-hotel .search-result-form {
+    background: #032e55;
+    color: #fff;
+    padding: 20px 0;
+    letter-spacing: 0; }
+    .page-hotel .search-result-form .search-result-form-trigger {
+      padding: 10px 15px; }
+  .page-hotel .main-title {
+    font-size: 25px;
+    font-weight: 400;
+    margin: 15px 0;
+    line-height: 32px; }
+    .page-hotel .main-title:after {
       content: '';
       display: inline-block;
-      width: 5px;
-      height: 5px;
-      background: #1daee4;
-      vertical-align: middle;
-      margin-right: 10px;
-      border-radius: 5px; }
+      background: url('/Assets/images/yellow-stripe-small.png');
+      background-repeat: no-repeat;
+      height: 19px;
+      width: 160px;
+      background-size: 100%; }
   .page-hotel .travorama-hotel {
     margin: 30px 0;
     /*--------------------*/
@@ -5119,6 +5131,9 @@ file: /Assets/travorama20/css/_page_flight.scss
                 padding: 0;
                 width: 30px;
                 height: 30px;
+                -webkit-border-radius: 30px;
+                -moz-border-radius: 30px;
+                -ms-border-radius: 30px;
                 border-radius: 30px;
                 top: 50%;
                 -webkit-appearance: none;
@@ -5216,7 +5231,18 @@ file: /Assets/travorama20/css/_page_flight.scss
           .page-hotel .travorama-hotel .detail-hotel .room .hotel-result .hotel-result-txt {
             line-height: 24px; }
           .page-hotel .travorama-hotel .detail-hotel .room .hotel-result .btn-hotel-result {
-            margin-left: 15px; }
+            margin-left: 15px;
+            padding-right: 25px; }
+            .page-hotel .travorama-hotel .detail-hotel .room .hotel-result .btn-hotel-result:after {
+              width: 0;
+              height: 0;
+              border-left: 4px solid transparent;
+              border-right: 4px solid transparent;
+              border-top: 4px solid #fff;
+              content: '';
+              margin-top: 6px;
+              position: absolute;
+              margin-left: 5px; }
       .page-hotel .travorama-hotel .detail-hotel .info-hotel {
         border-top: 1px solid #ccc;
         padding: 20px 0 15px; }
@@ -5232,6 +5258,9 @@ file: /Assets/travorama20/css/_page_flight.scss
               width: 22px;
               height: 22px;
               border: 2px solid #fff;
+              -webkit-border-radius: 22px;
+              -moz-border-radius: 22px;
+              -ms-border-radius: 22px;
               border-radius: 22px;
               background: url(/Assets/travorama20/images/Hotel/up.png) no-repeat center 3px; }
             .page-hotel .travorama-hotel .detail-hotel .info-hotel .ih-accordion .accordion-wrapper .accordion-title.active:after {

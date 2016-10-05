@@ -1,24 +1,13 @@
 ﻿.page-hotel {
+    /*General*/
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
     font-weight: 400;
     color: #000;
     letter-spacing: 0;
     -webkit-font-smoothing: antialiased;
-    .main-title {
-        font-size: 25px;
-        font-weight: 400;
-        margin: 15px 0;
-        line-height: 32px;
-        &:after {
-            content: '';
-            display: inline-block;
-            background: url('/Assets/images/yellow-stripe-small.png');
-            background-repeat: no-repeat;
-            height: 19px;
-            width: 100%;
-        }
-    }
+    
+    /*Fonts*/
     .lg-txt {    
         font-size: 22px;
         line-height: 24px;
@@ -43,6 +32,8 @@
         text-transform: uppercase;
         margin-bottom: 15px;
     }
+    
+    /*Custom Column*/
     .col-left, col-right, .col-left-result, .col-right-result, .col-xs-left, .col-xs-middle, .col-xs-right, .col-left-hotel, .col-right-hotel, .col-half, .col-left-page, .col-right-page, 
     .col-left-slider, col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
     .room-rl, .room-rm, .room-rr {
@@ -78,6 +69,7 @@
 
     .room-rl {width: 53%;} .room-rm {width: 19%;} .room-rr {width: 28%;}
 
+    /*Icon*/
     .star-outline {
         content: '';
         display: inline-block;
@@ -100,7 +92,6 @@
         width: 76px;
         margin-left: 17px;
     }
-    
     .star {
         display: block;
         background: url(/Assets/travorama20/images/Hotel/star.png);
@@ -204,6 +195,25 @@
         background-position: -128px -5px;
     }
     
+    /*Bullets*/
+    .blue-list {
+        list-style: none;
+        padding-left: 20px;
+        display: inline-block;
+        float: left;
+        & > li:before {
+            content: '';
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            background: #1daee4;
+            vertical-align: middle;
+            margin-right: 10px;
+            @include border-radius(5px);
+        }
+    }
+
+    /*Checklist & Radio Button*/
     label {
         &.round, &.square{
             input {display: none;}
@@ -310,20 +320,8 @@
             }
         }
     }
-    .page-slider {
-        background: url('/Assets/travorama20/images/Hotel/header-bg.jpg');
-        background-size: cover;
-        height: 200px;
-        color: #fff;
-        .header-title {padding: 35px 0;}
-    }
-    .search-result-form {
-        background: #032e55;
-        color: #fff;
-        padding: 20px 0;
-        letter-spacing: 0;
-        .search-result-form-trigger {padding: 10px 15px;}
-    }
+    
+    /*Form & Lable*/
     .form-control {
         height: 36px;
         box-shadow: none;
@@ -352,21 +350,37 @@
             }
         }
     }
+    
+    /*Shared Page*/
+    .page-slider {
+        background: url('/Assets/travorama20/images/Hotel/header-bg.jpg');
+        background-size: cover;
+        height: 200px;
+        color: #fff;
+        .header-title {padding: 35px 0;}
+    }
 
-    .blue-list {
-        list-style: none;
-        padding-left: 20px;
-        display: inline-block;
-        float: left;
-        & > li:before {
+    .search-result-form {
+        background: #032e55;
+        color: #fff;
+        padding: 20px 0;
+        letter-spacing: 0;
+        .search-result-form-trigger {padding: 10px 15px;}
+    }
+    
+    .main-title {
+        font-size: 25px;
+        font-weight: 400;
+        margin: 15px 0;
+        line-height: 32px;
+        &:after {
             content: '';
             display: inline-block;
-            width: 5px;
-            height: 5px;
-            background: #1daee4;
-            vertical-align: middle;
-            margin-right: 10px;
-            border-radius: 5px;
+            background: url('/Assets/images/yellow-stripe-small.png');
+            background-repeat: no-repeat;
+            height: 19px;
+            width: 160px;
+            background-size: 100%;
         }
     }
 
