@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.ApCommon.Model;
 using Newtonsoft.Json;
 

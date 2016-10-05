@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using com.hotelbeds.distribution.hotel_api_model.auto.messages;
 using com.hotelbeds.distribution.hotel_api_sdk.helpers;
-using Lunggo.ApCommon.Hotel.Model;
 using com.hotelbeds.distribution.hotel_api_sdk;
 using Newtonsoft.Json;
 
@@ -38,7 +37,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
             room.details = new List<RoomDetail>();
             for (int i = 0; i < condition.AdultCount; i++)
             {
-                room.adultOf(30);   
+            room.adultOf(30);
             }
 
             for (int i = 0; i < condition.ChildCount; i++)
@@ -57,7 +56,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
             List<HotelRoom> rooms = new List<HotelRoom>();
             
             //var hotels = new HotelDetail();
-            
+
             if (responseAvail != null && responseAvail.hotels != null && responseAvail.hotels.hotels != null &&
                 responseAvail.hotels.hotels.Count > 0)
             {
