@@ -303,6 +303,8 @@
     </Content>
     <Content Include="Assets\css\eticket.scss" />
     <Content Include="Assets\travorama20\images\Hotel\bed.png" />
+    <Content Include="Assets\travorama20\images\Hotel\blue-sprite.png" />
+    <Content Include="Assets\travorama20\images\Hotel\down.png" />
     <Content Include="Assets\travorama20\images\Hotel\mini-slider.jpg" />
     <Content Include="Assets\travorama20\images\Hotel\next-white.png" />
     <Content Include="Assets\travorama20\images\Hotel\prev-white.png" />
@@ -310,6 +312,7 @@
     <Content Include="Assets\travorama20\images\Hotel\size.png" />
     <Content Include="Assets\travorama20\images\Hotel\sort.png" />
     <Content Include="Assets\travorama20\images\Hotel\triangle-grey.png" />
+    <Content Include="Assets\travorama20\images\Hotel\up.png" />
     <Content Include="Assets\travorama20\images\Hotel\view.png" />
     <Content Include="Assets\vendor\flexslider\flexslider.css" />
     <Content Include="Assets\css\font-awesome.min.css" />

@@ -62,7 +62,7 @@
 
     .col-xs-left {width: 16.66667%;} .col-xs-middle {width: 41.66667%;} .col-xs-right { width: 41.66667%;}
 
-    .col-left-hotel {width: 25%;} .col-right-hotel {width: 75%; padding-left: 15px;}
+    .col-left-hotel, .quarter {width: 25%;} .col-right-hotel {width: 75%;}
 
     .col-half {width: 50%;}
 
@@ -181,7 +181,29 @@
             margin-left: 10px;
         }
     }
-
+    .blue-sprite {
+        content: '';
+        display: block;
+        background: url(/Assets/travorama20/images/Hotel/blue-sprite.png) no-repeat;
+        margin: 15px auto;
+    }
+    .hotel-blue-icon {
+        @extend .blue-sprite;
+        @include size(29px, 40px);
+    } .sport-blue-icon {
+        @extend .blue-sprite;
+        @include size(43px, 30px);
+        background-position: -38px -5px;
+    } .wifi-blue-icon {
+        @extend .blue-sprite;
+        @include size(30px, 23px);
+        background-position: -88px -9px;
+    } .park-blue-icon {
+        @extend .blue-sprite;
+        @include size(32px, 31px);
+        background-position: -128px -5px;
+    }
+    
     label {
         &.round, &.square{
             input {display: none;}
@@ -307,13 +329,9 @@
         box-shadow: none;
          .option {
             position: absolute;
-            top: 100%;
             width: 100%;
             z-index: 2;
-            display: none; 
-            margin: 0 auto;
-            left: 28px;
-            max-width: 80px;
+            display: none;
             text-align: center;
             padding: 0;
             @include border-radius(0);
@@ -329,10 +347,29 @@
                     color: #fff;
                     background: #999;
                     @include transition(all .3s ease);
+                    cursor: pointer;
                 }
             }
         }
     }
+
+    .blue-list {
+        list-style: none;
+        padding-left: 20px;
+        display: inline-block;
+        float: left;
+        & > li:before {
+            content: '';
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            background: #1daee4;
+            vertical-align: middle;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+    }
+
     .travorama-hotel {
         margin: 30px 0;
         .bread-crumb {

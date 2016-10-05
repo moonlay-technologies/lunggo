@@ -70,6 +70,7 @@
                 background: #fff;
                 border: 1px solid #afafaf;
                 border-radius: 3px;
+                .col-right-hotel {padding-left: 15px;}
             }
             .facility {
                 float: right;
@@ -84,7 +85,9 @@
                     left: 15px;
                 }
             }
-            .review {margin-bottom: 10px;
+            .review {
+                padding-bottom: 10px;
+                border-bottom: 1px solid #ccc;
                 .col-half {
                     &.left {
                         border-right: 1px solid #ccc;
@@ -117,7 +120,6 @@
                 }
             }
             .price {
-                border-top: 1px solid #ccc;
                 color: #ff7200;
                 padding-top: 10px;
             }
@@ -129,7 +131,7 @@
                 .page-container { 
                     display: inline-block;
                     margin-left: 30px;
-                    span {
+                    a {
                         &.prev {
                             display: inline-block;
                             width: 8px;
@@ -150,13 +152,16 @@
                         list-style-type: none;
                         display: inline-flex;
                         margin: 0;
-                        li {
+                        li > a {
                             display: inline-block;
-                            padding: 0 6px;
                             text-align: center;
                             margin: 0 10px;
-                            line-height: 19px;
-                            &.active {
+                            line-height: 20px;
+                            width: 20px;
+                            height: 20px;
+                            color: #000;
+                            text-decoration: none;
+                            &.active, &:hover {
                                 background: #1daee4;
                                 color: #fff;
                                 border-radius: 2px;

@@ -614,12 +614,12 @@ file: /Assets/travorama20/css/_page_flight.scss
             //.search-result-sort {display:none;}
         }
         // if search result departure or search result return is active
-        &>.active {width:530px;
+        &>.active {width:560px;
             .search-result-title {
                 p span.route-date {display:inline;}
             }
         }
-        &>.inactive {width:290px; opacity:0.5;
+        &>.inactive {width:320px; opacity:0.5;
             .search-result-warning {display:none;}
             .search-result-filter {display:none;}
             .search-result-sort {display:none;}
