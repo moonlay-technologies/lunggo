@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Hotel.Model
 {
-    public class SearchHotelResult
+    public class HotelReview
     {
-        internal List<HotelDetail> HotelDetails { get; set; }
+        public decimal Rate { get; set; }
+        public int ReviewCount { get; set; }
+        public string Type { get; set; }
     }
 }

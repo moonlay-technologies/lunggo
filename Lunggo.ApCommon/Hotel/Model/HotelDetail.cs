@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.hotelbeds.distribution.hotel_api_model.auto.model;
 using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Hotel.Model
@@ -11,7 +12,7 @@ namespace Lunggo.ApCommon.Hotel.Model
     public class HotelDetailForDisplay
     {
         [JsonProperty("hotelCd", NullValueHandling = NullValueHandling.Ignore)]
-        public string HotelCode { get; set; }
+        public int HotelCode { get; set; }
         [JsonProperty("hotelName", NullValueHandling = NullValueHandling.Ignore)]
         public string HotelName { get; set; }
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
@@ -21,7 +22,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("destinationCd", NullValueHandling = NullValueHandling.Ignore)]
         public string DestinationCode { get; set; }
         [JsonProperty("zoneCd", NullValueHandling = NullValueHandling.Ignore)]
-        public string ZoneCode { get; set; }
+        public int ZoneCode { get; set; }
         [JsonProperty("latitude", NullValueHandling = NullValueHandling.Ignore)]
         public double Latitude { get; set; }
         [JsonProperty("longitude", NullValueHandling = NullValueHandling.Ignore)]
@@ -53,7 +54,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("images", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> ImageUrl { get; set; }
         [JsonProperty("review", NullValueHandling = NullValueHandling.Ignore)]
-        public string Review { get; set; }
+        public List<Review> Review { get; set; }
         [JsonProperty("originalFare", NullValueHandling = NullValueHandling.Ignore)]
         public decimal OriginalFare { get; set; }
         [JsonProperty("originalFare", NullValueHandling = NullValueHandling.Ignore)]
@@ -64,12 +65,12 @@ namespace Lunggo.ApCommon.Hotel.Model
 
     public class HotelDetail
     {
-        public string HotelCode { get; set; }
-        public string Name { get; set; }
+        public int HotelCode { get; set; }
+        public string HotelName { get; set; }
         public string Description { get; set; }
         public string CountryCode { get; set; }
         public string DestinationCode { get; set; }
-        public string ZoneCode { get; set; }
+        public int ZoneCode { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public int StarRating { get; set; }
@@ -85,7 +86,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<string> Terminals { get; set; }
         public List<string> Pois { get; set; }
         public List<string> ImageUrl { get; set; }
-        public string Review { get; set; }
+        public List<Review> Review { get; set; }
         public decimal OriginalFare { get; set; }
         public decimal NetFare { get; set; }
         public decimal Discount { get; set; }
