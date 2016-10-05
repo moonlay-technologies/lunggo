@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
     {
         internal SearchHotelResult SearchHotel(SearchHotelCondition condition)
         {
-            HotelApiClient client = new HotelApiClient("blabla", "blabla", "blabla");
+            HotelApiClient client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "blabla");
             //HotelApiClient client = new HotelApiClient();
             var avail = new Availability
             {
@@ -24,6 +24,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                 checkOut =  condition.Checkout,
                 destination = condition.Location, //not good yet
                 language = "ENG",
+                zone =  condition.Zone,
                 payed = Availability.Pay.AT_WEB
             };
             AvailRoom room = new AvailRoom

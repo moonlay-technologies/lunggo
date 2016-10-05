@@ -10,6 +10,7 @@ namespace Lunggo.ApCommon.Hotel.Model
     public class SearchHotelCondition
     {
         public string Location { get; set; }
+        public int Zone { get; set; }
         public int Nights { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime Checkout { get; set; }
