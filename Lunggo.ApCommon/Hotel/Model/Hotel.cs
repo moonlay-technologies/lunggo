@@ -25,7 +25,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public IEnumerable<OnMemHotelFacility> FacilityList { get; set; } 
     }
 
-    public class HotelDetail : HotelDetailBase
+    public class HotelDetails : HotelDetailBase
     {
         public IEnumerable<HotelDescription> HotelDescriptions { get; set; }
         public Price LowestPrice { get; set; }

@@ -258,6 +258,7 @@
     <Compile Include="Hotel\Model\Logic\SelectHotelRoomOutput.cs" />
     <Compile Include="Hotel\Model\RevalidateHotelResult.cs" />
     <Compile Include="Hotel\Model\SearchHotelResult.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsCheckRateHotel.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsSearchHotel.cs" />
     <Compile Include="Payment\Constant\FailureReason.cs" />
     <Compile Include="Query\ContactUs.cs" />
@@ -463,13 +464,6 @@
     <Compile Include="Model\SearchBase.cs" />
     <Compile Include="Model\SearchViewModel.cs" />
     <Compile Include="Hotel\Constant\ApCommonHotelEnum.cs" />
-    <Compile Include="Hotel\Logic\HotelCacheUtil.cs" />
-    <Compile Include="Hotel\Logic\HotelPriceUtil.cs" />
-    <Compile Include="Hotel\Logic\HotelsSortComparer.cs" />
-    <Compile Include="Hotel\Logic\ParameterPreProcessor.cs" />
-    <Compile Include="Hotel\Logic\Search\HotelBookService.cs" />
-    <Compile Include="Hotel\Logic\Search\HotelRoomsSearchService.cs" />
-    <Compile Include="Hotel\Logic\Search\HotelsSearchService.cs" />
     <Compile Include="Hotel\Model\Hotel.cs" />
     <Compile Include="Hotel\Model\HotelDescription.cs" />
     <Compile Include="Hotel\Model\HotelImage.cs" />
@@ -834,6 +828,9 @@
   <ItemGroup>
     <Content Include="Service References\HotelBeds\com.hotelbeds.distribution.hotel_api_model.dll" />
     <Content Include="Service References\HotelBeds\com.hotelbeds.distribution.hotel_api_sdk.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Hotel\Logic\Search\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Azure.DocumentDB.1.9.5\build\Microsoft.Azure.DocumentDB.targets" Condition="Exists('..\packages\Microsoft.Azure.DocumentDB.1.9.5\build\Microsoft.Azure.DocumentDB.targets')" />

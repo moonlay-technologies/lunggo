@@ -324,10 +324,6 @@
     <Compile Include="ApiSrc\Payment\Model\UniqueCodeApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\UniqueCodeApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\PaymentController.cs" />
-    <Compile Include="ApiSrc\Rooms\Logic\GetRoomsLogic.cs" />
-    <Compile Include="ApiSrc\Rooms\Object\RoomSearchApiRequest.cs" />
-    <Compile Include="ApiSrc\Rooms\Object\RoomSearchApiResponse.cs" />
-    <Compile Include="ApiSrc\Rooms\RoomsController.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckVoucherLogic.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckVoucherApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckVoucherApiResponse.cs" />
@@ -384,7 +380,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ApiSrc\Rooms\Model\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

@@ -4,8 +4,7 @@ using System.Linq;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Model;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Object;
 using Lunggo.Framework.Database;
-using Lunggo.ApCommon.Hotel.Logic;
-using Lunggo.ApCommon.Hotel.Logic.Search;
+
 using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Query;
 
@@ -50,38 +49,38 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620.Logic
             return HotelMapping;
         }
 
-        public static string getHotelName(Uw620OrderHistoryRespone request,String hotelNo)
-        {
-            request.HotelId = hotelNo;
-            var searchServiceRequest = PreProcessHotelDetailRequest(request);
-            var hotelDetail = HotelsSearchService.GetHotelDetail(searchServiceRequest.HotelId);
+        //public static string getHotelName(Uw620OrderHistoryRespone request,String hotelNo)
+        //{
+        //    request.HotelId = hotelNo;
+        //    var searchServiceRequest = PreProcessHotelDetailRequest(request);
+        //    var hotelDetail = HotelsSearchService.GetHotelDetail(searchServiceRequest.HotelId);
 
-            var hotName = hotelDetail.HotelName;
+        //    var hotName = hotelDetail.HotelName;
 
-            if (hotName == null)
-            {
-                hotName = hotelNo;
-            }
+        //    if (hotName == null)
+        //    {
+        //        hotName = hotelNo;
+        //    }
 
-            return hotName;
-        }
+        //    return hotName;
+        //}
 
-        public static string getAddress(Uw620OrderHistoryRespone request, String hotelNo)
-        {
-            request.HotelId = hotelNo;
-            var searchServiceRequest = PreProcessHotelDetailRequest(request);
-            var hotelDetail = HotelsSearchService.GetHotelDetail(searchServiceRequest.HotelId);
+        //public static string getAddress(Uw620OrderHistoryRespone request, String hotelNo)
+        //{
+        //    request.HotelId = hotelNo;
+        //    var searchServiceRequest = PreProcessHotelDetailRequest(request);
+        //    var hotelDetail = HotelsSearchService.GetHotelDetail(searchServiceRequest.HotelId);
 
 
-            var hotAddress = hotelDetail.Address;
+        //    var hotAddress = hotelDetail.Address;
 
-            if (hotAddress == null)
-            {
-                hotAddress = "Unknown";
-            }
+        //    if (hotAddress == null)
+        //    {
+        //        hotAddress = "Unknown";
+        //    }
 
-            return hotAddress;
-        }
+        //    return hotAddress;
+        //}
 
         public static string getStatusPayment(String statusCode)
         {
@@ -165,15 +164,15 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620.Logic
             return allMap;
         } 
 
-        private static HotelRoomsSearchServiceRequest PreProcessHotelDetailRequest(Uw620OrderHistoryRespone request)
-        {
-            var searchServiceRequest = ParameterPreProcessor.InitializeHotelRoomsSearchServiceRequest(request);
-            ParameterPreProcessor.PreProcessLangParam(searchServiceRequest, request);
-            ParameterPreProcessor.PreProcessStayLengthParam(searchServiceRequest, request);
-            ParameterPreProcessor.PreProcessStayDateParam(searchServiceRequest, request);
-            ParameterPreProcessor.PreProcessRoomCountParam(searchServiceRequest, request);
-            return searchServiceRequest;
-        }
+        //private static HotelRoomsSearchServiceRequest PreProcessHotelDetailRequest(Uw620OrderHistoryRespone request)
+        //{
+        //    var searchServiceRequest = ParameterPreProcessor.InitializeHotelRoomsSearchServiceRequest(request);
+        //    ParameterPreProcessor.PreProcessLangParam(searchServiceRequest, request);
+        //    ParameterPreProcessor.PreProcessStayLengthParam(searchServiceRequest, request);
+        //    ParameterPreProcessor.PreProcessStayDateParam(searchServiceRequest, request);
+        //    ParameterPreProcessor.PreProcessRoomCountParam(searchServiceRequest, request);
+        //    return searchServiceRequest;
+        //}
 
         public static string getFlightAirline(string airLineCode)
         {

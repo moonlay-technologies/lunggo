@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using com.hotelbeds.distribution.hotel_api_model.auto.model;
 using com.hotelbeds.distribution.hotel_api_sdk.helpers;
-using Lunggo.ApCommon.Hotel.Model;
 using com.hotelbeds.distribution.hotel_api_sdk;
 using com.hotelbeds.distribution.hotel_api_model;
+using Lunggo.ApCommon.Hotel.Model;
 
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 {
-    internal partial class HotelBedsSearchHotel
+    public class HotelBedsSearchHotel
     {
         internal SearchHotelResult SearchHotel(SearchHotelCondition condition)
         {
