@@ -290,6 +290,18 @@
     <Compile Include="ApiSrc\Flight\Model\TopDestinationsApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\NewsletterSubscribeLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\NewsletterSubscribeApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelBookApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelBookApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelDetailApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\SelectRoomApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\RoomDetailApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\RateApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelSearchApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\SelectRoomApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\RoomDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\RateApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelSearchApiResponse.cs" />
     <Compile Include="ApiSrc\Notification\Logic\DeleteRegistrationLogic.cs" />
     <Compile Include="ApiSrc\Notification\Logic\PlatformMapper.cs" />
     <Compile Include="ApiSrc\Notification\Logic\UpdateRegistrationLogic.cs" />
@@ -372,7 +384,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ApiSrc\Hotel\Model\" />
     <Folder Include="ApiSrc\Rooms\Model\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
