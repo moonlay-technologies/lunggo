@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using com.hotelbeds.distribution.hotel_api_model.auto.messages;
 using com.hotelbeds.distribution.hotel_api_sdk.helpers;
 using com.hotelbeds.distribution.hotel_api_sdk;
+using Lunggo.ApCommon.Hotel.Model;
 using Newtonsoft.Json;
 
 
