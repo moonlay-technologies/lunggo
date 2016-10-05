@@ -8,6 +8,6 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
     {
         public string SearchId { get; set; }
         public int TotalHotel { get; set; }
-        public List<HotelDisplayForResult> Hotels { get; set; } 
+        public List<HotelDetailForDisplay> Hotels { get; set; } 
     }
 }

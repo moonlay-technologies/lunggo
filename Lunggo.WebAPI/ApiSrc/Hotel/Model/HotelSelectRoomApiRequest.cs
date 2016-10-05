@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
 {
-    public class SelectRoomApiRequest
+    public class HotelSelectRoomApiRequest
     {
         [JsonProperty("rateKey")]
         public string RateKey { get; set; }    

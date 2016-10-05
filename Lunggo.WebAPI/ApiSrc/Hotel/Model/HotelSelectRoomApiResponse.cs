@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
 {
-    public class SelectRoomApiResponse
+    public class HotelSelectRoomApiResponse
     {
         [JsonProperty("token")]
         public string Token{ get; set; } 

@@ -5,9 +5,9 @@ using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
 {
-    public class RateApiResponse
+    public class HotelRoomDetailApiResponse
     {
-        [JsonProperty("rates")]
-        public List<Rate> Rates{ get; set; } 
+        [JsonProperty("roomDetails")]
+        public List<HotelRoom> RoomDetails { get; set; } 
     }
 }

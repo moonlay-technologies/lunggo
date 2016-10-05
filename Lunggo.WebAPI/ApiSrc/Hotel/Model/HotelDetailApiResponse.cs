@@ -6,6 +6,6 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
 {
     public class HotelDetailApiResponse
     {
-       public HotelDisplayForResult HotelDetails { get; set; } 
+        public HotelDetailForDisplay HotelDetails { get; set; } 
     }
 }
