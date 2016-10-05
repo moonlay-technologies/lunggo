@@ -35,14 +35,6 @@
     <Reference Include="Base36Encoder">
       <HintPath>..\packages\csharpbase36.1.0.0\lib\Base36Encoder.dll</HintPath>
     </Reference>
-    <Reference Include="com.hotelbeds.distribution.hotel_api_model, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Service References\HotelBeds\com.hotelbeds.distribution.hotel_api_model.dll</HintPath>
-    </Reference>
-    <Reference Include="com.hotelbeds.distribution.hotel_api_sdk, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Service References\HotelBeds\com.hotelbeds.distribution.hotel_api_sdk.dll</HintPath>
-    </Reference>
     <Reference Include="CsQuery, Version=1.3.3.249, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CsQuery.1.3.4\lib\net40\CsQuery.dll</HintPath>
@@ -95,6 +87,9 @@
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -236,6 +231,72 @@
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\common\SimpleTypes.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\AbstractGenericRequest.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\AbstractGenericResponse.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\AvailabilityRQ.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\AvailabilityRS.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\BookingCancellationRS.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\BookingDetailRS.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\BookingListRS.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\BookingRQ.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\BookingRS.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\CheckRateRQ.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\CheckRateRS.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\HotelbedsError.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\StatusRS.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\AuditData.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\BasicRate.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Boards.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Booking.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\BookingRoom.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Bookings.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\CancellationPolicy.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\CreditCard.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\DailyRate.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Destination.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Filter.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\GeoLocation.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Holder.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Hotel.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Hotels.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\HotelsFilter.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Keyword.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\KeywordsFilter.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Occupancy.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Offer.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Pax.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\PaymentCard.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\PaymentContactData.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\PaymentData.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Promotion.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Rate.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\RateBreakDown.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\RateDiscount.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\RateSupplement.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Review.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\ReviewFilter.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Room.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Rooms.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\ShiftRate.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Source.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Stay.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Supplier.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Tax.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Taxes.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\model\Upselling.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\helpers\Availability.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\helpers\AvailRoom.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\helpers\Booking.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\helpers\BookingCheck.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\helpers\ConfirmRoom.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\helpers\RoomDetail.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\HotelApiClient.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\types\HotelApiPaths.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\types\HotelApiVersion.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\types\HotelSDKException.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\util\JSonConverters.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\util\UnitMeasure.cs" />
     <Compile Include="Hotel\Model\HotelCondition.cs" />
     <Compile Include="Hotel\Model\HotelDetail.cs" />
     <Compile Include="Hotel\Model\HotelIssueTicketResult.cs" />
@@ -824,10 +885,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Service References\HotelBeds\com.hotelbeds.distribution.hotel_api_model.dll" />
-    <Content Include="Service References\HotelBeds\com.hotelbeds.distribution.hotel_api_sdk.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Hotel\Logic\Search\" />

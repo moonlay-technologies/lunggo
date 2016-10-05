@@ -4,10 +4,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using com.hotelbeds.distribution.hotel_api_model.auto.messages;
-using com.hotelbeds.distribution.hotel_api_sdk.helpers;
-using com.hotelbeds.distribution.hotel_api_sdk;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.messages;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.helpers;
 using Newtonsoft.Json;
 
 

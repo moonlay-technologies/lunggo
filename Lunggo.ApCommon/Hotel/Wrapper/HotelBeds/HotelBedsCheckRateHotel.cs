@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using com.hotelbeds.distribution.hotel_api_sdk.helpers;
-using com.hotelbeds.distribution.hotel_api_sdk;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.helpers;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 {
