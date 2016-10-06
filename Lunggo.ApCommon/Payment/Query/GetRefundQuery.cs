@@ -3,7 +3,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Payment.Query
 {
-    internal class GetRefundQuery : QueryBase<GetRefundQuery, RefundTableRecord>
+    internal class GetRefundQuery : DbQueryBase<GetRefundQuery, RefundTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

@@ -61,7 +61,7 @@ namespace Lunggo.ApCommon.Payment.Model
             }
         }
 
-        private class GetUsedDiscountQuery : QueryBase<GetUsedDiscountQuery, UsedDiscountTableRecord>
+        private class GetUsedDiscountQuery : DbQueryBase<GetUsedDiscountQuery, UsedDiscountTableRecord>
         {
             protected override string GetQuery(dynamic condition = null)
             {

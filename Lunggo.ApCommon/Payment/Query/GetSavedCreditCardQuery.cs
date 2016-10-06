@@ -8,7 +8,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Payment.Query
 {
-    internal class GetSavedCreditCardQuery : QueryBase<GetSavedCreditCardQuery, SavedCreditCard>
+    internal class GetSavedCreditCardQuery : DbQueryBase<GetSavedCreditCardQuery, SavedCreditCard>
     {
         protected override string GetQuery(dynamic condition = null)
         {

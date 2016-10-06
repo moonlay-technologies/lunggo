@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Identity.Query
 {
-    public class GetListRoleByUserIdQuery : QueryBase<GetListRoleByUserIdQuery, string>
+    public class GetListRoleByUserIdQuery : DbQueryBase<GetListRoleByUserIdQuery, string>
     {
         private GetListRoleByUserIdQuery()
         {

@@ -4,7 +4,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Activity.Database.Query
 {
-    internal class SelectCityActivityByDateQuery : QueryBase<SelectCityActivityByDateQuery, QueryByDateModel>
+    internal class SelectCityActivityByDateQuery : DbQueryBase<SelectCityActivityByDateQuery, QueryByDateModel>
     {
         protected override string GetQuery(dynamic condition = null)
         {

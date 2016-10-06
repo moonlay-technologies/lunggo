@@ -5,7 +5,7 @@ using Lunggo.Framework.Pattern;
 
 namespace Lunggo.Framework.Database
 {
-    public abstract class NoReturnQueryBase<TQuery> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
+    public abstract class NoReturnDbQueryBase<TQuery> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
     {
         protected abstract String GetQuery(dynamic condition = null);
         public void Execute(IDbConnection conn, dynamic param)

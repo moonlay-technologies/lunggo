@@ -175,11 +175,15 @@
     <Compile Include="Database\IDbTableRepository.cs" />
     <Compile Include="Database\IDbWrapper.cs" />
     <Compile Include="Database\ITableRecord.cs" />
-    <Compile Include="Database\NoReturnQueryBase.cs" />
-    <Compile Include="Database\QueryBase.cs" />
+    <Compile Include="Database\NoReturnDbQueryBase.cs" />
+    <Compile Include="Database\DbQueryBase.cs" />
     <Compile Include="Database\QueryRecord.cs" />
     <Compile Include="Database\TableDao.cs" />
     <Compile Include="Database\TableRecord.cs" />
+    <Compile Include="Documents\DocQueryBase.cs" />
+    <Compile Include="Documents\DocumentClient.cs" />
+    <Compile Include="Documents\DocumentService.cs" />
+    <Compile Include="Documents\AzureDocumentDbClient.cs" />
     <Compile Include="Encoder\Encoder.cs" />
     <Compile Include="Error\Error.cs" />
     <Compile Include="Extension\DateTimeExtension.cs" />
@@ -313,7 +317,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

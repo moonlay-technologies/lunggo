@@ -2,7 +2,7 @@
 
 namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620.Query
 {
-    public class GetFlightHistory : QueryBase<GetFlightHistory, GetFlightHistoryRecord>
+    public class GetFlightHistory : DbQueryBase<GetFlightHistory, GetFlightHistoryRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {
