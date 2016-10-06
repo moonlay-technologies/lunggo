@@ -6494,6 +6494,9 @@ label.control-label {
   .checkout-hotel .content-step .rh-container .rh-content .rh-top {
     border-top: 1px solid #ccc;
     padding: 15px 0; }
+    .checkout-hotel .content-step .rh-container .rh-content .rh-top .hotel-facility {
+      position: absolute;
+      right: 0; }
   .checkout-hotel .content-step .rh-container .rh-content .rh-tnc {
     padding: 0;
     margin: 0; }
