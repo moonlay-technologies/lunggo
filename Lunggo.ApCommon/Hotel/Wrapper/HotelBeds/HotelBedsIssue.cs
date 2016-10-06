@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.common;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.helpers;
 using Lunggo.ApCommon.Product.Model;
 
@@ -12,7 +14,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
     {
         public HotelIssueTicketResult IssueHotel(HotelIssueInfo hotelIssueInfo)
         {
-            var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "TEST");
+            var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-api");
             var booking = new Booking();
 
             var listAdultPax = new List<Pax>();
@@ -31,7 +33,19 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 
             var countAdult = 0;
             var countChild = 0;
-            booking.createHolder(hotelIssueInfo.Contact.Name, hotelIssueInfo.Contact.Name);
+            string first, last;
+            var splittedName = hotelIssueInfo.Contact.Name.Trim().Split(' ');
+            if (splittedName.Length == 1)
+            {
+                first = hotelIssueInfo.Contact.Name;
+                last = hotelIssueInfo.Contact.Name;
+            }
+            else
+            {
+                first = hotelIssueInfo.Contact.Name.Substring(0, hotelIssueInfo.Contact.Name.LastIndexOf(' '));
+                last = splittedName[splittedName.Length - 1];
+            }
+            booking.createHolder(first, last);
             foreach (HotelRoom room in hotelIssueInfo.Rooms)
             {
                 foreach (HotelRate rate in room.Rates)
@@ -44,7 +58,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                     var totalAdultperRate = Convert.ToInt32(data.Split('~')[1]);
                     var totalChildrenperRate = Convert.ToInt32(data.Split('~')[2]);
 
-                    for (var z = 1; z > totalRoomForThisRate; z++)
+                    for (var z = 1; z <= totalRoomForThisRate; z++)
                     {
                         for (var i = 0; i < totalAdultperRate; i++)
                         {
@@ -62,11 +76,50 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                     booking.addRoom(rate.RateKey, confirmRoom);
                 }
             }
-            //ROO
-            
-            return new HotelIssueTicketResult();
+            booking.clientReference = hotelIssueInfo.RsvNo;
+            var bookingRq = booking.toBookingRQ();
+            if (bookingRq == null)
+                return new HotelIssueTicketResult
+                {
+                    IsInstantIssuance = false,
+                    Status = "FAILED"
+                };
+            var responseBooking = client.confirm(bookingRq);
+            if (responseBooking == null)
+                return new HotelIssueTicketResult
+                {
+                    IsSuccess = false,
+                    Status = "FAILED"
+                };
+            if (responseBooking.error != null)
+                return new HotelIssueTicketResult
+                {
+                    IsSuccess = false,
+                    Status = "FAILED: " + responseBooking.error.message,
+                };
+            if (responseBooking.booking == null)
+                return new HotelIssueTicketResult
+                {
+                    IsSuccess = false,
+                    Status = "FAILED"
+                };
+            if (responseBooking.booking.status == SimpleTypes.BookingStatus.CONFIRMED)
+            {
+                return new HotelIssueTicketResult
+                {
+                    IsSuccess = true,
+                    RsvNo = hotelIssueInfo.RsvNo,
+                    Status = "CONFIRMED",
+                    BookingId = hotelIssueInfo.Rooms.SelectMany(r => r.Rates.Select(t => t.RateKey)).ToList()
+                };
+            }
 
-            
+            return new HotelIssueTicketResult
+            {
+                IsSuccess = false,
+                Status = "FAILED",
+            };
+
         }
     }
 }

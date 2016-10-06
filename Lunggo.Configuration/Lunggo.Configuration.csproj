@@ -173,6 +173,10 @@
     <None Include="Config\Common\Airline.csv" />
     <None Include="Config\Common\Airport.csv" />
     <None Include="Config\Common\Country.csv" />
+    <None Include="Config\Common\HotelFacilities.csv" />
+    <None Include="Config\Common\HotelFacilityGroup.csv" />
+    <None Include="Config\Common\HotelRoom.csv" />
+    <None Include="Config\Common\HotelSegment.csv" />
     <None Include="Config\Common\HotelLocation.csv" />
     <None Include="Config\CloudApp.EticketHandler\Garuda.properties" />
     <None Include="Config\CustomerWeb\airAsia.properties" />

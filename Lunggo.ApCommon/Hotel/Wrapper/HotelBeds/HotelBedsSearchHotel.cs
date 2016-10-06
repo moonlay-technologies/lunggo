@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
     {
         public SearchHotelResult SearchHotel(SearchHotelCondition condition)
         {
-            HotelApiClient client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "blabla");
+            HotelApiClient client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-api");
             //HotelApiClient client = new HotelApiClient();
             var avail = new Availability
             {
@@ -79,8 +79,10 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                             RoomCode = roomAPI.code
                         }).ToList()
                     };
+
                 }
             }
+            
             return response;
         }
     }
