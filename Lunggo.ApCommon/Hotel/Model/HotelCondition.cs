@@ -25,13 +25,14 @@ namespace Lunggo.ApCommon.Hotel.Model
     public class HotelRevalidateInfo
     {
         public string RateKey { get; set; }
+        public decimal Price { get; set; }
     }
 
     public class HotelIssueInfo
     {
         public string RsvNo { get; set; }
         public List<Pax> Pax { get; set; }
-        public HotelRoom Rooms { get; set; }
+        public List<HotelRoom> Rooms { get; set; }
         public Contact Contact { get; set; }
     }
 }

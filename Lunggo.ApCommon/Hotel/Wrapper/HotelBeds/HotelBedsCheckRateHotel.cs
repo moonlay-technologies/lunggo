@@ -7,9 +7,9 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 {
     public class HotelBedsCheckRate
     {
-        public RevalidateHotelResult CheckRateHotel(HotelRate hotelRate)
+        public RevalidateHotelResult CheckRateHotel(HotelRevalidateInfo hotelRate)
         {
-            var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "blabla");
+            var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-api");
 
             var confirmRoom = new ConfirmRoom {details = new List<RoomDetail>()};
 

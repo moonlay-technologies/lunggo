@@ -20,16 +20,12 @@ namespace Lunggo.BackendWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AppInitializer.Init();
-            var request = new SearchHotelCondition();
-            request.CheckIn = DateTime.Now.AddDays(10);
-            request.Checkout = DateTime.Now.AddDays(13);
-            request.Rooms = 2;
-            request.AdultCount = 2;
-            request.Location = "JAV";
-            request.Zone = 1;
-            HotelBedsSearchHotel hotel = new HotelBedsSearchHotel();
-            var response = hotel.SearchHotel(request);
-            Debug.Print("Response : " + response);
+            var hb = new HotelBedsCheckRate();
+            hb.CheckRateHotel(new HotelRevalidateInfo
+            {
+                Price = 2564794,
+                RateKey = "20161108|20161110|W|1|1067|DBL.VM|ID_B2B_24|RO|O45I|1~2~1|8|N@E1B537EDBCFE49DF802AB180E0D87D38"
+            });
         }
     }
 }

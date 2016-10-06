@@ -231,6 +231,7 @@
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsIssue.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\common\SimpleTypes.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\AbstractGenericRequest.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\AbstractGenericResponse.cs" />
