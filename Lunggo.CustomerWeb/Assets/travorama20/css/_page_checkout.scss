@@ -269,21 +269,25 @@ label.control-label {
     .widget {
         .widget-title {}
         header {}
-        .widget-content {background:#f4f4f4;}
+        .widget-content {background:#ededed;}
         footer {}
 
         // widget price detail
         &.price-detail {
             .widget-content {padding:12px; font-size:12px;
                 dl {
+                    margin-bottom: 12px;
                     &:before, &:after {@include clearfix();}
-                    dt {font-weight:normal; width:60%; float:left; position:relative;
+                    dt {font-weight:600; width:60%; float:left; position:relative;
                         &:before {content:""; position:absolute; width:7px; height:7px; background:#fd8524; left:-12px; top:3px;}
+                        &.dt-title {width: 45%;}
                     }
-                    dd {font-weight:600; width:40%; float:left; text-align:right;}
+                    dd {font-weight:600; width:40%; float:left; text-align:right;
+                        &.dd-price {width: 55%;}
+                    }
                 }
                 dl.total-price {border-top:$border-default; padding-top:12px; margin-bottom:0;
-                    dt {font-weight:600; width:40%;
+                    dt {font-weight:700; width:40%;
                         &:before {display:none;}
                     }
                     dd {color:#ff7200; font-size:16px; font-weight:bold; width:60%;}
@@ -330,16 +334,48 @@ label.control-label {
                 }
             }
         }
-
-
+        
+        // widget hotel
+        &.hotel {
+            .widget-content {
+                padding:12px; 
+                border:$border-default; 
+                border-top:none;
+                .wt-top .col-right-hotel {padding: 15px 10px;}
+                .wt-bottom {
+                    margin: 7px 0;
+                    margin-left: 25px;
+                    line-height: 16px;
+                    &:before {@extend .maps-icon;}
+                }
+                .widget-bottom {
+                    line-height: 24px;
+                    border-top: 1px solid #ccc;
+                    padding-top: 7px;
+                }
+            }
+            .widget-subtitle {
+                background: #1daee4;
+                color: #fff;
+                padding: 7px 15px;
+                font-size: 15px;
+                font-weight: 600;
+                position: relative;
+            }
+            .widget-wrapper.notes {margin-top: 15px;
+                .sqr-blue-list li {
+                    padding-left: 8px;
+                    margin-bottom: 10px;
+                }
+            }
+        }
     }
-
 }
 
 // travorama login
-.travorama-login {border-top:$border-default; position:relative; margin-bottom:45px;
-    a.login-toggle {background:$color-main-blue; position:absolute; z-index:2; top:0; right:0; color:#fff; padding:12px; @include border-radius($border-radius-default); padding-left:30px; cursor:pointer;
-        &:before {width:16px; height:16px; background:url(/Assets/images/user-icon.png); background-size:contain; content:""; position:absolute; left:10px; top:12px;}
+.travorama-login {border-top:$border-default; position:relative; margin-bottom:35px;
+    a.login-toggle {background: #028ec3; position:absolute; z-index:2; top:0; right:0; color:#fff; padding:8px 10px; @include border-radius($border-radius-default); padding-left:35px; cursor:pointer;
+        &:before {width:16px; height:16px; background:url(/Assets/images/user-icon.png); background-size:contain; content:""; position:absolute; left:10px; top:auto;}
     }
     .login-content {background:$color-main-blue; padding:15px; padding-top:50px; display:none;
         .form-group {margin-bottom:5px;}
@@ -608,4 +644,82 @@ label.control-label {
 .page-overlay {
     // if expired
     &.flight-expired {z-index:9999;}
+}
+
+/*Hotel Checkout Page*/
+.checkout-hotel {
+    .step-button {
+        .btn {
+            margin-top: 15px;
+            font-size: 13px;
+            width: 200px;
+            &.btn-grey {margin-right: 10px;}
+        }
+    }
+    .maps-icon {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/travorama20/images/Hotel/location.png) no-repeat;
+        width: 12px;
+        height: 17px;
+        vertical-align: middle;
+        position: absolute;
+        margin-left: -20px;
+        margin-top: 2px;
+    }
+    .sqr-blue-list {
+        padding: 0;
+        list-style: none;
+        margin: 0;
+        .wc-title:before {
+            width: 8px;
+            height: 8px;
+            display: inline-block;
+            background: #1daee4;
+            content: '';
+            margin-left: -20px;
+            position: absolute;
+            margin-top: 4px;
+        }
+    }
+    .content-step {
+        .rh-container {
+            .rh-main-title {
+                background: #1daee4;
+                padding: 6px 25px;
+                font-size: 15px;
+                font-weight: 600;
+                color: #fff;
+            }
+            .rh-content {
+                border: 1px solid #ccc;
+                background: #fff;
+                padding: 15px 20px;
+                .rh-row {padding: 0 15px;}
+                .hotel-title-lg {margin-bottom: 10px;}
+                .rh-location {
+                    margin: 10px 0;
+                    margin-left: 20px;
+                    &:before {@extend .maps-icon;}
+                }
+                .rh-detail {
+                    line-height: 22px;
+                    margin-bottom: 15px;
+                }
+                .rh-top {
+                    border-top: 1px solid #ccc;
+                    padding: 15px 0;
+                }
+                .rh-tnc {
+                    padding: 0;
+                    margin: 0;
+                }
+                .sqr-blue-list li {
+                    padding-left: 0;
+                    margin-bottom: 10px;
+                }
+            }
+            &.notes-hotel {margin-top: 20px;}
+        }
+    }
 }

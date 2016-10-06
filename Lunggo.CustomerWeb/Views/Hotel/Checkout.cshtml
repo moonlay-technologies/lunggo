@@ -1,0 +1,337 @@
+﻿@{
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-hotel page-checkout-hotel";
+
+    ViewBag.SiteHeader = "checkout";
+    ViewBag.Title = "Checkout";
+}
+
+@section AdditionalJS {
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+}
+
+@section PageJS{
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/checkoutController.js"></script>
+}
+
+<div class="checkout-hotel">
+    <section class="checkout-step">
+        <div class="container">
+            <div class="step step-1" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span>01. <b>Data Pesanan</b></span></div>
+            <div class="step step-2" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span>02. <b>Data Pemesan</b></span></div>
+            <div class="step step-3" ng-class="{'active' : currentPage == 3}"><span>03. <b>Pembayaran</b></span></div>
+        </div>
+    </section>
+    <section class="checkout-content">
+        <div class="container">
+            <div class="col-left">
+                <div class="content-step" id="step-1" ng-show="currentPage == 1" style=" display: block !important;">
+                    <h3><b>RINCIAN</b> PEMESANAN</h3>
+                    <div class="rh-container review-hotel">
+                        <div class="rh-main-title">Detail Hotel</div>
+                        <div class="rh-content">
+                            <div class="rh-row clearfix">
+                                <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel-md.jpg" alt="Alternate Text" /></div>
+                                <div class="col-right-hotel">
+                                    <div class="blue-txt bold-txt hotel-title-lg md-txt">Bliss Hotel Singapore</div>
+                                    <div class="star star-4"></div>
+                                    <div class="rh-location">
+                                        Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ; Jakarta Barat
+                                    </div>
+                                    <div class="rh-detail">
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Check in</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">5 November 2016</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Check out</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">9 November 2016</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Malam</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">3 Malam</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Kamar</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">2 Kamar</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rh-row">
+                                <div class="rh-top clearfix">
+                                    <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel-md.jpg" alt="Alternate Text" /></div>
+                                    <div class="col-right-hotel clearfix">
+                                        <div class="rh-detail">
+                                            <div class="wb-container clearfix">
+                                                <div class="wb-left">Jenis Kamar</div>
+                                                <div class="wb-mid">:</div>
+                                                <div class="wb-right bold-txt">Superior Room</div>
+                                            </div>
+                                            <div class="wb-container clearfix">
+                                                <div class="wb-left">Jumlah Kamar</div>
+                                                <div class="wb-mid">:</div>
+                                                <div class="wb-right bold-txt">2 Kamar</div>
+                                            </div>
+
+                                            <div class="wb-container clearfix">
+                                                <div class="wb-left">Tamu per Kamar</div>
+                                                <div class="wb-mid">:</div>
+                                                <div class="wb-right bold-txt">2 orang</div>
+                                            </div>
+                                        </div>
+                                        <ul class="blue-txt semibold-txt blue-list rh-tnc">
+                                            <li>Extra bed belum termasuk</li>
+                                            <li>Free cancelation sebelum H-5 tanggal booking</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="rh-bottom">
+                                    <div class="rhb-content">
+                                        Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rh-container notes-hotel">
+                        <div class="rh-main-title">Catatan Khusus</div>
+                        <div class="rh-content clearfix">
+                            <ul class="sqr-blue-list">
+                                <li>
+                                    <div class="wc-title blue-txt bold-txt">Room Policy</div>
+                                    <div class="wc-txt">
+                                        Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consect etuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="wc-title blue-txt bold-txt">Room Policy</div>
+                                    <div class="wc-txt">
+                                        Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consect etuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- .content-step#step-1 -->
+                <!-- ******************** -->
+                <div class="content-step" id="step-2" ng-show="currentPage == 2" @*style=" display: block !important;"*@>
+                    <h3><b>DETAIL</b> PEMESAN</h3>
+                    <div class="travorama-login" ng-class="{'active' : loginShown}" ng-if="!loggedIn">
+                        <a class="login-toggle" ng-click="toggleLogin()"><b>Masuk</b> dengan akun <b>TRAVORAMA</b><span class="caret"></span></a>
+                        <div class="login-content">
+                            <form class="form register-form form-horizontal" name="loginForm" novalidate ng-submit="form.submit()">
+                                <div class="form-group">
+                                    <div class="col-xs-5">
+                                        <input type="text" class="form-control" ng-model="form.email" name="Email" id="login-username" value="" placeholder="Alamat e-mail" />
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <input type="password" class="form-control" name="Password" ng-model="form.password" id="login-password" value="" placeholder="Password" />
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input type="submit" value="MASUK" class="btn btn-yellow form-control" ng-disabled="form.submitting" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-10 text-right">
+                                        <a href="@Url.Action("ForgotPassword", "Account")">Lupa Password?</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!-- .travorama-login -->
+
+                    <form class="form" id="buyer-form" name="buyerForm" novalidate>
+                        <div class="form-group" ng-class="{'has-error' : buyerForm.title.$touched && buyerForm.title.$invalid}">
+                            <label class="control-label important">Titel :</label>
+                            <div>
+                                <select class="form-control" id="buyer-title" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
+                                    <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : buyerForm.name.$touched && buyerForm.name.$invalid}">
+                            <label class="control-label important">Nama Depan (dan Nama Tengah) :</label>
+                            <div ng-hide="loggedIn">
+                                <input type="text" pattern="[a-zA-Z\s]+" class="form-control nama" value="" id="buyer-name" placeholder="Nama Depan (dan Nama Tengah)" name="name" ng-model="buyerInfo.name" required />
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : buyerForm.name.$touched && buyerForm.name.$invalid}">
+                            <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
+                            <div ng-hide="loggedIn">
+                                <input type="text" pattern="[a-zA-Z\s]+" class="form-control nama" value="" id="buyer-name" placeholder="Nama Belakang / Nama Keluarga" name="name" ng-model="buyerInfo.name" required />
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : (buyerForm.phone.$touched && buyerForm.phone.$invalid) || (buyerForm.countryCode.$touched && buyerForm.countryCode.$invalid)}">
+                            <label class="control-label important">Nomor Telepon :</label>
+                            <div ng-hide="loggedIn">
+                                <input type="number" class="form-control" value=buyerInfo.phone id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
+                            <label class="control-label important">Masukkan Alamat E-mail Anda :</label>
+                            <div ng-hide="loggedIn">
+                                <input type="email" class="form-control" value="" id="buyer-email" placeholder="Ex: name@domain.com" name="email" ng-model="buyerInfo.email" required />
+                            </div>
+                            <div ng-hide="!loggedIn">
+                                <!--Jika udah Login-->
+                                <input type="email" class="form-control" value=buyerInfo.email id="buyer-email" placeholder="Ex: name@domain.com" name="email" ng-model="buyerInfo.email" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="square active confirmation-buyer">
+                                <div class="chck-container"><span class="switch"></span></div>
+                                <span class="name italic-txt semibold-txt">I'm not staying at this hotel. I'm making this booking for someone else</span>
+                                <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                            </label>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : buyerForm.title.$touched && buyerForm.title.$invalid}">
+                            <label class="control-label important">Titel :</label>
+                            <div>
+                                <select class="form-control" id="buyer-title" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
+                                    <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : buyerForm.name.$touched && buyerForm.name.$invalid}">
+                            <label class="control-label important">Nama Depan (dan Nama Tengah) :</label>
+                            <div ng-hide="loggedIn">
+                                <input type="text" pattern="[a-zA-Z\s]+" class="form-control nama" value="" id="buyer-name" placeholder="Nama Depan (dan Nama Tengah)" name="name" ng-model="buyerInfo.name" required />
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : buyerForm.name.$touched && buyerForm.name.$invalid}">
+                            <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
+                            <div ng-hide="loggedIn">
+                                <input type="text" pattern="[a-zA-Z\s]+" class="form-control nama" value="" id="buyer-name" placeholder="Nama Belakang / Nama Keluarga" name="name" ng-model="buyerInfo.name" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Country of Residence</label>
+                            <div>
+                                <select class="form-control" id="buyer-title" name="Country of Residence">
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                    </form><!-- #buyer-form -->
+                    
+                    <div class="step-button">
+                        <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
+                        <button class="btn btn-yellow go-top" ng-click="validateForm(2)">LANJUTKAN</button>
+                    </div>
+                </div><!-- .content-step#step-2 -->
+                <!-- ******************** -->
+                <div class="content-step" id="step-3" ng-show="currentPage > 2">
+                    <h3><b>RINCIAN</b> PESANAN</h3>
+                </div><!-- .content-step#step-3 -->
+                <!-- ******************** -->
+            </div>
+            <div class="col-right">
+                <div class="widget-container">
+                    <div class="widget price-detail">
+                        <h3 class="widget-title"><b>RINCIAN</b> HARGA</h3>
+                        <div class="widget-content">
+                            <dl class="total-room">
+                                <dt class="dt-title">1 Superior Room x 1 night :</dt>
+                                <dd class="dd-price">Rp 999.999.999</dd>
+                            </dl>
+                            <dl class="service-room">
+                                <dt class="dt-title">Pelayanan Kamar :</dt>
+                                <dd class="dd-price">Rp 999.999.999</dd>
+                            </dl>
+                            <dl class="total-price">
+                                <dt class="dt-title">Total</dt>
+                                <dd class="dd-price">Rp 999.999.999</dd>
+                            </dl>
+                        </div>
+                        <footer>
+                            <small>*Harga akan dikonfirmasi kembali sebelum proses pembayaran</small>
+                        </footer>
+                    </div><!-- .widget.price-detail -->
+                    <div class="widget hotel" @*ng-show="currentPage > 1"*@>
+                        <div class="hotel-detail">
+                            <h3 class="widget-title"><b>RINCIAN</b> PEMESANAN</h3>
+                            <div class="widget-wrapper">
+                                <div class="widget-subtitle">Detail Hotel</div>
+                                <div class="widget-content">
+                                    <div class="widget-top">
+                                        <div class="wt-top clearfix">
+                                            <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel-sm.jpg" alt="Alternate Text" /></div>
+                                            <div class="col-right-hotel">
+                                                <span class="blue-txt bold-txt">Bliss Hotel Singapore</span>
+                                                <br /><span class="star star-4"></span>
+                                            </div>
+                                        </div>
+                                        <div class="wt-bottom">
+                                            Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ; Jakarta Barat
+                                        </div>
+                                    </div>
+                                    <div class="widget-bottom">
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Check in</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">5 November 2016</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Check out</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">9 November 2016</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Malam</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">3 Malam</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Kamar</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">2 Kamar</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Jenis Kamar</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">Superior Room</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Tamu per Kamar</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">2 orang</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-wrapper notes">
+                                <div class="widget-subtitle">Catatan Khusus</div>
+                                <div class="widget-content clearfix">
+                                    <ul class="sqr-blue-list">
+                                        <li>
+                                            <div class="wc-title blue-txt bold-txt">Room Policy</div>
+                                            <div class="wc-txt">
+                                                Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="wc-title blue-txt bold-txt">Room Policy</div>
+                                            <div class="wc-txt">
+                                                Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!-- .widget.flight-detail -->
+                    </div>
+                </div><!-- .widget-container -->
+            </div>
+        </div>
+    </section>
+</div>

@@ -90,7 +90,7 @@ $mobile-app: '../images/mobile-app.png';
 /* general class */
 html {height:100%}
 
-body {overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; /*padding-bottom: 650px;*/}
+body {overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; min-height:100%; background:#f9f9f9; letter-spacing: 0; -webkit-font-smoothing: antialiased;}
 
 hr {border-top:$border-default;}
 
@@ -140,6 +140,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .no-spacing {letter-spacing:0;}
+
+.caret {margin-left: 5px;}
 
 .list-blue {list-style:none; padding-left:25px; counter-reset:list-counter;
     li {position:relative; padding-top:5px; padding-bottom:10px;

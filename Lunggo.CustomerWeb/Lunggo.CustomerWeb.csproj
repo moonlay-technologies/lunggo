@@ -2885,6 +2885,7 @@
     <Content Include="Views\Hotel\DetailHotel.cshtml" />
     <Content Include="Views\Hotel\Shared\_PageSlider.cshtml" />
     <Content Include="Views\Hotel\Shared\_BreadCrumb.cshtml" />
+    <Content Include="Views\Hotel\Checkout.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

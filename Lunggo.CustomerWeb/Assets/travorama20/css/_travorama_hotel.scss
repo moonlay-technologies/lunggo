@@ -16,7 +16,10 @@
     .sm-txt {font-size: 10px;}
     .xs-txt {font-size: 9px;}
     .italic-txt {font-style: italic;}
-    .underline-txt {text-decoration: line-through;}    
+    .underline-txt {text-decoration: line-through;} 
+    .bold-txt {font-weight: 700;}
+    .semibold-txt {font-weight: 600;}
+    .normal-txt {font-weight: 400;}   
     .blue-txt {color: $color-main-blue;
         &.bg {
             font-size: 16px;
@@ -36,14 +39,14 @@
     /*Custom Column*/
     .col-left, col-right, .col-left-result, .col-right-result, .col-xs-left, .col-xs-middle, .col-xs-right, .col-left-hotel, .col-right-hotel, .col-half, .col-left-page, .col-right-page, 
     .col-left-slider, col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr {
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right {
         position: relative;
         min-height: 1px;
     }
 
     .col-left, .col-left-result, .col-right-result, .col-left-hotel, .col-right-hotel, .col-xs-left, .col-xs-middle, .col-xs-right, .col-half, .col-left-page, .col-right-page,
     .col-left-slider, .col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr {float: left;}
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right {float: left;}
     
     .col-right {float: right;}
     
@@ -68,6 +71,8 @@
     .room-left {width: 15%;} .room-right {width: 85%;}
 
     .room-rl {width: 53%;} .room-rm {width: 19%;} .room-rr {width: 28%;}
+
+    .wb-left {width: 40%;} .wb-mid {width: 3%;} .wb-right {width: 57%;}
 
     /*Icon*/
     .star-outline {
@@ -290,6 +295,9 @@
             }
             &.active .switch {background: $color-main-blue;}
         }
+
+        /*Custom label*/
+        &.confirmation-buyer span.name {font-weight: 600;}
     }
     a {
         &.btn-blue {
