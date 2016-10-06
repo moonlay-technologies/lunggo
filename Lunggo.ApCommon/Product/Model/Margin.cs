@@ -83,7 +83,7 @@ namespace Lunggo.ApCommon.Product.Model
             }
         }
 
-        private class GetMarginQuery : QueryBase<GetMarginQuery, MarginTableRecord>
+        private class GetMarginQuery : DbQueryBase<GetMarginQuery, MarginTableRecord>
         {
             protected override string GetQuery(dynamic condition = null)
             {
@@ -93,7 +93,7 @@ namespace Lunggo.ApCommon.Product.Model
             }
         }
 
-        private class GetMarginsQuery : QueryBase<GetMarginsQuery, MarginTableRecord>
+        private class GetMarginsQuery : DbQueryBase<GetMarginsQuery, MarginTableRecord>
         {
             protected override string GetQuery(dynamic condition = null)
             {

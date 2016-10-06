@@ -4,7 +4,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class GetItinRuleQuery : QueryBase<GetItinRuleQuery, FlightItineraryRuleTableRecord>
+    internal class GetItinRuleQuery : DbQueryBase<GetItinRuleQuery, FlightItineraryRuleTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

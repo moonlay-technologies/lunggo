@@ -5,7 +5,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Payment.Query
 {
-    internal class GetUnpaidQuery : QueryBase<GetUnpaidQuery, PaymentTableRecord>
+    internal class GetUnpaidQuery : DbQueryBase<GetUnpaidQuery, PaymentTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

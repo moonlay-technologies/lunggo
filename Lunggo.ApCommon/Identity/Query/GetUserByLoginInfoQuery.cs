@@ -5,7 +5,7 @@ using Lunggo.Framework.Database;
 namespace Lunggo.ApCommon.Identity.Query
 {
 
-    public class GetUserByLoginInfoQuery : QueryBase<GetUserByLoginInfoQuery, GetUserByAnyQueryRecord>
+    public class GetUserByLoginInfoQuery : DbQueryBase<GetUserByLoginInfoQuery, GetUserByAnyQueryRecord>
     {
         private GetUserByLoginInfoQuery()
         {

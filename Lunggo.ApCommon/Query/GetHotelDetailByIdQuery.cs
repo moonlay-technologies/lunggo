@@ -4,7 +4,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Query
 {
-    public class GetHotelDetailByIdQuery: QueryBase<GetHotelDetailBySearchParamQuery, HotelDetailBase>
+    public class GetHotelDetailByIdQuery: DbQueryBase<GetHotelDetailBySearchParamQuery, HotelDetailBase>
     {
         private GetHotelDetailByIdQuery()
         {

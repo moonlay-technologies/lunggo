@@ -77,7 +77,7 @@ namespace Lunggo.ApCommon.Payment.Model
             }
         }
 
-        private class GetRefundQuery : QueryBase<GetRefundQuery, RefundTableRecord>
+        private class GetRefundQuery : DbQueryBase<GetRefundQuery, RefundTableRecord>
         {
             protected override string GetQuery(dynamic condition = null)
             {

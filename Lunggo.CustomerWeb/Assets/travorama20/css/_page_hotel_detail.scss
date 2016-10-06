@@ -1,0 +1,95 @@
+﻿.detail-hotel {
+    border-top: 1px solid #ccc;
+    .big-slider {
+        margin: 15px 0;
+        .top-desc {
+            margin-bottom: 15px;
+            .slider-title-lg {
+                font-size: 20px;
+                font-weight: 700;
+                margin-right: 30px;
+                vertical-align: text-bottom;
+            }
+            &>.star {display: inline-block;}
+            .address {line-height: 25px;
+                &:before {
+                    @extend .maps-icon;
+                    margin-right: 10px;
+                }
+            }
+        }
+        .col-right-slider {
+            border: 1px solid #ccc;
+            background: #fff;
+            .btn-container {
+                text-align: center;
+                margin: 5px 0;
+            }
+            .rs-title {
+                background: #1daee4;
+                padding: 7px 20px;
+                text-align: center;
+                color: #fff;
+                font-weight: 700;
+                &:before {
+                    @extend .hotel-icon;
+                    margin-right: 10px;
+                }
+            }
+            .rs-list {
+                border-top: 1px solid #ccc;
+                padding: 20px 15px;
+            }
+            .rs-rating {font-weight: 600;
+                .rs-txt-big {
+                    font-size: 40px;
+                    float: right;
+                    line-height: 40px;
+                }
+                .col-right-rs {
+                    line-height: 14px;
+                    padding: 7px 5px;
+                }
+            }
+            .rs-review {
+                &>.blue-txt {text-align: center;
+                    &:before {@extend .plane-icon;}
+                }
+                .review-bar {
+                    width: 100%;
+                    margin-top: 10px;
+                    font-size: 10px;
+                    font-weight: 600;
+                    line-height: 10px;
+                    .rb-container {margin-bottom: 12px;}
+                    .bar-horizontal {
+                        width: 75%;
+                        height: 10px;
+                        box-shadow: 1px 1px 1px 1px #999;
+                        display: inline-block;
+                        z-index: 0;
+                        position: relative;
+                    }
+                    .bar-range {
+                        background: $color-main-blue;
+                        display: block;
+                        width: 80%;
+                        z-index: 1;
+                        position: absolute;
+                        height: 10px;
+                    }
+                    .total-review {float: right;}
+                }
+            }
+            .rs-ta {
+                text-align: center;
+                .ta-title.green-txt {
+                    /*margin: 10px 0;*/
+                    &:before {@extend .ta-logo;}
+                    &:after {@extend .ta-rating; margin-top: 8px;}
+                }
+                .grey-txt.sm-txt.italic-txt {margin: 8px 0;}
+            }
+        }
+    }
+}

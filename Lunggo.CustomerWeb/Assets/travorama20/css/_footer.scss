@@ -1,19 +1,16 @@
 ﻿/*
-
 FOOTER Styling
 file : /Assets/travorama20/css/_footer.scss
-
 including in this file :
 - section subscribe
 - section payment
 - section feedback
 - site footer menu
 - site footer
-
 */
 
 /* site footer menu */
-.site-footer-menu {background:#303030; color:#fff; padding:0 0 30px; width:100%; bottom:152px; position: absolute;
+.site-footer-menu {background:#303030; color:#fff; padding:0 0 30px; width:100%; /*bottom:152px; position: absolute;*/
     a {color:#fff;}
 
     .menu-left {padding-right:50px;
@@ -97,10 +94,12 @@ including in this file :
 }
 
 /* site-footer */
-.site-footer {background:#111; color:#fff; padding:15px 0; bottom:0; width:100%;  position: absolute;
+.site-footer {background:#111; color:#fff; padding:15px 0; width:100%; /*position: absolute; bottom:0;*/ 
     .social-link {padding:15px 0;
         img {width:40px;}
         a {margin-left:3px;}
         a+a {margin-left:10px;}
     }
 }
+
+.footer-main-container {bottom:0}

@@ -103,6 +103,9 @@
     <None Include="App.config" />
     <None Include="Config\BackendWeb\api.properties" />
     <None Include="Config\BackendWeb\cw.properties" />
+    <None Include="Config\BackendWeb\documentDb.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\BackendWeb\facebook.properties" />
     <None Include="Config\BackendWeb\flight.properties">
       <SubType>Designer</SubType>
@@ -200,6 +203,9 @@
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\zendesk.properties" />
     <None Include="Config\Driver\azureStorage.properties" />
+    <None Include="Config\WebAPI\documentDb.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\log.properties">
       <SubType>Designer</SubType>
     </None>
