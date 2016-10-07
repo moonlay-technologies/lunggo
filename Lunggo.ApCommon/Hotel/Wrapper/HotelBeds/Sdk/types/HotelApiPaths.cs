@@ -116,7 +116,14 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.types
                 endpoint = "bookings?start=${start}&end=${end}&filterType=${filterType}&includeCancelled=${includeCancelled}&from=${from}&to=${to}";
             }
         }
-        
 
+        public class HOTEL_LIST : HotelApiPathsBase
+        {
+            public HOTEL_LIST()
+            {
+                httpMethod = new HttpMethod("GET");
+                endpoint = "hotels?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
+            }
+        }
     }
 }
