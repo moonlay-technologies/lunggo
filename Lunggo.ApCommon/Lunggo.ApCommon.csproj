@@ -231,7 +231,11 @@
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
+    <Compile Include="Hotel\Constant\CheckRateStatus.cs" />
+    <Compile Include="Hotel\Service\SelectRooms.cs" />
+    <Compile Include="Hotel\Service\Book.cs" />
     <Compile Include="Hotel\Service\Dictionary.cs" />
+    <Compile Include="Hotel\Service\Settings.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsIssue.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\common\SimpleTypes.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\AbstractGenericRequest.cs" />
@@ -324,7 +328,6 @@
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsCheckRateHotel.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsSearchHotel.cs" />
     <Compile Include="Payment\Constant\FailureReason.cs" />
-    <Compile Include="Query\ContactUs.cs" />
     <Compile Include="Flight\Model\FlightSlightDelay.cs" />
     <Compile Include="Flight\Model\FlightStop.cs" />
     <Compile Include="Flight\Model\FlightTrip.cs" />
@@ -527,24 +530,6 @@
     <Compile Include="Model\SearchBase.cs" />
     <Compile Include="Model\SearchViewModel.cs" />
     <Compile Include="Hotel\Constant\ApCommonHotelEnum.cs" />
-    <Compile Include="Hotel\Model\Hotel.cs" />
-    <Compile Include="Hotel\Model\HotelDescription.cs" />
-    <Compile Include="Hotel\Model\HotelImage.cs" />
-    <Compile Include="Hotel\Model\OnMemHotelFacility.cs" />
-    <Compile Include="Hotel\Model\PackageDetailForBooking.cs" />
-    <Compile Include="Hotel\Model\Room.cs" />
-    <Compile Include="Hotel\Model\RoomAssignment.cs" />
-    <Compile Include="Hotel\Model\RoomDetailForBooking.cs" />
-    <Compile Include="Hotel\Object\HotelBookServiceRequest.cs" />
-    <Compile Include="Hotel\Object\HotelRequestBase.cs" />
-    <Compile Include="Hotel\Object\HotelRoomsSearchServiceResponse.cs" />
-    <Compile Include="Hotel\Object\HotelRoomsSearchServiceRequest.cs" />
-    <Compile Include="Hotel\Object\HotelSearchServiceRequestBase.cs" />
-    <Compile Include="Hotel\Object\HotelsSearchFilter.cs" />
-    <Compile Include="Hotel\Object\HotelsSearchResult.cs" />
-    <Compile Include="Hotel\Object\HotelsSearchServiceRequest.cs" />
-    <Compile Include="Hotel\Model\RoomOccupant.cs" />
-    <Compile Include="Hotel\Object\HotelsSearchServiceResponse.cs" />
     <Compile Include="Identity\ExternalLogin\IdentityUserExternalLogin.cs" />
     <Compile Include="Identity\ExternalLogin\UserExternalLogin.cs" />
     <Compile Include="Identity\RoleStore\DapperRoleStore.cs" />
@@ -656,14 +641,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Travolutionary\TravolutionaryPreBookCheckResponse.cs" />
     <Compile Include="Trie\TrieIndexService.cs" />
     <Compile Include="Trie\TrieNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query\GetCountryCodeByAreaQuery.cs" />
-    <Compile Include="Query\GetCountryCodeQueryRecord.cs" />
-    <Compile Include="Query\GetHotelDetailByIdQuery.cs" />
-    <Compile Include="Query\GetHotelDetailBySearchParamQuery.cs" />
     <Compile Include="Sequence\RoleIdSequence.cs" />
     <Compile Include="Sequence\HotelSearchIdSequence.cs" />
     <Compile Include="Sequence\UserIdSequence.cs" />
@@ -672,11 +652,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Travolutionary\TravolutionaryHotelBookResponse.cs" />
-    <Compile Include="Travolutionary\TravolutionaryHotelRoomSearchResponse.cs" />
-    <Compile Include="Travolutionary\TravolutionaryHotelSearchResponse.cs" />
-    <Compile Include="Travolutionary\TravolutionaryHotelService.cs" />
-    <Compile Include="Travolutionary\TravolutionaryResponseBase.cs" />
     <Compile Include="Util\HotelFacilityUtil.cs" />
     <Compile Include="Util\UrlUtil.cs" />
     <Compile Include="Voucher\Query\GetVoucherRecordQuery.cs" />

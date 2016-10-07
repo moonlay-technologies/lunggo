@@ -27,11 +27,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                     if (responseCheckRate.hotel.rooms[0].rates[0].net == hotelRate.Price)
                     {
                         checkRateResult.IsPriceChanged = false;
+
                     }
                     else
                     {
                         checkRateResult.IsPriceChanged = true;
                         checkRateResult.NewPrice = responseCheckRate.hotel.rooms[0].rates[0].net;
+                        checkRateResult.RateKey = responseCheckRate.hotel.rooms[0].rates[0].rateKey;
                     }
                 }
                 checkRateResult.IsValid = true;
