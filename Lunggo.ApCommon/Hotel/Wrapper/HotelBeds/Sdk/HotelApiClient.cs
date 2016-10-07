@@ -232,7 +232,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk
             {
                 throw e;
             }
-        }
+        } 
+
 
         private T callRemoteApi<T, U>(U request, HotelApiPaths.HotelApiPathsBase path, List<Tuple<string, string>> param)
         {
