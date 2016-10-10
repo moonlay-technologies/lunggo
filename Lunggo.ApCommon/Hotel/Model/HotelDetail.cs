@@ -95,7 +95,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string Address { get; set; }
         [JsonProperty("postalCd", NullValueHandling = NullValueHandling.Ignore)]
         public string PostalCode { get; set; }
-        [JsonProperty("postalCd", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("city", NullValueHandling = NullValueHandling.Ignore)]
         public string City { get; set; }
         [JsonProperty("email", NullValueHandling = NullValueHandling.Ignore)]
         public string Email { get; set; }
@@ -109,7 +109,17 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<POI>Pois { get; set; }
         [JsonProperty("images", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> ImageUrl { get; set; }
+        [JsonProperty("facilities", NullValueHandling = NullValueHandling.Ignore)]
+        public List<HotelFacility> Facilities { get; set; } 
         
+    }
+
+    public class HotelFacility
+    {
+        [JsonProperty("facilityCd", NullValueHandling = NullValueHandling.Ignore)]
+        public int FacilityCode;
+        [JsonProperty("facilityGroupCd", NullValueHandling = NullValueHandling.Ignore)]
+        public int FacilityGroupCode;
     }
 
     public class POI

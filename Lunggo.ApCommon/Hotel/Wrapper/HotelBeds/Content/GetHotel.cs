@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Threading;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
@@ -18,32 +19,39 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
         public void GetHotelData()
         {
 
-            List<HotelDetailsBase> hotels = new List<HotelDetailsBase>();
-            List<string> languageCd = new List<string>{"ENG","IND"};
+            var hotels = new List<HotelDetailsBase>();
+            var languageCd = new List<string>{"ENG","IND"};
             
-            HotelApiClient client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-content-api");
+            var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-content-api");
            //https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels?fields=all&language=ENG&from=1&to=100&useSecondaryLanguage=false
 
-            int counter = 0;
-            for (int i = 0; i < languageCd.Count; i++)
+            var counter = 0;
+            var max = 100;
+            var start = 1;
+            // Create new stopwatch.
+            Stopwatch stopwatch = new Stopwatch();
+
+            // Begin timing.
+            stopwatch.Start();
+            foreach (var t in languageCd)
             {
-                Debug.Print("BAHASA : " + languageCd[i]);
+                Debug.Print("BAHASA : " + t);
                 List<Tuple<string, string>> param;
 
                 //Call for the first time 
                 param = new List<Tuple<string, string>>
                 {
                     new Tuple<string, string>("${fields}", "all"),
-                    new Tuple<string, string>("${language}", languageCd[i]),
+                    new Tuple<string, string>("${language}", t),
                     new Tuple<string, string>("${from}", "1"),
-                    new Tuple<string, string>("${to}", "3"), //1000
+                    new Tuple<string, string>("${to}", "1000"), //1000
                     new Tuple<string, string>("${useSecondaryLanguage}", "false"),
                 };
-                HotelRS bookingListRS = client.GetHotelList(param);
-                List<HotelDescriptions> hotelDescription = new List<HotelDescriptions>();
+                var bookingListRS = client.GetHotelList(param);
+                var hotelDescription = new List<HotelDescriptions>();
                 foreach (var hotelRS in bookingListRS.hotels)
                 {
-                    if (languageCd[i].Equals("ENG"))
+                    if (t.Equals("ENG"))
                     {
                         var hotel = new HotelDetailsBase
                         {
@@ -85,6 +93,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                                 }).ToList(),
                             DestinationCode = hotelRS.destinationCode,
                             ImageUrl = hotelRS.images == null ? null : hotelRS.images.Select(p => p.path).ToList(),
+                            
                         };
                         var hotelDesc = new HotelDescriptions
                         {
@@ -102,16 +111,27 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                             languageCode = "ID",
                             Description = hotelRS.description == null ? null : hotelRS.description.content
                         });
-                        counter++;
+                        if (start != max)
+                        {
+                            Debug.Print("Inserting : " + hotels[counter].HotelCode);
+                            InsertHotelDetailToDocDB(hotels[counter]);
+                            start++;
+                            counter++;
+                        }
+                        else
+                        {
+                            start = 1;
+                            Thread.Sleep(2000);
+                        }
                     }
                     
                 }
 
 
-                int total = 11; //bookingListRS.total
-                int from = 4; //1001
-                int to = 6; //2000
-                bool isValid = true;
+                var total = bookingListRS.total; //bookingListRS.total
+                var from = 1001; //1001
+                var to = 2000; //2000
+                var isValid = true;
                 do
                 {
                     if (to >= total)
@@ -120,19 +140,19 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                         isValid = false;
                     }
                     param = new List<Tuple<string, string>>
-                {
-                    new Tuple<string, string>("${fields}", "all"),
-                    new Tuple<string, string>("${language}", languageCd[i]),
-                    new Tuple<string, string>("${from}", from.ToString()),
-                    new Tuple<string, string>("${to}", to.ToString()),
-                    new Tuple<string, string>("${useSecondaryLanguage}", "false"),
-                };
-                    Debug.Print("From : " + from);
+                    {
+                        new Tuple<string, string>("${fields}", "all"),
+                        new Tuple<string, string>("${language}", t),
+                        new Tuple<string, string>("${from}", @from.ToString()),
+                        new Tuple<string, string>("${to}", to.ToString()),
+                        new Tuple<string, string>("${useSecondaryLanguage}", "false"),
+                    };
+                    Debug.Print("From : " + @from);
                     Debug.Print("To : " + to);
                     bookingListRS = client.GetHotelList(param);
                     foreach (var hotelRS in bookingListRS.hotels)
                     {
-                        if (languageCd[i].Equals("ENG"))
+                        if (t.Equals("ENG"))
                         {
                             var hotel = new HotelDetailsBase
                             {
@@ -164,6 +184,11 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                                 {
                                     RoomCode = p.roomCode
                                 }).ToList(),
+                                Facilities = hotelRS.facilities == null ? null : hotelRS.facilities.Select(p => new HotelFacility()
+                                {
+                                    FacilityCode = p.facilityCode,
+                                    FacilityGroupCode = p.facilityGroupCode
+                                }).ToList(),
                                 DestinationCode = hotelRS.destinationCode,
                                 ImageUrl = hotelRS.images == null ? null : hotelRS.images.Select(p => p.path).ToList(),
                             };
@@ -183,21 +208,34 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                                 languageCode = "ID",
                                 Description = hotelRS.description == null ? null : hotelRS.description.content
                             });
-                            counter++;
+                            if (start != max)
+                            {
+                                Debug.Print("Inserting : " + hotels[counter]);
+                                InsertHotelDetailToDocDB(hotels[counter]);
+                                start++;
+                                counter++;
+                            }
+                            else
+                            {
+                                start = 1;
+                                Thread.Sleep(2000);
+                            }
                         }
-                        
                     }
 
-                    from = from + 3; //1000
-                    to = to + 3; //1000
-                } while (isValid);  
+                    @from = @from + 1000; //1000
+                    to = to + 1000; //1000
+                } while (isValid);
             }
-
+            stopwatch.Stop();
+            Debug.Print("Time elapsed: {0}", stopwatch.Elapsed);
             Console.WriteLine("Done");
-            
-           var document = DocumentService.GetInstance();
-           document.Upsert("HotelDetails",hotels);
+        }
 
+        public void InsertHotelDetailToDocDB(HotelDetailsBase hotel)
+        {
+            var document = DocumentService.GetInstance();
+                document.Upsert("HotelDetail:" + hotel.HotelCode, hotel);
         }
 
     }

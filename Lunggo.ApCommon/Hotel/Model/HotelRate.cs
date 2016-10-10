@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("rateKey", NullValueHandling = NullValueHandling.Ignore)]
         public string RateKey { get; set; }
         [JsonProperty("regsId", NullValueHandling = NullValueHandling.Ignore)]
-        public int RegsId { get; set; }
+        public string RegsId { get; set; }
         [JsonProperty("class", NullValueHandling = NullValueHandling.Ignore)]
         public string Class { get; set; }
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
