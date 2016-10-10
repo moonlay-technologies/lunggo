@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Product.Model;
 using Microsoft.Azure.Documents;
 using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Hotel.Model
 {
-    public class HotelRate
+    public class HotelRate : OrderBase
     {
         [JsonProperty("rateKey", NullValueHandling = NullValueHandling.Ignore)]
         public string RateKey { get; set; }
@@ -18,8 +19,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string Class { get; set; }
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; set; }
-        [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal Price { get; set; }
+        //[JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
+        //public decimal Price { get; set; }
         [JsonProperty("paymenType", NullValueHandling = NullValueHandling.Ignore)]
         public string PaymentType { get; set; }
         [JsonProperty("boards", NullValueHandling = NullValueHandling.Ignore)]

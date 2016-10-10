@@ -15,11 +15,18 @@ namespace Lunggo.ApCommon.Hotel.Service
             hotel.Rooms = new List<HotelRoom>();
 
             //Enter Room Details to Hotel
-            foreach (var hotelRoom in decryptedData.Select(data => GetHotelRoomDetail(data.RoomCode)))
+
+            foreach (var data in decryptedData)
             {
-                hotel.Rooms.Add(hotelRoom);
+                var output = GetRoomDetail(new GetRoomDetailInput
+                {
+                    RoomCode = data.RoomCode
+                });
+
+                hotel.Rooms.Add(output.Room);
             }
 
+            
             //Initialise Rate for each Room
             foreach (var room in hotel.Rooms)
             {
@@ -29,7 +36,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             //Get Rate detail based on RateKey, then add rate detail to matched room code
             foreach (var detail in decryptedData)
             {
-                var roomRate = GetRateFromRateKey(detail.RateKey);
+                var roomRate = GetRateFromCache(detail.RateKey);
                 foreach (var room in hotel.Rooms.Where(room => detail.RateKey.Split('|')[5] == room.RoomCode))
                 {
                     room.Rates.Add(roomRate);
@@ -41,13 +48,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             SaveSelectedHotelDetailsToCache(token, hotel);
             return new SelectHotelRoomOutput
             {
-                Token = token.ToString()
+                Token = token
             };
         }
 
         public class RegsIdDecrypted
         {
-            public string HotelCode { get; set; }
+            public int HotelCode { get; set; }
             public string RoomCode { get; set; }
             public string RateKey { get; set; }
             
@@ -59,22 +66,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             return new RegsIdDecrypted();
         }
 
-        private HotelDetail GetHotelDetail(string hotelCode)
+        private HotelRate GetRateFromCache(string ratekey)
         {
-            //TODO Update THIS from HERI
-
-            return new HotelDetail();
-        }
-
-        private HotelRoom GetHotelRoomDetail(string roomCode)
-        {
-            //TODO Update THIS from HERI
-            return new HotelRoom();
-        }
-
-        private HotelRate GetRateFromRateKey(string rateKey)
-        {
-            //TODO Update THIS from HERI
             return new HotelRate();
         }
     }       

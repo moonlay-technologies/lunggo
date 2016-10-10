@@ -29,7 +29,7 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("RsvNo");
 		    }
 		}
-		public long? HotelCd
+		public int? HotelCd
 		{
 		    get { return _HotelCd; }
 		    set
@@ -150,7 +150,7 @@ namespace Lunggo.Repository.TableRecord
 		
 		private long? _Id;
 		private String _RsvNo;
-		private long? _HotelCd;
+		private int? _HotelCd;
 		private String _HotelName;
 		private DateTime? _CheckInDate;
 		private DateTime? _CheckOutDate;

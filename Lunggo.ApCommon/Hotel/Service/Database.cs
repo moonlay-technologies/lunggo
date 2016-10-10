@@ -126,7 +126,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 },
                                 PaymentType = rateRecord.PaymentType,
                                 RoomCount = rateRecord.RoomCount.GetValueOrDefault(),
-                                Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault())
+                                Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()) //TODO
                             };
                             hotelRoom.Rates.Add(rate);
                         }

@@ -331,8 +331,6 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="ApiSrc\Hotel\Object\HotelSearchApiRequest.cs" />
-    <Compile Include="ApiSrc\Hotel\Object\HotelSearchApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\HotelController.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\GetHotelLogic.cs" />
     <Compile Include="Global.asax.cs">
@@ -380,6 +378,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ApiSrc\Hotel\Object\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

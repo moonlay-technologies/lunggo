@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
     {
-        public void SaveSelectedHotelDetailsToCache(string token, HotelDetail hotel)
+        public void SaveSelectedHotelDetailsToCache(string token, HotelDetailsBase hotel)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "token:" + token;

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.Framework.Documents;
-using Lunggo.Hotel.ViewModels;
 using Microsoft.Azure.Documents;
 
 namespace Lunggo.ApCommon.Hotel.Service
