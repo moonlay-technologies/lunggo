@@ -54,7 +54,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                 AvailabilityRS responseAvail = client.doAvailability(availabilityRq);
 
             var response = new SearchHotelResult();
-            List<HotelRoom> rooms = new List<HotelRoom>();
+            List<HotelDetail> hotels = new List<HotelDetail>();
             
             //var hotels = new HotelDetail();
 
@@ -68,8 +68,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         HotelCode = hotelResponse.code,
                         HotelName = hotelResponse.name,
                         //Address = hotelResponse.address,
-                        Latitude = double.Parse(hotelResponse.latitude),
-                        Longitude = double.Parse(hotelResponse.longitude),
+                        Latitude = decimal.Parse(hotelResponse.latitude),
+                        Longitude = decimal.Parse(hotelResponse.longitude),
                         ZoneCode =  hotelResponse.zoneCode,
                         NetFare =  hotelResponse.totalNet,
                         OriginalFare = hotelResponse.totalSellingRate,
@@ -79,10 +79,10 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                             RoomCode = roomAPI.code
                         }).ToList()
                     };
-
+                    hotels.Add(hotel);
                 }
+                response.HotelDetails = hotels;
             }
-            
             return response;
         }
     }

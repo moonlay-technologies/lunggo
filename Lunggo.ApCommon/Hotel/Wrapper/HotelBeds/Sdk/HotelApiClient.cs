@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.messages;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.types;
 using Newtonsoft.Json;
@@ -232,6 +233,20 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk
             {
                 throw e;
             }
+        }
+
+        public HotelRS GetHotelList(List<Tuple<string, string>> param)
+        {
+            try
+            {
+                HotelApiPaths.HOTEL_LIST hotelList = new HotelApiPaths.HOTEL_LIST();
+                HotelRS repsonse = callRemoteApi<HotelRS, Tuple<string, string>[]>(null, hotelList, param);
+                return repsonse;
+            }
+            catch (HotelSDKException e)
+            {
+                throw e;
+            }
         } 
 
 
@@ -248,7 +263,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk
                                         }))
                 {
                     if (request == null && (path.GetType() != typeof(HotelApiPaths.STATUS)
-                        && path.GetType() != typeof(HotelApiPaths.BOOKING_CANCEL) && path.GetType() != typeof(HotelApiPaths.BOOKING_DETAIL) && path.GetType() != typeof(HotelApiPaths.BOOKING_LIST)))
+                        && path.GetType() != typeof(HotelApiPaths.BOOKING_CANCEL) && path.GetType() != typeof(HotelApiPaths.BOOKING_DETAIL) && path.GetType() != typeof(HotelApiPaths.BOOKING_LIST) && path.GetType() != typeof(HotelApiPaths.HOTEL_LIST)))
                         throw new Exception("Object request can't be null");
 
                     client.BaseAddress = new Uri(path.getUrl(this.basePath, this.version));

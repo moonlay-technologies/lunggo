@@ -232,6 +232,10 @@
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
     <Compile Include="Hotel\Constant\CheckRateStatus.cs" />
+    <Compile Include="Hotel\Query\GetHotelDetailFromSearchResult.cs" />
+    <Compile Include="Hotel\Service\GetHotelDetail.cs" />
+    <Compile Include="Hotel\Service\GetRate.cs" />
+    <Compile Include="Hotel\Service\GetRoomDetail.cs" />
     <Compile Include="Hotel\Service\Caching.cs" />
     <Compile Include="Hotel\Service\Database.cs" />
     <Compile Include="Hotel\Service\Issue.cs" />
@@ -240,6 +244,8 @@
     <Compile Include="Hotel\Service\Dictionary.cs" />
     <Compile Include="Hotel\Service\Settings.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\GetHotel.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\HotelContent.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\HotelRS.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsIssue.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\common\SimpleTypes.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\AbstractGenericRequest.cs" />

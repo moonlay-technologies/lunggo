@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Lunggo.ApCommon.Hotel.Model
 {
     public class SearchHotelResult
-    {
+    {   
         internal List<HotelDetail> HotelDetails { get; set; }
     }
 }
