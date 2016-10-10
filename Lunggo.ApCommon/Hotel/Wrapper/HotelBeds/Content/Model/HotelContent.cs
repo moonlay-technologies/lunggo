@@ -64,6 +64,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
         public string roomCode;
         public List<RoomStay> roomStays;
         public string roomType;
+        public List<RoomFacility> roomFacilities;
+    }
+
+    public class RoomFacility
+    {
+        public int facilityCode;
+        public int facilityGroupCode;
     }
 
     public class RoomStay

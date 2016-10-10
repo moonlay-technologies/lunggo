@@ -89,8 +89,18 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                                 ? null
                                 : hotelRS.rooms.Select(p => new HotelRoom
                                 {
-                                    RoomCode = p.roomCode
+                                    RoomCode = p.roomCode,
+                                    Facilities = p.roomFacilities == null ? null : p.roomFacilities.Select(q => new HotelRoomFacilities
+                                    {
+                                        FacilityCode = q.facilityCode,
+                                        FacilityGroupCode = q.facilityGroupCode
+                                    }).ToList()
                                 }).ToList(),
+                            Facilities = hotelRS.facilities == null ? null : hotelRS.facilities.Select(p => new HotelFacility()
+                            {
+                                FacilityCode = p.facilityCode,
+                                FacilityGroupCode = p.facilityGroupCode
+                            }).ToList(),
                             DestinationCode = hotelRS.destinationCode,
                             ImageUrl = hotelRS.images == null ? null : hotelRS.images.Select(p => p.path).ToList(),
                             

@@ -232,6 +232,7 @@
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
     <Compile Include="Hotel\Constant\CheckRateStatus.cs" />
+    <Compile Include="Hotel\Model\HotelRoomFacilities.cs" />
     <Compile Include="Hotel\Query\GetHotelDetailFromSearchResult.cs" />
     <Compile Include="Hotel\Service\GetHotelDetail.cs" />
     <Compile Include="Hotel\Service\GetRate.cs" />
