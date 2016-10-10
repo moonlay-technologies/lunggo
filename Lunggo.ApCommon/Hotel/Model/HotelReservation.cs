@@ -42,6 +42,6 @@ namespace Lunggo.ApCommon.Hotel.Model
             get { return ProductType.Hotel; }
         }
 
-        public List<HotelDetail> HotelDetails { get; set; }
+        public HotelDetail HotelDetails { get; set; }
     }
 }
