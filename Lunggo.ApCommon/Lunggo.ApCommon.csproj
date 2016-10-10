@@ -233,6 +233,8 @@
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
     <Compile Include="Hotel\Service\Dictionary.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\GetHotel.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\HotelContent.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\HotelRS.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsIssue.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\common\SimpleTypes.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\AbstractGenericRequest.cs" />
