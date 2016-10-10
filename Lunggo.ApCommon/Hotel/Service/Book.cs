@@ -1,11 +1,20 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Claims;
+using System.Web;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
+using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.Framework.Context;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -13,60 +22,51 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public BookHotelOutput BookHotel(BookHotelInput input)
         {
-            var bookInfo = GetBookingDataFromCache(input.Token);
-            var oldPrice = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(p => p.Price);
+            var bookInfo = GetSelectedHotelDetailsFromCache(input.Token);
+            var oldPrice = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(p => p.Price.Supplier);
             decimal newPrice = 0;
 
-            foreach (var rate in bookInfo.Rooms.SelectMany(room => room.Rates))
+            foreach (var room in bookInfo.Rooms)
             {
-                if (BookingStatusCd.Mnemonic(rate.Type) == CheckRateStatus.Recheck)
+                foreach (var rate in room.Rates)
                 {
-                    var revalidateResult = CheckRate(rate.RateKey, rate.Price);
-                    if (revalidateResult.IsPriceChanged)
+                    if (BookingStatusCd.Mnemonic(rate.Type) == CheckRateStatus.Recheck)
                     {
-                        UpdatePriceOfRateKey(revalidateResult.RateKey, revalidateResult.NewPrice.GetValueOrDefault());
-                        newPrice += revalidateResult.NewPrice.GetValueOrDefault();
+                        var revalidateResult = CheckRate(rate.RateKey, rate.Price.Supplier);
+                        if (revalidateResult.IsPriceChanged)
+                        {
+                            rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(), new Currency("IDR"));;
+                            newPrice += revalidateResult.NewPrice.GetValueOrDefault();
+                        }
+                        else
+                        {
+                            newPrice += rate.Price.Supplier;
+                        }
                     }
                     else
                     {
-                        SaveRateKeyToDocDb();
-                        newPrice += rate.Price;
+                        newPrice += rate.Price.Supplier;
                     }
                 }
-                else
-                {
-                    SaveRateKeyToDocDb();
-                    newPrice += rate.Price;
-                }
-            }
-
-            if (oldPrice == newPrice)
-            {
-                return new BookHotelOutput
-                {
-                    IsPriceChanged = false,
-                    IsValid = true,
-                    RsvNo = RsvNoSequence.GetInstance().GetNext(ProductType.Hotel),
-                    TimeLimit = new DateTime() //TODO Update timelimit
-                };
             }
             
+            SaveSelectedHotelDetailsToCache(input.Token, bookInfo);
+            if (oldPrice != newPrice)
+                return new BookHotelOutput
+                {
+                    IsPriceChanged = true,
+                    IsValid = true,
+                    NewPrice = newPrice
+                };
+            var rsvDetail = CreateHotelReservation(input, bookInfo, oldPrice);
+            InsertHotelRsvToDb(rsvDetail);
             return new BookHotelOutput
             {
-                IsPriceChanged = true,
+                IsPriceChanged = false,
                 IsValid = true,
-                NewPrice = newPrice
+                RsvNo = rsvDetail.RsvNo,
+                TimeLimit = rsvDetail.Payment.TimeLimit
             };
-        }
-
-        private void UpdatePriceOfRateKey(string rateKey, decimal newPrice)
-        {
-            //TODO Update THIS
-        }
-
-        private void SaveRateKeyToDocDb()
-        {
-            //TODO UPDATE THIS
         }
 
         private RevalidateHotelResult CheckRate(string rateKey, decimal ratePrice)
@@ -79,11 +79,42 @@ namespace Lunggo.ApCommon.Hotel.Service
             };
             return hb.CheckRateHotel(revalidateInfo);
         }
-        
-        public HotelDetail GetBookingDataFromCache(string token)
-        {
-            return new HotelDetail();
-        }
 
+        private HotelReservation CreateHotelReservation(BookHotelInput input, HotelDetail bookInfo, decimal price)
+        {
+            var rsvNo = RsvNoSequence.GetInstance().GetNext(ProductType.Hotel);
+            var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+            var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+            var platform = Client.GetPlatformType(clientId);
+            var deviceId = identity.Claims.Single(claim => claim.Type == "Device ID").Value;
+            var rsvState = new ReservationState
+            {
+                Platform = platform,
+                DeviceId = deviceId,
+                Language = "id", //OnlineContext.GetActiveLanguageCode();
+                Currency = new Currency("IDR"), //OnlineContext.GetActiveCurrencyCode());
+            };
+
+            var rsvDetail = new HotelReservation
+            {
+                RsvNo = rsvNo,
+                Contact = input.Contact,
+                HotelDetails = bookInfo,
+                Pax = input.Passengers,
+                Payment = new PaymentDetails
+                {
+                    Status = PaymentStatus.Pending,
+                    LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
+                    OriginalPriceIdr = price,
+                    TimeLimit = bookInfo.Rooms.SelectMany(r => r.Rates).Min(order => order.TimeLimit).AddMinutes(-10),
+                },
+                RsvStatus = RsvStatus.InProcess,
+                RsvTime = DateTime.UtcNow,
+                State = rsvState,
+            };
+            PaymentService.GetInstance().GetUniqueCode(rsvDetail.RsvNo, null, null);
+
+            return rsvDetail;
+        }
     }       
 }

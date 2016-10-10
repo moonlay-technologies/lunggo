@@ -65,7 +65,7 @@ namespace Lunggo.ApCommon.Hotel.Model
 
     public class HotelDetail
     {
-        public int HotelCode { get; set; }
+        public long HotelCode { get; set; }
         public string HotelName { get; set; }
         public string Description { get; set; }
         public string CountryCode { get; set; }
@@ -90,5 +90,11 @@ namespace Lunggo.ApCommon.Hotel.Model
         public decimal OriginalFare { get; set; }
         public decimal NetFare { get; set; }
         public decimal Discount { get; set; }
+        public int TotalAdult { get; set; }
+        public int TotalChildren { get; set; }
+        public DateTime CheckInDate { get; set; }
+        public DateTime CheckOutDate { get; set; }
+        public int NightCount { get; set; }
+        public string SpecialRequest { get; set; }
     }
 }

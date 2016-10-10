@@ -50,6 +50,9 @@
     <Compile Include="TableRecord\CurrencyTableRecord.cs" />
     <Compile Include="TableRecord\DiscountTableRecord.cs" />
     <Compile Include="TableRecord\FlightItineraryRuleTableRecord.cs" />
+    <Compile Include="TableRecord\HotelRateTableRecord.cs" />
+    <Compile Include="TableRecord\HotelReservationDetailsTableRecord.cs" />
+    <Compile Include="TableRecord\HotelRoomTableRecord.cs" />
     <Compile Include="TableRecord\MarginTableRecord.cs" />
     <Compile Include="TableRecord\PaymentTableRecord.cs" />
     <Compile Include="TableRecord\PriceTableRecord.cs" />
@@ -86,8 +89,6 @@
     <Compile Include="TableRecord\UsedMarginTableRecord.cs" />
     <Compile Include="TableRecord\VoucherRecipientsTableRecord.cs" />
     <Compile Include="TableRecord\VoucherTableRecord.cs" />
-    <Compile Include="TableRecord\HotelReservationRoomDetailsTableRecord.cs" />
-    <Compile Include="TableRecord\HotelReservationsTableRecord.cs" />
     <Compile Include="TableRecord\MemberTableRecord.cs" />
     <Compile Include="TableRecord\PersonTableRecord.cs">
       <SubType>Code</SubType>
@@ -115,6 +116,9 @@
     <Compile Include="TableRepository\CurrencyRepository.cs" />
     <Compile Include="TableRepository\DiscountRepository.cs" />
     <Compile Include="TableRepository\FlightItineraryRuleRepository.cs" />
+    <Compile Include="TableRepository\HotelRateRepository.cs" />
+    <Compile Include="TableRepository\HotelReservationDetailsRepository.cs" />
+    <Compile Include="TableRepository\HotelRoomRepository.cs" />
     <Compile Include="TableRepository\MarginRepository.cs" />
     <Compile Include="TableRepository\PaymentRepository.cs" />
     <Compile Include="TableRepository\PriceRepository.cs" />
@@ -151,8 +155,6 @@
     <Compile Include="TableRepository\UsedMarginRepository.cs" />
     <Compile Include="TableRepository\VoucherRecipientsRepository.cs" />
     <Compile Include="TableRepository\VoucherRepository.cs" />
-    <Compile Include="TableRepository\HotelReservationRoomDetailsRepository.cs" />
-    <Compile Include="TableRepository\HotelReservationsRepository.cs" />
     <Compile Include="TableRepository\MemberRepository.cs" />
     <Compile Include="TableRepository\PersonRepository.cs">
       <SubType>Code</SubType>
