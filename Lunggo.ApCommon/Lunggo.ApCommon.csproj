@@ -235,11 +235,8 @@
     <Compile Include="Hotel\Service\SelectRooms.cs" />
     <Compile Include="Hotel\Service\Book.cs" />
     <Compile Include="Hotel\Service\Dictionary.cs" />
-<<<<<<< HEAD
     <Compile Include="Hotel\Service\Settings.cs" />
-=======
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\GetHotel.cs" />
->>>>>>> 515d6d5b5bfabf04846229f776dce5ae5eb969c1
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsIssue.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\common\SimpleTypes.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\AbstractGenericRequest.cs" />
