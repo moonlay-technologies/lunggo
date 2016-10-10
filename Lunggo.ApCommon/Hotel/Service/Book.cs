@@ -13,7 +13,6 @@ using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
-using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.Framework.Context;
 
 namespace Lunggo.ApCommon.Hotel.Service

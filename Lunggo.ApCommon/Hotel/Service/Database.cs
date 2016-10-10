@@ -1,29 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web.UI;
-using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Hotel.Model;
-using Lunggo.ApCommon.Hotel.Model.Logic;
-using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
-using Lunggo.ApCommon.Identity.Users;
-using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
-using Lunggo.Framework.Extension;
-using Lunggo.Framework.Redis;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
-using StackExchange.Redis;
 using Pax = Lunggo.ApCommon.Product.Model.Pax;
 
 namespace Lunggo.ApCommon.Hotel.Service
@@ -126,7 +112,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 },
                                 PaymentType = rateRecord.PaymentType,
                                 RoomCount = rateRecord.RoomCount.GetValueOrDefault(),
-                                Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()) //TODO
+                                Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()) 
                             };
                             hotelRoom.Rates.Add(rate);
                         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
@@ -11,6 +12,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         public SelectHotelRoomOutput SelectHotelRoom (SelectHotelRoomInput input)
         {
             var decryptedData = input.RegsIds.Select(DecryptRegsId).ToList();
+
             var hotel = GetHotelDetail(decryptedData[0].HotelCode);
             hotel.Rooms = new List<HotelRoom>();
 
@@ -60,14 +62,20 @@ namespace Lunggo.ApCommon.Hotel.Service
             
         }
 
-        private RegsIdDecrypted DecryptRegsId(int RegsId)
+        private RegsIdDecrypted DecryptRegsId(string regsId)
         {
-            //TODO Update THIS
-            return new RegsIdDecrypted();
+            var splittedData = regsId.Split('|');
+            return new RegsIdDecrypted
+            {
+                HotelCode = Convert.ToInt32(splittedData[0]),
+                RoomCode = splittedData[1],
+                RateKey = splittedData[2]
+            };
         }
 
         private HotelRate GetRateFromCache(string ratekey)
         {
+            //TODO
             return new HotelRate();
         }
     }       
