@@ -204,9 +204,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 
 // location dropdown
-.search-location {width:850px; min-height:520px; background:#fff; position:absolute; top:0; left:325px; z-index:3; display:none;
+.search-location, .search-hotel {width:850px; min-height:520px; background:#fff; position:absolute; top:0; left:325px; z-index:3; display:none;
     .location-header {height:40px; background:#4e4e4e; color:#fff; font-weight:600; font-size:17px; padding:10px 15px;
-        .close-location {float:right; cursor:pointer;}
+        .close-location, .close-hotel {float:right; cursor:pointer;}
     }
     .location-body {color:#333;
         .location-recommend {
@@ -216,10 +216,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                     &.next {right:0; top:0; background-position:-30px 0;}
                 }
                 &:before, &:after {@include clearfix();}
-                nav {width:790px; height:60px; overflow:hidden;
-                    ul {margin:0; padding:0; display:block; width:945px;
+                nav {height:60px; overflow:hidden;
+                    ul {margin:0; padding:0; display:block;
                         &:before, &:after {@include clearfix();}
-                        li {display:table; width:135px; float:left; border-right:$border-default; cursor:pointer;
+                        li {display:table; float:left; border-right:$border-default; cursor:pointer;
                             span {display:block; color:#626262; background:#eaeaea; font-size:14px; font-weight:bold; height:60px; padding:0 20px; display:table-cell; vertical-align:middle; line-height:120%;}
                             &.active {border-right-color:#fff;
                                 span {color:#21afe5; background:#fff;}
@@ -229,7 +229,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                     }
                 }
             }
-            .tab-content {padding:0 30px; padding-bottom:15px; padding-top:30px;
+            .tab-content {
                 .col-xs-3 {padding:0 12px;}
                 &>div {display:none;
                     &.active {display:block;}
@@ -246,20 +246,37 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 }
             }
         }
-        .location-search {padding:10px; height:475px; overflow:auto; display:none;
-            .autocomplete-pre {
-                .text-pre {display:none;}
-                .text-loading {display:none;}
-            }
-            .autocomplete-no-result {display:none;}
-            .autocomplete-result {
-                ul {margin:0; padding:0;
-                    li {padding:10px; list-style:none; cursor:pointer;
-                        &:hover {background:$color-main-blue;}
-                    }
-                    li+li {border-top:$border-default;}
+    }
+    .location-search {padding:10px; height:475px; overflow:auto; display:none;
+        .autocomplete-pre {
+            .text-pre {display:none;}
+            .text-loading {display:none;}
+        }
+        .autocomplete-no-result {display:none;}
+        .autocomplete-result {
+            ul {margin:0; padding:0;
+                li {padding:10px; list-style:none; cursor:pointer;
+                    &:hover {background:$color-main-blue;}
                 }
+                li+li {border-top:$border-default;}
             }
+        }
+    }
+}
+
+.search-location {
+    nav {width:790px;
+        ul {width:945px;
+            li {width:135px;}
+        }
+    }
+    .tab-content {padding:0 30px; padding-bottom:15px; padding-top:30px;}
+}
+
+.search-hotel {
+    nav {width:100%;
+        ul {width:100%;
+            li {width:50%;}
         }
     }
 }

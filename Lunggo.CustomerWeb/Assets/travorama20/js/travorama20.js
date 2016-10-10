@@ -1793,3 +1793,28 @@ function accordionFunctions() {
         }
     }
 }
+
+//********************
+// hotel form search function
+function hotelFormSearchFunctions() {
+    //Show hotel
+    $('.form-hotel-location').click(function () {
+        $('.search-hotel').show();
+    });
+
+    //hideHotel hotel
+    function hideHotel() {
+        $('.search-hotel').hide();
+    }
+
+    //close hotel
+    $('.close-hotel').click(function () { hideHotel(); });
+
+    $('.search-hotel .location-recommend nav ul li ').click(function () {
+        var showClass = $(this).attr('data-show');
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+        $('.search-hotel .location-recommend .tab-content>div').removeClass('active');
+        $('.search-hotel .location-recommend .tab-content>div.' + showClass).addClass('active');
+    });
+}

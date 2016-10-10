@@ -10,7 +10,7 @@ file: /Assets/travorama20/css/_page_flight.scss
 .page-flight {
     // *****
     // search location
-    .search-location {position:absolute; top:95px;
+    .search-location, .search-hotel {position:absolute; top:95px;
         &#origin {left:5px;}
         &#destination {left:5px;}
         .location-body {border:$border-default;}

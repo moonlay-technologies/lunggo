@@ -106,6 +106,7 @@
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
 }
 
 @section PageJS{
@@ -134,36 +135,28 @@
             prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
             nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
         });
-
-
     </script>
     <script src="/Assets/Travorama20/js/homeController.js"></script>
     
-    @*@if (ViewBag.Campaign)
-    {
-        <script src="/Assets/vendor/transitJS/jquery.transit.min.js"></script>
-        <script src="/Campaign/Imlek2016/js/imlek2016.js"></script>
-    }*@
-
+    <script>
+        hotelFormSearchFunctions()
+    </script>
 }
-
 
 <section class="section-search">
     <div class="container">
         <div class="search-form">
-
             <header class="tab-header">
-                @*<nav>
-                <ul>
-                    <li class="flight active"><a href="#">Pesawat</a></li>
-                    <li class="hotel" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Hotel</a></li>
-    <li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>
+                <nav>
+                    <ul>
+                        <li class="flight"><a data-toggle="tab" href="#plane">Pesawat</a></li>
+                        <li class="hotel active"><a data-toggle="tab" href="#hotel">Hotel</a></li>
+                        @*<li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>*@
                     </ul>
-                </nav>*@
+                </nav>
             </header>
-
             <section class="tab-content">
-                <div class="tab-flight active">
+                <div class="tab-flight tab-pane cleafix" id="plane">
                     <form class="form form-horizontal form-flight" action="/id/Flight/Search" method="GET">
                         <h3 class="text-center">Cari <b>Tiket Pesawat</b></h3>
 
@@ -296,8 +289,8 @@
 
                     </form>
                 </div><!-- .tab-flight -->
-                <div class="tab-hotel">
-                    <h3 class="text-center">Cari <b>Kamar Hotel</b><br />(Domestik &amp; Internasional)</h3>
+                <div class="tab-hotel tab-pane clearfix active" id="hotel">
+                    <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
                     <form class="form form-horizontal form-hotel">
 
                         <div class="form-group hotel-location">
@@ -337,6 +330,47 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group hotel-visitor">
+                            <div class="col-xs-6">
+                                <div class="form-hotel-visitor adult" data-toggle="tooltip" data-placement="left" title="Tidak boleh kosong">
+                                    <h5 class="visitor-input adult">1</h5>
+                                    <small>
+                                        Dewasa
+                                    </small>
+                                    <div class="option">
+                                        <span>1</span>
+                                        <span>2</span>
+                                        <span>3</span>
+                                        <span>4</span>
+                                        <span>5</span>
+                                        <span>6</span>
+                                        <span>7</span>
+                                        <span>8</span>
+                                        <span>9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-hotel-visitor child">
+                                    <h5 class="visitor-input child">0</h5>
+                                    <small>
+                                        Anak
+                                    </small>
+                                    <div class="option">
+                                        <span>0</span>
+                                        <span>1</span>
+                                        <span>2</span>
+                                        <span>3</span>
+                                        <span>4</span>
+                                        <span>5</span>
+                                        <span>6</span>
+                                        <span>7</span>
+                                        <span>8</span>
+                                        <span>9</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group hotel-submit">
                             <div class="col-xs-12">
                                 <input type="submit" name="hotelSubmit" value="CARI" class="btn btn-yellow block form-control" />
@@ -366,6 +400,7 @@
         </div><!-- .search-form -->
         @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
         @Html.Partial("/Views/Shared/Travorama20/_SearchLocation.cshtml")
+        @Html.Partial("/Views/Shared/Travorama20/_SearchHotel.cshtml")
     </div><!-- .container -->
     @if (ViewBag.DestinationName == null || ViewBag.DestinationName == "" )
     {
