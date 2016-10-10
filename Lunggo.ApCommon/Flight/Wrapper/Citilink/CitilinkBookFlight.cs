@@ -372,7 +372,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         IsItineraryChanged = false,
                         IsPriceChanged = bookInfo.Itinerary.Price.Supplier != fixPrice,
                         IsSuccess = false,
-                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                        //Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
                         ErrorMessages = new List<string> { "Price is changed!" },
                         NewItinerary = fixItin,
                         NewPrice = fixPrice,
