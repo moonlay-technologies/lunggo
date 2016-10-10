@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
-using System.Web.WebPages;
-using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -22,16 +19,35 @@ namespace Lunggo.ApCommon.Hotel.Service
         public static Dictionary<string, string> HotelRoomTypeDictEng;
         public static Dictionary<string, string> HotelRoomCharacteristicDictId;
         public static Dictionary<string, string> HotelRoomCharacteristicDictEng;
+        public static Dictionary<int, string> HotelRoomFacilityDictId;
+        public static Dictionary<int, string> HotelRoomFacilityDictEng;
+        public static Dictionary<string, string> HotelRoomRateClassDictId;
+        public static Dictionary<string, string> HotelRoomRateClassDictEng;
+        public static Dictionary<string, string> HotelRoomRateTypeDictId;
+        public static Dictionary<string, string> HotelRoomRateTypeDictEng;
+        public static Dictionary<string, string> HotelRoomPaymentTypeDictId;
+        public static Dictionary<string, string> HotelRoomPaymentTypeDictEng;
+        public static Dictionary<string, string> HotelCountry;
+        public static Dictionary<string, string> HotelCountryIso;
+        public static Dictionary<string, string> HotelCountryIsoName;
 
         private const string HotelSegmentFileName = @"HotelSegment.csv";
         private const string HotelFacilityFileName = @"HotelFacilities.csv";
         private const string HotelFacilityGroupFileName = @"HotelFacilityGroup.csv";
         private const string HotelRoomFileName = @"HotelRoom.csv";
+        private const string HotelRoomRateClassFileName = @"HotelRoomRateClass.csv";
+        private const string HotelRoomRateTypeFileName = @"HotelRoomRateType.csv";
+        private const string HotelRoomPaymentTypeFileName = @"HotelRoomPaymentType.csv";
+        private const string HotelCountryFileName = @"HotelCountries.csv";
 
         private static string _hotelSegmentFilePath;
         private static string _hotelFacilitiesFilePath;
         private static string _hotelFacilityGroupFilePath;
         private static string _hotelRoomFilePath;
+        private static string _hotelRoomRateClassFilePath;
+        private static string _hotelRoomRateTypeFilePath;
+        private static string _hotelRoomPaymentTypeFilePath;
+        private static string _hotelCountriesFilePath;
         private static string _configPath;
 
         public void InitDictionary(string folderName)
@@ -46,17 +62,29 @@ namespace Lunggo.ApCommon.Hotel.Service
             _hotelFacilitiesFilePath = Path.Combine(_configPath, HotelFacilityFileName);
             _hotelFacilityGroupFilePath = Path.Combine(_configPath, HotelFacilityGroupFileName);
             _hotelRoomFilePath = Path.Combine(_configPath, HotelRoomFileName);
+            _hotelRoomRateClassFilePath = Path.Combine(_configPath, HotelRoomRateClassFileName);
+            _hotelRoomRateTypeFilePath = Path.Combine(_configPath, HotelRoomRateTypeFileName);
+            _hotelRoomPaymentTypeFilePath = Path.Combine(_configPath, HotelRoomPaymentTypeFileName);
+            _hotelCountriesFilePath = Path.Combine(_configPath, HotelCountryFileName);
 
             PopulateHotelSegmentDict(_hotelSegmentFilePath);
             PopulateHotelFacilitiesDict(_hotelFacilitiesFilePath);
             PopulateHotelFacilityGroupDict(_hotelFacilityGroupFilePath);
             PopulateHotelRoomDict(_hotelRoomFilePath);
             PopulateHotelRoomTypeDict(_hotelRoomFilePath);
-            PopulateHotelRoomCharactristicDict(_hotelRoomFilePath);
+            PopulateHotelRoomCharacteristicDict(_hotelRoomFilePath);
+            PopulateHotelRoomFacilityDict(_hotelFacilitiesFilePath);
+            PopulateHotelRoomRateClassDict(_hotelRoomRateClassFilePath);
+            PopulateHotelRoomRateTypeDict(_hotelRoomRateTypeFilePath);
+            PopulateHotelRoomPaymentTypeDict(_hotelRoomPaymentTypeFilePath);
+            PopulateHotelCountriesDict(_hotelCountriesFilePath);
         }
 
         private static void PopulateHotelSegmentDict(String hotelSegmentFilePath)
         {
+            HotelSegmentDictEng = new Dictionary<string, string>();
+            HotelSegmentDictId = new Dictionary<string, string>();
+
             using (var file = new StreamReader(hotelSegmentFilePath))
             {
                 var line = file.ReadLine();
@@ -64,8 +92,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     line = file.ReadLine();
                     var splittedLine = line.Split('|');
-                    HotelSegmentDictId.Add(splittedLine[0],splittedLine[1]);
-                    HotelSegmentDictEng.Add(splittedLine[0], splittedLine[2]);
+                    HotelSegmentDictEng.Add(splittedLine[0],splittedLine[1]);
+                    HotelSegmentDictId.Add(splittedLine[0], splittedLine[2]);
                 }
             }
             
@@ -73,6 +101,9 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static void PopulateHotelFacilitiesDict(String hotelFacilitiesFilePath)
         {
+            HotelFacilityDictEng = new Dictionary<int, string>();
+            HotelFacilityDictId = new Dictionary<int, string>();
+
             using (var file = new StreamReader(hotelFacilitiesFilePath))
             {
                 var line = file.ReadLine();
@@ -80,14 +111,17 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     line = file.ReadLine();
                     var splittedLine = line.Split('|');
-                    HotelFacilityDictId.Add(Convert.ToInt16(splittedLine[0]), splittedLine[1]);
-                    HotelFacilityDictId.Add(Convert.ToInt16(splittedLine[0]), splittedLine[2]);
+                    HotelFacilityDictEng.Add(Convert.ToInt32(splittedLine[0]), splittedLine[1]);
+                    HotelFacilityDictId.Add(Convert.ToInt32(splittedLine[0]), splittedLine[2]);
                 }
             }
         }
 
         private static void PopulateHotelFacilityGroupDict(String hotelFacilityGroupFilePath)
         {
+            HotelFacilityGroupDictEng = new Dictionary<int, string>();
+            HotelFacilityGroupDictId = new Dictionary<int, string>();
+
             using (var file = new StreamReader(hotelFacilityGroupFilePath))
             {
                 var line = file.ReadLine();
@@ -95,14 +129,17 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     line = file.ReadLine();
                     var splittedLine = line.Split('|');
-                    HotelFacilityGroupDictEng.Add(Convert.ToInt16(splittedLine[0]), splittedLine[1]);
-                    HotelFacilityGroupDictId.Add(Convert.ToInt16(splittedLine[0]), splittedLine[2]);
+                    HotelFacilityGroupDictEng.Add(Convert.ToInt32(splittedLine[0]), splittedLine[1]);
+                    HotelFacilityGroupDictId.Add(Convert.ToInt32(splittedLine[0]), splittedLine[2]);
                 }
             }
         }
 
         private static void PopulateHotelRoomDict(String hotelRoomFilePath)
         {
+            HotelRoomDictEng = new Dictionary<string, string>();
+            HotelRoomDictId = new Dictionary<string, string>();
+
             using (var file = new StreamReader(hotelRoomFilePath))
             {
                 var line = file.ReadLine();
@@ -118,6 +155,9 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static void PopulateHotelRoomTypeDict(String hotelRoomTypeFilePath)
         {
+            HotelRoomTypeDictEng = new Dictionary<string, string>();
+            HotelRoomTypeDictId = new Dictionary<string, string>();
+
             using (var file = new StreamReader(hotelRoomTypeFilePath))
             {
                 var line = file.ReadLine();
@@ -136,8 +176,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        private static void PopulateHotelRoomCharactristicDict(String hotelRoomCharactristicFilePath)
+        private static void PopulateHotelRoomCharacteristicDict(String hotelRoomCharactristicFilePath)
         {
+            HotelRoomCharacteristicDictEng = new Dictionary<string, string>();
+            HotelRoomCharacteristicDictId = new Dictionary<string, string>();
+
             using (var file = new StreamReader(hotelRoomCharactristicFilePath))
             {
                 var line = file.ReadLine();
@@ -146,13 +189,391 @@ namespace Lunggo.ApCommon.Hotel.Service
                     line = file.ReadLine();
                     var splittedLine = line.Split('|');
                     string x;
-                    if (!HotelRoomTypeDictEng.TryGetValue(splittedLine[2], out x))
+                    if (!HotelRoomCharacteristicDictEng.TryGetValue(splittedLine[2], out x))
                     {
                         HotelRoomCharacteristicDictEng.Add(splittedLine[2], splittedLine[10]);
                         HotelRoomCharacteristicDictId.Add(splittedLine[2], splittedLine[13]);
                     }
 
                 }
+            }
+        }
+
+        private static void PopulateHotelRoomFacilityDict(String hotelFacilitiesFilePath)
+        {
+            HotelRoomFacilityDictEng = new Dictionary<int, string>();
+            HotelRoomFacilityDictId = new Dictionary<int, string>();
+
+            using (var file = new StreamReader(hotelFacilitiesFilePath))
+            {
+                var line = file.ReadLine();
+                while (!file.EndOfStream)
+                {
+                    line = file.ReadLine();
+                    var splittedLine = line.Split('|');
+                    if (Convert.ToInt32(splittedLine[0])/1000 == 60)
+                    {
+                        HotelRoomFacilityDictEng.Add(Convert.ToInt32(splittedLine[0]), splittedLine[1]);
+                        HotelRoomFacilityDictId.Add(Convert.ToInt32(splittedLine[0]), splittedLine[2]);
+                    }
+                }
+            }
+        }
+
+        private static void PopulateHotelRoomRateClassDict(String hotelRoomRateClassFilePath)
+        {
+            HotelRoomRateClassDictEng = new Dictionary<string, string>();
+            HotelRoomRateClassDictId = new Dictionary<string, string>();
+
+            using (var file = new StreamReader(hotelRoomRateClassFilePath))
+            {
+                var line = file.ReadLine();
+                while (!file.EndOfStream)
+                {
+                    line = file.ReadLine();
+                    var splittedLine = line.Split('|');
+                    
+                    HotelRoomRateClassDictEng.Add(splittedLine[0], splittedLine[1]);
+                    HotelRoomRateClassDictId.Add(splittedLine[0], splittedLine[2]);
+                }
+            }
+        }
+
+        private static void PopulateHotelRoomRateTypeDict(String hotelRoomRateTypeFilePath)
+        {
+            HotelRoomRateTypeDictEng = new Dictionary<string, string>();
+            HotelRoomRateTypeDictId = new Dictionary<string, string>();
+
+            using (var file = new StreamReader(hotelRoomRateTypeFilePath))
+            {
+                var line = file.ReadLine();
+                while (!file.EndOfStream)
+                {
+                    line = file.ReadLine();
+                    var splittedLine = line.Split('|');
+
+                    HotelRoomRateTypeDictEng.Add(splittedLine[0], splittedLine[1]);
+                    HotelRoomRateTypeDictId.Add(splittedLine[0], splittedLine[2]);
+                }
+            }
+        }
+
+        private static void PopulateHotelRoomPaymentTypeDict(String hotelRoomPaymentTypeFilePath)
+        {
+            HotelRoomPaymentTypeDictEng = new Dictionary<string, string>();
+            HotelRoomPaymentTypeDictId = new Dictionary<string, string>();
+
+            using (var file = new StreamReader(hotelRoomPaymentTypeFilePath))
+            {
+                var line = file.ReadLine();
+                while (!file.EndOfStream)
+                {
+                    line = file.ReadLine();
+                    var splittedLine = line.Split('|');
+
+                    HotelRoomPaymentTypeDictEng.Add(splittedLine[0], splittedLine[1]);
+                    HotelRoomPaymentTypeDictId.Add(splittedLine[0], splittedLine[2]);
+                }
+            }
+        }
+
+        private static void PopulateHotelCountriesDict(String hotelCountriesFilePath)
+        {
+            HotelCountry = new Dictionary<string, string>();
+            HotelCountryIso = new Dictionary<string, string>();
+            HotelCountryIsoName = new Dictionary<string, string>();
+
+            using (var file = new StreamReader(hotelCountriesFilePath))
+            {
+                var line = file.ReadLine();
+                while (!file.EndOfStream)
+                {
+                    line = file.ReadLine();
+                    var splittedLine = line.Split('|');
+                    string x;
+                    HotelCountryIso.Add(splittedLine[0], splittedLine[1]);
+                    HotelCountry.Add(splittedLine[0], splittedLine[2]);
+                    if (!HotelCountryIsoName.TryGetValue(splittedLine[1], out x))
+                    {
+                        HotelCountryIsoName.Add(splittedLine[1], splittedLine[2]);
+                    }
+                }
+            }
+        }
+
+        public string GetHotelSegmentId(string code)
+        {
+            try
+            {
+                return HotelSegmentDictId[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelSegmentEng(string code)
+        {
+            try
+            {
+                return HotelSegmentDictEng[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelFacilityId(int code)
+        {
+            try
+            {
+                return HotelFacilityDictId[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelFacilityEng(int code)
+        {
+            try
+            {
+                return HotelFacilityDictEng[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelFacilityGroupId(int code)
+        {
+            try
+            {
+                return HotelFacilityGroupDictId[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelFacilityGroupEng(int code)
+        {
+            try
+            {
+                return HotelFacilityGroupDictEng[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomId(string code)
+        {
+            try
+            {
+                return HotelRoomDictId[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomEng(string code)
+        {
+            try
+            {
+                return HotelRoomDictEng[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomTypeId(string code)
+        {
+            try
+            {
+                return HotelRoomTypeDictId[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomTypeEng(string code)
+        {
+            try
+            {
+                return HotelRoomTypeDictEng[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomCharacteristicId(string code)
+        {
+            try
+            {
+                return HotelRoomCharacteristicDictId[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomCharacteristicEng(string code)
+        {
+            try
+            {
+                return HotelRoomCharacteristicDictEng[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomFacilityId(int code)
+        {
+            try
+            {
+                return HotelRoomFacilityDictId[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomFacilityEng(int code)
+        {
+            try
+            {
+                return HotelRoomFacilityDictEng[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomRateClassId(string code)
+        {
+            try
+            {
+                return HotelRoomRateClassDictId[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomRateClassEng(string code)
+        {
+            try
+            {
+                return HotelRoomRateClassDictEng[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomRateTypeId(string code)
+        {
+            try
+            {
+                return HotelRoomRateTypeDictId[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomRateTypeEng(string code)
+        {
+            try
+            {
+                return HotelRoomRateTypeDictEng[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomPaymentTypeId(string code)
+        {
+            try
+            {
+                return HotelRoomPaymentTypeDictId[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelRoomPaymentTypeEng(string code)
+        {
+            try
+            {
+                return HotelRoomPaymentTypeDictEng[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelCountryNameByCode(string code)
+        {
+            try
+            {
+                return HotelCountry[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelCountryIsoCode(string code)
+        {
+            try
+            {
+                return HotelCountryIso[code];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelCountryNameByIsoCode(string isoCode)
+        {
+            try
+            {
+                return HotelCountryIsoName[isoCode];
+            }
+            catch
+            {
+                return "";
             }
         }
 

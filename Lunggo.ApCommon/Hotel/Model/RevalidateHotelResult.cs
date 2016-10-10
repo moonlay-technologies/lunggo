@@ -11,5 +11,6 @@ namespace Lunggo.ApCommon.Hotel.Model
         internal bool IsValid { get; set; }
         internal decimal? NewPrice { get; set; }
         internal bool IsPriceChanged { get; set; }
+        internal string RateKey { get; set; }
     }
 }

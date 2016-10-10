@@ -2,6 +2,7 @@
 using System.Web.WebPages;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.BrowserDetection;
@@ -121,6 +122,12 @@ namespace Lunggo.BackendWeb
             var flight = FlightService.GetInstance();
             flight.Init("Config");
         }
+
+        //private static void InitHotelService()
+        //{
+        //    var hotel = HotelService.GetInstance();
+        //    hotel.Init("Config");
+        //}
 
         private static void InitPaymentService()
         {
