@@ -39,14 +39,14 @@
     /*Custom Column*/
     .col-left, col-right, .col-left-result, .col-right-result, .col-xs-left, .col-xs-middle, .col-xs-right, .col-left-hotel, .col-right-hotel, .col-half, .col-left-page, .col-right-page, 
     .col-left-slider, col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right {
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right {
         position: relative;
         min-height: 1px;
     }
 
     .col-left, .col-left-result, .col-right-result, .col-left-hotel, .col-right-hotel, .col-xs-left, .col-xs-middle, .col-xs-right, .col-half, .col-left-page, .col-right-page,
     .col-left-slider, .col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right {float: left;}
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right {float: left;}
     
     .col-right {float: right;}
     
@@ -74,6 +74,7 @@
 
     .wb-left {width: 40%;} .wb-mid {width: 3%;} .wb-right {width: 57%;}
 
+    .ot-left {width: 22%;}  .ot-right {width: 78%;} 
     /*Icon*/
     .star-outline {
         content: '';

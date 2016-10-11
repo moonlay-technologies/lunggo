@@ -4485,12 +4485,12 @@ file: /Assets/travorama20/css/_page_flight.scss
     margin-bottom: 15px; }
   .page-hotel .col-left, .page-hotel col-right, .page-hotel .col-left-result, .page-hotel .col-right-result, .page-hotel .col-xs-left, .page-hotel .col-xs-middle, .page-hotel .col-xs-right, .page-hotel .col-left-hotel, .page-hotel .col-right-hotel, .page-hotel .col-half, .page-hotel .col-left-page, .page-hotel .col-right-page,
   .page-hotel .col-left-slider, .page-hotel col-right-slider, .page-hotel .col-left-rs, .page-hotel .col-right-rs, .page-hotel .rb-left, .page-hotel .rb-mid, .page-hotel .rb-right, .page-hotel .room-sort-left, .page-hotel .room-sort-mid, .page-hotel .room-sort-right, .page-hotel .room-left, .page-hotel .room-right,
-  .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right {
+  .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right {
     position: relative;
     min-height: 1px; }
   .page-hotel .col-left, .page-hotel .col-left-result, .page-hotel .col-right-result, .page-hotel .col-left-hotel, .page-hotel .col-right-hotel, .page-hotel .col-xs-left, .page-hotel .col-xs-middle, .page-hotel .col-xs-right, .page-hotel .col-half, .page-hotel .col-left-page, .page-hotel .col-right-page,
   .page-hotel .col-left-slider, .page-hotel .col-right-slider, .page-hotel .col-left-rs, .page-hotel .col-right-rs, .page-hotel .rb-left, .page-hotel .rb-mid, .page-hotel .rb-right, .page-hotel .room-sort-left, .page-hotel .room-sort-mid, .page-hotel .room-sort-right, .page-hotel .room-left, .page-hotel .room-right,
-  .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right {
+  .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right {
     float: left; }
   .page-hotel .col-right {
     float: right; }
@@ -4546,6 +4546,10 @@ file: /Assets/travorama20/css/_page_flight.scss
     width: 3%; }
   .page-hotel .wb-right {
     width: 57%; }
+  .page-hotel .ot-left {
+    width: 22%; }
+  .page-hotel .ot-right {
+    width: 78%; }
   .page-hotel .star-outline, .page-hotel .so-1, .page-hotel .star.e-star.star-4:after, .page-hotel .so-2, .page-hotel .star.e-star.star-3:after, .page-hotel .so-3, .page-hotel .star.e-star.star-2:after, .page-hotel .so-4, .page-hotel .star.e-star:after {
     content: '';
     display: inline-block;
@@ -6625,7 +6629,11 @@ file : /Assets/travorama20/css/_page_password.scss
   .page-account form input {
     text-align: center;
     padding: 12px 0;
-    height: auto; }
+    height: auto;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px; }
   .page-account form a {
     font-weight: bold;
     color: inherit; }
@@ -6637,22 +6645,55 @@ file : /Assets/travorama20/css/_page_password.scss
   margin-left: 0;
   margin-right: 0; }
 
+.page-account-login .login-form {
+  float: right; }
+
 .page-account-login .form-section {
-  background-image: url(/Assets/images/login-bg.jpg); }
+  background-image: url(/Assets/images/login-bg.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 520px; }
   .page-account-login .form-section h1 {
-    font-size: 45px;
-    margin-bottom: 12px; }
+    font-size: 19px;
+    margin: 0;
+    line-height: 30px; }
+  .page-account-login .form-section h4 {
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0; }
+  .page-account-login .form-section form[name="loginForm"] {
+    width: 300px;
+    border-radius: 3px;
+    padding: 20px 15px; }
+    .page-account-login .form-section form[name="loginForm"] input[name="RememberMe"] {
+      vertical-align: text-bottom; }
+
+.page-account-register .register-form {
+  float: right; }
+
+.page-account-register .register-title {
+  margin-left: 250px; }
 
 .page-account-register .form-section {
-  background-image: url(/Assets/images/register-bg.jpg); }
+  background-image: url(/Assets/images/register-bg.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 520px; }
   .page-account-register .form-section h1 {
     font-size: 40px; }
 
 .page-account-register hgroup {
   text-align: right;
-  margin-bottom: 24px; }
+  margin-bottom: 20px; }
   .page-account-register hgroup h1, .page-account-register hgroup h4 {
     font-weight: bold; }
+
+.page-account-register form[name="registerForm"] {
+  width: 300px;
+  border-radius: 3px;
+  padding: 20px 15px; }
 
 .section-benefit {
   padding: 30px 0; }
@@ -6739,11 +6780,14 @@ file : /Assets/travorama20/css/_page_password.scss
   .page-account-profile .account-content .content-header {
     border-bottom: 1px solid #ccc; }
     .page-account-profile .account-content .content-header h2 {
-      margin-top: 0; }
+      margin: 0 0 15px;
+      text-transform: uppercase;
+      font-size: 19px; }
   .page-account-profile .account-content form {
     font-size: 12px; }
     .page-account-profile .account-content form header {
-      display: block; }
+      display: block;
+      margin-bottom: 0; }
       .page-account-profile .account-content form header:after {
         display: block;
         width: 100%;
@@ -6760,20 +6804,52 @@ file : /Assets/travorama20/css/_page_password.scss
         position: absolute;
         right: 6px;
         top: 6px; }
+      .page-account-profile .account-content form .form-group > .col-xs-3 {
+        padding: 0; }
     .page-account-profile .account-content form[name="passwordForm"] {
-      border-top: 1px solid #ccc;
-      padding-top: 18px;
-      margin-top: 18px; }
+      border-top: 1px solid #ccc; }
+    .page-account-profile .account-content form[name="profileForm"], .page-account-profile .account-content form[name="passwordForm"] {
+      padding: 15px 0; }
+  .page-account-profile .account-content .history-content .content-body {
+    background: #fff; }
+  .page-account-profile .account-content .history-content .tab-header {
+    margin-top: 15px; }
+    .page-account-profile .account-content .history-content .tab-header > nav > ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: inline-block;
+      width: 100%; }
+      .page-account-profile .account-content .history-content .tab-header > nav > ul > li {
+        width: 50%;
+        background: #ccc;
+        display: inline;
+        float: left;
+        padding: 12px;
+        text-align: center;
+        text-transform: uppercase; }
+        .page-account-profile .account-content .history-content .tab-header > nav > ul > li.active {
+          background: #1daee4; }
+          .page-account-profile .account-content .history-content .tab-header > nav > ul > li.active a {
+            color: #fff; }
+        .page-account-profile .account-content .history-content .tab-header > nav > ul > li a {
+          color: #999;
+          font-weight: 700;
+          font-size: 14px;
+          text-decoration: none;
+          padding: 0 100px; }
+  .page-account-profile .account-content .history-content .tab-content {
+    padding: 15px 15px; }
 
 .page-account-profile .order-wrapper {
-  margin-top: 24px; }
-  .page-account-profile .order-wrapper .order.flight {
+  margin-top: 15px; }
+  .page-account-profile .order-wrapper .order.flight, .page-account-profile .order-wrapper .order.hotel {
     background: #f1f1f1;
-    padding: 24px;
-    background-image: url(/Assets/images/order-flight-list-bg.png);
     background-position: top left;
-    background-repeat: no-repeat;
-    padding-left: 50px; }
+    background-repeat: no-repeat; }
+  .page-account-profile .order-wrapper .order.flight {
+    background-image: url(/Assets/images/order-flight-list-bg.png);
+    padding: 10px 55px; }
     .page-account-profile .order-wrapper .order.flight header {
       padding: 5px;
       font-size: 12px;
@@ -6794,12 +6870,27 @@ file : /Assets/travorama20/css/_page_password.scss
         color: #fe0001; }
       .page-account-profile .order-wrapper .order.flight section .detail .status.pending {
         color: #b551ea; }
+    .page-account-profile .order-wrapper .order.flight section .action {
+      float: right; }
     .page-account-profile .order-wrapper .order.flight + .order {
       border-top: 1px solid #ccc; }
+  .page-account-profile .order-wrapper .order.hotel {
+    background-image: url(/Assets/images/order-hotel-list-bg.png);
+    padding: 15px 55px; }
+    .page-account-profile .order-wrapper .order.hotel .ot {
+      margin-bottom: 8px; }
+    .page-account-profile .order-wrapper .order.hotel .action-hotel {
+      position: absolute;
+      margin-top: -35px;
+      right: 0;
+      margin-right: 75px; }
+    .page-account-profile .order-wrapper .order.hotel .order-bottom .ot-left:after {
+      content: ':';
+      display: inline-block;
+      float: right;
+      margin-right: 3px; }
 
 .page-account-profile .order-detail .content-body > div + div {
-  margin-top: 24px;
-  padding-top: 24px;
   border-top: 1px solid #ccc; }
 
 .page-account-profile .order-detail h2, .page-account-profile .order-detail h4 {
@@ -6839,6 +6930,8 @@ file : /Assets/travorama20/css/_page_password.scss
 
 .page-account-profile .order-detail .form .control-label {
   text-align: left; }
+  .page-account-profile .order-detail .form .control-label.col-xs-3 {
+    padding: 0; }
 
 .page-account-profile .order-detail .form label + div:before {
   content: ":";
@@ -6876,6 +6969,18 @@ file : /Assets/travorama20/css/_page_password.scss
       padding: 6px; }
     .page-account-profile .order-detail .passenger-list li .row div + div {
       background: #e2e2e2; }
+
+.page-account-profile .order-detail .info-buyer, .page-account-profile .order-detail .info-flight {
+  padding: 15px 0; }
+
+.page-account-profile .site-content > .container {
+  max-width: none !important; }
+
+.page-account-register .form-section > .container, .page-account-login .form-section > .container {
+  max-width: none !important; }
+
+.page-account-register .section-benefit > .container, .page-account-login .section-benefit > .container {
+  max-width: none !important; }
 
 .page-static .site-content {
   padding: 0;

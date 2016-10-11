@@ -302,6 +302,7 @@
       <DependentUpon>eticket.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\eticket.scss" />
+    <Content Include="Assets\images\order-hotel-list-bg.png" />
     <Content Include="Assets\travorama20\images\Hotel\bed.png" />
     <Content Include="Assets\travorama20\images\Hotel\blue-sprite.png" />
     <Content Include="Assets\travorama20\images\Hotel\down.png" />
