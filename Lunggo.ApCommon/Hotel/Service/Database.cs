@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
@@ -10,7 +11,7 @@ using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
-using Pax = Lunggo.ApCommon.Product.Model.Pax;
+//using Pax = Lunggo.ApCommon.Product.Model.Pax;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -27,7 +28,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 if (reservationRecord == null)
                     return null;
                 
-
                 var hotelReservation = new HotelReservation
                 {
                     RsvNo = rsvNo,
@@ -37,20 +37,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     State = ReservationState.GetFromDb(rsvNo),
                     HotelDetails = new HotelDetail()
                 };
-
-                //HotelDetails = new HotelDetail
-                //    {
-                //        HotelCode = reservationRecord.HotelCd.GetValueOrDefault(),
-                //        HotelName = reservationRecord.HotelName,
-                //        CheckInDate = reservationRecord.CheckInDate.GetValueOrDefault(),
-                //        CheckOutDate = reservationRecord.CheckOutDate.GetValueOrDefault(),
-                //        TotalAdult = reservationRecord.AdultCount.GetValueOrDefault(),
-                //        TotalChildren = reservationRecord.ChildCount.GetValueOrDefault(),
-                //        SpecialRequest = reservationRecord.SpecialRequest,
-                //        Rooms    = new List<HotelRoom>(),
-                        
-                //    },
-                if (hotelReservation.Contact == null || hotelReservation.Payment == null || hotelReservation.State == null)
+                //|| hotelReservation.State == null
+                if (hotelReservation.Contact == null || hotelReservation.Payment == null )
                     return null;
 
                 var hotelDetailRecords = HotelReservationDetailsTableRepo.GetInstance()
@@ -74,7 +62,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     };
 
                     var hotelRoomRecords = HotelRoomTableRepo.GetInstance()
-                    .Find(conn, new HotelRoomTableRecord { Id = hotelDetailRecord.Id }).ToList();
+                    .Find(conn, new HotelRoomTableRecord { DetailsId = hotelDetailRecord.Id }).ToList();
 
                     if (hotelRoomRecords.Count == 0)
                         return null;
@@ -92,7 +80,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             return null;
 
                         var rateRecords = HotelRateTableRepo.GetInstance()
-                            .Find(conn, new HotelRateTableRecord { Id = hotelRoomRecord.Id }).ToList();
+                            .Find(conn, new HotelRateTableRecord { RoomId =  hotelRoomRecord.Id }).ToList();
 
                         if (rateRecords.Count == 0)
                             return null;
@@ -101,7 +89,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         {
                             var rate = new HotelRate
                             {
-                                RateKey = rateRecord.Key,
+                                RateKey = rateRecord.RateKey,
                                 AdultCount = rateRecord.AdultCount.GetValueOrDefault(),
                                 ChildCount = rateRecord.ChildCount.GetValueOrDefault(),
                                 Boards = rateRecord.Board,
@@ -117,11 +105,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                             hotelRoom.Rates.Add(rate);
                         }
 
-                        hotelReservation.HotelDetails.Rooms.Add(hotelRoom);
-                    }              
+                        hotelDetail.Rooms.Add(hotelRoom);
+                    }
+
+                    hotelReservation.HotelDetails = hotelDetail;
                 }
                 
-
                 var paxRecords = PaxTableRepo.GetInstance()
                         .Find(conn, new PaxTableRecord { RsvNo = rsvNo }).ToList();
 
@@ -164,7 +153,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                 ReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
                 reservation.Contact.InsertToDb(reservation.RsvNo);
-                reservation.State.InsertToDb(reservation.RsvNo);
+                
+                //reservation.State.InsertToDb(reservation.RsvNo);
                 reservation.Payment.InsertToDb(reservation.RsvNo);
                 
                 var hotelRsvDetailsRecord = new HotelReservationDetailsTableRecord()
@@ -192,6 +182,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         Id = roomId,
                         Code = room.RoomCode,
+                        Type = room.Type,
                         DetailsId = hotelRsvDetailsRecord.Id,
                         InsertDate = DateTime.UtcNow,
                         InsertBy = "LunggoSystem",
@@ -215,10 +206,37 @@ namespace Lunggo.ApCommon.Hotel.Service
                             InsertBy = "LunggoSystem",
                             InsertPgId = "0",
                             PriceId = rate.Price.InsertToDb(),
+                            RoomId = roomId,
+                            RoomCount = rate.RoomCount,
+                            RateKey =  rate.RateKey,
+                            PaymentType = rate.PaymentType,
                         };
 
                         HotelRateTableRepo.GetInstance().Insert(conn, rateRecord);
                     }
+                }
+                foreach (var passenger in reservation.Pax)
+                {
+
+                    var passengerRecord = new PaxTableRecord
+                    {
+                        Id = PaxIdSequence.GetInstance().GetNext(),
+                        RsvNo = reservation.RsvNo,
+                        TypeCd = PaxTypeCd.Mnemonic(passenger.Type),
+                        GenderCd = GenderCd.Mnemonic(passenger.Gender),
+                        TitleCd = TitleCd.Mnemonic(passenger.Title),
+                        FirstName = passenger.FirstName,
+                        LastName = passenger.LastName,
+                        BirthDate = passenger.DateOfBirth.HasValue ? passenger.DateOfBirth.Value.ToUniversalTime() : (DateTime?)null,
+                        NationalityCd = passenger.Nationality,
+                        PassportNumber = passenger.PassportNumber,
+                        PassportExpiryDate = passenger.PassportExpiryDate.HasValue ? passenger.PassportExpiryDate.Value.ToUniversalTime() : (DateTime?)null,
+                        PassportCountryCd = passenger.PassportCountry,
+                        InsertBy = "LunggoSystem",
+                        InsertDate = DateTime.UtcNow,
+                        InsertPgId = "0"
+                    };
+                    PaxTableRepo.GetInstance().Insert(conn, passengerRecord);
                 }
             }
         }

@@ -29,13 +29,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             redisDb.StringSet(redisKey, redisValue, expiry - timeNow);
         }
 
-        public HotelDetail GetSelectedHotelDetailsFromCache(string token)
+        public HotelDetailsBase GetSelectedHotelDetailsFromCache(string token)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "hoteldetails:" + token;
+            var redisKey = "token:" + token;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var cacheObject = redisDb.StringGet(redisKey);
-            var hotelDetails = cacheObject.DeconvertTo<HotelDetail>();
+            var cacheObject = (string) redisDb.StringGet(redisKey);
+            var hotelDetails = cacheObject.Substring(13).Deserialize<HotelDetailsBase>();
             return hotelDetails;
         }
 

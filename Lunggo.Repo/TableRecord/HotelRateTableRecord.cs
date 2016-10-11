@@ -47,13 +47,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("RoomCount");
 		    }
 		}
-		public String Key
+		public String RateKey
 		{
-		    get { return _Key; }
+		    get { return _RateKey; }
 		    set
 		    {
-		        _Key = value;
-		        IncrementLog("Key");
+		        _RateKey = value;
+		        IncrementLog("RateKey");
 		    }
 		}
 		public String PaymentType
@@ -170,7 +170,7 @@ namespace Lunggo.Repository.TableRecord
 		private long? _RoomId;
 		private long? _PriceId;
 		private int? _RoomCount;
-		private String _Key;
+		private String _RateKey;
 		private String _PaymentType;
 		private String _Board;
 		private Decimal? _CancellationFee;
@@ -218,7 +218,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("RoomId", false),
 				new ColumnMetadata("PriceId", false),
 				new ColumnMetadata("RoomCount", false),
-				new ColumnMetadata("Key", false),
+				new ColumnMetadata("RateKey", false),
 				new ColumnMetadata("PaymentType", false),
 				new ColumnMetadata("Board", false),
 				new ColumnMetadata("CancellationFee", false),
