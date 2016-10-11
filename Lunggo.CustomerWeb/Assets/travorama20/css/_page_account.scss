@@ -197,8 +197,18 @@ file : /Assets/travorama20/css/_page_password.scss
                 }
                 &+.order {border-top:$border-default;}
             }
-            &.hotel {background-image:url(/Assets/images/order-hotel-list-bg.png); padding: 15px 55px;
+            &.hotel {background-image:url(/Assets/images/order-hotel-list-bg.png); padding: 15px 55px; padding-right: 40px;
                 .ot {margin-bottom: 8px;}
+                .wt-location {margin: 5px 0;
+                    &:before {
+                        content: '';
+                        display: inline-block;
+                        background: url(/Assets/travorama20/images/Hotel/location.png) no-repeat;
+                        width: 12px;
+                        height: 17px;
+                        vertical-align: middle;
+                    }
+                }
                 .action-hotel {
                     position: absolute;
                     margin-top: -35px;

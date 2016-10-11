@@ -6876,9 +6876,19 @@ file : /Assets/travorama20/css/_page_password.scss
       border-top: 1px solid #ccc; }
   .page-account-profile .order-wrapper .order.hotel {
     background-image: url(/Assets/images/order-hotel-list-bg.png);
-    padding: 15px 55px; }
+    padding: 15px 55px;
+    padding-right: 40px; }
     .page-account-profile .order-wrapper .order.hotel .ot {
       margin-bottom: 8px; }
+    .page-account-profile .order-wrapper .order.hotel .wt-location {
+      margin: 5px 0; }
+      .page-account-profile .order-wrapper .order.hotel .wt-location:before {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/travorama20/images/Hotel/location.png) no-repeat;
+        width: 12px;
+        height: 17px;
+        vertical-align: middle; }
     .page-account-profile .order-wrapper .order.hotel .action-hotel {
       position: absolute;
       margin-top: -35px;

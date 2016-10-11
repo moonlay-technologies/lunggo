@@ -1295,11 +1295,6 @@
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
     <Content Include="Assets\travorama20\css\help_section.css" />
     <Content Include="Assets\travorama20\css\help_section.min.css" />
-    <Content Include="Assets\travorama20\css\_footer.scss" />
-    <Content Include="Assets\travorama20\css\_header.scss" />
-    <Content Include="Assets\travorama20\css\_page_index.scss" />
-    <Content Include="Assets\travorama20\css\_screenLarge.scss" />
-    <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\countries.js" />
     <Content Include="Assets\travorama20\js\checkoutController.js" />
@@ -1404,11 +1399,6 @@
     <Content Include="Assets\script\b3r4rs2h.rlx" />
     <Content Include="Assets\script\jx0xoqwq.o1w" />
     <Content Include="Assets\script\zlgay2xd.w25" />
-    <Content Include="Assets\travorama20\css\_footer.scss" />
-    <Content Include="Assets\travorama20\css\_header.scss" />
-    <Content Include="Assets\travorama20\css\_page_index.scss" />
-    <Content Include="Assets\travorama20\css\_screenLarge.scss" />
-    <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\travorama20\css\_page_flight.scss" />
     <Content Include="Assets\travorama20\css\_page_checkout.scss" />
     <Content Include="Assets\bootstrap\bootstrap\mixins\_alerts.scss" />
@@ -1517,6 +1507,11 @@
     <Content Include="Assets\vendor\flexslider\fonts\flexslider-icon.eot" />
     <Content Include="Assets\vendor\flexslider\fonts\flexslider-icon.ttf" />
     <Content Include="Assets\vendor\flexslider\fonts\flexslider-icon.woff" />
+    <Content Include="Assets\travorama20\css\_footer.scss" />
+    <Content Include="Assets\travorama20\css\_header.scss" />
+    <Content Include="Assets\travorama20\css\_page_index.scss" />
+    <Content Include="Assets\travorama20\css\_screenLarge.scss" />
+    <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
