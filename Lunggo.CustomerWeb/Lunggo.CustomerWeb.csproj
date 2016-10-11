@@ -341,7 +341,6 @@
     <Content Include="Assets\css\invoice.scss" />
     <Content Include="Areas\Api\Views\web.config" />
     <Content Include="Assets\vendor\flexslider\flexslider.less" />
-    <None Include="Assets\css\jquery-ui.min.css.bak" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\jquery.range.css" />
     <Content Include="Assets\css\landingPage.css">
@@ -884,7 +883,6 @@
     <Content Include="Assets\images\flight-toggle-up.png" />
     <Content Include="Assets\images\flight-weight.png" />
     <Content Include="Assets\images\form-selection-sprite.png" />
-    <Content Include="Assets\images\form-selection-sprite.png.bak" />
     <Content Include="Assets\images\googlePlay.png" />
     <Content Include="Assets\images\gray-bg.png" />
     <Content Include="Assets\images\grey-bg.png" />
@@ -1481,7 +1479,6 @@
     <Content Include="Assets\mobile\css\application.scss" />
     <Content Include="Assets\mobile\css\_page_flight.scss" />
     <Content Include="Assets\mobile\css\_page_checkout.scss" />
-    <Content Include="Assets\images\subscribe-bg.jpg.bak" />
     <Content Include="Assets\mobile\css\_page_account.scss" />
     <Content Include="Assets\mobile\css\_page_static.scss" />
     <Content Include="Assets\mobile\css\_page_home.scss" />
@@ -2840,13 +2837,11 @@
     <Content Include="Views\StaticPage\_SectionHowTo.cshtml" />
     <Content Include="Views\Flight\Search-Single.mobile.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.mobile.cshtml" />
-    <None Include="Views\Flight\Checkout.mobile.cshtml.bak" />
     <Content Include="Views\Flight\Eticket.cshtml" />
     <Content Include="Views\Flight\Confirmation.mobile.cshtml" />
     <Content Include="Views\Flight\Payment.cshtml" />
     <Content Include="Views\Flight\Payment.mobile.cshtml" />
     <Content Include="Views\Flight\Eticket.mobile.cshtml" />
-    <None Include="Views\Flight\SearchResultList-Single.mobile.cshtml.bak" />
     <Content Include="Views\Template\eticket3.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.cshtml" />
     <Content Include="Views\Template\DisableBack.cshtml" />
@@ -2923,7 +2918,6 @@
     <Content Include="Views\UW620OrderHistory\OrderHistory.mobile.cshtml" />
     <Content Include="Views\Template\PendingConfirmed.cshtml" />
     <Content Include="Views\Template\SlightDelayEmail.cshtml" />
-    <None Include="Views\UW000TopPage\Index.mobile.cshtml.bak" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
