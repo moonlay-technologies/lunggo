@@ -154,11 +154,17 @@ namespace Lunggo.ApCommon.Hotel.Model
         public decimal NetFare { get; set; }
         [JsonProperty("discount", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Discount { get; set; }
+        [JsonProperty("totalAdult", NullValueHandling = NullValueHandling.Ignore)]
         public int TotalAdult { get; set; }
+        [JsonProperty("totalChildren", NullValueHandling = NullValueHandling.Ignore)]
         public int TotalChildren { get; set; }
+        [JsonProperty("checkIn", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime CheckInDate { get; set; }
+        [JsonProperty("checkOut", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime CheckOutDate { get; set; }
+        [JsonProperty("night", NullValueHandling = NullValueHandling.Ignore)]
         public int NightCount { get; set; }
+        [JsonProperty("specialRq", NullValueHandling = NullValueHandling.Ignore)]
         public string SpecialRequest { get; set; }
     }
 }

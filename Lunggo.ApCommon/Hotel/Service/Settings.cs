@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             throw new NotImplementedException();
         }
 
-        private HotelService()
+        public HotelService()
         {
 
         }

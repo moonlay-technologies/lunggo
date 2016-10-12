@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
+using Lunggo.ApCommon.Hotel.Query;
+using Lunggo.Framework.Documents;
+using Microsoft.Azure.Documents;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -11,10 +16,19 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public GetRoomDetailOutput GetRoomDetail(GetRoomDetailInput roomDetailInput)
         {
-            var roomType =  GetHotelRoomTypeId(roomDetailInput.RoomCode);
-            //Get Room Detail by RoomCode from room.csv and roomDetail in DocDB
-            //Mapping data nya ke dalam Output
-            return new GetRoomDetailOutput();
+            //First, take the single room from docDB
+            var document = DocumentService.GetInstance();
+            var searchResultData = document.Execute<HotelRoom>(new GetRoomDetailFromSearchResult(), new { roomDetailInput.SearchId, roomDetailInput.HotelCode,roomDetailInput.RoomCode }).SingleOrDefault();
+            if (searchResultData != null)
+            {
+                return new GetRoomDetailOutput
+                {
+                    Room = searchResultData
+                };
+            }
+            
+            else
+                return new GetRoomDetailOutput();
         }
     }
 

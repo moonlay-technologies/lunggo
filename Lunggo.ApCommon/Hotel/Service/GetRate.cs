@@ -23,7 +23,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     foreach (var rate in room.Rates)
                     {
-                        rate.RegsId = EncryptRegsId(searchResultData.HotelCode, room.RoomCode, rate.RateKey);
+                        rate.RegsId = EncryptRegsId(hotelRateInput.HotelCode, room.RoomCode, rate.RateKey);
                     }
                 }
             }
@@ -41,7 +41,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         }
         public string EncryptRegsId(int hotelCode, string roomCode, string rateKey)
         {
-            return hotelCode + "|" + roomCode + "|" + rateKey;
+            return hotelCode + "-" + roomCode + "-" + rateKey;
         }
     }
 }
