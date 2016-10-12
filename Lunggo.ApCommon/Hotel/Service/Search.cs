@@ -22,7 +22,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //Take data from SearchResult
                 var searchResult = GetAllSearchHotelResultFromDocument(input.SearchId);
                 //do return
-                var hotelList = new List<HotelDetail>();
+                List<HotelDetail> hotelList;
                 if (input.StartPage != 0 && input.EndPage != 0)
                 {
                     hotelList = searchResult.HotelDetails.Skip(input.StartPage).Take(input.EndPage).ToList();
@@ -34,7 +34,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return new SearchHotelOutput
                 {
                     SearchId = searchResult.SearchId,
-                    HotelDetailLists = hotelList
+                    HotelDetailLists = ConvertToHotelDetailForDisplay(hotelList)
                 };
             }
             else
@@ -67,7 +67,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     return new SearchHotelOutput
                     {
                         SearchId = result.SearchId,
-                        HotelDetailLists = result.HotelDetails.Take(100).ToList(),
+                        HotelDetailLists = ConvertToHotelDetailForDisplay(result.HotelDetails).Take(100).ToList(),
                         StartPage = 1,
                         EndPage = 100,
                     };

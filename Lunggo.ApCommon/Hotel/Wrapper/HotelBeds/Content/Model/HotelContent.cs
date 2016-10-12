@@ -42,8 +42,14 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
     public class Image
     {
         public int order;
-        public string imageTypeCode;
+        public Types type;
         public string path;
+    }
+
+    public class Types
+    {
+        public string code { get; set; }
+        public Description description { get; set; }
     }
 
     public class Coordinates
@@ -56,6 +62,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
     {
         public int distance;
         public string terminalCode;
+        public Description name;
+        public Description description;
     }
 
     public class Room

@@ -13,6 +13,8 @@ using Lunggo.Framework.Extension;
 using Lunggo.Framework.TicketSupport.ZendeskClass;
 using Microsoft.Data.Edm.Csdl;
 using Lunggo.Framework.Documents;
+using Image = Lunggo.ApCommon.Hotel.Model.Image;
+using Terminal = Lunggo.ApCommon.Hotel.Model.Terminal;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.Content
 {
@@ -71,10 +73,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                                 City = hotelRS.city == null ? null : hotelRS.city.content,
                                 PostalCode = hotelRS.postalCode,
                                 StarRating = hotelRS.categoryCode,
-                                Terminals =
-                                    hotelRS.terminals == null
-                                        ? null
-                                        : hotelRS.terminals.Select(p => p.terminalCode).ToList(),
+                                Terminals = hotelRS.terminals == null?null:hotelRS.terminals.Select(p => new Terminal()
+                                {
+                                       Name = p.name,
+                                       TerminalCode = p.terminalCode,
+                                       Distance = p.distance,
+                                       Description = p.description
+                                }).ToList(),
                                 ZoneCode = hotelRS.zoneCode,
                                 CountryCode = hotelRS.countryCode,
                                 Pois = hotelRS.InterestPoints == null
@@ -95,6 +100,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                                     : hotelRS.rooms.Select(p => new HotelRoom
                                     {
                                         RoomCode = p.roomCode,
+                                        Type = p.roomType,
+                                        characteristicCd = p.characteristicCode,
                                         Facilities = p.roomFacilities == null ? null : p.roomFacilities.Select(q => new HotelRoomFacilities
                                         {
                                             FacilityCode = q.facilityCode,
@@ -107,7 +114,12 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                                     FacilityGroupCode = p.facilityGroupCode
                                 }).ToList(),
                                 DestinationCode = hotelRS.destinationCode,
-                                ImageUrl = hotelRS.images == null ? null : hotelRS.images.Select(p => p.path).ToList(),
+                                ImageUrl = hotelRS.images == null ? null : hotelRS.images.Select(p => new Image
+                                {
+                                    Order = p.order,
+                                    Path = p.path,
+                                    Type = p.type,
+                                }).ToList(),
 
                             };
                             var hotelDesc = new HotelDescriptions

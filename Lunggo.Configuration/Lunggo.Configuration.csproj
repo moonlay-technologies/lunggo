@@ -176,6 +176,10 @@
     <None Include="Config\Common\Airline.csv" />
     <None Include="Config\Common\Airport.csv" />
     <None Include="Config\Common\Country.csv" />
+    <None Include="Config\Common\HotelAccomodation.csv" />
+    <None Include="Config\Common\HotelBoard.csv" />
+    <None Include="Config\Common\HotelCategory.csv" />
+    <None Include="Config\Common\HotelChain.csv" />
     <None Include="Config\Common\HotelCountries.csv" />
     <None Include="Config\Common\HotelFacilities.csv" />
     <None Include="Config\Common\HotelFacilityGroup.csv" />

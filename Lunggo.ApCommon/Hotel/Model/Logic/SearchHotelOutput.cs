@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         [JsonProperty("searchId", NullValueHandling = NullValueHandling.Ignore)]
         public string SearchId { get; set; }
         [JsonProperty("hotels", NullValueHandling = NullValueHandling.Ignore)]
-        public List<HotelDetail> HotelDetailLists { get; set; }
+        public List<HotelDetailForDisplay> HotelDetailLists { get; set; }
         public DateTime? ExpiryTime { get; set; }
         public int StartPage { get; set; }
         public int EndPage { get; set; }

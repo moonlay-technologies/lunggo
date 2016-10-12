@@ -234,6 +234,7 @@
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
     <Compile Include="Hotel\Constant\CheckRateStatus.cs" />
+    <Compile Include="Hotel\Model\HotelFacility.cs" />
     <Compile Include="Hotel\Model\HotelFilter.cs" />
     <Compile Include="Hotel\Model\HotelRoomFacilities.cs" />
     <Compile Include="Hotel\Model\HotelSorting.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="Hotel\Service\Caching.cs" />
     <Compile Include="Hotel\Service\Database.cs" />
     <Compile Include="Hotel\Service\Issue.cs" />
+    <Compile Include="Hotel\Service\ModelConversion.cs" />
     <Compile Include="Hotel\Service\Search.cs" />
     <Compile Include="Hotel\Service\Select.cs" />
     <Compile Include="Hotel\Service\Book.cs" />
