@@ -303,6 +303,15 @@
     </Content>
     <Content Include="Assets\css\eticket.scss" />
     <Content Include="Assets\images\order-hotel-list-bg.png" />
+    <Content Include="Assets\mobile\images\adult.png" />
+    <Content Include="Assets\mobile\images\child.png" />
+    <Content Include="Assets\mobile\images\date.png" />
+    <Content Include="Assets\mobile\images\find.png" />
+    <Content Include="Assets\mobile\images\flight-blue.png" />
+    <Content Include="Assets\mobile\images\flight-grey.png" />
+    <Content Include="Assets\mobile\images\hotel-blue.png" />
+    <Content Include="Assets\mobile\images\hotel-grey.png" />
+    <Content Include="Assets\mobile\images\time.png" />
     <Content Include="Assets\travorama20\images\Hotel\bed.png" />
     <Content Include="Assets\travorama20\images\Hotel\blue-sprite.png" />
     <Content Include="Assets\travorama20\images\Hotel\down.png" />
@@ -1509,6 +1518,7 @@
     <Content Include="Assets\travorama20\css\_page_index.scss" />
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
