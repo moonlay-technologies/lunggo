@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    ViewBag.BodyClass = "page-hotel page-search";
+    ViewBag.Title = "Pencarian Hotel";
+}
+
+@section AdditionalCSS{
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+}
+
+@section AdditionalJS {
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+}
+
+@section PageJS{
+}
+
+<div class="travorama-hotel-mobile">
+    <div class="top-content">
+        <div class="hotel-summary">
+            <div class="summary-left">
+                <div><b>Denpasar</b>, 2 Kamar</div>
+                <div class="semibold-txt">1 Malam (4 Okt 2016 - 5 Okt 2016)</div>
+            </div>
+            <a class="summary-right"><span>GANTI</span></a>
+        </div>
+        <div class="hotel-sort-filter clearfix">
+            <div class="hotel-sort-filter-action">
+                <a href="#">PETA</a>
+                <a href="#">FILTER</a>
+                <a href="#">SORTIR</a>
+            </div>
+        </div>
+    </div>
+</div>

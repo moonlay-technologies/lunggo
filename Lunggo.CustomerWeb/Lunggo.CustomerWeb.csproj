@@ -1507,7 +1507,7 @@
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff2" />
-    <Content Include="Assets\travorama20\css\_travorama_hotel.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel_detail.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel_search.scss" />
     <Content Include="Assets\vendor\flexslider\fonts\flexslider-icon.eot" />
@@ -1519,6 +1519,7 @@
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\mobile\css\_page_hotel.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel_search.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2886,10 +2887,12 @@
     <Content Include="Views\StaticPage\GlobalError.cshtml" />
     <Content Include="Views\StaticPage\GlobalError.mobile.cshtml" />
     <Content Include="Views\Hotel\DetailHotel.cshtml" />
-    <Content Include="Views\Hotel\Shared\_PageSlider.cshtml" />
-    <Content Include="Views\Hotel\Shared\_BreadCrumb.cshtml" />
+    <Content Include="Views\Hotel\Shared\Desktop\_PageSlider.cshtml" />
+    <Content Include="Views\Hotel\Shared\Desktop\_BreadCrumb.cshtml" />
     <Content Include="Views\Hotel\Checkout.cshtml" />
     <Content Include="Views\Shared\travorama20\_SearchHotel.cshtml" />
+    <Content Include="Views\Hotel\Search.mobile.cshtml" />
+    <Content Include="Views\Hotel\Shared\Mobile\_TopContent.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

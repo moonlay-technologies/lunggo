@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    ViewBag.BodyClass = "page-hotel page-search";
+    ViewBag.Title = "Pencarian Hotel";
+}
+
+@section AdditionalCSS{
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+}
+
+@section AdditionalJS {
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+}
+
+@section PageJS{
+}
+
+<div class="travorama-hotel-mobile">
+    @Html.Partial("/Views/Hotel/Shared/Mobile/_TopContent.cshtml")
+
+    <div class="search-list">
+        <div class="hotel-list-container">
+            <div class="hotel-list clearfix">
+                <div class="col-left-hotel"><img src="/Assets/mobile/images/Hotel/hotel-list-lg.jpg" alt="Hotel" /></div>
+                <div class="col-right-hotel">
+                    <span class="blue-txt bg">Bliss Hotel Singapore</span>
+                    <div class="star star-5"></div>
+                    <div class="review clearfix">
+                        <div class="col-half left">
+                            <b><span class="md-txt blue-txt">8.0</span> - </b><span class="sm-txt">Sangat Baik</span>
+                            <br /><span class="grey-txt sm-txt">540 ulasan</span>
+                        </div>
+                        <div class="col-half">
+                            <span class="trip-advisor"></span>
+                            <br /><span class="grey-txt sm-txt">540 ulasan</span>
+                        </div>
+                    </div>
+                    <div class="price orange-txt">
+                        <span class="txt-md"><b>Harga per malam mulai dari:</b></span>
+                        <br /><span class="underline-txt">Rp 899.999.999</span>
+                        <br /><span class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></span>
+                        <br /><span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
