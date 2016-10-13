@@ -20,7 +20,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             if (input.SearchId != null)
             {
                 //Take data from SearchResult
-                var searchResult = GetAllSearchHotelResultFromDocument(input.SearchId);
+                var searchResult = GetSearchHotelResultWithFilter(input);
                 //do return
                 List<HotelDetail> hotelList;
                 if (input.StartPage != 0 && input.EndPage != 0)
@@ -31,6 +31,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     hotelList = searchResult.HotelDetails.Take(100).ToList();
                 }
+
                 return new SearchHotelOutput
                 {
                     SearchId = searchResult.SearchId,
@@ -54,19 +55,26 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Rooms = input.Rooms
                 });
 
+                //remember to add searchId
+                Guid generatedSearchId = Guid.NewGuid();
+                result.SearchId = generatedSearchId.ToString();
+                Debug.Print("Search Id : "+ result.SearchId);
+
+
+                //Adding Additional Hotel Information
                 foreach (var hotel in result.HotelDetails)
                 {
                     var detail = GetHotelDetailsFromDocument(hotel.HotelCode);
-                    hotel.PhonesNumbers = detail.PhonesNumbers != null ?detail.PhonesNumbers : null;
+                    hotel.PhonesNumbers = detail.PhonesNumbers;
                     //hotel.Terminals = detail.Terminals != null ? detail.Terminals : null; //TODO Krena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
                     hotel.PostalCode = detail.PostalCode;
-                    hotel.Review = detail.Review != null ? detail.Review : null;
+                    hotel.Review = detail.Review;
                     hotel.StarRating = detail.StarRating;
                     hotel.Chain = detail.Chain;
                     hotel.Pois = detail.Pois;
                     hotel.Address = detail.Address;
-                    hotel.Segment = detail.Segment != null ? detail.Segment : null;
-                    hotel.PhonesNumbers = detail.PhonesNumbers != null ? detail.PhonesNumbers : null;
+                    hotel.Segment = detail.Segment;
+                    hotel.PhonesNumbers = detail.PhonesNumbers;
                     //hotel.ImageUrl = detail.ImageUrl != null ? detail.ImageUrl : null; //TODO Krena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
                     hotel.Email = detail.Email;
                     hotel.City = detail.City;
@@ -75,19 +83,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotel.Longitude = detail.Longitude;
                     hotel.Latitude = detail.Latitude;
                     hotel.DestinationCode = detail.DestinationCode;
-                    hotel.Description = detail.Description != null ? detail.Description : null;
+                    hotel.Description = detail.Description;
                     hotel.AccomodationType = detail.AccomodationType;
                 }
-
-                //remember to add searchId
-                Guid generatedSearchId = Guid.NewGuid();
-                result.SearchId = generatedSearchId.ToString();
-                Debug.Print("Search Id : "+ result.SearchId);
 
                 if (result.HotelDetails != null)
                 {
                     //save data to docDB
                     SaveSearchResultToDocument(result);
+
                     //return only 100 data for the first page
                     return new SearchHotelOutput
                     {

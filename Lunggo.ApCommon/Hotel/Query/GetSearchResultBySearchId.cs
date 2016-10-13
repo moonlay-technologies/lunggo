@@ -33,14 +33,14 @@ namespace Lunggo.ApCommon.Hotel.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("WHERE c.searhId = @SearchId");
-            if (condition.FilterParam.Area != null)
-            { clauseBuilder.Append("AND c.hotels.zoneCd IN @FilterParam.Area"); }
-            if (condition.FilterParam.StarRating != null)
-            { clauseBuilder.Append("AND c.hotels.starRating IN @FilterParam.StarRating"); }
-            if (condition.FilterParam.AccomodationType != null)
-            { clauseBuilder.Append("AND c.hotels.accomodationType IN @FilterParam.AccomodationType"); }
-            if (condition.FilterParam.Amenities != null)
-            { clauseBuilder.Append("AND c.hotels.facilityCd IN @FilterParam.Amenities"); }
+            if (condition.Area != null)
+            { clauseBuilder.Append("AND c.hotels.zoneCd IN @Area"); }
+            if (condition.StarRating != null)
+            { clauseBuilder.Append("AND c.hotels.starRating IN @StarRating"); }
+            if (condition.AccomodationType != null)
+            { clauseBuilder.Append("AND c.hotels.accomodationType IN @AccomodationType"); }
+            if (condition.Amenities != null)
+            { clauseBuilder.Append("AND c.hotels.facilityCd IN @Amenities"); }
             return clauseBuilder.ToString();
         }
 
@@ -48,9 +48,9 @@ namespace Lunggo.ApCommon.Hotel.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("ORDER BY c.hotelCd ASC");
-            if (condition.SortingParam.AscendingPrice == true)
+            if (condition.AscendingPrice == true)
             { clauseBuilder.Append(", c.netFare ASC"); }
-            if (condition.SortingParam.DescendingPrice == true)
+            if (condition.DescendingPrice == true)
             { clauseBuilder.Append(", c.netFare DESC"); }
             //if (condition.SortingParam.ByReview == true)
             //{ clauseBuilder.Append(", c.review DESC"); }

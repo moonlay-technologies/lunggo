@@ -31,7 +31,18 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var param = new
             {
-                input,
+                input.SearchId,
+                input.SortingParam.AscendingPrice,
+                input.SortingParam.DescendingPrice,
+                input.SortingParam.ByPopularity,
+                input.SortingParam.ByReview,
+                input.FilterParam.MaxPrice,
+                input.FilterParam.MinPrice,
+                input.FilterParam.StarRating,
+                input.FilterParam.Area,
+                input.FilterParam.BoardCode,
+                input.FilterParam.AccomodationType,
+                input.FilterParam.Amenities
             };
             var document = DocumentService.GetInstance();
             var searchResultData = document.Execute<SearchHotelResult>(new GetSearchResultBySearchId(), param, param).SingleOrDefault();

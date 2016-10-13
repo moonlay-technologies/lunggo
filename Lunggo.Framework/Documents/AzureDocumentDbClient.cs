@@ -132,7 +132,7 @@ namespace Lunggo.Framework.Documents
                         prop =>
                         {
                             var value = prop.GetValue(param);
-                            return value is IEnumerable
+                            return (!(value is string) && value is IEnumerable)
                                 ? (value.GetType().GetElementType() == typeof (string)
                                     ? new SqlParameter("@" + prop.Name, "('" + string.Join("','", value) + "')")
                                     : new SqlParameter("@" + prop.Name, "(" + string.Join(",", value) + ")"))
