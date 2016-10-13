@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public GetRoomDetailOutput GetRoomDetail(GetRoomDetailInput roomDetailInput)
         {
-            var roomType =  GetHotelRoomTypeId(roomDetailInput.RoomCode);
+            //var roomType =  GetHotelRoomTypeId(roomDetailInput.RoomCode);
             //Get Room Detail by RoomCode from room.csv and roomDetail in DocDB
             //Mapping data nya ke dalam Output
             return new GetRoomDetailOutput();

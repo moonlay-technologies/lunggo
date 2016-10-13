@@ -58,7 +58,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         TotalAdult = hotelDetailRecord.AdultCount.GetValueOrDefault(),
                         TotalChildren = hotelDetailRecord.ChildCount.GetValueOrDefault(),
                         SpecialRequest = hotelDetailRecord.SpecialRequest,
-                        Rooms = new List<HotelRoom>(),
+                        Rooms = new List<Model.HotelRoom>(),
                     };
 
                     var hotelRoomRecords = HotelRoomTableRepo.GetInstance()
@@ -69,7 +69,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                     foreach (var hotelRoomRecord in hotelRoomRecords)
                     {
-                        var hotelRoom = new HotelRoom
+                        var hotelRoom = new Model.HotelRoom
                         {
                             RoomCode = hotelRoomRecord.Code,
                             Type = hotelRoomRecord.Type,

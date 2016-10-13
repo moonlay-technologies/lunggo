@@ -177,6 +177,7 @@
     <None Include="Config\Common\Airport.csv" />
     <None Include="Config\Common\Country.csv" />
     <None Include="Config\Common\HotelCountries.csv" />
+    <None Include="Config\Common\HotelDestinations.csv" />
     <None Include="Config\Common\HotelFacilities.csv" />
     <None Include="Config\Common\HotelFacilityGroup.csv" />
     <None Include="Config\Common\HotelRoom.csv" />
@@ -513,6 +514,48 @@
     </None>
     <None Include="Config\WebJob.CurrencyCrawler\veritrans.properties" />
     <None Include="Config\WebJob.CurrencyCrawler\zendesk.properties" />
+    <None Include="Config\WebJob.HotelProcessor\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\api.properties" />
+    <None Include="Config\WebJob.HotelProcessor\azureStorage.properties" />
+    <None Include="Config\WebJob.HotelProcessor\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\cw.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\db.properties" />
+    <None Include="Config\WebJob.HotelProcessor\domain.properties" />
+    <None Include="Config\WebJob.HotelProcessor\facebook.properties" />
+    <None Include="Config\WebJob.HotelProcessor\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\freshdesk.properties" />
+    <None Include="Config\WebJob.HotelProcessor\Garuda.properties" />
+    <None Include="Config\WebJob.HotelProcessor\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\mandrill.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\veritrans.properties" />
+    <None Include="Config\WebJob.HotelProcessor\zendesk.properties" />
     <None Include="Config\WebJob.FlightProcessor\airAsia.properties">
       <SubType>Designer</SubType>
     </None>

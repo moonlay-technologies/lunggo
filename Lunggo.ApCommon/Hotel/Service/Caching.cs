@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Hotel.Model;
-using Lunggo.ApCommon.Product.Model;
-using Lunggo.ApCommon.Sequence;
-using Lunggo.ApCommon.Payment.Model;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
-using StackExchange.Redis;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {

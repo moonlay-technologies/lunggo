@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -9,12 +8,14 @@ using System.Web.Routing;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
-using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Payment.Model.Data;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.ApCommon.Hotel.Service;
-using Lunggo.ApCommon.Hotel.Service;
+
 namespace Lunggo.BackendWeb
 {
     public class MvcApplication : HttpApplication
@@ -29,36 +30,55 @@ namespace Lunggo.BackendWeb
             
             AppInitializer.Init();
 
-            HotelService.GetInstance().IssueHotel(new IssueHotelTicketInput
-            {
-                RsvNo = "276696535679"
-            });
+            HotelService.GetInstance().InitDictionary("config");
+            var room = HotelService.GetInstance().GetHotelRoom("TPL.2D-PO");
+            var rd_en = HotelService.GetInstance().GetHotelRoomDescEn("TPL.2D-PO");
+            var rd_id = HotelService.GetInstance().GetHotelRoomDescId("TPL.2D-PO");
+
+            var type = HotelService.GetInstance().GetHotelRoomType("SUI");
+            var type_EN = HotelService.GetInstance().GetHotelRoomTypeDescEn("SUI");
+            var type_id = HotelService.GetInstance().GetHotelRoomTypeDescId("SUI");
+
+            var chr = HotelService.GetInstance().GetHotelRoomCharacteristic("VM-VP");
+            var chr_en = HotelService.GetInstance().GetHotelRoomCharacteristicDescEn("VM-VP");
+            var chr_id = HotelService.GetInstance().GetHotelRoomCharacteristicDescId("VM-VP");
+        }
+    }
+}
+
+//PaymentService.GetInstance().UpdatePayment("276966536079", new PaymentDetails
+//            {
+//                Status = PaymentStatus.Settled,
+
+//            });
+
+            
             //var hoteldetail = new HotelDetailsBase
             //{
             //    AccomodationType = "HOTEL",
-            //    City = "Palma de Mallorca",
-            //    CountryCode = "ES",
-            //    DestinationCode = "PMI",
-            //    HotelCode = 74400,
-            //    HotelName = "UR Mision de San Miguel",
+            //    City = "Jakarta",
+            //    CountryCode = "ID",
+            //    DestinationCode = "JAV",
+            //    HotelCode = 1070,
+            //    HotelName = "Grand Mercure Jakarta Harmoni",
             //    Address = "somewhere",
             //    Chain = "lala",
             //    ZoneCode = 10,
-            //    StarRating = "4est",
+            //    StarRating = "5est",
             //    Rooms = new List<HotelRoom>
             //    {
             //        new HotelRoom
             //        {
-            //            RoomCode = "TPL.ST",
-            //            Type = "TRIPLE STANDARD",
+            //            RoomCode = "DBT.SU",
+            //            Type = "Double or Twin SUPERIOR",
             //            Rates = new List<HotelRate>
             //            {
             //                new HotelRate
             //                {
-            //                    RateKey = "20161108|20161110|W|1|74400|TPL.ST|CG-TODOS1|BB||1~2~1|8|N@AC00D0CEA1634851BC8E35BF320EAAF2",
+            //                    RateKey = "20170608|20170610|W|325|195728|DBT.SU|FIT|BB||1~2~1|8|N@6438F6AA2FF840C2B0D4796C25FC0C47",
             //                    Price = new Price
             //                    {
-            //                        Supplier = 4047952,
+            //                        Supplier = 2695418,
             //                        SupplierCurrency = new Currency("IDR"),
             //                        LocalCurrency = new Currency("IDR"),
             //                        Margin = new UsedMargin
@@ -78,8 +98,8 @@ namespace Lunggo.BackendWeb
             //                    Boards = "BB",
             //                    Cancellation = new Cancellation
             //                    {
-            //                        StartTime = Convert.ToDateTime("2016-12-05T23:59:00+01:00"),
-            //                        Fee = 1261858
+            //                        StartTime = Convert.ToDateTime("2017-06-06T23:59:00+07:00"),
+            //                        Fee = 1347709
             //                    },
             //                    RoomCount = 1,
             //                    Class = "NOR",
@@ -88,14 +108,55 @@ namespace Lunggo.BackendWeb
             //                }
             //            }
             //        },
+            //        new HotelRoom
+            //        {
+            //            RoomCode = "DBT.DX",
+            //            Type = "Double or Twin DELUXE",
+            //            Rates = new List<HotelRate>
+            //            {
+            //                new HotelRate
+            //                {
+            //                    RateKey = "20170608|20170610|W|325|195728|DBT.DX|FIT|BB||1~2~1|8|N@6438F6AA2FF840C2B0D4796C25FC0C47",
+            //                    Price = new Price
+            //                    {
+            //                        Supplier = 3040432,
+            //                        SupplierCurrency = new Currency("IDR"),
+            //                        LocalCurrency = new Currency("IDR"),
+            //                        Margin = new UsedMargin
+            //                        {
+            //                            Constant = 1,
+            //                            Currency = new Currency("IDR"),
+            //                            IsFlat = false,
+            //                            Name = "HTBD",
+            //                            Percentage = 1,
+            //                            Description = "HOTELBED"
+            //                        },
+            //                        MarginNominal = 10000,
+            //                    },
+            //                    PaymentType = "AT_WEB",
+            //                    AdultCount = 2,
+            //                    ChildCount = 1,
+            //                    Boards = "BB",
+            //                    Cancellation = new Cancellation
+            //                    {
+            //                        StartTime = Convert.ToDateTime("2017-06-06T23:59:00+07:00"),
+            //                        Fee = 1347709
+            //                    },
+            //                    RoomCount = 1,
+            //                    Class = "NOR",
+            //                    Type = "BOOKABLE",
+            //                    TimeLimit = new DateTime(2016, 10, 12, 14,0,0)
+            //                }
+            //            }
+            //        }
 
             //    }
             //};
 
-            //HotelService.GetInstance().SaveSelectedHotelDetailsToCache("1002", hoteldetail);
+            //HotelService.GetInstance().SaveSelectedHotelDetailsToCache("1005", hoteldetail);
             //var bookinput = new BookHotelInput
             //{
-            //    Token = "1002",
+            //    Token = "1005",
             //    Contact = new Contact
             //    {
             //        CountryCallingCode = "62",
@@ -129,16 +190,36 @@ namespace Lunggo.BackendWeb
             //            Type = PaxType.Child,
             //            Title = Title.Mister,
             //            Gender = Gender.Male
+            //        },
+            //        new Pax
+            //        {
+            //            FirstName = "John",
+            //            LastName = "Smith",
+            //            Type = PaxType.Adult,
+            //            Title = Title.Mister,
+            //            Gender = Gender.Male
+            //        },
+            //        new Pax
+            //        {
+            //            FirstName = "Sarah Jane",
+            //            LastName = "Smith",
+            //            Type = PaxType.Adult,
+            //            Title = Title.Miss,
+            //            Gender = Gender.Female
+            //        },
+            //        new Pax
+            //        {
+            //            FirstName = "John",
+            //            LastName = "Watson",
+            //            Type = PaxType.Child,
+            //            Title = Title.Mister,
+            //            Gender = Gender.Male
             //        }
             //    },
             //    SpecialRequest = "none"
             //};
 
             //HotelService.GetInstance().BookHotel(bookinput);
-        }
-    }
-}
-
 //var hotelbed = new HotelBedsSearchHotel();
 //hotelbed.SearchHotel(new SearchHotelCondition
 //{

@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var decryptedData = input.RegsIds.Select(DecryptRegsId).ToList();
 
             var hotel = GetHotelDetail(decryptedData[0].HotelCode);
-            hotel.Rooms = new List<HotelRoom>();
+            hotel.Rooms = new List<Model.HotelRoom>();
 
             //Enter Room Details to Hotel
 
