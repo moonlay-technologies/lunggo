@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
@@ -128,7 +129,15 @@ namespace Lunggo.Framework.Documents
             {
                 var paramList =
                     ((PropertyInfo[])param.GetType().GetProperties()).Select(
-                        prop => new SqlParameter("@" + prop.Name, prop.GetValue(param)));
+                        prop =>
+                        {
+                            var value = prop.GetValue(param);
+                            return value is IEnumerable
+                                ? (value.GetType().GetElementType() == typeof (string)
+                                    ? new SqlParameter("@" + prop.Name, "('" + string.Join("','", value) + "')")
+                                    : new SqlParameter("@" + prop.Name, "(" + string.Join(",", value) + ")"))
+                                : new SqlParameter("@" + prop.Name, value);
+                        });
                 var paramCollection = new SqlParameterCollection(paramList);
                 return paramCollection;
             }

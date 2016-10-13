@@ -1,4 +1,7 @@
-﻿using Lunggo.ApCommon.Hotel.Model;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Product.Constant;
@@ -13,6 +16,13 @@ namespace Lunggo.ApCommon.Hotel.Service
         public IssueHotelTicketOutput IssueHotel(IssueHotelTicketInput input)
         {
             var rsvData = GetReservationFromDb(input.RsvNo);
+            if (rsvData == null)
+            {
+                return new IssueHotelTicketOutput
+                {
+                    IsSuccess = false,
+                };
+            }
             var issueInfo = new HotelIssueInfo
             {
                 RsvNo = rsvData.RsvNo,
@@ -24,8 +34,30 @@ namespace Lunggo.ApCommon.Hotel.Service
             var issue = new HotelBedsIssue();
             var issueResult = issue.IssueHotel(issueInfo);
             UpdateRsvStatusDb(rsvData.RsvNo, issueResult.IsSuccess ? RsvStatus.Completed : RsvStatus.Failed);
-            return new IssueHotelTicketOutput();
+            if (issueResult.IsSuccess == false)
+            {
+                return new IssueHotelTicketOutput
+                {
+                    IsSuccess = false,
+                    ErrorMessages = new List<string>{issueResult.Status}
+                };
+            }
+            
+            {
+                var order = issueResult.BookingId.Select(id => new OrderResult
+                {
+                    BookingId = id, BookingStatus = BookingStatus.Ticketed, IsSuccess = true
+                }).ToList();
+
+
+                return new IssueHotelTicketOutput
+                {
+                    IsSuccess = true,
+                    OrderResults = order
+                };
+            }
         }
+
 
         private void UpdateRsvStatusDb(string rsvNo, RsvStatus status)
         {
@@ -40,10 +72,10 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         }
 
-        private void SendHotelEticket(string rsvNo)
-        {
-            //TODO Update THIS
-        }
+        //private void SendHotelEticket(string rsvNo)
+        //{
+        //    //TODO Update THIS
+        //}
 
         //private void SendFailedHotelNotif(string rsvNo)
         //{
