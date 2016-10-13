@@ -2,10 +2,13 @@
     font-size: 11px;
     .hotel-list-container {
         .hotel-list {
-            padding: 15px 10px 10px;
-            border-bottom: 1px solid #e9e9e9;
+            border-top: 1px solid #e9e9e9;
+            padding: 15px 10px;
             .col-right-hotel {
-                padding-left: 10px;
+                .star {margin-top: 3px;}
+                .price {margin-top: 10px;
+                    .detail {@extend .arrow-detail}
+                }
             }
         }
     }

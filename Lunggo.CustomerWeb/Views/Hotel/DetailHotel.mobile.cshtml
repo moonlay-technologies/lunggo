@@ -1,0 +1,133 @@
+﻿@{
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    ViewBag.BodyClass = "page-hotel page-detail";
+    ViewBag.Title = "Detail Hotel";
+}
+
+@section AdditionalCSS{
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="/Assets/vendor/flexslider/flexslider.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
+}
+
+@section AdditionalJS {
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+
+}
+
+@section PageJS{
+    <script>
+        $('.dh-slider').slick({
+            autoplay: true,
+            autoplaySpeed: 2500,
+            dots: false
+        });
+    </script>
+    <script src="/Assets/vendor/flexslider/jquery.flexslider.js"></script>
+    <script>
+        accordionFunctions();
+    </script>
+}
+<div class="travorama-hotel-mobile">
+    <div class="top-content">
+        @Html.Partial("/Views/Hotel/Shared/Mobile/_Summary.cshtml")
+        <div class="hotel-detail-menu clearfix">
+            <div class="hotel-detail-menu-action">
+                <a href="#" class="active">UMUM</a>
+                <a href="#">RINCIAN</a>
+            </div>
+        </div>
+    </div>
+    <div class="detail-hotel">
+        <div class="dh-slider">
+            <div class="item active">
+                <img src="/Assets/mobile/images/Hotel/hotel-detail-lg.jpg" />
+            </div>
+            <div class="item">
+                <img src="/Assets/mobile/images/Hotel/hotel-detail-lg.jpg" />
+            </div>
+        </div>
+        <div class="dh-title">
+            <div class="dh-name lg-txt blue-txt bold-txt">B Hotel Bali & Spa</div>
+            <div class="clearfix">
+                <div class="col-half"><span class="star star-5"></span></div>
+                <div class="col-half share-group">
+                    <a href="#" class="like"></a>
+                    <a href="#" class="share"></a>
+                </div>
+            </div>
+        </div>
+        <div class="dh-location sm-txt">
+            Jl. Imam Bonjol No 508, Denpasar,
+            Denpasar, Indonesia 80119
+        </div>
+        <div class="dh-listing">
+            <div class="dh-list-title bold-txt lg-txt darkgrey-txt">Informasi Kamar & Harga </div>
+            <ul class="dh-list-container">
+                <li>
+                    <div class="dh-accordion">
+                        <div class="accordion-wrapper">
+                            <div class="accordion md-txt">
+                                <div class="dh-list clearfix">
+                                    <div class="col-left-hotel"><img src="/Assets/mobile/images/Hotel/hotel-detail-sm.jpg" alt="Hotel" /></div>
+                                    <div class="col-right-hotel">
+                                        <div class="bold-txt lg-txt dh-arrow darkgrey-txt">Deluxe Room Only</div>
+                                        <div class="sm-txt grey-txt">
+                                            <div>Non-free Cancellation</div>
+                                            <span class="max-visitor">Max 2 orang</span>
+                                        </div>
+                                        <div class="price orange-txt">
+                                            <div class="underline-txt sm-txt">Rp 899.999.999</div>
+                                            <a href="#" class="detail"></a>
+                                            <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                            <span class="xs-txt">(*Termasuk Pajak)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="dh-list-detail clearfix">
+                                    <div class="dh-top"><img src="/Assets/mobile/images/Hotel/hotel-detail-xlg.jpg" alt="Hotel" /></div>
+                                    <div class="dh-bottom">
+                                        <div class="bold-txt lg-txt darkgrey-txt">Deluxe Room Only</div>
+                                        <div class="sm-txt grey-txt">
+                                            <div>Non-free Cancellation</div>
+                                            <span class="max-visitor">Max 2 orang</span>
+                                        </div>
+                                        <div class="price orange-txt">
+                                            <div class="underline-txt sm-txt">Rp 899.999.999</div>
+                                            <a href="#" class="detail"></a>
+                                            <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                            <span class="xs-txt">(*Termasuk Pajak)</span>
+                                        </div>
+                                        <a href="#" class="blue-txt downline-txt">Detail Info Kamar</a>
+                                        <div class="facility">
+                                            <span class="wifi"></span>
+                                            <span class="meal"></span>
+                                            <span class="ac"></span>
+                                        </div>
+                                        <div class="room clearfix">
+                                            <span class="room-title lg-txt darkgrey-txt semibold-txt">Kamar</span>
+                                            <div class="counter-room clearfix">
+                                                <a href="#" class="btn-room btn-min">-</a>
+                                                <span class="result-room semibold-txt">2</span>
+                                                <a href="#" class="btn-room btn-plus">-</a>
+                                            </div>
+                                            <a href="#" class="btn btn-yellow small">PESAN</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

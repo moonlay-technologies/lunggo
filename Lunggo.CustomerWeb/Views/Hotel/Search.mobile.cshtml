@@ -20,33 +20,50 @@
 }
 
 <div class="travorama-hotel-mobile">
-    @Html.Partial("/Views/Hotel/Shared/Mobile/_TopContent.cshtml")
-
-    <div class="search-list">
-        <div class="hotel-list-container">
-            <div class="hotel-list clearfix">
-                <div class="col-left-hotel"><img src="/Assets/mobile/images/Hotel/hotel-list-lg.jpg" alt="Hotel" /></div>
-                <div class="col-right-hotel">
-                    <span class="blue-txt bg">Bliss Hotel Singapore</span>
-                    <div class="star star-5"></div>
-                    <div class="review clearfix">
-                        <div class="col-half left">
-                            <b><span class="md-txt blue-txt">8.0</span> - </b><span class="sm-txt">Sangat Baik</span>
-                            <br /><span class="grey-txt sm-txt">540 ulasan</span>
-                        </div>
-                        <div class="col-half">
-                            <span class="trip-advisor"></span>
-                            <br /><span class="grey-txt sm-txt">540 ulasan</span>
-                        </div>
-                    </div>
-                    <div class="price orange-txt">
-                        <span class="txt-md"><b>Harga per malam mulai dari:</b></span>
-                        <br /><span class="underline-txt">Rp 899.999.999</span>
-                        <br /><span class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></span>
-                        <br /><span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
-                    </div>
-                </div>
+    <div class="top-content">
+        @Html.Partial("/Views/Hotel/Shared/Mobile/_Summary.cshtml")
+        <div class="hotel-sort-filter clearfix">
+            <div class="hotel-sort-filter-action">
+                <a href="#">PETA</a>
+                <a href="#">FILTER</a>
+                <a href="#">SORTIR</a>
             </div>
         </div>
+    </div>
+    <div class="search-list">
+        <ul class="hotel-list-container">
+            <li>
+                <div class="hotel-list clearfix">
+                    <div class="col-left-hotel"><img src="/Assets/mobile/images/Hotel/hotel-list-lg.jpg" alt="Hotel" /></div>
+                    <div class="col-right-hotel">
+                        <div class="blue-txt bold-txt lg-txt">Bliss Hotel Singapore</div>
+                        <div class="star star-4 e-star"></div>
+                        <div class="price orange-txt">
+                            <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
+                            <div class="underline-txt sm-txt">Rp 899.999.999</div>
+                            <a href="#" class="detail"></a>
+                            <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                            <span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="hotel-list clearfix">
+                    <div class="col-left-hotel"><img src="/Assets/mobile/images/Hotel/hotel-list-lg.jpg" alt="Hotel" /></div>
+                    <div class="col-right-hotel">
+                        <div class="blue-txt bold-txt lg-txt">Bliss Hotel Singapore</div>
+                        <div class="star star-4 e-star"></div>
+                        <div class="price orange-txt">
+                            <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
+                            <div class="underline-txt sm-txt">Rp 899.999.999</div>
+                            <a href="#" class="detail"></a>
+                            <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                            <span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
