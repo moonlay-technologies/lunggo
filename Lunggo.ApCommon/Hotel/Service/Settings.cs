@@ -24,12 +24,7 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         private bool _isInitialized;
 
-        internal override void Issue(string rsvNo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HotelService()
+        private HotelService()
         {
 
         }

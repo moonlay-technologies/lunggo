@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Claims;
-using System.Web;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
-using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
-using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
-using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.Framework.Context;
 using BookingStatusCd = Lunggo.ApCommon.Hotel.Constant.BookingStatusCd;
 
