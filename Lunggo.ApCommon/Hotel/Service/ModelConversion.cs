@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
                 CountryCode = hotelDetail.CountryCode,
-                CountryName = dictionary.GetHotelCountryNameByCode(hotelDetail.CountryCode),//TODO "Get Country Name"
+                //CountryName = dictionary.GetHotelCountryNameByCode(hotelDetail.CountryCode),//TODO "Get Country Name"
                 Latitude = hotelDetail.Latitude,
                 Longitude = hotelDetail.Longitude,
                 Email = hotelDetail.Email,
@@ -43,9 +43,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 ZoneCode = hotelDetail.ZoneCode,
                 //ZoneName = ZoneName, //TODO "Det Zone Name"
                 StarRatingCd = hotelDetail.StarRating,
-                StarRatingDescription = dictionary.GetHotelCategoryId(hotelDetail.StarRating), //TODO "Get Star Rating"
+                //StarRatingDescription = dictionary.GetHotelCategoryId(hotelDetail.StarRating), //TODO "Get Star Rating"
                 Chain = hotelDetail.Chain,
-                ChainName = dictionary.GetHotelChain(hotelDetail.Chain), //TODO "Get Chain Name"
+                //ChainName = dictionary.GetHotelChain(hotelDetail.Chain), //TODO "Get Chain Name"
                 //Segments =  //TODO "List of Segment by SegmentCode"
                 Pois = hotelDetail.Pois,
                 //Terminals =  //TODO "Perlu dtambahi dari data HotelDetailContent"
@@ -124,7 +124,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     AdultCount = rateDetail.AdultCount,
                     ChildCount = rateDetail.ChildCount,
                     Boards = rateDetail.Boards,
-                    BoardDescription = dictionary.GetHotelBoardId(rateDetail.Boards),//TODO
+                    //BoardDescription = dictionary.GetHotelBoardId(rateDetail.Boards),//TODO
                     RoomCount = rateDetail.RoomCount,
                     TimeLimit = rateDetail.TimeLimit,
                     Cancellation = rateDetail.Cancellation,
