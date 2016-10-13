@@ -31,17 +31,17 @@ namespace Lunggo.BackendWeb
             AppInitializer.Init();
 
             HotelService.GetInstance().InitDictionary("config");
-            var room = HotelService.GetInstance().GetHotelRoom("TPL.2D-PO");
-            var rd_en = HotelService.GetInstance().GetHotelRoomDescEn("TPL.2D-PO");
-            var rd_id = HotelService.GetInstance().GetHotelRoomDescId("TPL.2D-PO");
+            var rateClass = HotelService.GetInstance().GetHotelRoomRateType("BOOKABLE");
+            var rd_en = HotelService.GetInstance().GetHotelRoomRateTypeEng("BOOKABLE");
+            var rd_id = HotelService.GetInstance().GetHotelRoomRateTypeId("BOOKABLE");
 
-            var type = HotelService.GetInstance().GetHotelRoomType("SUI");
-            var type_EN = HotelService.GetInstance().GetHotelRoomTypeDescEn("SUI");
-            var type_id = HotelService.GetInstance().GetHotelRoomTypeDescId("SUI");
+            var type = HotelService.GetInstance().GetHotelRoomRateClass("NRF");
+            var type_EN = HotelService.GetInstance().GetHotelRoomRateClassEng("NRF");
+            var type_id = HotelService.GetInstance().GetHotelRoomRateClassId("NRF");
 
-            var chr = HotelService.GetInstance().GetHotelRoomCharacteristic("VM-VP");
-            var chr_en = HotelService.GetInstance().GetHotelRoomCharacteristicDescEn("VM-VP");
-            var chr_id = HotelService.GetInstance().GetHotelRoomCharacteristicDescId("VM-VP");
+            var chr = HotelService.GetInstance().GetHotelCountry("NY");
+            var chr_en = HotelService.GetInstance().GetHotelCountryIsoCode("NY");
+            var chr_id = HotelService.GetInstance().GetHotelCountryName("NY");
         }
     }
 }
