@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Services.Client;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,11 +44,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             document.Upsert("HotelDetail:" + hotelDetails.HotelCode, hotelDetails);
         }
 
-        public HotelDetailsBase GetHotelDetailsFromDocument(string hotelCode)
+        public HotelDetailsBase GetHotelDetailsFromDocument(int hotelCode)
         {
             var document = DocumentService.GetInstance();
             var id = "HotelDetail:" + hotelCode;
-            return document.Retrieve<HotelDetailsBase>("HotelDetail:" + id);
+            return document.Retrieve<HotelDetailsBase>(id);
         }
     }
 }

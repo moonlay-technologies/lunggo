@@ -29,13 +29,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
             var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-content-api");
            //https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels?fields=all&language=ENG&from=1&to=100&useSecondaryLanguage=false
 
-            var dataCount = 67001; 
+            var dataCount = 79001; 
             var counter = 0;
             var max = 3;
             var start = 1;
-            var from = 67001;
-            var to = 68000;
-            while (to <= 69000)
+            var from = 79001;
+            var to = 80000;
+            while (to <= 100000)
             {
                 Debug.Print("From : "+ from);
                 Debug.Print("To : " + to);
@@ -118,7 +118,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                                 {
                                     Order = p.order,
                                     Path = p.path,
-                                    Type = p.type,
+                                    Type = p.imageTypeCode,
                                 }).ToList(),
 
                             };

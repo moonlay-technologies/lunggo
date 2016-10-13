@@ -54,6 +54,31 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Rooms = input.Rooms
                 });
 
+                foreach (var hotel in result.HotelDetails)
+                {
+                    var detail = GetHotelDetailsFromDocument(hotel.HotelCode);
+                    hotel.PhonesNumbers = detail.PhonesNumbers != null ?detail.PhonesNumbers : null;
+                    //hotel.Terminals = detail.Terminals != null ? detail.Terminals : null; //TODO Krena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
+                    hotel.PostalCode = detail.PostalCode;
+                    hotel.Review = detail.Review != null ? detail.Review : null;
+                    hotel.StarRating = detail.StarRating;
+                    hotel.Chain = detail.Chain;
+                    hotel.Pois = detail.Pois;
+                    hotel.Address = detail.Address;
+                    hotel.Segment = detail.Segment != null ? detail.Segment : null;
+                    hotel.PhonesNumbers = detail.PhonesNumbers != null ? detail.PhonesNumbers : null;
+                    //hotel.ImageUrl = detail.ImageUrl != null ? detail.ImageUrl : null; //TODO Krena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
+                    hotel.Email = detail.Email;
+                    hotel.City = detail.City;
+                    hotel.CountryCode = detail.CountryCode;
+                    hotel.ZoneCode = detail.ZoneCode;
+                    hotel.Longitude = detail.Longitude;
+                    hotel.Latitude = detail.Latitude;
+                    hotel.DestinationCode = detail.DestinationCode;
+                    hotel.Description = detail.Description != null ? detail.Description : null;
+                    hotel.AccomodationType = detail.AccomodationType;
+                }
+
                 //remember to add searchId
                 Guid generatedSearchId = Guid.NewGuid();
                 result.SearchId = generatedSearchId.ToString();

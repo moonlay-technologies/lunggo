@@ -124,7 +124,9 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("images", NullValueHandling = NullValueHandling.Ignore)]
         public List<Image> ImageUrl { get; set; }
         [JsonProperty("facilities", NullValueHandling = NullValueHandling.Ignore)]
-        public List<HotelFacility> Facilities { get; set; } 
+        public List<HotelFacility> Facilities { get; set; }
+        [JsonProperty("review", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Review> Review { get; set; }
         
     }
 
@@ -167,24 +169,22 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("order", NullValueHandling = NullValueHandling.Ignore)]
         public int Order;
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
-        public Wrapper.HotelBeds.Content.Model.Types Type;
+        public string Type;
         [JsonProperty("path", NullValueHandling = NullValueHandling.Ignore)]
         public string Path;
     }
 
-    public class Types
-    {
-        [JsonProperty("code", NullValueHandling = NullValueHandling.Ignore)]
-        public string Code { get; set; }
+    //public class Types
+    //{
+    //    [JsonProperty("code", NullValueHandling = NullValueHandling.Ignore)]
+    //    public string Code { get; set; }
         
-        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
-        public Description Description { get; set; }
-    }
+    //    [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
+    //    public Description Description { get; set; }
+    //}
 
     public class HotelDetail : HotelDetailsBase
     {
-        [JsonProperty("review", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Review> Review { get; set; }
         [JsonProperty("originalFare", NullValueHandling = NullValueHandling.Ignore)]
         public decimal OriginalFare { get; set; }
         [JsonProperty("netFare", NullValueHandling = NullValueHandling.Ignore)]

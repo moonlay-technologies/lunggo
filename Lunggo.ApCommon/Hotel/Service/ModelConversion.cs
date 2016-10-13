@@ -16,6 +16,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             if (hotelDetails == null)
                 return null;
             var convertedHotels = new List<HotelDetailForDisplay>();
+            var dictionary = HotelService.GetInstance();
             foreach (var hotelDetail in hotelDetails)
             {
                 var hotel =   new HotelDetailForDisplay
@@ -25,14 +26,14 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
                 CountryCode = hotelDetail.CountryCode,
-                //CountryName = CountryName //TODO "Get Country Name"
+                CountryName = dictionary.GetHotelCountryNameByCode(hotelDetail.CountryCode),//TODO "Get Country Name"
                 Latitude = hotelDetail.Latitude,
                 Longitude = hotelDetail.Longitude,
                 Email = hotelDetail.Email,
                 PostalCode = hotelDetail.PostalCode,
                 DestinationCode = hotelDetail.DestinationCode,
-                //DestinationName =  DestinationName //TODO "Get Destination Name"
-                Description = hotelDetail.Description.Where(x=>x.languageCode.Equals("IND"))
+                //DestinationName =   //TODO "Get Destination Name"
+                Description = hotelDetail.Description==null?null:hotelDetail.Description.Where(x => x.languageCode.Equals("IND"))
                                 .Select(x=>new HotelDescriptions
                                 {
                                     languageCode = x.languageCode,
@@ -42,13 +43,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                 ZoneCode = hotelDetail.ZoneCode,
                 //ZoneName = ZoneName, //TODO "Det Zone Name"
                 StarRatingCd = hotelDetail.StarRating,
-                //StarRatingDescription = StarRating //TODO "Get Star Rating"
+                StarRatingDescription = dictionary.GetHotelCategoryId(hotelDetail.StarRating), //TODO "Get Star Rating"
                 Chain = hotelDetail.Chain,
-                //ChainName = Hotel.ChainName //TODO "Get Chain Name"
+                ChainName = dictionary.GetHotelChain(hotelDetail.Chain), //TODO "Get Chain Name"
                 //Segments =  //TODO "List of Segment by SegmentCode"
                 Pois = hotelDetail.Pois,
                 //Terminals =  //TODO "Perlu dtambahi dari data HotelDetailContent"
-                //Facilities = "Mapping data berdasarkan FacilitiesCode" //TODO
+                //Facilities =  //TODO
                 Review = hotelDetail.Review,
                 Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                 AccomodationType = hotelDetail.AccomodationType,
@@ -62,6 +63,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (rooms == null)
                 return null;
+            var dictionary = HotelService.GetInstance();
             var convertedRoom = new List<HotelRoomForDisplay>();
             foreach (var roomDetail in rooms)
             {
@@ -70,9 +72,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RoomCode = roomDetail.RoomCode,
                     RoomName = roomDetail.RoomName,
                     Type = roomDetail.Type,
-                    //TypeName = //TODO "Mapping Type Name"
+                    TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),//TODO "Mapping Type Name"
                     CharacteristicCode = roomDetail.characteristicCd,
-                    //CharacteristicName = //TODO "Mapping Characteristic Name"
+                    CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),//TODO "Mapping Characteristic Name"
                     Images = roomDetail.Images != null ? roomDetail.Images : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
                     Rates = ConvertToRateForDisplays(roomDetail.Rates)
@@ -82,26 +84,47 @@ namespace Lunggo.ApCommon.Hotel.Service
             return convertedRoom;
         }
 
+
+        internal HotelRoomForDisplay ConvertToSingleHotelRoomForDisplay(HotelRoom roomDetail)
+        {
+            if (roomDetail == null)
+                return null;
+            var dictionary = HotelService.GetInstance();
+            return new HotelRoomForDisplay
+                {
+                    RoomCode = roomDetail.RoomCode,
+                    RoomName = roomDetail.RoomName,
+                    Type = roomDetail.Type,
+                    TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),//TODO "Mapping Type Name"
+                    CharacteristicCode = roomDetail.characteristicCd,
+                    CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),//TODO "Mapping Characteristic Name"
+                    Images = roomDetail.Images != null ? roomDetail.Images : null,
+                    Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
+                    Rates = ConvertToRateForDisplays(roomDetail.Rates)
+                };
+        }
+
         internal List<HotelRateForDisplay> ConvertToRateForDisplays(List<HotelRate> rates)
         {
             if(rates == null)
                 return new List<HotelRateForDisplay>();
             var convertedRate = new List<HotelRateForDisplay>();
+            var dictionary = HotelService.GetInstance();
             foreach (var rateDetail in rates)
             {
                 var rate = new HotelRateForDisplay()
                 {
                     RateKey = rateDetail.RateKey,
                     Type = rateDetail.Type,
-                    //TypeDescription = //TODO "Mapping Rate Type"
+                    TypeDescription = dictionary.GetHotelRoomRateTypeId(rateDetail.Type),//TODO "Mapping Rate Type"
                     Class = rateDetail.Class,
-                    //ClassDescription = //TODO 
+                    ClassDescription = dictionary.GetHotelRoomRateClassId(rateDetail.Class),//TODO 
                     RegsId = rateDetail.RegsId,
                     Price = rateDetail.Price!=null?rateDetail.Price:null,
                     AdultCount = rateDetail.AdultCount,
                     ChildCount = rateDetail.ChildCount,
                     Boards = rateDetail.Boards,
-                    //BoardDescription = //TODO
+                    BoardDescription = dictionary.GetHotelBoardId(rateDetail.Boards),//TODO
                     RoomCount = rateDetail.RoomCount,
                     TimeLimit = rateDetail.TimeLimit,
                     Cancellation = rateDetail.Cancellation,

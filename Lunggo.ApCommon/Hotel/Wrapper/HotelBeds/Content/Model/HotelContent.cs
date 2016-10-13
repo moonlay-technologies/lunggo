@@ -42,7 +42,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
     public class Image
     {
         public int order;
-        public Types type;
+        public string imageTypeCode;
         public string path;
     }
 
