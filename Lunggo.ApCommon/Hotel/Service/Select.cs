@@ -41,14 +41,14 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
 
             //Get Rate detail based on RateKey, then add rate detail to matched room code
-            foreach (var detail in decryptedData)
-            {
-                var roomRate = GetRateFromCache(detail.RateKey);
-                foreach (var room in hotel.Rooms.Where(room => detail.RateKey.Split('|')[5] == room.RoomCode))
-                {
-                    room.Rates.Add(roomRate);
-                }
-            }
+            //foreach (var detail in decryptedData)
+            //{
+            //    //var roomRate = GetRateFromCache(detail.RateKey);
+            //    foreach (var room in hotel.Rooms.Where(room => detail.RateKey.Split('|')[5] == room.RoomCode))
+            //    {
+            //        room.Rates.Add(roomRate);
+            //    }
+            //}
 
             var token = HotelBookingIdSequence.GetInstance().GetNext().ToString();
 
@@ -69,7 +69,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private RegsIdDecrypted DecryptRegsId(string regsId)
         {
-            var splittedData = regsId.Split('|');
+            var splittedData = regsId.Split('-');
             return new RegsIdDecrypted
             {
                 HotelCode = Convert.ToInt32(splittedData[0]),

@@ -66,7 +66,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 RsvNo = rsvData.RsvNo,
                 Pax = rsvData.Pax,
                 Contact = rsvData.Contact,
-                Rooms = rsvData.HotelDetails.Rooms
+                Rooms = rsvData.HotelDetails.Rooms,
+                SpecialRequest = rsvData.HotelDetails.SpecialRequest
             };
 
             var issue = new HotelBedsIssue();

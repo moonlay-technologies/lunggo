@@ -236,10 +236,12 @@
     <Compile Include="ApiSrc\Account\Model\TokenRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\AutocompleteController.cs" />
-    <Compile Include="ApiSrc\Autocomplete\Logic\GetHotelLocationAutocompleteLogic.cs" />
+    <Compile Include="ApiSrc\Autocomplete\Logic\GetHotelAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetAirlineAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetAirportAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\AirlineApi.cs" />
+    <Compile Include="ApiSrc\Autocomplete\Model\HotelAutocompleteApi.cs" />
+    <Compile Include="ApiSrc\Autocomplete\Model\HotelAutocompleteApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\AutocompleteHotelLocationsApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\AutocompleteAirportsApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\AutocompleteAirlinesApiResponse.cs" />
@@ -290,6 +292,7 @@
     <Compile Include="ApiSrc\Flight\Model\TopDestinationsApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\NewsletterSubscribeLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\NewsletterSubscribeApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\BookLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelBookApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelBookApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelDetailApiRequest.cs" />
@@ -332,7 +335,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ApiSrc\Hotel\HotelController.cs" />
-    <Compile Include="ApiSrc\Hotel\Logic\GetHotelLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\SelectLogic.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

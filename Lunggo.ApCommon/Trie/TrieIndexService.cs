@@ -1,5 +1,4 @@
-﻿
-
+﻿using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Flight.Service;
 
 namespace Lunggo.ApCommon.Trie
@@ -11,6 +10,7 @@ namespace Lunggo.ApCommon.Trie
         internal TrieNode AirlineIndex = new TrieNode();
         internal TrieNode AirportIndex = new TrieNode();
         internal TrieNode HotelLocationIndex = new TrieNode();
+        internal TrieNode HotelAutocompleteIndex = new TrieNode();
 
         private TrieIndexService()
         {
@@ -28,6 +28,7 @@ namespace Lunggo.ApCommon.Trie
             {
                 InitAirlineIndex();
                 InitAirportIndex();
+                InitHotelAutocompleteIndex();
                 InitHotelLocationIndex();
                 _isInitialized = true;
             }
@@ -60,6 +61,14 @@ namespace Lunggo.ApCommon.Trie
                 HotelLocationIndex.InsertWordsBySentence(hotelLocation.Value.CountryName, hotelLocation.Key);
                 HotelLocationIndex.InsertWordsBySentence(hotelLocation.Value.LocationName, hotelLocation.Key);
                 HotelLocationIndex.InsertWordsBySentence(hotelLocation.Value.RegionName, hotelLocation.Key);
+            }
+        }
+
+        private void InitHotelAutocompleteIndex()
+        {
+            foreach (var item in HotelService.GetInstance()._Autocompletes)
+            {
+                HotelAutocompleteIndex.InsertWordsBySentence(item.Value.Name, item.Key);
             }
         }
     }

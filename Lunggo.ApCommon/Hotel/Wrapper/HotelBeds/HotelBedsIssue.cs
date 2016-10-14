@@ -76,7 +76,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                     booking.addRoom(rate.RateKey, confirmRoom);
                 }
             }
+
             booking.clientReference = hotelIssueInfo.RsvNo;
+            if (hotelIssueInfo.SpecialRequest != null)
+            {
+                booking.remark = hotelIssueInfo.SpecialRequest;
+            }
+
             var bookingRq = booking.toBookingRQ();
             if (bookingRq == null)
                 return new HotelIssueTicketResult

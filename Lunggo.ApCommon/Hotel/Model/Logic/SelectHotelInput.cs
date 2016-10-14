@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Hotel.Model.Logic
 {
-    public  class SelectHotelInput
+    public class SelectHotelInput
     {
         public string SearchId { get; set; }
         public string HotelCode { get; set; }

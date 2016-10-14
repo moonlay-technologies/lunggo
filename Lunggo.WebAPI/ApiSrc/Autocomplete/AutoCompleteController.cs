@@ -46,13 +46,12 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
-        [Route("v1/autocomplete/hotellocations/{prefix}")]
+        [Route("v1/autocomplete/hotel/{prefix}")]
         public ApiResponseBase HotelLocations(string prefix)
         {
             try
             {
-                return AutocompleteLogic.GetHotelLocationAutocomplete(prefix);
+                return AutocompleteLogic.GetHotelAutocomplete(prefix);
             }
             catch (Exception e)
             {
