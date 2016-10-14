@@ -1,4 +1,4 @@
-﻿.detail-hotel {
+﻿.detail-hotel { display: none;
     .dh-slider {
         button.slick-arrow {
             position: absolute;
@@ -154,4 +154,50 @@
             }
         }
     }
+}
+
+.spec-hotel {
+    .sh-title {margin-bottom: 15px;}
+    .sh-desc, .sh-facility, .sh-policy {padding: 25px 15px;}
+    .sh-desc, .sh-facility {border-bottom: 1px solid #e9e9e9;}
+    .sh-txt {
+	    height: 160px;
+        &.opened {height: auto;
+            .toggle {
+                .sh-open {display: none;}
+                .sh-close {display: block;}
+            }
+        }
+        .toggle {
+            .sh-open {display: block;}
+            .sh-close {display: none;}
+
+        }
+        .sh-open {@extend .arrow-down-grey;}
+        .sh-close {@extend .arrow-up-grey;}
+    }
+    .sh-facility {
+        .sh-list {
+            margin: 0;
+            list-style: none;
+            &>li {
+                margin: 12px 0;
+                line-height: 25px;
+            }
+            .ac-blue:before {@extend .ac-icon;}
+            .ac-grey:before {@extend .ac-icon-grey;}
+            .meal-blue:before {@extend .meal-icon;}
+            .meal-grey:before {@extend .meal-icon-grey;}
+            .bell-blue:before {@extend .bell-icon;}
+            .bell-grey:before {@extend .bell-icon-grey;}
+            .wifi-blue:before {@extend .wifi-icon;}
+            .wifi-grey:before {@extend .wifi-icon-grey;}
+            .pool-blue:before {@extend .pool-icon;}
+            .pool-grey:before {@extend .pool-icon-grey;}            
+            .bed-blue:before {@extend .bed-icon;}
+            .tv-blue:before {@extend .tv-icon;}
+            .car-blue:before {@extend .car-icon;}
+        }
+    }
+    .sh-policy {}
 }

@@ -1088,25 +1088,34 @@ function accordionFunctions() {
     }
 }
 
-//    $rootScope.FlightSearchForm.AutoComplete.Loading = true;
-//    // if result exist in cache
-//    if (keyword in $rootScope.FlightSearchForm.AutoComplete.Cache) {
-//        $rootScope.FlightSearchForm.AutoComplete.Result = $rootScope.FlightSearchForm.AutoComplete.Cache[keyword];
-//        $rootScope.FlightSearchForm.AutoComplete.Loading = false;
-//    } else {
-//        $.get(url).done(
-//            function (returnData) {
-//                $rootScope.FlightSearchForm.AutoComplete.Result = returnData;
-//                $rootScope.FlightSearchForm.AutoComplete.Loading = false;
-//                // add result to cache
-//                $rootScope.FlightSearchForm.AutoComplete.Cache[keyword] = returnData;
-//            }
-//        ).fail(
-//            function (returnData) {
-//                console.log('Failed to get airport list');
-//                console.log(returnData);
-//                $rootScope.FlightSearchForm.AutoComplete.Loading = false;
-//            }
-//        );
-//    }
-//}
+//********************
+// shorten text functions
+function shortenTextFunctions() {
+    $(function () {
+        var dot = $('#dot');
+        dot.append(' <a class="toggle" href="#"><span class="sh-open"></span><span class="sh-close"></span></a>');
+        function createDots() {
+            dot.dotdotdot({
+                after: 'a.toggle'
+            });
+        }
+        function destroyDots() {
+            dot.trigger('destroy');
+        }
+        createDots();
+        dot.on(
+            'click',
+            'a.toggle',
+            function () {
+                dot.toggleClass('opened');
+
+                if (dot.hasClass('opened')) {
+                    destroyDots();
+                } else {
+                    createDots();
+                }
+                return false;
+            }
+        );
+    });
+}

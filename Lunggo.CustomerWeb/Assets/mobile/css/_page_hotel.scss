@@ -112,6 +112,180 @@
         background-size: 100%;
         vertical-align: middle;
     }
+    .like-icon {
+        background: url(/Assets/mobile/images/Hotel/like.png);
+        width: 16px;
+        height: 15px;
+        display: inline-block;
+        float: right;
+        background-color: white;
+        margin-left: 10px;
+        vertical-align: middle;
+    }
+    .share-icon {
+        background: url(/Assets/mobile/images/Hotel/share.png);
+        width: 14px;
+        height: 14px;
+        display: inline-block;
+        float: right;
+        vertical-align: middle;
+    }
+    .wifi-icon-sm {
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/wifi.png) no-repeat;
+        vertical-align: middle;
+        width: 15px;
+        height: 11px;
+        background-size: 100%;
+    }
+    .wifi-icon {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/wifi.png) no-repeat;
+        width: 26px;
+        height: 20px;
+        background-size: 100%;
+        position: absolute;
+        left: 0;
+    }    
+    .wifi-icon-grey {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/wifi.png) no-repeat;
+        width: 26px;
+        height: 20px;
+        background-size: 100%;
+        position: absolute;
+        left: 0;
+    }  
+    .meal-icon-sm {
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/meal-grey.png) no-repeat;
+        vertical-align: middle;
+        width: 15px;
+        height: 14px;
+        background-size: 100%;
+        margin: 0 8px;
+    }
+    .meal-icon {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/meal.png) no-repeat;
+        width: 22px;
+        height: 24px;
+        background-size: 100%;
+        position: absolute;
+        left: 0;
+    }
+    .meal-icon-grey {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/meal-grey.png) no-repeat;
+        width: 22px;
+        height: 24px;
+        background-size: 100%;
+        position: absolute;
+        left: 0;
+    }
+    .ac-icon-sm {
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/ac.png) no-repeat;
+        vertical-align: middle;
+        width: 18px;
+        height: 18px;
+        background-size: 100%;
+    }
+    .ac-icon {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/ac.png) no-repeat;
+        width: 24px;
+        height: 24px;
+        background-size: 100%;
+        position: absolute;
+        left: 0;
+    }
+    .ac-icon-grey {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/ac-grey.png) no-repeat;
+        width: 24px;
+        height: 24px;
+        background-size: 100%;
+        position: absolute;
+        left: 0;
+    }
+    .bell-icon {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/bel.png) no-repeat;
+        width: 26px;
+        height: 19px;
+        background-size: 100%;
+        position: absolute;
+        left: 0;
+    }
+    .bell-icon-grey {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/bel-grey.png) no-repeat;
+        width: 26px;
+        height: 19px;
+        background-size: 100%;
+        position: absolute;
+        left: 0;
+    }
+    .pool-icon {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/pool.png) no-repeat;
+        width: 19px;
+        height: 25px;
+        background-size: 100%;
+        position: absolute;
+        left: 0;
+    }
+    .pool-icon-grey {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/bell-pool.png) no-repeat;
+        width: 19px;
+        height: 25px;
+        background-size: 100%;
+        position: absolute;
+        left: 0;
+    }
+    .bed-icon {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/bed.png) no-repeat;
+        width: 31px;
+        height: 18px;
+        background-size: 100%;
+        position: absolute;
+        left: 0;
+    }
+    .car-icon {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/car.png) no-repeat;
+        width: 27px;
+        height: 24px;
+        background-size: 100%;
+        position: absolute;
+        left: 0;
+    }
+    .tv-icon {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/tv.png) no-repeat;
+        width: 25px;
+        height: 27px;
+        background-size: 100%;
+        position: absolute;
+        left: 0;
+    }
+    /*Arrow icons*/
     .arrow-detail {
         background: url(/Assets/mobile/images/Hotel/arrow-orange.png);
         display: block;
@@ -146,48 +320,19 @@
         vertical-align: middle;
         margin-top: 10px;
     }
-    .like-icon {
-        background: url(/Assets/mobile/images/Hotel/like.png);
-        width: 16px;
-        height: 15px;
-        display: inline-block;
-        float: right;
-        background-color: white;
-        margin-left: 10px;
-        vertical-align: middle;
+    .arrow-down-grey {
+        display: block;
+        background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
+        width: 13px;
+        height: 8px;
+        margin: 10px auto 0;
     }
-    .share-icon {
-        background: url(/Assets/mobile/images/Hotel/share.png);
-        width: 14px;
-        height: 14px;
-        display: inline-block;
-        float: right;
-        vertical-align: middle;
-    }
-    .wifi-icon-sm {
-        display: inline-block;
-        background: url(/Assets/mobile/images/Hotel/wifi.png) no-repeat;
-        vertical-align: middle;
-        width: 15px;
-        height: 11px;
-        background-size: 100%;
-    }    
-    .meal-icon-sm {
-        display: inline-block;
-        background: url(/Assets/mobile/images/Hotel/meal.png) no-repeat;
-        vertical-align: middle;
-        width: 15px;
-        height: 14px;
-        background-size: 100%;
-        margin: 0 8px;
-    }
-    .ac-icon-sm {
-        display: inline-block;
-        background: url(/Assets/mobile/images/Hotel/ac.png) no-repeat;
-        vertical-align: middle;
-        width: 18px;
-        height: 18px;
-        background-size: 100%;
+    .arrow-up-grey {
+        display: block;
+        background: url(/Assets/mobile/images/Hotel/arrow-up-grey.png) no-repeat;
+        width: 13px;
+        height: 8px;
+        margin: 10px auto 0;
     }
 
     /*Hotel Listing*/

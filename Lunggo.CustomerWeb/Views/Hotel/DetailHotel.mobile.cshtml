@@ -18,7 +18,7 @@
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
-
+    <script type="text/javascript" src="/Assets/vendor/dotdotdot/jquery.dotdotdot.min.js"></script>
 }
 
 @section PageJS{
@@ -33,14 +33,17 @@
     <script>
         accordionFunctions();
     </script>
+    <script>
+        shortenTextFunctions();
+    </script>
 }
 <div class="travorama-hotel-mobile">
     <div class="top-content">
         @Html.Partial("/Views/Hotel/Shared/Mobile/_Summary.cshtml")
         <div class="hotel-detail-menu clearfix">
             <div class="hotel-detail-menu-action">
-                <a href="#" class="detail-menu active">UMUM</a>
-                <a href="#" class="spec-menu">RINCIAN</a>
+                <a href="#" class="detail-menu">UMUM</a>
+                <a href="#" class="spec-menu active">RINCIAN</a>
             </div>
         </div>
     </div>
@@ -130,7 +133,47 @@
             </ul>
         </div>
     </div>
-    <div class="rincian-hotel">
-        
+    <div class="spec-hotel">
+        <div class="sh-desc">
+            <div class="sh-title darkgrey-txt lg-txt bold-txt">Deskripsi </div>
+            <div class="sh-txt darkgrey-txt" id="dot">
+                Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectetuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. my nibh euismod tincidunt. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                <br /><br />
+                Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectetuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. my nibh euismod tincidunt. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+            </div>
+        </div>
+        <div class="sh-facility">
+            <div class="sh-title darkgrey-txt lg-txt bold-txt">Fasilitas Utama Hotel</div>
+            <div class="sh-list-facility grey-txt clearfix">
+                <ul class="col-half sh-list">
+                    <li class="bed-blue">Bed</li>
+                    <li class="meal-blue">Breakfast</li>
+                    <li class="bell-blue">Room Service</li>
+                    <li class="wifi-blue">Public WiFi</li>
+                    <li class="bed-blue">Bed</li>
+                    <li class="meal-grey">Breakfast</li>
+                    <li class="bell-grey">Room Service</li>
+                    <li class="wifi-grey">Public WiFi</li>
+                </ul>
+                <ul class="col-half sh-list">
+                    <li class="pool-blue">Swimming Pool</li>
+                    <li class="meal-blue">Breakfast</li>
+                    <li class="tv-blue">TV</li>
+                    <li class="car-blue">Hotel Car</li>
+                    <li class="ac-grey">AC</li>
+                    <li class="tv-blue">TV</li>
+                    <li class="car-blue">Hotel Car</li>
+                    <li class="ac-blue">AC</li>
+                </ul>
+            </div>
+        </div>
+        <div class="sh-policy">
+            <div class="sh-title darkgrey-txt lg-txt bold-txt">Kebijakan</div>
+            <div class="sh-policy-txt darkgrey-txt">
+                Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectetuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. my nibh euismod tincidunt. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                <br /><br />
+                Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectetuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. my nibh euismod tincidunt. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+            </div>
+        </div>
     </div>
 </div>
