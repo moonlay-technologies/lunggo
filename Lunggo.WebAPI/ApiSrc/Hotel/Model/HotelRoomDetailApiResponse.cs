@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
 {
-    public class HotelRoomDetailApiResponse
+    public class HotelRoomDetailApiResponse : ApiResponseBase
     {
         [JsonProperty("roomDetails")]
-        public List<HotelRoom> RoomDetails { get; set; } 
+        public HotelRoom RoomDetails { get; set; } 
     }
 }

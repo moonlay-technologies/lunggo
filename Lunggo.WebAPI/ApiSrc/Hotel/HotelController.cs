@@ -50,6 +50,24 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
                 return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Route("v1/hotel/getroomdetail")]
+        public ApiResponseBase GetRoomDetail()
+        {
+            HotelRoomDetailApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<HotelRoomDetailApiRequest>();
+                var apiResponse = HotelLogic.GetHotelRoomDetailLogic(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
     }
     
 

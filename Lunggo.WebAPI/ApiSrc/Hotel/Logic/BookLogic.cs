@@ -115,5 +115,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             }
             
         }
+
+        internal static object g(HotelRoomDetailApiRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -33,30 +33,30 @@ namespace Lunggo.BackendWeb
             
             AppInitializer.Init();
 
-            //HotelService.GetInstance().Search(new SearchHotelInput
-            //{
-
-            //    AdultCount = 2,
-            //    ChildCount = 1,
-            //    CheckIn = new DateTime(2017, 3, 19),
-            //    Checkout = new DateTime(2017, 3, 20),
-            //    Nights = 1,
-            //    Rooms = 1,
-            //    Location = "JAV"
-            //});
-
-
-
-            var info = new SelectHotelRoomInput
+            HotelService.GetInstance().Search(new SearchHotelInput
             {
-                SearchId = "b24b1214-03b8-402d-ada3-ba5d7ff58526",
-                RegsIds = new List<string>
-                {
-                    "444942-DBL.DX-20170319|20170320|W|325|444942|DBL.DX|BAR|BB||1~2~1|12|N@B2695CA06C454C8CB4152897757A223C"
-                }
-            };
 
-            var hb = HotelService.GetInstance().SelectHotelRoom(info);
+                AdultCount = 2,
+                ChildCount = 1,
+                CheckIn = new DateTime(2017, 3, 19),
+                Checkout = new DateTime(2017, 3, 20),
+                Nights = 1,
+                Rooms = 1,
+                Location = "JAV"
+            });
+
+
+
+            //var info = new SelectHotelRoomInput
+            //{
+            //    SearchId = "b24b1214-03b8-402d-ada3-ba5d7ff58526",
+            //    RegsIds = new List<string>
+            //    {
+            //        "444942-DBL.DX-20170319|20170320|W|325|444942|DBL.DX|BAR|BB||1~2~1|12|N@B2695CA06C454C8CB4152897757A223C"
+            //    }
+            //};
+
+            //var hb = HotelService.GetInstance().SelectHotelRoom(info);
         }
     }
 }

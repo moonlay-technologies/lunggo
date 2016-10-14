@@ -59,7 +59,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RoomName = output.Room.RoomName,
                     Type = output.Room.Type,
                     TypeName = output.Room.TypeName,
-
+                    
                 };
 
                 hotel.Rooms.Add(newRoom);
