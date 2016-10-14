@@ -2924,6 +2924,7 @@
     <Content Include="Views\Hotel\Search.mobile.cshtml" />
     <Content Include="Views\Hotel\Shared\Mobile\_Summary.cshtml" />
     <Content Include="Views\Hotel\DetailHotel.mobile.cshtml" />
+    <Content Include="Views\Hotel\Checkout.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
