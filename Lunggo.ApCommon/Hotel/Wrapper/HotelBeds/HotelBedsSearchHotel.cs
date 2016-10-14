@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.messages;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.helpers;
+using Lunggo.ApCommon.Product.Model;
 using Newtonsoft.Json;
 
 
@@ -18,14 +19,14 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
         public SearchHotelResult SearchHotel(SearchHotelCondition condition)
         {
             HotelApiClient client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-api");
-            //HotelApiClient client = new HotelApiClient();
             var avail = new Availability
             {
                 checkIn = condition.CheckIn,
                 checkOut =  condition.Checkout,
-                destination = condition.Location,
+                destination = condition.Location ?? null,
+                zone = condition.Zone,
+                //country belum ada
                 language = "ENG",
-                zone =  condition.Zone,
                 payed = Availability.Pay.AT_WEB
             };
             AvailRoom room = new AvailRoom
@@ -43,7 +44,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 
             for (int i = 0; i < condition.ChildCount; i++)
             {
-                room.childOf(30);
+                room.childOf(12);
             }
             avail.rooms.Add(room);
             AvailabilityRQ availabilityRq = avail.toAvailabilityRQ();
@@ -67,17 +68,30 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                     {
                         HotelCode = hotelResponse.code,
                         HotelName = hotelResponse.name,
-                        //Address = hotelResponse.address,
                         Latitude = decimal.Parse(hotelResponse.latitude),
                         Longitude = decimal.Parse(hotelResponse.longitude),
                         ZoneCode =  hotelResponse.zoneCode,
                         NetFare =  hotelResponse.totalNet,
+                        StarRating =  hotelResponse.categoryCode,
                         OriginalFare = hotelResponse.totalSellingRate,
                         Review = hotelResponse.reviews,
-                        Rooms =hotelResponse.rooms.Select(roomAPI=>new HotelRoom
+                        Rooms =hotelResponse.rooms.Select(roomApi=>new HotelRoom
                         {
-                            RoomCode = roomAPI.code
-                        }).ToList()
+                            RoomCode = roomApi.code,
+                            Rates = roomApi.rates.Select(x=> new HotelRate
+                            {
+                                RateKey = x.rateKey,
+                                Price = new Price{OriginalIdr = x.net},
+                                Boards = x.boardCode,
+                                //Cancellation = x.cancellationPolicies.Select(y=> new Cancellation
+                                //{
+                                //    Fee = y.amount,
+                                //    StartTime = y.from
+                                //}).ToList(),
+                                Class = x.rateClass,
+                                Type = x.rateType.ToString() 
+                            }).ToList()
+                        }).ToList(),
                     };
                     hotels.Add(hotel);
                 }

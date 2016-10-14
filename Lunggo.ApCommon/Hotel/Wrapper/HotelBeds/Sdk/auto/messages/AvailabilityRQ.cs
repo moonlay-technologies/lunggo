@@ -58,7 +58,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.messages
 
             if ( destination != null )
             {
-                if (String.IsNullOrEmpty(destination.code) || !destination.zone.HasValue)
+                if (String.IsNullOrEmpty(destination.code))
                     throw new ArgumentException("If destination object is informed then code and zone must be informed too.");
             }
 

@@ -9,6 +9,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
     public class GetRoomDetailInput
     {
         public string RoomCode { get; set; }
-        //public string HotelCode { get; set; }
+        public string HotelCode { get; set; }
+        public string SearchId { get; set; }
     }
 }

@@ -25,7 +25,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RoomCode = data.RoomCode
                 });
 
-                hotel.Rooms.Add(output.Room);
+                var hotelRoom = new HotelRoom
+                {
+                    RoomCode = output.Room.RoomCode
+                };
+
+                hotel.Rooms.Add(hotelRoom);
             }
 
             

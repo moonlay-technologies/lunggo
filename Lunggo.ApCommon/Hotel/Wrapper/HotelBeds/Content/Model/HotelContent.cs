@@ -46,6 +46,12 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
         public string path;
     }
 
+    public class Types
+    {
+        public string code { get; set; }
+        public Description description { get; set; }
+    }
+
     public class Coordinates
     {
         public decimal longitude;
@@ -56,6 +62,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
     {
         public int distance;
         public string terminalCode;
+        public Description name;
+        public Description description;
     }
 
     public class Room
