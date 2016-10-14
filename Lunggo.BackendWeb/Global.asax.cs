@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
@@ -32,25 +33,26 @@ namespace Lunggo.BackendWeb
             
             AppInitializer.Init();
 
-            var searchInput = new SearchHotelInput
-            {
-                AdultCount = 2,
-                ChildCount = 1,
-                CheckIn = new DateTime(2017, 3, 19),
-                Checkout = new DateTime(2017, 3, 20),
-                Nights = 1,
-                Rooms = 1,
-                Location = "JAV"
-            };
+            //HotelService.GetInstance().Search(new SearchHotelInput
+            //{
 
-            //HotelService.GetInstance().Search(searchInput);
+            //    AdultCount = 2,
+            //    ChildCount = 1,
+            //    CheckIn = new DateTime(2017, 3, 19),
+            //    Checkout = new DateTime(2017, 3, 20),
+            //    Nights = 1,
+            //    Rooms = 1,
+            //    Location = "JAV"
+            //});
+
+
 
             var info = new SelectHotelRoomInput
             {
-                SearchId = "e52160fa-9909-4145-a5a8-ae8456ae8db7",
+                SearchId = "b24b1214-03b8-402d-ada3-ba5d7ff58526",
                 RegsIds = new List<string>
                 {
-                    "444942-DBT.DX-20171108|20171110|W|325|444942|DBT.DX|FIT|BB||1~2~1|8|N@3C02D99FF367493E92985D1822ED078D"
+                    "444942-DBL.DX-20170319|20170320|W|325|444942|DBL.DX|BAR|BB||1~2~1|12|N@B2695CA06C454C8CB4152897757A223C"
                 }
             };
 

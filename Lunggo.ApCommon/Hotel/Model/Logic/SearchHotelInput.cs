@@ -30,5 +30,3 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         }
     }
 }
-
-//

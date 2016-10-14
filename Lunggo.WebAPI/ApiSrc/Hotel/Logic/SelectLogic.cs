@@ -77,16 +77,12 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             {
                 return new HotelSelectRoomApiResponse();
             }
-            else
+            return new HotelSelectRoomApiResponse
             {
-                return new HotelSelectRoomApiResponse
-                {
-                    //TimeLimit = selectHotelRoomServiceResponse
-                    Token = selectHotelRoomServiceResponse.Token
-                    //TODO: TIMELIMIT
-                };
-            }
-            
+                //TimeLimit = selectHotelRoomServiceResponse
+                Token = selectHotelRoomServiceResponse.Token,
+                TimeLimit = selectHotelRoomServiceResponse.Timelimit
+            };
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Sequence;
+using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -28,12 +29,40 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                 });
 
-                var hotelRoom = new HotelRoom
+                var newRates = new List<HotelRate>();
+                foreach (var rate in output.Room.Rates)
                 {
-                    RoomCode = output.Room.RoomCode
+                    var newrate = new HotelRate
+                    {
+                        RateKey = rate.RateKey,
+                        AdultCount = rate.AdultCount,
+                        Boards = rate.Boards,
+                        Cancellation = rate.Cancellation,
+                        ChildCount = rate.ChildCount,
+                        Class = rate.Class,
+                        Offers = rate.Offers,
+                        PaymentType = rate.PaymentType,
+                        RegsId = rate.RegsId,
+                        Price = rate.Price,
+                        Type = rate.Type,
+                    };
+                    newRates.Add(newrate);
+                }
+
+                var newRoom = new HotelRoom
+                {
+                    RoomCode = output.Room.RoomCode,
+                    characteristicCd = output.Room.CharacteristicCode,
+                    Facilities = output.Room.Facilities,
+                    Images = output.Room.Images,
+                    Rates = newRates,
+                    RoomName = output.Room.RoomName,
+                    Type = output.Room.Type,
+                    TypeName = output.Room.TypeName,
+
                 };
 
-                hotel.Rooms.Add(hotelRoom);
+                hotel.Rooms.Add(newRoom);
             }
 
             
@@ -58,7 +87,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             SaveSelectedHotelDetailsToCache(token, hotel);
             return new SelectHotelRoomOutput
             {
-                Token = token
+                Token = token,
+                Timelimit = DateTime.UtcNow.AddMinutes(Convert.ToInt32(ConfigManager.GetInstance().GetConfigValue("hotel","selectCacheTimeOut")))              
             };
         }
 
