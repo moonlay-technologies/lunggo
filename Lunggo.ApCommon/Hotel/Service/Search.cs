@@ -4,11 +4,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Query;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.Framework.Documents;
+using Lunggo.Framework.SharedModel;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -19,17 +21,79 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (input.SearchId != null)
             {
-                //Take data from SearchResult
-                var searchResult = GetSearchHotelResultWithFilter(input);
-                //do return
+                ////Take search result from docDB
+                //var searchResult = GetSearchHotelResultWithFilter(input);
+
+                //Take search data from Redis
+                var searchResult = GetSearchHotelResultFromCache(input.SearchId);
+
+                var hotels = searchResult.HotelDetails;
+                var hasil = searchResult.HotelDetails;
+                
+                //DO Filtering
+                if (hotels != null && input.FilterParam != null)
+                {
+                    hotels = searchResult.HotelDetails.Where(p =>
+                    (input.FilterParam.Area == null || input.FilterParam.Area.Contains(p.ZoneCode)) &&
+                    (input.FilterParam.StarRating == null || input.FilterParam.StarRating.Contains(p.StarRating)) &&
+                    (input.FilterParam.AccomodationType == null || input.FilterParam.AccomodationType.Contains(p.AccomodationType)) &&
+                    (input.FilterParam.MaxPrice == null || input.FilterParam.MinPrice == null || (p.OriginalFare >= input.FilterParam.MinPrice && p.OriginalFare <= input.FilterParam.MaxPrice))
+                    ).Select(p => new HotelDetail
+                    {
+                        HotelCode = p.HotelCode,
+                        HotelName = p.HotelName,
+                        Review = p.Review,
+                        Address = p.Address,
+                        PostalCode = p.PostalCode,
+                        Chain = p.Chain,
+                        Pois = p.Pois,
+                        StarRating = p.StarRating,
+                        Terminals = p.Terminals,
+                        Latitude = p.Latitude,
+                        Longitude = p.Longitude,
+                        PhonesNumbers = p.PhonesNumbers,
+                        OriginalFare = p.OriginalFare,
+                        ImageUrl = p.ImageUrl,
+                        ZoneCode = p.ZoneCode,
+                        SpecialRequest = p.SpecialRequest,
+                        Email = p.Email,
+                        Facilities = p.Facilities,
+                        Segment = p.Segment,
+                        Description = p.Description,
+                        City = p.City,
+                        CountryCode = p.CountryCode,
+                        NightCount = p.NightCount,
+                        Rooms = p.Rooms,
+                        NetFare = p.NetFare,
+                        DestinationCode = p.DestinationCode,
+                        AccomodationType = p.AccomodationType,
+                        Discount = p.Discount,
+                    }).ToList();    
+                }
+                
+
+                //Do Sorting
+                if (hotels != null && input.SortingParam != null)
+                {
+                    if (input.SortingParam.AscendingPrice)
+                    {
+                        hotels = hotels.OrderBy(p => p.OriginalFare).ToList();
+                    }
+
+                    if (input.SortingParam.DescendingPrice)
+                    {
+                        hotels = hotels.OrderByDescending(p => p.OriginalFare).ToList();
+                    }
+                }
+
                 List<HotelDetail> hotelList;
                 if (input.StartPage != 0 && input.EndPage != 0)
                 {
-                    hotelList = searchResult.HotelDetails.Skip(input.StartPage).Take(input.EndPage).ToList();
+                    hotelList = hotels.Skip(input.StartPage).Take(input.EndPage).ToList();
                 }
                 else
                 {
-                    hotelList = searchResult.HotelDetails.Take(100).ToList();
+                    hotelList = hotels.Take(100).ToList();
                 }
 
                 return new SearchHotelOutput
