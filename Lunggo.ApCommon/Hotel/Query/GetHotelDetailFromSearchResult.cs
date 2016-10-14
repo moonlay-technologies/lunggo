@@ -12,7 +12,6 @@ namespace Lunggo.ApCommon.Hotel.Query
         public override string GetQueryString(dynamic condition = null)
         {
             return "SELECT c.room FROM f JOIN c IN f.hotels WHERE f.id = @SearchId AND c.hotelCd = @HotelCode";
-            
         }
     }
 }

@@ -22,6 +22,12 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         public int EndPage { get; set; }
         public HotelFilter FilterParam { get; set; }
         public HotelSorting SortingParam { get; set; }
+
+        public SearchHotelInput()
+        {
+            SortingParam = new HotelSorting();
+            FilterParam = new HotelFilter();
+        }
     }
 }
 

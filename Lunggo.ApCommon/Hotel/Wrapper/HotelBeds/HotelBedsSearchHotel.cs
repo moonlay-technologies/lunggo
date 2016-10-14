@@ -71,9 +71,10 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         Latitude = decimal.Parse(hotelResponse.latitude),
                         Longitude = decimal.Parse(hotelResponse.longitude),
                         ZoneCode =  hotelResponse.zoneCode,
+                        DestinationCode = hotelResponse.destinationCode,
                         NetFare =  hotelResponse.totalNet,
                         StarRating =  hotelResponse.categoryCode,
-                        OriginalFare = hotelResponse.totalSellingRate,
+                        OriginalFare = hotelResponse.minRate,
                         Review = hotelResponse.reviews,
                         Rooms =hotelResponse.rooms.Select(roomApi=>new HotelRoom
                         {

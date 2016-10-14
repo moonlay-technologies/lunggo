@@ -12,10 +12,12 @@ namespace Lunggo.ApCommon.Hotel.Service
         public GetHotelRateOutput GetRate (GetHotelRateInput hotelRateInput)
         {
             var document = DocumentService.GetInstance();
-            var searchResultData =  document.Execute<HotelDetail>(new GetHotelDetailFromSearchResult(),new {hotelRateInput.SearchId, hotelRateInput.HotelCode}).SingleOrDefault();
-            if (searchResultData != null)
+            //var searchResultData =  document.Execute<HotelDetail>(new GetHotelDetailFromSearchResult(),new {hotelRateInput.SearchId, hotelRateInput.HotelCode}).SingleOrDefault();
+            var searchResultData = GetSearchHotelResultFromCache(hotelRateInput.SearchId);
+            var hotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotelRateInput.HotelCode);
+            if (hotel != null)
             {
-                foreach (var room in searchResultData.Rooms)
+                foreach (var room in hotel.Rooms)
                 {
                     foreach (var rate in room.Rates)
                     {
@@ -31,7 +33,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             return new GetHotelRateOutput
             {
                 SearchId = hotelRateInput.SearchId,
-                Rooms = searchResultData.Rooms != null ? searchResultData.Rooms : null,
+                Rooms = hotel.Rooms != null ? hotel.Rooms : null,
             };
 
         }

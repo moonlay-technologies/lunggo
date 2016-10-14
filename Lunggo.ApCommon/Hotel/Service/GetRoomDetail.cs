@@ -18,12 +18,15 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             //First, take the single room from docDB
             var document = DocumentService.GetInstance();
-            var searchResultData = document.Execute<HotelRoom>(new GetRoomDetailFromSearchResult(), new { roomDetailInput.SearchId, roomDetailInput.HotelCode,roomDetailInput.RoomCode }).SingleOrDefault();
-            if (searchResultData != null)
+            //var searchResultData = document.Execute<HotelRoom>(new GetRoomDetailFromSearchResult(), new { roomDetailInput.SearchId, roomDetailInput.HotelCode,roomDetailInput.RoomCode }).SingleOrDefault();
+            var searchResultData = GetSearchHotelResultFromCache(roomDetailInput.SearchId);
+            var hotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == roomDetailInput.HotelCode);
+            var room = hotel.Rooms.SingleOrDefault(p=>p.RoomCode == roomDetailInput.RoomCode);
+            if (room != null)
             {
                 return new GetRoomDetailOutput
                 {
-                    Room = ConvertToSingleHotelRoomForDisplay(searchResultData)
+                    Room = ConvertToSingleHotelRoomForDisplay(room)
                 };
             }
             

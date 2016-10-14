@@ -62,35 +62,39 @@ namespace Lunggo.ApCommon.Hotel.Service
 
 
                 //Adding Additional Hotel Information
-                foreach (var hotel in result.HotelDetails)
-                {
-                    var detail = GetHotelDetailsFromDocument(hotel.HotelCode);
-                    hotel.PhonesNumbers = detail.PhonesNumbers;
-                    //hotel.Terminals = detail.Terminals != null ? detail.Terminals : null; //TODO Krena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
-                    hotel.PostalCode = detail.PostalCode;
-                    hotel.Review = detail.Review;
-                    hotel.StarRating = detail.StarRating;
-                    hotel.Chain = detail.Chain;
-                    hotel.Pois = detail.Pois;
-                    hotel.Address = detail.Address;
-                    hotel.Segment = detail.Segment;
-                    hotel.PhonesNumbers = detail.PhonesNumbers;
-                    //hotel.ImageUrl = detail.ImageUrl != null ? detail.ImageUrl : null; //TODO Krena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
-                    hotel.Email = detail.Email;
-                    hotel.City = detail.City;
-                    hotel.CountryCode = detail.CountryCode;
-                    hotel.ZoneCode = detail.ZoneCode;
-                    hotel.Longitude = detail.Longitude;
-                    hotel.Latitude = detail.Latitude;
-                    hotel.DestinationCode = detail.DestinationCode;
-                    hotel.Description = detail.Description;
-                    hotel.AccomodationType = detail.AccomodationType;
-                }
+                //foreach (var hotel in result.HotelDetails)
+                //{
+                   //var detail = GetHotelDetailsFromDocument(hotel.HotelCode);
+                //    hotel.PhonesNumbers = detail.PhonesNumbers;
+                //    //hotel.Terminals = detail.Terminals != null ? detail.Terminals : null; //TODO Krena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
+                //    hotel.PostalCode = detail.PostalCode;
+                //    hotel.Review = detail.Review;
+                //    hotel.StarRating = detail.StarRating;
+                //    hotel.Chain = detail.Chain;
+                //    hotel.Pois = detail.Pois;
+                //    hotel.Address = detail.Address;
+                //    hotel.Segment = detail.Segment;
+                //    hotel.PhonesNumbers = detail.PhonesNumbers;
+                //    //hotel.ImageUrl = detail.ImageUrl != null ? detail.ImageUrl : null; //TODO Krena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
+                //    hotel.Email = detail.Email;
+                //    hotel.City = detail.City;
+                //    hotel.CountryCode = detail.CountryCode;
+                //    hotel.ZoneCode = detail.ZoneCode;
+                //    hotel.Longitude = detail.Longitude;
+                //    hotel.Latitude = detail.Latitude;
+                //    hotel.DestinationCode = detail.DestinationCode;
+                //    hotel.Description = detail.Description;
+                //    hotel.AccomodationType = detail.AccomodationType;
+                //}
 
                 if (result.HotelDetails != null)
                 {
                     //save data to docDB
-                    SaveSearchResultToDocument(result);
+                    //SaveSearchResultToDocument(result);
+
+                    //save searchResult to cache
+                    SaveSearchResultintoDatabaseToCache(result.SearchId,result);
+
 
                     //return only 100 data for the first page
                     return new SearchHotelOutput
@@ -108,6 +112,5 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
         }
-        
     }
 }
