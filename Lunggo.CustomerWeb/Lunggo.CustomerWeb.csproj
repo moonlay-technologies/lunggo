@@ -304,6 +304,7 @@
     <Content Include="Assets\css\eticket.scss" />
     <Content Include="Assets\images\order-hotel-list-bg.png" />
     <Content Include="Assets\mobile\images\adult.png" />
+    <Content Include="Assets\mobile\images\Hotel\ac.png" />
     <Content Include="Assets\mobile\images\Hotel\arrow-down-orange.png" />
     <Content Include="Assets\mobile\images\Hotel\arrow-next.png" />
     <Content Include="Assets\mobile\images\Hotel\arrow-orange.png" />
@@ -322,7 +323,9 @@
     <Content Include="Assets\mobile\images\Hotel\hotel-list-lg.jpg" />
     <Content Include="Assets\mobile\images\Hotel\like.png" />
     <Content Include="Assets\mobile\images\Hotel\location.png" />
+    <Content Include="Assets\mobile\images\Hotel\meal.png" />
     <Content Include="Assets\mobile\images\Hotel\share.png" />
+    <Content Include="Assets\mobile\images\Hotel\wifi.png" />
     <Content Include="Assets\mobile\images\time.png" />
     <Content Include="Assets\travorama20\images\Hotel\bed.png" />
     <Content Include="Assets\travorama20\images\Hotel\blue-sprite.png" />

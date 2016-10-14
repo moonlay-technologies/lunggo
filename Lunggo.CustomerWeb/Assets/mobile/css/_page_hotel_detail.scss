@@ -64,74 +64,92 @@
                 .col-right-hotel .sm-txt.grey-txt {margin: 5px 0;}
             }
             .dh-accordion {
-                .accordion-wrapper .accordion-content {
-                    margin-bottom: 0;
-                    &.show {
-                        padding: 15px;
-                        border: none;
-                        background: #eceff4;
+                .accordion-wrapper {
+                    .accordion-dh {
+                        &:before {@extend .arrow-down;}
+                        &.active:before {@extend .arrow-up;}
+                    }
+                    .accordion-content {
+                        margin-bottom: 0;
+                        &.show {
+                            padding: 15px;
+                            border: none;
+                            background: #eceff4;
+                        }
                     }
                 }
                 .dh-list-detail {
                     .dh-top img {width: 100%;}
-                    .dh-bottom {margin-top: 15px;}
-                    
-                    .room {
+                    .dh-bottom {
                         margin-top: 15px;
-                        .room-title {
-                            float: left;
-                            line-height: 30px;
+                        &>.sm-txt.grey-txt {
+                            line-height: 12px;
+                            margin-top: 6px;
                         }
-                        .counter-room {
-                            float: left;
-                            margin-left: 40px;
+                        &>.price {
+                            margin: 6px 0;
                         }
-                        .btn-room {
-                            background: #2eb4e7;
-                            color: #fff !important;
-                            vertical-align: middle;
-                            font-size: 0;
-                            line-height: 30px;
-                            width: 30px;
-                            height: 30px;
-                            display: inline-block;
-                            &.btn-min {
-                                margin-right: -3px;
-                                &:before {
-                                    content: '-';
-                                    display: inline-block;
-                                    color: #fff;
-                                    font-size: 20px;
-                                    padding: 0 12px;
-                                }
+                        .facility {
+                            margin-top: 6px;
+                            .wifi {@extend .wifi-icon-sm;}
+                            .meal {@extend .meal-icon-sm;}
+                            .ac {@extend .ac-icon-sm;}
+                        }
+                        .room {
+                            margin-top: 15px;
+                            .room-title {
+                                float: left;
+                                line-height: 30px;
                             }
-                            &.btn-plus {
-                                margin-left: -3px;
-                                &:before {
-                                    content: '+';
-                                    display: inline-block;
-                                    color: #fff;
-                                    font-size: 20px;
-                                    padding: 0 9px;
-                                }
+                            .counter-room {
+                                float: left;
+                                margin-left: 20px;
                             }
+                            .btn-room {
+                                background: #2eb4e7;
+                                color: #fff !important;
+                                vertical-align: middle;
+                                font-size: 0;
+                                line-height: 30px;
+                                width: 30px;
+                                height: 30px;
+                                display: inline-block;
+                                &.btn-min {
+                                    margin-right: -3px;
+                                    &:before {
+                                        content: '-';
+                                        display: inline-block;
+                                        color: #fff;
+                                        font-size: 20px;
+                                        padding: 0 12px;
+                                    }
+                                }
+                                &.btn-plus {
+                                    margin-left: -3px;
+                                    &:before {
+                                        content: '+';
+                                        display: inline-block;
+                                        color: #fff;
+                                        font-size: 20px;
+                                        padding: 0 9px;
+                                    }
+                                }
 
+                            }
+                            .result-room {
+                                background: #fff;
+                                vertical-align: middle;
+                                font-size: 14px;
+                                line-height: 30px;
+                                height: 30px;
+                                display: inline-block;
+                                width: 50px;
+                                text-align: center;
+                                border: 1px solid #ccc;
+                            }
+                            &>a.btn-yellow {float:right;}
                         }
-                        .result-room {
-                            background: #fff;
-                            vertical-align: middle;
-                            font-size: 14px;
-                            line-height: 30px;
-                            height: 30px;
-                            display: inline-block;
-                            width: 50px;
-                            text-align: center;
-                        }
-                        &>a.btn-yellow {float:right;}
                     }
-                }
-                .dh-arrow {
-                    &:before {@extend .arrow-down;}
                 }
             }
         }

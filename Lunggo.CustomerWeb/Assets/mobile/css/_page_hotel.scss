@@ -132,7 +132,19 @@
         right: 0;
         margin-right: 20px;
         vertical-align: middle;
-        margin-top: 4px;
+        margin-top: 10px;
+    }
+    .arrow-up {
+        content: '';
+        display: block;
+        background: url(/Assets/mobile/images/Hotel/arrow-up-orange.png);
+        width: 13px;
+        height: 8px;
+        position: absolute;
+        right: 0;
+        margin-right: 20px;
+        vertical-align: middle;
+        margin-top: 10px;
     }
     .like-icon {
         background: url(/Assets/mobile/images/Hotel/like.png);
@@ -152,6 +164,31 @@
         float: right;
         vertical-align: middle;
     }
+    .wifi-icon-sm {
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/wifi.png) no-repeat;
+        vertical-align: middle;
+        width: 15px;
+        height: 11px;
+        background-size: 100%;
+    }    
+    .meal-icon-sm {
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/meal.png) no-repeat;
+        vertical-align: middle;
+        width: 15px;
+        height: 14px;
+        background-size: 100%;
+        margin: 0 8px;
+    }
+    .ac-icon-sm {
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/ac.png) no-repeat;
+        vertical-align: middle;
+        width: 18px;
+        height: 18px;
+        background-size: 100%;
+    }
 
     /*Hotel Listing*/
     .dh-list-, .hotel-list-container {
@@ -169,7 +206,6 @@
     }
 
     /*Shared Page*/
-    .travorama-hotel-mobile {margin-bottom: 30px;}
     .top-content {
         .hotel-sort-filter .hotel-sort-filter-action a,
         .hotel-detail-menu .hotel-detail-menu-action a {
@@ -177,16 +213,15 @@
             color: #fff;
             text-align: center;
             display: block;
-            width: 33.333333333333336%;
             font-weight: bold;
             padding: 15px 0;
             background: #616161;
             text-decoration:none;
+            width: 50%;
             + a {border-left: 1px solid #8f8f8f;}
-        }
-        .hotel-sort-filter .hotel-sort-filter-action a {width: 33.333333333333336%;}
-        .hotel-detail-menu .hotel-detail-menu-action a {width: 50%;
-             &.active {background: #878787;}
+            &.detail-menu, &.spec-menu {
+                &.active {background: #878787;}
+            }
         }
         .hotel-summary {background-color:#2eb4e7; color:#fff; position:relative; @include clearfix();
             p {margin-bottom:0;}
