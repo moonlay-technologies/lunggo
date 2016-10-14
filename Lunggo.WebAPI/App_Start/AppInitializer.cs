@@ -2,6 +2,7 @@
 using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.Config;
@@ -30,6 +31,7 @@ namespace Lunggo.WebAPI
             InitUniqueIdGenerator();
             InitRedisService();
             InitFlightService();
+            InitHotelService();
             InitQueueService();
             InitMailService();
             InitPaymentService();
@@ -121,6 +123,11 @@ namespace Lunggo.WebAPI
             flight.Init("Config");
         }
 
+        private static void InitHotelService()
+        {
+            var flight = HotelService.GetInstance();
+            flight.Init("Config");
+        }
         private static void InitPaymentService()
         {
             var payment = PaymentService.GetInstance();

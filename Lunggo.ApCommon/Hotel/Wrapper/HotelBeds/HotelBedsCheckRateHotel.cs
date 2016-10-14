@@ -24,9 +24,11 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 
                 if (responseCheckRate != null && responseCheckRate.error == null)
                 {
+                    checkRateResult.IsValid = true;
                     if (responseCheckRate.hotel.rooms[0].rates[0].net == hotelRate.Price)
                     {
                         checkRateResult.IsPriceChanged = false;
+                        checkRateResult.RateKey = hotelRate.RateKey;
 
                     }
                     else
@@ -36,7 +38,11 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         checkRateResult.RateKey = responseCheckRate.hotel.rooms[0].rates[0].rateKey;
                     }
                 }
-                checkRateResult.IsValid = true;
+                else
+                {
+                    checkRateResult.IsValid = false;
+                }
+                
             }
             else
             {

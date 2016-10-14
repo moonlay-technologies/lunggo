@@ -103,10 +103,27 @@ namespace Lunggo.ApCommon.Hotel.Service
             public string CharacteristicDescId { get; set; }
             public string CharacteristicDescEn { get; set; }
         }
+
+        public class Autocomplete
+        {
+            public String Name;
+            public AutocompleteType Type;
+            public long Id;
+            public string Code;
+        }
+
+        public enum AutocompleteType
+        {
+            Destination = 1,
+            Zone = 2,
+            Hotel = 3
+        }
+        //FOR AUTOCOMPLETE
+        public Dictionary<long, Autocomplete> _Autocompletes; 
+
         public static Dictionary<string, string> HotelSegmentDictId;
         public static Dictionary<string, string> HotelSegmentDictEng;
-        public static Dictionary<int, string> HotelFacilityDictId;
-        public static Dictionary<int, string> HotelFacilityDictEng;
+        
         public static Dictionary<int, string> HotelFacilityGroupDictId;
         public static Dictionary<int, string> HotelFacilityGroupDictEng;
         public static Dictionary<int, Facility> HotelRoomFacility;
@@ -115,14 +132,13 @@ namespace Lunggo.ApCommon.Hotel.Service
         public static Dictionary<string, HotelRoomType> HotelRoomTypeDict;
         public static Dictionary<string, RoomCharacteristic> HotelRoomCharacteristicDict;
         
-        
-        public static Dictionary<string, RateClass> HotelRoomRateClassDict;
-        public static Dictionary<string, RateType> HotelRoomRateTypeDict;
-        public static Dictionary<string, PaymentType> HotelRoomPaymentTypeDict;
-        public static Dictionary<string, CountryDict> HotelCountry;
-        public static Dictionary<string, Destination> HotelDestinationDict;
-        public static Dictionary<string, Country> HotelDestinationCountryDict;
-        public static Dictionary<string, Zone> HotelDestinationZoneDict;
+        public Dictionary<string, RateClass> HotelRoomRateClassDict;
+        public Dictionary<string, RateType> HotelRoomRateTypeDict;
+        public Dictionary<string, PaymentType> HotelRoomPaymentTypeDict;
+        public Dictionary<string, CountryDict> HotelCountry;
+        public Dictionary<string, Destination> HotelDestinationDict;
+        public Dictionary<string, Country> HotelDestinationCountryDict;
+        public Dictionary<string, Zone> HotelDestinationZoneDict;
 
         public static List<Country> Countries;
         public static List<FacilityGroup> FacilityGroups;
@@ -188,7 +204,48 @@ namespace Lunggo.ApCommon.Hotel.Service
             PopulateHotelDestinationCountryDict(Countries);
             PopulateHotelDestinationDict(Countries);
             PopulateHotelZoneDict(Countries);
+
+            PopulateAutocomplete();
         }
+
+        private static void PopulateAutocomplete()
+        {
+            HotelService.GetInstance()._Autocompletes = new Dictionary<long, Autocomplete>();
+            long index = 1;
+            foreach (var country in Countries)
+            {
+                foreach (var destination in country.Destinations)
+                {
+
+                    var newValue = new Autocomplete
+                    {
+                        Id = index,
+                        Code = destination.Code,
+                        Name = destination.Name + ", " + country.Name,
+                        Type = AutocompleteType.Destination
+                    };
+
+                    HotelService.GetInstance()._Autocompletes.Add(index, newValue);
+                    index++;
+
+                    foreach (var zone in destination.Zones)
+                    {
+
+                        newValue = new Autocomplete
+                        {
+                            Id = index,
+                            Code = zone.Code,
+                            Name = zone.Name + ", " + destination.Name + ", " + country.Name,
+                            Type = AutocompleteType.Zone
+                        };
+
+                        HotelService.GetInstance()._Autocompletes.Add(index, newValue);
+                        index++;
+                    }
+                }
+            }
+        }
+
 
         //POPULATE METHODS REGARDING HOTEL SEGMENT
         private static void PopulateHotelSegmentDict(String hotelSegmentFilePath)
@@ -381,7 +438,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static void PopulateHotelRoomRateClassDict(String hotelRoomRateClassFilePath)
         {
-            HotelRoomRateClassDict = new Dictionary<string, RateClass>();;
+            HotelService.GetInstance().HotelRoomRateClassDict = new Dictionary<string, RateClass>(); ;
 
             using (var file = new StreamReader(hotelRoomRateClassFilePath))
             {
@@ -390,8 +447,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     line = file.ReadLine();
                     var splittedLine = line.Split('|');
-                    
-                    HotelRoomRateClassDict.Add(splittedLine[0], new RateClass
+
+                    HotelService.GetInstance().HotelRoomRateClassDict.Add(splittedLine[0], new RateClass
                     {
                         Code = splittedLine[0],
                         DescEn = splittedLine[1],
@@ -403,7 +460,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static void PopulateHotelRoomRateTypeDict(String hotelRoomRateTypeFilePath)
         {
-            HotelRoomRateTypeDict = new Dictionary<string, RateType>();
+            HotelService.GetInstance().HotelRoomRateTypeDict = new Dictionary<string, RateType>();
 
             using (var file = new StreamReader(hotelRoomRateTypeFilePath))
             {
@@ -413,7 +470,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     line = file.ReadLine();
                     var splittedLine = line.Split('|');
 
-                    HotelRoomRateTypeDict.Add(splittedLine[0], new RateType
+                    HotelService.GetInstance().HotelRoomRateTypeDict.Add(splittedLine[0], new RateType
                     {
                         Type = splittedLine[0],
                         DescEn = splittedLine[1],
@@ -425,7 +482,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static void PopulateHotelRoomPaymentTypeDict(String hotelRoomPaymentTypeFilePath)
         {
-            HotelRoomPaymentTypeDict = new Dictionary<string, PaymentType>();
+            HotelService.GetInstance().HotelRoomPaymentTypeDict = new Dictionary<string, PaymentType>();
 
             using (var file = new StreamReader(hotelRoomPaymentTypeFilePath))
             {
@@ -435,7 +492,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     line = file.ReadLine();
                     var splittedLine = line.Split('|');
 
-                    HotelRoomPaymentTypeDict.Add(splittedLine[0], new PaymentType
+                    HotelService.GetInstance().HotelRoomPaymentTypeDict.Add(splittedLine[0], new PaymentType
                     {
                         Type = splittedLine[0],
                         DescEn = splittedLine[1],
@@ -447,7 +504,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static void PopulateHotelCountriesDict(String hotelCountriesFilePath)
         {
-            HotelCountry = new Dictionary<string, CountryDict>();
+            HotelService.GetInstance().HotelCountry = new Dictionary<string, CountryDict>();
 
             using (var file = new StreamReader(hotelCountriesFilePath))
             {
@@ -456,7 +513,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     line = file.ReadLine();
                     var splittedLine = line.Split('|');
-                    HotelCountry.Add(splittedLine[0], new CountryDict
+                    HotelService.GetInstance().HotelCountry.Add(splittedLine[0], new CountryDict
                     {
                         CountryCode = splittedLine[0],
                         IsoCode = splittedLine[1],
@@ -549,28 +606,28 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static void PopulateHotelDestinationCountryDict(List<Country> countries)
         {
-            HotelDestinationCountryDict = new Dictionary<string, Country>();
+            HotelService.GetInstance().HotelDestinationCountryDict = new Dictionary<string, Country>();
             foreach (var country in countries)
             {
-                HotelDestinationCountryDict.Add(country.Code, country);
+                HotelService.GetInstance().HotelDestinationCountryDict.Add(country.Code, country);
             }
         }
 
         private static void PopulateHotelDestinationDict(List<Country> countries)
         {
-            HotelDestinationDict = new Dictionary<string, Destination>();
+            HotelService.GetInstance().HotelDestinationDict = new Dictionary<string, Destination>();
             foreach (var destination in countries.SelectMany(country => country.Destinations))
             {
-                HotelDestinationDict.Add(destination.Code, destination);
+                HotelService.GetInstance().HotelDestinationDict.Add(destination.Code, destination);
             }
         }
 
         private static void PopulateHotelZoneDict(List<Country> countries)
         {
-            HotelDestinationZoneDict = new Dictionary<string, Zone>();
+            HotelService.GetInstance().HotelDestinationZoneDict = new Dictionary<string, Zone>();
             foreach (var zone in countries.SelectMany(country => country.Destinations).SelectMany(destination => destination.Zones))
             {
-                HotelDestinationZoneDict.Add(zone.Code, zone);
+                HotelService.GetInstance().HotelDestinationZoneDict.Add(zone.Code, zone);
             }
         }
 

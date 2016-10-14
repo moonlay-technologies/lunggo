@@ -34,5 +34,6 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<Pax> Pax { get; set; }
         public List<HotelRoom> Rooms { get; set; }
         public Contact Contact { get; set; }
+        public string SpecialRequest { get; set; }
     }
 }
