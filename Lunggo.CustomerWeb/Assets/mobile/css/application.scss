@@ -166,8 +166,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .promo {@extend & .site-menu; background:url(/Assets/mobile/images/promo-logo.png); left:auto; right:15px; background-size: 100%; background-repeat: no-repeat;
             span.number-promo {content: ''; width: 12px; height: 12px; background: red; display: block; border-radius: 12px; float: right; font-size: 6px; line-height: 12px; color: #fff;}
         }
-        .flight-swap {@extend & .site-menu; background:url(/Assets/mobile/images/flight-swap.png) no-repeat; left:auto; right:15px; width: 23px; height: 25px; top: 18px;}
+        .change-hotel, .flight-swap {@extend & .site-menu; background:url(/Assets/mobile/images/flight-swap.png) no-repeat; left:auto; right:15px; width: 23px; height: 25px; top: 18px;}
         .flight-detail {@extend & .site-menu; width:40px; background:none; left:auto; right:15px; color:$color-main-blue; text-decoration:none; text-align:right; font-weight:600; padding:10px 0; font-size:14px;}
+        .login-hotel {@extend & .site-menu; background:url(/Assets/mobile/images/Hotel/login.png) no-repeat; left:auto; right:15px; width: 20px; height: 20px; top: 20px; background-size: 100%;}
     }
 }
 

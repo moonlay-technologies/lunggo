@@ -2,6 +2,8 @@
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.BodyClass = "page-hotel page-detail";
     ViewBag.Title = "Detail Hotel";
+    ViewBag.CurrentPage = "detail-hotel";
+    ViewBag.AngularController = "HotelController";
 }
 
 @section AdditionalCSS{
@@ -36,6 +38,7 @@
     <script>
         shortenTextFunctions();
     </script>
+    <script src="/Assets/mobile/js/HotelController.js"></script>
 }
 <div class="travorama-hotel-mobile">
     <div class="top-content">

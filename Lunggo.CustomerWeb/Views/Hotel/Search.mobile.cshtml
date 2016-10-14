@@ -2,6 +2,8 @@
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.BodyClass = "page-hotel page-search";
     ViewBag.Title = "Pencarian Hotel";
+    ViewBag.CurrentPage = "search-hotel";
+    ViewBag.AngularController = "HotelController";
 }
 
 @section AdditionalCSS{
@@ -17,6 +19,7 @@
 }
 
 @section PageJS{
+    <script src="/Assets/mobile/js/HotelController.js"></script>
 }
 
 <div class="travorama-hotel-mobile">

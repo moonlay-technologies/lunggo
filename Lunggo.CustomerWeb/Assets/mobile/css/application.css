@@ -120,7 +120,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     text-align: center;
     height: 60px;
     border-bottom: 1px solid #dddddd; }
-    .site-header .header-display .site-menu, .site-header .header-display .user-menu, .site-header .header-display .promo, .site-header .header-display .flight-swap, .site-header .header-display .flight-detail {
+    .site-header .header-display .site-menu, .site-header .header-display .user-menu, .site-header .header-display .promo, .site-header .header-display .change-hotel, .site-header .header-display .flight-swap, .site-header .header-display .flight-detail, .site-header .header-display .login-hotel {
       width: 30px;
       height: 30px;
       background: url(/Assets/mobile/images/burger-button.png) no-repeat;
@@ -152,7 +152,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         font-size: 6px;
         line-height: 12px;
         color: #fff; }
-    .site-header .header-display .flight-swap {
+    .site-header .header-display .change-hotel, .site-header .header-display .flight-swap {
       background: url(/Assets/mobile/images/flight-swap.png) no-repeat;
       left: auto;
       right: 15px;
@@ -170,6 +170,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-weight: 600;
       padding: 10px 0;
       font-size: 14px; }
+    .site-header .header-display .login-hotel {
+      background: url(/Assets/mobile/images/Hotel/login.png) no-repeat;
+      left: auto;
+      right: 15px;
+      width: 20px;
+      height: 20px;
+      top: 20px;
+      background-size: 100%; }
 
 .burger-content {
   position: fixed;
@@ -3678,7 +3686,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 15px;
     height: 11px;
     background-size: 100%; }
-  .page-hotel .wifi-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list .wifi-blue:before {
+  .page-hotel .wifi-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list .wifi-blue:before {
     content: '';
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/wifi.png) no-repeat;
@@ -3687,7 +3695,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
-  .page-hotel .wifi-icon-grey, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list .wifi-grey:before {
+  .page-hotel .wifi-icon-grey, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list .wifi-grey:before {
     content: '';
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/wifi.png) no-repeat;
@@ -3704,7 +3712,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     height: 14px;
     background-size: 100%;
     margin: 0 8px; }
-  .page-hotel .meal-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list .meal-blue:before {
+  .page-hotel .meal-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list .meal-blue:before {
     content: '';
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/meal.png) no-repeat;
@@ -3713,7 +3721,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
-  .page-hotel .meal-icon-grey, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list .meal-grey:before {
+  .page-hotel .meal-icon-grey, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list .meal-grey:before {
     content: '';
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/meal-grey.png) no-repeat;
@@ -3729,7 +3737,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 18px;
     height: 18px;
     background-size: 100%; }
-  .page-hotel .ac-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list .ac-blue:before {
+  .page-hotel .ac-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list .ac-blue:before {
     content: '';
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/ac.png) no-repeat;
@@ -3738,7 +3746,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
-  .page-hotel .ac-icon-grey, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list .ac-grey:before {
+  .page-hotel .ac-icon-grey, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list .ac-grey:before {
     content: '';
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/ac-grey.png) no-repeat;
@@ -3747,7 +3755,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
-  .page-hotel .bell-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list .bell-blue:before {
+  .page-hotel .bell-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list .bell-blue:before {
     content: '';
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/bel.png) no-repeat;
@@ -3756,7 +3764,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
-  .page-hotel .bell-icon-grey, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list .bell-grey:before {
+  .page-hotel .bell-icon-grey, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list .bell-grey:before {
     content: '';
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/bel-grey.png) no-repeat;
@@ -3765,7 +3773,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
-  .page-hotel .pool-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list .pool-blue:before {
+  .page-hotel .pool-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list .pool-blue:before {
     content: '';
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/pool.png) no-repeat;
@@ -3774,7 +3782,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
-  .page-hotel .pool-icon-grey, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list .pool-grey:before {
+  .page-hotel .pool-icon-grey, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list .pool-grey:before {
     content: '';
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/bell-pool.png) no-repeat;
@@ -3783,7 +3791,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
-  .page-hotel .bed-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list .bed-blue:before {
+  .page-hotel .bed-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list .bed-blue:before {
     content: '';
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/bed.png) no-repeat;
@@ -3792,7 +3800,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
-  .page-hotel .car-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list .car-blue:before {
+  .page-hotel .car-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list .car-blue:before {
     content: '';
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/car.png) no-repeat;
@@ -3801,7 +3809,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
-  .page-hotel .tv-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list .tv-blue:before {
+  .page-hotel .tv-icon, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list .tv-blue:before {
     content: '';
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/tv.png) no-repeat;
@@ -4069,9 +4077,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         display: block; }
       .page-hotel .travorama-hotel-mobile .spec-hotel .sh-txt .toggle .sh-close {
         display: none; }
-    .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list {
-      margin: 0;
-      list-style: none; }
-      .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list > li {
-        margin: 12px 0;
-        line-height: 25px; }
+    .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility {
+      padding-left: 15px; }
+      .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list {
+        margin: 0;
+        list-style: none; }
+        .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-list > li {
+          margin: 12px 0;
+          line-height: 25px; }

@@ -177,27 +177,28 @@
         .sh-close {@extend .arrow-up-grey;}
     }
     .sh-facility {
-        .sh-list {
-            margin: 0;
-            list-style: none;
-            &>li {
-                margin: 12px 0;
-                line-height: 25px;
+        .sh-list-facility {padding-left: 15px;
+            .sh-list {
+                margin: 0;
+                list-style: none;
+                &>li {
+                    margin: 12px 0;
+                    line-height: 25px;
+                }
+                .ac-blue:before {@extend .ac-icon;}
+                .ac-grey:before {@extend .ac-icon-grey;}
+                .meal-blue:before {@extend .meal-icon;}
+                .meal-grey:before {@extend .meal-icon-grey;}
+                .bell-blue:before {@extend .bell-icon;}
+                .bell-grey:before {@extend .bell-icon-grey;}
+                .wifi-blue:before {@extend .wifi-icon;}
+                .wifi-grey:before {@extend .wifi-icon-grey;}
+                .pool-blue:before {@extend .pool-icon;}
+                .pool-grey:before {@extend .pool-icon-grey;}            
+                .bed-blue:before {@extend .bed-icon;}
+                .tv-blue:before {@extend .tv-icon;}
+                .car-blue:before {@extend .car-icon;}
             }
-            .ac-blue:before {@extend .ac-icon;}
-            .ac-grey:before {@extend .ac-icon-grey;}
-            .meal-blue:before {@extend .meal-icon;}
-            .meal-grey:before {@extend .meal-icon-grey;}
-            .bell-blue:before {@extend .bell-icon;}
-            .bell-grey:before {@extend .bell-icon-grey;}
-            .wifi-blue:before {@extend .wifi-icon;}
-            .wifi-grey:before {@extend .wifi-icon-grey;}
-            .pool-blue:before {@extend .pool-icon;}
-            .pool-grey:before {@extend .pool-icon-grey;}            
-            .bed-blue:before {@extend .bed-icon;}
-            .tv-blue:before {@extend .tv-icon;}
-            .car-blue:before {@extend .car-icon;}
         }
     }
-    .sh-policy {}
 }
