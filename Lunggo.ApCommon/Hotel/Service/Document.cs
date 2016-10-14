@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SaveSearchResultToDocument(SearchHotelResult searchHotelResult)
         {
             var document = DocumentService.GetInstance();
-            document.Upsert("SearchResult:" + searchHotelResult.SearchId, searchHotelResult, TimeSpan.FromMinutes(30));
+            document.Upsert("SearchResult:" + searchHotelResult.SearchId, searchHotelResult, TimeSpan.FromMinutes(60));
         }
 
         public SearchHotelResult GetAllSearchHotelResultFromDocument(string searchId)

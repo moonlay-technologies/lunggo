@@ -29,6 +29,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //CountryName = dictionary.GetHotelCountryNameByCode(hotelDetail.CountryCode),//TODO "Get Country Name"
                 Latitude = hotelDetail.Latitude,
                 Longitude = hotelDetail.Longitude,
+                OriginalFare = hotelDetail.OriginalFare,
                 Email = hotelDetail.Email,
                 PostalCode = hotelDetail.PostalCode,
                 DestinationCode = hotelDetail.DestinationCode,

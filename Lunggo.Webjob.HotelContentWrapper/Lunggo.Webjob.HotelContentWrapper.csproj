@@ -56,6 +56,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\travorama-local-webjob - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-webjob - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-webjob - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-webjob - Web Deploy.pubxml" />
+    <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">

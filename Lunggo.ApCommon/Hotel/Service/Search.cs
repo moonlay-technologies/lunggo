@@ -64,7 +64,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //Adding Additional Hotel Information
                 //foreach (var hotel in result.HotelDetails)
                 //{
-                //    var detail = GetHotelDetailsFromDocument(hotel.HotelCode);
+                   //var detail = GetHotelDetailsFromDocument(hotel.HotelCode);
                 //    hotel.PhonesNumbers = detail.PhonesNumbers;
                 //    //hotel.Terminals = detail.Terminals != null ? detail.Terminals : null; //TODO Krena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
                 //    hotel.PostalCode = detail.PostalCode;
@@ -90,7 +90,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                 if (result.HotelDetails != null)
                 {
                     //save data to docDB
-                    SaveSearchResultToDocument(result);
+                    //SaveSearchResultToDocument(result);
+
+                    //save searchResult to cache
+                    SaveSearchResultintoDatabaseToCache(result.SearchId,result);
+
 
                     //return only 100 data for the first page
                     return new SearchHotelOutput
@@ -108,6 +112,5 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
         }
-        
     }
 }

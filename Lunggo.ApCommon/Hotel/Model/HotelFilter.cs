@@ -8,10 +8,10 @@ namespace Lunggo.ApCommon.Hotel.Model
 {
     public class HotelFilter
     {
-        public decimal MinPrice { get; set; }
-        public decimal MaxPrice { get; set; }
+        public decimal? MinPrice { get; set; }
+        public decimal? MaxPrice { get; set; }
         public List<int> StarRating { get; set; }
-        public List<string> Area { get; set; }
+        public List<int> Area { get; set; }
         public List<string> AccomodationType { get; set; }
         public List<string> Amenities { get; set; }
         public List<string> BoardCode { get; set; }

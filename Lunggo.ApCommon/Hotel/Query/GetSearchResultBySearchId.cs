@@ -24,23 +24,28 @@ namespace Lunggo.ApCommon.Hotel.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT c.hotels");
-            clauseBuilder.Append("FROM c");
+            clauseBuilder.Append("SELECT h AS hotels ");
+            clauseBuilder.Append("FROM c ");
+            clauseBuilder.Append("JOIN h in c.hotels ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause(dynamic condition)
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE c.searhId = @SearchId");
+            clauseBuilder.Append("WHERE c.id = CONCAT('SearchResult:' , @SearchId) ");
             if (condition.Area != null)
-            { clauseBuilder.Append("AND c.hotels.zoneCd IN @Area"); }
+            { clauseBuilder.Append("AND h.zoneCd IN @Area "); }
+            if (condition.MaxPrice != null && condition.MinPrice != null)
+            {
+                { clauseBuilder.Append("AND h.originalFare BETWEEN @MaxPrice AND @MinPrice "); }
+            }
             if (condition.StarRating != null)
-            { clauseBuilder.Append("AND c.hotels.starRating IN @StarRating"); }
+            { clauseBuilder.Append("AND h.starRating IN @StarRating "); }
             if (condition.AccomodationType != null)
-            { clauseBuilder.Append("AND c.hotels.accomodationType IN @AccomodationType"); }
+            { clauseBuilder.Append("AND h.accomodationType IN @AccomodationType "); }
             if (condition.Amenities != null)
-            { clauseBuilder.Append("AND c.hotels.facilityCd IN @Amenities"); }
+            { clauseBuilder.Append("AND h.facilityCd IN @Amenities "); }
             return clauseBuilder.ToString();
         }
 
