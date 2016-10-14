@@ -330,6 +330,7 @@
     <Content Include="Assets\mobile\images\Hotel\hotel-list-lg.jpg" />
     <Content Include="Assets\mobile\images\Hotel\like.png" />
     <Content Include="Assets\mobile\images\Hotel\location.png" />
+    <Content Include="Assets\mobile\images\Hotel\login.png" />
     <Content Include="Assets\mobile\images\Hotel\meal-grey.png" />
     <Content Include="Assets\mobile\images\Hotel\meal.png" />
     <Content Include="Assets\mobile\images\Hotel\pool-grey.png" />
