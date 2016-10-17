@@ -226,7 +226,7 @@
                         border: 3px solid $color-main-blue;
                         border-bottom: none;
                     }
-                    .room-right {border: none;}
+                    &>.room-right {border: none;}
                 }
                 &>.accordion-wrapper .accordion-content.show {
                     padding: 0;

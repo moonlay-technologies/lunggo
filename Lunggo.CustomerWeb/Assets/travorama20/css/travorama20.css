@@ -5136,7 +5136,7 @@ file: /Assets/travorama20/css/_page_flight.scss
           .page-hotel .travorama-hotel .detail-hotel .room .room-list-container .rl-accordion .accordion-rl.active .room-list {
             border: 3px solid #1daee4;
             border-bottom: none; }
-          .page-hotel .travorama-hotel .detail-hotel .room .room-list-container .rl-accordion .accordion-rl.active .room-right {
+          .page-hotel .travorama-hotel .detail-hotel .room .room-list-container .rl-accordion .accordion-rl.active > .room-right {
             border: none; }
           .page-hotel .travorama-hotel .detail-hotel .room .room-list-container .rl-accordion > .accordion-wrapper .accordion-content.show {
             padding: 0;
