@@ -163,7 +163,7 @@ namespace Lunggo.ApCommon.Payment.Model
             return symbol != null && symbol.Length == 3;
         }
 
-        private class GetCurrencyQuery : QueryBase<GetCurrencyQuery, CurrencyTableRecord>
+        private class GetCurrencyQuery : DbQueryBase<GetCurrencyQuery, CurrencyTableRecord>
         {
             protected override string GetQuery(dynamic condition = null)
             {

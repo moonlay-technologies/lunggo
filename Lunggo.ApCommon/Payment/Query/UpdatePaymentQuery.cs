@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Payment.Query
 {
-    public class UpdatePaymentQuery : NoReturnQueryBase<UpdatePaymentQuery>
+    public class UpdatePaymentQuery : NoReturnDbQueryBase<UpdatePaymentQuery>
     {
         protected override string GetQuery(dynamic condition = null)
         {

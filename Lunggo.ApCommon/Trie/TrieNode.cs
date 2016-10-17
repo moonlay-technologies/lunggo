@@ -12,9 +12,10 @@ namespace Lunggo.ApCommon.Trie
 
         public void InsertWordsBySentence(string sentence, long id)
         {
-            foreach (var word in sentence.Split(' '))
+            foreach (var word in sentence.Split(new [] {' ', ','}))
             {
-                InsertWord(word,id);
+                if (!string.IsNullOrEmpty(word))
+                    InsertWord(word,id);
             }
         }
 

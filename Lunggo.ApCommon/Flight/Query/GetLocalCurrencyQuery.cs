@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class GetLocalCurrencyQuery : QueryBase<GetLocalCurrencyQuery, string>
+    internal class GetLocalCurrencyQuery : DbQueryBase<GetLocalCurrencyQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {

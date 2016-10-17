@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lunggo.ApCommon.Campaign.Database.Query
 {
-    internal class GetCampaignVoucherRecordQuery : QueryBase<GetCampaignVoucherRecordQuery, CampaignVoucher>
+    internal class GetCampaignVoucherRecordQuery : DbQueryBase<GetCampaignVoucherRecordQuery, CampaignVoucher>
     {
         protected override string GetQuery(dynamic condition = null)
         {

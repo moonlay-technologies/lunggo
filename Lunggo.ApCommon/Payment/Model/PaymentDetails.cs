@@ -139,7 +139,7 @@ namespace Lunggo.ApCommon.Payment.Model
             }
         }
 
-        private class GetPaymentQuery : QueryBase<GetPaymentQuery, PaymentTableRecord>
+        private class GetPaymentQuery : DbQueryBase<GetPaymentQuery, PaymentTableRecord>
         {
             protected override string GetQuery(dynamic condition = null)
             {

@@ -102,9 +102,9 @@
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -236,10 +236,12 @@
     <Compile Include="ApiSrc\Account\Model\TokenRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\AutocompleteController.cs" />
-    <Compile Include="ApiSrc\Autocomplete\Logic\GetHotelLocationAutocompleteLogic.cs" />
+    <Compile Include="ApiSrc\Autocomplete\Logic\GetHotelAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetAirlineAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetAirportAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\AirlineApi.cs" />
+    <Compile Include="ApiSrc\Autocomplete\Model\HotelAutocompleteApi.cs" />
+    <Compile Include="ApiSrc\Autocomplete\Model\HotelAutocompleteApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\AutocompleteHotelLocationsApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\AutocompleteAirportsApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\AutocompleteAirlinesApiResponse.cs" />
@@ -290,6 +292,20 @@
     <Compile Include="ApiSrc\Flight\Model\TopDestinationsApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\NewsletterSubscribeLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\NewsletterSubscribeApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\BookLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\GetRoomDetailLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelBookApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelBookApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelDetailApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelSelectRoomApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelRoomDetailApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelRateApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelSearchApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelSelectRoomApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelRoomDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelRateApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelSearchApiResponse.cs" />
     <Compile Include="ApiSrc\Notification\Logic\DeleteRegistrationLogic.cs" />
     <Compile Include="ApiSrc\Notification\Logic\PlatformMapper.cs" />
     <Compile Include="ApiSrc\Notification\Logic\UpdateRegistrationLogic.cs" />
@@ -312,10 +328,6 @@
     <Compile Include="ApiSrc\Payment\Model\UniqueCodeApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\UniqueCodeApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\PaymentController.cs" />
-    <Compile Include="ApiSrc\Rooms\Logic\GetRoomsLogic.cs" />
-    <Compile Include="ApiSrc\Rooms\Object\RoomSearchApiRequest.cs" />
-    <Compile Include="ApiSrc\Rooms\Object\RoomSearchApiResponse.cs" />
-    <Compile Include="ApiSrc\Rooms\RoomsController.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckVoucherLogic.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckVoucherApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckVoucherApiResponse.cs" />
@@ -323,10 +335,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="ApiSrc\Hotel\Object\HotelSearchApiRequest.cs" />
-    <Compile Include="ApiSrc\Hotel\Object\HotelSearchApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\HotelController.cs" />
-    <Compile Include="ApiSrc\Hotel\Logic\GetHotelLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\SelectLogic.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -372,8 +382,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ApiSrc\Hotel\Model\" />
-    <Folder Include="ApiSrc\Rooms\Model\" />
+    <Folder Include="ApiSrc\Hotel\Object\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

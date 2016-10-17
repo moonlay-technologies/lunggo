@@ -12,7 +12,7 @@ namespace Lunggo.BackendWeb.Controllers
     public class HomeController : Controller
     {
 
-        public HotelReservationsTableRepo hotelBookTable = HotelReservationsTableRepo.GetInstance();
+        //public HotelReservationsTableRepo hotelBookTable = HotelReservationsTableRepo.GetInstance();
         public ReservationTableRepo flightBookTable = ReservationTableRepo.GetInstance();
 
         public IDbConnection connOpen = DbService.GetInstance().GetOpenConnection();
