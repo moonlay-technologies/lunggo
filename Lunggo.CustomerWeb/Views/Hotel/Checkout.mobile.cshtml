@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
-    ViewBag.BodyClass = "page page-checkout";
+    ViewBag.BodyClass = "page-hotel page page-checkout";
     ViewBag.AngularController = "paymentController";
     ViewBag.SiteHeader = "Payment";
     ViewBag.Title = "Pembayaran";
@@ -30,198 +30,335 @@
     <script src="/Assets/travorama20/js/paymentController.js"></script>
 }
 
-<section class="checkout-content">
-    <div class="page__header">
-        <h1 class="text-center section-title stripe">Metode <span>Pembayaran</span></h1>
-
+<header class="page__header">
+    <div class="step__wrapper">
+        <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01. Data <br />Kontak</span></div>
+        <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02. Review <br />Pesanan</span></div>
+        <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03. Pembayaran</span></div>
     </div>
-    <div class="page__body" id="step-4">
-        <div class="summary summary--price">
-            <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
-            <div class="summary__body">
-                <dl>
-                    <dt>Total Tiket</dt>
-                    <dd><sup>Rp</sup></dd>
-                </dl>
-                <dl>
-                    <dt>Diskon Travorama</dt>
-                    <dd ng-if="!(binDiscount.replaceDiscount && !voucher.confirmedCode)">- <sup>Rp</sup></dd>
-                    <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode"> <sup>Rp</sup>- 0</dd>
-                </dl>
-                <dl ng-show="voucher.confirmedCode">
-                    <dt></dt>
-                    <dd><sup>Rp</sup>-</dd>
-                </dl>
-                <dl ng-show="binDiscount.replaceDiscount && !voucher.confirmedCode">
-                    <dt></dt>
-                    <dd><sup>Rp</sup>-</dd>
-                </dl>
+</header>
+<section class="checkout-content">
+    <div class="page__body">
+        <div class=" page-step-1" ng-show="PageConfig.ActivePage == 1" @*style="display: none;"*@>
+            <div class="form">
 
-                <dl>
-                    <dt>Kode Unik Pembayaran</dt>
-                    <dd><sup>Rp</sup> </dd>
-                </dl>
-                <dl class="total-price">
-                    <dt>Total</dt>
-                    <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode"><sup>Rp</sup></dd>
-                    <dd ng-if="!(binDiscount.replaceDiscount && !voucher.confirmedCode)"><sup>Rp</sup></dd>
-                </dl>
-            </div><!-- .summary__body -->
-        </div><!-- .summar--price -->
+                <h3><b>DATA</b> KONTAK</h3>
 
-        <div class="summary summary--voucher">
-            <div class="container_new">
-                <h4>Punya kupon Travorama?</h4>
-                <p>Masukkan di sini</p>
+                <form name="BuyerForm" novalidate>
 
-                <form class="form form-horizontal">
                     <div class="form-group">
-                        <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
-                        @*<p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH02'">Kode voucher salah</p>
-                        <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH01'">Voucher sudah digunakan</p>
-                        <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH04'">Di bawah pembelian minimum</p>
-                        <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH05'">Voucher tidak dapat digunakan</p>
-                        <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH03'">Voucher sudah habis</p>
-                        <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH06'">Voucher sudah digunakan</p>
-                        <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH99'">Voucher tidak dapat digunakan</p>
-                        <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>*@
+                        <label class="control-label">Titel : </label>
+                        <select class="form-control" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
+                            <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                        </select>
                     </div>
 
-                    <div class="form-group">
-                        <div class="col-xs-6 col-xs-offset-6">
-                            <input type="submit" value="CEK" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
-                            @*<input type="submit" value="RESET" class="btn btn-yellow form-control" ng-click="voucher.reset()" ng-show="voucher.checked" />*@
+                    <div class="form-group important">
+                        <label class="control-label">Nama Lengkap : </label>
+                        <input type="text" value="" @*pattern="[a-zA-Z\s]+"*@ ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
+                        @*<div ng-show="!checkName(buyerInfo.name)" style="color:red">
+                            Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                        </div>*@
+                    </div>
+
+                    <div class="form-group important">
+                        <label class="control-label">Nomor Telepon : </label>
+                        <div class="row">
+                            <div class="col-xs-12 bottom-divider">
+                                <p><small>Kode Negara</small></p>
+                                <select class="form-control" name="PhoneCode" ng-model="buyerInfo.countryCode" ng-init="buyerInfo.countryCode = '62'">
+                                    <option ng-repeat="country in Countries" ng-selected="country.dial_code == buyerInfo.countryCode" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
+                                </select>
+                                @*<input type="number" value="" ng-model="buyerInfo.countryCode" name="PhoneCode" class="form-control" placeholder="Ex : 62 for Indonesia" required />*@
+                            </div>
+                            <div class="col-xs-12">
+                                <p><small>Nomor Telepon (Tanpa Kode Negara)</small></p>
+                                <input type="number" value="" ng-model="buyerInfo.phone" name="Phone" class="form-control" placeholder="Ex : 821 2345 6789" required />
+                            </div>
                         </div>
                     </div>
-                </form>
-            </div>
-        </div><!-- .summary--voucher-->
 
-        <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
-
-        <div class="summary summary--payment">
-            <h3 class="summary__title"><b>METODE</b> PEMBAYARAN</h3>
-            <div class="summary__body">
-
-                <form name="paymentMethodForm">
+                    <div class="form-group important" ng-class="{'has-error' : BuyerForm.email.$touched && BuyerForm.email.$invalid}">
+                        <label class=" control-label">Masukkan alamat e-mail Anda : </label>
+                        <input type="email" value="" ng-model="buyerInfo.email" name="Email" class="form-control" placeholder="Ex: name@domain.com" required />
+                    </div>
                     
+                    <div class="form-group important" ng-class="{'has-error' : BuyerForm.email.$touched && BuyerForm.email.$invalid}">
+                        <label class=" control-label">Special Request : </label>
+                        <textarea class="form-control ng-pristine ng-untouched ng-valid" name="message"></textarea>
+                    </div>
 
-                    <label ng-click="binDiscount.reset('ncc')">
-                        <header>
-                            <div class="input-wrapper">
-                                <input type="radio" name="paymentMethod" />
-                            </div>
-                            <h5>Transfer Bank</h5>
-                        </header>
-                        <section>
-                            <img src="/Assets/images/payment-atm.jpg" alt="Bank Transfer" />
-                        </section>
-                    </label>
-                    <label ng-click="binDiscount.reset('cc')">
-                        <header>
-                            <div class="input-wrapper">
-                                <input type="radio" name="paymentMethod" />
-                            </div>
-                            <h5>Kartu Kredit / Debit</h5>
-                        </header>
-                        <section>
-                            <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
-                        </section>
-                    </label>
-                    <label ng-click="binDiscount.reset('ncc')">
-                        <header>
-                            <div class="input-wrapper">
-                                <input type="radio" name="paymentMethod" />
-                            </div>
-                            <h5>ATM</h5>
-                        </header>
-                        <section>
-                            <img src="/Assets/images/payment-atm.jpg" alt="Virtual Account" />
-                        </section>
-                    </label>
-                    <label ng-click="binDiscount.reset('ncc')">
-                        <header>
-                            <div class="input-wrapper">
-                                <input type="radio" name="paymentMethod" />
-                            </div>
-                            <h5>Mandiri ClickPay</h5>
-                        </header>
-                        <section>
-                            <img src="/Assets/images/payment-mandiri.jpg" alt="Mandiri Clickpay" />
-                        </section>
-                    </label>
-                    <label ng-click="binDiscount.reset('ncc')">
-                        <header>
-                            <div class="input-wrapper">
-                                <input type="radio" name="paymentMethod" />
-                            </div>
-                            <h5>CIMB Clicks</h5>
-                        </header>
-                        <section>
-                            <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Niaga" />
-                        </section>
-                    </label>
+                    <div class="form-group">
+                        @*<div style="color:red" ng-show="form.incompleteContactTitle">
+                            Gelar pada Nama Kontak Belum Ditambahkan <br /> <br />
+                        </div>
+                        <div style="color:red" ng-show="form.incompleteContactName">
+                            Nama pada Data Kontak Belum Ditambahkan <br /> <br />
+                        </div>
+                        <div style="color:red" ng-show="form.incompleteContactPhone">
+                            Nomor Telepon pada Data Kontak Belum Lengkap. Silakan Pilih Kode Negara atau Lengkapi Nomor Telepon<br /> <br />
+                        </div>
+                        <div style="color:red" ng-show="form.incompleteContactEmail">
+                            Alamat E-Mail pada Data Kontak Belum Ditambahkan<br /> <br />
+                        </div>*@
+                        <button class="btn btn-yellow form-control" ng-click="validateForm(1)" @*ng-disabled="BuyerForm.$invalid || buyerInfo.title == titles[0].value"*@>LANJUT</button>
+                    </div>
+
                 </form>
 
-            </div><!-- .summary__body -->
-        </div><!-- .summary--payment -->
+            </div>
+        </div>
+        <div class=" page-step-2" ng-show="PageConfig.ActivePage == 2" style="display: none;">
+            <div class="review-hotel">
+                <div class="review-room">
+                    <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
+                    <div class="blue-txt semibold-txt">Booking ID 1298319028</div>
 
-        <div class="widget countdown">
-            <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
-            <div class="widget-content">
-                <p>Sisa waktu Anda untuk melakukan pembayaran</p>
-                <div class="timer">
-                    <div>
-                        <h5 class="hour">00</h5>
-                        <span>jam</span>
+                    <div class="rr-detail">
+                        <div class="rr-title semibold-txt md-txt">Padma Hotel Bandung</div>
+                        <div class="rr-row clearfix">
+                            <div class="col-2">Check-in</div>
+                            <div class="col-8">Sat, 22 Oct 2016, 14:00</div>
+                        </div>
+                        <div class="rr-row clearfix">
+                            <div class="col-2">Check-out</div>
+                            <div class="col-8">Sun, 23 Oct 2016, 12:00</div>
+                        </div>
+                        <div class="rr-row clearfix">
+                            <div class="col-2">Duration</div>
+                            <div class="col-8">1 night(s)</div>
+                        </div>
                     </div>
-                    <div class="separator"><h5>:</h5></div>
-                    <div>
-                        <h5 class="minute">00</h5>
-                        <span>menit</span>
+
+                    <div class="rr-detail">
+                        <div class="rr-title semibold-txt md-txt">Room : Premier Suite(x1)</div>
+                        <div class="rr-row">Capacity 2 guest(s)/room</div>
+                        <div class="rr-row">Breakfast included, Free WiFi</div>
                     </div>
-                    <div class="separator"><h5>:</h5></div>
-                    <div>
-                        <h5 class="second">00</h5>
-                        <span>detik</span>
+
+                    <div class="rr-detail">
+                        <div class="rr-title semibold-txt md-txt">Guest's name</div>
+                        <div class="rr-row">Jared Letto</div>
+                    </div>
+
+                    <div class="rr-detail">
+                        <div class="rr-title semibold-txt md-txt">Special Request</div>
+                        <div class="rr-row">-</div>
+                    </div>
+                </div>
+                <div class="price-detail">
+                    <div class="rr-row clearfix">
+                        <div class="col-6">Padma Hotel Bandung Premiere Suit (x1)</div>
+                        <div class="col-4">Rp 4.800.216</div>
+                    </div>
+                    <div class="rr-row clearfix">
+                        <div class="col-6 blue-txt">Tax</div>
+                        <div class="col-4 blue-txt">Included</div>
+                    </div>
+                    <div class="rr-row clearfix">
+                        <div class="col-6 blue-txt">Convenience Fee</div>
+                        <div class="col-4 blue-txt">- Rp 287</div>
+                    </div>
+                    <div class="rr-row clearfix">
+                        <div class="col-6 bold-txt lg-txt">Total</div>
+                        <div class="col-4 bold-txt">Rp 4.799.928</div>
                     </div>
                 </div>
             </div>
-        </div><!-- .widget.countdown -->
-        <br />
+        </div>
+        <div class=" page-step-3" ng-show="PageConfig.ActivePage == 3" style="display: none;">
+            <div class="page__header">
+                <h1 class="text-center section-title stripe">Metode <span>Pembayaran</span></h1>
+            </div>
+            <div class="page__body" id="step-4">
+                <div class="summary summary--price">
+                    <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
+                    <div class="summary__body">
+                        <dl>
+                            <dt>Total Tiket</dt>
+                            <dd><sup>Rp</sup></dd>
+                        </dl>
+                        <dl>
+                            <dt>Diskon Travorama</dt>
+                            <dd ng-if="!(binDiscount.replaceDiscount && !voucher.confirmedCode)">- <sup>Rp</sup></dd>
+                            <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode"> <sup>Rp</sup>- 0</dd>
+                        </dl>
+                        <dl ng-show="voucher.confirmedCode">
+                            <dt></dt>
+                            <dd><sup>Rp</sup>-</dd>
+                        </dl>
+                        <dl ng-show="binDiscount.replaceDiscount && !voucher.confirmedCode">
+                            <dt></dt>
+                            <dd><sup>Rp</sup>-</dd>
+                        </dl>
 
-        <div class="step-button">
+                        <dl>
+                            <dt>Kode Unik Pembayaran</dt>
+                            <dd><sup>Rp</sup> </dd>
+                        </dl>
+                        <dl class="total-price">
+                            <dt>Total</dt>
+                            <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode"><sup>Rp</sup></dd>
+                            <dd ng-if="!(binDiscount.replaceDiscount && !voucher.confirmedCode)"><sup>Rp</sup></dd>
+                        </dl>
+                    </div><!-- .summary__body -->
+                </div><!-- .summar--price -->
 
-            <form name="finalForm" id="finalForm" ng-submit="pay.setPaymentMethod()">
+                <div class="summary summary--voucher">
+                    <div class="container_new">
+                        <h4>Punya kupon Travorama?</h4>
+                        <p>Masukkan di sini</p>
 
-                <div class="hidden">
-                    <input type="text" name="RsvNo" value="" ng-model="rsvNo" />
-                    <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
-                    <input type="text" name="Language" value="" ng-model="language" />
+                        <form class="form form-horizontal">
+                            <div class="form-group">
+                                <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
+                                @*<p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH02'">Kode voucher salah</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH01'">Voucher sudah digunakan</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH04'">Di bawah pembelian minimum</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH05'">Voucher tidak dapat digunakan</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH03'">Voucher sudah habis</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH06'">Voucher sudah digunakan</p>
+                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH99'">Voucher tidak dapat digunakan</p>
+                            <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>*@
+                            </div>
 
-                    <input type="text" name="Payment.Data0" id="vt-token" value="" ng-model="CreditCard.Token" />
+                            <div class="form-group">
+                                <div class="col-xs-6 col-xs-offset-6">
+                                    <input type="submit" value="CEK" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
+                                    @*<input type="submit" value="RESET" class="btn btn-yellow form-control" ng-click="voucher.reset()" ng-show="voucher.checked" />*@
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- .summary--voucher-->
 
-                    <p>Voucher Code</p>
-                    <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
+                <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
 
-                    <p>Payment Method</p>
-                    <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
+                <div class="summary summary--payment">
+                    <h3 class="summary__title"><b>METODE</b> PEMBAYARAN</h3>
+                    <div class="summary__body">
+
+                        <form name="paymentMethodForm">
+
+
+                            <label ng-click="binDiscount.reset('ncc')">
+                                <header>
+                                    <div class="input-wrapper">
+                                        <input type="radio" name="paymentMethod" />
+                                    </div>
+                                    <h5>Transfer Bank</h5>
+                                </header>
+                                <section>
+                                    <img src="/Assets/images/payment-atm.jpg" alt="Bank Transfer" />
+                                </section>
+                            </label>
+                            <label ng-click="binDiscount.reset('cc')">
+                                <header>
+                                    <div class="input-wrapper">
+                                        <input type="radio" name="paymentMethod" />
+                                    </div>
+                                    <h5>Kartu Kredit / Debit</h5>
+                                </header>
+                                <section>
+                                    <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
+                                </section>
+                            </label>
+                            <label ng-click="binDiscount.reset('ncc')">
+                                <header>
+                                    <div class="input-wrapper">
+                                        <input type="radio" name="paymentMethod" />
+                                    </div>
+                                    <h5>ATM</h5>
+                                </header>
+                                <section>
+                                    <img src="/Assets/images/payment-atm.jpg" alt="Virtual Account" />
+                                </section>
+                            </label>
+                            <label ng-click="binDiscount.reset('ncc')">
+                                <header>
+                                    <div class="input-wrapper">
+                                        <input type="radio" name="paymentMethod" />
+                                    </div>
+                                    <h5>Mandiri ClickPay</h5>
+                                </header>
+                                <section>
+                                    <img src="/Assets/images/payment-mandiri.jpg" alt="Mandiri Clickpay" />
+                                </section>
+                            </label>
+                            <label ng-click="binDiscount.reset('ncc')">
+                                <header>
+                                    <div class="input-wrapper">
+                                        <input type="radio" name="paymentMethod" />
+                                    </div>
+                                    <h5>CIMB Clicks</h5>
+                                </header>
+                                <section>
+                                    <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Niaga" />
+                                </section>
+                            </label>
+                        </form>
+
+                    </div><!-- .summary__body -->
+                </div><!-- .summary--payment -->
+
+                <div class="widget countdown">
+                    <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
+                    <div class="widget-content">
+                        <p>Sisa waktu Anda untuk melakukan pembayaran</p>
+                        <div class="timer">
+                            <div>
+                                <h5 class="hour">00</h5>
+                                <span>jam</span>
+                            </div>
+                            <div class="separator"><h5>:</h5></div>
+                            <div>
+                                <h5 class="minute">00</h5>
+                                <span>menit</span>
+                            </div>
+                            <div class="separator"><h5>:</h5></div>
+                            <div>
+                                <h5 class="second">00</h5>
+                                <span>detik</span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- .widget.countdown -->
+                <br />
+
+                <div class="step-button">
+
+                    <form name="finalForm" id="finalForm" ng-submit="pay.setPaymentMethod()">
+
+                        <div class="hidden">
+                            <input type="text" name="RsvNo" value="" ng-model="rsvNo" />
+                            <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
+                            <input type="text" name="Language" value="" ng-model="language" />
+
+                            <input type="text" name="Payment.Data0" id="vt-token" value="" ng-model="CreditCard.Token" />
+
+                            <p>Voucher Code</p>
+                            <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
+
+                            <p>Payment Method</p>
+                            <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
+                        </div>
+
+                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","staticpage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","staticpage")" target="_blank">kebijakan privasi</a></p>
+                        @*<a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>*@
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-yellow form-control" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">BAYAR</button>
+                        </div>
+                        @*<input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">*@
+
+                    </form>
+
+                    <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                        <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                        <input type="text" name="PaymentUrl" value="" id="url-input" />
+                    </form>
+
                 </div>
-
-                <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","staticpage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","staticpage")" target="_blank">kebijakan privasi</a></p>
-                @*<a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>*@
-                <div class="form-group">
-                    <button type="submit" class="btn btn-yellow form-control" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">BAYAR</button>
-                </div>
-                @*<input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">*@
-
-            </form>
-
-            <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
-                <input type="text" name="RsvNo" value="" id="rsvno-input" />
-                <input type="text" name="PaymentUrl" value="" id="url-input" />
-            </form>
-
+            </div>
         </div>
     </div>
-</section><!-- .checkout-content -->
+</section>

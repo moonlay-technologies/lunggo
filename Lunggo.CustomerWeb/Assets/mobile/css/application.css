@@ -1439,29 +1439,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 36px;
     height: 24px;
     background-image: url('../images/dewasa.png');
-    top: 25px; }
+    top: 20px; }
   .page.page-home .form-container .col-custom-logo.icon-child:before {
     width: 36px;
     height: 24px;
     background-image: url('../images/anak.png');
-    top: 25px; }
+    top: 20px; }
   .page.page-home .form-container .col-custom-logo.icon-infant:before {
     width: 35px;
     height: 24px;
     background-image: url('../images/bayi.png');
-    top: 25px; }
-  .page.page-home .form-container .col-custom-field {
-    width: 33.33333%; }
-  .page.page-home .form-container .col-half {
-    width: 50%; }
-  .page.page-home .form-container .col-4 {
-    width: 40%; }
-  .page.page-home .form-container .col-6 {
-    width: 60%; }
-  .page.page-home .form-container .col-custom-logo, .page.page-home .form-container .col-custom-field, .page.page-home .form-container .col-half, .page.page-home .form-container .col-4, .page.page-home .form-container .col-6 {
-    float: left;
-    position: relative;
-    min-height: 1px; }
+    top: 20px; }
   .page.page-home .form-container input[name="hotel-night"], .page.page-home .form-container input[name="hotel-visitor"] {
     padding: 10px;
     text-align: right;
@@ -2105,29 +2093,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 36px;
     height: 24px;
     background-image: url('../images/dewasa.png');
-    top: 25px; }
+    top: 20px; }
   .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-child:before {
     width: 36px;
     height: 24px;
     background-image: url('../images/anak.png');
-    top: 25px; }
+    top: 20px; }
   .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-infant:before {
     width: 35px;
     height: 24px;
     background-image: url('../images/bayi.png');
-    top: 25px; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-field {
-    width: 33.33333%; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-half {
-    width: 50%; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-4 {
-    width: 40%; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-6 {
-    width: 60%; }
-  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-field, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-half, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-4, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-6 {
-    float: left;
-    position: relative;
-    min-height: 1px; }
+    top: 20px; }
   .page.page-flight .overlay.overlay--flight-form .overlay__content input[name="hotel-night"], .page.page-flight .overlay.overlay--flight-form .overlay__content input[name="hotel-visitor"] {
     padding: 10px;
     text-align: right;
@@ -3524,7 +3500,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   /*Arrow icons*/
   /*Hotel Listing*/
   /*Shared Page*/
-  /*Overlay*/ }
+  /*Overlay*/
+  /*Column*/ }
   .page-hotel.page-detail {
     overflow-y: scroll; }
   .page-hotel .lg-txt {
@@ -4117,3 +4094,19 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         text-align: center; }
   .page-hotel .overlay--detail-room .dr-container .dr-list-facility {
     padding-left: 15px; }
+  .page-hotel .col-custom-field {
+    width: 33.33333%; }
+  .page-hotel .col-half {
+    width: 50%; }
+  .page-hotel .col-2 {
+    width: 20%; }
+  .page-hotel .col-4 {
+    width: 40%; }
+  .page-hotel .col-6 {
+    width: 60%; }
+  .page-hotel .col-8 {
+    width: 80%; }
+  .page-hotel .col-custom-logo, .page-hotel .col-custom-field, .page-hotel .col-half, .page-hotel .col-2, .page-hotel .col-4, .page-hotel .col-6, .page-hotel .col-8 {
+    float: left;
+    position: relative;
+    min-height: 1px; }

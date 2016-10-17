@@ -341,26 +341,18 @@
         @extend .display-icon;
         @include size(36px, 24px);
         background-image:url($icon-adult); 
-        top: 25px;
+        top: 20px;
     } &.icon-child:before {
         @extend .display-icon;
         @include size(36px, 24px);
         background-image:url($icon-children); 
-        top: 25px;
+        top: 20px;
     } &.icon-infant:before {
         @extend .display-icon;
         @include size(35px, 24px);
         background-image:url($icon-infant);
-        top: 25px; 
+        top: 20px; 
     }
-}
-.col-custom-field {width: 33.333333333333332%;}
-.col-half {width: 50%;}
-.col-4 {width: 40%;} .col-6 {width: 60%;}
-.col-custom-logo, .col-custom-field, .col-half, .col-4, .col-6 {
-    float: left;
-    position: relative;
-    min-height: 1px;
 }
 
 input[name="hotel-night"], input[name="hotel-visitor"] {
