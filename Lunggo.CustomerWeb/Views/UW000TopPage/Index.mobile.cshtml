@@ -35,22 +35,6 @@
             prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
             nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
         });
-
-        //Drag Slider
-        $(function () {
-            $("#slider-range-max").slider({
-                range: "max",
-                min: 1,
-                max: 10,
-                value: 2,
-                slide: function (event, ui) {
-                    $("#amount").val(ui.value);
-                }
-            });
-            $("#amount").val($("#slider-range-max").slider("value"));
-        });
-
-            $('.ui-slider-handle').draggable();
     </script>
     <script src="/Assets/mobile/js/HomeController.js"></script>
 }
@@ -173,42 +157,32 @@
                         <div class="th-form">
                             <div class="form-group form__hotel">
                                 <div class="field-container">
-                                    <p class="form-control form-hotel">Tujuan <span class="hotel-placeholder placeholder">Kota, Wilayah atau Nama Hotel</span></p>
+                                    <p class="form-control form-hotel" ng-click="PageConfig.SetOverlay('hotel-select')">Tujuan <span class="hotel-placeholder placeholder">Kota, Wilayah atau Nama Hotel</span></p>
                                 </div>
                             </div>
                             <div class="form-group form__date">
                                 <div class="field-container">
-                                    <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-departure')">
+                                    <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-hotel')">
                                         Tanggal Masuk <span class="date-placeholder placeholder">{{FlightSearchForm.DepartureDate | date : 'EEE, dd MMM yyyy'}}</span>
                                     </p>
                                 </div>
                             </div>
                             <div class="form-group form__time">
-                                <div class="field-container">
-                                    <p class="form-control form-time">Durasi <span class="time-placeholder placeholder">1 malam</span></p>
+                                <div class="field-container clearfix">
+                                    <p class="form-control form-time"><span class="duration-title">Durasi</span><span class="placeholder">malam</span><input class="time-placeholder" type="text" name="hotel-night" value="1"></p>
                                 </div>
                                 <div class="checkout-date placeholder">Tanggal Keluar: Rab, 5 Okt 2016</div>
                             </div>
                             <div class="form-group form__visitor clearfix">
                                 <div class="field-container form-v-adult col-half">
                                     <div class="field-wrapper">
-                                        <p class="form-control form-adult">2 Dewasa</p>
+                                        <p class="form-control form-adult clearfix" ng-click="PageConfig.SetOverlay('visitor-hotel')"><input class="col-4" type="text" name="hotel-visitor" value="2"><span class="vt-title col-6">Dewasa</span></p>
                                     </div>
                                 </div>
                                 <div class="field-container form-v-child col-half">
                                     <div class="field-wrapper">
-                                        <p class="form-control form-child">1 Anak</p>
+                                        <p class="form-control form-child clearfix" ng-click="PageConfig.SetOverlay('visitor-hotel')"><input class="col-4" type="text" name="hotel-visitor" value="1"><span class="vt-title col-6">Anak</span></p>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mh-form">
-                            <div class="form-group form__slider">
-                                <div class="sa-title">Age of Child 1</div>
-                                <div id="slider-range-max" class="slider-bar"></div>
-                                <div class="range-title">
-                                    <span class="range-min">1</span>
-                                    <span class="range-max">12</span>
                                 </div>
                             </div>
                         </div>
@@ -442,5 +416,79 @@
             </div>
         </section>
     </div><!-- .overlay--passenger-selector -->
+    <!-- overlay hotel selector -->
+    <div class="overlay overlay--theme--blue overlay--hotel-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-select')}">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                <small>PILIH HOTEL TUJUAN</small>
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay();">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+
+            <div class="autocomplete-input">
+                <input type="text" class="form-control" name="name" value="" placeholder="Masukkan kota/ lokasi hotel tujuan" ng-model="FlightSearchForm.AutoComplete.Keyword" ng-change="FlightSearchForm.AutoComplete.GetAirport()" />
+            </div><!-- .autocomplete-input -->
+
+            <div class="autocomplete-preload" ng-show="FlightSearchForm.AutoComplete.Keyword.length < FlightSearchForm.AutoComplete.MinLength">
+                <div class="list__header">
+                    <h4>POPULAR DESTINATION</h4>
+                </div>
+                <ul class="result">
+                    <li class="hotel" ng-repeat="result in PageConfig.PopularDestination.Popular">
+                        <a class="hotel__link"></a>
+                        <span class="hotel__code">CGK</span>
+                        <div class="hotel__detail">
+                            <p class="hotel__location">Jakarta, Indonesia</p>
+                            <p class="result">999 Hotel</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="list__header">
+                    <h4>INDONESIA</h4>
+                </div>
+                <ul class="result">
+                    <li class="hotel" ng-repeat="result in PageConfig.PopularDestination.Indonesia">
+                        <a class="hotel__link"></a>
+                        <span class="hotel__code">CGK</span>
+                        <div class="hotel__detail">
+                            <p class="hotel__location">Jakarta, Indonesia</p>
+                            <p class="result">999 Hotel</p>
+                        </div>
+                    </li>
+                </ul>
+            </div><!-- .autocomplete-preload -->
+
+            @*<div class="autocomplete-loading">
+                <h4 class="text-center text-loading">Mencari Bandara</h4>
+            </div>
+
+            <div class="autocomplete-no-result">
+                <h4 class="text-center">Hasil tidak ditemukan</h4>
+            </div>
+
+            <div class="autocomplete-result">
+                <ul class="result" ng-click="PageConfig.SetOverlay()"></ul>
+            </div>*@
+        </section><!-- .overlay__content -->
+    </div>
+    <!-- overlay hotel date -->
+    <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker-hoteldate" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-hotel') }">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                Pilih Tanggal Masuk
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div class="overlay-selector">
+                <div class="overlay-selector__body">
+                    <div class="calendar-container">
+                        <div class="ui-datepicker return-date" id="returnDate"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div><!-- .overlay--datepicker-->
     @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
 </div><!-- .page-loading -->

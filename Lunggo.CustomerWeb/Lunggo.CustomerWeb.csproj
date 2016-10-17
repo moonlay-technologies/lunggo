@@ -320,10 +320,13 @@
     <Content Include="Assets\mobile\images\Hotel\arrow-prev.png" />
     <Content Include="Assets\mobile\images\Hotel\arrow-up-grey.png" />
     <Content Include="Assets\mobile\images\Hotel\arrow-up-orange.png" />
+    <Content Include="Assets\mobile\images\Hotel\bar.png" />
     <Content Include="Assets\mobile\images\Hotel\bed.png" />
     <Content Include="Assets\mobile\images\Hotel\bel-grey.png" />
     <Content Include="Assets\mobile\images\Hotel\bel.png" />
     <Content Include="Assets\mobile\images\Hotel\car.png" />
+    <Content Include="Assets\mobile\images\Hotel\checkin.png" />
+    <Content Include="Assets\mobile\images\Hotel\checkout.png" />
     <Content Include="Assets\mobile\images\Hotel\hotel-detail-lg.jpg" />
     <Content Include="Assets\mobile\images\Hotel\hotel-detail-sm.jpg" />
     <Content Include="Assets\mobile\images\Hotel\hotel-detail-xlg.jpg" />
@@ -333,6 +336,7 @@
     <Content Include="Assets\mobile\images\Hotel\login.png" />
     <Content Include="Assets\mobile\images\Hotel\meal-grey.png" />
     <Content Include="Assets\mobile\images\Hotel\meal.png" />
+    <Content Include="Assets\mobile\images\Hotel\people.png" />
     <Content Include="Assets\mobile\images\Hotel\pool-grey.png" />
     <Content Include="Assets\mobile\images\Hotel\pool.png" />
     <Content Include="Assets\mobile\images\Hotel\share.png" />
