@@ -298,6 +298,7 @@
     <Compile Include="ApiSrc\Auxiliary\Logic\NewsletterSubscribeLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\NewsletterSubscribeApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\BookLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\GetHotelDetailLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\SearchHotelLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelBookApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelBookApiResponse.cs" />

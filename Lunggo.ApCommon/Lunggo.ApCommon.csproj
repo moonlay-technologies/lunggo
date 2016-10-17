@@ -238,6 +238,8 @@
     <Compile Include="Hotel\Model\HotelFilter.cs" />
     <Compile Include="Hotel\Model\HotelRoomFacilities.cs" />
     <Compile Include="Hotel\Model\HotelSorting.cs" />
+    <Compile Include="Hotel\Model\Logic\GetHotelDetailInput.cs" />
+    <Compile Include="Hotel\Model\Logic\GetHotelDetailOutput.cs" />
     <Compile Include="Hotel\Query\GetHotelDetailFromSearchResult.cs" />
     <Compile Include="Hotel\Query\GetRoomDetailFromSearchResult.cs" />
     <Compile Include="Hotel\Query\GetSearchResultBySearchId.cs" />

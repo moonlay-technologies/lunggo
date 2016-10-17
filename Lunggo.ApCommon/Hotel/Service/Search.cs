@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Query;
@@ -107,17 +108,32 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //Do Call Availability
                 //Save data to DocDB
                 var hotelBedsClient = new HotelBedsSearchHotel();
-                var result = hotelBedsClient.SearchHotel(new SearchHotelCondition
+                var detailDestination = GetLocationById(input.Location);
+                var request = new SearchHotelCondition
                 {
                     CheckIn = input.CheckIn,
                     Checkout = input.Checkout,
-                    Location = input.Location,
-                    Zone = input.Zone,
                     AdultCount = input.AdultCount,
                     ChildCount = input.ChildCount,
                     Nights = input.Nights,
                     Rooms = input.Rooms
-                });
+                };
+                switch (detailDestination.Type)
+                {
+                    case AutocompleteType.Zone :
+                        var splittedZone = detailDestination.Code.Split('-');
+                        request.Zone = int.Parse(splittedZone[1].Trim());
+                        request.Destination = splittedZone[0].Trim();
+                        break;
+                    case AutocompleteType.Destination:
+                        request.Destination = detailDestination.Code;
+                        break;
+                    //case AutocompleteType.Hotel:
+                    //    request.HotelCode = detailDestination.Code; //TODO
+                    //    break;
+                };
+
+                var result = hotelBedsClient.SearchHotel(request);
 
                 //remember to add searchId
                 Guid generatedSearchId = Guid.NewGuid();
@@ -139,7 +155,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //    hotel.Address = detail.Address;
                 //    hotel.Segment = detail.Segment;
                 //    hotel.PhonesNumbers = detail.PhonesNumbers;
-                //    //hotel.ImageUrl = detail.ImageUrl != null ? detail.ImageUrl : null; //TODO Krena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
+                //    //hotel.ImageUrl = detail.ImageUrl != null ? detail.ImageUrl : null; //TODO Karena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
                 //    hotel.Email = detail.Email;
                 //    hotel.City = detail.City;
                 //    hotel.CountryCode = detail.CountryCode;
@@ -154,7 +170,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 if (result.HotelDetails != null)
                 {
                     //save data to docDB
-                    //SaveSearchResultToDocument(result);
+                    SaveSearchResultToDocument(result);
 
                     //save searchResult to cache
                     SaveSearchResultintoDatabaseToCache(result.SearchId,result);

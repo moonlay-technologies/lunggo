@@ -60,6 +60,51 @@ namespace Lunggo.ApCommon.Hotel.Service
             return convertedHotels;
         }
 
+        internal HotelDetailForDisplay ConvertToHotelDetailsBaseForDisplay(HotelDetailsBase hotelDetail)
+        {
+            if (hotelDetail == null)
+                return null;
+            var convertedHotels = new List<HotelDetailForDisplay>();
+            var hotel = new HotelDetailForDisplay
+            {
+                HotelCode = hotelDetail.HotelCode,
+                HotelName = hotelDetail.HotelName,
+                Address = hotelDetail.Address,
+                City = hotelDetail.City,
+                CountryCode = hotelDetail.CountryCode,
+                //CountryName = dictionary.GetHotelCountryNameByCode(hotelDetail.CountryCode),//TODO "Get Country Name"
+                Latitude = hotelDetail.Latitude,
+                Longitude = hotelDetail.Longitude,
+                Email = hotelDetail.Email,
+                PostalCode = hotelDetail.PostalCode,
+                DestinationCode = hotelDetail.DestinationCode,
+                //DestinationName =   //TODO "Get Destination Name"
+                Description = hotelDetail.Description == null ? null : hotelDetail.Description.Where(x => x.languageCode.Equals("IND"))
+                                .Select(x => new HotelDescriptions
+                                {
+                                    languageCode = x.languageCode,
+                                    Description = x.Description
+                                }).SingleOrDefault(),
+                PhonesNumbers = hotelDetail.PhonesNumbers,
+                ZoneCode = hotelDetail.ZoneCode,
+                //ZoneName = ZoneName, //TODO "Det Zone Name"
+                StarRatingCd = hotelDetail.StarRating,
+                //StarRatingDescription = dictionary.GetHotelCategoryId(hotelDetail.StarRating), //TODO "Get Star Rating"
+                Chain = hotelDetail.Chain,
+                //ChainName = dictionary.GetHotelChain(hotelDetail.Chain), //TODO "Get Chain Name"
+                //Segments =  //TODO "List of Segment by SegmentCode"
+                Pois = hotelDetail.Pois,
+                //Terminals =  //TODO "Perlu dtambahi dari data HotelDetailContent"
+                //Facilities =  //TODO
+                Review = hotelDetail.Review,
+                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
+                AccomodationType = hotelDetail.AccomodationType,
+            };
+            return hotel;
+        }
+
+
+
         internal List<HotelRoomForDisplay> ConvertToHotelRoomForDisplay(List<HotelRoom> rooms)
         {
             if (rooms == null)

@@ -23,7 +23,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
             {
                 checkIn = condition.CheckIn,
                 checkOut =  condition.Checkout,
-                destination = condition.Location ?? null,
+                destination = condition.Destination ?? null,
                 zone = condition.Zone,
                 //country belum ada
                 language = "ENG",
@@ -44,7 +44,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 
             for (int i = 0; i < condition.ChildCount; i++)
             {
-                room.childOf(12);
+                room.childOf(8);
             }
             avail.rooms.Add(room);
             AvailabilityRQ availabilityRq = avail.toAvailabilityRQ();

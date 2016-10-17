@@ -35,31 +35,45 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
             }
         }
 
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Route("v1/hotel/search")]
+        public ApiResponseBase SearchHotel()
+        {
+            HotelSearchApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<HotelSearchApiRequest>();
+                var apiResponse = HotelLogic.Search(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
 
         [HttpGet]
         [LunggoCorsPolicy]
         [Route("v1/hotel/GetHotelDetail/{hotelCd}")]
         public ApiResponseBase GetHotelDetail(int hotelCd)
         {
-            //HotelBookApiRequest request = null;
             try
             {
-                var task = DocumentService.AzureDocumentDbClient.ClientInstance._client.CreateDocumentAsync(
-                    DocumentService.AzureDocumentDbClient.ClientInstance._collection.SelfLink, new {a = "aaa"});
-                while (!task.IsCompleted)
+                var request = new HotelDetailApiRequest
                 {
-                    
-                }
-                //request = ApiRequestBase.DeserializeRequest<HotelDetailApiRequest>();
-                //DocumentService.GetInstance().Upsert("aaa", new {a="aaaaa"}, new TimeSpan(1));
-                var apiResponse = HotelService.GetInstance().GetHotelDetail(444942);
-                return new ApiResponseBase();
-                //return apiResponse;
+                    HotelCode = hotelCd
+                };
+                var apiResponse = HotelLogic.GetHotelDetailLogic(request);
+                return apiResponse;
+                //var apiResponse = HotelService.GetInstance().GetHotelDetailFromDb(444942);
+                //return new ApiResponseBase();
+                
             }
             catch (Exception e)
             {
-                return new ApiResponseBase();
-                //return ApiResponseBase.ExceptionHandling(e, request);
+                return ApiResponseBase.ExceptionHandling(e);
             }
         }
 
