@@ -5233,7 +5233,8 @@ file: /Assets/travorama20/css/_page_flight.scss
                     background: url(/Assets/travorama20/images/Hotel/prev-white.png) no-repeat;
                     width: 9px;
                     height: 14px;
-                    display: inline-block; }
+                    display: inline-block;
+                    margin-top: 5px; }
                 .page-hotel .travorama-hotel .detail-hotel .room .hotel-detail .col-left-top .hd-slider button.slick-arrow.slick-next {
                   right: 0;
                   margin-right: 15px; }
@@ -5242,7 +5243,8 @@ file: /Assets/travorama20/css/_page_flight.scss
                     background: url(/Assets/travorama20/images/Hotel/next-white.png) no-repeat;
                     width: 9px;
                     height: 14px;
-                    display: inline-block; }
+                    display: inline-block;
+                    margin-top: 5px; }
             .page-hotel .travorama-hotel .detail-hotel .room .hotel-detail .col-left-top .total-img {
               text-align: center;
               margin: 10px 0; }

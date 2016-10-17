@@ -3525,6 +3525,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   /*Hotel Listing*/
   /*Shared Page*/
   /*Overlay*/ }
+  .page-hotel.page-detail {
+    overflow-y: scroll; }
   .page-hotel .lg-txt {
     font-size: 14px;
     line-height: 16px; }

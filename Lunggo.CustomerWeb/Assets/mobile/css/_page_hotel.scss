@@ -6,6 +6,7 @@
     letter-spacing: 0;
     -webkit-font-smoothing: antialiased;
     background: #ffffff;
+    &.page-detail {overflow-y: scroll;}
 
     /*Fonts*/
     .lg-txt {    
