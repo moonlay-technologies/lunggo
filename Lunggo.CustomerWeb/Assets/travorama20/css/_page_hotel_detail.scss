@@ -217,6 +217,23 @@
                 margin-right: 10px;
             }
         }
+        .room-list-container {
+            padding: 0;
+            list-style: none;
+            .rl-accordion {
+                .accordion-rl.active {
+                    .room-list {
+                        border: 3px solid $color-main-blue;
+                        border-bottom: none;
+                    }
+                    .room-right {border: none;}
+                }
+                &>.accordion-wrapper .accordion-content.show {
+                    padding: 0;
+                    border: none;
+                }
+            }
+        }
         .room-list {
             margin-top: 15px;
             .room-right {
