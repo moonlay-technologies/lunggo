@@ -22,7 +22,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
 {
     public static partial class HotelLogic
     {
-        public static ApiResponseBase Book(HotelBookApiRequest request)
+        public static ApiResponseBase BookLogic(HotelBookApiRequest request)
         {
             if (IsValid(request))
             {

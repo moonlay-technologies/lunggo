@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
-using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
-using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {

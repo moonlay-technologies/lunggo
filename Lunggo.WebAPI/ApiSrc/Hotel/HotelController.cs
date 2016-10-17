@@ -24,7 +24,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
             try
             {
                 request = ApiRequestBase.DeserializeRequest<HotelBookApiRequest>();
-                var apiResponse = HotelLogic.Book(request);
+                var apiResponse = HotelLogic.BookLogic(request);
                 return apiResponse;
             }
             catch (Exception e)
@@ -42,7 +42,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
             try
             {
                 request = ApiRequestBase.DeserializeRequest<HotelSelectRoomApiRequest>();
-                var apiResponse = HotelLogic.SelectHotelRates(request);
+                var apiResponse = HotelLogic.SelectHotelRatesLogic(request);
                 return apiResponse;
             }
             catch (Exception e)
@@ -61,6 +61,24 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
             {
                 request = ApiRequestBase.DeserializeRequest<HotelRoomDetailApiRequest>();
                 var apiResponse = HotelLogic.GetHotelRoomDetailLogic(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Route("v1/hotel/getrate")]
+        public ApiResponseBase GetRate()
+        {
+            HotelRateApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<HotelRateApiRequest>();
+                var apiResponse = HotelLogic.GetRateLogic(request);
                 return apiResponse;
             }
             catch (Exception e)

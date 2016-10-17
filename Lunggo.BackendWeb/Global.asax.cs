@@ -19,6 +19,8 @@ using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Service;
+using Pax = Lunggo.ApCommon.Product.Model.Pax;
+
 namespace Lunggo.BackendWeb
 {
     public class MvcApplication : HttpApplication
@@ -42,21 +44,63 @@ namespace Lunggo.BackendWeb
                 Checkout = new DateTime(2017, 3, 20),
                 Nights = 1,
                 Rooms = 1,
-                Location = "JAV"
+                HotelCode = 444942
             });
 
-
-
-            //var info = new SelectHotelRoomInput
+            //HotelService.GetInstance().SelectHotelRoom(new SelectHotelRoomInput
             //{
-            //    SearchId = "b24b1214-03b8-402d-ada3-ba5d7ff58526",
+            //    SearchId = "c8e1018a-0f63-43de-b369-788e0fb643b2",
             //    RegsIds = new List<string>
             //    {
-            //        "444942-DBL.DX-20170319|20170320|W|325|444942|DBL.DX|BAR|BB||1~2~1|12|N@B2695CA06C454C8CB4152897757A223C"
+            //        "444942-DBL.DX-20170319|20170320|W|325|444942|DBL.DX|BAR|BB||1~2~1|12|N@7A427CDB72544906950EEC5F8ABC28FE",
             //    }
-            //};
+            //});
 
-            //var hb = HotelService.GetInstance().SelectHotelRoom(info);
+            //HotelService.GetInstance().BookHotel(new BookHotelInput
+            //{
+            //    Token = "21100",
+            //    Contact = new Contact
+            //    {
+            //        CountryCallingCode = "62",
+            //        Email = "intandea@gmail.com",
+            //        Name = "Intan Yutami",
+            //        Phone = "01092882",
+            //        Title = Title.Miss
+            //    },
+            //    Passengers = new List<Pax>
+            //    {
+            //        new Pax
+            //        {
+            //            FirstName = "John",
+            //            LastName = "Smith",
+            //            Type = PaxType.Adult,
+            //            Title = Title.Mister,
+            //            Gender = Gender.Male
+            //        },
+            //        new Pax
+            //        {
+            //            FirstName = "Sarah Jane",
+            //            LastName = "Smith",
+            //            Type = PaxType.Adult,
+            //            Title = Title.Miss,
+            //            Gender = Gender.Female
+            //        },
+            //        new Pax
+            //        {
+            //            FirstName = "John",
+            //            LastName = "Watson",
+            //            Type = PaxType.Child,
+            //            Title = Title.Mister,
+            //            Gender = Gender.Male
+            //        }
+            //    },
+            //    SpecialRequest = "none"
+            //});
+
+            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
+            //{
+            //    RsvNo = "278316537179"
+            //});
         }
     }
 }

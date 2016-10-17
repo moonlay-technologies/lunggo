@@ -21,7 +21,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
 {
     public static partial class HotelLogic
     {
-        public static ApiResponseBase SelectHotelRates(HotelSelectRoomApiRequest request)
+        public static ApiResponseBase SelectHotelRatesLogic(HotelSelectRoomApiRequest request)
         {
             if (IsValid(request))
             {

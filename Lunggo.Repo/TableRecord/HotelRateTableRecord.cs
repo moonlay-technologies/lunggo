@@ -74,22 +74,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Board");
 		    }
 		}
-		public Decimal? CancellationFee
+		public String Cancellation
 		{
-		    get { return _CancellationFee; }
+		    get { return _Cancellation; }
 		    set
 		    {
-		        _CancellationFee = value;
-		        IncrementLog("CancellationFee");
-		    }
-		}
-		public DateTime? CancellationStartTime
-		{
-		    get { return _CancellationStartTime; }
-		    set
-		    {
-		        _CancellationStartTime = value;
-		        IncrementLog("CancellationStartTime");
+		        _Cancellation = value;
+		        IncrementLog("Cancellation");
 		    }
 		}
 		public int? AdultCount
@@ -173,8 +164,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _RateKey;
 		private String _PaymentType;
 		private String _Board;
-		private Decimal? _CancellationFee;
-		private DateTime? _CancellationStartTime;
+		private String _Cancellation;
 		private int? _AdultCount;
 		private int? _ChildCount;
 		private String _InsertBy;
@@ -221,8 +211,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("RateKey", false),
 				new ColumnMetadata("PaymentType", false),
 				new ColumnMetadata("Board", false),
-				new ColumnMetadata("CancellationFee", false),
-				new ColumnMetadata("CancellationStartTime", false),
+				new ColumnMetadata("Cancellation", false),
 				new ColumnMetadata("AdultCount", false),
 				new ColumnMetadata("ChildCount", false),
 				new ColumnMetadata("InsertBy", false),

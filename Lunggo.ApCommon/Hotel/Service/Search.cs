@@ -8,6 +8,8 @@ using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Query;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Documents;
 
 namespace Lunggo.ApCommon.Hotel.Service
@@ -52,7 +54,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     AdultCount = input.AdultCount,
                     ChildCount = input.ChildCount,
                     Nights = input.Nights,
-                    Rooms = input.Rooms
+                    Rooms = input.Rooms,
+                    HotelCode = input.HotelCode
                 });
 
                 //remember to add searchId
@@ -93,10 +96,28 @@ namespace Lunggo.ApCommon.Hotel.Service
                     //SaveSearchResultToDocument(result);
 
                     //save searchResult to cache
-                    SaveSearchResultintoDatabaseToCache(result.SearchId,result);
-
-
+                    
+                    
+                    //TODO: MARGIN
+                    result.HotelDetails.ForEach(h => h.Rooms.ForEach(r => r.Rates.ForEach(t =>
+                    {
+                        t.Price.LocalCurrency = new Currency("IDR");
+                        t.Price.SetMargin(new Margin
+                        {
+                            Constant = 0,
+                            Currency = new Currency("IDR"),
+                            Description = "HOTELBEDS",
+                            Id = 10,
+                            IsActive = false,
+                            IsFlat = false,
+                            Name = "htbd",
+                            Percentage = 5,
+                            RuleId = 3
+                        });
+                    }
+                        )));
                     //return only 100 data for the first page
+                    SaveSearchResultintoDatabaseToCache(result.SearchId, result);
                     return new SearchHotelOutput
                     {
                         SearchId = result.SearchId,

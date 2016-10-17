@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
@@ -31,7 +33,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsSuccess = false,
                 };
             }
-
+            
             var output = new IssueHotelTicketOutput();
             if (rsvData.Payment.Method == PaymentMethod.Credit ||
                (rsvData.Payment.Method != PaymentMethod.Credit &&
@@ -61,12 +63,52 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsSuccess = false,
                 };
             }
+            var newRooms = new List<HotelRoom>();
+            foreach (var room in rsvData.HotelDetails.Rooms)
+            {
+                foreach (var rate in room.Rates)
+                {
+                    if (rate.TimeLimit >= DateTime.UtcNow) continue;
+                    var sampleRatekey = rate.RateKey.Split('|');
+                    var checkInDate = new DateTime(Convert.ToInt32(sampleRatekey[0].Substring(0, 4)), Convert.ToInt32(sampleRatekey[0].Substring(4, 2)),
+                        Convert.ToInt32(sampleRatekey[0].Substring(6, 2)));
+                    var checkOutDate = new DateTime(Convert.ToInt32(sampleRatekey[1].Substring(0, 4)), Convert.ToInt32(sampleRatekey[1].Substring(4, 2)),
+                        Convert.ToInt32(sampleRatekey[1].Substring(6, 2)));
+                    var hotelCd = Convert.ToInt32(sampleRatekey[4]);
+                    var roomCd = sampleRatekey[5];
+                    var someData = sampleRatekey[6];
+                    var board = sampleRatekey[7];
+                    var roomCount = Convert.ToInt32(sampleRatekey[9].Split('~')[0]);
+                    var adultCount = Convert.ToInt32(sampleRatekey[9].Split('~')[1]);
+                    var childCount = Convert.ToInt32(sampleRatekey[9].Split('~')[2]);
+
+                    var searchResult = Search(new SearchHotelInput
+                    {
+                        AdultCount = adultCount,
+                        CheckIn = checkInDate,
+                        Checkout = checkOutDate,
+                        ChildCount = childCount,
+                        Rooms = roomCount,
+                        HotelCode = hotelCd
+                    });
+
+                    foreach (var ratea in searchResult.HotelDetailLists.SelectMany(hotel => hotel.Rooms.SelectMany(rooma => (from ratea in rooma.Rates
+                        let rateKey = rate.RateKey.Split('|')
+                        where rateKey[5] == roomCd && rateKey[6] == someData && rateKey[7] == board
+                        select ratea))))
+                    {
+                        rate.Price.SetSupplier(ratea.Price.OriginalIdr, new Currency("IDR"));
+                    }
+                }
+            }
+            
+
             var issueInfo = new HotelIssueInfo
             {
                 RsvNo = rsvData.RsvNo,
                 Pax = rsvData.Pax,
                 Contact = rsvData.Contact,
-                Rooms = rsvData.HotelDetails.Rooms,
+                Rooms = newRooms,
                 SpecialRequest = rsvData.HotelDetails.SpecialRequest
             };
 
@@ -87,8 +129,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     BookingId = id, BookingStatus = BookingStatus.Ticketed, IsSuccess = true
                 }).ToList();
-
-
+                
                 return new IssueHotelTicketOutput
                 {
                     IsSuccess = true,

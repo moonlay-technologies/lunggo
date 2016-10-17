@@ -28,25 +28,31 @@ namespace Lunggo.ApCommon.Hotel.Service
                     SearchId = input.SearchId
 
                 });
-
+                var originRateKey = data.RateKey;
                 var newRates = new List<HotelRate>();
                 foreach (var rate in output.Room.Rates)
                 {
-                    var newrate = new HotelRate
+                    
+                    var roomRateKey = rate.RateKey;
+                    if (roomRateKey == originRateKey)
                     {
-                        RateKey = rate.RateKey,
-                        AdultCount = rate.AdultCount,
-                        Boards = rate.Boards,
-                        Cancellation = rate.Cancellation,
-                        ChildCount = rate.ChildCount,
-                        Class = rate.Class,
-                        Offers = rate.Offers,
-                        PaymentType = rate.PaymentType,
-                        RegsId = rate.RegsId,
-                        Price = rate.Price,
-                        Type = rate.Type,
-                    };
-                    newRates.Add(newrate);
+                        var newrate = new HotelRate
+                        {
+                            RateKey = rate.RateKey,
+                            AdultCount = rate.AdultCount,
+                            Boards = rate.Boards,
+                            Cancellation = rate.Cancellation,
+                            ChildCount = rate.ChildCount,
+                            Class = rate.Class,
+                            Offers = rate.Offers,
+                            PaymentType = rate.PaymentType,
+                            RegsId = rate.RegsId,
+                            Price = rate.Price,
+                            Type = rate.Type,
+                        };
+                        newRates.Add(newrate);
+                    }
+                    
                 }
 
                 var newRoom = new HotelRoom

@@ -5,12 +5,15 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.messages;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.helpers;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
+using Microsoft.Owin.Security.Provider;
 using Newtonsoft.Json;
-
+using Lunggo.ApCommon.Hotel.Constant;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 {
@@ -19,16 +22,33 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
         public SearchHotelResult SearchHotel(SearchHotelCondition condition)
         {
             HotelApiClient client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-api");
-            var avail = new Availability
+            var avail = new Availability();
+            if (condition.Location != null)
             {
-                checkIn = condition.CheckIn,
-                checkOut =  condition.Checkout,
-                destination = condition.Location ?? null,
-                zone = condition.Zone,
-                //country belum ada
-                language = "ENG",
-                payed = Availability.Pay.AT_WEB
-            };
+                avail = new Availability
+                {
+                    checkIn = condition.CheckIn,
+                    checkOut = condition.Checkout,
+                    destination = condition.Location ?? null,
+                    zone = condition.Zone,
+                    //country belum ada
+                    language = "ENG",
+                    payed = Availability.Pay.AT_WEB
+                };
+            }
+            else
+            {
+                avail = new Availability
+                {
+                    checkIn = condition.CheckIn,
+                    checkOut = condition.Checkout,
+                    includeHotels = new List<int>{condition.HotelCode},
+                    //country belum ada
+                    language = "ENG",
+                    payed = Availability.Pay.AT_WEB
+                };
+            }
+            
             AvailRoom room = new AvailRoom
             {
                 adults = condition.AdultCount,
@@ -39,13 +59,14 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
             room.details = new List<RoomDetail>();
             for (int i = 0; i < condition.AdultCount; i++)
             {
-            room.adultOf(30);
+                room.adultOf(30);
             }
 
             for (int i = 0; i < condition.ChildCount; i++)
             {
                 room.childOf(12);
             }
+
             avail.rooms.Add(room);
             AvailabilityRQ availabilityRq = avail.toAvailabilityRQ();
                 if (availabilityRq == null)
@@ -79,18 +100,37 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         Rooms =hotelResponse.rooms.Select(roomApi=>new HotelRoom
                         {
                             RoomCode = roomApi.code,
-                            Rates = roomApi.rates.Select(x=> new HotelRate
+                            Type = roomApi.code.Substring(0,3),
+                            TypeName = HotelService.GetInstance().GetHotelRoomTypeDescEn(roomApi.code.Substring(0, 3)),
+                            RoomName = roomApi.name,
+                            Rates = roomApi.rates.Select(x=>
                             {
-                                RateKey = x.rateKey,
-                                Price = new Price{OriginalIdr = x.net},
-                                Boards = x.boardCode,
-                                //Cancellation = x.cancellationPolicies.Select(y=> new Cancellation
-                                //{
-                                //    Fee = y.amount,
-                                //    StartTime = y.from
-                                //}).ToList(),
-                                Class = x.rateClass,
-                                Type = x.rateType.ToString() 
+                                var rate = new HotelRate
+                                {
+                                    AdultCount = x.adults,
+                                    ChildCount = x.children,
+                                    RoomCount = x.rooms,
+                                    PaymentType = PaymentTypeCd.Mnemonic(x.paymentType),
+                                    Offers = x.offers.Select(z => new Offer
+                                    {
+                                        Code = z.code,
+                                        Amount = z.amount,
+                                        Name = z.name
+                                    }).ToList(),
+                                    RateKey = x.rateKey,
+                                    Price = new Price(),
+                                    Boards = x.boardCode,
+                                    Cancellation = x.cancellationPolicies.Select(y => new Cancellation
+                                    {
+                                        Fee = y.amount,
+                                        StartTime = y.from
+                                    }).ToList(),
+                                    Class = x.rateClass,
+                                    Type = x.rateType.ToString()
+
+                                };
+                                rate.Price.SetSupplier(x.net, new Currency("IDR"));
+                                return rate;
                             }).ToList()
                         }).ToList(),
                     };
