@@ -24,8 +24,12 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public HotelDetailsBase GetHotelDetailFromDb (int hotelCode)
         {
-            var document = DocumentService.GetInstance();
-            return document.Retrieve<HotelDetailsBase>("HotelDetail:"+hotelCode);
+            /*Technologies using DocDB*/
+            //var document = DocumentService.GetInstance();
+            //return document.Retrieve<HotelDetailsBase>("HotelDetail:"+hotelCode);
+
+            /*Technpologies using TableStorage*/
+            return GetHotelDetailFromTableStorage(hotelCode);
         }
 
     }

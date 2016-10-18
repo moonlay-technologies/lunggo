@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Model;
+using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Hotel.Model
@@ -81,6 +82,7 @@ namespace Lunggo.ApCommon.Hotel.Model
 
     public class HotelDetailsBase
     {
+
         [JsonProperty("hotelCd", NullValueHandling = NullValueHandling.Ignore)]
         public int HotelCode { get; set; }
         [JsonProperty("hotelName", NullValueHandling = NullValueHandling.Ignore)]

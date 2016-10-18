@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Threading;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 using System;
@@ -31,11 +32,9 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
 
             var dataCount = 1; 
             var counter = 0;
-            var max = 3;
-            var start = 1;
             var from = 1;
             var to = 1000;
-            while (to <= 70000)
+            while (to <= 128000)
             {
 
                 Debug.Print("From : " + from);
@@ -142,15 +141,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                                 Description = hotelRS.description == null ? null : hotelRS.description.content
                             });
 
-                            if (start == max)
-                            {
-                                start = 1;
-                                Debug.Print("Tidur dulu");
-                                Thread.Sleep(1000);
-                            }
-                            Debug.Print("Inserting ke-" + dataCount + " : " + hotels[counter].HotelCode);
-                            InsertHotelDetailToDocDB(hotels[counter]);
-                            start++;
+                            Debug.Print("Insert ke-" + dataCount + " : " + hotels[counter].HotelCode);
+                            InsertHotelDetailToTableStorage(hotels[counter]);
                             counter++;
                             dataCount++;
                         }
@@ -159,16 +151,15 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                 }
                 from = from + 1000;
                 to = to + 1000;
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
 
             }
             Console.WriteLine("Done");
         }
 
-        public void InsertHotelDetailToDocDB(HotelDetailsBase hotel)
-        {var document = DocumentService.GetInstance();
-            //Debug.Print(hotel.Serialize());
-                document.Upsert("HotelDetail:" + hotel.HotelCode, hotel);
+        public void InsertHotelDetailToTableStorage(HotelDetailsBase hotel)
+        {
+            HotelService.GetInstance().SaveHotelDetailToTableStorage(hotel,hotel.HotelCode);
             
         }
 
