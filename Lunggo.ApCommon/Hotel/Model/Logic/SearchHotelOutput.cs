@@ -14,6 +14,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         [JsonProperty("hotels", NullValueHandling = NullValueHandling.Ignore)]
         public List<HotelDetailForDisplay> HotelDetailLists { get; set; }
         public DateTime? ExpiryTime { get; set; }
+        public int TotalHotel { get; set; }
         public int StartPage { get; set; }
         public int EndPage { get; set; }
         public HotelSorting SortingParam { get; set; }
