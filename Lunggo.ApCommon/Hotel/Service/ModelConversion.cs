@@ -1,16 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
-using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
-using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Service;
+using Lunggo.ApCommon.Product.Constant;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
     {
+        internal HotelReservationForDisplay ConvertToReservationForDisplay(HotelReservation hotelReservation)
+        {
+            if (hotelReservation == null)
+                return null;
+
+            var convertedRsv = new HotelReservationForDisplay
+            {
+                CancellationTime = hotelReservation.CancellationTime,
+                CancellationType = hotelReservation.CancellationType,
+                Contact = hotelReservation.Contact,
+                HotelDetail = ConvertToHotelDetailForDisplay(
+                new List<HotelDetail>
+                {
+                    hotelReservation.HotelDetails
+                }).ToList()[0],
+                Passengers = ConvertToPaxForDisplay(hotelReservation.Pax),
+                RsvNo = hotelReservation.RsvNo,
+                Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(hotelReservation.Payment),
+                RsvTime = hotelReservation.RsvTime,
+            };
+
+            return convertedRsv;
+        }
+
         internal List<HotelDetailForDisplay> ConvertToHotelDetailForDisplay(List<HotelDetail> hotelDetails)
         {
             if (hotelDetails == null)
@@ -59,6 +81,51 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             return convertedHotels;
         }
+
+        internal HotelDetailForDisplay ConvertToHotelDetailsBaseForDisplay(HotelDetailsBase hotelDetail)
+        {
+            if (hotelDetail == null)
+                return null;
+            var convertedHotels = new List<HotelDetailForDisplay>();
+            var hotel = new HotelDetailForDisplay
+            {
+                HotelCode = hotelDetail.HotelCode,
+                HotelName = hotelDetail.HotelName,
+                Address = hotelDetail.Address,
+                City = hotelDetail.City,
+                CountryCode = hotelDetail.CountryCode,
+                //CountryName = dictionary.GetHotelCountryNameByCode(hotelDetail.CountryCode),//TODO "Get Country Name"
+                Latitude = hotelDetail.Latitude,
+                Longitude = hotelDetail.Longitude,
+                Email = hotelDetail.Email,
+                PostalCode = hotelDetail.PostalCode,
+                DestinationCode = hotelDetail.DestinationCode,
+                //DestinationName =   //TODO "Get Destination Name"
+                Description = hotelDetail.Description == null ? null : hotelDetail.Description.Where(x => x.languageCode.Equals("IND"))
+                                .Select(x => new HotelDescriptions
+                                {
+                                    languageCode = x.languageCode,
+                                    Description = x.Description
+                                }).SingleOrDefault(),
+                PhonesNumbers = hotelDetail.PhonesNumbers,
+                ZoneCode = hotelDetail.ZoneCode,
+                //ZoneName = ZoneName, //TODO "Det Zone Name"
+                StarRatingCd = hotelDetail.StarRating,
+                //StarRatingDescription = dictionary.GetHotelCategoryId(hotelDetail.StarRating), //TODO "Get Star Rating"
+                Chain = hotelDetail.Chain,
+                //ChainName = dictionary.GetHotelChain(hotelDetail.Chain), //TODO "Get Chain Name"
+                //Segments =  //TODO "List of Segment by SegmentCode"
+                Pois = hotelDetail.Pois,
+                //Terminals =  //TODO "Perlu dtambahi dari data HotelDetailContent"
+                //Facilities =  //TODO
+                Review = hotelDetail.Review,
+                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
+                AccomodationType = hotelDetail.AccomodationType,
+            };
+            return hotel;
+        }
+
+
 
         internal List<HotelRoomForDisplay> ConvertToHotelRoomForDisplay(List<HotelRoom> rooms)
         {
@@ -134,7 +201,38 @@ namespace Lunggo.ApCommon.Hotel.Service
                 convertedRate.Add(rate);
             }
             return convertedRate;
-        } 
+        }
+
+        private static RsvDisplayStatus MapReservationStatus(HotelReservation reservation)
+        {
+            var paymentStatus = reservation.Payment.Status;
+            var paymentMethod = reservation.Payment.Method;
+            var rsvStatus = reservation.RsvStatus;
+
+            if (rsvStatus == RsvStatus.Cancelled || paymentStatus == PaymentStatus.Cancelled)
+                return RsvDisplayStatus.Cancelled;
+            if (rsvStatus == RsvStatus.Expired || paymentStatus == PaymentStatus.Expired)
+                return RsvDisplayStatus.Expired;
+            if (paymentStatus == PaymentStatus.Denied)
+                return RsvDisplayStatus.PaymentDenied;
+            if (paymentStatus == PaymentStatus.Failed)
+                return RsvDisplayStatus.FailedUnpaid;
+            if (rsvStatus == RsvStatus.Failed)
+                return paymentStatus == PaymentStatus.Settled
+                    ? RsvDisplayStatus.FailedPaid
+                    : RsvDisplayStatus.FailedUnpaid;
+            if (paymentMethod == PaymentMethod.Undefined)
+                return RsvDisplayStatus.Reserved;
+            if (paymentStatus == PaymentStatus.Settled)
+                return reservation.RsvStatus == RsvStatus.Completed
+                    ? RsvDisplayStatus.Issued
+                    : RsvDisplayStatus.Paid;
+            if (paymentStatus != PaymentStatus.Settled)
+                return (paymentMethod == PaymentMethod.VirtualAccount || paymentMethod == PaymentMethod.BankTransfer)
+                    ? RsvDisplayStatus.PendingPayment
+                    : RsvDisplayStatus.VerifyingPayment;
+            return RsvDisplayStatus.Undefined;
+        }
 
     }
 }

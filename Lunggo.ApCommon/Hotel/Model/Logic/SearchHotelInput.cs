@@ -10,8 +10,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
     public class SearchHotelInput
     {
         public string SearchId { get; set; }
-        public string Location { get; set; }
-        public int? Zone { get; set; }
+        public long Location { get; set; }
         public int Nights { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime Checkout { get; set; }
@@ -22,7 +21,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         public int EndPage { get; set; }
         public HotelFilter FilterParam { get; set; }
         public HotelSorting SortingParam { get; set; }
-
+        public int HotelCode { get; set; }
         public SearchHotelInput()
         {
             SortingParam = new HotelSorting();

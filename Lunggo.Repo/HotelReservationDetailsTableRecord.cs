@@ -5,7 +5,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class HotelRateTableRecord : Lunggo.Framework.Database.TableRecord
+    public class HotelReservationDetailsTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
@@ -20,67 +20,49 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Id");
 		    }
 		}
-		public long? RoomId
+		public String RsvNo
 		{
-		    get { return _RoomId; }
+		    get { return _RsvNo; }
 		    set
 		    {
-		        _RoomId = value;
-		        IncrementLog("RoomId");
+		        _RsvNo = value;
+		        IncrementLog("RsvNo");
 		    }
 		}
-		public long? PriceId
+		public int? HotelCd
 		{
-		    get { return _PriceId; }
+		    get { return _HotelCd; }
 		    set
 		    {
-		        _PriceId = value;
-		        IncrementLog("PriceId");
+		        _HotelCd = value;
+		        IncrementLog("HotelCd");
 		    }
 		}
-		public int? RoomCount
+		public String HotelName
 		{
-		    get { return _RoomCount; }
+		    get { return _HotelName; }
 		    set
 		    {
-		        _RoomCount = value;
-		        IncrementLog("RoomCount");
+		        _HotelName = value;
+		        IncrementLog("HotelName");
 		    }
 		}
-		public String RateKey
+		public DateTime? CheckInDate
 		{
-		    get { return _RateKey; }
+		    get { return _CheckInDate; }
 		    set
 		    {
-		        _RateKey = value;
-		        IncrementLog("RateKey");
+		        _CheckInDate = value;
+		        IncrementLog("CheckInDate");
 		    }
 		}
-		public String PaymentType
+		public DateTime? CheckOutDate
 		{
-		    get { return _PaymentType; }
+		    get { return _CheckOutDate; }
 		    set
 		    {
-		        _PaymentType = value;
-		        IncrementLog("PaymentType");
-		    }
-		}
-		public String Board
-		{
-		    get { return _Board; }
-		    set
-		    {
-		        _Board = value;
-		        IncrementLog("Board");
-		    }
-		}
-		public String Cancellation
-		{
-		    get { return _Cancellation; }
-		    set
-		    {
-		        _Cancellation = value;
-		        IncrementLog("Cancellation");
+		        _CheckOutDate = value;
+		        IncrementLog("CheckOutDate");
 		    }
 		}
 		public int? AdultCount
@@ -99,6 +81,15 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _ChildCount = value;
 		        IncrementLog("ChildCount");
+		    }
+		}
+		public String SpecialRequest
+		{
+		    get { return _SpecialRequest; }
+		    set
+		    {
+		        _SpecialRequest = value;
+		        IncrementLog("SpecialRequest");
 		    }
 		}
 		public String InsertBy
@@ -158,15 +149,14 @@ namespace Lunggo.Repository.TableRecord
 
 		
 		private long? _Id;
-		private long? _RoomId;
-		private long? _PriceId;
-		private int? _RoomCount;
-		private String _RateKey;
-		private String _PaymentType;
-		private String _Board;
-		private String _Cancellation;
+		private String _RsvNo;
+		private int? _HotelCd;
+		private String _HotelName;
+		private DateTime? _CheckInDate;
+		private DateTime? _CheckOutDate;
 		private int? _AdultCount;
 		private int? _ChildCount;
+		private String _SpecialRequest;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -175,20 +165,20 @@ namespace Lunggo.Repository.TableRecord
 		private String _UpdatePgId;
 
 
-		public static HotelRateTableRecord CreateNewInstance()
+		public static HotelReservationDetailsTableRecord CreateNewInstance()
         {
-            var record = new HotelRateTableRecord();
+            var record = new HotelReservationDetailsTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public HotelRateTableRecord()
+		public HotelReservationDetailsTableRecord()
         {
             ;
         }
 
-        static HotelRateTableRecord()
+        static HotelReservationDetailsTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -197,7 +187,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "HotelRate";
+            _tableName = "HotelReservationDetails";
         }
 
         private static void InitRecordMetadata()
@@ -205,15 +195,14 @@ namespace Lunggo.Repository.TableRecord
             _recordMetadata = new List<ColumnMetadata>
             {
 				new ColumnMetadata("Id", true),
-				new ColumnMetadata("RoomId", false),
-				new ColumnMetadata("PriceId", false),
-				new ColumnMetadata("RoomCount", false),
-				new ColumnMetadata("RateKey", false),
-				new ColumnMetadata("PaymentType", false),
-				new ColumnMetadata("Board", false),
-				new ColumnMetadata("Cancellation", false),
+				new ColumnMetadata("RsvNo", false),
+				new ColumnMetadata("HotelCd", false),
+				new ColumnMetadata("HotelName", false),
+				new ColumnMetadata("CheckInDate", false),
+				new ColumnMetadata("CheckOutDate", false),
 				new ColumnMetadata("AdultCount", false),
 				new ColumnMetadata("ChildCount", false),
+				new ColumnMetadata("SpecialRequest", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

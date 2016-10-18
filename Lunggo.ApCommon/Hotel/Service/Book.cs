@@ -127,7 +127,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Status = PaymentStatus.Pending,
                     LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
                     OriginalPriceIdr = price,
-                    TimeLimit = bookInfo.Rooms.SelectMany(r => r.Rates).Min(order => order.TimeLimit).AddMinutes(-10),
+                    TimeLimit = DateTime.UtcNow.AddHours(1)
+                    //TimeLimit = bookInfo.Rooms.SelectMany(r => r.Rates).Min(order => order.TimeLimit).AddMinutes(-10),
                 },
                 RsvStatus = RsvStatus.InProcess,
                 RsvTime = DateTime.UtcNow,

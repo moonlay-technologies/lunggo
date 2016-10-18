@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Payment.Model;
@@ -9,6 +10,7 @@ using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Extension;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 //using Pax = Lunggo.ApCommon.Product.Model.Pax;
@@ -93,12 +95,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 AdultCount = rateRecord.AdultCount.GetValueOrDefault(),
                                 ChildCount = rateRecord.ChildCount.GetValueOrDefault(),
                                 Boards = rateRecord.Board,
-                                Cancellation = new Cancellation
-                                {
-                                    StartTime = rateRecord.CancellationStartTime.GetValueOrDefault(),
-                                    Fee = rateRecord.CancellationFee.GetValueOrDefault()
-                                },
-                                PaymentType = rateRecord.PaymentType,
+                                Cancellation = rateRecord.Cancellation.Deserialize<List<Cancellation>>(),
+                                PaymentType = PaymentTypeCd.Mnemonic(rateRecord.PaymentType),
                                 RoomCount = rateRecord.RoomCount.GetValueOrDefault(),
                                 Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()) 
                             };
@@ -132,6 +130,23 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             }
         }
+
+        //private List<HotelReservation> GetOverviewReservationsByUserIdOrEmailFromDb(string userId, string email, string[] filters, string sort, int? page, int? itemsPerPage)
+        //{
+        //    using (var conn = DbService.GetInstance().GetOpenConnection())
+        //    {
+        //        var rsvNos =
+        //            GetRsvNosByUserIdQuery.GetInstance()
+        //                .Execute(conn, new { UserId = userId, ContactEmail = email }, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+        //                .Distinct().ToList();
+        //        if (!rsvNos.Any())
+        //            return null;
+        //        else
+        //        {
+        //            return rsvNos.Select(GetOverviewReservationFromDb).Where(rsv => rsv != null).ToList();
+        //        }
+        //    }
+        //}
         #endregion
 
         #region Insert
@@ -200,8 +215,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             AdultCount = rate.AdultCount,
                             ChildCount = rate.ChildCount,
                             Board = rate.Boards,
-                            CancellationFee = rate.Cancellation.Fee,
-                            CancellationStartTime = rate.Cancellation.StartTime,
+                            Cancellation = rate.Cancellation.Serialize(),
                             InsertDate = DateTime.UtcNow,
                             InsertBy = "LunggoSystem",
                             InsertPgId = "0",
@@ -209,7 +223,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             RoomId = roomId,
                             RoomCount = rate.RoomCount,
                             RateKey =  rate.RateKey,
-                            PaymentType = rate.PaymentType,
+                            PaymentType = PaymentTypeCd.MnemonicToString(rate.PaymentType),
                         };
 
                         HotelRateTableRepo.GetInstance().Insert(conn, rateRecord);

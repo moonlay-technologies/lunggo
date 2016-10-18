@@ -176,20 +176,48 @@
     <None Include="Config\Common\Airline.csv" />
     <None Include="Config\Common\Airport.csv" />
     <None Include="Config\Common\Country.csv" />
-    <None Include="Config\Common\HotelAccomodation.csv" />
-    <None Include="Config\Common\HotelBoard.csv" />
-    <None Include="Config\Common\HotelCategory.csv" />
-    <None Include="Config\Common\HotelChain.csv" />
-    <None Include="Config\Common\HotelCountries.csv" />
-    <None Include="Config\Common\HotelDestinations.csv" />
-    <None Include="Config\Common\HotelFacilities.csv" />
-    <None Include="Config\Common\HotelFacilityGroup.csv" />
-    <None Include="Config\Common\HotelRoom.csv" />
-    <None Include="Config\Common\HotelRoomPaymentType.csv" />
-    <None Include="Config\Common\HotelRoomRateType.csv" />
-    <None Include="Config\Common\HotelRoomRateClass.csv" />
-    <None Include="Config\Common\HotelSegment.csv" />
-    <None Include="Config\Common\HotelLocation.csv" />
+    <Content Include="Config\Common\HotelAccomodation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelBoard.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelCategory.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelChain.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelCountries.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelDestinations.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelFacilities.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelFacilityGroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelRoom.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelRoomPaymentType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelRoomRateType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelRoomRateClass.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelSegment.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelLocation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Config\CloudApp.EticketHandler\Garuda.properties" />
     <None Include="Config\CustomerWeb\airAsia.properties" />
     <None Include="Config\CustomerWeb\api.properties" />
@@ -756,6 +784,9 @@
     <None Include="Config\CloudApp.EticketHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="HtmlTemplate\HotelEticketEmail.cshtml" />
+    <None Include="HtmlTemplate\HotelInvoice.cshtml" />
+    <None Include="HtmlTemplate\HotelEticket.cshtml" />
     <None Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ContactUsEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueFailedNotifEmail.cshtml" />

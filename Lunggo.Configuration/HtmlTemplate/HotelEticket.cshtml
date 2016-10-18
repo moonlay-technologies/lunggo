@@ -1,0 +1,30 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Model
+@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Constant
+@model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<body class="eticket">
+
+    
+        <div class="page">
+            
+            
+                Nama Hotel: @Model.HotelDetail.HotelName <br/>
+                Lokasi: @Model.HotelDetail.DestinationName, @Model.HotelDetail.CountryName <br />
+                Total Harga: @Model.HotelDetail.NetFare
+                    
+               
+        </div><!-- .page -->
+
+
+    
+   
+
+</body>
+</html>

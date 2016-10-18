@@ -20,6 +20,7 @@
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>cb2daaaf</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,6 +51,10 @@
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Documents.Client, Version=1.10.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.DocumentDB.1.10.0\lib\net45\Microsoft.Azure.Documents.Client.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.NotificationHubs">
       <HintPath>..\packages\Microsoft.Azure.NotificationHubs.1.0.6\lib\net45-full\Microsoft.Azure.NotificationHubs.dll</HintPath>
@@ -293,7 +298,10 @@
     <Compile Include="ApiSrc\Auxiliary\Logic\NewsletterSubscribeLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\NewsletterSubscribeApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\BookLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\GetRateLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\GetRoomDetailLogic.cs" />
+	<Compile Include="ApiSrc\Hotel\Logic\GetHotelDetailLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\SearchHotelLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelBookApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelBookApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelDetailApiRequest.cs" />
@@ -382,7 +390,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ApiSrc\Hotel\Object\" />
+    <Folder Include="ApiSrc\Hotel\Model\Object\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
@@ -424,6 +432,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Azure.DocumentDB.1.10.0\build\Microsoft.Azure.DocumentDB.targets" Condition="Exists('..\packages\Microsoft.Azure.DocumentDB.1.10.0\build\Microsoft.Azure.DocumentDB.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Azure.DocumentDB.1.10.0\build\Microsoft.Azure.DocumentDB.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Azure.DocumentDB.1.10.0\build\Microsoft.Azure.DocumentDB.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

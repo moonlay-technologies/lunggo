@@ -9,10 +9,10 @@ namespace Lunggo.ApCommon.Hotel.Model
 {
     public class SearchHotelCondition
     {
-        public string Location { get; set; }
+        public string Destination { get; set; }
         public int? Zone { get; set; }
         public string Country { get; set; }
-        public string HotelCode { get; set; }
+        public int HotelCode { get; set; }
         public int Nights { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime Checkout { get; set; }

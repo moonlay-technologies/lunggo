@@ -10,7 +10,7 @@ namespace Lunggo.ApCommon.Hotel.Model
     {
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
-        public List<int> StarRating { get; set; }
+        public List<string> StarRating { get; set; }
         public List<int> Area { get; set; }
         public List<string> AccomodationType { get; set; }
         public List<string> Amenities { get; set; }
