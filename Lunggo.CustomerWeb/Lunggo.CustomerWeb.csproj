@@ -343,6 +343,7 @@
     <Content Include="Assets\mobile\images\Hotel\tv.png" />
     <Content Include="Assets\mobile\images\Hotel\wifi-grey.png" />
     <Content Include="Assets\mobile\images\Hotel\wifi.png" />
+    <Content Include="Assets\mobile\images\sand-clock.png" />
     <Content Include="Assets\mobile\images\time.png" />
     <Content Include="Assets\mobile\js\HotelController.js" />
     <Content Include="Assets\travorama20\images\Hotel\bed.png" />
