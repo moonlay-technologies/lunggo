@@ -111,12 +111,13 @@
     }
 
 </head>
-<body class="@ViewBag.BodyClass">
+<body class="@ViewBag.BodyClass" @(ViewBag.AngularController != null ? "ng-app=travorama ng-controller=" + ViewBag.AngularController+" ng-class={'no-scroll':PageConfig.BodyNoScroll,'burger-shown':PageConfig.BurgerShown}" : "ng-app=travorama")>
     @Html.Partial("/Views/Shared/_googleTag.cshtml")
 
     <!--********************-->
 
-    <section ng-app="travorama">
+    @*<section ng-app="travorama">*@
+
         @if (ViewBag.SiteHeader != "header-contact" && ViewBag.SiteHeader != "header-faq" && ViewBag.SiteHeader != "header-how-to" && ViewBag.SiteHeader != "header-global-error")
         {
             @Html.Partial("/Views/Shared/travorama20/_SiteHeader.cshtml")
@@ -137,7 +138,7 @@
                 @Html.Partial("/Views/Shared/travorama20/_SiteFooter.cshtml")
             </div>
         }
-    </section>
+    @*</section>*@
 
     <!--********************-->
     <!-- Javascripts -->

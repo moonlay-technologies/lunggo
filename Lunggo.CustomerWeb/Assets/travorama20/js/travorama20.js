@@ -5,7 +5,13 @@ $(function() {
 
 if (typeof(angular) == 'object') {
     var app = angular.module('travorama', ['ngRoute']);
+
+    app.config(function ($logProvider) {
+        $logProvider.debugEnabled(true);
+    });
 }
+
+
 
 //********************
 // variables
