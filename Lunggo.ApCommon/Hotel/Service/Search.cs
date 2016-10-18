@@ -170,7 +170,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 if (result.HotelDetails != null)
                 {
                     //save data to docDB
-                    SaveSearchResultToDocument(result);
+                    //SaveSearchResultToDocument(result);
 
                     //save searchResult to cache
                     SaveSearchResultintoDatabaseToCache(result.SearchId,result);
