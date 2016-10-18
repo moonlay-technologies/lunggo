@@ -4391,10 +4391,15 @@ file: /Assets/travorama20/css/_page_flight.scss
   /*Bullets*/
   /*Checklist & Radio Button*/
   /*Form & Lable*/
-  /*Shared Page*/ }
+  /*Shared Page*/
+  /*Hotel Thankyou Page*/
+  /*Hotel Checkout Page*/ }
   .page-hotel .lg-txt {
     font-size: 22px;
     line-height: 24px; }
+  .page-hotel .xlg-txt {
+    font-size: 30px;
+    line-height: 30px; }
   .page-hotel .md-txt {
     font-size: 15px; }
   .page-hotel .sm-txt {
@@ -4427,10 +4432,10 @@ file: /Assets/travorama20/css/_page_flight.scss
     font-size: 19px;
     text-transform: uppercase;
     margin-bottom: 15px; }
-  .page-hotel .col-left, .page-hotel col-right, .page-hotel .col-left-result, .page-hotel .col-right-result, .page-hotel .col-xs-left, .page-hotel .col-xs-middle, .page-hotel .col-xs-right, .page-hotel .col-left-hotel, .page-hotel .col-right-hotel, .page-hotel .col-half, .page-hotel .col-left-page, .page-hotel .col-right-page, .page-hotel .col-left-slider, .page-hotel col-right-slider, .page-hotel .col-left-rs, .page-hotel .col-right-rs, .page-hotel .rb-left, .page-hotel .rb-mid, .page-hotel .rb-right, .page-hotel .room-sort-left, .page-hotel .room-sort-mid, .page-hotel .room-sort-right, .page-hotel .room-left, .page-hotel .room-right, .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right {
+  .page-hotel .col-left, .page-hotel col-right, .page-hotel .col-left-result, .page-hotel .col-right-result, .page-hotel .col-xs-left, .page-hotel .col-xs-middle, .page-hotel .col-xs-right, .page-hotel .col-left-hotel, .page-hotel .col-right-hotel, .page-hotel .col-half, .page-hotel .col-left-page, .page-hotel .col-right-page, .page-hotel .col-left-slider, .page-hotel col-right-slider, .page-hotel .col-left-rs, .page-hotel .col-right-rs, .page-hotel .rb-left, .page-hotel .rb-mid, .page-hotel .rb-right, .page-hotel .room-sort-left, .page-hotel .room-sort-mid, .page-hotel .room-sort-right, .page-hotel .room-left, .page-hotel .room-right, .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right, .page-hotel .col-3, .page-hotel .col-4, .page-hotel .col-6 {
     position: relative;
     min-height: 1px; }
-  .page-hotel .col-left, .page-hotel .col-left-result, .page-hotel .col-right-result, .page-hotel .col-left-hotel, .page-hotel .col-right-hotel, .page-hotel .col-xs-left, .page-hotel .col-xs-middle, .page-hotel .col-xs-right, .page-hotel .col-half, .page-hotel .col-left-page, .page-hotel .col-right-page, .page-hotel .col-left-slider, .page-hotel .col-right-slider, .page-hotel .col-left-rs, .page-hotel .col-right-rs, .page-hotel .rb-left, .page-hotel .rb-mid, .page-hotel .rb-right, .page-hotel .room-sort-left, .page-hotel .room-sort-mid, .page-hotel .room-sort-right, .page-hotel .room-left, .page-hotel .room-right, .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right {
+  .page-hotel .col-left, .page-hotel .col-left-result, .page-hotel .col-right-result, .page-hotel .col-left-hotel, .page-hotel .col-right-hotel, .page-hotel .col-xs-left, .page-hotel .col-xs-middle, .page-hotel .col-xs-right, .page-hotel .col-half, .page-hotel .col-left-page, .page-hotel .col-right-page, .page-hotel .col-left-slider, .page-hotel .col-right-slider, .page-hotel .col-left-rs, .page-hotel .col-right-rs, .page-hotel .rb-left, .page-hotel .rb-mid, .page-hotel .rb-right, .page-hotel .room-sort-left, .page-hotel .room-sort-mid, .page-hotel .room-sort-right, .page-hotel .room-left, .page-hotel .room-right, .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right, .page-hotel .col-3, .page-hotel .col-4, .page-hotel .col-6 {
     float: left; }
   .page-hotel .col-right {
     float: right; }
@@ -4490,6 +4495,12 @@ file: /Assets/travorama20/css/_page_flight.scss
     width: 22%; }
   .page-hotel .ot-right {
     width: 78%; }
+  .page-hotel .col-3 {
+    width: 33.33333%; }
+  .page-hotel .col-4 {
+    width: 40%; }
+  .page-hotel .col-6 {
+    width: 60%; }
   .page-hotel .star-outline, .page-hotel .so-1, .page-hotel .star.e-star.star-4:after, .page-hotel .so-2, .page-hotel .star.e-star.star-3:after, .page-hotel .so-3, .page-hotel .star.e-star.star-2:after, .page-hotel .so-4, .page-hotel .star.e-star:after {
     content: '';
     display: inline-block;
@@ -4528,7 +4539,7 @@ file: /Assets/travorama20/css/_page_flight.scss
       width: 68px; }
     .page-hotel .star.e-star.star-5 {
       width: 85px; }
-  .page-hotel .maps-icon, .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location:before, .page-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .address:before, .page-hotel .widget-container .widget.hotel .widget-content .wt-bottom:before, .widget-container .widget.hotel .widget-content .page-hotel .wt-bottom:before, .page-hotel .checkout-hotel .content-step .rh-container .rh-content .rh-location:before, .checkout-hotel .content-step .rh-container .rh-content .page-hotel .rh-location:before {
+  .page-hotel .maps-icon, .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location:before, .page-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .address:before, .page-hotel .rh-container .rh-content .rh-location:before, .page-hotel .widget-container .widget.hotel .widget-content .wt-bottom:before, .widget-container .widget.hotel .widget-content .page-hotel .wt-bottom:before {
     content: '';
     display: inline-block;
     background: url(/Assets/travorama20/images/Hotel/location.png) no-repeat;
@@ -5382,6 +5393,127 @@ file: /Assets/travorama20/css/_page_flight.scss
             padding-right: 15px; }
           .page-hotel .travorama-hotel .detail-hotel .info-hotel .ih-desc .col-half.ih-r {
             padding-left: 15px; }
+  .page-hotel .rh-container .rh-main-title {
+    background: #1daee4;
+    padding: 6px 25px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff; }
+  .page-hotel .rh-container .rh-content {
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 15px 20px; }
+    .page-hotel .rh-container .rh-content .rh-row {
+      padding: 0 15px; }
+    .page-hotel .rh-container .rh-content .hotel-title-lg {
+      margin-bottom: 10px; }
+    .page-hotel .rh-container .rh-content .rh-location {
+      margin: 10px 0;
+      margin-left: 20px; }
+    .page-hotel .rh-container .rh-content .rh-detail {
+      line-height: 22px;
+      margin-bottom: 15px; }
+    .page-hotel .rh-container .rh-content .rh-top {
+      border-top: 1px solid #ccc;
+      padding: 15px 0; }
+      .page-hotel .rh-container .rh-content .rh-top .hotel-facility {
+        position: absolute;
+        right: 0; }
+    .page-hotel .rh-container .rh-content .rh-tnc {
+      padding: 0;
+      margin: 0; }
+    .page-hotel .rh-container .rh-content .sqr-blue-list li {
+      padding-left: 0;
+      margin-bottom: 10px; }
+  .page-hotel .rh-container.notes-hotel {
+    margin-top: 20px; }
+  .page-hotel.page-thankyou .thankyou > .container {
+    max-width: none !important; }
+  .page-hotel.page-thankyou .tp-counter {
+    padding: 20px;
+    border: 1px solid #ccc;
+    background: #fff;
+    margin: 15px 0 30px;
+    text-align: center;
+    border-radius: 2px; }
+    .page-hotel.page-thankyou .tp-counter .tp-list {
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+      text-align: center; }
+      .page-hotel.page-thankyou .tp-counter .tp-list.minute:before {
+        content: ':';
+        display: inline;
+        font-size: 30px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-weight: 700; }
+      .page-hotel.page-thankyou .tp-counter .tp-list.sec:before {
+        content: ':';
+        display: inline;
+        font-size: 30px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-weight: 700; }
+    .page-hotel.page-thankyou .tp-counter .col-half.left-side {
+      padding-left: 190px; }
+    .page-hotel.page-thankyou .tp-counter .col-half.right-side {
+      text-align: left; }
+      .page-hotel.page-thankyou .tp-counter .col-half.right-side .btn-yellow {
+        font-size: 13px;
+        padding: 10px 30px; }
+        .page-hotel.page-thankyou .tp-counter .col-half.right-side .btn-yellow:before {
+          content: '';
+          display: inline-block;
+          width: 22px;
+          height: 20px;
+          background: url(/Assets/travorama20/images/Hotel/print.png) no-repeat;
+          vertical-align: middle;
+          background-size: 100%;
+          margin-right: 10px; }
+    .page-hotel.page-thankyou .tp-counter .timer {
+      max-width: 240px;
+      margin: 0 auto 15px; }
+      .page-hotel.page-thankyou .tp-counter .timer:before {
+        content: '';
+        background: url(/Assets/mobile/images/sand-clock.png) no-repeat;
+        display: inline;
+        width: 28px;
+        height: 47px;
+        position: absolute;
+        background-size: 100%;
+        margin-left: -150px; }
+  .page-hotel.page-checkout-hotel .checkout-hotel .step-button .btn {
+    margin-top: 15px;
+    font-size: 13px;
+    width: 200px; }
+    .page-hotel.page-checkout-hotel .checkout-hotel .step-button .btn.btn-grey {
+      margin-right: 10px; }
+  .page-hotel.page-checkout-hotel .checkout-hotel .maps-icon, .page-hotel.page-checkout-hotel .checkout-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location:before, .page-hotel.page-checkout-hotel .travorama-hotel .search-list .search-list-result .col-right-result .checkout-hotel .location:before, .page-hotel.page-checkout-hotel .checkout-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .address:before, .page-hotel.page-checkout-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .checkout-hotel .address:before, .page-hotel.page-checkout-hotel .checkout-hotel .rh-container .rh-content .rh-location:before, .page-hotel.page-checkout-hotel .rh-container .rh-content .checkout-hotel .rh-location:before, .page-hotel.page-checkout-hotel .checkout-hotel .widget-container .widget.hotel .widget-content .wt-bottom:before, .widget-container .widget.hotel .widget-content .page-hotel.page-checkout-hotel .checkout-hotel .wt-bottom:before {
+    content: '';
+    display: inline-block;
+    background: url(/Assets/travorama20/images/Hotel/location.png) no-repeat;
+    width: 12px;
+    height: 17px;
+    vertical-align: middle;
+    position: absolute;
+    margin-left: -20px;
+    margin-top: 2px; }
+  .page-hotel.page-checkout-hotel .checkout-hotel .sqr-blue-list {
+    padding: 0;
+    list-style: none;
+    margin: 0; }
+    .page-hotel.page-checkout-hotel .checkout-hotel .sqr-blue-list .wc-title:before {
+      width: 8px;
+      height: 8px;
+      display: inline-block;
+      background: #1daee4;
+      content: '';
+      margin-left: -20px;
+      position: absolute;
+      margin-top: 4px; }
 
 /*
 
@@ -6413,71 +6545,6 @@ label.control-label {
 
 .page-overlay.flight-expired {
   z-index: 9999; }
-
-/*Hotel Checkout Page*/
-.checkout-hotel .step-button .btn {
-  margin-top: 15px;
-  font-size: 13px;
-  width: 200px; }
-  .checkout-hotel .step-button .btn.btn-grey {
-    margin-right: 10px; }
-.checkout-hotel .maps-icon, .checkout-hotel .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location:before, .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .checkout-hotel .location:before, .checkout-hotel .page-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .address:before, .page-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .checkout-hotel .address:before, .checkout-hotel .widget-container .widget.hotel .widget-content .wt-bottom:before, .widget-container .widget.hotel .widget-content .checkout-hotel .wt-bottom:before, .checkout-hotel .content-step .rh-container .rh-content .rh-location:before {
-  content: '';
-  display: inline-block;
-  background: url(/Assets/travorama20/images/Hotel/location.png) no-repeat;
-  width: 12px;
-  height: 17px;
-  vertical-align: middle;
-  position: absolute;
-  margin-left: -20px;
-  margin-top: 2px; }
-.checkout-hotel .sqr-blue-list {
-  padding: 0;
-  list-style: none;
-  margin: 0; }
-  .checkout-hotel .sqr-blue-list .wc-title:before {
-    width: 8px;
-    height: 8px;
-    display: inline-block;
-    background: #1daee4;
-    content: '';
-    margin-left: -20px;
-    position: absolute;
-    margin-top: 4px; }
-.checkout-hotel .content-step .rh-container .rh-main-title {
-  background: #1daee4;
-  padding: 6px 25px;
-  font-size: 15px;
-  font-weight: 600;
-  color: #fff; }
-.checkout-hotel .content-step .rh-container .rh-content {
-  border: 1px solid #ccc;
-  background: #fff;
-  padding: 15px 20px; }
-  .checkout-hotel .content-step .rh-container .rh-content .rh-row {
-    padding: 0 15px; }
-  .checkout-hotel .content-step .rh-container .rh-content .hotel-title-lg {
-    margin-bottom: 10px; }
-  .checkout-hotel .content-step .rh-container .rh-content .rh-location {
-    margin: 10px 0;
-    margin-left: 20px; }
-  .checkout-hotel .content-step .rh-container .rh-content .rh-detail {
-    line-height: 22px;
-    margin-bottom: 15px; }
-  .checkout-hotel .content-step .rh-container .rh-content .rh-top {
-    border-top: 1px solid #ccc;
-    padding: 15px 0; }
-    .checkout-hotel .content-step .rh-container .rh-content .rh-top .hotel-facility {
-      position: absolute;
-      right: 0; }
-  .checkout-hotel .content-step .rh-container .rh-content .rh-tnc {
-    padding: 0;
-    margin: 0; }
-  .checkout-hotel .content-step .rh-container .rh-content .sqr-blue-list li {
-    padding-left: 0;
-    margin-bottom: 10px; }
-.checkout-hotel .content-step .rh-container.notes-hotel {
-  margin-top: 20px; }
 
 /*
 

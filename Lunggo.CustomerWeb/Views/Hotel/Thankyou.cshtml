@@ -1,23 +1,9 @@
-﻿@using System.Globalization
-@using Lunggo.ApCommon.Constant
-@using Lunggo.ApCommon.Payment.Constant
-@using Lunggo.Framework.Config
-@using Lunggo.ApCommon.Flight.Model
-@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
-
-@{
+﻿@{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-hotel page-thankyou";
     ViewBag.Title = "Terima Kasih";
 
     ViewBag.BookingFailed = false;
-}
-
-@{
-    var payment = Model.Payment.Status;
-    var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
-    FlightSegmentForDisplay prevSegment = null;
-
 }
 
 @section AdditionalJS {
@@ -52,3 +38,180 @@
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
 }
 
+<div class="thankyou">
+    <div class="container">
+        <h2 class="section-title stripe text-center">TERIMA <span>KASIH</span></h2>
+        <div class="tp-desc">Telah memesan penerbangan di Travorama. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di email, setelah:</div>
+        <div class="tp-counter blue-txt">
+            <div class="timer-container clearfix">
+                <div class="col-half left-side">
+                    <div class="timer clearfix">
+                        <div class="col-3">
+                            <ul class="tp-list hour clearfix">
+                                <li class="h bold-txt xlg-txt">00</li>
+                                <li class="">Jam</li>
+                            </ul>
+                        </div>
+                        <div class="col-3">
+                            <ul class="tp-list minute clearfix">
+                                <li class="m bold-txt xlg-txt">59</li>
+                                <li class="">Menit</li>
+                            </ul>
+                        </div>
+                        <div class="col-3">
+                            <ul class="tp-list sec clearfix">
+                                <li class="s bold-txt xlg-txt">45</li>
+                                <li class="">Detik</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-half right-side"><a href="#" class="btn btn-yellow">CETAK PESANAN</a></div>
+            </div>
+            <div class="grey-txt">Anda dapat meuntup halaman ini dan mengecek status penerbitan e-tiket di menu cek pemesanan setiap saat.</div>
+        </div>
+        <div class="rh-container check-hotel clearfix">
+            <div class="rh-main-title">Detail Hotel</div>
+            <div class="rh-content col-6">
+                <h3 class="widget-title"><b>RINCIAN</b> PEMESANAN</h3>
+                <div class="widget-wrapper">
+                    <div class="widget-subtitle">Detail Hotel</div>
+                    <div class="widget-content">
+                        <div class="widget-top">
+                            <div class="wt-top clearfix">
+                                <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel-sm.jpg" alt="Alternate Text" /></div>
+                                <div class="col-right-hotel">
+                                    <span class="blue-txt bold-txt">Bliss Hotel Singapore</span>
+                                    <br /><span class="star star-4"></span>
+                                </div>
+                            </div>
+                            <div class="wt-bottom">
+                                Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ; Jakarta Barat
+                            </div>
+                        </div>
+                        <div class="widget-bottom">
+                            <div class="wb-container clearfix">
+                                <div class="wb-left">Check in</div>
+                                <div class="wb-mid">:</div>
+                                <div class="wb-right bold-txt">5 November 2016</div>
+                            </div>
+                            <div class="wb-container clearfix">
+                                <div class="wb-left">Check out</div>
+                                <div class="wb-mid">:</div>
+                                <div class="wb-right bold-txt">9 November 2016</div>
+                            </div>
+                            <div class="wb-container clearfix">
+                                <div class="wb-left">Malam</div>
+                                <div class="wb-mid">:</div>
+                                <div class="wb-right bold-txt">3 Malam</div>
+                            </div>
+                            <div class="wb-container clearfix">
+                                <div class="wb-left">Kamar</div>
+                                <div class="wb-mid">:</div>
+                                <div class="wb-right bold-txt">2 Kamar</div>
+                            </div>
+                            <div class="wb-container clearfix">
+                                <div class="wb-left">Jenis Kamar</div>
+                                <div class="wb-mid">:</div>
+                                <div class="wb-right bold-txt">Superior Room</div>
+                            </div>
+                            <div class="wb-container clearfix">
+                                <div class="wb-left">Tamu per Kamar</div>
+                                <div class="wb-mid">:</div>
+                                <div class="wb-right bold-txt">2 orang</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="rh-row clearfix">
+                    <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel-md.jpg" alt="Alternate Text"></div>
+                    <div class="col-right-hotel">
+                        <div class="blue-txt bold-txt hotel-title-lg md-txt">Bliss Hotel Singapore</div>
+                        <div class="star star-4"></div>
+                        <div class="rh-location">
+                            Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ; Jakarta Barat
+                        </div>
+                        <div class="rh-detail">
+                            <div class="wb-container clearfix">
+                                <div class="wb-left">Check in</div>
+                                <div class="wb-mid">:</div>
+                                <div class="wb-right bold-txt">5 November 2016</div>
+                            </div>
+                            <div class="wb-container clearfix">
+                                <div class="wb-left">Check out</div>
+                                <div class="wb-mid">:</div>
+                                <div class="wb-right bold-txt">9 November 2016</div>
+                            </div>
+                            <div class="wb-container clearfix">
+                                <div class="wb-left">Malam</div>
+                                <div class="wb-mid">:</div>
+                                <div class="wb-right bold-txt">3 Malam</div>
+                            </div>
+                            <div class="wb-container clearfix">
+                                <div class="wb-left">Kamar</div>
+                                <div class="wb-mid">:</div>
+                                <div class="wb-right bold-txt">2 Kamar</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rh-row">
+                    <div class="rh-top clearfix">
+                        <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel-md.jpg" alt="Alternate Text"></div>
+                        <div class="col-right-hotel clearfix">
+                            <span class="hotel-facility facility"></span>
+                            <div class="rh-detail">
+                                <div class="wb-container clearfix">
+                                    <div class="wb-left">Jenis Kamar</div>
+                                    <div class="wb-mid">:</div>
+                                    <div class="wb-right bold-txt">Superior Room</div>
+                                </div>
+                                <div class="wb-container clearfix">
+                                    <div class="wb-left">Jumlah Kamar</div>
+                                    <div class="wb-mid">:</div>
+                                    <div class="wb-right bold-txt">2 Kamar</div>
+                                </div>
+
+                                <div class="wb-container clearfix">
+                                    <div class="wb-left">Tamu per Kamar</div>
+                                    <div class="wb-mid">:</div>
+                                    <div class="wb-right bold-txt">2 orang</div>
+                                </div>
+                            </div>
+                            <ul class="blue-txt semibold-txt blue-list rh-tnc">
+                                <li>Extra bed belum termasuk</li>
+                                <li>Free cancelation sebelum H-5 tanggal booking</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="rh-bottom">
+                        <div class="rhb-content">
+                            Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+            <div class="col-4">
+                <div class="price-detail clearfix">
+                    <div class="summary__title lg-txt"><b>RINCIAN</b> HARGA</div>
+                    <div class="rr-row clearfix">
+                        <div class="col-half">Padma Hotel Bandung Premiere Suit (x1)</div>
+                        <div class="col-half right-txt">Rp 4.800.216</div>
+                    </div>
+                    <div class="rr-row clearfix">
+                        <div class="col-half blue-txt">Tax</div>
+                        <div class="col-half blue-txt right-txt">Included</div>
+                    </div>
+                    <div class="rr-row clearfix">
+                        <div class="col-half blue-txt">Convenience Fee</div>
+                        <div class="col-half blue-txt right-txt">- Rp 287</div>
+                    </div>
+                    <div class="rr-row clearfix total">
+                        <div class="col-half bold-txt lg-txt">Total</div>
+                        <div class="col-half bold-txt lg-txt right-txt">Rp 4.799.928</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

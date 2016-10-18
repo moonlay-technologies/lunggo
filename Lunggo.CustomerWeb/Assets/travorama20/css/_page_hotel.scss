@@ -12,6 +12,10 @@
         font-size: 22px;
         line-height: 24px;
     }
+    .xlg-txt {
+        font-size: 30px;
+        line-height: 30px;
+    }
     .md-txt {font-size: 15px;}
     .sm-txt {font-size: 10px;}
     .xs-txt {font-size: 9px;}
@@ -39,14 +43,14 @@
     /*Custom Column*/
     .col-left, col-right, .col-left-result, .col-right-result, .col-xs-left, .col-xs-middle, .col-xs-right, .col-left-hotel, .col-right-hotel, .col-half, .col-left-page, .col-right-page, 
     .col-left-slider, col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right {
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-3, .col-4, .col-6 {
         position: relative;
         min-height: 1px;
     }
 
     .col-left, .col-left-result, .col-right-result, .col-left-hotel, .col-right-hotel, .col-xs-left, .col-xs-middle, .col-xs-right, .col-half, .col-left-page, .col-right-page,
     .col-left-slider, .col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right {float: left;}
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-3, .col-4, .col-6  {float: left;}
     
     .col-right {float: right;}
     
@@ -75,6 +79,9 @@
     .wb-left {width: 40%;} .wb-mid {width: 3%;} .wb-right {width: 57%;}
 
     .ot-left {width: 22%;}  .ot-right {width: 78%;} 
+
+    .col-3 {width: 33.333333333333336%;} .col-4 {width: 40%;} .col-6 {width: 60%;}
+
     /*Icon*/
     .star-outline {
         content: '';
@@ -404,5 +411,160 @@
         /* imports */
         @import 'page_hotel_search';
         @import 'page_hotel_detail';
+    }
+    .rh-container {
+        .rh-main-title {
+            background: #1daee4;
+            padding: 6px 25px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+        }
+        .rh-content {
+            border: 1px solid #ccc;
+            background: #fff;
+            padding: 15px 20px;
+            .rh-row {padding: 0 15px;}
+            .hotel-title-lg {margin-bottom: 10px;}
+            .rh-location {
+                margin: 10px 0;
+                margin-left: 20px;
+                &:before {@extend .maps-icon;}
+            }
+            .rh-detail {
+                line-height: 22px;
+                margin-bottom: 15px;
+            }
+            .rh-top {
+                border-top: 1px solid #ccc;
+                padding: 15px 0;
+                .hotel-facility {
+                    position: absolute;
+                    right: 0;
+                }
+            }
+            .rh-tnc {
+                padding: 0;
+                margin: 0;
+            }
+            .sqr-blue-list li {
+                padding-left: 0;
+                margin-bottom: 10px;
+            }
+        }
+        &.notes-hotel {margin-top: 20px;}
+    }
+
+    /*Hotel Thankyou Page*/
+    &.page-thankyou {
+        .thankyou>.container {max-width: none !important;}
+        .tp-counter {
+            padding: 20px;
+            border: 1px solid #ccc;
+            background: #fff;
+            margin: 15px 0 30px;
+            text-align: center;
+            border-radius: 2px;
+            .tp-list {
+                padding: 0;
+                margin: 0;
+                list-style-type: none;
+                text-align: center;
+                &.minute:before {
+                    content: ':';
+                    display: inline;
+                    font-size: 30px;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    font-weight: 700;
+                }
+                &.sec:before {
+                    content: ':';
+                    display: inline;
+                    font-size: 30px;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    font-weight: 700;
+                }
+            }
+            .col-half{
+                &.left-side {padding-left: 190px;}
+                &.right-side {
+                    text-align: left;
+                    .btn-yellow {
+                        font-size: 13px;
+                        padding: 10px 30px;
+                        &:before {
+                            content: '';
+                            display: inline-block;
+                            width: 22px;
+                            height: 20px;
+                            background: url(/Assets/travorama20/images/Hotel/print.png) no-repeat;
+                            vertical-align: middle;
+                            background-size: 100%;
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+            .timer {
+                max-width: 240px;
+                margin: 0 auto 15px;
+                &:before {
+                    content: '';
+                    background: url(/Assets/mobile/images/sand-clock.png) no-repeat;
+                    display: inline;
+                    width: 28px;
+                    height: 47px;
+                    position: absolute;
+                    background-size: 100%;
+                    margin-left: -150px;
+                }
+            }
+        }
+    }
+    /*Hotel Checkout Page*/
+    &.page-checkout-hotel {
+        .checkout-hotel {
+            .step-button {
+                .btn {
+                    margin-top: 15px;
+                    font-size: 13px;
+                    width: 200px;
+                    &.btn-grey {margin-right: 10px;}
+                }
+            }
+            .maps-icon {
+                content: '';
+                display: inline-block;
+                background: url(/Assets/travorama20/images/Hotel/location.png) no-repeat;
+                width: 12px;
+                height: 17px;
+                vertical-align: middle;
+                position: absolute;
+                margin-left: -20px;
+                margin-top: 2px;
+            }
+            .sqr-blue-list {
+                padding: 0;
+                list-style: none;
+                margin: 0;
+                .wc-title:before {
+                    width: 8px;
+                    height: 8px;
+                    display: inline-block;
+                    background: #1daee4;
+                    content: '';
+                    margin-left: -20px;
+                    position: absolute;
+                    margin-top: 4px;
+                }
+            }
+            .content-step {
+           
+            }
+        } 
     }
 }
