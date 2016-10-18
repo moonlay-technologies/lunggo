@@ -1,0 +1,54 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Flight.Model
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+
+@{
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-hotel page-thankyou";
+    ViewBag.Title = "Terima Kasih";
+
+    ViewBag.BookingFailed = false;
+}
+
+@{
+    var payment = Model.Payment.Status;
+    var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
+    FlightSegmentForDisplay prevSegment = null;
+
+}
+
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/jquery.countdown.min.js"></script>
+}
+
+@section PageJS{
+    <script>
+        var langCode = 'en';
+        var printTimeout = '';
+
+        // development only start
+        printTimeout = new Date(); // please change this print time out to actual time
+        printTimeout.setSeconds(printTimeout.getSeconds() + 7200);
+        // development only end
+
+        // countdown timer
+        $('.timer').countdown(printTimeout, function (event) {
+            $('.timer .hour h5').text(event.strftime('%H'));
+            $('.timer .minute h5').text(event.strftime('%M'));
+            $('.timer .second h5').text(event.strftime('%S'));
+        }).on('finish.countdown', function () {
+            $('.print .btn').removeClass('disabled');
+        });
+
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/checkoutController.js"></script>
+}
+

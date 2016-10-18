@@ -1,0 +1,119 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Flight.Model
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+
+@{
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    ViewBag.Title = "Terima Kasih";
+    ViewBag.BodyClass = "page-hotel page page-thankyou";
+    ViewBag.SiteHeader = "thankyou";
+    ViewBag.AngularController = "ThankyouController";
+    
+}
+
+
+@section AdditionalCSS {
+}
+
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+
+@section PageJS{
+    <script src="/Assets/mobile/js/ThankyouController.js"></script>
+}
+
+<div class="travorama-hotel-mobile">
+    <div class="thankyou-page">
+        <div class="tp-timer clearfix">
+            <div class="tp-title"><span class="bold-txt darkgrey-txt">Terima</span> Kasih</div>
+            <div class="tp-desc darkgrey-txt">Telah memesan penerbangan di Travorama. Anda dapat mengunduh e-ticket Anda, setelah:</div>
+            <div class="tp-counter blue-txt">
+                <div class="timer clearfix">
+                    <div class="col-3">
+                        <ul class="tp-list hour clearfix">
+                            <li class="h bold-txt xlg-txt">00</li>
+                            <li class="sm-txt">Jam</li>
+                        </ul>
+                    </div>
+                    <div class="col-3">
+                        <ul class="tp-list minute clearfix">
+                            <li class="m bold-txt xlg-txt">59</li>
+                            <li class="sm-txt">Menit</li>
+                        </ul>
+                    </div>
+                    <div class="col-3">
+                        <ul class="tp-list sec clearfix">
+                            <li class="s bold-txt xlg-txt">45</li>
+                            <li class="sm-txt">Detik</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="grey-txt sm-txt">Anda dapat meuntup halaman ini dan mengecek status penerbitan e-tiket di menu cek pemesanan setiap saat.</div>
+            </div>
+            <div class="print-payment"><a href="#" class="btn btn-blue md-txt">Tanda Bukti Pembayaran</a></div>
+            <div class="blue-txt bold-txt no-order">No.Pesanan: 1234567890F</div>
+            <div class="tp-id">
+                <div class="summary__title lg-txt"><b>NAMA</b> TAMU</div>
+                <div class="rr-row darkgrey-txt semibold-txt">JARED LETTO</div>
+                <div class="rr-row phone darkgrey-txt">+6280102938098 / patriciaaviani@yahoo.com</div>
+            </div>
+        </div>
+        <div class="review-room clearfix">
+            <div class="summary__title lg-txt"><b>DETAIL</b> PESANAN</div>
+            <div class="blue-txt semibold-txt lg-txt">Booking ID 1298319028</div>
+
+            <div class="rr-detail">
+                <div class="rr-title semibold-txt lg-txt">Padma Hotel Bandung</div>
+                <div class="rr-row clearfix">
+                    <div class="col-2">Check-in</div>
+                    <div class="col-8">Sat, 22 Oct 2016, 14:00</div>
+                </div>
+                <div class="rr-row clearfix">
+                    <div class="col-2">Check-out</div>
+                    <div class="col-8">Sun, 23 Oct 2016, 12:00</div>
+                </div>
+                <div class="rr-row clearfix">
+                    <div class="col-2">Duration</div>
+                    <div class="col-8">1 night(s)</div>
+                </div>
+            </div>
+
+            <div class="rr-detail">
+                <div class="rr-title semibold-txt lg-txt">Room : Premier Suite (x1)</div>
+                <div class="rr-row">Capacity 2 guest(s)/room</div>
+                <div class="rr-row">Breakfast included, Free WiFi</div>
+            </div>
+        </div>
+        <div class="price-detail clearfix">
+            <div class="summary__title lg-txt"><b>RINCIAN</b> HARGA</div>
+            <div class="rr-row clearfix">
+                <div class="col-half">Padma Hotel Bandung Premiere Suit (x1)</div>
+                <div class="col-half right-txt">Rp 4.800.216</div>
+            </div>
+            <div class="rr-row clearfix">
+                <div class="col-half blue-txt">Tax</div>
+                <div class="col-half blue-txt right-txt">Included</div>
+            </div>
+            <div class="rr-row clearfix">
+                <div class="col-half blue-txt">Convenience Fee</div>
+                <div class="col-half blue-txt right-txt">- Rp 287</div>
+            </div>
+            <div class="rr-row clearfix total">
+                <div class="col-half bold-txt lg-txt">Total</div>
+                <div class="col-half bold-txt lg-txt right-txt">Rp 4.799.928</div>
+            </div>
+        </div>
+        <div class="tp-payment">
+            <div class="summary__title lg-txt"><b>METODE</b> PEMBAYARAN</div>
+            <div class="rr-detail blue-txt semibold-txt">(Credit Card)</div>
+            <div class="center-txt"><img src="/Assets/images/payment-cc.jpg" alt="Alternate Text" /></div>
+        </div>
+    </div>
+</div>

@@ -209,40 +209,6 @@
         margin-left: 0;
         margin-right: 0;
     }
-
-    /*Page Checkout Hotel*/
-    &.page-hotel {
-        background: #f9f9f9;
-        .checkout-content {
-            /*Shared*/
-            .rr-row {line-height: 20px;
-                &.total {
-                    border-top: 1px solid #e9e9e9;
-                    margin-top: 10px;
-                    padding-top: 10px;
-                }
-            }
-            .rr-detail {margin: 20px 0;}
-            .rr-title {margin-bottom: 10px;}
-
-            .form-hotel {
-                padding: 5px 15px 30px;
-                textarea[name="special-request"] {height: 80px;}
-            }
-            .review-hotel {
-                margin: 5px 0 30px;
-                .review-room {
-                    padding: 0 15px;
-                    border-bottom: 1px solid #e9e9e9;
-                }
-                .price-detail {padding: 0 15px;}
-            }
-            .payment {
-                padding: 5px 15px 15px;
-            }
-            .widget {margin: 5px 0 30px;}
-        }
-    }
 }
 
 // page confirmation

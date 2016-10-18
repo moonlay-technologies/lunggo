@@ -23,5 +23,9 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+        public ActionResult Thankyou()
+        {
+            return View();
+        }
     }
 }
