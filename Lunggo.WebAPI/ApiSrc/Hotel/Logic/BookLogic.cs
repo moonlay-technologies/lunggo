@@ -22,7 +22,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
 {
     public static partial class HotelLogic
     {
-        public static ApiResponseBase Book(HotelBookApiRequest request)
+        public static ApiResponseBase BookLogic(HotelBookApiRequest request)
         {
             if (IsValid(request))
             {
@@ -114,6 +114,11 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 }
             }
             
+        }
+
+        internal static object g(HotelRoomDetailApiRequest request)
+        {
+            throw new NotImplementedException();
         }
     }
 }

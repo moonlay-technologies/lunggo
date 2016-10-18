@@ -21,7 +21,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
 {
     public static partial class HotelLogic
     {
-        public static ApiResponseBase SelectHotelRates(HotelSelectRoomApiRequest request)
+        public static ApiResponseBase SelectHotelRatesLogic(HotelSelectRoomApiRequest request)
         {
             if (IsValid(request))
             {
@@ -77,16 +77,12 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             {
                 return new HotelSelectRoomApiResponse();
             }
-            else
+            return new HotelSelectRoomApiResponse
             {
-                return new HotelSelectRoomApiResponse
-                {
-                    //TimeLimit = selectHotelRoomServiceResponse
-                    Token = selectHotelRoomServiceResponse.Token
-                    //TODO: TIMELIMIT
-                };
-            }
-            
+                //TimeLimit = selectHotelRoomServiceResponse
+                Token = selectHotelRoomServiceResponse.Token,
+                TimeLimit = selectHotelRoomServiceResponse.Timelimit
+            };
         }
     }
 }

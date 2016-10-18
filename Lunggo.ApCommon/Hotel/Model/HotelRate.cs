@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Product.Model;
 using Microsoft.Azure.Documents;
 using Newtonsoft.Json;
+using Lunggo.ApCommon.Hotel.Constant;
 
 namespace Lunggo.ApCommon.Hotel.Model
 {
@@ -31,13 +32,13 @@ namespace Lunggo.ApCommon.Hotel.Model
         //[JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         //public decimal Price { get; set; }
         [JsonProperty("paymentType", NullValueHandling = NullValueHandling.Ignore)]
-        public string PaymentType { get; set; }
+        public PaymentTypeEnum PaymentType { get; set; }
         [JsonProperty("boards", NullValueHandling = NullValueHandling.Ignore)]
         public string Boards { get; set; }
         [JsonProperty("boardDesc", NullValueHandling = NullValueHandling.Ignore)]
         public string BoardDescription { get; set; }
         [JsonProperty("cancellation", NullValueHandling = NullValueHandling.Ignore)]
-        public Cancellation Cancellation { get; set; }
+        public List<Cancellation> Cancellation { get; set; }
         [JsonProperty("roomCount", NullValueHandling = NullValueHandling.Ignore)]
         public int RoomCount { get; set; }
         [JsonProperty("adultCount", NullValueHandling = NullValueHandling.Ignore)]
@@ -63,11 +64,11 @@ namespace Lunggo.ApCommon.Hotel.Model
         //[JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         //public decimal Price { get; set; }
         [JsonProperty("paymenType", NullValueHandling = NullValueHandling.Ignore)]
-        public string PaymentType { get; set; }
+        public PaymentTypeEnum PaymentType { get; set; }
         [JsonProperty("boards", NullValueHandling = NullValueHandling.Ignore)]
         public string Boards { get; set; }
         [JsonProperty("cancellation", NullValueHandling = NullValueHandling.Ignore)]
-        public Cancellation Cancellation { get; set; }
+        public List<Cancellation> Cancellation { get; set; }
         [JsonProperty("roomCount", NullValueHandling = NullValueHandling.Ignore)]
         public int RoomCount { get; set; }
         [JsonProperty("adultCount", NullValueHandling = NullValueHandling.Ignore)]
@@ -85,6 +86,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string Code { get; set; }
         [JsonProperty("amount", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Amount { get; set; }
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+        public string Name { get; set; }
     }
 
     public class Cancellation

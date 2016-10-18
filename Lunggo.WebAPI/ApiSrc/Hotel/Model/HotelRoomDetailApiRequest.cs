@@ -8,8 +8,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
     public class HotelRoomDetailApiRequest
     {
         [JsonProperty("hotelCode")]
-        public string HotelCode { get; set; }
-        [JsonProperty("roomCodes")]
-        public List<string> RoomCodes { get; set; }       
+        public int HotelCode { get; set; }
+        [JsonProperty("roomCode")]
+        public string RoomCode { get; set; }      
+        [JsonProperty("searchId")]
+        public string SearchId { get; set; }
     } 
 }
