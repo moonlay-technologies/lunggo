@@ -364,3 +364,13 @@ input[name="hotel-night"], input[name="hotel-visitor"] {
     background: transparent;
     border-radius: 0;
 }
+
+/*Column*/
+.col-custom-field {width: 33.333333333333332%;}
+.col-half {width: 50%;}
+.col-2 {width: 20%;} .col-4 {width: 40%;} .col-6 {width: 60%;} .col-8 {width: 80%;} 
+.col-custom-logo, .col-custom-field, .col-half, .col-2, .col-4, .col-6, .col-8 {
+    float: left;
+    position: relative;
+    min-height: 1px;
+}

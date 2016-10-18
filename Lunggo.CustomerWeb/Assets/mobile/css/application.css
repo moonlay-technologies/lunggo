@@ -1033,7 +1033,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     font-weight: bold; }
 
 .summary--payment label {
-  border: 1px solid #ccc;
   display: block;
   width: 100%;
   background: #fff;
@@ -1052,8 +1051,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       width: 30px;
       text-align: center;
       position: absolute;
-      height: 100%;
-      padding-top: 5px; }
+      height: 100%; }
     .summary--payment label header h5 {
       padding: 10px;
       margin: 0;
@@ -1116,348 +1114,366 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     clear: both; }
   .page.page-home.burger-shown {
     overflow-y: hidden; }
-  .page.page-home .form-container .form-wrapper {
-    margin: 0 0 15px;
-    min-height: 100%;
-    background: none;
-    border: 0; }
-    .page.page-home .form-container .form-wrapper h1 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #ffffff; }
-    .page.page-home .form-container .form-wrapper form .form-group {
-      margin-bottom: 0; }
-      .page.page-home .form-container .form-wrapper form .form-group p.form-control {
-        height: auto; }
-    .page.page-home .form-container .form-wrapper form .form__destination .title-destination, .page.page-home .form-container .form-wrapper form .form__origin .title-destination {
-      font-size: 13px;
-      text-align: center;
-      margin-bottom: 10px;
-      color: #000000; }
-    .page.page-home .form-container .form-wrapper form .form__destination p.form-control, .page.page-home .form-container .form-wrapper form .form__origin p.form-control {
-      text-align: center;
-      background: #ecf0f4;
-      max-width: 120px;
-      margin: 0 auto;
-      box-shadow: none;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      -ms-border-radius: 5px;
-      border-radius: 5px;
-      border: 1px solid #d3d7da;
-      cursor: pointer; }
-    .page.page-home .form-container .form-wrapper form span.code-airport, .page.page-home .form-container .form-wrapper form span.city {
-      margin: 0 auto; }
-    .page.page-home .form-container .form-wrapper form span.code-airport {
-      font-size: 40px;
-      line-height: 44px;
-      color: #000000; }
-    .page.page-home .form-container .form-wrapper form span.city {
-      font-size: 12px;
-      line-height: 20px;
-      color: #686868; }
-    .page.page-home .form-container .form-wrapper form span.icon-pp {
-      background-image: url('../images/calendar.png');
-      width: 37px;
-      height: 26px;
-      top: 20px; }
-    .page.page-home .form-container .form-wrapper form span.icon-return {
-      background-image: url('../images/loop.png');
-      width: 33px;
-      height: 23px;
-      top: 20px; }
-    .page.page-home .form-container .form-wrapper form span.icon-fc {
-      background-image: url('../images/medals.png');
-      width: 39px;
-      height: 26px;
-      top: 20px; }
-    .page.page-home .form-container .form-wrapper form span.icon-people {
-      background-image: url('../images/people.png');
-      width: 41px;
-      height: 57px;
-      top: 16px; }
-    .page.page-home .form-container .form-wrapper form span.arrow {
-      background-image: url('../images/arrow-down-bw.png');
-      width: 24px;
-      height: 15px;
-      z-index: 1;
-      bottom: auto;
-      right: 0;
-      top: 29px;
-      left: auto;
-      margin: 0;
-      display: block;
-      cursor: pointer;
-      background-position-x: 80%; }
-    .page.page-home .form-container .form-wrapper form .middle-form .form-group {
-      position: relative; }
-    .page.page-home .form-container .form-wrapper form .top-form {
-      max-width: 300px;
-      margin: 0px auto; }
-    .page.page-home .form-container .form-wrapper form .form__submit {
-      margin-top: 24px; }
-    .page.page-home .form-container .form-wrapper form .form__departure p, .page.page-home .form-container .form-wrapper form .form__departure p.form-control, .page.page-home .form-container .form-wrapper form .form__departure select.form-control, .page.page-home .form-container .form-wrapper form .form__return p, .page.page-home .form-container .form-wrapper form .form__return p.form-control, .page.page-home .form-container .form-wrapper form .form__return select.form-control, .page.page-home .form-container .form-wrapper form .form__roundtrip p, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control, .page.page-home .form-container .form-wrapper form .form__passenger p, .page.page-home .form-container .form-wrapper form .form__passenger p.form-control, .page.page-home .form-container .form-wrapper form .form__passenger select.form-control, .page.page-home .form-container .form-wrapper form .form__flightclass p, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control, .page.page-home .form-container .form-wrapper form .form__hotel p, .page.page-home .form-container .form-wrapper form .form__hotel p.form-control, .page.page-home .form-container .form-wrapper form .form__hotel select.form-control, .page.page-home .form-container .form-wrapper form .form__date p, .page.page-home .form-container .form-wrapper form .form__date p.form-control, .page.page-home .form-container .form-wrapper form .form__date select.form-control, .page.page-home .form-container .form-wrapper form .form__time p, .page.page-home .form-container .form-wrapper form .form__time p.form-control, .page.page-home .form-container .form-wrapper form .form__time select.form-control, .page.page-home .form-container .form-wrapper form .form__visitor p, .page.page-home .form-container .form-wrapper form .form__visitor p.form-control, .page.page-home .form-container .form-wrapper form .form__visitor select.form-control {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      font-size: 13px;
-      color: #000000;
-      padding: 0;
-      height: auto;
-      border: none;
-      box-shadow: none;
-      -webkit-border-radius: 0;
-      -moz-border-radius: 0;
-      -ms-border-radius: 0;
-      border-radius: 0;
-      display: inline;
-      background: #ffffff; }
-      .page.page-home .form-container .form-wrapper form .form__departure p span, .page.page-home .form-container .form-wrapper form .form__departure p.form-control span, .page.page-home .form-container .form-wrapper form .form__departure select.form-control span, .page.page-home .form-container .form-wrapper form .form__return p span, .page.page-home .form-container .form-wrapper form .form__return p.form-control span, .page.page-home .form-container .form-wrapper form .form__return select.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip p span, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger p span, .page.page-home .form-container .form-wrapper form .form__passenger p.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger select.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass p span, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control span, .page.page-home .form-container .form-wrapper form .form__hotel p span, .page.page-home .form-container .form-wrapper form .form__hotel p.form-control span, .page.page-home .form-container .form-wrapper form .form__hotel select.form-control span, .page.page-home .form-container .form-wrapper form .form__date p span, .page.page-home .form-container .form-wrapper form .form__date p.form-control span, .page.page-home .form-container .form-wrapper form .form__date select.form-control span, .page.page-home .form-container .form-wrapper form .form__time p span, .page.page-home .form-container .form-wrapper form .form__time p.form-control span, .page.page-home .form-container .form-wrapper form .form__time select.form-control span, .page.page-home .form-container .form-wrapper form .form__visitor p span, .page.page-home .form-container .form-wrapper form .form__visitor p.form-control span, .page.page-home .form-container .form-wrapper form .form__visitor select.form-control span {
-        float: right; }
-    .page.page-home .form-container .form-wrapper form .form__time .field-container {
-      padding: 10px 0 !important; }
-    .page.page-home .form-container .form-wrapper form .form__passenger > .row {
-      margin: 0;
-      text-align: center; }
-    .page.page-home .form-container .form-wrapper form .field-container {
-      border-bottom: 1px solid #dddddd;
-      padding: 21px 0;
-      margin-left: 30px; }
-      .page.page-home .form-container .form-wrapper form .field-container.form-adult, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container.form-children, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container.form-children, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container.form-infant, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container.form-infant, .page.page-home .form-container .form-wrapper form .field-container.form-child, .page.page-home .form-container .form-wrapper form .field-container.form-infant, .page.page-home .form-container .form-wrapper form .field-container.form-v-adult, .page.page-home .form-container .form-wrapper form .field-container.form-v-child {
-        border-bottom: none;
-        margin-left: 0; }
-      .page.page-home .form-container .form-wrapper form .field-container.form-adult, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container.form-children, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container.form-children, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container.form-infant, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container.form-infant, .page.page-home .form-container .form-wrapper form .field-container.form-child, .page.page-home .form-container .form-wrapper form .field-container.form-v-adult {
-        padding: 0 10px 0 28px; }
-      .page.page-home .form-container .form-wrapper form .field-container.form-infant, .page.page-home .form-container .form-wrapper form .field-container.form-v-child {
-        padding: 0 0 0 28px; }
-      .page.page-home .form-container .form-wrapper form .field-container.form-v-adult .field-wrapper, .page.page-home .form-container .form-wrapper form .field-container.form-v-child .field-wrapper {
-        padding: 11px 0; }
-      .page.page-home .form-container .form-wrapper form .field-container p, .page.page-home .form-container .form-wrapper form .field-container select {
-        cursor: pointer; }
-      .page.page-home .form-container .form-wrapper form .field-container .field-wrapper {
-        padding: 21px 0;
-        border-bottom: 1px solid #dddddd;
-        text-align: center; }
-    .page.page-home .form-container .form-wrapper form .flip-container {
-      padding-top: 50px;
-      min-height: 104px; }
-      .page.page-home .form-container .form-wrapper form .flip-container .flip {
-        width: 35px;
-        height: 37px;
+  .page.page-home .form-container {
+    /*Column*/ }
+    .page.page-home .form-container .form-wrapper {
+      margin: 0 0 15px;
+      min-height: 100%;
+      background: none;
+      border: 0; }
+      .page.page-home .form-container .form-wrapper h1 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #ffffff; }
+      .page.page-home .form-container .form-wrapper form .form-group {
+        margin-bottom: 0; }
+        .page.page-home .form-container .form-wrapper form .form-group p.form-control {
+          height: auto; }
+      .page.page-home .form-container .form-wrapper form .form__destination .title-destination, .page.page-home .form-container .form-wrapper form .form__origin .title-destination {
+        font-size: 13px;
+        text-align: center;
+        margin-bottom: 10px;
+        color: #000000; }
+      .page.page-home .form-container .form-wrapper form .form__destination p.form-control, .page.page-home .form-container .form-wrapper form .form__origin p.form-control {
+        text-align: center;
         background: #ecf0f4;
-        border: 1px solid #d3d7da;
-        display: inline-block;
+        max-width: 120px;
+        margin: 0 auto;
+        box-shadow: none;
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         -ms-border-radius: 5px;
-        border-radius: 5px; }
-        .page.page-home .form-container .form-wrapper form .flip-container .flip:before {
-          background-image: url('../images/flip.png');
-          width: 43px;
-          height: 40px;
-          margin-top: 7px;
-          margin-left: 5px;
-          content: ''; }
-    .page.page-home .form-container .form-wrapper form .form__roundtrip .switch {
-      float: right;
-      position: relative;
-      display: inline-block;
-      width: 40px;
-      height: 24px; }
-      .page.page-home .form-container .form-wrapper form .form__roundtrip .switch input {
-        display: none; }
-    .page.page-home .form-container .form-wrapper form .form__roundtrip .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      -webkit-transition: all 0.3s ease-out;
-      -moz-transition: all 0.3s ease-out;
-      -o-transition: all 0.3s ease-out;
-      transition: all 0.3s ease-out; }
-      .page.page-home .form-container .form-wrapper form .form__roundtrip .slider:before {
+        border-radius: 5px;
+        border: 1px solid #d3d7da;
+        cursor: pointer; }
+      .page.page-home .form-container .form-wrapper form span.code-airport, .page.page-home .form-container .form-wrapper form span.city {
+        margin: 0 auto; }
+      .page.page-home .form-container .form-wrapper form span.code-airport {
+        font-size: 40px;
+        line-height: 44px;
+        color: #000000; }
+      .page.page-home .form-container .form-wrapper form span.city {
+        font-size: 12px;
+        line-height: 20px;
+        color: #686868; }
+      .page.page-home .form-container .form-wrapper form span.icon-pp {
+        background-image: url('../images/calendar.png');
+        width: 37px;
+        height: 26px;
+        top: 20px; }
+      .page.page-home .form-container .form-wrapper form span.icon-return {
+        background-image: url('../images/loop.png');
+        width: 33px;
+        height: 23px;
+        top: 20px; }
+      .page.page-home .form-container .form-wrapper form span.icon-fc {
+        background-image: url('../images/medals.png');
+        width: 39px;
+        height: 26px;
+        top: 20px; }
+      .page.page-home .form-container .form-wrapper form span.icon-people {
+        background-image: url('../images/people.png');
+        width: 41px;
+        height: 57px;
+        top: 16px; }
+      .page.page-home .form-container .form-wrapper form span.arrow {
+        background-image: url('../images/arrow-down-bw.png');
+        width: 24px;
+        height: 15px;
+        z-index: 1;
+        bottom: auto;
+        right: 0;
+        top: 29px;
+        left: auto;
+        margin: 0;
+        display: block;
+        cursor: pointer;
+        background-position-x: 80%; }
+      .page.page-home .form-container .form-wrapper form .middle-form .form-group {
+        position: relative; }
+      .page.page-home .form-container .form-wrapper form .top-form {
+        max-width: 300px;
+        margin: 0px auto; }
+      .page.page-home .form-container .form-wrapper form .form__submit {
+        margin-top: 24px; }
+      .page.page-home .form-container .form-wrapper form .form__departure p, .page.page-home .form-container .form-wrapper form .form__departure p.form-control, .page.page-home .form-container .form-wrapper form .form__departure select.form-control, .page.page-home .form-container .form-wrapper form .form__return p, .page.page-home .form-container .form-wrapper form .form__return p.form-control, .page.page-home .form-container .form-wrapper form .form__return select.form-control, .page.page-home .form-container .form-wrapper form .form__roundtrip p, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control, .page.page-home .form-container .form-wrapper form .form__passenger p, .page.page-home .form-container .form-wrapper form .form__passenger p.form-control, .page.page-home .form-container .form-wrapper form .form__passenger select.form-control, .page.page-home .form-container .form-wrapper form .form__flightclass p, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control, .page.page-home .form-container .form-wrapper form .form__hotel p, .page.page-home .form-container .form-wrapper form .form__hotel p.form-control, .page.page-home .form-container .form-wrapper form .form__hotel select.form-control, .page.page-home .form-container .form-wrapper form .form__date p, .page.page-home .form-container .form-wrapper form .form__date p.form-control, .page.page-home .form-container .form-wrapper form .form__date select.form-control, .page.page-home .form-container .form-wrapper form .form__time p, .page.page-home .form-container .form-wrapper form .form__time p.form-control, .page.page-home .form-container .form-wrapper form .form__time select.form-control, .page.page-home .form-container .form-wrapper form .form__visitor p, .page.page-home .form-container .form-wrapper form .form__visitor p.form-control, .page.page-home .form-container .form-wrapper form .form__visitor select.form-control {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        font-size: 13px;
+        color: #000000;
+        padding: 0;
+        height: auto;
+        border: none;
+        box-shadow: none;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        -ms-border-radius: 0;
+        border-radius: 0;
+        display: inline;
+        background: #ffffff; }
+        .page.page-home .form-container .form-wrapper form .form__departure p span, .page.page-home .form-container .form-wrapper form .form__departure p.form-control span, .page.page-home .form-container .form-wrapper form .form__departure select.form-control span, .page.page-home .form-container .form-wrapper form .form__return p span, .page.page-home .form-container .form-wrapper form .form__return p.form-control span, .page.page-home .form-container .form-wrapper form .form__return select.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip p span, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger p span, .page.page-home .form-container .form-wrapper form .form__passenger p.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger select.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass p span, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control span, .page.page-home .form-container .form-wrapper form .form__hotel p span, .page.page-home .form-container .form-wrapper form .form__hotel p.form-control span, .page.page-home .form-container .form-wrapper form .form__hotel select.form-control span, .page.page-home .form-container .form-wrapper form .form__date p span, .page.page-home .form-container .form-wrapper form .form__date p.form-control span, .page.page-home .form-container .form-wrapper form .form__date select.form-control span, .page.page-home .form-container .form-wrapper form .form__time p span, .page.page-home .form-container .form-wrapper form .form__time p.form-control span, .page.page-home .form-container .form-wrapper form .form__time select.form-control span, .page.page-home .form-container .form-wrapper form .form__visitor p span, .page.page-home .form-container .form-wrapper form .form__visitor p.form-control span, .page.page-home .form-container .form-wrapper form .form__visitor select.form-control span {
+          float: right; }
+      .page.page-home .form-container .form-wrapper form .form__time .field-container {
+        padding: 10px 0 !important; }
+      .page.page-home .form-container .form-wrapper form .form__passenger > .row {
+        margin: 0;
+        text-align: center; }
+      .page.page-home .form-container .form-wrapper form .field-container {
+        border-bottom: 1px solid #dddddd;
+        padding: 21px 0;
+        margin-left: 30px; }
+        .page.page-home .form-container .form-wrapper form .field-container.form-adult, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container.form-children, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container.form-children, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container.form-infant, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container.form-infant, .page.page-home .form-container .form-wrapper form .field-container.form-child, .page.page-home .form-container .form-wrapper form .field-container.form-infant, .page.page-home .form-container .form-wrapper form .field-container.form-v-adult, .page.page-home .form-container .form-wrapper form .field-container.form-v-child {
+          border-bottom: none;
+          margin-left: 0; }
+        .page.page-home .form-container .form-wrapper form .field-container.form-adult, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container.form-children, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container.form-children, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container.form-infant, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container.form-infant, .page.page-home .form-container .form-wrapper form .field-container.form-child, .page.page-home .form-container .form-wrapper form .field-container.form-v-adult {
+          padding: 0 10px 0 28px; }
+        .page.page-home .form-container .form-wrapper form .field-container.form-infant, .page.page-home .form-container .form-wrapper form .field-container.form-v-child {
+          padding: 0 0 0 28px; }
+        .page.page-home .form-container .form-wrapper form .field-container.form-v-adult .field-wrapper, .page.page-home .form-container .form-wrapper form .field-container.form-v-child .field-wrapper {
+          padding: 11px 0; }
+        .page.page-home .form-container .form-wrapper form .field-container p, .page.page-home .form-container .form-wrapper form .field-container select {
+          cursor: pointer; }
+        .page.page-home .form-container .form-wrapper form .field-container .field-wrapper {
+          padding: 21px 0;
+          border-bottom: 1px solid #dddddd;
+          text-align: center; }
+      .page.page-home .form-container .form-wrapper form .flip-container {
+        padding-top: 50px;
+        min-height: 104px; }
+        .page.page-home .form-container .form-wrapper form .flip-container .flip {
+          width: 35px;
+          height: 37px;
+          background: #ecf0f4;
+          border: 1px solid #d3d7da;
+          display: inline-block;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          -ms-border-radius: 5px;
+          border-radius: 5px; }
+          .page.page-home .form-container .form-wrapper form .flip-container .flip:before {
+            background-image: url('../images/flip.png');
+            width: 43px;
+            height: 40px;
+            margin-top: 7px;
+            margin-left: 5px;
+            content: ''; }
+      .page.page-home .form-container .form-wrapper form .form__roundtrip .switch {
+        float: right;
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 24px; }
+        .page.page-home .form-container .form-wrapper form .form__roundtrip .switch input {
+          display: none; }
+      .page.page-home .form-container .form-wrapper form .form__roundtrip .slider {
         position: absolute;
-        content: "";
-        height: 16px;
-        width: 16px;
-        left: 4px;
-        bottom: 4px;
-        background-color: #ffffff;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
         -webkit-transition: all 0.3s ease-out;
         -moz-transition: all 0.3s ease-out;
         -o-transition: all 0.3s ease-out;
         transition: all 0.3s ease-out; }
-    .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider {
-      background-color: #2ea1e8; }
-    .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider:before {
-      -webkit-transform: translate(16px, 0);
-      -ms-transform: translate(16px, 0);
-      -o-transform: translate(16px, 0);
-      transform: translate(16px, 0); }
-    .page.page-home .form-container .form-wrapper form .form__roundtrip input:focus + .slider {
-      -webkit-border-radius: 0 0 1px #2196F3;
-      -moz-border-radius: 0 0 1px #2196F3;
-      -ms-border-radius: 0 0 1px #2196F3;
-      box-shadow: 0 0 1px #2196F3; }
-    .page.page-home .form-container .form-wrapper form .form__roundtrip .slider.round {
-      -webkit-border-radius: 24px;
-      -moz-border-radius: 24px;
-      -ms-border-radius: 24px;
-      border-radius: 24px; }
-      .page.page-home .form-container .form-wrapper form .form__roundtrip .slider.round:before {
-        -webkit-border-radius: 50%;
-        -moz-border-radius: 50%;
-        -ms-border-radius: 50%;
-        border-radius: 50%; }
-    .page.page-home .form-container .form-wrapper form .form__slider {
-      margin-top: 20px; }
-      .page.page-home .form-container .form-wrapper form .form__slider .sa-title {
-        font-size: 13px; }
-      .page.page-home .form-container .form-wrapper form .form__slider .range-title .range-max {
-        float: right; }
-      .page.page-home .form-container .form-wrapper form .form__slider .ui-slider-horizontal {
-        margin: 10px 0;
-        background: #2fb4e6;
-        border: none !important;
-        border-radius: 0;
-        height: 9px; }
-        .page.page-home .form-container .form-wrapper form .form__slider .ui-slider-horizontal .ui-slider-range {
-          background: #ecf0f4;
-          border-radius: 0; }
-        .page.page-home .form-container .form-wrapper form .form__slider .ui-slider-horizontal .ui-slider-handle {
-          -webkit-border-radius: 1px 1px 5px #666;
-          -moz-border-radius: 1px 1px 5px #666;
-          -ms-border-radius: 1px 1px 5px #666;
-          box-shadow: 1px 1px 5px #666;
-          width: 16px;
+        .page.page-home .form-container .form-wrapper form .form__roundtrip .slider:before {
+          position: absolute;
+          content: "";
           height: 16px;
-          background: #ffffff;
-          border: 0;
-          -webkit-border-radius: 16px;
-          -moz-border-radius: 16px;
-          -ms-border-radius: 16px;
-          border-radius: 16px; }
-          .page.page-home .form-container .form-wrapper form .form__slider .ui-slider-horizontal .ui-slider-handle:after {
-            content: '';
-            width: 10px;
-            height: 10px;
-            display: inline-block;
-            background: #2fb4e6;
-            -webkit-border-radius: 10px;
-            -moz-border-radius: 10px;
-            -ms-border-radius: 10px;
-            border-radius: 10px;
-            margin: 3px; }
-  .page.page-home .form-container .tab-content .tp-flight .form-wrapper {
-    padding: 20px 15px; }
-  .page.page-home .form-container .tab-content .tp-hotel .form-wrapper {
-    padding: 0 12px 20px; }
-    .page.page-home .form-container .tab-content .tp-hotel .form-wrapper .placeholder {
-      color: #999;
-      float: right;
-      font-size: 13px; }
-    .page.page-home .form-container .tab-content .tp-hotel .form-wrapper .checkout-date {
-      margin-top: 6px;
-      font-size: 13px;
-      width: 100%;
-      text-align: right; }
-    .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-hotel:before {
-      background-size: 40%;
-      background-repeat: no-repeat;
-      content: '';
-      display: inline-block;
-      vertical-align: middle;
-      position: absolute;
-      left: 0;
-      width: 47px;
-      height: 52px;
-      background-image: url(/Assets/mobile/images/find.png);
-      margin-left: 12px; }
-    .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-date:before {
-      background-size: 40%;
-      background-repeat: no-repeat;
-      content: '';
-      display: inline-block;
-      vertical-align: middle;
-      position: absolute;
-      left: 0;
-      width: 47px;
-      height: 46px;
-      background-image: url(/Assets/mobile/images/date.png);
-      margin-left: 12px; }
-    .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-time .duration-title {
+          width: 16px;
+          left: 4px;
+          bottom: 4px;
+          background-color: #ffffff;
+          -webkit-transition: all 0.3s ease-out;
+          -moz-transition: all 0.3s ease-out;
+          -o-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out; }
+      .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider {
+        background-color: #2ea1e8; }
+      .page.page-home .form-container .form-wrapper form .form__roundtrip input:checked + .slider:before {
+        -webkit-transform: translate(16px, 0);
+        -ms-transform: translate(16px, 0);
+        -o-transform: translate(16px, 0);
+        transform: translate(16px, 0); }
+      .page.page-home .form-container .form-wrapper form .form__roundtrip input:focus + .slider {
+        -webkit-border-radius: 0 0 1px #2196F3;
+        -moz-border-radius: 0 0 1px #2196F3;
+        -ms-border-radius: 0 0 1px #2196F3;
+        box-shadow: 0 0 1px #2196F3; }
+      .page.page-home .form-container .form-wrapper form .form__roundtrip .slider.round {
+        -webkit-border-radius: 24px;
+        -moz-border-radius: 24px;
+        -ms-border-radius: 24px;
+        border-radius: 24px; }
+        .page.page-home .form-container .form-wrapper form .form__roundtrip .slider.round:before {
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          -ms-border-radius: 50%;
+          border-radius: 50%; }
+      .page.page-home .form-container .form-wrapper form .form__slider {
+        margin-top: 20px; }
+        .page.page-home .form-container .form-wrapper form .form__slider .sa-title {
+          font-size: 13px; }
+        .page.page-home .form-container .form-wrapper form .form__slider .range-title .range-max {
+          float: right; }
+        .page.page-home .form-container .form-wrapper form .form__slider .ui-slider-horizontal {
+          margin: 10px 0;
+          background: #2fb4e6;
+          border: none !important;
+          border-radius: 0;
+          height: 9px; }
+          .page.page-home .form-container .form-wrapper form .form__slider .ui-slider-horizontal .ui-slider-range {
+            background: #ecf0f4;
+            border-radius: 0; }
+          .page.page-home .form-container .form-wrapper form .form__slider .ui-slider-horizontal .ui-slider-handle {
+            -webkit-border-radius: 1px 1px 5px #666;
+            -moz-border-radius: 1px 1px 5px #666;
+            -ms-border-radius: 1px 1px 5px #666;
+            box-shadow: 1px 1px 5px #666;
+            width: 16px;
+            height: 16px;
+            background: #ffffff;
+            border: 0;
+            -webkit-border-radius: 16px;
+            -moz-border-radius: 16px;
+            -ms-border-radius: 16px;
+            border-radius: 16px; }
+            .page.page-home .form-container .form-wrapper form .form__slider .ui-slider-horizontal .ui-slider-handle:after {
+              content: '';
+              width: 10px;
+              height: 10px;
+              display: inline-block;
+              background: #2fb4e6;
+              -webkit-border-radius: 10px;
+              -moz-border-radius: 10px;
+              -ms-border-radius: 10px;
+              border-radius: 10px;
+              margin: 3px; }
+    .page.page-home .form-container .tab-content .tp-flight .form-wrapper {
+      padding: 20px 15px; }
+    .page.page-home .form-container .tab-content .tp-hotel .form-wrapper {
+      padding: 0 12px 20px; }
+      .page.page-home .form-container .tab-content .tp-hotel .form-wrapper .placeholder {
+        color: #999;
+        float: right;
+        font-size: 13px; }
+      .page.page-home .form-container .tab-content .tp-hotel .form-wrapper .checkout-date {
+        margin-top: 6px;
+        font-size: 13px;
+        width: 100%;
+        text-align: right; }
+      .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-hotel:before {
+        background-size: 40%;
+        background-repeat: no-repeat;
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        left: 0;
+        width: 47px;
+        height: 52px;
+        background-image: url(/Assets/mobile/images/find.png);
+        margin-left: 12px; }
+      .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-date:before {
+        background-size: 40%;
+        background-repeat: no-repeat;
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        left: 0;
+        width: 47px;
+        height: 46px;
+        background-image: url(/Assets/mobile/images/date.png);
+        margin-left: 12px; }
+      .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-time .duration-title {
+        float: left;
+        margin-top: 10px; }
+      .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-time .placeholder {
+        margin-top: 10px; }
+      .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-time input[name="hotel-night"] {
+        float: right;
+        width: 60px; }
+      .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-time:before {
+        background-size: 40%;
+        background-repeat: no-repeat;
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        left: 0;
+        width: 53px;
+        height: 52px;
+        background-image: url(/Assets/mobile/images/time.png);
+        margin-left: 12px;
+        margin-top: 10px; }
+      .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-adult:before, .page.page-home .form-container .tab-content .tp-hotel .form-wrapper .overlay.overlay--flight-form form p.form-children:before, .overlay.overlay--flight-form form .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-children:before, .page.page-home .form-container .tab-content .tp-hotel .form-wrapper .overlay.overlay--flight-form form p.form-infant:before, .overlay.overlay--flight-form form .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-infant:before {
+        background-size: 40%;
+        background-repeat: no-repeat;
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        left: 0;
+        width: 41px;
+        height: 57px;
+        background-image: url(/Assets/mobile/images/adult.png);
+        margin-top: 10px; }
+      .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-child:before {
+        background-size: 40%;
+        background-repeat: no-repeat;
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        left: 0;
+        width: 42px;
+        height: 53px;
+        background-image: url(/Assets/mobile/images/child.png);
+        margin-top: 10px; }
+      .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p .vt-title {
+        margin-top: 10px;
+        text-align: left; }
+    .page.page-home .form-container .col-custom-logo.icon-adult:before {
+      width: 36px;
+      height: 24px;
+      background-image: url('../images/dewasa.png');
+      top: 20px; }
+    .page.page-home .form-container .col-custom-logo.icon-child:before {
+      width: 36px;
+      height: 24px;
+      background-image: url('../images/anak.png');
+      top: 20px; }
+    .page.page-home .form-container .col-custom-logo.icon-infant:before {
+      width: 35px;
+      height: 24px;
+      background-image: url('../images/bayi.png');
+      top: 20px; }
+    .page.page-home .form-container input[name="hotel-night"], .page.page-home .form-container input[name="hotel-visitor"] {
+      padding: 10px;
+      text-align: right;
+      display: inline;
+      box-shadow: none;
+      border: none;
+      background: transparent;
+      border-radius: 0; }
+    .page.page-home .form-container .col-custom-field {
+      width: 33.33333%; }
+    .page.page-home .form-container .col-half {
+      width: 50%; }
+    .page.page-home .form-container .col-2 {
+      width: 20%; }
+    .page.page-home .form-container .col-4 {
+      width: 40%; }
+    .page.page-home .form-container .col-6 {
+      width: 60%; }
+    .page.page-home .form-container .col-8 {
+      width: 80%; }
+    .page.page-home .form-container .col-custom-logo, .page.page-home .form-container .col-custom-field, .page.page-home .form-container .col-half, .page.page-home .form-container .col-2, .page.page-home .form-container .col-4, .page.page-home .form-container .col-6, .page.page-home .form-container .col-8 {
       float: left;
-      margin-top: 10px; }
-    .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-time .placeholder {
-      margin-top: 10px; }
-    .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-time input[name="hotel-night"] {
-      float: right;
-      width: 60px; }
-    .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-time:before {
-      background-size: 40%;
-      background-repeat: no-repeat;
-      content: '';
-      display: inline-block;
-      vertical-align: middle;
-      position: absolute;
-      left: 0;
-      width: 53px;
-      height: 52px;
-      background-image: url(/Assets/mobile/images/time.png);
-      margin-left: 12px;
-      margin-top: 10px; }
-    .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-adult:before, .page.page-home .form-container .tab-content .tp-hotel .form-wrapper .overlay.overlay--flight-form form p.form-children:before, .overlay.overlay--flight-form form .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-children:before, .page.page-home .form-container .tab-content .tp-hotel .form-wrapper .overlay.overlay--flight-form form p.form-infant:before, .overlay.overlay--flight-form form .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-infant:before {
-      background-size: 40%;
-      background-repeat: no-repeat;
-      content: '';
-      display: inline-block;
-      vertical-align: middle;
-      position: absolute;
-      left: 0;
-      width: 41px;
-      height: 57px;
-      background-image: url(/Assets/mobile/images/adult.png);
-      margin-top: 10px; }
-    .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p.form-child:before {
-      background-size: 40%;
-      background-repeat: no-repeat;
-      content: '';
-      display: inline-block;
-      vertical-align: middle;
-      position: absolute;
-      left: 0;
-      width: 42px;
-      height: 53px;
-      background-image: url(/Assets/mobile/images/child.png);
-      margin-top: 10px; }
-    .page.page-home .form-container .tab-content .tp-hotel .form-wrapper p .vt-title {
-      margin-top: 10px;
-      text-align: left; }
-  .page.page-home .form-container .col-custom-logo.icon-adult:before {
-    width: 36px;
-    height: 24px;
-    background-image: url('../images/dewasa.png');
-    top: 20px; }
-  .page.page-home .form-container .col-custom-logo.icon-child:before {
-    width: 36px;
-    height: 24px;
-    background-image: url('../images/anak.png');
-    top: 20px; }
-  .page.page-home .form-container .col-custom-logo.icon-infant:before {
-    width: 35px;
-    height: 24px;
-    background-image: url('../images/bayi.png');
-    top: 20px; }
-  .page.page-home .form-container input[name="hotel-night"], .page.page-home .form-container input[name="hotel-visitor"] {
-    padding: 10px;
-    text-align: right;
-    display: inline;
-    box-shadow: none;
-    border: none;
-    background: transparent;
-    border-radius: 0; }
+      position: relative;
+      min-height: 1px; }
   .page.page-home .overlay.overlay--datepicker {
     overflow: hidden; }
   .page.page-home .calendar-container .ui-datepicker {
@@ -1768,6 +1784,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     padding-top: 3px;
     padding-bottom: 3px; }
 .page.page-flight .overlay.overlay--flight-form .overlay__content {
+  /*Column*/
   min-height: auto;
   padding: 0; }
   .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper {
@@ -2112,6 +2129,22 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     border: none;
     background: transparent;
     border-radius: 0; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-field {
+    width: 33.33333%; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-half {
+    width: 50%; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-2 {
+    width: 20%; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-4 {
+    width: 40%; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-6 {
+    width: 60%; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-8 {
+    width: 80%; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-field, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-half, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-2, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-4, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-6, .page.page-flight .overlay.overlay--flight-form .overlay__content .col-8 {
+    float: left;
+    position: relative;
+    min-height: 1px; }
 .page.page-flight .overlay.overlay--datepicker .overlay__content {
   max-width: 340px;
   margin: 0 auto 15px;
@@ -2558,318 +2591,355 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .clearer {
   clear: both; }
 
-.page.page-checkout .page__header {
-  margin: 0;
-  padding: 0;
-  overflow: hidden; }
-  .page.page-checkout .page__header:after {
-    display: block;
-    width: 100%;
-    content: "";
-    clear: both; }
-  .page.page-checkout .page__header .step__wrapper {
-    position: relative; }
-    .page.page-checkout .page__header .step__wrapper .step {
-      float: left;
-      width: 33.33333%;
-      background: #2eb4e7;
-      color: #fff;
-      position: relative;
-      z-index: 2;
-      -webkit-border-radius: skewX(-30deg);
-      -moz-border-radius: skewX(-30deg);
-      -ms-border-radius: skewX(-30deg);
-      transform: skewX(-30deg); }
-      .page.page-checkout .page__header .step__wrapper .step span {
-        font-size: 13px;
-        font-weight: 600;
-        padding: 10px 15px;
-        display: block;
+.page.page-checkout {
+  /*Page Checkout Hotel*/ }
+  .page.page-checkout .page__header {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; }
+    .page.page-checkout .page__header:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .page.page-checkout .page__header .step__wrapper {
+      position: relative; }
+      .page.page-checkout .page__header .step__wrapper .step {
+        float: left;
+        width: 33.33333%;
+        background: #2eb4e7;
+        color: #fff;
         position: relative;
         z-index: 2;
-        -webkit-border-radius: skewX(30deg);
-        -moz-border-radius: skewX(30deg);
-        -ms-border-radius: skewX(30deg);
-        transform: skewX(30deg); }
-      .page.page-checkout .page__header .step__wrapper .step:before {
-        background: #2eb4e7; }
-      .page.page-checkout .page__header .step__wrapper .step:after {
-        background: #2eb4e7; }
-      .page.page-checkout .page__header .step__wrapper .step.active {
-        background: #032f56; }
-        .page.page-checkout .page__header .step__wrapper .step.active:before {
+        -webkit-border-radius: skewX(-30deg);
+        -moz-border-radius: skewX(-30deg);
+        -ms-border-radius: skewX(-30deg);
+        transform: skewX(-30deg); }
+        .page.page-checkout .page__header .step__wrapper .step span {
+          font-size: 13px;
+          font-weight: 600;
+          padding: 10px 15px;
+          display: block;
+          position: relative;
+          z-index: 2;
+          -webkit-border-radius: skewX(30deg);
+          -moz-border-radius: skewX(30deg);
+          -ms-border-radius: skewX(30deg);
+          transform: skewX(30deg); }
+        .page.page-checkout .page__header .step__wrapper .step:before {
+          background: #2eb4e7; }
+        .page.page-checkout .page__header .step__wrapper .step:after {
+          background: #2eb4e7; }
+        .page.page-checkout .page__header .step__wrapper .step.active {
           background: #032f56; }
-        .page.page-checkout .page__header .step__wrapper .step.active:after {
-          background: #032f56; }
-      .page.page-checkout .page__header .step__wrapper .step.inactive {
-        background: #a6a6a6; }
-        .page.page-checkout .page__header .step__wrapper .step.inactive:before {
+          .page.page-checkout .page__header .step__wrapper .step.active:before {
+            background: #032f56; }
+          .page.page-checkout .page__header .step__wrapper .step.active:after {
+            background: #032f56; }
+        .page.page-checkout .page__header .step__wrapper .step.inactive {
           background: #a6a6a6; }
-      .page.page-checkout .page__header .step__wrapper .step:last-child {
-        border-right: 0; }
-        .page.page-checkout .page__header .step__wrapper .step:last-child:after {
+          .page.page-checkout .page__header .step__wrapper .step.inactive:before {
+            background: #a6a6a6; }
+        .page.page-checkout .page__header .step__wrapper .step:last-child {
+          border-right: 0; }
+          .page.page-checkout .page__header .step__wrapper .step:last-child:after {
+            content: '';
+            display: block;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 15px;
+            -webkit-border-radius: skewX(30deg);
+            -moz-border-radius: skewX(30deg);
+            -ms-border-radius: skewX(30deg);
+            transform: skewX(30deg); }
+        .page.page-checkout .page__header .step__wrapper .step.step-1:before {
           content: '';
           display: block;
           position: absolute;
           height: 100%;
           width: 100%;
           top: 0;
-          left: 15px;
+          left: -15px;
           -webkit-border-radius: skewX(30deg);
           -moz-border-radius: skewX(30deg);
           -ms-border-radius: skewX(30deg);
           transform: skewX(30deg); }
-      .page.page-checkout .page__header .step__wrapper .step.step-1:before {
-        content: '';
-        display: block;
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        top: 0;
-        left: -15px;
-        -webkit-border-radius: skewX(30deg);
-        -moz-border-radius: skewX(30deg);
-        -ms-border-radius: skewX(30deg);
-        transform: skewX(30deg); }
-.page.page-checkout .page__body {
-  padding: 0 15px 20px;
-  overflow-wrap: break-word;
-  /*h3 {margin: 20px 0; font-size: 14px;}*/ }
-  .page.page-checkout .page__body .page-loading {
-    display: none; }
-  .page.page-checkout .page__body .page-loaded {
-    display: block; }
-  .page.page-checkout .page__body .page-step-2 .btn.btn-yellow {
-    margin-bottom: 15px; }
-  .page.page-checkout .page__body .page-step-3 .btn.btn-yellow.form-control, .page.page-checkout .page__body .page-step-3 .btn.btn-grey.form-control {
-    width: 48%;
-    float: right; }
-  .page.page-checkout .page__body .page-step-3 .btn.btn-grey.form-control {
-    float: left; }
-  .page.page-checkout .page__body .page-step-3 .flight-fare-wrapper {
-    margin-bottom: 15px; }
-.page.page-checkout .passenger {
-  background: #fff;
-  border: 1px solid #ccc;
-  margin: 20px 0;
-  border-radius: 2px; }
-  .page.page-checkout .passenger .passenger__header {
-    background: #2eb4e7;
-    color: #fff;
-    font-weight: bold;
-    padding: 10px 15px; }
-    .page.page-checkout .passenger .passenger__header .passenger__title {
-      margin: 0;
-      font-weight: 600;
-      font-size: 13px; }
-  .page.page-checkout .passenger .passenger__body {
-    padding: 10px; }
-.page.page-checkout .summary .summary__title {
-  color: #333; }
-.page.page-checkout .summary .summary__body > dl {
-  padding: 7.5px 0;
-  margin-bottom: 0;
-  font-size: 11px; }
-  .page.page-checkout .summary .summary__body > dl:first-child {
-    border-bottom: 1px dotted #ff9a24;
-    padding-top: 0; }
-    .page.page-checkout .summary .summary__body > dl:first-child > dt:before {
-      width: 7px;
-      height: 7px;
-      background: #ff9a24;
-      display: inline-block;
-      content: '';
-      margin-left: -14px;
-      margin-right: 7px; }
-  .page.page-checkout .summary .summary__body > dl:nth-child(3) {
-    color: #2fb4e6; }
-  .page.page-checkout .summary .summary__body > dl:last-child {
-    border-top: 1px solid #ff9a24; }
-    .page.page-checkout .summary .summary__body > dl:last-child > dd {
-      color: #ff9a24;
-      font-size: 16px;
-      font-weight: 700; }
-.page.page-checkout .summary.summary--price dl:after {
-  display: block;
-  width: 100%;
-  content: "";
-  clear: both; }
-.page.page-checkout .summary.summary--price dl dt {
-  float: left;
-  width: 50%;
-  font-weight: normal;
-  position: relative;
-  padding-left: 12px;
-  font-weight: 700; }
-.page.page-checkout .summary.summary--price dl dd {
-  float: left;
-  width: 50%;
-  text-align: right;
-  font-weight: 700; }
-.page.page-checkout .summary.summary--price dl.total-price dt {
-  width: 35%; }
-  .page.page-checkout .summary.summary--price dl.total-price dt:before {
-    display: none; }
-.page.page-checkout .summary.summary--price dl.total-price dd {
-  width: 65%;
-  color: #ff7200;
-  font-size: 16px; }
-.page.page-checkout .summary.summary--price dl:nth-child(2) {
-  color: #2fb4e6; }
-.page.page-checkout .summary.summary--passenger {
-  color: #63c6ec; }
-  .page.page-checkout .summary.summary--passenger h4 {
-    color: #63c6ec;
-    font-weight: bold; }
-  .page.page-checkout .summary.summary--passenger ol {
-    padding-left: 20px; }
-  .page.page-checkout .summary.summary--passenger dl {
-    margin-bottom: 5px;
-    color: #333; }
-    .page.page-checkout .summary.summary--passenger dl:after {
-      display: block;
-      width: 100%;
-      content: "";
-      clear: both; }
-    .page.page-checkout .summary.summary--passenger dl dt {
-      float: left;
-      width: 50%;
-      font-weight: normal;
-      position: relative; }
-      .page.page-checkout .summary.summary--passenger dl dt:after {
-        position: absolute;
-        content: ':';
-        right: 10px; }
-    .page.page-checkout .summary.summary--passenger dl dd {
-      float: left;
-      width: 50%;
-      font-weight: bold; }
-.page.page-checkout .summary.summary--voucher {
-  background: #eaeaea;
-  padding: 10px;
-  margin-bottom: 10px; }
-  .page.page-checkout .summary.summary--voucher h4 {
-    font-weight: bold; }
-  .page.page-checkout .summary.summary--voucher .container_new p {
-    margin-left: 0;
-    margin-right: 0;
-    padding: 10px 0 0; }
-  .page.page-checkout .summary.summary--voucher .form-horizontal .form-group {
-    margin-bottom: 10px; }
-    .page.page-checkout .summary.summary--voucher .form-horizontal .form-group .col-xs-offset-6 {
-      margin: 0;
-      float: right;
-      padding: 0; }
-.page.page-checkout .summary.summary--payment label {
-  border: 1px solid #ccc;
-  display: block;
-  width: 100%;
-  background: #fff;
-  color: #fff; }
-  .page.page-checkout .summary.summary--payment label header {
-    background: #36b6e7;
-    position: relative; }
-    .page.page-checkout .summary.summary--payment label header:after {
-      display: block;
-      width: 100%;
-      content: "";
-      clear: both; }
-    .page.page-checkout .summary.summary--payment label header .input-wrapper {
-      float: left;
-      background: #028ec3;
-      width: 30px;
-      text-align: center;
-      position: absolute;
-      height: 100%;
-      padding-top: 5px; }
-    .page.page-checkout .summary.summary--payment label header h5 {
-      padding: 10px;
-      margin: 0;
-      float: left;
-      padding-left: 40px;
-      font-weight: bold;
-      width: 100%; }
-  .page.page-checkout .summary.summary--payment label section {
-    text-align: center;
-    padding: 5px; }
-.page.page-checkout .credit-card-form .cc-number.visa {
-  background-image: url(/Assets/images/visa-logo.jpg);
-  background-position: 98% center;
-  background-repeat: no-repeat; }
-.page.page-checkout .credit-card-form .cc-number.mastercard {
-  background-image: url(/Assets/images/mastercard-logo.jpg);
-  background-position: 98% center;
-  background-repeat: no-repeat; }
-.page.page-checkout .overlay--flight-detail .flight-detail-wrapper {
-  padding: 10px;
-  padding-top: 0; }
-.page.page-checkout .overlay--flight-detail .flight-fare-wrapper .fare-note {
-  background: #eaeaea;
-  padding: 10px; }
-.page.page-checkout .overlay--flight-detail dl:after {
-  display: block;
-  width: 100%;
-  content: "";
-  clear: both; }
-.page.page-checkout .overlay--flight-detail dl dt {
-  float: left;
-  width: 50%;
-  font-weight: normal;
-  position: relative;
-  padding-left: 12px; }
-  .page.page-checkout .overlay--flight-detail dl dt:before {
-    position: absolute;
-    content: '';
-    width: 7px;
-    height: 7px;
-    background: #ff7200;
-    top: 3px;
-    left: 0; }
-.page.page-checkout .overlay--flight-detail dl dd {
-  float: left;
-  width: 50%;
-  text-align: right;
-  font-weight: bold; }
-.page.page-checkout .overlay--flight-detail dl.total-price {
-  border-top: 1px solid #ccc;
-  padding-top: 10px; }
-  .page.page-checkout .overlay--flight-detail dl.total-price dt {
-    width: 35%; }
-    .page.page-checkout .overlay--flight-detail dl.total-price dt:before {
+  .page.page-checkout .page__body {
+    padding: 0 15px 20px;
+    overflow-wrap: break-word;
+    /*h3 {margin: 20px 0; font-size: 14px;}*/ }
+    .page.page-checkout .page__body .page-loading {
       display: none; }
-  .page.page-checkout .overlay--flight-detail dl.total-price dd {
+    .page.page-checkout .page__body .page-loaded {
+      display: block; }
+    .page.page-checkout .page__body .page-step-2 .btn.btn-yellow {
+      margin-bottom: 15px; }
+    .page.page-checkout .page__body .page-step-3 .btn.btn-yellow.form-control, .page.page-checkout .page__body .page-step-3 .btn.btn-grey.form-control {
+      width: 48%;
+      float: right; }
+    .page.page-checkout .page__body .page-step-3 .btn.btn-grey.form-control {
+      float: left; }
+    .page.page-checkout .page__body .page-step-3 .flight-fare-wrapper {
+      margin-bottom: 15px; }
+  .page.page-checkout .passenger {
+    background: #fff;
+    border: 1px solid #ccc;
+    margin: 20px 0;
+    border-radius: 2px; }
+    .page.page-checkout .passenger .passenger__header {
+      background: #2eb4e7;
+      color: #fff;
+      font-weight: bold;
+      padding: 10px 15px; }
+      .page.page-checkout .passenger .passenger__header .passenger__title {
+        margin: 0;
+        font-weight: 600;
+        font-size: 13px; }
+    .page.page-checkout .passenger .passenger__body {
+      padding: 10px; }
+  .page.page-checkout .summary .summary__title {
+    color: #333; }
+  .page.page-checkout .summary .summary__body > dl {
+    padding: 7.5px 0;
+    margin-bottom: 0;
+    font-size: 11px; }
+    .page.page-checkout .summary .summary__body > dl:first-child {
+      border-bottom: 1px dotted #ff9a24;
+      padding-top: 0; }
+      .page.page-checkout .summary .summary__body > dl:first-child > dt:before {
+        width: 7px;
+        height: 7px;
+        background: #ff9a24;
+        display: inline-block;
+        content: '';
+        margin-left: -14px;
+        margin-right: 7px; }
+    .page.page-checkout .summary .summary__body > dl:nth-child(3) {
+      color: #2fb4e6; }
+    .page.page-checkout .summary .summary__body > dl:last-child {
+      border-top: 1px solid #ff9a24; }
+      .page.page-checkout .summary .summary__body > dl:last-child > dd {
+        color: #ff9a24;
+        font-size: 16px;
+        font-weight: 700; }
+  .page.page-checkout .summary.summary--price dl:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page.page-checkout .summary.summary--price dl dt {
+    float: left;
+    width: 50%;
+    font-weight: normal;
+    position: relative;
+    padding-left: 12px;
+    font-weight: 700; }
+  .page.page-checkout .summary.summary--price dl dd {
+    float: left;
+    width: 50%;
+    text-align: right;
+    font-weight: 700; }
+  .page.page-checkout .summary.summary--price dl.total-price dt {
+    width: 35%; }
+    .page.page-checkout .summary.summary--price dl.total-price dt:before {
+      display: none; }
+  .page.page-checkout .summary.summary--price dl.total-price dd {
     width: 65%;
     color: #ff7200;
     font-size: 16px; }
-.page.page-checkout .overlay--flight-detail .overlay__body.overlay__content .flight__separator {
-  left: 35%; }
-.page.page-checkout .form-mandiri-payment {
-  margin: 5px 0; }
-  .page.page-checkout .form-mandiri-payment .form-row {
-    padding: 0;
-    list-style-type: none; }
-    .page.page-checkout .form-mandiri-payment .form-row li {
+  .page.page-checkout .summary.summary--price dl:nth-child(2) {
+    color: #2fb4e6; }
+  .page.page-checkout .summary.summary--passenger {
+    color: #63c6ec; }
+    .page.page-checkout .summary.summary--passenger h4 {
+      color: #63c6ec;
+      font-weight: bold; }
+    .page.page-checkout .summary.summary--passenger ol {
+      padding-left: 20px; }
+    .page.page-checkout .summary.summary--passenger dl {
+      margin-bottom: 5px;
+      color: #333; }
+      .page.page-checkout .summary.summary--passenger dl:after {
+        display: block;
+        width: 100%;
+        content: "";
+        clear: both; }
+      .page.page-checkout .summary.summary--passenger dl dt {
+        float: left;
+        width: 50%;
+        font-weight: normal;
+        position: relative; }
+        .page.page-checkout .summary.summary--passenger dl dt:after {
+          position: absolute;
+          content: ':';
+          right: 10px; }
+      .page.page-checkout .summary.summary--passenger dl dd {
+        float: left;
+        width: 50%;
+        font-weight: bold; }
+  .page.page-checkout .summary.summary--voucher {
+    background: #eaeaea;
+    padding: 10px;
+    margin-bottom: 10px; }
+    .page.page-checkout .summary.summary--voucher h4 {
+      font-weight: bold; }
+    .page.page-checkout .summary.summary--voucher .container_new p {
+      margin-left: 0;
+      margin-right: 0;
+      padding: 10px 0 0; }
+    .page.page-checkout .summary.summary--voucher .form-horizontal .form-group {
+      margin-bottom: 10px; }
+      .page.page-checkout .summary.summary--voucher .form-horizontal .form-group .col-xs-offset-6 {
+        margin: 0;
+        float: right;
+        padding: 0; }
+  .page.page-checkout .summary.summary--payment label {
+    display: block;
+    width: 100%;
+    background: #fff;
+    color: #fff;
+    margin-bottom: 15px; }
+    .page.page-checkout .summary.summary--payment label header {
+      background: #36b6e7;
+      position: relative; }
+      .page.page-checkout .summary.summary--payment label header:after {
+        display: block;
+        width: 100%;
+        content: "";
+        clear: both; }
+      .page.page-checkout .summary.summary--payment label header .input-wrapper {
+        float: left;
+        background: #028ec3;
+        width: 30px;
+        text-align: center;
+        position: absolute;
+        height: 100%; }
+        .page.page-checkout .summary.summary--payment label header .input-wrapper input[name="paymentMethod"] {
+          width: 15px;
+          height: 15px;
+          border: 0;
+          margin-top: 12px; }
+      .page.page-checkout .summary.summary--payment label header h5 {
+        padding: 12px;
+        margin: 0;
+        float: left;
+        padding-left: 40px;
+        font-weight: 600;
+        width: 100%;
+        font-size: 13px; }
+    .page.page-checkout .summary.summary--payment label section {
+      text-align: center;
+      padding: 15px;
+      border: 1px solid #e9e9e9; }
+  .page.page-checkout .credit-card-form .cc-number.visa {
+    background-image: url(/Assets/images/visa-logo.jpg);
+    background-position: 98% center;
+    background-repeat: no-repeat; }
+  .page.page-checkout .credit-card-form .cc-number.mastercard {
+    background-image: url(/Assets/images/mastercard-logo.jpg);
+    background-position: 98% center;
+    background-repeat: no-repeat; }
+  .page.page-checkout .overlay--flight-detail .flight-detail-wrapper {
+    padding: 10px;
+    padding-top: 0; }
+  .page.page-checkout .overlay--flight-detail .flight-fare-wrapper .fare-note {
+    background: #eaeaea;
+    padding: 10px; }
+  .page.page-checkout .overlay--flight-detail dl:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page.page-checkout .overlay--flight-detail dl dt {
+    float: left;
+    width: 50%;
+    font-weight: normal;
+    position: relative;
+    padding-left: 12px; }
+    .page.page-checkout .overlay--flight-detail dl dt:before {
+      position: absolute;
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: #ff7200;
+      top: 3px;
+      left: 0; }
+  .page.page-checkout .overlay--flight-detail dl dd {
+    float: left;
+    width: 50%;
+    text-align: right;
+    font-weight: bold; }
+  .page.page-checkout .overlay--flight-detail dl.total-price {
+    border-top: 1px solid #ccc;
+    padding-top: 10px; }
+    .page.page-checkout .overlay--flight-detail dl.total-price dt {
+      width: 35%; }
+      .page.page-checkout .overlay--flight-detail dl.total-price dt:before {
+        display: none; }
+    .page.page-checkout .overlay--flight-detail dl.total-price dd {
+      width: 65%;
+      color: #ff7200;
+      font-size: 16px; }
+  .page.page-checkout .overlay--flight-detail .overlay__body.overlay__content .flight__separator {
+    left: 35%; }
+  .page.page-checkout .form-mandiri-payment {
+    margin: 5px 0; }
+    .page.page-checkout .form-mandiri-payment .form-row {
       padding: 0;
-      display: inline; }
-.page.page-checkout h3 {
-  margin: 20px 0;
-  font-size: 14px; }
-.page.page-checkout .col-left {
-  width: 55%;
-  font-weight: 700; }
-.page.page-checkout .col-middle {
-  width: 3%; }
-.page.page-checkout .col-right {
-  width: 42%; }
-.page.page-checkout .col-left, .page.page-checkout .col-middle, .page.page-checkout .col-right {
-  float: left;
-  position: relative;
-  min-height: 1px; }
-.page.page-checkout .bottom-divider {
-  margin-bottom: 7.5px; }
-.page.page-checkout .form-horizontal .form-group {
-  margin-left: 0;
-  margin-right: 0; }
+      list-style-type: none; }
+      .page.page-checkout .form-mandiri-payment .form-row li {
+        padding: 0;
+        display: inline; }
+  .page.page-checkout h3 {
+    margin: 20px 0;
+    font-size: 14px; }
+  .page.page-checkout .col-left {
+    width: 55%;
+    font-weight: 700; }
+  .page.page-checkout .col-middle {
+    width: 3%; }
+  .page.page-checkout .col-right {
+    width: 42%; }
+  .page.page-checkout .col-left, .page.page-checkout .col-middle, .page.page-checkout .col-right {
+    float: left;
+    position: relative;
+    min-height: 1px; }
+  .page.page-checkout .bottom-divider {
+    margin-bottom: 7.5px; }
+  .page.page-checkout .form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0; }
+  .page.page-checkout.page-hotel {
+    background: #f9f9f9; }
+    .page.page-checkout.page-hotel .checkout-content {
+      /*Shared*/ }
+      .page.page-checkout.page-hotel .checkout-content .rr-row {
+        line-height: 20px; }
+        .page.page-checkout.page-hotel .checkout-content .rr-row.total {
+          border-top: 1px solid #e9e9e9;
+          margin-top: 10px;
+          padding-top: 10px; }
+      .page.page-checkout.page-hotel .checkout-content .rr-detail {
+        margin: 20px 0; }
+      .page.page-checkout.page-hotel .checkout-content .rr-title {
+        margin-bottom: 10px; }
+      .page.page-checkout.page-hotel .checkout-content .form-hotel {
+        padding: 5px 15px 30px; }
+        .page.page-checkout.page-hotel .checkout-content .form-hotel textarea[name="special-request"] {
+          height: 80px; }
+      .page.page-checkout.page-hotel .checkout-content .review-hotel {
+        margin: 5px 0 30px; }
+        .page.page-checkout.page-hotel .checkout-content .review-hotel .review-room {
+          padding: 0 15px;
+          border-bottom: 1px solid #e9e9e9; }
+        .page.page-checkout.page-hotel .checkout-content .review-hotel .price-detail {
+          padding: 0 15px; }
+      .page.page-checkout.page-hotel .checkout-content .payment {
+        padding: 5px 15px 15px; }
+      .page.page-checkout.page-hotel .checkout-content .widget {
+        margin: 5px 0 30px; }
 
 .page.page-confirmation .instruction header {
   background: #2fb4e6;
@@ -3500,8 +3570,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   /*Arrow icons*/
   /*Hotel Listing*/
   /*Shared Page*/
-  /*Overlay*/
-  /*Column*/ }
+  /*Overlay*/ }
   .page-hotel.page-detail {
     overflow-y: scroll; }
   .page-hotel .lg-txt {
@@ -3543,15 +3612,24 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     font-size: 19px;
     text-transform: uppercase;
     margin-bottom: 15px; }
-  .page-hotel .col-half, .page-hotel .col-3 {
+  .page-hotel .right {
+    text-align: right; }
+  .page-hotel .col-custom-logo, .page-hotel .col-custom-field, .page-hotel .col-half, .page-hotel .col-2, .page-hotel .col-3, .page-hotel .col-4, .page-hotel .col-6, .page-hotel .col-8 {
+    float: left;
     position: relative;
     min-height: 1px; }
-  .page-hotel .col-half, .page-hotel .col-3 {
-    float: left; }
-  .page-hotel .col-half {
-    width: 50%; }
+  .page-hotel .col-2 {
+    width: 20%; }
   .page-hotel .col-3 {
     width: 33.33333%; }
+  .page-hotel .col-4 {
+    width: 40%; }
+  .page-hotel .col-half {
+    width: 50%; }
+  .page-hotel .col-6 {
+    width: 60%; }
+  .page-hotel .col-8 {
+    width: 80%; }
   .page-hotel .star-outline, .page-hotel .so-1, .page-hotel .star.e-star.star-4:after, .page-hotel .so-2, .page-hotel .star.e-star.star-3:after, .page-hotel .so-3, .page-hotel .star.e-star.star-2:after, .page-hotel .so-4, .page-hotel .star.e-star:after {
     content: '';
     display: inline-block;
@@ -4094,19 +4172,3 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         text-align: center; }
   .page-hotel .overlay--detail-room .dr-container .dr-list-facility {
     padding-left: 15px; }
-  .page-hotel .col-custom-field {
-    width: 33.33333%; }
-  .page-hotel .col-half {
-    width: 50%; }
-  .page-hotel .col-2 {
-    width: 20%; }
-  .page-hotel .col-4 {
-    width: 40%; }
-  .page-hotel .col-6 {
-    width: 60%; }
-  .page-hotel .col-8 {
-    width: 80%; }
-  .page-hotel .col-custom-logo, .page-hotel .col-custom-field, .page-hotel .col-half, .page-hotel .col-2, .page-hotel .col-4, .page-hotel .col-6, .page-hotel .col-8 {
-    float: left;
-    position: relative;
-    min-height: 1px; }
