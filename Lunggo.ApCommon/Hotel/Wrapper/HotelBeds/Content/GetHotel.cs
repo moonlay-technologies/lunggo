@@ -24,138 +24,162 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
         public void GetHotelData()
         {
 
-            var hotels = new List<HotelDetailsBase>();
-            var languageCd = new List<string>{"ENG","IND"};
-            
-            var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-content-api");
-           //https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels?fields=all&language=ENG&from=1&to=100&useSecondaryLanguage=false
-
-            var dataCount = 1; 
-            var counter = 0;
-            var from = 1;
-            var to = 1000;
-            while (to <= 128000)
+            try
             {
+                var hotels = new List<HotelDetailsBase>();
+                var languageCd = new List<string> {"ENG", "IND"};
 
-                Debug.Print("From : " + from);
-                Debug.Print("To : " + to);
+                var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a",
+                    "https://api.test.hotelbeds.com/hotel-content-api");
+                //https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels?fields=all&language=ENG&from=1&to=100&useSecondaryLanguage=false
 
-                Console.WriteLine("From : " + from);
-
-                foreach (var t in languageCd)
+                var dataCount = 1;
+                var counter = 0;
+                var from = 1;
+                var to = 1000;
+                while (to <= 128000)
                 {
-                    Debug.Print("BAHASA : " + t);
-                    List<Tuple<string, string>> param;
 
-                    //Call for the first time 
-                    param = new List<Tuple<string, string>>
-                {
-                    new Tuple<string, string>("${fields}", "all"),
-                    new Tuple<string, string>("${language}", t),
-                    new Tuple<string, string>("${from}", from.ToString()),
-                    new Tuple<string, string>("${to}", to.ToString()), //1000
-                    new Tuple<string, string>("${useSecondaryLanguage}", "false"),
-                };
-                    var bookingListRS = client.GetHotelList(param);
-                    var hotelDescription = new List<HotelDescriptions>();
-                    foreach (var hotelRS in bookingListRS.hotels)
+                    Debug.Print("From : " + from);
+                    Debug.Print("To : " + to);
+
+                    Console.WriteLine("From : " + from);
+
+                    foreach (var t in languageCd)
                     {
-                        if (t.Equals("ENG"))
+                        Debug.Print("BAHASA : " + t);
+                        List<Tuple<string, string>> param;
+
+                        //Call for the first time 
+                        param = new List<Tuple<string, string>>
                         {
-                            var hotel = new HotelDetailsBase
+                            new Tuple<string, string>("${fields}", "all"),
+                            new Tuple<string, string>("${language}", t),
+                            new Tuple<string, string>("${from}", from.ToString()),
+                            new Tuple<string, string>("${to}", to.ToString()), //1000
+                            new Tuple<string, string>("${useSecondaryLanguage}", "false"),
+                        };
+                        var bookingListRS = client.GetHotelList(param);
+                        var hotelDescription = new List<HotelDescriptions>();
+                        foreach (var hotelRS in bookingListRS.hotels)
+                        {
+                            if (t.Equals("ENG"))
                             {
-                                HotelCode = hotelRS.code,
-                                HotelName = hotelRS.name == null ? null : hotelRS.name.content,
-                                AccomodationType = hotelRS.accommodationTypeCode,
-                                Address = hotelRS.address == null ? null : hotelRS.address.content,
-                                Chain = hotelRS.chainCode,
-                                Email = hotelRS.email,
-                                PhonesNumbers =
-                                    hotelRS.phones == null ? null : hotelRS.phones.Select(p => p.phoneNumber).ToList(),
-                                City = hotelRS.city == null ? null : hotelRS.city.content,
-                                PostalCode = hotelRS.postalCode,
-                                StarRating = hotelRS.categoryCode,
-                                Terminals = hotelRS.terminals == null?null:hotelRS.terminals.Select(p => new Terminal()
+                                var hotel = new HotelDetailsBase
                                 {
-                                       Name = p.name,
-                                       TerminalCode = p.terminalCode,
-                                       Distance = p.distance,
-                                       Description = p.description
-                                }).ToList(),
-                                ZoneCode = hotelRS.zoneCode,
-                                CountryCode = hotelRS.countryCode,
-                                Pois = hotelRS.InterestPoints == null
-                                    ? null
-                                    : hotelRS.InterestPoints.Select(p => new POI()
-                                    {
-                                        poiName = p.poiName,
-                                        distance = p.distance,
-                                        facilityCode = p.facilityCode,
-                                        facilityGroupCode = p.facilityGroupCode,
-                                        order = p.order
-                                    }).ToList(),
-                                Latitude = hotelRS.coordinates == null ? 0 : hotelRS.coordinates.latitude,
-                                Longitude = hotelRS.coordinates == null ? 0 : hotelRS.coordinates.longitude,
-                                Segment = hotelRS.segmentCodes,
-                                Rooms = hotelRS.rooms == null
-                                    ? null
-                                    : hotelRS.rooms.Select(p => new HotelRoom
-                                    {
-                                        RoomCode = p.roomCode,
-                                        Type = p.roomType,
-                                        characteristicCd = p.characteristicCode,
-                                        Facilities = p.roomFacilities == null ? null : p.roomFacilities.Select(q => new HotelRoomFacilities
+                                    HotelCode = hotelRS.code,
+                                    HotelName = hotelRS.name == null ? null : hotelRS.name.content,
+                                    AccomodationType = hotelRS.accommodationTypeCode,
+                                    Address = hotelRS.address == null ? null : hotelRS.address.content,
+                                    Chain = hotelRS.chainCode,
+                                    Email = hotelRS.email,
+                                    PhonesNumbers =
+                                        hotelRS.phones == null
+                                            ? null
+                                            : hotelRS.phones.Select(p => p.phoneNumber).ToList(),
+                                    City = hotelRS.city == null ? null : hotelRS.city.content,
+                                    PostalCode = hotelRS.postalCode,
+                                    StarRating = hotelRS.categoryCode,
+                                    Terminals =
+                                        hotelRS.terminals == null
+                                            ? null
+                                            : hotelRS.terminals.Select(p => new Terminal()
+                                            {
+                                                Name = p.name,
+                                                TerminalCode = p.terminalCode,
+                                                Distance = p.distance,
+                                                Description = p.description
+                                            }).ToList(),
+                                    ZoneCode = hotelRS.zoneCode,
+                                    CountryCode = hotelRS.countryCode,
+                                    Pois = hotelRS.InterestPoints == null
+                                        ? null
+                                        : hotelRS.InterestPoints.Select(p => new POI()
                                         {
-                                            FacilityCode = q.facilityCode,
-                                            FacilityGroupCode = q.facilityGroupCode
-                                        }).ToList()
-                                    }).ToList(),
-                                Facilities = hotelRS.facilities == null ? null : hotelRS.facilities.Select(p => new HotelFacility()
+                                            poiName = p.poiName,
+                                            distance = p.distance,
+                                            facilityCode = p.facilityCode,
+                                            facilityGroupCode = p.facilityGroupCode,
+                                            order = p.order
+                                        }).ToList(),
+                                    Latitude = hotelRS.coordinates == null ? 0 : hotelRS.coordinates.latitude,
+                                    Longitude = hotelRS.coordinates == null ? 0 : hotelRS.coordinates.longitude,
+                                    Segment = hotelRS.segmentCodes,
+                                    Rooms = hotelRS.rooms == null
+                                        ? null
+                                        : hotelRS.rooms.Select(p => new HotelRoom
+                                        {
+                                            RoomCode = p.roomCode,
+                                            Type = p.roomType,
+                                            characteristicCd = p.characteristicCode,
+                                            Facilities =
+                                                p.roomFacilities == null
+                                                    ? null
+                                                    : p.roomFacilities.Select(q => new HotelRoomFacilities
+                                                    {
+                                                        FacilityCode = q.facilityCode,
+                                                        FacilityGroupCode = q.facilityGroupCode
+                                                    }).ToList()
+                                        }).ToList(),
+                                    Facilities =
+                                        hotelRS.facilities == null
+                                            ? null
+                                            : hotelRS.facilities.Select(p => new HotelFacility()
+                                            {
+                                                FacilityCode = p.facilityCode,
+                                                FacilityGroupCode = p.facilityGroupCode
+                                            }).ToList(),
+                                    DestinationCode = hotelRS.destinationCode,
+                                    ImageUrl = hotelRS.images == null
+                                        ? null
+                                        : hotelRS.images.Select(p => new Image
+                                        {
+                                            Order = p.order,
+                                            Path = p.path,
+                                            Type = p.imageTypeCode,
+                                        }).ToList(),
+
+                                };
+                                var hotelDesc = new HotelDescriptions
                                 {
-                                    FacilityCode = p.facilityCode,
-                                    FacilityGroupCode = p.facilityGroupCode
-                                }).ToList(),
-                                DestinationCode = hotelRS.destinationCode,
-                                ImageUrl = hotelRS.images == null ? null : hotelRS.images.Select(p => new Image
+                                    languageCode = "ENG",
+                                    Description = hotelRS.description == null ? null : hotelRS.description.content
+                                };
+                                hotel.Description = new List<HotelDescriptions>();
+                                hotel.Description.Add(hotelDesc);
+                                hotels.Add(hotel);
+                            }
+                            else
+                            {
+                                hotels[counter].Description.Add(new HotelDescriptions
                                 {
-                                    Order = p.order,
-                                    Path = p.path,
-                                    Type = p.imageTypeCode,
-                                }).ToList(),
+                                    languageCode = "IND",
+                                    Description = hotelRS.description == null ? null : hotelRS.description.content
+                                });
 
-                            };
-                            var hotelDesc = new HotelDescriptions
-                            {
-                                languageCode = "ENG",
-                                Description = hotelRS.description == null ? null : hotelRS.description.content
-                            };
-                            hotel.Description = new List<HotelDescriptions>();
-                            hotel.Description.Add(hotelDesc);
-                            hotels.Add(hotel);
+                                Debug.Print("Insert ke-" + dataCount + " : " + hotels[counter].HotelCode);
+                                InsertHotelDetailToTableStorage(hotels[counter]);
+                                counter++;
+                                dataCount++;
+                            }
+
                         }
-                        else
-                        {
-                            hotels[counter].Description.Add(new HotelDescriptions
-                            {
-                                languageCode = "IND",
-                                Description = hotelRS.description == null ? null : hotelRS.description.content
-                            });
-
-                            Debug.Print("Insert ke-" + dataCount + " : " + hotels[counter].HotelCode);
-                            InsertHotelDetailToTableStorage(hotels[counter]);
-                            counter++;
-                            dataCount++;
-                        }
-
                     }
-                }
-                from = from + 1000;
-                to = to + 1000;
-                Thread.Sleep(1000);
+                    from = from + 1000;
+                    to = to + 1000;
+                    Thread.Sleep(1000);
 
+                }
+                Console.WriteLine("Done");
             }
-            Console.WriteLine("Done");
-        }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+            }
+            
+        
+    }
 
         public void InsertHotelDetailToTableStorage(HotelDetailsBase hotel)
         {
