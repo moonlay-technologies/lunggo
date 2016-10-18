@@ -131,9 +131,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                     case AutocompleteType.Destination:
                         request.Destination = detailDestination.Code;
                         break;
-                    //case AutocompleteType.Hotel:
-                    //    request.HotelCode = detailDestination.Code; //TODO
-                    //    break;
                 };
 
                 var result = hotelBedsClient.SearchHotel(request);
