@@ -235,7 +235,8 @@
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
     <Compile Include="Hotel\Constant\PaymentType.cs" />
     <Compile Include="Hotel\Constant\CheckRateStatus.cs" />
-    <Compile Include="Hotel\Model\HotelDetailWrapper.cs" />
+    <Compile Include="Hotel\Model\HotelReservationSearch.cs" />
+	<Compile Include="Hotel\Model\HotelDetailWrapper.cs" />
     <Compile Include="Hotel\Model\HotelFacility.cs" />
     <Compile Include="Hotel\Model\HotelFilter.cs" />
     <Compile Include="Hotel\Model\HotelRoomFacilities.cs" />
@@ -254,10 +255,12 @@
     <Compile Include="Hotel\Service\Database.cs" />
     <Compile Include="Hotel\Service\Issue.cs" />
     <Compile Include="Hotel\Service\ModelConversion.cs" />
+    <Compile Include="Hotel\Service\Reservations.cs" />
     <Compile Include="Hotel\Service\Search.cs" />
     <Compile Include="Hotel\Service\Select.cs" />
     <Compile Include="Hotel\Service\Book.cs" />
     <Compile Include="Hotel\Service\Dictionary.cs" />
+    <Compile Include="Hotel\Service\SendToCustomer.cs" />
     <Compile Include="Hotel\Service\Settings.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\GetHotel.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\HotelContent.cs" />

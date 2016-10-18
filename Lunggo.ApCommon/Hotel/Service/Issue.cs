@@ -117,6 +117,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             UpdateRsvStatusDb(rsvData.RsvNo, issueResult.IsSuccess ? RsvStatus.Completed : RsvStatus.Failed);
             if (issueResult.IsSuccess == false)
             {
+                SendIssueFailedNotifToDeveloper(rsvData.RsvNo);
+                SendEticketSlightDelayNotifToCustomer(rsvData.RsvNo);
                 return new IssueHotelTicketOutput
                 {
                     IsSuccess = false,
@@ -125,6 +127,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             
             {
+                SendEticketToCustomer(rsvData.RsvNo);
                 var order = issueResult.BookingId.Select(id => new OrderResult
                 {
                     BookingId = id, BookingStatus = BookingStatus.Ticketed, IsSuccess = true

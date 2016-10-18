@@ -130,6 +130,23 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             }
         }
+
+        //private List<HotelReservation> GetOverviewReservationsByUserIdOrEmailFromDb(string userId, string email, string[] filters, string sort, int? page, int? itemsPerPage)
+        //{
+        //    using (var conn = DbService.GetInstance().GetOpenConnection())
+        //    {
+        //        var rsvNos =
+        //            GetRsvNosByUserIdQuery.GetInstance()
+        //                .Execute(conn, new { UserId = userId, ContactEmail = email }, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+        //                .Distinct().ToList();
+        //        if (!rsvNos.Any())
+        //            return null;
+        //        else
+        //        {
+        //            return rsvNos.Select(GetOverviewReservationFromDb).Where(rsv => rsv != null).ToList();
+        //        }
+        //    }
+        //}
         #endregion
 
         #region Insert

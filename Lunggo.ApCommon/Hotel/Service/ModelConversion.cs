@@ -1,11 +1,38 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Service;
+using Lunggo.ApCommon.Product.Constant;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
     {
+        internal HotelReservationForDisplay ConvertToReservationForDisplay(HotelReservation hotelReservation)
+        {
+            if (hotelReservation == null)
+                return null;
+
+            var convertedRsv = new HotelReservationForDisplay
+            {
+                CancellationTime = hotelReservation.CancellationTime,
+                CancellationType = hotelReservation.CancellationType,
+                Contact = hotelReservation.Contact,
+                HotelDetail = ConvertToHotelDetailForDisplay(
+                new List<HotelDetail>
+                {
+                    hotelReservation.HotelDetails
+                }).ToList()[0],
+                Passengers = ConvertToPaxForDisplay(hotelReservation.Pax),
+                RsvNo = hotelReservation.RsvNo,
+                Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(hotelReservation.Payment),
+                RsvTime = hotelReservation.RsvTime,
+            };
+
+            return convertedRsv;
+        }
+
         internal List<HotelDetailForDisplay> ConvertToHotelDetailForDisplay(List<HotelDetail> hotelDetails)
         {
             if (hotelDetails == null)
@@ -174,7 +201,38 @@ namespace Lunggo.ApCommon.Hotel.Service
                 convertedRate.Add(rate);
             }
             return convertedRate;
-        } 
+        }
+
+        private static RsvDisplayStatus MapReservationStatus(HotelReservation reservation)
+        {
+            var paymentStatus = reservation.Payment.Status;
+            var paymentMethod = reservation.Payment.Method;
+            var rsvStatus = reservation.RsvStatus;
+
+            if (rsvStatus == RsvStatus.Cancelled || paymentStatus == PaymentStatus.Cancelled)
+                return RsvDisplayStatus.Cancelled;
+            if (rsvStatus == RsvStatus.Expired || paymentStatus == PaymentStatus.Expired)
+                return RsvDisplayStatus.Expired;
+            if (paymentStatus == PaymentStatus.Denied)
+                return RsvDisplayStatus.PaymentDenied;
+            if (paymentStatus == PaymentStatus.Failed)
+                return RsvDisplayStatus.FailedUnpaid;
+            if (rsvStatus == RsvStatus.Failed)
+                return paymentStatus == PaymentStatus.Settled
+                    ? RsvDisplayStatus.FailedPaid
+                    : RsvDisplayStatus.FailedUnpaid;
+            if (paymentMethod == PaymentMethod.Undefined)
+                return RsvDisplayStatus.Reserved;
+            if (paymentStatus == PaymentStatus.Settled)
+                return reservation.RsvStatus == RsvStatus.Completed
+                    ? RsvDisplayStatus.Issued
+                    : RsvDisplayStatus.Paid;
+            if (paymentStatus != PaymentStatus.Settled)
+                return (paymentMethod == PaymentMethod.VirtualAccount || paymentMethod == PaymentMethod.BankTransfer)
+                    ? RsvDisplayStatus.PendingPayment
+                    : RsvDisplayStatus.VerifyingPayment;
+            return RsvDisplayStatus.Undefined;
+        }
 
     }
 }
