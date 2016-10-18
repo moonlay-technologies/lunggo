@@ -14,13 +14,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
 
-        public void SendChangedEticketToCustomer(string rsvNo)
-        {
-            var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("HotelChangedEticket");
-            queue.AddMessage(new CloudQueueMessage(rsvNo));
-        }
-
+        
         public void SendTransferInstructionToCustomer(string rsvNo)
         {
             var queueService = QueueService.GetInstance();
@@ -28,30 +22,23 @@ namespace Lunggo.ApCommon.Hotel.Service
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
 
-        /* Jika Gagal Issue karna Deposit Abis atau lainnya*/
-        public void SendIssueSlightDelayNotifToCustomer(string message) 
-        {
-            var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("HotelIssueSlightDelayNotifEmail");
-            queue.AddMessage(new CloudQueueMessage(message));
-        }
+        ///* Jika Gagal Issue karna Deposit Abis atau lainnya*/
+        //public void SendIssueSlightDelayNotifToCustomer(string message) 
+        //{
+        //    var queueService = QueueService.GetInstance();
+        //    var queue = queueService.GetQueueByReference("HotelIssueSlightDelayNotifEmail");
+        //    queue.AddMessage(new CloudQueueMessage(message));
+        //}
 
-        /*Send Issue Failed into Developer*/
-        public void SendIssueFailedNotifToDeveloper(string message)
-        {
-            var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("HotelIssueFailedNotifEmail");
-            queue.AddMessage(new CloudQueueMessage(message));
-        }
+        ///*Send Issue Failed into Developer*/
+        //public void SendIssueFailedNotifToDeveloper(string message)
+        //{
+        //    var queueService = QueueService.GetInstance();
+        //    var queue = queueService.GetQueueByReference("HotelIssueFailedNotifEmail");
+        //    queue.AddMessage(new CloudQueueMessage(message));
+        //}
 
-        /*Jika Salah satu Mistifly dan status udah settled, tapi etiket blom terkirim*/
-        public void SendEticketSlightDelayNotifToCustomer(string rsvNo)
-        {
-            var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("HotelEticketSlightDelayNotifEmail");
-            queue.AddMessage(new CloudQueueMessage(rsvNo));
-        }
-
+        
         /*Jika Issue Exception tidak bisa di handle manual*/
         public void SendSaySorryFailedIssueNotifToCustomer(string rsvNo)
         {
