@@ -354,6 +354,7 @@
     <Content Include="Assets\travorama20\images\Hotel\mini-slider.jpg" />
     <Content Include="Assets\travorama20\images\Hotel\next-white.png" />
     <Content Include="Assets\travorama20\images\Hotel\prev-white.png" />
+    <Content Include="Assets\travorama20\images\Hotel\print.png" />
     <Content Include="Assets\travorama20\images\Hotel\room.jpg" />
     <Content Include="Assets\travorama20\images\Hotel\size.png" />
     <Content Include="Assets\travorama20\images\Hotel\sort.png" />
