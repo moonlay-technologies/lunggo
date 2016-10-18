@@ -97,13 +97,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         StarRating =  hotelResponse.categoryCode,
                         OriginalFare = hotelResponse.minRate,
                         Review = hotelResponse.reviews,
-                        Rooms =hotelResponse.rooms.Select(roomApi=>new HotelRoom
+                        Rooms = hotelResponse.rooms == null ? null : hotelResponse.rooms.Select(roomApi => new HotelRoom
                         {
                             RoomCode = roomApi.code,
                             Type = roomApi.code.Substring(0,3),
                             TypeName = HotelService.GetInstance().GetHotelRoomTypeDescEn(roomApi.code.Substring(0, 3)),
                             RoomName = roomApi.name,
-                            Rates = roomApi.rates.Select(x=>
+                            Rates = roomApi.rates == null ? null : roomApi.rates.Select(x =>
                             {
                                 var rate = new HotelRate
                                 {
@@ -111,7 +111,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                     ChildCount = x.children,
                                     RoomCount = x.rooms,
                                     PaymentType = PaymentTypeCd.Mnemonic(x.paymentType),
-                                    Offers = x.offers.Select(z => new Offer
+                                    Offers = x.offers == null ? null : x.offers.Select(z => new Offer
                             {
                                         Code = z.code,
                                         Amount = z.amount,
@@ -120,7 +120,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                 RateKey = x.rateKey,
                                     Price = new Price(),
                                 Boards = x.boardCode,
-                                    Cancellation = x.cancellationPolicies.Select(y => new Cancellation
+                                    Cancellation = x.cancellationPolicies == null ? null : x.cancellationPolicies.Select(y => new Cancellation
                                     {
                                         Fee = y.amount,
                                         StartTime = y.from
