@@ -125,7 +125,17 @@ namespace Lunggo.ApCommon.Payment.Service
                 UpdatePaymentToDb(rsvNo, paymentDetails);
             }
             if (method == PaymentMethod.BankTransfer || method == PaymentMethod.VirtualAccount)
-                FlightService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
+            {
+                if (reservation.Type == ProductType.Flight)
+                {
+                    FlightService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
+                }
+                else
+                {
+                    HotelService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
+                }
+            }
+                
             isUpdated = true;
             return paymentDetails;
         }
