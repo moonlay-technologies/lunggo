@@ -23,7 +23,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
         {
             HotelApiClient client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-api");
             var avail = new Availability();
-            if (condition.Location != null)
+            if (condition.Destination != null)
             {
                 avail = new Availability
                 {

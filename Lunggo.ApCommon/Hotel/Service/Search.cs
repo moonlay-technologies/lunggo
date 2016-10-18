@@ -115,7 +115,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     CheckIn = input.CheckIn,
                     Checkout = input.Checkout,
-                    HotelCode = input.HotelCode
+                    HotelCode = input.HotelCode,
                     AdultCount = input.AdultCount,
                     ChildCount = input.ChildCount,
                     Nights = input.Nights,
