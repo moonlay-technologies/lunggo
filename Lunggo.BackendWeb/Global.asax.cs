@@ -10,17 +10,15 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
-using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
-
+<<<<<<< HEAD
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
-
+=======
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Service;
-using Pax = Lunggo.ApCommon.Product.Model.Pax;
-
+>>>>>>> f487fd4c18764af6650997763893179639b89a5d
 namespace Lunggo.BackendWeb
 {
     public class MvcApplication : HttpApplication
@@ -34,186 +32,120 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             AppInitializer.Init();
-
-            HotelService.GetInstance().Search(new SearchHotelInput
+            var info = new HotelRevalidateInfo
             {
+                RateKey = "20171108|20171110|W|1|1533|TPL.ST|CG- MERCHANT|RO||1~2~1|8|N@03B9A98F4D3B4AF99F3AF21C0914DE60",
+                Price = 2477686
+            };
+            //var hb = new HotelBedsCheckRate();
+            //var x = hb.CheckRateHotel(info);
+            var hoteldetail = new HotelDetailsBase
+            {
+                AccomodationType = "HOTEL",
+                City = "Palma de Mallorca",
+                CountryCode = "ES",
+                DestinationCode = "PMI",
+                HotelCode = 1533,
+                HotelName = "Mirador",
+                Address = "somewhere",
+                Chain = "lala",
+                ZoneCode = 10,
+                StarRating = "5est",
+                Rooms = new List<HotelRoom>
+                {
+                    new HotelRoom
+                    {
+                        RoomCode = "TPL.ST",
+                        Type = "Triple Standard",
+                        Rates = new List<HotelRate>
+                        {
+                            new HotelRate
+                            {
+                                RateKey = "20171108|20171110|W|1|1533|TPL.ST|CG- MERCHANT|RO||1~2~1|8|N@03B9A98F4D3B4AF99F3AF21C0914DE60",
+                                Price = new Price
+                                {
+                                    Supplier = 2477686,
+                                    SupplierCurrency = new Currency("IDR"),
+                                    LocalCurrency = new Currency("IDR"),
+                                    Margin = new UsedMargin
+                                    {
+                                        Constant = 1,
+                                        Currency = new Currency("IDR"),
+                                        IsFlat = false,
+                                        Name = "HTBD",
+                                        Percentage = 1,
+                                        Description = "HOTELBED"
+                                    },
+                                    MarginNominal = 10000,
+                                },
+                                PaymentType = "AT_WEB",
+                                AdultCount = 2,
+                                ChildCount = 1,
+                                Boards = "RO",
+                                Cancellation = new Cancellation
+                                {
+                                    StartTime = Convert.ToDateTime("2017-06-06T23:59:00+07:00"),
+                                    Fee = 1347709
+                                },
+                                RoomCount = 1,
+                                Class = "NOR",
+                                Type = "BOOKABLE",
+                                TimeLimit = new DateTime(2016, 10, 12, 14,0,0)
+                            }
+                        }
+                    },
+                }
+            };
 
-                AdultCount = 2,
-                ChildCount = 1,
-                CheckIn = new DateTime(2017, 3, 19),
-                Checkout = new DateTime(2017, 3, 20),
-                Nights = 1,
-                Rooms = 1,
-                HotelCode = 444942
-            });
+<<<<<<< HEAD
+            HotelService.GetInstance().SaveSelectedHotelDetailsToCache("1005", hoteldetail);
 
-            //HotelService.GetInstance().SelectHotelRoom(new SelectHotelRoomInput
-            //{
-            //    SearchId = "c8e1018a-0f63-43de-b369-788e0fb643b2",
-            //    RegsIds = new List<string>
-            //    {
-            //        "444942-DBL.DX-20170319|20170320|W|325|444942|DBL.DX|BAR|BB||1~2~1|12|N@7A427CDB72544906950EEC5F8ABC28FE",
-            //    }
-            //});
+            var bookinput = new BookHotelInput
+            {
+                Token = "1005",
+                Contact = new Contact
+                {
+                    CountryCallingCode = "62",
+                    Email = "intandea@gmail.com",
+                    Name = "Intan Yutami",
+                    Phone = "01092882",
+                    Title = Title.Miss
+                },
+                Passengers = new List<Pax>
+                {
+                    new Pax
+                    {
+                        FirstName = "John",
+                        LastName = "Smith",
+                        Type = PaxType.Adult,
+                        Title = Title.Mister,
+                        Gender = Gender.Male
+                    },
+                    new Pax
+                    {
+                        FirstName = "Sarah Jane",
+                        LastName = "Smith",
+                        Type = PaxType.Adult,
+                        Title = Title.Miss,
+                        Gender = Gender.Female
+                    },
+                    new Pax
+                    {
+                        FirstName = "John",
+                        LastName = "Watson",
+                        Type = PaxType.Child,
+                        Title = Title.Mister,
+                        Gender = Gender.Male
+                    }
+                },
+                SpecialRequest = "none"
+            };
 
-            //HotelService.GetInstance().BookHotel(new BookHotelInput
-            //{
-            //    Token = "21100",
-            //    Contact = new Contact
-            //    {
-            //        CountryCallingCode = "62",
-            //        Email = "intandea@gmail.com",
-            //        Name = "Intan Yutami",
-            //        Phone = "01092882",
-            //        Title = Title.Miss
-            //    },
-            //    Passengers = new List<Pax>
-            //    {
-            //        new Pax
-            //        {
-            //            FirstName = "John",
-            //            LastName = "Smith",
-            //            Type = PaxType.Adult,
-            //            Title = Title.Mister,
-            //            Gender = Gender.Male
-            //        },
-            //        new Pax
-            //        {
-            //            FirstName = "Sarah Jane",
-            //            LastName = "Smith",
-            //            Type = PaxType.Adult,
-            //            Title = Title.Miss,
-            //            Gender = Gender.Female
-            //        },
-            //        new Pax
-            //        {
-            //            FirstName = "John",
-            //            LastName = "Watson",
-            //            Type = PaxType.Child,
-            //            Title = Title.Mister,
-            //            Gender = Gender.Male
-            //        }
-            //    },
-            //    SpecialRequest = "none"
-            //});
-
-            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
-            //{
-            //    RsvNo = "278316537179"
-            //});
+            HotelService.GetInstance().BookHotel(bookinput);
         }
     }
 }
-//var info = new HotelRevalidateInfo
-//{
-//    RateKey = "20171108|20171110|W|1|1533|TPL.ST|CG- MERCHANT|RO||1~2~1|8|N@03B9A98F4D3B4AF99F3AF21C0914DE60",
-//    Price = 2477686
-//};
-////var hb = new HotelBedsCheckRate();
-////var x = hb.CheckRateHotel(info);
-//var hoteldetail = new HotelDetailsBase
-//{
-//    AccomodationType = "HOTEL",
-//    City = "Palma de Mallorca",
-//    CountryCode = "ES",
-//    DestinationCode = "PMI",
-//    HotelCode = 1533,
-//    HotelName = "Mirador",
-//    Address = "somewhere",
-//    Chain = "lala",
-//    ZoneCode = 10,
-//    StarRating = "5est",
-//    Rooms = new List<HotelRoom>
-//    {
-//        new HotelRoom
-//        {
-//            RoomCode = "TPL.ST",
-//            Type = "Triple Standard",
-//            Rates = new List<HotelRate>
-//            {
-//                new HotelRate
-//                {
-//                    RateKey = "20171108|20171110|W|1|1533|TPL.ST|CG- MERCHANT|RO||1~2~1|8|N@03B9A98F4D3B4AF99F3AF21C0914DE60",
-//                    Price = new Price
-//                    {
-//                        Supplier = 2477686,
-//                        SupplierCurrency = new Currency("IDR"),
-//                        LocalCurrency = new Currency("IDR"),
-//                        Margin = new UsedMargin
-//                        {
-//                            Constant = 1,
-//                            Currency = new Currency("IDR"),
-//                            IsFlat = false,
-//                            Name = "HTBD",
-//                            Percentage = 1,
-//                            Description = "HOTELBED"
-//                        },
-//                        MarginNominal = 10000,
-//                    },
-//                    PaymentType = "AT_WEB",
-//                    AdultCount = 2,
-//                    ChildCount = 1,
-//                    Boards = "RO",
-//                    Cancellation = new Cancellation
-//                    {
-//                        StartTime = Convert.ToDateTime("2017-06-06T23:59:00+07:00"),
-//                        Fee = 1347709
-//                    },
-//                    RoomCount = 1,
-//                    Class = "NOR",
-//                    Type = "BOOKABLE",
-//                    TimeLimit = new DateTime(2016, 10, 12, 14,0,0)
-//                }
-//            }
-//        },
-//    }
-//};
 
-
-//HotelService.GetInstance().SaveSelectedHotelDetailsToCache("1005", hoteldetail);
-
-//var bookinput = new BookHotelInput
-//{
-//    Token = "1005",
-//    Contact = new Contact
-//    {
-//        CountryCallingCode = "62",
-//        Email = "intandea@gmail.com",
-//        Name = "Intan Yutami",
-//        Phone = "01092882",
-//        Title = Title.Miss
-//    },
-//    Passengers = new List<Pax>
-//    {
-//        new Pax
-//        {
-//            FirstName = "John",
-//            LastName = "Smith",
-//            Type = PaxType.Adult,
-//            Title = Title.Mister,
-//            Gender = Gender.Male
-//        },
-//        new Pax
-//        {
-//            FirstName = "Sarah Jane",
-//            LastName = "Smith",
-//            Type = PaxType.Adult,
-//            Title = Title.Miss,
-//            Gender = Gender.Female
-//        },
-//        new Pax
-//        {
-//            FirstName = "John",
-//            LastName = "Watson",
-//            Type = PaxType.Child,
-//            Title = Title.Mister,
-//            Gender = Gender.Male
-//        }
-//    },
-//    SpecialRequest = "none"
-//};
-
-//HotelService.GetInstance().BookHotel(bookinput);
 //PaymentService.GetInstance().UpdatePayment("276966536079", new PaymentDetails
 //            {
 //                Status = PaymentStatus.Settled,
@@ -221,12 +153,12 @@ namespace Lunggo.BackendWeb
 //            });
 
             
-
-            //HotelService.GetInstance().IssueHotel(new IssueHotelTicketInput
-            //{
-            //    RsvNo = "276696535679"
-            //});
-
+=======
+            HotelService.GetInstance().IssueHotel(new IssueHotelTicketInput
+            {
+                RsvNo = "276696535679"
+            });
+>>>>>>> f487fd4c18764af6650997763893179639b89a5d
             //var hoteldetail = new HotelDetailsBase
             //{
             //    AccomodationType = "HOTEL",
@@ -329,9 +261,9 @@ namespace Lunggo.BackendWeb
             //};
 
             //HotelService.GetInstance().BookHotel(bookinput);
-//        }
-//    }
-//}
+        }
+    }
+}
 
 //var hotelbed = new HotelBedsSearchHotel();
 //hotelbed.SearchHotel(new SearchHotelCondition

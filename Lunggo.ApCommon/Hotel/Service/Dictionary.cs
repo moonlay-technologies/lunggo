@@ -631,6 +631,21 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
+
+        //GET METHOD REGARDING AUTOCOMPLETE
+        public Autocomplete GetLocationById(long id)
+        {
+            try
+            {
+                return _Autocompletes[id];
+            }
+            catch (Exception)
+            {
+                
+                return new Autocomplete();
+            }
+        }
+
         //GET METHODS REGARDING SEGMENT
         public string GetHotelSegmentId(string code)
         {

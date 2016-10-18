@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var decryptedData = input.RegsIds.Select(DecryptRegsId).ToList();
 
-            var hotel = GetHotelDetail(decryptedData[0].HotelCode);
+            var hotel = GetHotelDetailFromDb(decryptedData[0].HotelCode);
             hotel.Rooms = new List<HotelRoom>();
 
             //Enter Room Details to Hotel
@@ -32,7 +32,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var newRates = new List<HotelRate>();
                 foreach (var rate in output.Room.Rates)
                 {
-                    
+
                     var roomRateKey = rate.RateKey;
                     if (roomRateKey == originRateKey)
                     {

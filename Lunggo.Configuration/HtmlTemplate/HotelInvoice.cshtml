@@ -1,0 +1,60 @@
+﻿@using System.Globalization
+@model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
+@using Lunggo.ApCommon.Constant
+@using Lunggo.Framework.Config
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/ico" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/favico.ico")" />
+
+    <title>Travorama - E-tiket</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/bootstrap.min.css")">
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")">
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/invoice.min.css")">
+
+</head>
+<body class="eticket">
+
+    <div class="page">
+        <header class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travelmadezy-logo.jpg")" alt="Travelmadezy" />
+                        <address>
+                            <p><b>PT. Travel Madezy Internasional</b></p>
+                            <p>Equity Tower 25th ﬂoor, SCBD Lot 9, Jl. Jendral Sudirman kav. 52 - 53</p>
+                            <!-- <p>p. +62 21 29035088  / +62 21 29035089 | f. +62 21 29035099 </p> -->
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </header><!-- .page-header -->
+        
+    </div><!-- .page -->
+    <!-- ****************************** -->
+    <!-- javascripts -->
+    <script src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/js/jquery.min.js")"></script>
+
+    @if (IsSectionDefined("AdditionalPageJavascript"))
+    {
+        @RenderSection("AdditionalPageJavascript");
+    }
+
+    @if (IsSectionDefined("PageJavascript"))
+    {
+        @RenderSection("PageJavascript");
+    }
+
+
+</body>
+</html>
+
+

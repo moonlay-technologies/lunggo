@@ -23,19 +23,19 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SaveSearchResultintoDatabaseToCache(string token, SearchHotelResult searchResult)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "token:" + token;
+            var redisKey = "HotelSearchResult:" + token;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var redisValue = "searchresult:" + searchResult.Serialize();
+            var redisValue = searchResult.ToCacheObject();
             redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(60));
         }
 
         public SearchHotelResult GetSearchHotelResultFromCache(string token)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "token:" + token;
+            var redisKey = "HotelSearchResult:" + token;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var cacheObject = (string)redisDb.StringGet(redisKey);
-            var searchResult = cacheObject.Substring(13).Deserialize<SearchHotelResult>();
+            var cacheObject = redisDb.StringGet(redisKey);
+            var searchResult = cacheObject.DeconvertTo<SearchHotelResult>();
             return searchResult;
         }
 
