@@ -784,6 +784,8 @@
     <None Include="Config\CloudApp.EticketHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="HtmlTemplate\HotelEticketEmail.cshtml" />
+    <None Include="HtmlTemplate\HotelInvoice.cshtml" />
     <None Include="HtmlTemplate\HotelEticket.cshtml" />
     <None Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ContactUsEmail.cshtml" />

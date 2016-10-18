@@ -59,6 +59,7 @@ namespace Lunggo.CloudApp.EticketHandler
             while (!cancellationToken.IsCancellationRequested)
             {
                 await ProcessEticketQueue.ProcessQueue();
+                await ProcessHotelEticketQueue.ProcessQueue();
                 await ProcessChangedEticketQueue.ProcessQueue();
                 await Task.Delay(1000, cancellationToken);
             }
