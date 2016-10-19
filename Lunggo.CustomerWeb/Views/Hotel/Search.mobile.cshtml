@@ -27,8 +27,8 @@
         @Html.Partial("/Views/Hotel/Shared/Mobile/_Summary.cshtml")
         <div class="hotel-sort-filter clearfix">
             <div class="hotel-sort-filter-action">
-                <a href="#">FILTER</a>
-                <a href="#">SORTIR</a>
+                <a ng-click="PageConfig.SetOverlay('hotel-filter')">FILTER</a>
+                <a ng-click="PageConfig.SetOverlay('hotel-sort')">SORTIR</a>
             </div>
         </div>
     </div>
@@ -67,5 +67,246 @@
                 </div>
             </li>
         </ul>
+    </div>
+
+    <!-- Overlay Filter -->
+    <div class="overlay overlay--hotel-filter overlay--theme--blue" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-filter')}">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                FILTER
+                <span class="overlay__close" ng-click="SetOverlay()">X</span>
+            </h3>
+        </header>
+        <section class="overlay__content">
+            <div class="filter-group filter-group--price">
+                <div class="filter-group__header">
+                    <h4 class="filter-group__title">Harga (permalam)</h4>
+                </div>
+                <div class="filter-group__content">
+                    <div class="slider-price price-slider" id="price-slider"></div>
+                    <div class="slider-minmax">
+                        <span>Rp {{priceFilterParam.current[0] | number}}</span>
+                        <span class="pull-right">Rp {{priceFilterParam.current[1] | number}}</span>
+                    </div>
+                    <div class="hidden">
+                        <input type="text" name="priceSliderValueMin" value="" class="price-slider-min" ng-model="priceFilterParam.current[0]" />
+                        <input type="text" name="priceSliderValueMax" value="" class="price-slider-max" ng-model="priceFilterParam.current[1]" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="filter-group filter-group--rating">
+                <div class="filter-group__header">
+                    <h4 class="filter-group__title">Peringkat Bintang Hotel</h4>
+                </div>
+                <div class="filter-group__content">
+                    <label class="active">
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                </div>
+            </div>
+            <div class="filter-group filter-group--facility">
+                <div class="filter-group__header">
+                    <h4 class="filter-group__title">Fasilitas</h4>
+                </div>
+                <div class="filter-group__content sh-list">
+                    <label class="active">
+                        <div class="switch"></div>
+                        <span class="bed-white">Bed</span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label class="active">
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span></span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                </div>
+            </div>
+            <div class="filter-group filter-group--area">
+                <div class="filter-group__header">
+                    <h4 class="filter-group__title">Area</h4>
+                </div>
+                <div class="filter-group__content">
+                    <label class="active">
+                        <div class="switch"></div>
+                        <span>Ubud</span>
+                        <input type="checkbox" value="false"/>
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span>Kuta</span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span>Seminyak</span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span>Legian</span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                </div>
+            </div>
+            <div class="filter-group filter-group--room">
+                <div class="filter-group__header">
+                    <h4 class="filter-group__title">Jenis Kamar</h4>
+                </div>
+                <div class="filter-group__content">
+                    <label class="active">
+                        <div class="switch"></div>
+                        <span>Single</span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span>Triple</span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span>Twin</span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span>Queen</span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span>Double</span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                    <label>
+                        <div class="switch"></div>
+                        <span>King</span>
+                        <input type="checkbox" value="false" />
+                    </label>
+                </div>
+            </div>
+            <div class="reset">
+                <button class="btn btn-reset" value="Reset" ng-click="resetFilter()">Reset</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Overlay Sort -->
+    <div class="overlay overlay--hotel-sort overlay--theme--blue" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-sort')}">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                SORTIR
+                <span class="overlay__close" ng-click="SetOverlay()">X</span>
+            </h3>
+        </header>
+        <section class="overlay__content">
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'price' && FlightConfig[0].FlightSort.Invert == false}" ng-click="FlightConfig[0].FlightSort.Set('price',false)">Harga - Rendah ke Tinggi</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'price' && FlightConfig[0].FlightSort.Invert == true}" ng-click="FlightConfig[0].FlightSort.Set('price',true)">Harga - Tinggi ke Rendah</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'airline' && FlightConfig[0].FlightSort.Invert == false}" ng-click="FlightConfig[0].FlightSort.Set('airline',false)"> Nama Maskapai - A ke Z</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'airline' && FlightConfig[0].FlightSort.Invert == true}" ng-click="FlightConfig[0].FlightSort.Set('airline',true)">Nama Maskapai - Z ke A</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'duration' && FlightConfig[0].FlightSort.Invert == false}" ng-click="FlightConfig[0].FlightSort.Set('duration',false)">Durasi - Singkat ke Lama</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'duration' && FlightConfig[0].FlightSort.Invert == true}" ng-click="FlightConfig[0].FlightSort.Set('duration',true)">Durasi - Lama ke Singkat</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'departure' && FlightConfig[0].FlightSort.Invert == false}" ng-click="FlightConfig[0].FlightSort.Set('departure',false)">Waktu Berangkat - Terawal ke Terakhir</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'departure' && FlightConfig[0].FlightSort.Invert == true}" ng-click="FlightConfig[0].FlightSort.Set('departure',true)">Waktu Berangkat - Terakhir ke Terawal</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'arrival' && FlightConfig[0].FlightSort.Invert == false}" ng-click="FlightConfig[0].FlightSort.Set('arrival',false)">Waktu Kedatangan - Terawal ke Terakhir</span>
+            <span ng-class="{'active' : FlightConfig[0].FlightSort.Label == 'arrival' && FlightConfig[0].FlightSort.Invert == true}" ng-click="FlightConfig[0].FlightSort.Set('arrival',true)">Waktu Kedatangan - Terakhir ke Terawal</span>
+        </section>
+        <section class="overlay__content hidden">
+            <label>
+                Harga - Rendah ke Tinggi
+                <input type="radio" name="name" value="" />
+            </label>
+            <label>
+                Harga - Tinggi ke Rendah
+                <input type="radio" name="name" value="" />
+            </label>
+            <label>
+                Nama Hotel - A ke Z
+                <input type="radio" name="name" value="" />
+            </label>
+            <label>
+                Nama Hotel - Z ke A
+                <input type="radio" name="name" value="" />
+            </label>
+            <label>
+                Bintang Hotel - 5 ke 1
+                <input type="radio" name="name" value="" />
+            </label>
+            <label>
+                Bintang Hotel - 1 ke 5
+                <input type="radio" name="name" value="" />
+            </label>
+        <label>
+            Ulasan Tamu - Tertinggi ke Terendah
+            <input type="radio" name="name" value="" />
+        </label>
+        <label>
+            Ulasan Tamu - Terendah ke Tertinggi
+            <input type="radio" name="name" value="" />
+        </label>
+        </section>
     </div>
 </div>

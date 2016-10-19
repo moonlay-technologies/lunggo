@@ -15,7 +15,7 @@
 .os-regular, .form-group label.control-label, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .note > p, .page.page-home .form-container .form-wrapper form span.code-airport, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.code-airport {
   font-weight: 400; }
 
-.os-semibold, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event, .overlay--flight-filter .overlay__content .reset .btn-reset {
+.os-semibold, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event, .overlay--flight-filter .overlay__content .reset .btn-reset, .overlay--hotel-filter .overlay__content .reset .btn-reset {
   font-weight: 600; }
 
 .os-bold, .form-group button, .form-wrapper.form-wrapper--register a, .form-wrapper.form-wrapper--login a, .overlay .overlay__header h3.overlay__title, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li, .desc {
@@ -612,11 +612,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .overlay.overlay--flight-form form .form-infant:before {
   background-position: -44px 0; }
 
-.overlay.overlay--flight-filter .overlay__content {
-  background: #878787;
-  color: #fff; }
-
-.overlay.overlay--flight-sort .overlay__content {
+.overlay.overlay--flight-filter .overlay__content, .overlay.overlay--hotel-filter .overlay__content, .overlay.overlay--flight-sort .overlay__content, .overlay.overlay--hotel-sort .overlay__content {
   background: #878787;
   color: #fff; }
 
@@ -1100,6 +1096,147 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       padding: 0 15px; }
       .accordion-wrapper .accordion-content.show > ol > li {
         margin-bottom: 10px; }
+
+.overlay--flight-sort .overlay__content, .overlay--hotel-sort .overlay__content {
+  padding: 0;
+  font-size: 11px; }
+  .overlay--flight-sort .overlay__content span, .overlay--hotel-sort .overlay__content span {
+    display: block;
+    padding: 20px 15px; }
+    .overlay--flight-sort .overlay__content span:before, .overlay--hotel-sort .overlay__content span:before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+      border: 3px solid #fff;
+      -webkit-border-radius: 50px;
+      -moz-border-radius: 50px;
+      -ms-border-radius: 50px;
+      border-radius: 50px; }
+    .overlay--flight-sort .overlay__content span + span, .overlay--hotel-sort .overlay__content span + span {
+      border-top: 1px solid #999; }
+    .overlay--flight-sort .overlay__content span.active, .overlay--hotel-sort .overlay__content span.active {
+      color: #fff; }
+      .overlay--flight-sort .overlay__content span.active:before, .overlay--hotel-sort .overlay__content span.active:before {
+        background: #ffca10; }
+    .overlay--flight-sort .overlay__content span:hover, .overlay--hotel-sort .overlay__content span:hover {
+      background: #2fb4e6; }
+  .overlay--flight-sort .overlay__content label, .overlay--hotel-sort .overlay__content label {
+    display: block;
+    width: 100%;
+    padding: 12px 0; }
+    .overlay--flight-sort .overlay__content label + label, .overlay--hotel-sort .overlay__content label + label {
+      border-top: 1px solid #ccc; }
+    .overlay--flight-sort .overlay__content label input[type="radio"], .overlay--hotel-sort .overlay__content label input[type="radio"] {
+      float: right; }
+
+.overlay--flight-filter .overlay__content .filter-container, .overlay--hotel-filter .overlay__content .filter-container {
+  padding: 12px; }
+.overlay--flight-filter .overlay__content .filter-group, .overlay--hotel-filter .overlay__content .filter-group {
+  padding: 15px 12px;
+  font-size: 11px; }
+  .overlay--flight-filter .overlay__content .filter-group label, .overlay--hotel-filter .overlay__content .filter-group label {
+    font-weight: normal; }
+  .overlay--flight-filter .overlay__content .filter-group + .filter-group, .overlay--hotel-filter .overlay__content .filter-group + .filter-group {
+    border-top: 1px solid #999; }
+  .overlay--flight-filter .overlay__content .filter-group .filter-group__header, .overlay--hotel-filter .overlay__content .filter-group .filter-group__header {
+    margin-bottom: 5px; }
+    .overlay--flight-filter .overlay__content .filter-group .filter-group__header .filter-group__title, .overlay--hotel-filter .overlay__content .filter-group .filter-group__header .filter-group__title {
+      margin: 0;
+      font-weight: 600;
+      font-size: 12px; }
+  .overlay--flight-filter .overlay__content .filter-group .filter-group__content label, .overlay--hotel-filter .overlay__content .filter-group .filter-group__content label {
+    display: block;
+    padding: 12px 0; }
+    .overlay--flight-filter .overlay__content .filter-group .filter-group__content label + label, .overlay--hotel-filter .overlay__content .filter-group .filter-group__content label + label {
+      border-top: 1px solid #ccc; }
+  .overlay--flight-filter .overlay__content .filter-group .filter-group__content input[type="checkbox"], .overlay--hotel-filter .overlay__content .filter-group .filter-group__content input[type="checkbox"] {
+    float: right; }
+  .overlay--flight-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal, .overlay--hotel-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal {
+    -webkit-border-radius: 1px 1px 1px #666;
+    -moz-border-radius: 1px 1px 1px #666;
+    -ms-border-radius: 1px 1px 1px #666;
+    box-shadow: 1px 1px 1px #666;
+    margin: 10px 0;
+    background: #fff;
+    border: none !important;
+    border-radius: 0;
+    height: 15px; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal .ui-slider-range, .overlay--hotel-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal .ui-slider-range {
+      background: #fed446;
+      box-shadow: 1px 1px 1px #666;
+      border-radius: 0; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal .ui-slider-handle, .overlay--hotel-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal .ui-slider-handle {
+      -webkit-border-radius: 1px 1px 5px #666;
+      -moz-border-radius: 1px 1px 5px #666;
+      -ms-border-radius: 1px 1px 5px #666;
+      box-shadow: 1px 1px 5px #666;
+      width: 20px;
+      height: 20px;
+      background: #fed446;
+      border: 0;
+      border-radius: 0;
+      margin-left: -10px; }
+  .overlay--flight-filter .overlay__content .filter-group.filter-group--airline label img, .overlay--hotel-filter .overlay__content .filter-group.filter-group--airline label img {
+    height: 30px;
+    margin-right: 10px; }
+  .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content:after, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content:after, .overlay--flight-filter .overlay__content .filter-group.filter-group--facility .filter-group__content:after, .overlay--flight-filter .overlay__content .filter-group.filter-group--area .filter-group__content:after, .overlay--flight-filter .overlay__content .filter-group.filter-group--room .filter-group__content:after, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content:after, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content:after, .overlay--hotel-filter .overlay__content .filter-group.filter-group--departure .filter-group__content:after, .overlay--hotel-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content:after, .overlay--hotel-filter .overlay__content .filter-group.filter-group--facility .filter-group__content:after, .overlay--hotel-filter .overlay__content .filter-group.filter-group--area .filter-group__content:after, .overlay--hotel-filter .overlay__content .filter-group.filter-group--room .filter-group__content:after, .overlay--hotel-filter .overlay__content .filter-group.filter-group--transit .filter-group__content:after, .overlay--hotel-filter .overlay__content .filter-group.filter-group--airline .filter-group__content:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label, .overlay--flight-filter .overlay__content .filter-group.filter-group--facility .filter-group__content label, .overlay--flight-filter .overlay__content .filter-group.filter-group--area .filter-group__content label, .overlay--flight-filter .overlay__content .filter-group.filter-group--room .filter-group__content label, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label, .overlay--hotel-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label, .overlay--hotel-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label, .overlay--hotel-filter .overlay__content .filter-group.filter-group--facility .filter-group__content label, .overlay--hotel-filter .overlay__content .filter-group.filter-group--area .filter-group__content label, .overlay--hotel-filter .overlay__content .filter-group.filter-group--room .filter-group__content label, .overlay--hotel-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label, .overlay--hotel-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label {
+    display: block;
+    float: left;
+    width: 50%;
+    border: 0;
+    margin-bottom: 0;
+    padding: 6px 0;
+    position: relative; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--facility .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--area .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--room .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--facility .filter-group__content label .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--area .filter-group__content label .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--room .filter-group__content label .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label .switch {
+      float: left;
+      width: 20px;
+      height: 20px;
+      content: "";
+      background: #fff;
+      border: 3px solid #fff;
+      position: absolute;
+      top: 50%;
+      margin-top: -10px;
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      -ms-border-radius: 20px;
+      border-radius: 20px; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--facility .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--area .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--room .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label input, .overlay--hotel-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label input, .overlay--hotel-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label input, .overlay--hotel-filter .overlay__content .filter-group.filter-group--facility .filter-group__content label input, .overlay--hotel-filter .overlay__content .filter-group.filter-group--area .filter-group__content label input, .overlay--hotel-filter .overlay__content .filter-group.filter-group--room .filter-group__content label input, .overlay--hotel-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label input, .overlay--hotel-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label input {
+      display: none; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--facility .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--area .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--room .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label span, .overlay--hotel-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label span, .overlay--hotel-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label span, .overlay--hotel-filter .overlay__content .filter-group.filter-group--facility .filter-group__content label span, .overlay--hotel-filter .overlay__content .filter-group.filter-group--area .filter-group__content label span, .overlay--hotel-filter .overlay__content .filter-group.filter-group--room .filter-group__content label span, .overlay--hotel-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label span, .overlay--hotel-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label span {
+      width: 100%;
+      padding-left: 30px;
+      display: block; }
+    .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label.active .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label.active .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--facility .filter-group__content label.active .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--area .filter-group__content label.active .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--room .filter-group__content label.active .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label.active .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label.active .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label.active .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label.active .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--facility .filter-group__content label.active .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--area .filter-group__content label.active .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--room .filter-group__content label.active .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label.active .switch, .overlay--hotel-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label.active .switch {
+      background: #ffca10; }
+  .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label, .overlay--hotel-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label {
+    width: 33.3334%; }
+  .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label, .overlay--hotel-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label {
+    width: 100%; }
+.overlay--flight-filter .overlay__content .reset, .overlay--hotel-filter .overlay__content .reset {
+  text-align: center;
+  margin: 20px 0; }
+  .overlay--flight-filter .overlay__content .reset .btn-reset, .overlay--hotel-filter .overlay__content .reset .btn-reset {
+    width: 104px;
+    height: 42px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    border-radius: 0;
+    background: #696969;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff; }
 
 /*--------------------*/
 /*--------------------*/
@@ -2186,147 +2323,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           -moz-border-radius: 2px;
           -ms-border-radius: 2px;
           border-radius: 2px; }
-
-.overlay--flight-filter .overlay__content .filter-container {
-  padding: 12px; }
-.overlay--flight-filter .overlay__content .filter-group {
-  padding: 15px 12px;
-  font-size: 11px; }
-  .overlay--flight-filter .overlay__content .filter-group label {
-    font-weight: normal; }
-  .overlay--flight-filter .overlay__content .filter-group + .filter-group {
-    border-top: 1px solid #999; }
-  .overlay--flight-filter .overlay__content .filter-group .filter-group__header {
-    margin-bottom: 5px; }
-    .overlay--flight-filter .overlay__content .filter-group .filter-group__header .filter-group__title {
-      margin: 0;
-      font-weight: 600;
-      font-size: 12px; }
-  .overlay--flight-filter .overlay__content .filter-group .filter-group__content label {
-    display: block;
-    padding: 12px 0; }
-    .overlay--flight-filter .overlay__content .filter-group .filter-group__content label + label {
-      border-top: 1px solid #ccc; }
-  .overlay--flight-filter .overlay__content .filter-group .filter-group__content input[type="checkbox"] {
-    float: right; }
-  .overlay--flight-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal {
-    -webkit-border-radius: 1px 1px 1px #666;
-    -moz-border-radius: 1px 1px 1px #666;
-    -ms-border-radius: 1px 1px 1px #666;
-    box-shadow: 1px 1px 1px #666;
-    margin: 10px 0;
-    background: #fff;
-    border: none !important;
-    border-radius: 0;
-    height: 15px; }
-    .overlay--flight-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal .ui-slider-range {
-      background: #fed446;
-      box-shadow: 1px 1px 1px #666;
-      border-radius: 0; }
-    .overlay--flight-filter .overlay__content .filter-group.filter-group--price .ui-slider-horizontal .ui-slider-handle {
-      -webkit-border-radius: 1px 1px 5px #666;
-      -moz-border-radius: 1px 1px 5px #666;
-      -ms-border-radius: 1px 1px 5px #666;
-      box-shadow: 1px 1px 5px #666;
-      width: 20px;
-      height: 20px;
-      background: #fed446;
-      border: 0;
-      border-radius: 0;
-      margin-left: -10px; }
-  .overlay--flight-filter .overlay__content .filter-group.filter-group--airline label img {
-    height: 30px;
-    margin-right: 10px; }
-  .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content:after, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content:after, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content:after, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content:after {
-    display: block;
-    width: 100%;
-    content: "";
-    clear: both; }
-  .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label {
-    display: block;
-    float: left;
-    width: 50%;
-    border: 0;
-    margin-bottom: 0;
-    padding: 6px 0;
-    position: relative; }
-    .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label .switch {
-      float: left;
-      width: 20px;
-      height: 20px;
-      content: "";
-      background: #fff;
-      border: 3px solid #fff;
-      position: absolute;
-      top: 50%;
-      margin-top: -10px;
-      -webkit-border-radius: 20px;
-      -moz-border-radius: 20px;
-      -ms-border-radius: 20px;
-      border-radius: 20px; }
-    .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label input, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label input {
-      display: none; }
-    .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label span, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label span {
-      width: 100%;
-      padding-left: 30px;
-      display: block; }
-    .overlay--flight-filter .overlay__content .filter-group.filter-group--departure .filter-group__content label.active .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--arrival .filter-group__content label.active .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label.active .switch, .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label.active .switch {
-      background: #ffca10; }
-  .overlay--flight-filter .overlay__content .filter-group.filter-group--transit .filter-group__content label {
-    width: 33.3334%; }
-  .overlay--flight-filter .overlay__content .filter-group.filter-group--airline .filter-group__content label {
-    width: 100%; }
-.overlay--flight-filter .overlay__content .reset {
-  text-align: center;
-  margin: 20px 0; }
-  .overlay--flight-filter .overlay__content .reset .btn-reset {
-    width: 104px;
-    height: 42px;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    -ms-border-radius: 0;
-    border-radius: 0;
-    background: #696969;
-    font-size: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #fff; }
-
-.overlay--flight-sort .overlay__content {
-  padding: 0;
-  font-size: 11px; }
-  .overlay--flight-sort .overlay__content span {
-    display: block;
-    padding: 20px 15px; }
-    .overlay--flight-sort .overlay__content span:before {
-      content: '';
-      width: 20px;
-      height: 20px;
-      background: #fff;
-      display: inline-block;
-      vertical-align: middle;
-      margin-right: 10px;
-      border: 3px solid #fff;
-      -webkit-border-radius: 50px;
-      -moz-border-radius: 50px;
-      -ms-border-radius: 50px;
-      border-radius: 50px; }
-    .overlay--flight-sort .overlay__content span + span {
-      border-top: 1px solid #999; }
-    .overlay--flight-sort .overlay__content span.active {
-      color: #fff; }
-      .overlay--flight-sort .overlay__content span.active:before {
-        background: #ffca10; }
-    .overlay--flight-sort .overlay__content span:hover {
-      background: #2fb4e6; }
-  .overlay--flight-sort .overlay__content label {
-    display: block;
-    width: 100%;
-    padding: 12px 0; }
-    .overlay--flight-sort .overlay__content label + label {
-      border-top: 1px solid #ccc; }
-    .overlay--flight-sort .overlay__content label input[type="radio"] {
-      float: right; }
 
 .overlay--flight-detail .overlay__content {
   padding: 0; }
@@ -3662,7 +3658,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       width: 68px; }
     .page-hotel .star.e-star.star-5 {
       width: 85px; }
-  .page-hotel .maps-icon, .page-hotel .detail-hotel-container .detail-hotel .dh-location:before {
+  .page-hotel .maps-icon, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-location:before {
     content: '';
     width: 13px;
     height: 18px;
@@ -3696,7 +3692,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     display: inline-block;
     float: right;
     vertical-align: middle; }
-  .page-hotel .wifi-icon-sm, .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .facility .wifi {
+  .page-hotel .wifi-icon-sm, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .facility .wifi {
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/wifi.png) no-repeat;
     vertical-align: middle;
@@ -3721,7 +3717,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
-  .page-hotel .meal-icon-sm, .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .facility .meal {
+  .page-hotel .wifi-icon-white, .page-hotel .sh-list .wifi-white:before {
+    content: '';
+    display: inline-block;
+    background: url(/Assets/mobile/images/Hotel/wifi-white.png) no-repeat;
+    width: 26px;
+    height: 20px;
+    background-size: 100%;
+    vertical-align: middle;
+    margin-right: 10px; }
+  .page-hotel .meal-icon-sm, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .facility .meal {
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/meal-grey.png) no-repeat;
     vertical-align: middle;
@@ -3747,7 +3752,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
-  .page-hotel .ac-icon-sm, .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .facility .ac {
+  .page-hotel .meal-icon-white, .page-hotel .sh-list .meal-white:before {
+    content: '';
+    display: inline-block;
+    background: url(/Assets/mobile/images/Hotel/meal-white.png) no-repeat;
+    width: 22px;
+    height: 24px;
+    background-size: 100%;
+    vertical-align: middle;
+    margin-right: 10px; }
+  .page-hotel .ac-icon-sm, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .facility .ac {
     display: inline-block;
     background: url(/Assets/mobile/images/Hotel/ac.png) no-repeat;
     vertical-align: middle;
@@ -3772,6 +3786,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
+  .page-hotel .ac-icon-white, .page-hotel .sh-list .ac-white:before {
+    content: '';
+    display: inline-block;
+    background: url(/Assets/mobile/images/Hotel/ac-white.png) no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 100%;
+    vertical-align: middle;
+    margin-right: 10px; }
   .page-hotel .bell-icon, .page-hotel .sh-list .bell-blue:before {
     content: '';
     display: inline-block;
@@ -3790,6 +3813,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
+  .page-hotel .bell-icon-white, .page-hotel .sh-list .bell-white:before {
+    content: '';
+    display: inline-block;
+    background: url(/Assets/mobile/images/Hotel/bel-white.png) no-repeat;
+    width: 26px;
+    height: 19px;
+    background-size: 100%;
+    vertical-align: middle;
+    margin-right: 10px; }
   .page-hotel .pool-icon, .page-hotel .sh-list .pool-blue:before {
     content: '';
     display: inline-block;
@@ -3802,12 +3834,21 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page-hotel .pool-icon-grey, .page-hotel .sh-list .pool-grey:before {
     content: '';
     display: inline-block;
-    background: url(/Assets/mobile/images/Hotel/bell-pool.png) no-repeat;
+    background: url(/Assets/mobile/images/Hotel/pool-grey.png) no-repeat;
     width: 19px;
     height: 25px;
     background-size: 100%;
     position: absolute;
     left: 0; }
+  .page-hotel .pool-icon-white, .page-hotel .sh-list .pool-white:before {
+    content: '';
+    display: inline-block;
+    background: url(/Assets/mobile/images/Hotel/pool-white.png) no-repeat;
+    width: 19px;
+    height: 25px;
+    background-size: 100%;
+    vertical-align: middle;
+    margin-right: 10px; }
   .page-hotel .bar-icon, .page-hotel .sh-list .bar-blue:before {
     content: '';
     display: inline-block;
@@ -3826,6 +3867,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
+  .page-hotel .bed-icon-white, .page-hotel .sh-list .bed-white:before {
+    content: '';
+    display: inline-block;
+    background: url(/Assets/mobile/images/Hotel/bed-white.png) no-repeat;
+    width: 31px;
+    height: 18px;
+    background-size: 100%;
+    vertical-align: middle;
+    margin-right: 10px; }
   .page-hotel .car-icon, .page-hotel .sh-list .car-blue:before {
     content: '';
     display: inline-block;
@@ -3835,6 +3885,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
+  .page-hotel .car-icon-white, .page-hotel .sh-list .car-white:before {
+    content: '';
+    display: inline-block;
+    background: url(/Assets/mobile/images/Hotel/car-white.png) no-repeat;
+    width: 27px;
+    height: 24px;
+    background-size: 100%;
+    vertical-align: middle;
+    margin-right: 10px; }
   .page-hotel .checkin-icon, .page-hotel .sh-list .check-in:before {
     content: '';
     display: block;
@@ -3868,7 +3927,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     position: absolute;
     left: 0; }
-  .page-hotel .arrow-detail, .page-hotel .detail-hotel-container .search-list .hotel-list-container .hotel-list .col-right-hotel .price .detail {
+  .page-hotel .tv-icon-white, .page-hotel .sh-list .tv-white:before {
+    content: '';
+    display: inline-block;
+    background: url(/Assets/mobile/images/Hotel/tv-white.png) no-repeat;
+    width: 25px;
+    height: 27px;
+    background-size: 100%;
+    vertical-align: middle;
+    margin-right: 10px; }
+  .page-hotel .arrow-detail, .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list .col-right-hotel .price .detail {
     background: url(/Assets/mobile/images/Hotel/arrow-orange.png);
     display: block;
     width: 8px;
@@ -3877,7 +3945,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     right: 0;
     margin-right: 15px;
     vertical-align: middle; }
-  .page-hotel .arrow-down, .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .accordion-wrapper .accordion-dh:before {
+  .page-hotel .arrow-down, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .accordion-wrapper .accordion-dh:before {
     content: '';
     display: block;
     background: url(/Assets/mobile/images/Hotel/arrow-down-orange.png);
@@ -3888,7 +3956,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin-right: 20px;
     vertical-align: middle;
     margin-top: 10px; }
-  .page-hotel .arrow-up, .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .accordion-wrapper .accordion-dh.active:before {
+  .page-hotel .arrow-up, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .accordion-wrapper .accordion-dh.active:before {
     content: '';
     display: block;
     background: url(/Assets/mobile/images/Hotel/arrow-up-orange.png);
@@ -3899,13 +3967,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin-right: 20px;
     vertical-align: middle;
     margin-top: 10px; }
-  .page-hotel .arrow-down-grey, .page-hotel .detail-hotel-container .spec-hotel .sh-txt .sh-open {
+  .page-hotel .arrow-down-grey, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-txt .sh-open {
     display: block;
     background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
     width: 13px;
     height: 8px;
     margin: 10px auto 0; }
-  .page-hotel .arrow-up-grey, .page-hotel .detail-hotel-container .spec-hotel .sh-txt .sh-close {
+  .page-hotel .arrow-up-grey, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-txt .sh-close {
     display: block;
     background: url(/Assets/mobile/images/Hotel/arrow-up-grey.png) no-repeat;
     width: 13px;
@@ -4028,69 +4096,69 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin: 20px 0; }
   .page-hotel .rr-title {
     margin-bottom: 10px; }
-  .page-hotel .detail-hotel-container {
+  .page-hotel .travorama-hotel-mobile {
     /*--------------------*/
     /* imports */ }
-    .page-hotel .detail-hotel-container .search-list {
+    .page-hotel .travorama-hotel-mobile .search-list {
       font-size: 11px; }
-      .page-hotel .detail-hotel-container .search-list .hotel-list-container .hotel-list {
+      .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list {
         padding: 15px 10px; }
-        .page-hotel .detail-hotel-container .search-list .hotel-list-container .hotel-list .col-right-hotel .star {
+        .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list .col-right-hotel .star {
           margin-top: 3px; }
-        .page-hotel .detail-hotel-container .search-list .hotel-list-container .hotel-list .col-right-hotel .price {
+        .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list .col-right-hotel .price {
           margin-top: 10px; }
-    .page-hotel .detail-hotel-container .detail-hotel {
+    .page-hotel .travorama-hotel-mobile .detail-hotel {
       /*display: none;*/ }
-      .page-hotel .detail-hotel-container .detail-hotel .dh-title {
+      .page-hotel .travorama-hotel-mobile .detail-hotel .dh-title {
         padding: 20px 15px;
         border-bottom: 1px solid #e9e9e9; }
-        .page-hotel .detail-hotel-container .detail-hotel .dh-title .dh-name {
+        .page-hotel .travorama-hotel-mobile .detail-hotel .dh-title .dh-name {
           margin-bottom: 12px; }
-      .page-hotel .detail-hotel-container .detail-hotel .dh-location {
+      .page-hotel .travorama-hotel-mobile .detail-hotel .dh-location {
         padding: 20px 50px;
         border-bottom: 1px solid #e9e9e9;
         line-height: 12px;
         color: #666; }
-      .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-title {
+      .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-title {
         padding: 20px 15px 15px; }
-      .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container {
+      .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container {
         padding: 0;
         margin: 0;
         list-style: none; }
-        .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container > li {
+        .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container > li {
           border-top: 1px solid #e9e9e9; }
-          .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container > li:first-child {
+          .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container > li:first-child {
             border-top: none; }
-        .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-list {
+        .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list {
           padding: 10px 15px; }
-          .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-list .col-right-hotel .sm-txt.grey-txt {
+          .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list .col-right-hotel .sm-txt.grey-txt {
             margin: 5px 0; }
-        .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .accordion-wrapper .accordion-content {
+        .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .accordion-wrapper .accordion-content {
           margin-bottom: 0; }
-          .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .accordion-wrapper .accordion-content.show {
+          .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .accordion-wrapper .accordion-content.show {
             padding: 15px;
             border: none;
             background: #eceff4; }
-        .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-top img {
+        .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-top img {
           width: 100%; }
-        .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom {
+        .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom {
           margin-top: 15px; }
-          .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom > .sm-txt.grey-txt {
+          .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom > .sm-txt.grey-txt {
             line-height: 12px;
             margin-top: 6px; }
-          .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom > .price {
+          .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom > .price {
             margin: 6px 0; }
-          .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .facility {
+          .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .facility {
             margin-top: 6px; }
-          .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room {
+          .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room {
             margin-top: 15px; }
-            .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .room-title {
+            .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .room-title {
               float: left;
               line-height: 30px; }
-            .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .counter-room {
+            .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .counter-room {
               float: left;
               margin-left: 20px; }
-            .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .btn-room {
+            .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .btn-room {
               background: #2eb4e7;
               color: #fff !important;
               vertical-align: middle;
@@ -4099,23 +4167,23 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
               width: 30px;
               height: 30px;
               display: inline-block; }
-              .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .btn-room.btn-min {
+              .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .btn-room.btn-min {
                 margin-right: -3px; }
-                .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .btn-room.btn-min:before {
+                .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .btn-room.btn-min:before {
                   content: '-';
                   display: inline-block;
                   color: #fff;
                   font-size: 20px;
                   padding: 0 12px; }
-              .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .btn-room.btn-plus {
+              .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .btn-room.btn-plus {
                 margin-left: -3px; }
-                .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .btn-room.btn-plus:before {
+                .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .btn-room.btn-plus:before {
                   content: '+';
                   display: inline-block;
                   color: #fff;
                   font-size: 20px;
                   padding: 0 9px; }
-            .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .result-room {
+            .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room .result-room {
               background: #fff;
               vertical-align: middle;
               font-size: 14px;
@@ -4125,29 +4193,29 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
               width: 50px;
               text-align: center;
               border: 1px solid #ccc; }
-            .page-hotel .detail-hotel-container .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room > a.btn-yellow {
+            .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-accordion .dh-list-detail .dh-bottom .room > a.btn-yellow {
               float: right; }
-    .page-hotel .detail-hotel-container .spec-hotel {
+    .page-hotel .travorama-hotel-mobile .spec-hotel {
       display: none; }
-      .page-hotel .detail-hotel-container .spec-hotel .sh-title {
+      .page-hotel .travorama-hotel-mobile .spec-hotel .sh-title {
         margin-bottom: 15px; }
-      .page-hotel .detail-hotel-container .spec-hotel .sh-desc, .page-hotel .detail-hotel-container .spec-hotel .sh-facility, .page-hotel .detail-hotel-container .spec-hotel .sh-policy {
+      .page-hotel .travorama-hotel-mobile .spec-hotel .sh-desc, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-policy {
         padding: 25px 15px; }
-      .page-hotel .detail-hotel-container .spec-hotel .sh-desc, .page-hotel .detail-hotel-container .spec-hotel .sh-facility {
+      .page-hotel .travorama-hotel-mobile .spec-hotel .sh-desc, .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility {
         border-bottom: 1px solid #e9e9e9; }
-      .page-hotel .detail-hotel-container .spec-hotel .sh-txt {
+      .page-hotel .travorama-hotel-mobile .spec-hotel .sh-txt {
         height: 160px; }
-        .page-hotel .detail-hotel-container .spec-hotel .sh-txt.opened {
+        .page-hotel .travorama-hotel-mobile .spec-hotel .sh-txt.opened {
           height: auto; }
-          .page-hotel .detail-hotel-container .spec-hotel .sh-txt.opened .toggle .sh-open {
+          .page-hotel .travorama-hotel-mobile .spec-hotel .sh-txt.opened .toggle .sh-open {
             display: none; }
-          .page-hotel .detail-hotel-container .spec-hotel .sh-txt.opened .toggle .sh-close {
+          .page-hotel .travorama-hotel-mobile .spec-hotel .sh-txt.opened .toggle .sh-close {
             display: block; }
-        .page-hotel .detail-hotel-container .spec-hotel .sh-txt .toggle .sh-open {
+        .page-hotel .travorama-hotel-mobile .spec-hotel .sh-txt .toggle .sh-open {
           display: block; }
-        .page-hotel .detail-hotel-container .spec-hotel .sh-txt .toggle .sh-close {
+        .page-hotel .travorama-hotel-mobile .spec-hotel .sh-txt .toggle .sh-close {
           display: none; }
-      .page-hotel .detail-hotel-container .spec-hotel .sh-facility .sh-list-facility {
+      .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility {
         padding-left: 15px; }
   .page-hotel .overlay--detail-room.overlay .overlay__content {
     padding: 0; }

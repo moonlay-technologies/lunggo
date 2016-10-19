@@ -20,7 +20,7 @@
     .xs-txt {font-size: 8px;}
     .italic-txt {font-style: italic;}
     .underline-txt {text-decoration: line-through;} 
-    .downline-txt {text-decoration: underline;} 
+    .downline-txt {text-decoration: underline;}
     .bold-txt {font-weight: 700;}
     .semibold-txt {font-weight: 600;}
     .normal-txt {font-weight: 400;}   
@@ -178,6 +178,16 @@
         background-size: 100%;
         position: absolute;
         left: 0;
+    } 
+    .wifi-icon-white {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/wifi-white.png) no-repeat;
+        width: 26px;
+        height: 20px;
+        background-size: 100%;
+        vertical-align: middle;
+        margin-right: 10px;
     }  
     .meal-icon-sm {
         display: inline-block;
@@ -208,6 +218,16 @@
         position: absolute;
         left: 0;
     }
+    .meal-icon-white {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/meal-white.png) no-repeat;
+        width: 22px;
+        height: 24px;
+        background-size: 100%;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
     .ac-icon-sm {
         display: inline-block;
         background: url(/Assets/mobile/images/Hotel/ac.png) no-repeat;
@@ -236,6 +256,16 @@
         position: absolute;
         left: 0;
     }
+    .ac-icon-white {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/ac-white.png) no-repeat;
+        width: 24px;
+        height: 24px;
+        background-size: 100%;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
     .bell-icon {
         content: '';
         display: inline-block;
@@ -256,6 +286,16 @@
         position: absolute;
         left: 0;
     }
+    .bell-icon-white {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/bel-white.png) no-repeat;
+        width: 26px;
+        height: 19px;
+        background-size: 100%;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
     .pool-icon {
         content: '';
         display: inline-block;
@@ -269,12 +309,22 @@
     .pool-icon-grey {
         content: '';
         display: inline-block;
-        background: url(/Assets/mobile/images/Hotel/bell-pool.png) no-repeat;
+        background: url(/Assets/mobile/images/Hotel/pool-grey.png) no-repeat;
         width: 19px;
         height: 25px;
         background-size: 100%;
         position: absolute;
         left: 0;
+    }
+    .pool-icon-white {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/pool-white.png) no-repeat;
+        width: 19px;
+        height: 25px;
+        background-size: 100%;
+        vertical-align: middle;
+        margin-right: 10px;
     }
     .bar-icon {
         content: '';
@@ -296,6 +346,16 @@
         position: absolute;
         left: 0;
     }
+    .bed-icon-white {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/bed-white.png) no-repeat;
+        width: 31px;
+        height: 18px;
+        background-size: 100%;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
     .car-icon {
         content: '';
         display: inline-block;
@@ -305,6 +365,16 @@
         background-size: 100%;
         position: absolute;
         left: 0;
+    }
+    .car-icon-white {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/car-white.png) no-repeat;
+        width: 27px;
+        height: 24px;
+        background-size: 100%;
+        vertical-align: middle;
+        margin-right: 10px;
     }
     .checkin-icon {
         content: '';
@@ -342,6 +412,16 @@
         background-size: 100%;
         position: absolute;
         left: 0;
+    }
+    .tv-icon-white {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/mobile/images/Hotel/tv-white.png) no-repeat;
+        width: 25px;
+        height: 27px;
+        background-size: 100%;
+        vertical-align: middle;
+        margin-right: 10px;
     }
     /*Arrow icons*/
     .arrow-detail {
@@ -479,17 +559,25 @@
         }
         .ac-blue:before {@extend .ac-icon;}
         .ac-grey:before {@extend .ac-icon-grey;}
+        .ac-white:before {@extend .ac-icon-white;}
         .meal-blue:before {@extend .meal-icon;}
         .meal-grey:before {@extend .meal-icon-grey;}
+        .meal-white:before {@extend .meal-icon-white;}
         .bell-blue:before {@extend .bell-icon;}
         .bell-grey:before {@extend .bell-icon-grey;}
+        .bell-white:before {@extend .bell-icon-white;}
         .wifi-blue:before {@extend .wifi-icon;}
         .wifi-grey:before {@extend .wifi-icon-grey;}
+        .wifi-white:before {@extend .wifi-icon-white;}
         .pool-blue:before {@extend .pool-icon;}
         .pool-grey:before {@extend .pool-icon-grey;}            
+        .pool-white:before {@extend .pool-icon-white;}            
         .bed-blue:before {@extend .bed-icon;}
+        .bed-white:before {@extend .bed-icon-white;}
         .tv-blue:before {@extend .tv-icon;}
+        .tv-white:before {@extend .tv-icon-white;}
         .car-blue:before {@extend .car-icon;}
+        .car-white:before {@extend .car-icon-white;}
         .bar-blue:before {@extend .bar-icon;}
         .check-in:before {@extend .checkin-icon; margin: 0 auto;}
         .check-out:before {@extend .checkout-icon; margin: 0 auto;}
@@ -509,7 +597,7 @@
     }
     .rr-detail {margin: 20px 0;}
     .rr-title {margin-bottom: 10px;}
-    .detail-hotel-container {
+    .travorama-hotel-mobile {
         /*--------------------*/
         /* imports */
         @import 'page_hotel_search';
