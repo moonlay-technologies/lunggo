@@ -100,10 +100,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotelList = hotels.Take(100).ToList();
                 }
 
+                hotelList = AddHotelDetail(hotelList);
+
                 return new SearchHotelOutput
                 {
                     SearchId = searchResult.SearchId,
-                    HotelDetailLists = ConvertToHotelDetailForDisplay(hotelList)
+                    HotelDetailLists = ConvertToHotelDetailForDisplay(hotelList),
+                    StartPage = input.StartPage,
+                    EndPage = hotelList.Count,
+                    TotalHotel = hotelList.Count
                 };
             }
             else
@@ -172,9 +177,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                     return new SearchHotelOutput
                     {
                         SearchId = result.SearchId,
-                        HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails).Take(100).ToList(),
+                        HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
                         StartPage = 1,
                         EndPage = 100,
+                        TotalHotel = firstPageHotelDetails.Count
                     };
                 }
                 else
