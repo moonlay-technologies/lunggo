@@ -50,6 +50,10 @@
     <Compile Include="TableRecord\CurrencyTableRecord.cs" />
     <Compile Include="TableRecord\DiscountTableRecord.cs" />
     <Compile Include="TableRecord\FlightItineraryRuleTableRecord.cs" />
+    <Compile Include="TableRecord\HotelRateRuleTableRecord.cs">
+      <SubType>
+      </SubType>
+    </Compile>
     <Compile Include="TableRecord\HotelRateTableRecord.cs" />
     <Compile Include="TableRecord\HotelReservationDetailsTableRecord.cs" />
     <Compile Include="TableRecord\HotelRoomTableRecord.cs" />
@@ -117,6 +121,10 @@
     <Compile Include="TableRepository\DiscountRepository.cs" />
     <Compile Include="TableRepository\FlightItineraryRuleRepository.cs" />
     <Compile Include="TableRepository\HotelRateRepository.cs" />
+    <Compile Include="TableRepository\HotelRateRuleRepository.cs">
+      <SubType>
+      </SubType>
+    </Compile>
     <Compile Include="TableRepository\HotelReservationDetailsRepository.cs" />
     <Compile Include="TableRepository\HotelRoomRepository.cs" />
     <Compile Include="TableRepository\MarginRepository.cs" />

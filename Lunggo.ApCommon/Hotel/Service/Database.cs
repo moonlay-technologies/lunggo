@@ -4,7 +4,7 @@ using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
-using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
+using Lunggo.ApCommon.Hotel.Query;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
@@ -131,22 +131,50 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        //private List<HotelReservation> GetOverviewReservationsByUserIdOrEmailFromDb(string userId, string email, string[] filters, string sort, int? page, int? itemsPerPage)
-        //{
-        //    using (var conn = DbService.GetInstance().GetOpenConnection())
-        //    {
-        //        var rsvNos =
-        //            GetRsvNosByUserIdQuery.GetInstance()
-        //                .Execute(conn, new { UserId = userId, ContactEmail = email }, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
-        //                .Distinct().ToList();
-        //        if (!rsvNos.Any())
-        //            return null;
-        //        else
-        //        {
-        //            return rsvNos.Select(GetOverviewReservationFromDb).Where(rsv => rsv != null).ToList();
-        //        }
-        //    }
-        //}
+        private static List<HotelMarginRule> GetActivePriceMarginRulesFromDb()
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var activeRules = GetActiveHotelPriceMarginRuleQuery.GetInstance().ExecuteMultiMap(conn, null, null,
+                    (marginRecord, ruleRecord) =>
+                    {
+                        var margin = new Margin
+                        {
+                            Id = marginRecord.Id.GetValueOrDefault(),
+                            RuleId = marginRecord.OrderRuleId.GetValueOrDefault(),
+                            Name = marginRecord.Name,
+                            Description = marginRecord.Description,
+                            Percentage = marginRecord.Percentage.GetValueOrDefault(),
+                            Constant = marginRecord.Constant.GetValueOrDefault(),
+                            Currency = new Currency(marginRecord.CurrencyCd),
+                            IsFlat = marginRecord.IsFlat.GetValueOrDefault(),
+                            IsActive = marginRecord.IsActive.GetValueOrDefault(),
+                        };
+                        var rule = new HotelRateRule
+                        {
+                            BookingDays = ruleRecord.BookingDays.Deserialize<List<DayOfWeek>>(),
+                            ConstraintCount = ruleRecord.ConstraintCount.GetValueOrDefault(),
+                            Priority = ruleRecord.Priority.GetValueOrDefault(),
+                            StayDates = ruleRecord.StayDates.Deserialize<List<HotelRateRule.DateSpanRule>>(),
+                            StayDurations = ruleRecord.StayDurations.Deserialize<List<int>>(),
+                            Boards = ruleRecord.Boards.Deserialize<List<string>>(),
+                            BookingDates = ruleRecord.BookingDays.Deserialize<List<HotelRateRule.DateSpanRule>>(),
+                            Countries = ruleRecord.Countries.Deserialize<List<string>>(),
+                            Destinations = ruleRecord.Destinations.Deserialize<List<string>>(),
+                            HotelChains = ruleRecord.HotelChains.Deserialize<List<string>>(),
+                            HotelStars = ruleRecord.HotelStars.Deserialize<List<string>>(),
+                            MaxAdult = ruleRecord.MaxAdult.GetValueOrDefault(),
+                            MaxChild = ruleRecord.MaxChild.GetValueOrDefault(),
+                            MinAdult = ruleRecord.MinAdult.GetValueOrDefault(),
+                            MinChild = ruleRecord.MinChild.GetValueOrDefault(),
+                            RoomTypes = ruleRecord.RoomTypes.Deserialize<List<string>>()
+                        };
+                        return new HotelMarginRule(margin, rule);
+                    }, "BookingDateSpans").ToList();
+                return activeRules.ToList();
+            }
+        }
+
         #endregion
 
         #region Insert
@@ -254,7 +282,88 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
         }
-        
+
+        private static void InsertPriceMarginRulesToDb(List<HotelMarginRule> rules, List<HotelMarginRule> deletedRules)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var activeRules = GetActivePriceMarginRulesFromDb();
+                foreach (var deletedRule in deletedRules)
+                {
+                    if (activeRules.Any(activeRule => activeRule.Margin.Id == deletedRule.Margin.Id))
+                    {
+                        HotelRateRuleTableRepo.GetInstance()
+                            .Update(conn, new HotelRateRuleTableRecord
+                            {
+                                Id = deletedRule.Margin.RuleId,
+                                Priority = deletedRule.Rule.Priority,
+                            });
+                        MarginTableRepo.GetInstance()
+                            .Update(conn, new MarginTableRecord
+                            {
+                                Id = deletedRule.Margin.Id,
+                                IsActive = deletedRule.Margin.IsActive
+                            });
+                    }
+                }
+                foreach (var marginRule in rules)
+                {
+                    if (activeRules.Any(activeRule => activeRule.Margin.RuleId == marginRule.Margin.RuleId))
+                    {
+                        HotelRateRuleTableRepo.GetInstance()
+                            .Update(conn, new HotelRateRuleTableRecord
+                            {
+                                Id = marginRule.Margin.RuleId,
+                                Priority = marginRule.Rule.Priority,
+                            });
+                    }
+                    else
+                    {
+                        var margin = marginRule.Margin;
+                        var marginRecord = new MarginTableRecord
+                        {
+                            Id = margin.Id,
+                            Name = margin.Name,
+                            Description = margin.Description,
+                            Percentage = margin.Percentage,
+                            Constant = margin.Constant,
+                            IsFlat = margin.IsFlat,
+                            IsActive = true,
+                            InsertBy = "LunggoSystem",
+                            InsertDate = DateTime.UtcNow,
+                            InsertPgId = "0"
+                        };
+                        MarginTableRepo.GetInstance().Insert(conn, marginRecord);
+
+                        var rule = marginRule.Rule;
+                        var ruleRecord = new HotelRateRuleTableRecord
+                        {
+                            Id = marginRule.Margin.RuleId,
+                            BookingDays = rule.BookingDays.Serialize(),
+                            BookingDates = rule.BookingDates.Serialize(),
+                            Boards = rule.ToString().Serialize(),
+                            Countries = rule.Countries.Serialize(),
+                            Destinations = rule.Countries.Serialize(),
+                            HotelChains = rule.HotelChains.Serialize(),
+                            HotelStars = rule.HotelStars.Serialize(),
+                            MaxAdult = rule.MaxAdult,
+                            MaxChild = rule.MaxChild,
+                            MinAdult = rule.MinAdult,
+                            MinChild = rule.MinChild,
+                            RoomTypes = rule.RoomTypes.Serialize(),
+                            StayDates = rule.StayDates.Serialize(),
+                            StayDurations = rule.StayDurations.Serialize(),
+                            ConstraintCount = rule.ConstraintCount,
+                            Priority = rule.Priority,
+                            InsertBy = "LunggoSystem",
+                            InsertDate = DateTime.UtcNow,
+                            InsertPgId = "0"
+                        };
+                        HotelRateRuleTableRepo.GetInstance().Insert(conn, ruleRecord);
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Update
