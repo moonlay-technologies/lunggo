@@ -2933,6 +2933,7 @@
     <Content Include="Views\Hotel\Checkout.mobile.cshtml" />
     <Content Include="Views\Hotel\Thankyou.cshtml" />
     <Content Include="Views\Hotel\Thankyou.mobile.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SearchCalendarHotel.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

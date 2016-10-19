@@ -158,7 +158,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // form Search Location pop up
 // and form Date Selector pop up
 // search calendar
-.search-calendar {width:320px; height:520px; background:#252525; position:absolute; top:0; left:325px; z-index:2; display:none;
+.search-calendar, .search-calendar-hotel {width:320px; height:520px; background:#252525; position:absolute; top:0; left:325px; z-index:2; display:none;
     .calendar-header {height:40px; background:#4e4e4e; color:#fff; font-weight:600; font-size:17px; padding:10px 15px;
         .close-calendar {float:right; cursor:pointer;}
     }
@@ -170,6 +170,43 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .ui-datepicker {width:100% !important; position:relative;
         .ui-datepicker-group {width:100%; padding:15px;
             & + .ui-datepicker-group {border-top:$border-default;}
+            .ui-datepicker-title {color:#fff; color:$color-main-blue; font-size:14px; font-weight:600; margin-bottom:10px;}
+            .ui-datepicker-calendar {width:100%; color:#fff;
+                thead {
+                    th {text-align:center; padding-bottom:10px;
+                        span {color:#fff !important; font-size:12px;}
+                    }
+                }
+                tbody {
+                    tr {margin-bottom:5px;
+                        td {text-align:center;
+                            span, a {color:#fff; display:inline-block; font-size:12px; padding-top:4px; width:25px; height:25px;}
+                            a:hover {background:#fff; color:#252525; text-decoration:none;}
+                        }
+                    }
+                }
+                .ui-state-disabled, .ui-datepicker-unselectable {cursor:not-allowed;
+                    span {color:#666;}
+                }
+                .ui-datepicker-week-end {
+                    span, a {color:#fed83e;}
+                    a:hover {background:#fed83e;}
+                    // if disabled
+                    &.ui-datepicker-unselectable {
+                        span, a {color:#666;}
+                    }
+                }
+            }
+            .ui-datepicker-prev {position:absolute; top:-10px; left:15px; cursor:pointer; color:$color-main-blue; font-size:12px;}
+            .ui-datepicker-next {position:absolute; top:-10px; cursor:pointer; color:$color-main-blue; font-size:12px; left:auto; right:15px; font-size:12px;}
+        }
+    }
+}
+
+// datepicker hotel
+.hotel-date-picker {padding:15px;
+    .ui-datepicker {width:100% !important; position:relative;
+        &.ui-datepicker-inline {width:100%; padding:15px;
             .ui-datepicker-title {color:#fff; color:$color-main-blue; font-size:14px; font-weight:600; margin-bottom:10px;}
             .ui-datepicker-calendar {width:100%; color:#fff;
                 thead {

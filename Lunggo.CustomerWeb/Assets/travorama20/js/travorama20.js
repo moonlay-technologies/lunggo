@@ -1817,4 +1817,48 @@ function hotelFormSearchFunctions() {
         $('.search-hotel .location-recommend .tab-content>div').removeClass('active');
         $('.search-hotel .location-recommend .tab-content>div.' + showClass).addClass('active');
     });
+
+    //*****
+    // show and hide search calendar
+    function showCalendar(target) {
+        target = target || $('.search-calendar-hotel').attr('data-date');
+        $('.search-calendar-hotel').attr('id', target);
+        if (target == 'departure') {
+            $('.search-calendar-hotel .calendar-header .departure').removeClass('hidden');
+            $('.search-calendar-hotel .calendar-header .return').addClass('hidden');
+        } else {
+            $('.search-calendar-hotel .calendar-header .departure').addClass('hidden');
+            $('.search-calendar-hotel .calendar-header .return').removeClass('hidden');
+        }
+        $('.search-calendar-hotel').attr('data-date', target);
+        $('.searchsearch-calendar-hotel').show();
+    }
+
+    function hideCalendar() {
+        $('.search-calendar-hotel').hide();
+    }
+    $('.close-calendar').click(function () { hideCalendar(); });
+
+    //*****
+    // date selector
+    $('.form-hotel-checkin').click(function () {
+        $('.search-calendar-hotel').show();
+        showCalendar();
+        $('.hotel-date-picker').datepicker('option', 'minDate', new Date());
+    });
+
+    // embed date picker into page
+    $('.hotel-date-picker').datepicker({
+        numberOfMonths: 1,
+        onSelect: function (data) {
+            data = data.substring(3, 5) + "/" + data.substring(0, 2) + "/" + data.substring(6, 10);
+            console.log(data);
+            var target;
+            var chosenDate = new Date(data);
+            $(target + ' .date').html(('0' + chosenDate.getDate()).slice(-2));
+            $(target + ' .month').html(translateMonth(chosenDate.getMonth()));
+            $(target + ' .year').html(chosenDate.getFullYear());
+            $('.search-calendar-hotel').hide();
+        }
+    });
 }
