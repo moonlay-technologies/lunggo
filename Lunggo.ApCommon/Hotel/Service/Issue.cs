@@ -117,8 +117,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             UpdateRsvStatusDb(rsvData.RsvNo, issueResult.IsSuccess ? RsvStatus.Completed : RsvStatus.Failed);
             if (issueResult.IsSuccess == false)
             {
-                SendIssueFailedNotifToDeveloper(rsvData.RsvNo);
-                SendEticketSlightDelayNotifToCustomer(rsvData.RsvNo);
+                SendSaySorryFailedIssueNotifToCustomer(rsvData.RsvNo);
                 return new IssueHotelTicketOutput
                 {
                     IsSuccess = false,

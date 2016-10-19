@@ -117,6 +117,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Function\HotelSaySorryFailedIssueNotifEmail.cs" />
     <Compile Include="Function\HotelEticketEmail.cs" />
     <Compile Include="Function\FlightEticketSlightDelayNotifEmail.cs" />
     <Compile Include="Function\FlightIssueFailedNotifEmail.cs" />

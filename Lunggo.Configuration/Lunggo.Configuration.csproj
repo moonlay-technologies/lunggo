@@ -784,6 +784,10 @@
     <None Include="Config\CloudApp.EticketHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
+    <None Include="HtmlTemplate\HotelSaySorryFailedIssueNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\HotelEticketEmail.cshtml" />
+    <None Include="HtmlTemplate\HotelInvoice.cshtml" />
     <None Include="HtmlTemplate\HotelEticket.cshtml" />
     <None Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ContactUsEmail.cshtml" />
@@ -797,6 +801,7 @@
     <None Include="HtmlTemplate\TransferConfirmationEmail.cshtml" />
     <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
+    <None Include="HtmlTemplate\VirtualAccountInstructionEmailHotel.cshtml" />
     <None Include="HtmlTemplate\VirtualAccountInstructionEmail.cshtml" />
     <None Include="HtmlTemplate\BankTransferInstructionEmail.cshtml" />
     <None Include="HtmlTemplate\ForgotPasswordEmail.cshtml" />
