@@ -131,6 +131,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 if (!HotelChainMatches(rule, hotelDetail)) continue;
                 if (!BoardMatches(rule, rate)) continue;
                 if (!RoomTypeMatches(rule, rate)) continue;
+                if (!PaxMatches(rule, rate)) continue;
                 return marginRule;
             }
             return null;
@@ -190,6 +191,13 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var roomtype = rate.Type;
             return rule.HotelStars.Contains(roomtype);
+        }
+
+        private static bool PaxMatches(HotelRateRule rule, HotelRate rate)
+        {
+            var childCt = rate.ChildCount;
+            var adultCt = rate.AdultCount;
+            return rule.MinAdult <= adultCt && rule.MaxAdult >= adultCt && rule.MinChild <= childCt && rule.MaxChild >= childCt;
         }
 
        #endregion
