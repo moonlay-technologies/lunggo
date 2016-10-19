@@ -156,7 +156,7 @@
                 </nav>
             </header>
             <section class="tab-content">
-                <div class="tab-flight tab-pane cleafix" id="plane">
+                <div class="tab-flight tab-pane cleafix" id="plane" ng-click="changeTab()">
                     <form class="form form-horizontal form-flight" action="/id/Flight/Search" method="GET">
                         <h3 class="text-center">Cari <b>Tiket Pesawat</b></h3>
 
@@ -298,8 +298,8 @@
                                 <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" />
                             </div>
                         </div>
-                        <div class="form-group hotel-date">
-                            <div class="col-xs-6">
+                        <div class="form-group hotel-date" ng-click="hotelCalendar.show = true">
+                            <div class="col-xs-6" ng-click="hotelCalendar.show = true">
                                 <div class="form-hotel-checkin">
                                     <small>Tanggal Keberangkatan</small>
                                     <span class="date">28</span>
@@ -307,7 +307,7 @@
                                     <span class="year">2015</span>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
+                            <div class="col-xs-6" ng-click="hotelCalendar.show = true">
                                 <div class="form-hotel-checkout">
                                     <small>Tanggal Keberangkatan</small>
                                     <span class="date">28</span>
@@ -398,9 +398,24 @@
             </section>
 
         </div><!-- .search-form -->
+        <div class="search-calendar" ng-show="hotelCalendar.show">
+            <header class="calendar-header aaa">
+                <p class="departure calendar-title">Tanggal Check-in <span ng-click="hotelCalendar.show = false">X</span></p>
+            </header>
+            <section class="calendar-body">
+
+                <div class="home-nav">
+                    <a href="#" class="nav-prev"></a>
+                    <a href="#" class="nav-next"></a>
+                </div>
+
+                <div class="date-picker"></div>
+            </section>
+        </div><!-- .search-calendar -->
         @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
         @Html.Partial("/Views/Shared/Travorama20/_SearchLocation.cshtml")
         @Html.Partial("/Views/Shared/Travorama20/_SearchHotel.cshtml")
+        @Html.Partial("/Views/Shared/Travorama20/_SearchHotelCalendar.cshtml")
     </div><!-- .container -->
     @if (ViewBag.DestinationName == null || ViewBag.DestinationName == "" )
     {

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -8,18 +9,13 @@ namespace Lunggo.CustomerWeb.Models
 {
     public class HotelSearchModel
     {
-        [JsonProperty("zzz")]
-        public string info { get; set; }
-    }
-
-    public class Data
-    {
         [JsonProperty("aaa")]
         public int code { get; set; }
         [JsonProperty("bbb")]
         public string name { get; set; }
-
     }
+
+   
 
     public class HotelSearchApiRequest
     {
@@ -33,10 +29,22 @@ namespace Lunggo.CustomerWeb.Models
         public int AdultCount { get; set; }
         [JsonProperty("childCount")]
         public int ChildCount { get; set; }
-        [JsonProperty("hotelFilter")]
+        [JsonProperty("filter")]
         public HotelRequestFilter Filter { get; set; }
-        [JsonProperty("hotelSorting")]
+        [JsonProperty("sorting")]
         public HotelRequestSorting Sorting { get; set; }
+
+        public HotelSearchApiRequest(string queryString) {
+            List<string> query = queryString.Split('.').ToList<string>();
+            Location = query[0];
+            //DateTime tempDate = new DateTime();
+            //DateTime.TryParse(query[1], out tempDate) = true ? CheckinDate = tempDate : ;
+            CheckinDate = DateTime.Parse(query[1], new CultureInfo("id-ID"));
+            CheckoutDate = DateTime.Parse(query[2], new CultureInfo("id-ID"));
+            AdultCount = int.Parse(query[3]);
+            ChildCount = int.Parse(query[4]);
+           
+        }
     }
 
     public class HotelRequestFilter

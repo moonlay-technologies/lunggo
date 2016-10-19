@@ -8,10 +8,23 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', functi
         code: indexPageDestinationsCode
     };
 
+    $scope.hotelCalendar = {};
+    $scope.hotelCalendar.show = true;
+    $scope.changeTab = function (){
+    }
+
     //@Url.Action("Search", "Hotel")?zzz={{departureDate}}" method="POST"
     //=============== hotel start ======================
 
     $scope.hotel = {};
+    $scope.hotel.checkinDate = "28-12-2016";
+    $scope.hotel.checkoutDate = "30-12-2016";
+    $scope.hotel.nightCount = 1;
+    $scope.hotel.roomCount = 2;
+    $scope.hotel.adultCount = 3;
+    $scope.hotel.childCount = 1;
+
+
     $scope.hotel.searchHotel = function (){
         $log.debug('searching hotel');
         location.href = '/id/Hotel/Search/' + $scope.hotel.searchParam();
@@ -23,7 +36,14 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', functi
     };
 
     $scope.hotel.searchParam = function (){
-        return "?info=aaabbbccc"} 
+        return ("?info=" + 
+            [$scope.hotel.checkinDate,
+             $scope.hotel.checkoutDate,
+             $scope.hotel.nightCount,
+             $scope.hotel.roomCount,
+             $scope.hotel.adultCount,
+             $scope.hotel.childCount].join('.')
+        )
     }
     //=============== hotel end ======================
     
