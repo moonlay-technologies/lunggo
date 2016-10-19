@@ -264,114 +264,6 @@ label.control-label {
 .mandiri-clikpay-form {
 }
 
-// widget
-.widget-container {
-    .widget {
-        .widget-title {}
-        header {}
-        .widget-content {background:#ededed;}
-        footer {}
-
-        // widget price detail
-        &.price-detail {
-            .widget-content {padding:12px; font-size:12px;
-                dl {
-                    margin-bottom: 12px;
-                    &:before, &:after {@include clearfix();}
-                    dt {font-weight:600; width:60%; float:left; position:relative;
-                        &:before {content:""; position:absolute; width:7px; height:7px; background:#fd8524; left:-12px; top:3px;}
-                        &.dt-title {width: 45%;}
-                    }
-                    dd {font-weight:600; width:40%; float:left; text-align:right;
-                        &.dd-price {width: 55%;}
-                    }
-                }
-                dl.total-price {border-top:$border-default; padding-top:12px; margin-bottom:0;
-                    dt {font-weight:700; width:40%;
-                        &:before {display:none;}
-                    }
-                    dd {color:#ff7200; font-size:16px; font-weight:bold; width:60%;}
-                }
-            }
-            footer {padding:12px; background:#ddd; font-style:italic;}
-        }
-
-        // widget voucher
-        &.voucher {
-            .widget-content {padding:12px;}
-            .bg-danger, .bg-success {padding:6px; margin-top:6px;}
-        }
-
-        // widget airline
-        &.flight {
-            .widget-content {padding:12px; border:$border-default; border-top:none;
-                .airline {padding-bottom:12px;
-                    .airline-image {width:50px; border:$border-default; float:left; margin-right:12px; background:#fff;}
-                    .airline-name {font-weight:bold; color:$color-main-blue;}
-                    .airline-number {@extend .airline-name;}
-                }
-                .route {
-                    &:before, &:after {@include clearfix;}
-                    .origin {float:left; width:45%;}
-                    .duration {float:left; width:7%; margin-right:3%; content:""; border-top:3px solid $color-main-blue; margin-top:50px;}
-                    .destination {@extend .origin;}
-                    //
-                    h4 {font-weight:bold;}
-                    h5 {}
-                }
-            }
-        }
-
-        // widget countdown
-        &.countdown {
-            .widget-content {background:#ffd632; padding:12px;
-                P {padding-left:28px; background:url(/Assets/images/sandclock-yellow.png) left 3px no-repeat; font-size:12px; margin-bottom:12px;}
-                .timer {background:#ffefb1; border-bottom:1px solid #dab939; text-align:center; padding:12px; color:#4d4e4e;
-                    & > div {display:inline-block;}
-                    h5 {font-weight:bold; font-size:36px; margin-bottom:0; margin-top:0;}
-                    span {font-size:12px;}
-                    .separator {vertical-align:top; margin-left:6px; margin-right:6px;}
-                }
-            }
-        }
-        
-        // widget hotel
-        &.hotel {
-            .widget-content {
-                padding:12px; 
-                border:$border-default; 
-                border-top:none;
-                .wt-top .col-right-hotel {padding: 15px 10px;}
-                .wt-bottom {
-                    margin: 7px 0;
-                    margin-left: 25px;
-                    line-height: 16px;
-                    &:before {@extend .maps-icon;}
-                }
-                .widget-bottom {
-                    line-height: 24px;
-                    border-top: 1px solid #ccc;
-                    padding-top: 7px;
-                }
-            }
-            .widget-subtitle {
-                background: #1daee4;
-                color: #fff;
-                padding: 7px 15px;
-                font-size: 15px;
-                font-weight: 600;
-                position: relative;
-            }
-            .widget-wrapper.notes {margin-top: 15px;
-                .sqr-blue-list li {
-                    padding-left: 8px;
-                    margin-bottom: 10px;
-                }
-            }
-        }
-    }
-}
-
 // travorama login
 .travorama-login {border-top:$border-default; position:relative; margin-bottom:35px;
     a.login-toggle {background: #028ec3; position:absolute; z-index:2; top:0; right:0; color:#fff; padding:8px 10px; @include border-radius($border-radius-default); padding-left:35px; cursor:pointer;
@@ -524,6 +416,15 @@ label.control-label {
 // **********
 // page thank you
 .page-thankyou {
+    .section-title.stripe {
+        font-weight: 600;
+        background: url(/Assets/images/yellow-stripe.png) center bottom no-repeat;
+        padding-bottom: 20px;
+        width: 240px;
+        background-size: 100%;
+        margin: 15px auto 45px;
+    }
+
     .site-content {padding:24px 0;}
 
     .countdown {background:#fff; padding:24px; border:$border-default; margin-top:24px; margin-bottom:24px; text-align:center;
@@ -635,6 +536,104 @@ label.control-label {
                 padding: 25px;
                 float: right;
             }
+        }
+    }
+
+    /*Hotel Thankyou Page*/
+    &.page-hotel {
+        .thankyou>.container {max-width: none !important;}
+        .timer-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .tp-counter {
+            padding: 20px;
+            border: 1px solid #ccc;
+            background: #fff;
+            margin: 15px 0 30px;
+            text-align: center;
+            border-radius: 2px;
+            .tp-list {
+                padding: 0;
+                margin: 0;
+                list-style-type: none;
+                text-align: center;
+                &.minute:before {
+                    content: ':';
+                    display: inline;
+                    font-size: 30px;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    font-weight: 700;
+                }
+                &.sec:before {
+                    content: ':';
+                    display: inline;
+                    font-size: 30px;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    font-weight: 700;
+                }
+            }
+            .col-half{
+                &.left-side {padding-left: 190px;}
+                &.right-side {
+                    text-align: left;
+                    padding-left: 40px;
+                    .btn-yellow {
+                        font-size: 13px;
+                        padding: 10px 30px;
+                        &:before {
+                            content: '';
+                            display: inline-block;
+                            width: 22px;
+                            height: 20px;
+                            background: url(/Assets/travorama20/images/Hotel/print.png) no-repeat;
+                            vertical-align: middle;
+                            background-size: 100%;
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+            .timer {
+                max-width: 240px;
+                margin: 0 auto 15px;
+                &:before {
+                    content: '';
+                    background: url(/Assets/mobile/images/sand-clock.png) no-repeat;
+                    display: inline;
+                    width: 28px;
+                    height: 47px;
+                    position: absolute;
+                    background-size: 100%;
+                    margin-left: -140px;
+                }
+            }
+        }
+        .tp-detail {
+            .tp-container {
+                padding: 15px 20px;
+                min-height: 320px !important;
+            }
+            .tp-left {background: #f3f1f1;}
+            .tp-right {background: #ededed;}
+            .tp-title {margin-bottom: 10px;}
+            .tp-img {
+                text-align: center;
+                margin-top: 10px;
+            }
+            .tpb-container {
+                line-height: 20px;
+                .col-8:before {
+                    content: ':';
+                    display: inline-block;
+                    font-weight: 400;
+                }
+            }
+            .tp-top {margin-bottom: 10px;}
         }
     }
 }

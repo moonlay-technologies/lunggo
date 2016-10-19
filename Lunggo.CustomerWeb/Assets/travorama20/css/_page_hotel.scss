@@ -415,8 +415,8 @@
     .rh-container {
         .rh-main-title {
             background: #1daee4;
-            padding: 6px 25px;
-            font-size: 15px;
+            padding: 8px 25px;
+            font-size: 14px;
             font-weight: 600;
             color: #fff;
         }
@@ -455,76 +455,6 @@
         &.notes-hotel {margin-top: 20px;}
     }
 
-    /*Hotel Thankyou Page*/
-    &.page-thankyou {
-        .thankyou>.container {max-width: none !important;}
-        .tp-counter {
-            padding: 20px;
-            border: 1px solid #ccc;
-            background: #fff;
-            margin: 15px 0 30px;
-            text-align: center;
-            border-radius: 2px;
-            .tp-list {
-                padding: 0;
-                margin: 0;
-                list-style-type: none;
-                text-align: center;
-                &.minute:before {
-                    content: ':';
-                    display: inline;
-                    font-size: 30px;
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    font-weight: 700;
-                }
-                &.sec:before {
-                    content: ':';
-                    display: inline;
-                    font-size: 30px;
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    font-weight: 700;
-                }
-            }
-            .col-half{
-                &.left-side {padding-left: 190px;}
-                &.right-side {
-                    text-align: left;
-                    .btn-yellow {
-                        font-size: 13px;
-                        padding: 10px 30px;
-                        &:before {
-                            content: '';
-                            display: inline-block;
-                            width: 22px;
-                            height: 20px;
-                            background: url(/Assets/travorama20/images/Hotel/print.png) no-repeat;
-                            vertical-align: middle;
-                            background-size: 100%;
-                            margin-right: 10px;
-                        }
-                    }
-                }
-            }
-            .timer {
-                max-width: 240px;
-                margin: 0 auto 15px;
-                &:before {
-                    content: '';
-                    background: url(/Assets/mobile/images/sand-clock.png) no-repeat;
-                    display: inline;
-                    width: 28px;
-                    height: 47px;
-                    position: absolute;
-                    background-size: 100%;
-                    margin-left: -150px;
-                }
-            }
-        }
-    }
     /*Hotel Checkout Page*/
     &.page-checkout-hotel {
         .checkout-hotel {
