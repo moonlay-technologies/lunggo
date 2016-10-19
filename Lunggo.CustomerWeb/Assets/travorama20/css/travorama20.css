@@ -6737,7 +6737,7 @@ label.control-label {
   .page-thankyou.page-hotel .tp-detail .tpb-container {
     line-height: 20px; }
     .page-thankyou.page-hotel .tp-detail .tpb-container .col-8:before {
-      content: ':';
+      content: '\00a0:\00a0';
       display: inline-block;
       font-weight: 700; }
   .page-thankyou.page-hotel .tp-detail .tp-top {

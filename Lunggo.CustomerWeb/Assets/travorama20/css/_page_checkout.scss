@@ -628,7 +628,7 @@ label.control-label {
             .tpb-container {
                 line-height: 20px;
                 .col-8:before {
-                    content: ':';
+                    content: '\00a0:\00a0';
                     display: inline-block;
                     font-weight: 700;
                 }
