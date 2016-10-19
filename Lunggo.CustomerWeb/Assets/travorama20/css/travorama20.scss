@@ -160,7 +160,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // search calendar
 .search-calendar, .search-calendar-hotel {width:320px; height:520px; background:#252525; position:absolute; top:0; left:325px; z-index:2; display:none;
     .calendar-header {height:40px; background:#4e4e4e; color:#fff; font-weight:600; font-size:17px; padding:10px 15px;
-        .close-calendar {float:right; cursor:pointer;}
+        .close-calendar, .close-calendar-hotel {float:right; cursor:pointer;}
     }
     .calendar-body {padding-top:15px;}
     .home-nav {display:none;}
