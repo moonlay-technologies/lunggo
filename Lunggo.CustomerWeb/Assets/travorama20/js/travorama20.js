@@ -1837,7 +1837,7 @@ function hotelFormSearchFunctions() {
     function hideCalendar() {
         $('.search-calendar-hotel').hide();
     }
-    $('.close-calendar').click(function () { hideCalendar(); });
+    $('.close-calendar-hotel').click(function () { hideCalendar(); });
 
     //*****
     // date selector
