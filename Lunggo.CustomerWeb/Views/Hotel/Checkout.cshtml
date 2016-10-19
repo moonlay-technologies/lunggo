@@ -125,7 +125,7 @@
                     </div>
                 </div><!-- .content-step#step-1 -->
                 <!-- ******************** -->
-                <div class="content-step" id="step-2" ng-show="currentPage == 2" @*style=" display: block !important;*@">
+                <div class="content-step" id="step-2" ng-show="currentPage == 2" style=" display: block !important;">
                     <h3><b>DETAIL</b> PEMESAN</h3>
                     <div class="travorama-login" ng-class="{'active' : loginShown}" ng-if="!loggedIn">
                         <a class="login-toggle" ng-click="toggleLogin()"><b>Masuk</b> dengan akun <b>TRAVORAMA</b><span class="caret"></span></a>
@@ -224,9 +224,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Special Request</label>
+                            <label class="control-label">Catatan Khusus</label>
                             <div>
-                                <textarea class="form-control ng-pristine ng-untouched ng-valid" name="message" ng-model="message"></textarea>
+                                <textarea class="form-control ng-pristine ng-untouched ng-valid" name="special-request" ng-model="message"></textarea>
                             </div>
                         </div>
                     </form><!-- #buyer-form -->
@@ -237,7 +237,7 @@
                     </div>
                 </div><!-- .content-step#step-2 -->
                 <!-- ******************** -->
-                <div class="content-step" id="step-3" ng-show="currentPage > 2" style=" display: block !important;">
+                <div class="content-step" id="step-3" ng-show="currentPage > 2" @*style=" display: block !important;"*@>
                     <div class="checkout-content">
                         <h3><b>METODE</b> PEMBAYARAN</h3>
                         <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>

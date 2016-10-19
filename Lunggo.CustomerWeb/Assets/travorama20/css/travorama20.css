@@ -5739,6 +5739,12 @@ file: /Assets/travorama20/css/_page_flight.scss
       margin-left: -20px;
       position: absolute;
       margin-top: 4px; }
+  .page-hotel.page-checkout-hotel .checkout-hotel textarea[name="special-request"].form-control {
+    height: 80px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px; }
 
 /*
 
@@ -6733,7 +6739,7 @@ label.control-label {
     .page-thankyou.page-hotel .tp-detail .tpb-container .col-8:before {
       content: ':';
       display: inline-block;
-      font-weight: 400; }
+      font-weight: 700; }
   .page-thankyou.page-hotel .tp-detail .tp-top {
     margin-bottom: 10px; }
 

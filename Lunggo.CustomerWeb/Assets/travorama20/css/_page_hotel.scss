@@ -492,8 +492,9 @@
                     margin-top: 4px;
                 }
             }
-            .content-step {
-           
+            textarea[name="special-request"].form-control {
+                height: 80px;
+                @include border-radius(2px);
             }
         } 
     }
