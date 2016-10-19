@@ -72,7 +72,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 HotelName = hotelDetail.HotelName,
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
-                CountryName = GetHotelCountryName(hotelDetail.CountryCode),//TODO "Get Country Name"
+                CountryName = GetHotelCountryName(hotelDetail.CountryCode),
                 Latitude = hotelDetail.Latitude,
                 Longitude = hotelDetail.Longitude,
                 Email = hotelDetail.Email,
@@ -81,9 +81,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Description = hotelDetail.Description == null ? null : hotelDetail.Description.Where(x => x.languageCode.Equals("IND"))
                                 .Select(x => x.Description).SingleOrDefault(),
                 PhonesNumbers = hotelDetail.PhonesNumbers,
-                ZoneName = GetHotelZoneNameFromDict(hotelDetail.ZoneCode.ToString()), //TODO "Det Zone Name"
-                StarRatingDescription = GetHotelCategoryDescId(hotelDetail.StarRating), //TODO "Get Star Rating"
-                ChainName = GetHotelChainDesc(hotelDetail.Chain), //TODO "Get Chain Name"
+                ZoneName = GetHotelZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
+                StarRatingDescription = GetHotelCategoryDescId(hotelDetail.StarRating),
+                ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 //Segments =  //TODO "List of Segment by SegmentCode"
                 Pois = hotelDetail.Pois,
                 Terminals =  hotelDetail.Terminals,//TODO "Perlu dtambahi dari data HotelDetailContent"

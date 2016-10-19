@@ -39,7 +39,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         }
         public string EncryptRegsId(int hotelCode, string roomCode, string rateKey)
         {
-            return hotelCode + "-" + roomCode + "-" + rateKey;
+            return hotelCode + "," + roomCode + "," + rateKey;
         }
     }
 }

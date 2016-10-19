@@ -16,6 +16,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         public GetHotelDetailOutput GetHotelDetail(GetHotelDetailInput input)
         {
             var hotelDetail = GetHotelDetailFromDb(input.HotelCode);
+            var hotelRoom = GetRoomFromSearchResult(input.HotelCode, input.SearchId);
+            hotelDetail.Rooms = hotelRoom;
             return new GetHotelDetailOutput
             {
                 HotelDetail = ConvertToHotelDetailsBaseForDisplay(hotelDetail)
@@ -30,6 +32,13 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             /*Technpologies using TableStorage*/
             return GetHotelDetailFromTableStorage(hotelCode);
+        }
+
+        public List<HotelRoom> GetRoomFromSearchResult(int hotelCode,string searchId)
+        {
+            var searchResultData = GetSearchHotelResultFromCache(searchId);
+            var SearchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotelCode);
+            return SearchResulthotel.Rooms;
         }
 
     }
