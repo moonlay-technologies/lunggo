@@ -33,10 +33,10 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                     "https://api.test.hotelbeds.com/hotel-content-api");
                 //https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels?fields=all&language=ENG&from=1&to=100&useSecondaryLanguage=false
 
-                var dataCount = 1;
+                var dataCount = 85001;
                 var counter = 0;
-                var from = 1;
-                var to = 1000;
+                var from = 85001;
+                var to = 86000;
                 while (to <= 128000)
                 {
 

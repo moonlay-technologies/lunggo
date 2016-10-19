@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using CsQuery.Engine.PseudoClassSelectors;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
@@ -99,10 +100,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotelList = hotels.Take(100).ToList();
                 }
 
+                hotelList = AddHotelDetail(hotelList);
+
                 return new SearchHotelOutput
                 {
                     SearchId = searchResult.SearchId,
-                    HotelDetailLists = ConvertToHotelDetailForDisplay(hotelList)
+                    HotelDetailLists = ConvertToHotelDetailForDisplay(hotelList),
+                    StartPage = input.StartPage,
+                    EndPage = hotelList.Count,
+                    TotalHotel = hotelList.Count
                 };
             }
             else
@@ -131,9 +137,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                     case AutocompleteType.Destination:
                         request.Destination = detailDestination.Code;
                         break;
-                    //case AutocompleteType.Hotel:
-                    //    request.HotelCode = detailDestination.Code; //TODO
-                    //    break;
                 };
 
                 var result = hotelBedsClient.SearchHotel(request);
@@ -143,41 +146,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 result.SearchId = generatedSearchId.ToString();
                 Debug.Print("Search Id : "+ result.SearchId);
 
-
-                //Adding Additional Hotel Information
-                //foreach (var hotel in result.HotelDetails)
-                //{
-                   //var detail = GetHotelDetailsFromDocument(hotel.HotelCode);
-                //    hotel.PhonesNumbers = detail.PhonesNumbers;
-                //    //hotel.Terminals = detail.Terminals != null ? detail.Terminals : null; //TODO Krena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
-                //    hotel.PostalCode = detail.PostalCode;
-                //    hotel.Review = detail.Review;
-                //    hotel.StarRating = detail.StarRating;
-                //    hotel.Chain = detail.Chain;
-                //    hotel.Pois = detail.Pois;
-                //    hotel.Address = detail.Address;
-                //    hotel.Segment = detail.Segment;
-                //    hotel.PhonesNumbers = detail.PhonesNumbers;
-                //    //hotel.ImageUrl = detail.ImageUrl != null ? detail.ImageUrl : null; //TODO Karena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
-                //    hotel.Email = detail.Email;
-                //    hotel.City = detail.City;
-                //    hotel.CountryCode = detail.CountryCode;
-                //    hotel.ZoneCode = detail.ZoneCode;
-                //    hotel.Longitude = detail.Longitude;
-                //    hotel.Latitude = detail.Latitude;
-                //    hotel.DestinationCode = detail.DestinationCode;
-                //    hotel.Description = detail.Description;
-                //    hotel.AccomodationType = detail.AccomodationType;
-                //}
-
                 if (result.HotelDetails != null)
                 {
-                    //save data to docDB
-                    //SaveSearchResultToDocument(result);
-
-                    //save searchResult to cache
-
-
                     //TODO: MARGIN
                     result.HotelDetails.ForEach(h => h.Rooms.ForEach(r => r.Rates.ForEach(t =>
                     {
@@ -196,14 +166,21 @@ namespace Lunggo.ApCommon.Hotel.Service
                         });
                     }
                         )));
-                    //return only 100 data for the first page
+
                     SaveSearchResultintoDatabaseToCache(result.SearchId, result);
+
+                    var firstPageHotelDetails = result.HotelDetails.Take(100).ToList(); 
+                    //Add HotelDetail Here
+                    firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
+
+                    //return only 100 data for the first page
                     return new SearchHotelOutput
                     {
                         SearchId = result.SearchId,
-                        HotelDetailLists = ConvertToHotelDetailForDisplay(result.HotelDetails).Take(100).ToList(),
+                        HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
                         StartPage = 1,
                         EndPage = 100,
+                        TotalHotel = firstPageHotelDetails.Count
                     };
                 }
                 else
@@ -212,6 +189,23 @@ namespace Lunggo.ApCommon.Hotel.Service
                     return new SearchHotelOutput();
                 }
             }
+        }
+
+        public List<HotelDetail> AddHotelDetail(List<HotelDetail> result)
+        {
+            //Adding Additional Hotel Information
+                foreach (var hotel in result)
+                {
+                   var detail = GetHotelDetailFromDb(hotel.HotelCode);
+                    hotel.Address = detail.Address;
+                    hotel.City = detail.City;
+                    hotel.Chain = detail.Chain;
+                    hotel.AccomodationType = detail.AccomodationType;
+                    //facilities hotel;
+                    hotel.Review = detail.Review;
+                    hotel.ImageUrl = detail.ImageUrl;
+                }
+            return result;
         }
     }
 }

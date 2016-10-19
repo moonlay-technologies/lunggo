@@ -17,12 +17,56 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             HotelDetailWrapper hotel = new HotelDetailWrapper("hotel",hotelCd.ToString());
             var data = hotelDetail.Serialize();
-            hotel.Data1 = data.Substring(0, (data.Length / 2));
-            hotel.Data2 = data.Substring(data.Length/2);
+            var splittedData = SplitByLength(data, 30000);
+            DivideData(hotel,splittedData);
             var tableClient = TableStorageService.GetInstance();
             var table = tableClient.GetTableByReference("hoteldetail");
             var insertOp = TableOperation.InsertOrReplace(hotel);
             table.Execute(insertOp);
+        }
+
+        public void DivideData(HotelDetailWrapper hotel, IEnumerable<string> splittedData)
+        {
+            try
+            {
+                var separatedData = splittedData.ToList();
+                hotel.Data1 = separatedData[0];
+                hotel.Data2 = separatedData[1];
+                hotel.Data3 = separatedData[2];
+                hotel.Data4 = separatedData[3];
+                hotel.Data5 = separatedData[4];
+                hotel.Data6 = separatedData[5];
+                hotel.Data7 = separatedData[6];
+                hotel.Data8 = separatedData[7];
+                hotel.Data9 = separatedData[8];
+                hotel.Data10 = separatedData[9];
+                hotel.Data11 = separatedData[10];
+                hotel.Data12 = separatedData[11];
+                hotel.Data13 = separatedData[12];
+                hotel.Data14 = separatedData[13];
+                hotel.Data15 = separatedData[14];
+                hotel.Data16 = separatedData[15];
+                hotel.Data17 = separatedData[16];
+                hotel.Data18 = separatedData[17];
+                hotel.Data19 = separatedData[18];
+                hotel.Data20 = separatedData[19];
+            }
+            catch (Exception e)
+            {
+                
+            }
+        }
+
+        public static IEnumerable<string> SplitByLength(string str, int maxLength)
+        {
+            int index = 0;
+            while (index + maxLength < str.Length)
+            {
+                yield return str.Substring(index, maxLength);
+                index += maxLength;
+            }
+
+            yield return str.Substring(index);
         }
 
         public HotelDetailsBase GetHotelDetailFromTableStorage(int hotelCd)
@@ -38,9 +82,44 @@ namespace Lunggo.ApCommon.Hotel.Service
             // Execute the retrieve operation.
             TableResult retrievedResult = table.Execute(retrieveOperation);
             HotelDetailWrapper resultWrapper = (HotelDetailWrapper) retrievedResult.Result;
-            var concatedResult = resultWrapper.Data1 + resultWrapper.Data2;
+            var concatedResult = ConcateData(resultWrapper);
             HotelDetailsBase result = concatedResult.Deserialize<HotelDetailsBase>();
             return result;
+        }
+
+        public string ConcateData(HotelDetailWrapper hotel)
+        {
+            var data = new StringBuilder();
+            try
+            {
+                data.Append(hotel.Data1);
+                data.Append(hotel.Data2);
+                data.Append(hotel.Data3);
+                data.Append(hotel.Data4);
+                data.Append(hotel.Data5);
+                data.Append(hotel.Data6);
+                data.Append(hotel.Data7);
+                data.Append(hotel.Data8);
+                data.Append(hotel.Data9);
+                data.Append(hotel.Data10);
+                data.Append(hotel.Data11);
+                data.Append(hotel.Data12);
+                data.Append(hotel.Data13);
+                data.Append(hotel.Data14);
+                data.Append(hotel.Data15);
+                data.Append(hotel.Data16);
+                data.Append(hotel.Data17);
+                data.Append(hotel.Data18);
+                data.Append(hotel.Data19);
+                data.Append(hotel.Data20);
+            }
+            catch
+            {
+                
+            }
+
+            return data.ToString();
+
         }
 
         public void DeleteEntityFromTableStorage(int hotelCd)

@@ -47,6 +47,36 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         }
 
+        public class Chain
+        {
+            public string Code { get; set; }
+            public string Description { get; set; }
+        }
+
+        public class Accomodation
+        {
+            public string Code { get; set; }
+            public string MultiDescription { get; set; }
+            public string TypeNameId { get; set; }
+            public string TypeNameEn { get; set; }
+        }
+
+        public class Board
+        {
+            public string Code { get; set; }
+            public string NameId { get; set; }
+            public string NameEn { get; set; }
+            public string MultilingualCode { get; set; }
+        }
+
+        public class Category {
+            public string Code { get; set; }
+            public int SimpleCode { get; set; }
+            public string AccomodationType { get; set; }
+            public string NameEn { get; set; }
+            public string NameId { get; set; }
+        }
+
         public class HotelRoomType
         {
             public string Type { get; set; }
@@ -128,6 +158,11 @@ namespace Lunggo.ApCommon.Hotel.Service
         public static Dictionary<int, string> HotelFacilityGroupDictEng;
         public static Dictionary<int, Facility> HotelRoomFacility;
 
+        public static Dictionary<string, Chain> HotelChains;
+        public static Dictionary<string, Accomodation> HotelAccomodations;
+        public static Dictionary<string, Board> HotelBoards;
+        public static Dictionary<string, Category> HotelCategories; 
+
         public static Dictionary<string, Room> HotelRoomDict;
         public static Dictionary<string, HotelRoomType> HotelRoomTypeDict;
         public static Dictionary<string, RoomCharacteristic> HotelRoomCharacteristicDict;
@@ -154,6 +189,12 @@ namespace Lunggo.ApCommon.Hotel.Service
         private const string HotelCountryFileName = @"HotelCountries.csv";
         private const string HotelDestinationFileName = @"HotelDestinations.csv";
 
+        private const string HotelchainFileName = @"HotelChain.csv";
+        private const string HotelBoardFileName = @"HotelBoard.csv";
+        private const string HotelAccomodationFileName = @"HotelAccomodation.csv";
+        private const string HotelCategoryFileName = @"HotelCategory.csv";
+
+
         private static string _hotelSegmentFilePath;
         private static string _hotelFacilitiesFilePath;
         private static string _hotelFacilityGroupFilePath;
@@ -163,6 +204,11 @@ namespace Lunggo.ApCommon.Hotel.Service
         private static string _hotelRoomPaymentTypeFilePath;
         private static string _hotelCountriesFilePath;
         private static string _hotelDestinationsFilePath;
+        private static string _hotelAccomodationFilePath;
+        private static string _hotelBoardFilePath;
+        private static string _hotelChainFilePath;
+        private static string _hotelCategoryFilePath;
+
         private static string _configPath;
 
         public void InitDictionary(string folderName)
@@ -182,8 +228,16 @@ namespace Lunggo.ApCommon.Hotel.Service
             _hotelRoomPaymentTypeFilePath = Path.Combine(_configPath, HotelRoomPaymentTypeFileName);
             _hotelCountriesFilePath = Path.Combine(_configPath, HotelCountryFileName);
             _hotelDestinationsFilePath = Path.Combine(_configPath, HotelDestinationFileName);
-
+            _hotelAccomodationFilePath = Path.Combine(_configPath, HotelAccomodationFileName);
+            _hotelBoardFilePath = Path.Combine(_configPath, HotelBoardFileName);
+            _hotelChainFilePath = Path.Combine(_configPath, HotelchainFileName);
+            _hotelCategoryFilePath = Path.Combine(_configPath, HotelCategoryFileName);
             PopulateHotelSegmentDict(_hotelSegmentFilePath);
+
+            PopulateHotelAccomodationDict(_hotelAccomodationFilePath);
+            PopulateHotelBoardDict(_hotelBoardFilePath);
+            PopulateHotelChainDict(_hotelChainFilePath);
+            PopulateHotelCategoryDict(_hotelCategoryFilePath);
 
             PopulateHotelFacilityGroupDict(_hotelFacilityGroupFilePath);
             PopulateHotelFacilityGroupList(_hotelFacilitiesFilePath);
@@ -501,6 +555,101 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
         }
+
+
+        private static void PopulateHotelAccomodationDict(String hotelAccomodationFilePath)
+        {
+            HotelAccomodations = new Dictionary<string, Accomodation>();
+
+            using (var file = new StreamReader(hotelAccomodationFilePath))
+            {
+                var line = file.ReadLine();
+                while (!file.EndOfStream)
+                {
+                    line = file.ReadLine();
+                    var splittedLine = line.Split('|');
+
+                    HotelAccomodations.Add(splittedLine[0], new Accomodation
+                    {
+                        Code = splittedLine[0],
+                        MultiDescription = splittedLine[1],
+                        TypeNameEn = splittedLine[2],
+                        TypeNameId = splittedLine[3]
+                    });
+                }
+            }
+        }
+
+
+        private static void PopulateHotelBoardDict(String hotelBoardFilePath)
+        {
+            HotelBoards = new Dictionary<string, Board>();
+
+            using (var file = new StreamReader(hotelBoardFilePath))
+            {
+                var line = file.ReadLine();
+                while (!file.EndOfStream)
+                {
+                    line = file.ReadLine();
+                    var splittedLine = line.Split('|');
+
+                    HotelBoards.Add(splittedLine[0], new Board
+                    {
+                        Code = splittedLine[0],
+                        NameEn = splittedLine[1],
+                        NameId = splittedLine[2],
+                        MultilingualCode = splittedLine[3]
+                    });
+                }
+            }
+        }
+
+        private static void PopulateHotelChainDict(String hotelChainFilePath)
+        {
+            HotelChains = new Dictionary<string, Chain>();
+
+            using (var file = new StreamReader(hotelChainFilePath))
+            {
+                var line = file.ReadLine();
+                while (!file.EndOfStream)
+                {
+                    line = file.ReadLine();
+                    var splittedLine = line.Split('|');
+
+                    HotelChains.Add(splittedLine[0], new Chain
+                    {
+                        Code = splittedLine[0],
+                        Description = splittedLine[1],
+                    });
+                }
+            }
+        }
+
+        private static void PopulateHotelCategoryDict(String hotelCategoryFilePath)
+        {
+            HotelCategories = new Dictionary<string, Category>();
+
+            using (var file = new StreamReader(hotelCategoryFilePath))
+            {
+                var line = file.ReadLine();
+                while (!file.EndOfStream)
+                {
+                    line = file.ReadLine();
+                    var splittedLine = line.Split('|');
+
+                    HotelCategories.Add(splittedLine[0], new Category
+                    {
+                        Code = splittedLine[0],
+                        SimpleCode = int.Parse(splittedLine[1]),
+                        AccomodationType = splittedLine[2],
+                        NameEn = splittedLine[4],
+                        NameId = splittedLine[5]
+                    });
+                }
+            }
+        }
+
+
 
         private static void PopulateHotelCountriesDict(String hotelCountriesFilePath)
         {
@@ -1050,6 +1199,166 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return new Zone();
             }
         }
+
+        public string GetHotelZoneNameFromDict(string zoneCode)
+        {
+            try
+            {
+                return HotelDestinationZoneDict[zoneCode].Name;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+
+        //GETTER FOR HOTEL CHAIN
+        public Chain GetHotelChain(string code)
+        {
+            try
+            {
+                return HotelChains[code];
+            }
+            catch
+            {
+                return new Chain();
+            }
+        }
+        public string GetHotelChainDesc(string code)
+        {
+            try
+            {
+                return HotelChains[code].Description;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+
+        //GETTER FOR HOTEL ACCOMODATION
+        public Accomodation GetHotelAccomodation(string code)
+        {
+            try
+            {
+                return HotelAccomodations[code];
+            }
+            catch
+            {
+                return new Accomodation();
+            }
+        }
+        public string GetHotelAccomdationMultiDesc(string code)
+        {
+            try
+            {
+                return HotelAccomodations[code].MultiDescription;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelAccomodationDescEng(string code)
+        {
+            try
+            {
+                return HotelAccomodations[code].TypeNameEn;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+        public string GetHotelAccomodationDescId(string code)
+        {
+            try
+            {
+                return HotelAccomodations[code].TypeNameId;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        //GETTER FOR HOTEL BOARD
+        public Board GetHotelBoard(string code)
+        {
+            try
+            {
+                return HotelBoards[code];
+            }
+            catch
+            {
+                return new Board();
+            }
+        }
+        public string GetHotelBoardDescEn(string code)
+        {
+            try
+            {
+                return HotelBoards[code].NameEn;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelBoardDescId(string code)
+        {
+            try
+            {
+                return HotelBoards[code].NameId;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+
+        //GETTER FOR HOTEL CATEGORY
+        public Category GetHotelCategory(string code)
+        {
+            try
+            {
+                return HotelCategories[code];
+            }
+            catch
+            {
+                return new Category();
+            }
+        }
+        public string GetHotelCategoryDescEn(string code)
+        {
+            try
+            {
+                return HotelCategories[code].NameEn;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetHotelCategoryDescId(string code)
+        {
+            try
+            {
+                return HotelCategories[code].NameId;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+
     }
 
     

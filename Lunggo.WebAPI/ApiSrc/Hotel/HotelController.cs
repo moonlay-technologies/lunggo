@@ -110,14 +110,15 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("v1/hotel/GetHotelDetail/{hotelCd}")]
-        public ApiResponseBase GetHotelDetail(int hotelCd)
+        [Route("v1/hotel/GetHotelDetail/{searchId}/{hotelCd}")]
+        public ApiResponseBase GetHotelDetail(string searchId, int hotelCd)
         {
             try
             {
                 var request = new HotelDetailApiRequest
                 {
-                    HotelCode = hotelCd
+                    HotelCode = hotelCd,
+                    SearchId = searchId
                 };
                 var apiResponse = HotelLogic.GetHotelDetailLogic(request);
                 return apiResponse;
