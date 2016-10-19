@@ -140,41 +140,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                 result.SearchId = generatedSearchId.ToString();
                 Debug.Print("Search Id : "+ result.SearchId);
 
-
-                //Adding Additional Hotel Information
-                //foreach (var hotel in result.HotelDetails)
-                //{
-                   //var detail = GetHotelDetailsFromDocument(hotel.HotelCode);
-                //    hotel.PhonesNumbers = detail.PhonesNumbers;
-                //    //hotel.Terminals = detail.Terminals != null ? detail.Terminals : null; //TODO Krena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
-                //    hotel.PostalCode = detail.PostalCode;
-                //    hotel.Review = detail.Review;
-                //    hotel.StarRating = detail.StarRating;
-                //    hotel.Chain = detail.Chain;
-                //    hotel.Pois = detail.Pois;
-                //    hotel.Address = detail.Address;
-                //    hotel.Segment = detail.Segment;
-                //    hotel.PhonesNumbers = detail.PhonesNumbers;
-                //    //hotel.ImageUrl = detail.ImageUrl != null ? detail.ImageUrl : null; //TODO Karena ada tambahan jadi masih ada kesalahan ya, di masukin data content ke docDB
-                //    hotel.Email = detail.Email;
-                //    hotel.City = detail.City;
-                //    hotel.CountryCode = detail.CountryCode;
-                //    hotel.ZoneCode = detail.ZoneCode;
-                //    hotel.Longitude = detail.Longitude;
-                //    hotel.Latitude = detail.Latitude;
-                //    hotel.DestinationCode = detail.DestinationCode;
-                //    hotel.Description = detail.Description;
-                //    hotel.AccomodationType = detail.AccomodationType;
-                //}
+                //Add HotelDetail Here
+                //result = AddHotelDetail(result);
 
                 if (result.HotelDetails != null)
                 {
-                    //save data to docDB
-                    //SaveSearchResultToDocument(result);
-
-                    //save searchResult to cache
-
-
                     //TODO: MARGIN
                     result.HotelDetails.ForEach(h => h.Rooms.ForEach(r => r.Rates.ForEach(t =>
                     {
@@ -209,6 +179,36 @@ namespace Lunggo.ApCommon.Hotel.Service
                     return new SearchHotelOutput();
                 }
             }
+        }
+
+        public SearchHotelResult AddHotelDetail(SearchHotelResult result)
+        {
+            //Adding Additional Hotel Information
+                foreach (var hotel in result.HotelDetails)
+                {
+                   var detail = GetHotelDetailFromDb(hotel.HotelCode);
+                    hotel.PhonesNumbers = detail.PhonesNumbers;
+                    hotel.Terminals = detail.Terminals; //TODO
+                    hotel.PostalCode = detail.PostalCode;
+                    hotel.Review = detail.Review;
+                    hotel.StarRating = detail.StarRating;
+                    hotel.Chain = detail.Chain;
+                    hotel.Pois = detail.Pois;
+                    hotel.Address = detail.Address;
+                    hotel.Segment = detail.Segment;
+                    hotel.PhonesNumbers = detail.PhonesNumbers;
+                    hotel.ImageUrl = detail.ImageUrl; //TODO
+                    hotel.Email = detail.Email;
+                    hotel.City = detail.City;
+                    hotel.CountryCode = detail.CountryCode;
+                    hotel.ZoneCode = detail.ZoneCode;
+                    hotel.Longitude = detail.Longitude;
+                    hotel.Latitude = detail.Latitude;
+                    hotel.DestinationCode = detail.DestinationCode;
+                    hotel.Description = detail.Description;
+                    hotel.AccomodationType = detail.AccomodationType;
+                }
+            return result;
         }
     }
 }

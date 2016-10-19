@@ -31,7 +31,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("zoneCd", NullValueHandling = NullValueHandling.Ignore)]
         public int ZoneCode { get; set; }
         [JsonProperty("zoneName", NullValueHandling = NullValueHandling.Ignore)]
-        public int ZoneName { get; set; }
+        public string ZoneName { get; set; }
         [JsonProperty("latitude", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Latitude { get; set; }
         [JsonProperty("longitude", NullValueHandling = NullValueHandling.Ignore)]

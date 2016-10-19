@@ -1200,6 +1200,18 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
+        public string GetHotelZoneNameFromDict(string zoneCode)
+        {
+            try
+            {
+                return HotelDestinationZoneDict[zoneCode].Name;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
 
         //GETTER FOR HOTEL CHAIN
         public Chain GetHotelChain(string code)

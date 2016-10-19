@@ -94,7 +94,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
                 CountryCode = hotelDetail.CountryCode,
-                //CountryName = dictionary.GetHotelCountryNameByCode(hotelDetail.CountryCode),//TODO "Get Country Name"
+                CountryName = GetHotelCountryName(hotelDetail.CountryCode),//TODO "Get Country Name"
                 Latitude = hotelDetail.Latitude,
                 Longitude = hotelDetail.Longitude,
                 Email = hotelDetail.Email,
@@ -109,18 +109,20 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 }).SingleOrDefault(),
                 PhonesNumbers = hotelDetail.PhonesNumbers,
                 ZoneCode = hotelDetail.ZoneCode,
-                //ZoneName = ZoneName, //TODO "Det Zone Name"
+                ZoneName = GetHotelZoneNameFromDict(hotelDetail.ZoneCode.ToString()), //TODO "Det Zone Name"
                 StarRatingCd = hotelDetail.StarRating,
-                //StarRatingDescription = dictionary.GetHotelCategoryId(hotelDetail.StarRating), //TODO "Get Star Rating"
+                StarRatingDescription = GetHotelCategoryDescId(hotelDetail.StarRating), //TODO "Get Star Rating"
                 Chain = hotelDetail.Chain,
-                //ChainName = dictionary.GetHotelChain(hotelDetail.Chain), //TODO "Get Chain Name"
+                ChainName = GetHotelChainDesc(hotelDetail.Chain), //TODO "Get Chain Name"
                 //Segments =  //TODO "List of Segment by SegmentCode"
                 Pois = hotelDetail.Pois,
-                //Terminals =  //TODO "Perlu dtambahi dari data HotelDetailContent"
-                //Facilities =  //TODO
+                Terminals =  hotelDetail.Terminals,//TODO "Perlu dtambahi dari data HotelDetailContent"
+                //Facilities =  hotelDetail.Facilities,//TODO Bentuk LIst, harus dipecah satu satu
                 Review = hotelDetail.Review,
                 Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                 AccomodationType = hotelDetail.AccomodationType,
+                AccomodationName = GetHotelAccomdationMultiDesc(hotelDetail.AccomodationType),
+                ImageUrl = hotelDetail.ImageUrl,
             };
             return hotel;
         }
@@ -192,7 +194,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     AdultCount = rateDetail.AdultCount,
                     ChildCount = rateDetail.ChildCount,
                     Boards = rateDetail.Boards,
-                    //BoardDescription = dictionary.GetHotelBoardId(rateDetail.Boards),//TODO
+                    BoardDescription = GetHotelBoardDescId(rateDetail.Boards),//TODO
                     RoomCount = rateDetail.RoomCount,
                     TimeLimit = rateDetail.TimeLimit,
                     Cancellation = rateDetail.Cancellation,
